@@ -29,13 +29,12 @@ public class ConsoleLauncher {
 
     public static void main(String[] args) {
 
-//        ApplicationContext ctx = SpringApplication.run(new Object[]{
-////      "classpath*:spring/rs-context.xml",
-////            "classpath*:spring/spring-config-shiro.xml",
-////            "classpath*:motan_site_client.xml",
-//            ConsoleLauncher.class
-//        }, args);
-        ApplicationContext ctx = SpringApplication.run(ConsoleLauncher.class);
+        ApplicationContext ctx = SpringApplication.run(new Object[]{
+//      "classpath*:spring/rs-context.xml",
+//            "classpath*:spring/spring-config-shiro.xml",
+            "classpath*:hookah_rpc_server.xml",
+            ConsoleLauncher.class
+        }, args);
         MotanSwitcherUtil.setSwitcherValue(MotanConstants.REGISTRY_HEARTBEAT_SWITCHER, true);
     }
 }

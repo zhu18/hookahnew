@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfigurati
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import javax.annotation.PostConstruct;
@@ -23,7 +24,7 @@ import javax.annotation.PostConstruct;
 @EnableAutoConfiguration(exclude = {ThymeleafAutoConfiguration.class})
 @EnableScheduling
 @ComponentScan
-//@ImportResource(locations = "classpath:motan_site_client.xml")
+@ImportResource(locations = "classpath:hookah_rpc_client.xml")
 public class WebsiteLauncher {
     private static final Logger logger = LoggerFactory.getLogger(WebsiteLauncher.class);
 

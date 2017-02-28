@@ -6,24 +6,28 @@
        http://api.weibo.com/schema/motan http://api.weibo.com/schema/motan.xsd">
 
 
-  <!-- 注册中心配置 使用不同注册中心需要依赖对应的jar包。-->
-  <!--<motan:registry regProtocol="local" name="registry"/>-->
+  <!-- 业务具体实现类 -->
+  <bean id="userService" class="com.jusfoun.hookah.console.service.impl.UserServiceImpl"/>
+
+  <!-- 注册中心配置 使用不同注册中心需要依赖对应的jar包。如果不使用注册中心，可以把check属性改为false，忽略注册失败。-->
+  <!--<motan:registry regProtocol="local" name="registry" />-->
   <motan:registry regProtocol="consul" name="registry" address="127.0.0.1:8500"/>
   <!--<motan:registry regProtocol="zookeeper" name="registry" address="127.0.0.1:2181" connectTimeout="2000"/>-->
 
-  <!-- motan协议配置 -->
-  <motan:protocol default="true" name="motan" haStrategy="failover"
-                  loadbalance="roundrobin" maxClientConnection="10" minClientConnection="2"/>
+  <!-- 协议配置。为防止多个业务配置冲突，推荐使用id表示具体协议。-->
+  <motan:protocol id="hookah" default="true" name="motan"
+                  maxServerConnection="80000" maxContentLength="1048576"
+                  maxWorkerThread="800" minWorkerThread="20"/>
 
-  <!-- 通用referer基础配置 -->
-  <motan:basicReferer requestTimeout="200" accessLog="false"
-                      retries="2" group="motan-demo-rpc" module="motan-demo-rpc"
-                      application="myMotanDemo" protocol="motan" registry="registry"
-                      id="HookahRPCConsoleBasicConfig" throwException="false" check="true"/>
+  <!-- 通用配置，多个rpc服务使用相同的基础配置. group和module定义具体的服务池。export格式为“protocol id:提供服务的端口”-->
+  <motan:basicService export="hookah:5002"
+                      group="hookah-rpc" accessLog="false" shareChannel="true" module="hookah-rpc"
+                      application="hookah" registry="registry" id="serviceBasicConfig"/>
 
-  <!-- 具体referer配置。使用方通过beanid使用服务接口类 -->
-  <motan:referer id="userService"
-                 interface="com.jusfoun.hookah.rpc.api.UserService"
-                 connectTimeout="300" requestTimeout="300" basicReferer="HookahRPCConsoleBasicConfig"/>
+  <!-- 具体rpc服务配置，声明实现的接口类。-->
+  <motan:service interface="com.jusfoun.hookah.rpc.api.UserService"
+                 ref="userService" export="hookah:5001" basicService="serviceBasicConfig">
+  </motan:service>
+
 
 </beans>
