@@ -1,0 +1,469 @@
+<div class="index-menu">
+  <div class="hookah-common-transparent-head J_Module">
+    <div class="module-wrap J_tb_lazyload dbl_tms_module_wrap">
+      <div class="J-home-slider-black">
+        <div id="J-home-topbar-menu">
+          <div class="module-wrap J_tb_lazyload dbl_tms_module_wrap www-hookah-common-menu ">
+            <div class="topbar-body black-cell">
+              <div class="topbar-box ">
+                <div class="y-row y-clear">
+                  <a class="logo-cell y-left" href="${host.server}">
+                    <img class="black" style="z-index: 2;"
+                         src="${host.static}/img/logo2.png">
+                  </a>
+                  <div class="menu-body y-left">
+                    <ul class="y-clear" id="J_topbar_menu">
+                      <li index="activity" dropdown="hide" width="92" left="0">
+                        <a href="#">最新活动</a>
+                        <img src="${host.static}/img/TB16iSzLpXXXXXjapXXXXXXXXXX-48-32.png">
+                      </li>
+                      <li index="product" dropdown="show" width="64" left="92">
+                        <a>产品1</a>
+                      </li>
+                      <li index="solution" dropdown="show" width="92" left="156">
+                        <a href="">解决方案2</a>
+                      </li>
+                      <li index="data" dropdown="hide" width="78" left="248">
+                        <a href="">大数据3</a>
+                      </li>
+
+                      <li class="line" width="0" left="326" style="width: 0px; left: 468px;"></li>
+                    </ul>
+                  </div>
+                  <div class="tool-body y-right">
+                    <%if( x=="auth"){%>
+                    <div class="y-clear">
+                      <ul class="y-right tips-box">
+                        <!--<li class="tips-item">-->
+                        <!--<a-->
+                        <!--href="/help"-->
+                        <!--class="login">帮助文档</a>-->
+                        <!--</li>-->
+                        <li class="tips-item">
+                          <a href="${host.server}" target="_blank">首页</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <%}else{%>
+                    <div class="y-clear">
+                      <a class="login-cell y-right register" href="${host.auth}/register?oauth_callback=${host.auth}/login">注册</a>
+                      <ul class="y-right tips-box">
+                        <li class="tips-item">
+                          <a href="${host.auth}/login?oauth_callback=${oauth_callback!'/'}" class="login">登录1</a>
+                        </li>
+                        <!--<li class="tips-item">-->
+                        <!--<a href="//beian.hookah.com/">备案</a>-->
+                        <!--</li>-->
+                        <li class="tips-item">
+                          <a href="/console" target="_blank">我的</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <%}%>
+                  </div>
+                </div>
+              </div>
+              <div class="topbar-dropdown-box" style="z-index: 998;">
+                <div class="close-dropdown dropdown-ing">
+                  <img src="${host.static}/img/TB1.HbsLXXXXXakXVXXXXXXXXXX-44-20.png">
+                </div>
+                <div class="dropdown-ing">
+                  <div class="y-row">
+                    <!-- 产品 -->
+                    <div style="display: none;" class="menu-boxs" index="product">
+                      <ul class="ul-move level-1">
+                        <li index="0" style="cursor: pointer;background-color: #00a2ca;" top="0">
+                          <a href="${host.server}/bigdata/product/product_index">大数据&nbsp;&gt;</a>
+                        </li>
+                        <li class="line" top="160"></li>
+                      </ul>
+                      <div class="cell-level2" style="display: inline-block;" tpl-key="product_database"
+                           tpl-type="tpl2">
+                        <ul class="tpl2">
+                          <li>
+                            <h1>
+                              数据应用
+                            </h1>
+                            <ul>
+                              <li>
+                                <a href="${host.server}/bigdata/product/re">推荐引擎</a>
+                              </li>
+                              <li>
+                                <a href="${host.server}/bigdata/product/prophet">公众趋势分析</a>
+                              </li>
+                              <li>
+                                <a href="${host.server}/bigdata/product/cdp/">数据集成（公测中）</a>
+                              </li>
+                              <li>
+                                <a href="/market/store/1334330-0.html"
+                                   target="_blank">数据市场相关API及应用</a>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <h1>
+                              数据分析展现
+                            </h1>
+                            <ul>
+                              <li>
+                                <a href="${host.server}/bigdata/visual/datav">DataV数据可视化</a>
+                              </li>
+                              <li>
+                                <a href="${host.server}/bigdata/product/bi">Quick BI</a>
+                              </li>
+                              <li>
+                                <a href="${host.server}/bigdata/product/porana">画像分析（公测中）</a>
+                              </li>
+                              <li>
+                                <a href="${host.server}/bigdata/visual/yuntu-jx">郡县图治</a>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <h1>
+                              大数据基础服务
+                            </h1>
+                            <ul>
+                              <li>
+                                <a href="${host.server}/bigdata/product/ide">大数据开发套件</a>
+                              </li>
+                              <li>
+                                <a href="${host.server}/bigdata/product/sc">流计算</a>
+                              </li>
+                            </ul>
+                          </li>
+
+                        </ul>
+                      </div>
+                    </div>
+                    <!-- 解决方案 -->
+                    <div style="display: none;" class="menu-boxs" index="solution">
+                      <div class="cell-level2 clear-left" tpl-key="solution" tpl-type="tpl5">
+                        <ul class="tpl5">
+                          <li>
+                            <h1>行业解决方案</h1>
+                            <ul>
+                              <li>
+                                <a href="">
+                                  <span>电商解决方案<img
+                                    src="${host.static}/img/TB1pS2YMVXXXXcCaXXXXXXXXXXX-56-24.png"></span>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="">
+                                  金融解决方案
+                                </a>
+                              </li>
+                              <li>
+                                <a href="">
+                                <span>医疗解决方案<img
+                                  src="${host.static}/img/TB1pS2YMVXXXXcCaXXXXXXXXXXX-56-24.png"></span>
+                                </a>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <h1>&nbsp;</h1>
+                            <ul>
+                              <li>
+                                <a href="">
+                                  政务解决方案
+                                </a>
+                              </li>
+                              <li>
+                                <a href="">
+                                  <span>物联网解决方案<img
+                                    src="${host.static}/img/TB1pS2YMVXXXXcCaXXXXXXXXXXX-56-24.png"></span>
+                                </a>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <h1>
+                              大数据解决方案
+                            </h1>
+                            <ul>
+                              <li>
+                                <a href="/solution/base">
+                                  大数据仓库
+                                </a>
+                              </li>
+                              <li>
+                                <a href="/solution/rp">
+                                  医疗大数据
+                                </a>
+                              </li>
+                              <li>
+                                <a href="/solution/cds">
+                                  企业级数据服务解决方案
+                                </a>
+                              </li>
+                              <!--<li>-->
+                              <!--<a href="/visual/tiqas">-->
+                              <!--台风路径分析-->
+                              <!--</a>-->
+                              <!--</li>-->
+                              <li>
+                                <a href="/solution/dm">
+                                  <span>数字营销解决方案<img
+                                    src="${host.static}/img/TB1pS2YMVXXXXcCaXXXXXXXXXXX-56-24.png"></span>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="/solution/industry">
+                                  <span>工业大数据服务解决方案<img
+                                    src="${host.static}/img/TB1pS2YMVXXXXcCaXXXXXXXXXXX-56-24.png"></span>
+                                </a>
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <!-- 更多 -->
+                    <div style="display: none;" class="menu-boxs" index="more">
+                      <ul class="ul-move level-1">
+                        <li index="0" top="0">
+                          重要通道
+                        </li>
+                        <li index="1" top="40">
+                          教育与创业孵化
+                        </li>
+                        <li index="2" top="80">
+                          合作与生态
+                        </li>
+                        <li class="line" top="120"></li>
+                      </ul>
+                      <div class="cell-level2" tpl-key="more_passageway" tpl-type="tpl3">
+                        <ul class="tpl3">
+                          <li>
+                            <h1>
+                              重要频道
+                            </h1>
+                            <ul>
+                              <li>
+                                <a href="https://wanwang.hookah.com/">万网</a>
+                              </li>
+                              <li>
+                                <a href="https://yundun.hookah.com">云盾</a>
+                              </li>
+                              <li>
+                                <a href="https://www.hookah.com/aliware">企业互联网架构 Aliware</a>
+                              </li>
+                              <li>
+                                <a href="https://www.hookah.com/price">定价</a>
+                              </li>
+                              <li>
+                                <a href="https://www.hookah.com/customer/">客户案例</a>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <h1>
+                              快速入口
+                            </h1>
+                            <ul>
+                              <li>
+                                <a href="https://beian.hookah.com/">备案</a>
+                              </li>
+                              <li>
+                                <a href="https://mail.hookah.com/" target="_blank">阿里邮箱</a>
+                              </li>
+                              <li>
+                                <a href="https://promotion.hookah.com/ntms/mobile.html" target="_blank">手机APP</a>
+                              </li>
+                              <li>
+                                <a href="https://www.hookah.com/product/new">新产品发布台</a>
+                              </li>
+                              <li>
+                                <a href="https://brand.hookah.com/" target="_blank">阿里云品牌形象全新升级</a>
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="cell-level2" style="display: none;" tpl-key="more_education"
+                           tpl-type="tpl3">
+                        <ul class="tpl3">
+
+                          <li>
+                            <h1>
+                              <a href="https://chuangke.hookah.com">创客+&nbsp;&gt;</a>
+                            </h1>
+                            <ul>
+                              <li>
+                                <a href="https://chuangke.hookah.com/markets/hookah/surpportive">创业扶持</a>
+                              </li>
+                              <li>
+                                <a href="https://chuangke.hookah.com/finance">融资申请</a>
+                              </li>
+                              <li>
+                                <a href="https://chuangke.hookah.com/incubator">孵化园/园区入驻</a>
+                              </li>
+                              <li>
+                                <a href="https://chuangke.hookah.com/college">创业大学</a>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <h1>
+                              云栖小镇
+                            </h1>
+                            <ul>
+                              <li>
+                                <a
+                                  href="https://chuangke.hookah.com/markets/hookah/taofuchengzhen">淘富成真</a>
+                              </li>
+                              <li>
+                                <a
+                                  href="https://chuangke.hookah.com/markets/hookah/taofumeeting">淘富成真见面会</a>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <h1>
+                              <a href="https://www.hookah.com/support/training">培训认证&nbsp;&gt;</a>
+                            </h1>
+                            <ul>
+                              <li>
+                                <a href="https://www.hookah.com/support/video">视频课程</a>
+                              </li>
+                              <li>
+                                <a href="https://www.hookah.com/support/courses">培训课程</a>
+                              </li>
+                              <li>
+                                <a href="https://www.hookah.com/support/certification">考试认证</a>
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="cell-level2" style="display: none;" tpl-key="more_ecology"
+                           tpl-type="tpl3">
+                        <ul class="tpl3">
+                          <li>
+                            <h1>
+                              云合作
+                            </h1>
+                            <ul>
+                              <li>
+                                <a href="https://partner.hookah.com">加入合作伙伴</a>
+                              </li>
+                              <li>
+                                <a href="https://partner.hookah.com/list/solution.html">解决方案合作</a>
+                              </li>
+                              <li>
+                                <a href="https://partner.hookah.com/list/cloud.html">云服务合作</a>
+                              </li>
+                              <li>
+                                <a href="https://partner.hookah.com/list/technical.html">技术平台合作</a>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <h1>
+                              &nbsp;
+                            </h1>
+                            <ul>
+                              <li>
+                                <a href="https://partner.hookah.com/shumeng">数梦工场合作</a>
+                              </li>
+                              <li>
+                                <a
+                                  href="https://promotion.hookah.com/ntms/act/hookah/cps.html">CPS推广合作</a>
+                              </li>
+                              <li>
+                                <a
+                                  href="https://open.alipay.com/platform/home.htm?from=hookahshengtai20160825">蚂蚁金服开放合作</a>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <h1>
+                              云扶持
+                            </h1>
+                            <ul>
+
+                              <li>
+                                <a href="https://promotion.hookah.com/ntms/csr.html">公益扶持</a>
+                              </li>
+                              <li>
+                                <a href="https://promotion.hookah.com/ntms/campus.html">学生扶持</a>
+                              </li>
+                              <li>
+                                <a href="http://dai.aliloan.com/hookah.html" target="_blank">企业小额贷款</a>
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="clear:both;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  var i, u;
+  $("#J_topbar_menu>li[index]").each(function () {
+    var n = $(this).attr('index');
+    var h = $(this).attr('dropdown');
+    var w = $(this).attr("width");
+    var l = $(this).attr("left");
+    var s = "width:" + w + "px;left:" + l + "px";
+    $(this).hover(
+      function () {
+//        $(".line").css({"width":w,"left":l});
+        $(".line").attr("style", s);
+        if (h === 'show') {
+          showDropdown(n);
+        } else {
+          hideDropdown();
+        }
+        u = true;
+      },
+      function () {
+        if (u === false) {
+          $(".line").css({"width": "0px"});
+        }
+      });
+  });
+  function showDropdown(n) {
+    $(".topbar-dropdown-box").addClass("show");
+    $(".topbar-dropdown-box>div").each(function () {
+      $(this).removeClass("dropdown-ing");
+    });
+    if (i === undefined) {
+      i = "div[index='" + n + "']";
+    } else {
+      $(i).css("display", "none");
+      i = "div[index='" + n + "']";
+    }
+    $(i).css("display", "block");
+    $(i).hover(
+      function (e) {
+        e.preventDefault();
+        u = true;
+        console.log(e);
+      },
+      function () {
+        u = false;
+        hideDropdown();
+        console.log("div out ");
+      }
+    );
+  }
+  function hideDropdown() {
+    $(".topbar-dropdown-box").removeClass("show");
+    $(".topbar-dropdown-box>div").each(function () {
+      $(this).addClass("dropdown-ing");
+    });
+  }
+
+</script>
