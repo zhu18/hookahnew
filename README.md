@@ -18,9 +18,11 @@
 ### 项目人员
   邵建双、赵博
 ### 代码说明
-  hookan-console 后台管理项目目录
-  hookan-website 前端网站项目目录
-  doc 文档目录
+ * hookah-console 后台管理，也是服务发布端
+ * hookah-website 前端网站，消费端，通过rpc调用console发布的服务
+ * hookah-core 基础共享，包括实体类和一些工具类等。
+ * hookah-rpc-api 接口，服务端实现此接口，消费端通过rpc调用。
+ * doc 文档目录，原型太大，不上传了。
 ### 开发准备
  * 发现服务使用Consul，类似zookeeper，多了个图形界面方便查看用之。<br>
  网址：https://www.consul.io/<br>
@@ -39,5 +41,6 @@
 * 技术栈选型
 * 项目结构搭建
 * 基础模块搭建
+* 服务治理基础框架搭建
 
   
