@@ -1,0 +1,62 @@
+<div class="viewFramework-product-navbar" ng-if="config.productNavBar != 'disabled' && !config.disableNavigation">
+  <div class="product-nav-stage"
+       ng-class="{'product-nav-stage-main':navScene=='main','product-nav-stage-sub':navScene=='sub'}">
+    <div class="product-nav-scene product-nav-main-scene">
+      <div class="product-nav-title " id="nav-title" ng-bind="config.title">消息中心</div>
+      <!-- 自定义内容插入点，比如商标、logo -->
+      <div customized-content="" class=""></div>
+      <div class="product-nav-list">
+        <ul role="tree" aria-labelledby="nav-title">
+          <li ng-repeat="item in config.mainNav" class="nav-showchild"
+              ng-class="{'active':checkActive(item,'main') && !item.showChild,'nav-showchild':item.showChild}">
+            <div product-nav-link="" item="item" class="">
+              <a href="" role="treeitem"
+                 aria-haspopup="true"
+                 aria-label="press enter to expand"
+                 ng-click="item.showChild=!item.showChild"
+                 class="">
+                <div class="nav-icon"><span
+                  ng-class="{'icon-arrow-down':item.showChild,'icon-arrow-right':!item.showChild}"
+                  class="icon-arrow-down"></span></div>
+                <div class="nav-title " ng-bind="item.title"></div>
+                <div class="nav-extend">
+                  <span unread-count="" active-condition="active" class="">
+                    <span item="item" ng-if="vm.unreadCount>0" class="total-unread-count">70</span>
+                  </span>
+                </div>
+              </a>
+            </div>
+            <ul ng-if="item.childs" ng-show="item.showChild" role="group" class="">
+              <!-- ngRepeat: childItem in item.childs -->
+              <li ng-repeat="childItem in item.childs" class="" ui-sref-active="active">
+                <div class="">
+                  <a ui-sref="{{childItem.url}}">
+                    <div class="nav-icon"></div>
+                    <div class="nav-title " ng-bind="childItem.title"></div>
+                  </a>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <li ng-repeat="item in config.mainNav" class=""
+              ng-class="{'active':checkActive(item,'main') && !item.showChild,'nav-showchild':item.showChild}">
+            <div product-nav-link="" item="item" class=""><a href="#/subscribeMsg" role="treeitem"
+                                                             ui-sref="subscribeMsg()" class=""
+                                                             data-spm-anchor-id="5176.2020520130.103.4">
+              <div class="nav-icon"></div>
+              <div class="nav-title " ng-bind="item.title">消息接收管理</div>
+            </a></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="viewFramework-product-navbar-collapse" ng-click="collapseProductNavbar()" ng-if="config.productNavBar != 'disabled' && !config.disableNavigation">
+  <div class="product-navbar-collapse-inner">
+    <div class="product-navbar-collapse-bg"></div>
+    <div class="product-navbar-collapse">
+      <span class="icon-collapse-left"></span> <span class="icon-collapse-right"></span>
+    </div>
+  </div>
+</div>

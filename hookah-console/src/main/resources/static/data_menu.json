@@ -1,0 +1,55 @@
+[
+  {
+    "title": "最新活动",
+    "index": "activity",
+    "url": "/activity"
+  },
+  {
+    "title": "产品",
+    "index": "product"
+  },
+  {
+    "title": "解决方案",
+    "index": "solution",
+    "url": "/activity"
+  },
+
+  {
+    "title": "支持",
+    "index": "support",
+    "url": "/activity",
+    "child": [
+      {
+        "title": "支持计划",
+        "child": [
+          {
+            "title": "售后支持计划",
+            "url": "/support/techsupport"
+          },
+          {
+            "title": "尊享服务",
+            "url": "/support/service/list"
+          }
+        ]
+      },
+      {
+        "title": "帮助与文档&nbsp;&gt;",
+        "url": "/help",
+        "child": [
+          {
+            "title": "文档与常见问题",
+            "url": "/help/qa"
+          },
+          {
+            "title": "新手学堂",
+            "url": "/help/fresher"
+          },
+          {
+            "title": "支持工具",
+            "url": "/support"
+          }
+        ]
+      }
+    ]
+  }
+]

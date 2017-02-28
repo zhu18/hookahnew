@@ -9,8 +9,10 @@
   <packaging>pom</packaging>
   <version>0.0.1</version>
   <modules>
-    <module>hookan-console</module>
-    <module>hookan-website</module>
+    <module>hookah-console</module>
+    <module>hookah-website</module>
+    <module>hookah-core</module>
+    <module>hookah-rpc-api</module>
   </modules>
 
   <properties>

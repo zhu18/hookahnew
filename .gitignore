@@ -129,3 +129,5 @@ local.properties
 */target
 
 /.idea/
+/hookah-console/src/main/resources/application-dev.yml
+/hookah-website/src/main/resources/application-dev.yml
