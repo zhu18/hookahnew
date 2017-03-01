@@ -41,6 +41,11 @@
   在nginx.conf文件http配置部分最后加入```include servers/*;```
   前台访问地址:www.hookah.app <br>
   后台访问地址:console.hookah.app/home  待改 <br>
+  添加以下代码到本机的hosts文件中
+  ```$xslt
+  127.0.0.1 www.hookah.app hookah.app
+  127.0.0.1 console.hookah.app
+```
 ### 时间线
 
 #### 2017-3-1
