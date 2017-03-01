@@ -122,6 +122,13 @@ public interface GenericService<Model extends GenericModel, ID extends Serializa
     Model selectOne(List<Condition> filters);
 
     /**
+     * 查询全部记录
+     *
+     * @return 对象集合
+     */
+    List<Model> selectList();
+
+    /**
      * 查询多个对象
      *
      * @return 对象集合

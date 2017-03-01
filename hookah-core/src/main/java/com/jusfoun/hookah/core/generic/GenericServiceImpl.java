@@ -67,6 +67,13 @@ public class GenericServiceImpl<Model extends GenericModel, ID extends Serializa
     }
 
     @Override
+    public List<Model> selectList() {
+        // TODO Auto-generated method stub
+        List<Model> list = dao.selectByExample(convertFilter2Example(null, null));
+        return list;
+    }
+
+    @Override
     public List<Model> selectList(List<Condition> filters, List<OrderBy> orderBys) {
         // TODO Auto-generated method stub
         List<Model> list = dao.selectByExample(convertFilter2Example(filters, orderBys));

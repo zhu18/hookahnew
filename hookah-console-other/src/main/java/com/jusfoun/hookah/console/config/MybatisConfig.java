@@ -18,7 +18,7 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@MapperScan(basePackages = "com.jusfoun.hookah.console.dao")
+@MapperScan(basePackages = "com.jusfoun.hookah.core.dao")
 public class MybatisConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(MybatisConfig.class);
@@ -63,8 +63,8 @@ public class MybatisConfig {
 //            sessionFactory.setConfiguration(configuration);
 
             //添加XML目录
-	        ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-	        sessionFactory.setMapperLocations(resolver.getResources("classpath*:persistence/*.xml"));
+            ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+            sessionFactory.setMapperLocations(resolver.getResources("classpath:com/jusfoun/hookah/core/dao/*.xml"));
         } catch (Exception e) {
             e.printStackTrace();
         }

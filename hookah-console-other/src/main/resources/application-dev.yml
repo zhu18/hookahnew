@@ -5,7 +5,7 @@ spring:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
     username: root
-    password: admin
+    password: password
     initialize: true
     type: com.alibaba.druid.pool.DruidDataSource
     # 连接池配置
