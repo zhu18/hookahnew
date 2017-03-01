@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.webiste.controller;
 
+import com.jusfoun.hookah.rpc.api.other.TestService;
 import com.jusfoun.hookah.rpc.api.other.UserService;
 import com.jusfoun.hookah.core.domain.Test;
 import com.jusfoun.hookah.rpc.api.other.UserService;
@@ -26,6 +27,9 @@ public class IndexController {
     @Resource
     UserService userService;
 
+    @Resource
+    TestService testService;
+
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home(Model model) {
@@ -41,5 +45,22 @@ public class IndexController {
         String s = userService.sayhello();
         System.out.println(s);
         return "index";
+    }
+
+    @RequestMapping(value = "/select", method = RequestMethod.GET)
+    @ResponseBody
+    public Object select(Model model) {
+        Test test = (Test) testService.selectById("ee");
+
+        return test;
+    }
+
+    @RequestMapping(value = "/insert", method = RequestMethod.GET)
+    @ResponseBody
+    public Object insert(Model model) {
+        Test t2 = new Test();
+        t2.setName("wwwwww");
+        testService.insert(t2);
+        return "success";
     }
 }
