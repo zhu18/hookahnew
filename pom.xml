@@ -9,10 +9,16 @@
   <packaging>pom</packaging>
   <version>0.0.1</version>
   <modules>
-    <module>hookah-console</module>
     <module>hookah-website</module>
     <module>hookah-core</module>
-    <module>hookah-rpc-api</module>
+    <module>hookah-console-other</module>
+    <module>hookah-console-goods</module>
+    <module>hookah-console-order</module>
+    <module>hookah-console-shelf</module>
+    <module>hookah-rpc-other-api</module>
+    <module>hookah-rpc-goods-api</module>
+    <module>hookah-rpc-order-api</module>
+    <module>hookah-rpc-shelf-api</module>
   </modules>
 
   <properties>
