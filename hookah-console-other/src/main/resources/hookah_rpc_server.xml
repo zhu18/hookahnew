@@ -8,6 +8,7 @@
 
   <!-- 业务具体实现类 -->
   <bean id="userService" class="com.jusfoun.hookah.console.service.impl.UserServiceImpl"/>
+  <bean id="testService" class="com.jusfoun.hookah.console.service.impl.TestServiceImpl"/>
 
   <!-- 注册中心配置 使用不同注册中心需要依赖对应的jar包。如果不使用注册中心，可以把check属性改为false，忽略注册失败。-->
   <!--<motan:registry regProtocol="local" name="registry" />-->
@@ -27,6 +28,9 @@
   <!-- 具体rpc服务配置，声明实现的接口类。-->
   <motan:service interface="com.jusfoun.hookah.rpc.api.UserService"
                  ref="userService" export="hookah:5001" basicService="serviceBasicConfig">
+  </motan:service>
+  <motan:service interface="com.jusfoun.hookah.rpc.api.TestService"
+                 ref="testService" export="hookah:5001" basicService="serviceBasicConfig">
   </motan:service>
 
 
