@@ -134,3 +134,4 @@ local.properties
 /hookah-console-angular/npm-debug.log
 /hookah-console-angular/dist/
 /hookah-console-other/src/main/resources/application-dev.yml
+/hookah-console-angular/node_modules/
