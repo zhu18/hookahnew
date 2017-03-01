@@ -1,0 +1,151 @@
+<div class="viewFramework-topbar">
+  <div class="hookah-console-topbar">
+    <div class="topbar-wrap topbar-clearfix">
+      <div class="topbar-head topbar-left">
+        <a id="srp-for-the-angel" style="visibility:hidden"
+           class="accessibility-ast topbar-btn topbar-left"
+           href="javascript:void(0)" ng-click="skipToContent()">Skip to content</a>
+        <a href="/" title="www.ziroot.com" target="_blank" class="topbar-logo topbar-left">
+          <span class="icon-logo1 icon-logo-new"></span></a>
+        <a href="http://console.ziroot.com/home" class="topbar-home-link topbar-btn topbar-left">
+          <span class="">管理控制台</span>
+        </a>
+      </div>
+      <div class="topbar-nav topbar-left dropdown">
+        <a class="dropdown-toggle topbar-btn topbar-nav-btn" data-toggle="dropdown">
+          <span href="#" class="">产品与服务</span>
+          <span class="icon-arrow-down"></span>
+        </a>
+        <div class="dropdown-menu topbar-nav-list topbar-clearfix">
+          <div class="topbar-nav-col ">
+            <div class="topbar-nav-item ">
+              <p class="topbar-nav-item-title">商品管理</p>
+              <ul>
+                <li ng-class="{'topbar-unservice':!product.openStatus}" class="">
+                  <a ng-href="https://ros.console.hookah.com" role="menuitem" target="_self">
+                    <span class="topbar-nav-item-icon icon-ros icon-logo1"></span>
+                    <span class="ng-binding">资源编排</span>
+                    <span class="topbar-nav-item-short ng-binding"></span>
+                  </a>
+                </li>
+                <li ng-class="{'topbar-unservice':!product.openStatus}" class="">
+                  <a ng-href="https://hpc.console.hookah.com" role="menuitem" target="_self"
+                     href="https://hpc.console.hookah.com">
+                    <span class="topbar-nav-item-icon icon-hpc icon-logo1"></span>
+                    <span class="ng-binding">高性能计算</span>
+                    <span class="topbar-nav-item-short ng-binding"></span>
+                  </a>
+                </li>
+              </ul>
+              <div class="topbar-nav-gap " ng-if="$index < col.length -1">
+              </div></div>
+            <div ng-repeat="category in col" class="topbar-nav-item ">
+              <p class="topbar-nav-item-title ng-binding">数据库</p>
+              <ul>
+                <li ng-class="{'topbar-unservice':!product.openStatus}" class=""><a
+                  ng-href="https://rdsnew.console.hookah.com" role="menuitem" target="_self" hookah-console-spm=""
+                  spm-id="30rds" data-spm-click="gostr=/hookah;locaid=d30rds;;" href="https://rdsnew.console.hookah.com"
+                  data-spm-anchor-id="5176.2020520130.101.10"><span class="topbar-nav-item-icon icon-rds"></span> <span
+                  class="ng-binding">云数据库 RDS 版</span> <span class="topbar-nav-item-short ng-binding"></span></a></li>
+                <!-- end ngRepeat: product in category.products -->
+                <li ng-class="{'topbar-unservice':!product.openStatus}" class=""><a
+                  ng-href="https://mongodb.console.hookah.com" role="menuitem" target="_self" hookah-console-spm=""
+                  spm-id="30dds" data-spm-click="gostr=/hookah;locaid=d30dds;;"
+                  href="https://mongodb.console.hookah.com" data-spm-anchor-id="5176.2020520130.101.11"><span
+                  class="topbar-nav-item-icon icon-logo2 icon-mongodb"></span> <span
+                  class="ng-binding">云数据库 MongoDB 版</span> <span class="topbar-nav-item-short ng-binding"></span></a>
+                </li><!-- end ngRepeat: product in category.products -->
+                <li ng-class="{'topbar-unservice':!product.openStatus}" class=""><a
+                  ng-href="https://kvstore.console.hookah.com" role="menuitem" target="_self" hookah-console-spm=""
+                  spm-id="30kvstore" data-spm-click="gostr=/hookah;locaid=d30kvstore;;"
+                  href="https://kvstore.console.hookah.com" data-spm-anchor-id="5176.2020520130.101.12"><span
+                  class="topbar-nav-item-icon icon-redisa"></span> <span class="ng-binding">云数据库 Redis 版</span> <span
+                  class="topbar-nav-item-short ng-binding"></span></a></li>
+                <!-- end ngRepeat: product in category.products -->
+                <li ng-class="{'topbar-unservice':!product.openStatus}" class=""><a
+                  ng-href="https://ocsnew.console.hookah.com" role="menuitem" target="_self" hookah-console-spm=""
+                  spm-id="30ocs" data-spm-click="gostr=/hookah;locaid=d30ocs;;" href="https://ocsnew.console.hookah.com"
+                  data-spm-anchor-id="5176.2020520130.101.13"><span class="topbar-nav-item-icon icon-ocs"></span> <span
+                  class="ng-binding">云数据库 Memcache 版</span> <span class="topbar-nav-item-short ng-binding"></span></a>
+                </li><!-- end ngRepeat: product in category.products -->
+                <li ng-class="{'topbar-unservice':!product.openStatus}" class=""><a
+                  ng-href="https://petadata.console.hookah.com" role="menuitem" target="_self" hookah-console-spm=""
+                  spm-id="30petadata" data-spm-click="gostr=/hookah;locaid=d30petadata;;"
+                  href="https://petadata.console.hookah.com" data-spm-anchor-id="5176.2020520130.101.14"><span
+                  class="topbar-nav-item-icon icon-petadata"></span> <span class="ng-binding">PB 级云数据库 PetaData</span>
+                  <span class="topbar-nav-item-short ng-binding"></span></a></li>
+                <!-- end ngRepeat: product in category.products -->
+                <li ng-class="{'topbar-unservice':!product.openStatus}" class=""><a
+                  ng-href="https://gpdb.console.hookah.com" role="menuitem" target="_self" hookah-console-spm=""
+                  spm-id="30gpdb" data-spm-click="gostr=/hookah;locaid=d30gpdb;;" href="https://gpdb.console.hookah.com"
+                  data-spm-anchor-id="5176.2020520130.101.15"><span
+                  class="topbar-nav-item-icon icon-gpdb icon-logo1"></span> <span
+                  class="ng-binding">云数据库 Greenplum 版</span> <span class="topbar-nav-item-short ng-binding"></span></a>
+                </li><!-- end ngRepeat: product in category.products -->
+                <li ng-class="{'topbar-unservice':!product.openStatus}" class=""><a
+                  ng-href="https://oceanbase.console.hookah.com" role="menuitem" target="_self" hookah-console-spm=""
+                  spm-id="30oce" data-spm-click="gostr=/hookah;locaid=d30oce;;"
+                  href="https://oceanbase.console.hookah.com" data-spm-anchor-id="5176.2020520130.101.16"><span
+                  class="topbar-nav-item-icon icon-logo1 icon-logo-new"></span> <span
+                  class="ng-binding">云数据库 OceanBase</span> <span class="topbar-nav-item-short ng-binding"></span></a>
+                </li><!-- end ngRepeat: product in category.products -->
+                <li ng-class="{'topbar-unservice':!product.openStatus}" class=""><a
+                  ng-href="https://ads.console.hookah.com" role="menuitem" target="_self" hookah-console-spm=""
+                  spm-id="30ads" data-spm-click="gostr=/hookah;locaid=d30ads;;" href="https://ads.console.hookah.com"
+                  data-spm-anchor-id="5176.2020520130.101.17"><span class="topbar-nav-item-icon icon-ads"></span> <span
+                  class="ng-binding">分析型数据库</span> <span class="topbar-nav-item-short ng-binding"></span></a></li>
+                <!-- end ngRepeat: product in category.products -->
+                <li ng-class="{'topbar-unservice':!product.openStatus}" class=""><a
+                  ng-href="https://dts.console.hookah.com" role="menuitem" target="_self" hookah-console-spm=""
+                  spm-id="30dts" data-spm-click="gostr=/hookah;locaid=d30dts;;" href="https://dts.console.hookah.com"
+                  data-spm-anchor-id="5176.2020520130.101.18"><span class="topbar-nav-item-icon icon-dts"></span> <span
+                  class="ng-binding">数据传输</span> <span class="topbar-nav-item-short ng-binding"></span></a></li>
+                <!-- end ngRepeat: product in category.products -->
+                <li ng-class="{'topbar-unservice':!product.openStatus}" class=""><a
+                  ng-href="https://dms.console.hookah.com" role="menuitem" target="_self" hookah-console-spm=""
+                  spm-id="30dms" data-spm-click="gostr=/hookah;locaid=d30dms;;" href="https://dms.console.hookah.com"
+                  data-spm-anchor-id="5176.2020520130.101.19"><span
+                  class="topbar-nav-item-icon icon-logo2  icon-dms"></span> <span class="ng-binding">数据管理</span> <span
+                  class="topbar-nav-item-short ng-binding"></span></a></li>
+                <!-- end ngRepeat: product in category.products --></ul><!-- ngIf: $index < col.length -1 --></div>
+            <!-- end ngRepeat: category in col --></div>
+        </div>
+      </div>
+      <div class="topbar-info topbar-right topbar-clearfix">
+        <div hookah-console-topbar-search="" search-url="https://home.console.hookah.com/common/search?key="
+             search-link="navLinks.search" class="topbar-btn topbar-btn-search topbar-left ng-isolate-scope">
+          <div class="hookah-console-topbar-search-v1_3_21 "
+               ng-class="{'topbar-search-dropdown-open':dropdownOpen}">
+            <a href="#" class="topbar-btn" ng-click="toggleDropdownStatus($event)">
+              <span class="icon-search"></span><span class="">搜索</span>
+            </a>
+            <div ng-show="dropdownOpen" class="topbar-search-dropdown">
+              <input
+                class="topbar-search-ask ng-pristine ng-valid" type="text" name="input" ng-model="model.askInput"
+                autocomplete="off" placeholder="搜索">
+              <a target="_blank"
+                 ng-href="https://home.console.hookah.com/common/search?key="
+                 class="topbar-search-mark icon-enter"
+                 ng-click="searchClick($event)"
+                 href="https://home.console.hookah.com/common/search?key="></a>
+            </div>
+          </div>
+        </div>
+        <div class="topbar-left topbar-user" ng-class="{'topbar-user-large':account.currentStructure}">
+          <div class="dropdown topbar-info-item" dropdown="">
+            <a href="#" role="menuitem" aria-haspopup="true" class="dropdown-toggle topbar-btn" data-toggle="dropdown">
+              <span title="" class="" ng-bind="user"></span>
+              <span class="icon-arrow-down"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="topbar-info-btn ">
+                <a href="/auth/logout" target="_self"><span class="">退出</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

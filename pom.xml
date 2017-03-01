@@ -15,10 +15,10 @@
     <module>hookah-console-goods</module>
     <module>hookah-console-order</module>
     <module>hookah-console-shelf</module>
-    <module>hookah-rpc-other-api</module>
-    <module>hookah-rpc-goods-api</module>
-    <module>hookah-rpc-order-api</module>
-    <module>hookah-rpc-shelf-api</module>
+    <module>hookah-rpc-api-other</module>
+    <module>hookah-rpc-api-goods</module>
+    <module>hookah-rpc-api-order</module>
+    <module>hookah-rpc-api-shelf</module>
   </modules>
 
   <properties>

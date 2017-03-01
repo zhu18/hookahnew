@@ -18,7 +18,7 @@
     </dependency>
     <dependency>
       <groupId>com.jusfoun</groupId>
-      <artifactId>hookah-rpc-other-api</artifactId>
+      <artifactId>hookah-rpc-api-other</artifactId>
       <version>0.0.1</version>
     </dependency>
     <!-- weibo motan-->

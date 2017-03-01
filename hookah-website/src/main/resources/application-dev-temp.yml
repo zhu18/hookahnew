@@ -1,5 +1,5 @@
 server:
-  port: 8000
+  port: 9000
   http:
     protocal: http://
 myconf:
@@ -11,8 +11,8 @@ myconf:
     cache: false
 
   host:
-    server: ${server.http.protocal}localhost:8000
-    static: ${server.http.protocal}localhost:8000
-    auth: ${server.http.protocal}localhost:8000
-    console: ${server.http.protocal}localhost:8000
+    server: ${server.http.protocal}localhost:9000
+    static: ${server.http.protocal}localhost:9000
+    auth: ${server.http.protocal}localhost:9000
+    console: ${server.http.protocal}localhost:9000
 debug: true

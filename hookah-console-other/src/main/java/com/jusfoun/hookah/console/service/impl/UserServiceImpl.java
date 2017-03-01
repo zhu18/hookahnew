@@ -2,7 +2,7 @@ package com.jusfoun.hookah.console.service.impl;
 
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
-import com.jusfoun.hookah.rpc.api.UserService;
+import com.jusfoun.hookah.rpc.api.other.UserService;
 import org.springframework.stereotype.Service;
 
 /**

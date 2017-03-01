@@ -25,7 +25,7 @@
                       application="hookah" registry="registry" id="serviceBasicConfig"/>
 
   <!-- 具体rpc服务配置，声明实现的接口类。-->
-  <motan:service interface="com.jusfoun.hookah.rpc.api.UserService"
+  <motan:service interface="com.jusfoun.hookah.rpc.api.other.UserService"
                  ref="userService" export="hookah:5001" basicService="serviceBasicConfig">
   </motan:service>
 

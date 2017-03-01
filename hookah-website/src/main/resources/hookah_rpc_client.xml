@@ -22,7 +22,7 @@
 
   <!-- 具体referer配置。使用方通过beanid使用服务接口类 -->
   <motan:referer id="userService"
-                 interface="com.jusfoun.hookah.rpc.api.UserService"
+                 interface="com.jusfoun.hookah.rpc.api.other.UserService"
                  connectTimeout="300" requestTimeout="300" basicReferer="HookahRPCClientBasicConfig"/>
 
 </beans>

@@ -36,8 +36,19 @@
   未完<br>
  * 配置项目开发环境
    复制console与website项目中的application-dev-temp.yml改名为application-dev.yml
+ * 配置nginx
+  把doc/nginx目录下的servers拷贝到自己的nginx目录中
+  在nginx.conf文件http配置部分最后加入```include servers/*;```
+  前台访问地址:www.hookah.app <br>
+  后台访问地址:console.hookah.app/home  待改 <br>
 ### 时间线
-#### 2017-2-27
+
+#### 2017-3-1
+ * 项目结构调整拆分为商品、订单、货架、其他4大部分
+ * 后台管理界面单独拆分为hookah-console-angular
+ * 配置nginx环境与开发说明
+ *
+#### 2017-2-28
 * 技术栈选型
 * 项目结构搭建
 * 基础模块搭建
