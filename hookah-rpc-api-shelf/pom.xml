@@ -8,8 +8,28 @@
     <version>0.0.1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-
   <artifactId>hookah-rpc-api-shelf</artifactId>
+  <packaging>jar</packaging>
+  <dependencies>
+    <dependency>
+      <groupId>com.jusfoun</groupId>
+      <artifactId>hookah-core</artifactId>
+      <version>0.0.1</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 
 
 </project>
