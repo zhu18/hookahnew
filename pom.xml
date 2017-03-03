@@ -19,6 +19,7 @@
     <module>hookah-rpc-api-goods</module>
     <module>hookah-rpc-api-order</module>
     <module>hookah-rpc-api-shelf</module>
+    <module>hookah-oauth2server</module>
   </modules>
 
   <properties>
@@ -192,6 +193,11 @@
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-jdbc</artifactId>
+        <version>${spring-boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-mongodb</artifactId>
         <version>${spring-boot.version}</version>
       </dependency>
       <!--<dependency>-->

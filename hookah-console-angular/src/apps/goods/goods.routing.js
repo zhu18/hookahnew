@@ -13,7 +13,7 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
     })
     .state('items.add', {
       url: '/items/add',
-      template: require('./list.html'),
+      template: require('./add.html'),
       controller: 'WorkorderListCtrl',
     })
     .state('items.category', {
