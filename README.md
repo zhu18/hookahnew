@@ -46,6 +46,11 @@
   127.0.0.1 www.hookah.app hookah.app
   127.0.0.1 console.hookah.app
 ```
+*mongoDB，作为MySQL 数据库扩展，版本选用3.X，最新稳定版为3.4.2
+ 下载地址:https://www.mongodb.com/download-center
+ 配置：（1）下载后解压，主要是bin目录和几个协议文件等。
+       （2）和bin同级添加data目录。
+       (3) 启动：命令行到 bin目录下，执行 mongod --dbpath <data目录>
 ### 时间线
 
 #### 2017-3-1
