@@ -51,6 +51,14 @@
  配置：（1）下载后解压，主要是bin目录和几个协议文件等。
        （2）和bin同级添加data目录。
        (3) 启动：命令行到 bin目录下，执行 mongod --dbpath <data目录>
+
+* RabbitMQ 作为消息中间件，主要应用于高并发下订单处理（如秒杀）
+  --需要 具备Erlang  OTP,按系统下载安装。
+  --下载并安装 RabbitMQ,  http://www.rabbitmq.com/download.html,当前最新版本为 3.6.6
+  --RabbitMQ会自动注册为服务且自动启动。
+  --设置图形化管理界面。进入安装目录下sbin目录，使用命令："rabbitmq-plugins.bat" enable rabbitmq_management
+  --重启服务后生效。net stop RabbitMQ && net start RabbitMQ
+  --图形化访问地址为：http://localhost:15672/，默认用户名和密码都是guest。可以通过命令添加用户并设置权限。具体操作自行百度。
 ### 时间线
 
 #### 2017-3-1
@@ -63,5 +71,3 @@
 * 项目结构搭建
 * 基础模块搭建
 * 服务治理基础框架搭建
-
-  
