@@ -79,8 +79,20 @@
     <!-- spring -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-dependencies</artifactId>
+      <version>1.4.2.RELEASE</version>
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
+    <!--<dependency>-->
+      <!--<groupId>org.springframework.boot</groupId>-->
+      <!--<artifactId>spring-boot-devtools</artifactId>-->
+      <!--<version>1.4.2.RELEASE</version>-->
+    <!--</dependency>-->
     <!-- JSON -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
@@ -211,13 +223,28 @@
   </profiles>
   <build>
     <plugins>
+      <!--<plugin>-->
+        <!--<artifactId>maven-compiler-plugin</artifactId>-->
+        <!--<version>3.1</version>-->
+        <!--<configuration>-->
+          <!--<source>${java.version}</source>-->
+          <!--<target>${java.version}</target>-->
+        <!--</configuration>-->
+      <!--</plugin>-->
       <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>1.4.2.RELEASE</version>
         <configuration>
-          <source>${java.version}</source>
-          <target>${java.version}</target>
+          <executable>true</executable>
         </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

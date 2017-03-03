@@ -7,7 +7,7 @@ body {
   min-height: 0 !important;
 }
 .module-wrap .topbar-body {
-  height: 60px;
+  height: 40px;
   border-bottom: 1px solid #D8D8D8;
   border-bottom: 1px solid rgba(55, 61, 65, 0.15);
   -webkit-transition: background-color 0.2s 0.4s;
@@ -148,12 +148,12 @@ body {
   display: none;
 }
 .module-wrap .topbar-body .tool-body .login-cell {
-  width: 130px;
-  height: 61px;
+  width: 80px;
+  height: 41px;
   background-color: #00C1DE;
   text-align: center;
   color: #fff;
-  line-height: 60px;
+  line-height: 40px;
   font-size: 14px;
   -webkit-transition: background-color 0.3s;
   -moz-transition: background-color 0.3s;
@@ -168,9 +168,9 @@ body {
   margin-right: 26px;
   float: right;
   text-align: left;
-  height: 60px;
+  height: 40px;
   box-sizing: border-box;
-  line-height: 60px;
+  line-height: 40px;
 }
 .module-wrap .topbar-body .tool-body .y-right li a {
   color: #373D41;
@@ -208,7 +208,7 @@ body {
   display: block;
   float: right;
   width: 60px;
-  height: 60px;
+  height: 40px;
 }
 .module-wrap .topbar-body.login-box .user-info-cell:hover {
   background-color: #00C1DE;
@@ -247,7 +247,7 @@ body {
 .module-wrap .topbar-body.login-box .user-info-cell > div .user-info-dropdown {
   display: none;
   position: absolute;
-  top: 61px;
+  top: 41px;
   right: 0;
   width: 240px;
 }
@@ -261,14 +261,14 @@ body {
   position: absolute;
   left: 15px;
   top: 15px;
-  -webkit-border-radius: 60px;
+  -webkit-border-radius: 40px;
   -webkit-background-clip: padding-box;
-  -moz-border-radius: 60px;
+  -moz-border-radius: 40px;
   -moz-background-clip: padding;
-  border-radius: 60px;
+  border-radius: 40px;
   background-clip: padding-box;
   width: 60px;
-  height: 60px;
+  height: 40px;
 }
 .module-wrap .topbar-body.login-box .user-info-cell > div .user-info-dropdown .info-cell ul {
   padding-top: 14px;

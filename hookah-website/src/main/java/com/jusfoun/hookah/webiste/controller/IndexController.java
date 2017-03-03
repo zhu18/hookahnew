@@ -4,7 +4,6 @@ import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.rpc.api.other.*;
 import com.jusfoun.hookah.core.domain.Test;
-import com.jusfoun.hookah.rpc.api.other.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
