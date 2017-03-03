@@ -4,6 +4,7 @@ import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.rpc.api.other.*;
 import com.jusfoun.hookah.core.domain.Test;
+import com.jusfoun.hookah.rpc.api.other.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -38,6 +39,9 @@ public class IndexController {
 
     @Resource
     UserMongoService userMongoService;
+
+    @Resource
+    MqSenderService mqSenderService;
 
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -119,5 +123,12 @@ public class IndexController {
         t2.setId(UUID.randomUUID().toString());
         userMongoService.insert(t2);
         return "success";
+    }
+
+    @RequestMapping(value = "/send", method = RequestMethod.GET)
+    @ResponseBody
+    public Object sendMsg(String msg,Model model) {
+        mqSenderService.send(msg);
+        return "sucess";
     }
 }

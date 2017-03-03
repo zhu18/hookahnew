@@ -33,6 +33,12 @@ spring:
   data:
     mongodb:
       uri:  mongodb://localhost:27017/hookah
+  rabbitmq:
+    addresses: 127.0.0.1:5672
+    username: guest
+    password: guest
+    publisher-confirms: true
+    virtual-host: /
 #  jpa:
 #    database: MYSQL
 #    show-sql: true

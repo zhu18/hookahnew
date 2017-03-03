@@ -33,5 +33,8 @@
   <motan:referer id="userMongoService"
                  interface="com.jusfoun.hookah.rpc.api.other.UserMongoService"
                  connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+  <motan:referer id="mqSenderService"
+                 interface="com.jusfoun.hookah.rpc.api.other.MqSenderService"
+                 connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
 
 </beans>
