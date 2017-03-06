@@ -1,0 +1,14 @@
+<%
+var head = {
+%>
+
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<%include("/layout/index_sale.html"){} %>
+
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
