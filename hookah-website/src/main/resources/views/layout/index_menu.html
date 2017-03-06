@@ -1,114 +1,115 @@
 <div class="index-menu">
-  <div class="hookah-common-transparent-head J_Module">
-    <div class="module-wrap J_tb_lazyload dbl_tms_module_wrap">
-      <div class="J-home-slider-black">
-        <div id="J-home-topbar-menu">
-          <div class="module-wrap J_tb_lazyload dbl_tms_module_wrap www-hookah-common-menu ">
-            <div class="topbar-body black-cell">
-              <div class="topbar-box ">
-                <div class="y-row y-clear">
-                  <!--<a class="logo-cell y-left" href="${host.server}">-->
-                  <!--<img class="black" style="z-index: 2;"-->
-                  <!--src="/static/img/logo2.png">-->
-                  <!--</a>-->
-                  <div class="tool-body y-left">
-                    <div class="y-clear">
-                      <ul class="y-right tips-box">
-                        <li class="tips-item">
-                          <a href="/help" class="login">关于我们</a>
-                        </li>
-                        <li class="tips-item">
-                          <a href="/help" class="login">首页</a>
-                        </li>
-                      </ul>
+    <div class="hookah-common-transparent-head J_Module">
+        <div class="module-wrap J_tb_lazyload dbl_tms_module_wrap">
+            <div class="J-home-slider-black">
+                <div id="J-home-topbar-menu">
+                    <div class="module-wrap J_tb_lazyload dbl_tms_module_wrap www-hookah-common-menu ">
+                        <div class="topbar-body black-cell">
+                            <div class="topbar-box ">
+                                <div class="y-row y-clear">
+                                    <!--<a class="logo-cell y-left" href="${host.server}">-->
+                                    <!--<img class="black" style="z-index: 2;"-->
+                                    <!--src="/static/img/logo2.png">-->
+                                    <!--</a>-->
+                                    <div class="tool-body y-left">
+                                        <div class="y-clear">
+                                            <ul class="y-right tips-box">
+                                                <li class="tips-item">
+                                                    <a href="/help" class="login">关于我们</a>
+                                                </li>
+                                                <li class="tips-item">
+                                                    <a href="/help" class="login">首页</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="tool-body y-right">
+                                        <div class="y-clear">
+                                            <ul class="y-right tips-box">
+                                                <li class="tips-item">
+                                                    <a href="/help" class="login">帮助文档</a>
+                                                </li>
+                                                <li class="tips-item">
+                                                    <a href="/help" class="login">收藏本站</a>
+                                                </li>
+                                                <li class="tips-item">
+                                                    <a href="/help" class="login">联系我们</a>
+                                                </li>
+                                                <li class="tips-item">
+                                                    <a class="login-cell y-right" href="/oauth/register">注册有礼</a>
+                                                </li>
+                                                <li class="tips-item">
+                                                    <a href="${host.auth}/login?oauth_callback=${oauth_callback!'/'}"
+                                                       class="login">登录</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="clear:both;"></div>
                     </div>
-                  </div>
-                  <div class="tool-body y-right">
-                    <div class="y-clear">
-                      <ul class="y-right tips-box">
-                        <li class="tips-item">
-                          <a href="/help" class="login">帮助文档</a>
-                        </li>
-                        <li class="tips-item">
-                          <a href="/help" class="login">收藏本站</a>
-                        </li>
-                        <li class="tips-item">
-                          <a href="/help" class="login">联系我们</a>
-                        </li>
-                        <li class="tips-item">
-                          <a class="login-cell y-right" href="/oauth/register">注册有礼</a>
-                        </li>
-                        <li class="tips-item">
-                          <a href="${host.auth}/login?oauth_callback=${oauth_callback!'/'}" class="login">登录</a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
                 </div>
-              </div>
             </div>
-            <div style="clear:both;"></div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 <script type="text/javascript">
-  var i, u;
-  $("#J_topbar_menu>li[index]").each(function () {
-    var n = $(this).attr('index');
-    var h = $(this).attr('dropdown');
-    var w = $(this).attr("width");
-    var l = $(this).attr("left");
-    var s = "width:" + w + "px;left:" + l + "px";
-    $(this).hover(
-      function () {
+    var i, u;
+    $("#J_topbar_menu>li[index]").each(function () {
+        var n = $(this).attr('index');
+        var h = $(this).attr('dropdown');
+        var w = $(this).attr("width");
+        var l = $(this).attr("left");
+        var s = "width:" + w + "px;left:" + l + "px";
+        $(this).hover(
+            function () {
 //        $(".line").css({"width":w,"left":l});
-        $(".line").attr("style", s);
-        if (h === 'show') {
-          showDropdown(n);
+                $(".line").attr("style", s);
+                if (h === 'show') {
+                    showDropdown(n);
+                } else {
+                    hideDropdown();
+                }
+                u = true;
+            },
+            function () {
+                if (u === false) {
+                    $(".line").css({"width": "0px"});
+                }
+            });
+    });
+    function showDropdown(n) {
+        $(".topbar-dropdown-box").addClass("show");
+        $(".topbar-dropdown-box>div").each(function () {
+            $(this).removeClass("dropdown-ing");
+        });
+        if (i === undefined) {
+            i = "div[index='" + n + "']";
         } else {
-          hideDropdown();
+            $(i).css("display", "none");
+            i = "div[index='" + n + "']";
         }
-        u = true;
-      },
-      function () {
-        if (u === false) {
-          $(".line").css({"width": "0px"});
-        }
-      });
-  });
-  function showDropdown(n) {
-    $(".topbar-dropdown-box").addClass("show");
-    $(".topbar-dropdown-box>div").each(function () {
-      $(this).removeClass("dropdown-ing");
-    });
-    if (i === undefined) {
-      i = "div[index='" + n + "']";
-    } else {
-      $(i).css("display", "none");
-      i = "div[index='" + n + "']";
+        $(i).css("display", "block");
+        $(i).hover(
+            function (e) {
+                e.preventDefault();
+                u = true;
+                console.log(e);
+            },
+            function () {
+                u = false;
+                hideDropdown();
+                console.log("div out ");
+            }
+        );
     }
-    $(i).css("display", "block");
-    $(i).hover(
-      function (e) {
-        e.preventDefault();
-        u = true;
-        console.log(e);
-      },
-      function () {
-        u = false;
-        hideDropdown();
-        console.log("div out ");
-      }
-    );
-  }
-  function hideDropdown() {
-    $(".topbar-dropdown-box").removeClass("show");
-    $(".topbar-dropdown-box>div").each(function () {
-      $(this).addClass("dropdown-ing");
-    });
-  }
+    function hideDropdown() {
+        $(".topbar-dropdown-box").removeClass("show");
+        $(".topbar-dropdown-box>div").each(function () {
+            $(this).addClass("dropdown-ing");
+        });
+    }
 
 </script>
