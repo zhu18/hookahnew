@@ -1,23 +1,4 @@
 <div class="index-slide y-row">
-    <!--<div class="slide-btn-left"><</div>-->
-    <!--<div class="slide-btn-right">></div>-->
-    <!--<div class="slide-content">-->
-        <!--<ul>-->
-            <!--<li class="y-left"><img src="/static/img/TB1BLQsPpXXXXXNXXXXXXXXXXXX-440-330.jpg" alt=""></li>-->
-            <!--<li class="y-left"><img src="/static/img/TB1BLQsPpXXXXXNXXXXXXXXXXXX-440-330.jpg" alt=""></li>-->
-            <!--<li class="y-left"><img src="/static/img/TB1BLQsPpXXXXXNXXXXXXXXXXXX-440-330.jpg" alt=""></li>-->
-            <!--<li class="y-left"><img src="/static/img/TB1BLQsPpXXXXXNXXXXXXXXXXXX-440-330.jpg" alt=""></li>-->
-            <!--<li class="y-left"><img src="/static/img/TB1BLQsPpXXXXXNXXXXXXXXXXXX-440-330.jpg" alt=""></li>-->
-            <!--<li class="y-left"><img src="/static/img/TB1BLQsPpXXXXXNXXXXXXXXXXXX-440-330.jpg" alt=""></li>-->
-            <!--<li class="y-left"><img src="/static/img/TB1BLQsPpXXXXXNXXXXXXXXXXXX-440-330.jpg" alt=""></li>-->
-            <!--<li class="y-left"><img src="/static/img/TB1BLQsPpXXXXXNXXXXXXXXXXXX-440-330.jpg" alt=""></li>-->
-            <!--<li class="y-left"><img src="/static/img/TB1BLQsPpXXXXXNXXXXXXXXXXXX-440-330.jpg" alt=""></li>-->
-        <!--</ul>-->
-    <!--</div>-->
-
-
-
-
     <div class="pic_con">
         <div class="btn_change left_btn"><</div>
         <div class="btn_change right_btn">></div>
@@ -32,6 +13,7 @@
                     <li><a href="#"><img src="/static/img/TB1BLQsPpXXXXXNXXXXXXXXXXXX-440-330.jpg"></a><p>唯美画面一</p></li>
                     <li><a href="#"><img src="/static/img/TB1BLQsPpXXXXXNXXXXXXXXXXXX-440-330.jpg"></a><p style="display: none;">唯美画面一</p></li>
                     <li><a href="#"><img src="/static/img/TB1BLQsPpXXXXXNXXXXXXXXXXXX-440-330.jpg"></a><p style="display: none;">唯美画面一</p></li>
+
                 </ul>
             </div>
         </div><!--content end-->
@@ -45,17 +27,19 @@
     var picNum=$picDiv.children("ul").children("li").length;
     var page_count=Math.ceil(picNum/6);
     var $pDiv_w=$p_Div.width()+12;
-
+    $(".left_btn").css({'color':'#ccc','cursor':'no-drop'});
     $(".right_btn").click(function(){
         if(page_count>page){
             $picDiv.animate({left:'-'+page*$pDiv_w+"px"},"normal");
             page++;
-//            $(".left_btn").css();
-//            if(page>=page_count){
-//                $(this).css({'background':'url(images/rightstop.jpg) no-repeat'});
-//            }else{
-//                $(this).css({'background':'url(images/rightstart.jpg) no-repeat'});
-//            }
+            console.log("right----page----------:"+page);
+            console.log("right-----page*$pDiv_w----------:"+page*$pDiv_w);
+            $(".left_btn").css({'color':'#fff','cursor':'pointer'});
+            if(page>=page_count){
+                $(this).css({'color':'#ccc','cursor':'no-drop'});
+            }else{
+                $(this).css({'color':'#fff','cursor':'pointer'});
+            }
         }
         $(this).siblings(".highlight_tip").find("span").eq((page-1)).addClass("current").siblings().removeClass("current");
     });
@@ -64,19 +48,15 @@
         if(page>1){
             $picDiv.animate({left:"+="+$pDiv_w+'px'},"normal");
             page--;
-//            $(".right_btn").css({'background':'url(images/rightstart.jpg) no-repeat'});
-//            if(page<=1){
-//                $(this).css({'background':'url(images/leftstop.jpg) no-repeat'});
-//            }else{
-//                $(this).css({'background':'url(images/leftstart.jpg) no-repeat'});
-//            }
+            console.log("left-----page----------:"+page);
+            console.log("left-----page*$pDiv_w----------:"+page*$pDiv_w);
+            $(".right_btn").css({'color':'#fff','cursor':'pointer'});
+            if(page<=1){
+                $(this).css({'color':'#ccc','cursor':'no-drop'});
+            }else{
+                $(this).css({'color':'#fff','cursor':'pointer'});
+            }
         }
         $(this).siblings(".highlight_tip").find("span").eq((page-1)).addClass("current").siblings().removeClass("current");
     });
-
-//    $(".pic_lists>ul>li").hover(function(){
-//        $(this).children("p").show();
-//    },function(){
-//        $(this).children("p").hide();
-//    });
 </script>

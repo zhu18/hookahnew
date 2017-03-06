@@ -1091,37 +1091,10 @@ body {
     width: 100%;
     height: 100%;
 }
-/*.index-slide{*/
-    /*position: relative;*/
-/*}*/
-/*.index-slide .slide-btn-left{*/
-    /*position: absolute;*/
-    /*left: 0;*/
-    /*height: 200px;*/
-    /*line-height: 200px;*/
-    /*background: rgba(0,0,0,0.5);*/
-    /*color: #fff;*/
-    /*width: 30px;*/
-    /*text-align: center;*/
-    /*font-size: 30px;*/
-    /*cursor: pointer;*/
-/*}*/
-/*.index-slide .slide-btn-right{*/
-    /*position: absolute;*/
-    /*right: 0;*/
-    /*height: 200px;*/
-    /*line-height: 200px;*/
-    /*background: rgba(0,0,0,0.5);*/
-    /*color: #fff;*/
-    /*width: 30px;*/
-    /*text-align: center;*/
-    /*font-size: 30px;*/
-    /*cursor: pointer;*/
-/*}*/
-/*.index-slide .slide-content{padding:0 30px}*/
-/*.index-slide .slide-content li{width:150px;margin:0 10px 0 0 ;}*/
-/*.index-slide .slide-content li img{width:100%;}*/
-
+.index-slide{
+    margin-top:30px;
+    margin-bottom:30px;
+}
 .pic_con {
     padding: 30px 0;
     position: relative;
@@ -1129,7 +1102,6 @@ body {
     overflow: hidden;
     width:100%;
 }
-
 .pic_lists {
     float: left;
     width: 9999999px;
@@ -1138,7 +1110,6 @@ body {
     top: 0px;
     left: 0px;
 }
-
 .btn_change {
     width: 30px;
     height: 120px;
@@ -1150,17 +1121,14 @@ body {
     font-size: 28px;
     color: #fff;
 }
-
 .left_btn {
     top:30px;
     left:0
 }
-
 .right_btn {
     top:30px;
     right: 0px
 }
-
 .pic_content {
     overflow: hidden;
     height: 120px;
@@ -1169,7 +1137,6 @@ body {
     position: relative;
     margin:0 40px;
 }
-
 .pic_content ul li {
     float: left;
     width: 178px;
@@ -1178,7 +1145,6 @@ body {
     margin: 0 5px;
     position: relative
 }
-
 .pic_content ul li p {
     height: 24px;
     background: #333;
@@ -1196,30 +1162,6 @@ body {
     width:100%;
 }
 
-/*.highlight_tip {*/
-    /*width: 50%;*/
-    /*position: relative;*/
-    /*margin: 0 auto;*/
-    /*top: -15px;*/
-    /*left: 20%;*/
-/*}*/
-
-/*.highlight_tip span {*/
-    /*height: 24px;*/
-    /*padding: 5px;*/
-    /*line-height: 24px;*/
-    /*float: left;*/
-    /*margin: 0 2px;*/
-    /*cursor: pointer*/
-/*}*/
-
-/*.highlight_tip span.current {*/
-    /*height: 18px;*/
-    /*width: 18px;*/
-    /*line-height: 18px;*/
-    /*background: #9CC;*/
-    /*text-align: center*/
-/*}*/
 
 
 
