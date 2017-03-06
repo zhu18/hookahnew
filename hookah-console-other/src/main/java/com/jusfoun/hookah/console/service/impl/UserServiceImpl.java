@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  * @desc
  */
 @Service
-public class UserServiceImpl extends GenericServiceImpl<User, Long> implements UserService{
+public class UserServiceImpl extends GenericServiceImpl<User, String> implements UserService{
     @Override
     public String sayhello() {
         return "hi guy";

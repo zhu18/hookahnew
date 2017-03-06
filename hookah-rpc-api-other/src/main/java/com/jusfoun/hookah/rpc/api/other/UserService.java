@@ -8,7 +8,7 @@ import com.jusfoun.hookah.core.generic.GenericService;
  * @date 2017/2/28 下午3:06
  * @desc
  */
-public interface UserService extends GenericService<User,Long> {
+public interface UserService extends GenericService<User,String> {
 
     String sayhello();
 }
