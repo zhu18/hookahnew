@@ -25,7 +25,8 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
 
     @Override
     public int insert(Model model) {
-        mongoTemplate.insert(model);
+        //mongoTemplate.insert(model);// 不存在则插入，存在则丢弃
+        mongoTemplate.save(model);  // 不存在则插入，存在则更新
         return 0;
     }
 
