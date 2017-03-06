@@ -1043,13 +1043,38 @@ body {
 .index-news-bar2 .tool-body .news-bar2-box .news-bar2-left .trends-center-right .info{
     width: 320px;
 }
+.index-news-bar2 .tool-body .news-bar2-box .news-bar2-left .trends-center-right .info h3{
+    margin-bottom: 3px;
+    font-weight: 800;
+    font-size: 16px;
+}
+.index-news-bar2 .tool-body .news-bar2-box .news-bar2-left .trends-center-right .info p{
+    text-align: justify;
+}
 .index-news-bar2 .tool-body .news-bar2-box .news-bar2-right{
     width:300px;
     background: #f7f7f7;
     height: 406px;
 }
-
-
+.index-news-bar2 .tool-body .news-bar2-box .news-bar2-right .notice-title{
+    border-left: 3px solid #a7a5a5;
+    padding-left: 8px;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 22px;
+    margin: 10px 0 0 10px;
+}
+.index-news-bar2 .tool-body .news-bar2-box .news-bar2-right .notice-box{
+    background: #efeeee;
+    padding: 10px;
+}
+.index-news-bar2 .tool-body .news-bar2-box .news-bar2-right .notice-box>span{
+    display: inline-block;
+}
+.index-news-bar2 .tool-body .news-bar2-box .news-bar2-right .notice-box>a{
+    display: inline-block;
+}
+.index-news-bar2 .tool-body .news-bar2-box .news-bar2-right .notice-bot-img{}
 
 
 
