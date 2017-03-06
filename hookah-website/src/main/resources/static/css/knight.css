@@ -1895,8 +1895,8 @@ a.y-btn-anti.y-btn-disabled, a.y-btn-anti:active.y-btn-disabled, a.y-btn-anti:ho
 
 @font-face {
     font-family: 'iconfont';
-    src: url(/aliyun/www-dpl/0.5.73/knight/fonts/iconfont.eot?rk2faw);
-    src: url(/aliyun/www-dpl/0.5.73/knight/fonts/iconfont.eot?#iefixrk2faw) format('embedded-opentype'), url(/aliyun/www-dpl/0.5.73/knight/fonts/iconfont.woff?rk2faw) format('woff'), url(/aliyun/www-dpl/0.5.73/knight/fonts/iconfont.ttf?rk2faw) format('truetype'), url(/aliyun/www-dpl/0.5.73/knight/fonts/iconfont.svg?rk2faw#icofont) format('svg');
+    src: url(/static/fonts/iconfont.eot?rk2faw);
+    src: url(/static/fonts/iconfont.eot?#iefixrk2faw) format('embedded-opentype'), url(/static/fonts/iconfont.woff?rk2faw) format('woff'), url(/static/fonts/iconfont.ttf?rk2faw) format('truetype'), url(/static/fonts/iconfont.svg?rk2faw#icofont) format('svg');
     font-weight: 400;
     font-style: normal
 }
