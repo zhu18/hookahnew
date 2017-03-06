@@ -135,3 +135,4 @@ local.properties
 /hookah-console-other/src/main/resources/application-dev.yml
 /hookah-website/src/main/resources/application-dev.yml
 /npm-debug.log
+/*.ipr
