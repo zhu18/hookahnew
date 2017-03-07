@@ -19,6 +19,8 @@
     display: block;
     padding-left:20px;
 }
+.innovation-center .innovation-menu li a.on{color:#fff;background: #0c9abe;}
+.innovation-center .innovation-menu li a.on:hover{color:#fff;}
 .innovation-center .innovation-menu li a:hover{
     color:#0c9abe;
 }
