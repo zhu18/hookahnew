@@ -21,4 +21,5 @@ public class MyBuyerController {
     public String invoice() {
         return "/mybuyer/invoice";
     }
+
 }
