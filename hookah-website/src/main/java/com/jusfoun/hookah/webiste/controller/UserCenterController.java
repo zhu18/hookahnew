@@ -16,4 +16,10 @@ public class UserCenterController {
     public String index(){
         return "usercenter/index";
     }
+
+    @RequestMapping(value = "/usercenter/fundmanage", method = RequestMethod.GET)
+    public String fundmanage() { return "usercenter/fundmanage"; }
+
+    @RequestMapping(value = "/usercenter/safeset", method = RequestMethod.GET)
+    public String safeset() { return "usercenter/safeset"; }
 }

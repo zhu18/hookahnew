@@ -114,7 +114,8 @@ a, ins {
 }
 
 a, a:hover, a:link, a:visited {
-    color: #00a2ca
+    color: #00a2ca;
+    text-decoration: none;
 }
 
 .y-lnk-highlight, .y-lnk-highlight:hover, .y-lnk-highlight:link, .y-lnk-highlight:visited {
