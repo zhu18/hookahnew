@@ -1,0 +1,73 @@
+.user-center {
+    padding: 30px 0;
+}
+.user-center-box{
+    width:970px;
+}
+.order-tab .order-tab-box{
+    padding: 18px 0;
+    list-style-type: none;
+    font-size: 16px;
+    line-height: 1.25;
+    overflow: hidden;
+}
+.order-tab .order-tab-box li{
+    float: left;
+    padding: 0 20px;
+    border-left: 1px solid #e0e0e0;
+    color: #757575;
+}
+.order-tab .order-tab-box li a {
+    color: #757575;
+    text-decoration: none;
+}
+.order-tab .order-tab-box li.first {
+    padding-left: 0;
+    border-left: 0;
+}
+.order-tab .order-tab-box li.active a{
+    color: #ff6700;
+}
+.order-manage .order-box{}
+.order-manage .order-box .order-items{
+    border: 1px solid #ccc;
+    width:100%;
+    margin-bottom:20px;
+}
+.order-manage .order-box .order-items .order-head{
+    line-height: 40px;
+    background: #f1f1f1;
+    overflow: hidden;
+    padding:0 10px;
+    font-size:13px;
+}
+.order-manage .order-box .order-items .order-body .goods-img div{
+    width: 120px;
+    padding: 10px 0;
+    height: 90px;
+}
+.order-manage .order-box table tr{}
+.order-manage .order-box table tr td{padding:0 10px;}
+.order-manage .order-box table tr td img{
+    width:100%;
+}
+.order-manage .order-box table tr td a{display: block;}
+.order-manage .order-box table tr .operation{
+    text-align: center;
+}
+.order-manage .order-box table tr td.unpaid span{
+    color:#ff6700;
+}
+/******* my-invoice start*******/
+
+
+/******* my-invoice end*******/
+
+
+
+
+
+
+
+
+
