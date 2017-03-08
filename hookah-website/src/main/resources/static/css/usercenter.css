@@ -1,0 +1,32 @@
+.user-center{}
+.user-center .user-center-bd{}
+.user-center .user-center-bd .user-center-menu{width:200px;}
+.user-center .user-center-bd .user-center-menu .menu-list{}
+.user-center .user-center-bd .user-center-menu .menu-list .menu-items{
+    height: 36px;
+    line-height: 36px;
+    padding-left: 10px;
+    font-size: 10px;
+    background: #42485b;
+    font-size: 14px;
+
+
+}
+.user-center .user-center-bd .user-center-menu .menu-header{
+    text-decoration: none;
+    color:#fff;
+    cursor: pointer;
+}
+.user-center .user-center-bd .user-center-menu .menu-category li a{
+    line-height: 36px;
+    padding-left: 20px;
+    background: #51586f;
+}
+.user-center .user-center-bd .user-center-box{width:1000px}
+
+
+
+
+
+
+

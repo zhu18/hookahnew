@@ -1,13 +1,51 @@
 <%
 var head = {
 %>
-
+<link rel="stylesheet" type="text/css" href="/static/css/usercenter.css">
 <%};%>
 
 <%
 var htmlPart = {
 %>
+<div class="user-center">
+    <div class="user-center-bd y-row">
+        <div class="user-center-menu y-left">
+            <ul class="menu-list">
+                <li class="menu-items">
+                    <h3 class="menu-header">用户中心</h3>
+                    <ol class="menu-category">
+                        <li><a href="javascript:void(0)">个人资料</a></li>
+                        <li><a href="javascript:void(0)">资金管理</a></li>
+                        <li><a href="javascript:void(0)">安全设置</a></li>
+                    </ol>
+                </li>
+                <li class="menu-items">
+                    <h3 class="menu-header">买家中心</h3>
+                    <ol class="menu-category">
+                        <li><a href="javascript:void(0)">购物车</a></li>
+                        <li><a href="javascript:void(0)">我的发票</a></li>
+                        <li><a href="javascript:void(0)">订单管理</a></li>
+                        <li><a href="javascript:void(0)">评价管理</a></li>
+                        <li><a href="javascript:void(0)">我的关注</a></li>
+                    </ol>
+                </li>
+                <li class="menu-items">
+                    <h3 class="menu-header">卖家中心</h3>
+                    <ol class="menu-category">
+                        <li><a href="javascript:void(0)">宝贝管理</a></li>
+                        <li><a href="javascript:void(0)">交易管理</a></li>
+                        <li><a href="javascript:void(0)">店铺管理</a></li>
+                        <li><a href="javascript:void(0)">客服管理</a></li>
+                    </ol>
+                </li>
+            </ul>
 
+        </div>
+        <div class="user-center-box y-left">
+            box
+        </div>
+    </div>
+</div>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
