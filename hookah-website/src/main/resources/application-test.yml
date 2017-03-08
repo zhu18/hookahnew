@@ -16,3 +16,6 @@ myconf:
     auth: ${server.http.protocal}localhost:9000
     console: ${server.http.protocal}localhost:9000
 debug: true
+spring:
+  mvc:
+      static-path-pattern: /static/**

@@ -16,7 +16,7 @@
 4.前端框架
   AngularJS、JQuery等。
 ### 项目人员
-  邵建双、赵博
+  邵建双、赵博、吴冰冰、王佳玲
 ### 代码说明
  * hookah-console 后台管理，也是服务发布端
  * hookah-website 前端网站，消费端，通过rpc调用console发布的服务
