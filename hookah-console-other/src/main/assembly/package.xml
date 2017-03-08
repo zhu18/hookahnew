@@ -38,8 +38,8 @@
     </fileSet>
     <!-- 把项目的页面文件，打包进压缩文件的webapp/views目录 -->
     <fileSet>
-      <directory>${project.build.directory}/views</directory>
-      <outputDirectory>/webapp/views</outputDirectory>
+      <directory>${project.build.directory}/webapp</directory>
+      <outputDirectory>/webapp</outputDirectory>
       <includes>
         <include>**/*.*</include>
       </includes>

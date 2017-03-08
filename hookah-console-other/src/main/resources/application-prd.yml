@@ -1,5 +1,5 @@
 server:
-  port: 8001
+  port: 9100
 spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
@@ -48,8 +48,8 @@ myconf:
     suffix: .html
     cache: false
   host:
-    server: ${server.http.protocal}localhost:8001
-    static: ${server.http.protocal}localhost:8001
-    auth: ${server.http.protocal}localhost:8001
-    console: ${server.http.protocal}localhost:8001
+    server: ${server.http.protocal}localhost:9100
+    static: ${server.http.protocal}localhost:9100
+    auth: ${server.http.protocal}localhost:9100
+    console: ${server.http.protocal}localhost:9100
 debug: true
