@@ -16,4 +16,10 @@ public class InnovationController {
     public String index(){
         return "innovation/index";
     }
+
+    @RequestMapping(value = "/innovation/equity", method = RequestMethod.GET)
+    public String equity(){
+        return "innovation/equity";
+    }
+
 }

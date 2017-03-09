@@ -1,14 +1,24 @@
 .myseller-wrapper .category-label{
     height:40px;
-    padding-left:100px;
+    padding-left:130px;
     position: relative;
+    margin-left: 200px;
 }
 .myseller-wrapper .category-label label{
     position: absolute;
     left:0;
     top:0;
+    font-size: 14px;
+    width:130px;
+    text-align: right;
+    line-height: 32px;
 }
-.myseller-wrapper .category-label input{}
+.myseller-wrapper .category-label input{
+    width: 300px;
+    height: 30px;
+    border: 1px solid #333;
+    padding: 0 5px;
+}
 .myseller-wrapper .category-label span{
 
 }
