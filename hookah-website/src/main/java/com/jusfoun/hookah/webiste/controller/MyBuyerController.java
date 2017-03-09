@@ -19,7 +19,12 @@ public class MyBuyerController {
 
     @RequestMapping(value = "/mybuyer/invoice", method = RequestMethod.GET)
     public String invoice() {
-        return "/mybuyer/invoice";
+        return "/mybuyer/invoice/index";
+    }
+
+    @RequestMapping(value = "/mybuyer/invoice/info", method = RequestMethod.GET)
+    public String invoiceinfo() {
+        return "/mybuyer/invoice/info";
     }
 
 }
