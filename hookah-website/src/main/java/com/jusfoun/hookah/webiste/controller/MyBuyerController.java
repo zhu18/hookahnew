@@ -27,4 +27,14 @@ public class MyBuyerController {
         return "/mybuyer/invoice/info";
     }
 
+    @RequestMapping(value = "/mybuyer/cart", method = RequestMethod.GET)
+    public String cart() {
+        return "/mybuyer/cart";
+    }
+
+    @RequestMapping(value = "/mybuyer/rate", method = RequestMethod.GET)
+    public String rate() {
+        return "/mybuyer/rate";
+    }
+
 }

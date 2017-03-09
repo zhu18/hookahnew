@@ -27,8 +27,8 @@
     line-height: 20px;
     border-bottom: 1px solid #ccc;
 }
-.user-center .user-center-bd .user-center-menu .menu-category{display: none}
-.user-center .user-center-bd .user-center-menu .menu-category.active{display: block}
+/*.user-center .user-center-bd .user-center-menu .menu-category{display: none}*/
+/*.user-center .user-center-bd .user-center-menu .menu-category.active{display: block}*/
 .user-center .user-center-bd .user-center-menu .menu-category li a:hover{
     color:#0c9abe;
 }

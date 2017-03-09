@@ -12,8 +12,8 @@
         <ol class="menu-category">
             <li><a href="/mybuyer">订单管理</a></li>
             <li><a href="/mybuyer/invoice">我的发票</a></li>
-            <li><a href="javascript:void(0)">购物车</a></li>
-            <li><a href="javascript:void(0)">评价管理</a></li>
+            <li><a href="/mybuyer/cart">购物车</a></li>
+            <li><a href="/mybuyer/rate">我的评价</a></li>
             <li><a href="javascript:void(0)">我的关注</a></li>
         </ol>
     </li>
@@ -27,12 +27,3 @@
         </ol>
     </li>
 </ul>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $(".menu-list .menu-items").hover(function() {
-            $(this).addClass("active").siblings().removeClass('active');
-            $(this).children('.menu-category').slideDown();
-            $(this).siblings().children('.menu-category').slideUp();
-        });
-    })
-</script>
