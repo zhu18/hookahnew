@@ -1,0 +1,19 @@
+.myseller-wrapper .category-label{
+    height:40px;
+    padding-left:100px;
+    position: relative;
+}
+.myseller-wrapper .category-label label{
+    position: absolute;
+    left:0;
+    top:0;
+}
+.myseller-wrapper .category-label input{}
+.myseller-wrapper .category-label span{
+
+}
+.myseller-wrapper .category-label select{}
+
+
+
+

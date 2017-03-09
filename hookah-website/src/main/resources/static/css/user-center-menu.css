@@ -32,3 +32,35 @@
 .user-center .user-center-bd .user-center-menu .menu-category li a:hover{
     color:#0c9abe;
 }
+
+
+.user-center {
+    padding: 30px 0;
+}
+.user-center-box{
+    width:970px;
+}
+.wrapper-tab .wrapper-tab-box{
+    padding: 18px 0;
+    list-style-type: none;
+    font-size: 16px;
+    line-height: 1.25;
+    overflow: hidden;
+}
+.wrapper-tab .wrapper-tab-box li{
+    float: left;
+    padding: 0 20px;
+    border-left: 1px solid #e0e0e0;
+    color: #757575;
+}
+.wrapper-tab .wrapper-tab-box li a {
+    color: #757575;
+    text-decoration: none;
+}
+.wrapper-tab .wrapper-tab-box li.first {
+    padding-left: 0;
+    border-left: 0;
+}
+.wrapper-tab .wrapper-tab-box li.active a{
+    color: #ff6700;
+}
