@@ -1,0 +1,112 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" type="text/css" href="/static/css/user-center-menu.css">
+<link rel="stylesheet" type="text/css" href="/static/css/mybuyer.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="user-center">
+    <div class="user-center-bd y-row">
+        <div class="user-center-menu y-left">
+            <%include("/layout/user-center-menu.html"){}%>
+        </div>
+        <div class="user-center-box y-right">
+            <h3 class="center-title">订单管理</h3>
+            <div class="order-manage">
+                <div class="order-tab">
+                    <ul class="order-tab-box">
+                        <li class="first"><a href="/mybuyer/attention_item">商品</a></li>
+                        <li class="active"><a href="/mybuyer/attention_shop">店铺</a></li>
+                    </ul>
+                </div>
+                <div class="attention-shop-box">
+                    <div class="shop-item">
+                        <div class="shop-info y-left">
+                            <div class="imgs"><img src="../../static/img/zheng.jpg" alt=""></div>
+                            <div class="info">
+                                <a href="javascript:void(0)">
+                                    <h3>维恩泽维尔旗舰店</h3>
+                                    <p>主营数据查询、数据处理、认证...</p>
+                                </a>
+                            </div>
+                            <span class="cancel-btn">取消关注</span>
+                        </div>
+                        <div class="shop-list y-left">
+                            <div class="list-item y-left">
+                                <div class="imgs"><a href="javascript:void(0)"><img src="../../static/img/zheng.jpg" alt=""></a></div>
+                                <h3><a href="javascript:void(0)">身份证实名认证</a></h3>
+                            </div>
+                            <div class="list-item y-left">
+                                <div class="imgs"><a href="javascript:void(0)"><img src="../../static/img/zheng.jpg" alt=""></a></div>
+                                <h3><a href="javascript:void(0)">身份证实名认证</a></h3>
+                            </div>
+                            <div class="list-item y-left">
+                                <div class="imgs"><a href="javascript:void(0)"><img src="../../static/img/zheng.jpg" alt=""></a></div>
+                                <h3><a href="javascript:void(0)">身份证实名认证</a></h3>
+                            </div>
+                            <div class="list-item y-left">
+                                <div class="imgs"><a href="javascript:void(0)"><img src="../../static/img/zheng.jpg" alt=""></a></div>
+                                <h3><a href="javascript:void(0)">身份证实名认证</a></h3>
+                            </div>
+                            <div class="list-item y-left">
+                                <div class="imgs"><a href="javascript:void(0)"><img src="../../static/img/zheng.jpg" alt=""></a></div>
+                                <h3><a href="javascript:void(0)">身份证实名认证</a></h3>
+                            </div>
+                        </div>
+                        <div class="more"><span>更多商品 >></span></div>
+                    </div>
+                    <div class="shop-item">
+                        <div class="shop-info y-left">
+                            <div class="imgs"><img src="../../static/img/zheng.jpg" alt=""></div>
+                            <div class="info">
+                                <a href="javascript:void(0)">
+                                    <h3>维恩泽维尔旗舰店</h3>
+                                    <p>主营数据查询、数据处理、认证...</p>
+                                </a>
+                            </div>
+                            <span class="cancel-btn">取消关注</span>
+                        </div>
+                        <div class="shop-list y-left">
+                            <div class="list-item y-left">
+                                <div class="imgs"><a href="javascript:void(0)"><img src="../../static/img/zheng.jpg" alt=""></a></div>
+                                <h3><a href="javascript:void(0)">身份证实名认证</a></h3>
+                            </div>
+                            <div class="list-item y-left">
+                                <div class="imgs"><a href="javascript:void(0)"><img src="../../static/img/zheng.jpg" alt=""></a></div>
+                                <h3><a href="javascript:void(0)">身份证实名认证</a></h3>
+                            </div>
+                            <div class="list-item y-left">
+                                <div class="imgs"><a href="javascript:void(0)"><img src="../../static/img/zheng.jpg" alt=""></a></div>
+                                <h3><a href="javascript:void(0)">身份证实名认证</a></h3>
+                            </div>
+                            <div class="list-item y-left">
+                                <div class="imgs"><a href="javascript:void(0)"><img src="../../static/img/zheng.jpg" alt=""></a></div>
+                                <h3><a href="javascript:void(0)">身份证实名认证</a></h3>
+                            </div>
+                            <div class="list-item y-left">
+                                <div class="imgs"><a href="javascript:void(0)"><img src="../../static/img/zheng.jpg" alt=""></a></div>
+                                <h3><a href="javascript:void(0)">身份证实名认证</a></h3>
+                            </div>
+                            <div class="list-item y-left">
+                                <div class="imgs"><a href="javascript:void(0)"><img src="../../static/img/zheng.jpg" alt=""></a></div>
+                                <h3><a href="javascript:void(0)">身份证实名认证</a></h3>
+                            </div>
+                            <div class="list-item y-left">
+                                <div class="imgs"><a href="javascript:void(0)"><img src="../../static/img/zheng.jpg" alt=""></a></div>
+                                <h3><a href="javascript:void(0)">身份证实名认证</a></h3>
+                            </div>
+                        </div>
+                        <div class="more"><span>合并更多 >></span></div>
+                    </div>
+                </div>
+                <%include("/layout/pageaction.html"){} %>
+            </div>
+        </div>
+    </div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>

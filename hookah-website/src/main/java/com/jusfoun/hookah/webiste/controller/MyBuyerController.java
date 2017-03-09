@@ -37,4 +37,14 @@ public class MyBuyerController {
         return "/mybuyer/rate";
     }
 
+    @RequestMapping(value = "/mybuyer/attention_item", method = RequestMethod.GET)
+    public String attentionitem() {
+        return "/mybuyer/attention_item";
+    }
+
+    @RequestMapping(value = "/mybuyer/attention_shop", method = RequestMethod.GET)
+    public String attentionshop() {
+        return "/mybuyer/attention_shop";
+    }
+
 }
