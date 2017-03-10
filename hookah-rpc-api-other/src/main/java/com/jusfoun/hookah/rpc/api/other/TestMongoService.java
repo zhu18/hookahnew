@@ -1,6 +1,5 @@
 package com.jusfoun.hookah.rpc.api.other;
 
-import com.jusfoun.hookah.core.domain.Test;
 import com.jusfoun.hookah.core.generic.GenericService;
 
 /**

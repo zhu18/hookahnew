@@ -41,8 +41,8 @@
     </commentGenerator>
     <!--数据库链接地址账号密码-->
     <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                    connectionURL="jdbc:mysql://127.0.0.1:3306/hookah?characterEncoding=utf8"
-                    userId="root" password="admin"/>
+                    connectionURL="jdbc:mysql://192.168.15.90:3306/hookah?characterEncoding=utf8"
+                    userId="root" password="password"/>
     <javaTypeResolver>
       <property name="forceBigDecimals" value="false"/>
     </javaTypeResolver>

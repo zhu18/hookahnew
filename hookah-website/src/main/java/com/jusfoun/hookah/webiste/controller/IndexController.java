@@ -3,7 +3,6 @@ package com.jusfoun.hookah.webiste.controller;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.rpc.api.other.*;
-import com.jusfoun.hookah.core.domain.Test;
 import com.jusfoun.hookah.rpc.api.other.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -118,10 +117,10 @@ public class IndexController {
     @RequestMapping(value = "/uinsert", method = RequestMethod.GET)
     @ResponseBody
     public Object minsertUser(Model model) {
-        User t2 = new User();
+       /* User t2 = new User();
         t2.setEmail("abc@ddd.com");
         t2.setId(UUID.randomUUID().toString());
-        userMongoService.insert(t2);
+        userMongoService.insert(t2);*/
         return "success";
     }
 
