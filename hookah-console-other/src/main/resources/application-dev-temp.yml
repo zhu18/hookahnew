@@ -3,9 +3,9 @@ server:
 spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
+    url: jdbc:mysql://192.168.15.90:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
     username: root
-    password: admin
+    password: password
     initialize: true
     type: com.alibaba.druid.pool.DruidDataSource
     # 连接池配置
@@ -32,11 +32,11 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
   data:
     mongodb:
-      uri:  mongodb://localhost:27017/hookah
+      uri:  mongodb://192.168.15.90:27017/hookah
   rabbitmq:
-    addresses: 127.0.0.1:5672
-    username: guest
-    password: guest
+    addresses: 192.168.15.90:5672
+    username: root
+    password: password
     publisher-confirms: true
     virtual-host: /
 #  jpa:

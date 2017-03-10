@@ -1,0 +1,58 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" type="text/css" href="/static/css/user-center-menu.css">
+<link rel="stylesheet" type="text/css" href="/static/css/myseller.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="user-center">
+    <div class="user-center-bd y-row">
+        <div class="user-center-menu y-left">
+            <%include("/layout/user-center-menu.html"){}%>
+        </div>
+        <div class="user-center-box y-right">
+            <h3 class="center-title">商品管理</h3>
+            <div class="pulish-wrapper">
+                <div class="wrapper-tab">
+                    <ul class="wrapper-tab-box">
+                        <li class="first active"><a href="/myseller">发布商品</a></li>
+                        <li><a href="javascript:void(0)">出售中的商品</a></li>
+                    </ul>
+                </div>
+                <div class="publish-box">
+                    <h3 class="category-title">类目：查询 >> 失信被执行人查询</h3>
+                    <h1>1.商品基本信息</h1>
+                    <div class="struct">
+                        <table>
+                            <tr>
+                                <td class="bar">商品名称：</td>
+                                <td>
+                                    <div class="text-box"><input type="text"><span class="input-count"><strong>0</strong>/60</span></div>
+                                    <div class="errors"><ul><li><span class="errorinfo">不能超过60个字符!</span></li></ul></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bar">商品简介：</td>
+                                <td>
+                                    <div class="textarea-box"><textarea type="text"></textarea><span class="input-count"><strong>0</strong>/150</span></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bar">商品简介：</td>
+                                <td>
+                                    <div class="textarea-box"><textarea type="text"></textarea><span class="input-count"><strong>0</strong>/150</span></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>

@@ -1,8 +1,8 @@
 package com.jusfoun.hookah.console.other.service.impl;
 
-import com.jusfoun.hookah.core.domain.Test;
+import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.generic.GenericMongoServiceImpl;
-import com.jusfoun.hookah.rpc.api.other.TestMongoService;
+import com.jusfoun.hookah.rpc.api.other.GoodsMongoService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,6 +11,6 @@ import org.springframework.stereotype.Service;
  * @desc
  */
 @Service
-public class TestMongoServiceImpl extends GenericMongoServiceImpl<Test, String> implements TestMongoService {
+public class GoodsMongoServiceImpl extends GenericMongoServiceImpl<Goods, String> implements GoodsMongoService {
 
 }

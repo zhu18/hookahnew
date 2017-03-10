@@ -23,9 +23,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableAutoConfiguration(exclude = {ThymeleafAutoConfiguration.class, DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 @EnableScheduling
 @ComponentScan
-public class ConsoleLauncher {
+public class ConsoleOtherLauncher {
 
-    private static final Logger logger = LoggerFactory.getLogger(ConsoleLauncher.class);
+    private static final Logger logger = LoggerFactory.getLogger(ConsoleOtherLauncher.class);
 
     public static void main(String[] args) {
 
@@ -33,7 +33,7 @@ public class ConsoleLauncher {
 //      "classpath*:spring/rs-context.xml",
 //            "classpath*:spring/spring-config-shiro.xml",
             "classpath*:hookah_rpc_server.xml",
-            ConsoleLauncher.class
+            ConsoleOtherLauncher.class
         }, args);
         MotanSwitcherUtil.setSwitcherValue(MotanConstants.REGISTRY_HEARTBEAT_SWITCHER, true);
     }

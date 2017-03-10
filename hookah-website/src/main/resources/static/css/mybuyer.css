@@ -1,33 +1,4 @@
-.user-center {
-    padding: 30px 0;
-}
-.user-center-box{
-    width:970px;
-}
-.order-tab .order-tab-box{
-    padding: 18px 0;
-    list-style-type: none;
-    font-size: 16px;
-    line-height: 1.25;
-    overflow: hidden;
-}
-.order-tab .order-tab-box li{
-    float: left;
-    padding: 0 20px;
-    border-left: 1px solid #e0e0e0;
-    color: #757575;
-}
-.order-tab .order-tab-box li a {
-    color: #757575;
-    text-decoration: none;
-}
-.order-tab .order-tab-box li.first {
-    padding-left: 0;
-    border-left: 0;
-}
-.order-tab .order-tab-box li.active a{
-    color: #ff6700;
-}
+
 .order-manage .order-box{}
 .order-manage .order-box .order-items{
     border: 1px solid #ccc;
@@ -41,12 +12,14 @@
     padding:0 10px;
     font-size:13px;
 }
-.order-manage .order-box .order-items .order-body .goods-img div{
+.order-manage .order-box .order-items .order-body .img div{
     width: 120px;
     padding: 10px 0;
     height: 90px;
 }
-.order-manage .order-box table tr{}
+.order-manage .order-box table tr{
+    border-bottom: 1px solid #ccc;
+}
 .order-manage .order-box table tr td{padding:0 10px;}
 .order-manage .order-box table tr td img{
     width:100%;
@@ -59,15 +32,370 @@
     color:#ff6700;
 }
 /******* my-invoice start*******/
+.invoice-content{
+    overflow: hidden;
+    background: #f5f6fa;
+    border: 1px solid #e5e5e5;
+    padding:20px;
+}
+.invoice-content .left{
+    width:400px;
+}
+.invoice-content .left .selected-total-money,.invoice-content .right .wait-Print-money{
+    font-size: 14px;
+    color:#000;
+}
+.invoice-content .left .selected-total-money span{
+    color:#f68300;
+}
+.invoice-content .left .can-total-money{
+    padding-left: 20px;
+}
+.invoice-content .right{
+    width:400px;
+    text-align: right;
+}
+.invoice-content .right .wait-Print-money span{
+    color:#390;
+}
+.invoice-content .take-btn{
+    min-width: 100px;
+    height: 36px;
+    border: 0;
+    background: #00c1de;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+}
+.invoice-list table{
+    width:100%;
+    border-left:1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+}
+.invoice-list table tr{
+    border-bottom:1px solid #e5e5e5;
+    line-height: 40px;
+}
+.invoice-list table tr:hover{
+    background: #f5f6fa;
+}
+.invoice-list table tr td,.invoice-list table thead tr th{
+    padding:0 10px;
+}
+.invoice-list table tr .text-right{
+    text-align: right;
+}
+.invoice-list table thead tr{
+    background: #f5f6fa;
+    height:30px;
+    line-height: 30px;
 
+}
 
 /******* my-invoice end*******/
+/******* invoice-info start*******/
 
 
-
-
-
-
-
-
+.label-big-box li{
+    position: relative;
+    line-height: 60px;
+    padding-left: 100px;
+    min-height: 60px;
+    font-size: 14px;
+}
+.label-big-box label {
+    position: absolute;
+    left: 0;
+}
+.label-big-box .input-txt {
+    padding: 4px;
+    width: 220px;
+    height: 30px;
+    border: 1px solid #ccc;
+    line-height: 30px;
+    font-size: 14px;
+    color: #222;
+    background: #fff;
+}
+.label-big-box .except {
+    width: auto;
+    margin-right: 10px;
+    position: static;
+    display: inline;
+}
+.label-big-box .btn {
+    min-width: 100px;
+    height: 36px;
+    border: 0;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 20px;
+}
+.label-big-box .submit-btn {
+    background: #00c1de;
+}
+.label-big-box .cancel-btn {
+    background: #ec5b5b;
+}
+.invoice-info-box .info-items{
+    width:100%;
+    margin-bottom:30px;
+    border:1px solid #e5e5e5;
+}
+.invoice-info-box .info-items .title{
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+    font-weight: 800;
+    padding-left: 10px;
+    color: #333;
+    background: #f5f6fa;
+}
+.invoice-info-box .info-items .title span{
+    font-size: 14px;
+    cursor: pointer;
+    color:#0a9e00;
+    margin-left:50px;
+}
+.invoice-info-box .info-items ul{
+    padding:10px;
+}
+#edit-invoice-info{
+    position: fixed;
+    top:0;
+    left:0;
+    background: rgba(0,0,0,0.8);
+    width:100%;
+    height:100%;
+    z-index:999;
+    display: none;
+}
+.edit-invoice-info{
+    position: relative;
+    width:700px;
+    background: #fff;
+    margin: 100px auto;
+    padding: 20px;
+}
+.edit-invoice-info .title{
+    font-size: 18px;
+    border-bottom: 1px solid #ccc;
+    height: 40px;
+    margin-bottom: 20px;
+}
+.edit-invoice-info .title span{
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 30px;
+    display: block;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    cursor: pointer;
+}
+/******* invoice-info end*******/
+/******* cart start*******/
+.order-manage .order-box .order-items.cart-list-title,.cart-list-bottom{
+    margin-top:10px;
+}
+.order-manage .order-box .order-items.cart-list-title,.order-manage .order-box .order-items.cart-list-title tr{
+    border:none;
+}
+.order-manage .cart-box .order-items .checkbox{width:6%}
+.order-manage .cart-box .order-items .img{width:16%}
+.order-manage .cart-box .order-items .name{width:25%}
+.order-manage .cart-box .order-items .price{width:12%}
+.order-manage .cart-box .order-items .number{width:12%}
+.order-manage .cart-box .order-items .number div{}
+.order-manage .cart-box .order-items .number .btn{
+    width: 20px;
+    height: 28px;
+    background: #f0f0f0;
+    display: inline-block;
+    float: left;
+    border: 1px solid #e5e5e5;
+    text-align: center;
+    line-height: 28px;
+    cursor: pointer;
+}
+.order-manage .cart-box .order-items .number input{
+    width: 36px;
+    text-align: center;
+    float: left;
+    height: 28px;
+    border: 1px solid #aaa;
+}
+.order-manage .cart-box .order-items .number .btn:hover{
+    color:#f68300;
+    border-color:#f68300;
+}
+.order-manage .cart-box .order-items .money{width:12%}
+.order-manage .cart-box .order-items .operation{width:14%}
+.order-manage .order-box .order-items.cart-list-bottom,.order-manage .order-box .order-items.cart-list-bottom tr{
+    border:none;
+}
+.order-manage .order-box .order-items.cart-list-bottom{
+    background: #e5e5e5;
+    height: 40px;
+}
+.order-manage .order-box .order-items.cart-list-bottom .operation{padding:0;}
+.order-manage .order-box .order-items.cart-list-bottom .buy-btn{
+    width: 80px;
+    height: 41px;
+    background-color: #00C1DE;
+    text-align: center;
+    color: #fff;
+    line-height: 40px;
+    font-size: 14px;
+    border:none;
+    float: right;
+}
+/******* cart end*******/
+/******* rate start*******/
+.rate-manage .rate-box{}
+.rate-manage .rate-box table{
+    width:100%
+}
+.rate-manage .rate-box table tr{
+    border-bottom:1px solid #e5e5e5;
+}
+.rate-manage .rate-box table tr th{
+    height: 40px;
+    background: #f0f0f0;
+    padding:0 10px;
+    font-size: 14px;
+    font-weight: 800;
+}
+.rate-manage .rate-box table tr td{
+    padding:10px;
+}
+.rate-manage .rate-box table tr td .goods-info{
+    max-width: 200px;
+    display: block;
+}
+.rate-manage .rate-box table tr td .goods-info h3{
+    color:#00a2ca;
+}
+/******* rate end*******/
+/******* attention-item-box start*******/
+.attention-item-box{
+    overflow: hidden;
+}
+.attention-item-box .item-box{
+    width:145px;
+    text-align: center;
+    margin:0 20px 20px 0;
+}
+.attention-item-box .item-box:nth-child(6n+0){
+    margin-right:0;
+}
+.attention-item-box .item-box .imgs{
+    position:relative;
+    width:100%;
+}
+.attention-item-box .item-box .imgs a{
+    display: block;
+    width:100%
+}
+.attention-item-box .item-box .imgs img{width: 100%}
+.attention-item-box .item-box .imgs span{
+    position: absolute;
+    right:0;
+    top:0;
+    padding:5px;
+    background:rgba(0,0,0,0.8);
+    color:#fff;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s 0.4s;
+}
+.attention-item-box .item-box .imgs:hover span{
+    opacity: 1;
+    transition: opacity 0.2s 0.4s;
+}
+.attention-item-box .item-box .title{
+    font-size: 14px;
+    text-align: center;
+    line-height: 24px;
+}
+.attention-item-box .item-box .price{
+    color:#f68300;
+    text-align: center;
+}
+/******* attention-item-box end*******/
+/******* attention-shop-box start*******/
+.attention-shop-box .shop-item{
+    width:100%;
+    border-bottom:1px solid #e5e5e5;
+    padding-bottom: 10px;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+.attention-shop-box .shop-item .shop-info{
+    width: 180px;
+    padding-right: 20px;
+}
+.attention-shop-box .shop-item .shop-info .info{
+    margin:10px 0;
+}
+.attention-shop-box .shop-item .shop-info .cancel-btn{
+    padding:5px;
+    background: #00a2ca;
+    cursor: pointer;
+    color:#fff;
+}
+.attention-shop-box .shop-item .shop-info .imgs{
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    overflow: hidden;
+}
+.attention-shop-box .shop-item .shop-info .imgs img{
+    width:100%;
+}
+.attention-shop-box .shop-item .shop-info .info a{
+    color:#333;
+    text-decoration: none;
+}
+.attention-shop-box .shop-item .shop-info .info a:hover,.info a:hover h3{
+    color:#00a2ca;
+}
+.attention-shop-box .shop-item .shop-list{
+    width:770px;
+}
+.attention-shop-box .shop-item .shop-list .list-item{
+    width:138px;
+    margin-right:20px;
+}
+.attention-shop-box .shop-item .shop-list .list-item:nth-child(5n+0){
+    margin:0;
+}
+.attention-shop-box .shop-item .shop-list .list-item h3{
+    text-align: center;
+    line-height: 30px;
+}
+.attention-shop-box .shop-item .shop-list .list-item .imgs{
+    wdith:100%
+}
+.attention-shop-box .shop-item .shop-list .list-item .imgs a{
+    width:100%
+}
+.attention-shop-box .shop-item .shop-list .list-item .imgs a img{
+    width:100%
+}
+.attention-shop-box .shop-item .more{
+    width:100%;
+    height:30px;
+    line-height:30px;
+    text-align: right;
+    overflow: hidden;
+}
+.attention-shop-box .shop-item .more span{
+    color:#00a2ca;
+    cursor: pointer;
+}
+/******* attention-shop-box end*******/
 

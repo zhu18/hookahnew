@@ -16,4 +16,9 @@ public class MySellerController {
     public String index(){
         return "/myseller/index";
     }
+
+    @RequestMapping(value = "/myseller/publish", method = RequestMethod.GET)
+    public String publish(){
+        return "/myseller/publish";
+    }
 }

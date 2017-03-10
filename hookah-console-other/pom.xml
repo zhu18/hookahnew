@@ -213,6 +213,11 @@
       <version>3.1.0</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>tk.mybatis</groupId>
+      <artifactId>mapper</artifactId>
+    </dependency>
+
   </dependencies>
   <build>
     <resources>
@@ -272,7 +277,7 @@
           <archive>
             <addMavenDescriptor>true</addMavenDescriptor>
             <manifest>
-              <mainClass>com.jusfoun.hookah.console.other.ConsoleLauncher</mainClass>
+              <mainClass>com.jusfoun.hookah.console.other.ConsoleOtherLauncher</mainClass>
               <addClasspath>true</addClasspath>
               <classpathPrefix>lib/</classpathPrefix>
             </manifest>

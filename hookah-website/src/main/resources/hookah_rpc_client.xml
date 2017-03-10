@@ -7,7 +7,8 @@
 
   <!-- 注册中心配置 使用不同注册中心需要依赖对应的jar包。-->
   <!--<motan:registry regProtocol="local" name="registry"/>-->
-  <motan:registry regProtocol="consul" name="registry" address="127.0.0.1:8500"/>
+  <motan:registry regProtocol="consul" name="registry" address="192.168.15.90:8500"/>
+  <!--<motan:registry regProtocol="consul" name="registry" address="127.0.0.1:8500"/>-->
   <!--<motan:registry regProtocol="zookeeper" name="registry" address="127.0.0.1:2181" connectTimeout="2000"/>-->
 
   <!-- motan协议配置 -->
@@ -24,11 +25,11 @@
   <motan:referer id="userService"
                  interface="com.jusfoun.hookah.rpc.api.other.UserService"
                  connectTimeout="300" requestTimeout="300" basicReferer="HookahRPCClientBasicConfig"/>
-  <motan:referer id="testService"
-                 interface="com.jusfoun.hookah.rpc.api.other.TestService"
+  <motan:referer id="goodsService"
+                 interface="com.jusfoun.hookah.rpc.api.other.GoodsService"
                  connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
-  <motan:referer id="testMongoService"
-                 interface="com.jusfoun.hookah.rpc.api.other.TestMongoService"
+  <motan:referer id="goodsMongoService"
+                 interface="com.jusfoun.hookah.rpc.api.other.GoodsMongoService"
                  connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
   <motan:referer id="userMongoService"
                  interface="com.jusfoun.hookah.rpc.api.other.UserMongoService"

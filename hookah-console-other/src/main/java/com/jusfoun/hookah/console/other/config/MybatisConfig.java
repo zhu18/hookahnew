@@ -1,87 +1,100 @@
+/*
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2014-2016 abel533@gmail.com
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package com.jusfoun.hookah.console.other.config;
 
-import com.github.miemiedev.mybatis.paginator.OffsetLimitInterceptor;
 import com.github.pagehelper.PageHelper;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.TransactionManagementConfigurer;
 
 import javax.sql.DataSource;
 import java.util.Properties;
 
+/**
+ * MyBatis基础配置
+ *
+ * @author liuzh
+ * @since 2015-12-19 10:11
+ */
 @Configuration
-@MapperScan(basePackages = "com.jusfoun.hookah.core.dao")
-public class MybatisConfig {
+@EnableTransactionManagement
+@MapperScan("com.jusfoun.hookah.core.dao")
+public class MyBatisConfig implements TransactionManagementConfigurer {
 
-    private static final Logger logger = LoggerFactory.getLogger(MybatisConfig.class);
+    @Autowired
+    DataSource dataSource;
 
-    @Bean
-    public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
-        final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
+    @Bean(name = "sqlSessionFactory")
+    public SqlSessionFactory sqlSessionFactoryBean() {
+        SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
+        bean.setDataSource(dataSource);
+        bean.setTypeAliasesPackage("com.jusfoun.hookah.core.domain");
+
+        //分页插件
+        PageHelper pageHelper = new PageHelper();
+        Properties properties = new Properties();
+        properties.setProperty("reasonable", "true");
+        properties.setProperty("supportMethodsArguments", "true");
+        properties.setProperty("returnPageInfo", "check");
+        properties.setProperty("params", "count=countSql");
+        pageHelper.setProperties(properties);
+
+        //添加插件
+        bean.setPlugins(new Interceptor[]{pageHelper});
+        //添加XML目录
+        ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         try {
-            sessionFactory.setDataSource(dataSource);
-            //sessionFactory.setConfigLocation(new InputStreamResource(this.getClass().getResourceAsStream("/mybatis-config.xml")));
-            //分页插件
-            PageHelper pageHelper = new PageHelper();
-            Properties properties = new Properties();
-            properties.setProperty("reasonable", "true");
-            properties.setProperty("supportMethodsArguments", "true");
-            properties.setProperty("returnPageInfo", "check");
-            properties.setProperty("params", "count=countSql");
-            pageHelper.setProperties(properties);
-
-
-            Interceptor[] interceptor = {pageHelper, offsetLimitInterceptor()};
-            sessionFactory.setPlugins(interceptor);
-            //
-//            sqlSessionFactory = sessionFactory.getObject();
-
-//            org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
-//            configuration.setUseGeneratedKeys(true);//使用jdbc的getGeneratedKeys获取数据库自增主键值
-//            configuration.setDefaultExecutorType(ExecutorType.BATCH); //批量操作
-//            configuration.setUseColumnLabel(true);//使用列别名替换列名 select user as User
-//            configuration.setMapUnderscoreToCamelCase(true);//-自动使用驼峰命名属性映射字段   userId    user_id
-//            configuration.setLocalCacheScope(LocalCacheScope.SESSION);
-//            configuration.setLazyLoadingEnabled(true);
-//            configuration.setAggressiveLazyLoading(false);
-//            Set<String> methodNames = new HashSet() {{
-//                add("equals");
-//                add("clone");
-//                add("hashCode");
-//                add("toString");
-//            }};
-//            configuration.setLazyLoadTriggerMethods(methodNames);
-            //configuration.setLogImpl(Logger.class);
-//            sessionFactory.setConfiguration(configuration);
-
-            //添加XML目录
-            ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-            sessionFactory.setMapperLocations(resolver.getResources("classpath:com/jusfoun/hookah/core/dao/*.xml"));
+            bean.setMapperLocations(resolver.getResources("classpath:com/jusfoun/hookah/core/dao/*Mapper.xml"));
+            bean.getObject().getConfiguration().setMapUnderscoreToCamelCase(true);//设置驼峰
+            return bean.getObject();
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return sessionFactory.getObject();
     }
 
-    @Bean(destroyMethod="clearCache")
+    @Bean
     public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
-        logger.debug("---------> Set SqlSessionTemplate");
-        sqlSessionFactory.getConfiguration().setMapUnderscoreToCamelCase(true);
+//        sqlSessionFactory.getConfiguration().setMapUnderscoreToCamelCase(true);
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 
-    public OffsetLimitInterceptor offsetLimitInterceptor() throws Exception {
-        OffsetLimitInterceptor offsetLimitInterceptor = new OffsetLimitInterceptor();
-        offsetLimitInterceptor.setDialectClass("com.github.miemiedev.mybatis.paginator.dialect.MySQLDialect");
-        return offsetLimitInterceptor;
+    @Bean
+    @Override
+    public PlatformTransactionManager annotationDrivenTransactionManager() {
+        return new DataSourceTransactionManager(dataSource);
     }
-
 }
