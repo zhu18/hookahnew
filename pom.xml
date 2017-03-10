@@ -20,6 +20,7 @@
     <module>hookah-rpc-api-order</module>
     <module>hookah-rpc-api-shelf</module>
     <module>hookah-oauth2server</module>
+    <module>hookah-console-webapi</module>
   </modules>
 
   <properties>
