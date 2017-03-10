@@ -1,6 +1,8 @@
 package com.jusfoun.hookah.core.generic;
 
 import org.apache.ibatis.annotations.Param;
+import tk.mybatis.mapper.common.Mapper;
+import tk.mybatis.mapper.common.MySqlMapper;
 
 import java.util.List;
 
@@ -16,63 +18,15 @@ import java.util.List;
  * @author ShaoJianshuang
  * @since 2015年4月3日 下午18:02:45
  */
-public interface GenericDao<Model extends GenericModel> {
+public interface GenericDao<Model extends GenericModel> extends Mapper<Model>, MySqlMapper<Model> {
+    //TODO
+    //FIXME 特别注意，该接口不能被扫描到，否则会出错
 
-    /**
-     * 插入对象
-     *
-     * @param model 对象
-     */
-    int insertSelective(Model model);
     
     /**
      * 批量插入对象
      * @param list 对象列表
      */
     int insertBatch(List<Model> list);
-
-    /**
-     * 更新对象
-     *
-     * @param model 对象
-     */
-    int updateByPrimaryKeySelective(Model model);
-
-    /**
-     * 通过主键, 删除对象
-     *
-     * @param id 主键
-     */
-    <ID> int deleteByPrimaryKey(ID id);
-    
-    /**
-     * 通过主键, 删除对象
-     *
-     * @param model 主键
-     */
-    <ID> int delete(Model model);
-    /**
-     * 通过条件，删除对象
-     * @param example
-     * @return
-     */
-    <E> int deleteByExample(E example);
-
-    /**
-     * 通过主键, 查询对象
-     *
-     * @param id 主键
-     * @return
-     */
-    <ID>Model selectByPrimaryKey(ID id);
-    
-    <E> List<Model> selectByExample(E example);
-
-    <E> int updateByExampleSelective(@Param("record") Model record, @Param("example") E example);
-
-    <E> int updateByExample(@Param("record") Model record, @Param("example") E example);
-
-    int updateByPrimaryKey(Model record);
-    
-    <E> int countByExample(E example);
 }
+

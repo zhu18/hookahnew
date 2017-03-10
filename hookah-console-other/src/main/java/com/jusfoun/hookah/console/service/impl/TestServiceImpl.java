@@ -1,7 +1,6 @@
 package com.jusfoun.hookah.console.service.impl;
 
 import com.jusfoun.hookah.core.dao.TestMapper;
-import com.jusfoun.hookah.core.domain.Test;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.rpc.api.other.TestService;
 import org.springframework.stereotype.Service;

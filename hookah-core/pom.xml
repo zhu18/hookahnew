@@ -63,6 +63,10 @@
             <artifactId>mybatis-spring</artifactId>
         </dependency>
         <dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.github.miemiedev</groupId>
             <artifactId>mybatis-paginator</artifactId>
         </dependency>
