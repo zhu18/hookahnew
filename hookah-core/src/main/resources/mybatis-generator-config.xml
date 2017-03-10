@@ -53,7 +53,7 @@
       <property name="rootClass" value="com.jusfoun.hookah.core.generic.GenericModel"/>
     </javaModelGenerator>
     <!--生成映射文件存放位置-->
-    <sqlMapGenerator targetPackage="com.jusfoun.hookah.core.dao" targetProject="src/main/resources">
+    <sqlMapGenerator targetPackage="com.jusfoun.hookah.core.dao" targetProject="src/main/java">
       <property name="enableSubPackages" value="true"/>
 
     </sqlMapGenerator>

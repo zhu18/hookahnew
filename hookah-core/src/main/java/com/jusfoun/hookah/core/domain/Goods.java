@@ -1,6 +1,9 @@
 package com.jusfoun.hookah.core.domain;
 
 import com.jusfoun.hookah.core.generic.GenericModel;
+import org.springframework.data.annotation.Id;
+
+import javax.persistence.GeneratedValue;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -11,6 +14,8 @@ public class Goods extends GenericModel {
      *
      * @mbggenerated
      */
+    @Id
+    @GeneratedValue(generator = "UUID")
     private String goodsId;
 
     /**

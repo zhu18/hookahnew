@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.webiste.controller;
 
+import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.rpc.api.other.*;
@@ -31,10 +32,10 @@ public class IndexController {
     UserService userService;
 
     @Resource
-    TestService testService;
+    GoodsService goodsService;
 
     @Resource
-    TestMongoService testMongoService;
+    GoodsMongoService goodsMongoService;
 
     @Resource
     UserMongoService userMongoService;
@@ -62,7 +63,7 @@ public class IndexController {
     @RequestMapping(value = "/select", method = RequestMethod.GET)
     @ResponseBody
     public Object select(Model model) {
-        List<Test> list = (List) testService.selectList();
+        List<Goods> list = (List) goodsService.selectList();
 
         return list;
     }
@@ -70,38 +71,37 @@ public class IndexController {
     @RequestMapping(value = "/insert", method = RequestMethod.GET)
     @ResponseBody
     public Object insert(Model model) {
-        Test t2 = new Test();
-        t2.setName("wwwwww");
-        t2.setId("ee");
-        testService.insert(t2);
+        Goods t2 = new Goods();
+        t2.setGoodsName("wwwwww");
+        goodsService.insert(t2);
         return "success";
     }
 
     @RequestMapping(value = "/mselect", method = RequestMethod.GET)
     @ResponseBody
     public Object mselect(Model model) {
-        List<Test> list = (List) testMongoService.selectList();
+        List<Goods> list = (List) goodsMongoService.selectList();
 
         return list;
     }
 
     @RequestMapping(value = "/mselectone", method = RequestMethod.GET)
     @ResponseBody
-    public Test mselectone(Model model) {
+    public Goods mselectone(Model model) {
         List<Condition> filters = new ArrayList(1);
         filters.add(Condition.eq("id","ee"));
-        Test test = (Test) testMongoService.selectOne(filters);
+        Goods goods = (Goods) goodsMongoService.selectOne(filters);
 
-        return test;
+        return goods;
     }
 
     @RequestMapping(value = "/minsert", method = RequestMethod.GET)
     @ResponseBody
     public Object minsert(Model model) {
-        Test t2 = new Test();
-        t2.setName("xxxxxxxx");
-        t2.setId(UUID.randomUUID().toString());
-        testMongoService.insert(t2);
+        Goods t2 = new Goods();
+        t2.setGoodsName("xxxxxxxx");
+        t2.setGoodsId(UUID.randomUUID().toString());
+        goodsMongoService.insert(t2);
         return "success";
     }
 
