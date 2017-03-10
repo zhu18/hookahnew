@@ -47,18 +47,18 @@
       <property name="forceBigDecimals" value="false"/>
     </javaTypeResolver>
     <!--生成Model类存放位置-->
-    <javaModelGenerator targetPackage="com.jusfoun.hookah.core.domain" targetProject="src/main/java">
+    <javaModelGenerator targetPackage="com.jusfoun.hookah.core.domain" targetProject="src/main/generate">
       <property name="enableSubPackages" value="true"/>
       <property name="trimStrings" value="true"/>
       <property name="rootClass" value="com.jusfoun.hookah.core.generic.GenericModel"/>
     </javaModelGenerator>
     <!--生成映射文件存放位置-->
-    <sqlMapGenerator targetPackage="com.jusfoun.hookah.core.dao" targetProject="src/main/java">
+    <sqlMapGenerator targetPackage="com.jusfoun.hookah.core.dao" targetProject="src/main/generate">
       <property name="enableSubPackages" value="true"/>
 
     </sqlMapGenerator>
     <!--生成Dao类存放位置-->
-    <javaClientGenerator type="XMLMAPPER" targetPackage="com.jusfoun.hookah.core.dao" targetProject="src/main/java">
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.jusfoun.hookah.core.dao" targetProject="src/main/generate">
       <property name="enableSubPackages" value="true"/>
       <property name="rootInterface" value="com.jusfoun.hookah.core.dao.GenericDao&lt;Model&gt;"/>
     </javaClientGenerator>
@@ -71,6 +71,9 @@
            enableDeleteByExample="true" enableSelectByExample="true"
            selectByExampleQueryId="true" >
       <generatedKey column="id" sqlStatement="select replace(uuid(),'-','') from dual"/>
+      <columnOverride column="goods_brief" javaType="java.lang.String" jdbcType="VARCHARAR" />
+      <columnOverride column="goods_desc" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <columnOverride column="seller_note" javaType="java.lang.String" jdbcType="VARCHAR" />
     </table>
 
   </context>

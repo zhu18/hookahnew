@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.jusfoun.hookah.core.dao.GoodsMapper" >
+  <sql id="generateKey">
+    select replace(uuid(),'-','')
+  </sql>
   <!-- 批量插入 -->
-  <insert id="insertBatch" parameterType="java.util.List">
-    <selectKey keyProperty="goodsId" order="BEFORE" resultType="java.lang.String" keyColumn="goods_id">
-      select replace(uuid(),'-','')
-    </selectKey>
+  <insert id="insertBatchSelective" parameterType="java.util.List">
     insert into goods
-    (
-    goods_id,goods_name
-    )
+    ( goods_id, goods_sn, domain_id, goods_name, goods_brief, goods_desc, keywords, goods_img,
+    goods_status, goods_number, warn_number, onsale_start_date, onsale_end_date, cat_id,
+    add_time, last_update_time, user_id, attr_id, is_real, shop_price, seller_note, add_user)
     values
-    <foreach collection="list" index="index" item="item" separator=",">
+    <foreach collection="list"  index="index" item="item" separator=",">
       (
-      #{goodsId,jdbcType=VARCHAR},#{item.goodsName,jdbcType=VARCHAR}
+      (<include refid="generateKey"/>), #{item.goodsSn,jdbcType=VARCHAR}, #{item.domainId,jdbcType=VARCHAR},
+      #{item.goodsName,jdbcType=VARCHAR}, #{item.goodsBrief,jdbcType=VARCHAR}, #{item.goodsDesc,jdbcType=VARCHAR},
+      #{item.keywords,jdbcType=VARCHAR}, #{item.goodsImg,jdbcType=VARCHAR}, #{item.goodsStatus,jdbcType=TINYINT},
+      #{item.goodsNumber,jdbcType=INTEGER}, #{item.warnNumber,jdbcType=INTEGER},
+      #{item.onsaleStartDate,jdbcType=TIMESTAMP},
+      #{item.onsaleEndDate,jdbcType=TIMESTAMP}, #{item.catId,jdbcType=VARCHAR}, #{item.addTime,jdbcType=TIMESTAMP},
+      #{item.lastUpdateTime,jdbcType=TIMESTAMP}, #{item.userId,jdbcType=VARCHAR}, #{item.attrId,jdbcType=VARCHAR},
+      #{item.isReal,jdbcType=INTEGER}, #{item.shopPrice,jdbcType=DECIMAL}, #{item.sellerNote,jdbcType=VARCHAR},
+      #{item.addUser,jdbcType=VARCHAR}
       )
     </foreach>
   </insert>

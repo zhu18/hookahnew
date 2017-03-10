@@ -1,6 +1,5 @@
 package com.jusfoun.hookah.core.generic;
 
-import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 import tk.mybatis.mapper.common.MySqlMapper;
 
@@ -27,6 +26,6 @@ public interface GenericDao<Model extends GenericModel> extends Mapper<Model>, M
      * 批量插入对象
      * @param list 对象列表
      */
-    int insertBatch(List<Model> list);
+    int insertBatchSelective(List<Model> list);
 }
 
