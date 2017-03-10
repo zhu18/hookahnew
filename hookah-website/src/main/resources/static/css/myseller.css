@@ -1,5 +1,6 @@
+/******** myseller-wrapper start ********/
 .myseller-wrapper .category-label{
-    height:40px;
+    height:50px;
     padding-left:130px;
     position: relative;
     margin-left: 200px;
@@ -20,10 +21,147 @@
     padding: 0 5px;
 }
 .myseller-wrapper .category-label span{
+    width: 50px;
+    margin-left: -50px;
+    display: inline-block;
+    height: 32px;
+    background: #333;
+    line-height: 32px;
+    position: absolute;
+    text-align: center;
+    cursor: pointer;
+    color:#fff;
+}
+.myseller-wrapper .category-label select{
+    width: 312px;
+    height: 32px;
+}
+.myseller-wrapper .select-category-box{
+    padding:10px;
+    background: #f5f6fa;
+    border: 1px solid #ccc;
+    overflow: hidden;
+}
+.myseller-wrapper .select-category-box .select-category-item{
+    padding:10px;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    width: 200px;
+
+    position: relative;
+}
+.myseller-wrapper .select-category-box .select-category-item .item-box{
+    height:300px;
+    overflow: auto;
+}
+.myseller-wrapper .select-category-item .item-box dl{
+    border-bottom:1px dotted #ccc;
+    padding:10px 0;
+}
+.myseller-wrapper .select-category-item .item-box dl:last-child{
+    border:none;
+}
+.myseller-wrapper .select-category-item .item-box dt{
+    color: #00c1de;
+    font-weight: 800;
+}
+.myseller-wrapper .select-category-item .item-box dd{}
+.myseller-wrapper .select-category-box .select-category-item .search-item{
+    width:100%;
+    position: relative;
+}
+.myseller-wrapper .select-category-box .select-category-item .search-item span{
+    position: absolute;
+    font-size: 15px;
+    left: 4px;
+    top: 3px
+}
+.myseller-wrapper .select-category-box .select-category-item .search-item input{
+    width: 100%;
+    height: 24px;
+    padding-left: 20px;
+    box-sizing: border-box;
+}
+.myseller-wrapper .cate-path{
+    color: #444;
+    padding-top: 9px;
+    position: relative;
+    line-height: 22px;
+    height: 54px;
+}
+.myseller-wrapper .cate-path .clearfix{
+    background-color: #FFFAF2;
+    border: 1px solid #FEDBAB;
+    padding: 4px 27px;
+}
+.myseller-wrapper .cate-path .clearfix label{
+    font-size: 14px;
+    font-weight: 800;
+}
+.myseller-wrapper .cate-path .arrow{
+    left: 43px;
+    top: 3px;
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 7px solid #fedbab;
+}
+.pulish-btn{text-align: center}
+.pulish-btn a{
+    display: inline-block;
+    min-width: 150px;
+    height: 40px;
+    line-height: 40px;
+    text-decoration: none;
+    border: 0;
+    background: #00c1de;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+/******** myseller-wrapper end ********/
+/******** pulish-wrapper start ********/
+.pulish-wrapper .publish-box{
+    border:1px solid #e5e5e5;
 
 }
-.myseller-wrapper .category-label select{}
-
-
-
-
+.pulish-wrapper .publish-box .category-title{
+    line-height: 30px;
+    background: #f5f6fa;
+    padding-left: 20px;
+    margin-bottom: 10px;
+}
+.pulish-wrapper .publish-box h1{
+    font-size: 14px;
+    padding: 0 20px;
+    color: #000;
+}
+.pulish-wrapper .publish-box .struct{
+    margin:10px 0;
+    padding:5px;
+}
+.pulish-wrapper .publish-box .struct table{width:100%}
+.pulish-wrapper .publish-box .struct tr{}
+.pulish-wrapper .publish-box .struct tr td{
+    padding:2px 5px 8px;
+    line-height: 24px;
+}
+.text-box input{
+    width: 700px;
+    border: 1px solid #ccc;
+    height: 26px;
+    color: #333;
+    padding: 0 10px;
+}
+.input-count{
+    margin-left:10px;
+    vertical-align: top;
+}
+.pulish-wrapper .publish-box .struct tr td.bar{
+    width: 120px;
+    text-align: right;
+    vertical-align: top;
+}
+/******** pulish-wrapper end ********/
