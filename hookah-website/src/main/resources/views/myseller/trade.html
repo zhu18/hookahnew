@@ -1,0 +1,90 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" type="text/css" href="/static/css/user-center-menu.css">
+<link rel="stylesheet" type="text/css" href="/static/css/myseller.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="user-center">
+    <div class="user-center-bd y-row">
+        <div class="user-center-menu y-left">
+            <%include("/layout/user-center-menu.html"){}%>
+        </div>
+        <div class="user-center-box y-right">
+            <h3 class="center-title">交易管理</h3>
+            <div class="trade-wrapper">
+                <div class="wrapper-tab">
+                    <ul class="wrapper-tab-box">
+                        <li class="first active"><a href="/myseller/trade">已出售商品</a></li>
+                        <li class=""><a href="/myseller/rate">评价管理</a></li>
+                    </ul>
+                </div>
+                <div class="trade-box">
+                    <table>
+                        <tr>
+                            <th class="text-center">宝贝</th>
+                            <th>订单号</th>
+                            <th class="text-right">单价（元）</th>
+                            <th class="text-center">数量</th>
+                            <th>买家</th>
+                            <th>交易状态</th>
+                            <th class="text-right">实收款（元）</th>
+                            <th>评价</th>
+                            <th class="text-center">操作</th>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <a href="javascript:void(0)">
+                                    <img src="../../static/img/zheng.jpg" alt="">
+                                    <p>这个是商品的title</p>
+                                </a>
+                                
+                            </td>
+                            <td>1345134512351234</td>
+                            <td class="text-right">8000</td>
+                            <td class="text-center">2</td>
+                            <td>怪蜀叔</td>
+                            <td>成功</td>
+                            <td class="text-right">16000</td>
+                            <td>
+                                <span>好评</span>
+                                <span>tip:速度快，信息全</span>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)">无操作项</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <a href="javascript:void(0)">
+                                    <img src="../../static/img/zheng.jpg" alt="">
+                                    <p>这个是商品的title</p>
+                                </a>
+                            </td>
+                            <td>1345134512351234</td>
+                            <td class="text-right">8000</td>
+                            <td class="text-center">2</td>
+                            <td>怪蜀叔怪蜀叔</td>
+                            <td>成功</td>
+                            <td class="text-right">16000</td>
+                            <td>
+                                <span>好评</span>
+                                <span>tip:速度快，信息全</span>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)">无操作项</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <%include("/layout/pageaction.html"){} %>
+            </div>
+        </div>
+    </div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>

@@ -21,4 +21,34 @@ public class MySellerController {
     public String publish(){
         return "/myseller/publish";
     }
+
+    @RequestMapping(value = "/myseller/trade", method = RequestMethod.GET)
+    public String trade(){
+        return "/myseller/trade";
+    }
+
+    @RequestMapping(value = "/myseller/tradeing", method = RequestMethod.GET)
+    public String tradeing(){
+        return "/myseller/tradeing";
+    }
+
+    @RequestMapping(value = "/myseller/rate", method = RequestMethod.GET)
+    public String mysellrate(){
+        return "/myseller/rate";
+    }
+
+    @RequestMapping(value = "/myseller/custom", method = RequestMethod.GET)
+    public String custom(){
+        return "/myseller/custom";
+    }
+
+    @RequestMapping(value = "/myseller/customer", method = RequestMethod.GET)
+    public String customer(){
+        return "/myseller/customer";
+    }
+
+    @RequestMapping(value = "/myseller/illegal", method = RequestMethod.GET)
+    public String illegal(){
+        return "/myseller/illegal";
+    }
 }

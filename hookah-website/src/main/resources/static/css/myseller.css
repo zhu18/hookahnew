@@ -122,10 +122,10 @@
     cursor: pointer;
 }
 /******** myseller-wrapper end ********/
-/******** pulish-wrapper start ********/
+/******** publish-wrapper start ********/
 .pulish-wrapper .publish-box{
     border:1px solid #e5e5e5;
-
+    margin:20px 0;
 }
 .pulish-wrapper .publish-box .category-title{
     line-height: 30px;
@@ -170,6 +170,7 @@
     height: 55px;
     color: #333;
     padding: 2px 5px;
+    resize:none;
 }
 .input-count{
     margin-left:10px;
@@ -181,4 +182,152 @@
     text-align: right;
     vertical-align: top;
 }
-/******** pulish-wrapper end ********/
+.table-box{width:712px;}
+.table-box table{
+    /*border: 1px solid #d7d7d7;*/
+}
+.table-box table th{
+    background-color: #f8f8f8;
+    border: 1px solid #d7d7d7;
+    white-space: nowrap;
+    font-weight: 400;
+    padding: 1px 0;
+    text-align: center;
+}
+.table-box table td{
+    border: 1px solid #d7d7d7;
+    padding: 1px 0;
+    text-align: center;
+    white-space: nowrap;
+}
+.inputbox input{
+    border: 0;
+    width: 100%;
+    text-align: center;
+    background: #fff;
+    height: 23px;
+    text-indent: 3px;
+}
+.inputbox textarea{
+    border: 0;
+    width: 100%;
+    text-align: center;
+    background: #fff;
+    min-height: 23px;
+    text-indent: 3px;
+}
+.checkbox-box input{
+    margin-right: 5px;
+}
+.radio-box input{
+    margin-right: 5px;
+}
+.radio-box label,.checkbox-box label{
+    margin-right:15px;
+}
+.wangEditor-container .wangEditor-menu-container{
+    background: #f1f1f1;
+}
+.wangEditor-wrapper{
+    wdith:712px;
+}
+.info.block {
+    line-height: 26px;
+    display: inline-block;
+    color: #767676;
+}
+.multimage-wrap {
+    margin-bottom: 10px;
+}
+.multimage-wrap .image-list {
+    display: inline-block;
+}
+.multimage-wrap .image-list li {
+    border: 1px solid #cdcdcd;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    height: 100px;
+    width: 100px;
+    margin: 0 10px 0 0;
+}
+.multimage-wrap .image-list li {
+    border: 1px solid #cdcdcd;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    height: 100px;
+    width: 100px;
+    margin: 0 10px 0 0;
+}
+.multimage-wrap .image-list li .preview {
+    z-index: 0;
+    text-align: center;
+    line-height: 90px;
+    font-family: arial;
+    background-color: #f6f6f6;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.multimage-wrap .image-list li .preview .upload-tip {
+    color: #d7d7d7;
+    cursor: pointer;
+    font-size: 42px;
+    position: relative;
+    top: 5px;
+    text-decoration: none;
+}
+.multimage-wrap .image-list li .info {
+    display: inline-block;
+    position: absolute;
+    background: rgba(33,33,33,.7);
+    color: #fff;
+    left: 0;
+    top: 0;
+    z-index: 7;
+    width: 100%;
+    text-align: center;
+    filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#b2404040, endColorstr=#b2404040)";
+}
+.multimage-wrap .image-list li .info em {
+    color: #f60;
+}
+/******** publish-wrapper end ********/
+/******** trade-wrapper end ********/
+.trade-wrapper{}
+.trade-box{}
+.trade-box table{
+    width:100%;
+}
+.trade-box table tr{
+    border: 1px solid #e5e5e5;
+}
+.trade-box table th {
+    background: #f5f6fa;
+    height: 30px;
+    line-height: 30px;
+    padding:0 10px;
+}
+.trade-box table td {
+    padding:0 10px;
+}
+.trade-box table td a{
+    display: block;
+    padding:10px;
+    text-align:center;
+}
+.trade-box table td a img{
+    width:70px;
+}
+.trade-box table td a p{
+
+}
+.trade-box .text-right{text-align: right}
+.trade-box .text-center{text-align: center}
+/******** trade-wrapper end ********/

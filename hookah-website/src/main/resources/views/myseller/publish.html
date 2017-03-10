@@ -3,6 +3,7 @@ var head = {
 %>
 <link rel="stylesheet" type="text/css" href="/static/css/user-center-menu.css">
 <link rel="stylesheet" type="text/css" href="/static/css/myseller.css">
+<link rel="stylesheet" type="text/css" href="/static/css/wangEditor/wangEditor.min.css">
 <%};%>
 
 <%
@@ -14,14 +15,8 @@ var htmlPart = {
             <%include("/layout/user-center-menu.html"){}%>
         </div>
         <div class="user-center-box y-right">
-            <h3 class="center-title">商品管理</h3>
+            <h3 class="center-title">发布商品</h3>
             <div class="pulish-wrapper">
-                <div class="wrapper-tab">
-                    <ul class="wrapper-tab-box">
-                        <li class="first active"><a href="/myseller">发布商品</a></li>
-                        <li><a href="javascript:void(0)">出售中的商品</a></li>
-                    </ul>
-                </div>
                 <div class="publish-box">
                     <h3 class="category-title">类目：查询 >> 失信被执行人查询</h3>
                     <h1>1.商品基本信息</h1>
@@ -30,29 +25,458 @@ var htmlPart = {
                             <tr>
                                 <td class="bar">商品名称：</td>
                                 <td>
-                                    <div class="text-box"><input type="text"><span class="input-count"><strong>0</strong>/60</span></div>
-                                    <div class="errors"><ul><li><span class="errorinfo">不能超过60个字符!</span></li></ul></div>
+                                    <div class="text-box"><input type="text">
+                                        <span class="input-count"><strong>0</strong>/60</span>
+                                    </div>
+                                    <div class="errors">
+                                        <ul>
+                                            <li><span class="errorinfo">不能超过60个字符!</span></li>
+                                        </ul>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="bar">商品简介：</td>
                                 <td>
-                                    <div class="textarea-box"><textarea type="text"></textarea><span class="input-count"><strong>0</strong>/150</span></div>
+                                    <div class="textarea-box">
+                                        <textarea type="text"></textarea>
+                                        <span class="input-count"><strong>0</strong>/150</span>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bar">商品简介：</td>
+                                <td class="bar">商品图片：</td>
                                 <td>
-                                    <div class="textarea-box"><textarea type="text"></textarea><span class="input-count"><strong>0</strong>/150</span></div>
+                                    <div class="block info" style="margin: 0px 0px 3px;">
+                                        宝贝主图大小不能超过3MB。
+                                    </div>
+                                    <div class="multimage-wrap">
+                                        <ul class="image-list">
+                                            <li>
+                                                <div class="operate">
+                                                    <i class="icon iconfont icon-sortleft toleft" title="左移"></i>
+                                                    <i class="icon iconfont icon-sortright toright" title="右移"></i>
+                                                    <i class="icon iconfont icon-remove del" title="删除"></i>
+                                                </div>
+                                                <div class="preview">
+                                                    <a title="上传图片" class="upload-tip">+</a>
+                                                </div>
+                                                <span class="info"><em>*</em>宝贝主图</span>
+                                            </li>
+                                            <li>
+                                                <div class="preview">
+                                                    <a title="上传图片" tabindex="0" class="upload-tip" style="display: inline;">
+                                                        <iclass="icon iconfont icon-tianjia"></i>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bar">单价及库存：</td>
+                                <td>
+                                    <div class="table-box">
+                                        <table class="price-table">
+                                            <thead>
+                                            <tr>
+                                                <th>单价（元）</th>
+                                                <th>总库存（件）</th>
+                                                <th>商家编码</th>
+                                                <th>商品条形码</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="texbox">
+                                                        <div class="inputbox"><input type="text"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="texbox">
+                                                        <div class="inputbox"><input type="text"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="texbox" id="outerId">
+                                                        <div class="inputbox"><input type="text"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="texbox" id="barcode">
+                                                        <div class="inputbox"><input type="text"></div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bar">规格及价格：</td>
+                                <td>
+                                    <div class="table-box">
+                                        <table class="price-table">
+                                            <thead>
+                                            <tr>
+                                                <th>规格（次）</th>
+                                                <th>价格（元）</th>
+                                                <th>操作</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="texbox">
+                                                        <div class="inputbox"><input type="text" value="2000"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="texbox">
+                                                        <div class="inputbox"><input type="text" value="2000"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <span>-</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="texbox">
+                                                        <div class="inputbox"><input type="text" value="4000"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="texbox">
+                                                        <div class="inputbox"><input type="text" value="3500"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <span>-</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="texbox">
+                                                        <div class="inputbox"><input type="text"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="texbox">
+                                                        <div class="inputbox"><input type="text"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <span>+</span>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bar">商品描述：</td>
+                                <td>
+                                    <div class="wangEditor-wrapper">
+                                        <textarea id="textarea1" style="height:300px;">
+
+                                        </textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h1>2.API信息</h1>
+                    <div class="struct">
+                        <table>
+                            <tr>
+                                <td class="bar">接口地址：</td>
+                                <td>
+                                    <div class="text-box">
+                                        <input type="text">
+                                        <span class="input-count"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bar">请求示例：</td>
+                                <td>
+                                    <div class="text-box">
+                                        <input type="text">
+                                        <span class="input-count"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bar">接口描述：</td>
+                                <td>
+                                    <div class="textarea-box">
+                                        <textarea type="text"></textarea>
+                                        <span class="input-count"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bar">请求参数：</td>
+                                <td>
+                                    <div class="table-box">
+                                        <table class="price-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>名称</th>
+                                                    <th>类型</th>
+                                                    <th>必填</th>
+                                                    <th>示例</th>
+                                                    <th>描述</th>
+                                                    <th>操作</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <div class="texbox">
+                                                            <div class="inputbox"><input type="text" value="appkey"></div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="texbox">
+                                                            <div class="inputbox"><input type="text" value="String"></div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="texbox">
+                                                            <div class="inputbox"><input type="text" value="是"></div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="texbox">
+                                                            <div class="inputbox"><input type="text" value=""></div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="texbox">
+                                                            <div class="inputbox"><textarea>您申请的appkey</textarea></div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <span>-</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="texbox">
+                                                            <div class="inputbox"><input type="text" value="place"></div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="texbox">
+                                                            <div class="inputbox"><input type="text" value="String"></div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="texbox">
+                                                            <div class="inputbox"><input type="text" value="否"></div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="texbox">
+                                                            <div class="inputbox"><input type="text" value="山东"></div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="texbox">
+                                                            <div class="inputbox"><textarea>省份（省/直辖市/自治区）</textarea></div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <span>-</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="texbox">
+                                                            <div class="inputbox"><input type="text" value=""></div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="texbox">
+                                                            <div class="inputbox"><input type="text" value=""></div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="texbox">
+                                                            <div class="inputbox"><input type="text" value=""></div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="texbox">
+                                                            <div class="inputbox"><input type="text" value=""></div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="texbox">
+                                                            <div class="inputbox"><textarea></textarea></div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <span>+</span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bar">请求参数：</td>
+                                <td>
+                                    <div class="table-box">
+                                        <table class="price-table">
+                                            <thead>
+                                            <tr>
+                                                <th>错误码</th>
+                                                <th>说明</th>
+                                                <th>操作</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="texbox">
+                                                        <div class="inputbox"><input type="text" value="10000"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="texbox">
+                                                        <div class="inputbox"><textarea>成功</textarea></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <span>-</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="texbox">
+                                                        <div class="inputbox"><input type="text" value="10001"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="texbox">
+                                                        <div class="inputbox">
+                                                            <textarea>错误的请求appkey错误的请求appkey错误的请求appkey错误的请求appkey</textarea>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <span>-</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="texbox">
+                                                        <div class="inputbox"><input type="text" value=""></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="texbox">
+                                                        <div class="inputbox"><textarea></textarea></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <span>+</span>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h1>3.售后保障信息</h1>
+                    <div class="struct">
+                        <table>
+                            <tr>
+                                <td class="bar">售后服务：</td>
+                                <td>
+                                    <div class="checkbox-box">
+                                        <label>
+                                            <input type="checkbox" checked>提供发票
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bar"></td>
+                                <td>
+                                    <div class="checkbox-box">
+                                        <label>
+                                            <input type="checkbox" >保修服务
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bar"></td>
+                                <td>
+                                    <div class="checkbox-box">
+                                        <label>
+                                            <input type="checkbox" >退换货承诺：凡通过正常流程购买本平台商品，若存在质量问题或与描述不符，本店将主动提供退换货服务
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h1>4.商品其他信息</h1>
+                    <div class="struct">
+                        <table>
+                            <tr>
+                                <td class="bar">库存计数：</td>
+                                <td>
+                                    <div class="radio-box">
+                                        <label>
+                                            <input type="radio" name="121">买家拍下减库存
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="121" checked>买家付款减库存
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bar">上架时间：</td>
+                                <td>
+                                    <div class="radio-box">
+                                        <label>
+                                            <input type="radio" name="122" checked>立刻上架
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="122">定时上架
+                                        </label>
+                                    </div>
                                 </td>
                             </tr>
                         </table>
                     </div>
                 </div>
+                <div class="pulish-btn">
+                    <a href="/myseller/publish">发布商品</a>
+                </div>
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript" src="../../static/js/wangEditor.min.js"></script>
+<script type="text/javascript">
+    var editor = new wangEditor('textarea1');
+    editor.create();
+</script>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
