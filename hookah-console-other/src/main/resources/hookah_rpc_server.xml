@@ -7,12 +7,11 @@
 
 
   <!-- 业务具体实现类 -->
-  <bean id="userService" class="com.jusfoun.hookah.console.service.impl.UserServiceImpl"/>
-  <bean id="goodsService" class="com.jusfoun.hookah.console.service.impl.GoodsServiceImpl"/>
-  <bean id="goodsMongoService" class="com.jusfoun.hookah.console.service.impl.GoodsMongoServiceImpl"/>
-  <bean id="userMongoService" class="com.jusfoun.hookah.console.service.impl.UserMongoServiceImpl"/>
-  <bean id="mqSenderService" class="com.jusfoun.hookah.console.service.impl.MqSenderServiceImpl"/>
-
+  <bean id="userService" class="com.jusfoun.hookah.console.other.service.impl.UserServiceImpl"/>
+  <bean id="goodsService" class="com.jusfoun.hookah.console.other.service.impl.GoodsServiceImpl"/>
+  <bean id="goodsMongoService" class="com.jusfoun.hookah.console.other.service.impl.GoodsMongoServiceImpl"/>
+  <bean id="userMongoService" class="com.jusfoun.hookah.console.other.service.impl.UserMongoServiceImpl"/>
+  <bean id="mqSenderService" class="com.jusfoun.hookah.console.other.service.impl.MqSenderServiceImpl"/>
   <!-- 注册中心配置 使用不同注册中心需要依赖对应的jar包。如果不使用注册中心，可以把check属性改为false，忽略注册失败。-->
   <!--<motan:registry regProtocol="local" name="registry" />-->
   <motan:registry regProtocol="consul" name="registry" address="192.168.15.90:8500"/>

@@ -3,17 +3,17 @@
 <mapper namespace="com.jusfoun.hookah.core.dao.GoodsMapper" >
   <!-- 批量插入 -->
   <insert id="insertBatch" parameterType="java.util.List">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      select replace(uuid(),'-','') from dual
+    <selectKey keyProperty="goodsId" order="BEFORE" resultType="java.lang.String" keyColumn="goods_id">
+      select replace(uuid(),'-','')
     </selectKey>
     insert into goods
     (
-    goods_id
+    goods_id,goods_name
     )
     values
     <foreach collection="list" index="index" item="item" separator=",">
       (
-      #{id,jdbcType=VARCHAR}
+      #{goodsId,jdbcType=VARCHAR},#{item.goodsName,jdbcType=VARCHAR}
       )
     </foreach>
   </insert>

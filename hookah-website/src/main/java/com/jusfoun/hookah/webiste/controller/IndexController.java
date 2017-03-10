@@ -77,6 +77,20 @@ public class IndexController {
         return "success";
     }
 
+    @RequestMapping(value = "/insertbatch", method = RequestMethod.GET)
+    @ResponseBody
+    public Object insertBatch(Model model) {
+        List<Goods> list = new ArrayList<Goods>();
+        Goods t1 = new Goods();
+        t1.setGoodsName("t111111111111");
+        list.add(t1);
+        Goods t2 = new Goods();
+        t2.setGoodsName("t2222222222");
+        list.add(t2);
+        goodsService.insertBatch(list);
+        return "success";
+    }
+
     @RequestMapping(value = "/mselect", method = RequestMethod.GET)
     @ResponseBody
     public Object mselect(Model model) {
