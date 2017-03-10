@@ -151,13 +151,30 @@
 .text-box input{
     width: 700px;
     border: 1px solid #ccc;
-    height: 26px;
+    height: 22px;
     color: #333;
-    padding: 0 10px;
+    padding: 2px 5px;
+}
+.errors ul li {
+    white-space: normal;
+    word-wrap: break-word;
+    overflow: hidden;
+    word-break: break-all;
+    padding: 0 10px 0 0;
+    color: #EA4A36;
+    line-height: 24px;
+}
+.textarea-box textarea{
+    width: 700px;
+    border: 1px solid #ccc;
+    height: 55px;
+    color: #333;
+    padding: 2px 5px;
 }
 .input-count{
     margin-left:10px;
     vertical-align: top;
+    display: inline-block;
 }
 .pulish-wrapper .publish-box .struct tr td.bar{
     width: 120px;
