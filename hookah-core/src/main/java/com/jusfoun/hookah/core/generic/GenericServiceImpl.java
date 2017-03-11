@@ -122,7 +122,7 @@ public class GenericServiceImpl<Model extends GenericModel, ID extends Serializa
     @Override
     public int insertBatch(List<Model> list) {
         logger.info(String.format("class %s:method %s", this.getClass().getName(), "insertBatch(List<Model> list)"));
-        dao.insertBatchSelective(list);
+        dao.insertBatch(list);
         return list.size();
     }
 

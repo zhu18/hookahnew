@@ -22,4 +22,10 @@ public class UserCenterController {
 
     @RequestMapping(value = "/usercenter/safeset", method = RequestMethod.GET)
     public String safeset() { return "usercenter/safeset"; }
+
+    @RequestMapping(value = "/usercenter/recharge", method = RequestMethod.GET)
+    public String recharge() { return "usercenter/recharge"; }
+
+    @RequestMapping(value = "/usercenter/withdrawals", method = RequestMethod.GET)
+    public String withdrawals() { return "usercenter/withdrawals"; }
 }
