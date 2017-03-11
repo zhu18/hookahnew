@@ -5,7 +5,7 @@
     select replace(uuid(),'-','')
   </sql>
   <!-- 批量插入 -->
-  <insert id="insertBatchSelective" parameterType="java.util.List">
+  <insert id="insertBatch" parameterType="java.util.List">
     insert into goods
     ( goods_id, goods_sn, domain_id, goods_name, goods_brief, goods_desc, keywords, goods_img,
     goods_status, goods_number, warn_number, onsale_start_date, onsale_end_date, cat_id,

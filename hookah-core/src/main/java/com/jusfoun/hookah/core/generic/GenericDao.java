@@ -26,6 +26,6 @@ public interface GenericDao<Model extends GenericModel> extends Mapper<Model>, M
      * 批量插入对象
      * @param list 对象列表
      */
-    int insertBatchSelective(List<Model> list);
+    int insertBatch(List<Model> list);
 }
 
