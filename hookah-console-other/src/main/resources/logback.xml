@@ -26,6 +26,17 @@
 
   <logger name="com.jusfoun.hookah.console" level="DEBUG" />
 
+  <logger name="jdbc.sqlonly" level="DEBUG"/>
+
+  <logger name="jdbc.sqltiming" level="ERROR"/>
+
+  <logger name="jdbc.audit" level="ERROR"/>
+
+  <logger name="jdbc.resultset" level="ERROR"/>
+
+  <logger name="jdbc.connection" level="ERROR"/>
+
+
   <!-- 日志输出级别 -->
   <root level="INFO">
     <appender-ref ref="STDOUT" />
