@@ -134,17 +134,19 @@
 .fundmanage-box .fundmanage-bd .user-balance .price span{
     font-size: 14px;
 }
-.fundmanage-box .fundmanage-bd .user-balance .operation button{
+.fundmanage-box .fundmanage-bd .user-balance .operation a{
     min-width:100px;
     height:36px;
-    border:0;
+    line-height: 36px;
+    text-align: center;
     background:#00c1de;
     color:#fff;
     font-size: 16px;
-    cursor: pointer;
     margin-right:20px;
+    text-decoration: none;
+    display: inline-block;
 }
-.fundmanage-box .fundmanage-bd .user-balance .operation button.btn-2{
+.fundmanage-box .fundmanage-bd .user-balance .operation a.btn-2{
 background:#f9cf02;
 }
 /******fund-manage end*******/
@@ -213,3 +215,18 @@ background:#f9cf02;
 }
 
 /******safe-set start*******/
+.price-input{
+    font-size: 14px;
+}
+.price-input input{
+    width: 200px;
+    height: 36px;
+    border: 1px solid #ccc;
+    padding: 2px 10px;
+    font-size: 16px;
+    color: #333;
+}
+.withdrawals-btn{
+    padding-left: 155px;
+    padding-top: 30px;
+}

@@ -14,17 +14,14 @@ var htmlPart = {
             <%include("/layout/user-center-menu.html"){}%>
         </div>
         <div class="user-center-box y-right">
-            <h3 class="center-title">资金管理</h3>
+            <h3 class="center-title">提现</h3>
             <div class="fundmanage-box">
                 <div class="fundmanage-bd">
-                    <div class="user-infos y-left">
-                        <div class="user-head-img"></div>
-                        <p>Hi,<span>nickname</span></p>
-                    </div>
-                    <div class="user-balance y-left">
-                        <div class="title">余额:</div>
+                    <div class="user-balance">
+                        <div class="title">您的可提现金额为:</div>
                         <div class="price">8000<span>.00元</span></div>
-                        <div class="operation"><a href="/usercenter/recharge">充值</a><a href="/usercenter/withdrawals" class="btn-2">提现</a></div>
+                        <div class="price-input"><label>请输入您要提现的金额：</label><input type="text"></div>
+                        <div class="operation withdrawals-btn"><a href="javascript:void(0)">提交</a></div>
                     </div>
                 </div>
             </div>
