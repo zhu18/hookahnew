@@ -20,7 +20,19 @@
     position: absolute;
     left: 100%;
     top: 0;
-    background: #ccc;
+    background: #fff;
+    border:1px solid #ccc;
+}
+.exchange-center .exchange-top-bar .exchange-top-menu .exchange-menu-box .exchange-menu-items .category-box ul{
+    line-height: 30px;
+    padding: 10px 0 0 20px;
+}
+.exchange-center .exchange-menu-items .category-box ul a{
+    color:#333;
+    text-decoration: none;
+}
+.exchange-center .exchange-menu-items .category-box ul a:hover{
+    color:#00a2ca;
 }
 .exchange-center .exchange-top-bar .exchange-top-menu .exchange-menu-box .title{
     position: relative;

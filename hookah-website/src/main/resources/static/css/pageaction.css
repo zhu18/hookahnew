@@ -1,6 +1,7 @@
 .pageaction{
     margin:30px 0;
     overflow: hidden;
+    width:100%;
 }
 .pageaction ul {
     text-align: center
