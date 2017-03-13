@@ -27,20 +27,26 @@
 .innovation-center .innovation-content{
     width:980px;
 }
-.innovation-center .innovation-content .innovation-imgs{
-    width:100%;
-    height:400px;
-    text-align: center;
-    font-size: 100px;
-    line-height: 400px;
-}
+/*.innovation-center .innovation-content .innovation-imgs{*/
+    /*width:100%;*/
+    /*height:400px;*/
+    /*text-align: center;*/
+    /*font-size: 100px;*/
+    /*line-height: 400px;*/
+/*}*/
 .innovation-center .center-title{
     font-size: 18px;
     height: 30px;
     line-height: 20px;
     border-bottom: 1px solid #ccc;
 }
-.innovation-center .innovation-info{}
+.innovation-center .innovation-info .title{
+    font-size: 20px;
+    font-weight:bold;
+    height: 35px;
+    line-height: 25px;
+    border-bottom: 1px solid #ccc;
+}
 .innovation-center .info-title{
     line-height: 26px;
 }
@@ -50,6 +56,132 @@
     text-align: justify;
     letter-spacing: 0.5px;
 }
-/*********/
 
+.clearfix:after{
+    visibility: hidden;
+    clear: both;
+    display: block;
+    content: ".";
+    height: 0;
+    font-size: 0;
+    zoom:1;
+}
 
+/*双创中心*/
+/*.innovation-center .picture .same {*/
+    /*width: 201px;*/
+    /*height: 162px;*/
+/*}*/
+.innovation-center .picture .middle {
+    width: 432px;
+    height: 292px;
+    display: block;
+    margin:0px auto;
+}
+.innovation-center .picture .public {
+    display: inline-block;
+    -webkit-perspective:500;
+    -moz-perspective:500;
+    -ms-perspective:500;
+    perspective: 500;
+    -ms-transform: perspective(500px);
+    -moz-transform: perspective(500px);
+    transform-style: preserve-3d;
+}
+.innovation-center .picture .middlePicTop {
+    position: relative;
+    width: 201px;
+    height: 162px;
+    transition: 0.6s;
+}
+.innovation-center .public:hover .middlePicTop {
+    transform: rotateY(180deg);
+}
+/*.innovation-center .front,.back {*/
+    /*position: absolute;*/
+    /*left: 0;*/
+    /*top: 0;*/
+    /*backface-visibility: hidden;*/
+    /*width: 100%;*/
+    /*height: 100%;*/
+    /*overflow: hidden;*/
+/*}*/
+.innovation-center .front {
+    transform: rotateY(0deg);
+    z-index: 2;
+}
+/*.innovation-center .picture .middlePicBottom {*/
+    /*position: relative;*/
+    /*margin-left:72px;*/
+/*}*/
+/*.innovation-center .picture .middleBottomLetf2 {*/
+    /*position: absolute;*/
+    /*left: 300px;*/
+/*}*/
+
+/*数据众包*/
+.innovation-center .innovation-imgs {
+    padding-top:20px;
+}
+.innovation-center .innovation-imgs .leftline,.innovation-center .innovation-imgs .rightimg {
+    float: left;
+}
+.innovation-center .leftline {
+    margin-top: 100px;
+}
+.innovation-center .leftline span {
+    display: inline-block;
+}
+.innovation-center .leftline .line{
+    vertical-align: middle;
+    margin-right: 5px;
+}
+.innovation-center .leftline .self_server {
+    font-size: 20px;
+    margin-right: 15px;
+}
+.innovation-center .innovation-imgs .line {
+    height: 40px;
+    border-right: 2px solid #52A7FD;
+    padding-right: 10px;
+}
+
+/*孵化器*/
+.innovation-center .innovation {
+    margin:30px 200px;
+}
+.innovation-center .contentInno .title,.innovation-center .contentGoodTeam .title {
+    line-height: 35px;
+    font-weight:bold;
+    font-size: 14px;
+}
+.innovation-center .contentInno,.innovation-center .contentGoodTeam {
+    line-height: 30px;
+}
+/*基础开发平台*/
+.innovation-center .picture img{
+    margin:30px 170px 0px;
+}
+/*****股权众筹****/
+.innovation-center .detail{
+    padding-top: 20px;
+    width: 980px;
+    height: 213px;
+}
+.innovation-center .leftDetail {
+    padding-right:20px;
+}
+.innovation-center .detail .leftDetail ,.innovation-center .detail .rightDetail{
+    float:left;
+}
+/*优秀团队*/
+.innovation-center .goodTeam img {
+    display: inline-block;
+    width: 770px;
+    height: 439px;
+    margin: 30px 95px;
+}
+
+/*大数据产业基金*/
+/*活动*/
+/*创客大赛*/
