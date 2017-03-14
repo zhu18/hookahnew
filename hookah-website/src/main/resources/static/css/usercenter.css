@@ -29,6 +29,9 @@
     position: relative;
     background: #fff;
 }
+.user-center .user-center-bd .user-center-box .user-info .user-head-portrait img{
+    width:100%;
+}
 .user-center .user-center-bd .user-center-box .user-info .user-head-portrait span{
     display: none;
     position: absolute;
@@ -109,9 +112,9 @@
 .fundmanage-box .fundmanage-bd .user-infos .user-head-img{
     width:100px;
     height:100px;
-    background: #fffaae;
     margin:30px auto;
 }
+.fundmanage-box .fundmanage-bd .user-infos .user-head-img img{width:100%;}
 .fundmanage-box .fundmanage-bd .user-infos p{
     text-align: center;
     font-size: 14px;
