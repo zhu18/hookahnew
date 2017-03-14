@@ -31,4 +31,7 @@ public class InformationController {
     public String centerAnnouncement(){
         return "information/center_announcement";
     }
+
+    @RequestMapping(value = "/information/details", method = RequestMethod.GET)
+    public String details(){ return "information/details"; }
 }

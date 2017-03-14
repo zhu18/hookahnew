@@ -15,6 +15,4 @@ public class ExchangeController {
     @RequestMapping(value = "/exchange", method = RequestMethod.GET)
     public String index(){ return "exchange/index"; }
 
-    @RequestMapping(value = "/exchange/bbsInformation", method = RequestMethod.GET)
-    public String bbsInformation(){ return "exchange/bbsInformation"; }
 }

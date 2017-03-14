@@ -55,10 +55,49 @@ var htmlPart = {
                     </div>
                 </li>
             </ul>
+            <input type="button" id="btn_dialogjquery" value="jq打开浮层"/>
+            <input type="button" id="btn_alert" value="alert"/>
+            <input type="button" id="btn_alert2" value="alert定时关闭"/>
+            <input type="button" id="btn_confirm" value="confirm三种按钮"/>
+            <input type="button" id="btn_confirmdefault" value="confirm默认"/>
+            <input type="button" id="btn_confirmbottom" value="置底的confirm"/>
             <%include("/layout/pageaction.html"){} %>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $('#btn_dialogjquery').Dialog({target:"#dialog-contentjq",mask:true,width:500,height:300,title:'标题',animate:true})
+    $('#btn_alert').click(function(){
+        $.alert('选好商品才能上传素材哦',true,function(){
+            $.alert('你点击了ok')
+        })
+    });
+    $('#btn_alert2').click(function(){
+        $.alert('提交成功，商品到货后第一时间发送短信至：18667040027')
+    });
+    $('#btn_confirm').click(function(){
+        $.confirm('<span>sss</span>下载全部 9 张图片至本地相册?' +
+            '<div class="confirm-title2">' +
+            '<form id="inputss" action="">' +
+            '<input type="text" name="tests">' +
+            '</form>' +
+            '</div>',[{yes:"是"},{no:'否'},{close:'关闭'}],function(){
+
+            var vals= $('#inputss').serializeArray();
+            console.log(JSON.stringify(vals));
+            this.hide();
+
+        });
+    })
+    $('#btn_confirmdefault').click(function(){
+        $.confirm('你确定要删除这条消息吗? ',null,function(type){
+            $.alert('您点击了'+type);
+            this.hide();
+        });
+    })
+
+
+</script>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
