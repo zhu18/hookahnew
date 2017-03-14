@@ -1,0 +1,97 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" type="text/css" href="/static/css/user-center-menu.css">
+<link rel="stylesheet" type="text/css" href="/static/css/usercenter-admin.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="user-center">
+    <div class="user-center-bd y-row">
+        <div class="user-center-menu y-left">
+            <ul class="menu-list">
+                <li class="menu-items active">
+                    <h3 class="menu-header">用户中心</h3>
+                    <ol class="menu-category active">
+                        <li><a href="/usercenter">个人资料</a></li>
+                        <li><a href="/usercenter/fundmanage">资金管理</a></li>
+                        <li><a href="/usercenter/safeset">安全设置</a></li>
+                    </ol>
+                </li>
+                <li class="menu-items">
+                    <h3 class="menu-header">管理员</h3>
+                    <ol class="menu-category">
+                        <li><a href="/usercenter/articleManagement">文章管理</a></li>
+                        <li><a href="/usercenter/publishArticle">发表文章</a></li>
+                    </ol>
+                </li>
+            </ul>
+
+        </div>
+        <div class="user-center-box y-right">
+            <h3 class="center-title">文章管理</h3>
+            <div class="article-management-box">
+                <div class="select-title">
+                    <label>文章分类：</label>
+                    <select name="" id="">
+                        <option value="">双创中心</option>
+                        <option value="">博览会</option>
+                        <option value="">资讯中心</option>
+                    </select>
+                </div>
+                <div class="article-box">
+                    <table class="order-items">
+                        <tr class="order-head">
+                            <th>序号</th>
+                            <th>文章名称</th>
+                            <th class="imgs">图片</th>
+                            <th>创建日期</th>
+                            <th>发表人</th>
+                            <th>操作</th>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>2017年人工智能的兴起于衰败</td>
+                            <td class="imgs"><div><img src="../../static/img/zheng.jpg" alt=""></div></td>
+                            <td>2017年3月13日</td>
+                            <td>wudy</td>
+                            <td>
+                                <a href="javascript:void(0)">删除</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>2017年人工智能的兴起于衰败</td>
+                            <td class="imgs"><div><img src="../../static/img/zheng.jpg" alt=""></div></td>
+                            <td>2017年3月13日</td>
+                            <td>wudy</td>
+                            <td>
+                                <a href="javascript:void(0)">删除</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>2017年人工智能的兴起于衰败</td>
+                            <td class="imgs"><div><img src="../../static/img/zheng.jpg" alt=""></div></td>
+                            <td>2017年3月13日</td>
+                            <td>wudy</td>
+                            <td>
+                                <a href="javascript:void(0)">修改</a>
+                                <a href="javascript:void(0)">删除</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <%include("/layout/pageaction.html"){} %>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+</script>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>

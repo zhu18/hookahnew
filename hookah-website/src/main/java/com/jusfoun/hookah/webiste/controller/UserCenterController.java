@@ -28,4 +28,10 @@ public class UserCenterController {
 
     @RequestMapping(value = "/usercenter/withdrawals", method = RequestMethod.GET)
     public String withdrawals() { return "usercenter/withdrawals"; }
+
+    @RequestMapping(value = "/usercenter/articleManagement", method = RequestMethod.GET)
+    public String articleManagement() { return "usercenter/articleManagement"; }
+
+    @RequestMapping(value = "/usercenter/publishArticle", method = RequestMethod.GET)
+    public String publishArticle() { return "usercenter/publishArticle"; }
 }

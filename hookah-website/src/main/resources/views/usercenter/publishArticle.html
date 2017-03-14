@@ -1,0 +1,107 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" type="text/css" href="/static/css/user-center-menu.css">
+<link rel="stylesheet" type="text/css" href="/static/css/usercenter-admin.css">
+<link rel="stylesheet" type="text/css" href="/static/css/wangEditor/wangEditor.min.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="user-center">
+    <div class="user-center-bd y-row">
+        <div class="user-center-menu y-left">
+            <ul class="menu-list">
+                <li class="menu-items active">
+                    <h3 class="menu-header">用户中心</h3>
+                    <ol class="menu-category active">
+                        <li><a href="/usercenter">个人资料</a></li>
+                        <li><a href="/usercenter/fundmanage">资金管理</a></li>
+                        <li><a href="/usercenter/safeset">安全设置</a></li>
+                    </ol>
+                </li>
+                <li class="menu-items">
+                    <h3 class="menu-header">文章管理</h3>
+                    <ol class="menu-category">
+                        <li><a href="/usercenter/articleManagement">文章管理</a></li>
+                        <li><a href="/usercenter/publishArticle">发表文章</a></li>
+                    </ol>
+                </li>
+            </ul>
+
+        </div>
+        <div class="user-center-box y-right">
+            <h3 class="center-title">发表文章</h3>
+            <div class="publish-article">
+                <table>
+                    <tr>
+                        <td class="bar"><em>*</em>文章分类：</td>
+                        <td>
+                            <div class="select-box">
+                                <select name="" id="">
+                                    <option value="">双创中心</option>
+                                    <option value="">博览会</option>
+                                    <option value="">资讯中心</option>
+                                </select>
+                            </div>
+                            <div class="errors">
+                                <ul>
+                                    <li><span class="errorinfo">请选择文章分类!</span></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bar">文章标题：</td>
+                        <td>
+                            <div class="text-box">
+                                <input type="text">
+                                <span class="input-count"><strong>0</strong>/60</span>
+                            </div>
+                            <div class="errors">
+                                <ul>
+                                    <li><span class="errorinfo">不能超过60个字符!</span></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bar">文章标签：</td>
+                        <td>
+                            <div class="text-box">
+                                <input type="text" placeholder="例：乐天，萨德">
+                            </div>
+                            <div class="tips">
+                                <ul>
+                                    <li><span class="tipsinfo">标签之间用' , '号隔开，最多5个</span></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bar">商品描述：</td>
+                        <td>
+                            <div class="wangEditor-wrapper">
+                                <textarea id="textarea1" style="height:500px;">
+
+                                </textarea>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div class="pulish-btn">
+                    <a href="javascript:void(0)">发布商品</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../static/js/wangEditor.min.js"></script>
+<script type="text/javascript">
+    var editor = new wangEditor('textarea1');
+    editor.create();
+</script>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>

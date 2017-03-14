@@ -1,0 +1,127 @@
+.select-title{
+    font-size: 16px;
+    color:#757575;
+    margin: 20px 0;
+}
+.select-title select{
+    height:30px;
+    font-size: 14px;
+}
+
+
+.article-management-box  .order-items{
+    border: 1px solid #ccc;
+    width:100%;
+    margin-bottom:20px;
+}
+.article-management-box  .order-items .order-head th{
+    padding:0 10px;
+}
+.article-management-box  .order-items .order-head{
+    line-height: 40px;
+    background: #f1f1f1;
+    overflow: hidden;
+
+    font-size:13px;
+}
+.article-management-box  .order-items tr div{
+    width: 60px;
+    padding: 10px 0;
+    display: inline-block;
+}
+.article-management-box  table tr{
+    border-bottom: 1px solid #ccc;
+}
+.article-management-box  table tr td{padding:0 10px;}
+.article-management-box  table tr .imgs{
+    text-align: center;
+}
+.article-management-box  table tr td img{
+    width:100%;
+}
+.article-management-box  table tr td a{display: block;}
+.article-management-box  table tr .operation{
+    text-align: center;
+}
+.article-management-box  table tr td.unpaid span{
+    color:#ff6700;
+}
+/*****************/
+.publish-article{
+    padding:30px 50px 0 20px;
+}
+.publish-article table {
+    width: 100%;
+}
+.publish-article table tr td {
+    padding: 2px 5px 8px;
+    line-height: 24px;
+    font-size: 14px;
+}
+.publish-article table tr td.bar {
+    width: 120px;
+    text-align: right;
+    vertical-align: top;
+    padding-top: 5px;
+    position: relative;
+}
+.publish-article table tr td.bar em{
+    color: #EA4A36;
+    position: absolute;
+    right: 3px;
+    top: 9px;
+}
+.publish-article table .text-box input {
+    width: 600px;
+    border: 1px solid #ccc;
+    height: 26px;
+    color: #333;
+    padding: 2px 5px;
+    font-size:14px;
+}
+.publish-article table .input-count {
+    margin-left: 10px;
+    /*vertical-align: top;*/
+    display: inline-block;
+}
+.publish-article table .errors ul li {
+    white-space: normal;
+    word-wrap: break-word;
+    overflow: hidden;
+    word-break: break-all;
+    padding: 0 10px 0 0;
+    color: #EA4A36;
+    line-height: 24px;
+}
+.publish-article table .tips ul li {
+    white-space: normal;
+    word-wrap: break-word;
+    overflow: hidden;
+    word-break: break-all;
+    padding: 0 10px 0 0;
+    color: #7C7C7C;
+    line-height: 24px;
+}
+.publish-article table .select-box select{
+    height:32px;
+}
+.publish-article .pulish-btn {
+    text-align: center;
+    padding-top:20px;
+}
+.publish-article .pulish-btn a {
+    display: inline-block;
+    min-width: 150px;
+    height: 40px;
+    line-height: 40px;
+    text-decoration: none;
+    border: 0;
+    background: #00c1de;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+
+
