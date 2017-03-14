@@ -1,9 +1,7 @@
+@charset "utf-8";
 .box{
-    /*display: block;*/
     width: 1200px;
-    height: 1000px;
     margin:0 auto;
-    background: lightgrey;
 }
 .box .smalltitle {
     position: relative;
@@ -26,6 +24,12 @@
     float: left;
     margin-left: 85px;
 }
+.box .content .headline {
+    margin-bottom:10px;
+}
+.box .content .headline h3 {
+    font-weight: 700;
+}
 .box .rightside {
     width: 273px;
     height: 800px;
@@ -43,6 +47,7 @@
 .box p {
     font-size: 14px;
     text-indent: 30px;
+    line-height: 30px;
 }
 .box .content .images img {
     display: block;

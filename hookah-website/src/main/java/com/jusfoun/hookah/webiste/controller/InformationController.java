@@ -16,4 +16,19 @@ public class InformationController {
     public String index(){
         return "information/index";
     }
+
+    @RequestMapping(value = "/information/center_dynamic", method = RequestMethod.GET)
+    public String centerDynamic(){
+        return "information/center_dynamic";
+    }
+
+    @RequestMapping(value = "/information/industry_consulting", method = RequestMethod.GET)
+    public String industryConsulting(){
+        return "information/industry_consulting";
+    }
+
+    @RequestMapping(value = "/information/center_announcement", method = RequestMethod.GET)
+    public String centerAnnouncement(){
+        return "information/center_announcement";
+    }
 }
