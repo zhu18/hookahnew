@@ -67,14 +67,31 @@ var htmlPart = {
                         </td>
                     </tr>
                     <tr>
-                        <td class="bar">文章标签：</td>
+                        <td class="bar">资讯热文：</td>
                         <td>
-                            <div class="text-box">
-                                <input type="text" placeholder="例：乐天，萨德">
+                            <div class="radio-box">
+                                <label>
+                                    <input type="radio" name="122" checked="">立刻上架
+                                </label>
+                                <label>
+                                    <input type="radio" name="122">定时上架
+                                </label>
                             </div>
-                            <div class="tips">
-                                <ul>
-                                    <li><span class="tipsinfo">标签之间用' , '号隔开，最多5个</span></li>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bar">图片：</td>
+                        <td>
+                            <div class="block info" style="margin: 0px 0px 3px;">
+                                图片大小不能超过3MB。
+                            </div>
+                            <div class="multimage-wrap">
+                                <ul class="image-list">
+                                    <li>
+                                        <div class="preview">
+                                            <a title="上传图片" class="upload-tip">+</a>
+                                        </div>
+                                    </li>
                                 </ul>
                             </div>
                         </td>
@@ -100,6 +117,15 @@ var htmlPart = {
 <script type="text/javascript" src="../../static/js/wangEditor.min.js"></script>
 <script type="text/javascript">
     var editor = new wangEditor('textarea1');
+    // 上传图片（举例）
+    editor.config.uploadImgUrl = '/upload';
+
+    // 设置 headers（举例）
+    editor.config.uploadHeaders = {
+        'Accept' : 'text/x-json'
+    };
+
+
     editor.create();
 </script>
 <%};

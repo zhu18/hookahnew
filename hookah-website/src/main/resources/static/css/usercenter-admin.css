@@ -62,14 +62,13 @@
     width: 120px;
     text-align: right;
     vertical-align: top;
-    padding-top: 5px;
     position: relative;
 }
 .publish-article table tr td.bar em{
     color: #EA4A36;
     position: absolute;
     right: 3px;
-    top: 9px;
+    top: 7px;
 }
 .publish-article table .text-box input {
     width: 600px;
@@ -122,6 +121,61 @@
     cursor: pointer;
 }
 
-
-
-
+.publish-article .radio-box label, .checkbox-box label {
+    margin-right: 15px;
+}
+.publish-article .radio-box input {
+    margin-right: 5px;
+}
+.multimage-wrap {
+    margin-bottom: 10px;
+}
+.multimage-wrap .image-list {
+    display: inline-block;
+}
+.multimage-wrap .image-list li {
+    border: 1px solid #cdcdcd;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    height: 100px;
+    width: 100px;
+    margin: 0 10px 0 0;
+}
+.multimage-wrap .image-list li {
+    border: 1px solid #cdcdcd;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    height: 100px;
+    width: 100px;
+    margin: 0 10px 0 0;
+}
+.multimage-wrap .image-list li .preview {
+    z-index: 0;
+    text-align: center;
+    line-height: 90px;
+    font-family: arial;
+    background-color: #f6f6f6;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.multimage-wrap .image-list li .preview .upload-tip {
+    color: #d7d7d7;
+    cursor: pointer;
+    font-size: 42px;
+    position: relative;
+    top: 5px;
+    text-decoration: none;
+}
+.info.block {
+    line-height: 26px;
+    display: inline-block;
+    color: #767676;
+}
