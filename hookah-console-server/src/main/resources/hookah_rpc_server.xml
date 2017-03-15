@@ -6,44 +6,48 @@
        http://api.weibo.com/schema/motan http://api.weibo.com/schema/motan.xsd">
 
 
-  <!-- 业务具体实现类 -->
-  <bean id="userService" class="com.jusfoun.hookah.console.server.service.impl.UserServiceImpl"/>
-  <bean id="goodsService" class="com.jusfoun.hookah.console.server.service.impl.GoodsServiceImpl"/>
-  <bean id="goodsMongoService" class="com.jusfoun.hookah.console.server.service.impl.GoodsMongoServiceImpl"/>
-  <bean id="userMongoService" class="com.jusfoun.hookah.console.server.service.impl.UserMongoServiceImpl"/>
-  <bean id="mqSenderService" class="com.jusfoun.hookah.console.server.service.impl.MqSenderServiceImpl"/>
-  <!-- 注册中心配置 使用不同注册中心需要依赖对应的jar包。如果不使用注册中心，可以把check属性改为false，忽略注册失败。-->
-  <!--<motan:registry regProtocol="local" name="registry" />-->
-  <motan:registry regProtocol="consul" name="registry" address="192.168.15.90:8500"/>
-  <!--<motan:registry regProtocol="consul" name="registry" address="127.0.0.1:8500"/>-->
-  <!--<motan:registry regProtocol="zookeeper" name="registry" address="127.0.0.1:2181" connectTimeout="2000"/>-->
+    <!-- 业务具体实现类 -->
+    <bean id="userService" class="com.jusfoun.hookah.console.server.service.impl.UserServiceImpl"/>
+    <bean id="goodsService" class="com.jusfoun.hookah.console.server.service.impl.GoodsServiceImpl"/>
+    <bean id="goodsMongoService" class="com.jusfoun.hookah.console.server.service.impl.GoodsMongoServiceImpl"/>
+    <bean id="userMongoService" class="com.jusfoun.hookah.console.server.service.impl.UserMongoServiceImpl"/>
+    <bean id="mqSenderService" class="com.jusfoun.hookah.console.server.service.impl.MqSenderServiceImpl"/>
+    <!-- 商品分类查询 -->
+    <bean id="categoryService" class="com.jusfoun.hookah.console.server.service.impl.CategoryServiceImpl"/>
+    <!-- 注册中心配置 使用不同注册中心需要依赖对应的jar包。如果不使用注册中心，可以把check属性改为false，忽略注册失败。-->
+    <!--<motan:registry regProtocol="local" name="registry" />-->
+    <motan:registry regProtocol="consul" name="registry" address="192.168.15.90:8500"/>
+    <!--<motan:registry regProtocol="consul" name="registry" address="127.0.0.1:8500"/>-->
+    <!--<motan:registry regProtocol="zookeeper" name="registry" address="127.0.0.1:2181" connectTimeout="2000"/>-->
 
-  <!-- 协议配置。为防止多个业务配置冲突，推荐使用id表示具体协议。-->
-  <motan:protocol id="hookah" default="true" name="motan"
-                  maxServerConnection="80000" maxContentLength="1048576"
-                  maxWorkerThread="800" minWorkerThread="20"/>
+    <!-- 协议配置。为防止多个业务配置冲突，推荐使用id表示具体协议。-->
+    <motan:protocol id="hookah" default="true" name="motan"
+                    maxServerConnection="80000" maxContentLength="1048576"
+                    maxWorkerThread="800" minWorkerThread="20"/>
 
-  <!-- 通用配置，多个rpc服务使用相同的基础配置. group和module定义具体的服务池。export格式为“protocol id:提供服务的端口”-->
-  <motan:basicService export="hookah:5002"
-                      group="hookah-rpc" accessLog="false" shareChannel="true" module="hookah-rpc"
-                      application="hookah" registry="registry" id="serviceBasicConfig"/>
+    <!-- 通用配置，多个rpc服务使用相同的基础配置. group和module定义具体的服务池。export格式为“protocol id:提供服务的端口”-->
+    <motan:basicService export="hookah:5002"
+                        group="hookah-rpc" accessLog="false" shareChannel="true" module="hookah-rpc"
+                        application="hookah" registry="registry" id="serviceBasicConfig"/>
 
-  <!-- 具体rpc服务配置，声明实现的接口类。-->
-  <motan:service interface="com.jusfoun.hookah.rpc.api.UserService"
-                 ref="userService" export="hookah:5001" basicService="serviceBasicConfig">
-  </motan:service>
-  <motan:service interface="com.jusfoun.hookah.rpc.api.GoodsService"
-                 ref="goodsService" export="hookah:5001" basicService="serviceBasicConfig">
-  </motan:service>
-  <motan:service interface="com.jusfoun.hookah.rpc.api.GoodsMongoService"
-                 ref="goodsMongoService" export="hookah:5001" basicService="serviceBasicConfig">
-  </motan:service>
-  <motan:service interface="com.jusfoun.hookah.rpc.api.UserMongoService"
-                 ref="userMongoService" export="hookah:5001" basicService="serviceBasicConfig">
-  </motan:service>
-  <motan:service interface="com.jusfoun.hookah.rpc.api.MqSenderService"
-                 ref="mqSenderService" export="hookah:5001" basicService="serviceBasicConfig">
-  </motan:service>
-
+    <!-- 具体rpc服务配置，声明实现的接口类。-->
+    <motan:service interface="com.jusfoun.hookah.rpc.api.UserService"
+                   ref="userService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+    <motan:service interface="com.jusfoun.hookah.rpc.api.GoodsService"
+                   ref="goodsService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+    <motan:service interface="com.jusfoun.hookah.rpc.api.GoodsMongoService"
+                   ref="goodsMongoService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+    <motan:service interface="com.jusfoun.hookah.rpc.api.UserMongoService"
+                   ref="userMongoService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+    <motan:service interface="com.jusfoun.hookah.rpc.api.MqSenderService"
+                   ref="mqSenderService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+    <motan:service interface="com.jusfoun.hookah.rpc.api.CategoryService"
+                   ref="categoryService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
 
 </beans>
