@@ -172,7 +172,6 @@
 .hot-resources .hot-resources-box .box-bd .imgs{
     width:60px;
     height:60px;
-    /*background: rgba(0,0,0,0.4);*/
     display: inline-block;
 }
 .hot-resources .hot-resources-box .box-bd .imgs img {
@@ -253,7 +252,6 @@
 .hot-resources .hot-resources-box .hot-sell-list .card-second .card-second-imgs{
     width:66px;
     height:66px;
-    /*background: #ccc;*/
 }
 .hot-resources .hot-resources-box .hot-sell-list .card-second .card-second-imgs img {
     width: 100%;
@@ -315,7 +313,6 @@
 .trade-resources .front .imgs{
     width: 80px;
     height: 80px;
-    /*background: #ccc;*/
     margin: 30px auto;
 }
 .trade-resources .front .imgs img {
@@ -360,7 +357,6 @@
 .trade-resources .back .imgs{
     width: 70px;
     height: 70px;
-    /*background: #ccc;*/
     margin: 20px auto;
 }
 .trade-resources .back .imgs img {
@@ -498,7 +494,6 @@
 .data-analysis .data-analysis-box .content .items .content-right li .icon{
     width: 80px;
     height: 80px;
-    /*border: 1px solid #ddd;*/
     margin: 10px auto;
     display: inline-block;
 }
