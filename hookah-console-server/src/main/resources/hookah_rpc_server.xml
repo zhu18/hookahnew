@@ -46,7 +46,7 @@
                  ref="mqSenderService" export="hookah:5001" basicService="serviceBasicConfig">
   </motan:service>
   <motan:service interface="com.jusfoun.hookah.rpc.api.SysNewsService"
-                 ref="sysNewService" export="hookah:5001" basicService="serviceBasicConfig">
+                 ref="sysNewsService" export="hookah:5001" basicService="serviceBasicConfig">
   </motan:service>
 
 </beans>
