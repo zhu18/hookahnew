@@ -3,7 +3,7 @@ package com.jusfoun.hookah.console.other.service.impl;
 import com.jusfoun.hookah.core.dao.GoodsMapper;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
-import com.jusfoun.hookah.rpc.api.other.GoodsService;
+import com.jusfoun.hookah.rpc.api.GoodsService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

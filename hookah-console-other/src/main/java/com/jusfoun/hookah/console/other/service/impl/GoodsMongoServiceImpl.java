@@ -2,7 +2,7 @@ package com.jusfoun.hookah.console.other.service.impl;
 
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.generic.GenericMongoServiceImpl;
-import com.jusfoun.hookah.rpc.api.other.GoodsMongoService;
+import com.jusfoun.hookah.rpc.api.GoodsMongoService;
 import org.springframework.stereotype.Service;
 
 /**

@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.rpc.api.other;
+package com.jusfoun.hookah.rpc.api;
 
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.generic.GenericService;
@@ -8,6 +8,6 @@ import com.jusfoun.hookah.core.generic.GenericService;
  * @date 2017/2/28 下午3:06
  * @desc
  */
-public interface GoodsMongoService extends GenericService<Goods,String> {
+public interface GoodsService extends GenericService<Goods,String> {
 
 }

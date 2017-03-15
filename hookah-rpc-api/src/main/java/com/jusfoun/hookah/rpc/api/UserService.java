@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.rpc.api.other;
+package com.jusfoun.hookah.rpc.api;
 
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.generic.GenericService;
