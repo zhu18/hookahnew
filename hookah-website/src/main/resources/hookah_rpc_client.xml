@@ -23,19 +23,19 @@
 
   <!-- 具体referer配置。使用方通过beanid使用服务接口类 -->
   <motan:referer id="userService"
-                 interface="com.jusfoun.hookah.rpc.api.other.UserService"
+                 interface="com.jusfoun.hookah.rpc.api.UserService"
                  connectTimeout="300" requestTimeout="300" basicReferer="HookahRPCClientBasicConfig"/>
   <motan:referer id="goodsService"
-                 interface="com.jusfoun.hookah.rpc.api.other.GoodsService"
+                 interface="com.jusfoun.hookah.rpc.api.GoodsService"
                  connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
   <motan:referer id="goodsMongoService"
-                 interface="com.jusfoun.hookah.rpc.api.other.GoodsMongoService"
+                 interface="com.jusfoun.hookah.rpc.api.GoodsMongoService"
                  connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
   <motan:referer id="userMongoService"
-                 interface="com.jusfoun.hookah.rpc.api.other.UserMongoService"
+                 interface="com.jusfoun.hookah.rpc.api.UserMongoService"
                  connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
   <motan:referer id="mqSenderService"
-                 interface="com.jusfoun.hookah.rpc.api.other.MqSenderService"
+                 interface="com.jusfoun.hookah.rpc.api.MqSenderService"
                  connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
 
 </beans>
