@@ -8,7 +8,7 @@
     margin:0 5px;
 }
 .goods-sort{
-    padding:0 0 20px;
+    padding:10px 0 15px;
 }
 .goods-sort .sort-inner{
     height: 39px;
@@ -350,5 +350,117 @@
 .activity-recommend-box .item a img{
     width:100%;
 }
+.goods-group{
+    border:1px solid #ccc;
+    padding:0 10px;
+}
+.goods-group .row{
+    border-top: 1px dashed #dedede;
+    padding: 0 100px 0 112px;
+    position: relative;
+}
+.goods-group .row:first-child{
+    border:none;
+}
+.goods-group .row .head{
+    position: absolute;
+    left:11px;
+    top:9px;
+    color:#999;
+}
+.goods-group .row .body{}
+.goods-group .row .body .items {
+    height: 36px;
+    overflow: hidden;
+}
+.goods-group .row .body .items a{
+    float: left;
+    margin: 9px 40px 9px 0;
+    height: 18px;
+    color: #333;
+    text-decoration: none;
+}
+.goods-group .row .body .items a .icon-btn-check-small {
+    display: none;
+    float: left;
+    margin: 4px 5px 0 0;
+}
+.goods-group .row .body .items a .text {
+    float: left;
+    max-width: 140px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 18px;
+}
+.goods-group .row .body .items a .fa-exclamation-circle{
+    float: left;
+    display: inline;
+    margin: 4px 0 0 5px;
+    color:#cac8c8;
+}
+.goods-group .row .body .items-show2line {
+    height: 72px;
+}
+.goods-group .row .body .items-show3line{
+    height: 108px;
+    overflow-y: scroll;
 
+}
+.goods-group .row .foot{
+    position: absolute;
+    right: 0;
+    top: 9px;
+}
+.goods-group .foot .switch-multi {
+    position: absolute;
+    right: 60px;
+    height: 16px;
+    padding: 0 3px;
+    line-height: 16px;
+    border: solid 1px #dad9d9;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.goods-group .foot .show-more,.goods-group .foot .show-less {
+    position: absolute;
+    right: 10px;
+    height: 18px;
+    padding-right: 10px;
+    line-height: 18px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.goods-group .foot .show-less{
+    display: none;
+}
+.goods-group .foot .show-more .fa-angle-down, .foot .show-less .fa-angle-up{
+    position: absolute;
+    top: 3px;
+    right: 2px;
+    cursor: pointer;
+}
+.goods-group .body .btns {
+    display: none;
+    text-align: center;
+}
+.goods-group .body .submit {
+    color: #fff;
+    background: #F94700;
+    border: 1px solid #F94700;
+}
+.goods-group .body .cancel {
+    border: 1px solid #e8e8e8;
+}
+.goods-group .body .cancel, .goods-group .body .submit {
+    display: inline-block;
+    margin: 5px;
+    border-radius: 2px;
+    height: 20px;
+    width: 42px;
+    line-height: 20px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+}
 /***** goods-details end *******/

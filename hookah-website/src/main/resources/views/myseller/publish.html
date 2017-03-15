@@ -45,6 +45,106 @@ var htmlPart = {
                                 </td>
                             </tr>
                             <tr>
+                                <td class="bar">商品属性：</td>
+                                <td>
+                                    <div class="block info" style="margin: 0px 0px 3px;">
+                                        宝贝主图大小不能超过3MB。
+                                    </div>
+                                    <div class="attribute-box">
+                                        <table class="y-left">
+                                            <tr>
+                                                <td>品牌:</td>
+                                                <td>
+                                                    <div class="attribute-bd">
+                                                        <div class="search-select-box">
+                                                            <div class="search-txt">
+                                                                <span class="down-icon fa fa-angle-down"></span>
+                                                            </div>
+                                                            <div class="search-option">
+                                                                <input type="text">
+                                                                <ul>
+                                                                    <li>1</li>
+                                                                    <li>2</li>
+                                                                    <li>3</li>
+                                                                    <li>1</li>
+                                                                    <li>2</li>
+                                                                    <li>3</li>
+                                                                    <li>1</li>
+                                                                    <li>2</li>
+                                                                    <li>3</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>品牌:</td>
+                                                <td>
+                                                    <div class="attribute-bd">
+                                                        <div class="search-select-box">
+                                                            <div class="search-txt">
+                                                                <span class="down-icon fa fa-angle-down"></span>
+                                                            </div>
+                                                            <div class="search-option">
+                                                                <input type="text">
+                                                                <ul>
+                                                                    <li>1</li>
+                                                                    <li>2</li>
+                                                                    <li>3</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table class="y-left">
+                                            <tr>
+                                                <td>品牌:</td>
+                                                <td>
+                                                    <div class="attribute-bd">
+                                                        <div class="search-select-box">
+                                                            <div class="search-txt">
+                                                                <span class="down-icon fa fa-angle-down"></span>
+                                                            </div>
+                                                            <div class="search-option">
+                                                                <input type="text">
+                                                                <ul>
+                                                                    <li>1</li>
+                                                                    <li>2</li>
+                                                                    <li>3</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>品牌:</td>
+                                                <td>
+                                                    <div class="attribute-bd">
+                                                        <div class="search-select-box">
+                                                            <div class="search-txt">
+                                                                <span class="down-icon fa fa-angle-down"></span>
+                                                            </div>
+                                                            <div class="search-option">
+                                                                <input type="text">
+                                                                <ul>
+                                                                    <li>1</li>
+                                                                    <li>2</li>
+                                                                    <li>3</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td class="bar">商品图片：</td>
                                 <td>
                                     <div class="block info" style="margin: 0px 0px 3px;">
@@ -474,9 +574,18 @@ var htmlPart = {
 </div>
 <script type="text/javascript" src="../../static/js/wangEditor.min.js"></script>
 <script type="text/javascript">
-    var editor = new wangEditor('textarea1');
-    editor.create();
+    $(document).ready(function () {
+        var editor = new wangEditor('textarea1');
+        editor.create();
+        $('.search-select-box').click(function(){
+            $(this).children('.search-option').show();
+        });
+        $('.search-option').mouseleave(function(){
+            $(this).hide();
+        })
+    })
 </script>
+
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
