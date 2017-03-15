@@ -11,9 +11,9 @@
  * 2016年7月6日       guozhifeng         1.0             1.0
  * Why & What is modified: <修改原因描述>
  */
-package com.jusfoun.hookah.console.upload;
+package com.jusfoun.hookah.console.server.upload;
 
-import com.jusfoun.hookah.console.util.SSHHelper;
+import com.jusfoun.hookah.console.server.util.SSHHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

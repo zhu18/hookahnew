@@ -11,7 +11,7 @@
  * 2016年8月13日       guozhifeng         1.0             1.0
  * Why & What is modified: <修改原因描述>
  */
-package com.jusfoun.hookah.console.util;
+package com.jusfoun.hookah.console.server.util;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
