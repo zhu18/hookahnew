@@ -402,7 +402,7 @@
                 setTimeout(function() {
                     if (newSeries.points) { // May be destroyed in the meantime, #3389
                         each(newSeries.points, function(point, i) {
-                            // Fade in other points			  
+                            // Fade in server points			  
                             var verb = i === (level && level.pointIndex) ? 'show' : 'fadeIn',
                                 inherit = verb === 'show' ? true : undefined;
                             if (point.graphic) { // #3407

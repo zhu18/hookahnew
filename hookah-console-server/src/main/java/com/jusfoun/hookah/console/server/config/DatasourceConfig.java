@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.console.other.config;
+package com.jusfoun.hookah.console.server.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import org.apache.commons.lang3.StringUtils;

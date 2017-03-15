@@ -28283,7 +28283,7 @@ var ngBindTemplateDirective = ['$interpolate', function($interpolate) {
          .controller('ExampleController', ['$scope', function($scope) {
            $scope.myHTML =
               'I am an <code>HTML</code>string with ' +
-              '<a href="#">links!</a> and other <em>stuff</em>';
+              server;
          }]);
      </file>
 
@@ -31039,7 +31039,7 @@ var ngStyleDirective = ngDirective(function(scope, element, attr) {
     <file name="script.js">
       angular.module('switchExample', ['ngAnimate'])
         .controller('ExampleController', ['$scope', function($scope) {
-          $scope.items = ['settings', 'home', 'other'];
+          $scope.items = ['settings', 'home', server];
           $scope.selection = $scope.items[0];
         }]);
     </file>

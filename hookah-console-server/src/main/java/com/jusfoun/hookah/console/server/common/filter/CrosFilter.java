@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.console.other.common.filter;
+package com.jusfoun.hookah.console.server.common.filter;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.annotation.Order;

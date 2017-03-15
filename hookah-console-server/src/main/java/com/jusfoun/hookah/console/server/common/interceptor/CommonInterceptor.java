@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.console.other.common.interceptor;
+package com.jusfoun.hookah.console.server.common.interceptor;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;

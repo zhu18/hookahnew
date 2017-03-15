@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.console.other.config;
+package com.jusfoun.hookah.console.server.config;
 
 /**
  * <p>User: Zhang Kaitao

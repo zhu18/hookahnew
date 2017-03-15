@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.console.other.service.impl;
+package com.jusfoun.hookah.console.server.service.impl;
 
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.generic.GenericMongoServiceImpl;

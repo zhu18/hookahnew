@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.console.other.common;
+package com.jusfoun.hookah.console.server.common;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

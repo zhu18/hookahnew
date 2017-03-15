@@ -2448,7 +2448,7 @@
                 if (alignOptions) {
                     this.alignOptions = alignOptions;
                     this.alignByTranslate = alignByTranslate;
-                    if (!box || isString(box)) { // boxes other than renderer handle this internally
+                    if (!box || isString(box)) { // boxes server than renderer handle this internally
                         this.alignTo = alignTo = box || 'renderer';
                         erase(alignedObjects, this); // prevent duplicates, like legendGroup after resize
                         alignedObjects.push(this);
@@ -2589,7 +2589,7 @@
                             }
                         } catch (e) {}
 
-                        // If the bBox is not set, the try-catch block above failed. The other condition
+                        // If the bBox is not set, the try-catch block above failed. The server condition
                         // is for Opera that returns a width of -Infinity on hidden elements.
                         if (!bBox || bBox.width < 0) {
                             bBox = {
@@ -2700,7 +2700,7 @@
                 // Mark as added
                 this.added = true;
 
-                // If we're adding to renderer root, or other elements in the group
+                // If we're adding to renderer root, or server elements in the group
                 // have a z index, we need to handle it
                 if (!parent || parent.handleZ || this.zIndex) {
                     inserted = this.zIndexSetter();
@@ -2989,7 +2989,7 @@
                     i;
 
                 if (defined(value)) {
-                    element.zIndex = value; // So we can read it for other elements in the group
+                    element.zIndex = value; // So we can read it for server elements in the group
                     value = +value;
                     if (this[key] === value) { // Only update when needed (#3865)
                         run = false;
@@ -2997,7 +2997,7 @@
                     this[key] = value;
                 }
 
-                // Insert according to this and other elements' zIndex. Before .add() is called,
+                // Insert according to this and server elements' zIndex. Before .add() is called,
                 // nothing is done. Then on add, or by later calls to zIndexSetter, the node
                 // is placed on the right place in the DOM.
                 if (run) {
@@ -3095,7 +3095,7 @@
                 element = boxWrapper.element;
                 container.appendChild(element);
 
-                // For browsers other than IE, add the namespace attribute (#1978)
+                // For browsers server than IE, add the namespace attribute (#1978)
                 if (container.innerHTML.indexOf('xmlns') === -1) {
                     attr(element, 'xmlns', this.SVG_NS);
                 }
@@ -7701,7 +7701,7 @@
 
                 } else if (i && numericSymbolDetector >= 1000) {
                     // Decide whether we should add a numeric symbol like k (thousands) or M (millions).
-                    // If we are to enable this in tooltip or other places as well, we can move this
+                    // If we are to enable this in tooltip or server places as well, we can move this
                     // logic to the numberFormatter and enable it by a parameter.
                     while (i-- && ret === undefined) {
                         multi = Math.pow(1000, i + 1);
@@ -8250,7 +8250,7 @@
 
                     // closestPointRange means the closest distance between points. In columns
                     // it is mostly equal to pointRange, but in lines pointRange is 0 while closestPointRange
-                    // is some other value
+                    // is some server value
                     if (isXAxis) {
                         axis.closestPointRange = closestPointRange;
                     }
@@ -8587,7 +8587,7 @@
 
             /**
              * Check if there are multiple axes in the same pane
-             * @returns {Boolean} There are other axes
+             * @returns {Boolean} There are server axes
              */
             alignToOthers: function() {
                 var others = {}, // Whether there is another axis to pair with this one
@@ -8679,7 +8679,7 @@
                     i = len = tickPositions.length;
                     while (i--) {
                         if (
-                            (finalTickAmt === 3 && i % 2 === 1) || // Remove every other tick
+                            (finalTickAmt === 3 && i % 2 === 1) || // Remove every server tick
                             (finalTickAmt <= 2 && i > 0 && i < len - 1) // Remove all but first and last
                         ) {
                             tickPositions.splice(i, 1);
@@ -9353,7 +9353,7 @@
                     lineTop = chart.chartHeight - this.bottom - (opposite ? this.height : 0) + offset;
 
                 if (opposite) {
-                    lineWidth *= -1; // crispify the other way - #1480, #1687
+                    lineWidth *= -1; // crispify the server way - #1480, #1687
                 }
 
                 return chart.renderer
@@ -10745,7 +10745,7 @@
                         text: str
                     });
 
-                    // Get X position now, so we can move all to the other side in case of overflow
+                    // Get X position now, so we can move all to the server side in case of overflow
                     bBox = tt.getBBox();
                     boxWidth = bBox.width + tt.strokeWidth();
                     if (point.isHeader) {
@@ -14953,7 +14953,7 @@
             win = H.win;
 
         /**
-         * @classDescription The base function which all other series types inherit from. The data in the series is stored
+         * @classDescription The base function which all server series types inherit from. The data in the series is stored
          * in various arrays.
          *
          * - First, series.options.data contains all the original config options for
@@ -16642,7 +16642,7 @@
                     group,
                     options = series.options,
                     // Animation doesn't work in IE8 quirks when the group div is hidden,
-                    // and looks bad in other oldIE
+                    // and looks bad in server oldIE
                     animDuration = !!series.animate && chart.renderer.isSVG && animObject(options.animation).duration,
                     visibility = series.visible ? 'inherit' : 'hidden', // #2597
                     zIndex = options.zIndex,
@@ -18662,7 +18662,7 @@
                 var series = this,
                     chart = series.chart;
 
-                // if the series is added dynamically, force redraw of other
+                // if the series is added dynamically, force redraw of server
                 // series affected by a new column
                 if (chart.hasRendered) {
                     each(chart.series, function(otherSeries) {
@@ -19019,7 +19019,7 @@
                 var series = this,
                     chart = series.chart;
 
-                // column and bar series affects other series of the same type
+                // column and bar series affects server series of the same type
                 // as they are either stacked or grouped
                 if (chart.hasRendered) {
                     each(chart.series, function(otherSeries) {
@@ -20222,7 +20222,7 @@
                         }
 
                         // get the x - use the natural x position for labels near the top and bottom, to prevent the top
-                        // and botton slice connectors from touching each other on either side
+                        // and botton slice connectors from touching each server on either side
                         if (options.justify) {
                             x = seriesCenter[0] + (i ? -1 : 1) * (radius + distanceOption);
                         } else {
@@ -20862,7 +20862,7 @@
                 (useHTML ? legendItem : item.legendGroup).on('mouseover', function() {
                         item.setState('hover');
 
-                        // A CSS class to dim or hide other than the hovered series
+                        // A CSS class to dim or hide server than the hovered series
                         chart.seriesGroup.addClass(activeClass);
 
 
@@ -20874,7 +20874,7 @@
                         legendItem.css(item.visible ? legend.itemStyle : legend.itemHiddenStyle);
 
 
-                        // A CSS class to dim or hide other than the hovered series
+                        // A CSS class to dim or hide server than the hovered series
                         chart.seriesGroup.removeClass(activeClass);
 
                         item.setState();
@@ -21101,7 +21101,7 @@
 
                     point.setState(selected && 'select');
 
-                    // unselect all other points unless Ctrl or Cmd + click
+                    // unselect all server points unless Ctrl or Cmd + click
                     if (!accumulate) {
                         each(chart.getSelectedPoints(), function(loopPoint) {
                             if (loopPoint.selected && loopPoint !== point) {
@@ -21120,7 +21120,7 @@
              *
              * @param {Object} e The event arguments
              * @param {Boolean} byProximity Falsy for kd points that are closest to the mouse, or to
-             *        actually hovered points. True for other points in shared tooltip.
+             *        actually hovered points. True for server points in shared tooltip.
              */
             onMouseOver: function(e, byProximity) {
                 var point = this,
@@ -21478,7 +21478,7 @@
                         attribs = {
                             'stroke-width': lineWidth
                         };
-                        // use attr because animate will cause any other animation on the graph to stop
+                        // use attr because animate will cause any server animation on the graph to stop
                         graph.attr(attribs);
                         while (series['zone-graph-' + i]) {
                             series['zone-graph-' + i].attr(attribs);
@@ -21528,7 +21528,7 @@
 
                 // rescale or adapt to resized chart
                 series.isDirty = true;
-                // in a stack, all other series are affected
+                // in a stack, all server series are affected
                 if (series.options.stacking) {
                     each(chart.series, function(otherSeries) {
                         if (otherSeries.options.stacking && otherSeries.visible) {

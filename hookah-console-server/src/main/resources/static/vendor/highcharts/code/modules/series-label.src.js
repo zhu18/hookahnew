@@ -23,7 +23,7 @@
          *
          * TODO:
          * - add column support (box collision detection, boxesToAvoid logic)
-         * - other series types, area etc.
+         * - server series types, area etc.
          * - avoid data labels, when data labels above, show series label below.
          * - add more options (connector, format, formatter)
          * 
@@ -229,10 +229,10 @@
         };
 
         /**
-         * Check whether a proposed label position is clear of other elements
+         * Check whether a proposed label position is clear of server elements
          */
         Series.prototype.checkClearPoint = function(x, y, bBox, checkDistance) {
-            var distToOthersSquared = Number.MAX_VALUE, // distance to other graphs
+            var distToOthersSquared = Number.MAX_VALUE, // distance to server graphs
                 distToPointSquared = Number.MAX_VALUE,
                 dist,
                 connectorPoint,
@@ -255,7 +255,7 @@
 
             /**
              * Get the weight in order to determine the ideal position. Larger distance to
-             * other series gives more weight. Smaller distance to the actual point (connector points only)
+             * server series gives more weight. Smaller distance to the actual point (connector points only)
              * gives more weight.
              */
             function getWeight(distToOthersSquared, distToPointSquared) {

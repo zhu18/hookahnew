@@ -311,7 +311,7 @@
           <archive>
             <addMavenDescriptor>true</addMavenDescriptor>
             <manifest>
-              <mainClass>com.jusfoun.hookah.console.other.ConsoleServerLauncher</mainClass>
+              <mainClass>com.jusfoun.hookah.console.server.ConsoleServerLauncher</mainClass>
               <addClasspath>true</addClasspath>
               <classpathPrefix>lib/</classpathPrefix>
             </manifest>

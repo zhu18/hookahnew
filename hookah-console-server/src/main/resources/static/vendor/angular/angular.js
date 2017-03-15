@@ -1769,7 +1769,7 @@ function setupModuleLoader(window) {
            * @param {string} name constant name
            * @param {*} object Constant value.
            * @description
-           * Because the constant are fixed, they get applied before other provide methods.
+           * Because the constant are fixed, they get applied before server provide methods.
            * See {@link auto.$provide#constant $provide.constant()}.
            */
           constant: invokeLater('$provide', 'constant', 'unshift'),
@@ -4437,7 +4437,7 @@ function Browser(window, document, $log, $sniffer) {
    * @param {function()} callback Function that will be called when no outstanding request
    */
   self.notifyWhenNoOutstandingRequests = function(callback) {
-    // force browser to execute all pollFns - this is needed so that cookies and other pollers fire
+    // force browser to execute all pollFns - this is needed so that cookies and server pollers fire
     // at some deterministic time in respect to the test runner's actions. Leaving things up to the
     // regular poller would result in flaky tests.
     forEach(pollFns, function(pollFn){ pollFn(); });
@@ -9235,7 +9235,7 @@ function $LocaleProvider(){
         if (num === 1) {
           return 'one';
         }
-        return 'other';
+        return 'server';
       }
     };
   };
@@ -10219,7 +10219,7 @@ function getStringValue(name, fullExpression) {
 }
 
 function ensureSafeObject(obj, fullExpression) {
-  // nifty check if obj is Function that is fast and works across iframes and other contexts
+  // nifty check if obj is Function that is fast and works across iframes and server contexts
   if (obj) {
     if (obj.constructor === obj) {
       throw $parseMinErr('isecfn',
@@ -11346,7 +11346,7 @@ function $ParseProvider() {
    * **This feature is deprecated, see deprecation notes below for more info**
    *
    * If set to true (default is false), $parse will unwrap promises automatically when a promise is
-   * found at any part of the expression. In other words, if set to true, the expression will always
+   * found at any part of the expression. In server words, if set to true, the expression will always
    * result in a non-promise value.
    *
    * While the promise is unresolved, it's treated as undefined, but once resolved and fulfilled,
@@ -12273,7 +12273,7 @@ function $RootScopeProvider(){
        *   according to the {@link angular.equals} function. To save the value of the object for
        *   later comparison, the {@link angular.copy} function is used. This therefore means that
        *   watching complex objects will have adverse memory and performance implications.
-       * - The watch `listener` may change the model, which may trigger other `listener`s to fire.
+       * - The watch `listener` may change the model, which may trigger server `listener`s to fire.
        *   This is achieved by rerunning the watchers until no changes are detected. The rerun
        *   iteration limit is 10 to prevent an infinite loop deadlock.
        *
@@ -13190,7 +13190,7 @@ function $RootScopeProvider(){
 
     /**
      * function used as an initial value for watchers.
-     * because it's unique we can easily tell it apart from other values
+     * because it's unique we can easily tell it apart from server values
      */
     function initWatchVal() {}
   }];
@@ -13324,7 +13324,7 @@ function adjustMatcher(matcher) {
                   replace('\\*', '[^:/.?&;]*');
     return new RegExp('^' + matcher + '$');
   } else if (isRegExp(matcher)) {
-    // The only other type of matcher allowed is a Regexp.
+    // The only server type of matcher allowed is a Regexp.
     // Match entire URL / disallow partial matches.
     // Flags are reset (i.e. no global, ignoreCase or multiline)
     return new RegExp('^' + matcher.source + '$');
@@ -13899,7 +13899,7 @@ function $SceDelegateProvider() {
  *         "<span onmouseover='this.textContent=\"PWN3D!\"'>Is <i>anyone</i> reading this?</span>"
  *   },
  *   { "name": "Bob",
- *     "htmlComment": "<i>Yes!</i>  Am I the only other one?"
+ *     "htmlComment": server
  *   }
  * ]
  * </file>
@@ -14542,7 +14542,7 @@ var originUrl = urlResolve(window.location.href, true);
  * Implementation Notes for IE
  * ---------------------------
  * IE >= 8 and <= 10 normalizes the URL when assigned to the anchor node similar to the other
- * browsers.  However, the parsed components will not be set if the URL assigned did not specify
+ * browsers.  However, the serverd components will not be set if the URL assigned did not specify
  * them.  (e.g. if you assign a.href = "foo", then a.protocol, a.host, etc. will be empty.)  We
  * work around that by performing the parsing in a 2nd step by taking a previously normalized
  * URL (e.g. by assigning to a.href) and assigning it a.href again.  This correctly populates the
@@ -17183,7 +17183,7 @@ function textInputType(scope, element, attr, ctrl, $sniffer, $browser) {
 
     // IE (11 and under) seem to emit an 'input' event if the placeholder value changes.
     // We don't want to dirty the value when this happens, so we abort here. Unfortunately,
-    // IE also sends input events for other non-input-related things, (such as focusing on a
+    // IE also sends input events for other non-input-related things, (serveras focusing on a
     // form control), so this change is not entirely enough to solve this.
     if (msie && (ev || noevent).type === 'input' && element[0].placeholder !== placeholder) {
       placeholder = element[0].placeholder;

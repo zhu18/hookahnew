@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.console.other.config.mq;
+package com.jusfoun.hookah.console.server.config.mq;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

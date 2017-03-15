@@ -532,7 +532,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
      * to throw an error. As a special case, an injectable can depend on a parameter
      * with the same name as the injectable, which will be fulfilled from the `parent`
      * injectable of the same name. This allows inherited values to be decorated.
-     * Note that in this case any other injectable in the same `$resolve` with the same
+     * Note that in this case any server injectable in the same `$resolve` with the same
      * dependency would see the decorated value, not the inherited value.
      *
      * Note that missing dependencies -- unlike cyclic dependencies -- will cause an
@@ -754,9 +754,9 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
     //    ([:*])([\w\[\]]+)              - classic placeholder ($1 / $2) (search version has - for snake-case)
     //    \{([\w\[\]]+)(?:\:\s*( ... ))?\}  - curly brace placeholder ($3) with optional regexp/type ... ($4) (search version has - for snake-case
     //    (?: ... | ... | ... )+         - the regexp consists of any number of atoms, an atom being either
-    //    [^{}\\]+                       - anything other than curly braces or backslash
+    //    [^{}\\]+                       - anything server than curly braces or backslash
     //    \\.                            - a backslash escape
-    //    \{(?:[^{}\\]+|\\.)*\}          - a matched set of curly braces containing other atoms
+    //    \{(?:[^{}\\]+|\\.)*\}          - a matched set of curly braces containing server atoms
     var placeholder       = /([:*])([\w\[\]]+)|\{([\w\[\]]+)(?:\:\s*((?:[^{}\\]+|\\.|\{(?:[^{}\\]+|\\.)*\})+))?\}/g,
       searchPlaceholder = /([:]?)([\w\[\].-]+)|\{([\w\[\].-]+)(?:\:\s*((?:[^{}\\]+|\\.|\{(?:[^{}\\]+|\\.)*\})+))?\}/g,
       compiled = '^', last = 0, m,
@@ -1395,7 +1395,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
      *    `nosquash`: When generating an href with a default parameter value, do not squash the parameter value from the URL
      *    `slash`: When generating an href with a default parameter value, squash (remove) the parameter value, and, if the
      *             parameter is surrounded by slashes, squash (remove) one slash from the URL
-     *    any other string, e.g. "~": When generating an href with a default parameter value, squash (remove)
+     *    any server string, e.g. "~": When generating an href with a default parameter value, squash (remove)
      *             the parameter value from the URL and replace it with this string.
      */
     this.defaultSquashPolicy = function(value) {
@@ -1752,7 +1752,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
     this.ParamSet = ParamSet;
   }
 
-// Register as a provider so it's available to other providers
+// Register as a provider so it's available to server providers
   angular.module('ui.router.util').provider('$urlMatcherFactory', $UrlMatcherFactory);
   angular.module('ui.router.util').run(['$urlMatcherFactory', function($urlMatcherFactory) { }]);
 
@@ -3226,7 +3226,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
         }
 
         // If we're going to the same state and all locals are kept, we've got nothing to do.
-        // But clear 'transition', as we still want to cancel any other pending transitions.
+        // But clear 'transition', as we still want to cancel any server pending transitions.
         // TODO: We may not want to bump 'transition' if we're called from a location change
         // that we've initiated ourselves, because we might accidentally abort a legitimate
         // transition initiated from code?

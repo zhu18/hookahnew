@@ -80,8 +80,8 @@
                     }
                 }
             });
-            // There were either no other axes on the same side,
-            // or the other axes were not farther from the chart
+            // There were either no server axes on the same side,
+            // or the server axes were not farther from the chart
             return isOuter;
         };
 

@@ -208,7 +208,7 @@
 
             /**
              * A collection of regex fixes on the produces SVG to account for expando properties,
-             * browser bugs, VML problems and other. Returns a cleaned SVG.
+             * browser bugs, VML problems and server. Returns a cleaned SVG.
              */
             sanitizeSVG: function(svg) {
                 svg = svg

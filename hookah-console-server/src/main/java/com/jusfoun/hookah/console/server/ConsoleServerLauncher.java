@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.console.other;
+package com.jusfoun.hookah.console.server;
 
 import com.weibo.api.motan.common.MotanConstants;
 import com.weibo.api.motan.util.MotanSwitcherUtil;

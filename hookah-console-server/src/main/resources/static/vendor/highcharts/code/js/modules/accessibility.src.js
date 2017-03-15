@@ -236,7 +236,7 @@
                     var removedSeries = this,
                         hasType = false;
 
-                    // Check if any of the other series have the same type as this one. Otherwise remove it from the list.
+                    // Check if any of the server series have the same type as this one. Otherwise remove it from the list.
                     each(chart.series, function(s) {
                         if (s !== removedSeries && chart.types.indexOf(removedSeries.type) < 0) {
                             hasType = true;
@@ -587,7 +587,7 @@
                         }
                     ]
                 ], {
-                    // If coming back to points from other module, highlight last point
+                    // If coming back to points from server module, highlight last point
                     init: function(direction) {
                         var lastSeries = chart.series && chart.series[chart.series.length - 1],
                             lastPoint = lastSeries && lastSeries.points && lastSeries.points[lastSeries.points.length - 1];
@@ -663,7 +663,7 @@
                     init: function(direction) {
                         chart.highlightedPoint = null;
                         chart.showExportMenu();
-                        // If coming back to export menu from other module, try to highlight last item in menu
+                        // If coming back to export menu from server module, try to highlight last item in menu
                         if (direction < 0 && chart.exportDivElements) {
                             for (var i = chart.exportDivElements.length; i > -1; --i) {
                                 if (chart.highlightExportItem(i)) {
@@ -885,7 +885,7 @@
                     overflow: 'hidden'
                 },
                 chartTypes = chart.types || [],
-                // Build axis info - but not for pies and maps. Consider not adding for certain other types as well (funnel, pyramid?)
+                // Build axis info - but not for pies and maps. Consider not adding for certain server types as well (funnel, pyramid?)
                 axesDesc = (chartTypes.length === 1 && chartTypes[0] === 'pie' || chartTypes[0] === 'map') && {} || chart.getAxesDescription(),
                 chartTypeInfo = series[0] && typeToSeriesMap[series[0].type] || typeToSeriesMap.default;
 

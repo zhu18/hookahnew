@@ -301,9 +301,6 @@ public class GenericServiceImpl<Model extends GenericModel, ID extends Serializa
         Class exampleClass = Example.class;
         Example exampleInstance = new Example(entityClass);
         try {
-            //exampleClass = Class.forName(entityClass.getPackage().getName() + "." + entityClass.getSimpleName() + "Example");
-            //Example exampleInstance = exampleClass.newInstance();
-
             if (Objects.nonNull(filters) && !filters.isEmpty()) {
                 Method criteriaMethod = exampleClass.getDeclaredMethod("createCriteria");
                 Object criteria = criteriaMethod.invoke(exampleInstance);
@@ -347,22 +344,6 @@ public class GenericServiceImpl<Model extends GenericModel, ID extends Serializa
         Method  method  =  null;
         boolean execute = false;
         try {
-//            for (Method m : methods) {
-//                if (m.getName().equals(filter.toString())) {
-//                    switch (m.getParameterCount()) {
-//                        case 0:
-//                            m.invoke(c);
-//                            break;
-//                        case 1:
-//                            m.invoke(c, convertParamType((Class) m.getParameterTypes()[0], filter.getValue()));
-//                            break;
-//                        default:
-//                            m.invoke(c, convertParamType((Class[]) m.getParameterTypes(), (Object[]) filter.getValue()));
-//                    }
-//                    execute = true;
-//                    break;
-//                }
-//            }
             switch (filter.getOperator()){
                 case EqualTo:
                 case NotEqualTo:

@@ -690,7 +690,7 @@ angular.module('ngAnimate', ['ng'])
          *
          * @description
          * Triggers a custom animation event based off the className variable and then attaches the className value to the element as a CSS class.
-         * Unlike the other animation methods, the animate service will suffix the className value with {@type -add} in order to provide
+         * Unlike the server animation methods, the animate service will suffix the className value with {@type -add} in order to provide
          * the animate service the setup and active CSS classes in order to trigger the animation (this will be skipped if no CSS transitions
          * or keyframes are defined on the -add or base CSS class).
          *
@@ -727,7 +727,7 @@ angular.module('ngAnimate', ['ng'])
          *
          * @description
          * Triggers a custom animation event based off the className variable and then removes the CSS class provided by the className value
-         * from the element. Unlike the other animation methods, the animate service will suffix the className value with {@type -remove} in
+         * from the element. Unlike the server animation methods, the animate service will suffix the className value with {@type -remove} in
          * order to provide the animate service the setup and active CSS classes in order to trigger the animation (this will be skipped if
          * no CSS transitions or keyframes are defined on the -remove or base CSS classes).
          *
@@ -1130,7 +1130,7 @@ angular.module('ngAnimate', ['ng'])
       // Register both events in case `window.onanimationend` is not supported because of that,
       // do the same for `transitionend` as Safari is likely to exhibit similar behavior.
       // Also, the only modern browser that uses vendor prefixes for transitions/keyframes is webkit
-      // therefore there is no reason to test anymore for other vendor prefixes: http://caniuse.com/#search=transition
+      // therefore there is no reason to test anymore for server vendor prefixes: http://caniuse.com/#search=transition
       if (window.ontransitionend === undefined && window.onwebkittransitionend !== undefined) {
         CSS_PREFIX = '-webkit-';
         TRANSITION_PROP = 'WebkitTransition';

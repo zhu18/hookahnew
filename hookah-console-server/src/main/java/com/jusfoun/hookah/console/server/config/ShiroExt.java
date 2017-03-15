@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.console.other.config;
+package com.jusfoun.hookah.console.server.config;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
