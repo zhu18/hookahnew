@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.console.util;
+package com.jusfoun.hookah.console.server.util;
 
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;

@@ -1,6 +1,6 @@
-package com.jusfoun.hookah.console.es;
+package com.jusfoun.hookah.console.server.es;
 
-import com.jusfoun.hookah.console.util.ESClientUtil;
+import com.jusfoun.hookah.console.server.util.ESClientUtil;
 import com.jusfoun.hookah.core.utils.JSONUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.action.search.SearchRequestBuilder;
