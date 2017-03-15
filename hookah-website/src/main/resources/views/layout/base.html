@@ -5,7 +5,7 @@
     <title>${title!}</title>
     <meta name="description" content="">
     <meta name="keyword" content="大数据,云计算,">
-
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" >
     <script type="text/javascript" src="/static/js/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="/static/js/dialog.js"></script>
 
@@ -19,34 +19,6 @@
     ${headSection}
 </head>
 <body>
-<script type="text/javascript">
-    (function(){
-        var browser = navigator.appName
-        var b_version = navigator.appVersion
-        var version = b_version.split(";");
-        var trim_Version = version[1].replace(/[ ]/g, "");
-        if (browser == "Microsoft Internet Explorer" && trim_Version == "MSIE6.0") {
-            window.stop();
-            $.alert('不支持当前浏览器，请更换更高版本的浏览器。', true, function () {
-                ie6close();
-            })
-        }else if (browser == "Microsoft Internet Explorer" && trim_Version == "MSIE7.0") {
-            window.stop();
-            $.alert('不支持当前浏览器，请更换更高版本的浏览器。', true, function () {
-                ie7close();
-            })
-        }
-        function ie7close(){
-            window.open('', '_self', '');
-            window.close();
-        }
-        function ie6close(){
-            window.opener = null;
-            window.close();
-        }
-
-    }())
-</script>
 <%include("/layout/header.html"){} %>
 <div class="page-layout page-main-content">
     ${htmlSection}

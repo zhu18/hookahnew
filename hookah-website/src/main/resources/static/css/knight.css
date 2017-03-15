@@ -68,7 +68,6 @@ caption, th {
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: 500;
-    color: #000
 }
 
 h1 {
@@ -112,8 +111,8 @@ a, ins {
     -ms-transition: color .2s;
     -o-transition: color .2s
 }
-
-a, a:link, a:visited ,a:hover{
+a,a:link{color:#333;}
+a:visited ,a:hover {
     color: #00a2ca;
     text-decoration: none;
 }
