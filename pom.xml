@@ -11,7 +11,7 @@
   <modules>
     <module>hookah-website</module>
     <module>hookah-core</module>
-    <module>hookah-console-other</module>
+    <module>hookah-console-server</module>
     <module>hookah-rpc-api</module>
     <module>hookah-oauth2server</module>
     <module>hookah-console-webapi</module>

@@ -11,6 +11,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.FatalBeanException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import tk.mybatis.mapper.entity.Example;
 
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
@@ -297,12 +298,11 @@ public class GenericServiceImpl<Model extends GenericModel, ID extends Serializa
 
         Class entityClass = (Class) trueType;
 
-        Class exampleClass;
-        Object exampleInstance = null;
+        Class exampleClass = Example.class;
+        Example exampleInstance = new Example(entityClass);
         try {
-            exampleClass = Class.forName(entityClass.getPackage().getName() + "." + entityClass.getSimpleName() + "Example");
-            exampleInstance = exampleClass.newInstance();
-
+            //exampleClass = Class.forName(entityClass.getPackage().getName() + "." + entityClass.getSimpleName() + "Example");
+            //Example exampleInstance = exampleClass.newInstance();
 
             if (Objects.nonNull(filters) && !filters.isEmpty()) {
                 Method criteriaMethod = exampleClass.getDeclaredMethod("createCriteria");
@@ -321,16 +321,10 @@ public class GenericServiceImpl<Model extends GenericModel, ID extends Serializa
                 orderByMethod.invoke(exampleInstance, sbuf.deleteCharAt(sbuf.length() - 1).toString());
             }
             return exampleInstance;
-        } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException(e);
         } catch (NoSuchMethodException e) {
             // TODO Auto-generated catch block
             throw new RuntimeException(e);
         } catch (SecurityException e) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException(e);
-        } catch (InstantiationException e) {
             // TODO Auto-generated catch block
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -350,24 +344,61 @@ public class GenericServiceImpl<Model extends GenericModel, ID extends Serializa
      */
     protected <C> C transMethod(C c, Condition filter) {
         Class clazz = c.getClass().getSuperclass();
-        Method[] methods = clazz.getDeclaredMethods();
+        Method  method  =  null;
         boolean execute = false;
         try {
-            for (Method m : methods) {
-                if (m.getName().equals(filter.toString())) {
-                    switch (m.getParameterCount()) {
-                        case 0:
-                            m.invoke(c);
-                            break;
-                        case 1:
-                            m.invoke(c, convertParamType((Class) m.getParameterTypes()[0], filter.getValue()));
-                            break;
-                        default:
-                            m.invoke(c, convertParamType((Class[]) m.getParameterTypes(), (Object[]) filter.getValue()));
-                    }
+//            for (Method m : methods) {
+//                if (m.getName().equals(filter.toString())) {
+//                    switch (m.getParameterCount()) {
+//                        case 0:
+//                            m.invoke(c);
+//                            break;
+//                        case 1:
+//                            m.invoke(c, convertParamType((Class) m.getParameterTypes()[0], filter.getValue()));
+//                            break;
+//                        default:
+//                            m.invoke(c, convertParamType((Class[]) m.getParameterTypes(), (Object[]) filter.getValue()));
+//                    }
+//                    execute = true;
+//                    break;
+//                }
+//            }
+            switch (filter.getOperator()){
+                case EqualTo:
+                case NotEqualTo:
+                case GreaterThan:
+                case LessThan:
+                case GreaterThanOrEqualTo:
+                case LessThanOrEqualTo:
+                case Like:
+                case NotLike:
+                    method =  clazz.getDeclaredMethod(filter.toString(),String.class,Object.class);
+                    method.invoke(c,filter.getProperty(),filter.getValue());
                     execute = true;
                     break;
-                }
+                case In:
+                case NotIn:
+                    method =  clazz.getDeclaredMethod(filter.toString(),String.class,List.class);
+                    method.invoke(c,filter.getProperty(),Arrays.asList((Object[])filter.getValue()));
+                    execute = true;
+                    break;
+                case Between:
+                case NotBetween:
+                    method =  clazz.getDeclaredMethod(filter.toString(),String.class,Object.class,Object.class);
+                    Object[] value= (Object[])filter.getValue();
+                    if(value.length!=2){
+                        logger.error("between参数个数不为2");
+                    }
+                    method.invoke(c,filter.getProperty(),value[0],value[1]);
+                    execute = true;
+                    break;
+                case IsNull:
+                case IsNotNull:
+                    method =  clazz.getDeclaredMethod(filter.toString(),String.class);
+                    method.invoke(c,filter.getProperty());
+                    break;
+                default:
+                    logger.info("unknown method:"+filter.toString());
             }
             if (execute) {
                 logger.info("success to add condition:" + clazz.getName() + "-" + filter);
@@ -377,6 +408,8 @@ public class GenericServiceImpl<Model extends GenericModel, ID extends Serializa
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             // TODO Auto-generated catch block
             throw new RuntimeException(e);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
         }
         return c;
     }
