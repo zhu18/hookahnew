@@ -1,7 +1,7 @@
 package com.jusfoun.hookah.console.other.service.impl;
 
 import com.jusfoun.hookah.console.other.config.mq.RabbitMqSender;
-import com.jusfoun.hookah.rpc.api.other.MqSenderService;
+import com.jusfoun.hookah.rpc.api.MqSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

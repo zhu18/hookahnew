@@ -2,7 +2,7 @@ package com.jusfoun.hookah.console.other.service.impl;
 
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
-import com.jusfoun.hookah.rpc.api.other.UserService;
+import com.jusfoun.hookah.rpc.api.UserService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  * @desc
  */
 @Service
-public class UserServiceImpl extends GenericServiceImpl<User, String> implements UserService{
+public class UserServiceImpl extends GenericServiceImpl<User, String> implements UserService {
     @Override
     public String sayhello() {
         return "hi guy";

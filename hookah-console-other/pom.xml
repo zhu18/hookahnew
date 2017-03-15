@@ -19,7 +19,7 @@
     </dependency>
     <dependency>
       <groupId>com.jusfoun</groupId>
-      <artifactId>hookah-rpc-api-other</artifactId>
+      <artifactId>hookah-rpc-api</artifactId>
       <version>0.0.1</version>
     </dependency>
     <dependency>

@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.rpc.api.other;
+package com.jusfoun.hookah.rpc.api;
 
 /**
  * @author huang lei
