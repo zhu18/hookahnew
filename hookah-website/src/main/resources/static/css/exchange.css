@@ -109,7 +109,9 @@
 .recommend-resources .box-bd li .info .info-img{
     width: 90px;
     height: 90px;
-    background: #f9a3a3;
+}
+.recommend-resources .box-bd li .info .info-img img {
+    width: 100%;
 }
 .recommend-resources .box-bd li .info .info-box{
     width: 156px;
@@ -170,8 +172,11 @@
 .hot-resources .hot-resources-box .box-bd .imgs{
     width:60px;
     height:60px;
-    background: rgba(0,0,0,0.4);
+    /*background: rgba(0,0,0,0.4);*/
     display: inline-block;
+}
+.hot-resources .hot-resources-box .box-bd .imgs img {
+    width: 100%;
 }
 .hot-resources .hot-resources-box .box-bd .title{
     font-size: 15px;
@@ -248,7 +253,10 @@
 .hot-resources .hot-resources-box .hot-sell-list .card-second .card-second-imgs{
     width:66px;
     height:66px;
-    background: #ccc;
+    /*background: #ccc;*/
+}
+.hot-resources .hot-resources-box .hot-sell-list .card-second .card-second-imgs img {
+    width: 100%;
 }
 .hot-resources .hot-resources-box .hot-sell-list .card-second .card-second-info{
     width:104px;
@@ -307,8 +315,11 @@
 .trade-resources .front .imgs{
     width: 80px;
     height: 80px;
-    background: #ccc;
+    /*background: #ccc;*/
     margin: 30px auto;
+}
+.trade-resources .front .imgs img {
+    width: 100%;
 }
 .trade-resources .front .title{
     text-align: center;
@@ -349,8 +360,11 @@
 .trade-resources .back .imgs{
     width: 70px;
     height: 70px;
-    background: #ccc;
+    /*background: #ccc;*/
     margin: 20px auto;
+}
+.trade-resources .back .imgs img {
+    width: 100%;
 }
 .trade-resources .back .info{
     padding:10px;
@@ -484,9 +498,12 @@
 .data-analysis .data-analysis-box .content .items .content-right li .icon{
     width: 80px;
     height: 80px;
-    border: 1px solid #ddd;
+    /*border: 1px solid #ddd;*/
     margin: 10px auto;
     display: inline-block;
+}
+.data-analysis .data-analysis-box .content .items .content-right li .icon img {
+    width: 100%;
 }
 .data-analysis .data-analysis-box .content .items .content-right li .price{
     font-size: 16px;
