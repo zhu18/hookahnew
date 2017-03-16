@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -47,10 +48,13 @@ public class SysNewsController {
 
     @RequestMapping(value = "/sysNews/insert", method = RequestMethod.GET)
     @ResponseBody
-    public Object insert(Model model) {
-        SysNews t2 = new SysNews();
-        t2.setContent("dfdfsdfsfsfsdfsdf");
-        sysNewsService.insert(t2);
+    public Object insert(SysNews model) {
+        SysNews snews = new SysNews();
+        snews = model;
+        snews.setSytTime(new Date());
+
+        snews.setContent("dfdfsdfsfsfsdfsdf");
+        sysNewsService.insert(snews);
         return "success";
     }
 
