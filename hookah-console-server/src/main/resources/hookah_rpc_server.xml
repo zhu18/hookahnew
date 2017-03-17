@@ -12,6 +12,7 @@
     <bean id="goodsMongoService" class="com.jusfoun.hookah.console.server.service.impl.GoodsMongoServiceImpl"/>
     <bean id="userMongoService" class="com.jusfoun.hookah.console.server.service.impl.UserMongoServiceImpl"/>
     <bean id="mqSenderService" class="com.jusfoun.hookah.console.server.service.impl.MqSenderServiceImpl"/>
+    <bean id="sysNewsService" class="com.jusfoun.hookah.console.server.service.impl.SysNewsServiceImpl"/>
     <!-- 商品分类查询 -->
     <bean id="categoryService" class="com.jusfoun.hookah.console.server.service.impl.CategoryServiceImpl"/>
     <bean id="mgCategoryAttrTypeService" class="com.jusfoun.hookah.console.server.service.impl.MgCategoryAttrTypeServiceImpl"/>
@@ -50,6 +51,9 @@
     </motan:service>
     <motan:service interface="com.jusfoun.hookah.rpc.api.CategoryService"
                    ref="categoryService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+    <motan:service interface="com.jusfoun.hookah.rpc.api.SysNewsService"
+                   ref="sysNewsService" export="hookah:5001" basicService="serviceBasicConfig">
     </motan:service>
     <motan:service interface="com.jusfoun.hookah.rpc.api.MgCategoryAttrTypeService"
                    ref="mgCategoryAttrTypeService" export="hookah:5001" basicService="serviceBasicConfig">
