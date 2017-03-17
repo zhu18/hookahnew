@@ -14,6 +14,8 @@
     <bean id="mqSenderService" class="com.jusfoun.hookah.console.server.service.impl.MqSenderServiceImpl"/>
     <!-- 商品分类查询 -->
     <bean id="categoryService" class="com.jusfoun.hookah.console.server.service.impl.CategoryServiceImpl"/>
+    <bean id="mgCategoryAttrTypeService" class="com.jusfoun.hookah.console.server.service.impl.MgCategoryAttrTypeServiceImpl"/>
+
     <!-- 注册中心配置 使用不同注册中心需要依赖对应的jar包。如果不使用注册中心，可以把check属性改为false，忽略注册失败。-->
     <!--<motan:registry regProtocol="local" name="registry" />-->
     <motan:registry regProtocol="consul" name="registry" address="192.168.15.90:8500"/>
@@ -48,6 +50,9 @@
     </motan:service>
     <motan:service interface="com.jusfoun.hookah.rpc.api.CategoryService"
                    ref="categoryService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+    <motan:service interface="com.jusfoun.hookah.rpc.api.MgCategoryAttrTypeService"
+                   ref="mgCategoryAttrTypeService" export="hookah:5001" basicService="serviceBasicConfig">
     </motan:service>
 
 </beans>

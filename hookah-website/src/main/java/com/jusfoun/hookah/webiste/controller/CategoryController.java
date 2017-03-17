@@ -23,21 +23,18 @@ public class CategoryController {
     CategoryService categoryService;
 
     /**
-     * 查询商品分类及商品属性
-     * type: 0 商品分类； 1 商品属性
+     * 查询商品分类
      * catSign: 0 普通； 1 系统
      * @param pid
-     * @param type
      * @return
      */
-    @RequestMapping("findByPId/{type}/{catSign}")
-    public ResultJson findByPId(String pid, @PathVariable Byte type, @PathVariable Byte catSign) {
+    @RequestMapping("findByPId/{catSign}")
+    public ResultJson findByPId(String pid, @PathVariable Byte catSign) {
         ResultJson<List<Category>> resultJson = new ResultJson<>();
         resultJson.setCode(HookahConstants.RESULT_SUCCESS);
         try {
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.eq("parentId", pid));
-            filters.add(Condition.eq("type", type));
             filters.add(Condition.eq("catSign", catSign));
             filters.add(Condition.eq("isShow", 1));
             List<Category> list = (List) categoryService.selectList(filters);
