@@ -97,8 +97,7 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
         Type type = getClass().getGenericSuperclass();
         Type trueType = ((ParameterizedType) type).getActualTypeArguments()[0];
 
-        mongoTemplate.findOne(this.convertFilter2Query(filters),(Class)trueType);
-        return null;
+        return (Model)mongoTemplate.findOne(this.convertFilter2Query(filters),(Class)trueType);
     }
 
     @Override
@@ -111,7 +110,10 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
 
     @Override
     public List<Model> selectList(List<Condition> filters) {
-        return null;
+        Type type = getClass().getGenericSuperclass();
+        Type trueType = ((ParameterizedType) type).getActualTypeArguments()[0];
+
+        return mongoTemplate.find(this.convertFilter2Query(filters),(Class)trueType);
     }
 
     @Override
