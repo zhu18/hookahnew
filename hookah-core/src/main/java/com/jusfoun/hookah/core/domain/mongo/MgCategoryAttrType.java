@@ -2,6 +2,8 @@ package com.jusfoun.hookah.core.domain.mongo;
 
 import com.jusfoun.hookah.core.generic.GenericModel;
 import com.jusfoun.hookah.core.utils.DateUtils;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.util.List;
@@ -10,7 +12,9 @@ import java.util.List;
  * Created by wangjl on 2017-3-16.
  * 商品分类与属性分类关系表
  */
+@Document
 public class MgCategoryAttrType extends GenericModel implements Serializable {
+    @Id
     private String catId; //商品分类id
     private List<AttrTypeBean> attrTypelist; //商品
     private String addTime;
