@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.console.server.util;
+package com.jusfoun.hookah.webiste.util;
 
 import com.jcraft.jsch.*;
 import org.slf4j.Logger;

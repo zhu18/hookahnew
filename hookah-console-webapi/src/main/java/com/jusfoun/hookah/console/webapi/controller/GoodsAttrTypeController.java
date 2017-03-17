@@ -1,10 +1,10 @@
 package com.jusfoun.hookah.console.webapi.controller;
 
-import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.Category;
 import com.jusfoun.hookah.core.domain.GoodsAttrType;
-import com.jusfoun.hookah.core.domain.ResultJson;
 import com.jusfoun.hookah.core.exception.HookahException;
+import com.jusfoun.hookah.core.utils.ExceptionConst;
+import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.GoodsAttrTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,20 +27,20 @@ public class GoodsAttrTypeController {
      * @return
      */
     @RequestMapping("add")
-    public ResultJson addAttrType(GoodsAttrType obj) {
-        ResultJson<List<Category>> resultJson = new ResultJson<>();
-        resultJson.setCode(HookahConstants.RESULT_SUCCESS);
+    public ReturnData addAttrType(GoodsAttrType obj) {
+        ReturnData<List<Category>> returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
         try {
             int i = goodsAttrTypeService.insert(obj);
             if(i < 0) {
                 throw new HookahException("操作失败");
             }
         }catch (Exception e) {
-            resultJson.setCode(HookahConstants.RESULT_ERROR);
-            resultJson.setMessage(e.toString());
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setMessage(e.toString());
             e.printStackTrace();
         }
-        return resultJson;
+        return returnData;
     }
 
     /**
@@ -49,9 +49,9 @@ public class GoodsAttrTypeController {
      * @return
      */
     @RequestMapping("del")
-    public ResultJson delAttrType(String id, String shopId) {
-        ResultJson<List<GoodsAttrType>> resultJson = new ResultJson<>();
-        resultJson.setCode(HookahConstants.RESULT_SUCCESS);
+    public ReturnData delAttrType(String id, String shopId) {
+        ReturnData<List<GoodsAttrType>> returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
         try {
             //TODO 判断属性分类下是否有商品
             GoodsAttrType attrType = new GoodsAttrType();
@@ -62,10 +62,10 @@ public class GoodsAttrTypeController {
                 throw new HookahException("操作失败");
             }
         }catch (Exception e) {
-            resultJson.setCode(HookahConstants.RESULT_ERROR);
-            resultJson.setMessage(e.toString());
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setMessage(e.toString());
             e.printStackTrace();
         }
-        return resultJson;
+        return returnData;
     }
 }
