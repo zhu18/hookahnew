@@ -57,7 +57,6 @@ public class CategoryController {
 
     @RequestMapping("findAttr")
     public ReturnData findGoodsAttr(String catId) {
-        logger.info("----------------"+catId);
         ReturnData<MgCategoryAttrType> returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
