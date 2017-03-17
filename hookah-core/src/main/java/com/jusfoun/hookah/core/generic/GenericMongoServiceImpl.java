@@ -56,6 +56,11 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
 
     @Override
     public int delete(Model model) {
+        try{
+            mongoTemplate.remove(model);
+        }catch(Exception e){
+            return -1;
+        }
         return 0;
     }
 
@@ -71,6 +76,10 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
 
     @Override
     public int deleteByCondtion(List<Condition> filters) {
+        Type type = getClass().getGenericSuperclass();
+        Type trueType = ((ParameterizedType) type).getActualTypeArguments()[0];
+
+        mongoTemplate.remove(this.convertFilter2Query(filters),(Class)trueType);
         return 0;
     }
 
