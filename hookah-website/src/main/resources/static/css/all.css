@@ -1756,8 +1756,7 @@ lesshat-selector {
   border: 0;
   -webkit-appearance: none;
 }
-.ui-dialog-close:hover,
-.ui-dialog-close:focus {
+.ui-dialog-close:hover{
   color: #000000;
   text-decoration: none;
   cursor: pointer;
@@ -1822,8 +1821,7 @@ lesshat-selector {
   border: solid 1px #00a2ca;
   display: inline-block;
 }
-.ui-dialog-footer button:hover,
-.ui-dialog-footer button:focus {
+.ui-dialog-footer button:hover{
   color: #333333;
   text-decoration: none;
 }
@@ -1847,7 +1845,6 @@ lesshat-selector {
   border-color: #cccccc;
 }
 .ui-dialog-footer button:hover,
-.ui-dialog-footer button:focus,
 .ui-dialog-footer button:active {
   color: #fff;
   background-color: #33b5d4;
@@ -1858,7 +1855,6 @@ lesshat-selector {
 }
 .ui-dialog-footer button[disabled],
 .ui-dialog-footer button[disabled]:hover,
-.ui-dialog-footer button[disabled]:focus,
 .ui-dialog-footer button[disabled]:active {
   background-color: #ffffff;
   border-color: #cccccc;
@@ -1869,7 +1865,6 @@ lesshat-selector {
   border-color: #33b5d4;
 }
 .ui-dialog-footer button.ui-dialog-autofocus:hover,
-.ui-dialog-footer button.ui-dialog-autofocus:focus,
 .ui-dialog-footer button.ui-dialog-autofocus:active {
   color: #ffffff;
   background-color: #33b5d4;
@@ -2172,8 +2167,7 @@ lesshat-selector {
   border: 0;
   -webkit-appearance: none;
 }
-.ui-dialog-close:hover,
-.ui-dialog-close:focus {
+.ui-dialog-close:hover{
   color: #000000;
   text-decoration: none;
   cursor: pointer;
@@ -2238,8 +2232,7 @@ lesshat-selector {
   border: solid 1px #00a2ca;
   display: inline-block;
 }
-.ui-dialog-footer button:hover,
-.ui-dialog-footer button:focus {
+.ui-dialog-footer button:hover{
   color: #333333;
   text-decoration: none;
 }
@@ -2263,7 +2256,6 @@ lesshat-selector {
   border-color: #cccccc;
 }
 .ui-dialog-footer button:hover,
-.ui-dialog-footer button:focus,
 .ui-dialog-footer button:active {
   color: #fff;
   background-color: #33b5d4;
@@ -2274,7 +2266,6 @@ lesshat-selector {
 }
 .ui-dialog-footer button[disabled],
 .ui-dialog-footer button[disabled]:hover,
-.ui-dialog-footer button[disabled]:focus,
 .ui-dialog-footer button[disabled]:active {
   background-color: #ffffff;
   border-color: #cccccc;
@@ -2285,7 +2276,6 @@ lesshat-selector {
   border-color: #33b5d4;
 }
 .ui-dialog-footer button.ui-dialog-autofocus:hover,
-.ui-dialog-footer button.ui-dialog-autofocus:focus,
 .ui-dialog-footer button.ui-dialog-autofocus:active {
   color: #ffffff;
   background-color: #33b5d4;

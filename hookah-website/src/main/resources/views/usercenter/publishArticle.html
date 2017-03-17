@@ -113,32 +113,113 @@ var htmlPart = {
                                 <div class="wangEditor-wrapper">
                                 <textarea name="content" id="content" style="height:500px;"></textarea>
                                 </div>
+                                <span id="preview-content" class="preview-content-btn y-right">预览内容</span>
                             </td>
                         </tr>
                     </table>
                     <div class="pulish-btn">
                         <button type="button" id="submit-article" value="立即发表">立即发表</button>
                     </div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <p><input type="file" id="file1" name="file" /></p>
+                    <input type="button" id="btnss" value="上传" />
+                    <p><img id="img1" alt="上传成功啦" src="" /></p>
                 </form>
             </div>
         </div>
     </div>
 </div>
 <script type="text/javascript" src="../../static/js/wangEditor.min.js"></script>
-<script type="text/javascript" src="../../static/js/uploadPreview.js"></script>
+<script type="text/javascript" src="../../static/js/ajaxfileupload.js"></script>
 <script type="text/javascript">
     //富文本
     var editor = new wangEditor('content');
         // 上传图片（举例）
     editor.config.uploadImgUrl = '/upload';
-        // 设置 headers（举例）
-    editor.config.uploadHeaders = {
-        'Accept' : 'text/x-json'
-    };
+        // 关闭菜单栏fixed
+    editor.config.menuFixed = false;
     editor.create();
 
     //上传图片
-    new uploadPreview({ UpBtn: "preview-btn", DivShow: "preview-div", ImgShow: "preview-img" });
+//    new uploadPreview({ UpBtn: "preview-btn", DivShow: "preview-div", ImgShow: "preview-img" });
+
+
+
+
+
+
+
+
+
+
+    $("#btnss").click(function () {
+        if ($("#file1").val().length > 0) {
+            ajaxFileUpload();
+        }
+        else {
+            alert("请选择图片");
+        }
+    })
+    function ajaxFileUpload() {
+        $.ajaxFileUpload
+        (
+            {
+                url: '/upload/fileUpload', //用于文件上传的服务器端请求地址
+                secureuri: false, //一般设置为false
+                fileElementId: 'file1', //文件上传空间的id属性  <input type="file" id="file" name="file" />
+                dataType: 'HTML', //返回值类型 一般设置为json
+                success: function (data, status)  //服务器成功响应处理函数
+                {
+                    alert(data);
+                    $("#img1").attr("src", data);
+                    if (typeof (data.error) != 'undefined') {
+                        if (data.error != '') {
+                            alert(data.error);
+                        } else {
+                            alert(data.msg);
+                        }
+                    }
+                },
+                error: function (data, status, e)//服务器响应失败处理函数
+                {
+                    alert(e);
+                }
+            }
+        )
+        return false;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     function changes(that){
@@ -205,6 +286,36 @@ var htmlPart = {
 
 
     })
+    //文章内容预览
+
+
+
+
+
+
+
+    $('#preview-content').click(function(){
+        var content = $('#content').val();
+        var html = '';
+            html += '<div id="preview-wrap" class="preview-wrap" style="display: block;">';
+            html += '<div class="preview-box">';
+            html += '<h3 class="preview-title">预览<span id="close">x</span></h3>';
+            html += '<div class="preview-content">';
+            html += content;
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+
+        if(content == ""){
+            $.alert('请输入文章内容！',true,function(){})
+        }else{
+            $('body').append(html);
+        }
+        $('#close').click(function(){
+            $('#preview-wrap').remove();
+        })
+    })
+
 
 
 </script>

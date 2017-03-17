@@ -78,6 +78,7 @@
     padding: 2px 5px;
     font-size:14px;
 }
+
 .publish-article table .input-count {
     margin-left: 10px;
     /*vertical-align: top;*/
@@ -190,6 +191,19 @@
     opacity: 0;
     background: rgba(0,0,0,0.7);
 }
+.preview-content-btn{
+    text-align: center;
+    margin-top:10px;
+    display: inline-block;
+    min-width: 80px;
+    height: 30px;
+    line-height: 30px;
+    border: 0;
+    background: #00c1de;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
 .info.block {
     line-height: 26px;
     display: inline-block;
@@ -197,3 +211,44 @@
 }
 .select-hide{display: none;}
 .errors{display: none;}
+
+.preview-wrap{
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.8);
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    /*display: none;*/
+}
+.preview-wrap .preview-box{
+    position: relative;
+    width: 840px;
+    background: #fff;
+    margin: 100px auto;
+    padding: 20px;
+}
+
+.preview-wrap .preview-title{
+    font-size: 18px;
+    border-bottom: 1px solid #ccc;
+    height: 40px;
+    margin-bottom: 20px;
+}
+.preview-wrap .preview-content{
+    max-height: 500px;
+    overflow-y: scroll;
+}
+.preview-wrap .preview-title span {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 30px;
+    display: block;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    cursor: pointer;
+}

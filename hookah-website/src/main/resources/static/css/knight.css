@@ -27,9 +27,6 @@ body, button, input, select, textarea {
     -webkit-font-smoothing: antialiased
 }
 
-input, select, textarea {
-    font-size: 100%
-}
 
 table {
     border-collapse: collapse;
@@ -862,10 +859,6 @@ a.y-btn-anti.y-btn-disabled, a.y-btn-anti:active.y-btn-disabled, a.y-btn-anti:ho
     color: #ccc
 }
 
-.y-form .y-input:focus, .y-form select:focus, .y-input:focus {
-    border-color: #69c5dd;
-    background: #e9fbfe
-}
 
 .y-form .row-info.row-info-warning, .y-form .row-info.row-info-warning .icon, .y-msg.y-msg-warning .y-icon {
     color: #e00
@@ -4414,4 +4407,8 @@ a.y-btn-anti.y-btn-disabled, a.y-btn-anti:active.y-btn-disabled, a.y-btn-anti:ho
 
 .float-tool .cloud-helper a:hover .cloud-help-icon-bottom {
     background-position: 0 -101px
+}
+input:focus, select:focus, textarea:focus {
+    outline:none;
+    border:1px solid #69c5dd;
 }
