@@ -34,98 +34,178 @@ var htmlPart = {
         <div class="user-center-box y-right">
             <h3 class="center-title">发表文章</h3>
             <div class="publish-article">
-                <table>
-                    <tr>
-                        <td class="bar"><em>*</em>文章分类：</td>
-                        <td>
-                            <div class="select-box">
-                                <select name="" id="">
-                                    <option value="">双创中心</option>
-                                    <option value="">博览会</option>
-                                    <option value="">资讯中心</option>
-                                </select>
-                            </div>
-                            <div class="errors">
-                                <ul>
-                                    <li><span class="errorinfo">请选择文章分类!</span></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="bar">文章标题：</td>
-                        <td>
-                            <div class="text-box">
-                                <input type="text">
-                                <span class="input-count"><strong>0</strong>/60</span>
-                            </div>
-                            <div class="errors">
-                                <ul>
-                                    <li><span class="errorinfo">不能超过60个字符!</span></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="bar">资讯热文：</td>
-                        <td>
-                            <div class="radio-box">
-                                <label>
-                                    <input type="radio" name="122" checked="">是
-                                </label>
-                                <label>
-                                    <input type="radio" name="122">否
-                                </label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="bar">图片：</td>
-                        <td>
-                            <div class="block info" style="margin: 0px 0px 3px;">
-                                图片大小不能超过3MB。
-                            </div>
-                            <div class="multimage-wrap">
-                                <ul class="image-list">
-                                    <li>
-                                        <div class="preview">
-                                            <a title="上传图片" class="upload-tip">+</a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="bar">商品描述：</td>
-                        <td>
-                            <div class="wangEditor-wrapper">
-                                <textarea id="textarea1" style="height:500px;">
-
-                                </textarea>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-                <div class="pulish-btn">
-                    <a href="javascript:void(0)">立即发表</a>
-                </div>
+                <form name="publishArticle" id="publishArticle">
+                    <table>
+                        <tr>
+                            <td class="bar"><em>*</em>文章分类：</td>
+                            <td>
+                                <div class="select-box">
+                                    <select name="newsGroup" id="newsGroup" onchange="changes(this)">
+                                        <option value="0">请选择分类</option>
+                                        <option value="innovation">双创中心</option>
+                                        <option value="exposition">博览会</option>
+                                        <option value="information">资讯中心</option>
+                                    </select>
+                                    <span class="select-line select-hide">-</span>
+                                    <select name="newsSonGroup" id="newsSonGroup" class="select-hide">
+                                        <option value="0">请选择分类</option>
+                                        <option value="1">中心动态</option>
+                                        <option value="2">行业咨询</option>
+                                        <option value="3">中心公告</option>
+                                    </select>
+                                </div>
+                                <div class="errors">
+                                    <ul>
+                                        <li><span class="errorinfo">请选择文章分类!</span></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bar">文章标题：</td>
+                            <td>
+                                <div class="text-box">
+                                    <input id="newsTitle" name="newsTitle" type="text">
+                                    <span class="input-count"><strong>0</strong>/60</span>
+                                </div>
+                                <div class="errors">
+                                    <ul>
+                                        <li><span class="errorinfo">不能超过60个字符!</span></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bar">资讯热文：</td>
+                            <td>
+                                <div class="radio-box">
+                                    <label>
+                                        <input type="radio" name="isHot" value="1">是
+                                    </label>
+                                    <label>
+                                        <input type="radio" checked="" name="isHot" value="0" name="122">否
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bar">图片：</td>
+                            <td>
+                                <div class="block info" style="margin: 0px 0px 3px;">
+                                    图片大小不能超过3MB。
+                                </div>
+                                <div class="multimage-wrap">
+                                    <ul class="image-list">
+                                        <li>
+                                            <div class="preview" id="preview-div">
+                                                <a title="上传图片" class="upload-tip">+</a>
+                                                <img class="preview-img" id="preview-img">
+                                                <input type="file" id="preview-btn" class="preview-btn">
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bar">文章内容：</td>
+                            <td>
+                                <div class="wangEditor-wrapper">
+                                <textarea name="content" id="content" style="height:500px;"></textarea>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="pulish-btn">
+                        <button type="button" id="submit-article" value="立即发表">立即发表</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
 <script type="text/javascript" src="../../static/js/wangEditor.min.js"></script>
+<script type="text/javascript" src="../../static/js/uploadPreview.js"></script>
 <script type="text/javascript">
-    var editor = new wangEditor('textarea1');
-    // 上传图片（举例）
+    //富文本
+    var editor = new wangEditor('content');
+        // 上传图片（举例）
     editor.config.uploadImgUrl = '/upload';
-
-    // 设置 headers（举例）
+        // 设置 headers（举例）
     editor.config.uploadHeaders = {
         'Accept' : 'text/x-json'
     };
-
     editor.create();
+
+    //上传图片
+    new uploadPreview({ UpBtn: "preview-btn", DivShow: "preview-div", ImgShow: "preview-img" });
+
+
+    function changes(that){
+
+        var thisVal = $(that).val();
+        $('.select-hide').hide();
+        if(thisVal == 'information'){
+            $('#newsSonGroup').show();
+            $('.select-line').show();
+        }else{
+            $('#newsSonGroup').hide();
+            $('.select-line').hide();
+        }
+        if($(that).val() == 0){
+            $(that).parents().siblings('.errors').show();
+        }else{
+            $(that).parents().siblings('.errors').hide();
+        }
+
+    }
+
+    $('#submit-article').click(function(){
+        var data = {};
+            data.newsGroup = $('#newsGroup').val();
+            data.newsTitle = $('#newsTitle').val();
+            data.isHot = $("input[name='isHot']:checked").val();
+            data.content = $('#content').val();
+            data.pictureUrl = 'asvasdvasdvav';
+            data.newsSonGroup = $('#newsSonGroup').val();
+        if(data.newsGroup == 0){
+            $('#newsGroup').focus();
+            $('#newsGroup').parents().siblings('.errors').show();
+            return;
+        }else if(data.newsGroup === 'information'){
+            if(data.newsSonGroup == 0){
+                $('#newsSonGroup').focus();
+                $('#newsSonGroup').parents().siblings('.errors').show();
+                return;
+            }
+        }
+        if(data.newsTitle == "" || data.newsTitle == null){
+            $('#newsTitle').focus();
+            return;
+        }else if(data.content == "") {
+            $.alert('请输入文章内容！',true,function(){
+
+            })
+            return;
+        }else{
+            $.ajax({
+                type: "POST",
+                url: "/sysNews/insert",
+                data: data,
+                success: function(msg){
+                    if(msg.code == 1){
+                        $.alert('提交成功')
+                    }else{
+                        $.alert(msg.message)
+                    }
+
+                }
+            });
+        }
+
+
+    })
+
 
 </script>
 <%};

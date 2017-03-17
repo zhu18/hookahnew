@@ -108,7 +108,7 @@
     text-align: center;
     padding-top:20px;
 }
-.publish-article .pulish-btn a {
+.publish-article .pulish-btn button{
     display: inline-block;
     min-width: 150px;
     height: 40px;
@@ -174,8 +174,26 @@
     top: 5px;
     text-decoration: none;
 }
+.multimage-wrap .image-list li .preview .preview-img{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
+.multimage-wrap .image-list li .preview .preview-btn {
+    font-size: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100px;
+    height: 100px;
+    opacity: 0;
+    background: rgba(0,0,0,0.7);
+}
 .info.block {
     line-height: 26px;
     display: inline-block;
     color: #767676;
 }
+.select-hide{display: none;}
+.errors{display: none;}

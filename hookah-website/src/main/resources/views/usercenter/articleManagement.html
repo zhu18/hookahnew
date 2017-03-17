@@ -51,6 +51,21 @@ var htmlPart = {
                             <th>发表人</th>
                             <th>操作</th>
                         </tr>
+                        <% for(list in data){ %>
+
+                            <tr>
+                                <td>1</td>
+                                <td>${list.newsTitle}</td>
+                                <td class="imgs"><div><img src="../../static/img/zheng.jpg" alt=""></div></td>
+                                <td>${list.sytTime}</td>
+                                <td>${list.sysUser}</td>
+                                <td>
+                                    <a href="javascript:void(0)">删除</a>
+                                </td>
+                            </tr>
+
+                        <% } %>
+
                         <tr>
                             <td>1</td>
                             <td>2017年人工智能的兴起于衰败</td>
