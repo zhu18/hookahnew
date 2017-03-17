@@ -60,20 +60,20 @@
     <!--生成Dao类存放位置-->
     <javaClientGenerator type="XMLMAPPER" targetPackage="com.jusfoun.hookah.core.dao" targetProject="src/main/java">
       <property name="enableSubPackages" value="true"/>
-      <property name="rootInterface" value="com.jusfoun.hookah.core.dao.GenericDao&lt;GoodsAttr&gt;"/>
+      <property name="rootInterface" value="com.jusfoun.hookah.core.dao.GenericDao&lt;Goods&gt;"/>
     </javaClientGenerator>
     <!--生成对应表及类名-->
     <!-- <table tableName="hb_enterprise_copy"  domainObjectName="EnterprisePojo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
       <columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" />
     </table> -->
-    <table schema="hookah" tableName="goods_attr" domainObjectName=""
+    <table schema="hookah" tableName="goods" domainObjectName=""
            enableCountByExample="false" enableUpdateByExample="false"
            enableDeleteByExample="false" enableSelectByExample="false"
            selectByExampleQueryId="false" >
       <generatedKey column="type_id" sqlStatement="select replace(uuid(),'-','') from dual"/>
-      <!--<columnOverride column="goods_brief" javaType="java.lang.String" jdbcType="VARCHARAR" />-->
-      <!--<columnOverride column="goods_desc" javaType="java.lang.String" jdbcType="VARCHAR" />-->
-      <!--<columnOverride column="seller_note" javaType="java.lang.String" jdbcType="VARCHAR" />-->
+      <columnOverride column="goods_brief" javaType="java.lang.String" jdbcType="VARCHARAR" />
+      <columnOverride column="goods_desc" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <columnOverride column="seller_note" javaType="java.lang.String" jdbcType="VARCHAR" />
     </table>
 
   </context>

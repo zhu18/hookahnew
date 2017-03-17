@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class UploadResult implements Serializable {
     private String fileName;
     private String filePath;
+    private String absPath;
 
     public String getFileName() {
         return fileName;
@@ -25,8 +26,17 @@ public class UploadResult implements Serializable {
         this.filePath = filePath;
     }
 
-    public UploadResult(String fileName, String filePath) {
+    public String getAbsPath() {
+        return absPath;
+    }
+
+    public void setAbsPath(String absPath) {
+        this.absPath = absPath;
+    }
+
+    public UploadResult(String fileName, String filePath, String absPath) {
         this.fileName = fileName;
         this.filePath = filePath;
+        this.absPath = absPath;
     }
 }

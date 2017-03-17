@@ -39,11 +39,12 @@ public class UploadUtil {
                 if (!pathFile.exists() && !pathFile.isDirectory()) {
                     pathFile.mkdirs();
                 }
-
                 File localFile = new File(pathReal + fileName);
                 file.transferTo(localFile);
             }
-            list.add(new UploadResult(fileName, tmpPath + fileName));
+            String filePath = tmpPath + fileName;
+            list.add(new UploadResult(fileName, filePath,
+                    PropertiesManager.getInstance().getProperty("upload.url") + filePath));
         }
         return list;
     }
