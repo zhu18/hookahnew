@@ -57,12 +57,11 @@ public class UserCenterController {
             int pageSizeNew = 10;
             filters.add(Condition.eq("newsGroup", SysNews.Innovation));
             page = sysNewsService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
-
         } catch (Exception e) {
             e.printStackTrace();
 
         }
-        model.addAttribute("list",page);
+        model.addAttribute("pageInfo",page);
         return "usercenter/articleManagement";
     }
 
