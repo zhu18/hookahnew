@@ -29,7 +29,7 @@ public class SysNewsController {
     @Resource
     SysNewsService sysNewsService;
 
-    /** 每页记录数 */
+    /** 第几页 */
     private static final int PAGE_NUM = 1;
     /** 每页记录数 */
     private static final int PAGE_SIZE = 10;
@@ -76,45 +76,54 @@ public class SysNewsController {
     /**
      * @Title: list
      * @Description: 查询列表
-     * @param paramMap
-     * @param model
-     * @param request
+
      * @return
      * @return: ReturnData
      */
+    /**
+     *  查询列表
+     * @param pageNumber  所在位置
+     * @param pageSize 每页记录数
+     * @param newsGroup 文章一级分类
+     * @param newsSonGroup 文章二级分类
+     * @return
+     */
     @ResponseBody
-    @RequestMapping(value = "/sysNews/list", method = RequestMethod.POST)
-    public String list( Map<String,String> paramMap, Model model, HttpServletRequest request) {
-        Pagination<SysNews> page;
+    @RequestMapping(value = "/sysNews/list", method = RequestMethod.GET)
+    public Object list( String pageNumber , String pageSize , String newsGroup,String newsSonGroup) {
+        Pagination<SysNews> page = new Pagination<>();
         try {
             List<Condition> filters = new ArrayList();
             List<OrderBy> orderBys = new ArrayList();
             orderBys.add(OrderBy.desc("sytTime"));
             //参数校验
-            int pageNumber = PAGE_NUM;
-            if(paramMap.containsKey("pageNumber") && paramMap.get("pageNumber")!=null){
-                pageNumber = Integer.parseInt(paramMap.get("pageNumber"));
+            int pageNumberNew = PAGE_NUM;
+            if(StringUtils.isNotBlank(pageNumber)){
+                pageNumberNew = Integer.parseInt(pageNumber);
             }
 
-            int pageSize = PAGE_SIZE;
-            if(paramMap.containsKey("pageSize") && paramMap.get("pageSize")!=null){
-                pageSize = Integer.parseInt(paramMap.get("pageSize"));
+            int pageSizeNew = PAGE_SIZE;
+            if(StringUtils.isNotBlank(pageSize)){
+                pageSizeNew = Integer.parseInt(pageSize);
             }
 
-            if(paramMap.containsKey("newsGroup") && StringUtils.isNotBlank(paramMap.get("newsGroup"))){
-                filters.add(Condition.eq("newsGroup", paramMap.get("newsGroup")));
+            if( StringUtils.isNotBlank(newsGroup)){
+                filters.add(Condition.eq("newsGroup",newsGroup));
             }else {
                 filters.add(Condition.eq("newsGroup", SysNews.Innovation));
             }
 
-            page = sysNewsService.getListInPage(pageNumber, pageSize, filters, orderBys);
-            model.addAttribute(page);
-           // return ReturnData.success(page);
+            if( StringUtils.isNotBlank(newsSonGroup)){
+                filters.add(Condition.eq("newsSonGroup", newsSonGroup));
+            }
+
+            page = sysNewsService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
+
         } catch (Exception e) {
             e.printStackTrace();
-         //   return ReturnData.error();
+
         }
-        return "usercenter/articleManagement";
+        return page ;
     }
 
 
