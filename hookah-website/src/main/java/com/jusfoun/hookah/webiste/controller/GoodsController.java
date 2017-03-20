@@ -4,6 +4,7 @@ import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -23,4 +24,17 @@ public class GoodsController {
     public ReturnData addGoods(Goods obj) {
         return null;
     }
+
+    @RequestMapping(value = "/goods/list", method = RequestMethod.GET)
+    public String list(){
+        return "/goods/list";
+    }
+
+    @RequestMapping(value = "/goods/details", method = RequestMethod.GET)
+    public String details(){
+        return "/goods/details";
+    }
+
+
+
 }
