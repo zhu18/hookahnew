@@ -8,6 +8,7 @@ import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.MgGoodsService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -53,4 +54,17 @@ public class GoodsController {
         }
         return returnData;
     }
+
+    @RequestMapping(value = "/goods/list", method = RequestMethod.GET)
+    public String list(){
+        return "/goods/list";
+    }
+
+    @RequestMapping(value = "/goods/details", method = RequestMethod.GET)
+    public String details(){
+        return "/goods/details";
+    }
+
+
+
 }

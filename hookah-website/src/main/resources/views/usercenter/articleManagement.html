@@ -36,6 +36,7 @@ var htmlPart = {
                 <div class="select-title">
                     <label>文章分类：</label>
                     <select name="newsGroup" id="newsGroup" onchange="changes(this)">
+                        <!--<option value="5">请选择分类</option>-->
                         <option value="innovation">双创中心</option>
                         <option value="exposition">博览会</option>
                         <option value="information">资讯中心</option>
@@ -57,38 +58,38 @@ var htmlPart = {
                             <th>发表人</th>
                             <th>操作</th>
                         </tr>
-
-                        <tr>
-                            <td>1</td>
-                            <td>2017年人工智能的兴起于衰败</td>
-                            <td class="imgs"><div><img src="../../static/img/zheng.jpg" alt=""></div></td>
-                            <td>2017年3月13日</td>
-                            <td>wudy</td>
-                            <td>
-                                <a href="javascript:void(0)">删除</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>2017年人工智能的兴起于衰败</td>
-                            <td class="imgs"><div><img src="../../static/img/zheng.jpg" alt=""></div></td>
-                            <td>2017年3月13日</td>
-                            <td>wudy</td>
-                            <td>
-                                <a href="javascript:void(0)">删除</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>2017年人工智能的兴起于衰败</td>
-                            <td class="imgs"><div><img src="../../static/img/zheng.jpg" alt=""></div></td>
-                            <td>2017年3月13日</td>
-                            <td>wudy</td>
-                            <td>
-                                <a href="javascript:void(0)">修改</a>
-                                <a href="javascript:void(0)">删除</a>
-                            </td>
-                        </tr>
+                        <!--<tr>-->
+                            <!--<td>1</td>-->
+                            <!--<td>2017年人工智能的兴起于衰败</td>-->
+                            <!--<td class="imgs"><div><img src="../../static/img/zheng.jpg" alt=""></div></td>-->
+                            <!--<td>2017年3月13日</td>-->
+                            <!--<td>wudy</td>-->
+                            <!--<td>-->
+                                <!--&lt;!&ndash;<a href="javascript:void(0)">删除</a>&ndash;&gt;-->
+                                <!--<span onclick="deleteData('595a34b82d1a4be2b2286ad1f293d480')">删除</span>-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td>2</td>-->
+                            <!--<td>2017年人工智能的兴起于衰败</td>-->
+                            <!--<td class="imgs"><div><img src="../../static/img/zheng.jpg" alt=""></div></td>-->
+                            <!--<td>2017年3月13日</td>-->
+                            <!--<td>wudy</td>-->
+                            <!--<td>-->
+                                <!--<a href="javascript:void(0)">删除</a>-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td>3</td>-->
+                            <!--<td>2017年人工智能的兴起于衰败</td>-->
+                            <!--<td class="imgs"><div><img src="../../static/img/zheng.jpg" alt=""></div></td>-->
+                            <!--<td>2017年3月13日</td>-->
+                            <!--<td>wudy</td>-->
+                            <!--<td>-->
+                                <!--<a href="javascript:void(0)">修改</a>-->
+                                <!--<a href="javascript:void(0)">删除</a>-->
+                            <!--</td>-->
+                        <!--</tr>-->
                     </table>
                 </div>
                 <%include("/layout/pageaction.html"){} %>
@@ -98,7 +99,6 @@ var htmlPart = {
 </div>
 <script type="text/javascript">
     function changes(that){
-
         var thisVal = $(that).val();
         $('.select-hide').hide();
         if(thisVal == 'information'){
@@ -113,36 +113,70 @@ var htmlPart = {
         }else{
             $(that).parents().siblings('.errors').hide();
         }
-
-    }
-
-    var listVal = $('#newsGroup').val();
-    var newsSonGroup = $('#newsSonGroup').val();
-    var data = {};
+        var newsSonGroup = $('#newsSonGroup').val();
+        var data = {};
         data.pageNumber = 1;
-        data.pageSize = 10;
-        data.newsgroup = listVal;
+        data.pageSize = 8;
+        data.newsgroup = thisVal;
         if(data.newsgroup == 'information'){
             data.newsSonGroup = newsSonGroup;
-        }
-    alert(data)
-    loadData(data);
-
+        };
+//        $(".article-box>.order-items").not(".order-head").remove();
+        loadData(data);
+    }
     function loadData(data){
-
+        if($(".article-box>.order-items>.order-head").siblings()){
+            $(".article-box>.order-items>.order-head").siblings().remove();
+        }
         $.ajax({
-            type: "POST",
+            type: "get",
             url: "/sysNews/list",
             data: data,
-            success: function(msg){
-                if(msg.code == 1){
-                    console.log(msg.data)
-                }else{
-                    $.alert(msg.message)
+            success: function(data){
+                console.log(data);
+                for(var i=0;i<data.list.length;i++){
+                    $(".article-box>.order-items").append(
+                        "<tr>"
+                        +"<td>"+(i+1)+"</td>"
+                        +"<td>"+data.list[i].newsTitle+"</td>"
+                        +"<td class='imgs'>"+"<div>"+"<img src="+data.list[i].pictureUrl+">"+"</div>"+"</td>"
+                        +"<td>"+getDate(data.list[i].sytTime)+"</td>"
+                        +"<td>"+data.list[i].sysUser+"</td>"
+                        +"<td>"
+                        +"<span>删除</span>"
+//                        +"<span onclick="+deleteData(data.list[i].newsId)+">删除</span>"
+                        +"</td>"
+                        +"</tr>"
+                    );
                 }
+                function getDate(time){
+                    var date = new Date(time);
+                    year = date.getFullYear() + '年';
+                    month = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '月';
+                    date = date.getDate() + '日';
+                    return year+month+date;
+                }
+            },
+            error:function(e){
+                err ? err(e):alert("请求或操作失败！");
+            },
 
-            }
         });
+    }
+
+    function deleteData(id){
+        $.ajax({
+            type:"post",
+            url:"/sysNews/deleteInfo",
+            data:{newsId:id},
+            success:function(data){
+                if(data.code=="1"){
+                    console.log("删除成功");
+                }else {
+                    $.alert(data.message);
+                }
+            }
+        })
     }
 </script>
 <%};

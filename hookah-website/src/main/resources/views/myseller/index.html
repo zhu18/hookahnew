@@ -63,6 +63,7 @@ var htmlPart = {
                 <div class="cate-path">
                     <div class="clearfix">
                         <label>您当前的选择是：</label>
+                        <span class="clearfix-content"></span>
                     </div>
                     <span class="arrow"></span>
                 </div>
@@ -86,21 +87,38 @@ include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
     loadData(url,pid);
     //点击加载。。。
     function clickLoadData(url,pid,that){
+
         $(that).parents(".select-category-item").nextAll(".select-category-item").remove();
         $(that).addClass('active').siblings().removeClass('active');
         loadData(url,pid);
         currentCategory(that);
         $('#pusblishBtn').click(function(){
-            window.location.href = "/myseller/publish?catId="+pid;
+            var category = $('.clearfix-content').text();
+            window.location.href = "/myseller/publish?catId="+pid+"&category="+category;
         })
     }
     function currentCategory(that){
+        var indexs = $(that).parents(".select-category-item").index();
+
         var nextAll = $(that).parents(".select-category-item").nextAll(".select-category-item");
-        if(nextAll){
-            $('.clearfix').append("<span>"+$(that).text()+"---------</span>");
+
+        if(indexs == 0){
+            $('.clearfix-content > .clearfix-box').remove();
+
+
+            $('.clearfix-content').append('<span class="clearfix-box clearfix-box-'+indexs+'">'+$(that).text()+'</span>');
         }else{
-            $('.clearfix').append("<span>"+$(that).text()+"</span>");
+            $('.clearfix-content').children('.clearfix-box-'+indexs).remove();
+            $('.clearfix-content').append('<span class="clearfix-box clearfix-box-'+indexs+'"> > '+$(that).text()+'</span>');
         }
+
+
+
+//        if(nextAll){
+//            $('.clearfix').append("<span>"+$(that).text()+"---------</span>");
+//        }else{
+//            $('.clearfix').append("<span>"+$(that).text()+"</span>");
+//        }
 //        $('.clearfix').append($(that).text());
     }
     //加载。。。
