@@ -63,7 +63,6 @@ var htmlPart = {
                 <div class="cate-path">
                     <div class="clearfix">
                         <label>您当前的选择是：</label>
-                        ${x}
                     </div>
                     <span class="arrow"></span>
                 </div>
@@ -78,13 +77,6 @@ var htmlPart = {
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
 <script type="text/javascript">
-    <%
-    var a = 3;
-    var b = 3,c = "abc",d=true,e=null;
-    var f = [1,2,3];
-    var g = {key1:a,key2:c};
-    var i = a+b;
-    %>
 
     var url = "/category/findByPId/1";
     var pid = 0;

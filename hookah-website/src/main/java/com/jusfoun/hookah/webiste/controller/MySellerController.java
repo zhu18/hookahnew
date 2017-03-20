@@ -1,7 +1,6 @@
 package com.jusfoun.hookah.webiste.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -14,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class MySellerController {
 
     @RequestMapping(value = "/myseller", method = RequestMethod.GET)
-    public String index(Model model){
-        model.addAttribute("happy", "Hello,world");
-        model.addAttribute("x", "卖家中心今天天气不错");
+    public String index(){
         return "/myseller/index";
     }
 
