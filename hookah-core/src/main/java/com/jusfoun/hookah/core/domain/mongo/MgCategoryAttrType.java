@@ -1,7 +1,6 @@
 package com.jusfoun.hookah.core.domain.mongo;
 
 import com.jusfoun.hookah.core.generic.GenericModel;
-import com.jusfoun.hookah.core.utils.DateUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -31,7 +30,6 @@ public class MgCategoryAttrType extends GenericModel implements Serializable {
             private String attrId;
             private String attrName;
             private Integer level;
-            private Integer isLeafe;
 
             public String getAttrId() {
                 return attrId;
@@ -55,14 +53,6 @@ public class MgCategoryAttrType extends GenericModel implements Serializable {
 
             public void setLevel(Integer level) {
                 this.level = level;
-            }
-
-            public Integer getIsLeafe() {
-                return isLeafe;
-            }
-
-            public void setIsLeafe(Integer isLeafe) {
-                this.isLeafe = isLeafe;
             }
         }
 
@@ -119,16 +109,8 @@ public class MgCategoryAttrType extends GenericModel implements Serializable {
         return addTime;
     }
 
-    public void setAddTime() {
-        this.addTime = DateUtils.toDefaultNowTime();
-    }
-
     public String getLastUpdateTime() {
         return lastUpdateTime;
-    }
-
-    public void setLastUpdateTime() {
-        this.lastUpdateTime = DateUtils.toDefaultNowTime();
     }
 
     public List<AttrTypeBean> getAttrTypelist() {
@@ -137,5 +119,13 @@ public class MgCategoryAttrType extends GenericModel implements Serializable {
 
     public void setAttrTypelist(List<AttrTypeBean> attrTypelist) {
         this.attrTypelist = attrTypelist;
+    }
+
+    public void setAddTime(String addTime) {
+        this.addTime = addTime;
+    }
+
+    public void setLastUpdateTime(String lastUpdateTime) {
+        this.lastUpdateTime = lastUpdateTime;
     }
 }

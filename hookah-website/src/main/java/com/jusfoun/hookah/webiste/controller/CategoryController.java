@@ -55,6 +55,11 @@ public class CategoryController {
         return returnData;
     }
 
+    /**
+     * 查看商品分类下的商品属性
+     * @param catId
+     * @return
+     */
     @RequestMapping("findAttr")
     public ReturnData findGoodsAttr(String catId) {
         ReturnData<MgCategoryAttrType> returnData = new ReturnData<>();
