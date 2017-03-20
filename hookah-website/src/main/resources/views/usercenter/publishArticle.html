@@ -100,7 +100,8 @@ var htmlPart = {
                                             <div class="preview" id="preview-div">
                                                 <a title="上传图片" class="upload-tip">+</a>
                                                 <img class="preview-img" id="preview-img">
-                                                <input type="file" id="preview-btn" class="preview-btn">
+                                                <input type="file" id="filename" name="filename" class="preview-btn">
+                                                <a href="javascript:void(0)" class="replace-btn" id="replace-btn">替换图片</a>
                                             </div>
                                         </li>
                                     </ul>
@@ -128,8 +129,17 @@ var htmlPart = {
                     <br>
                     <br>
                     <br>
-                    <p><input type="file" id="file1" name="file" /></p>
-                    <input type="button" id="btnss" value="上传" />
+                    <!--<p><input type="file" id="file1" name="filename" /></p>-->
+                    <!--<a href="javascript:void(0)" id="btnss" >上传</a>-->
+                    <!--<p><img id="img1" alt="上传成功啦" src="" /></p>-->
+
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+
+                    <p><input type="file" id="filename" name="filename" /></p>
                     <p><img id="img1" alt="上传成功啦" src="" /></p>
                 </form>
             </div>
@@ -147,79 +157,49 @@ var htmlPart = {
     editor.config.menuFixed = false;
     editor.create();
 
+    var imgSrc = '';
+
     //上传图片
-//    new uploadPreview({ UpBtn: "preview-btn", DivShow: "preview-div", ImgShow: "preview-img" });
 
-
-
-
-
-
-
-
-
-
-    $("#btnss").click(function () {
-        if ($("#file1").val().length > 0) {
-            ajaxFileUpload();
+    //选择文件之后执行上传
+    $('#preview-div').click(function(){
+        if($('#preview-img').attr('src')){
+            console.log('yessss');
+            $('#filename').val("");
+            sda();
+        }else{
+            console.log("nononono");
+            sda();
         }
-        else {
-            alert("请选择图片");
-        }
-    })
-    function ajaxFileUpload() {
-        $.ajaxFileUpload
-        (
-            {
-                url: '/upload/fileUpload', //用于文件上传的服务器端请求地址
-                secureuri: false, //一般设置为false
-                fileElementId: 'file1', //文件上传空间的id属性  <input type="file" id="file" name="file" />
-                dataType: 'HTML', //返回值类型 一般设置为json
-                success: function (data, status)  //服务器成功响应处理函数
-                {
-                    alert(data);
-                    $("#img1").attr("src", data);
-                    if (typeof (data.error) != 'undefined') {
-                        if (data.error != '') {
-                            alert(data.error);
-                        } else {
-                            alert(data.msg);
+        function sda(){
+
+            $('#filename').on('change', function() {
+                $.ajaxFileUpload({
+                    url:'/upload/fileUpload',
+                    secureuri:false,
+                    fileElementId:'filename',//file标签的id
+                    dataType: 'json',//返回数据的类型
+                    success: function (data, status) {
+                        //把图片替换
+                        var obj= data.data[0];
+                        $("#preview-img").attr("src", "http://"+obj.absPath);
+                        imgSrc = "http://"+obj.absPath;
+                        if(typeof(data.error) != 'undefined') {
+                            if(data.error != '') {
+                                alert(data.error);
+                            } else {
+                                alert(data.msg);
+                            }
                         }
+                    },
+                    error: function (data, status, e) {
+                        alert(e);
                     }
-                },
-                error: function (data, status, e)//服务器响应失败处理函数
-                {
-                    alert(e);
-                }
-            }
-        )
-        return false;
-    }
+                });
+            });
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    })
 
 
     function changes(that){
@@ -247,7 +227,7 @@ var htmlPart = {
             data.newsTitle = $('#newsTitle').val();
             data.isHot = $("input[name='isHot']:checked").val();
             data.content = $('#content').val();
-            data.pictureUrl = 'asvasdvasdvav';
+            data.pictureUrl = imgSrc;
             data.newsSonGroup = $('#newsSonGroup').val();
         if(data.newsGroup == 0){
             $('#newsGroup').focus();
@@ -268,6 +248,11 @@ var htmlPart = {
 
             })
             return;
+        }else if(data.pictureUrl == "") {
+            $.alert('请上传图片！',true,function(){
+
+            })
+            return;
         }else{
             $.ajax({
                 type: "POST",
@@ -285,14 +270,9 @@ var htmlPart = {
         }
 
 
+
     })
     //文章内容预览
-
-
-
-
-
-
 
     $('#preview-content').click(function(){
         var content = $('#content').val();
@@ -314,6 +294,12 @@ var htmlPart = {
         $('#close').click(function(){
             $('#preview-wrap').remove();
         })
+    })
+
+    $('#preview-div').hover(function(){
+        if($('#preview-img').attr('src')){
+            $('#replace-btn').toggle();
+        }
     })
 
 

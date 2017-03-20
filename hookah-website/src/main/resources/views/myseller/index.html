@@ -36,103 +36,39 @@ var htmlPart = {
                     </select>
                 </div>
                 <div class="select-category-box">
-                    <div class="select-category-item y-left">
-                        <div class="search-item">
-                            <span>🔍</span>
-                            <input type="text">
-                        </div>
-                        <div class="item-box">
-                            <dl>
-                                <dt>查询</dt>
-                                <dd>身份证信息查询</dd>
-                                <dd>失信被执行人查询</dd>
-                                <dd>身份证信息查询</dd>
-                            </dl>
-                            <dl>
-                                <dt>认证</dt>
-                                <dd>身份证实名认证</dd>
-                                <dd>失信被执行人查询</dd>
-                                <dd>身份证信息查询</dd>
-                            </dl>
-                            <dl>
-                                <dt>查询</dt>
-                                <dd>身份证信息查询</dd>
-                                <dd>失信被执行人查询</dd>
-                                <dd>身份证信息查询</dd>
-                            </dl>
-                            <dl>
-                                <dt>认证</dt>
-                                <dd>身份证实名认证</dd>
-                                <dd>失信被执行人查询</dd>
-                                <dd>身份证信息查询</dd>
-                            </dl>
-                            <dl>
-                                <dt>查询</dt>
-                                <dd>身份证信息查询</dd>
-                                <dd>失信被执行人查询</dd>
-                                <dd>身份证信息查询</dd>
-                            </dl>
-                            <dl>
-                                <dt>认证</dt>
-                                <dd>身份证实名认证</dd>
-                                <dd>失信被执行人查询</dd>
-                                <dd>身份证信息查询</dd>
-                            </dl>
-                        </div>
-                    </div>
-                    <div class="select-category-item y-left">
-                        <div class="search-item">
-                            <span>🔍</span>
-                            <input type="text">
-                        </div>
-                        <div class="item-box">
-                            <dl>
-                                <dt>查询</dt>
-                                <dd>身份证信息查询</dd>
-                                <dd>失信被执行人查询</dd>
-                                <dd>身份证信息查询</dd>
-                            </dl>
-                            <dl>
-                                <dt>认证</dt>
-                                <dd>身份证实名认证</dd>
-                                <dd>失信被执行人查询</dd>
-                                <dd>身份证信息查询</dd>
-                            </dl>
-                            <dl>
-                                <dt>查询</dt>
-                                <dd>身份证信息查询</dd>
-                                <dd>失信被执行人查询</dd>
-                                <dd>身份证信息查询</dd>
-                            </dl>
-                            <dl>
-                                <dt>认证</dt>
-                                <dd>身份证实名认证</dd>
-                                <dd>失信被执行人查询</dd>
-                                <dd>身份证信息查询</dd>
-                            </dl>
-                            <dl>
-                                <dt>查询</dt>
-                                <dd>身份证信息查询</dd>
-                                <dd>失信被执行人查询</dd>
-                                <dd>身份证信息查询</dd>
-                            </dl>
-                            <dl>
-                                <dt>认证</dt>
-                                <dd>身份证实名认证</dd>
-                                <dd>失信被执行人查询</dd>
-                                <dd>身份证信息查询</dd>
-                            </dl>
-                        </div>
-                    </div>
+                    <!--<div class="select-category-item y-left">-->
+                        <!--<div class="search-item">-->
+                            <!--<span>🔍</span>-->
+                            <!--<input type="text">-->
+                        <!--</div>-->
+                        <!--<div class="item-box">-->
+                            <!--<dl>-->
+                                <!--<dt>查询</dt>-->
+
+                            <!--</dl>-->
+
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="select-category-item y-left">-->
+                        <!--<div class="item-box">-->
+                            <!--<dl>-->
+                                <!--<dt>查询</dt>-->
+                                <!--<dd>身份证信息查询</dd>-->
+                                <!--<dd>失信被执行人查询</dd>-->
+                                <!--<dd>身份证信息查询</dd>-->
+                            <!--</dl>-->
+                        <!--</div>-->
+                    <!--</div>-->
                 </div>
                 <div class="cate-path">
                     <div class="clearfix">
-                        <label>您当前的选择是：</label>无
+                        <label>您当前的选择是：</label>
+
                     </div>
                     <span class="arrow"></span>
                 </div>
                 <div class="pulish-btn">
-                    <a href="/myseller/publish">发布商品</a>
+                    <a href="JavaScript:void (0)" id="pusblishBtn">发布商品</a>
                 </div>
             </div>
         </div>
@@ -141,3 +77,64 @@ var htmlPart = {
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
+<script type="text/javascript">
+    var url = "/category/findByPId/1";
+    var pid = 0;
+    var datas = null ;
+
+    //
+    loadData(url,pid);
+    //点击加载。。。
+    function clickLoadData(url,pid,that){
+        $(that).parents(".select-category-item").nextAll(".select-category-item").remove();
+        $(that).addClass('active').siblings().removeClass('active');
+        loadData(url,pid);
+        currentCategory(that);
+        $('#pusblishBtn').click(function(){
+            window.location.href = "/myseller/publish?catId="+pid;
+        })
+    }
+    function currentCategory(that){
+        var nextAll = $(that).parents(".select-category-item").nextAll(".select-category-item");
+        if(nextAll){
+            $('.clearfix').append("<span>"+$(that).text()+"---------</span>");
+        }else{
+            $('.clearfix').append("<span>"+$(that).text()+"</span>");
+        }
+//        $('.clearfix').append($(that).text());
+    }
+    //加载。。。
+    function loadData(url,pid){
+        $.ajax({
+            type: "get",
+            url: url,
+            data: {
+                pid:pid
+            },
+            success: function(msg){
+                if(msg.code == 1){
+                    datas = msg.data;
+                    if(datas.length > 0){
+                        var html = "";
+                        for(var i = 0; i < datas.length; i++){
+                            html += '<dd onclick="clickLoadData(url,'+datas[i].catId+',this)">'+datas[i].catName+'</dd>';
+                        }
+                        var htmlS = '';
+                        htmlS += '<div class="select-category-item y-left">';
+                        htmlS += '<div class="item-box">';
+                        htmlS += '<dl>';
+//                            htmlS += '<dt>查询</dt>';
+                        htmlS += html;
+                        htmlS += '</dl>';
+                        htmlS += '</div>';
+                        htmlS += '</div>';
+                        $('.select-category-box').append(htmlS);
+                    }
+                }else{
+                    $.alert(msg.message)
+                }
+            }
+        });
+    }
+
+</script>

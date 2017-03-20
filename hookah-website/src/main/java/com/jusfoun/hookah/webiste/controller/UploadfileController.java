@@ -18,10 +18,8 @@ import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.webiste.util.UploadUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,9 +38,9 @@ import javax.servlet.http.HttpServletRequest;
 public class UploadfileController {
 	private static Logger logger = LoggerFactory.getLogger(UploadfileController.class);
 
-	@RequestMapping("fileUpload")
-	@ResponseBody
-	public ReturnData fileUpload(HttpServletRequest request, @RequestParam MultipartFile[] myfiles) {
+	@RequestMapping(value="fileUpload", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @ResponseBody
+    public ReturnData fileUpload(HttpServletRequest request, @RequestParam("filename") MultipartFile[] myfiles) {
 		ReturnData returnData = new ReturnData();
         returnData.setCode(ExceptionConst.Success);
         try {
