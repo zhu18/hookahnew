@@ -31,6 +31,29 @@ public class CategoryController {
     MgCategoryAttrTypeService mgCategoryAttrTypeService;
 
     /**
+     * 查询所有分类
+     * @param catSign ： 0 普通； 1 系统
+     * @return
+     */
+    @RequestMapping("findAll/{catSign}")
+    public ReturnData findAll(@PathVariable String catSign) {
+        ReturnData<List<Category>> returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            List<Condition> filters = new ArrayList<>();
+            filters.add(Condition.eq("catSign", catSign));
+            filters.add(Condition.eq("isShow", 1));
+            List<Category> list = (List) categoryService.selectList(filters);
+            returnData.setData(list);
+        }catch (Exception e) {
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
+
+    /**
      * 查询商品分类
      * catSign: 0 普通； 1 系统
      * @param pid
@@ -56,8 +79,8 @@ public class CategoryController {
     }
 
     /**
-     * 查看商品分类下的商品属性
-     * @param catId
+     * 创建商品时，查看商品某分类下包括的商品属性
+     * @param catId 商品某分类
      * @return
      */
     @RequestMapping("findAttr")

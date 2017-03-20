@@ -46,5 +46,7 @@
     <motan:referer id="mgCategoryAttrTypeService"
                    interface="com.jusfoun.hookah.rpc.api.MgCategoryAttrTypeService"
                    connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
-
+    <motan:referer id="mgGoodsService"
+                   interface="com.jusfoun.hookah.rpc.api.MgGoodsService"
+                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
 </beans>

@@ -21,12 +21,12 @@ public class MgCategoryAttrType extends GenericModel implements Serializable {
     private String userId;
     private String domainId;
 
-    static class AttrTypeBean implements Serializable {
+    public static class AttrTypeBean implements Serializable {
         private String typeId;
         private String typeName;
         private List<AttrBean> attrlist;
 
-        static class AttrBean implements Serializable{
+        public static class AttrBean implements Serializable{
             private String attrId;
             private String attrName;
             private Integer level;

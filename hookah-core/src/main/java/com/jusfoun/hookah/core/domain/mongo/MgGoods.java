@@ -1,6 +1,8 @@
 package com.jusfoun.hookah.core.domain.mongo;
 
 import com.jusfoun.hookah.core.generic.GenericModel;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.util.List;
@@ -9,25 +11,36 @@ import java.util.List;
 /**
  * Created by wangjl on 2017-3-17.
  */
+@Document
 public class MgGoods extends GenericModel implements Serializable {
 
 
     /**
      * goods_id : 商品id
+     * attrTypeList: [{xxxx}]
      * formatList : [{"format":1,"number":1,"price":500,"status":0}]
      * imgList : [{"imgUrl":"http: xxxx","imgDesc":"kslkfklskl","weight":1}]
      */
-
-    private String goods_id;
+    @Id
+    private String goodsId;
+    private List<MgCategoryAttrType.AttrTypeBean> attrTypeList;
     private List<FormatBean> formatList;
     private List<ImgBean> imgList;
 
-    public String getGoods_id() {
-        return goods_id;
+    public List<MgCategoryAttrType.AttrTypeBean> getAttrTypeList() {
+        return attrTypeList;
     }
 
-    public void setGoods_id(String goods_id) {
-        this.goods_id = goods_id;
+    public void setAttrTypeList(List<MgCategoryAttrType.AttrTypeBean> attrTypeList) {
+        this.attrTypeList = attrTypeList;
+    }
+
+    public String getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(String goodsId) {
+        this.goodsId = goodsId;
     }
 
     public List<FormatBean> getFormatList() {
