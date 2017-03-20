@@ -35,10 +35,16 @@ var htmlPart = {
             <div class="article-management-box">
                 <div class="select-title">
                     <label>文章分类：</label>
-                    <select name="" id="">
-                        <option value="">双创中心</option>
-                        <option value="">博览会</option>
-                        <option value="">资讯中心</option>
+                    <select name="newsGroup" id="newsGroup" onchange="changes(this)">
+                        <option value="innovation">双创中心</option>
+                        <option value="exposition">博览会</option>
+                        <option value="information">资讯中心</option>
+                    </select>
+                    <span class="select-line select-hide">-</span>
+                    <select name="newsSonGroup" id="newsSonGroup" class="select-hide">
+                        <option value="0">中心动态</option>
+                        <option value="1">行业咨询</option>
+                        <option value="2">中心公告</option>
                     </select>
                 </div>
                 <div class="article-box">
@@ -51,16 +57,7 @@ var htmlPart = {
                             <th>发表人</th>
                             <th>操作</th>
                         </tr>
-                        <tr>
-                            <td>1</td>
-                            <td></td>
-                            <td class="imgs"><div><img src="../../static/img/zheng.jpg" alt=""></div></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <a href="javascript:void(0)">删除</a>
-                            </td>
-                        </tr>
+
                         <tr>
                             <td>1</td>
                             <td>2017年人工智能的兴起于衰败</td>
@@ -100,7 +97,53 @@ var htmlPart = {
     </div>
 </div>
 <script type="text/javascript">
+    function changes(that){
 
+        var thisVal = $(that).val();
+        $('.select-hide').hide();
+        if(thisVal == 'information'){
+            $('#newsSonGroup').show();
+            $('.select-line').show();
+        }else{
+            $('#newsSonGroup').hide();
+            $('.select-line').hide();
+        }
+        if($(that).val() == 0){
+            $(that).parents().siblings('.errors').show();
+        }else{
+            $(that).parents().siblings('.errors').hide();
+        }
+
+    }
+
+    var listVal = $('#newsGroup').val();
+    var newsSonGroup = $('#newsSonGroup').val();
+    var data = {};
+        data.pageNumber = 1;
+        data.pageSize = 10;
+        data.newsgroup = listVal;
+        if(data.newsgroup == 'information'){
+            data.newsSonGroup = newsSonGroup;
+        }
+    alert(data)
+    loadData(data);
+
+    function loadData(data){
+
+        $.ajax({
+            type: "POST",
+            url: "/sysNews/list",
+            data: data,
+            success: function(msg){
+                if(msg.code == 1){
+                    console.log(msg.data)
+                }else{
+                    $.alert(msg.message)
+                }
+
+            }
+        });
+    }
 </script>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
