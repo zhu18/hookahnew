@@ -47,6 +47,7 @@ var htmlPart = {
                         <option value="2">中心公告</option>
                     </select>
                 </div>
+                ${list.list}
                 <div class="article-box">
                     <table class="order-items">
                         <tr class="order-head">
@@ -125,8 +126,8 @@ var htmlPart = {
         if(data.newsgroup == 'information'){
             data.newsSonGroup = newsSonGroup;
         }
-    alert(data)
-    loadData(data);
+//    alert(data)
+//    loadData(data);
 
     function loadData(data){
 
@@ -136,7 +137,7 @@ var htmlPart = {
             data: data,
             success: function(msg){
                 if(msg.code == 1){
-                    console.log(msg.data)
+//                    console.log(msg.data)
                 }else{
                     $.alert(msg.message)
                 }

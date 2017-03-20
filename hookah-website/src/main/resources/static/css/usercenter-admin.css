@@ -166,6 +166,8 @@
     position: absolute;
     left: 0;
     top: 0;
+    display: table-cell;
+    vertical-align: middle;
 }
 .multimage-wrap .image-list li .preview .upload-tip {
     color: #d7d7d7;
@@ -179,14 +181,15 @@
     height: 100%;
     text-align: center;
     line-height: 100px;
-    z-index: 10;
+    z-index: -1;
 }
 .multimage-wrap .image-list li .preview .preview-img{
-    position: absolute;
-    left: 0;
-    top: 0;
+    /*position: absolute;*/
+    /*left: 0;*/
+    /*top: 0;*/
     width: 100%;
     z-index: 20;
+    vertical-align: middle;
 }
 .multimage-wrap .image-list li .preview .preview-btn {
     font-size: 100%;
