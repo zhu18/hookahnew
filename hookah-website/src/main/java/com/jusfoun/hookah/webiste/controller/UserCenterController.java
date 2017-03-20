@@ -7,6 +7,7 @@ import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.rpc.api.SysNewsService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -44,7 +45,7 @@ public class UserCenterController {
     public String withdrawals() { return "usercenter/withdrawals"; }
 
     @RequestMapping(value = "/usercenter/articleManagement", method = RequestMethod.GET)
-    public String articleManagement(HttpServletRequest request) {
+    public String articleManagement(Model model) {
 
         Pagination<SysNews> page = new Pagination<>();
         try {
@@ -61,7 +62,7 @@ public class UserCenterController {
             e.printStackTrace();
 
         }
-        request.setAttribute("page",page);
+        model.addAttribute("list",page);
         return "usercenter/articleManagement";
     }
 
