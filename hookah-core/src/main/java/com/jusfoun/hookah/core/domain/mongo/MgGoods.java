@@ -70,7 +70,6 @@ public class MgGoods extends GenericModel implements Serializable {
         private int format;
         private int number;
         private int price;
-        private int status;
 
         public int getFormat() {
             return format;
@@ -94,14 +93,6 @@ public class MgGoods extends GenericModel implements Serializable {
 
         public void setPrice(int price) {
             this.price = price;
-        }
-
-        public int getStatus() {
-            return status;
-        }
-
-        public void setStatus(int status) {
-            this.status = status;
         }
     }
 

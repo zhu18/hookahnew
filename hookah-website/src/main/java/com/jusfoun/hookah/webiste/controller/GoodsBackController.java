@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.webiste.controller;
 
+import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -7,6 +8,7 @@ import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.MgGoodsService;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,11 +31,27 @@ public class GoodsBackController {
     MgGoodsService mgGoodsService;
 
     @RequestMapping("add")
-    public ReturnData addGoodsBack(GoodsVo obj) {
+    public ReturnData addGoodsBack(@RequestBody GoodsVo obj) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
-            goodsService.addGoods(obj);
+//            goodsService.addGoods(obj);
+            Goods goods = new Goods();
+            goods.setGoodsName("hello");
+            goodsService.insert(goods);
+//            if (obj == null)
+//                throw new HookahException("空数据！");
+//            // 将数据插入数据库
+//            int i = goodsService.insert(obj);
+//            if(i < 0)
+//                throw new HookahException("操作失败");
+//            // 将数据放入mongo
+//            MgGoods mgGoods = new MgGoods();
+//            mgGoods.setAttrTypeList(obj.getAttrTypeList());
+//            mgGoods.setFormatList(obj.getFormatList());
+//            mgGoods.setImgList(obj.getImgList());
+//            mgGoods.setGoodsId(obj.getGoodsId());
+//            mgGoodsService.insert(mgGoods);
         }catch (Exception e) {
             returnData.setCode(ExceptionConst.Error);
             returnData.setMessage(e.toString());

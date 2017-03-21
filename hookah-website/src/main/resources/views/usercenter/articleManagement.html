@@ -177,7 +177,15 @@ var htmlPart = {
             }
         });
     }
-    function deleteData(id){
+    function deleteData(id) {
+        $.confirm('你确定要删除这条消息吗? ',null,function(type){
+            if(type == 'yes'){
+                deleteLoad(id);
+                this.hide();
+            }
+        });
+    }
+    function deleteLoad(id){
         var arr=[];
         arr.push(id);
         $.ajax({
