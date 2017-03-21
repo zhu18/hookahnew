@@ -60,7 +60,28 @@ var htmlPart = {
                                 <th>操作</th>
                             </tr>
                         </thead>
-                        <tbody></tbody>
+                        <tbody>
+                        <%
+                        for( item in pageInfo.list){
+                        %>
+                            <tr>
+                                <td>${print(itemLP.index)}</td>
+                                <td>${item.newsTitle}</td>
+                                <td class="imgs"><div><img src="${item.pictureUrl}"></div></td>
+                                <td>${item.sytTime,"yyyy-dd-mm HH:mm:ss"}</td>
+                                <%
+                                if(item.sysUser == '' || item.sysUser == null ){
+                                %>
+                                <td>-</td>
+                                <% }else{ %>
+                                <td>${item.sysUser}</td>
+                                <% } %>
+                                <td>
+                                    <a onclick="deleteData('${item.newsId}')">删除</a>
+                                </td>
+                            </tr>
+                        <% } %>
+                        </tbody>
                     </table>
                 </div>
                 <%include("/layout/pageaction.html"){} %>
@@ -69,7 +90,6 @@ var htmlPart = {
     </div>
 </div>
 <script type="text/javascript">
-    changes($("#newsGroup").val());
     function changes(that){
         var thisVal = $(that).val();
         $('.select-hide').hide();
@@ -93,19 +113,18 @@ var htmlPart = {
         if(data.newsgroup == 'information'){
             data.newsSonGroup = newsSonGroup;
         };
-
         loadData(data);
     }
+
     function loadData(data){
-            $(".article-box > .order-items> tbody").html("");
+        $(".article-box > .order-items > tbody").html('');
         $.ajax({
             type: "get",
             url: "/sysNews/list",
             data: data,
             success: function(data){
-                console.log(data);
                 for(var i=0;i<data.list.length;i++){
-                    $(".article-box>.order-items").append(
+                    $(".article-box > .order-items > tbody").append(
                         "<tr>"
                         +"<td>"+(i+1)+"</td>"
                         +"<td>"+data.list[i].newsTitle+"</td>"
@@ -114,7 +133,8 @@ var htmlPart = {
                         +"<td>"+data.list[i].sysUser+"</td>"
                         +"<td>"
 //                        +"<span>删除</span>"
-                        +"<a onclick="+"deleteData("+data.list[i].newsId+")"+">删除</a>"
+//                        +"<a onclick="+"deleteData("+data.list[i].newsId+")"+">删除</a>"
+                        +"<a href='javascript:onclick=deleteData("+JSON.stringify(data.list[i].newsId)+");' >删除</a>"
                         +"</td>"
                         +"</tr>"
                     );
@@ -129,25 +149,28 @@ var htmlPart = {
                     var minutes = date.getMinutes();
                     var seconds = date.getSeconds();
                     return year+'-'+add(month)+'-'+add(date1)+' '+add(hours)+':'+add(minutes)+':'+add(seconds);
-//                    return year+'-'+add(month)+'-'+add(date);
                 }
             },
             error:function(e){
-                err ? err(e):alert("请求或操作失败！");
-            },
+                alert(e);
+            }
 
         });
     }
-
     function deleteData(id){
-        console.log(id);
+        var arr=[];
+        arr.push(id);
         $.ajax({
             type:"post",
             url:"/sysNews/deleteInfo",
-            data:{ newsId:id },
+            dataType: "json",
+            data: JSON.stringify(arr),
+            headers: {'Content-Type': 'application/json'},
             success:function(data){
-                if(data.code=="1"){
-                    console.log("删除成功");
+                if(data.code == "1"){
+                    $.alert('删除成功', true, function(){
+                        location.reload();
+                    });
                 }else {
                     $.alert(data.message);
                 }
