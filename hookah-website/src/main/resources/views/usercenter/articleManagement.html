@@ -24,7 +24,6 @@ var htmlPart = {
                     <h3 class="menu-header">文章管理</h3>
                     <ol class="menu-category">
                         <li><a href="/usercenter/articleManagement">文章管理</a></li>
-                        <li><a href="/usercenter/publishArticle">发表文章</a></li>
                     </ol>
                 </li>
             </ul>
@@ -33,7 +32,7 @@ var htmlPart = {
         <div class="user-center-box y-right">
             <h3 class="center-title">文章管理</h3>
             <div class="article-management-box">
-                <div class="select-title">
+                <div class="select-title clearfix">
                     <label>文章分类：</label>
                     <select name="newsGroup" id="newsGroup" onchange="changes(this)">
                         <!--<option value="5">请选择分类</option>-->
@@ -47,6 +46,7 @@ var htmlPart = {
                         <option value="1">行业咨询</option>
                         <option value="2">中心公告</option>
                     </select>
+                    <button  onclick="window.location='/usercenter/publishArticle'">发表文章</button>
                 </div>
                 <div class="article-box">
                     <table class="order-items">
@@ -78,6 +78,7 @@ var htmlPart = {
                                 <% } %>
                                 <td>
                                     <a onclick="deleteData('${item.newsId}')">删除</a>
+                                    <a onclick="updateData('${item.newsId}')">修改</a>
                                 </td>
                             </tr>
                         <% } %>
@@ -115,7 +116,7 @@ var htmlPart = {
         };
         loadData(data);
     }
-
+//    获取列表信息
     function loadData(data){
         $(".article-box > .order-items > tbody").html('');
         $.ajax({
@@ -123,6 +124,7 @@ var htmlPart = {
             url: "/sysNews/list",
             data: data,
             success: function(data){
+                console.log(data);
                 for(var i=0;i<data.list.length;i++){
                     $(".article-box > .order-items > tbody").append(
                         "<tr>"
@@ -130,16 +132,21 @@ var htmlPart = {
                         +"<td>"+data.list[i].newsTitle+"</td>"
                         +"<td class='imgs'>"+"<div>"+"<img src="+data.list[i].pictureUrl+">"+"</div>"+"</td>"
                         +"<td>"+format(data.list[i].sytTime)+"</td>"
-                        +"<td>"+data.list[i].sysUser+"</td>"
+                        +"<td>"+judge(data.list[i].sysUser)+"</td>"
                         +"<td>"
-//                        +"<span>删除</span>"
-//                        +"<a onclick="+"deleteData("+data.list[i].newsId+")"+">删除</a>"
                         +"<a href='javascript:onclick=deleteData("+JSON.stringify(data.list[i].newsId)+");' >删除</a>"
+                        +"<a href='/usercenter/publishArticle:onclick=updateData("+JSON.stringify(data.list[i])+");' >修改</a>"
                         +"</td>"
                         +"</tr>"
                     );
                 }
-                function add(m){return m<10 ? '0'+m:m};
+                function judge(user){
+                    if(user == ""||user == null){
+                        return "-";
+                    }
+                    return user;
+                }
+                function add(m){ return m < 10 ? '0'+ m:m };
                 function format(time){
                     var date = new Date(time);
                     var year = date.getFullYear() ;
@@ -154,7 +161,6 @@ var htmlPart = {
             error:function(e){
                 alert(e);
             }
-
         });
     }
     function deleteData(id) {
@@ -173,18 +179,34 @@ var htmlPart = {
             url:"/sysNews/deleteInfo",
             dataType: "json",
             data: JSON.stringify(arr),
-            headers: {'Content-Type': 'application/json'},
+            contentType: 'application/json',
             success:function(data){
-                if(data.code == "1"){
-                    $.alert('删除成功', true, function(){
-                        location.reload();
+                if(data.code == "1") {
+                    $.alert('删除成功', true, function () {
+//                        location.reload();
                     });
-                }else {
-                    $.alert(data.message);
                 }
+            },
+            error:function(e){
+                alert(e);
+            }
+        });
+    }
+    function updateData(data){
+        $.ajax({
+            type:"post",
+            url:"/sysNews/update",
+            data: {
+                newsId:data.list[i].newsId,
+                newsTitle:data.list[i].newsTitle,
+                newsGroup:data.list[i].newsGroup,
+                isHot:data.list[i].isHot,
+                content:data.list[i].content,
+                pictureUrl:data.list[i].pictureUrl
             }
         })
     }
+
 </script>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
