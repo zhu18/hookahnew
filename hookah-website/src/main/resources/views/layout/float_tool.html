@@ -20,7 +20,6 @@
     $(window).scroll(function () {
         var windowHeight = parseFloat($(window).height())
         var totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());
-        var documentheight = parseFloat($(document).height());
         if (totalheight - windowHeight >= 500) {
             $('#J_gotoTop').show();
         } else {
@@ -28,6 +27,6 @@
         }
     });
     $("#J_gotoTop").click(function() {
-        $("html,body").animate({scrollTop:0}, 300);
+        $("html,body").animate({scrollTop:0}, 'slow');
     });
 </script>
