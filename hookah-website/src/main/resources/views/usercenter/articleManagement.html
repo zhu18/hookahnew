@@ -110,21 +110,26 @@ var htmlPart = {
                         +"<td>"+(i+1)+"</td>"
                         +"<td>"+data.list[i].newsTitle+"</td>"
                         +"<td class='imgs'>"+"<div>"+"<img src="+data.list[i].pictureUrl+">"+"</div>"+"</td>"
-                        +"<td>"+getDate(data.list[i].sytTime)+"</td>"
+                        +"<td>"+format(data.list[i].sytTime)+"</td>"
                         +"<td>"+data.list[i].sysUser+"</td>"
                         +"<td>"
-                        +"<span>删除</span>"
-//                        +"<span onclick="+deleteData(data.list[i].newsId)+">删除</span>"
+//                        +"<span>删除</span>"
+                        +"<a onclick="+"deleteData("+data.list[i].newsId+")"+">删除</a>"
                         +"</td>"
                         +"</tr>"
                     );
                 }
-                function getDate(time){
+                function add(m){return m<10 ? '0'+m:m};
+                function format(time){
                     var date = new Date(time);
-                    year = date.getFullYear() + '年';
-                    month = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '月';
-                    date = date.getDate() + '日';
-                    return year+month+date;
+                    var year = date.getFullYear() ;
+                    var month = date.getMonth()+1;
+                    var date1 = date.getDate() ;
+                    var hours = date.getHours();
+                    var minutes = date.getMinutes();
+                    var seconds = date.getSeconds();
+                    return year+'-'+add(month)+'-'+add(date1)+' '+add(hours)+':'+add(minutes)+':'+add(seconds);
+//                    return year+'-'+add(month)+'-'+add(date);
                 }
             },
             error:function(e){
@@ -135,10 +140,11 @@ var htmlPart = {
     }
 
     function deleteData(id){
+        console.log(id);
         $.ajax({
             type:"post",
             url:"/sysNews/deleteInfo",
-            data:{newsId:id},
+            data:{ newsId:id },
             success:function(data){
                 if(data.code=="1"){
                     console.log("删除成功");
