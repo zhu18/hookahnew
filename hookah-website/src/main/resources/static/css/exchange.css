@@ -22,6 +22,7 @@
     top: 0;
     background: #fff;
     border:1px solid #ccc;
+    z-index: 999;
 }
 .exchange-center .exchange-top-bar .exchange-top-menu .exchange-menu-box .exchange-menu-items .category-box ul{
     line-height: 30px;
@@ -52,7 +53,6 @@
     color: #e0e0e0;
 }
 .exchange-center .exchange-top-bar .exchange-top-silde{
-    background: #ffc7f3;
     width: 680px;
     margin: 0 30px;
     height:460px;
@@ -506,6 +506,20 @@
 }
 /*****data-analysis end******/
 
+.exchange-top-silde .hookah-index-top-banner-2016 .module-wrap [data-hover-container] {
+    height:460px;
+}
+.exchange-top-silde .hookah-index-top-banner-2016 .module-wrap [data-hover-container] [data-group] {
+    height:460px;
+}
+.exchange-top-silde .hookah-index-top-banner-2016 .module-wrap [data-hover-container] .layer img {
+    width:100%;
+    left:0;
+}
+.exchange-top-silde .hookah-index-top-banner-2016 .module-wrap [data-hover-container] .banner-row {
+    min-height: auto;
+    min-width: auto;
+}
 
 
 
