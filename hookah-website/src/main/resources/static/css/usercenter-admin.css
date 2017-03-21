@@ -46,6 +46,17 @@
 .article-management-box  table tr td.unpaid span{
     color:#ff6700;
 }
+.article-management-box button {
+    cursor: pointer;
+    float:right;
+    background: #51586f;
+    width:80px;
+    line-height: 28px;
+    display: inline-block;
+    text-align: center;
+    border:none;
+    outline: none;
+}
 /*****************/
 .publish-article{
     padding:30px 50px 0 20px;

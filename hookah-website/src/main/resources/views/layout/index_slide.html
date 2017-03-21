@@ -32,8 +32,6 @@
         if(page_count>page){
             $picDiv.animate({left:'-'+page*$pDiv_w+"px"},"normal");
             page++;
-            console.log("right----page----------:"+page);
-            console.log("right-----page*$pDiv_w----------:"+page*$pDiv_w);
             $(".left_btn").css({'color':'#fff','cursor':'pointer'});
             if(page>=page_count){
                 $(this).css({'color':'#ccc','cursor':'no-drop'});
@@ -48,8 +46,6 @@
         if(page>1){
             $picDiv.animate({left:"+="+$pDiv_w+'px'},"normal");
             page--;
-            console.log("left-----page----------:"+page);
-            console.log("left-----page*$pDiv_w----------:"+page*$pDiv_w);
             $(".right_btn").css({'color':'#fff','cursor':'pointer'});
             if(page<=1){
                 $(this).css({'color':'#ccc','cursor':'no-drop'});
@@ -59,4 +55,5 @@
         }
         $(this).siblings(".highlight_tip").find("span").eq((page-1)).addClass("current").siblings().removeClass("current");
     });
+
 </script>
