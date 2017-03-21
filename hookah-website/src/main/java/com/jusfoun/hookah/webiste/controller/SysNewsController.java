@@ -2,32 +2,40 @@ package com.jusfoun.hookah.webiste.controller;
 
 
 import com.jusfoun.hookah.core.common.Pagination;
+import com.jusfoun.hookah.core.domain.Category;
 import com.jusfoun.hookah.core.domain.SysNews;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.rpc.api.CategoryService;
 import com.jusfoun.hookah.rpc.api.SysNewsService;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
+
 
 /**
  * 新闻资讯类接口
  */
 @Controller
+@RequestMapping("sysNews")
 public class SysNewsController {
-
+    protected final static Logger logger = LoggerFactory.getLogger(SysNewsController.class);
 
     @Resource
     SysNewsService sysNewsService;
+
+    @Resource
+    CategoryService categoryService;
 
     /** 第几页 */
     private static final int PAGE_NUM = 1;
@@ -45,12 +53,22 @@ public class SysNewsController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/sysNews/details", method = RequestMethod.GET)
-    public SysNews details(String  id)
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "details", method = RequestMethod.GET)
+    public ReturnData details(String  id)
     {
-        SysNews  sysN= new SysNews();
-        sysN = sysNewsService.selectById(id);
-        return sysN;
+        ReturnData result = new ReturnData();
+        try {
+            SysNews  sysN= new SysNews();
+            sysN = sysNewsService.selectById(id);
+            result.setData(sysN);
+            result.success();
+        } catch (Exception e) {
+            result.setCode("0");
+            e.printStackTrace();
+        }
+        return result;
     }
 
     /**
@@ -60,7 +78,7 @@ public class SysNewsController {
      */
     @CrossOrigin
     @ResponseBody
-    @RequestMapping(value = "sysNews/deleteInfo", method = RequestMethod.POST)
+    @RequestMapping(value = "deleteInfo", method = RequestMethod.POST)
     public ReturnData deleteInfo( @RequestBody String[] ids){
         try {
             sysNewsService.delete(ids);
@@ -78,25 +96,18 @@ public class SysNewsController {
      */
     @CrossOrigin
     @ResponseBody
-    @RequestMapping(value = "sysNews/deleteOne", method = RequestMethod.POST)
-    public ReturnData deleteOne( @RequestBody String id){
+    @RequestMapping(value = "deleteOne", method = RequestMethod.GET)
+    public ReturnData deleteOne(String id){
         try {
             sysNewsService.delete(id);
         } catch (Exception e) {
+            e.printStackTrace();
             return ReturnData.fail();
         }
         return ReturnData.success();
     }
 
 
-
-    /**
-     * @Title: list
-     * @Description: 查询列表
-
-     * @return
-     * @return: ReturnData
-     */
     /**
      *  查询列表
      * @param pageNumber  所在位置
@@ -106,7 +117,7 @@ public class SysNewsController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/sysNews/list", method = RequestMethod.GET)
+    @RequestMapping(value = "list", method = RequestMethod.GET)
     public Object list( String pageNumber , String pageSize , String newsGroup,String newsSonGroup) {
         Pagination<SysNews> page = new Pagination<>();
         try {
@@ -160,7 +171,7 @@ public class SysNewsController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/sysNews/insert", method = RequestMethod.POST)
+    @RequestMapping(value = "insert", method = RequestMethod.POST)
     public ReturnData insert(SysNews model) {
         ReturnData result = new ReturnData();
         try {
@@ -168,6 +179,9 @@ public class SysNewsController {
             snews = model;
             snews.setSytTime(new Date());
             sysNewsService.insert(snews);
+            Category cy = new Category();
+            cy.setAddUser("ddddddddddd");
+            categoryService.insert(cy);
             result.success();
         } catch (Exception e) {
             result.setCode("0");
@@ -182,7 +196,7 @@ public class SysNewsController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/sysNews/update", method = RequestMethod.POST)
+    @RequestMapping(value = "update", method = RequestMethod.POST)
     public ReturnData update(SysNews model) {
         ReturnData result = new ReturnData();
         try {
@@ -198,7 +212,7 @@ public class SysNewsController {
     }
 
 
-    @RequestMapping(value = "/sysNews/select", method = RequestMethod.GET)
+    @RequestMapping(value = "select", method = RequestMethod.GET)
     @ResponseBody
     public Object select(Model model) {
         List<Condition> filters = new ArrayList();
