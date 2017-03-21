@@ -118,16 +118,20 @@
     border-bottom: 7px solid #fedbab;
 }
 .pulish-btn{text-align: center}
-.pulish-btn a{
+.pulish-btn button{
     display: inline-block;
     min-width: 150px;
     height: 40px;
     line-height: 40px;
     text-decoration: none;
     border: 0;
-    background: #00c1de;
+    background: #ccc;
     color: #fff;
     font-size: 16px;
+    cursor: no-drop;
+}
+.pulish-btn .pusGoods-btn{
+    background: #00a2ca;
     cursor: pointer;
 }
 /******** myseller-wrapper end ********/

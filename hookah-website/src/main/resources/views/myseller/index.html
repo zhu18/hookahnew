@@ -68,7 +68,7 @@ var htmlPart = {
                     <span class="arrow"></span>
                 </div>
                 <div class="pulish-btn">
-                    <a href="JavaScript:void (0)" id="pusblishBtn">发布商品</a>
+                    <button disabled="disabled" id="pusblishBtn">发布商品</>
                 </div>
             </div>
         </div>
@@ -82,16 +82,18 @@ include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
     var url = "/category/findByPId/1";
     var pid = 0;
     var datas = null ;
+    var nextAll = '';
+    var isTrue = false;
 
     //
     loadData(url,pid);
     //点击加载。。。
     function clickLoadData(url,pid,that){
-
         $(that).parents(".select-category-item").nextAll(".select-category-item").remove();
         $(that).addClass('active').siblings().removeClass('active');
         loadData(url,pid);
         currentCategory(that);
+        nextAll = $(that).parents(".select-category-item").nextAll(".select-category-item");
         $('#pusblishBtn').click(function(){
             var category = $('.clearfix-content').text();
             window.location.href = "/myseller/publish?catId="+pid+"&category="+category;
@@ -99,28 +101,25 @@ include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
     }
     function currentCategory(that){
         var indexs = $(that).parents(".select-category-item").index();
-
-        var nextAll = $(that).parents(".select-category-item").nextAll(".select-category-item");
-
         if(indexs == 0){
             $('.clearfix-content > .clearfix-box').remove();
-
-
             $('.clearfix-content').append('<span class="clearfix-box clearfix-box-'+indexs+'">'+$(that).text()+'</span>');
         }else{
             $('.clearfix-content').children('.clearfix-box-'+indexs).remove();
             $('.clearfix-content').append('<span class="clearfix-box clearfix-box-'+indexs+'"> > '+$(that).text()+'</span>');
         }
 
-
-
-//        if(nextAll){
-//            $('.clearfix').append("<span>"+$(that).text()+"---------</span>");
-//        }else{
-//            $('.clearfix').append("<span>"+$(that).text()+"</span>");
-//        }
-//        $('.clearfix').append($(that).text());
     }
+
+function showBtn(isTrue){
+    if(isTrue == true){
+        $('#pusblishBtn').css({'cursor':'no-drop','background':'#ccc'}).attr({'disabled':'disabled'});
+    }else{
+        $('#pusblishBtn').css({'cursor':'pointer','background':'#00c1de'}).removeAttr('disabled');
+    }
+}
+
+
     //加载。。。
     function loadData(url,pid){
         $.ajax({
@@ -133,24 +132,27 @@ include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
                 if(msg.code == 1){
                     datas = msg.data;
                     if(datas.length > 0){
-                        var html = "";
+                        var html = '';
+                        html += '<div class="select-category-item y-left">';
+                        html += '<div class="item-box">';
+                        html += '<dl>';
                         for(var i = 0; i < datas.length; i++){
                             html += '<dd onclick="clickLoadData(url,'+datas[i].catId+',this)">'+datas[i].catName+'</dd>';
                         }
-                        var htmlS = '';
-                        htmlS += '<div class="select-category-item y-left">';
-                        htmlS += '<div class="item-box">';
-                        htmlS += '<dl>';
-//                            htmlS += '<dt>查询</dt>';
-                        htmlS += html;
-                        htmlS += '</dl>';
-                        htmlS += '</div>';
-                        htmlS += '</div>';
-                        $('.select-category-box').append(htmlS);
+                        html += '</dl>';
+                        html += '</div>';
+                        html += '</div>';
+                        $('.select-category-box').append(html);
+                        isTrue = true;
+                        console.log('0:'+isTrue);
+
+                    }else{
+                        isTrue = false;
                     }
                 }else{
                     $.alert(msg.message)
                 }
+                showBtn(isTrue)
             }
         });
     }
