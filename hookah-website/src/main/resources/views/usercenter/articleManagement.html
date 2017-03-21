@@ -50,46 +50,39 @@ var htmlPart = {
                 </div>
                 <div class="article-box">
                     <table class="order-items">
-                        <tr class="order-head">
-                            <th>序号</th>
-                            <th>文章名称</th>
-                            <th class="imgs">图片</th>
-                            <th>创建日期</th>
-                            <th>发表人</th>
-                            <th>操作</th>
-                        </tr>
-                        <!--<tr>-->
-                            <!--<td>1</td>-->
-                            <!--<td>2017年人工智能的兴起于衰败</td>-->
-                            <!--<td class="imgs"><div><img src="../../static/img/zheng.jpg" alt=""></div></td>-->
-                            <!--<td>2017年3月13日</td>-->
-                            <!--<td>wudy</td>-->
-                            <!--<td>-->
-                                <!--&lt;!&ndash;<a href="javascript:void(0)">删除</a>&ndash;&gt;-->
-                                <!--<span onclick="deleteData('595a34b82d1a4be2b2286ad1f293d480')">删除</span>-->
-                            <!--</td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td>2</td>-->
-                            <!--<td>2017年人工智能的兴起于衰败</td>-->
-                            <!--<td class="imgs"><div><img src="../../static/img/zheng.jpg" alt=""></div></td>-->
-                            <!--<td>2017年3月13日</td>-->
-                            <!--<td>wudy</td>-->
-                            <!--<td>-->
-                                <!--<a href="javascript:void(0)">删除</a>-->
-                            <!--</td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td>3</td>-->
-                            <!--<td>2017年人工智能的兴起于衰败</td>-->
-                            <!--<td class="imgs"><div><img src="../../static/img/zheng.jpg" alt=""></div></td>-->
-                            <!--<td>2017年3月13日</td>-->
-                            <!--<td>wudy</td>-->
-                            <!--<td>-->
-                                <!--<a href="javascript:void(0)">修改</a>-->
-                                <!--<a href="javascript:void(0)">删除</a>-->
-                            <!--</td>-->
-                        <!--</tr>-->
+                        <thead>
+                            <tr class="order-head">
+                                <th>序号</th>
+                                <th>文章名称</th>
+                                <th class="imgs">图片</th>
+                                <th>创建日期</th>
+                                <th>发表人</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                        <%
+                        for( item in pageInfo.list){
+                        %>
+                            <tr>
+                                <td>${print(itemLP.index)}</td>
+                                <td>${item.newsTitle}</td>
+                                <td class="imgs"><div><img src="${item.pictureUrl}"></div></td>
+                                <td>${item.sytTime,"yyyy-dd-mm HH:mm:ss"}</td>
+                                <%
+                                if(item.sysUser == '' || item.sysUser == null ){
+                                %>
+                                <td>-</td>
+                                <% }else{ %>
+                                <td>${item.sysUser}</td>
+                                <% } %>
+                                <td>
+                                    <a onclick="deleteData('${item.newsId}')">删除</a>
+                                </td>
+                            </tr>
+                        <% } %>
+                        </tbody>
                     </table>
                 </div>
                 <%include("/layout/pageaction.html"){} %>
@@ -98,6 +91,8 @@ var htmlPart = {
     </div>
 </div>
 <script type="text/javascript">
+
+
     function changes(that){
         var thisVal = $(that).val();
         $('.select-hide').hide();
@@ -121,21 +116,18 @@ var htmlPart = {
         if(data.newsgroup == 'information'){
             data.newsSonGroup = newsSonGroup;
         };
-//        $(".article-box>.order-items").not(".order-head").remove();
         loadData(data);
     }
+
     function loadData(data){
-        if($(".article-box>.order-items>.order-head").siblings()){
-            $(".article-box>.order-items>.order-head").siblings().remove();
-        }
+        $(".article-box > .order-items > tbody").html('');
         $.ajax({
             type: "get",
             url: "/sysNews/list",
             data: data,
             success: function(data){
-                console.log(data);
                 for(var i=0;i<data.list.length;i++){
-                    $(".article-box>.order-items").append(
+                    $(".article-box > .order-items > tbody").append(
                         "<tr>"
                         +"<td>"+(i+1)+"</td>"
                         +"<td>"+data.list[i].newsTitle+"</td>"
@@ -143,8 +135,7 @@ var htmlPart = {
                         +"<td>"+getDate(data.list[i].sytTime)+"</td>"
                         +"<td>"+data.list[i].sysUser+"</td>"
                         +"<td>"
-                        +"<span>删除</span>"
-//                        +"<span onclick="+deleteData(data.list[i].newsId)+">删除</span>"
+                        +"<a href='javascript:onclick=deleteData("+JSON.stringify(data.list[i].newsId)+");' >删除</a>"
                         +"</td>"
                         +"</tr>"
                     );
@@ -158,20 +149,26 @@ var htmlPart = {
                 }
             },
             error:function(e){
-                err ? err(e):alert("请求或操作失败！");
-            },
+                alert(e);
+            }
 
         });
     }
-
     function deleteData(id){
+        var arr = [];
+        arr.push(id);
         $.ajax({
             type:"post",
             url:"/sysNews/deleteInfo",
-            data:{newsId:id},
+            dataType: "json",
+            data: JSON.stringify(arr),
+            headers: {'Content-Type': 'application/json'},
             success:function(data){
-                if(data.code=="1"){
-                    console.log("删除成功");
+                if(data.code == "1"){
+                    $.alert('删除成功', true, function(){
+                        location.reload();
+                    });
+
                 }else {
                     $.alert(data.message);
                 }
