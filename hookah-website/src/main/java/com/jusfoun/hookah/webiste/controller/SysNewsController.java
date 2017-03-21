@@ -54,7 +54,7 @@ public class SysNewsController {
     }
 
     /**
-     * 根据ID删除文章
+     * 根据ID批量删除文章
      * @param ids
      * @return
      */
@@ -70,6 +70,23 @@ public class SysNewsController {
         return ReturnData.success();
     }
 
+
+    /**
+     * 根据ID删除文章
+     * @param id
+     * @return
+     */
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "sysNews/deleteOne", method = RequestMethod.POST)
+    public ReturnData deleteOne( @RequestBody String id){
+        try {
+            sysNewsService.delete(id);
+        } catch (Exception e) {
+            return ReturnData.fail();
+        }
+        return ReturnData.success();
+    }
 
 
 
