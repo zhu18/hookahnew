@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.core.domain;
 
 import com.jusfoun.hookah.core.generic.GenericModel;
+import javax.persistence.Id;
 
 import javax.persistence.GeneratedValue;
 import java.util.Date;
@@ -19,6 +20,7 @@ public class SysNews extends GenericModel {
      *
      * @mbggenerated
      */
+    @Id
     @GeneratedValue(generator = "UUID")
     private String newsId;
 
