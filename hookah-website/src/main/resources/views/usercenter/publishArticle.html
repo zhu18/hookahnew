@@ -28,7 +28,6 @@ var htmlPart = {
                     </ol>
                 </li>
             </ul>
-
         </div>
         <div class="user-center-box y-right">
             <h3 class="center-title">发表文章</h3>
@@ -212,6 +211,7 @@ var htmlPart = {
             $('#newsSonGroup').hide();
             $('.select-line').hide();
         }
+        console.log(thisVal);
         if($(that).val() == 0){
             $(that).parents().siblings('.errors').show();
         }else{
@@ -223,6 +223,7 @@ var htmlPart = {
     $('#submit-article').click(function(){
         var data = {};
             data.newsGroup = $('#newsGroup').val();
+            console.log(data.newsGroup);
             data.newsTitle = $('#newsTitle').val();
             data.isHot = $("input[name='isHot']:checked").val();
             data.content = $('#content').val();
@@ -249,7 +250,6 @@ var htmlPart = {
             return;
         }else if(data.pictureUrl == "") {
             $.alert('请上传图片！',true,function(){
-
             })
             return;
         }else{
@@ -263,7 +263,6 @@ var htmlPart = {
                     }else{
                         $.alert(msg.message)
                     }
-
                 }
             });
         }

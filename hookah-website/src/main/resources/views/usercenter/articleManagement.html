@@ -78,7 +78,6 @@ var htmlPart = {
                                 <% } %>
                                 <td>
                                     <a onclick="deleteData('${item.newsId}')">删除</a>
-                                    <a onclick="updateData('${item.newsId}')">修改</a>
                                 </td>
                             </tr>
                         <% } %>
@@ -127,7 +126,7 @@ var htmlPart = {
                 console.log(data);
                 for(var i=0;i<data.list.length;i++){
                     $(".article-box > .order-items > tbody").append(
-                        "<tr>"
+                       "<tr>"
                         +"<td>"+(i+1)+"</td>"
                         +"<td>"+data.list[i].newsTitle+"</td>"
                         +"<td class='imgs'>"+"<div>"+"<img src="+data.list[i].pictureUrl+">"+"</div>"+"</td>"
@@ -140,6 +139,7 @@ var htmlPart = {
                         +"</tr>"
                     );
                 }
+
                 function judge(user){
                     if(user == ""||user == null){
                         return "-";
@@ -156,6 +156,20 @@ var htmlPart = {
                     var minutes = date.getMinutes();
                     var seconds = date.getSeconds();
                     return year+'-'+add(month)+'-'+add(date1)+' '+add(hours)+':'+add(minutes)+':'+add(seconds);
+                };
+                function updateData(data){
+                    $.ajax({
+                        type:"post",
+                        url:"/sysNews/update",
+                        data: {
+                            newsId:data.list[i].newsId,
+                            newsTitle:data.list[i].newsTitle,
+                            newsGroup:data.list[i].newsGroup,
+                            isHot:data.list[i].isHot,
+                            content:data.list[i].content,
+                            pictureUrl:data.list[i].pictureUrl
+                        }
+                    })
                 }
             },
             error:function(e){
@@ -184,21 +198,6 @@ var htmlPart = {
             }
         });
     }
-    function updateData(data){
-        $.ajax({
-            type:"post",
-            url:"/sysNews/update",
-            data: {
-                newsId:data.list[i].newsId,
-                newsTitle:data.list[i].newsTitle,
-                newsGroup:data.list[i].newsGroup,
-                isHot:data.list[i].isHot,
-                content:data.list[i].content,
-                pictureUrl:data.list[i].pictureUrl
-            }
-        })
-    }
-
 </script>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
