@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.domain.Category;
+import com.jusfoun.hookah.core.domain.CategoryVo;
 import com.jusfoun.hookah.core.domain.mongo.MgCategoryAttrType;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
@@ -43,6 +44,11 @@ public class CategoryController {
         filters.add(Condition.eq("isShow", 1));
         List<Category> list = (List) categoryService.selectList(filters);
         return list;
+    }
+
+    @RequestMapping("findAll")
+    public List<CategoryVo> findAll() {
+        return categoryService.getCatTree();
     }
 
     /**

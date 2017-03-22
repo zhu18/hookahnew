@@ -1,8 +1,6 @@
 package com.jusfoun.hookah.webiste.controller;
 
-import com.jusfoun.hookah.core.domain.Category;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
-import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.rpc.api.CategoryService;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.MgCategoryAttrTypeService;
@@ -12,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author huang lei
@@ -32,11 +28,7 @@ public class MySellerController {
     @RequestMapping(value = "/myseller", method = RequestMethod.GET)
     public String index(Model model){
         // 默认加载分类
-        List<Condition> filters = new ArrayList<>();
-        filters.add(Condition.eq("catSign", 1));
-        filters.add(Condition.eq("isShow", 1));
-        List<Category> list = (List) categoryService.selectList(filters);
-        model.addAttribute("categoryList", list);
+        model.addAttribute("categoryList", categoryService.getCatTree());
         return "/myseller/index";
     }
 
@@ -70,7 +62,6 @@ public class MySellerController {
 
     @RequestMapping(value = "/myseller/illegal", method = RequestMethod.GET)
     public String illegal(){
-
         return "/myseller/illegal";
     }
 }
