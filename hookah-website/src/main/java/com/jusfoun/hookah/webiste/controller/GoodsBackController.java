@@ -8,9 +8,9 @@ import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.MgGoodsService;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -31,27 +31,11 @@ public class GoodsBackController {
     MgGoodsService mgGoodsService;
 
     @RequestMapping("add")
-    public ReturnData addGoodsBack(@RequestBody GoodsVo obj) {
+    public ReturnData addGoodsBack(GoodsVo model) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
-//            goodsService.addGoods(obj);
-            Goods goods = new Goods();
-            goods.setGoodsName("hello");
-            goodsService.insert(goods);
-//            if (obj == null)
-//                throw new HookahException("空数据！");
-//            // 将数据插入数据库
-//            int i = goodsService.insert(obj);
-//            if(i < 0)
-//                throw new HookahException("操作失败");
-//            // 将数据放入mongo
-//            MgGoods mgGoods = new MgGoods();
-//            mgGoods.setAttrTypeList(obj.getAttrTypeList());
-//            mgGoods.setFormatList(obj.getFormatList());
-//            mgGoods.setImgList(obj.getImgList());
-//            mgGoods.setGoodsId(obj.getGoodsId());
-//            mgGoodsService.insert(mgGoods);
+            goodsService.addGoods(model);
         }catch (Exception e) {
             returnData.setCode(ExceptionConst.Error);
             returnData.setMessage(e.toString());
@@ -66,18 +50,20 @@ public class GoodsBackController {
      * @return
      */
     @RequestMapping("findById")
-    public ReturnData findGoodsById(String id, @RequestParam(value = "123")String domainId) {
+    public @ResponseBody ReturnData findGoodsById(String id) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.eq("goodsId", id));
-            filters.add(Condition.eq("domainId", domainId));
+            filters.add(Condition.eq("domainId", "123"));
             filters.add(Condition.in("goodsStatus", new Byte[]{1,2}));
-            GoodsVo goodsVo = (GoodsVo) goodsService.selectOne(filters);
-            if (goodsVo == null) {
-                returnData.setMessage(ExceptionConst.empty);
+            Goods goods = goodsService.selectOne(filters);
+            if (goods == null || goods.getGoodsId() == null) {
+                returnData.setCode(ExceptionConst.empty);
             }else {
+                GoodsVo goodsVo = new GoodsVo();
+                BeanUtils.copyProperties(goods, goodsVo);
                 MgGoods mgGoods = mgGoodsService.selectById(id);
                 if (mgGoods != null) {
                     goodsVo.setFormatList(mgGoods.getFormatList());

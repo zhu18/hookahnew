@@ -7,6 +7,7 @@ import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.MgGoodsService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -55,13 +56,30 @@ public class GoodsController {
         return returnData;
     }
 
-    @RequestMapping(value = "/goods/list", method = RequestMethod.GET)
+    @RequestMapping(value = "list", method = RequestMethod.GET)
     public String list(){
         return "/goods/list";
     }
 
-    @RequestMapping(value = "/goods/details", method = RequestMethod.GET)
-    public String details(){
+    /**
+     * 商品查询
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "details", method = RequestMethod.GET)
+    public String details(String id, Model model){
+        GoodsVo goodsVo = new GoodsVo();
+        BeanUtils.copyProperties(goodsService.selectById(id), goodsVo);
+        if(goodsVo != null) {
+            MgGoods mgGoods = mgGoodsService.selectById(id);
+            if (mgGoods != null) {
+                goodsVo.setFormatList(mgGoods.getFormatList());
+                goodsVo.setImgList(mgGoods.getImgList());
+                goodsVo.setAttrTypeList(mgGoods.getAttrTypeList());
+            }
+        }
+        model.addAttribute("goods", goodsVo);
         return "/goods/details";
     }
 

@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -35,22 +36,13 @@ public class CategoryController {
      * @param catSign ： 0 普通； 1 系统
      * @return
      */
-    @RequestMapping("findAll/{catSign}")
-    public ReturnData findAll(@PathVariable String catSign) {
-        ReturnData<List<Category>> returnData = new ReturnData<>();
-        returnData.setCode(ExceptionConst.Success);
-        try {
-            List<Condition> filters = new ArrayList<>();
-            filters.add(Condition.eq("catSign", catSign));
-            filters.add(Condition.eq("isShow", 1));
-            List<Category> list = (List) categoryService.selectList(filters);
-            returnData.setData(list);
-        }catch (Exception e) {
-            returnData.setCode(ExceptionConst.Error);
-            returnData.setMessage(e.toString());
-            e.printStackTrace();
-        }
-        return returnData;
+    @RequestMapping(value = "findAll/{catSign}", method= RequestMethod.GET)
+    public Object findAll(@PathVariable String catSign) {
+        List<Condition> filters = new ArrayList<>();
+        filters.add(Condition.eq("catSign", catSign));
+        filters.add(Condition.eq("isShow", 1));
+        List<Category> list = (List) categoryService.selectList(filters);
+        return list;
     }
 
     /**
