@@ -1,15 +1,20 @@
 <div class="viewFramework-sidebar">
   <div class="sidebar-content">
     <div class="sidebar-inner">
+      <!--三条杠-->
       <div class="sidebar-fold" ng-class="{'icon-unfold': !config.isSidebarFold,'icon-fold':config.isSidebarFold}"
            ng-click="sideBar.toggleSidebarStatus()"></div>
+      <!--产品与服务-->
       <div class="sidebar-nav main-nav" ng-class="{'sidebar-nav-fold':navConfig.product.folded}" ng-show="navConfig.product.show">
         <div class="sidebar-title" ng-click="sideBar.toggleFoldStatus($event,navConfig.product)">
           <div class="sidebar-title-inner" sidebar-tooltip="" tooltip-append-to-body="true"
                tooltip-placement="right" tooltip-animation="true">
+            <!--三角箭头-->
             <span class="sidebar-title-icon icon-arrow-down"></span>
+            <!--模块名字-->
             <span class="sidebar-title-text">产品与服务</span>
-            <span class="sidebar-manage "
+            <!--设置按钮&#45;&#45;设置各个模块显示那几个子模块-->
+            <span class="sidebar-manage"
                   uib-tooltip="自定义产品与服务" tooltip-append-to-body="true" tooltip-placement="right"
                   tooltip-animation="true">
                   <a class="icon-setup " picked-items="productPreference" items="products" type="product"
@@ -17,14 +22,18 @@
                 </span>
           </div>
         </div>
+        <!--每个模块的下的子模块-->
         <ul class="sidebar-trans" style="">
+          <!--商品管理-->
           <li class="nav-item">
+            <!--点击后跳到对应的路由-->
             <a href="/goods/" class="sidebar-trans"
                sidebar-tooltip="" tooltip-append-to-body="true" tooltip-placement="right" tooltip-animation="true">
               <div class="nav-icon sidebar-trans"><span class="icon-dts"></span></div>
               <span class="nav-title">商品管理&nbsp;</span>
             </a>
           </li>
+          <!--货架管理-->
           <li class="nav-item">
             <a href="/dms" class="sidebar-trans"
                sidebar-tooltip="" tooltip-append-to-body="true" tooltip-placement="right" tooltip-animation="true">
@@ -32,6 +41,7 @@
               <span class="nav-title">货架管理&nbsp;</span>
             </a>
           </li>
+          <!--订单管理-->
           <li class="nav-item">
             <a href="/dms" class="sidebar-trans"
                sidebar-tooltip="" tooltip-append-to-body="true" tooltip-placement="right" tooltip-animation="true">
@@ -84,14 +94,18 @@
         </ul>
       </div>
 
+      <!--系统管理-->
       <div class="sidebar-nav" ng-class="{'sidebar-nav-fold':navConfig.system.folded}" ng-show="navConfig.system.show">
         <div class="sidebar-title" ng-click="sideBar.toggleFoldStatus($event,navConfig.system)">
           <div class="sidebar-title-inner" sidebar-tooltip="" tooltip-append-to-body="true" tooltip-placement="right"
                tooltip-animation="true">
-                <span class="sidebar-title-icon">
+            <!--三角箭头-->
+            <span class="sidebar-title-icon">
                   <span class="icon-arrow-down"></span>
                 </span>
+            <!--模块名字-->
             <span class="sidebar-title-text">系统管理</span>
+            <!--设置按钮&#45;&#45;设置各个模块显示那几个子模块(这里不知道为什么有?)-->
             <span class="sidebar-manage " sidebar-tooltip="自定义用户中心" tooltip-append-to-body="true"
                   tooltip-placement="right" tooltip-animation="true">
                   <a class="" picked-items="servicePreference" items="services" type="service" title="自定义用户中心快捷入口"
@@ -99,6 +113,7 @@
                 </span>
           </div>
         </div>
+        <!--每个模块的下的子模块-->
         <ul class="entrance-nav sidebar-trans">
           <li class="nav-item" ng-class="{'active':currentProductId == 'account'}"><a href="/account/" sidebar-tooltip="" tooltip-append-to-body="true"
                                          tooltip-placement="right" tooltip-animation="true">
