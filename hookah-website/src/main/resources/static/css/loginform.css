@@ -39,9 +39,6 @@ abbr, acronym {
   border: 0
 }
 
-.ua-webkit input:focus, .ua-webkit textarea:focus {
-  outline: 0
-}
 
 html {
   overflow-y: scroll;
@@ -225,14 +222,6 @@ a img {
   border: 1px solid #a6a6a6
 }
 
-.fm-text:focus, .fm-textarea:focus {
-  border-color: #70a5e0;
-  -webkit-box-shadow: 0 0 2px #a6cfff;
-  -moz-box-shadow: 0 0 2px #a6cfff;
-  -ms-box-shadow: 0 0 2px #a6cfff;
-  -o-box-shadow: 0 0 2px #a6cfff;
-  box-shadow: 0 0 2px #a6cfff
-}
 
 .fm-checkbox, .fm-radio {
   vertical-align: middle;
@@ -1321,10 +1310,6 @@ input.fm-button-disabled {
   background: transparent
 }
 
-#login-form #login-content .fm-text:focus {
-  background-color: #e9fbfe;
-  border-color: #69c5dd
-}
 
 #login-form #login-content #fm-login-checkcode-update {
   color: #00a2ca

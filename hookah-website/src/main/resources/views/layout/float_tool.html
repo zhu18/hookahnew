@@ -1,5 +1,5 @@
 <div class="float-tool" style="  width: 38px;height: initial;margin-bottom:50px;">
-    <div id="J_gotoTop" style="cursor: pointer;">
+    <div id="J_gotoTop" style="cursor: pointer; display: none;">
         <img style="width: 38px;"
              src="/static/img/TB1fekgNXXXXXasXpXXXXXXXXXX-80-80.jpg"
              hover="/static/img/TB1hzkTLXXXXXXNXXXXXXXXXXXX-80-80.png">
@@ -16,3 +16,17 @@
         <!--</div>-->
     <!--</div>-->
 </div>
+<script class="text/javascript">
+    $(window).scroll(function () {
+        var windowHeight = parseFloat($(window).height())
+        var totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());
+        if (totalheight - windowHeight >= 500) {
+            $('#J_gotoTop').show();
+        } else {
+            $('#J_gotoTop').hide();
+        }
+    });
+    $("#J_gotoTop").click(function() {
+        $("html,body").animate({scrollTop:0}, 'slow');
+    });
+</script>

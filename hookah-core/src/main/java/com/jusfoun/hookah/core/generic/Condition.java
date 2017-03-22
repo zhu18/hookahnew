@@ -375,8 +375,7 @@ public class Condition<Type> implements Serializable {
 	@Override
 	public String toString(){
 		StringBuffer sbuf = new StringBuffer();
-		sbuf.append("and").append(Character.toUpperCase(property.charAt(0))).append(property.substring(1));
-		sbuf.append(operator.name());
+		sbuf.append("and").append(operator.name());
 		return sbuf.toString();
 	}
 }

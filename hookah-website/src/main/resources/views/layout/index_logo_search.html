@@ -1,23 +1,43 @@
 <div class="layout layout-grid-0">
-  <div class="grid-0">
-    <div class="col col-main">
-      <div class="main-wrap J_Region">
-        <div class="hookah-index-product-sale J_Module">
-          <div class="module-wrap J_tb_lazyload dbl_tms_module_wrap">
-            <div class="index-search y-row">
-              <div class="logo-box y-left"><a href="javascript:void(0)">LOGO</a></div>
-              <div class="search-box y-right">
-                <div class="search-input y-left">
-                  <input type="text" placeholder="搜索" class="search-ask y-left">
-                  <a href="javascript:void(0)" class="search-btn y-right"><span
-                    class="icon-search"></span>搜索</a>
+    <div class="grid-0">
+        <div class="col col-main">
+            <div class="main-wrap J_Region">
+                <div class="hookah-index-product-sale J_Module">
+                    <div class="module-wrap J_tb_lazyload dbl_tms_module_wrap">
+                        <div class="input-search-container">
+                            <div class="index-search-box" id="input-search-box">
+                                <div class="index-search y-row" id="input-search">
+                                    <div class="logo-box y-left"><a href="javascript:void(0)"><img src="../../static/img/logo-test.jpg" alt=""></a></div>
+                                    <div class="search-box y-right">
+                                        <div class="search-input y-left">
+                                            <input type="text" placeholder="搜索" class="search-ask y-left">
+                                            <a href="javascript:void(0)" class="search-btn y-right">
+                                                <span class="fa fa-search"></span>
+                                            </a>
+                                        </div>
+                                        <div class="shopping-cart y-right"><a href="/cart">购物车</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="shopping-cart y-right">购物车</div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
+<script type="text/javascript">
+    $(window).scroll(function () {
+        var windowHeight = parseFloat($(window).height())
+        var totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());
+        if (totalheight - windowHeight >= 40) {
+            $('#input-search-box').css({"position":"fixed", "box-shadow":"0 1px 15px 0px #757575","padding":"5px 0"});
+            $('#input-search-box .logo-box').css({"margin":"0", "height":"40px"});
+            $('#input-search-box .search-box').css({"margin":"0"});
+        } else {
+            $('#input-search-box').css({"position":"inherit", "box-shadow":"none","padding":"0"});
+            $('#input-search-box .logo-box').css({"margin":"20px 0 0", "height":"60px"});
+            $('#input-search-box .search-box').css({"margin":"30px 0 0 "});
+        }
+    });
+</script>

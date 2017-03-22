@@ -17,5 +17,8 @@ myconf:
     console: ${server.http.protocal}localhost:9000
 debug: true
 spring:
+  data:
+    mongodb:
+      uri:  mongodb://192.168.15.90:27017/hookah
   mvc:
       static-path-pattern: /static/**

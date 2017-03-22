@@ -157,7 +157,7 @@
         }
         o.removeClass("center animating-enter-up").addClass("bottom");
         oo.removeClass("active");
-        console.log(active_index);
+//        console.log(active_index);
         o = $("div[data-groupindex='" + active_index + "']");
         o.removeClass("bottom").addClass("center animating-enter-up");
         oo = $(".banner-tab-li[data-index='" + active_index + "']");
@@ -165,4 +165,9 @@
     var nn = $(".banner-tab-li[data-index='" + active_index + "']");
     nn.addClass("active");
     }
+    $('.banner-tab > .banner-tab-li').click(function(){
+        $(this).addClass('active').siblings().removeClass('active');
+        $('.index-top-banner > div[data-active="dark"]').eq($(this).index()).removeClass('bottom').addClass("center animating-enter-up").siblings().removeClass("center animating-enter-up").addClass("bottom");
+
+    })
 </script>

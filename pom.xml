@@ -11,14 +11,8 @@
   <modules>
     <module>hookah-website</module>
     <module>hookah-core</module>
-    <module>hookah-console-other</module>
-    <module>hookah-console-goods</module>
-    <module>hookah-console-order</module>
-    <module>hookah-console-shelf</module>
-    <module>hookah-rpc-api-other</module>
-    <module>hookah-rpc-api-goods</module>
-    <module>hookah-rpc-api-order</module>
-    <module>hookah-rpc-api-shelf</module>
+    <module>hookah-console-server</module>
+    <module>hookah-rpc-api</module>
     <module>hookah-oauth2server</module>
     <module>hookah-console-webapi</module>
   </modules>

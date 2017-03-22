@@ -82,6 +82,10 @@ public abstract class DateUtils {
         return toDateText(date, DATE_TIME_FORMAT);
     }
 
+    public static String toDefaultNowTime() {
+        return toDateText(new Date(), DEFAULT_DATE_TIME_FORMAT);
+    }
+
 
     /**
      * Return current year.

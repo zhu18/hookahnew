@@ -3,8 +3,7 @@ package com.jusfoun.hookah.webiste.controller;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.generic.Condition;
-import com.jusfoun.hookah.rpc.api.other.*;
-import com.jusfoun.hookah.rpc.api.other.UserService;
+import com.jusfoun.hookah.rpc.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -63,7 +62,9 @@ public class IndexController {
     @RequestMapping(value = "/select", method = RequestMethod.GET)
     @ResponseBody
     public Object select(Model model) {
-        List<Goods> list = (List) goodsService.selectList();
+        List<Condition> filters = new ArrayList<>();
+        filters.add(Condition.in("goodsId",new Object[]{1149,1152}));
+        List<Goods> list = (List) goodsService.selectList(filters);
 
         return list;
     }

@@ -1,0 +1,164 @@
+<div class="hookah-index-top-banner-2016">
+    <div class="module-wrap">
+        <div class="index-top-banner" data-hover-container="">
+            <div data-group="" data-isimage="true" data-active="dark" data-groupindex="0" class="bottom">
+                <div class="y-row" data-ignore-group="">
+                    <div class="layer left-header" data-ignore="">
+                        <a href="javascript:void(0)">
+                            <h1>大数据运营创造者</h1>
+                            <p>吹牛逼很厉害</p>
+                        </a>
+                    </div>
+                </div>
+                <a href="javascript:void(0)">
+                    <div data-base-layer="" style="transform: rotateX(0deg) rotateY(0deg);">
+                        <div class="banner-row">
+                            <div class="layer right-image" data-zindex="50">
+                                <img src="../../static/img/111.jpeg" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div data-group="" data-isimage="" data-group-open="" data-active="dark" data-groupindex="1"
+                 class="bottom">
+                <div class="y-row" data-ignore-group="">
+                    <div class="layer left-header" data-ignore="">
+                        <a href=""
+                           target="_blank" data-spm-anchor-id="5176.8142029.418686.3">
+                            <h1>大数据运营创造者</h1>
+                            <p>吹牛逼很厉害</p>
+                            <button class="layer-btn">立即下载</button>
+                        </a>
+                    </div>
+                </div>
+                <a href="javascript:void(0)">
+                    <div data-base-layer="" style="transform: rotateX(0deg) rotateY(0deg);">
+                        <div class="banner-row">
+                            <div class="layer right-image" data-zindex="50">
+                                <img src="../../static/img/112.jpeg" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div data-group="" data-isimage="" data-group-open="" data-active="dark" data-groupindex="2"
+                 class="bottom">
+                <div class="y-row" data-ignore-group="">
+                    <div class="layer left-header" data-ignore="">
+                        <a href=""
+                           target="_blank">
+                            <h1>大数据技术领导者</h1>
+                            <p>吹的很厉害</p>
+                            <button class="layer-btn">立刻查看</button>
+                        </a>
+                    </div>
+                </div>
+                <a href=""
+                   target="_blank">
+                    <div data-base-layer="" style="transform: rotateX(0deg) rotateY(0deg);">
+                        <div class="banner-row">
+                            <div class="banner-row">
+                                <div class="layer right-image" data-zindex="50">
+                                    <img src="../../static/img/113.jpeg" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div data-group="" data-isimage="" data-group-open="" data-active="dark" data-groupindex="3"
+                 class="bottom">
+                <div class="y-row" data-ignore-group="">
+                    <div class="layer left-header" data-ignore="">
+                        <a
+                                href=""
+                                target="_blank">
+                            <h1>大数据价值发现者</h1>
+                            <p>吹得很厉害</p>
+                            <button class="layer-btn">查看详情</button>
+                        </a>
+                    </div>
+                </div>
+                <a href="javascript:void(0)">
+                    <div data-base-layer="" style="transform: rotateX(0deg) rotateY(0deg);">
+                        <div class="banner-row">
+                            <div class="banner-row">
+                                <div class="layer right-image" data-zindex="50">
+                                    <img src="../../static/img/114.jpeg" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div data-group="" data-isimage="" data-group-open="" data-active="dark" data-groupindex="4"
+                 class="bottom">
+                <div class="y-row" data-ignore-group="">
+                    <div class="layer left-header" data-ignore="">
+                        <a href=""
+                           target="_blank"">
+                        <h1>大数据平台方案</h1>
+                        <p>实时洞察风险、挖掘潜在客户、轻松抢占市场</p>
+                        <button class="layer-btn">立即查看</button>
+                        </a>
+                    </div>
+                </div>
+                <a href="javascript:void(0)">
+                    <div data-base-layer="" style="transform: rotateX(0deg) rotateY(0deg);">
+                        <div class="banner-row">
+
+                            <div class="banner-row">
+                                <div class="layer right-image" data-zindex="50">
+                                    <img src="../../static/img/115.jpeg" alt="">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <ul class="banner-tab dark" style="visibility: visible; margin-left: -55px;">
+            <li class="banner-tab-li" data-index="0"></li>
+            <li class="banner-tab-li " data-index="1"></li>
+            <li class="banner-tab-li" data-index="2"></li>
+            <li class="banner-tab-li" data-index="3"></li>
+            <li class="banner-tab-li" data-index="4"></li>
+        </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var dd = $("div[data-hover-container]");
+    var ss = dd.children().length;
+    var ll = setInterval('slider()', 5000);
+    var active_index = 0;
+    var data_index = 0;
+    var o = $("div[data-groupindex='" + active_index + "']");
+    var oo = $(".banner-tab-li[data-index='" + active_index + "']");
+    oo.addClass("active");
+    o.removeClass("bottom").addClass("center animating-enter-up");
+    function slider() {
+        if (active_index < ss - 1) {
+            o.removeClass("center animating-enter-up").addClass("bottom");
+            oo.removeClass("active");
+            active_index += 1;
+        } else {
+            active_index = 0;
+        }
+        o.removeClass("center animating-enter-up").addClass("bottom");
+        oo.removeClass("active");
+//        console.log(active_index);
+        o = $("div[data-groupindex='" + active_index + "']");
+        o.removeClass("bottom").addClass("center animating-enter-up");
+        oo = $(".banner-tab-li[data-index='" + active_index + "']");
+        oo.addClass("active");
+    var nn = $(".banner-tab-li[data-index='" + active_index + "']");
+    nn.addClass("active");
+    }
+    $('.banner-tab > .banner-tab-li').click(function(){
+        $(this).addClass('active').siblings().removeClass('active');
+        $('.index-top-banner > div[data-active="dark"]').eq($(this).index()).removeClass('bottom').addClass("center animating-enter-up").siblings().removeClass("center animating-enter-up").addClass("bottom");
+
+    })
+</script>

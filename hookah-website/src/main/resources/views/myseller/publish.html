@@ -4,6 +4,8 @@ var head = {
 <link rel="stylesheet" type="text/css" href="/static/css/user-center-menu.css">
 <link rel="stylesheet" type="text/css" href="/static/css/myseller.css">
 <link rel="stylesheet" type="text/css" href="/static/css/wangEditor/wangEditor.min.css">
+<link rel="stylesheet" type="text/css" href="/static/css/chosen.css">
+
 <%};%>
 
 <%
@@ -18,7 +20,7 @@ var htmlPart = {
             <h3 class="center-title">发布商品</h3>
             <div class="pulish-wrapper">
                 <div class="publish-box">
-                    <h3 class="category-title">类目：查询 >> 失信被执行人查询</h3>
+                    <h3 class="category-title">类目：<span class="category-title-box"></span></h3>
                     <h1>1.商品基本信息</h1>
                     <div class="struct">
                         <table>
@@ -44,6 +46,18 @@ var htmlPart = {
                                     </div>
                                 </td>
                             </tr>
+                            <tr class="attribute-container">
+                                <td class="bar">商品属性：</td>
+                                <td>
+
+                                    <div class="attribute-box">
+                                        <table>
+
+                                        </table>
+
+                                    </div>
+                                </td>
+                            </tr>
                             <tr>
                                 <td class="bar">商品图片：</td>
                                 <td>
@@ -65,8 +79,10 @@ var htmlPart = {
                                             </li>
                                             <li>
                                                 <div class="preview">
-                                                    <a title="上传图片" tabindex="0" class="upload-tip" style="display: inline;">
-                                                        <iclass="icon iconfont icon-tianjia"></i>
+                                                    <a title="上传图片" tabindex="0" class="upload-tip"
+                                                       style="display: inline;">
+                                                        <iclass
+                                                        ="icon iconfont icon-tianjia"></i>
                                                     </a>
                                                 </div>
                                             </li>
@@ -226,106 +242,106 @@ var htmlPart = {
                                     <div class="table-box">
                                         <table class="price-table">
                                             <thead>
-                                                <tr>
-                                                    <th>名称</th>
-                                                    <th>类型</th>
-                                                    <th>必填</th>
-                                                    <th>示例</th>
-                                                    <th>描述</th>
-                                                    <th>操作</th>
-                                                </tr>
+                                            <tr>
+                                                <th>名称</th>
+                                                <th>类型</th>
+                                                <th>必填</th>
+                                                <th>示例</th>
+                                                <th>描述</th>
+                                                <th>操作</th>
+                                            </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <div class="texbox">
-                                                            <div class="inputbox"><input type="text" value="appkey"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="texbox">
-                                                            <div class="inputbox"><input type="text" value="String"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="texbox">
-                                                            <div class="inputbox"><input type="text" value="是"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="texbox">
-                                                            <div class="inputbox"><input type="text" value=""></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="texbox">
-                                                            <div class="inputbox"><textarea>您申请的appkey</textarea></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <span>-</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="texbox">
-                                                            <div class="inputbox"><input type="text" value="place"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="texbox">
-                                                            <div class="inputbox"><input type="text" value="String"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="texbox">
-                                                            <div class="inputbox"><input type="text" value="否"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="texbox">
-                                                            <div class="inputbox"><input type="text" value="山东"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="texbox">
-                                                            <div class="inputbox"><textarea>省份（省/直辖市/自治区）</textarea></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <span>-</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="texbox">
-                                                            <div class="inputbox"><input type="text" value=""></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="texbox">
-                                                            <div class="inputbox"><input type="text" value=""></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="texbox">
-                                                            <div class="inputbox"><input type="text" value=""></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="texbox">
-                                                            <div class="inputbox"><input type="text" value=""></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="texbox">
-                                                            <div class="inputbox"><textarea></textarea></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <span>+</span>
-                                                    </td>
-                                                </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="texbox">
+                                                        <div class="inputbox"><input type="text" value="appkey"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="texbox">
+                                                        <div class="inputbox"><input type="text" value="String"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="texbox">
+                                                        <div class="inputbox"><input type="text" value="是"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="texbox">
+                                                        <div class="inputbox"><input type="text" value=""></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="texbox">
+                                                        <div class="inputbox"><textarea>您申请的appkey</textarea></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <span>-</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="texbox">
+                                                        <div class="inputbox"><input type="text" value="place"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="texbox">
+                                                        <div class="inputbox"><input type="text" value="String"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="texbox">
+                                                        <div class="inputbox"><input type="text" value="否"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="texbox">
+                                                        <div class="inputbox"><input type="text" value="山东"></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="texbox">
+                                                        <div class="inputbox"><textarea>省份（省/直辖市/自治区）</textarea></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <span>-</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="texbox">
+                                                        <div class="inputbox"><input type="text" value=""></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="texbox">
+                                                        <div class="inputbox"><input type="text" value=""></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="texbox">
+                                                        <div class="inputbox"><input type="text" value=""></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="texbox">
+                                                        <div class="inputbox"><input type="text" value=""></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="texbox">
+                                                        <div class="inputbox"><textarea></textarea></div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <span>+</span>
+                                                </td>
+                                            </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -416,7 +432,7 @@ var htmlPart = {
                                 <td>
                                     <div class="checkbox-box">
                                         <label>
-                                            <input type="checkbox" >保修服务
+                                            <input type="checkbox">保修服务
                                         </label>
                                     </div>
                                 </td>
@@ -426,7 +442,7 @@ var htmlPart = {
                                 <td>
                                     <div class="checkbox-box">
                                         <label>
-                                            <input type="checkbox" >退换货承诺：凡通过正常流程购买本平台商品，若存在质量问题或与描述不符，本店将主动提供退换货服务
+                                            <input type="checkbox">退换货承诺：凡通过正常流程购买本平台商品，若存在质量问题或与描述不符，本店将主动提供退换货服务
                                         </label>
                                     </div>
                                 </td>
@@ -466,17 +482,82 @@ var htmlPart = {
                     </div>
                 </div>
                 <div class="pulish-btn">
-                    <a href="/myseller/publish">发布商品</a>
+                    <button class="pusGoods-btn">发布商品</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <script type="text/javascript" src="../../static/js/wangEditor.min.js"></script>
+<script type="text/javascript" src="../../static/js/chosen.jquery.js"></script>
 <script type="text/javascript">
-    var editor = new wangEditor('textarea1');
-    editor.create();
+    $(document).ready(function () {
+        var editor = new wangEditor('textarea1');
+        editor.create(); //初始化富文本
+        $('.search-select-box').click(function () {
+            $(this).children('.search-option').show();
+        });
+        $('.search-option').mouseleave(function () {
+            $(this).hide();
+        })
+
+
+        $.getUrlParam = function (key) {
+            var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+            var result = window.location.search.substr(1).match(reg);
+            return result ? decodeURIComponent(result[2]) : null;
+        }
+
+        var catId = $.getUrlParam('catId'),
+            category = $.getUrlParam('category'),
+            url = '/category/findAttr';
+        $('.category-title-box').text(category);
+
+        loadData(url, catId); //加载商品属性数据
+        function loadData(url, catId) {
+            $.ajax({
+                type: "get",
+                url: url,
+                data: {
+                    catId: catId
+                },
+                success: function (msg) {
+                    if (msg.code == 1) {
+                        renderselect(msg.data)//渲染商品属性
+                    } else {
+                        $.alert(msg.message)
+                    }
+                }
+            });
+        }
+        function renderselect(data) {
+            if (data) {
+                var html = '';
+                var typeList = data.attrTypelist;
+                for (var i = 0; i < data.attrTypelist.length; i++) {
+                    html += '<tr>';
+                    html += '<td>' + typeList[i].typeName + '：</td>';
+                    html += ' <td>';
+                    html += '<select data-placeholder="请选择'+typeList[i].typeName+'" name="'+typeList[i].typeName+'" style="width:560px;" multiple class="chosen-select chosen-select-'+i+'" tabindex="8">';
+                    html += '<option value="null"></option>';
+                    for(var j = 0; j < typeList[i].attrlist.length; j++){
+                        html += '<option value="'+typeList[i].attrlist[j].attrId+'">'+typeList[i].attrlist[j].attrName+'</option>';
+                    }
+                    html += '</select>';
+                    html += '</td>';
+                    html += '</tr>';
+                }
+                $('.attribute-box').append(html);
+                $('.chosen-select').chosen(); //初始化select 多选插件
+            }else{
+                $('.attribute-container').remove();
+            }
+        }
+
+
+    })
 </script>
+
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class ExchangeController {
 
     @RequestMapping(value = "/exchange", method = RequestMethod.GET)
-    public String index(){
-        return "exchange/index";
-    }
+    public String index(){ return "exchange/index"; }
+
 }

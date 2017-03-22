@@ -1,0 +1,294 @@
+.select-title{
+    font-size: 16px;
+    color:#757575;
+    margin: 20px 0;
+}
+.select-title select{
+    height:30px;
+    font-size: 14px;
+}
+
+
+.article-management-box  .order-items{
+    border: 1px solid #ccc;
+    width:100%;
+    margin-bottom:20px;
+}
+.article-management-box  .order-items .order-head th{
+    padding:0 10px;
+}
+.article-management-box  .order-items .order-head{
+    line-height: 40px;
+    background: #f1f1f1;
+    overflow: hidden;
+
+    font-size:13px;
+}
+.article-management-box  .order-items tr div{
+    width: 60px;
+    padding: 10px 0;
+    display: inline-block;
+}
+.article-management-box  table tr{
+    border-bottom: 1px solid #ccc;
+}
+.article-management-box  table tr td{padding:0 10px;}
+.article-management-box  table tr .imgs{
+    text-align: center;
+}
+.article-management-box  table tr td img{
+    width:100%;
+}
+.article-management-box  table tr td a{display: block;}
+.article-management-box  table tr .operation{
+    text-align: center;
+}
+.article-management-box  table tr td.unpaid span{
+    color:#ff6700;
+}
+.article-management-box button {
+    cursor: pointer;
+    float:right;
+    background: #f8f8f8;
+    width:80px;
+    line-height: 28px;
+    display: inline-block;
+    text-align: center;
+    border:none;
+    border:1px solid #00C1DE;
+    outline: none;
+}
+/*****************/
+.publish-article{
+    padding:30px 50px 0 20px;
+}
+.publish-article table {
+    width: 100%;
+}
+.publish-article table tr td {
+    padding: 2px 5px 8px;
+    line-height: 24px;
+    font-size: 14px;
+}
+.publish-article table tr td.bar {
+    width: 120px;
+    text-align: right;
+    vertical-align: top;
+    position: relative;
+}
+.publish-article table tr td.bar em{
+    color: #EA4A36;
+    position: absolute;
+    right: 3px;
+    top: 7px;
+}
+.publish-article table .text-box input {
+    width: 600px;
+    border: 1px solid #ccc;
+    height: 26px;
+    color: #333;
+    padding: 2px 5px;
+    font-size:14px;
+}
+
+.publish-article table .input-count {
+    margin-left: 10px;
+    /*vertical-align: top;*/
+    display: inline-block;
+}
+.publish-article table .errors ul li {
+    white-space: normal;
+    word-wrap: break-word;
+    overflow: hidden;
+    word-break: break-all;
+    padding: 0 10px 0 0;
+    color: #EA4A36;
+    line-height: 24px;
+}
+.publish-article table .tips ul li {
+    white-space: normal;
+    word-wrap: break-word;
+    overflow: hidden;
+    word-break: break-all;
+    padding: 0 10px 0 0;
+    color: #7C7C7C;
+    line-height: 24px;
+}
+.publish-article table .select-box select{
+    height:32px;
+}
+.publish-article .pulish-btn {
+    text-align: center;
+    padding-top:20px;
+}
+.publish-article .pulish-btn button{
+    display: inline-block;
+    min-width: 150px;
+    height: 40px;
+    line-height: 40px;
+    text-decoration: none;
+    border: 0;
+    background: #00c1de;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.publish-article .radio-box label, .checkbox-box label {
+    margin-right: 15px;
+}
+.publish-article .radio-box input {
+    margin-right: 5px;
+}
+.multimage-wrap {
+    margin-bottom: 10px;
+}
+.multimage-wrap .image-list {
+    display: inline-block;
+}
+.multimage-wrap .image-list li {
+    border: 1px solid #cdcdcd;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    height: 100px;
+    width: 100px;
+    margin: 0 10px 0 0;
+}
+.multimage-wrap .image-list li {
+    border: 1px solid #cdcdcd;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    height: 100px;
+    width: 100px;
+    margin: 0 10px 0 0;
+}
+.multimage-wrap .image-list li .preview {
+    z-index: 0;
+    text-align: center;
+    line-height: 90px;
+    font-family: arial;
+    background-color: #f6f6f6;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: table-cell;
+    vertical-align: middle;
+}
+.multimage-wrap .image-list li .preview .upload-tip {
+    color: #d7d7d7;
+    cursor: pointer;
+    font-size: 42px;
+    position: absolute;
+    top: 0px;
+    left: 0;
+    text-decoration: none;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 100px;
+    z-index: -1;
+}
+.multimage-wrap .image-list li .preview .preview-img{
+    /*position: absolute;*/
+    /*left: 0;*/
+    /*top: 0;*/
+    width: 100%;
+    z-index: 20;
+    vertical-align: middle;
+}
+.multimage-wrap .image-list li .preview .preview-btn {
+    font-size: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100px;
+    height: 100px;
+    opacity: 0;
+    background: rgba(0,0,0,0.7);
+    cursor: pointer;
+    z-index: 40;
+}
+.multimage-wrap .image-list li .preview .replace-btn{
+    display: none;
+    color: #fff;
+    background: rgba(0,0,0,0.8);
+    cursor: pointer;
+    font-size: 14px;
+    position: absolute;
+    top: 0px;
+    left: 0;
+    text-decoration: none;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 100px;
+    z-index: 30;
+}
+.preview-content-btn{
+    text-align: center;
+    margin-top:10px;
+    display: inline-block;
+    min-width: 80px;
+    height: 30px;
+    line-height: 30px;
+    border: 0;
+    background: #00c1de;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+.info.block {
+    line-height: 26px;
+    display: inline-block;
+    color: #767676;
+}
+.select-hide{display: none;}
+.errors{display: none;}
+
+.preview-wrap{
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.8);
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    /*display: none;*/
+}
+.preview-wrap .preview-box{
+    position: relative;
+    width: 840px;
+    background: #fff;
+    margin: 100px auto;
+    padding: 20px;
+}
+
+.preview-wrap .preview-title{
+    font-size: 18px;
+    border-bottom: 1px solid #ccc;
+    height: 40px;
+    margin-bottom: 20px;
+}
+.preview-wrap .preview-content{
+    max-height: 500px;
+    overflow-y: scroll;
+}
+.preview-wrap .preview-title span {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 30px;
+    display: block;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    cursor: pointer;
+}

@@ -1,0 +1,309 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" type="text/css" href="/static/css/user-center-menu.css">
+<link rel="stylesheet" type="text/css" href="/static/css/usercenter-admin.css">
+<link rel="stylesheet" type="text/css" href="/static/css/wangEditor/wangEditor.min.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="user-center">
+    <div class="user-center-bd y-row">
+        <div class="user-center-menu y-left">
+            <ul class="menu-list">
+                <li class="menu-items active">
+                    <h3 class="menu-header">用户中心</h3>
+                    <ol class="menu-category active">
+                        <li><a href="/usercenter">个人资料</a></li>
+                        <li><a href="/usercenter/fundmanage">资金管理</a></li>
+                        <li><a href="/usercenter/safeset">安全设置</a></li>
+                    </ol>
+                </li>
+                <li class="menu-items">
+                    <h3 class="menu-header">文章管理</h3>
+                    <ol class="menu-category">
+                        <li><a href="/usercenter/articleManagement">文章管理</a></li>
+                    </ol>
+                </li>
+            </ul>
+        </div>
+        <div class="user-center-box y-right">
+            <h3 class="center-title">发表文章</h3>
+            <div class="publish-article">
+                <form name="publishArticle" id="publishArticle">
+                    <table>
+                        <tr>
+                            <td class="bar"><em>*</em>文章分类：</td>
+                            <td>
+                                <div class="select-box">
+                                    <select name="newsGroup" id="newsGroup" onchange="changes(this)">
+                                        <option value="0">请选择分类</option>
+                                        <option value="innovation">双创中心</option>
+                                        <option value="exposition">博览会</option>
+                                        <option value="information">资讯中心</option>
+                                    </select>
+                                    <span class="select-line select-hide">-</span>
+                                    <select name="newsSonGroup" id="newsSonGroup" class="select-hide">
+                                        <option value="0">请选择分类</option>
+                                        <option value="1">中心动态</option>
+                                        <option value="2">行业咨询</option>
+                                        <option value="3">中心公告</option>
+                                    </select>
+                                </div>
+                                <div class="errors">
+                                    <ul>
+                                        <li><span class="errorinfo">请选择文章分类!</span></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bar">文章标题：</td>
+                            <td>
+                                <div class="text-box">
+                                    <input id="newsTitle" name="newsTitle" type="text">
+                                    <span class="input-count"><strong>0</strong>/60</span>
+                                </div>
+                                <div class="errors">
+                                    <ul>
+                                        <li><span class="errorinfo">不能超过60个字符!</span></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bar">资讯热文：</td>
+                            <td>
+                                <div class="radio-box">
+                                    <label>
+                                        <input type="radio" name="isHot" value="1">是
+                                    </label>
+                                    <label>
+                                        <input type="radio" checked="" name="isHot" value="0" name="122">否
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bar">图片：</td>
+                            <td>
+                                <div class="block info" style="margin: 0px 0px 3px;">
+                                    图片大小不能超过3MB。
+                                </div>
+                                <div class="multimage-wrap">
+                                    <ul class="image-list">
+                                        <li>
+                                            <div class="preview" id="preview-div">
+                                                <a title="上传图片" class="upload-tip">+</a>
+                                                <img class="preview-img" id="preview-img">
+                                                <input type="file" id="filename" name="filename" class="preview-btn">
+                                                <a href="javascript:void(0)" class="replace-btn" id="replace-btn">替换图片</a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bar">文章内容：</td>
+                            <td>
+                                <div class="wangEditor-wrapper">
+                                <textarea name="content" id="content" style="height:500px;"></textarea>
+                                </div>
+                                <span id="preview-content" class="preview-content-btn y-right">预览内容</span>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="pulish-btn">
+                        <button type="button" id="submit-article" value="立即发表">立即发表</button>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <!--<p><input type="file" id="file1" name="filename" /></p>-->
+                    <!--<a href="javascript:void(0)" id="btnss" >上传</a>-->
+                    <!--<p><img id="img1" alt="上传成功啦" src="" /></p>-->
+
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+
+                    <p><input type="file" id="filename" name="filename" /></p>
+                    <p><img id="img1" alt="上传成功啦" src="" /></p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../static/js/wangEditor.min.js"></script>
+<script type="text/javascript" src="../../static/js/ajaxfileupload.js"></script>
+<script type="text/javascript">
+    //富文本
+    var editor = new wangEditor('content');
+        // 上传图片（举例）
+    editor.config.uploadImgUrl = '/upload';
+        // 关闭菜单栏fixed
+    editor.config.menuFixed = false;
+    editor.config.pasteText = true; //之粘贴纯文本
+    editor.create();
+
+    var imgSrc = '';
+
+    //上传图片
+
+    //选择文件之后执行上传
+    $('#preview-div').click(function(){
+        if($('#preview-img').attr('src')){
+            console.log('yessss');
+            $('#filename').val("");
+            sda();
+        }else{
+            console.log("nononono");
+            sda();
+        }
+        function sda(){
+
+            $('#filename').on('change', function() {
+                $.ajaxFileUpload({
+                    url:'/upload/fileUpload',
+                    secureuri:false,
+                    fileElementId:'filename',//file标签的id
+                    dataType: 'json',//返回数据的类型
+                    success: function (data, status) {
+                        //把图片替换
+                        var obj= data.data[0];
+                        $("#preview-img").attr("src", "http://"+obj.absPath);
+                        imgSrc = "http://"+obj.absPath;
+                        if(typeof(data.error) != 'undefined') {
+                            if(data.error != '') {
+                                alert(data.error);
+                            } else {
+                                alert(data.msg);
+                            }
+                        }
+                    },
+                    error: function (data, status, e) {
+                        alert(e);
+                    }
+                });
+            });
+        }
+
+    })
+
+
+    function changes(that){
+
+        var thisVal = $(that).val();
+        $('.select-hide').hide();
+        if(thisVal == 'information'){
+            $('#newsSonGroup').show();
+            $('.select-line').show();
+        }else{
+            $('#newsSonGroup').hide();
+            $('.select-line').hide();
+        }
+        console.log(thisVal);
+        if($(that).val() == 0){
+            $(that).parents().siblings('.errors').show();
+        }else{
+            $(that).parents().siblings('.errors').hide();
+        }
+
+    }
+
+    $('#submit-article').click(function(){
+        var data = {};
+            data.newsGroup = $('#newsGroup').val();
+            console.log(data.newsGroup);
+            data.newsTitle = $('#newsTitle').val();
+            data.isHot = $("input[name='isHot']:checked").val();
+            data.content = $('#content').val();
+            data.pictureUrl = imgSrc;
+            data.newsSonGroup = $('#newsSonGroup').val();
+        if(data.newsGroup == 0){
+            $('#newsGroup').focus();
+            $('#newsGroup').parents().siblings('.errors').show();
+            return;
+        }else if(data.newsGroup === 'information'){
+            if(data.newsSonGroup == 0){
+                $('#newsSonGroup').focus();
+                $('#newsSonGroup').parents().siblings('.errors').show();
+                return;
+            }
+        }
+        if(data.newsTitle == "" || data.newsTitle == null){
+            $('#newsTitle').focus();
+            return;
+        }else if(data.content == "") {
+            $.alert('请输入文章内容！',true,function(){
+
+            })
+            return;
+        }else if(data.pictureUrl == "") {
+            $.alert('请上传图片！',true,function(){
+            })
+            return;
+        }else{
+            $.ajax({
+                type: "POST",
+                url: "/sysNews/insert",
+                data: data,
+                success: function(msg){
+                    if(msg.code == 1){
+                        $.alert('提交成功')
+                    }else{
+                        $.alert(msg.message)
+                    }
+                }
+            });
+        }
+
+
+
+    })
+    //文章内容预览
+
+    $('#preview-content').click(function(){
+        var content = $('#content').val();
+        var html = '';
+            html += '<div id="preview-wrap" class="preview-wrap" style="display: block;">';
+            html += '<div class="preview-box">';
+            html += '<h3 class="preview-title">预览<span id="close">x</span></h3>';
+            html += '<div class="preview-content">';
+            html += content;
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+
+        if(content == ""){
+            $.alert('请输入文章内容！',true,function(){})
+        }else{
+            $('body').append(html);
+        }
+        $('#close').click(function(){
+            $('#preview-wrap').remove();
+        })
+    })
+
+    $('#preview-div').hover(function(){
+        if($('#preview-img').attr('src')){
+            $('#replace-btn').toggle();
+        }
+    })
+
+
+
+</script>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
