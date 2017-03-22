@@ -3,8 +3,6 @@ package com.jusfoun.hookah.webiste.controller;
 import com.jusfoun.hookah.core.domain.Category;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.generic.Condition;
-import com.jusfoun.hookah.core.utils.ExceptionConst;
-import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.CategoryService;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.MgCategoryAttrTypeService;
@@ -44,16 +42,6 @@ public class MySellerController {
 
     @RequestMapping(value = "/myseller/publish", method = RequestMethod.GET)
     public String publish(GoodsVo obj, Model model){
-        ReturnData returnData = new ReturnData<>();
-        returnData.setCode(ExceptionConst.Success);
-        try {
-            goodsService.addGoods(obj);
-        }catch (Exception e) {
-            returnData.setCode(ExceptionConst.Error);
-            returnData.setMessage(e.toString());
-            e.printStackTrace();
-        }
-        model.addAttribute("addResult", returnData);
         return "/myseller/publish";
     }
 
