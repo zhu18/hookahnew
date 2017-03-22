@@ -56,7 +56,7 @@ public class GoodsController {
         return returnData;
     }
 
-    @RequestMapping(value = "/goods/list", method = RequestMethod.GET)
+    @RequestMapping(value = "list", method = RequestMethod.GET)
     public String list(){
         return "/goods/list";
     }
@@ -67,7 +67,7 @@ public class GoodsController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/goods/details", method = RequestMethod.GET)
+    @RequestMapping(value = "details", method = RequestMethod.GET)
     public String details(String id, Model model){
         GoodsVo goodsVo = new GoodsVo();
         BeanUtils.copyProperties(goodsService.selectById(id), goodsVo);
