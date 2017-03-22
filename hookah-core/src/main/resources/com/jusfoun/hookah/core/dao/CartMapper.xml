@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jusfoun.hookah.core.dao.CartMapper">
+  <sql id="generateKey">
+    select replace(uuid(),'-','')
+  </sql>
+  <!-- 批量插入 -->
+  <insert id="insertBatch" parameterType="java.util.List">
+      insert into cart
+      (
+          rec_id, user_id, session_id, goods_id, goods_sn, product_id, goods_name, market_price, goods_price, goods_number, is_real,
+          extension_code, parent_id, rec_type, is_gift, is_shipping, can_handsel, goods_attr_id, add_time, goods_attr
+      )
+      values
+      <foreach collection="list" index="index" item="item" separator=",">
+      (
+          (<include refid="generateKey" />), #{item.userId,jdbcType=VARCHAR}, #{item.sessionId,jdbcType=CHAR},
+          #{item.goodsId,jdbcType=VARCHAR}, #{item.goodsSn,jdbcType=VARCHAR}, #{item.productId,jdbcType=VARCHAR},
+          #{item.goodsName,jdbcType=VARCHAR}, #{item.marketPrice,jdbcType=DECIMAL}, #{item.goodsPrice,jdbcType=DECIMAL},
+          #{item.goodsNumber,jdbcType=SMALLINT}, #{item.isReal,jdbcType=TINYINT}, #{item.extensionCode,jdbcType=VARCHAR},
+          #{item.parentId,jdbcType=VARCHAR}, #{item.recType,jdbcType=TINYINT}, #{item.isGift,jdbcType=SMALLINT},
+          #{item.isShipping,jdbcType=TINYINT}, #{item.canHandsel,jdbcType=TINYINT}, #{item.goodsAttrId,jdbcType=VARCHAR},
+          #{item.addTime,jdbcType=TIMESTAMP}, #{item.goodsAttr,jdbcType=LONGVARCHAR}
+      )
+      </foreach>
+  </insert>
+</mapper>

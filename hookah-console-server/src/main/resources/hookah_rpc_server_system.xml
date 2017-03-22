@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:motan="http://api.weibo.com/schema/motan"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://api.weibo.com/schema/motan http://api.weibo.com/schema/motan.xsd">
+
+
+    <!-- 业务具体实现类 -->
+    <bean id="userService" class="com.jusfoun.hookah.console.server.service.impl.UserServiceImpl"/>
+    <bean id="userMongoService" class="com.jusfoun.hookah.console.server.service.impl.UserMongoServiceImpl"/>
+
+    <!-- 具体rpc服务配置，声明实现的接口类。-->
+    <motan:service interface="com.jusfoun.hookah.rpc.api.UserService"
+                   ref="userService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+
+    <motan:service interface="com.jusfoun.hookah.rpc.api.UserMongoService"
+                   ref="userMongoService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+</beans>
