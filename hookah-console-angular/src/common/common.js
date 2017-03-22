@@ -7,6 +7,7 @@ angular.element(document).ready(function () {
       withCredentials: true
     }
   });
+  // 手动加载模块
   angular.element(document).ready(function () {
     angular.bootstrap(document, ['Hookah']);
   });
