@@ -20,33 +20,4 @@
                         retries="2" group="hookah-rpc" module="hookah-rpc"
                         application="hookah" protocol="motan" registry="registry"
                         id="HookahRPCClientBasicConfig" throwException="false" check="true"/>
-
-    <!-- 具体referer配置。使用方通过beanid使用服务接口类 -->
-    <motan:referer id="userService"
-                   interface="com.jusfoun.hookah.rpc.api.UserService"
-                   connectTimeout="300" requestTimeout="300" basicReferer="HookahRPCClientBasicConfig"/>
-    <motan:referer id="goodsService"
-                   interface="com.jusfoun.hookah.rpc.api.GoodsService"
-                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
-    <motan:referer id="goodsMongoService"
-                   interface="com.jusfoun.hookah.rpc.api.GoodsMongoService"
-                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
-    <motan:referer id="userMongoService"
-                   interface="com.jusfoun.hookah.rpc.api.UserMongoService"
-                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
-    <motan:referer id="mqSenderService"
-                   interface="com.jusfoun.hookah.rpc.api.MqSenderService"
-                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
-    <motan:referer id="categoryService"
-                   interface="com.jusfoun.hookah.rpc.api.CategoryService"
-                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
-    <motan:referer id="sysNewsService"
-                   interface="com.jusfoun.hookah.rpc.api.SysNewsService"
-                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
-    <motan:referer id="mgCategoryAttrTypeService"
-                   interface="com.jusfoun.hookah.rpc.api.MgCategoryAttrTypeService"
-                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
-    <motan:referer id="mgGoodsService"
-                   interface="com.jusfoun.hookah.rpc.api.MgGoodsService"
-                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
 </beans>
