@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:motan="http://api.weibo.com/schema/motan"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://api.weibo.com/schema/motan http://api.weibo.com/schema/motan.xsd">
+
+
+    <!-- 业务具体实现类 -->
+    <bean id="goodsService" class="com.jusfoun.hookah.console.server.service.impl.GoodsServiceImpl"/>
+
+    <!-- 商品分类查询 -->
+    <bean id="categoryService" class="com.jusfoun.hookah.console.server.service.impl.CategoryServiceImpl"/>
+    <bean id="mgCategoryAttrTypeService" class="com.jusfoun.hookah.console.server.service.impl.MgCategoryAttrTypeServiceImpl"/>
+    <!-- 商品添加 -->
+    <bean id="mgGoodsService" class="com.jusfoun.hookah.console.server.service.impl.MgGoodsServiceImpl"/>
+
+
+    <!-- 具体rpc服务配置，声明实现的接口类。-->
+    <motan:service interface="com.jusfoun.hookah.rpc.api.GoodsService"
+                   ref="goodsService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+    <motan:service interface="com.jusfoun.hookah.rpc.api.CategoryService"
+                   ref="categoryService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+    <motan:service interface="com.jusfoun.hookah.rpc.api.MgCategoryAttrTypeService"
+                   ref="mgCategoryAttrTypeService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+    <motan:service interface="com.jusfoun.hookah.rpc.api.MgGoodsService"
+                   ref="mgGoodsService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+
+</beans>

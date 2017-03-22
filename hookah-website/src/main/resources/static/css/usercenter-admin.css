@@ -156,16 +156,6 @@
     width: 100px;
     margin: 0 10px 0 0;
 }
-.multimage-wrap .image-list li {
-    border: 1px solid #cdcdcd;
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    vertical-align: middle;
-    height: 100px;
-    width: 100px;
-    margin: 0 10px 0 0;
-}
 .multimage-wrap .image-list li .preview {
     z-index: 0;
     text-align: center;

@@ -24,7 +24,7 @@ import javax.annotation.PostConstruct;
 @EnableAutoConfiguration(exclude = {ThymeleafAutoConfiguration.class})
 @EnableScheduling
 @ComponentScan
-@ImportResource(locations = "classpath:hookah_rpc_client.xml")
+@ImportResource(locations = {"classpath:hookah_rpc_client.xml","classpath:hookah_rpc_client_goods.xml","classpath:hookah_rpc_client_order.xml","classpath:hookah_rpc_client_other.xml","classpath:hookah_rpc_client_system.xml"})
 public class WebsiteLauncher {
     private static final Logger logger = LoggerFactory.getLogger(WebsiteLauncher.class);
 

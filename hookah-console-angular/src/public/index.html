@@ -29,17 +29,20 @@
 </head>
 <body ng-controller="MainController">
 <div view-framework>
-
+  <!--头部指令-->
   <div top-bar></div>
   <div class="viewFramework-body"
        ng-class="{'viewFramework-sidebar-mini':(!config.disableNavigation && !config.hideSidebar) && config.sidebar == 'mini','viewFramework-sidebar-full': (!config.disableNavigation && !config.hideSidebar) && config.sidebar == 'full','viewFramework-topbar-hide':config.disableNavigation || config.hideTopbar}">
-
+    <!--侧边栏指令-->
     <div side-bar></div>
+    <!--中间主体内容-->
     <div class="viewFramework-product"
-         ng-class="{'viewFramework-product-col-1':!config.disableNavigation && config.productNavBar=='col-1','viewFramework-product-col-2': !config.disableNavigation && config.productNavBar=='col-2'}">
+         ng-class="{'viewFramework-product-col-1':!config.disableNavigation && config.productNavBar=='col-1',
+         'viewFramework-product-col-2': !config.disableNavigation && config.productNavBar=='col-2'}">
       <div product-navbar></div>
       <div class="viewFramework-product-body" style="background-color: #ffffff">
         <div ui-view class="console-container" ng-animate="{enter:'fade-enter'}">
+
         </div>
       </div>
     </div>
