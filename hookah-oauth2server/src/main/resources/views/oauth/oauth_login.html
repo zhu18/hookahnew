@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>首页</title>
+  <link rel="stylesheet" type="text/css" href="/static/vendor/bootstrap/bootstrap.css">
+  <script src="/static/vendor/jquery/jquery1.10.2.min.js"></script>
+  <script src="/static/vendor/bootstrap/bootstrap.min.js"></script>
+</head>
+<body class="container">
+<div class="row">
+  <h3>Oauth Login</h3>
+  <p>
+    登录使用的 client_id: '${parameter.client_id}'.
+  </p>
+
+  <div class="row">
+    <div class="col-md-5">
+      <form action="${ctxPath}/oauth/authorize" method="post" class="form-horizontal">
+        <input type="hidden" name="client_id" value="${parameter.client_id}"/>
+        <input type="hidden" name="scope" value="${parameter.scope}"/>
+        <input type="hidden" name="response_type" value="${parameter.response_type}"/>
+        <input type="hidden" name="redirect_uri" value="${parameter.redirect_uri}"/>
+        <input type="hidden" name="state" value="${parameter.state}"/>
+        <input type="hidden" name="client_secret" value="${parameter.client_secret}"/>
+
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Username</label>
+
+          <div class="col-sm-9">
+            <input type="text" name="username" value="" required="required" class="form-control"
+                   placeholder="Type username"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Password</label>
+
+          <div class="col-sm-9">
+            <input type="password" name="password" required="required" class="form-control"
+                   placeholder="Type password"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <input type="submit" value="Login" class="btn btn-primary"/>
+            &nbsp;
+            <span style="color:red;"></span>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div>
+  <br/>
+
+  <p>可以使用下面的账号登录或使用你自行添加的账号:</p>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>username</th>
+      <th>password</th>
+      <th>grant_types</th>
+      <th>role</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>test</td>
+      <td>test</td>
+      <td>authorization_code,password,refresh_token,client_credentials</td>
+      <td>User(id=22)</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

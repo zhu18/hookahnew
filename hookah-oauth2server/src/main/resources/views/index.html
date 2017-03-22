@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>首页</title>
+  <link rel="stylesheet" type="text/css" href="/static/vendor/bootstrap/bootstrap.css">
+  <script src="/static/vendor/jquery/jquery1.10.2.min.js"></script>
+  <script src="/static/vendor/bootstrap/bootstrap.min.js"></script>
+</head>
+<body class="container">
+<h2>Oauth2-Shiro is work!</h2>
+<a href="${ctxPath}/logout">Logout</a>
+<br/>
+<!--Welcome: <shiro:principal/>-->
+<hr/>
+<div>
+  <strong>测试OAuth</strong>
+
+  <p>
+    <a href="${ctxPath}/resources/oauth_test.html">oauth_test</a>
+  </p>
+</div>
+<hr/>
+<div>
+  <strong>菜单</strong>
+
+  <p class="help-block">根据不同的Role会显示不同的菜单 (Shiro权限控制)</p>
+  <ul>
+    <% if(shiro.hasRole("Admin")){%>
+    <li><a href="#">Admin Action</a></li>
+    <%}%>
+    <% if(shiro.hasRole("User")){%>
+    <li><a href="#">User Action</a></li>
+    <%}%>
+    <% if(shiro.hasPermission("user:list")){%>
+    <li><a href="#">User List</a></li>
+    <%}%>
+    <% if(shiro.hasPermission("user:create")){%>
+    <li><a href="#">User Create</a></li>
+    <%}%>
+  </ul>
+</div>
+</body>
+</html>
