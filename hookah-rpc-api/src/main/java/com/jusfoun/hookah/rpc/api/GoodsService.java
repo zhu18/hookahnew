@@ -12,4 +12,5 @@ import com.jusfoun.hookah.core.generic.GenericService;
  */
 public interface GoodsService extends GenericService<Goods,String> {
     void addGoods(GoodsVo obj) throws HookahException;
+    void updateGoods(GoodsVo obj) throws HookahException;
 }

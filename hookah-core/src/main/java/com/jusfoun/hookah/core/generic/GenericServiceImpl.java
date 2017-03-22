@@ -480,5 +480,4 @@ public class GenericServiceImpl<Model extends GenericModel, ID extends Serializa
         }
         return sbuf.toString();
     }
-
 }
