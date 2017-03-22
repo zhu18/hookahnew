@@ -178,10 +178,10 @@ var htmlPart = {
     //富文本
     var editor = new wangEditor('content');
         // 上传图片（举例）
-//    editor.config.uploadImgUrl = '/upload';
+    editor.config.uploadImgUrl = '/upload';
         // 关闭菜单栏fixed
-//    editor.config.menuFixed = false;
-//    editor.config.pasteText = true; //之粘贴纯文本
+    editor.config.menuFixed = false;
+    editor.config.pasteText = true; //之粘贴纯文本
 
         editor.create();
     }
@@ -277,18 +277,33 @@ var htmlPart = {
             $.alert('请上传图片！',true,function(){ })
             return;
         }else{
-            $.ajax({
-                type: "POST",
-                url: "/sysNews/insert",
-                data: data,
-                success: function(msg){
-                    if(msg.code == 1){
-                        $.alert('提交成功')
-                    }else{
-                        $.alert(msg.message)
+            if(id){
+                $.ajax({
+                    type: "POST",
+                    url: "/sysNews/update",
+                    data: data,
+                    success: function(msg){
+                        if(msg.code == 1){
+                            $.alert('修改成功')
+                        }else{
+                            $.alert(msg.message)
+                        }
                     }
-                }
-            });
+                });
+            }else{
+                $.ajax({
+                    type: "POST",
+                    url: "/sysNews/insert",
+                    data: data,
+                    success: function(msg){
+                        if(msg.code == 1){
+                            $.alert('提交成功')
+                        }else{
+                            $.alert(msg.message)
+                        }
+                    }
+                });
+            }
         }
     }
 
