@@ -29,10 +29,7 @@ public class RegController {
     @RequestMapping(value = "/reg",method = RequestMethod.POST)
     @ResponseBody
     public Object pReg(User user){
-        System.out.println(user.getUserName());
-        System.out.println(user.getPassword());
-        int i = userService.insert(user);
-        System.out.println(user.getUserId());
+        User user1 = userService.insert(user);
         return user;
     }
 }
