@@ -380,6 +380,8 @@
     display: block;
     padding:10px;
     text-align:center;
+    max-width: 200px;
+    margin: 0 auto;
 }
 .trade-box table td a img{
     width:70px;
