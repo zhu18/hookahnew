@@ -85,6 +85,8 @@ public class MySellerController {
             List<Condition> filters = new ArrayList();
             List<OrderBy> orderBys = new ArrayList();
             orderBys.add(OrderBy.desc("lastUpdateTime"));
+            //只查询商品状态为未删除的商品
+            filters.add(Condition.eq("isDelete", 1));
             //参数校验
             int pageNumberNew = HookahConstants.PAGE_NUM;
             if(StringUtils.isNotBlank(pageNumber)){
@@ -94,8 +96,6 @@ public class MySellerController {
             if(StringUtils.isNotBlank(pageSize)){
                 pageSizeNew = Integer.parseInt(pageSize);
             }
-            //只查询商品状态为未删除的商品
-            filters.add(Condition.eq("isDelete", 1));
 
             if( StringUtils.isNotBlank(goodsName)){
                 filters.add(Condition.like("goodsName", goodsName.trim()));

@@ -69,7 +69,7 @@ public class MgGoods extends GenericModel implements Serializable {
 
         private int format;
         private int number;
-        private int price;
+        private Float price;
 
         public int getFormat() {
             return format;
@@ -87,11 +87,11 @@ public class MgGoods extends GenericModel implements Serializable {
             this.number = number;
         }
 
-        public int getPrice() {
+        public Float getPrice() {
             return price;
         }
 
-        public void setPrice(int price) {
+        public void setPrice(Float price) {
             this.price = price;
         }
     }

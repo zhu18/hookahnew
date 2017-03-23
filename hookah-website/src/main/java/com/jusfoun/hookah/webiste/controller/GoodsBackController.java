@@ -61,6 +61,7 @@ public class GoodsBackController {
             List<Condition> filters = new ArrayList();
             List<OrderBy> orderBys = new ArrayList();
             orderBys.add(OrderBy.desc("lastUpdateTime"));
+            filters.add(Condition.eq("isDelete", 1));
             //参数校验
             int pageNumberNew = HookahConstants.PAGE_NUM;
             if(StringUtils.isNotBlank(pageNumber)){

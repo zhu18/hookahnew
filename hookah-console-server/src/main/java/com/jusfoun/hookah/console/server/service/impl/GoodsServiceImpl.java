@@ -40,12 +40,12 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         if(obj == null)
             throw new HookahException("操作失败");
         // 将数据放入mongo
-        MgGoods mgGoods = new MgGoods();
-        mgGoods.setAttrTypeList(obj.getAttrTypeList());
-        mgGoods.setFormatList(obj.getFormatList());
-        mgGoods.setImgList(obj.getImgList());
-        mgGoods.setGoodsId(obj.getGoodsId());
-        mongoTemplate.insert(mgGoods);
+            MgGoods mgGoods = new MgGoods();
+            mgGoods.setAttrTypeList(obj.getAttrTypeList());
+            mgGoods.setFormatList(obj.getFormatList());
+            mgGoods.setImgList(obj.getImgList());
+            mgGoods.setGoodsId(obj.getGoodsId());
+            mongoTemplate.insert(mgGoods);
     }
 
     @Override
