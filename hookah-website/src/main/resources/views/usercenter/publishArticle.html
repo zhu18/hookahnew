@@ -3,12 +3,6 @@ var head = {
 %>
 <link rel="stylesheet" type="text/css" href="/static/css/user-center-menu.css">
 <link rel="stylesheet" type="text/css" href="/static/css/usercenter-admin.css">
-<link rel="stylesheet" type="text/css" href="/static/css/wangEditor/wangEditor.min.css">
-<%};%>
-
-<%
-var htmlPart = {
-%>
 <div class="user-center">
     <div class="user-center-bd y-row">
         <div class="user-center-menu y-left">
@@ -110,7 +104,7 @@ var htmlPart = {
                             <td class="bar">文章内容：</td>
                             <td>
                                 <div class="wangEditor-wrapper">
-                                <textarea name="content" id="content" style="height:500px;"></textarea>
+                                    <textarea name="content" id="content" style="height:500px;"></textarea>
                                 </div>
                                 <span id="preview-content" class="preview-content-btn y-right">预览内容</span>
                             </td>
@@ -124,11 +118,17 @@ var htmlPart = {
         </div>
     </div>
 </div>
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<link rel="stylesheet" type="text/css" href="/static/css/wangEditor/wangEditor.min.css">
 <script type="text/javascript" src="../../static/js/wangEditor.min.js"></script>
 <script type="text/javascript" src="../../static/js/ajaxfileupload.js"></script>
 <script type="text/javascript">
 
-        $.getUrlParam = function (key) {
+    $.getUrlParam = function (key) {
             var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
             var result = window.location.search.substr(1).match(reg);
             return result ? decodeURIComponent(result[2]) : null;
@@ -151,7 +151,6 @@ var htmlPart = {
             })
         }
 
-
     //富文本
     var editor = new wangEditor('content');
         // 上传图片（举例）
@@ -160,6 +159,37 @@ var htmlPart = {
     editor.config.menuFixed = false;
     editor.config.pasteText = true; //之粘贴纯文本
     editor.create();
+
+
+    var id = $.getUrlParam('id');
+    function createEidtor(){
+        //富文本
+        var editor = new wangEditor('content');
+        //上传图片（举例）
+        editor.config.uploadImgUrl = '/upload';
+        //关闭菜单栏fixed
+        editor.config.menuFixed = false;
+        editor.create();
+    }
+    if(id){
+        $(".user-center-box .center-title").text("编辑文章");
+        $.ajax({
+            type:"get",
+            url:"/sysNews/details",
+            data:{ id: id},
+            success:function(data){
+                var isHot=data.data.isHot;
+                $("#newsGroup").val(data.data.newsGroup);
+                $("#newsTitle").val(data.data.newsTitle);
+                $("input[name='isHot'][value="+isHot+"]").attr("checked",true);
+                $("#content").html(data.data.content) ;
+                createEidtor();
+            }
+        })
+    }else{
+        createEidtor();
+    }
+
     var imgSrc = '';
     //上传图片
 
@@ -200,11 +230,11 @@ var htmlPart = {
             });
         }
     })
-
     function changes(that){
         var thisVal = $(that).val();
         $('.select-hide').hide();
         if(thisVal == 'information'){
+            //    立即发表
             $('#newsSonGroup').show();
             $('.select-line').show();
         }else{
@@ -219,15 +249,21 @@ var htmlPart = {
         }
     }
 
-//    立即发表
     function published(){
         var data = {};
-            data.newsGroup = $('#newsGroup').val();
-            data.newsTitle = $('#newsTitle').val();
-            data.isHot = $("input[name='isHot']:checked").val();
-            data.content = $('#content').val();
-            data.pictureUrl = imgSrc;
-            data.newsSonGroup = $('#newsSonGroup').val();
+        var url = '';
+        data.newsGroup = $('#newsGroup').val();
+        data.newsTitle = $('#newsTitle').val();
+        data.isHot = $("input[name='isHot']:checked").val();
+        data.content = $('#content').val();
+        data.pictureUrl = imgSrc;
+        data.newsSonGroup = $('#newsSonGroup').val();
+        if (id){
+            url = "/sysNews/update";
+            data.newsId = id;
+        }else{
+            url = "/sysNews/insert";
+        }
         if(data.newsGroup == 0){
             $('#newsGroup').focus();
             $('#newsGroup').parents().siblings('.errors').show();
@@ -250,41 +286,27 @@ var htmlPart = {
             return;
         }else{
             if(id){
-                $.ajax({
-                    type: "POST",
-                    url: "/sysNews/update",
-                    data: {
-                        newsId:id,
-                        newsGroup:data.newsGroup,
-                        newsTitle:data.newsTitle,
-                        isHot:data.isHot,
-                        content:data.content,
-                        pictureUrl:data.pictureUrl
-                    },
-                    success: function(msg){
-                        if(msg.code == 1){
-                            $.alert('修改成功')
-                        }else{
-                            $.alert(msg.message)
-                        }
-                    }
-                });
+                ajaxFun(id,url)
             }else{
-                $.ajax({
-                    type: "POST",
-                    url: "/sysNews/insert",
-                    data: data,
-                    success: function(msg){
-                        if(msg.code == 1){
-                            $.alert('提交成功')
-                        }else{
-                            $.alert(msg.message)
-                        }
-                    }
-                });
+                ajaxFun(id,url)
             }
         }
+        function ajaxFun(id,url){
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: data,
+                success: function(msg){
+                    if(msg.code == 1){
+                        $.alert('修改成功')
+                    }else{
+                        $.alert(msg.message)
+                    }
+                }
+            });
+        }
     }
+
 
 //     文章内容预览
     $('#preview-content').click(function(){
@@ -307,13 +329,11 @@ var htmlPart = {
             $('#preview-wrap').remove();
         })
     })
-
     $('#preview-div').hover(function(){
         if($('#preview-img').attr('src')){
             $('#replace-btn').toggle();
         }
     })
-
 </script>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
