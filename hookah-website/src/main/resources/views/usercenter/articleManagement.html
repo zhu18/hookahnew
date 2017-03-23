@@ -78,6 +78,7 @@ var htmlPart = {
                                 <% } %>
                                 <td>
                                     <a onclick="deleteData('${item.newsId}')">删除</a>
+                                    <a href="/usercenter/publishArticle?id=${item.newsId}">修改</a>
                                 </td>
                             </tr>
                         <% } %>
@@ -182,7 +183,8 @@ var htmlPart = {
             success:function(data){
                 if(data.code == "1") {
                     $.alert('删除成功', true, function () {
-//                        location.reload();
+                        data.newsGroup = $("#newsGroup").val();
+                        loadData(data);
                     });
                 }
             },

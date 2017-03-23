@@ -1,10 +1,10 @@
 package com.jusfoun.hookah.core.domain;
 
 import com.jusfoun.hookah.core.generic.GenericModel;
+import org.springframework.data.annotation.Id;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.validation.constraints.Digits;
 import java.util.Date;
 
@@ -16,7 +16,7 @@ public class Cart extends GenericModel {
      * @mbggenerated
      */
     @Id
-    @org.springframework.data.annotation.Id
+    @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String recId;
 
