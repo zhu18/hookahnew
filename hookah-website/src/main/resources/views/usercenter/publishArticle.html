@@ -113,24 +113,6 @@ var head = {
                     <div class="pulish-btn">
                         <button type="button" id="submit-article" value="立即发表" onclick="published()">立即发表</button>
                     </div>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <!--<p><input type="file" id="file1" name="filename" /></p>-->
-                    <!--<a href="javascript:void(0)" id="btnss" >上传</a>-->
-                    <!--<p><img id="img1" alt="上传成功啦" src="" /></p>-->
-
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-
                 </form>
             </div>
         </div>
@@ -151,6 +133,32 @@ var htmlPart = {
             var result = window.location.search.substr(1).match(reg);
             return result ? decodeURIComponent(result[2]) : null;
         };
+        var id = $.getUrlParam('id');
+
+        if(id){
+            $(".user-center-box .center-title").text("编辑文章");
+            $.ajax({
+                type:"get",
+                url:"/sysNews/details",
+                data:{ id: id},
+                success:function(data){
+                    console.log(data.data.content);
+                    $("#newsGroup").val(data.data.newsGroup);
+                    $("#newsTitle").val(data.data.newsTitle);
+                    $("input[name='isHot'][value="+data.data.isHot+"]").attr("checked",true);
+                    $("#content").val(data.data.content);
+                }
+            })
+        }
+
+    //富文本
+    var editor = new wangEditor('content');
+        // 上传图片（举例）
+    editor.config.uploadImgUrl = '/upload';
+        // 关闭菜单栏fixed
+    editor.config.menuFixed = false;
+    editor.config.pasteText = true; //之粘贴纯文本
+    editor.create();
 
 
     var id = $.getUrlParam('id');
@@ -161,7 +169,6 @@ var htmlPart = {
         editor.config.uploadImgUrl = '/upload';
         //关闭菜单栏fixed
         editor.config.menuFixed = false;
-
         editor.create();
     }
     if(id){
@@ -183,14 +190,7 @@ var htmlPart = {
         createEidtor();
     }
 
-
-
-
-
-
-
     var imgSrc = '';
-
     //上传图片
 
     //选择文件之后执行上传
@@ -292,7 +292,6 @@ var htmlPart = {
             }
         }
         function ajaxFun(id,url){
-
             $.ajax({
                 type: "POST",
                 url: url,

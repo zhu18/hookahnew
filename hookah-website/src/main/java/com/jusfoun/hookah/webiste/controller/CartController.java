@@ -10,10 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -54,7 +51,8 @@ public class CartController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    @ResponseBody
+    @RequestMapping(value = "/cart/add", method = RequestMethod.POST)
     public ReturnData add(@RequestBody Cart cart, Model model) {
         try {
             //需要先获取当前用户id
@@ -62,7 +60,7 @@ public class CartController {
             cart.setUserId(userId);
             cart.setAddTime(new Date());
             cart.setGoodsNumber(new Integer(1).shortValue());
-            cartService.insert(cart);
+            cart = cartService.insert(cart);
             return ReturnData.success();
         } catch (Exception e) {
             logger.info(e.getMessage());
@@ -76,7 +74,8 @@ public class CartController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/addAll", method = RequestMethod.GET)
+    @ResponseBody
+    @RequestMapping(value = "/cart/addAll", method = RequestMethod.POST)
     public ReturnData addAll(@RequestBody List<Cart> list, Model model) {
         try {
             //需要先获取当前用户id
@@ -101,7 +100,8 @@ public class CartController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    @ResponseBody
+    @RequestMapping(value = "/cart/edit", method = RequestMethod.POST)
     public ReturnData edit(@RequestBody Cart cart, Model model) {
         if(StringUtils.isBlank(cart.getRecId())){
             return ReturnData.invalidParameters("The field[recId] CANNOT be null!");
@@ -120,8 +120,9 @@ public class CartController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public ReturnData delete(@RequestParam String id) {
+    @ResponseBody
+    @RequestMapping("/cart/delete/{id}")
+    public ReturnData delete(@PathVariable String id) {
         try {
             cartService.delete(id);
             return ReturnData.success();
@@ -136,7 +137,8 @@ public class CartController {
      * @param ids
      * @return
      */
-    @RequestMapping(value = "/deleteAll", method = RequestMethod.GET)
+    @ResponseBody
+    @RequestMapping(value = "/cart/deleteAll", method = RequestMethod.POST)
     public ReturnData deleteAll(@RequestBody String[] ids) {
         try {
             List<Condition> filters = new ArrayList<>();
