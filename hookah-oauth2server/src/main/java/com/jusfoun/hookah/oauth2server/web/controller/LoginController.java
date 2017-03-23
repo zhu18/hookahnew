@@ -68,4 +68,9 @@ public class LoginController {
             return "redirect:/login";
         }
     }
+
+    @RequestMapping(value = "/reg",method = RequestMethod.GET)
+    public String reg(Model model){
+        return "register";
+    }
 }
