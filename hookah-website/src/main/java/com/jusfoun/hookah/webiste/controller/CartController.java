@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -53,15 +54,15 @@ public class CartController {
      */
     @ResponseBody
     @RequestMapping(value = "/cart/add", method = RequestMethod.POST)
-    public ReturnData add(@RequestBody Cart cart, Model model) {
+    public ReturnData add(@Valid @RequestBody Cart cart, Model model) {
         try {
             //需要先获取当前用户id
-            String userId = "";
+            String userId = "shawn";
             cart.setUserId(userId);
             cart.setAddTime(new Date());
             cart.setGoodsNumber(new Integer(1).shortValue());
             cart = cartService.insert(cart);
-            return ReturnData.success();
+            return ReturnData.success(cart);
         } catch (Exception e) {
             logger.info(e.getMessage());
             return ReturnData.error(e.getMessage());
@@ -121,7 +122,7 @@ public class CartController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("/cart/delete/{id}")
+    @RequestMapping(value = "/cart/delete/{id}",method = RequestMethod.GET)
     public ReturnData delete(@PathVariable String id) {
         try {
             cartService.delete(id);

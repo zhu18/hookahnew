@@ -3,6 +3,12 @@ var head = {
 %>
 <link rel="stylesheet" type="text/css" href="/static/css/user-center-menu.css">
 <link rel="stylesheet" type="text/css" href="/static/css/myseller.css">
+<script type="text/javascript">
+    var pagePath = '/goods/back/list';
+    var pageSize = 10 ;
+    var pageType = 'get';
+    var pageNumber = 1;
+</script>
 <%};%>
 
 <%
@@ -19,47 +25,69 @@ var htmlPart = {
                 <div class="wrapper-tab">
                     <ul class="wrapper-tab-box">
                         <li class="first "><a href="/myseller">发布商品</a></li>
-                        <li class="active"><a href="/myseller/tradeing">出售中的商品</a></li>
+                        <li class="active"><a href="/myseller/tradeing">已发布商品</a></li>
                     </ul>
                 </div>
                 <div class="trade-box">
                     <table>
-                        <tr>
-                            <th class="text-center">宝贝</th>
-                            <th>分类</th>
-                            <th class="text-right">单价（元）</th>
-                            <th class="text-center">审核状态</th>
-                            <th class="text-center">操作</th>
-                        </tr>
-                        <tr>
-                            <td class="text-center">
-                                <a href="javascript:void(0)">
-                                    <img src="../../static/img/zheng.jpg" alt="">
-                                    <p>这个是商品的title</p>
-                                </a>
-                            </td>
-                            <td>分类一</td>
-                            <td class="text-right">8000</td>
-                            <td class="text-center">成功</td>
-                            <td>
-                                <a href="javascript:void(0)">下架</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">
-                                <a href="javascript:void(0)">
-                                    <img src="../../static/img/zheng.jpg" alt="">
-                                    <p>这个是商品的title</p>
-                                </a>
-                            </td>
-                            <td>分类二</td>
-                            <td class="text-right">8000</td>
-                            <td class="text-center">失败</td>
-                            <td>
-                                <a href="javascript:void(0)">重新审核</a>
-                                <a href="javascript:void(0)">修改</a>
-                            </td>
-                        </tr>
+                        <thead>
+                            <tr>
+                                <th class="text-center">宝贝</th>
+                                <th>分类</th>
+                                <th class="text-right">单价（元）</th>
+                                <th class="text-center">添加时间</th>
+                                <th class="text-center">审核状态</th>
+                                <th class="text-center">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for(list in pageInfo.list){ %>
+                            <tr>
+                                <td class="text-center">
+                                    <a href="javascript:void(0)">
+                                        <img src="http://${list.goodsImg}" alt="">
+                                        <p>${list.goodsName}</p>
+                                    </a>
+                                </td>
+                                <td>${list.catId}</td>
+                                <td class="text-right">${list.shopNumber}</td>
+                                <td class="text-center">${list.addTime, "yyyy-MM-dd HH:mm:ss"}</td>
+                                <td class="text-center">
+                                    <%
+                                    switch(list.checkStatus){
+                                        case 0:
+                                            print("审核中");
+                                            break;
+                                        case 1:
+                                            print("通过");
+                                            break;
+                                        case 2:
+                                            print("不通过");
+                                            break;
+                                    }
+                                    %>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)">下架</a>
+                                </td>
+                            </tr>
+                            <% } %>
+                        </tbody>
+                        <!--<tr>-->
+                            <!--<td class="text-center">-->
+                                <!--<a href="javascript:void(0)">-->
+                                    <!--<img src="../../static/img/zheng.jpg" alt="">-->
+                                    <!--<p>这个是商品的title</p>-->
+                                <!--</a>-->
+                            <!--</td>-->
+                            <!--<td>分类二</td>-->
+                            <!--<td class="text-right">8000</td>-->
+                            <!--<td class="text-center">失败</td>-->
+                            <!--<td>-->
+                                <!--<a href="javascript:void(0)">重新审核</a>-->
+                                <!--<a href="javascript:void(0)">修改</a>-->
+                            <!--</td>-->
+                        <!--</tr>-->
                     </table>
                 </div>
                 <%include("/layout/pageaction.html"){} %>
@@ -70,3 +98,46 @@ var htmlPart = {
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
+<script type="text/javascript">
+    function pageBackFn(data){
+        if(data.data.list){
+            var list = data.data.list;
+            var html = '';
+            for(var i=0; i<list.length; i++){
+                html += '<tr>';
+                html += '<td class="text-center">';
+                html += '<a href="javascript:void(0)">';
+                html += '<img src="http://'+list[i].goodsImg+'" alt="">';
+                html += '<p>'+list[i].goodsName+'</p>';
+                html += '</a>';
+                html += '</td>';
+                html += '<td>'+list[i].catId+'</td>';
+                html += '<td class="text-right">'+list[i].shopNumber+'</td>';
+                html += '<td class="text-center">'+format(list[i].addTime)+'</td>';
+                if(list[i].checkStatus == 0){
+                    html += '<td class="text-center">审核中</td>';
+                }else if(list[i].checkStatus == 1){
+                    html += '<td class="text-center">通过</td>';
+                }else if(list[i].checkStatus == 2){
+                    html += '<td class="text-center">不通过</td>';
+                }
+                html += '<td>';
+                html += '<a href="javascript:void(0)">下架</a>';
+                html += '</td>';
+                html += '</tr>';
+            }
+            function add(m){ return m < 10 ? '0'+ m:m };
+            function format(time){
+                var date = new Date(time);
+                var year = date.getFullYear() ;
+                var month = date.getMonth()+1;
+                var date1 = date.getDate() ;
+                var hours = date.getHours();
+                var minutes = date.getMinutes();
+                var seconds = date.getSeconds();
+                return year+'-'+add(month)+'-'+add(date1)+' '+add(hours)+':'+add(minutes)+':'+add(seconds);
+            };
+            $('.trade-box tbody').html(html);
+        }
+    }
+</script>
