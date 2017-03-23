@@ -2,7 +2,6 @@ package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.domain.Cart;
 import com.jusfoun.hookah.core.generic.Condition;
-import com.jusfoun.hookah.core.utils.JSONUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.CartService;
 import org.apache.commons.lang3.StringUtils;
@@ -61,10 +60,7 @@ public class CartController {
             cart.setUserId(userId);
             cart.setAddTime(new Date());
             cart.setGoodsNumber(new Integer(1).shortValue());
-            logger.info(JSONUtils.toString(cart));
-            cartService.insert(cart);
-            logger.info(cart.getRecId());
-            logger.info(JSONUtils.toString(cart));
+            cart = cartService.insert(cart);
             return ReturnData.success();
         } catch (Exception e) {
             logger.info(e.getMessage());

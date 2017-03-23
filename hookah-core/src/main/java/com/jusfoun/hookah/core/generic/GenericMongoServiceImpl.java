@@ -24,14 +24,14 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
     private MongoTemplate mongoTemplate;
 
     @Override
-    public int insert(Model model) {
+    public Model insert(Model model) {
         mongoTemplate.insert(model);
-        return 0;
+        return model;
     }
 
     @Override
     public int insertBatch(List<Model> list) {
-        return 0;
+        return list.size();
     }
 
     @Override

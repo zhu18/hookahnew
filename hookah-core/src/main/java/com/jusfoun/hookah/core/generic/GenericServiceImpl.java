@@ -110,8 +110,10 @@ public class GenericServiceImpl<Model extends GenericModel, ID extends Serializa
      */
     @Transactional(readOnly = false)
     @Override
-    public int insert(Model model) {
-        return dao.insertSelective(model);
+    public Model insert(Model model) {
+        logger.info(String.format("class %s:method %s", this.getClass().getName(), "insert(Model model)"));
+        dao.insertSelective(model);
+        return model;
     }
 
     /**

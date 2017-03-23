@@ -50,7 +50,8 @@ public class MyBatisMapperScannerConfig {
         Properties properties = new Properties();
         properties.setProperty("mappers", "com.jusfoun.hookah.core.generic.GenericDao");
         properties.setProperty("notEmpty", "false");
-        properties.setProperty("IDENTITY", "MYSQL");
+        properties.setProperty("IDENTITY", "select replace(uuid(),'-','') from dual");
+        properties.setProperty("ORDER", "BEFORE");
         mapperScannerConfigurer.setProperties(properties);
         return mapperScannerConfigurer;
     }
