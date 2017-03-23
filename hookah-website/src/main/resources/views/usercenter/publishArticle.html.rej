@@ -1,9 +1,0 @@
-diff a/hookah-website/src/main/resources/views/usercenter/publishArticle.html b/hookah-website/src/main/resources/views/usercenter/publishArticle.html	(rejected hunks)
-@@ -215,7 +215,6 @@
-         }else{
-             $(that).parents().siblings('.errors').hide();
-         }
--
-     }
- 
-     $('#submit-article').click(function(){
