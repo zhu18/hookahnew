@@ -23,7 +23,7 @@ public interface GenericService<Model extends GenericModel, ID extends Serializa
      *
      * @param model 对象
      */
-    int insert(Model model);
+    Model insert(Model model);
     
     /**
      * 批量插入对象
