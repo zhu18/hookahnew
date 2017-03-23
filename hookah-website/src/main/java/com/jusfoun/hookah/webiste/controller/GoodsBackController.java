@@ -52,9 +52,12 @@ public class GoodsBackController {
     }
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
-    public @ResponseBody Object list( String pageNumber, String pageSize, String goodsName, Byte checkStatus) {
-        Pagination<Goods> page = new Pagination<>();
+    public @ResponseBody ReturnData list( String pageNumber, String pageSize, String goodsName, Byte checkStatus) {
+
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
         try {
+            Pagination<Goods> page = new Pagination<>();
             List<Condition> filters = new ArrayList();
             List<OrderBy> orderBys = new ArrayList();
             orderBys.add(OrderBy.desc("lastUpdateTime"));
@@ -74,10 +77,13 @@ public class GoodsBackController {
                 filters.add(Condition.like("checkStatus", checkStatus));
             }
             page = goodsService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
-        } catch (Exception e) {
+            returnData.setData(page);
+        }catch (Exception e) {
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setMessage(e.toString());
             e.printStackTrace();
         }
-        return page ;
+        return returnData;
     }
 
 

@@ -3,6 +3,13 @@ var head = {
 %>
 <link rel="stylesheet" type="text/css" href="/static/css/user-center-menu.css">
 <link rel="stylesheet" type="text/css" href="/static/css/usercenter-admin.css">
+<link rel="stylesheet" type="text/css" href="/static/css/wangEditor/wangEditor.min.css">
+
+<%};%>
+
+<%
+var htmlPart = {
+%>
 <div class="user-center">
     <div class="user-center-bd y-row">
         <div class="user-center-menu y-left">
@@ -118,49 +125,15 @@ var head = {
         </div>
     </div>
 </div>
-<%};%>
-
-<%
-var htmlPart = {
-%>
-<link rel="stylesheet" type="text/css" href="/static/css/wangEditor/wangEditor.min.css">
 <script type="text/javascript" src="../../static/js/wangEditor.min.js"></script>
 <script type="text/javascript" src="../../static/js/ajaxfileupload.js"></script>
 <script type="text/javascript">
-
+    var getImg = "";
     $.getUrlParam = function (key) {
             var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
             var result = window.location.search.substr(1).match(reg);
             return result ? decodeURIComponent(result[2]) : null;
         };
-        var id = $.getUrlParam('id');
-
-        if(id){
-            $(".user-center-box .center-title").text("编辑文章");
-            $.ajax({
-                type:"get",
-                url:"/sysNews/details",
-                data:{ id: id},
-                success:function(data){
-                    console.log(data.data.content);
-                    $("#newsGroup").val(data.data.newsGroup);
-                    $("#newsTitle").val(data.data.newsTitle);
-                    $("input[name='isHot'][value="+data.data.isHot+"]").attr("checked",true);
-                    $("#content").val(data.data.content);
-                }
-            })
-        }
-
-    //富文本
-    var editor = new wangEditor('content');
-        // 上传图片（举例）
-    editor.config.uploadImgUrl = '/upload';
-        // 关闭菜单栏fixed
-    editor.config.menuFixed = false;
-    editor.config.pasteText = true; //之粘贴纯文本
-    editor.create();
-
-
     var id = $.getUrlParam('id');
     function createEidtor(){
         //富文本
@@ -178,12 +151,13 @@ var htmlPart = {
             url:"/sysNews/details",
             data:{ id: id},
             success:function(data){
-                var isHot=data.data.isHot;
                 $("#newsGroup").val(data.data.newsGroup);
                 $("#newsTitle").val(data.data.newsTitle);
-                $("input[name='isHot'][value="+isHot+"]").attr("checked",true);
+                $("input[name='isHot'][value="+data.data.isHot+"]").attr("checked",true);
+                $("#preview-img").attr('src',data.data.pictureUrl);
                 $("#content").html(data.data.content) ;
                 createEidtor();
+                getImg = data.data.pictureUrl;
             }
         })
     }else{
@@ -241,7 +215,6 @@ var htmlPart = {
             $('#newsSonGroup').hide();
             $('.select-line').hide();
         }
-
         if($(that).val() == 0){
             $(that).parents().siblings('.errors').show();
         }else{
@@ -256,12 +229,13 @@ var htmlPart = {
         data.newsTitle = $('#newsTitle').val();
         data.isHot = $("input[name='isHot']:checked").val();
         data.content = $('#content').val();
-        data.pictureUrl = imgSrc;
         data.newsSonGroup = $('#newsSonGroup').val();
         if (id){
+            data.pictureUrl = getImg;
             url = "/sysNews/update";
             data.newsId = id;
         }else{
+            data.pictureUrl = imgSrc;
             url = "/sysNews/insert";
         }
         if(data.newsGroup == 0){
