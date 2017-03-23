@@ -1,6 +1,8 @@
 package com.jusfoun.hookah.core.domain;
 
 import com.jusfoun.hookah.core.generic.GenericModel;
+import org.springframework.data.annotation.Id;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -11,6 +13,7 @@ public class Cart extends GenericModel {
      *
      * @mbggenerated
      */
+    @Id
     private String recId;
 
     /**
