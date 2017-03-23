@@ -119,24 +119,6 @@ var htmlPart = {
                     <div class="pulish-btn">
                         <button type="button" id="submit-article" value="立即发表" onclick="published()">立即发表</button>
                     </div>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <!--<p><input type="file" id="file1" name="filename" /></p>-->
-                    <!--<a href="javascript:void(0)" id="btnss" >上传</a>-->
-                    <!--<p><img id="img1" alt="上传成功啦" src="" /></p>-->
-
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-
                 </form>
             </div>
         </div>
@@ -153,26 +135,23 @@ var htmlPart = {
         };
         var id = $.getUrlParam('id');
 
-
         if(id){
-            var contentText = false;
             $(".user-center-box .center-title").text("编辑文章");
             $.ajax({
                 type:"get",
                 url:"/sysNews/details",
                 data:{ id: id},
                 success:function(data){
-                    var isHot=data.data.isHot;
+                    console.log(data.data.content);
                     $("#newsGroup").val(data.data.newsGroup);
                     $("#newsTitle").val(data.data.newsTitle);
-                    $("input[name='isHot'][value="+isHot+"]").attr("checked",true);
-                     $("#content").val(data.data.content) ;
-                    contentText = true;
+                    $("input[name='isHot'][value="+data.data.isHot+"]").attr("checked",true);
+                    $("#content").val(data.data.content);
                 }
             })
         }
 
-    if(contentText){
+
     //富文本
     var editor = new wangEditor('content');
         // 上传图片（举例）
@@ -180,13 +159,8 @@ var htmlPart = {
         // 关闭菜单栏fixed
     editor.config.menuFixed = false;
     editor.config.pasteText = true; //之粘贴纯文本
-
-        editor.create();
-    }
-
-
+    editor.create();
     var imgSrc = '';
-
     //上传图片
 
     //选择文件之后执行上传
@@ -279,7 +253,14 @@ var htmlPart = {
                 $.ajax({
                     type: "POST",
                     url: "/sysNews/update",
-                    data: data,
+                    data: {
+                        newsId:id,
+                        newsGroup:data.newsGroup,
+                        newsTitle:data.newsTitle,
+                        isHot:data.isHot,
+                        content:data.content,
+                        pictureUrl:data.pictureUrl
+                    },
                     success: function(msg){
                         if(msg.code == 1){
                             $.alert('修改成功')
