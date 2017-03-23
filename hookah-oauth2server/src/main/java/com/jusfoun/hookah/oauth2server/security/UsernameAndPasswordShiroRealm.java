@@ -1,7 +1,7 @@
 package com.jusfoun.hookah.oauth2server.security;
 
 import com.jusfoun.hookah.core.domain.User;
-import com.jusfoun.hookah.oauth2server.dao.UserMapper;
+import com.jusfoun.hookah.core.dao.UserMapper;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.apache.shiro.authc.*;
@@ -35,7 +35,9 @@ public class UsernameAndPasswordShiroRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         LOG.info("##################执行Shiro权限认证##################");
         String username = (String) super.getAvailablePrincipal(principalCollection);
-        User user = userDao.selectByUsername(username);
+//        User user = userDao.selectByUsername(username);
+
+        User user = new User();
         if (user != null) {
             //权限信息对象info,用来存放查出的用户的所有的角色（role）及权限（permission）
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
@@ -70,7 +72,8 @@ public class UsernameAndPasswordShiroRealm extends AuthorizingRealm {
         LOG.info("验证当前Subject时获取到token为：" + ReflectionToStringBuilder.toString(token, ToStringStyle.MULTI_LINE_STYLE));
 
         //查出是否有此用户
-        User user = userDao.selectByUsername(token.getUsername());
+//        User user = userDao.selectByUsername(token.getUsername());
+        User user = new User();
         if (user != null) {
             // 若存在，将此用户存放到登录认证info中，无需自己做密码对比，Shiro会为我们进行密码对比校验
             return new SimpleAuthenticationInfo(user.getUserName(), user.getPassword(), getName());
