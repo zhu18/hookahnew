@@ -251,12 +251,19 @@ var htmlPart = {
 
     function published(){
         var data = {};
+        var url = '';
         data.newsGroup = $('#newsGroup').val();
         data.newsTitle = $('#newsTitle').val();
         data.isHot = $("input[name='isHot']:checked").val();
         data.content = $('#content').val();
         data.pictureUrl = imgSrc;
         data.newsSonGroup = $('#newsSonGroup').val();
+        if (id){
+            url = "/sysNews/update";
+            data.newsId = id;
+        }else{
+            url = "/sysNews/insert";
+        }
         if(data.newsGroup == 0){
             $('#newsGroup').focus();
             $('#newsGroup').parents().siblings('.errors').show();
@@ -279,32 +286,25 @@ var htmlPart = {
             return;
         }else{
             if(id){
-                $.ajax({
-                    type: "POST",
-                    url: "/sysNews/update",
-                    data: data,
-                    success: function(msg){
-                        if(msg.code == 1){
-                            $.alert('修改成功')
-                        }else{
-                            $.alert(msg.message)
-                        }
-                    }
-                });
+                ajaxFun(id,url)
             }else{
-                $.ajax({
-                    type: "POST",
-                    url: "/sysNews/insert",
-                    data: data,
-                    success: function(msg){
-                        if(msg.code == 1){
-                            $.alert('提交成功')
-                        }else{
-                            $.alert(msg.message)
-                        }
-                    }
-                });
+                ajaxFun(id,url)
             }
+        }
+        function ajaxFun(id,url){
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: data,
+                success: function(msg){
+                    if(msg.code == 1){
+                        $.alert('修改成功')
+                    }else{
+                        $.alert(msg.message)
+                    }
+                }
+            });
         }
     }
 
