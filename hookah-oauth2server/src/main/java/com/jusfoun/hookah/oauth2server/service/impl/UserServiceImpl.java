@@ -1,17 +1,12 @@
 package com.jusfoun.hookah.oauth2server.service.impl;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
-import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.rpc.api.UserService;
-import com.jusfoun.hookah.oauth2server.dao.RoleMapper;
-import com.jusfoun.hookah.oauth2server.dao.UserMapper;
+import com.jusfoun.hookah.core.dao.UserMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @author huang lei

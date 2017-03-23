@@ -2225,7 +2225,7 @@ body .hide {
   height: 33px;
   line-height: 33px;
   left: 0;
-  top: 0
+  top: -1
 }
 
 .form-main-list .form-group .form-item .mobile-text .mobile-text-input {
