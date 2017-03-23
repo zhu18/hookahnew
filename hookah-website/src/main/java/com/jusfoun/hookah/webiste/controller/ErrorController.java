@@ -19,7 +19,7 @@ public class ErrorController {
 
     @RequestMapping(value = "/error/500", method = RequestMethod.GET)
     public String error500() {
-        return "/error/404";
+        return "/error/500";
     }
 
 

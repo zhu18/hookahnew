@@ -49,4 +49,21 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         mgGoods.setGoodsId(obj.getGoodsId());
         mongoTemplate.insert(mgGoods);
     }
+
+    @Override
+    @Transactional
+    public void updateGoods(GoodsVo obj) throws HookahException {
+        int i = super.updateByIdSelective(obj);
+        if(i < 1) {
+            throw new HookahException("更新失败！");
+        }else {
+            // 将数据放入mongo
+            MgGoods mgGoods = new MgGoods();
+            mgGoods.setAttrTypeList(obj.getAttrTypeList());
+            mgGoods.setFormatList(obj.getFormatList());
+            mgGoods.setImgList(obj.getImgList());
+            mgGoods.setGoodsId(obj.getGoodsId());
+            mongoTemplate.save(mgGoods);
+        }
+    }
 }

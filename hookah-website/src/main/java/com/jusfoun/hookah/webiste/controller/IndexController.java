@@ -2,7 +2,9 @@ package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.generic.Condition;
+import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -34,7 +36,7 @@ public class IndexController {
     GoodsService goodsService;
 
     @Resource
-    GoodsMongoService goodsMongoService;
+    MgGoodsService mgGoodsService;
 
     @Resource
     UserMongoService userMongoService;
@@ -94,29 +96,39 @@ public class IndexController {
 
     @RequestMapping(value = "/mselect", method = RequestMethod.GET)
     @ResponseBody
-    public Object mselect(Model model) {
-        List<Goods> list = (List) goodsMongoService.selectList();
+    public ReturnData mselect(Model model) {
+        List<Condition> filters = new ArrayList<>();
+        filters.add(Condition.eq("goodsName","商品名称"));
+        List<Goods> list = (List) mgGoodsService.selectList(filters);
 
-        return list;
+        return ReturnData.success(list);
+    }
+
+    @RequestMapping(value = "/mselectid", method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnData mselectid(Model model) {
+        String id = "d1c634f6-ae96-4af7-a1b5-f3c037d8a751";
+        MgGoods goods =  mgGoodsService.selectById(id);
+
+        return ReturnData.success(goods);
     }
 
     @RequestMapping(value = "/mselectone", method = RequestMethod.GET)
     @ResponseBody
-    public Goods mselectone(Model model) {
+    public ReturnData mselectone(Model model) {
         List<Condition> filters = new ArrayList(1);
-        filters.add(Condition.eq("id","ee"));
-        Goods goods = (Goods) goodsMongoService.selectOne(filters);
+        filters.add(Condition.eq("goodsId","d1c634f6-ae96-4af7-a1b5-f3c037d8a751"));
+        MgGoods goods = (MgGoods) mgGoodsService.selectOne(filters);
 
-        return goods;
+        return ReturnData.success(goods);
     }
 
     @RequestMapping(value = "/minsert", method = RequestMethod.GET)
     @ResponseBody
     public Object minsert(Model model) {
-        Goods t2 = new Goods();
-        t2.setGoodsName("xxxxxxxx");
+        MgGoods t2 = new MgGoods();
         t2.setGoodsId(UUID.randomUUID().toString());
-        goodsMongoService.insert(t2);
+        mgGoodsService.insert(t2);
         return "success";
     }
 

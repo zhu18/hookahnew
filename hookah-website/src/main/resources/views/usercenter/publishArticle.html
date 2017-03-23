@@ -117,7 +117,7 @@ var htmlPart = {
                         </tr>
                     </table>
                     <div class="pulish-btn">
-                        <button type="button" id="submit-article" value="立即发表">立即发表</button>
+                        <button type="button" id="submit-article" value="立即发表" onclick="published()">立即发表</button>
                     </div>
                     <br>
                     <br>
@@ -147,6 +147,34 @@ var htmlPart = {
 <script type="text/javascript" src="../../static/js/wangEditor.min.js"></script>
 <script type="text/javascript" src="../../static/js/ajaxfileupload.js"></script>
 <script type="text/javascript">
+
+        $.getUrlParam = function (key) {
+            var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+            var result = window.location.search.substr(1).match(reg);
+            return result ? decodeURIComponent(result[2]) : null;
+        };
+        var id = $.getUrlParam('id');
+
+
+        if(id){
+            var contentText = false;
+            $(".user-center-box .center-title").text("编辑文章");
+            $.ajax({
+                type:"get",
+                url:"/sysNews/details",
+                data:{ id: id},
+                success:function(data){
+                    var isHot=data.data.isHot;
+                    $("#newsGroup").val(data.data.newsGroup);
+                    $("#newsTitle").val(data.data.newsTitle);
+                    $("input[name='isHot'][value="+isHot+"]").attr("checked",true);
+                     $("#content").val(data.data.content) ;
+                    contentText = true;
+                }
+            })
+        }
+
+    if(contentText){
     //富文本
     var editor = new wangEditor('content');
         // 上传图片（举例）
@@ -154,7 +182,10 @@ var htmlPart = {
         // 关闭菜单栏fixed
     editor.config.menuFixed = false;
     editor.config.pasteText = true; //之粘贴纯文本
-    editor.create();
+
+        editor.create();
+    }
+
 
     var imgSrc = '';
 
@@ -163,7 +194,7 @@ var htmlPart = {
     //选择文件之后执行上传
     $('#preview-div').click(function(){
         if($('#preview-img').attr('src')){
-            console.log('yessss');
+            console.log('ysessss');
             $('#filename').val("");
             sda();
         }else{
@@ -171,7 +202,6 @@ var htmlPart = {
             sda();
         }
         function sda(){
-
             $('#filename').on('change', function() {
                 $.ajaxFileUpload({
                     url:'/upload/fileUpload',
@@ -197,12 +227,9 @@ var htmlPart = {
                 });
             });
         }
-
     })
 
-
     function changes(that){
-
         var thisVal = $(that).val();
         $('.select-hide').hide();
         if(thisVal == 'information'){
@@ -212,19 +239,18 @@ var htmlPart = {
             $('#newsSonGroup').hide();
             $('.select-line').hide();
         }
-        console.log(thisVal);
+
         if($(that).val() == 0){
             $(that).parents().siblings('.errors').show();
         }else{
             $(that).parents().siblings('.errors').hide();
         }
-
     }
 
-    $('#submit-article').click(function(){
+//    立即发表
+    function published(){
         var data = {};
             data.newsGroup = $('#newsGroup').val();
-            console.log(data.newsGroup);
             data.newsTitle = $('#newsTitle').val();
             data.isHot = $("input[name='isHot']:checked").val();
             data.content = $('#content').val();
@@ -245,34 +271,43 @@ var htmlPart = {
             $('#newsTitle').focus();
             return;
         }else if(data.content == "") {
-            $.alert('请输入文章内容！',true,function(){
-
-            })
+            $.alert('请输入文章内容！',true,function(){ })
             return;
         }else if(data.pictureUrl == "") {
-            $.alert('请上传图片！',true,function(){
-            })
+            $.alert('请上传图片！',true,function(){ })
             return;
         }else{
-            $.ajax({
-                type: "POST",
-                url: "/sysNews/insert",
-                data: data,
-                success: function(msg){
-                    if(msg.code == 1){
-                        $.alert('提交成功')
-                    }else{
-                        $.alert(msg.message)
+            if(id){
+                $.ajax({
+                    type: "POST",
+                    url: "/sysNews/update",
+                    data: data,
+                    success: function(msg){
+                        if(msg.code == 1){
+                            $.alert('修改成功')
+                        }else{
+                            $.alert(msg.message)
+                        }
                     }
-                }
-            });
+                });
+            }else{
+                $.ajax({
+                    type: "POST",
+                    url: "/sysNews/insert",
+                    data: data,
+                    success: function(msg){
+                        if(msg.code == 1){
+                            $.alert('提交成功')
+                        }else{
+                            $.alert(msg.message)
+                        }
+                    }
+                });
+            }
         }
+    }
 
-
-
-    })
-    //文章内容预览
-
+//     文章内容预览
     $('#preview-content').click(function(){
         var content = $('#content').val();
         var html = '';
@@ -284,7 +319,6 @@ var htmlPart = {
             html += '</div>';
             html += '</div>';
             html += '</div>';
-
         if(content == ""){
             $.alert('请输入文章内容！',true,function(){})
         }else{
@@ -300,8 +334,6 @@ var htmlPart = {
             $('#replace-btn').toggle();
         }
     })
-
-
 
 </script>
 <%};

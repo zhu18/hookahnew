@@ -134,12 +134,11 @@ var htmlPart = {
                         +"<td>"+judge(data.list[i].sysUser)+"</td>"
                         +"<td>"
                         +"<a href='javascript:onclick=deleteData("+JSON.stringify(data.list[i].newsId)+");' >删除</a>"
-                        +"<a href='/usercenter/publishArticle:onclick=updateData("+JSON.stringify(data.list[i])+");' >修改</a>"
+                        +"<a href='/usercenter/publishArticle?isEdit=1&id="+data.list[i].newsId+"'>修改</a>"
                         +"</td>"
                         +"</tr>"
                     );
                 }
-
                 function judge(user){
                     if(user == ""||user == null){
                         return "-";
@@ -157,20 +156,6 @@ var htmlPart = {
                     var seconds = date.getSeconds();
                     return year+'-'+add(month)+'-'+add(date1)+' '+add(hours)+':'+add(minutes)+':'+add(seconds);
                 };
-                function updateData(data){
-                    $.ajax({
-                        type:"post",
-                        url:"/sysNews/update",
-                        data: {
-                            newsId:data.list[i].newsId,
-                            newsTitle:data.list[i].newsTitle,
-                            newsGroup:data.list[i].newsGroup,
-                            isHot:data.list[i].isHot,
-                            content:data.list[i].content,
-                            pictureUrl:data.list[i].pictureUrl
-                        }
-                    })
-                }
             },
             error:function(e){
                 alert(e);
@@ -206,6 +191,7 @@ var htmlPart = {
             }
         });
     }
+
 </script>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}

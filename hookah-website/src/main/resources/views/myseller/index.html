@@ -36,6 +36,61 @@ var htmlPart = {
                     </select>
                 </div>
                 <div class="select-category-box">
+                    <div class="category-item-box">
+                        <div class="item-box">
+                            <ul class="item-box-in">
+                                <%
+                                for( item in categoryList){
+                                %>
+                                <li>
+                                    <a href="javascript:categoryMenu(this)">${item.catName}</a>
+                                    <% if(item.children.~size > 0){ %>
+                                    <ul>
+                                        <%
+                                        for( item1 in item.children){
+                                        %>
+                                        <li>
+                                            <a href="javascript:categoryMenu(this)">${item1.catName}</a>
+                                            <% if(item1.children.~size > 0){ %>
+                                            <ul>
+                                                <%
+                                                for( item2 in item1.children){
+                                                %>
+                                                <li>
+                                                    <a href="javascript:categoryMenu(this)">${item2.catName}</a>
+                                                    <% if(item2.children.~size > 0){ %>
+                                                    <ul>
+                                                        <%
+                                                        for( item3 in item2.children){
+                                                        %>
+                                                        <li>
+                                                            <a href="javascript:categoryMenu(this)">${item3.catName}</a>
+                                                            <% if(item3.children.~size > 0){ %>
+                                                            <ul>
+                                                                <li>
+
+                                                                </li>
+                                                            </ul>
+                                                            <% } %>
+                                                        </li>
+                                                        <% } %>
+                                                    </ul>
+                                                    <% } %>
+                                                </li>
+                                                <% } %>
+                                            </ul>
+                                            <% } %>
+                                        </li>
+                                        <% } %>
+                                    </ul>
+                                    <% } %>
+                                </li>
+                                <% } %>
+                            </ul>
+                        </div>
+                    </div>
+
+
                     <!--<div class="select-category-item y-left">-->
                         <!--<div class="search-item">-->
                             <!--<span>🔍</span>-->
@@ -67,6 +122,8 @@ var htmlPart = {
                     </div>
                     <span class="arrow"></span>
                 </div>
+
+
                 <div class="pulish-btn">
                     <button disabled="disabled" id="pusblishBtn">发布商品</>
                 </div>
@@ -86,7 +143,15 @@ include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
     var isTrue = false;
 
     //
-    loadData(url,pid);
+
+    function categoryMenu(that){
+        console.log($(that).html());
+        $(that).siblings('ul').show();
+    }
+
+
+
+//    loadData(url,pid);
     //点击加载。。。
     function clickLoadData(url,pid,that){
         $(that).parents(".select-category-item").nextAll(".select-category-item").remove();
@@ -111,7 +176,7 @@ include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 
     }
 
-function showBtn(isTrue){
+    function showBtn(isTrue){
     if(isTrue == true){
         $('#pusblishBtn').css({'cursor':'no-drop','background':'#ccc'}).attr({'disabled':'disabled'});
     }else{

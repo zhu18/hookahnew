@@ -390,3 +390,25 @@
 .trade-box .text-right{text-align: right}
 .trade-box .text-center{text-align: center}
 /******** trade-wrapper end ********/
+
+.category-item-box{
+    border: 1px solid #ccc;
+    padding: 10px;
+    background: #fff;
+    display: inline-block;
+    min-width: 170px;
+}
+.category-item-box .item-box{position: relative}
+.category-item-box .item-box .item-box-in a{
+    line-height: 30px;
+}
+.category-item-box .item-box .item-box-in ul{
+    display: none;
+    background: #ccc;
+}
+
+
+
+
+
+

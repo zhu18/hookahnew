@@ -33,6 +33,10 @@ public class ConsoleServerLauncher {
 //      "classpath*:spring/rs-context.xml",
 //            "classpath*:spring/spring-config-shiro.xml",
             "classpath*:hookah_rpc_server.xml",
+            "classpath*:hookah_rpc_server_goods.xml",
+            "classpath*:hookah_rpc_server_order.xml",
+            "classpath*:hookah_rpc_server_system.xml",
+            "classpath*:hookah_rpc_server_other.xml",
             ConsoleServerLauncher.class
         }, args);
         MotanSwitcherUtil.setSwitcherValue(MotanConstants.REGISTRY_HEARTBEAT_SWITCHER, true);
