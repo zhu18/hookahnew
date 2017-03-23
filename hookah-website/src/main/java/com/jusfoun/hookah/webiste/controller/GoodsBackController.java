@@ -44,7 +44,7 @@ public class GoodsBackController {
         try {
             goodsService.addGoods(obj);
         }catch (Exception e) {
-            returnData.setCode(ExceptionConst.Error);
+            returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());
             e.printStackTrace();
         }
@@ -79,7 +79,7 @@ public class GoodsBackController {
             page = goodsService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
             returnData.setData(page);
         }catch (Exception e) {
-            returnData.setCode(ExceptionConst.Error);
+            returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());
             e.printStackTrace();
         }
@@ -100,7 +100,6 @@ public class GoodsBackController {
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.eq("goodsId", id));
             filters.add(Condition.eq("domainId", "123"));
-            filters.add(Condition.in("goodsStatus", new Byte[]{1,2}));
             Goods goods = goodsService.selectOne(filters);
             if (goods == null || goods.getGoodsId() == null) {
                 returnData.setCode(ExceptionConst.empty);
@@ -116,7 +115,7 @@ public class GoodsBackController {
                 returnData.setData(goodsVo);
             }
         }catch (Exception e) {
-            returnData.setCode(ExceptionConst.Error);
+            returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());
             e.printStackTrace();
         }
@@ -130,7 +129,7 @@ public class GoodsBackController {
         try{
             goodsService.updateGoods(obj);
         }catch (Exception e) {
-            returnData.setCode(ExceptionConst.Error);
+            returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());
             e.printStackTrace();
         }

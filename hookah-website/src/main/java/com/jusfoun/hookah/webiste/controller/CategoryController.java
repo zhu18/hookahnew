@@ -38,17 +38,36 @@ public class CategoryController {
      * @return
      */
     @RequestMapping(value = "findAll/{catSign}", method= RequestMethod.GET)
-    public Object findAll(@PathVariable String catSign) {
-        List<Condition> filters = new ArrayList<>();
-        filters.add(Condition.eq("catSign", catSign));
-        filters.add(Condition.eq("isShow", 1));
-        List<Category> list = (List) categoryService.selectList(filters);
-        return list;
+    public ReturnData findAll(@PathVariable String catSign) {
+        ReturnData<List<Category>> returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        try{
+            List<Condition> filters = new ArrayList<>();
+            filters.add(Condition.eq("catSign", catSign));
+            filters.add(Condition.eq("isShow", 1));
+            filters.add(Condition.eq("isDelete", 1));
+            List<Category> list = (List) categoryService.selectList(filters);
+            returnData.setData(list);
+        }catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
     }
 
     @RequestMapping("findAll")
-    public List<CategoryVo> findAll() {
-        return categoryService.getCatTree();
+    public ReturnData findAll() {
+        ReturnData<List<CategoryVo>> returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        try{
+            returnData.setData(categoryService.getCatTree());
+        }catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
     }
 
     /**
@@ -69,7 +88,7 @@ public class CategoryController {
             List<Category> list = (List) categoryService.selectList(filters);
             returnData.setData(list);
         }catch (Exception e) {
-            returnData.setCode(ExceptionConst.Error);
+            returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());
             e.printStackTrace();
         }
@@ -89,7 +108,7 @@ public class CategoryController {
             MgCategoryAttrType obj = mgCategoryAttrTypeService.selectById(catId);
             returnData.setData(obj);
         }catch (Exception e) {
-            returnData.setCode(ExceptionConst.Error);
+            returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());
             e.printStackTrace();
         }

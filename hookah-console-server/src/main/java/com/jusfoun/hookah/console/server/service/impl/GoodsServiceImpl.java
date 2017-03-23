@@ -6,9 +6,7 @@ import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
-import com.jusfoun.hookah.core.utils.GeneratorUtil;
 import com.jusfoun.hookah.rpc.api.GoodsService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,9 +36,8 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         if (obj == null)
             throw new HookahException("空数据！");
         // 将数据插入数据库
-        obj.setGoodsId(GeneratorUtil.getUUID());
         obj = (GoodsVo)super.insert(obj);
-        if(StringUtils.isBlank(obj.getGoodsId()))
+        if(obj == null)
             throw new HookahException("操作失败");
         // 将数据放入mongo
         MgGoods mgGoods = new MgGoods();

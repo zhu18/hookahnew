@@ -31,8 +31,8 @@ public class GoodsAttrTypeController {
         ReturnData<List<Category>> returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
-            int i = goodsAttrTypeService.insert(obj);
-            if(i < 0) {
+            obj = goodsAttrTypeService.insert(obj);
+            if(obj == null) {
                 throw new HookahException("操作失败");
             }
         }catch (Exception e) {
