@@ -13,7 +13,7 @@ import javax.annotation.Resource;
 /**
  * @author huang lei
  * @date 2017/3/23 上午10:15
- * @desc
+ * @desc 注册
  */
 @Controller
 public class RegController {
@@ -28,11 +28,11 @@ public class RegController {
 
     @RequestMapping(value = "/reg",method = RequestMethod.POST)
     @ResponseBody
-    public String pReg(User user){
+    public Object pReg(User user){
         System.out.println(user.getUserName());
         System.out.println(user.getPassword());
         int i = userService.insert(user);
         System.out.println(user.getUserId());
-        return "register";
+        return user;
     }
 }
