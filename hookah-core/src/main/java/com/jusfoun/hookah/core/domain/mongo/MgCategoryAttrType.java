@@ -1,6 +1,5 @@
 package com.jusfoun.hookah.core.domain.mongo;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.jusfoun.hookah.core.generic.GenericModel;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -24,7 +23,6 @@ public class MgCategoryAttrType extends GenericModel implements Serializable {
 
 //    @JsonSerializableSchema
     public static class AttrTypeBean implements Serializable {
-        @JsonDeserialize
         private String typeId;
         private String typeName;
         private List<AttrBean> attrList;

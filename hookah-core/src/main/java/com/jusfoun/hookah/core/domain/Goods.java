@@ -5,6 +5,7 @@ import com.jusfoun.hookah.core.generic.GenericModel;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Digits;
 import java.util.Date;
 
 public class Goods extends GenericModel {
@@ -152,6 +153,7 @@ public class Goods extends GenericModel {
      *
      * @mbggenerated
      */
+    @Digits(integer=10,fraction = 2)
     private Float shopPrice;
 
     /**

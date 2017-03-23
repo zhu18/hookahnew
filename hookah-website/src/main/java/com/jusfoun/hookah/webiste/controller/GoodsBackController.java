@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class GoodsBackController {
 
 
     @RequestMapping("add")
-    public @ResponseBody ReturnData addGoodsBack(@RequestBody GoodsVo obj) {
+    public @ResponseBody ReturnData addGoodsBack(@Valid @RequestBody GoodsVo obj) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
@@ -124,7 +125,7 @@ public class GoodsBackController {
     }
 
     @RequestMapping("update")
-    public @ResponseBody ReturnData update(@RequestBody GoodsVo obj) {
+    public @ResponseBody ReturnData update(@Valid @RequestBody GoodsVo obj) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try{

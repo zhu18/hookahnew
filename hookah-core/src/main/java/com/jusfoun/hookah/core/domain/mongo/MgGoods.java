@@ -4,6 +4,7 @@ import com.jusfoun.hookah.core.generic.GenericModel;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.Digits;
 import java.io.Serializable;
 import java.util.List;
 
@@ -69,6 +70,7 @@ public class MgGoods extends GenericModel implements Serializable {
 
         private int format;
         private int number;
+        @Digits(integer=10,fraction = 2)
         private Float price;
 
         public int getFormat() {
