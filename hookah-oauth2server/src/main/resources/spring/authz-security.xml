@@ -55,6 +55,7 @@
         /druid* = anon
         /druid/** = anon
         /login = anon
+        /reg = anon
         /unauthorized = anon
         # OAuth anon
         /oauth/** = anon
