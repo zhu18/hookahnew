@@ -19,9 +19,9 @@ import java.util.Properties;
 
 @Configuration
 @MapperScan(basePackages = "com.jusfoun.hookah.oauth2server.dao")
-public class MybatisConfig {
+public class MyBatisConfig {
 
-    private static final Logger logger = LoggerFactory.getLogger(MybatisConfig.class);
+    private static final Logger logger = LoggerFactory.getLogger(MyBatisConfig.class);
 
     @Bean
     public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
