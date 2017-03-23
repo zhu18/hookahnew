@@ -28,8 +28,8 @@ public class MgCategoryRelationController {
         ReturnData<List<Category>> returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
-            int i = mgCategoryAttrTypeService.insert(obj);
-            if(i < 0) {
+            obj = mgCategoryAttrTypeService.insert(obj);
+            if(obj == null) {
                 throw new HookahException("操作失败");
             }
         }catch (Exception e) {

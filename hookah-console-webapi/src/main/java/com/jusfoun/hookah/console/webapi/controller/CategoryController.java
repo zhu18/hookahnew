@@ -30,8 +30,8 @@ public class CategoryController {
         returnData.setCode(ExceptionConst.Success);
         try {
             category.setCatId("101");
-            int i = categoryService.insert(category);
-            if(i < 0) {
+            category = categoryService.insert(category);
+            if(category == null) {
                 throw new HookahException("操作失败");
             }
         }catch (Exception e) {

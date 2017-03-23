@@ -56,7 +56,7 @@ public class MySellerController {
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.eq("goodsId", id));
             filters.add(Condition.eq("domainId", "123"));
-            filters.add(Condition.in("goodsStatus", new Byte[]{1, 2}));
+            filters.add(Condition.eq("isOnsale", "1"));
             Goods goods = goodsService.selectOne(filters);
             if (goods != null && StringUtils.isNotBlank(goods.getGoodsId())) {
                 GoodsVo goodsVo = new GoodsVo();
@@ -94,8 +94,8 @@ public class MySellerController {
             if(StringUtils.isNotBlank(pageSize)){
                 pageSizeNew = Integer.parseInt(pageSize);
             }
-            //只查询商品状态为发布和下架的商品
-            filters.add(Condition.in("goodsStatus", new Byte[]{1,2}));
+            //只查询商品状态为未删除的商品
+            filters.add(Condition.eq("isDelete", 1));
 
             if( StringUtils.isNotBlank(goodsName)){
                 filters.add(Condition.like("goodsName", goodsName.trim()));
