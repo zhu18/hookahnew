@@ -41,10 +41,10 @@ var htmlPart = {
                         <option value="information">资讯中心</option>
                     </select>
                     <span class="select-line select-hide">-</span>
-                    <select name="newsSonGroup" id="newsSonGroup" class="select-hide">
-                        <option value="0">中心动态</option>
-                        <option value="1">行业咨询</option>
-                        <option value="2">中心公告</option>
+                    <select name="newsSonGroup" id="newsSonGroup" class="select-hide" onchange="second(this)">
+                        <option value="1">中心动态</option>
+                        <option value="2">行业咨询</option>
+                        <option value="3">中心公告</option>
                     </select>
                     <button  onclick="window.location='/usercenter/publishArticle'">发表文章</button>
                 </div>
@@ -91,6 +91,7 @@ var htmlPart = {
     </div>
 </div>
 <script type="text/javascript">
+    var data = {};
     function changes(that){
         var thisVal = $(that).val();
         $('.select-hide').hide();
@@ -101,20 +102,19 @@ var htmlPart = {
             $('#newsSonGroup').hide();
             $('.select-line').hide();
         }
-        if($(that).val() == 0){
-            $(that).parents().siblings('.errors').show();
-        }else{
-            $(that).parents().siblings('.errors').hide();
-        }
-        var newsSonGroup = $('#newsSonGroup').val();
-        var data = {};
         data.pageNumber = 1;
         data.pageSize = 8;
         data.newsGroup = thisVal;
         if(data.newsGroup == 'information'){
-            data.newsSonGroup = newsSonGroup;
+            data.newsSonGroup = 1;
+            $("#newsSonGroup").val("1");
         };
         loadData(data);
+    }
+    function second(that){
+        data.newsSonGroup=$(that).val();
+        loadData(data);
+        data.newsSonGroup="";
     }
 //    获取列表信息
     function loadData(data){
