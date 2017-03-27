@@ -2,6 +2,7 @@ package com.jusfoun.hookah.console.server.service.impl;
 
 import com.jusfoun.hookah.core.dao.GoodsShelvesMapper;
 import com.jusfoun.hookah.core.domain.GoodsShelves;
+import com.jusfoun.hookah.core.domain.vo.OptionalShelves;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.rpc.api.ShelvesService;
 import org.springframework.stereotype.Service;
@@ -21,5 +22,10 @@ public class ShelvesServiceImpl extends GenericServiceImpl<GoodsShelves, String>
     @Resource
     public void setDao(GoodsShelvesMapper goodsShelvesMapper) {
         super.setDao(goodsShelvesMapper);
+    }
+
+    @Override
+    public OptionalShelves getOptionShelves() {
+        return null;
     }
 }

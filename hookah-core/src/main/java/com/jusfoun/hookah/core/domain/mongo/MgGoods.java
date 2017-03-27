@@ -13,7 +13,7 @@ import java.util.List;
  * Created by wangjl on 2017-3-17.
  */
 @Document
-public class MgGoods extends GenericModel implements Serializable {
+public class MgGoods extends GenericModel {
 
 
     /**
@@ -27,6 +27,7 @@ public class MgGoods extends GenericModel implements Serializable {
     private List<MgCategoryAttrType.AttrTypeBean> attrTypeList;
     private List<FormatBean> formatList;
     private List<ImgBean> imgList;
+    private ApiInfoBean apiInfo;
 
     public List<MgCategoryAttrType.AttrTypeBean> getAttrTypeList() {
         return attrTypeList;
@@ -131,6 +132,129 @@ public class MgGoods extends GenericModel implements Serializable {
 
         public void setWeight(int weight) {
             this.weight = weight;
+        }
+    }
+
+    public static class ApiInfoBean implements Serializable {
+        private String apiUrl; //接口地址
+        private String apiMethod;//请求方式：GET/POST
+        private String reqSample;//请求示例
+        private String apiDesc;//接口描述
+        private List<FiledBean> reqParamList;//请求参数
+        private List<FiledBean> respParamList;//返回参数
+        private String respSample;//返回示例
+
+        public String getApiUrl() {
+            return apiUrl;
+        }
+
+        public void setApiUrl(String apiUrl) {
+            this.apiUrl = apiUrl;
+        }
+
+        public String getApiMethod() {
+            return apiMethod;
+        }
+
+        public void setApiMethod(String apiMethod) {
+            this.apiMethod = apiMethod;
+        }
+
+        public String getReqSample() {
+            return reqSample;
+        }
+
+        public void setReqSample(String reqSample) {
+            this.reqSample = reqSample;
+        }
+
+        public String getApiDesc() {
+            return apiDesc;
+        }
+
+        public void setApiDesc(String apiDesc) {
+            this.apiDesc = apiDesc;
+        }
+
+        public List<FiledBean> getReqParamList() {
+            return reqParamList;
+        }
+
+        public void setReqParamList(List<FiledBean> reqParamList) {
+            this.reqParamList = reqParamList;
+        }
+
+        public List<FiledBean> getRespParamList() {
+            return respParamList;
+        }
+
+        public void setRespParamList(List<FiledBean> respParamList) {
+            this.respParamList = respParamList;
+        }
+
+        public String getRespSample() {
+            return respSample;
+        }
+
+        public void setRespSample(String respSample) {
+            this.respSample = respSample;
+        }
+    }
+
+    public static class FiledBean implements Serializable {
+        private String fieldName;
+        private String fieldType;
+        private String isMust;//是否必须：0 否；1 是
+        private String fieldSample;
+        private String describle;
+        private String fieldDefault;//默认值
+
+        public String getFieldName() {
+            return fieldName;
+        }
+
+        public void setFieldName(String fieldName) {
+            this.fieldName = fieldName;
+        }
+
+        public String getFieldType() {
+            return fieldType;
+        }
+
+        public void setFieldType(String fieldType) {
+            this.fieldType = fieldType;
+        }
+
+        public String getIsMust() {
+            return isMust;
+        }
+
+        public void setIsMust(String isMust) {
+            this.isMust = isMust;
+        }
+
+        public String getFieldSample() {
+            return fieldSample;
+        }
+
+        public void setFieldSample(String fieldSample) {
+            this.fieldSample = fieldSample;
+        }
+
+        public String getDescrible() {
+            return describle;
+        }
+
+        public void setDescrible(String describle) {
+            this.describle = describle;
+        }
+
+        public String getFieldDefault() {
+            return fieldDefault;
+        }
+
+        public void setFieldDefault(String fieldDefault) {
+            this.fieldDefault = fieldDefault;
         }
     }
 }

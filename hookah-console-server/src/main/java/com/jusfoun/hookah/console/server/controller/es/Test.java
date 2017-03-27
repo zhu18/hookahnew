@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.console.server.es;
+package com.jusfoun.hookah.console.server.controller.es;
 
 import com.jusfoun.hookah.console.server.util.ESClientUtil;
 import com.jusfoun.hookah.core.utils.JSONUtils;
@@ -153,7 +153,7 @@ public class Test {
 //        }
         //TODO using aggregations
         //TODO search template
-        System.out.println(JSONUtils.toString(search("国", "indx", "tweet1", 0, 10)));;
+        System.out.println(JSONUtils.toString(search("国", "twitter", "tweet1", 0, 10)));;
     }
 
     private XContentBuilder createIKMapping(String indexType) {

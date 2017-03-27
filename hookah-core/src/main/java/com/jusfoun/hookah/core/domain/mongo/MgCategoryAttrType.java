@@ -12,7 +12,7 @@ import java.util.List;
  * 商品分类与属性分类关系表
  */
 @Document
-public class MgCategoryAttrType extends GenericModel implements Serializable {
+public class MgCategoryAttrType extends GenericModel {
     @Id
     private String catId; //商品分类id
     private List<AttrTypeBean> attrTypelist; //商品
