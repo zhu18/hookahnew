@@ -4,12 +4,13 @@ package com.jusfoun.hookah.oauth2server.service.impl;
 import com.jusfoun.hookah.core.domain.OauthClient;
 import com.jusfoun.hookah.core.domain.shared.GuidGenerator;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
-import com.jusfoun.hookah.rpc.api.oauth2.OAuthClientService;
 import com.jusfoun.hookah.oauth2server.dao.OauthClientMapper;
+import com.jusfoun.hookah.rpc.api.oauth2.OAuthClientService;
 import com.jusfoun.hookah.oauth2server.dao.RoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,13 +22,17 @@ import java.util.UUID;
 @Service("clientService")
 public class OauthClientServiceImpl extends GenericServiceImpl<OauthClient,Long> implements OAuthClientService {
 
-
-
-    @Autowired
-    private OauthClientMapper clientDao;
+    @Resource
+    private OauthClientMapper oauthClientMapper;
 
     @Autowired
     private RoleMapper roleDao;
+
+    @Resource
+    public void setDao(OauthClientMapper oauthClientMapper){
+        super.setDao(oauthClientMapper);
+    }
+
 
     @Override
     public OauthClient loadClientDetailsFormDto() {
@@ -43,7 +48,8 @@ public class OauthClientServiceImpl extends GenericServiceImpl<OauthClient,Long>
 
     public OauthClient selectByClientId(String clientId){
 
-        return clientDao.selectByClientId(clientId);
+//        return oauthClientMapper.selectByClientId(clientId);
+        return null;
     }
 
     @Override
