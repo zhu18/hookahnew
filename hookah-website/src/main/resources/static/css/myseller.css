@@ -158,7 +158,7 @@
 .pulish-wrapper .publish-box .struct table{width:100%}
 .pulish-wrapper .publish-box .struct tr{}
 .pulish-wrapper .publish-box .struct tr td{
-    padding:2px 5px 8px;
+    padding:3px 5px;
     line-height: 24px;
 }
 .pulish-wrapper .publish-box .struct tr td .attribute-box table{
@@ -214,7 +214,7 @@
     color: #333;
     padding: 2px 5px;
 }
-.errors ul li {
+.errors{
     white-space: normal;
     word-wrap: break-word;
     overflow: hidden;
@@ -222,6 +222,7 @@
     padding: 0 10px 0 0;
     color: #EA4A36;
     line-height: 24px;
+    display: none;
 }
 .textarea-box textarea{
     width: 700px;
@@ -275,6 +276,13 @@
     min-height: 23px;
     text-indent: 3px;
 }
+.selectbox select{
+    width: 100%;
+    text-align: center;
+    background: #fff;
+    height: 23px;
+    text-indent: 3px;
+}
 .checkbox-box input{
     margin-right: 5px;
 }
@@ -304,59 +312,70 @@
 .multimage-wrap .image-list li {
     border: 1px solid #cdcdcd;
     cursor: pointer;
-    display: inline-block;
-    position: relative;
-    vertical-align: middle;
     height: 100px;
     width: 100px;
-    margin: 0 10px 0 0;
-}
-.multimage-wrap .image-list li {
-    border: 1px solid #cdcdcd;
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    vertical-align: middle;
-    height: 100px;
-    width: 100px;
-    margin: 0 10px 0 0;
 }
 .multimage-wrap .image-list li .preview {
+    list-style: none;
     z-index: 0;
     text-align: center;
-    line-height: 90px;
-    font-family: arial;
     background-color: #f6f6f6;
-    width: 100%;
-    height: 100%;
+    height: 100px;
+    width: 100px;
     overflow: hidden;
-    position: absolute;
-    left: 0;
-    top: 0;
+    position: relative;
+    display: table-cell;
+    vertical-align: middle;
 }
 .multimage-wrap .image-list li .preview .upload-tip {
-    color: #d7d7d7;
+    color: #a5a3a3;
     cursor: pointer;
-    font-size: 42px;
-    position: relative;
-    top: 5px;
-    text-decoration: none;
-}
-.multimage-wrap .image-list li .info {
-    display: inline-block;
+    font-size: 30px;
     position: absolute;
-    background: rgba(33,33,33,.7);
-    color: #fff;
+    top: 0px;
+    left: 0;
+    text-decoration: none;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 100px;
+    z-index: -1;
+}
+.multimage-wrap .image-list li .preview .preview-img{
+    text-align: center;
+    vertical-align: middle;
+    max-width: 100%;
+    max-height: 100%;
+}
+.multimage-wrap .image-list li .preview .preview-btn {
+    font-size: 100%;
+    position: absolute;
     left: 0;
     top: 0;
-    z-index: 7;
+    width: 100px;
+    height: 100px;
+    opacity: 0;
+    background: rgba(0,0,0,0.7);
+    cursor: pointer;
+    z-index: 40;
+}
+.multimage-wrap .image-list li .preview .replace-btn {
+    display: none;
+    color: #fff;
+    background: rgba(0,0,0,0.8);
+    cursor: pointer;
+    font-size: 14px;
+    position: absolute;
+    top: 0px;
+    left: 0;
+    text-decoration: none;
     width: 100%;
+    height: 100%;
     text-align: center;
-    filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#b2404040, endColorstr=#b2404040)";
+    line-height: 100px;
+    z-index: 30;
 }
-.multimage-wrap .image-list li .info em {
-    color: #f60;
-}
+
 /******** publish-wrapper end ********/
 /******** trade-wrapper end ********/
 .trade-wrapper{}
@@ -408,7 +427,10 @@
     display: none;
     background: #ccc;
 }
-
+.table-plus .table-delete-btn, .table-plus .table-plus-btn{
+    padding:5px 7px;
+    cursor: pointer;
+}
 
 
 
