@@ -1,12 +1,9 @@
 <link rel="stylesheet" type="text/css" href="/static/css/pageaction.css">
 <div class="pageaction">
-    <!--共计：${pageInfo.totalItems}条<br>-->
-    <!--共计：${pageInfo.totalPage}页<br>-->
-    <!--每页：${pageInfo.pageSize}条<br>-->
-    <!--当前是第：${pageInfo.currentPage}页<br>-->
     <div class="tcdPageCode"></div>
 </div>
 <script type="text/javascript">
+
     function goPage(pageNumber){
         $.ajax({
             type:pageType,
@@ -17,14 +14,15 @@
             },
             success:function(data){
                 if(data.code == "1") {
-                    pageBackFn(data)
+                    if(pageNumber != 1){
+                        pageBackFn(data)
+                    }
                 }else{
                     alert(data.message);
                 }
             }
         });
     }
-
 (function($){
     var ms = {
         init:function(obj,args){
@@ -120,13 +118,16 @@
         ms.init(this,args);
     }
 })(jQuery);
-if(${pageInfo.totalPage} > 1){
-    $(".tcdPageCode").createPage({
-        pageCount:${pageInfo.totalPage},
-        current:pageNumber,
-        backFn:function(pageNumber){
-            goPage(pageNumber)
-        }
-    });
+if(${pageInfo} != null){
+    if(${pageInfo.totalPage} > 1){
+        $(".tcdPageCode").createPage({
+            pageCount:${pageInfo.totalPage},
+            current:pageNumber,
+            backFn:function(pageNumber){
+                goPage(pageNumber)
+            }
+        });
+    }
 }
+
 </script>
