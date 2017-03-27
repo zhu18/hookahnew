@@ -138,8 +138,19 @@ var htmlPart = {
     function createEidtor(){
         //富文本
         var editor = new wangEditor('content');
-        editor.config.uploadImgUrl = '/upload';//上传图片（举例）
-        editor.config.menuFixed = false;//关闭菜单栏fixed
+        //上传图片（举例）
+        editor.config.uploadImgUrl = '/upload';
+        //关闭菜单栏fixed
+        editor.config.menuFixed = false;
+        editor.config.menus = $.map(wangEditor.config.menus, function(item, key) {
+            if (item === 'location') {
+                return null;
+            }
+            if (item === 'video') {
+                return null;
+            }
+            return item;
+        });
         editor.create();
     }
     if(id){
@@ -300,6 +311,7 @@ var htmlPart = {
             $('#preview-wrap').remove();
         })
     })
+    //替换图片的隐显
     $('#preview-div').hover(function(){
         if($('#preview-img').attr('src')){
             $('#replace-btn').toggle();
