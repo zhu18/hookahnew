@@ -5,9 +5,10 @@ var head = {
 <link rel="stylesheet" type="text/css" href="/static/css/myseller.css">
 <script type="text/javascript">
     var pagePath = '/goods/back/list';
-    var pageSize = 10 ;
     var pageType = 'get';
-    var pageNumber = 1;
+    var dataParm = {};
+    dataParm.pageNumber = 1;
+    dataParm.pageSize = 20;
 </script>
 <%};%>
 
@@ -41,37 +42,6 @@ var htmlPart = {
                             </tr>
                         </thead>
                         <tbody>
-                            <% for(list in pageInfo.list){ %>
-                            <tr>
-                                <td class="text-center">
-                                    <a href="javascript:void(0)">
-                                        <img src="http://${list.goodsImg}" alt="">
-                                        <p>${list.goodsName}</p>
-                                    </a>
-                                </td>
-                                <td>${list.catId}</td>
-                                <td class="text-right">${list.shopNumber}</td>
-                                <td class="text-center">${list.addTime, "yyyy-MM-dd HH:mm:ss"}</td>
-                                <td class="text-center">
-                                    <%
-                                    switch(list.checkStatus){
-                                        case 0:
-                                            print("审核中");
-                                            break;
-                                        case 1:
-                                            print("通过");
-                                            break;
-                                        case 2:
-                                            print("不通过");
-                                            break;
-                                    }
-                                    %>
-                                </td>
-                                <td>
-                                    <a href="javascript:void(0)">下架</a>
-                                </td>
-                            </tr>
-                            <% } %>
                         </tbody>
                         <!--<tr>-->
                             <!--<td class="text-center">-->
@@ -99,7 +69,7 @@ var htmlPart = {
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
 <script type="text/javascript">
-    function pageBackFn(data){
+    function loadPageData(data){
         if(data.data.list){
             var list = data.data.list;
             var html = '';
