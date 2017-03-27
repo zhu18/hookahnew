@@ -3,27 +3,39 @@
     <div class="tcdPageCode"></div>
 </div>
 <script type="text/javascript">
-
-    function goPage(pageNumber){
+    goPage("1");
+    function goPage(pageNumber){ //请求页面数据   **需要在当前页面声明pagePath**
+        dataParm.pageNumber = pageNumber;
         $.ajax({
             type:pageType,
             url:pagePath,
-            data: {
-                pageNumber:pageNumber,
-                pageSize:pageSize
-            },
+            data:dataParm,
             success:function(data){
                 if(data.code == "1") {
-                    if(pageNumber != 1){
-                        pageBackFn(data)
+                    totalPages = data.data.totalPage;
+                    loadPageData(data);
+                    if(pageNumber == 1){
+                        $('.pageaction').html('').append('<div class="tcdPageCode"></div>');
+                        renderPage(data.data.totalPage, data.data.currentPage);
                     }
                 }else{
-                    alert(data.message);
+                    console.log(data.message);
                 }
             }
         });
     }
-(function($){
+    function renderPage(totalPages,currentPage){ //渲染分页
+        if(totalPages > 1){
+            $(".tcdPageCode").createPage({
+                pageCount:totalPages,
+                current:currentPage,
+                backFn:function(p){
+                    goPage(p)
+                }
+            });
+        }
+    }
+(function($){ //页面分页插件
     var ms = {
         init:function(obj,args){
             return (function(){
@@ -118,16 +130,6 @@
         ms.init(this,args);
     }
 })(jQuery);
-if(${pageInfo} != null){
-    if(${pageInfo.totalPage} > 1){
-        $(".tcdPageCode").createPage({
-            pageCount:${pageInfo.totalPage},
-            current:pageNumber,
-            backFn:function(pageNumber){
-                goPage(pageNumber)
-            }
-        });
-    }
-}
+
 
 </script>
