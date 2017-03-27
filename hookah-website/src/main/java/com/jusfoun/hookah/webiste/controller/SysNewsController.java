@@ -118,7 +118,7 @@ public class SysNewsController {
      */
     @ResponseBody
     @RequestMapping(value = "list", method = RequestMethod.GET)
-    public Object list( String pageNumber , String pageSize , String newsGroup,String newsSonGroup) {
+    public ReturnData list( String pageNumber , String pageSize , String newsGroup,String newsSonGroup) {
         Pagination<SysNews> page = new Pagination<>();
         try {
             List<Condition> filters = new ArrayList();
@@ -149,9 +149,9 @@ public class SysNewsController {
 
         } catch (Exception e) {
             e.printStackTrace();
-
+            return ReturnData.error("exception");
         }
-        return page ;
+        return ReturnData.success(page) ;
     }
 
 
