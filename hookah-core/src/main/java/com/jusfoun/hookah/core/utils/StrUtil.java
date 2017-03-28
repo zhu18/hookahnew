@@ -1,7 +1,9 @@
 package com.jusfoun.hookah.core.utils;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Random;
 
 public abstract class StrUtil {
 
@@ -126,6 +128,51 @@ public abstract class StrUtil {
             sb.append(stringArray[i]);
         }
         return sb.toString();
+    }
+
+    /**
+     * base64编码
+     *
+     * @param s
+     * @return
+     * @throws UnsupportedEncodingException
+     */
+    public static String getBASE64(String s)
+            throws UnsupportedEncodingException {
+
+        if (s == null)
+            return null;
+        return (new sun.misc.BASE64Encoder()).encode(s.getBytes("gbk"));
+    }
+
+    /**
+     * 生成n位验证码
+     *
+     * @param n
+     * @return
+     */
+    public static String random(int n) {
+        if (n < 1 || n > 10) {
+            throw new IllegalArgumentException("cannot random " + n
+                    + " bit number");
+        }
+        Random ran = new Random();
+        if (n == 1) {
+            return String.valueOf(ran.nextInt(10));
+        }
+        int bitField = 0;
+        char[] chs = new char[n];
+        for (int i = 0; i < n; i++) {
+            while (true) {
+                int k = ran.nextInt(10);
+                if ((bitField & (1 << k)) == 0) {
+                    bitField |= 1 << k;
+                    chs[i] = (char) (k + '0');
+                    break;
+                }
+            }
+        }
+        return new String(chs);
     }
     
     /**驼峰转下划线(简单写法，效率低于{@link #humpToLine2(String)})*/  

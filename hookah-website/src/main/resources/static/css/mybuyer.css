@@ -204,12 +204,12 @@
 .order-manage .order-box .order-items.cart-list-title,.order-manage .order-box .order-items.cart-list-title tr{
     border:none;
 }
-.order-manage .cart-box .order-items .checkbox{width:6%}
+.order-manage .cart-box .order-items .checkbox{width:7%}
 .order-manage .cart-box .order-items .img{width:16%}
-.order-manage .cart-box .order-items .name{width:25%}
-.order-manage .cart-box .order-items .price{width:12%}
-.order-manage .cart-box .order-items .number{width:12%}
-.order-manage .cart-box .order-items .number div{}
+.order-manage .cart-box .order-items .name{width:25%;word-break: break-word;}
+.order-manage .cart-box .order-items .price{width:12%;text-align: right;}
+.order-manage .cart-box .order-items .number{width:12%;text-align: center}
+.order-manage .cart-box .order-items .number div{display: inline-block}
 .order-manage .cart-box .order-items .number .btn{
     width: 20px;
     height: 28px;
@@ -232,7 +232,7 @@
     color:#f68300;
     border-color:#f68300;
 }
-.order-manage .cart-box .order-items .money{width:12%}
+.order-manage .cart-box .order-items .money{width:12%;text-align: right}
 .order-manage .cart-box .order-items .operation{width:14%}
 .order-manage .order-box .order-items.cart-list-bottom,.order-manage .order-box .order-items.cart-list-bottom tr{
     border:none;

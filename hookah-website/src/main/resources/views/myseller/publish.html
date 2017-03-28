@@ -412,6 +412,7 @@ var htmlPart = {
 <script type="text/javascript" src="../../static/js/ajaxfileupload.js"></script>
 <script type="text/javascript" src="../../static/js/jquery.jedate.min.js"></script>
 <script type="text/javascript">
+    var imgSrc = "";
     $.getUrlParam = function (key) {
         var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
         var result = window.location.search.substr(1).match(reg);
@@ -566,7 +567,7 @@ var htmlPart = {
                         //把图片替换
                         var obj= data.data[0];
                         $("#preview-img").attr("src", "http://"+obj.absPath);
-                        imgSrc = "http://"+obj.absPath;
+                        imgSrc = obj.absPath;
                         if(typeof(data.error) != 'undefined') {
                             if(data.error != '') {
                                 alert(data.error);
@@ -616,7 +617,7 @@ var htmlPart = {
                 attrTypeList.attrlist = $(this).val();
                 data.attrTypeList.push(attrTypeList);
             });
-            data.goodsImg = $('#preview-img').attr('src');
+            data.goodsImg = imgSrc;
             data.formatList = [];
 
             $('table[d-type="priceHtml"] tbody tr').each(function(){

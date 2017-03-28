@@ -72,6 +72,7 @@ public class CartController {
             Goods goods = goodsService.selectById(cart.getGoodsId());
             cart.setGoodsSn(goods.getGoodsSn());
             cart.setGoodsName(goods.getGoodsName());
+            cart.setGoodsImg(goods.getGoodsImg());
             //入库
             cartService.insert(cart);
 
@@ -102,6 +103,7 @@ public class CartController {
                 Goods goods = goodsService.selectById(cart.getGoodsId());
                 cart.setGoodsSn(goods.getGoodsSn());
                 cart.setGoodsName(goods.getGoodsName());
+                cart.setGoodsImg(goods.getGoodsImg());
             }
 
             cartService.insertBatch(list);
