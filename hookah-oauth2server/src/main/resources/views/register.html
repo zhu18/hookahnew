@@ -61,17 +61,33 @@ var htmlPart = {
 
           <div class="form-item">
 	            <span class="form-label tsl" data-phase-id="r_p_noCaptcha">
-		            <span class="star">*</span>验证
+		            <span class="star">*</span>验证码
               </span>
             <div id="register_no_captcha" class="nc-container" data-nc-idx="1">
               <input class="form-text mobile-text-input" maxlength="20" name="mobile" id="J_Mobile"
                      data-pattern="^(86){0,1}1\d{10}$" type="text" value=""
-                     data-inner_placeholder="r_p_input_inner_entermobile" placeholder="请输入手机号码">
+                     data-inner_placeholder="r_p_input_inner_entermobile" placeholder="请输入验证码">
+              <img class="captcha-text-btn">
             </div>
             <input id="J_NcoSig" name="ncoSig" type="hidden">
             <input id="J_NcoSessionid" name="ncoSessionid" type="hidden">
             <input id="J_NcoToken" type="hidden" name="ncoToken" value="0a50007946a4c829e976dd88288a42f7">
             <input id="J_NcoUa" type="hidden" name="ua">
+          </div>
+          <div class="form-item">
+	            <span class="form-label tsl" data-phase-id="r_p_noCaptcha">
+		            <span class="star">*</span>手机验证码
+              </span>
+            <div id="register_no_phone_captcha" class="nc-container" data-nc-idx="1">
+              <input class="form-text mobile-text-input" maxlength="20" name="mobile" id="J_phone_Mobile"
+                     data-pattern="^(86){0,1}1\d{10}$" type="text" value=""
+                     data-inner_placeholder="r_p_input_inner_entermobile" placeholder="请输入手机验证码">
+              <a href="javascript:void(0)" class="mobile-text-btn">获取验证码</a>
+            </div>
+            <input id="J_phone_NcoSig" name="ncoSig" type="hidden">
+            <input id="J_phone_NcoSessionid" name="ncoSessionid" type="hidden">
+            <input id="J_phone_NcoToken" type="hidden" name="ncoToken" value="0a50007946a4c829e976dd88288a42f7">
+            <input id="J_phone_NcoUa" type="hidden" name="ua">
           </div>
           <div class="form-item">
             <input class="form-checkbox" type="checkbox" checked="" name="" id="J_Agreement" style="float: left">

@@ -50,7 +50,13 @@
                                                 <%}else{%>
                                                 <li class="tips-item userInfos">
                                                     <a href="/usercenter" class="login">欢迎，${user.userName}</a>
-                                                    <div class="userInfos-box"></div>
+                                                    <div class="userInfos-box">
+                                                        <div class="userInfos-con">
+                                                            <img src="../../static/img/zheng.jpg" alt="">
+                                                            <p>username</p>
+                                                        </div>
+                                                        <a href="">退出</a>
+                                                    </div>
                                                 </li>
                                                 <%}%>
                                             </ul>
@@ -122,5 +128,11 @@
             $(this).addClass("dropdown-ing");
         });
     }
-
+    $('.userInfos').mouseover(function(){
+        $(this).css("background","#fff").children('.userInfos-box').show();
+        $(this).children('a').css("color","#333");
+    }).mouseout(function(){
+        $(this).css("background","none").children('a').css("color","#FFF");
+        $(this).children('.userInfos-box').hide();
+    })
 </script>

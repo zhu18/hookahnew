@@ -78,6 +78,8 @@ body {
 .module-wrap .topbar-body.no-change .tool-body .tips-box .tips-item a,
 .module-wrap .topbar-body:hover .tool-body .tips-box .tips-item a {
     color: #fff;
+    padding:0 10px;
+    display: block;
 }
 
 .module-wrap .topbar-body.no-change .tool-body .tips-box .tips-item a:hover,
@@ -193,12 +195,52 @@ body {
 }
 
 .module-wrap .topbar-body .tool-body .y-right li {
-    margin-right: 26px;
+    margin-right: 6px;
     float: right;
     text-align: left;
     height: 40px;
     box-sizing: border-box;
     line-height: 40px;
+
+}
+.module-wrap .topbar-body .tool-body .y-right .userInfos{position: relative}
+.module-wrap .topbar-body .tool-body .y-right .userInfos .login{
+    position: relative;
+    z-index: 3;
+    height:37px;
+}
+.module-wrap .topbar-body .tool-body .y-right .userInfos:hover .login{
+    border:1px solid #ccc;
+    border-bottom: 2px solid #fff;
+}
+.module-wrap .topbar-body .tool-body .y-right .userInfos .userInfos-box{
+    position:absolute;
+    width:260px;
+    background: #fff;
+    border:1px solid #ccc;
+    padding:10px;
+    top:39px;
+    left:0px;
+    display: none;
+    z-index: 1;
+}
+.module-wrap .topbar-body .tool-body .y-right .userInfos .userInfos-box a{
+    color:#333;
+    float: right;
+}
+.module-wrap .topbar-body .tool-body .y-right .userInfos .userInfos-box .userInfos-con{
+    width:150px;
+    float: left;
+}
+.module-wrap .topbar-body .tool-body .y-right .userInfos .userInfos-box .userInfos-con img{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    float: left;
+}
+.module-wrap .topbar-body .tool-body .y-right .userInfos .userInfos-box .userInfos-con p{
+    float: left;
+    margin-left: 20px;
 }
 
 .module-wrap .topbar-body .tool-body .y-right li a {
