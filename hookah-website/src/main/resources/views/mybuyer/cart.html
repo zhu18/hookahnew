@@ -19,7 +19,7 @@ var htmlPart = {
                 <div class="order-box cart-box">
                     <table class="cart-list-title order-items">
                         <tr class="order-body">
-                            <td class="checkbox"><label for=""><input type="checkbox">全选</label></td>
+                            <td class="checkbox"><label><input type="checkbox" name="checkcc"> 全选</label></td>
                             <td class="img"></td>
                             <td class="name">商品信息</td>
                             <td class="price">单价</td>
@@ -30,52 +30,76 @@ var htmlPart = {
                     </table>
                     <table class="order-items">
                         <tr class="order-head">
-                            <td class="checkbox"><input type="checkbox"></td>
+                            <td class="checkbox"><input type="checkbox" name="checkcc"></td>
                             <td colspan="6">卖家名称：大胡子妹妹</td>
                         </tr>
+                        <% for(list in cartList){ %>
                         <tr class="order-body">
-                            <td class="checkbox"><input type="checkbox"></td>
+                            <td class="checkbox"><input type="checkbox" name="checkcc"></td>
                             <td class="img"><div><img src="../../static/img/TB1BLQsPpXXXXXNXXXXXXXXXXXX-440-330.jpg" alt=""></div></td>
-                            <td class="name">银行卡类型查询</td>
-                            <td class="price">￥8000.00</td>
+                            <td class="name">${list.goodsName}</td>
+                            <td class="price">￥${list.goodsPrice}</td>
                             <td class="number">
                                 <div>
                                     <span class="reduce-btn btn">-</span>
-                                    <input type="text" value="1">
+                                    <input type="text" value="${list.goodsNumber}">
                                     <span class="plus-btn btn">+</span>
                                 </div>
                             </td>
-                            <td class="money">￥8000.00</td>
+                            <td class="money">￥${list.goodsPrice * list.goodsNumber}</td>
                             <td class="operation">
                                 <a href="javascript:void(0)">商品详情</a>
                                 <a href="javascript:void(0)">删除</a>
                             </td>
                         </tr>
-                        <tr class="order-body">
-                            <td class="checkbox"><input type="checkbox"></td>
-                            <td class="img"><div><img src="../../static/img/TB1BLQsPpXXXXXNXXXXXXXXXXXX-440-330.jpg" alt=""></div></td>
-                            <td class="name">银行卡类型查询</td>
-                            <td class="price">￥8000.00</td>
-                            <td class="number">
-                                <div>
-                                    <span class="reduce-btn btn">-</span>
-                                    <input type="text" value="1">
-                                    <span class="plus-btn btn">+</span>
-                                </div>
-                            </td>
-                            <td class="money">￥8000.00</td>
-                            <td class="operation">
-                                <a href="javascript:void(0)">商品详情</a>
-                                <a href="javascript:void(0)">评价</a>
-                                <a href="javascript:void(0)">申请售后</a>
-                                <a href="javascript:void(0)">删除</a>
-                                <a href="javascript:void(0)">再次购买</a>
-                            </td>
-                        </tr>
+                        <% } %>
+
+
+
+
+                        <!--<tr class="order-body">-->
+                            <!--<td class="checkbox"><input type="checkbox"></td>-->
+                            <!--<td class="img"><div><img src="../../static/img/TB1BLQsPpXXXXXNXXXXXXXXXXXX-440-330.jpg" alt=""></div></td>-->
+                            <!--<td class="name">银行卡类型查询</td>-->
+                            <!--<td class="price">￥8000.00</td>-->
+                            <!--<td class="number">-->
+                                <!--<div>-->
+                                    <!--<span class="reduce-btn btn">-</span>-->
+                                    <!--<input type="text" value="1">-->
+                                    <!--<span class="plus-btn btn">+</span>-->
+                                <!--</div>-->
+                            <!--</td>-->
+                            <!--<td class="money">￥8000.00</td>-->
+                            <!--<td class="operation">-->
+                                <!--<a href="javascript:void(0)">商品详情</a>-->
+                                <!--<a href="javascript:void(0)">删除</a>-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                        <!--<tr class="order-body">-->
+                            <!--<td class="checkbox"><input type="checkbox"></td>-->
+                            <!--<td class="img"><div><img src="../../static/img/TB1BLQsPpXXXXXNXXXXXXXXXXXX-440-330.jpg" alt=""></div></td>-->
+                            <!--<td class="name">银行卡类型查询</td>-->
+                            <!--<td class="price">￥8000.00</td>-->
+                            <!--<td class="number">-->
+                                <!--<div>-->
+                                    <!--<span class="reduce-btn btn">-</span>-->
+                                    <!--<input type="text" value="1">-->
+                                    <!--<span class="plus-btn btn">+</span>-->
+                                <!--</div>-->
+                            <!--</td>-->
+                            <!--<td class="money">￥8000.00</td>-->
+                            <!--<td class="operation">-->
+                                <!--<a href="javascript:void(0)">商品详情</a>-->
+                                <!--<a href="javascript:void(0)">评价</a>-->
+                                <!--<a href="javascript:void(0)">申请售后</a>-->
+                                <!--<a href="javascript:void(0)">删除</a>-->
+                                <!--<a href="javascript:void(0)">再次购买</a>-->
+                            <!--</td>-->
+                        <!--</tr>-->
                     </table>
                     <table class="cart-list-bottom order-items">
                         <tr class="order-body">
-                            <td class="checkbox"><label for=""><input type="checkbox">全选</label></td>
+                            <td class="checkbox"><label><input type="checkbox" name="checkcc"> 全选</label></td>
                             <td class="img"></td>
                             <td class="name"></td>
                             <td class="price"></td>
