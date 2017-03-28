@@ -14,7 +14,6 @@
     <module>hookah-console-server</module>
     <module>hookah-rpc-api</module>
     <module>hookah-oauth2server</module>
-    <module>hookah-console-webapi</module>
   </modules>
 
   <properties>

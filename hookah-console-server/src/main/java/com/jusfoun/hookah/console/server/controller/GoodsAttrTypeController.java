@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.console.webapi.controller;
+package com.jusfoun.hookah.console.server.controller;
 
 import com.jusfoun.hookah.core.domain.Category;
 import com.jusfoun.hookah.core.domain.GoodsAttrType;
