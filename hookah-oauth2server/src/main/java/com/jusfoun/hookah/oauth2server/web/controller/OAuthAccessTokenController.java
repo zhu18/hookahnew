@@ -3,6 +3,8 @@ package com.jusfoun.hookah.oauth2server.web.controller;
 
 import com.jusfoun.hookah.core.domain.OauthAccessToken;
 import com.jusfoun.hookah.core.domain.OauthCode;
+import com.jusfoun.hookah.rpc.api.oauth2.OAuthAccessTokenService;
+import com.jusfoun.hookah.rpc.api.oauth2.OAuthCodeService;
 import com.jusfoun.hookah.rpc.api.oauth2.OAuthService;
 import org.apache.oltu.oauth2.as.request.OAuthTokenRequest;
 import org.apache.oltu.oauth2.as.response.OAuthASResponse;
@@ -19,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -33,6 +36,13 @@ public class OAuthAccessTokenController {
 
     @Autowired
     private OAuthService oAuthService;
+
+    @Resource
+    private OAuthCodeService oAuthCodeService;
+
+    @Resource
+    private OAuthAccessTokenService oAuthAccessTokenService;
+
 
     @RequestMapping("accessToken")
     public HttpEntity authorize(HttpServletRequest request) throws OAuthSystemException {
@@ -62,7 +72,7 @@ public class OAuthAccessTokenController {
 //            }
 
             String code = oauthRequest.getParam(OAuth.OAUTH_CODE);
-            OauthCode oauthCode = oAuthService.selectByCode(code);
+            OauthCode oauthCode = oAuthCodeService.selectById(code);
             // 检查验证类型，此处只检查AUTHORIZATION_CODE类型，其他的还有PASSWORD或REFRESH_TOKEN
             if (oauthRequest.getParam(OAuth.OAUTH_GRANT_TYPE).equals(GrantType.AUTHORIZATION_CODE.toString())) {
                 if (oauthCode == null) {
@@ -76,8 +86,7 @@ public class OAuthAccessTokenController {
             }
 
             //生成Access Token
-            OauthAccessToken oAuthAccessToken = oAuthService.insertAccessToken(oauthCode);
-
+            OauthAccessToken oAuthAccessToken = oAuthAccessTokenService.insertAccessToken(oauthCode);
 
             //生成OAuth响应
             OAuthResponse response = OAuthASResponse

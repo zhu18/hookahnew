@@ -3,6 +3,7 @@ package com.jusfoun.hookah.webiste.controller;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.Goods;
+import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -12,6 +13,8 @@ import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.MgCategoryAttrTypeService;
 import com.jusfoun.hookah.rpc.api.MgGoodsService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,19 +42,29 @@ public class MySellerController {
     MgGoodsService mgGoodsService;
 
     @RequestMapping(value = "/myseller", method = RequestMethod.GET)
-    public String index(Model model){
+    public String index(Model model) {
+
+//        Subject subject = SecurityUtils.getSubject();
+//        if (subject.isAuthenticated()) {
+//            Object user = subject.getPrincipal();
+//            System.out.println("-----");
+//            System.out.println("-----"+subject.getPrincipals().toString());
+//            model.addAttribute("user", user);
+//
+//        }
+
         // 默认加载分类
-        try{
+        try {
             model.addAttribute("categoryList", categoryService.getCatTree());
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return "/myseller/index";
     }
 
     @RequestMapping(value = "/myseller/publish", method = RequestMethod.GET)
-    public String publish(String id, Model model){
-        if(StringUtils.isNotBlank(id)) {
+    public String publish(String id, Model model) {
+        if (StringUtils.isNotBlank(id)) {
             // 查询商品信息
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.eq("goodsId", id));
@@ -74,12 +87,12 @@ public class MySellerController {
     }
 
     @RequestMapping(value = "/myseller/trade", method = RequestMethod.GET)
-    public String trade(){
+    public String trade() {
         return "/myseller/trade";
     }
 
     @RequestMapping(value = "/myseller/tradeing", method = RequestMethod.GET)
-    public String tradeing(String pageNumber, String pageSize, String goodsName, Byte checkStatus, Model model){
+    public String tradeing(String pageNumber, String pageSize, String goodsName, Byte checkStatus, Model model) {
         Pagination<Goods> page = new Pagination<>();
         try {
             List<Condition> filters = new ArrayList();
@@ -89,18 +102,18 @@ public class MySellerController {
             filters.add(Condition.eq("isDelete", 1));
             //参数校验
             int pageNumberNew = HookahConstants.PAGE_NUM;
-            if(StringUtils.isNotBlank(pageNumber)){
+            if (StringUtils.isNotBlank(pageNumber)) {
                 pageNumberNew = Integer.parseInt(pageNumber);
             }
             int pageSizeNew = HookahConstants.PAGE_SIZE;
-            if(StringUtils.isNotBlank(pageSize)){
+            if (StringUtils.isNotBlank(pageSize)) {
                 pageSizeNew = Integer.parseInt(pageSize);
             }
 
-            if( StringUtils.isNotBlank(goodsName)){
+            if (StringUtils.isNotBlank(goodsName)) {
                 filters.add(Condition.like("goodsName", goodsName.trim()));
             }
-            if(checkStatus != null){
+            if (checkStatus != null) {
                 filters.add(Condition.like("checkStatus", checkStatus));
             }
             page = goodsService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
@@ -112,22 +125,22 @@ public class MySellerController {
     }
 
     @RequestMapping(value = "/myseller/rate", method = RequestMethod.GET)
-    public String mysellrate(){
+    public String mysellrate() {
         return "/myseller/rate";
     }
 
     @RequestMapping(value = "/myseller/custom", method = RequestMethod.GET)
-    public String custom(){
+    public String custom() {
         return "/myseller/custom";
     }
 
     @RequestMapping(value = "/myseller/customer", method = RequestMethod.GET)
-    public String customer(){
+    public String customer() {
         return "/myseller/customer";
     }
 
     @RequestMapping(value = "/myseller/illegal", method = RequestMethod.GET)
-    public String illegal(){
+    public String illegal() {
         return "/myseller/illegal";
     }
 }

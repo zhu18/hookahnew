@@ -1,6 +1,10 @@
 package com.jusfoun.hookah.oauth2server.web.controller;
 
 import com.jusfoun.hookah.core.domain.OauthAccessToken;
+import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.generic.Condition;
+import com.jusfoun.hookah.rpc.api.UserService;
+import com.jusfoun.hookah.rpc.api.oauth2.OAuthAccessTokenService;
 import com.jusfoun.hookah.rpc.api.oauth2.OAuthService;
 import com.jusfoun.hookah.oauth2server.config.Constants;
 import org.apache.oltu.oauth2.common.OAuth;
@@ -20,8 +24,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author huang lei
@@ -34,6 +41,12 @@ public class UserInfoController {
     @Autowired
     private OAuthService oAuthService;
 
+    @Resource
+    private OAuthAccessTokenService oAuthAccessTokenService;
+
+    @Resource
+    private UserService userService;
+
     @RequestMapping("/userInfo")
     public HttpEntity userInfo(HttpServletRequest request) throws OAuthSystemException {
         try {
@@ -42,7 +55,7 @@ public class UserInfoController {
             OAuthAccessResourceRequest oauthRequest = new OAuthAccessResourceRequest(request, ParameterStyle.QUERY);
             //获取Access Token
             String accessToken = oauthRequest.getAccessToken();
-            OauthAccessToken oauthAccessToken = oAuthService.selectByTokenId(accessToken);
+            OauthAccessToken oauthAccessToken = oAuthAccessTokenService.selectById(accessToken);
 
             //验证Access Token
             if (oauthAccessToken == null) {
@@ -57,9 +70,15 @@ public class UserInfoController {
                 headers.add(OAuth.HeaderType.WWW_AUTHENTICATE, oauthResponse.getHeader(OAuth.HeaderType.WWW_AUTHENTICATE));
                 return new ResponseEntity(headers, HttpStatus.UNAUTHORIZED);
             }
-            //返回用户名
+            //返回用户
             String username = oauthAccessToken.getUsername();
-            return new ResponseEntity(username, HttpStatus.OK);
+            List<Condition> filters = new ArrayList<>();
+            filters.add(Condition.eq("userName", username));
+            User user = userService.selectOne(filters);
+            user.setPassword("");
+            user.setEmail("");
+            user.setMobile("");
+            return new ResponseEntity(user, HttpStatus.OK);
         } catch (OAuthProblemException e) {
             //检查是否设置了错误码
             String errorCode = e.getError();

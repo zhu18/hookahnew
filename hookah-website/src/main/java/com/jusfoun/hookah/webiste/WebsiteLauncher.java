@@ -7,11 +7,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.web.filter.DelegatingFilterProxy;
 
 import javax.annotation.PostConstruct;
 
@@ -24,9 +27,20 @@ import javax.annotation.PostConstruct;
 @EnableAutoConfiguration(exclude = {ThymeleafAutoConfiguration.class})
 @EnableScheduling
 @ComponentScan
-@ImportResource(locations = {"classpath:hookah_rpc_client.xml","classpath:hookah_rpc_client_goods.xml","classpath:hookah_rpc_client_order.xml","classpath:hookah_rpc_client_other.xml","classpath:hookah_rpc_client_system.xml"})
+@ImportResource(locations = {"classpath:spring-config-shiro.xml","classpath:hookah_rpc_client.xml","classpath:hookah_rpc_client_goods.xml","classpath:hookah_rpc_client_order.xml","classpath:hookah_rpc_client_other.xml","classpath:hookah_rpc_client_system.xml"})
 public class WebsiteLauncher {
     private static final Logger logger = LoggerFactory.getLogger(WebsiteLauncher.class);
+
+    @Bean
+    public FilterRegistrationBean securityFilterChainRegistration() {
+        DelegatingFilterProxy delegatingFilterProxy = new DelegatingFilterProxy();
+        delegatingFilterProxy.setTargetBeanName("shiroFilter");
+        delegatingFilterProxy.setTargetFilterLifecycle(true);
+        FilterRegistrationBean registrationBean = new FilterRegistrationBean(delegatingFilterProxy);
+        registrationBean.setName("shiroFilter");
+        registrationBean.addUrlPatterns("/*");
+        return registrationBean;
+    }
 
     public static void main(String[] args) {
         ApplicationContext ctx = SpringApplication.run(WebsiteLauncher.class);

@@ -74,7 +74,7 @@ public class AuthorizeController {
             //如果用户没有登录，跳转到登陆页面 TODO...判断是否是POST
             if (!subject.isAuthenticated()) {
                 if (!isLogin(subject, request)) {//登录失败时跳转到登陆页面
-                    model.addAttribute("client", clientService.selectByClientId(oauthRequest.getClientId()));
+                    model.addAttribute("client", clientService.selectById(oauthRequest.getClientId()));
                     return "login";
                 }
             }
@@ -84,7 +84,7 @@ public class AuthorizeController {
                 //生成授权码
                 String authCode = null;
                 //responseType目前仅支持CODE，另外还有TOKEN
-                OauthClient oauthClient = clientService.selectByClientId(oauthRequest.getClientId());
+                OauthClient oauthClient = clientService.selectById(oauthRequest.getClientId());
                 String responseType = oauthRequest.getParam(OAuth.OAUTH_RESPONSE_TYPE);
                 if (responseType.equals(ResponseType.CODE.toString())) {
                     OAuthIssuerImpl oauthIssuerImpl = new OAuthIssuerImpl(new MD5Generator());
@@ -99,10 +99,11 @@ public class AuthorizeController {
                 builder.setCode(authCode);
                 //得到到客户端重定向地址
                 String req_redirectURI = oauthRequest.getParam(OAuth.OAUTH_REDIRECT_URI);
-                String redirectURI = oauthClient.getRedirectUri();
+                //客户端注册时配置的返回地址，内部系统不需要
+//                String redirectURI = oauthClient.getRedirectUri();
                 builder.setParam("redirect_uri",req_redirectURI);
                 //构建响应
-                final OAuthResponse oAuthResponse = builder.location(redirectURI).buildQueryMessage();
+                final OAuthResponse oAuthResponse = builder.location(req_redirectURI).buildQueryMessage();
 
                 //根据OAuthResponse返回ResponseEntity响应
                 HttpHeaders headers = new HttpHeaders();
@@ -154,7 +155,7 @@ public class AuthorizeController {
         if ("get".equalsIgnoreCase(request.getMethod())) {
             return false;
         }
-        String username = request.getParameter("username");
+        String username = request.getParameter("userName");
         String password = request.getParameter("password");
 
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
