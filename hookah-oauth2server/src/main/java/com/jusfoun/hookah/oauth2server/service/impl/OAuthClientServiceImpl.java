@@ -20,7 +20,7 @@ import java.util.UUID;
  * @desc
  */
 @Service("clientService")
-public class OauthClientServiceImpl extends GenericServiceImpl<OauthClient,Long> implements OAuthClientService {
+public class OAuthClientServiceImpl extends GenericServiceImpl<OauthClient,String> implements OAuthClientService {
 
     @Resource
     private OauthClientMapper oauthClientMapper;

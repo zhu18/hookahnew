@@ -3,7 +3,9 @@ package com.jusfoun.hookah.oauth2server.service.impl;
 import com.jusfoun.hookah.core.domain.OauthAccessToken;
 import com.jusfoun.hookah.core.domain.OauthClient;
 import com.jusfoun.hookah.core.domain.OauthCode;
+import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.rpc.api.oauth2.OAuthClientService;
+import com.jusfoun.hookah.rpc.api.oauth2.OAuthCodeService;
 import com.jusfoun.hookah.rpc.api.oauth2.OAuthService;
 import com.jusfoun.hookah.oauth2server.dao.OauthAccessTokenMapper;
 import com.jusfoun.hookah.oauth2server.dao.OauthCodeMapper;
@@ -13,6 +15,8 @@ import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author huang lei
@@ -24,10 +28,10 @@ public class OAuthServiceImpl implements OAuthService {
 
 
     @Resource
-    private OAuthClientService clientService;
+    private OAuthClientService oAuthClientService;
 
     @Resource
-    private OauthCodeMapper oAuthCodeDao;
+    private OAuthCodeService oAuthCodeService;
 
     @Resource
     private OauthAccessTokenMapper oAuthAccessTokenDao;
@@ -42,8 +46,7 @@ public class OAuthServiceImpl implements OAuthService {
         oAuthCode.setCode(authCode);
         oAuthCode.setClientId(oauthClient.getClientId());
         oAuthCode.setUsername(username);
-        oAuthCodeDao.insert(oAuthCode);
-//        oAuthCode.setId(id); //TODO
+        oAuthCodeService.insert(oAuthCode);
         return oAuthCode;
     }
 
@@ -75,12 +78,13 @@ public class OAuthServiceImpl implements OAuthService {
 
 
     public OauthCode selectByCode(String code) {
-//        return oAuthCodeDao.selectByCode(code);
-        return null;
+        return oAuthCodeService.selectById(code);
     }
 
     public boolean checkClientId(String clientId) {
-        return clientService.selectByClientId(clientId) != null;
+        List<Condition> conditions = new ArrayList<>();
+        conditions.add(Condition.eq("clientId",clientId ));
+        return oAuthClientService.selectOne(conditions) != null;
     }
 
     public boolean checkClientSecret(String clientSecret) {

@@ -11,7 +11,7 @@ import java.util.List;
  * @date 2017/3/22 上午10:21
  * @desc
  */
-public interface OAuthClientService extends GenericService<OauthClient,Long> {
+public interface OAuthClientService extends GenericService<OauthClient,String> {
 
 
     OauthClient loadClientDetailsFormDto();

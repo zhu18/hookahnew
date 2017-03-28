@@ -36,16 +36,23 @@
                                                     <a href="/help" class="login">联系我们</a>
                                                 </li>
                                                 <li class="tips-item">
-                                                    <a class="login-cell y-right" href="/oauth/register">注册有礼</a>
-                                                </li>
-                                                <li class="tips-item">
-                                                    <a href="${host.auth}/login?oauth_callback=${oauth_callback!'/'}"
-                                                       class="login">登录</a>
-                                                </li>
-                                                <li class="tips-item">
                                                     <a href="/usercenter"
                                                        class="usercenter">个人中心</a>
                                                 </li>
+                                                <%if(isEmpty(user)){%>
+                                                <li class="tips-item">
+                                                    <a class="login-cell y-right" href="http://localhost:9900/oauth/register">注册有礼</a>
+                                                </li>
+                                                <li class="tips-item">
+                                                    <a href="http://localhost:9900/oauth/login"
+                                                       class="login">登录</a>
+                                                </li>
+                                                <%}else{%>
+                                                <li class="tips-item">
+                                                    <a href="/usercenter"
+                                                       class="login">欢迎，${user.userName}</a>
+                                                </li>
+                                                <%}%>
                                             </ul>
                                         </div>
                                     </div>
