@@ -1,7 +1,6 @@
 package com.jusfoun.hookah.core.domain.mongo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.generic.GenericModel;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,28 +14,19 @@ import java.util.Date;
  */
 @Document
 public class MgSmsValidate extends GenericModel {
-    private String userId;
-
     private String phoneNum;
 
     private String smsContent;
+
+    private String validCode;
 
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date sendTime;
 
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
-    @Indexed(expireAfterSeconds = HookahConstants.SMS_DURATION_SECONDS)
+    @Indexed(expireAfterSeconds = 30)
     private Date expireTime;
 
-
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
     public String getPhoneNum() {
         return phoneNum;
@@ -52,6 +42,14 @@ public class MgSmsValidate extends GenericModel {
 
     public void setSmsContent(String smsContent) {
         this.smsContent = smsContent;
+    }
+
+    public String getValidCode() {
+        return validCode;
+    }
+
+    public void setValidCode(String validCode) {
+        this.validCode = validCode;
     }
 
     public Date getSendTime() {

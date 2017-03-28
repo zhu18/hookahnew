@@ -12,5 +12,5 @@ public class HookahConstants {
     public static final int PAGE_SIZE = 10;
 
     /** 短信过期时间，单位秒 */
-    public static final Integer SMS_DURATION_SECONDS = 600;
+    public static final Integer SMS_DURATION_SECONDS = 30;
 }

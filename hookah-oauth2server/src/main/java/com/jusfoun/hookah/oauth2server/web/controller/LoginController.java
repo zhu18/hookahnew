@@ -1,6 +1,6 @@
 package com.jusfoun.hookah.oauth2server.web.controller;
 
-import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.domain.vo.UserValidVo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
@@ -22,13 +22,15 @@ public class LoginController {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
+
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model) {
         return "login";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String postLogin(User user, RedirectAttributes redirectAttributes) {
+    public String postLogin(UserValidVo user, RedirectAttributes redirectAttributes) {
 
         String username = user.getUserName();
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(), user.getPassword());
@@ -68,6 +70,8 @@ public class LoginController {
             return "redirect:/login";
         }
     }
+
+
 
 
 
