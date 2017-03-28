@@ -13,9 +13,6 @@ public class HookahConstants {
 
     /** 短信过期时间，单位秒 */
     public static final Integer SMS_DURATION_SECONDS = 30;
-    /** es分词 */
-    public static final String ES_ANALYZER_IK_MAX = "ik_max_word";
-    public static final String ES_ANALYZER_IK_SMART = "ik_smart_word";
 
     public enum AnalyzeOpt {
         ANALYZED("analyzed"),
