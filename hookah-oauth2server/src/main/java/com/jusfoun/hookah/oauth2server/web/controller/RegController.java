@@ -3,12 +3,14 @@ package com.jusfoun.hookah.oauth2server.web.controller;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.mongo.MgSmsValidate;
+import com.jusfoun.hookah.core.domain.vo.UserValidVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.SMSUtil;
 import com.jusfoun.hookah.core.utils.StrUtil;
 import com.jusfoun.hookah.rpc.api.MgSmsValidateService;
 import com.jusfoun.hookah.rpc.api.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,9 +45,39 @@ public class RegController {
 
     @RequestMapping(value = "/reg",method = RequestMethod.POST)
     @ResponseBody
-    public Object pReg(User user){
+    public ReturnData pReg(UserValidVo user){
+        //boolean valid = true;
+        //1、校验图片验证码 ,=======>可以跳过这步，我觉得不校验问题也不大
+        String captcha = user.getCaptcha();
+
+        //2、校验短信验证码
+            //获取库里缓存的验证码
+        List<Condition> filters = new ArrayList();
+        filters.add(Condition.eq("phoneNum",user.getMobile()));
+        filters.add(Condition.eq("validCode",user.getValidSms()));
+        MgSmsValidate sms = mgSmsValidateService.selectOne(filters);
+        if(sms==null){ //验证码错误或者已过期
+            return ReturnData.error("短信验证码错误或者已过期");
+        }
+
+        //3、校验密码一致
+        String password = user.getPassword().trim();
+        String passwordRepeat = user.getPasswordRepeat().trim();
+        if(StringUtils.isBlank(password) || StringUtils.isBlank(passwordRepeat) ){
+            return  ReturnData.error("密码或者确认密码不能为空");
+        }
+        if(!password.equals(passwordRepeat)){
+            return  ReturnData.error("密码与确认密码不一致");
+        }
+
+        if(password.length()<6){
+            return  ReturnData.error("密码过短");
+        }
+
+        //其他校验规则
+
         User user1 = userService.insert(user);
-        return user;
+        return ReturnData.success(user1);
     }
 
     @RequestMapping(value = "/sendSms", method = RequestMethod.POST)
