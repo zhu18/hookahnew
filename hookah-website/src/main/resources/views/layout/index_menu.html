@@ -41,10 +41,10 @@
                                                 </li>
                                                 <%if(isEmpty(user)){%>
                                                 <li class="tips-item">
-                                                    <a class="login-cell y-right" href="http://localhost:9900/oauth/register">注册有礼</a>
+                                                    <a class="login-cell y-right" href="http://localhost:9900/reg">注册有礼</a>
                                                 </li>
                                                 <li class="tips-item">
-                                                    <a href="http://localhost:9900/oauth/login"
+                                                    <a href="http://localhost:9900/oauth/authorize?client_id=website&response_type=code&redirect_uri=http://localhost:9000/"
                                                        class="login">登录</a>
                                                 </li>
                                                 <%}else{%>
