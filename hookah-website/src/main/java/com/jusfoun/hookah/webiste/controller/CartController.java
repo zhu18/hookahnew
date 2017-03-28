@@ -1,9 +1,12 @@
 package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.domain.Cart;
+import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.generic.Condition;
+import com.jusfoun.hookah.core.utils.JSONUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.CartService;
+import com.jusfoun.hookah.rpc.api.GoodsService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,16 +32,17 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
+    @Autowired
+    private GoodsService goodsService;
+
     @RequestMapping(value = "/cart", method = RequestMethod.GET)
     public String cart(Model model) {
         try {
             List<Condition> filters = new ArrayList<>();
-            /*
-            filters.add(Condition.eq("userId", "<当前用户id>"));
-             */
-
+            filters.add(Condition.eq("userId", "hookah"));
             List<Cart> carts = cartService.selectList(filters);
             model.addAttribute("cartList", carts);
+            logger.info(JSONUtils.toString(carts));
             return "/mybuyer/cart";
         } catch (Exception e) {
             logger.info(e.getMessage());
@@ -56,13 +60,22 @@ public class CartController {
     @RequestMapping(value = "/cart/add", method = RequestMethod.POST)
     public ReturnData add(@Valid @RequestBody Cart cart, Model model) {
         try {
+            //设置默认信息
+
             //需要先获取当前用户id
-            String userId = "shawn";
+            String userId = "hookah";
             cart.setUserId(userId);
             cart.setAddTime(new Date());
-            cart.setGoodsNumber(new Integer(1).shortValue());
-            cart = cartService.insert(cart);
-            return ReturnData.success(cart);
+            cart.setIsGift(new Integer(0).shortValue());
+
+            //补充商品信息
+            Goods goods = goodsService.selectById(cart.getGoodsId());
+            cart.setGoodsSn(goods.getGoodsSn());
+            cart.setGoodsName(goods.getGoodsName());
+            //入库
+            cartService.insert(cart);
+
+            return ReturnData.success();
         } catch (Exception e) {
             logger.info(e.getMessage());
             return ReturnData.error(e.getMessage());
@@ -80,11 +93,15 @@ public class CartController {
     public ReturnData addAll(@RequestBody List<Cart> list, Model model) {
         try {
             //需要先获取当前用户id
-            String userId = "";
+            String userId = "hookah";
             for(Cart cart:list){
                 cart.setUserId(userId);
                 cart.setAddTime(new Date());
-                cart.setGoodsNumber(new Integer(1).shortValue());
+                cart.setIsGift(new Integer(0).shortValue());
+
+                Goods goods = goodsService.selectById(cart.getGoodsId());
+                cart.setGoodsSn(goods.getGoodsSn());
+                cart.setGoodsName(goods.getGoodsName());
             }
 
             cartService.insertBatch(list);
@@ -108,7 +125,7 @@ public class CartController {
             return ReturnData.invalidParameters("The field[recId] CANNOT be null!");
         }
         try {
-            cartService.insert(cart);
+            cartService.updateByIdSelective(cart);
             return ReturnData.success();
         } catch (Exception e) {
             logger.info(e.getMessage());
