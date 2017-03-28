@@ -12,4 +12,7 @@
     <motan:referer id="sysNewsService"
                    interface="com.jusfoun.hookah.rpc.api.SysNewsService"
                    connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+    <motan:referer id="mgSmsValidateService"
+                   interface="com.jusfoun.hookah.rpc.api.MgSmsValidateService"
+                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
 </beans>
