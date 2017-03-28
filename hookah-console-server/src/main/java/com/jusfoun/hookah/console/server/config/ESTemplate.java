@@ -18,7 +18,6 @@ import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.action.update.UpdateRequest;
-import org.elasticsearch.client.Client;
 import org.elasticsearch.client.Requests;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.text.Text;
@@ -79,74 +78,6 @@ public class ESTemplate {
     }
 
     /**
-     * 搜索
-     * @param client
-     * @param key 搜索关键词
-     * @param index 索引
-     * @param type
-     * @param pagination
-     * @param fields
-     * @return
-     * @throws UnknownHostException
-     */
-    public void search(TransportClient client, String key, String index, String type,
-                       Pagination pagination, Boolean isHighLight, String... fields) throws UnknownHostException {
-        //创建查询索引,要查询的索引库为index
-        SearchRequestBuilder builder = client.prepareSearch();
-        builder.setIndices(index);
-        builder.setTypes(type);
-        builder.setFrom(pagination.getCurrentPage()*pagination.getPageSize());
-        builder.setSize(pagination.getPageSize());
-
-        //设置查询类型：1.SearchType.DFS_QUERY_THEN_FETCH 精确查询； 2.SearchType.SCAN 扫描查询,无序
-        builder.setSearchType(SearchType.DFS_QUERY_AND_FETCH);
-        if(StringUtils.isNotBlank(key)){
-            // 设置查询关键词
-            builder.setQuery(QueryBuilders.multiMatchQuery(key, fields));
-        }
-
-        //设置是否按查询匹配度排序
-        builder.setExplain(true);
-        //设置高亮显示
-        if(isHighLight) {
-            HighlightBuilder highlightBuilder = new HighlightBuilder().field("*").requireFieldMatch(false);
-            highlightBuilder.preTags("<span style=\"color:red\">");
-            highlightBuilder.postTags("</span>");
-            builder.highlighter(highlightBuilder);
-        }
-
-        //执行搜索,返回搜索响应信息
-        SearchResponse searchResponse = builder.get();
-        SearchHits searchHits = searchResponse.getHits();
-
-        //总命中数
-        long total = searchHits.getTotalHits();
-        SearchHit[] hits = searchHits.getHits();
-        pagination.setTotalItems(total);
-        List<Map<String, Object>> list = new ArrayList();
-        for (SearchHit hit : hits) {
-            Map<String, HighlightField> highlightFields = hit.getHighlightFields();
-            //title高亮
-            Map<String, Object> source = hit.getSource();
-            for(String filed : fields) {
-                HighlightField titleField = highlightFields.get(filed);
-                if(titleField!=null){
-                    Text[] fragments = titleField.fragments();
-                    String name = "";
-                    for (Text text : fragments) {
-                        name += text;
-                    }
-                    source.put(filed, name);
-                }
-            }
-            list.add(source);
-        }
-        if(list != null && list.size() > 0)
-            pagination.setList(list);
-    }
-
-
-    /**
      * 使用prepareMapping形式进行创建mapping
      * @param indexName
      * @param type
@@ -154,13 +85,11 @@ public class ESTemplate {
      * @return
      * @throws IOException
      */
-    public boolean putMapping(Client client,String indexName,String type,Map<String,Map<String,String>> mappings) throws IOException{
+    public boolean putMapping(TransportClient client,String indexName,String type,Map<String,Map<String,String>> mappings) throws IOException{
         XContentBuilder mappingSource = XContentFactory.jsonBuilder()
                 .startObject().startObject(type)
                 .startObject("_all").field("analyzer", "ik_max_word")
-                .field("analyzer", "pinyin")
                 .field("search_analyzer", "ik_max_word")
-                .field("search_analyzer","pinyin")
                 .field("term_vector", "no").endObject()
                 //----初始
                 .startObject("properties");
@@ -188,7 +117,7 @@ public class ESTemplate {
      * @param mapping String  Map  XContentBuilder
      * @return boolean
      */
-    public boolean putMapping(Client client,String indexName,String type,Object mapping){
+    public boolean putMapping(TransportClient client,String indexName,String type,Object mapping){
         Assert.notNull(indexName, "No index defined for putMapping()");
         Assert.notNull(type, "No type defined for putMapping()");
         PutMappingRequestBuilder mappingBuilder = client.admin().indices()
@@ -209,7 +138,7 @@ public class ESTemplate {
      * @param type
      * @return Map
      */
-    public Map getMapping(Client client,String indexName,String type){
+    public Map getMapping(TransportClient client,String indexName,String type){
         Assert.notNull(indexName, "No index defined for putMapping()");
         Assert.notNull(type, "No type defined for putMapping()");
         Map mappings = null;
@@ -227,7 +156,7 @@ public class ESTemplate {
      * @param indexName
      * @return boolean
      */
-    public boolean deleteIndex(Client client,String indexName){
+    public boolean deleteIndex(TransportClient client,String indexName){
         Assert.notNull(indexName, "indexName不允许为空");
         if(indexExists(client,indexName)){
             return client.admin().indices().prepareDelete(indexName).execute().actionGet().isAcknowledged();
@@ -241,7 +170,7 @@ public class ESTemplate {
      * @param indexName
      * @return boolean
      */
-    public boolean indexExists(Client client,String indexName){
+    public boolean indexExists(TransportClient client,String indexName){
         return client.admin().indices().exists(Requests.indicesExistsRequest(indexName)).actionGet().isExists();
     }
 
@@ -252,7 +181,7 @@ public class ESTemplate {
      * @param type
      * @return
      */
-    public boolean mappingExists(Client client,String indexName,String type){
+    public boolean mappingExists(TransportClient client,String indexName,String type){
         return client.admin().cluster().prepareState().execute()
                 .actionGet().getState().metaData().index(indexName)
                 .getMappings().containsKey(type);
@@ -267,7 +196,7 @@ public class ESTemplate {
      * @param keyId  @Nullable Object keyId,boolean keyVal2Column,
      * @param listMap
      */
-    public void bulkIndex(Client client,String indexName,String type,String keyId,List<Map<String,Object>> listMap){
+    public void bulkIndex(TransportClient client,String indexName,String type,String keyId,List<Map<String,Object>> listMap){
         Assert.notNull(indexName, "indexName不允许为空");
         BulkRequestBuilder bulkRequest = client.prepareBulk();
         IndexRequestBuilder indexRequest = null;
@@ -314,7 +243,7 @@ public class ESTemplate {
      * @param concurrentRequests  线程数
      * @param listMap
      */
-    public void bulkProcessorIndex(Client client,String indexName,String type,String keyId,long bulkSize,int bulkActions,
+    public void bulkProcessorIndex(TransportClient client,String indexName,String type,String keyId,long bulkSize,int bulkActions,
                                    long flushInterval,int concurrentRequests,List<Map<String,Object>> listMap){
         Assert.notNull(indexName, "indexName不允许为空");
         IndexRequest indexRequest = null;
@@ -372,7 +301,7 @@ public class ESTemplate {
      * @param concurrentRequests  线程数
      * @param listMap
      */
-    public void bulkProcessorUpdate(Client client,String indexName,String type,String keyId,long bulkSize,int bulkActions,
+    public void bulkProcessorUpdate(TransportClient client,String indexName,String type,String keyId,long bulkSize,int bulkActions,
                                     long flushInterval,int concurrentRequests,List<Map<String,Object>> listMap){
         if(StringUtils.isBlank(keyId)){return;}
         Assert.notNull(indexName, "indexName不允许为空");
@@ -413,7 +342,7 @@ public class ESTemplate {
         bulkProcessor.close();
     }
 
-    public void bulkDelete(Client client,String indexName,String type,long bulkSize,int bulkActions,
+    public void bulkDelete(TransportClient client,String indexName,String type,long bulkSize,int bulkActions,
                            long flushInterval,int concurrentRequests,List<Object> ids){
         if(ids == null || ids.isEmpty()){
             return;
@@ -460,7 +389,7 @@ public class ESTemplate {
      * @param ids
      * @return
      */
-    public List<Map<String,Object>> queryMultiGet(Client client,String index,String type,String... ids){
+    public List<Map<String,Object>> queryMultiGet(TransportClient client,String index,String type,String... ids){
         List<Map<String,Object>> listData = null;
         GetResponse response = null;
         MultiGetResponse multiGetResponse = client.prepareMultiGet()
@@ -482,7 +411,7 @@ public class ESTemplate {
      * @param field
      * @param fieldNames
      */
-    public void queryMultiMatch(Client client,String indexName,String type,String field,String... fieldNames){
+    public void queryMultiMatch(TransportClient client,String indexName,String type,String field,String... fieldNames){
         QueryBuilder qb = QueryBuilders.multiMatchQuery(field, fieldNames);
         SearchRequestBuilder srb = client.prepareSearch();
         srb.setIndices(indexName).setTypes(type).setQuery(qb);
@@ -501,7 +430,7 @@ public class ESTemplate {
      * @param callFields
      * @return List<Map>
      */
-    public List<Map> queryStringQuery(Client client,String indexName,String type,Map<String,Object> filterMap,
+    public List<Map> queryStringQuery(TransportClient client,String indexName,String type,Map<String,Object> filterMap,
                                       int from,int limit,String... callFields){
         SearchRequestBuilder requestBuilder = client.prepareSearch(indexName);
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
@@ -536,7 +465,7 @@ public class ESTemplate {
      * @param callFields
      * @return
      */
-    public long queryCountByStringQuery(Client client,String indexName,String type,
+    public long queryCountByStringQuery(TransportClient client,String indexName,String type,
                                         Map<String,Object> filterMap,String... callFields){
         long totalCount = 0;
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
@@ -562,7 +491,7 @@ public class ESTemplate {
         return totalCount;
     }
 
-    public SearchRequestBuilder getSearchRequest(Client client,String indexName,String type){
+    public SearchRequestBuilder getSearchRequest(TransportClient client,String indexName,String type){
         SearchRequestBuilder requestBuilder = client.prepareSearch(indexName);
         requestBuilder.setTypes(type);
         return requestBuilder;
@@ -619,7 +548,7 @@ public class ESTemplate {
      * @param maxNumberOfRetries  重试次数
      * @return
      */
-    public BulkProcessor getBulkProcess(Client client,int bulkActions,long bulkSize,
+    public BulkProcessor getBulkProcess(TransportClient client,int bulkActions,long bulkSize,
                                         long flushInterval,int concurrentRequests,long initialDelay,int maxNumberOfRetries){
         BulkProcessor bulkProcessor = BulkProcessor.builder(client, new BulkProcessor.Listener(){
             @Override
@@ -699,5 +628,72 @@ public class ESTemplate {
             }
         }
         return currentList;
+    }
+
+    /**
+     * 搜索
+     * @param client
+     * @param key 搜索关键词
+     * @param index 索引
+     * @param type
+     * @param pagination
+     * @param fields
+     * @return
+     * @throws UnknownHostException
+     */
+    public void search(TransportClient client, String key, String index, String type,
+                       Pagination pagination, Boolean isHighLight, String... fields) throws UnknownHostException {
+        //创建查询索引,要查询的索引库为index
+        SearchRequestBuilder builder = client.prepareSearch();
+        builder.setIndices(index);
+        builder.setTypes(type);
+        builder.setFrom(pagination.getCurrentPage()*pagination.getPageSize());
+        builder.setSize(pagination.getPageSize());
+
+        //设置查询类型：1.SearchType.DFS_QUERY_THEN_FETCH 精确查询； 2.SearchType.SCAN 扫描查询,无序
+        builder.setSearchType(SearchType.DFS_QUERY_AND_FETCH);
+        if(StringUtils.isNotBlank(key)){
+            // 设置查询关键词
+            builder.setQuery(QueryBuilders.multiMatchQuery(key, fields));
+        }
+
+        //设置是否按查询匹配度排序
+        builder.setExplain(true);
+        //设置高亮显示
+        if(isHighLight) {
+            HighlightBuilder highlightBuilder = new HighlightBuilder().field("*").requireFieldMatch(false);
+            highlightBuilder.preTags("<span style=\"color:red\">");
+            highlightBuilder.postTags("</span>");
+            builder.highlighter(highlightBuilder);
+        }
+
+        //执行搜索,返回搜索响应信息
+        SearchResponse searchResponse = builder.get();
+        SearchHits searchHits = searchResponse.getHits();
+
+        //总命中数
+        long total = searchHits.getTotalHits();
+        SearchHit[] hits = searchHits.getHits();
+        pagination.setTotalItems(total);
+        List<Map<String, Object>> list = new ArrayList();
+        for (SearchHit hit : hits) {
+            Map<String, HighlightField> highlightFields = hit.getHighlightFields();
+            //title高亮
+            Map<String, Object> source = hit.getSource();
+            for(String filed : fields) {
+                HighlightField titleField = highlightFields.get(filed);
+                if(titleField!=null){
+                    Text[] fragments = titleField.fragments();
+                    String name = "";
+                    for (Text text : fragments) {
+                        name += text;
+                    }
+                    source.put(filed, name);
+                }
+            }
+            list.add(source);
+        }
+        if(list != null && list.size() > 0)
+            pagination.setList(list);
     }
 }
