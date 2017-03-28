@@ -43,14 +43,14 @@
                                                 <li class="tips-item">
                                                     <a class="login-cell y-right" href="http://localhost:9900/oauth/register">注册有礼</a>
                                                 </li>
-                                                <li class="tips-item">
-                                                    <a href="http://localhost:9900/oauth/login"
-                                                       class="login">登录</a>
+                                                <li class="tips-item userInfos">
+                                                    <a href="http://localhost:9900/oauth/login" class="login">登录</a>
+                                                    <div class="userInfos-box"></div>
                                                 </li>
                                                 <%}else{%>
-                                                <li class="tips-item">
-                                                    <a href="/usercenter"
-                                                       class="login">欢迎，${user.userName}</a>
+                                                <li class="tips-item userInfos">
+                                                    <a href="/usercenter" class="login">欢迎，${user.userName}</a>
+                                                    <div class="userInfos-box"></div>
                                                 </li>
                                                 <%}%>
                                             </ul>

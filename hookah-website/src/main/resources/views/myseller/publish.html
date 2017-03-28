@@ -22,7 +22,7 @@ var htmlPart = {
             <div class="pulish-wrapper">
                 <div class="publish-box">
                     <h3 class="category-title">类目：<span class="category-title-box"></span></h3>
-                    <h1>1.商品基本信息</h1>
+                    <h1>商品基本信息：</h1>
                     <div class="struct">
                         <table>
 
@@ -189,15 +189,28 @@ var htmlPart = {
                             </tr>
                         </table>
                     </div>
-                    <h1 class="api-info-box">2.API信息</h1>
+                    <h1 class="api-info-box">API信息：</h1>
                     <div class="struct api-info-box">
                         <table>
                             <tr>
                                 <td class="bar">接口地址：</td>
                                 <td>
                                     <div class="text-box">
-                                        <input type="text">
+                                        <input type="text" name="apiUrl">
                                         <span class="input-count"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bar">上架时间：</td>
+                                <td>
+                                    <div class="radio-box">
+                                        <label>
+                                            <input type="radio" name="apiMethod" value="GET" checked>GET
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="apiMethod" value="POST">POST
+                                        </label>
                                     </div>
                                 </td>
                             </tr>
@@ -205,7 +218,7 @@ var htmlPart = {
                                 <td class="bar">请求示例：</td>
                                 <td>
                                     <div class="text-box">
-                                        <input type="text">
+                                        <input type="text" name="reqSample">
                                         <span class="input-count"></span>
                                     </div>
                                 </td>
@@ -214,7 +227,7 @@ var htmlPart = {
                                 <td class="bar">接口描述：</td>
                                 <td>
                                     <div class="textarea-box">
-                                        <textarea type="text"></textarea>
+                                        <textarea type="text" name="apiDesc"></textarea>
                                         <span class="input-count"></span>
                                     </div>
                                 </td>
@@ -238,32 +251,37 @@ var htmlPart = {
                                             <tbody>
                                                 <tr class="parent-tr">
                                                     <td class="name-input">
-                                                        <div class="inputbox"><input type="text" placeholder="请输入名称"></div>
+                                                        <div class="inputbox"><input type="text" name="fieldName" placeholder="请输入名称"></div>
                                                     </td>
                                                     <td class="type-input">
-                                                        <div class="inputbox"><input type="text" placeholder="请输入类型"></div>
+                                                        <div class="selectbox">
+                                                            <select name="fieldType">
+                                                                <option value="String">String</option>
+                                                                <option value="int">int</option>
+                                                            </select>
+                                                        </div>
                                                     </td>
                                                     <td class="type-input">
-                                                        <div class="inputbox"><input type="text" placeholder="请输入默认值"></div>
+                                                        <div class="inputbox"><input type="text" name="fieldDefault" placeholder="请输入默认值"></div>
                                                     </td>
                                                     <td>
                                                         <div class="radio-box">
                                                             <label>
-                                                                <input type="radio" name="isMust0" checked value="0">是
+                                                                <input type="radio" name="isMust0" checked value="0">否
                                                             </label>
                                                             <label>
-                                                                <input type="radio" name="isMust0" value="0">否
+                                                                <input type="radio" name="isMust0" value="1">是
                                                             </label>
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <div class="inputbox"><input type="text" placeholder="请输入示例"></div>
+                                                        <div class="inputbox"><input type="text" name="fieldSample" placeholder="请输入示例"></div>
                                                     </td>
                                                     <td>
-                                                        <div class="inputbox"><textarea placeholder="请输入描述"></textarea></div>
+                                                        <div class="inputbox"><textarea name="describle" placeholder="请输入描述"></textarea></div>
                                                     </td>
                                                     <td>
-                                                        <span class="table-plus-btn" onclick="tablePlus(this)">+</span>
+                                                        <span class="table-plus-btn itemNum" onclick="tablePlus(this)">+</span>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -275,7 +293,7 @@ var htmlPart = {
                                 <td class="bar">返回示例：</td>
                                 <td>
                                     <div class="textarea-box">
-                                        <textarea type="text"></textarea>
+                                        <textarea type="text" name="respSample"></textarea>
                                         <span class="input-count"></span>
                                     </div>
                                 </td>
@@ -295,10 +313,10 @@ var htmlPart = {
                                             <tbody>
                                                 <tr class="parent-tr">
                                                     <td class="errorNum-input">
-                                                        <div class="inputbox"><input type="text" placeholder="请输入错误码"></div>
+                                                        <div class="inputbox"><input type="text" name="fieldName" placeholder="请输入错误码"></div>
                                                     </td>
                                                     <td>
-                                                        <div class="inputbox"><textarea placeholder="请输入说明"></textarea></div>
+                                                        <div class="inputbox"><textarea name="describle" placeholder="请输入说明"></textarea></div>
                                                     </td>
                                                     <td>
                                                         <span class="table-plus-btn" onclick="tablePlus(this)">+</span>
@@ -311,7 +329,7 @@ var htmlPart = {
                             </tr>
                         </table>
                     </div>
-                    <h1>3.售后保障信息</h1>
+                    <h1>售后保障信息：</h1>
                     <div class="struct">
                         <table>
                             <tr>
@@ -346,7 +364,7 @@ var htmlPart = {
                             </tr>
                         </table>
                     </div>
-                    <h1>4.商品其他信息</h1>
+                    <h1>商品其他信息：</h1>
                     <div class="struct">
                         <table>
                             <tr>
@@ -382,7 +400,7 @@ var htmlPart = {
                     </div>
                 </div>
                 <div class="pulish-btn">
-                    <button class="pusGoods-btn">发布商品</button>
+                    <button class="pusGoods-btn trues">发布商品</button>
                 </div>
 
             </div>
@@ -472,10 +490,13 @@ var htmlPart = {
     function tableDelete(that){
         $(that).parents('.parent-tr').remove();
     };
-    var item = 0;
+    var itemNum = 0;
     function tablePlus(that){
-
-        item++ ;
+        if($(that).hasClass('itemNum')){
+            itemNum += 1 ;
+            console.log(itemNum)
+        }
+        console.log(itemNum)
         var priceHtml = '';//规格与价格
         priceHtml += '<tr class="parent-tr">';
         priceHtml += '<td class="number-input"><div class="inputbox"><input type="number" datatype="number" placeholder="请输入规格"></div></td>';
@@ -485,17 +506,18 @@ var htmlPart = {
         priceHtml += '</tr>';
         var requestHtml = '';//请求接口
         requestHtml += '<tr class="parent-tr">';
-        requestHtml += '<td class="name-input"><div class="inputbox"><input type="text" placeholder="请输入名称"></div></td>';
-        requestHtml += '<td class="type-input"><div class="inputbox"><input type="text" placeholder="请输入类型"></div></td>';
-        requestHtml += '<td><div class="radio-box"><label><input type="radio" name="isMust'+item+'" checked>是</label><label><input type="radio" name="isMust'+item+'">否</label></div></td>';
-        requestHtml += '<td><div class="inputbox"><input type="text" placeholder="请输入示例"></div></td>';
-        requestHtml += '<td><div class="inputbox"><textarea  placeholder="请输入描述"></textarea></div></td>';
-        requestHtml += '<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
+        requestHtml += '<td class="name-input"><div class="inputbox"><input type="text" name="fieldName" placeholder="请输入名称"></div></td>';
+        requestHtml += '<td class="type-input"><div class="selectbox"><select name="fieldType"><option value="String">String</option><option value="int">int</option></select></div></td>';
+        requestHtml += '<td class="type-input"><div class="inputbox"><input type="text" name="fieldDefault" placeholder="请输入默认值"></div></td>';
+        requestHtml += '<td><div class="radio-box"><label><input type="radio" name="isMust'+itemNum+'" checked value="0">否</label><label><input type="radio" name="isMust'+itemNum+'" value="1">是</label></div></td>';
+        requestHtml += '<td><div class="inputbox"><input type="text" name="fieldSample" placeholder="请输入示例"></div></td>';
+        requestHtml += '<td><div class="inputbox"><textarea  placeholder="请输入描述" name="describle"></textarea></div></td>';
+        requestHtml += '<td><span class="table-plus-btn itemNum" onclick="tablePlus(this)">+</span></td>';
         requestHtml += '</tr>';
         var returnHtml = '';//返回借口
         returnHtml += '<tr class="parent-tr">';
-        returnHtml += '<td class="errorNum-input"><div class="inputbox"><input type="text" placeholder="请输入错误码"></div></td>';
-        returnHtml += '<td><div class="inputbox"><textarea placeholder="请输入说明"></textarea></div></td>';
+        returnHtml += '<td class="errorNum-input"><div class="inputbox"><input type="text" placeholder="请输入错误码" name="fieldName"></div></td>';
+        returnHtml += '<td><div class="inputbox"><textarea placeholder="请输入说明" name="describle"></textarea></div></td>';
         returnHtml += '<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
         returnHtml += '</tr>';
 
@@ -614,6 +636,33 @@ var htmlPart = {
             if (data.isOnsale == 1){
                 data.onsaleStartDate = $('#indate').val();
             }
+            if(data.goodsType == 1){
+                data.apiInfo = {};
+                data.apiInfo.apiUrl = $('.api-info-box').find('input[name="apiUrl"]').val();
+                data.apiInfo.apiMethod = $('.api-info-box').find('input[name="apiMethod"]:checked').val();
+                data.apiInfo.reqSample = $('.api-info-box').find('input[name="reqSample"]').val();
+                data.apiInfo.apiDesc = $('.api-info-box').find('textarea[name="apiDesc"]').val();
+                data.apiInfo.reqParamList = [];
+                $('table[d-type="requestHtml"] tbody tr').each(function(i,item){
+                    var listData = {};
+                    listData.fieldName = $(item).find('input[name="fieldName"]').val();
+                    listData.fieldType = $(item).find('select[name="fieldType"]').val();
+                    listData.isMust = $(item).find('input[name="isMust'+i+'"]:checked').val();
+                    listData.fieldSample = $(item).find('input[name="fieldSample"]').val();
+                    listData.fieldDefault = $(item).find('input[name="fieldDefault"]').val();
+                    listData.describle = $(item).find('textarea[name="describle"]').val();
+                    data.apiInfo.reqParamList.push(listData);
+                });
+                data.apiInfo.respParamList = [];
+                $('table[d-type="returnHtml"] tbody tr').each(function(){
+                    var listData = {};
+                    listData.fieldName = $(this).find('input[name="fieldName"]').val();
+                    listData.describle = $(this).find('textarea[name="describle"]').val();
+                    data.apiInfo.respParamList.push(listData);
+                });
+                data.apiInfo.respSample = $('.api-info-box').find('textarea[name="respSample"]').val();
+            }
+
 
         if(!!!data.goodsName){
             alert("请输入商品名称");
@@ -622,7 +671,20 @@ var htmlPart = {
         }else if(!!!data.goodsImg){
             alert("请上传图片");
         }else{
-            alert(JSON.stringify(data));
+            $.ajax({
+                type:'POST',
+                url:'/goods/back/add',
+                data:JSON.stringify(data),
+                dataType:'json',
+                contentType: 'application/json',
+                success:function(data){
+                    if(data.code == "1") {
+                        $.alert('发布成功');
+                    }else{
+                        alert(data.message);
+                    }
+                }
+            });
         }
 
 
@@ -647,6 +709,17 @@ var htmlPart = {
         isTime:true,
         minDate:$.nowDate(0)
     })
+
+
+
+    window.onbeforeunload = function()
+    {
+        if($('.pusGoods-btn').hasClass('trues')){
+            return;
+        }else{
+            return '确定要离开吗';
+        }
+    }
 </script>
 
 <%};
