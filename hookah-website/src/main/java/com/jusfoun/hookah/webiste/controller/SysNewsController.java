@@ -202,6 +202,8 @@ public class SysNewsController {
         try {
             SysNews snews = new SysNews();
             snews = model;
+            snews.setSytTime(new Date());
+            snews.setUpdateTime(new Date());
             sysNewsService.updateById(snews);
             result.success();
         } catch (Exception e) {

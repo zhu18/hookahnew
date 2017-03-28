@@ -1,27 +1,6 @@
-package com.jusfoun.hookah.console.server.es;
-
-import com.jusfoun.hookah.console.server.util.ESClientUtil;
-import com.jusfoun.hookah.core.utils.JSONUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.elasticsearch.action.search.SearchRequestBuilder;
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.action.search.SearchType;
-import org.elasticsearch.common.text.Text;
-import org.elasticsearch.common.xcontent.XContentBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.SearchHits;
-import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
-import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
+package com.jusfoun.hookah.console.server.controller.es;
 
 import java.io.IOException;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 
 
 /**
@@ -153,98 +132,98 @@ public class Test {
 //        }
         //TODO using aggregations
         //TODO search template
-        System.out.println(JSONUtils.toString(search("国", "indx", "tweet1", 0, 10)));;
+//        System.out.println(JSONUtils.toString(search("国", "twitter", "tweet1", 0, 10)));
     }
-
-    private XContentBuilder createIKMapping(String indexType) {
-        XContentBuilder mapping = null;
-        try {
-            mapping = jsonBuilder().startObject()
-                    // 索引库名（类似数据库中的表）
-                    .startObject(indexType).startObject("properties")
-                    .startObject("product_name").field("type", "string")
-                    .field("analyzer","ik").field("search_analyzer","ik_smart").endObject()
-                    .startObject("title_sub").field("type", "string")
-                    .field("analyzer","ik").field("search_analyzer","ik_smart").endObject()
-                    .startObject("title_primary").field("type", "string")
-                    .field("analyzer","ik").field("search_analyzer","ik_smart").endObject()
-                    .startObject("publisher").field("type", "string")
-                    .field("analyzer","ik").field("search_analyzer","ik_smart").endObject()
-                    .startObject("author_name").field("type", "string")
-                    .field("analyzer","ik").field("search_analyzer","ik_smart").endObject()
-                    //.field("boost",100).endObject()
-                    // 姓名
-                    //.startObject("name").field("type", "string").endObject()
-                    // 位置
-                    //.startObject("location").field("type", "geo_point").endObject()
-                    //.endObject().startObject("_all").field("analyzer","ik").field("search_analyzer","ik").endObject().endObject().endObject();
-                    .endObject().endObject().endObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return mapping;
-    }
-
-    public static Map<String, Object> search(String key,String index,String type,int start,int row) throws UnknownHostException {
-        //创建查询索引,要查询的索引库为index
-        SearchRequestBuilder builder = ESClientUtil.getClient().prepareSearch(index);
-        builder.setTypes(type);
-        builder.setFrom(start);
-        builder.setSize(row);
-
-        //设置查询类型：1.SearchType.DFS_QUERY_THEN_FETCH 精确查询； 2.SearchType.SCAN 扫描查询,无序
-        builder.setSearchType(SearchType.DFS_QUERY_AND_FETCH);
-        if(StringUtils.isNotBlank(key)){
-            // 设置查询关键词
-            builder.setQuery(QueryBuilders.multiMatchQuery(key, "content"));
-        }
-
-        //设置是否按查询匹配度排序
-        builder.setExplain(true);
-        //设置高亮显示
-        HighlightBuilder highlightBuilder = new HighlightBuilder().field("*").requireFieldMatch(false);
-        highlightBuilder.preTags("<span style=\"color:red\">");
-        highlightBuilder.postTags("</span>");
-        builder.highlighter(highlightBuilder);
-
-        //执行搜索,返回搜索响应信息
-        SearchResponse searchResponse = builder.get();
-        SearchHits searchHits = searchResponse.getHits();
-
-        //总命中数
-        long total = searchHits.getTotalHits();
-        Map<String, Object> map = new HashMap();
-        SearchHit[] hits = searchHits.getHits();
-        map.put("count", total);
-        List<Map<String, Object>> list = new ArrayList();
-        for (SearchHit hit : hits) {
-            //highlightFields.size=0??
-            Map<String, HighlightField> highlightFields = hit.getHighlightFields();
-
-            //title高亮
-            HighlightField titleField = highlightFields.get("content");
-            Map<String, Object> source = hit.getSource();
-            if(titleField!=null){
-                Text[] fragments = titleField.fragments();
-                String name = "";
-                for (Text text : fragments) {
-                    name+=text;
-                }
-                source.put("content", name);
-            }
-//            //describe高亮
-//            HighlightField describeField = highlightFields.get("describe");
-//            if(describeField!=null){
-//                Text[] fragments = describeField.fragments();
-//                String describe = "";
+//
+//    private XContentBuilder createIKMapping(String indexType) {
+//        XContentBuilder mapping = null;
+//        try {
+//            mapping = jsonBuilder().startObject()
+//                    // 索引库名（类似数据库中的表）
+//                    .startObject(indexType).startObject("properties")
+//                    .startObject("product_name").field("type", "string")
+//                    .field("analyzer","ik").field("search_analyzer","ik_smart").endObject()
+//                    .startObject("title_sub").field("type", "string")
+//                    .field("analyzer","ik").field("search_analyzer","ik_smart").endObject()
+//                    .startObject("title_primary").field("type", "string")
+//                    .field("analyzer","ik").field("search_analyzer","ik_smart").endObject()
+//                    .startObject("publisher").field("type", "string")
+//                    .field("analyzer","ik").field("search_analyzer","ik_smart").endObject()
+//                    .startObject("author_name").field("type", "string")
+//                    .field("analyzer","ik").field("search_analyzer","ik_smart").endObject()
+//                    //.field("boost",100).endObject()
+//                    // 姓名
+//                    //.startObject("name").field("type", "string").endObject()
+//                    // 位置
+//                    //.startObject("location").field("type", "geo_point").endObject()
+//                    //.endObject().startObject("_all").field("analyzer","ik").field("search_analyzer","ik").endObject().endObject().endObject();
+//                    .endObject().endObject().endObject();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return mapping;
+//    }
+//
+//    public static Map<String, Object> search(String key,String index,String type,int start,int row) throws UnknownHostException {
+//        //创建查询索引,要查询的索引库为index
+//        SearchRequestBuilder builder = ESClientUtil.getClient().prepareSearch(index);
+//        builder.setTypes(type);
+//        builder.setFrom(start);
+//        builder.setSize(row);
+//
+//        //设置查询类型：1.SearchType.DFS_QUERY_THEN_FETCH 精确查询； 2.SearchType.SCAN 扫描查询,无序
+//        builder.setSearchType(SearchType.DFS_QUERY_AND_FETCH);
+//        if(StringUtils.isNotBlank(key)){
+//            // 设置查询关键词
+//            builder.setQuery(QueryBuilders.multiMatchQuery(key, "content"));
+//        }
+//
+//        //设置是否按查询匹配度排序
+//        builder.setExplain(true);
+//        //设置高亮显示
+//        HighlightBuilder highlightBuilder = new HighlightBuilder().field("*").requireFieldMatch(false);
+//        highlightBuilder.preTags("<span style=\"color:red\">");
+//        highlightBuilder.postTags("</span>");
+//        builder.highlighter(highlightBuilder);
+//
+//        //执行搜索,返回搜索响应信息
+//        SearchResponse searchResponse = builder.get();
+//        SearchHits searchHits = searchResponse.getHits();
+//
+//        //总命中数
+//        long total = searchHits.getTotalHits();
+//        Map<String, Object> map = new HashMap();
+//        SearchHit[] hits = searchHits.getHits();
+//        map.put("count", total);
+//        List<Map<String, Object>> list = new ArrayList();
+//        for (SearchHit hit : hits) {
+//            //highlightFields.size=0??
+//            Map<String, HighlightField> highlightFields = hit.getHighlightFields();
+//
+//            //title高亮
+//            HighlightField titleField = highlightFields.get("content");
+//            Map<String, Object> source = hit.getSource();
+//            if(titleField!=null){
+//                Text[] fragments = titleField.fragments();
+//                String name = "";
 //                for (Text text : fragments) {
-//                    describe+=text;
+//                    name+=text;
 //                }
-//                source.put("describe", describe);
+//                source.put("content", name);
 //            }
-            list.add(source);
-        }
-        map.put("dataList", list);
-        return map;
-    }
+////            //describe高亮
+////            HighlightField describeField = highlightFields.get("describe");
+////            if(describeField!=null){
+////                Text[] fragments = describeField.fragments();
+////                String describe = "";
+////                for (Text text : fragments) {
+////                    describe+=text;
+////                }
+////                source.put("describe", describe);
+////            }
+//            list.add(source);
+//        }
+//        map.put("dataList", list);
+//        return map;
+//    }
 }

@@ -3,6 +3,13 @@ var head = {
 %>
 <link rel="stylesheet" type="text/css" href="/static/css/user-center-menu.css">
 <link rel="stylesheet" type="text/css" href="/static/css/usercenter-admin.css">
+<script type="text/javascript">
+    var pagePath = '/sysNews/list';
+    var pageType = 'get';
+    var dataParm = {};
+    dataParm.pageNumber = 1;
+    dataParm.pageSize = 10;
+</script>
 <%};%>
 
 <%
@@ -61,118 +68,154 @@ var htmlPart = {
                             </tr>
                         </thead>
                         <tbody>
-                        <%
-                        for( item in pageInfo.list){
-                        %>
-                            <tr>
-                                <td>${print(itemLP.index)}</td>
-                                <td>${item.newsTitle}</td>
-                                <td class="imgs"><div><img src="${item.pictureUrl}"></div></td>
-                                <td>${item.sytTime,"yyyy-MM-dd HH:mm:ss"}</td>
-                                <%
-                                if(item.sysUser == '' || item.sysUser == null ){
-                                %>
-                                <td>-</td>
-                                <% }else{ %>
-                                <td>${item.sysUser}</td>
-                                <% } %>
-                                <td>
-                                    <a onclick="deleteData('${item.newsId}')">删除</a>
-                                    <a href="/usercenter/publishArticle?id=${item.newsId}">修改</a>
-                                </td>
-                            </tr>
-                        <% } %>
+
                         </tbody>
                     </table>
                 </div>
                 <%include("/layout/pageaction.html"){} %>
             </div>
-            <div class="footer">
-                <ul class="pagination" id="pagination0"></ul>
-            </div>
         </div>
     </div>
 </div>
 <script type="text/javascript">
-
-        var data = {};
-        function changes(that){
-            var thisVal = $(that).val();
-            $('.select-hide').hide();
-            if(thisVal == 'information'){
-                $('#newsSonGroup').show();
-                $('.select-line').show();
-            }else{
-                $('#newsSonGroup').hide();
-                $('.select-line').hide();
+    function loadPageData(data){ //渲染页面数据
+        if(data.data.list){
+            var list = data.data.list;
+            var html = '';
+            for(var i=0; i<list.length; i++){
+                html += '<tr>';
+                html += '<td>'+(i+1)+'</td>';
+                html += '<td>'+list[i].newsTitle+'</td>';
+                html += '<td class="imgs"><div><img src="'+list[i].pictureUrl+'"></div></td>';
+                html += '<td>'+format(list[i].sytTime)+'</td>';
+                html += '<td>'+judge(list[i].sysUser)+'</td>';
+                html += '<td>';
+                html += '<a href="javascript:deleteData(\''+list[i].newsId+'\');">删除</a>';
+                html += '<a href="/usercenter/publishArticle?id='+list[i].newsId+'">修改</a>';
+                html += '</td>';
+                html += '</tr>';
             }
-            if(thisVal!=='information'){
-                data.newsSonGroup="";
-            }
-            data.pageNumber = 1;
-            data.pageSize = 8;
-            data.newsGroup = thisVal;
-            if(data.newsGroup == 'information'){
-                data.newsSonGroup = $("#newsSonGroup").val();;
+            function add(m){ return m < 10 ? '0'+ m:m };
+            function format(time){
+                var date = new Date(time);
+                var year = date.getFullYear() ;
+                var month = date.getMonth()+1;
+                var date1 = date.getDate() ;
+                var hours = date.getHours();
+                var minutes = date.getMinutes();
+                var seconds = date.getSeconds();
+                return year+'-'+add(month)+'-'+add(date1)+' '+add(hours)+':'+add(minutes)+':'+add(seconds);
             };
-            loadData(data);
-        }
-        function second(that){
-            data.newsSonGroup=$(that).val();
-            loadData(data);
-        }
-//    获取列表信息
-        function loadData(data){
-            $(".article-box > .order-items > tbody").html('');
-            $.ajax({
-                type: "get",
-                url: "/sysNews/list",
-                data: data,
-                success: function(data){
-                    console.log(data);
-                    for(var i=0;i<data.list.length;i++){
-                        $(".article-box > .order-items > tbody").append(
-                            "<tr>"
-                            +"<td>"+(i+1)+"</td>"
-                            +"<td>"+data.list[i].newsTitle+"</td>"
-                            +"<td class='imgs'>"+"<div>"+"<img src="+data.list[i].pictureUrl+">"+"</div>"+"</td>"
-                            +"<td>"+format(data.list[i].sytTime)+"</td>"
-                            +"<td>"+judge(data.list[i].sysUser)+"</td>"
-                            +"<td>"
-                            +"<a href='javascript:onclick=deleteData("+JSON.stringify(data.list[i].newsId)+");' >删除</a>"
-                            +"<a href='/usercenter/publishArticle?id="+data.list[i].newsId+"'>修改</a>"
-                            +"</td>"
-                            +"</tr>"
-                        );
-                    }
-                    $(".article-box > .order-items > tbody").append(html);
-                    function judge(user){
-                        if(user == ""||user == null){
-                            return "-";
-                        }
-                        return user;
-                    }
-                    function add(m){ return m < 10 ? '0'+ m:m };
-                    function format(time){
-                        var date = new Date(time);
-                        var year = date.getFullYear() ;
-                        var month = date.getMonth()+1;
-                        var date1 = date.getDate() ;
-                        var hours = date.getHours();
-                        var minutes = date.getMinutes();
-                        var seconds = date.getSeconds();
-                        return year+'-'+add(month)+'-'+add(date1)+' '+add(hours)+':'+add(minutes)+':'+add(seconds);
-                    };
-                },
-                error:function(e){
-                    alert(e);
+            function judge(user){
+                if(user == ""||user == null){
+                    return "-";
                 }
-            });
+                return user;
+            }
+            $('.article-box .order-items tbody').html(html);
         }
+    }
+    function changes(that){ //筛选状态改变
+        var thisVal = $(that).val();
+        $('.select-hide').hide();
+        if(thisVal == 'information'){
+            $('#newsSonGroup').show();
+            $('.select-line').show();
+            dataParm.newsGroup = thisVal;
+            dataParm.newsSonGroup = $("#newsSonGroup").val();
+            goPage("1");
+        }else{
+            $('#newsSonGroup').hide();
+            $('.select-line').hide();
+            dataParm.newsGroup = thisVal;
+            dataParm.newsSonGroup = "";
+            goPage("1");
+        }
+    }
+    function second(that){
+        dataParm.newsSonGroup=$(that).val();
+        goPage("1");
+    }
+
+//        var data = {};
+//        function changes(that){
+//            var thisVal = $(that).val();
+//            $('.select-hide').hide();
+//            if(thisVal == 'information'){
+//                $('#newsSonGroup').show();
+//                $('.select-line').show();
+//            }else{
+//                $('#newsSonGroup').hide();
+//                $('.select-line').hide();
+//            }
+//            if(thisVal!=='information'){
+//                data.newsSonGroup="";
+//            }
+//            data.pageNumber = 1;
+//            data.pageSize = pageSize;
+//            data.newsGroup = thisVal;
+//            if(data.newsGroup == 'information'){
+//                data.newsSonGroup = $("#newsSonGroup").val();;
+//            };
+//            loadData(data);
+//        }
+//        function second(that){
+//            data.newsSonGroup=$(that).val();
+//            loadData(data);
+//        }
+//    获取列表信息
+//        function loadData(data){
+//            $(".article-box > .order-items > tbody").html('');
+//            $.ajax({
+//                type: "get",
+//                url: "/sysNews/list",
+//                data: data,
+//                success: function(data){
+//                    console.log(data);
+//                    for(var i=0;i<data.list.length;i++){
+//                        $(".article-box > .order-items > tbody").append(
+//                            "<tr>"
+//                            +"<td>"+(i+1)+"</td>"
+//                            +"<td>"+data.list[i].newsTitle+"</td>"
+//                            +"<td class='imgs'>"+"<div>"+"<img src="+data.list[i].pictureUrl+">"+"</div>"+"</td>"
+//                            +"<td>"+format(data.list[i].sytTime)+"</td>"
+//                            +"<td>"+judge(data.list[i].sysUser)+"</td>"
+//                            +"<td>"
+//                            +"<a href='javascript:onclick=deleteData("+JSON.stringify(data.list[i].newsId)+");' >删除</a>"
+//                            +"<a href='/usercenter/publishArticle?id="+data.list[i].newsId+"'>修改</a>"
+//                            +"</td>"
+//                            +"</tr>"
+//                        );
+//                    }
+//                    function judge(user){
+//                        if(user == ""||user == null){
+//                            return "-";
+//                        }
+//                        return user;
+//                    }
+//                    function add(m){ return m < 10 ? '0'+ m:m };
+//                    function format(time){
+//                        var date = new Date(time);
+//                        var year = date.getFullYear() ;
+//                        var month = date.getMonth()+1;
+//                        var date1 = date.getDate() ;
+//                        var hours = date.getHours();
+//                        var minutes = date.getMinutes();
+//                        var seconds = date.getSeconds();
+//                        return year+'-'+add(month)+'-'+add(date1)+' '+add(hours)+':'+add(minutes)+':'+add(seconds);
+//                    };
+//                },
+//                error:function(e){
+//                    alert(e);
+//                }
+//            });
+//        }
         function deleteData(id) {
             $.confirm('你确定要删除这条消息吗? ',null,function(type){
                 if(type == 'yes'){
                     deleteLoad(id);
+                    this.hide();
+                }else{
                     this.hide();
                 }
             });
@@ -199,81 +242,7 @@ var htmlPart = {
                 }
             });
         }
-        //分页
-        function pageBackFn(data){
-            if(data.data.list){
-                var list = data.data.list;
-                var html = '';
-                for(var i=0; i<list.length; i++){
-                    html += '<tr>';
-                    html += '<td class="text-center">';
-                    html += '<a href="javascript:void(0)">';
-                    html += '<img src="http://'+list[i].goodsImg+'" alt="">';
-                    html += '<p>'+list[i].goodsName+'</p>';
-                    html += '</a>';
-                    html += '</td>';
-                    html += '<td>'+list[i].catId+'</td>';
-                    html += '<td class="text-right">'+list[i].shopNumber+'</td>';
-                    html += '<td class="text-center">'+format(list[i].addTime)+'</td>';
-                    if(list[i].checkStatus == 0){
-                        html += '<td class="text-center">审核中</td>';
-                    }else if(list[i].checkStatus == 1){
-                        html += '<td class="text-center">通过</td>';
-                    }else if(list[i].checkStatus == 2){
-                        html += '<td class="text-center">不通过</td>';
-                    }
-                    html += '<td>';
-                    html += '<a href="javascript:void(0)">下架</a>';
-                    html += '</td>';
-                    html += '</tr>';
-                }
-                function add(m){ return m < 10 ? '0'+ m:m };
-                function format(time){
-                    var date = new Date(time);
-                    var year = date.getFullYear() ;
-                    var month = date.getMonth()+1;
-                    var date1 = date.getDate() ;
-                    var hours = date.getHours();
-                    var minutes = date.getMinutes();
-                    var seconds = date.getSeconds();
-                    return year+'-'+add(month)+'-'+add(date1)+' '+add(hours)+':'+add(minutes)+':'+add(seconds);
-                };
-            },
-            error:function(e){
-                alert(e);
-            }
-        });
-    }
-    function deleteData(id) {
-        $.confirm('你确定要删除这条消息吗? ',null,function(type){
-            if(type == 'yes'){
-                deleteLoad(id);
-                this.hide();
-            }
-        });
-    }
-    function deleteLoad(id){
-        var arr=[];
-        arr.push(id);
-        $.ajax({
-            type:"post",
-            url:"/sysNews/deleteInfo",
-            dataType: "json",
-            data: JSON.stringify(arr),
-            contentType: 'application/json',
-            success:function(data){
-                if(data.code == "1") {
-                    $.alert('删除成功', true, function () {
-                        data.newsGroup = $("#newsGroup").val();
-                        loadData(data);
-                    });
-                }
-            },
-            error:function(e){
-                alert(e);
-            }
-        });
-    }
+
 
 </script>
 <%};

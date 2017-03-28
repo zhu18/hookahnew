@@ -99,10 +99,7 @@ public class GoodsBackController {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
-            List<Condition> filters = new ArrayList<>();
-            filters.add(Condition.eq("goodsId", id));
-            filters.add(Condition.eq("domainId", "123"));
-            Goods goods = goodsService.selectOne(filters);
+            Goods goods = goodsService.selectById(id);
             if (goods == null || goods.getGoodsId() == null) {
                 returnData.setCode(ExceptionConst.empty);
             }else {

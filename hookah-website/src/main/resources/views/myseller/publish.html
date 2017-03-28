@@ -5,6 +5,7 @@ var head = {
 <link rel="stylesheet" type="text/css" href="/static/css/myseller.css">
 <link rel="stylesheet" type="text/css" href="/static/css/wangEditor/wangEditor.min.css">
 <link rel="stylesheet" type="text/css" href="/static/css/chosen.css">
+<link rel="stylesheet" type="text/css" href="/static/css/jedate/jedate.css">
 
 <%};%>
 
@@ -24,6 +25,7 @@ var htmlPart = {
                     <h1>1.商品基本信息</h1>
                     <div class="struct">
                         <table>
+
                             <tr>
                                 <td class="bar">商品名称：</td>
                                 <td>
@@ -50,8 +52,24 @@ var htmlPart = {
                             <tr class="attribute-container">
                                 <td class="bar">商品属性：</td>
                                 <td>
+                                    <div class="block info" style="margin: 0px 0px 3px;">
+                                        商品属性支持默认。
+                                    </div>
                                     <div class="attribute-box">
                                         <table></table>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bar">商品类型：</td>
+                                <td>
+                                    <div class="radio-box">
+                                        <label>
+                                            <input type="radio" name="goodsTypes" onchange="goodsTypes(this)" value="0" checked>常规商品
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="goodsTypes" onchange="goodsTypes(this)" value="1">api
+                                        </label>
                                     </div>
                                 </td>
                             </tr>
@@ -136,7 +154,7 @@ var htmlPart = {
                                             <tbody>
                                                 <tr class="parent-tr">
                                                     <td class="number-input">
-                                                        <div class="inputbox"><input type="number" placeholder="请输入规格"></div>
+                                                        <div class="inputbox"><input type="number" datatype="number" placeholder="请输入规格"></div>
                                                     </td>
                                                     <td>
                                                         <div class="selectbox">
@@ -148,7 +166,7 @@ var htmlPart = {
                                                         </div>
                                                     </td>
                                                     <td class="price-input">
-                                                        <div class="inputbox"><input class="price-input" type="number" placeholder="请输入价格"></div>
+                                                        <div class="inputbox"><input class="price-input" datatype="price" type="number" placeholder="请输入价格"></div>
                                                     </td>
                                                     <td>
                                                         <span class="table-plus-btn" onclick="tablePlus(this)">+</span>
@@ -171,8 +189,8 @@ var htmlPart = {
                             </tr>
                         </table>
                     </div>
-                    <h1>2.API信息</h1>
-                    <div class="struct">
+                    <h1 class="api-info-box">2.API信息</h1>
+                    <div class="struct api-info-box">
                         <table>
                             <tr>
                                 <td class="bar">接口地址：</td>
@@ -210,6 +228,7 @@ var htmlPart = {
                                                 <tr>
                                                     <th>名称</th>
                                                     <th>类型</th>
+                                                    <th>默认值</th>
                                                     <th>必填</th>
                                                     <th>示例</th>
                                                     <th>描述</th>
@@ -223,6 +242,9 @@ var htmlPart = {
                                                     </td>
                                                     <td class="type-input">
                                                         <div class="inputbox"><input type="text" placeholder="请输入类型"></div>
+                                                    </td>
+                                                    <td class="type-input">
+                                                        <div class="inputbox"><input type="text" placeholder="请输入默认值"></div>
                                                     </td>
                                                     <td>
                                                         <div class="radio-box">
@@ -246,6 +268,15 @@ var htmlPart = {
                                                 </tr>
                                             </tbody>
                                         </table>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bar">返回示例：</td>
+                                <td>
+                                    <div class="textarea-box">
+                                        <textarea type="text"></textarea>
+                                        <span class="input-count"></span>
                                     </div>
                                 </td>
                             </tr>
@@ -336,10 +367,13 @@ var htmlPart = {
                                 <td>
                                     <div class="radio-box">
                                         <label>
-                                            <input type="radio" name="122" checked>立刻上架
+                                            <input type="radio" name="isOnsale" value="0" checked onchange="isOnsaleFun(this)">立刻上架
                                         </label>
                                         <label>
-                                            <input type="radio" name="122">定时上架
+                                            <input type="radio" name="isOnsale" value="1" onchange="isOnsaleFun(this)">定时上架
+                                        </label>
+                                        <label class="isOnsale-box">
+                                            请选择上架时间：<input id="indate" type="text" placeholder="请选择"  readonly>
                                         </label>
                                     </div>
                                 </td>
@@ -358,11 +392,30 @@ var htmlPart = {
 <script type="text/javascript" src="../../static/js/wangEditor.min.js"></script>
 <script type="text/javascript" src="../../static/js/chosen.jquery.js"></script>
 <script type="text/javascript" src="../../static/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="../../static/js/jquery.jedate.min.js"></script>
 <script type="text/javascript">
+    $.getUrlParam = function (key) {
+        var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+        var result = window.location.search.substr(1).match(reg);
+        return result ? decodeURIComponent(result[2]) : null;
+    }
+
+    var catId = $.getUrlParam('catId'),
+        category = $.getUrlParam('category'),
+        url = '/category/findAttr';
     $(document).ready(function () {
         var editor = new wangEditor('textarea1');
-        editor.config.uploadImgUrl = '/upload';//上传图片（举例）
+        editor.config.uploadImgUrl = '/upload/fileUpload';//上传图片（举例）
         editor.config.menuFixed = false;//关闭菜单栏fixed
+        editor.config.menus = $.map(wangEditor.config.menus, function(item, key) {
+            if (item === 'location') {
+                return null;
+            }
+            if (item === 'video') {
+                return null;
+            }
+            return item;
+        });
         editor.create(); //初始化富文本
         $('.search-select-box').click(function () {
             $(this).children('.search-option').show();
@@ -372,15 +425,7 @@ var htmlPart = {
         })
 
 
-        $.getUrlParam = function (key) {
-            var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
-            var result = window.location.search.substr(1).match(reg);
-            return result ? decodeURIComponent(result[2]) : null;
-        }
 
-        var catId = $.getUrlParam('catId'),
-            category = $.getUrlParam('category'),
-            url = '/category/findAttr';
         $('.category-title-box').text(category);
 
         loadData(url, catId); //加载商品属性数据
@@ -408,7 +453,7 @@ var htmlPart = {
                     html += '<tr>';
                     html += '<td>' + typeList[i].typeName + '：</td>';
                     html += ' <td>';
-                        html += '<select data-placeholder="请选择'+typeList[i].typeName+'" name="'+typeList[i].typeName+'" style="width:560px;" multiple class="chosen-select chosen-select-'+i+'" tabindex="8">';
+                        html += '<select data-placeholder="请选择'+typeList[i].typeName+'" name="'+typeList[i].typeName+'" typeid="'+typeList[i].typeId+'" style="width:560px;" multiple class="chosen-select chosen-select-'+i+'" tabindex="8">';
                         for(var j = 0; j < typeList[i].attrList.length; j++){
                             html += '<option value="'+typeList[i].attrList[j].attrId+'">'+typeList[i].attrList[j].attrName+'</option>';
                         }
@@ -416,7 +461,7 @@ var htmlPart = {
                     html += '</td>';
                     html += '</tr>';
                 }
-                $('.attribute-box').append(html);
+                $('.attribute-box table').append(html);
                 $('.chosen-select').chosen(); //初始化select 多选插件
             }else{
                 $('.attribute-container').remove();
@@ -433,9 +478,9 @@ var htmlPart = {
         item++ ;
         var priceHtml = '';//规格与价格
         priceHtml += '<tr class="parent-tr">';
-        priceHtml += '<td class="number-input"><div class="inputbox"><input type="number" placeholder="请输入规格"></div></td>';
+        priceHtml += '<td class="number-input"><div class="inputbox"><input type="number" datatype="number" placeholder="请输入规格"></div></td>';
         priceHtml += '<td><div class="selectbox"><select name="format"><option value="0">次</option><option value="1">天</option><option value="2">年</option></select></div></td>';
-        priceHtml += '<td class="price-input"><div class="inputbox"><input type="number" placeholder="请输入价格"></div></td>';
+        priceHtml += '<td class="price-input"><div class="inputbox"><input type="number" datatype="price" placeholder="请输入价格"></div></td>';
         priceHtml += '<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
         priceHtml += '</tr>';
         var requestHtml = '';//请求接口
@@ -539,8 +584,69 @@ var htmlPart = {
     });
     $('.pusGoods-btn').click(function(){
         var data = {};
+            data.goodsName = $('input[name="goodsName"]').val();
+            data.goodsBrief = $('textarea[name="goodsBrief"]').val();
+            data.attrTypeList = [];
+            $('.chosen-select').each(function(){
+                var attrTypeList = {};
+                attrTypeList.typeId = $(this).attr('typeid');
+                attrTypeList.typeName = $(this).attr('name');
+                attrTypeList.attrlist = $(this).val();
+                data.attrTypeList.push(attrTypeList);
+            });
+            data.goodsImg = $('#preview-img').attr('src');
+            data.formatList = [];
+
+            $('table[d-type="priceHtml"] tbody tr').each(function(){
+                var listData = {};
+                listData.number = $(this).find('input[datatype="number"]').val();
+                listData.format = $(this).find('select[name="format"]').val();
+                listData.price = $(this).find('input[datatype="price"]').val();
+                data.formatList.push(listData);
+            });
+            data.shopNumber = data.formatList[0].number;
+            data.shopFormat = data.formatList[0].format;
+            data.shopPrice = data.formatList[0].price;
+            data.goodsType = $('input[name="goodsTypes"]:checked').val();
+            data.goodsDesc = $('#textarea1').val();
+            data.catId = catId; //此ID为url上的id
+            data.isOnsale = $('input[name="isOnsale"]:checked').val();
+            if (data.isOnsale == 1){
+                data.onsaleStartDate = $('#indate').val();
+            }
+
+        if(!!!data.goodsName){
+            alert("请输入商品名称");
+        }else if(!!!data.goodsBrief){
+            alert("请输入商品简介");
+        }else if(!!!data.goodsImg){
+            alert("请上传图片");
+        }else{
+            alert(JSON.stringify(data));
+        }
+
 
     });
+
+    function goodsTypes(that){
+        if($(that).val() == 0){
+            $('.api-info-box').hide();
+        }else{
+            $('.api-info-box').show();
+        }
+    }
+    function isOnsaleFun(that){
+        if($(that).val() == 1){
+            $('.isOnsale-box').show();
+        }else{
+            $('.isOnsale-box').hide();
+        }
+    }
+    $.jeDate("#indate",{
+        format:"YYYY-MM-DD hh:mm:ss",
+        isTime:true,
+        minDate:$.nowDate(0)
+    })
 </script>
 
 <%};

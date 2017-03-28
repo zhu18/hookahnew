@@ -155,6 +155,7 @@
     margin:10px 0;
     padding:5px;
 }
+.pulish-wrapper .publish-box .api-info-box{display: none;}
 .pulish-wrapper .publish-box .struct table{width:100%}
 .pulish-wrapper .publish-box .struct tr{}
 .pulish-wrapper .publish-box .struct tr td{
@@ -432,7 +433,13 @@
     cursor: pointer;
 }
 
+.radio-box .isOnsale-box{display: none;}
+.radio-box .isOnsale-box input {
+    width:200px;
+    height:30px;
+    border:1px solid #ccc;
 
+}
 
 
 
