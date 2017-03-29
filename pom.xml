@@ -32,7 +32,7 @@
     <spring.version>4.3.4.RELEASE</spring.version>
     <spring-boot.version>1.4.2.RELEASE</spring-boot.version>
     <spring.security.oauth.version>2.0.12.RELEASE</spring.security.oauth.version>
-    <motan.version>0.2.3</motan.version>
+    <motan.version>0.3.0</motan.version>
     <vertx.version>3.3.3</vertx.version>
     <beetl.version>2.7.12</beetl.version>
     <oltu.version>1.0.2</oltu.version>
