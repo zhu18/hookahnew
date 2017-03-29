@@ -17,6 +17,7 @@ var htmlPart = {
             <h3 class="center-title">购物车</h3>
             <div class="order-manage">
                 <div class="order-box cart-box">
+                    <% if(cartList.~size > 1){ %>
                     <table class="cart-list-title order-items">
                         <tr class="order-body">
                             <td class="checkbox"><label><input type="checkbox" class="checkall" name="checkall"> 全选</label></td>
@@ -33,20 +34,22 @@ var htmlPart = {
                             <!--<td class="checkbox"><input type="checkbox" name="checkcc"></td>-->
                             <!--<td colspan="6">卖家名称：大胡子妹妹</td>-->
                         <!--</tr>-->
+
+
                         <% for(list in cartList){ %>
                         <tr class="order-body">
                             <td class="checkbox"><input type="checkbox" name="items" value="${list.recId}"></td>
                             <td class="img"><div><img src="${list.goodsImg}" alt=""></div></td>
                             <td class="name">${list.goodsName}</td>
-                            <td class="price">${list.goodsPrice}</td>
+                            <td class="price">${list.goodsPrice / 100}</td>
                             <td class="number" recId="${list.recId}">
                                 <div>
                                     <span class="reduce-btn btn <% if(list.goodsNumber <= 1){ %>testcalss<% } %>" onclick="reduceFn(this)">-</span>
-                                    <input type="text" class="numberInput" value="${list.goodsNumber}" onkeydown="kkdown()" onfocus="numFocusFn(this)" >
+                                    <input type="text" class="numberInput" value="${list.goodsNumber}" onkeydown="return kkdown(this,event)" onfocus="numFocusFn(this)" >
                                     <span class="plus-btn btn" onclick="plusFn(this)">+</span>
                                 </div>
                             </td>
-                            <td class="money">${list.goodsPrice * list.goodsNumber}</td>
+                            <td class="money">${(list.goodsPrice * list.goodsNumber) / 100}</td>
                             <td class="operation">
                                 <a href="javascript:void(0)">商品详情</a>
                                 <a href="javascript:void(0)">删除</a>
@@ -100,7 +103,7 @@ var htmlPart = {
                     <table class="cart-list-bottom order-items">
                         <tr class="order-body">
                             <td class="checkbox"><label><input class="checkall" type="checkbox" name="checkall"> 全选</label></td>
-                            <td class="img"></td>
+                            <td class="img"><a href="javascript:void(0)" id="btn">删除</a></td>
                             <td class="name"></td>
                             <td class="price"></td>
                             <td class="number">已选商品 <span>0</span>件</td>
@@ -108,8 +111,10 @@ var htmlPart = {
                             <td class="operation"><button class="buy-btn">结算</button></td>
                         </tr>
                     </table>
+                    <%}else{%>
+                    <div>没有有数据</div>
+                    <%}%>
                 </div>
-                <input type="button" value="获得选中的所有值" id="btn">
             </div>
         </div>
     </div>
@@ -130,21 +135,41 @@ var htmlPart = {
         });
         $("[name=checkall]:checkbox").prop("checked",flag);
     })
-
-    //输出选中的值
+    //删除选中
     $("#btn").click(function(){
-        var str="你选中的是：\r\n";
+        var str=[];
         $("[name=items]:checkbox:checked").each(function(){
-            str+=$(this).val()+"\r\n";
+            str.push($(this).val());
         });
-        alert(str);
+        if(str.length >= 1){
+            $.ajax({
+                type: "POST",
+                url: '/cart/deleteAll',
+                data: {
+                    ids:str
+                },
+                success: function (msg) {
+                    if (msg.code == 1) {
+                        $.alert('删除成功')
+                        $("[name=items]:checkbox:checked").each(function(){
+                            $(this).parents('.order-body').remove()
+                        });
+                        if($("[name=checkall]:checkbox").prop("checked")){
+                            $('.cart-box').html('没有有数据')
+                        }
+                    } else {
+                        $.alert(msg.message)
+                    }
+                }
+            });
+        }else{
+            $.alert('至少选择一件商品')
+        }
     });
-
-    function reduceFn(that){
+    function reduceFn(that){ //点击按钮事件
         var goodsNumber = Number($(that).siblings('input').val());
         if(goodsNumber > 1){
             goodsNumber -= 1;
-//            console.log(inputVal)
             moneyFn(that, goodsNumber);
         }
         if(goodsNumber <= 1){
@@ -153,17 +178,16 @@ var htmlPart = {
         $(that).siblings('input').val(goodsNumber)
 
     }
-    function plusFn(that){
+    function plusFn(that){ //点击加按钮事件
         var goodsNumber = Number($(that).siblings('input').val());
         goodsNumber += 1;
-//        console.log(inputVal)
         $(that).siblings('input').val(goodsNumber)
         if(goodsNumber > 1){
             $(that).siblings('.reduce-btn').removeClass('testcalss');
         }
         moneyFn(that, goodsNumber);
     }
-    function moneyFn(that, goodsNumber){
+    function moneyFn(that, goodsNumber){ //点击加减按钮之后进行操作
         var price = Number($(that).parents('.number').siblings('.price').html());
         var money = (price * goodsNumber).toFixed(2);
         var recId = $(that).parents('.number').attr('recId');
@@ -171,6 +195,9 @@ var htmlPart = {
         console.log('recId:----'+recId);
         console.log('price:----'+price);
         console.log('money:----'+money);
+        editAjax(recId, goodsNumber)
+    }
+    function editAjax(recId, goodsNumber){ //请求
         $.ajax({
             type: "POST",
             url: '/cart/edit',
@@ -193,41 +220,35 @@ var htmlPart = {
             return inputVal = $(that).val();
         }
     }
-   var i=1
     $('.numberInput').blur(function(){
-        console.log (i++)
+        var goodsNumber = Number($(this).val());
+        var recId = $(this).parents('.number').attr('recId');
+        var price = Number($(this).parents('.number').siblings('.price').html());
         if($(this).val()){
             if($(this).val() % 1 == 0){
                 if(inputVal != $(this).val()){
-                    console.log('数据不一样可以提交')
+                    editAjax(recId, goodsNumber)
+                    $(this).parents('.number').siblings('.money').html(price * goodsNumber);
                 }else{
                     console.log('数据一样的')
                 }
             }else{
-                console.log('不是整数')
+                alert('请输入整数')
             }
         }else{
-            console.log('不能为空')
+            alert('不能为空')
         }
 
     })
-    function kkdown(){
-        if(event.keyCode==13){
-            $(this).blur();
+    function kkdown(that, e){
+        var keynum = window.event ? e.keyCode : e.which;
+        if(keynum == 13){
+            $(that).blur()
         }
+
     }
 
 
-//    if($('.numberInput').is(':focus')){
-//
-//    }
-    $('.numberInput').keydown(function(event){
-        if(event.keyCode==13){
-            $('.numberInput').blur();
-            console.log('按下成功了')
-//            numBlurFn(this)
-        }
-    });
 </script>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
