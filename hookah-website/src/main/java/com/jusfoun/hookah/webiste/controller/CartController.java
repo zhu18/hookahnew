@@ -58,7 +58,7 @@ public class CartController {
      */
     @ResponseBody
     @RequestMapping(value = "/cart/add", method = RequestMethod.POST)
-    public ReturnData add(@Valid @RequestBody Cart cart, Model model) {
+    public ReturnData add(@Valid Cart cart, Model model) {
         try {
             //设置默认信息
 
@@ -91,7 +91,7 @@ public class CartController {
      */
     @ResponseBody
     @RequestMapping(value = "/cart/addAll", method = RequestMethod.POST)
-    public ReturnData addAll(@RequestBody List<Cart> list, Model model) {
+    public ReturnData addAll(List<Cart> list, Model model) {
         try {
             //需要先获取当前用户id
             String userId = "hookah";
@@ -122,7 +122,7 @@ public class CartController {
      */
     @ResponseBody
     @RequestMapping(value = "/cart/edit", method = RequestMethod.POST)
-    public ReturnData edit(@RequestBody Cart cart, Model model) {
+    public ReturnData edit(Cart cart, Model model) {
         if(StringUtils.isBlank(cart.getRecId())){
             return ReturnData.invalidParameters("The field[recId] CANNOT be null!");
         }
@@ -159,7 +159,7 @@ public class CartController {
      */
     @ResponseBody
     @RequestMapping(value = "/cart/deleteAll", method = RequestMethod.POST)
-    public ReturnData deleteAll(@RequestBody String[] ids) {
+    public ReturnData deleteAll(String[] ids) {
         try {
             List<Condition> filters = new ArrayList<>();
             cartService.delete(ids);
