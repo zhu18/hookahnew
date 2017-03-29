@@ -122,7 +122,7 @@ public class CartController {
      */
     @ResponseBody
     @RequestMapping(value = "/cart/edit", method = RequestMethod.POST)
-    public ReturnData edit(@RequestBody Cart cart, Model model) {
+    public ReturnData edit( Cart cart, Model model) {
         if(StringUtils.isBlank(cart.getRecId())){
             return ReturnData.invalidParameters("The field[recId] CANNOT be null!");
         }
