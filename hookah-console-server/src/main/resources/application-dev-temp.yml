@@ -43,7 +43,7 @@ spring:
       host: smtp.qiye.163.com
       port: 25
       username: gbd@jusfoun.com
-      spring.mail.password: 1QAZ2wsx
+      password: 1QAZ2wsx
       properties:
         mail:
           smtp:
