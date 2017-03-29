@@ -14,10 +14,10 @@
       values
       <foreach collection="list" index="index" item="item" separator=",">
       (
-          (<include refid="generateKey" />),#{item.userId,jdbcType=VARCHAR}, #{item.goodsId,jdbcType=VARCHAR},
+          (<include refid="generateKey" />), #{item.userId,jdbcType=VARCHAR}, #{item.goodsId,jdbcType=VARCHAR},
           #{item.goodsSn,jdbcType=VARCHAR}, #{item.goodsName,jdbcType=VARCHAR}, #{item.goodsImg,jdbcType=VARCHAR},
-          #{item.marketPrice,jdbcType=REAL}, #{item.goodsPrice,jdbcType=REAL}, #{item.goodsFormat,jdbcType=VARCHAR},
-          #{item.formatNumber,jdbcType=SMALLINT}, #{item.goodsNumber,jdbcType=SMALLINT}, #{item.recType,jdbcType=TINYINT},
+          #{item.marketPrice,jdbcType=DECIMAL}, #{item.goodsPrice,jdbcType=DECIMAL}, #{item.goodsFormat,jdbcType=VARCHAR},
+          #{item.formatNumber,jdbcType=BIGINT}, #{item.goodsNumber,jdbcType=BIGINT}, #{item.recType,jdbcType=TINYINT},
           #{item.isGift,jdbcType=SMALLINT}, #{item.addTime,jdbcType=TIMESTAMP}
       )
       </foreach>

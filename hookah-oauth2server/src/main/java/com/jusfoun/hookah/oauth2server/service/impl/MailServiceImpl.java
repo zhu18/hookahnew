@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.console.server.service.impl;
+package com.jusfoun.hookah.oauth2server.service.impl;
 
 import com.jusfoun.hookah.rpc.api.MailService;
 import org.slf4j.Logger;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+
 @Service
 public class MailServiceImpl implements MailService {
 	

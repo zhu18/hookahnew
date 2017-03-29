@@ -2,8 +2,10 @@ server:
   port: 9100
 spring:
   datasource:
-    driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.15.90:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
+    url: jdbc:log4jdbc:mysql://192.168.15.90:3306/hookah?characterEncoding=utf8&useSSL=false&autoReconnect=true&failOverReadOnly=false&autoReconnectForPools=true
+    driverClassName: net.sf.log4jdbc.DriverSpy
+    #driverClassName: com.mysql.jdbc.Driver
+    #url: jdbc:mysql://192.168.15.90:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
     username: root
     password: password
     initialize: true
@@ -43,7 +45,7 @@ spring:
       host: smtp.qiye.163.com
       port: 25
       username: gbd@jusfoun.com
-      password: 1QAZ2wsx
+      spring.mail.password: 1QAZ2wsx
       properties:
         mail:
           smtp:

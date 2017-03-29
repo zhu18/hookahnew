@@ -19,34 +19,34 @@ var htmlPart = {
                 <div class="order-box cart-box">
                     <table class="cart-list-title order-items">
                         <tr class="order-body">
-                            <td class="checkbox"><label><input type="checkbox" name="checkcc"> 全选</label></td>
+                            <td class="checkbox"><label><input type="checkbox" class="checkall" name="checkall"> 全选</label></td>
                             <td class="img"></td>
                             <td class="name">商品信息</td>
-                            <td class="price">单价</td>
+                            <td class="price">单价(元)</td>
                             <td class="number">数量</td>
-                            <td class="money">金额</td>
+                            <td class="money">金额(元)</td>
                             <td class="operation">操作</td>
                         </tr>
                     </table>
                     <table class="order-items">
-                        <tr class="order-head">
-                            <td class="checkbox"><input type="checkbox" name="checkcc"></td>
-                            <td colspan="6">卖家名称：大胡子妹妹</td>
-                        </tr>
+                        <!--<tr class="order-head">-->
+                            <!--<td class="checkbox"><input type="checkbox" name="checkcc"></td>-->
+                            <!--<td colspan="6">卖家名称：大胡子妹妹</td>-->
+                        <!--</tr>-->
                         <% for(list in cartList){ %>
                         <tr class="order-body">
-                            <td class="checkbox"><input type="checkbox" name="checkcc"></td>
-                            <td class="img"><div><img src="../../static/img/TB1BLQsPpXXXXXNXXXXXXXXXXXX-440-330.jpg" alt=""></div></td>
+                            <td class="checkbox"><input type="checkbox" name="items" value="${list.recId}"></td>
+                            <td class="img"><div><img src="${list.goodsImg}" alt=""></div></td>
                             <td class="name">${list.goodsName}</td>
-                            <td class="price">￥${list.goodsPrice}</td>
-                            <td class="number">
+                            <td class="price">${list.goodsPrice}</td>
+                            <td class="number" recId="${list.recId}">
                                 <div>
-                                    <span class="reduce-btn btn">-</span>
-                                    <input type="text" value="${list.goodsNumber}">
-                                    <span class="plus-btn btn">+</span>
+                                    <span class="reduce-btn btn <% if(list.goodsNumber <= 1){ %>testcalss<% } %>" onclick="reduceFn(this)">-</span>
+                                    <input type="text" class="numberInput" value="${list.goodsNumber}" onkeydown="kkdown()" onfocus="numFocusFn(this)" >
+                                    <span class="plus-btn btn" onclick="plusFn(this)">+</span>
                                 </div>
                             </td>
-                            <td class="money">￥${list.goodsPrice * list.goodsNumber}</td>
+                            <td class="money">${list.goodsPrice * list.goodsNumber}</td>
                             <td class="operation">
                                 <a href="javascript:void(0)">商品详情</a>
                                 <a href="javascript:void(0)">删除</a>
@@ -99,7 +99,7 @@ var htmlPart = {
                     </table>
                     <table class="cart-list-bottom order-items">
                         <tr class="order-body">
-                            <td class="checkbox"><label><input type="checkbox" name="checkcc"> 全选</label></td>
+                            <td class="checkbox"><label><input class="checkall" type="checkbox" name="checkall"> 全选</label></td>
                             <td class="img"></td>
                             <td class="name"></td>
                             <td class="price"></td>
@@ -109,11 +109,126 @@ var htmlPart = {
                         </tr>
                     </table>
                 </div>
-
+                <input type="button" value="获得选中的所有值" id="btn">
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+
+    //全选/全不选
+    $(".checkall").click(function(){
+        $("[name=items]:checkbox").prop("checked",this.checked);
+        $("[name=checkall]:checkbox").prop("checked",this.checked);
+    });
+    $("[name=items]:checkbox").click(function(){
+        var flag=true;
+        $("[name=items]:checkbox").each(function(){
+            if(!this.checked){
+                flag=false;
+            }
+        });
+        $("[name=checkall]:checkbox").prop("checked",flag);
+    })
+
+    //输出选中的值
+    $("#btn").click(function(){
+        var str="你选中的是：\r\n";
+        $("[name=items]:checkbox:checked").each(function(){
+            str+=$(this).val()+"\r\n";
+        });
+        alert(str);
+    });
+
+    function reduceFn(that){
+        var goodsNumber = Number($(that).siblings('input').val());
+        if(goodsNumber > 1){
+            goodsNumber -= 1;
+//            console.log(inputVal)
+            moneyFn(that, goodsNumber);
+        }
+        if(goodsNumber <= 1){
+            $(that).addClass('testcalss')
+        }
+        $(that).siblings('input').val(goodsNumber)
+
+    }
+    function plusFn(that){
+        var goodsNumber = Number($(that).siblings('input').val());
+        goodsNumber += 1;
+//        console.log(inputVal)
+        $(that).siblings('input').val(goodsNumber)
+        if(goodsNumber > 1){
+            $(that).siblings('.reduce-btn').removeClass('testcalss');
+        }
+        moneyFn(that, goodsNumber);
+    }
+    function moneyFn(that, goodsNumber){
+        var price = Number($(that).parents('.number').siblings('.price').html());
+        var money = (price * goodsNumber).toFixed(2);
+        var recId = $(that).parents('.number').attr('recId');
+        $(that).parents('.number').siblings('.money').html(money);
+        console.log('recId:----'+recId);
+        console.log('price:----'+price);
+        console.log('money:----'+money);
+        $.ajax({
+            type: "POST",
+            url: '/cart/edit',
+            data: {
+                recId: recId,
+                goodsNumber:goodsNumber
+            },
+            success: function (msg) {
+                if (msg.code == 1) {
+
+                } else {
+                    $.alert(msg.message)
+                }
+            }
+        });
+    }
+    var inputVal = "";
+    function numFocusFn(that){
+        if($(that).val()){
+            return inputVal = $(that).val();
+        }
+    }
+   var i=1
+    $('.numberInput').blur(function(){
+        console.log (i++)
+        if($(this).val()){
+            if($(this).val() % 1 == 0){
+                if(inputVal != $(this).val()){
+                    console.log('数据不一样可以提交')
+                }else{
+                    console.log('数据一样的')
+                }
+            }else{
+                console.log('不是整数')
+            }
+        }else{
+            console.log('不能为空')
+        }
+
+    })
+    function kkdown(){
+        if(event.keyCode==13){
+            $(this).blur();
+        }
+    }
+
+
+//    if($('.numberInput').is(':focus')){
+//
+//    }
+    $('.numberInput').keydown(function(event){
+        if(event.keyCode==13){
+            $('.numberInput').blur();
+            console.log('按下成功了')
+//            numBlurFn(this)
+        }
+    });
+</script>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
