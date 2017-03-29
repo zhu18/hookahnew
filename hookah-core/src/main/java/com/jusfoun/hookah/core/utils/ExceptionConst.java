@@ -12,6 +12,11 @@ public abstract class ExceptionConst {
     public static final String InvalidParameters = "1001";
     public static final String AssertFailed = "1002";
 
+
+    public static final String PHONE_NULL_ERROR="2001";
+    /**发送短信异常*/
+    public static final String SMS_ERROR_MSG= "2002";
+
     private static final Map<String, String> CODE = new HashMap<String, String>() {
         private static final long serialVersionUID = 1L;
 
@@ -22,6 +27,9 @@ public abstract class ExceptionConst {
             put(Error, "系统内部错误");
             put(InvalidParameters, "无效参数");
             put(AssertFailed, "参数验证失败");
+            put(PHONE_NULL_ERROR,"手机号为空");
+            put(SMS_ERROR_MSG,"发送短信异常");
+
         }
     };
 

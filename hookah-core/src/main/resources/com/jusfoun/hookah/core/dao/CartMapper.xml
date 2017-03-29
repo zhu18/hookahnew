@@ -8,16 +8,17 @@
   <insert id="insertBatch" parameterType="java.util.List">
       insert into cart
       (
-      rec_id, user_id, goods_id, goods_sn, goods_name, market_price, goods_price, goods_format,
-      goods_number, rec_type, is_gift, add_time
+      rec_id, user_id, goods_id, goods_sn, goods_name, goods_img, market_price, goods_price,
+      goods_format, format_number, goods_number, rec_type, is_gift, add_time
       )
       values
       <foreach collection="list" index="index" item="item" separator=",">
       (
           (<include refid="generateKey" />),#{item.userId,jdbcType=VARCHAR}, #{item.goodsId,jdbcType=VARCHAR},
-          #{item.goodsSn,jdbcType=VARCHAR}, #{item.goodsName,jdbcType=VARCHAR}, #{item.marketPrice,jdbcType=REAL},
-          #{item.goodsPrice,jdbcType=REAL}, #{item.goodsFormat,jdbcType=VARCHAR}, #{item.goodsNumber,jdbcType=SMALLINT},
-          #{item.recType,jdbcType=TINYINT}, #{item.isGift,jdbcType=SMALLINT}, #{item.addTime,jdbcType=TIMESTAMP}
+          #{item.goodsSn,jdbcType=VARCHAR}, #{item.goodsName,jdbcType=VARCHAR}, #{item.goodsImg,jdbcType=VARCHAR},
+          #{item.marketPrice,jdbcType=REAL}, #{item.goodsPrice,jdbcType=REAL}, #{item.goodsFormat,jdbcType=VARCHAR},
+          #{item.formatNumber,jdbcType=SMALLINT}, #{item.goodsNumber,jdbcType=SMALLINT}, #{item.recType,jdbcType=TINYINT},
+          #{item.isGift,jdbcType=SMALLINT}, #{item.addTime,jdbcType=TIMESTAMP}
       )
       </foreach>
   </insert>

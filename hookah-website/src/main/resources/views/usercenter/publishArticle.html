@@ -197,7 +197,7 @@ var htmlPart = {
                         //把图片替换
                         var obj= data.data[0];
                         $("#preview-img").attr("src", "http://"+obj.absPath);
-                        imgSrc = "http://"+obj.absPath;
+                        imgSrc = obj.absPath;
                         if(typeof(data.error) != 'undefined') {
                             if(data.error != '') {
                                 alert(data.error);

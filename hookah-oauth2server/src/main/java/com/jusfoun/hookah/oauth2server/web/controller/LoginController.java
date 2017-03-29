@@ -22,6 +22,8 @@ public class LoginController {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
+
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model) {
         return "login";
@@ -68,6 +70,8 @@ public class LoginController {
             return "redirect:/login";
         }
     }
+
+
 
 
 
