@@ -12,7 +12,7 @@
 
   <!-- Realm实现 -->
   <bean id="oAuth2Realm" class="com.jusfoun.hookah.webiste.shiro.OAuth2Realm">
-    <property name="cachingEnabled" value="false"/>
+    <property name="cachingEnabled" value="true"/>
     <property name="authenticationCachingEnabled" value="true"/>
     <property name="authorizationCacheName" value="authorizationCache"/>
     <property name="clientId" value="website"/>
@@ -61,7 +61,7 @@
   <bean id="mySessionListener" class="com.jusfoun.hookah.webiste.shiro.MySessionListener"/>
   <!-- 会话管理器 -->
   <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
-    <property name="sessionIdUrlRewritingEnabled" value="false" />
+    <property name="sessionIdUrlRewritingEnabled" value="true" />
     <property name="globalSessionTimeout" value="1800000"/>
     <property name="deleteInvalidSessions" value="true"/>
     <property name="sessionValidationSchedulerEnabled" value="true"/>
