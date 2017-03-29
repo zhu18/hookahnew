@@ -13,4 +13,37 @@ public class HookahConstants {
 
     /** 短信过期时间，单位秒 */
     public static final Integer SMS_DURATION_SECONDS = 30;
+
+    public enum AnalyzeOpt {
+        ANALYZED("analyzed"),
+        NOT_ANALYZED("not_analyzed");
+
+        public String val;
+
+        AnalyzeOpt(String val) {
+            this.val = val;
+        }
+    }
+
+    public enum Analyzer {
+        IK_MAX_WORD("ik_max_word"),
+        PINYIN("pinyin");
+
+        public String val;
+
+        Analyzer(String val) {
+            this.val = val;
+        }
+    }
+
+    public enum TermVector {
+        OFFSETS("with_positions_offsets"),
+        NONE(null);
+
+        public String val;
+
+        TermVector(String val) {
+            this.val = val;
+        }
+    }
 }

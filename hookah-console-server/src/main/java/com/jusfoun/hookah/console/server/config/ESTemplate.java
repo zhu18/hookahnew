@@ -32,6 +32,7 @@ import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
+import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import java.io.IOException;
@@ -44,6 +45,7 @@ import java.util.Map;
 /**
  * Created by wangjl on 2017-3-27.
  */
+@Component
 public class ESTemplate {
     /**
      * 构建ES索引
