@@ -28,7 +28,7 @@
   <!-- 会话Cookie模板 -->
   <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
     <constructor-arg value="ssid"/>
-    <property name="domain" value="ziroot.app"/>
+    <!--<property name="domain" value="ziroot.app"/>-->
     <property name="httpOnly" value="true"/>
     <property name="maxAge" value="-1"/>
   </bean>
@@ -61,7 +61,7 @@
   <bean id="mySessionListener" class="com.jusfoun.hookah.webiste.shiro.MySessionListener"/>
   <!-- 会话管理器 -->
   <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
-    <property name="sessionIdUrlRewritingEnabled" value="true" />
+    <property name="sessionIdUrlRewritingEnabled" value="false" />
     <property name="globalSessionTimeout" value="1800000"/>
     <property name="deleteInvalidSessions" value="true"/>
     <property name="sessionValidationSchedulerEnabled" value="true"/>
