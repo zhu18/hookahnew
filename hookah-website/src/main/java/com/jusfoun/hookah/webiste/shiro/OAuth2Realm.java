@@ -11,6 +11,7 @@ import org.apache.oltu.oauth2.client.response.OAuthAccessTokenResponse;
 import org.apache.oltu.oauth2.client.response.OAuthResourceResponse;
 import org.apache.oltu.oauth2.common.OAuth;
 import org.apache.oltu.oauth2.common.message.types.GrantType;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -117,6 +118,7 @@ public class OAuth2Realm extends AuthorizingRealm {
             Map<String,String> user = new HashMap<String,String>();
             user.put("userId",jsonObject.getString("userId"));
             user.put("userName",jsonObject.getString("userName"));
+            SecurityUtils.getSubject().getSession().setAttribute("user",user);
             return user;
         } catch (Exception e) {
             e.printStackTrace();

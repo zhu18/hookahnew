@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.webiste.shiro;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.subject.Subject;
@@ -90,13 +91,14 @@ public class OAuth2AuthenticationFilter extends AuthenticatingFilter {
             WebUtils.issueRedirect(request, response, failureUrl + "?error=" + error + "error_description=" + errorDescription);
             return false;
         }
-        Subject subject = getSubject(request, response);
+//        Subject subject = getSubject(request, response);
+        Subject subject = SecurityUtils.getSubject();
 
         if(!subject.isAuthenticated()) {
             if(StringUtils.isEmpty(request.getParameter(authcCodeParam))) {
                 //如果用户没有身份验证，且没有auth code，则重定向到服务端授权
-                HttpServletResponse httpServletResponse =(HttpServletResponse)response;
-                httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//                HttpServletResponse httpServletResponse =(HttpServletResponse)response;
+//                httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 //                OutputStream outputStream = httpServletResponse.getOutputStream();
 //                String data = "akasdf";
 //                outputStream.write(data.getBytes());
