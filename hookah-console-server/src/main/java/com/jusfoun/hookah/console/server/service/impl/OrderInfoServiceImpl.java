@@ -206,14 +206,14 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         // TODO Auto-generated method stub
         PageHelper.startPage(pageNum, pageSize, getOrderBy(orderBys));
         List<OrderInfo> list =  super.selectList(filters,orderBys);
-        List<OrderInfoVo> listVo = new ArrayList<>();
+        Page<OrderInfoVo> page = new Page<OrderInfoVo>();
         for(OrderInfo order:list){
             OrderInfoVo orderInfoVo = (OrderInfoVo)order;
             OrderInfoVo mgOrder = mgOrderInfoService.selectById(orderInfoVo.getOrderId());
             orderInfoVo.setMgOrderGoodsList(mgOrder.getMgOrderGoodsList());
-            listVo.add(orderInfoVo);
+            page.add(orderInfoVo);
         }
-        Page<OrderInfoVo> page = (Page<OrderInfoVo>)listVo;
+
         Pagination<OrderInfoVo> pagination = new Pagination<OrderInfoVo>();
         pagination.setTotalItems(page.getTotal());
         pagination.setPageSize(pageSize);

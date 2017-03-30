@@ -15,6 +15,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/pay")
 public class PayController {
 
+    @RequestMapping(value = "/createOrder", method = RequestMethod.GET)
+    public String createOrder() {
+        return "/pay/createOrder";
+    }
+
     @RequestMapping(value = "/cash", method = RequestMethod.GET)
     public String cash() {
         return "/pay/cash";

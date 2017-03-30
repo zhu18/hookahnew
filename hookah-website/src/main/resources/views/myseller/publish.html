@@ -624,7 +624,7 @@ var htmlPart = {
                 var listData = {};
                 listData.number = $(this).find('input[datatype="number"]').val();
                 listData.format = $(this).find('select[name="format"]').val();
-                listData.price = $(this).find('input[datatype="price"]').val();
+                listData.price = ($(this).find('input[datatype="price"]').val())*100;
                 data.formatList.push(listData);
             });
             data.shopNumber = data.formatList[0].number;
