@@ -27,7 +27,7 @@ import java.util.UUID;
  * Created by huanglei on 2016/11/8.
  */
 @Controller
-@RequestMapping("/test")
+//@RequestMapping("/")
 public class IndexController {
 
 

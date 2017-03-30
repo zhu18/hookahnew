@@ -157,7 +157,6 @@
 .channel-balance .channel-name, .channel-moneyfund .channel-name {
     margin-right: 4px;
 }
-lightpay.css:1
 .channel-name {
     font-size: 14px;
     float: left;
@@ -276,3 +275,18 @@ div.sixDigitPassword span {
 .saved-card-list .channel-balance{
     display: block;
 }
+.create-wrapper .order-wrapper{
+    border-bottom:none;
+}
+.create-wrapper .main-container {
+    border: 1px solid #a6a6a6;
+}
+
+
+
+
+
+
+
+
+
