@@ -109,6 +109,8 @@
         /usercenter/** = oauth2Authc
         /mybuyer* = oauth2Authc
         /mybuyer/** = oauth2Authc
+        /cart* = oauth2Authc
+        /cart/** = oauth2Authc
         /logout = logout
         <!--/** = user-->
       </value>

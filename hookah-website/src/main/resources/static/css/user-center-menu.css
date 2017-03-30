@@ -21,6 +21,9 @@
     color: #9cddf5;
     text-decoration: none;
 }
+.user-center .user-center-bd .user-center-menu .menu-category li a.active{
+    color:#0c9abe;
+}
 .user-center .center-title{
     font-size: 18px;
     height: 30px;

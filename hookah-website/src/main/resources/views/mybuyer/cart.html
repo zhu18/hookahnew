@@ -112,7 +112,7 @@ var htmlPart = {
                         </tr>
                     </table>
                     <%}else{%>
-                    <div>没有有数据</div>
+                    <div class="noDataBox">购物车没有商品 >>><a href="/">去购物</a></div>
                     <%}%>
                 </div>
             </div>
@@ -120,7 +120,6 @@ var htmlPart = {
     </div>
 </div>
 <script type="text/javascript">
-
     //全选/全不选
     $(".checkall").click(function(){
         $("[name=items]:checkbox").prop("checked",this.checked);
@@ -155,7 +154,7 @@ var htmlPart = {
                             $(this).parents('.order-body').remove()
                         });
                         if($("[name=checkall]:checkbox").prop("checked")){
-                            $('.cart-box').html('没有有数据')
+                            $('.cart-box').html('<div class="noDataBox">购物车没有商品 >>><a href="/">去购物</a></div>');
                         }
                     } else {
                         $.alert(msg.message)

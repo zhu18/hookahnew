@@ -19,6 +19,9 @@
     display: block;
     padding-left:20px;
 }
+.innovation-center .innovation-menu li a.active{
+    color:#00a2ca;
+}
 .innovation-center .innovation-menu li a.on{color:#fff;background: #0c9abe;}
 .innovation-center .innovation-menu li a.on:hover{color:#fff;}
 .innovation-center .innovation-menu li a:hover{

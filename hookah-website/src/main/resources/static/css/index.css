@@ -952,7 +952,9 @@ body {
     color: #333;
     text-decoration: none;
 }
-
+.index-nav-bar .tool-body .y-left li a.active {
+    color: #00a2ca;
+}
 .index-nav-bar .tool-body .y-left li a:hover {
     color: #00a2ca;
     display: block;
@@ -1241,6 +1243,11 @@ body {
 .pic_content ul li a img {
     width:100%;
 }
-
+.noDataBox{
+    width:100%;
+    padding:20px 0;
+    text-align: center;
+    font-size: 14px;
+}
 
 

@@ -27,3 +27,11 @@
         </ol>
     </li>
 </ul>
+<script type="text/javascript">
+    var urlPathss = window.location.pathname;
+    $('.menu-category li').each(function(){
+        if($(this).children('a').attr('href') == urlPathss){
+            $(this).children('a').addClass('active')
+        }
+    })
+</script>
