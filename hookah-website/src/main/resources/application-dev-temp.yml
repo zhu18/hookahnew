@@ -11,11 +11,23 @@ myconf:
     cache: false
 
   host:
-    server: ${server.http.protocal}localhost:9000
-    static: ${server.http.protocal}localhost:9000
-    auth: ${server.http.protocal}localhost:9000
-    console: ${server.http.protocal}localhost:9000
+    website: ${server.http.protocal}www.hookah.app
+    static: ${server.http.protocal}static.hookah.app
+    auth: ${server.http.protocal}auth.hookah.app
+    console: ${server.http.protocal}console.hookah.app
+  oauth2:
+    clientId: website
+    clientSecret: Yqn2ht4DYkMHlDvTY7CV
+    regUrl: http://auth.hookah.app/reg
+    loginUrl: http://auth.hookah.app/oauth/authorize?client_id=website&response_type=code&redirect_uri=http://localhost:9000/login
+    logoutUrl: http://auth.hookah.app/logout?redirect_uri=http://localhost:9000/login
+    accessTokenUrl: http://auth.hookah.app/oauth/accessToken
+    userInfoUrl: http://auth.hookah.app/userInfo
+    redirectUrl: http://auth.hookah.app/login
 debug: true
 spring:
+  data:
+    mongodb:
+      uri:  mongodb://192.168.15.90:27017/hookah
   mvc:
       static-path-pattern: /static/**

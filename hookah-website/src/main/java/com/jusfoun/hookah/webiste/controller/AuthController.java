@@ -1,10 +1,17 @@
 package com.jusfoun.hookah.webiste.controller;
 
+import org.apache.oltu.oauth2.client.URLConnectionClient;
+import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
+import org.apache.oltu.oauth2.client.response.OAuthClientResponse;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Map;
 
 /**
  * All rights Reserved, Designed By
@@ -21,27 +28,28 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author: huanglei
  */
 @Controller
-@RequestMapping("/auth")
 public class AuthController {
 
-  @RequestMapping(value = "/login", method = RequestMethod.GET)
-  public String login(Model model) {
-    model.addAttribute("happy","Hello,world");
-    model.addAttribute("x","auth");
-    return "login";
-  }
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login(Model model) {
+        return "redirect:/";
+    }
 
-  @RequestMapping(value = "/login", method = RequestMethod.POST)
-  @ResponseBody
-  public Model pLogin(Model model){
-    model.addAttribute("ha","dd");
-    return model;
-  }
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @ResponseBody
+    public Model pLogin(Model model) {
+        return model;
+    }
 
-  @RequestMapping(value = "/register", method = RequestMethod.GET)
-  public String register(Model model) {
-    model.addAttribute("happy","Hello,world");
-    model.addAttribute("x","auth");
-    return "register";
-  }
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    public String register(Model model) {
+        return "register";
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logout(Model model) throws Exception {
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return "redirect:http://localhost:9900/logout";
+    }
 }

@@ -21,26 +21,36 @@ import java.util.Map;
  * @author: huanglei
  */
 @Component
-@ConfigurationProperties(prefix="myconf")
+@ConfigurationProperties(prefix = "myconf")
 public class MyProps {
 
-  private Map<String,String> beetl = new HashMap<>();
+    private Map<String, String> beetl = new HashMap<>();
 
-  private Map<String,String> host = new HashMap<>();
+    private Map<String, String> host = new HashMap<>();
 
-  public Map<String, String> getBeetl() {
-    return beetl;
-  }
+    private Map<String, String> oauth2 = new HashMap<>();
 
-  public void setBeetl(Map<String, String> beetl) {
-    this.beetl = beetl;
-  }
+    public Map<String, String> getBeetl() {
+        return beetl;
+    }
 
-  public Map<String, String> getHost() {
-    return host;
-  }
+    public void setBeetl(Map<String, String> beetl) {
+        this.beetl = beetl;
+    }
 
-  public void setHost(Map<String, String> host) {
-    this.host = host;
-  }
+    public Map<String, String> getHost() {
+        return host;
+    }
+
+    public void setHost(Map<String, String> host) {
+        this.host = host;
+    }
+
+    public Map<String, String> getOauth2() {
+        return oauth2;
+    }
+
+    public void setOauth2(Map<String, String> oauth2) {
+        this.oauth2 = oauth2;
+    }
 }

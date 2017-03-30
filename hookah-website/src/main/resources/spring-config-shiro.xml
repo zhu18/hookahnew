@@ -15,11 +15,11 @@
     <property name="cachingEnabled" value="true"/>
     <property name="authenticationCachingEnabled" value="true"/>
     <property name="authorizationCacheName" value="authorizationCache"/>
-    <property name="clientId" value="website"/>
-    <property name="clientSecret" value="Yqn2ht4DYkMHlDvTY7CV"/>
-    <property name="accessTokenUrl" value="http://localhost:9900/oauth/accessToken"/>
-    <property name="userInfoUrl" value="http://localhost:9900/userInfo"/>
-    <property name="redirectUrl" value="http://localhost:9900/login"/>
+    <property name="clientId" value="${myconf.oauth2.clientId}"/>
+    <property name="clientSecret" value="${myconf.oauth2.clientSecret}"/>
+    <property name="accessTokenUrl" value="${myconf.oauth2.accessTokenUrl}"/>
+    <property name="userInfoUrl" value="${myconf.oauth2.userInfoUrl}"/>
+    <property name="redirectUrl" value="${myconf.oauth2.redirectUrl}"/>
   </bean>
 
   <!-- 会话ID生成器 -->
@@ -27,7 +27,7 @@
 
   <!-- 会话Cookie模板 -->
   <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
-    <constructor-arg value="ssid"/>
+    <constructor-arg value="hookah_sid"/>
     <!--<property name="domain" value="ziroot.app"/>-->
     <property name="httpOnly" value="true"/>
     <property name="maxAge" value="-1"/>
@@ -85,12 +85,15 @@
     <property name="authcCodeParam" value="code"/>
     <property name="failureUrl" value="/error/oauth2Failure"/>
   </bean>
+  <bean id="logout" class="com.jusfoun.hookah.webiste.filter.SystemLogoutFilter">
+    <property name="redirectUrl" value="${myconf.oauth2.logoutUrl}" />
+  </bean>
 
   <!-- Shiro的Web过滤器 -->
   <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
     <property name="securityManager" ref="securityManager"/>
     <property name="loginUrl"
-              value="http://localhost:9900/oauth/authorize?client_id=website&amp;response_type=code&amp;redirect_uri=http://localhost:9000/login"/>
+              value="${myconf.oauth2.loginUrl}"/>
     <property name="successUrl" value="/"/>
     <property name="filters">
       <util:map>

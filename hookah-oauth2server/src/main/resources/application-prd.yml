@@ -1,5 +1,7 @@
 server:
   port: 9900
+  http:
+      protocal: http://
 spring:
   datasource:
     url: jdbc:log4jdbc:mysql://192.168.15.90:3306/hookah?characterEncoding=utf8&useSSL=false&autoReconnect=true&failOverReadOnly=false&autoReconnectForPools=true
@@ -41,6 +43,19 @@ spring:
     password: password
     publisher-confirms: true
     virtual-host: /
+  mail:
+    host: smtp.qiye.163.com
+    port: 25
+    username: gbd@jusfoun.com
+    password: 1QAZ2wsx
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            socketFactory:
+              fallback: false
 #  jpa:
 #    database: MYSQL
 #    show-sql: true
@@ -59,8 +74,8 @@ myconf:
     suffix: .html
     cache: false
   host:
-    server: ${server.http.protocal}localhost:9900
-    static: ${server.http.protocal}localhost:9900
-    auth: ${server.http.protocal}localhost:9900
-    console: ${server.http.protocal}localhost:9900
+    website: ${server.http.protocal}www.hookah.app
+    static: ${server.http.protocal}static.hookah.app
+    auth: ${server.http.protocal}auth.hookah.app
+    console: ${server.http.protocal}console.hookah.app
 debug: true

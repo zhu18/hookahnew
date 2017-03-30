@@ -20,6 +20,8 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +32,8 @@ import java.util.Map;
  * @desc
  */
 public class OAuth2Realm extends AuthorizingRealm {
+
+    private static final Logger logger = LoggerFactory.getLogger(OAuth2Realm.class);
 
     private String clientId;
     private String clientSecret;
@@ -121,7 +125,7 @@ public class OAuth2Realm extends AuthorizingRealm {
             SecurityUtils.getSubject().getSession().setAttribute("user",user);
             return user;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.toString());
             throw new OAuth2AuthenticationException(e);
         }
     }

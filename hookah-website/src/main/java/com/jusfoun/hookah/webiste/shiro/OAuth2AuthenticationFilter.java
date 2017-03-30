@@ -64,13 +64,14 @@ public class OAuth2AuthenticationFilter extends AuthenticatingFilter {
         return new OAuth2Token(code);
     }
 
-//    @Override
-//    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-//        return false;
-//    }
+    @Override
+    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
+        return false;
+    }
 
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
+
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         StringBuffer url = httpServletRequest.getRequestURL();
         String redirectURI = request.getParameter("redirect_uri");
@@ -138,11 +139,6 @@ public class OAuth2AuthenticationFilter extends AuthenticatingFilter {
             }
         }
         return false;
-    }
-
-    @Override
-    public void doFilterInternal(final ServletRequest servletRequest,final ServletResponse servletResponse,final FilterChain chain) throws ServletException, IOException {
-        super.doFilterInternal(servletRequest, servletResponse, chain);
     }
 
 

@@ -51,9 +51,6 @@ public class BeetlConf {
       ClasspathResourceLoader cploder = new ClasspathResourceLoader(BeetlConf.class.getClassLoader(), myProps.getBeetl().get("templatesPath"));
       beetlGroupUtilConfiguration.setResourceLoader(cploder);
       Map<String,Object> shared = new HashMap<String,Object>();
-      shared.put("staticPath",myProps.getHost().get("static"));
-      shared.put("authPath",myProps.getHost().get("auth"));
-      shared.put("serverHost",myProps.getHost().get("server"));
       shared.put("host",myProps.getHost());
       beetlGroupUtilConfiguration.setSharedVars(shared);
 
