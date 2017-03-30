@@ -649,7 +649,7 @@ public class ESTemplate {
         SearchRequestBuilder builder = client.prepareSearch();
         builder.setIndices(index);
         builder.setTypes(type);
-        builder.setFrom(pagination.getCurrentPage()*pagination.getPageSize());
+        builder.setFrom((pagination.getCurrentPage() - 1) * pagination.getPageSize());
         builder.setSize(pagination.getPageSize());
 
         //设置查询类型：1.SearchType.DFS_QUERY_THEN_FETCH 精确查询； 2.SearchType.SCAN 扫描查询,无序

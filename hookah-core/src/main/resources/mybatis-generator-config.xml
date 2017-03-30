@@ -42,13 +42,13 @@
     </commentGenerator>
     <!--数据库链接地址账号密码-->
     <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                    connectionURL="jdbc:mysql://192.168.15.90:3306/hookah?characterEncoding=utf8&amp;tinyInt1isBit=false"
-                    userId="root" password="password"/>
+                    connectionURL="jdbc:mysql://localhost:3306/hookah?characterEncoding=utf8&amp;tinyInt1isBit=false"
+                    userId="root" password="123456"/>
     <javaTypeResolver>
       <property name="forceBigDecimals" value="false"/>
     </javaTypeResolver>
     <!--生成Model类存放位置-->
-    <javaModelGenerator targetPackage="com.jusfoun.hookah.core.domain" targetProject="src/main/java">
+    <javaModelGenerator targetPackage="com.jusfoun.hookah.core.domain" targetProject="src/main/wjl">
       <property name="enableSubPackages" value="true"/>
       <property name="trimStrings" value="true"/>
       <property name="rootClass" value="com.jusfoun.hookah.core.generic.GenericModel"/>

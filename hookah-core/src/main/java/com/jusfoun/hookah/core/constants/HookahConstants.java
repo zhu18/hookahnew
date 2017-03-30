@@ -17,7 +17,6 @@ public class HookahConstants {
     public enum AnalyzeOpt {
         ANALYZED("analyzed"),
         NOT_ANALYZED("not_analyzed");
-
         public String val;
 
         AnalyzeOpt(String val) {
@@ -27,7 +26,9 @@ public class HookahConstants {
 
     public enum Analyzer {
         IK_MAX_WORD("ik_max_word"),
-        PINYIN("pinyin");
+        IK_SMART("ik_smart"),
+        PINYIN("pinyin"),
+        NONE(null);
 
         public String val;
 
@@ -43,6 +44,26 @@ public class HookahConstants {
         public String val;
 
         TermVector(String val) {
+            this.val = val;
+        }
+    }
+
+    public enum Type {
+        TEXT("text"),
+        KEYWORD("keyword"),
+        DATE("date"),
+        LONG("long"),
+        DOUBLE("double"),
+        BOOLEAN("boolean"),
+        FLOAT("float"),
+        INTEGER("integer"),
+        SHORT("short"),
+        BYTE("byte"),
+        IP("ip");
+
+        public String val;
+
+        Type(String val) {
             this.val = val;
         }
     }

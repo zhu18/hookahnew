@@ -1,5 +1,9 @@
 package com.jusfoun.hookah.console.server.config;
 
+import com.jusfoun.hookah.console.server.util.PropertiesManager;
+import com.jusfoun.hookah.core.constants.HookahConstants.Analyzer;
+import com.jusfoun.hookah.core.domain.es.EsGoods;
+import com.jusfoun.hookah.rpc.api.ElasticSearchService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +19,7 @@ import org.springframework.stereotype.Component;
 public class ESConfig implements CommandLineRunner {
     private static final Logger logger = LoggerFactory.getLogger(ESConfig.class);
     @Autowired
-    ESTransportClient esTransportClient;
+    ElasticSearchService elasticSearchService;
 
     /***
      * 初始化索引及索引数据
@@ -23,11 +27,25 @@ public class ESConfig implements CommandLineRunner {
      * @throws Exception
      */
     @Override
-    public void run(String... strings) throws Exception {
+    public void run(String... strings) {
+        logger.info("===========初始化ES-begin=============");
         //TODO 可从数据库查询需要新建的索引信息（暂时从配置文件里获取）
-
-        //TODO 判断索引是否存在
-        //TODO 如果索引不存在创建索引并导入数据
-        //TODO 如果队列里有操作数据，进行依次处理
+        String goodsIndex = PropertiesManager.getInstance().getProperty("goods.index");
+        String goodsType = PropertiesManager.getInstance().getProperty("goods.type");
+        Integer goodsShards = Integer.valueOf(PropertiesManager.getInstance().getProperty("goods.index.shards"));
+        Integer goodsReplicas = Integer.valueOf(PropertiesManager.getInstance().getProperty("goods.index.replicas"));
+        //如果索引不存在创建索引并导入数据
+        try {
+            String goodsKeyField = elasticSearchService.initEs(EsGoods.class, Analyzer.IK_MAX_WORD.val,
+                    goodsIndex, goodsType, goodsShards, goodsReplicas);
+            //如果能获取到主键字段说明是新创建的type，导入数据
+            elasticSearchService.bulkInsert(goodsKeyField, goodsIndex, goodsType);
+        } catch (Exception e) {
+            logger.error("初始化ES-error:" + e.getMessage());
+            e.printStackTrace();
+        }
+        logger.info("===========初始化ES-end=============");
     }
+
+
 }

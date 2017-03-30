@@ -12,7 +12,7 @@ public class EsFieldMapping implements Serializable{
 
 	private static final long serialVersionUID = -6261048300857335092L;
 
-	/*数据类型 string long*/
+	/*数据类型 text keyword long*/
 	private String type;
 
 	private String analyzer;
@@ -32,6 +32,13 @@ public class EsFieldMapping implements Serializable{
 		this.type = type;
 		this.analyzer = analyzer;
 	}
+
+    public EsFieldMapping(String type, String analyzer, String search_analyzer) {
+        super();
+        this.type = type;
+        this.analyzer = analyzer;
+        this.search_analyzer = search_analyzer;
+    }
 
 	public String getType() {
 		return type;
