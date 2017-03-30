@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.console.server.controller;
+package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
@@ -31,6 +31,7 @@ import java.util.List;
  */
 @Controller
 public class OrderInfoController {
+	private String  userId = "hookah";
 	
 	private static final Logger logger = LoggerFactory.getLogger(OrderInfoController.class);
 	private static final String PAGE_SIZE = new Integer(HookahConstants.PAGE_SIZE).toString();
@@ -126,6 +127,7 @@ public class OrderInfoController {
 	}
 
 	private OrderInfo init(OrderInfo orderinfo) {
+		orderinfo.setUserId(userId);
 		Date date = new Date();
 		orderinfo.setOrderSn(OrderHelper.genOrderSn());
 		orderinfo.setOrderStatus(OrderInfo.ORDERSTATUS_CONFIRM);
