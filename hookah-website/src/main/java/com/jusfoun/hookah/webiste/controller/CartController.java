@@ -1,7 +1,7 @@
 package com.jusfoun.hookah.webiste.controller;
 
-import com.jusfoun.hookah.core.domain.Cart;
 import com.jusfoun.hookah.core.domain.Goods;
+import com.jusfoun.hookah.core.domain.vo.CartVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.JSONUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
@@ -13,7 +13,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -40,7 +43,8 @@ public class CartController {
         try {
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.eq("userId", "hookah"));
-            List<Cart> carts = cartService.selectList(filters);
+            filters.add(Condition.eq("delFlag", new Integer(0).shortValue()));
+            List<CartVo> carts = cartService.selectList(filters);
             model.addAttribute("cartList", carts);
             logger.info(JSONUtils.toString(carts));
             return "/mybuyer/cart";
@@ -58,7 +62,7 @@ public class CartController {
      */
     @ResponseBody
     @RequestMapping(value = "/cart/add", method = RequestMethod.POST)
-    public ReturnData add(@Valid Cart cart, Model model) {
+    public ReturnData add(@Valid CartVo cart, Model model) {
         try {
             //设置默认信息
 
@@ -67,6 +71,8 @@ public class CartController {
             cart.setUserId(userId);
             cart.setAddTime(new Date());
             cart.setIsGift(new Integer(0).shortValue());
+            cart.setDelFlag(new Integer(0).shortValue());
+
 
             //补充商品信息
             Goods goods = goodsService.selectById(cart.getGoodsId());
@@ -91,11 +97,11 @@ public class CartController {
      */
     @ResponseBody
     @RequestMapping(value = "/cart/addAll", method = RequestMethod.POST)
-    public ReturnData addAll(List<Cart> list, Model model) {
+    public ReturnData addAll(List<CartVo> list, Model model) {
         try {
             //需要先获取当前用户id
             String userId = "hookah";
-            for(Cart cart:list){
+            for(CartVo cart:list){
                 cart.setUserId(userId);
                 cart.setAddTime(new Date());
                 cart.setIsGift(new Integer(0).shortValue());
@@ -122,7 +128,7 @@ public class CartController {
      */
     @ResponseBody
     @RequestMapping(value = "/cart/edit", method = RequestMethod.POST)
-    public ReturnData edit(Cart cart, Model model) {
+    public ReturnData edit(CartVo cart, Model model) {
         if(StringUtils.isBlank(cart.getRecId())){
             return ReturnData.invalidParameters("The field[recId] CANNOT be null!");
         }
@@ -143,8 +149,9 @@ public class CartController {
     @ResponseBody
     @RequestMapping(value = "/cart/delete/{id}",method = RequestMethod.GET)
     public ReturnData delete(@PathVariable String id) {
+        logger.info("逻辑删除购物车：{}",id);
         try {
-            cartService.delete(id);
+            cartService.deleteByLogic(id);
             return ReturnData.success();
         } catch (Exception e) {
             logger.info(e.getMessage());
@@ -160,9 +167,9 @@ public class CartController {
     @ResponseBody
     @RequestMapping(value = "/cart/deleteAll", method = RequestMethod.POST)
     public ReturnData deleteAll(String[] ids) {
+        logger.info("逻辑删除购物车：{}",ids);
         try {
-            List<Condition> filters = new ArrayList<>();
-            cartService.delete(ids);
+
             return ReturnData.success();
         } catch (Exception e) {
             logger.info(e.getMessage());

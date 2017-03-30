@@ -75,6 +75,13 @@ public class GenericServiceImpl<Model extends GenericModel, ID extends Serializa
     }
 
     @Override
+    public List<Model> selectList(Model model) {
+        // TODO Auto-generated method stub
+        List<Model> list = dao.selectByExample(convertFilter2Example(convertModel2Condition(model), null));
+        return list;
+    }
+
+    @Override
     public List<Model> selectList(List<Condition> filters, List<OrderBy> orderBys) {
         // TODO Auto-generated method stub
         List<Model> list = dao.selectByExample(convertFilter2Example(filters, orderBys));
@@ -279,6 +286,44 @@ public class GenericServiceImpl<Model extends GenericModel, ID extends Serializa
         return -1;
     }
 
+    /**
+     * 根据Model 动态生成查询条件列表
+     *
+     * @param model
+     * @return
+     */
+    protected List<Condition> convertModel2Condition(Model model) {
+        Type type = getClass().getGenericSuperclass();
+        Type trueType = ((ParameterizedType) type).getActualTypeArguments()[0];
+
+        Class entityClass = (Class) trueType;
+        List<Condition> filters = new ArrayList<>();
+        try {
+            if (Objects.nonNull(model)) {
+                while(entityClass!=Object.class){
+                    Field[] fields = entityClass.getDeclaredFields();
+                    for(Field field:fields){
+                        field.setAccessible(true);
+                        if(field.get(model)!=null){
+                            filters.add(Condition.eq(field.getName(),convertParamType((Class)field.getGenericType(),field.get(model))));
+                        }
+                        field.setAccessible(false);
+                    }
+                    entityClass = entityClass.getSuperclass();
+                }
+            }
+            return filters;
+        } catch (SecurityException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException(e);
+        } catch (IllegalArgumentException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
      * 根据Filter动态实例化Example类

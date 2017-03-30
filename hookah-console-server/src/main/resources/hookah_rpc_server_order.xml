@@ -9,12 +9,23 @@
     <!-- 业务具体实现类 -->
     <!-- 购物车 -->
     <bean id="cartService" class="com.jusfoun.hookah.console.server.service.impl.CartServiceImpl"/>
+    <!-- 订单 -->
+    <bean id="orderInfoService" class="com.jusfoun.hookah.console.server.service.impl.OrderInfoServiceImpl"/>
+    <bean id="mgOrderInfoService" class="com.jusfoun.hookah.console.server.service.impl.MgOrderInfoServiceImpl"/>
+
     <bean id="invoiceService" class="com.jusfoun.hookah.console.server.service.impl.CartServiceImpl"/>
 
     <!-- 具体rpc服务配置，声明实现的接口类。-->
     <motan:service interface="com.jusfoun.hookah.rpc.api.CartService"
                    ref="cartService" export="hookah:5001" basicService="serviceBasicConfig">
     </motan:service>
+    <motan:service interface="com.jusfoun.hookah.rpc.api.OrderInfoService"
+                   ref="orderInfoService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+    <motan:service interface="com.jusfoun.hookah.rpc.api.MgOrderInfoService"
+                   ref="mgOrderInfoService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+
     <motan:service interface="com.jusfoun.hookah.rpc.api.InvoiceService"
                    ref="invoiceService" export="hookah:5001" basicService="serviceBasicConfig">
     </motan:service>
