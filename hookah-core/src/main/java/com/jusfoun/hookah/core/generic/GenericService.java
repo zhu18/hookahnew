@@ -133,6 +133,13 @@ public interface GenericService<Model extends GenericModel, ID extends Serializa
      *
      * @return 对象集合
      */
+    List<Model> selectList(Model model);
+
+    /**
+     * 查询多个对象
+     *
+     * @return 对象集合
+     */
     List<Model> selectList(List<Condition> filters);
     
     /**

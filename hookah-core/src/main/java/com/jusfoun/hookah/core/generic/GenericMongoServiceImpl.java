@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.core.generic;
 
 import com.jusfoun.hookah.core.common.Pagination;
+import org.apache.commons.beanutils.ConvertUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -9,9 +10,13 @@ import org.springframework.data.mongodb.core.query.Query;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author:jsshao
@@ -118,6 +123,14 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
     }
 
     @Override
+    public List<Model> selectList(Model model) {
+        Type type = getClass().getGenericSuperclass();
+        Type trueType = ((ParameterizedType) type).getActualTypeArguments()[0];
+
+        return mongoTemplate.find(this.convertFilter2Query(convertModel2Condition(model)),(Class)trueType);
+    }
+
+    @Override
     public List<Model> selectList(List<Condition> filters) {
         Type type = getClass().getGenericSuperclass();
         Type trueType = ((ParameterizedType) type).getActualTypeArguments()[0];
@@ -182,5 +195,58 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
             query.addCriteria(criteria);
         }
         return query;
+    }
+
+    /**
+     * 根据Model 动态生成查询条件列表
+     *
+     * @param model
+     * @return
+     */
+    protected List<Condition> convertModel2Condition(Model model) {
+        Type type = getClass().getGenericSuperclass();
+        Type trueType = ((ParameterizedType) type).getActualTypeArguments()[0];
+
+        Class entityClass = (Class) trueType;
+        List<Condition> filters = new ArrayList<>();
+        try {
+            if (Objects.nonNull(model)) {
+                while(entityClass!=Object.class){
+                    Field[] fields = entityClass.getDeclaredFields();
+                    for(Field field:fields){
+                        field.setAccessible(true);
+                        if(field.get(model)!=null){
+                            filters.add(Condition.eq(field.getName(),convertParamType((Class)field.getGenericType(),field.get(model))));
+                        }
+                        field.setAccessible(false);
+                    }
+                    entityClass = entityClass.getSuperclass();
+                }
+            }
+            return filters;
+        } catch (SecurityException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException(e);
+        } catch (IllegalArgumentException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 单值 类型转换
+     *
+     * @param clazz
+     * @param obj
+     * @return
+     */
+    protected <T> T convertParamType(Class<T> clazz, Object obj) {
+        if (clazz == List.class && obj instanceof Object[]) {
+            return (T) Arrays.asList(((Object[]) obj));
+        }
+        return (T) ConvertUtils.convert(obj, clazz);
     }
 }

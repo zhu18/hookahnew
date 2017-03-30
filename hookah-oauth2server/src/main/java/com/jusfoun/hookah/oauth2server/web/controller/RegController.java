@@ -6,7 +6,6 @@ import com.jusfoun.hookah.core.domain.mongo.MgSmsValidate;
 import com.jusfoun.hookah.core.domain.vo.UserValidVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ReturnData;
-import com.jusfoun.hookah.core.utils.SMSUtil;
 import com.jusfoun.hookah.core.utils.StrUtil;
 import com.jusfoun.hookah.rpc.api.MgSmsValidateService;
 import com.jusfoun.hookah.rpc.api.UserService;
@@ -20,8 +19,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -89,16 +86,11 @@ public class RegController {
             String code = StrUtil.random(4);
             StringBuffer content =  new StringBuffer();
             content.append("验证码为：").append(code).append(",有效时间").append(HookahConstants.SMS_DURATION_SECONDS).append("秒。");
-            SMSUtil.sendSMS(phoneNum,content.toString());
 
-            Calendar cal = Calendar. getInstance ();
-            cal.set(Calendar.MINUTE , Calendar.SECOND+HookahConstants.SMS_DURATION_SECONDS ) ;  //计算过期时间
             sms = new MgSmsValidate();
             sms.setPhoneNum(phoneNum);
-            sms.setSendTime(new Date());
             sms.setSmsContent(content.toString());
             sms.setValidCode(code);
-            sms.setExpireTime(cal.getTime());
             mgSmsValidateService.insert(sms);
             return ReturnData.success("短信验证码已经发送");
         }else{    //刚刚发送过验证码，避免重复发送

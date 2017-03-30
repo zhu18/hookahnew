@@ -41,6 +41,19 @@ spring:
     password: password
     publisher-confirms: true
     virtual-host: /
+  mail:
+    host: smtp.qiye.163.com
+    port: 25
+    username: gbd@jusfoun.com
+    password: 1QAZ2wsx
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            socketFactory:
+              fallback: false
 #  jpa:
 #    database: MYSQL
 #    show-sql: true

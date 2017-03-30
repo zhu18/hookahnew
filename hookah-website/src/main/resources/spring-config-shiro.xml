@@ -12,7 +12,7 @@
 
   <!-- Realm实现 -->
   <bean id="oAuth2Realm" class="com.jusfoun.hookah.webiste.shiro.OAuth2Realm">
-    <property name="cachingEnabled" value="false"/>
+    <property name="cachingEnabled" value="true"/>
     <property name="authenticationCachingEnabled" value="true"/>
     <property name="authorizationCacheName" value="authorizationCache"/>
     <property name="clientId" value="website"/>
@@ -28,7 +28,7 @@
   <!-- 会话Cookie模板 -->
   <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
     <constructor-arg value="ssid"/>
-    <property name="domain" value="ziroot.app"/>
+    <!--<property name="domain" value="ziroot.app"/>-->
     <property name="httpOnly" value="true"/>
     <property name="maxAge" value="-1"/>
   </bean>
@@ -109,6 +109,8 @@
         /usercenter/** = oauth2Authc
         /mybuyer* = oauth2Authc
         /mybuyer/** = oauth2Authc
+        /cart* = oauth2Authc
+        /cart/** = oauth2Authc
         /logout = logout
         <!--/** = user-->
       </value>

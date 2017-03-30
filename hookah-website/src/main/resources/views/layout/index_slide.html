@@ -27,14 +27,14 @@
     var picNum=$picDiv.children("ul").children("li").length;
     var page_count=Math.ceil(picNum/6);
     var $pDiv_w=$p_Div.width()+12;
-    $(".left_btn").css({'color':'#ccc','cursor':'no-drop'});
+    $(".left_btn").css({'color':'#828080','cursor':'no-drop'});
     $(".right_btn").click(function(){
         if(page_count>page){
             $picDiv.animate({left:'-'+page*$pDiv_w+"px"},"normal");
             page++;
             $(".left_btn").css({'color':'#fff','cursor':'pointer'});
             if(page>=page_count){
-                $(this).css({'color':'#ccc','cursor':'no-drop'});
+                $(this).css({'color':'#828080','cursor':'no-drop'});
             }else{
                 $(this).css({'color':'#fff','cursor':'pointer'});
             }
@@ -48,7 +48,7 @@
             page--;
             $(".right_btn").css({'color':'#fff','cursor':'pointer'});
             if(page<=1){
-                $(this).css({'color':'#ccc','cursor':'no-drop'});
+                $(this).css({'color':'#828080','cursor':'no-drop'});
             }else{
                 $(this).css({'color':'#fff','cursor':'pointer'});
             }

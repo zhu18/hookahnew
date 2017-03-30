@@ -120,7 +120,7 @@
     $.alert = function(content, button, callback, timer, settings) {
         var options = {};
         var defaults = {
-            zIndex: 100,
+            zIndex: 10001,
             type: 'alert'
         };
         if (typeof content == 'object') {

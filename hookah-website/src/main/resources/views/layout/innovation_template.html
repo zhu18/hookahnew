@@ -8,3 +8,11 @@
     <li><a href="/innovation/activity">活动</a></li>
     <li><a href="/innovation/guest_competition">创客大赛</a></li>
 </ul>
+<script type="text/javascript">
+    var urlPathss = window.location.pathname;
+    $('.innovation-menu li').each(function(){
+        if($(this).children('a').attr('href') == urlPathss){
+            $(this).children('a').addClass('active')
+        }
+    })
+</script>
