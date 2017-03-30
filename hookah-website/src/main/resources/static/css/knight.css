@@ -109,7 +109,7 @@ a, ins {
     -o-transition: color .2s
 }
 a,a:link{color:#333;}
-a:visited ,a:hover {
+a:hover {
     color: #00a2ca;
     text-decoration: none;
 }

@@ -13,7 +13,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -40,6 +43,7 @@ public class CartController {
         try {
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.eq("userId", "hookah"));
+            filters.add(Condition.eq("delFlag", new Integer(0).shortValue()));
             List<Cart> carts = cartService.selectList(filters);
             model.addAttribute("cartList", carts);
             logger.info(JSONUtils.toString(carts));
@@ -67,6 +71,8 @@ public class CartController {
             cart.setUserId(userId);
             cart.setAddTime(new Date());
             cart.setIsGift(new Integer(0).shortValue());
+            cart.setDelFlag(new Integer(0).shortValue());
+
 
             //补充商品信息
             Goods goods = goodsService.selectById(cart.getGoodsId());
@@ -143,8 +149,9 @@ public class CartController {
     @ResponseBody
     @RequestMapping(value = "/cart/delete/{id}",method = RequestMethod.GET)
     public ReturnData delete(@PathVariable String id) {
+        logger.info("逻辑删除购物车：{}",id);
         try {
-            cartService.delete(id);
+            cartService.deleteByLogic(id);
             return ReturnData.success();
         } catch (Exception e) {
             logger.info(e.getMessage());
@@ -160,9 +167,9 @@ public class CartController {
     @ResponseBody
     @RequestMapping(value = "/cart/deleteAll", method = RequestMethod.POST)
     public ReturnData deleteAll(String[] ids) {
+        logger.info("逻辑删除购物车：{}",ids);
         try {
-            List<Condition> filters = new ArrayList<>();
-            cartService.delete(ids);
+
             return ReturnData.success();
         } catch (Exception e) {
             logger.info(e.getMessage());

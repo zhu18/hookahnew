@@ -3,6 +3,7 @@ package com.jusfoun.hookah.webiste.controller;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
+import com.jusfoun.hookah.core.domain.mongo.MgSmsValidate;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.*;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,6 +27,7 @@ import java.util.UUID;
  * Created by huanglei on 2016/11/8.
  */
 @Controller
+@RequestMapping("/test")
 public class IndexController {
 
 
@@ -45,6 +48,12 @@ public class IndexController {
 
     @Resource
     MqSenderService mqSenderService;
+
+    @Resource
+    MgSmsValidateService mgSmsValidateService;
+
+    @Resource
+    MailService mailService;
 
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -127,6 +136,28 @@ public class IndexController {
         MgGoods t2 = new MgGoods();
         t2.setGoodsId(UUID.randomUUID().toString());
         mgGoodsService.insert(t2);
+        return "success";
+    }
+
+    @RequestMapping(value = "/msms", method = RequestMethod.GET)
+    @ResponseBody
+    public Object msms(String content,Model model) {
+        MgSmsValidate sms = new MgSmsValidate();
+        sms.setSendTime(new Date());
+        sms.setPhoneNum("18611661363");
+        sms.setSmsContent(content);
+        sms.setExpireTime(new Date());
+        mgSmsValidateService.insert(sms);
+        return "success";
+    }
+
+    @RequestMapping(value = "/mail", method = RequestMethod.GET)
+    @ResponseBody
+    public Object mail(String content,Model model) {
+        String toEmail = "sjs@jusfoun.com";
+        String subject = "测试";
+        String text = "<b>测试</b>";
+        mailService.send(toEmail,subject,text);
         return "success";
     }
 

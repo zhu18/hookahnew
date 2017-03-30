@@ -16,7 +16,7 @@
       (
           (<include refid="generateKey" />), #{item.userId,jdbcType=VARCHAR}, #{item.goodsId,jdbcType=VARCHAR},
           #{item.goodsSn,jdbcType=VARCHAR}, #{item.goodsName,jdbcType=VARCHAR}, #{item.goodsImg,jdbcType=VARCHAR},
-          #{item.marketPrice,jdbcType=DECIMAL}, #{item.goodsPrice,jdbcType=DECIMAL}, #{item.goodsFormat,jdbcType=VARCHAR},
+          #{item.marketPrice,jdbcType=BIGINT}, #{item.goodsPrice,jdbcType=BIGINT}, #{item.goodsFormat,jdbcType=VARCHAR},
           #{item.formatNumber,jdbcType=BIGINT}, #{item.goodsNumber,jdbcType=BIGINT}, #{item.recType,jdbcType=TINYINT},
           #{item.isGift,jdbcType=SMALLINT}, #{item.addTime,jdbcType=TIMESTAMP}
       )

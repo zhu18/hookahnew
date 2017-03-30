@@ -5,9 +5,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import java.util.Map;
 
 /**
- * 创建mapping的实体
- * @author WXF
- * 2016年6月16日
+ * Created by wangjl on 2017-3-28.
  */
 public class EsMapping {
     @JSONField(name="_all")

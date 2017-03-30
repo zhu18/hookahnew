@@ -4,3 +4,11 @@
     <li><a href="/exposition/financial_innovation">金融创新</a></li>
     <li><a href="/exposition/solve_plan">解决方案</a></li>
 </ul>
+<script type="text/javascript">
+    var urlPathss = window.location.pathname;
+    $('.innovation-menu li').each(function(){
+        if($(this).children('a').attr('href') == urlPathss){
+            $(this).children('a').addClass('active')
+        }
+    })
+</script>

@@ -1,7 +1,8 @@
 package com.jusfoun.hookah.core.annotation;
 
-import com.jusfoun.hookah.core.constants.HookahConstants.Analyzer;
+import com.jusfoun.hookah.core.constants.HookahConstants.Type;
 import com.jusfoun.hookah.core.constants.HookahConstants.AnalyzeOpt;
+import com.jusfoun.hookah.core.constants.HookahConstants.Analyzer;
 import com.jusfoun.hookah.core.constants.HookahConstants.TermVector;
 
 import java.lang.annotation.*;
@@ -15,7 +16,9 @@ import java.lang.annotation.*;
 @Inherited
 public @interface EsField {
     AnalyzeOpt analyzeOpt() default AnalyzeOpt.NOT_ANALYZED;
-    Analyzer analyzer() default Analyzer.IK_MAX_WORD;
+    Analyzer analyzer() default Analyzer.NONE;
     TermVector termVector() default TermVector.NONE;
+    Type type() default Type.TEXT;
+    Analyzer searchAnalyzer() default Analyzer.NONE;
     boolean isStore() default false;
 }

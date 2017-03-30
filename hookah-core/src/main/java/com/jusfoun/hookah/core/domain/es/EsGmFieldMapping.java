@@ -3,11 +3,7 @@ package com.jusfoun.hookah.core.domain.es;
 import java.io.Serializable;
 
 /**
- * 通用的字段的mapping，目前这里主要将Boolean字段进行移动到这儿
- * 后面考虑植入非suggest的属性字段
- * Gm General Model
- * @author WXF
- * 2016年7月10日
+ * Created by wangjl on 2017-3-28.
  */
 public class EsGmFieldMapping extends EsFieldMapping implements Serializable{
 
@@ -36,8 +32,8 @@ public class EsGmFieldMapping extends EsFieldMapping implements Serializable{
 		this.term_vector = term_vector;
 	}
 
-    public EsGmFieldMapping(String index, String type, String analyzer, String term_vector, boolean store) {
-        super(type, analyzer);
+    public EsGmFieldMapping(String index, String type, String analyzer, String term_vector, boolean store, String search_analyzer) {
+        super(type, analyzer, search_analyzer);
         this.index = index;
         this.term_vector = term_vector;
         this.store = store;

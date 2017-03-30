@@ -10,7 +10,7 @@
     <li class="menu-items">
         <h3 class="menu-header">买家中心</h3>
         <ol class="menu-category">
-            <li><a href="/mybuyer">订单管理</a></li>
+            <li><a href="/mybuyer/order">订单管理</a></li>
             <li><a href="/mybuyer/invoice">我的发票</a></li>
             <li><a href="/cart">购物车</a></li>
             <li><a href="/mybuyer/rate">我的评价</a></li>
@@ -27,3 +27,11 @@
         </ol>
     </li>
 </ul>
+<script type="text/javascript">
+    var urlPathss = window.location.pathname;
+    $('.menu-category li').each(function(){
+        if($(this).children('a').attr('href') == urlPathss){
+            $(this).children('a').addClass('active')
+        }
+    })
+</script>

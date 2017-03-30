@@ -4,18 +4,24 @@ import com.jusfoun.hookah.core.annotation.EsField;
 import com.jusfoun.hookah.core.constants.HookahConstants.AnalyzeOpt;
 import com.jusfoun.hookah.core.constants.HookahConstants.Analyzer;
 import com.jusfoun.hookah.core.constants.HookahConstants.TermVector;
+import com.jusfoun.hookah.core.constants.HookahConstants.Type;
+import org.springframework.data.annotation.Id;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 /**
  * Created by wangjl on 2017-3-28.
  */
 public class EsGoods {
+    @Id
     @EsField
     private String goodsId;
     @EsField(analyzeOpt= AnalyzeOpt.ANALYZED, analyzer= Analyzer.IK_MAX_WORD,
-            termVector= TermVector.OFFSETS, isStore = true)
+            termVector= TermVector.OFFSETS, isStore = true, searchAnalyzer = Analyzer.IK_SMART)
     private String goodsName;
     @EsField(analyzeOpt= AnalyzeOpt.ANALYZED, analyzer= Analyzer.PINYIN,
-            termVector= TermVector.OFFSETS, isStore = true)
+            termVector= TermVector.OFFSETS, isStore = true, searchAnalyzer = Analyzer.PINYIN)
     private String goodsNamePy;
     @EsField
     private String goodsBrief;
@@ -29,6 +35,9 @@ public class EsGoods {
     private String catId;
     @EsField
     private String attrId;
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @EsField(type = Type.DATE)
+    private Date addTime;
 
     public String getGoodsId() {
         return goodsId;
@@ -100,5 +109,13 @@ public class EsGoods {
 
     public void setAttrId(String attrId) {
         this.attrId = attrId;
+    }
+
+    public Date getAddTime() {
+        return addTime;
+    }
+
+    public void setAddTime(Date addTime) {
+        this.addTime = addTime;
     }
 }

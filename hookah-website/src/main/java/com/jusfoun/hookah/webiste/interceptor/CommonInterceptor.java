@@ -2,6 +2,7 @@ package com.jusfoun.hookah.webiste.interceptor;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,10 +24,14 @@ public class CommonInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
+        boolean ajax = "XMLHttpRequest".equals(httpServletRequest.getHeader("X-Requested-With"));
         Subject subject = SecurityUtils.getSubject();
         if (subject != null && subject.isAuthenticated()) {
-            Map<String, Object> model = modelAndView.getModel();
-            model.put("user", subject.getPrincipal());
+            if(!ajax){
+                Map<String, Object> model = modelAndView.getModel();
+                model.put("user", subject.getPrincipal());
+            }
+
         }
     }
 
