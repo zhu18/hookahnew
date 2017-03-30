@@ -1,7 +1,7 @@
 package com.jusfoun.hookah.webiste.controller;
 
+import com.jusfoun.hookah.core.domain.Cart;
 import com.jusfoun.hookah.core.domain.Goods;
-import com.jusfoun.hookah.core.domain.vo.CartVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.JSONUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
@@ -44,7 +44,7 @@ public class CartController {
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.eq("userId", "hookah"));
             filters.add(Condition.eq("delFlag", new Integer(0).shortValue()));
-            List<CartVo> carts = cartService.selectList(filters);
+            List<Cart> carts = cartService.selectList(filters);
             model.addAttribute("cartList", carts);
             logger.info(JSONUtils.toString(carts));
             return "/mybuyer/cart";
@@ -62,7 +62,7 @@ public class CartController {
      */
     @ResponseBody
     @RequestMapping(value = "/cart/add", method = RequestMethod.POST)
-    public ReturnData add(@Valid CartVo cart, Model model) {
+    public ReturnData add(@Valid Cart cart, Model model) {
         try {
             //设置默认信息
 
@@ -97,11 +97,11 @@ public class CartController {
      */
     @ResponseBody
     @RequestMapping(value = "/cart/addAll", method = RequestMethod.POST)
-    public ReturnData addAll(List<CartVo> list, Model model) {
+    public ReturnData addAll(List<Cart> list, Model model) {
         try {
             //需要先获取当前用户id
             String userId = "hookah";
-            for(CartVo cart:list){
+            for(Cart cart:list){
                 cart.setUserId(userId);
                 cart.setAddTime(new Date());
                 cart.setIsGift(new Integer(0).shortValue());
@@ -128,7 +128,7 @@ public class CartController {
      */
     @ResponseBody
     @RequestMapping(value = "/cart/edit", method = RequestMethod.POST)
-    public ReturnData edit(CartVo cart, Model model) {
+    public ReturnData edit(Cart cart, Model model) {
         if(StringUtils.isBlank(cart.getRecId())){
             return ReturnData.invalidParameters("The field[recId] CANNOT be null!");
         }

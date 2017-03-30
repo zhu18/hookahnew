@@ -1,7 +1,7 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
 import com.jusfoun.hookah.core.dao.CartMapper;
-import com.jusfoun.hookah.core.domain.vo.CartVo;
+import com.jusfoun.hookah.core.domain.Cart;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.rpc.api.CartService;
@@ -15,7 +15,7 @@ import java.util.List;
  * @author:jsshao
  * @date: 2017-3-17
  */
-public class CartServiceImpl extends GenericServiceImpl<CartVo, String> implements CartService {
+public class CartServiceImpl extends GenericServiceImpl<Cart, String> implements CartService {
 
     @Resource
     private CartMapper cartMapper;
@@ -27,11 +27,11 @@ public class CartServiceImpl extends GenericServiceImpl<CartVo, String> implemen
     }
 
     @Override
-    public List<CartVo> selectByIds(String[] ids) {
+    public List<Cart> selectByIds(String[] ids) {
         try {
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.in("recId",ids));
-            List<CartVo> list = cartMapper.selectByExample(this.convertFilter2Example(filters));
+            List<Cart> list = cartMapper.selectByExample(this.convertFilter2Example(filters));
             return list;
         }catch (Exception e){
             logger.info("Exception:{}",e.getMessage());
@@ -42,7 +42,7 @@ public class CartServiceImpl extends GenericServiceImpl<CartVo, String> implemen
 
     @Override
     public void deleteByLogic(String id) {
-        CartVo cart = new CartVo();
+        Cart cart = new Cart();
         cart.setRecId(id);
         cart.setDelFlag(new Integer(1).shortValue());
         super.updateById(cart);
@@ -50,7 +50,7 @@ public class CartServiceImpl extends GenericServiceImpl<CartVo, String> implemen
 
     @Override
     public void deleteBatchByLogic(String[] ids) {
-        CartVo cart = new CartVo();
+        Cart cart = new Cart();
         cart.setDelFlag(new Integer(1).shortValue());
 
         List<Condition> filters = new ArrayList<>();

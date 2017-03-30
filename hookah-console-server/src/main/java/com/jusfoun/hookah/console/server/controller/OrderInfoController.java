@@ -70,7 +70,7 @@ public class OrderInfoController {
 			}
 			List<OrderBy> orderBys = new ArrayList<>();
 			orderBys.add(OrderBy.desc("addTime"));
-			Pagination<OrderInfoVo> p = orderInfoService.getListInPage(pageNum,pageSize,filters,orderBys);
+			Pagination<OrderInfoVo> p = orderInfoService.getDetailListInPage(pageNum,pageSize,filters,orderBys);
 			return ReturnData.success(p);
 		}catch(Exception e){
 			logger.error("分页查询错误",e);
@@ -108,7 +108,7 @@ public class OrderInfoController {
      * @return
      */
 	@RequestMapping(value="/insert",method=RequestMethod.POST)
-	public ReturnData insert(OrderInfoVo orderinfo,String cartIds){
+	public ReturnData insert(OrderInfo orderinfo,String cartIds){
 		try{
 			init(orderinfo);
 			orderinfo = orderInfoService.insert(orderinfo,cartIds);
@@ -119,7 +119,7 @@ public class OrderInfoController {
 		}
 	}
 
-	private OrderInfoVo init(OrderInfoVo orderinfo) {
+	private OrderInfo init(OrderInfo orderinfo) {
 		Date date = new Date();
 		orderinfo.setOrderSn(OrderHelper.genOrderSn());
 		orderinfo.setOrderStatus(OrderInfo.ORDERSTATUS_CONFIRM);

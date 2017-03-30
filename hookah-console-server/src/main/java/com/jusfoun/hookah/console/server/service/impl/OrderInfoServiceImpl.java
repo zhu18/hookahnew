@@ -8,7 +8,6 @@ import com.jusfoun.hookah.core.domain.Cart;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.OrderInfo;
 import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
-import com.jusfoun.hookah.core.domain.vo.CartVo;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -33,7 +32,7 @@ import java.util.List;
  * @author:jsshao
  * @date: 2017-3-17
  */
-public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfoVo, String> implements OrderInfoService {
+public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> implements OrderInfoService {
 
     @Resource
     private OrderInfoMapper orderinfoMapper;
@@ -128,12 +127,12 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfoVo, String
 
     @Transactional(readOnly=false)
     @Override
-    public OrderInfoVo insert(OrderInfoVo orderInfo,String cartIds) throws Exception {
+    public OrderInfo insert(OrderInfo orderInfo,String cartIds) throws Exception {
         init(orderInfo);
 
         String[] cartIdArray = cartIds.split(",");
 
-        List<CartVo> cartList= cartService.selectByIds(cartIdArray);
+        List<Cart> cartList= cartService.selectByIds(cartIdArray);
         List<MgOrderGoods> ordergoodsList = null;
         if(cartList!=null&&cartList.size()>0){
             ordergoodsList = new ArrayList<MgOrderGoods>();
@@ -155,9 +154,10 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfoVo, String
 
             if(ordergoodsList!=null&&ordergoodsList.size()>0){
                 orderInfo.setDelFlag(0);
-                orderInfo.setMgOrderGoodsList(ordergoodsList);
+                OrderInfoVo orderInfoVo = (OrderInfoVo)orderInfo;
+                orderInfoVo.setMgOrderGoodsList(ordergoodsList);
                 orderinfoMapper.insert(orderInfo);
-                mgOrderInfoService.insert(orderInfo);
+                mgOrderInfoService.insert(orderInfoVo);
             }
             if(goodsAmount.compareTo(0L)==0){
                 updatePayStatus(orderInfo.getOrderSn(),2);
@@ -175,19 +175,16 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfoVo, String
         logger.info("updatePayStatus status = {}",status);
         List<Condition> filters = new ArrayList<>();
         filters.add(Condition.eq("orderSn",orderSn));
-        List<OrderInfoVo> list =  super.selectList(filters);
-        if(list!=null&&list.size()>0){
-            logger.info("list.size() = {}",list.size());
-            OrderInfoVo orderInfo = list.get(0);
-            orderInfo.setPayTime(new Date());
-            orderInfo.setLastmodify(new Date());
-            orderInfo.setPayStatus(status);
-            super.updateByIdSelective(orderInfo);
+        OrderInfo orderInfo =  super.selectOne(filters);
 
-            //支付成功后
-            if(2== status){
-                managePaySuccess(orderInfo);
-            }
+        orderInfo.setPayTime(new Date());
+        orderInfo.setLastmodify(new Date());
+        orderInfo.setPayStatus(status);
+        super.updateByIdSelective(orderInfo);
+
+        //支付成功后
+        if(2== status){
+            managePaySuccess(orderInfo);
         }
         //        if(list!=null&&list.size()>0){
         //            mapper.updatePayStatus(orderSn,status);
@@ -204,16 +201,19 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfoVo, String
 
 
     @Override
-    public Pagination<OrderInfoVo> getListInPage(Integer pageNum, Integer pageSize, List<Condition> filters,
+    public Pagination<OrderInfoVo> getDetailListInPage(Integer pageNum, Integer pageSize, List<Condition> filters,
                                            List<OrderBy> orderBys) {
         // TODO Auto-generated method stub
         PageHelper.startPage(pageNum, pageSize, getOrderBy(orderBys));
-        List<OrderInfoVo> list = super.selectList(filters,orderBys);
-        for(OrderInfoVo order:list){
-            OrderInfoVo mgOrder = mgOrderInfoService.selectById(order.getOrderId());
-            order.setMgOrderGoodsList(mgOrder.getMgOrderGoodsList());
+        List<OrderInfo> list =  super.selectList(filters,orderBys);
+        List<OrderInfoVo> listVo = new ArrayList<>();
+        for(OrderInfo order:list){
+            OrderInfoVo orderInfoVo = (OrderInfoVo)order;
+            OrderInfoVo mgOrder = mgOrderInfoService.selectById(orderInfoVo.getOrderId());
+            orderInfoVo.setMgOrderGoodsList(mgOrder.getMgOrderGoodsList());
+            listVo.add(orderInfoVo);
         }
-        Page<OrderInfoVo> page = (Page<OrderInfoVo>)list;
+        Page<OrderInfoVo> page = (Page<OrderInfoVo>)listVo;
         Pagination<OrderInfoVo> pagination = new Pagination<OrderInfoVo>();
         pagination.setTotalItems(page.getTotal());
         pagination.setPageSize(pageSize);
