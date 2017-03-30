@@ -1,16 +1,20 @@
 package com.jusfoun.hookah.oauth2server.web.controller;
 
 import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.oauth2server.config.MyProps;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Map;
 
 /**
  * @author huang lei
@@ -22,7 +26,8 @@ public class LoginController {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-
+    @Autowired
+    MyProps myProps;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model) {
@@ -61,13 +66,14 @@ public class LoginController {
             ae.printStackTrace();
             redirectAttributes.addFlashAttribute("message", "用户名或密码不正确");
         }
+        Map<String,String> host = myProps.getHost();
         //验证是否登录成功
         if (currentUser.isAuthenticated()) {
             logger.info("用户[" + username + "]登录认证通过(这里可以进行一些认证通过后的一些系统参数初始化操作)");
-            return "redirect:http://localhost:9000";
+            return "redirect:"+host.get("website")+"/login";
         } else {
             token.clear();
-            return "redirect:http://localhost:9000";
+            return "redirect:"+host.get("website")+"/login";
         }
     }
 
