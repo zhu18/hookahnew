@@ -4,6 +4,7 @@ package com.jusfoun.hookah.webiste.controller;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.domain.Category;
 import com.jusfoun.hookah.core.domain.SysNews;
+import com.jusfoun.hookah.core.domain.vo.SysNewsVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ReturnData;
@@ -18,9 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -60,8 +59,8 @@ public class SysNewsController {
     {
         ReturnData result = new ReturnData();
         try {
-            SysNews  sysN= new SysNews();
-            sysN = sysNewsService.selectById(id);
+            SysNewsVo  sysN= new SysNewsVo();
+            sysN = sysNewsService.selectNewsByID(id);
             result.setData(sysN);
             result.success();
         } catch (Exception e) {
@@ -153,6 +152,48 @@ public class SysNewsController {
         }
         return ReturnData.success(page) ;
     }
+
+
+
+
+    /**
+     *  查询列表
+     * @param pageNumber  所在位置
+     * @param pageSize 每页记录数
+     * @param newsGroup 文章一级分类
+     * @param newsSonGroup 文章二级分类
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "listByGroup", method = RequestMethod.GET)
+    public ReturnData listByGroup( String pageNumber,String pageSize,String newsGroup,String newsSonGroup) {
+
+        try {
+            //参数校验
+            int pageNumberNew = PAGE_NUM;
+            if(StringUtils.isNotBlank(pageNumber)){
+                pageNumberNew = Integer.parseInt(pageNumber);
+            }
+            int pageSizeNew = PAGE_SIZE;
+            if(StringUtils.isNotBlank(pageSize)){
+                pageSizeNew = Integer.parseInt(pageSize);
+            }
+            Map<String,Object> map = new HashMap<String,Object>();
+            Map<String,Object> infos = sysNewsService.getNewsList(newsGroup,newsSonGroup,pageSizeNew);
+            List<List<SysNewsVo>> data=(List<List<SysNewsVo>>)infos.get("dataList");
+            map.put("dataList", data.get((pageNumberNew-1)));
+            map.put("totalPage", infos.get("totalCount"));
+            map.put("totalItems", infos.get("totalItem"));//总条数
+            map.put("pageSize", 10);//每页条数
+            map.put("currentPage", pageNumber);//当前页
+            return ReturnData.success(map);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ReturnData.error("exception");
+        }
+    }
+
 
 
 
