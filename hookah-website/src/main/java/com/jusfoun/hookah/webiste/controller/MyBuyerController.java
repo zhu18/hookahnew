@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class MyBuyerController {
 
-    @RequestMapping(value = "/mybuyer", method = RequestMethod.GET)
+    @RequestMapping(value = "/mybuyer/order", method = RequestMethod.GET)
     public String index() {
-        return "/mybuyer/index";
+        return "/mybuyer/order";
     }
 
     @RequestMapping(value = "/mybuyer/invoice", method = RequestMethod.GET)

@@ -203,11 +203,19 @@ body {
     line-height: 40px;
 
 }
-.module-wrap .topbar-body .tool-body .y-right .userInfos{position: relative}
+.module-wrap .topbar-body .tool-body .y-right .userInfos{
+    position: relative;
+}
 .module-wrap .topbar-body .tool-body .y-right .userInfos .login{
     position: relative;
     z-index: 3;
     height:37px;
+}
+span.downIcon.fa.fa-sort-desc {
+    color: #fff;
+    position: absolute;
+    right: -3px;
+    top: 13px;
 }
 .module-wrap .topbar-body .tool-body .y-right .userInfos:hover .login{
     border:1px solid #ccc;
