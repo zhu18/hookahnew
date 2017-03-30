@@ -56,7 +56,7 @@ public class OrderInfoController {
      * @return
      */
 	@RequestMapping(value="/order/list",method=RequestMethod.GET)
-	public String findByPage( @RequestParam(defaultValue="1")Integer pageNum, @RequestParam(defaultValue= "15")Integer pageSize,Integer payStatis,Integer commentFlag,Date startDate,Date endDate,String domainName,Model model){
+	public String findByPage( @RequestParam(defaultValue="1")Integer pageNum, @RequestParam(defaultValue= "15")Integer pageSize,Integer payStatus,Integer commentFlag,Date startDate,Date endDate,String domainName,Model model){
 		try{
 			List<Condition> filters = new ArrayList<>();
 			if(startDate!=null){
@@ -65,8 +65,8 @@ public class OrderInfoController {
 			if(endDate!=null){
 				filters.add(Condition.le("addTime",endDate));
 			}
-			if(payStatis!=null){
-				filters.add(Condition.eq("payStatis",payStatis));
+			if(payStatus!=null){
+				filters.add(Condition.eq("payStatus",payStatus));
 			}
 			if(commentFlag!=null){
 				filters.add(Condition.eq("commentFlag",commentFlag));
