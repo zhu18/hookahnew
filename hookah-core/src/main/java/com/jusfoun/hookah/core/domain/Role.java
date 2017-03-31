@@ -1,6 +1,8 @@
 package com.jusfoun.hookah.core.domain;
 
 import com.jusfoun.hookah.core.generic.GenericModel;
+
+import javax.persistence.Id;
 import java.util.Date;
 
 public class Role extends GenericModel {
@@ -10,6 +12,7 @@ public class Role extends GenericModel {
      *
      * @mbggenerated
      */
+    @Id
     private String roleId;
 
     /**
