@@ -16,6 +16,8 @@
     <bean id="mgGoodsService" class="com.jusfoun.hookah.console.server.service.impl.MgGoodsServiceImpl"/>
     <!-- 商品货架 -->
     <bean id="shelvesService" class="com.jusfoun.hookah.console.server.service.impl.ShelvesServiceImpl"/>
+    <!-- ES -->
+    <bean id="elasticSearchService" class="com.jusfoun.hookah.console.server.service.impl.ElasticSearchServiceImpl"/>
 
     <!-- 具体rpc服务配置，声明实现的接口类。-->
     <motan:service interface="com.jusfoun.hookah.rpc.api.GoodsService"
@@ -33,5 +35,7 @@
     <motan:service interface="com.jusfoun.hookah.rpc.api.ShelvesService"
                    ref="shelvesService" export="hookah:5001" basicService="serviceBasicConfig">
     </motan:service>
-
+    <motan:service interface="com.jusfoun.hookah.rpc.api.ElasticSearchService"
+                   ref="elasticSearchService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
 </beans>

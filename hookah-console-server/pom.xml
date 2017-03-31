@@ -40,11 +40,11 @@
         </exclusion>
       </exclusions>
     </dependency>
-    <!--<dependency>-->
-      <!--<groupId>io.netty</groupId>-->
-      <!--<artifactId>netty</artifactId>-->
-      <!--<version>3.10.6.Final</version>-->
-    <!--</dependency>-->
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty</artifactId>
+      <version>3.10.6.Final</version>
+    </dependency>
     <dependency>
       <groupId>org.jboss.netty</groupId>
       <artifactId>netty</artifactId>
@@ -266,27 +266,21 @@
         <filtering>false</filtering>
       </resource>
       <resource>
-        <targetPath>${project.build.directory}/config</targetPath>
+        <targetPath>${project.build.directory}/webapp</targetPath>
         <directory>src/main/resources</directory>
         <filtering>true</filtering>
         <includes>
           <include>**/*.xml</include>
           <include>**/*.properties</include>
           <include>**/*.yml</include>
-          <include>**/*.txt</include>
+          <include>**/.txt</include>
         </includes>
       </resource>
       <!-- 打包时注释下面的resource -->
       <resource>
-        <targetPath>${project.build.directory}/classes</targetPath>
-        <directory>src/main/resources</directory>
-        <filtering>true</filtering>
-        <includes>
-          <include>**/*.xml</include>
-          <include>**/*.properties</include>
-          <include>**/*.yml</include>
-          <include>**/config.json</include>
-        </includes>
+      <targetPath>${project.build.directory}/classes</targetPath>
+      <directory>src/main/resources</directory>
+      <filtering>false</filtering>
       </resource>
     </resources>
     <pluginManagement>
@@ -318,7 +312,8 @@
             <manifestEntries>
               <Class-Path>.</Class-Path>
               <!--               配置文件外置 -->
-              <Class-Path>config/</Class-Path>
+              <Class-Path>webapp/</Class-Path>
+              <!--<Class-Path>config/</Class-Path>-->
             </manifestEntries>
           </archive>
         </configuration>

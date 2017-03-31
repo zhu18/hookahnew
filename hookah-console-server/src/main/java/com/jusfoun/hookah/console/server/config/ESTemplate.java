@@ -32,6 +32,7 @@ import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
+import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -633,6 +634,49 @@ public class ESTemplate {
     }
 
     /**
+     * 复合查询
+     * @param client
+     * @param indexName
+     * @param type
+     * @param filterMap
+     * @param pagination
+     * @param orderField
+     * @param order
+     * @return
+     */
+    public Pagination search(TransportClient client,String indexName,String type,Map<String,Object> filterMap,
+                                      Pagination pagination, String orderField, String order ){
+        SearchRequestBuilder requestBuilder = client.prepareSearch(indexName);
+        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+        QueryStringQueryBuilder queryString = null;
+        MatchAllQueryBuilder matchAll = null;
+        if(filterMap != null && !filterMap.isEmpty()){
+            for(Map.Entry entry : filterMap.entrySet()){
+                if(entry.getValue() != null) {
+                    queryString = QueryBuilders.queryStringQuery(String.valueOf(entry.getValue()));
+                    queryString.field(String.valueOf(entry.getKey()));
+                    boolQueryBuilder.must(queryString);
+                }
+            }
+        }else{//检索全部
+            matchAll = QueryBuilders.matchAllQuery();
+            boolQueryBuilder.must(matchAll);
+        }
+
+        requestBuilder.setTypes(type).setQuery(boolQueryBuilder);
+        if(StringUtils.isNotBlank(orderField)) {
+            requestBuilder.addSort(orderField, StringUtils.isNotBlank(order) &&
+                    order.equals(SortOrder.DESC.toString()) ? SortOrder.DESC : SortOrder.ASC);
+        }
+        requestBuilder.setFrom((pagination.getCurrentPage() -1) * pagination.getPageSize())
+                .setSize(pagination.getPageSize());
+        SearchResponse searchResponse = requestBuilder.execute().actionGet();
+        pagination.setList(result2MapData(searchResponse));
+        pagination.setTotalItems(searchResponse.getHits().getTotalHits());
+        return pagination;
+    }
+
+    /**
      * 搜索
      * @param client
      * @param key 搜索关键词
@@ -650,7 +694,7 @@ public class ESTemplate {
         builder.setIndices(index);
         builder.setTypes(type);
         builder.setFrom((pagination.getCurrentPage() - 1) * pagination.getPageSize());
-        builder.setSize(pagination.getPageSize());
+        builder.setSize(pagination.getCurrentPage() * pagination.getPageSize());
 
         //设置查询类型：1.SearchType.DFS_QUERY_THEN_FETCH 精确查询； 2.SearchType.SCAN 扫描查询,无序
         builder.setSearchType(SearchType.DFS_QUERY_AND_FETCH);

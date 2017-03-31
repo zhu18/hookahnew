@@ -67,6 +67,7 @@ public class BeetlConf {
 
     @Bean(name = "beetlViewResolver")
     public BeetlSpringViewResolver getBeetlSpringViewResolver(@Qualifier("beetlConfig") BeetlGroupUtilConfiguration beetlGroupUtilConfiguration) {
+        beetlGroupUtilConfiguration.getGroupTemplate().registerFunctionPackage("shiro",new ShiroExt());
         BeetlSpringViewResolver beetlSpringViewResolver = new BeetlSpringViewResolver();
         beetlSpringViewResolver.setContentType("text/html;charset=UTF-8");
         beetlSpringViewResolver.setCache(false);

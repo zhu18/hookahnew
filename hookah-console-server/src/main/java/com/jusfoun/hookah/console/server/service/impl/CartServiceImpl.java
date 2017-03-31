@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * 购物车服务
+ *
  * @author:jsshao
  * @date: 2017-3-17
  */
@@ -30,12 +31,12 @@ public class CartServiceImpl extends GenericServiceImpl<Cart, String> implements
     public List<Cart> selectByIds(String[] ids) {
         try {
             List<Condition> filters = new ArrayList<>();
-            filters.add(Condition.in("recId",ids));
+            filters.add(Condition.in("recId", ids));
             List<Cart> list = cartMapper.selectByExample(this.convertFilter2Example(filters));
             return list;
-        }catch (Exception e){
-            logger.info("Exception:{}",e.getMessage());
-            return  null;
+        } catch (Exception e) {
+            logger.info("Exception:{}", e.getMessage());
+            return null;
         }
 
     }
@@ -44,17 +45,16 @@ public class CartServiceImpl extends GenericServiceImpl<Cart, String> implements
     public void deleteByLogic(String id) {
         Cart cart = new Cart();
         cart.setRecId(id);
-        cart.setDelFlag(new Integer(1).shortValue());
+        cart.setIsDeleted(new Byte("1"));
         super.updateById(cart);
     }
 
     @Override
     public void deleteBatchByLogic(String[] ids) {
         Cart cart = new Cart();
-        cart.setDelFlag(new Integer(1).shortValue());
-
+        cart.setIsDeleted(new Byte("1"));
         List<Condition> filters = new ArrayList<>();
-        filters.add(Condition.in("recId",ids));
-        super.updateByCondition(cart,filters);
+        filters.add(Condition.in("recId", ids));
+        super.updateByCondition(cart, filters);
     }
 }

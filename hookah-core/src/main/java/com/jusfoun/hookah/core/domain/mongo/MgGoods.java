@@ -61,6 +61,14 @@ public class MgGoods extends GenericModel {
         this.imgList = imgList;
     }
 
+    public ApiInfoBean getApiInfo() {
+        return apiInfo;
+    }
+
+    public void setApiInfo(ApiInfoBean apiInfo) {
+        this.apiInfo = apiInfo;
+    }
+
     public static class FormatBean implements Serializable {
         /**
          * format : 1
@@ -69,6 +77,8 @@ public class MgGoods extends GenericModel {
          * status : 0
          */
 
+        private Integer formatId;
+        private String formatName;
         private int format;
         private int number;
         @Digits(integer=10,fraction = 2)
@@ -96,6 +106,22 @@ public class MgGoods extends GenericModel {
 
         public void setPrice(Float price) {
             this.price = price;
+        }
+
+        public Integer getFormatId() {
+            return formatId;
+        }
+
+        public void setFormatId(Integer formatId) {
+            this.formatId = formatId;
+        }
+
+        public String getFormatName() {
+            return formatName;
+        }
+
+        public void setFormatName(String formatName) {
+            this.formatName = formatName;
         }
     }
 
@@ -257,4 +283,5 @@ public class MgGoods extends GenericModel {
             this.fieldDefault = fieldDefault;
         }
     }
+
 }

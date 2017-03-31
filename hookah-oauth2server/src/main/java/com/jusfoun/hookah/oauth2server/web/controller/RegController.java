@@ -49,6 +49,7 @@ public class RegController {
 
         //2、校验短信验证码
             //获取库里缓存的验证码
+        /*
         List<Condition> filters = new ArrayList();
         filters.add(Condition.eq("phoneNum",user.getMobile()));
         filters.add(Condition.eq("validCode",user.getValidSms()));
@@ -56,6 +57,7 @@ public class RegController {
         if(sms==null){ //验证码错误或者已过期
             return ReturnData.error("短信验证码错误或者已过期");
         }
+        */
 
         //3、校验密码一致
         String password = user.getPassword().trim();
@@ -73,7 +75,7 @@ public class RegController {
 
         //其他校验规则
 
-        User user1 = userService.insert(user);
+        User user1 = userService.insert((User)user);
         return ReturnData.success(user1);
     }
 

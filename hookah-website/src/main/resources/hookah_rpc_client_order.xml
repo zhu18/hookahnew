@@ -12,6 +12,9 @@
     <motan:referer id="orderInfoService"
                    interface="com.jusfoun.hookah.rpc.api.OrderInfoService"
                    connectTimeout="300" requestTimeout="300" basicReferer="HookahRPCClientBasicConfig"/>
+    <motan:referer id="mgOrderInfoService"
+                   interface="com.jusfoun.hookah.rpc.api.MgOrderInfoService"
+                   connectTimeout="300" requestTimeout="300" basicReferer="HookahRPCClientBasicConfig"/>
     <motan:referer id="invoiceService"
                    interface="com.jusfoun.hookah.rpc.api.InvoiceService"
                    connectTimeout="300" requestTimeout="300" basicReferer="HookahRPCClientBasicConfig"/>

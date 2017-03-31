@@ -19,8 +19,8 @@ myconf:
     clientId: website
     clientSecret: Yqn2ht4DYkMHlDvTY7CV
     regUrl: http://auth.hookah.test/reg
-    loginUrl: http://auth.hookah.test/oauth/authorize?client_id=website&response_type=code&redirect_uri=http://localhost:9000/login
-    logoutUrl: http://auth.hookah.test/logout?redirect_uri=http://localhost:9000/login
+    loginUrl: http://auth.hookah.test/oauth/authorize?client_id=website&response_type=code&redirect_uri=http://www.hookah.test/login
+    logoutUrl: http://auth.hookah.test/logout?redirect_uri=http://www.hookah.test/login
     accessTokenUrl: http://auth.hookah.test/oauth/accessToken
     userInfoUrl: http://auth.hookah.test/userInfo
     redirectUrl: http://auth.hookah.test/login

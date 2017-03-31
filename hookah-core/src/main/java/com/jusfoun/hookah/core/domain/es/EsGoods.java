@@ -8,14 +8,15 @@ import com.jusfoun.hookah.core.constants.HookahConstants.Type;
 import org.springframework.data.annotation.Id;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by wangjl on 2017-3-28.
  */
-public class EsGoods {
+public class EsGoods implements Serializable {
     @Id
-    @EsField
+    @EsField(type = Type.KEYWORD)
     private String goodsId;
     @EsField(analyzeOpt= AnalyzeOpt.ANALYZED, analyzer= Analyzer.IK_MAX_WORD,
             termVector= TermVector.OFFSETS, isStore = true, searchAnalyzer = Analyzer.IK_SMART)
@@ -33,8 +34,16 @@ public class EsGoods {
     private String goodsImg;
     @EsField
     private String catId;
+    @EsField(analyzeOpt= AnalyzeOpt.ANALYZED, analyzer= Analyzer.WHITESPACE,
+            termVector= TermVector.OFFSETS, isStore = true, searchAnalyzer = Analyzer.WHITESPACE)
+    private String catIds;
     @EsField
     private String attrId;
+    @EsField
+    private String goodsArea;
+    @EsField(analyzeOpt= AnalyzeOpt.ANALYZED, analyzer= Analyzer.WHITESPACE,
+            termVector= TermVector.OFFSETS, isStore = true, searchAnalyzer = Analyzer.WHITESPACE)
+    private String goodsAreas;
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @EsField(type = Type.DATE)
     private Date addTime;
@@ -117,5 +126,29 @@ public class EsGoods {
 
     public void setAddTime(Date addTime) {
         this.addTime = addTime;
+    }
+
+    public String getCatIds() {
+        return catIds;
+    }
+
+    public void setCatIds(String catIds) {
+        this.catIds = catIds;
+    }
+
+    public String getGoodsArea() {
+        return goodsArea;
+    }
+
+    public void setGoodsArea(String goodsArea) {
+        this.goodsArea = goodsArea;
+    }
+
+    public String getGoodsAreas() {
+        return goodsAreas;
+    }
+
+    public void setGoodsAreas(String goodsAreas) {
+        this.goodsAreas = goodsAreas;
     }
 }
