@@ -13,6 +13,7 @@ import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.generic.OrderBy;
+import com.jusfoun.hookah.core.utils.JSONUtils;
 import com.jusfoun.hookah.core.utils.OrderHelper;
 import com.jusfoun.hookah.rpc.api.CartService;
 import com.jusfoun.hookah.rpc.api.GoodsService;
@@ -205,20 +206,22 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                                            List<OrderBy> orderBys) {
         // TODO Auto-generated method stub
         PageHelper.startPage(pageNum, pageSize, getOrderBy(orderBys));
-        List<OrderInfo> list =  super.selectList(filters,orderBys);
-        List<OrderInfoVo> listVo = new ArrayList<>();
+        Page<OrderInfo> list =  (Page<OrderInfo>) super.selectList(filters,orderBys);
+        Page<OrderInfoVo> page = new Page<OrderInfoVo>(pageNum,pageSize);
         for(OrderInfo order:list){
-            OrderInfoVo orderInfoVo = (OrderInfoVo)order;
+            OrderInfoVo orderInfoVo = new OrderInfoVo();
+            this.copyProperties(order,orderInfoVo,null);
             OrderInfoVo mgOrder = mgOrderInfoService.selectById(orderInfoVo.getOrderId());
             orderInfoVo.setMgOrderGoodsList(mgOrder.getMgOrderGoodsList());
-            listVo.add(orderInfoVo);
+            page.add(orderInfoVo);
         }
-        Page<OrderInfoVo> page = (Page<OrderInfoVo>)listVo;
+
         Pagination<OrderInfoVo> pagination = new Pagination<OrderInfoVo>();
-        pagination.setTotalItems(page.getTotal());
+        pagination.setTotalItems(list.getTotal());
         pagination.setPageSize(pageSize);
         pagination.setCurrentPage(pageNum);
         pagination.setList(page);
+        logger.info(JSONUtils.toString(pagination));
         return pagination;
     }
 }

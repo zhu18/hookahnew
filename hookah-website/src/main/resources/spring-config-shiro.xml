@@ -114,6 +114,10 @@
         /mybuyer/** = oauth2Authc
         /cart* = oauth2Authc
         /cart/** = oauth2Authc
+        /order* = oauth2Authc
+        /order/** = oauth2Authc
+        /pay* = oauth2Authc
+        /pay/** = oauth2Authc
         /logout = logout
         <!--/** = user-->
       </value>

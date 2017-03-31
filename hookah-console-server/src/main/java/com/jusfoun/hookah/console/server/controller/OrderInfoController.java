@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,7 +30,6 @@ import java.util.List;
  * @created 2016年6月28日
  */
 @Controller
-@RequestMapping("/orderInfo")
 public class OrderInfoController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(OrderInfoController.class);
@@ -37,6 +37,11 @@ public class OrderInfoController {
 	
 	@Autowired
 	private OrderInfoService orderInfoService;
+
+	@RequestMapping(value="/order",method=RequestMethod.GET)
+	public String index(){
+		return "redirect:/order/list";
+	}
 
 	/**
 	 * 分页查询
@@ -49,8 +54,8 @@ public class OrderInfoController {
      * @param domainName  店铺名 模糊查询
      * @return
      */
-	@RequestMapping(value="/list",method=RequestMethod.GET)
-	public ReturnData findByPage( @RequestParam(defaultValue="1")Integer pageNum, @RequestParam(defaultValue= "15")Integer pageSize,Integer payStatis,Integer commentFlag,Date startDate,Date endDate,String domainName){
+	@RequestMapping(value="/order/list",method=RequestMethod.GET)
+	public String findByPage( @RequestParam(defaultValue="1")Integer pageNum, @RequestParam(defaultValue= "15")Integer pageSize,Integer payStatis,Integer commentFlag,Date startDate,Date endDate,String domainName,Model model){
 		try{
 			List<Condition> filters = new ArrayList<>();
 			if(startDate!=null){
@@ -70,14 +75,15 @@ public class OrderInfoController {
 			}
 			List<OrderBy> orderBys = new ArrayList<>();
 			orderBys.add(OrderBy.desc("addTime"));
-			Pagination<OrderInfoVo> p = orderInfoService.getDetailListInPage(pageNum,pageSize,filters,orderBys);
-			return ReturnData.success(p);
+			Pagination<OrderInfoVo> pOrders = orderInfoService.getDetailListInPage(pageNum,pageSize,filters,orderBys);
+			model.addAttribute("orderList",pOrders);
+			return "/mybuyer/order";
 		}catch(Exception e){
 			logger.error("分页查询错误",e);
 			ReturnData.error("系统异常");
 		}
-		
-		return ReturnData.fail();
+
+		return "/error/500";
 	}
 
 	/**
@@ -85,7 +91,7 @@ public class OrderInfoController {
 	 * @param orderInfo
 	 * @return
      */
-	@RequestMapping(value = "/update",method=RequestMethod.POST)
+	@RequestMapping(value = "/order/update",method=RequestMethod.POST)
 	public ReturnData update(OrderInfoVo orderInfo){
 		if(StringUtils.isBlank(orderInfo.getOrderId())){
 			return  ReturnData.invalidParameters("参数orderId不可为空");
@@ -107,7 +113,7 @@ public class OrderInfoController {
 	 * @param cartIds
      * @return
      */
-	@RequestMapping(value="/insert",method=RequestMethod.POST)
+	@RequestMapping(value="/order/insert",method=RequestMethod.POST)
 	public ReturnData insert(OrderInfo orderinfo,String cartIds){
 		try{
 			init(orderinfo);

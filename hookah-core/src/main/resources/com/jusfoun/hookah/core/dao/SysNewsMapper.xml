@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jusfoun.hookah.core.dao.SysNewsMapper">
+
+    <resultMap id="ListMap" type="com.jusfoun.hookah.core.domain.vo.SysNewsVo">
+        <id column="headImg"  property="headImg"/>
+        <id column="userName"  property="userName"/>
+    </resultMap>
+
+
+    <select id="selectByGroup" resultMap="ListMap">
+        SELECT news.* ,
+        us.`head_img` AS headImg ,
+        us.`user_name` AS userName
+        FROM sys_news  AS news , user  AS us
+        <where> news.`sys_user` = us.`user_id`
+            <if test="group !=null and group !=''">
+                and news.news_group=#{group}
+            </if>
+            <if test="sonGroup !=null and sonGroup !=''">
+                and news.news_son_group=#{sonGroup}
+            </if>
+        </where>
+        ORDER BY news.syt_time DESC
+    </select>
+
+    <select id="selectNewsByID" resultMap="ListMap">
+        SELECT news.* ,
+        us.`head_img` AS headImg ,
+        us.`user_name` AS userName
+        FROM sys_news  AS news , user  AS us
+        <where> news.`sys_user` = us.`user_id`
+            <if test="newId !=null and newId !=''">
+                and news.news_id=#{newId}
+            </if>
+        </where>
+        ORDER BY news.syt_time DESC
+    </select>
+
+</mapper>
