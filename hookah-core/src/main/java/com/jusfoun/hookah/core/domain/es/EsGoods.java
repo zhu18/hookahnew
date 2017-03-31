@@ -39,6 +39,11 @@ public class EsGoods implements Serializable {
     private String catIds;
     @EsField
     private String attrId;
+    @EsField
+    private String goodsArea;
+    @EsField(analyzeOpt= AnalyzeOpt.ANALYZED, analyzer= Analyzer.WHITESPACE,
+            termVector= TermVector.OFFSETS, isStore = true, searchAnalyzer = Analyzer.WHITESPACE)
+    private String goodsAreas;
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @EsField(type = Type.DATE)
     private Date addTime;
@@ -129,5 +134,21 @@ public class EsGoods implements Serializable {
 
     public void setCatIds(String catIds) {
         this.catIds = catIds;
+    }
+
+    public String getGoodsArea() {
+        return goodsArea;
+    }
+
+    public void setGoodsArea(String goodsArea) {
+        this.goodsArea = goodsArea;
+    }
+
+    public String getGoodsAreas() {
+        return goodsAreas;
+    }
+
+    public void setGoodsAreas(String goodsAreas) {
+        this.goodsAreas = goodsAreas;
     }
 }
