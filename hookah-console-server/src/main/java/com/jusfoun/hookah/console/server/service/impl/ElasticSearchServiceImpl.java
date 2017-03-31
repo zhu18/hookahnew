@@ -10,8 +10,10 @@ import com.jusfoun.hookah.core.domain.es.EsAllMapping;
 import com.jusfoun.hookah.core.domain.es.EsFieldMapping;
 import com.jusfoun.hookah.core.domain.es.EsGoods;
 import com.jusfoun.hookah.core.domain.es.EsMapping;
+import com.jusfoun.hookah.core.domain.vo.EsGoodsVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.rpc.api.ElasticSearchService;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.client.transport.TransportClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +28,7 @@ import java.util.Map;
  * Created by wangjl on 2017-3-28.
  */
 @Service
-public class ElasticSearchServiceImpl<T> implements ElasticSearchService {
+public class ElasticSearchServiceImpl implements ElasticSearchService {
     @Autowired
     ESTransportClient esTransportClient;
     @Autowired
@@ -93,9 +95,10 @@ public class ElasticSearchServiceImpl<T> implements ElasticSearchService {
     }
 
     @Override
-    public void search(Pagination pagination, String key, String index, String type,
-                                Boolean isHighLight, String... fields) throws Exception {
+    public Pagination search(Pagination pagination, String key, String index, String type,
+                             Boolean isHighLight, String... fields) throws Exception {
         esTemplate.search(esTransportClient.getObject(), key, index, type, pagination, isHighLight, fields);
+        return pagination;
     }
 
     @Override
@@ -103,4 +106,22 @@ public class ElasticSearchServiceImpl<T> implements ElasticSearchService {
         esTemplate.deleteIndex(esTransportClient.getObject(), indexName);
     }
 
+    @Override
+    public Pagination search(EsGoodsVo vo) throws Exception {
+        Integer pageSize = vo.getPageSize();
+        Integer pageNum = vo.getPageNum();
+        String orderField = vo.getOrderFiled();
+        String order = vo.getOrder();
+
+        Pagination pagination = new Pagination();
+        pagination.setPageSize(pageSize);
+        pagination.setCurrentPage(pageNum);
+        Map<String, Object> map = new HashedMap();
+        if(vo.getEsGoods() != null) {
+            map = AnnotationUtil.convert2Map(vo.getEsGoods());
+        }
+        esTemplate.search(esTransportClient.getObject(), "qingdao-goods-v1",
+                "goods", map, pagination, orderField, order);
+        return pagination;
+    }
 }

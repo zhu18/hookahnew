@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.rpc.api;
 
 import com.jusfoun.hookah.core.common.Pagination;
+import com.jusfoun.hookah.core.domain.vo.EsGoodsVo;
 
 /**
  * Created by wangjl on 2017-3-28.
@@ -14,8 +15,10 @@ public interface ElasticSearchService {
 
     void bulkInsert(String keyField, String index, String type) throws Exception;
 
-    void search(Pagination pagination, String key, String index, String type,
-                Boolean isHighLight, String... fields) throws Exception;
+    Pagination search(Pagination pagination, String key, String index, String type,
+                      Boolean isHighLight, String... fields) throws Exception;
 
     void deleteIndex(String indexName) throws Exception;
+
+    Pagination search(EsGoodsVo vo) throws Exception;
 }
