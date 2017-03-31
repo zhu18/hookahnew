@@ -89,6 +89,7 @@
         /druid/** = anon
         /login = anon
         /reg = anon
+        /captcha = anon
         /unauthorized = anon
         # OAuth anon
         /oauth/** = anon

@@ -106,6 +106,10 @@ public class ReturnData<T> {
     public static ReturnData fail(){
     	return new ReturnData(Fail,ExceptionConst.get(Fail),null);
     }
+
+    public static ReturnData fail(String message){
+        return new ReturnData(Fail,message,null);
+    }
     
     public static ReturnData invalidParameters(){
     	return new ReturnData(InvalidParameters,ExceptionConst.get(InvalidParameters),null);

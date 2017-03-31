@@ -1,10 +1,9 @@
 package com.jusfoun.hookah.oauth2server.service.impl;
 
 import com.jusfoun.hookah.core.constants.HookahConstants;
-import com.jusfoun.hookah.core.domain.mongo.MgSmsValidate;
+import com.jusfoun.hookah.core.domain.mongo.MgCaptcha;
 import com.jusfoun.hookah.core.generic.GenericMongoServiceImpl;
-import com.jusfoun.hookah.core.utils.SMSUtil;
-import com.jusfoun.hookah.rpc.api.MgSmsValidateService;
+import com.jusfoun.hookah.rpc.api.MgCaptchaService;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
@@ -18,22 +17,18 @@ import java.util.Date;
  * @desc
  */
 @Service
-public class MgSmsValidateServiceImpl extends GenericMongoServiceImpl<MgSmsValidate, String> implements MgSmsValidateService {
+public class MgCaptchaServiceImpl extends GenericMongoServiceImpl<MgCaptcha, String> implements MgCaptchaService {
     @Resource
     private MongoTemplate mongoTemplate;
 
     @Override
-    public MgSmsValidate insert(MgSmsValidate sms) {
-        //发送短信
-        logger.info("发送短信，接收方：{}，内容为:{}",sms.getPhoneNum(),sms.getSmsContent());
-        SMSUtil.sendSMS(sms.getPhoneNum(),sms.getSmsContent());
-
+    public MgCaptcha insert(MgCaptcha cpt) {  //临时借用这个类
         //缓存短信
-        sms.setSendTime(new Date());
+        cpt.setCreateTime(new Date());
         Calendar cal = Calendar. getInstance ();
         cal.set(Calendar.MINUTE , Calendar.MINUTE+ HookahConstants.SMS_DURATION_UNIT ) ;  //计算过期时间
-        sms.setExpireTime(cal.getTime());
-        mongoTemplate.insert(sms);
-        return sms;
+        cpt.setExpireTime(cal.getTime());
+        mongoTemplate.insert(cpt);
+        return cpt;
     }
 }
