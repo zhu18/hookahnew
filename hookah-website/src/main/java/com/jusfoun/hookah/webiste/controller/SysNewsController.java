@@ -18,7 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-
 import java.util.*;
 
 
@@ -36,9 +35,13 @@ public class SysNewsController {
     @Resource
     CategoryService categoryService;
 
-    /** 第几页 */
+    /**
+     * 第几页
+     */
     private static final int PAGE_NUM = 1;
-    /** 每页记录数 */
+    /**
+     * 每页记录数
+     */
     private static final int PAGE_SIZE = 10;
 
    /* @RequestMapping(value = "/sysNews/list", method = RequestMethod.POST)
@@ -49,17 +52,17 @@ public class SysNewsController {
 
     /**
      * 根据信息ID获取详情信息
+     *
      * @param id
      * @return
      */
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "details", method = RequestMethod.GET)
-    public ReturnData details(String  id)
-    {
+    public ReturnData details(String id) {
         ReturnData result = new ReturnData();
         try {
-            SysNewsVo  sysN= new SysNewsVo();
+            SysNewsVo sysN = new SysNewsVo();
             sysN = sysNewsService.selectNewsByID(id);
             result.setData(sysN);
             result.success();
@@ -72,13 +75,14 @@ public class SysNewsController {
 
     /**
      * 根据ID批量删除文章
+     *
      * @param ids
      * @return
      */
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "deleteInfo", method = RequestMethod.POST)
-    public ReturnData deleteInfo( @RequestBody String[] ids){
+    public ReturnData deleteInfo(@RequestBody String[] ids) {
         try {
             sysNewsService.delete(ids);
         } catch (Exception e) {
@@ -90,13 +94,14 @@ public class SysNewsController {
 
     /**
      * 根据ID删除文章
+     *
      * @param id
      * @return
      */
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "deleteOne", method = RequestMethod.GET)
-    public ReturnData deleteOne(String id){
+    public ReturnData deleteOne(String id) {
         try {
             sysNewsService.delete(id);
         } catch (Exception e) {
@@ -108,16 +113,17 @@ public class SysNewsController {
 
 
     /**
-     *  查询列表
-     * @param pageNumber  所在位置
-     * @param pageSize 每页记录数
-     * @param newsGroup 文章一级分类
+     * 查询列表
+     *
+     * @param pageNumber   所在位置
+     * @param pageSize     每页记录数
+     * @param newsGroup    文章一级分类
      * @param newsSonGroup 文章二级分类
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "list", method = RequestMethod.GET)
-    public ReturnData list( String pageNumber , String pageSize , String newsGroup,String newsSonGroup) {
+    public ReturnData list(String pageNumber, String pageSize, String newsGroup, String newsSonGroup) {
         Pagination<SysNews> page = new Pagination<>();
         try {
             List<Condition> filters = new ArrayList();
@@ -125,22 +131,22 @@ public class SysNewsController {
             orderBys.add(OrderBy.desc("sytTime"));
             //参数校验
             int pageNumberNew = PAGE_NUM;
-            if(StringUtils.isNotBlank(pageNumber)){
+            if (StringUtils.isNotBlank(pageNumber)) {
                 pageNumberNew = Integer.parseInt(pageNumber);
             }
 
             int pageSizeNew = PAGE_SIZE;
-            if(StringUtils.isNotBlank(pageSize)){
+            if (StringUtils.isNotBlank(pageSize)) {
                 pageSizeNew = Integer.parseInt(pageSize);
             }
 
-            if( StringUtils.isNotBlank(newsGroup)){
-                filters.add(Condition.eq("newsGroup",newsGroup));
-            }else {
+            if (StringUtils.isNotBlank(newsGroup)) {
+                filters.add(Condition.eq("newsGroup", newsGroup));
+            } else {
                 filters.add(Condition.eq("newsGroup", SysNews.Innovation));
             }
 
-            if( StringUtils.isNotBlank(newsSonGroup)){
+            if (StringUtils.isNotBlank(newsSonGroup)) {
                 filters.add(Condition.eq("newsSonGroup", newsSonGroup));
             }
 
@@ -150,38 +156,37 @@ public class SysNewsController {
             e.printStackTrace();
             return ReturnData.error("exception");
         }
-        return ReturnData.success(page) ;
+        return ReturnData.success(page);
     }
 
 
-
-
     /**
-     *  查询列表
-     * @param pageNumber  所在位置
-     * @param pageSize 每页记录数
-     * @param newsGroup 文章一级分类
+     * 查询列表
+     *
+     * @param pageNumber   所在位置
+     * @param pageSize     每页记录数
+     * @param newsGroup    文章一级分类
      * @param newsSonGroup 文章二级分类
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "listByGroup", method = RequestMethod.GET)
-    public ReturnData listByGroup( String pageNumber,String pageSize,String newsGroup,String newsSonGroup) {
+    public ReturnData listByGroup(String pageNumber, String pageSize, String newsGroup, String newsSonGroup) {
 
         try {
             //参数校验
             int pageNumberNew = PAGE_NUM;
-            if(StringUtils.isNotBlank(pageNumber)){
+            if (StringUtils.isNotBlank(pageNumber)) {
                 pageNumberNew = Integer.parseInt(pageNumber);
             }
             int pageSizeNew = PAGE_SIZE;
-            if(StringUtils.isNotBlank(pageSize)){
+            if (StringUtils.isNotBlank(pageSize)) {
                 pageSizeNew = Integer.parseInt(pageSize);
             }
-            Map<String,Object> map = new HashMap<String,Object>();
-            Map<String,Object> infos = sysNewsService.getNewsList(newsGroup,newsSonGroup,pageSizeNew);
-            List<List<SysNewsVo>> data=(List<List<SysNewsVo>>)infos.get("dataList");
-            map.put("dataList", data.get((pageNumberNew-1)));
+            Map<String, Object> map = new HashMap<String, Object>();
+            Map<String, Object> infos = sysNewsService.getNewsList(newsGroup, newsSonGroup, pageSizeNew);
+            List<List<SysNewsVo>> data = (List<List<SysNewsVo>>) infos.get("dataList");
+            map.put("dataList", data.get((pageNumberNew - 1)));
             map.put("totalPage", infos.get("totalCount"));
             map.put("totalItems", infos.get("totalItem"));//总条数
             map.put("pageSize", 10);//每页条数
@@ -208,6 +213,7 @@ public class SysNewsController {
 
     /**
      * 新增文章
+     *
      * @param model
      * @return
      */
@@ -233,6 +239,7 @@ public class SysNewsController {
 
     /**
      * 修改文章
+     *
      * @param model
      * @return
      */

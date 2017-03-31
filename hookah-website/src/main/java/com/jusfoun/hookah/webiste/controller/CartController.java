@@ -42,7 +42,7 @@ public class CartController extends BaseController {
     public String cart(Model model) {
         try {
             String userId = this.getCurrentUser().getUserId();
-            logger.info("当前用户是:{}",userId);
+            logger.info("当前用户是:{}", userId);
 
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.eq("userId", userId));
@@ -60,6 +60,7 @@ public class CartController extends BaseController {
 
     /**
      * Ajax 方式增加购物车
+     *
      * @param cart
      * @param model
      * @return
@@ -70,11 +71,11 @@ public class CartController extends BaseController {
         try {
             //需要先获取当前用户id
             String userId = this.getCurrentUser().getUserId();
-            logger.info("当前用户是:{}",userId);
+            logger.info("当前用户是:{}", userId);
             cart.setUserId(userId);
             cart.setAddTime(new Date());
             cart.setIsGift(new Integer(0).shortValue());
-            cart.setDelFlag(new Integer(0).shortValue());
+            cart.setIsDeleted(new Byte("0"));
 
 
             //补充商品信息
@@ -94,6 +95,7 @@ public class CartController extends BaseController {
 
     /**
      * Ajax 方式增加购物车
+     *
      * @param list
      * @param model
      * @return
@@ -104,7 +106,7 @@ public class CartController extends BaseController {
         try {
             //需要先获取当前用户id
             String userId = "hookah";
-            for(Cart cart:list){
+            for (Cart cart : list) {
                 cart.setUserId(userId);
                 cart.setAddTime(new Date());
                 cart.setIsGift(new Integer(0).shortValue());
@@ -125,6 +127,7 @@ public class CartController extends BaseController {
 
     /**
      * Ajax  编辑购物车
+     *
      * @param cart
      * @param model
      * @return
@@ -132,7 +135,7 @@ public class CartController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/cart/edit", method = RequestMethod.POST)
     public ReturnData edit(Cart cart, Model model) {
-        if(StringUtils.isBlank(cart.getRecId())){
+        if (StringUtils.isBlank(cart.getRecId())) {
             return ReturnData.invalidParameters("The field[recId] CANNOT be null!");
         }
         try {
@@ -146,13 +149,14 @@ public class CartController extends BaseController {
 
     /**
      * Ajax 方式增加购物车
+     *
      * @param id
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/cart/delete/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/cart/delete/{id}", method = RequestMethod.GET)
     public ReturnData delete(@PathVariable String id) {
-        logger.info("逻辑删除购物车：{}",id);
+        logger.info("逻辑删除购物车：{}", id);
         try {
             cartService.deleteByLogic(id);
             return ReturnData.success();
@@ -164,13 +168,14 @@ public class CartController extends BaseController {
 
     /**
      * Ajax 方式增加购物车
+     *
      * @param ids
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/cart/deleteAll", method = RequestMethod.POST)
     public ReturnData deleteAll(String[] ids) {
-        logger.info("逻辑删除购物车：{}",ids);
+        logger.info("逻辑删除购物车：{}", ids);
         try {
 
             return ReturnData.success();
