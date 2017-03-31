@@ -87,7 +87,7 @@ public class RegController {
         if(sms==null){//如果近期没有发送过
             String code = StrUtil.random(4);
             StringBuffer content =  new StringBuffer();
-            content.append("验证码为：").append(code).append(",有效时间").append(HookahConstants.SMS_DURATION_SECONDS).append("秒。");
+            content.append("验证码为：").append(code).append(",有效时间").append(HookahConstants.SMS_DURATION_MINITE).append("分。");
 
             sms = new MgSmsValidate();
             sms.setPhoneNum(phoneNum);

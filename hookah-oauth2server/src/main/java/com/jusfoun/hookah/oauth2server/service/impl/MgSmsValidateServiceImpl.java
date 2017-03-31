@@ -31,7 +31,7 @@ public class MgSmsValidateServiceImpl extends GenericMongoServiceImpl<MgSmsValid
         //缓存短信
         sms.setSendTime(new Date());
         Calendar cal = Calendar. getInstance ();
-        cal.set(Calendar.MINUTE , Calendar.MINUTE+ HookahConstants.SMS_DURATION_UNIT ) ;  //计算过期时间
+        cal.set(Calendar.MINUTE , Calendar.MINUTE+ HookahConstants.SMS_DURATION_MINITE ) ;  //计算过期时间
         sms.setExpireTime(cal.getTime());
         mongoTemplate.insert(sms);
         return sms;

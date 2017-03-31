@@ -26,7 +26,7 @@ public class MgCaptchaServiceImpl extends GenericMongoServiceImpl<MgCaptcha, Str
         //缓存短信
         cpt.setCreateTime(new Date());
         Calendar cal = Calendar. getInstance ();
-        cal.set(Calendar.MINUTE , Calendar.MINUTE+ HookahConstants.SMS_DURATION_UNIT ) ;  //计算过期时间
+        cal.set(Calendar.MINUTE , Calendar.MINUTE+ HookahConstants.CAPTCHA_DURATION_MINITE ) ;  //计算过期时间
         cpt.setExpireTime(cal.getTime());
         mongoTemplate.insert(cpt);
         return cpt;
