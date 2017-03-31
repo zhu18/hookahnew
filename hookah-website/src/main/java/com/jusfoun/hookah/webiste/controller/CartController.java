@@ -29,7 +29,7 @@ import java.util.List;
  * @desc 买家中心
  */
 @Controller
-public class CartController {
+public class CartController extends BaseController {
     private final static Logger logger = LoggerFactory.getLogger(CartController.class);
 
     @Autowired
@@ -41,15 +41,19 @@ public class CartController {
     @RequestMapping(value = "/cart", method = RequestMethod.GET)
     public String cart(Model model) {
         try {
+            String userId = this.getCurrentUser().getUserId();
+            logger.info("当前用户是:{}",userId);
+
             List<Condition> filters = new ArrayList<>();
-            filters.add(Condition.eq("userId", "hookah"));
+            filters.add(Condition.eq("userId", userId));
             filters.add(Condition.eq("delFlag", new Integer(0).shortValue()));
             List<Cart> carts = cartService.selectList(filters);
             model.addAttribute("cartList", carts);
             logger.info(JSONUtils.toString(carts));
             return "/mybuyer/cart";
         } catch (Exception e) {
-            logger.info(e.getMessage());
+            e.printStackTrace();
+            logger.error(e.getMessage());
             return "redirect:/error/500";
         }
     }
@@ -64,10 +68,9 @@ public class CartController {
     @RequestMapping(value = "/cart/add", method = RequestMethod.POST)
     public ReturnData add(@Valid Cart cart, Model model) {
         try {
-            //设置默认信息
-
             //需要先获取当前用户id
-            String userId = "hookah";
+            String userId = this.getCurrentUser().getUserId();
+            logger.info("当前用户是:{}",userId);
             cart.setUserId(userId);
             cart.setAddTime(new Date());
             cart.setIsGift(new Integer(0).shortValue());

@@ -1,7 +1,6 @@
 package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.common.Pagination;
-import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.OrderInfo;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -30,12 +29,7 @@ import java.util.List;
  * @created 2016年6月28日
  */
 @Controller
-public class OrderInfoController {
-	private String  userId = "hookah";
-	
-	private static final Logger logger = LoggerFactory.getLogger(OrderInfoController.class);
-	private static final String PAGE_SIZE = new Integer(HookahConstants.PAGE_SIZE).toString();
-	
+public class OrderInfoController extends BaseController{
 	@Autowired
 	private OrderInfoService orderInfoService;
 
@@ -48,7 +42,7 @@ public class OrderInfoController {
 	 * 分页查询
 	 * @param pageNum
 	 * @param pageSize
-	 * @param payStatis    支付状态
+	 * @param payStatus    支付状态
 	 * @param commentFlag   是否评论
 	 * @param startDate
 	 * @param endDate      结束日期
@@ -56,7 +50,7 @@ public class OrderInfoController {
      * @return
      */
 	@RequestMapping(value="/order/list",method=RequestMethod.GET)
-	public String findByPage( @RequestParam(defaultValue="1")Integer pageNum, @RequestParam(defaultValue= "15")Integer pageSize,Integer payStatus,Integer commentFlag,Date startDate,Date endDate,String domainName,Model model){
+	public String findByPage( @RequestParam(defaultValue=PAGE_NUM)Integer pageNum, @RequestParam(defaultValue= PAGE_SIZE)Integer pageSize,Integer payStatus,Integer commentFlag,Date startDate,Date endDate,String domainName,Model model){
 		try{
 			List<Condition> filters = new ArrayList<>();
 			if(startDate!=null){
@@ -74,13 +68,17 @@ public class OrderInfoController {
 			if(domainName!=null){
 				filters.add(Condition.like("domainName","%"+domainName+"%"));
 			}
+			String userId = getCurrentUser().getUserId();
+			filters.add(Condition.eq("userId",userId));
+			filters.add(Condition.eq("delFlag",0));
+
 			List<OrderBy> orderBys = new ArrayList<>();
 			orderBys.add(OrderBy.desc("addTime"));
 			Pagination<OrderInfoVo> pOrders = orderInfoService.getDetailListInPage(pageNum,pageSize,filters,orderBys);
 			model.addAttribute("orderList",pOrders);
 			return "/mybuyer/order";
 		}catch(Exception e){
-			logger.error("分页查询错误",e);
+			logger.error("分页查询订单错误",e);
 			ReturnData.error("系统异常");
 		}
 
@@ -127,6 +125,7 @@ public class OrderInfoController {
 	}
 
 	private OrderInfo init(OrderInfo orderinfo) {
+		String userId = getCurrentUser().getUserId();
 		orderinfo.setUserId(userId);
 		Date date = new Date();
 		orderinfo.setOrderSn(OrderHelper.genOrderSn());
