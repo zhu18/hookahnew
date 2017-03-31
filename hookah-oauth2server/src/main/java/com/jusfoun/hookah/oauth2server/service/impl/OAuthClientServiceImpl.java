@@ -1,12 +1,12 @@
 package com.jusfoun.hookah.oauth2server.service.impl;
 
 
+import com.jusfoun.hookah.core.dao.RoleMapper;
 import com.jusfoun.hookah.core.domain.OauthClient;
 import com.jusfoun.hookah.core.domain.shared.GuidGenerator;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.oauth2server.dao.OauthClientMapper;
 import com.jusfoun.hookah.rpc.api.oauth2.OAuthClientService;
-import com.jusfoun.hookah.oauth2server.dao.RoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
