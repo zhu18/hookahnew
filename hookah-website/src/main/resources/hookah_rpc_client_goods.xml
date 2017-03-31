@@ -21,4 +21,7 @@
     <motan:referer id="shelvesService"
                    interface="com.jusfoun.hookah.rpc.api.ShelvesService"
                    connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+    <motan:referer id="elasticSearchService"
+                   interface="com.jusfoun.hookah.rpc.api.ElasticSearchService"
+                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
 </beans>

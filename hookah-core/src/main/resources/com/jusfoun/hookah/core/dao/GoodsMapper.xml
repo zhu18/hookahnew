@@ -60,6 +60,7 @@
         <result column="keywords" jdbcType="VARCHAR" property="keywords" />
         <result column="goods_img" jdbcType="VARCHAR" property="goodsImg" />
         <result column="cat_id" jdbcType="VARCHAR" property="catId" />
+        <result column="cat_ids" jdbcType="VARCHAR" property="catIds" />
         <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     </resultMap>
     <select id="getNeedEsGoods" resultMap="EsResultMap">
@@ -72,6 +73,7 @@
             keywords,
             goods_img,
             cat_id,
+            getParentList(cat_id) cat_ids,
             add_time
         FROM
             goods
