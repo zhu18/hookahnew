@@ -28,6 +28,7 @@ public class HookahConstants {
         IK_MAX_WORD("ik_max_word"),
         IK_SMART("ik_smart"),
         PINYIN("pinyin"),
+        WHITESPACE("whitespace"),
         NONE(null);
 
         public String val;
