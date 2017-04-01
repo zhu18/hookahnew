@@ -15,6 +15,8 @@
  */
 package com.jusfoun.hookah.console.server.pay.unionpay.sdk;
 
+/*import org.bouncycastle.jce.provider.BouncyCastleProvider;*/
+
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import java.io.File;
