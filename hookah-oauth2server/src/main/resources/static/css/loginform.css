@@ -515,7 +515,7 @@ input.fm-button-disabled {
 }
 
 #login-form .loading-mask .loading-icon {
-  background: url(../images/ajax-loader-16x16.gif) no-repeat center center;
+  background: url(../img/ajax-loader-16x16.gif) no-repeat center center;
   z-index: 2
 }
 
@@ -1051,7 +1051,7 @@ input.fm-button-disabled {
 }
 
 .icon-notice {
-  background-image: url(../images/notice.png)
+  background-image: url(../img/notice.png);
 }
 
 .icon-info {

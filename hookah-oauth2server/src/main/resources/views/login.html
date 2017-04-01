@@ -101,7 +101,7 @@ var htmlPart = {
   <div style="margin-left: 100px;float: left;width:450px;height:350px; "></div>
   <div class="login-module" id="login-module">
     <div class="iframe-show iframe-loaded">
-      <form id="login-form" name="user" method="post"
+      <form id="login-form" name="user" method="post" onsubmit="return check(this)"
             class="form clr style-type-vertical lang-zh_CN vertical-zh_CN ">
         <div id="login-title" style="font-size:12px;font-weight:normal;">
           使用会员名登录
@@ -155,7 +155,7 @@ var htmlPart = {
           </dl>
           <dl class="fm-login-checkcode-nc">
             <dt id="fm-login-checkcode-title" class="about-checkcode fm-label">
-              <label for="fm-login-checkcode">验证码:</label>
+              <label>验证码:</label>
             </dt>
             <dd id="fm-login-checkcode-wrap" class="about-checkcode fm-field">
               <div id="nocaptcha" class="nc-container tb-login" data-nc-idx="1">
@@ -261,20 +261,40 @@ var htmlPart = {
     //          }
     //      }
     //  }
-    //  $('#fm-login-id').change(function(){
-    //      if($(this).val()){
-    //          $('#login-error').hide();
-    //      }else{
-    //          $('#login-error').show().children('.notice-descript').html('用户名不能为空');
-    //      }
-    //  })
-    //  $('#fm-login-password').change(function(){
-    //      if($(this).val()){
-    //          $('#login-error').hide();
-    //      }else{
-    //          $('#login-error').show().children('.notice-descript').html('密码不能为空');
-    //      }
-    //  })
+      $('#fm-login-id').blur(function(){
+          if($(this).val()){
+              $('#login-error').hide();
+          }else{
+              $('#login-error').show().children('.notice-descript').html('用户名不能为空');
+          }
+      })
+      $('#fm-login-password').blur(function(){
+          if($(this).val()){
+              $('#login-error').hide();
+          }else{
+              $('#login-error').show().children('.notice-descript').html('密码不能为空');
+          }
+      })
+
+
+
+
+    function check(form) {
+
+        if(form.userName.value=='') {
+            $('#login-error').show().children('.notice-descript').html('用户名不能为空');
+            form.userName.focus();
+            return false;
+        }
+        if(form.password.value==''){
+            $('#login-error').show().children('.notice-descript').html('密码不能为空');
+            form.password.focus();
+            return false;
+        }
+        $('#login-loading').show();
+        return true;
+    }
+
 </script>
 <%};
 include("layout/base.html",{headSection:head,htmlSection:htmlPart}){}

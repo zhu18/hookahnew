@@ -1070,12 +1070,10 @@ body .hide {
 }
 
 #ali-logo a {
-  background: url(/simg/sprites/app/new-header-v4-2@1x.png?t=d9d72c0f_0) no-repeat
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
   #ali-logo a {
-    background: url(/simg/sprites/app/new-header-v4-2@2x.png?t=7d7b384c_0) no-repeat;
     background-size: 600px 400px
   }
 }
@@ -2149,9 +2147,6 @@ body .hide {
   margin: 10px 0 0 10px
 }
 
-/
-/
----------------
 * {
   font-family: Microsoft Yahei
 }
@@ -2228,7 +2223,7 @@ body .hide {
   height: 33px;
   line-height: 33px;
   left: 0;
-  top: -1
+  top: 1px;
 }
 
 .form-main-list .form-group .form-item .mobile-text .mobile-text-input {
@@ -2361,10 +2356,18 @@ body .hide {
   top: 1px;
   left: 169px;
   height: 35px;
+  border:none;
 }
+.form-item .mobile-btn-disabled{
+  background: #ccc;
+}
+
 .form-item .mobile-text-btn:hover{
   text-decoration: none;
   background: #00a2ca;
+}
+.form-item .mobile-btn-disabled:hover{
+    background: #ccc;
 }
 .form-item .captcha-text-btn{
   width:96px;

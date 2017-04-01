@@ -65,7 +65,7 @@ var htmlPart = {
 		            <span class="star">*</span>验证码
               </span>
                         <div id="register_no_captcha" class="nc-container" data-nc-idx="1">
-                            <input class="form-text mobile-text-input" maxlength="20" name="mobile" id="J_Mobile"
+                            <input class="form-text mobile-text-input" maxlength="20" name="capcha" id="J_Capcha"
                                    data-pattern="^(86){0,1}1\d{10}$" type="text" value=""
                                    data-inner_placeholder="r_p_input_inner_entermobile" placeholder="请输入验证码">
                             <div class="captcha-text-btn" id="J_captcha">
@@ -85,7 +85,7 @@ var htmlPart = {
                             <input class="form-text mobile-text-input" maxlength="20" name="mobile" id="J_phone_Mobile"
                                    data-pattern="^(86){0,1}1\d{10}$" type="text" value=""
                                    data-inner_placeholder="r_p_input_inner_entermobile" placeholder="请输入手机验证码">
-                            <a href="javascript:void(0)" class="mobile-text-btn">获取验证码</a>
+                            <button href="javascript:void(0)" id="J_captchaImg" type="button" class="mobile-text-btn">获取验证码</button>
                         </div>
                         <input id="J_phone_NcoSig" name="ncoSig" type="hidden">
                         <input id="J_phone_NcoSessionid" name="ncoSessionid" type="hidden">
@@ -120,6 +120,7 @@ var htmlPart = {
                 </div>
             </form>
         </div>
+        <div class="msg msg-type-info" id="J_MsgCaptcha" style="position: absolute; left: 754px; top: 399px;"><i class="iconfont">󰅂</i><div class="msg-tit"></div><div class="msg-cnt" aria-live="assertive"></div></div>
         <div class="msg msg-type-info" id="J_MsgMobile" style="position: absolute; left: 754px; top: 346px;"><i class="iconfont">󰅂</i><div class="msg-tit"></div><div class="msg-cnt" aria-live="assertive"></div></div>
         <div class="msg msg-type-info" id="J_MsgPassword" style="position: absolute; left: 754px; top: 144px;"><i class="iconfont">󰅂</i><div class="msg-tit"></div><div class="msg-cnt" aria-live="assertive"></div></div>
         <div class="msg msg-type-info" id="J_MsgRePassword" style="position: absolute; left: 754px; top: 196px;"><i class="iconfont">󰅂</i><div class="msg-tit"></div><div class="msg-cnt" aria-live="assertive">请再次输入你的密码</div></div>
@@ -208,7 +209,8 @@ $('#J_captcha').on('click',function(){
             upperLetter: /[A-Z]/,//匹配大写
             lowerLetter: /[a-z]/,//匹配小写
             number: /\d/g,//匹配数字
-            character: /[-+=|,!@#$%^&*?_.~+\/\\()|{}\[\]<>]/     //匹配字符
+            character: /[-+=|,!@#$%^&*?_.~+\/\\()|{}\[\]<>]/,     //匹配字符
+            mobile:/^1(3|4|5|7|8)\d{9}$/
         },
         nickIllegal:function(val){
             return this.regex.nickIllegal.test(val)
@@ -239,6 +241,9 @@ $('#J_captcha').on('click',function(){
         },
         character:function(val){
             return this.regex.character.test(val)
+        },
+        mobile:function(val){
+            return this.regex.mobile.test(val)
         }
 
     };
@@ -342,8 +347,6 @@ $('#J_captcha').on('click',function(){
     });
     $('#J_RePassword').focus(function(){
         $('#J_MsgRePassword').show().removeClass('msg-type-error').addClass('msg-type-info').children('.msg-cnt').html('请再次输入你的密码');
-
-
     });
     $('#J_RePassword').blur(function(){
         if($(this).val() == $('#J_Password').val()){
@@ -351,8 +354,72 @@ $('#J_captcha').on('click',function(){
         }else{
             $('#J_MsgRePassword').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_GENERAL_CONFIRM_PASSWORD_NOT_MATCH);
         }
-
     });
+    $('#J_Mobile').blur(function(){
+        var mobile = $(this).val();
+        if(mobile){
+            if(testData.mobile(mobile)){
+                $('#J_MsgMobile').hide();
+            }else{
+                $('#J_MsgMobile').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_GENERAL_MOBILE_MALFORM);
+            }
+        }else{
+            $('#J_MsgMobile').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_GENERAL_MOBILEPHONE_EMPTY);
+        }
+    });
+    $('#J_captchaImg').on('click',function(){
+        var that =  $(this);
+        var mobile = $('#J_Mobile').val();
+        if(!$('#J_Capcha').val()){
+            $('#J_MsgCaptcha').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_IMAGECHECKCODE_MALFORM);
+        }else{
+            $('#J_MsgCaptcha').hide();
+            if(mobile){
+                if(testData.mobile(mobile)){
+                    $('#J_MsgMobile').hide();
+                    testCaptcha();
+                }else{
+                    $('#J_MsgMobile').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_GENERAL_MOBILE_MALFORM);
+                }
+            }else{
+                $('#J_MsgMobile').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_GENERAL_MOBILEPHONE_EMPTY);
+            }
+        }
+    });
+    function testCaptcha(){
+        $.ajax({
+            type:'post',
+            url:'http://auth.hookah.app/captcha_check ',
+            data:{text:$('#J_Capcha').val()},
+            success:function(data){
+                if(data.code == 1){
+                    console.log('111111111111');
+                    //成功之后请求手机号验证码
+                }else{
+                    $('#J_MsgCaptcha').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_REGISTER_CHECKCODE_NOT_MATCH);
+                }
+            }
+        })
+    }
+    var countdown = 60;
+    function settime(that) {
+        if (countdown == 0) {
+            that.removeAttr("disabled");
+            that.html("获取验证码");
+            that.removeClass('mobile-btn-disabled');
+            countdown = 60;
+            return;
+        } else {
+            that.attr("disabled", true);
+            that.html("重新获取(" + countdown + ")");
+            that.addClass('mobile-btn-disabled');
+            countdown--;
+        }
+        setTimeout(function() {
+                settime(that) }
+            ,1000)
+    }
+
     function strlen(str){ //test nick length
         var len = 0;
         for (var i=0; i<str.length; i++) {
@@ -517,6 +584,8 @@ $('#J_captcha').on('click',function(){
             var nick = $('#J_userName').val();
             var password = $('#J_Password').val();
             var rePassword = $('#J_RePassword').val();
+            var mobile = $('#J_Mobile').val();
+
             var a = testData.number(nick),
                 b = testData.upperLetter(nick),
                 c = testData.lowerLetter(nick),
@@ -524,14 +593,17 @@ $('#J_captcha').on('click',function(){
             if(strlen(nick) <= 25 && strlen(nick) >= 5 && !testData.allNumber(nick)){
                 if(!testData.nickIllegal(nick)){
                     if(strlen(password) <= 20 && strlen(password) >= 6){
-                        if((a && b) || (a && c) || (a && d) || (b && c) || (b && d) || (c && d)){
-                            if(rePassword == password){
-                                console.log('yyyyyyyes');
+                        if(rePassword == password){
+                            console.log('yyyyyyyes');
+                            if(testData.mobile(mobile)){
+                                $.post("/reg",$("#J_InfoForm").serialize(),function(data){
+                                    console.log(data);
+                                });
                             }else{
-                                $('#J_MsgRePassword').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_GENERAL_CONFIRM_PASSWORD_NOT_MATCH);
+                                $('#J_MsgMobile').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_GENERAL_MOBILE_MALFORM);
                             }
                         }else{
-                            $('#J_MsgPassword').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_MALFORM_PASSWORD);
+                            $('#J_MsgRePassword').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_GENERAL_CONFIRM_PASSWORD_NOT_MATCH);
                         }
                     }else{
                         $('#J_MsgPassword').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_MALFORM_PASSWORD);
@@ -542,9 +614,7 @@ $('#J_captcha').on('click',function(){
             }else{
                 $('#J_MsgNick').show().children('.msg-cnt').html(TRLang.ERROR_MALFORM_NICK_NAME);
             }
-//          $.post("/reg",$("#J_InfoForm").serialize(),function(data){
-//            console.log(data);
-//          });
+
         })
     });
 
