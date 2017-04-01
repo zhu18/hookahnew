@@ -37,6 +37,7 @@
  * 配置项目开发环境
    复制console与website项目中的application-dev-temp.yml改名为application-dev.yml
  * 配置nginx
+  ！！Windows操作系统下，将自己的nginx目录的权限设置为 Users用户组完全控制
   把doc/nginx目录下的servers拷贝到自己的nginx目录中
   在nginx.conf文件http配置部分最后加入```include servers/*;```
   前台访问地址:www.hookah.app <br>
@@ -45,6 +46,7 @@
   ```$xslt
   127.0.0.1 www.hookah.app hookah.app
   127.0.0.1 console.hookah.app
+  127.0.0.1 auth.hookah.app
 ```
 *mongoDB，作为MySQL 数据库扩展，版本选用3.X，最新稳定版为3.4.2
  下载地址:https://www.mongodb.com/download-center

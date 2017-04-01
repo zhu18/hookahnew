@@ -26,8 +26,6 @@ public class UsernameAndPasswordShiroRealm extends AuthorizingRealm {
 
     private static final Logger LOG = LoggerFactory.getLogger(UsernameAndPasswordShiroRealm.class);
 
-    //    @Resource
-//    private UserMapper userDao;
     @Resource
     private UserService userService;
 

@@ -1,6 +1,9 @@
 package com.jusfoun.hookah.core.domain;
 
 import com.jusfoun.hookah.core.generic.GenericModel;
+import com.sun.javafx.beans.IDProperty;
+
+import javax.persistence.Id;
 import java.util.Date;
 
 public class UserDetail extends GenericModel {
@@ -10,6 +13,7 @@ public class UserDetail extends GenericModel {
      *
      * @mbggenerated
      */
+    @Id
     private String userId;
 
     /**
