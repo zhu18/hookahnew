@@ -1,8 +1,7 @@
 package com.jusfoun.hookah.oauth2server.web.controller;
 
+import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
-import com.jusfoun.hookah.core.domain.mongo.MgCaptcha;
-import com.jusfoun.hookah.core.utils.GeneratorUtil;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.MgCaptchaService;
 import org.slf4j.Logger;
@@ -16,6 +15,7 @@ import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 
 /**
@@ -35,6 +35,7 @@ public class CaptchaController {
     @RequestMapping(value = "/captcha")
     public ReturnData getKaptchaImage(HttpServletRequest request,
                                       HttpServletResponse response) throws Exception {
+        HttpSession session = request.getSession();
         response.setDateHeader("Expires", 0);
         response.setHeader("Cache-Control",
                 "no-store, no-cache, must-revalidate");
@@ -44,15 +45,8 @@ public class CaptchaController {
 
         String capText = captchaProducer.createText();
         logger.info("capText: {}" , capText);
-        String captchaId = GeneratorUtil.getUUID();
-        try {
-
-            MgCaptcha captcha = new MgCaptcha(captchaId,capText);
-            captchaService.insert(captcha);
-            response.setHeader("cuid",captchaId);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        session.setAttribute(Constants.KAPTCHA_SESSION_KEY, capText);  //存在session里
+        
         BufferedImage bi = captchaProducer.createImage(capText);
         ServletOutputStream out = response.getOutputStream();
         ImageIO.write(bi, "jpg", out);
@@ -66,18 +60,16 @@ public class CaptchaController {
 
     @RequestMapping(value = "/captcha_check")
     @ResponseBody
-    public ReturnData checkCaptcha(String captchaId, String text, HttpServletRequest request,
+    public ReturnData checkCaptcha(String text, HttpServletRequest request,
                                    HttpServletResponse response) throws Exception {
 
-        MgCaptcha captcha = captchaService.selectById(captchaId);
-        if(captcha==null){
-            return ReturnData.error("过期");
+        HttpSession session = request.getSession();
+        String value = (String)session.getAttribute(Constants.KAPTCHA_SESSION_KEY);
+
+        if(!value.equals(text)){
+            return ReturnData.success(0);
         }else{
-            if(!captcha.getValidCode().equals(text)){
-                return ReturnData.fail();
-            }else{
-                return ReturnData.success("输入正确");
-            }
+            return ReturnData.success(1);
         }
     }
 }
