@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.rpc.api;
 
 import com.jusfoun.hookah.core.domain.Goods;
+import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.GenericService;
@@ -13,4 +14,6 @@ import com.jusfoun.hookah.core.generic.GenericService;
 public interface GoodsService extends GenericService<Goods,String> {
     void addGoods(GoodsVo obj) throws HookahException;
     void updateGoods(GoodsVo obj) throws HookahException;
+
+    MgGoods.FormatBean getFormat(String goodsId, Integer formatId);
 }

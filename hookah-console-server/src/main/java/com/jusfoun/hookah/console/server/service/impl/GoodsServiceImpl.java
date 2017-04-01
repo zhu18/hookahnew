@@ -75,6 +75,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
      * @param formatId 商品规格id
      * @return
      */
+    @Override
     public MgGoods.FormatBean getFormat(String goodsId, Integer formatId)  {
         MgGoods mgGoods = mgGoodsService.selectById(goodsId);
         if (mgGoods == null) {
