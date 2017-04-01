@@ -40,11 +40,8 @@ public class OAuthAccessTokenController {
     @Resource
     private OAuthCodeService oAuthCodeService;
 
-    @Resource
-    private OAuthAccessTokenService oAuthAccessTokenService;
-
-
     @RequestMapping("accessToken")
+    @SuppressWarnings("unchecked")
     public HttpEntity authorize(HttpServletRequest request) throws OAuthSystemException {
         try {
             //构建OAuth请求
@@ -86,7 +83,7 @@ public class OAuthAccessTokenController {
             }
 
             //生成Access Token
-            OauthAccessToken oAuthAccessToken = oAuthAccessTokenService.insertAccessToken(oauthCode);
+            OauthAccessToken oAuthAccessToken = oAuthService.insertAccessToken(oauthCode);
 
             //生成OAuth响应
             OAuthResponse response = OAuthASResponse

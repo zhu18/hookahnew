@@ -4,6 +4,7 @@ import com.jusfoun.hookah.core.domain.OauthAccessToken;
 import com.jusfoun.hookah.core.domain.OauthClient;
 import com.jusfoun.hookah.core.domain.OauthCode;
 import com.jusfoun.hookah.core.generic.Condition;
+import com.jusfoun.hookah.rpc.api.oauth2.OAuthAccessTokenService;
 import com.jusfoun.hookah.rpc.api.oauth2.OAuthClientService;
 import com.jusfoun.hookah.rpc.api.oauth2.OAuthCodeService;
 import com.jusfoun.hookah.rpc.api.oauth2.OAuthService;
@@ -34,7 +35,7 @@ public class OAuthServiceImpl implements OAuthService {
     private OAuthCodeService oAuthCodeService;
 
     @Resource
-    private OauthAccessTokenMapper oAuthAccessTokenDao;
+    private OAuthAccessTokenService oAuthAccessTokenService;
 
     @Resource
     private OAuthIssuer oAuthIssuer;
@@ -61,7 +62,7 @@ public class OAuthServiceImpl implements OAuthService {
         oAuthAccessToken.setTokenType("Bearer");
         oAuthAccessToken.setTokenExpiredSeconds(60 * 60 * 12);//12小时
         oAuthAccessToken.setRefreshTokenExpiredSeconds(60 * 60 * 24 * 30); //30天
-        oAuthAccessTokenDao.insert(oAuthAccessToken);
+        oAuthAccessTokenService.insert(oAuthAccessToken);
 //        oAuthAccessToken.setId(id);
         return oAuthAccessToken;
     }

@@ -13,18 +13,6 @@ import java.util.List;
  */
 public interface OAuthClientService extends GenericService<OauthClient,String> {
 
-
     OauthClient loadClientDetailsFormDto();
-
-    int saveClientDetails(OauthClient formDto);
-
-    /**
-     * @return
-     */
-    List<OauthClient> findAll();
-
-    OauthClient selectByClientId(String clientId);
-
-
 
 }

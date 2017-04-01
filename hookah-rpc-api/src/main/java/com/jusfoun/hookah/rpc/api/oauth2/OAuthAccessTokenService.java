@@ -11,6 +11,4 @@ import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
  * @desc
  */
 public interface OAuthAccessTokenService extends GenericService<OauthAccessToken,String> {
-
-    OauthAccessToken insertAccessToken(OauthCode oauthCode)throws OAuthSystemException;
 }
