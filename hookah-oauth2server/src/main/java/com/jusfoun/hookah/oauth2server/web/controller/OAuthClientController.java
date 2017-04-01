@@ -24,14 +24,13 @@ import java.util.List;
 @RequestMapping(value = "/client/")
 public class OAuthClientController {
 
-
     @Resource
     private OAuthClientService clientService;
 
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public String list(String clientId, Model model) {
-        List<OauthClient> listDto = clientService.findAll();
+        List<OauthClient> listDto = clientService.selectList();
         model.addAttribute("listDto", listDto);
         return "oauth/client_list";
     }

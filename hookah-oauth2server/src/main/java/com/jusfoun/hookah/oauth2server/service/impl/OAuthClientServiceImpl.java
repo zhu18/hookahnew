@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * @author huang lei
@@ -20,7 +18,7 @@ import java.util.UUID;
  * @desc
  */
 @Service("clientService")
-public class OAuthClientServiceImpl extends GenericServiceImpl<OauthClient,String> implements OAuthClientService {
+public class OAuthClientServiceImpl extends GenericServiceImpl<OauthClient, String> implements OAuthClientService {
 
     @Resource
     private OauthClientMapper oauthClientMapper;
@@ -29,10 +27,9 @@ public class OAuthClientServiceImpl extends GenericServiceImpl<OauthClient,Strin
     private RoleMapper roleDao;
 
     @Resource
-    public void setDao(OauthClientMapper oauthClientMapper){
+    public void setDao(OauthClientMapper oauthClientMapper) {
         super.setDao(oauthClientMapper);
     }
-
 
     @Override
     public OauthClient loadClientDetailsFormDto() {
@@ -42,62 +39,6 @@ public class OAuthClientServiceImpl extends GenericServiceImpl<OauthClient,Strin
         OauthClient.setClientId(GuidGenerator.generateClientId());
         OauthClient.setClientSecret(GuidGenerator.generateClientSecret());
 //    clientDetails.setGrantTypes();
-
         return OauthClient;
-    }
-
-    public OauthClient selectByClientId(String clientId){
-
-//        return oauthClientMapper.selectByClientId(clientId);
-        return null;
-    }
-
-    @Override
-    public int saveClientDetails(OauthClient formDto) {
-
-//        return clientDao.save(formDto);
-        return 0;
-    }
-
-
-    public int createClient(OauthClient OauthClient) {
-        OauthClient.setClientId(UUID.randomUUID().toString());
-        OauthClient.setClientSecret(UUID.randomUUID().toString());
-//        return clientDao.save(OauthClient);
-        return 0;
-    }
-
-
-    public OauthClient updateClient(OauthClient OauthClient) {
-//        return clientDao.save(OauthClient);
-        return null;
-    }
-
-    public void deleteClient(String clientId) {
-//        clientDao.delete(clientId);
-
-    }
-
-
-    public OauthClient findOne(String clientId) {
-//        return clientDao.getOne(clientId);
-        return null;
-    }
-
-    public List<OauthClient> findAll() {
-//        return clientDao.findAll();
-        return null;
-    }
-
-
-    public OauthClient findByClientId(String clientId) {
-//        return clientDao.getOne(clientId);
-        return null;
-    }
-
-
-    public OauthClient findByClientSecret(String clientSecret) {
-//        return clientDao.findByClientSecret(clientSecret);
-        return null;
     }
 }

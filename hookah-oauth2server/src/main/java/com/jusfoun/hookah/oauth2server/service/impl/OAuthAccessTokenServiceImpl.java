@@ -30,18 +30,4 @@ public class OAuthAccessTokenServiceImpl extends GenericServiceImpl<OauthAccessT
         super.setDao(oauthAccessTokenMapper);
     }
 
-    public OauthAccessToken insertAccessToken(OauthCode oauthCode) throws OAuthSystemException {
-        final String accessToken = oAuthIssuer.accessToken();
-        OauthAccessToken oAuthAccessToken = new OauthAccessToken();
-        oAuthAccessToken.setTokenId(accessToken);
-        oAuthAccessToken.setUsername(oauthCode.getUsername());
-        oAuthAccessToken.setClientId(oauthCode.getClientId());
-        oAuthAccessToken.setAuthenticationId(oauthCode.getCode());
-        oAuthAccessToken.setRefreshToken(oAuthIssuer.refreshToken());
-        oAuthAccessToken.setTokenType("Bearer");
-        oAuthAccessToken.setTokenExpiredSeconds(60 * 60 * 12);//12小时
-        oAuthAccessToken.setRefreshTokenExpiredSeconds(60 * 60 * 24 * 30); //30天
-        oauthAccessTokenMapper.insert(oAuthAccessToken);
-        return oAuthAccessToken;
-    }
 }

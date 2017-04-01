@@ -3,7 +3,6 @@ package com.jusfoun.hookah.oauth2server.web.controller;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.jusfoun.hookah.core.utils.ReturnData;
-import com.jusfoun.hookah.rpc.api.MgCaptchaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +28,6 @@ public class CaptchaController {
     @Autowired
     DefaultKaptcha captchaProducer;
 
-    @Autowired
-    MgCaptchaService captchaService;
-
     @RequestMapping(value = "/captcha")
     public ReturnData getKaptchaImage(HttpServletRequest request,
                                       HttpServletResponse response) throws Exception {
@@ -46,7 +42,7 @@ public class CaptchaController {
         String capText = captchaProducer.createText();
         logger.info("capText: {}" , capText);
         session.setAttribute(Constants.KAPTCHA_SESSION_KEY, capText);  //存在session里
-        
+
         BufferedImage bi = captchaProducer.createImage(capText);
         ServletOutputStream out = response.getOutputStream();
         ImageIO.write(bi, "jpg", out);
