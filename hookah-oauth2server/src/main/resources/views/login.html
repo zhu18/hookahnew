@@ -236,6 +236,46 @@ var htmlPart = {
     </div>
   </div>
 </div>
+<script>
+
+    //  $('#fm-login-password').keydown(function(e){
+    //      if(e && e.keyCode==13){
+    //          validate()
+    //      }
+    //  })
+    //  function validate(){
+    //      var name = $('#fm-login-id').val();
+    //      var password = $('#fm-login-password').val();
+    //
+    //      if(!name){
+    //          $('#login-error').show().children('.notice-descript').html('用户名不能为空');
+    //      }else{
+    //          $('#login-error').hide();
+    //          if(!password){
+    //              $('#login-error').show().children('.notice-descript').html('密码不能为空');
+    //          }else{
+    //              $('#login-error').hide();
+    //              $.post("/login",$("#login-form").serialize(),function(data){
+    //                  console.log(data);
+    //              });
+    //          }
+    //      }
+    //  }
+    //  $('#fm-login-id').change(function(){
+    //      if($(this).val()){
+    //          $('#login-error').hide();
+    //      }else{
+    //          $('#login-error').show().children('.notice-descript').html('用户名不能为空');
+    //      }
+    //  })
+    //  $('#fm-login-password').change(function(){
+    //      if($(this).val()){
+    //          $('#login-error').hide();
+    //      }else{
+    //          $('#login-error').show().children('.notice-descript').html('密码不能为空');
+    //      }
+    //  })
+</script>
 <%};
 include("layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>

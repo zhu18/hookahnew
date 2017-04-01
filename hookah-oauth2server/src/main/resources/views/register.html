@@ -69,7 +69,7 @@ var htmlPart = {
                                    data-pattern="^(86){0,1}1\d{10}$" type="text" value=""
                                    data-inner_placeholder="r_p_input_inner_entermobile" placeholder="请输入验证码">
                             <div class="captcha-text-btn" id="J_captcha">
-
+                                <img src="http://auth.hookah.app/captcha">
                             </div>
                         </div>
                         <input id="J_NcoSig" name="ncoSig" type="hidden">
@@ -171,19 +171,19 @@ var htmlPart = {
 
 
 $('#J_captcha').on('click',function(){
-    capchaFn()
+    $(this).html('<img src="http://auth.hookah.app/captcha">');
 });
-capchaFn();
-var CUID = null;
-function capchaFn(){
-    $.ajax({
-        url: 'http://auth.hookah.app/captcha',
-        success: function (data, textStatus,resObj) {
-            $('#J_captcha').html('<img src="'+data+'">');
-            CUID = resObj.getResponseHeader('cuid');
-        }
-    });
-}
+//capchaFn();
+//var CUID = null;
+//function capchaFn(){
+//    $.ajax({
+//        url: 'http://auth.hookah.app/captcha',
+//        success: function (data, textStatus,resObj) {
+//            $('#J_captcha').html('<img src="'+data+'">');
+//            CUID = resObj.getResponseHeader('cuid');
+//        }
+//    });
+//}
 
 
 
