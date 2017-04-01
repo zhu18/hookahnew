@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.core.domain;
 
 import com.jusfoun.hookah.core.generic.GenericModel;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.Id;
 import java.util.Date;
@@ -133,6 +134,7 @@ public class Cart extends GenericModel {
      *
      * @mbggenerated
      */
+    @NotBlank
     private String formatId;
 
     /**
