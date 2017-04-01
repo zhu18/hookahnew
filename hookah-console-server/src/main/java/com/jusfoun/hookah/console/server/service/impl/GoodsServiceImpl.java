@@ -7,11 +7,13 @@ import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.rpc.api.GoodsService;
+import com.jusfoun.hookah.rpc.api.MgGoodsService;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author huang lei
@@ -24,6 +26,8 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
     private GoodsMapper goodsMapper;
     @Resource
     private MongoTemplate mongoTemplate;
+    @Resource
+    MgGoodsService mgGoodsService;
 
     @Resource
     public void setDao(GoodsMapper goodsMapper) {
@@ -64,4 +68,26 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             mongoTemplate.save(mgGoods);
         }
     }
+
+    /**
+     * 提供给购物车查询商品规格的接口
+     * @param goodsId 商品id
+     * @param formatId 商品规格id
+     * @return
+     */
+    public MgGoods.FormatBean getFormat(String goodsId, Integer formatId)  {
+        MgGoods mgGoods = mgGoodsService.selectById(goodsId);
+        if (mgGoods == null) {
+            throw new HookahException("未查到商品信息");
+        }
+
+        List<MgGoods.FormatBean> list = mgGoods.getFormatList();
+        for(MgGoods.FormatBean format : list) {
+            if(format.getFormatId() == formatId) {
+                return format;
+            }
+        }
+        throw new HookahException("未查到对应的商品规格");
+    }
+
 }
