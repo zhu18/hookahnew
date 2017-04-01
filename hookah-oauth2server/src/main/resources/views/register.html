@@ -147,52 +147,9 @@ var htmlPart = {
     </div>
 </div>
 <script>
-
-</script>
-<script>
-
-//    imgsss();
-//    function imgsss(){
-//        $.ajax({
-//            type: "POST",
-//            url: 'http://auth.hookah.app/captcha',
-//            success: function(msg){
-//                if(msg.code == 1){
-//                    alert(JSON.stringify(msg));
-//                }else{
-//                    alert(msg.message)
-//                }
-//            }
-//        });
-//    }
-
-
-
-
-
-
 $('#J_captcha').on('click',function(){
     $(this).html('<img src="http://auth.hookah.app/captcha">');
 });
-//capchaFn();
-//var CUID = null;
-//function capchaFn(){
-//    $.ajax({
-//        url: 'http://auth.hookah.app/captcha',
-//        success: function (data, textStatus,resObj) {
-//            $('#J_captcha').html('<img src="'+data+'">');
-//            CUID = resObj.getResponseHeader('cuid');
-//        }
-//    });
-//}
-
-
-
-
-
-
-
-
     var testData = {
         tipIcon:{
             error: '㐲',
@@ -303,7 +260,6 @@ $('#J_captcha').on('click',function(){
             }else{
                 passwordChange.iconOrColor(".pw-rule-legal",testData.tipIcon.error,'pw-icon-normal pw-icon-ok','pw-icon-error');
             }
-
         }
         if(a || b || c || d){
             passwordChange.strength('pw-strength-bar-2 pw-strength-bar-3','pw-strength-bar-1',TRLang.pwd_level_low);
@@ -314,9 +270,6 @@ $('#J_captcha').on('click',function(){
         if(a && b && c && d && (strlen(val) > 7)){
             passwordChange.strength('pw-strength-bar-1 pw-strength-bar-2','pw-strength-bar-3',TRLang.pwd_level_high)
         }
-
-
-
     });
     $('#J_Password').blur(function(){
         var thisVal = $(this).val();
@@ -341,9 +294,6 @@ $('#J_captcha').on('click',function(){
                 }
             })
         }
-
-
-
     });
     $('#J_RePassword').focus(function(){
         $('#J_MsgRePassword').show().removeClass('msg-type-error').addClass('msg-type-info').children('.msg-cnt').html('请再次输入你的密码');
@@ -377,7 +327,7 @@ $('#J_captcha').on('click',function(){
             if(mobile){
                 if(testData.mobile(mobile)){
                     $('#J_MsgMobile').hide();
-                    testCaptcha();
+                    testCaptcha(that);
                 }else{
                     $('#J_MsgMobile').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_GENERAL_MOBILE_MALFORM);
                 }
@@ -386,17 +336,22 @@ $('#J_captcha').on('click',function(){
             }
         }
     });
-    function testCaptcha(){
+    function testCaptcha(that){
         $.ajax({
             type:'post',
             url:'http://auth.hookah.app/captcha_check ',
             data:{text:$('#J_Capcha').val()},
             success:function(data){
                 if(data.code == 1){
-                    console.log('111111111111');
+                    if(data.data == 1){
+                        settime(that);
+                    }else if(data.data == 0){
+                        $('#J_Capcha').focus().val('');
+                        $('#J_MsgCaptcha').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_REGISTER_CHECKCODE_NOT_MATCH);
+                    }
                     //成功之后请求手机号验证码
                 }else{
-                    $('#J_MsgCaptcha').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_REGISTER_CHECKCODE_NOT_MATCH);
+                    console.log(data.message)
                 }
             }
         })
@@ -507,19 +462,14 @@ $('#J_captcha').on('click',function(){
         ERROR_SMS_UPWARD_TIMEOUT: '验证码失效，请 <a id=\'J_reSendUpMsg\' class=\'resend-upmsg\' href=\'javascript:;\'>刷新验证码</a>，重新发送',
         ERROR_VOICE_UPWARD_ERROR_CODE: '验证失败，点击再次呼叫我们将向你拨打语音来电',
         ERROR_VOICE_UPWARD_TIMEOUT: '验证码失效，请重新获取验证码',
-
-
         ERROR_PHONE_EMPTY: '请补全您的联系电话信息',
         ERROR_PHONE_AREA_MALFORM: '您的区号格式有误，请输入8位以内的数字',
         ERROR_PHONE_NUMBER_MALFORM: '您输入的号码格式有误，请输入14位以内数字或者数字与\'-\'的组合',
         ERROR_GENERAL_COMPANY_INVALID: '输入的字符必须是3-50位的中文汉字',
         ERROR_GENERAL_ADDRESS_INVALID: '输入的字符必须是5-200位的字符',
         ERROR_VOICE_UPWARD_UNRECEIVED: '未收到验证码',
-
         ERROR_REGISTER_EMAIL_UNAVAILABLE: '此邮箱作为登录名已存在，请更换邮箱或登录',
-
         ERROR_REGISTER_EMAIL_ICBU_GUEST: '此邮箱作为登录名已存在，请更换邮箱或登录',
-
         ERROR_GENERAL_CONFIRM_PASSWORD_NOT_MATCH: '两次密码输入不一致',
         ERROR_GENERAL_ILLEGAL_SIGN: '您请求的参数错误，请重新登录后重试',
         ERROR_GENERAL_MOBILEPHONE_MALFORM: '手机号码格式不正确，请重新输入',
@@ -594,7 +544,6 @@ $('#J_captcha').on('click',function(){
                 if(!testData.nickIllegal(nick)){
                     if(strlen(password) <= 20 && strlen(password) >= 6){
                         if(rePassword == password){
-                            console.log('yyyyyyyes');
                             if(testData.mobile(mobile)){
                                 $.post("/reg",$("#J_InfoForm").serialize(),function(data){
                                     console.log(data);
@@ -614,10 +563,8 @@ $('#J_captcha').on('click',function(){
             }else{
                 $('#J_MsgNick').show().children('.msg-cnt').html(TRLang.ERROR_MALFORM_NICK_NAME);
             }
-
         })
     });
-
 </script>
 <%};
 include("layout/base.html",{headSection:head,htmlSection:htmlPart}){}
