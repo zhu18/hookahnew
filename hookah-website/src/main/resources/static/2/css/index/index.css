@@ -1007,8 +1007,32 @@ margin-left:-100px;
     color:#fff;
 }
 .index-trade-resources .back a{padding:5px 10px;}
+/**** index-information ****/
+.index-information{
+    padding:50px 0;
+    background: #f5f6f6;
+    overflow: hidden;
+}
+.index-information .list-data{
+    padding:20px;
+    background: #fff;
+}
+.index-information .central-box{
+    width:880px;
+}
+.index-information .box-title{
+    height:34px;
 
-
+}
+.index-information .box-title h3{
+    font-size: 16px;
+}
+.index-information .box-title a{
+    margin-top:5px;
+}
+.index-information .notice-box{
+    width:220px;
+}
 
 
 
