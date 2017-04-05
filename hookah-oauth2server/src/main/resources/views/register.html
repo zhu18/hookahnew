@@ -147,6 +147,10 @@ var htmlPart = {
     </div>
 </div>
 <script>
+var pathName = window.location.pathname;
+if(pathName == '/reg'){
+    $('h2.logo-title').html('注册');
+}
 $('#J_captcha').on('click',function(){
     $(this).html('<img src="http://auth.hookah.app/captcha">');
 });
