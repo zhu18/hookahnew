@@ -8,6 +8,13 @@ var head = {
 var htmlPart = {
 %>
 asfsdf
+<%};%>
+<%
+var footer = {
+%>
+<script src="/static/apps/home/index.js"></script>
+<script src="/static/apps/home/home.routing.js"></script>
+<script src="/static/apps/home/HomeController.js"></script>
 <%};
-include("layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+include("layout/base.html",{headSection:head,htmlSection:htmlPart,footerSection:footer}){}
 %>

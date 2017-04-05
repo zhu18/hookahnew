@@ -76,7 +76,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
      * @return
      */
     @Override
-    public MgGoods.FormatBean getFormat(String goodsId, Integer formatId)  {
+    public MgGoods.FormatBean getFormat(String goodsId, Integer formatId) throws HookahException  {
         MgGoods mgGoods = mgGoodsService.selectById(goodsId);
         if (mgGoods == null) {
             throw new HookahException("未查到商品信息");
