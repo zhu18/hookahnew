@@ -123,6 +123,8 @@ public class MgOrderGoods extends GenericModel {
      */
     private Short isGift;
 
+    private Integer formatId;
+
     private Integer goodsFormat;
 
     private Long formatNumber;
@@ -510,5 +512,13 @@ public class MgOrderGoods extends GenericModel {
 
     public void setFormatNumber(Long formatNumber) {
         this.formatNumber = formatNumber;
+    }
+
+    public Integer getFormatId() {
+        return formatId;
+    }
+
+    public void setFormatId(Integer formatId) {
+        this.formatId = formatId;
     }
 }

@@ -1,5 +1,6 @@
 import '../../common/common';
 import homeRouting from './home.routing';
+import "../../style/home/home.console.css";
 
 const MODULE_NAME = 'Hookah';
 let app = angular.module(MODULE_NAME, [
