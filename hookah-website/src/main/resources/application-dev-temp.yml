@@ -19,8 +19,8 @@ myconf:
     clientId: website
     clientSecret: Yqn2ht4DYkMHlDvTY7CV
     regUrl: http://auth.hookah.app/reg
-    loginUrl: http://auth.hookah.app/oauth/authorize?client_id=website&response_type=code&redirect_uri=http://localhost:9000/login
-    logoutUrl: http://auth.hookah.app/logout?redirect_uri=http://localhost:9000/login
+    loginUrl: http://auth.hookah.app/oauth/authorize?client_id=website&response_type=code&redirect_uri=http://www.hookah.app/login
+    logoutUrl: http://auth.hookah.app/logout?redirect_uri=http://www.hookah.app/login
     accessTokenUrl: http://auth.hookah.app/oauth/accessToken
     userInfoUrl: http://auth.hookah.app/userInfo
     redirectUrl: http://auth.hookah.app/login
@@ -31,3 +31,17 @@ spring:
       uri:  mongodb://192.168.15.90:27017/hookah
   mvc:
       static-path-pattern: /static/**
+
+redis:
+  ip: 192.168.15.90
+  port: 6379
+  password: Yqn2ht4DYkMHlDvTY7CV
+  pool:
+    #最大分配的对象数
+    maxTotal: 1024
+    #最大能够保持idel状态的对象数
+    maxIdle: 200
+    #当调用borrow Object方法时，是否进行有效性检查
+    testOnBorrow: false
+
+

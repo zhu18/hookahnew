@@ -41,6 +41,7 @@
     <alibaba.druid.version>1.0.27</alibaba.druid.version>
     <maven.jar.plugin>3.0.2</maven.jar.plugin>
     <maven.assembly.plugin>2.6</maven.assembly.plugin>
+    <jedis.version>2.9.0</jedis.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -88,6 +89,14 @@
             <artifactId>slf4j-log4j12</artifactId>
           </exclusion>
         </exclusions>
+      </dependency>
+
+      <dependency>
+        <groupId>redis.clients</groupId>
+        <artifactId>jedis</artifactId>
+        <version>${jedis.version}</version>
+        <type>jar</type>
+        <scope>compile</scope>
       </dependency>
 
       <!-- only needed for spring-based features -->
@@ -194,6 +203,11 @@
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        <version>${spring-boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-redis</artifactId>
         <version>${spring-boot.version}</version>
       </dependency>
       <dependency>
