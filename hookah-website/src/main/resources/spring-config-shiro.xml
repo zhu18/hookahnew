@@ -119,6 +119,8 @@
         /pay* = oauth2Authc
         /pay/** = oauth2Authc
         /logout = logout
+        /admin** = roles["Admin"]
+        /admin/** = roles["Admin"]
         <!--/** = user-->
       </value>
     </property>
