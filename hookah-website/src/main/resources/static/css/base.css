@@ -131,8 +131,6 @@
     display: block;
 }
 .userInfos:hover .login{
-    border:1px solid #ccc;
-    border-bottom: 2px solid #fff;
 }
 .userInfos .userInfos-box{
     position:absolute;
