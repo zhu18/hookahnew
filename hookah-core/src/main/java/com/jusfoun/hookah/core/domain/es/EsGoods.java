@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by wangjl on 2017-3-28.
@@ -47,6 +48,9 @@ public class EsGoods implements Serializable {
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @EsField(type = Type.DATE)
     private Date addTime;
+    @EsField(type = Type.COMPLETION, analyzer= Analyzer.IK_MAX_WORD,
+            searchAnalyzer = Analyzer.IK_MAX_WORD, payloads = true)
+    private List<String> suggest;
 
     public String getGoodsId() {
         return goodsId;
@@ -150,5 +154,13 @@ public class EsGoods implements Serializable {
 
     public void setGoodsAreas(String goodsAreas) {
         this.goodsAreas = goodsAreas;
+    }
+
+    public List<String> getSuggest() {
+        return suggest;
+    }
+
+    public void setSuggest(List<String> suggest) {
+        this.suggest = suggest;
     }
 }
