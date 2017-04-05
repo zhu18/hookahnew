@@ -1,0 +1,28 @@
+<%
+var head = {
+%>
+<link type="text/css" rel="stylesheet" href="/static/1/css/innovation.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="innovation-center">
+    <div class="innovation-bd y-row">
+        <%include("/1/layout/innovation_template.html"){}%>
+        <div class="innovation-content y-right">
+            <h3 class="center-title">优秀团队</h3>
+            <div class="goodTeam">
+                <img src="../../static/1/img/innovation/u5508.png" alt="">
+                <div class="contentGoodTeam">
+                    <p class="title">强大的创业团队</p>
+                    <p>产品开发与运营团队的核心成员均来自传统电信、互联网行业及知名IT企业，具有较深的产品研发能力及运营服务经验，对通信、互联网行业有着深刻理解，并具备较强的技术应用与模式创新能力。产品开发与运营团队的核心成员均来自传统电信、互联网行业及知名IT企业，具有较深的产品研发能力及运营服务经验，对通信、互联网行业有着深刻理解，并具备较强的技术应用与模式创新能力。产品开发与运营团队的核心成员均来自传统电信、互联网行业及知名IT企业，具有较深的产品研发能力及运营服务经验，对通信、互联网行业有着深刻理解，并具备较强的技术应用与模式创新能力。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%};
+include("/1/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>

@@ -1,14 +1,14 @@
 <%
 var head = {
 %>
-
+<link rel="stylesheet" href="/static/css/index/index.css">
 <%};%>
 
 <%
 var htmlPart = {
 %>
-<%include("/layout/index_sale.html"){} %>
 
+<%include("/index/index.html"){} %>
 <%};
-include("layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>

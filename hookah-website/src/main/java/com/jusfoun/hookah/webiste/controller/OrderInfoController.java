@@ -3,6 +3,7 @@ package com.jusfoun.hookah.webiste.controller;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.domain.OrderInfo;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
+import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.OrderHelper;
@@ -76,13 +77,13 @@ public class OrderInfoController extends BaseController {
             orderBys.add(OrderBy.desc("addTime"));
             Pagination<OrderInfoVo> pOrders = orderInfoService.getDetailListInPage(pageNum, pageSize, filters, orderBys);
             model.addAttribute("orderList", pOrders);
-            return "/mybuyer/order";
+            return "/1/mybuyer/order";
         } catch (Exception e) {
             logger.error("分页查询订单错误", e);
             ReturnData.error("系统异常");
         }
 
-        return "/error/500";
+        return "/1/error/500";
     }
 
     /**
@@ -126,7 +127,7 @@ public class OrderInfoController extends BaseController {
         }
     }
 
-    private OrderInfo init(OrderInfo orderinfo) {
+    private OrderInfo init(OrderInfo orderinfo) throws HookahException{
         String userId = getCurrentUser().getUserId();
         orderinfo.setUserId(userId);
         Date date = new Date();
