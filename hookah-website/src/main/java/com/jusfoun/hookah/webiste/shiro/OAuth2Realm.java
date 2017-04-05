@@ -3,6 +3,7 @@ package com.jusfoun.hookah.webiste.shiro;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.rpc.api.RoleService;
 import org.apache.oltu.oauth2.client.OAuthClient;
 import org.apache.oltu.oauth2.client.URLConnectionClient;
 import org.apache.oltu.oauth2.client.request.OAuthBearerClientRequest;
@@ -23,8 +24,10 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author huang lei
@@ -34,6 +37,9 @@ import java.util.Map;
 public class OAuth2Realm extends AuthorizingRealm {
 
     private static final Logger logger = LoggerFactory.getLogger(OAuth2Realm.class);
+
+    @Resource
+    private RoleService roleService;
 
     private String clientId;
     private String clientSecret;
@@ -74,7 +80,15 @@ public class OAuth2Realm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+        //null usernames are invalid
+        if (principals == null) {
+            throw new OAuth2AuthenticationException("PrincipalCollection method argument cannot be null.");
+        }
+        HashMap<String,String> user = (HashMap<String,String>)principals.getPrimaryPrincipal();
+        String userId = user.get("userId");
+        Set<String> roleNames = roleService.selectRolesByUserId(userId);
+//        String username = (String) getAvailablePrincipal(principals);
+        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo(roleNames);
         return authorizationInfo;
     }
 
