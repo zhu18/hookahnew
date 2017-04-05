@@ -15,9 +15,9 @@ public class EsGmFieldMapping extends EsFieldMapping implements Serializable{
 	private String format;
 
 	/*是否包含在 all_source中*/
-	private boolean include_in_all;
+	private Boolean include_in_all;
 	/*是否存储*/
-	private boolean store;
+	private Boolean store;
 
 	public EsGmFieldMapping() {}
 
@@ -32,7 +32,7 @@ public class EsGmFieldMapping extends EsFieldMapping implements Serializable{
 		this.term_vector = term_vector;
 	}
 
-    public EsGmFieldMapping(String index, String type, String analyzer, String term_vector, boolean store, String search_analyzer) {
+    public EsGmFieldMapping(String index, String type, String analyzer, String term_vector, Boolean store, String search_analyzer) {
         super(type, analyzer, search_analyzer);
         this.index = index;
         this.term_vector = term_vector;
@@ -45,10 +45,10 @@ public class EsGmFieldMapping extends EsFieldMapping implements Serializable{
 	public void setIndex(String index) {
 		this.index = index;
 	}
-	public boolean isStore() {
+	public Boolean isStore() {
 		return store;
 	}
-	public void setStore(boolean store) {
+	public void setStore(Boolean store) {
 		this.store = store;
 	}
 
@@ -60,11 +60,11 @@ public class EsGmFieldMapping extends EsFieldMapping implements Serializable{
 		this.term_vector = term_vector;
 	}
 
-	public boolean isInclude_in_all() {
+	public Boolean isInclude_in_all() {
 		return include_in_all;
 	}
 
-	public void setInclude_in_all(boolean include_in_all) {
+	public void setInclude_in_all(Boolean include_in_all) {
 		this.include_in_all = include_in_all;
 	}
 
@@ -75,8 +75,4 @@ public class EsGmFieldMapping extends EsFieldMapping implements Serializable{
 	public void setFormat(String format) {
 		this.format = format;
 	}
-	
-
-	
-	
 }
