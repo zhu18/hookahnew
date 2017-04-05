@@ -12,51 +12,35 @@ var htmlPart = {
     <div class="exchange-top-bar y-row">
         <div class="exchange-top-menu y-left">
             <ul class="exchange-menu-box">
+                <% for(list in categoryInfo){ %>
                 <li class="exchange-menu-items">
-                    <a href="javascript:void(0)" class="title"><i>></i>数据源</a>
+                    <a href="/goods/list?catId=${list.catId}" class="title"><i>></i>${list.catName}</a>
+                    <% if(list.children.~size > 0){ %>
                     <div class="category-box">
                         <ul>
-                            <li><a href="/goods/list">失信被执行人查询</a></li>
-                            <li><a href="/goods/list">失信被执行人查询</a></li>
+                            <% for(item in children){ %>
+                                <li><a href="/goods/list?catId=${item.catName}">${item.catName}</a></li>
+                            <% } %>
                         </ul>
                     </div>
+                    <% } %>
                 </li>
-                <li class="exchange-menu-items">
-                    <a href="javascript:void(0)" class="title"><i>></i>数据源</a>
-                    <div class="category-box">2222222222222</div>
-                </li>
-                <li class="exchange-menu-items">
-                    <a href="javascript:void(0)" class="title"><i>></i>数据模型</a>
-                    <div class="category-box">3333333333333</div>
-                </li>
-                <li class="exchange-menu-items">
-                    <a href="javascript:void(0)" class="title"><i>></i>可视化引擎工具</a>
-                    <div class="category-box">4444444444</div>
-                </li>
-                <li class="exchange-menu-items">
-                    <a href="javascript:void(0)" class="title"><i>></i>应用场景</a>
-                    <div class="category-box">555555</div>
-                </li>
-                <li class="exchange-menu-items">
-                    <a href="javascript:void(0)" class="title"><i>></i>采集爬虫工具</a>
-                    <div class="category-box">6666666</div>
-                </li>
-                <li class="exchange-menu-items">
-                    <a href="javascript:void(0)" class="title"><i>></i>数据模型</a>
-                    <div class="category-box">777777777</div>
-                </li>
-                <li class="exchange-menu-items">
-                    <a href="javascript:void(0)" class="title"><i>></i>可视化引擎工具</a>
-                    <div class="category-box">88888888</div>
-                </li>
-                <li class="exchange-menu-items">
-                    <a href="javascript:void(0)" class="title"><i>></i>应用场景</a>
-                    <div class="category-box">9999999999</div>
-                </li>
-                <li class="exchange-menu-items">
-                    <a href="javascript:void(0)" class="title"><i>></i>采集爬虫工具</a>
-                    <div class="category-box">000000000</div>
-                </li>
+                <% } %>
+
+                <!--<li class="exchange-menu-items">-->
+                    <!--<a href="javascript:void(0)" class="title"><i>></i>数据源</a>-->
+                    <!--<div class="category-box">-->
+                        <!--<ul>-->
+                            <!--<li><a href="/goods/list">失信被执行人查询</a></li>-->
+                            <!--<li><a href="/goods/list">失信被执行人查询</a></li>-->
+                        <!--</ul>-->
+                    <!--</div>-->
+                <!--</li>-->
+                <!--<li class="exchange-menu-items">-->
+                    <!--<a href="javascript:void(0)" class="title"><i>></i>数据源</a>-->
+                    <!--<div class="category-box">2222222222222</div>-->
+                <!--</li>-->
+
             </ul>
         </div>
         <div class="exchange-top-silde y-left">

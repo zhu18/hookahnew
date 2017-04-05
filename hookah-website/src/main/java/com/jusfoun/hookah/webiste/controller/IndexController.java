@@ -7,8 +7,6 @@ import com.jusfoun.hookah.core.domain.mongo.MgSmsValidate;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.*;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -186,4 +184,10 @@ public class IndexController {
         mqSenderService.send(msg);
         return "sucess";
     }
+
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public String Nhome(Model model) {
+        return "2/index";
+    }
+
 }

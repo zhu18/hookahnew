@@ -1,0 +1,112 @@
+.header-top-bar{
+    background: #f5f5f5;
+    height:30px;
+    line-height: 30px;
+}
+.header-top-bar li{
+    margin:0 10px;
+}
+.header-top-bar li .fa{
+    font-size: 14px;
+}
+.header-centerbar{
+    height:108px;
+}
+.header-centerbar .grid-row{
+    height:80px;
+    padding-top: 28px;
+    background:url("../images/header-centerbar-bg.jpg") right no-repeat;
+}
+.header-centerbar .logo{}
+.header-centerbar .search{
+    margin-left:76px;
+    position: relative;
+}
+.header-centerbar .search .fa{
+    position: absolute;
+    left:0;
+    top:0;
+    width:38px;
+    height:38px;
+    line-height:38px;
+    font-size:20px;
+    color: #c0c0c0;
+}
+.header-centerbar .search input{
+    width:440px;
+    height:36px;
+    border:1px solid #bec5cf;
+    background: #fff;
+    padding-left:32px;
+    font-size: 13px;
+    color: #666;
+}
+.header-centerbar .search button{
+    position: absolute;
+    right:0;
+    top:0;
+    width:80px;
+    height:38px;
+    cursor: pointer;
+}
+.header-centerbar .search .search-text{
+    line-height: 26px;
+}
+.header-centerbar .search .search-text a:hover{
+    color:#ffa800;
+}
+.header-bottom-bar{
+    height:46px;
+    line-height: 46px;
+    background: #3e557b;
+    overflow: hidden;
+}
+.header-bottom-bar li{
+    padding: 0 20px;
+}
+.header-bottom-bar li.active{
+    background: #2d3f5c;
+}
+.header-bottom-bar li a{
+    font-size: 16px;
+    color: #fff;
+    display: block;
+}
+/************/
+.footer-bar{
+    padding:50px 0;
+    background: #494952;
+    overflow: hidden;
+    color:#fff;
+}
+.footer-bar a{
+    color:#959595;
+}
+.footer-bar h3,.footer-bar p{
+    color:#fff;
+}
+.footer-bar dl{width:200px;}
+.footer-bar dl dt{
+    padding-left:30px;
+    font-size: 16px;
+    position: relative;
+}
+.footer-bar dl dt span{
+    position: absolute;
+    left:7px;
+    top:2px;
+    font-size: 20px;
+}
+.footer-bar dl dd{
+    padding-left:30px;
+    font-size: 14px;
+    line-height: 30px;
+}
+.footer-bar .QRcode-box{
+    width:130px;
+    text-align: center;
+}
+.footer-bar .QRcode-box h3{
+    font-size: 16px;
+    line-height: 40px;
+}
