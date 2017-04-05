@@ -12,22 +12,22 @@ import javax.servlet.http.HttpServletRequest;
  * @desc 买家中心
  */
 @Controller
-@RequestMapping(value = "/error/")
+@RequestMapping(value = "/1/error/")
 public class ErrorController {
 
     @RequestMapping(value = "404", method = RequestMethod.GET)
     public String error404() {
-        return "/error/404";
+        return "/1/error/404";
     }
 
     @RequestMapping(value = "500", method = RequestMethod.GET)
     public String error500() {
-        return "/error/500";
+        return "/1/error/500";
     }
 
     @RequestMapping(value = "oauth2Failure",method = RequestMethod.GET)
     public String oauth2Failure(HttpServletRequest request){
-        return "/error/oauth2Failure";
+        return "/1/error/oauth2Failure";
     }
 
 }

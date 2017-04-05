@@ -18,9 +18,9 @@ public class ExchangeController {
     @Resource
     CategoryService categoryService;
 
-    @RequestMapping(value = "/exchange", method = RequestMethod.GET)
+    @RequestMapping(value = "/1/exchange", method = RequestMethod.GET)
     public String index(Model model){
         model.addAttribute("categoryInfo", categoryService.getCatTree());
-        return "exchange/index";
+        return "1/exchange/index";
     }
 }

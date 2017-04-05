@@ -1,0 +1,76 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" type="text/css" href="/static/1/css/user-center-menu.css">
+<link rel="stylesheet" type="text/css" href="/static/1/css/mybuyer.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="user-center">
+    <div class="user-center-bd y-row">
+        <div class="user-center-menu y-left">
+            <%include("/1/layout/user-center-menu.html"){}%>
+        </div>
+        <div class="user-center-box y-right">
+            <h3 class="center-title">我的评价</h3>
+            <div class="rate-manage">
+                <div class="rate-box">
+                    <table>
+                        <tr>
+                            <th>评价级别</>
+                            <th>评价内容</th>
+                            <th>被评价人</th>
+                            <th>商品信息</th>
+                            <th>操作</th>
+                        </tr>
+                        <tr>
+                            <td>好评</td>
+                            <td>接口好用，速度快，信息量大</td>
+                            <td>商家or卖家名称</td>
+                            <td>
+                                <a class="goods-info" href="javascript:void(0)">
+                                    <h3>身份证实名认证</h3>
+                                    <p>借贷机构可用于查询申请人互联网申请借款</p>
+                                </a>
+                                <span>￥800.00</span>
+                            </td>
+                            <td><a href="javascript:void(0)">修改评价</a></td>
+                        </tr>
+                        <tr>
+                            <td>好评</td>
+                            <td>接口好用，速度快，信息量大</td>
+                            <td>商家or卖家名称</td>
+                            <td>
+                                <a class="goods-info" href="javascript:void(0)">
+                                    <h3>身份证实名认证</h3>
+                                    <p>借贷机构可用于查询申请人互联网申请借款借贷机构可用于查询申请人互联网申请借款</p>
+                                </a>
+                                <span>￥800.00</span>
+                            </td>
+                            <td><a href="javascript:void(0)">修改评价</a></td>
+                        </tr>
+                        <tr>
+                            <td>好评</td>
+                            <td>接口好用，速度快，信息量大</td>
+                            <td>商家or卖家名称</td>
+                            <td>
+                                <a class="goods-info" href="javascript:void(0)">
+                                    <h3>身份证实名认证</h3>
+                                    <p>借贷机构可用于查询申请人互联网申请借款</p>
+                                </a>
+                                <span>￥800.00</span>
+                            </td>
+                            <td><a href="javascript:void(0)">修改评价</a></td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%};
+include("/1/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>

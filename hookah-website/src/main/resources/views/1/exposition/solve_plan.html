@@ -1,0 +1,25 @@
+<%
+var head = {
+%>
+<link type="text/css" rel="stylesheet" href="/static/1/css/innovation.css">
+<link type="text/css" rel="stylesheet" href="/static/1/css/exposition.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="innovation-center">
+    <div class="innovation-bd y-row">
+        <%include("/1/layout/exposition_template.html"){}%>
+        <div class="innovation-content y-right">
+            <h3 class="center-title">解决方案</h3>
+            <div class="solve">
+                <img src="../../static/1/img/exposition/u1055.png" alt="">
+                <img src="../../static/1/img/exposition/u6166.png" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+<%};
+include("/1/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
