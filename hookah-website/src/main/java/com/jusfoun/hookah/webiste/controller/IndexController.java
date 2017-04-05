@@ -187,7 +187,7 @@ public class IndexController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String Nhome(Model model) {
-        return "2/index";
+        return "index";
     }
 
 }
