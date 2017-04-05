@@ -4,7 +4,6 @@ import com.jusfoun.hookah.core.generic.GenericModel;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.validation.constraints.Digits;
 import java.io.Serializable;
 import java.util.List;
 
@@ -80,9 +79,8 @@ public class MgGoods extends GenericModel {
         private Integer formatId;
         private String formatName;
         private int format;
-        private int number;
-        @Digits(integer=10,fraction = 2)
-        private Float price;
+        private Integer number;
+        private Long price;
 
         public int getFormat() {
             return format;
@@ -92,19 +90,19 @@ public class MgGoods extends GenericModel {
             this.format = format;
         }
 
-        public int getNumber() {
+        public Integer getNumber() {
             return number;
         }
 
-        public void setNumber(int number) {
+        public void setNumber(Integer number) {
             this.number = number;
         }
 
-        public Float getPrice() {
+        public Long getPrice() {
             return price;
         }
 
-        public void setPrice(Float price) {
+        public void setPrice(Long price) {
             this.price = price;
         }
 
