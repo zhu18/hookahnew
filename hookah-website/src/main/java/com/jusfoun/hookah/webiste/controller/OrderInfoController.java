@@ -3,6 +3,7 @@ package com.jusfoun.hookah.webiste.controller;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.domain.OrderInfo;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
+import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.OrderHelper;
@@ -70,7 +71,7 @@ public class OrderInfoController extends BaseController {
             }
             String userId = getCurrentUser().getUserId();
             filters.add(Condition.eq("userId", userId));
-            filters.add(Condition.eq("delFlag", 0));
+            filters.add(Condition.eq("isDeleted", 0));
 
             List<OrderBy> orderBys = new ArrayList<>();
             orderBys.add(OrderBy.desc("addTime"));
@@ -108,14 +109,14 @@ public class OrderInfoController extends BaseController {
 
 
     /**
-     * 插入订单
+     * 订单结算
      *
      * @param orderinfo
      * @param cartIds
      * @return
      */
-    @RequestMapping(value = "/order/insert", method = RequestMethod.POST)
-    public ReturnData insert(OrderInfo orderinfo, String cartIds) {
+    @RequestMapping(value = "/order/settle", method = RequestMethod.POST)
+    public ReturnData settle(OrderInfo orderinfo, String cartIds) {
         try {
             init(orderinfo);
             orderinfo = orderInfoService.insert(orderinfo, cartIds);
@@ -126,7 +127,27 @@ public class OrderInfoController extends BaseController {
         }
     }
 
-    private OrderInfo init(OrderInfo orderinfo) {
+    /**
+     * 直接购买
+     * @param orderinfo
+     * @param goodsId
+     * @param formatId
+     * @param goodsNumber
+     * @return
+     */
+    @RequestMapping(value = "/order/direct", method = RequestMethod.POST)
+    public ReturnData directCreate(OrderInfo orderinfo, String goodsId, Integer formatId,Long goodsNumber) {
+        try {
+            init(orderinfo);
+            orderinfo = orderInfoService.insert(orderinfo, goodsId, formatId,goodsNumber);
+            return ReturnData.success(orderinfo);
+        } catch (Exception e) {
+            logger.error("插入错误", e);
+            return ReturnData.error("系统异常");
+        }
+    }
+
+    private OrderInfo init(OrderInfo orderinfo) throws HookahException{
         String userId = getCurrentUser().getUserId();
         orderinfo.setUserId(userId);
         Date date = new Date();
@@ -178,7 +199,7 @@ public class OrderInfoController extends BaseController {
         orderinfo.setCallbackStatus("true");
         orderinfo.setLastmodify(date);
         orderinfo.setEmail("");
-        orderinfo.setDelFlag(1);
+        orderinfo.setIsDeleted(new Integer(0).byteValue());
         orderinfo.setCommentFlag(0);
         return orderinfo;
     }

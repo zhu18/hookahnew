@@ -7,6 +7,7 @@ import com.jusfoun.hookah.core.dao.OrderInfoMapper;
 import com.jusfoun.hookah.core.domain.Cart;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.OrderInfo;
+import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.exception.HookahException;
@@ -102,7 +103,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         orderinfo.setCallbackStatus("true");
         orderinfo.setLastmodify(date);
         orderinfo.setEmail("");
-        orderinfo.setDelFlag(1);
+        orderinfo.setIsDeleted(new Integer(0).byteValue());
         orderinfo.setCommentFlag(0);
         return orderinfo;
     }
@@ -122,6 +123,28 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 		og.setIsGift(cart.getIsGift());
         og.setIsReal(0);
         og.setMarketPrice(cart.getMarketPrice());
+//		og.setSendNumber(cart.getS);
+        return og;
+    }
+
+    private MgOrderGoods getMgOrderGoodsByGoodsFormat(Goods goods, MgGoods.FormatBean format,Long goodsNumber) {
+        MgOrderGoods og = new MgOrderGoods();
+        og.setDiscountFee(0L);
+
+        og.setGoodsId(goods.getGoodsId());
+        og.setGoodsName(goods.getGoodsName());
+        og.setGoodsNumber(goodsNumber);
+        og.setGoodsSn(goods.getGoodsSn());
+
+        og.setGoodsPrice(format.getPrice());
+
+        og.setGoodsFormat(format.getFormat());
+        og.setFormatId(format.getFormatId());
+        og.setFormatNumber((long)format.getNumber());
+        og.setGoodsImg(goods.getGoodsImg());
+        og.setIsGift(new Integer(0).shortValue());
+        og.setIsReal(0);
+        //og.setMarketPrice(goods.getShopPrice());
 //		og.setSendNumber(cart.getS);
         return og;
     }
@@ -154,7 +177,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             orderInfo.setOrderAmount(goodsAmount);
 
             if(ordergoodsList!=null&&ordergoodsList.size()>0){
-                orderInfo.setDelFlag(0);
+                orderInfo.setIsDeleted(new Integer(0).byteValue());
                 OrderInfoVo orderInfoVo = (OrderInfoVo)orderInfo;
                 orderInfoVo.setMgOrderGoodsList(ordergoodsList);
                 orderinfoMapper.insert(orderInfo);
@@ -167,6 +190,43 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             //逻辑删除已经提交的购物车商品
             cartService.deleteBatchByLogic(cartIdArray);
         }
+        return orderInfo;
+    }
+
+    @Transactional(readOnly=false)
+    @Override
+    public OrderInfo insert(OrderInfo orderInfo, String goodsId, Integer formatId, Long goodsNumber) throws Exception {
+        init(orderInfo);
+
+        List<MgOrderGoods> ordergoodsList = null;
+
+            ordergoodsList = new ArrayList<MgOrderGoods>();
+            Long goodsAmount = new Long(0);
+                //验证商品是否下架
+                Goods g = goodsService.selectById(goodsId);
+                if(g.getIsOnsale()==null||g.getIsOnsale()!=1){
+                    throw new HookahException("商品["+g.getGoodsName()+"]未上架");
+                }
+                MgGoods.FormatBean format= goodsService.getFormat(goodsId,formatId);
+                if(goodsNumber!=null){
+                    goodsAmount += format.getPrice() * format.getNumber() * goodsNumber;  //商品单价 * 套餐内数量 * 购买套餐数量
+                }
+                MgOrderGoods og = getMgOrderGoodsByGoodsFormat(g,format,goodsNumber);
+                ordergoodsList.add(og);
+            orderInfo.setGoodsAmount(goodsAmount);
+            orderInfo.setOrderAmount(goodsAmount);
+
+            if(ordergoodsList!=null&&ordergoodsList.size()>0){
+                orderInfo.setIsDeleted(new Integer(0).byteValue());
+                OrderInfoVo orderInfoVo = (OrderInfoVo)orderInfo;
+                orderInfoVo.setMgOrderGoodsList(ordergoodsList);
+                orderinfoMapper.insert(orderInfo);
+                mgOrderInfoService.insert(orderInfoVo);
+            }
+            if(goodsAmount.compareTo(0L)==0){
+                updatePayStatus(orderInfo.getOrderSn(),2);
+            }
+
         return orderInfo;
     }
 
