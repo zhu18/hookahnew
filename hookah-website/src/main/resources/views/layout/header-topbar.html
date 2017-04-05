@@ -1,8 +1,21 @@
 <div class="grid-0 header-top-bar border-bottom backgorund-gray">
     <div class="grid-row">
         <ul class="text-align-right">
-            <li class="display-inline-block"><a href="javascript:void(0)"><span class="fa fa-user-o margin-right-5"></span>登录</a></li>
-            <li class="display-inline-block"><a href="javascript:void(0)" class="color-orange">免费注册</a></li>
+            <%if(isEmpty(user)){%>
+            <li class="display-inline-block"><a href="${oauth2.loginUrl}"><span class="fa fa-user-o margin-right-5"></span>登录</a></li>
+            <li class="display-inline-block"><a href="${oauth2.regUrl}" class="color-orange">免费注册</a></li>
+            <%}else{%>
+            <li class="display-inline-block userInfos">
+                <a href="/usercenter" class="login"><span class="fa fa-user-o margin-right-5"></span>欢迎，${user.userName}</a>
+                <div class="userInfos-box">
+                    <div class="userInfos-con">
+                        <img src="../../static/1/img/zheng.jpg" alt="">
+                        <p>username</p>
+                    </div>
+                    <a href="/logout">退出</a>
+                </div>
+            </li>
+            <%}%>
             <li class="display-inline-block">|</li>
             <li class="display-inline-block"><a href="javascript:void(0)"><span class="fa fa-question-circle-o margin-right-5"></span>常见问题</a></li>
             <li class="display-inline-block"><a href="javascript:void(0)">联系我们</a></li>
@@ -10,3 +23,12 @@
         </ul>
     </div>
 </div>
+<script type="text/javascript">
+    $('.userInfos').mouseover(function(){
+        $(this).css("background","#fff").children('.userInfos-box').show();
+        $(this).children('a');
+    }).mouseout(function(){
+        $(this).css("background","none").children('a');
+        $(this).children('.userInfos-box').hide();
+    })
+</script>
