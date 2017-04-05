@@ -1,0 +1,22 @@
+<%
+var head = {
+%>
+<link type="text/css" rel="stylesheet" href="/static/1/css/innovation.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="innovation-center">
+    <div class="innovation-bd y-row">
+        <%include("/1/layout/innovation_template.html"){}%>
+        <div class="innovation-content y-right">
+            <h3 class="center-title">创客大赛</h3>
+            <div>创客大赛</div>
+        </div>
+    </div>
+</div>
+
+<%};
+include("/1/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>

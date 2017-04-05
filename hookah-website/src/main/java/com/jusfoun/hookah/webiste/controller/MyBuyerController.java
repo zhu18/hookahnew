@@ -12,34 +12,34 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class MyBuyerController {
 
-    @RequestMapping(value = "/mybuyer/order", method = RequestMethod.GET)
+    @RequestMapping(value = "/1/mybuyer/order", method = RequestMethod.GET)
     public String index() {
         return "redirect:/order/list";
     }
 
-    @RequestMapping(value = "/mybuyer/invoice", method = RequestMethod.GET)
+    @RequestMapping(value = "/1/mybuyer/invoice", method = RequestMethod.GET)
     public String invoice() {
-        return "/mybuyer/invoice/index";
+        return "/1/mybuyer/invoice/index";
     }
 
-    @RequestMapping(value = "/mybuyer/invoice/info", method = RequestMethod.GET)
+    @RequestMapping(value = "/1/mybuyer/invoice/info", method = RequestMethod.GET)
     public String invoiceinfo() {
-        return "/mybuyer/invoice/info";
+        return "/1/mybuyer/invoice/info";
     }
 
-    @RequestMapping(value = "/mybuyer/rate", method = RequestMethod.GET)
+    @RequestMapping(value = "/1/mybuyer/rate", method = RequestMethod.GET)
     public String rate() {
-        return "/mybuyer/rate";
+        return "/1/mybuyer/rate";
     }
 
-    @RequestMapping(value = "/mybuyer/attention_item", method = RequestMethod.GET)
+    @RequestMapping(value = "/1/mybuyer/attention_item", method = RequestMethod.GET)
     public String attentionitem() {
-        return "/mybuyer/attention_item";
+        return "/1/mybuyer/attention_item";
     }
 
-    @RequestMapping(value = "/mybuyer/attention_shop", method = RequestMethod.GET)
+    @RequestMapping(value = "/1/mybuyer/attention_shop", method = RequestMethod.GET)
     public String attentionshop() {
-        return "/mybuyer/attention_shop";
+        return "/1/mybuyer/attention_shop";
     }
 
 }

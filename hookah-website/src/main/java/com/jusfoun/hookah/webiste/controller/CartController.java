@@ -2,6 +2,7 @@ package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.domain.Cart;
 import com.jusfoun.hookah.core.domain.Goods;
+import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.JSONUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
@@ -38,7 +39,7 @@ public class CartController extends BaseController {
     @Autowired
     private GoodsService goodsService;
 
-    @RequestMapping(value = "/cart", method = RequestMethod.GET)
+    @RequestMapping(value = "/1/cart", method = RequestMethod.GET)
     public String cart(Model model) {
         try {
             String userId = this.getCurrentUser().getUserId();
@@ -46,11 +47,11 @@ public class CartController extends BaseController {
 
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.eq("userId", userId));
-            filters.add(Condition.eq("delFlag", new Integer(0).shortValue()));
+            filters.add(Condition.eq("isDeleted", new Integer(0).shortValue()));
             List<Cart> carts = cartService.selectList(filters);
             model.addAttribute("cartList", carts);
             logger.info(JSONUtils.toString(carts));
-            return "/mybuyer/cart";
+            return "/1/mybuyer/cart";
         } catch (Exception e) {
             e.printStackTrace();
             logger.error(e.getMessage());
@@ -66,7 +67,7 @@ public class CartController extends BaseController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/cart/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/1/cart/add", method = RequestMethod.POST)
     public ReturnData add(@Valid Cart cart, Model model) {
         try {
             //需要先获取当前用户id
@@ -77,12 +78,16 @@ public class CartController extends BaseController {
             cart.setIsGift(new Integer(0).shortValue());
             cart.setIsDeleted(new Byte("0"));
 
+            MgGoods.FormatBean format= goodsService.getFormat(cart.getGoodsId(),cart.getFormatId());
 
             //补充商品信息
             Goods goods = goodsService.selectById(cart.getGoodsId());
             cart.setGoodsSn(goods.getGoodsSn());
             cart.setGoodsName(goods.getGoodsName());
             cart.setGoodsImg(goods.getGoodsImg());
+            cart.setGoodsFormat(format.getFormat());
+            cart.setFormatNumber((long)format.getNumber());
+            cart.setGoodsPrice(format.getPrice());
             //入库
             cartService.insert(cart);
 
@@ -100,7 +105,7 @@ public class CartController extends BaseController {
      * @param model
      * @return
      */
-    @ResponseBody
+    /*@ResponseBody
     @RequestMapping(value = "/cart/addAll", method = RequestMethod.POST)
     public ReturnData addAll(List<Cart> list, Model model) {
         try {
@@ -123,7 +128,7 @@ public class CartController extends BaseController {
             logger.info(e.getMessage());
             return ReturnData.error(e.getMessage());
         }
-    }
+    }*/
 
     /**
      * Ajax  编辑购物车
@@ -133,7 +138,7 @@ public class CartController extends BaseController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/cart/edit", method = RequestMethod.POST)
+    @RequestMapping(value = "/1/cart/edit", method = RequestMethod.POST)
     public ReturnData edit(Cart cart, Model model) {
         if (StringUtils.isBlank(cart.getRecId())) {
             return ReturnData.invalidParameters("The field[recId] CANNOT be null!");
@@ -154,7 +159,7 @@ public class CartController extends BaseController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/cart/delete/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/1/cart/delete/{id}", method = RequestMethod.GET)
     public ReturnData delete(@PathVariable String id) {
         logger.info("逻辑删除购物车：{}", id);
         try {
@@ -173,7 +178,7 @@ public class CartController extends BaseController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/cart/deleteAll", method = RequestMethod.POST)
+    @RequestMapping(value = "/1/cart/deleteAll", method = RequestMethod.POST)
     public ReturnData deleteAll(String[] ids) {
         logger.info("逻辑删除购物车：{}", ids);
         try {

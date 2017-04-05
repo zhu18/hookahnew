@@ -63,7 +63,8 @@ public class HookahConstants {
         INTEGER("integer"),
         SHORT("short"),
         BYTE("byte"),
-        IP("ip");
+        IP("ip"),
+        COMPLETION("completion");
 
         public String val;
 

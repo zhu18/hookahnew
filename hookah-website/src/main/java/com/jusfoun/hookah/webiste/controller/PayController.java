@@ -1,10 +1,8 @@
 package com.jusfoun.hookah.webiste.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author bingbing wu
@@ -12,17 +10,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @desc
  */
 @Controller
-@RequestMapping("/pay")
+@RequestMapping("/1/pay")
 public class PayController {
 
     @RequestMapping(value = "/createOrder", method = RequestMethod.GET)
     public String createOrder() {
-        return "/pay/createOrder";
+        return "/1/pay/createOrder";
     }
 
     @RequestMapping(value = "/cash", method = RequestMethod.GET)
     public String cash() {
-        return "/pay/cash";
+        return "/1/pay/cash";
     }
 
 

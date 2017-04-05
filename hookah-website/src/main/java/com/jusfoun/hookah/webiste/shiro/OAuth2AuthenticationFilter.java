@@ -8,14 +8,10 @@ import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
 import org.apache.shiro.web.util.WebUtils;
 import org.springframework.util.StringUtils;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -86,7 +82,7 @@ public class OAuth2AuthenticationFilter extends AuthenticatingFilter {
             this.redirectUrl = url.toString();
 //            this.redirectUrl = redirectURI;
         }
-        String error = request.getParameter("error");
+        String error = request.getParameter("1/error");
         String errorDescription = request.getParameter("error_description");
         if(!StringUtils.isEmpty(error)) {//如果服务端返回了错误
             WebUtils.issueRedirect(request, response, failureUrl + "?error=" + error + "error_description=" + errorDescription);

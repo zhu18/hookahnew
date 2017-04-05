@@ -1,0 +1,727 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" type="text/css" href="/static/1/css/user-center-menu.css">
+<link rel="stylesheet" type="text/css" href="/static/1/css/myseller.css">
+<link rel="stylesheet" type="text/css" href="/static/1/css/wangEditor/wangEditor.min.css">
+<link rel="stylesheet" type="text/css" href="/static/1/css/chosen.css">
+<link rel="stylesheet" type="text/css" href="/static/1/css/jedate/jedate.css">
+
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="user-center">
+    <div class="user-center-bd y-row">
+        <div class="user-center-menu y-left">
+            <%include("/1/layout/user-center-menu.html"){}%>
+        </div>
+        <div class="user-center-box y-right">
+            <h3 class="center-title">发布商品</h3>
+            <div class="pulish-wrapper">
+                <div class="publish-box">
+                    <h3 class="category-title">类目：<span class="category-title-box"></span></h3>
+                    <h1>商品基本信息：</h1>
+                    <div class="struct">
+                        <table>
+
+                            <tr>
+                                <td class="bar">商品名称：</td>
+                                <td>
+                                    <div class="text-box"><input name="goodsName" id="J-goodsName" onfocus="onfocusFn(this)" type="text" maxlength="30">
+                                        <span class="input-count"><strong>0</strong>/30</span>
+                                    </div>
+                                    <div class="errors">
+                                        <span class="errorinfo">请填写商品名称，不能超过30个字!</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bar">商品简介：</td>
+                                <td>
+                                    <div class="textarea-box">
+                                        <textarea type="text" name="goodsBrief" id="J-goodsBrief" onfocus="onfocusFn(this)" maxlength="200"></textarea>
+                                        <span class="input-count"><strong>0</strong>/200</span>
+                                    </div>
+                                    <div class="errors">
+                                        <span class="errorinfo">请填写商品简介，不能超过200个字!</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="attribute-container">
+                                <td class="bar">商品属性：</td>
+                                <td>
+                                    <div class="block info" style="margin: 0px 0px 3px;">
+                                        商品属性支持默认。
+                                    </div>
+                                    <div class="attribute-box">
+                                        <table></table>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bar">商品类型：</td>
+                                <td>
+                                    <div class="radio-box">
+                                        <label>
+                                            <input type="radio" name="goodsTypes" onchange="goodsTypes(this)" value="0" checked>常规商品
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="goodsTypes" onchange="goodsTypes(this)" value="1">api
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bar">商品图片：</td>
+                                <td>
+                                    <div class="block info" style="margin: 0px 0px 3px;">
+                                        商品图片大小不能超过3MB。
+                                    </div>
+                                    <div class="multimage-wrap">
+                                        <ul class="image-list">
+                                            <li>
+                                                <div class="preview" id="preview-div">
+                                                    <a title="上传图片" class="upload-tip "><span class="fa fa-plus"></span></a>
+                                                    <img class="preview-img" id="preview-img">
+                                                    <input type="file" id="filename" name="filename" class="preview-btn">
+                                                    <a href="javascript:void(0)" class="replace-btn" id="replace-btn">替换图片</a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!---------------------------------------------------------------->
+                            <!--<tr>-->
+                                <!--<td class="bar">单价及库存：</td>-->
+                                <!--<td>-->
+                                    <!--<div class="table-box">-->
+                                        <!--<table class="price-table">-->
+                                            <!--<thead>-->
+                                            <!--<tr>-->
+                                                <!--<th>单价（元）</th>-->
+                                                <!--<th>总库存（件）</th>-->
+                                                <!--<th>商家编码</th>-->
+                                                <!--<th>商品条形码</th>-->
+                                            <!--</tr>-->
+                                            <!--</thead>-->
+                                            <!--<tbody>-->
+                                            <!--<tr>-->
+                                                <!--<td>-->
+                                                    <!--<div class="texbox">-->
+                                                        <!--<div class="inputbox"><input type="text"></div>-->
+                                                    <!--</div>-->
+                                                <!--</td>-->
+                                                <!--<td>-->
+                                                    <!--<div class="texbox">-->
+                                                        <!--<div class="inputbox"><input type="text"></div>-->
+                                                    <!--</div>-->
+                                                <!--</td>-->
+                                                <!--<td>-->
+                                                    <!--<div class="texbox" id="outerId">-->
+                                                        <!--<div class="inputbox"><input type="text"></div>-->
+                                                    <!--</div>-->
+                                                <!--</td>-->
+                                                <!--<td>-->
+                                                    <!--<div class="texbox" id="barcode">-->
+                                                        <!--<div class="inputbox"><input type="text"></div>-->
+                                                    <!--</div>-->
+                                                <!--</td>-->
+                                            <!--</tr>-->
+                                            <!--</tbody>-->
+                                        <!--</table>-->
+                                    <!--</div>-->
+                                <!--</td>-->
+                            <!--</tr>-->
+                            <tr>
+                                <td class="bar">规格及价格：</td>
+                                <td>
+                                    <div class="block info" style="margin: 0px 0px 3px;">
+                                        第一行为默认数据。
+                                    </div>
+                                    <div class="table-box">
+                                        <table class="price-table table-plus" d-type="priceHtml">
+                                            <thead>
+                                                <tr>
+                                                    <th>规格</th>
+                                                    <th>类型</th>
+                                                    <th>价格（元）</th>
+                                                    <th>操作</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="parent-tr">
+                                                    <td class="number-input">
+                                                        <div class="inputbox"><input type="number" datatype="number" placeholder="请输入规格"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="selectbox">
+                                                            <select name="format">
+                                                                <option value="0">次</option>
+                                                                <option value="1">天</option>
+                                                                <option value="2">年</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td class="price-input">
+                                                        <div class="inputbox"><input class="price-input" datatype="price" type="number" placeholder="请输入价格"></div>
+                                                    </td>
+                                                    <td>
+                                                        <span class="table-plus-btn" onclick="tablePlus(this)">+</span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bar">商品描述：</td>
+                                <td>
+                                    <div class="wangEditor-wrapper">
+                                        <textarea id="textarea1" style="height:500px;"></textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h1 class="api-info-box">API信息：</h1>
+                    <div class="struct api-info-box">
+                        <table>
+                            <tr>
+                                <td class="bar">接口地址：</td>
+                                <td>
+                                    <div class="text-box">
+                                        <input type="text" name="apiUrl">
+                                        <span class="input-count"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bar">上架时间：</td>
+                                <td>
+                                    <div class="radio-box">
+                                        <label>
+                                            <input type="radio" name="apiMethod" value="GET" checked>GET
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="apiMethod" value="POST">POST
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bar">请求示例：</td>
+                                <td>
+                                    <div class="text-box">
+                                        <input type="text" name="reqSample">
+                                        <span class="input-count"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bar">接口描述：</td>
+                                <td>
+                                    <div class="textarea-box">
+                                        <textarea type="text" name="apiDesc"></textarea>
+                                        <span class="input-count"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bar">请求参数：</td>
+                                <td>
+                                    <div class="table-box">
+                                        <table class="price-table table-plus" d-type="requestHtml">
+                                            <thead>
+                                                <tr>
+                                                    <th>名称</th>
+                                                    <th>类型</th>
+                                                    <th>默认值</th>
+                                                    <th>必填</th>
+                                                    <th>示例</th>
+                                                    <th>描述</th>
+                                                    <th>操作</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="parent-tr">
+                                                    <td class="name-input">
+                                                        <div class="inputbox"><input type="text" name="fieldName" placeholder="请输入名称"></div>
+                                                    </td>
+                                                    <td class="type-input">
+                                                        <div class="selectbox">
+                                                            <select name="fieldType">
+                                                                <option value="String">String</option>
+                                                                <option value="int">int</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td class="type-input">
+                                                        <div class="inputbox"><input type="text" name="fieldDefault" placeholder="请输入默认值"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="radio-box">
+                                                            <label>
+                                                                <input type="radio" name="isMust0" checked value="0">否
+                                                            </label>
+                                                            <label>
+                                                                <input type="radio" name="isMust0" value="1">是
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="inputbox"><input type="text" name="fieldSample" placeholder="请输入示例"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="inputbox"><textarea name="describle" placeholder="请输入描述"></textarea></div>
+                                                    </td>
+                                                    <td>
+                                                        <span class="table-plus-btn itemNum" onclick="tablePlus(this)">+</span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bar">返回示例：</td>
+                                <td>
+                                    <div class="textarea-box">
+                                        <textarea type="text" name="respSample"></textarea>
+                                        <span class="input-count"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bar">返回参数：</td>
+                                <td>
+                                    <div class="table-box">
+                                        <table class="price-table table-plus" d-type="returnHtml">
+                                            <thead>
+                                                <tr>
+                                                    <th>错误码</th>
+                                                    <th>说明</th>
+                                                    <th>操作</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="parent-tr">
+                                                    <td class="errorNum-input">
+                                                        <div class="inputbox"><input type="text" name="fieldName" placeholder="请输入错误码"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="inputbox"><textarea name="describle" placeholder="请输入说明"></textarea></div>
+                                                    </td>
+                                                    <td>
+                                                        <span class="table-plus-btn" onclick="tablePlus(this)">+</span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h1>售后保障信息：</h1>
+                    <div class="struct">
+                        <table>
+                            <tr>
+                                <td class="bar">售后服务：</td>
+                                <td>
+                                    <div class="checkbox-box">
+                                        <label>
+                                            <input type="checkbox" checked>提供发票
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bar"></td>
+                                <td>
+                                    <div class="checkbox-box">
+                                        <label>
+                                            <input type="checkbox">保修服务
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bar"></td>
+                                <td>
+                                    <div class="checkbox-box">
+                                        <label>
+                                            <input type="checkbox">退换货承诺：凡通过正常流程购买本平台商品，若存在质量问题或与描述不符，本店将主动提供退换货服务
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h1>商品其他信息：</h1>
+                    <div class="struct">
+                        <table>
+                            <tr>
+                                <td class="bar">库存计数：</td>
+                                <td>
+                                    <div class="radio-box">
+                                        <label>
+                                            <input type="radio" name="121">买家拍下减库存
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="121" checked>买家付款减库存
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bar">上架时间：</td>
+                                <td>
+                                    <div class="radio-box">
+                                        <label>
+                                            <input type="radio" name="isOnsale" value="0" checked onchange="isOnsaleFun(this)">立刻上架
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="isOnsale" value="1" onchange="isOnsaleFun(this)">定时上架
+                                        </label>
+                                        <label class="isOnsale-box">
+                                            请选择上架时间：<input id="indate" type="text" placeholder="请选择"  readonly>
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="pulish-btn">
+                    <button class="pusGoods-btn trues">发布商品</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../static/1/js/wangEditor.min.js"></script>
+<script type="text/javascript" src="../../static/1/js/chosen.jquery.js"></script>
+<script type="text/javascript" src="../../static/1/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="../../static/1/js/jquery.jedate.min.js"></script>
+<script type="text/javascript">
+    var imgSrc = "";
+    $.getUrlParam = function (key) {
+        var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+        var result = window.location.search.substr(1).match(reg);
+        return result ? decodeURIComponent(result[2]) : null;
+    }
+
+    var catId = $.getUrlParam('catId'),
+        category = $.getUrlParam('category'),
+        url = '/category/findAttr';
+    $(document).ready(function () {
+        var editor = new wangEditor('textarea1');
+        editor.config.uploadImgUrl = '/upload/fileUpload';//上传图片（举例）
+        editor.config.uploadImgFileName = 'filename';
+        editor.config.menuFixed = false;//关闭菜单栏fixed
+        editor.config.menus = $.map(wangEditor.config.menus, function(item, key) {
+            if (item === 'location') {
+                return null;
+            }
+            if (item === 'video') {
+                return null;
+            }
+            return item;
+        });
+        editor.create(); //初始化富文本
+        $('.search-select-box').click(function () {
+            $(this).children('.search-option').show();
+        });
+        $('.search-option').mouseleave(function () {
+            $(this).hide();
+        })
+
+
+
+        $('.category-title-box').text(category);
+
+        loadData(url, catId); //加载商品属性数据
+        function loadData(url, catId) {
+            $.ajax({
+                type: "get",
+                url: url,
+                data: {
+                    catId: catId
+                },
+                success: function (msg) {
+                    if (msg.code == 1) {
+                        renderselect(msg.data)//渲染商品属性
+                    } else {
+                        $.alert(msg.message)
+                    }
+                }
+            });
+        }
+        function renderselect(data) {
+            if (data) {
+                var html = '';
+                var typeList = data.attrTypelist;
+                for (var i = 0; i < data.attrTypelist.length; i++) {
+                    html += '<tr>';
+                    html += '<td>' + typeList[i].typeName + '：</td>';
+                    html += ' <td>';
+                        html += '<select data-placeholder="请选择'+typeList[i].typeName+'" name="'+typeList[i].typeName+'" typeid="'+typeList[i].typeId+'" style="width:560px;" multiple class="chosen-select chosen-select-'+i+'" tabindex="8">';
+                        for(var j = 0; j < typeList[i].attrList.length; j++){
+                            html += '<option value="'+typeList[i].attrList[j].attrId+'">'+typeList[i].attrList[j].attrName+'</option>';
+                        }
+                        html += '</select>';
+                    html += '</td>';
+                    html += '</tr>';
+                }
+                $('.attribute-box table').append(html);
+                $('.chosen-select').chosen(); //初始化select 多选插件
+            }else{
+                $('.attribute-container').remove();
+            }
+        }
+    })
+
+    function tableDelete(that){
+        $(that).parents('.parent-tr').remove();
+    };
+    var itemNum = 0;
+    function tablePlus(that){
+        if($(that).hasClass('itemNum')){
+            itemNum += 1 ;
+            console.log(itemNum)
+        }
+        console.log(itemNum)
+        var priceHtml = '';//规格与价格
+        priceHtml += '<tr class="parent-tr">';
+        priceHtml += '<td class="number-input"><div class="inputbox"><input type="number" datatype="number" placeholder="请输入规格"></div></td>';
+        priceHtml += '<td><div class="selectbox"><select name="format"><option value="0">次</option><option value="1">天</option><option value="2">年</option></select></div></td>';
+        priceHtml += '<td class="price-input"><div class="inputbox"><input type="number" datatype="price" placeholder="请输入价格"></div></td>';
+        priceHtml += '<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
+        priceHtml += '</tr>';
+        var requestHtml = '';//请求接口
+        requestHtml += '<tr class="parent-tr">';
+        requestHtml += '<td class="name-input"><div class="inputbox"><input type="text" name="fieldName" placeholder="请输入名称"></div></td>';
+        requestHtml += '<td class="type-input"><div class="selectbox"><select name="fieldType"><option value="String">String</option><option value="int">int</option></select></div></td>';
+        requestHtml += '<td class="type-input"><div class="inputbox"><input type="text" name="fieldDefault" placeholder="请输入默认值"></div></td>';
+        requestHtml += '<td><div class="radio-box"><label><input type="radio" name="isMust'+itemNum+'" checked value="0">否</label><label><input type="radio" name="isMust'+itemNum+'" value="1">是</label></div></td>';
+        requestHtml += '<td><div class="inputbox"><input type="text" name="fieldSample" placeholder="请输入示例"></div></td>';
+        requestHtml += '<td><div class="inputbox"><textarea  placeholder="请输入描述" name="describle"></textarea></div></td>';
+        requestHtml += '<td><span class="table-plus-btn itemNum" onclick="tablePlus(this)">+</span></td>';
+        requestHtml += '</tr>';
+        var returnHtml = '';//返回借口
+        returnHtml += '<tr class="parent-tr">';
+        returnHtml += '<td class="errorNum-input"><div class="inputbox"><input type="text" placeholder="请输入错误码" name="fieldName"></div></td>';
+        returnHtml += '<td><div class="inputbox"><textarea placeholder="请输入说明" name="describle"></textarea></div></td>';
+        returnHtml += '<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
+        returnHtml += '</tr>';
+
+
+        if($(that).parents('.table-plus').attr('d-type') == 'priceHtml'){
+            if($(that).parent().siblings('.number-input').find('input').val() && $(that).parent().siblings('.price-input').find('input').val()){
+                $(that).parents('.table-plus tbody').append(priceHtml);
+                addItem(that)
+            }else{
+                alert('请输入规格和价格');
+            }
+        }else if($(that).parents('.table-plus').attr('d-type') == 'requestHtml'){
+            if($(that).parent().siblings('.name-input').find('input').val() && $(that).parent().siblings('.type-input').find('input').val()){
+                $(that).parents('.table-plus tbody').append(requestHtml);
+                addItem(that)
+            }else{
+                alert('请输入相关内容');
+            }
+        }else if($(that).parents('.table-plus').attr('d-type') == 'returnHtml'){
+            if($(that).parent().siblings('.errorNum-input').find('input').val()){
+                $(that).parents('.table-plus tbody').append(returnHtml);
+                addItem(that)
+            }else{
+                alert('请输入相关内容');
+            }
+        }
+        function addItem(that){
+            $(that).addClass('table-delete-btn').removeClass('table-plus-btn').text('-').attr('onclick','tableDelete(this)');
+        }
+    };
+    $('#preview-div').click(function(){
+        if($('#preview-img').attr('src')){
+            $('#filename').val("");
+            sda();
+        }else{
+            sda();
+        }
+        function sda(){
+            $('#filename').on('change', function() {
+                $.ajaxFileUpload({
+                    url:'/upload/fileUpload',
+                    secureuri:false,
+                    fileElementId:'filename',//file标签的id
+                    dataType: 'json',//返回数据的类型
+                    success: function (data, status) {
+                        //把图片替换
+                        var obj= data.data[0];
+                        $("#preview-img").attr("src", "http://"+obj.absPath);
+                        imgSrc = obj.absPath;
+                        if(typeof(data.error) != 'undefined') {
+                            if(data.error != '') {
+                                alert(data.error);
+                            } else {
+                                alert(data.msg);
+                            }
+                        }
+                    },
+                    error: function (data, status, e) {
+                        alert(e);
+                    }
+                });
+            });
+        }
+    })
+    $('#preview-div').hover(function(){
+        if($('#preview-img').attr('src')){
+            $('#replace-btn').toggle();
+        }
+    });
+    function onfocusFn(that) {
+        $(that).parent().siblings('.errors').show();
+    };
+    $('#J-goodsName').blur(function(){
+        if($(this).val() && $(this).val().length <= 30){
+            $(this).parents('.text-box').siblings('.errors').hide();
+        }else{
+            $(this).focus();
+        }
+    });
+    $('#J-goodsBrief').blur(function(){
+        if($(this).val() && $(this).val().length <= 200){
+            $(this).parent().siblings('.errors').hide();
+        }else{
+            $(this).focus();
+        }
+    });
+    $('.pusGoods-btn').click(function(){
+        var data = {};
+            data.goodsName = $('input[name="goodsName"]').val();
+            data.goodsBrief = $('textarea[name="goodsBrief"]').val();
+            data.attrTypeList = [];
+            $('.chosen-select').each(function(){
+                var attrTypeList = {};
+                attrTypeList.typeId = $(this).attr('typeid');
+                attrTypeList.typeName = $(this).attr('name');
+                attrTypeList.attrlist = $(this).val();
+                data.attrTypeList.push(attrTypeList);
+            });
+            data.goodsImg = imgSrc;
+            data.formatList = [];
+
+            $('table[d-type="priceHtml"] tbody tr').each(function(){
+                var listData = {};
+                listData.number = $(this).find('input[datatype="number"]').val();
+                listData.format = $(this).find('select[name="format"]').val();
+                listData.price = ($(this).find('input[datatype="price"]').val())*100;
+                data.formatList.push(listData);
+            });
+            data.shopNumber = data.formatList[0].number;
+            data.shopFormat = data.formatList[0].format;
+            data.shopPrice = data.formatList[0].price;
+            data.goodsType = $('input[name="goodsTypes"]:checked').val();
+            data.goodsDesc = $('#textarea1').val();
+            data.catId = catId; //此ID为url上的id
+            data.isOnsale = $('input[name="isOnsale"]:checked').val();
+            if (data.isOnsale == 1){
+                data.onsaleStartDate = $('#indate').val();
+            }
+            if(data.goodsType == 1){
+                data.apiInfo = {};
+                data.apiInfo.apiUrl = $('.api-info-box').find('input[name="apiUrl"]').val();
+                data.apiInfo.apiMethod = $('.api-info-box').find('input[name="apiMethod"]:checked').val();
+                data.apiInfo.reqSample = $('.api-info-box').find('input[name="reqSample"]').val();
+                data.apiInfo.apiDesc = $('.api-info-box').find('textarea[name="apiDesc"]').val();
+                data.apiInfo.reqParamList = [];
+                $('table[d-type="requestHtml"] tbody tr').each(function(i,item){
+                    var listData = {};
+                    listData.fieldName = $(item).find('input[name="fieldName"]').val();
+                    listData.fieldType = $(item).find('select[name="fieldType"]').val();
+                    listData.isMust = $(item).find('input[name="isMust'+i+'"]:checked').val();
+                    listData.fieldSample = $(item).find('input[name="fieldSample"]').val();
+                    listData.fieldDefault = $(item).find('input[name="fieldDefault"]').val();
+                    listData.describle = $(item).find('textarea[name="describle"]').val();
+                    data.apiInfo.reqParamList.push(listData);
+                });
+                data.apiInfo.respParamList = [];
+                $('table[d-type="returnHtml"] tbody tr').each(function(){
+                    var listData = {};
+                    listData.fieldName = $(this).find('input[name="fieldName"]').val();
+                    listData.describle = $(this).find('textarea[name="describle"]').val();
+                    data.apiInfo.respParamList.push(listData);
+                });
+                data.apiInfo.respSample = $('.api-info-box').find('textarea[name="respSample"]').val();
+            }
+
+
+        if(!!!data.goodsName){
+            alert("请输入商品名称");
+        }else if(!!!data.goodsBrief){
+            alert("请输入商品简介");
+        }else if(!!!data.goodsImg){
+            alert("请上传图片");
+        }else{
+            $.ajax({
+                type:'POST',
+                url:'/goods/back/add',
+                data:JSON.stringify(data),
+                dataType:'json',
+                contentType: 'application/json',
+                success:function(data){
+                    if(data.code == "1") {
+                        $.alert('发布成功');
+                    }else{
+                        alert(data.message);
+                    }
+                }
+            });
+        }
+
+
+    });
+
+    function goodsTypes(that){
+        if($(that).val() == 0){
+            $('.api-info-box').hide();
+        }else{
+            $('.api-info-box').show();
+        }
+    }
+    function isOnsaleFun(that){
+        if($(that).val() == 1){
+            $('.isOnsale-box').show();
+        }else{
+            $('.isOnsale-box').hide();
+        }
+    }
+    $.jeDate("#indate",{
+        format:"YYYY-MM-DD hh:mm:ss",
+        isTime:true,
+        minDate:$.nowDate(0)
+    })
+
+
+
+    window.onbeforeunload = function()
+    {
+        if($('.pusGoods-btn').hasClass('trues')){
+            return;
+        }else{
+            return '确定要离开吗';
+        }
+    }
+</script>
+
+<%};
+include("/1/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
