@@ -110,3 +110,56 @@
     font-size: 16px;
     line-height: 40px;
 }
+.userInfos {
+    position: relative;
+}
+.userInfos .userInfos-box {
+    position: absolute;
+    width: 260px;
+    top: 39px;
+    left: 0px;
+    display: none;
+    z-index: 1;
+    background: rgb(255, 255, 255);
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(204, 204, 204);
+    border-image: initial;
+    padding: 10px;
+}
+.userInfos .login{
+    display: block;
+}
+.userInfos:hover .login{
+    border:1px solid #ccc;
+    border-bottom: 2px solid #fff;
+}
+.userInfos .userInfos-box{
+    position:absolute;
+    width:260px;
+    background: #fff;
+    border:1px solid #ccc;
+    padding:10px;
+    top:30px;
+    left:0px;
+    display: none;
+    z-index: 1;
+}
+.userInfos .userInfos-box a{
+    color:#333;
+    float: right;
+}
+.userInfos .userInfos-box .userInfos-con{
+    width:150px;
+    float: left;
+}
+.userInfos .userInfos-box .userInfos-con img{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    float: left;
+}
+.userInfos .userInfos-box .userInfos-con p{
+    float: left;
+    margin-left: 20px;
+}

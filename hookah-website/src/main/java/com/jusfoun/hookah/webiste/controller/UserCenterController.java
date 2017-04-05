@@ -19,7 +19,7 @@ public class UserCenterController {
     SysNewsService sysNewsService;
 
     @RequestMapping(value = "/1/usercenter", method = RequestMethod.GET)
-    public String index(){
+    public String index1(){
         return "1/usercenter/index";
     }
 
@@ -39,4 +39,12 @@ public class UserCenterController {
 
     @RequestMapping(value = "/1/usercenter/publishArticle", method = RequestMethod.GET)
     public String publishArticle() { return "1/usercenter/publishArticle"; }
+
+
+
+
+    @RequestMapping(value = "/usercenter", method = RequestMethod.GET)
+    public String index(){
+        return "usercenter/myseller/goodsManage";
+    }
 }
