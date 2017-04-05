@@ -76,13 +76,13 @@ public class OrderInfoController extends BaseController {
             orderBys.add(OrderBy.desc("addTime"));
             Pagination<OrderInfoVo> pOrders = orderInfoService.getDetailListInPage(pageNum, pageSize, filters, orderBys);
             model.addAttribute("orderList", pOrders);
-            return "/mybuyer/order";
+            return "/1/mybuyer/order";
         } catch (Exception e) {
             logger.error("分页查询订单错误", e);
             ReturnData.error("系统异常");
         }
 
-        return "/error/500";
+        return "/1/error/500";
     }
 
     /**

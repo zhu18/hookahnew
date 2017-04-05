@@ -25,7 +25,7 @@ public class AdminController {
     @Resource
     SysNewsService sysNewsService;
 
-    @RequestMapping(value = "/admin/articleManagement", method = RequestMethod.GET)
+    @RequestMapping(value = "/1/admin/articleManagement", method = RequestMethod.GET)
     public String articleManagement(Model model) {
 
         Pagination<SysNews> page = new Pagination<>();
@@ -43,6 +43,6 @@ public class AdminController {
 
         }
         model.addAttribute("pageInfo",page);
-        return "admin/articleManagement";
+        return "1/admin/articleManagement";
     }
 }

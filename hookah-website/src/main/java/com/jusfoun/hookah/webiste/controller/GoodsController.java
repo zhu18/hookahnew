@@ -20,7 +20,7 @@ import javax.annotation.Resource;
  * Created by wangjl on 2017-3-20.
  */
 @Controller
-@RequestMapping("goods")
+@RequestMapping("1/goods")
 public class GoodsController {
     @Resource
     GoodsService goodsService;
@@ -61,7 +61,7 @@ public class GoodsController {
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public String list(){
-        return "/goods/list";
+        return "/1/goods/list";
     }
 
     /**
@@ -82,8 +82,8 @@ public class GoodsController {
                 goodsVo.setAttrTypeList(mgGoods.getAttrTypeList());
             }
         }
-        model.addAttribute("goods", goodsVo);
-        return "/goods/details";
+        model.addAttribute("1/goods", goodsVo);
+        return "/1/goods/details";
     }
 
 }

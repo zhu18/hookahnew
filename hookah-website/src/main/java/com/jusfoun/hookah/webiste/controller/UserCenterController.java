@@ -1,20 +1,11 @@
 package com.jusfoun.hookah.webiste.controller;
 
-import com.jusfoun.hookah.core.common.Pagination;
-import com.jusfoun.hookah.core.domain.SysNews;
-import com.jusfoun.hookah.core.generic.Condition;
-import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.rpc.api.SysNewsService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author huang lei
@@ -27,25 +18,25 @@ public class UserCenterController {
     @Resource
     SysNewsService sysNewsService;
 
-    @RequestMapping(value = "/usercenter", method = RequestMethod.GET)
+    @RequestMapping(value = "/1/usercenter", method = RequestMethod.GET)
     public String index(){
-        return "usercenter/index";
+        return "1/usercenter/index";
     }
 
-    @RequestMapping(value = "/usercenter/fundmanage", method = RequestMethod.GET)
-    public String fundmanage() { return "usercenter/fundmanage"; }
+    @RequestMapping(value = "/1/usercenter/fundmanage", method = RequestMethod.GET)
+    public String fundmanage() { return "1/usercenter/fundmanage"; }
 
-    @RequestMapping(value = "/usercenter/safeset", method = RequestMethod.GET)
-    public String safeset() { return "usercenter/safeset"; }
+    @RequestMapping(value = "/1/usercenter/safeset", method = RequestMethod.GET)
+    public String safeset() { return "1/usercenter/safeset"; }
 
-    @RequestMapping(value = "/usercenter/recharge", method = RequestMethod.GET)
-    public String recharge() { return "usercenter/recharge"; }
+    @RequestMapping(value = "/1/usercenter/recharge", method = RequestMethod.GET)
+    public String recharge() { return "1/usercenter/recharge"; }
 
-    @RequestMapping(value = "/usercenter/withdrawals", method = RequestMethod.GET)
-    public String withdrawals() { return "usercenter/withdrawals"; }
+    @RequestMapping(value = "/1/usercenter/withdrawals", method = RequestMethod.GET)
+    public String withdrawals() { return "1/usercenter/withdrawals"; }
 
 
 
-    @RequestMapping(value = "/usercenter/publishArticle", method = RequestMethod.GET)
-    public String publishArticle() { return "usercenter/publishArticle"; }
+    @RequestMapping(value = "/1/usercenter/publishArticle", method = RequestMethod.GET)
+    public String publishArticle() { return "1/usercenter/publishArticle"; }
 }

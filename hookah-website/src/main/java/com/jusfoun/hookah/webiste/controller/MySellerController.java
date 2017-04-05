@@ -3,7 +3,6 @@ package com.jusfoun.hookah.webiste.controller;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.Goods;
-import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -13,8 +12,6 @@ import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.MgCategoryAttrTypeService;
 import com.jusfoun.hookah.rpc.api.MgGoodsService;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,7 +38,7 @@ public class MySellerController {
     @Resource
     MgGoodsService mgGoodsService;
 
-    @RequestMapping(value = "/myseller", method = RequestMethod.GET)
+    @RequestMapping(value = "/1/myseller", method = RequestMethod.GET)
     public String index(Model model) {
 
 //        Subject subject = SecurityUtils.getSubject();
@@ -59,10 +56,10 @@ public class MySellerController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "/myseller/index";
+        return "/1/myseller/index";
     }
 
-    @RequestMapping(value = "/myseller/publish", method = RequestMethod.GET)
+    @RequestMapping(value = "/1/myseller/publish", method = RequestMethod.GET)
     public String publish(String id, Model model) {
         if (StringUtils.isNotBlank(id)) {
             // 查询商品信息
@@ -83,15 +80,15 @@ public class MySellerController {
                 }
             }
         }
-        return "/myseller/publish";
+        return "/1/myseller/publish";
     }
 
-    @RequestMapping(value = "/myseller/trade", method = RequestMethod.GET)
+    @RequestMapping(value = "/1/myseller/trade", method = RequestMethod.GET)
     public String trade() {
-        return "/myseller/trade";
+        return "/1/myseller/trade";
     }
 
-    @RequestMapping(value = "/myseller/tradeing", method = RequestMethod.GET)
+    @RequestMapping(value = "/1/myseller/tradeing", method = RequestMethod.GET)
     public String tradeing(String pageNumber, String pageSize, String goodsName, Byte checkStatus, Model model) {
         Pagination<Goods> page = new Pagination<>();
         try {
@@ -121,26 +118,26 @@ public class MySellerController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "/myseller/tradeing";
+        return "/1/myseller/tradeing";
     }
 
-    @RequestMapping(value = "/myseller/rate", method = RequestMethod.GET)
+    @RequestMapping(value = "/1/myseller/rate", method = RequestMethod.GET)
     public String mysellrate() {
-        return "/myseller/rate";
+        return "/1/myseller/rate";
     }
 
-    @RequestMapping(value = "/myseller/custom", method = RequestMethod.GET)
+    @RequestMapping(value = "/1/myseller/custom", method = RequestMethod.GET)
     public String custom() {
-        return "/myseller/custom";
+        return "/1/myseller/custom";
     }
 
-    @RequestMapping(value = "/myseller/customer", method = RequestMethod.GET)
+    @RequestMapping(value = "/1/myseller/customer", method = RequestMethod.GET)
     public String customer() {
-        return "/myseller/customer";
+        return "/1/myseller/customer";
     }
 
-    @RequestMapping(value = "/myseller/illegal", method = RequestMethod.GET)
+    @RequestMapping(value = "/1/myseller/illegal", method = RequestMethod.GET)
     public String illegal() {
-        return "/myseller/illegal";
+        return "/1/myseller/illegal";
     }
 }

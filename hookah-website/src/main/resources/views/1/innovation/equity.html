@@ -1,0 +1,48 @@
+<%
+var head = {
+%>
+<link type="text/css" rel="stylesheet" href="/static/1/css/innovation.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="innovation-center">
+    <div class="innovation-bd y-row">
+        <%include("/1/layout/innovation_template.html"){}%>
+        <div class="innovation-content y-right">
+            <h3 class="center-title">股权众筹</h3>
+            <div class="detail">
+                <div class="leftDetail">
+                    <img src="../../static/1/img/innovation/u5351.png" alt="">
+                </div>
+                <div class="rightDetail">
+                    <p><h3>医保大数据分析与挖掘</h3></p>
+                    <p><h5>杭州市</h5></p>
+                </div>
+            </div>
+            <div class="detail">
+                <div class="leftDetail">
+                    <img src="../../static/1/img/innovation/u5351.png" alt="">
+                </div>
+                <div class="rightDetail">
+                    <p><h3>医保大数据分析与挖掘</h3></p>
+                    <p><h5>杭州市</h5></p>
+                </div>
+            </div>
+            <div class="detail">
+                <div class="leftDetail">
+                    <img src="../../static/1/img/innovation/u5351.png" alt="">
+                </div>
+                <div class="rightDetail">
+                    <p><h3>医保大数据分析与挖掘</h3></p>
+                    <p><h5>杭州市</h5></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%};
+include("/1/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>

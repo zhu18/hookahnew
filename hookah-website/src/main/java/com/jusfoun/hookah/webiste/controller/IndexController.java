@@ -54,9 +54,9 @@ public class IndexController {
     MailService mailService;
 
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/1/", method = RequestMethod.GET)
     public String home(Model model) {
-        return "index";
+        return "/1/index";
     }
 
     @RequestMapping(value = "/s", method = RequestMethod.GET)
@@ -185,9 +185,9 @@ public class IndexController {
         return "sucess";
     }
 
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public String Nhome(Model model) {
-        return "2/index";
+        return "index";
     }
 
 }

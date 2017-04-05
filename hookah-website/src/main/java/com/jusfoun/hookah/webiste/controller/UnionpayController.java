@@ -26,11 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 
-import com.alibaba.fastjson.JSONObject;
-
-
 @RestController
-@RequestMapping("/pay/unionpay")
+@RequestMapping("/1/pay/unionpay")
 public class UnionpayController extends BaseController{
 	
 	private static final Logger logger = LoggerFactory.getLogger(UnionpayController.class);
@@ -237,7 +234,7 @@ public class UnionpayController extends BaseController{
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value="/pay", method = RequestMethod.GET)
+	@RequestMapping(value= "/1/pay", method = RequestMethod.GET)
 	ModelAndView pay(@RequestParam(required=true) Integer orderId,
 			@RequestParam(required=true) String accNo,
 			@RequestParam(required=true) String smsCode,

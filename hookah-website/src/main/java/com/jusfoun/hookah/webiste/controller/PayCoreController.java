@@ -27,7 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
  * z支付接口
  */
 @Controller
-@RequestMapping("/pay")
+@RequestMapping("/1/pay")
 public class PayCoreController {
 
 	protected final static Logger logger = LoggerFactory.getLogger(PayCoreController.class);

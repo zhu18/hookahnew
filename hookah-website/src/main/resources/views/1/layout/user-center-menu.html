@@ -1,0 +1,37 @@
+<ul class="menu-list">
+    <li class="menu-items active">
+        <h3 class="menu-header">用户中心</h3>
+        <ol class="menu-category active">
+            <li><a href="/1/usercenter">个人资料</a></li>
+            <li><a href="/1/usercenter/fundmanage">资金管理</a></li>
+            <li><a href="/1/usercenter/safeset">安全设置</a></li>
+        </ol>
+    </li>
+    <li class="menu-items">
+        <h3 class="menu-header">买家中心</h3>
+        <ol class="menu-category">
+            <li><a href="/1/mybuyer/order">订单管理</a></li>
+            <li><a href="/1/mybuyer/invoice">我的发票</a></li>
+            <li><a href="/1/cart">购物车</a></li>
+            <li><a href="/1/mybuyer/rate">我的评价</a></li>
+            <li><a href="/1/mybuyer/attention_item">我的关注</a></li>
+        </ol>
+    </li>
+    <li class="menu-items">
+        <h3 class="menu-header">卖家中心</h3>
+        <ol class="menu-category">
+            <li><a href="/1/myseller">商品管理</a></li>
+            <li><a href="/1/myseller/trade">交易管理</a></li>
+            <li><a href="javascript:void(0)">店铺管理</a></li>
+            <li><a href="/1/myseller/custom">客服管理</a></li>
+        </ol>
+    </li>
+</ul>
+<script type="text/javascript">
+    var urlPathss = window.location.pathname;
+    $('.menu-category li').each(function(){
+        if($(this).children('a').attr('href') == urlPathss){
+            $(this).children('a').addClass('active')
+        }
+    })
+</script>

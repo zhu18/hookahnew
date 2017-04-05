@@ -1,0 +1,49 @@
+<div class="layout layout-grid-0">
+  <div class="grid-0">
+    <div class="col col-main">
+      <div class="main-wrap J_Region">
+        <div class="hookah-index-product-sale J_Module">
+          <div class="module-wrap J_tb_lazyload dbl_tms_module_wrap">
+            <div class="index-nav-bar y-row">
+              <div class="tool-body y-left">
+                <div class="y-clear">
+                  <ul class="y-left tips-box">
+                    <li class="tips-item">
+                      <a href="/1/exchange" class="login">交易中心</a>
+                    </li>
+                    <li class="tips-item">
+                      <a href="/1/innovation" class="login">双创中心</a>
+                    </li>
+                    <li class="tips-item">
+                      <a href="/1/exposition" class="login">博览会</a>
+                    </li>
+                    <li class="tips-item">
+                      <a href="/1/information" class="login">资讯中心</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+    var PATHName = window.location.pathname.substring(1);
+    var webName = PATHName == '' ? '' : PATHName.substring(0, PATHName.indexOf('/'));
+    $('.index-nav-bar .tips-box li').each(function(){
+        var elementVal = $(this).children('a').attr('href').substring(1);
+        if(webName){
+            if(webName == elementVal){
+                $(this).children('a').addClass('active')
+                console.log(webName)
+            }
+        }else{
+            if(elementVal == PATHName){
+                $(this).children('a').addClass('active')
+            }
+        }
+    })
+</script>
