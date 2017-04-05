@@ -1007,15 +1007,127 @@ margin-left:-100px;
     color:#fff;
 }
 .index-trade-resources .back a{padding:5px 10px;}
+/**** index-information ****/
+.index-information{
+    padding:50px 0;
+    background: #f5f6f6;
+    overflow: hidden;
+}
+.index-information .list-data{
+    padding:20px;
+    background: #fff;
+}
+.index-information .central-box{
+    width:860px;
+}
+.index-information .central-box .center-left{
+    width:380px;
+}
+.index-information .central-box .center-left a{
+    display: block;
+}
+.index-information .central-box .center-left img{
+    width:100%
+}
+.index-information .central-box .center-left h3{
+    font-size: 14px;
+    line-height: 26px;
+}
+.index-information .central-box .center-left div{
+    overflow: hidden;
+    margin-bottom:10px;
+}
+.index-information .central-box .center-left p{
+text-decoration: none;
+}
+.index-information .box-title{
+    height:34px;
+}
+.index-information .box-title h3{
+    font-size: 16px;
+    height: 32px;
+    padding: 0 10px;
+    border-bottom: 3px solid #3e567c;
+}
+.index-information .box-title a{
+    margin-top:5px;
+}
+.index-information .notice-box{
+    width:240px;
+}
+.index-information .central-box .center-right{
+    width:460px;
+}
 
+.index-information .central-box .center-right li{
+    overflow: hidden;
+    padding-top:10px;
+    border-top:1px dotted #ccc;
+}
+.index-information .central-box .center-right li:first-child{
+    padding: 0;
+    border:none;
+}
+.index-information .central-box .center-right li:last-child{
+    margin:0 !important;
+}
+.index-information .central-box .center-right li a{
+    display: block;
+}
 
+.index-information .central-box .center-right li a img{
+    width:110px;
+}
+.index-information .central-box .center-right li a .infos{
+    width:340px;
+}
+.index-information a p,.index-information a h3{
+    -webkit-transition:all .3s linear;
+    transition:all .3s linear;
+}
+.index-information a:hover p,.index-information a:hover h3{
+    color:#078cfc;
+    -webkit-transition:all .3s linear;
+    transition:all .3s linear;
+}
 
+.index-information .central-box .center-right li a .infos h3{
+    font-size: 14px;
+    margin-bottom: 4px;
+}
 
+.index-information .notice-box li{
+    height: 38.8px;
+    line-height: 38.8px;
+    border-bottom:1px dotted #ccc;
+}
 
-
-
-
-
+.co-organization{
+    padding:40px 0;
+}
+.co-organization h3{
+    font-size: 16px;
+}
+.co-organization ul{
+    overflow: hidden;
+}
+.co-organization ul li{
+    margin:20px 48px 0 0;
+    width:160px;
+    height:40px;
+    overflow: hidden;
+}
+.co-organization ul li a{
+    display: block;
+    width:100%;
+    height:100%;
+}
+.co-organization ul li a img{
+    width:100%
+}
+.co-organization ul li:nth-child(6n){
+    margin-right: 0;
+}
 
 
 

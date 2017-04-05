@@ -2,6 +2,7 @@ package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.domain.Cart;
 import com.jusfoun.hookah.core.domain.Goods;
+import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.JSONUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
@@ -46,7 +47,7 @@ public class CartController extends BaseController {
 
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.eq("userId", userId));
-            filters.add(Condition.eq("delFlag", new Integer(0).shortValue()));
+            filters.add(Condition.eq("isDeleted", new Integer(0).shortValue()));
             List<Cart> carts = cartService.selectList(filters);
             model.addAttribute("cartList", carts);
             logger.info(JSONUtils.toString(carts));
@@ -77,12 +78,16 @@ public class CartController extends BaseController {
             cart.setIsGift(new Integer(0).shortValue());
             cart.setIsDeleted(new Byte("0"));
 
+            MgGoods.FormatBean format= goodsService.getFormat(cart.getGoodsId(),cart.getFormatId());
 
             //补充商品信息
             Goods goods = goodsService.selectById(cart.getGoodsId());
             cart.setGoodsSn(goods.getGoodsSn());
             cart.setGoodsName(goods.getGoodsName());
             cart.setGoodsImg(goods.getGoodsImg());
+            cart.setGoodsFormat(format.getFormat());
+            cart.setFormatNumber((long)format.getNumber());
+            cart.setGoodsPrice(format.getPrice());
             //入库
             cartService.insert(cart);
 
@@ -100,7 +105,7 @@ public class CartController extends BaseController {
      * @param model
      * @return
      */
-    @ResponseBody
+    /*@ResponseBody
     @RequestMapping(value = "/cart/addAll", method = RequestMethod.POST)
     public ReturnData addAll(List<Cart> list, Model model) {
         try {
@@ -123,7 +128,7 @@ public class CartController extends BaseController {
             logger.info(e.getMessage());
             return ReturnData.error(e.getMessage());
         }
-    }
+    }*/
 
     /**
      * Ajax  编辑购物车
