@@ -1,0 +1,43 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/index/index.css">
+<link rel="stylesheet" href="/static/css/usercenter/userInfo.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+    <div class="grid-row clearfix">
+        <div class="grid-left left-bar">
+            <ul>
+                <li class="text-align-center active"><span class="fa fa-caret-down"></span><span class="fa fa-caret-up" style="display: none;"></span>交易管理 <span class="fa fa-"></span></li>
+                <li class="text-align-center"><a href="#"><span class="fa fa-file-text"></span>订单管理</a></li>
+                <li class="text-align-center"><a href="#"><span class="fa fa-heart-o" aria-hidden="true"></span>我的关注</a></li>
+            </ul>
+            <ul>
+                <li class="text-align-center"><span class="fa fa-caret-down"></span><span class="fa fa-caret-up" style="display: none;"></span>用户中心 <span class=""></span></li>
+                <li class="text-align-center"><a href="#"><span class="fa fa-cog"></span>账号管理</a></li>
+                <li class="text-align-center"><a href="#"><span class="fa fa-cog"></span>消息中心</a></li>
+                <li class="text-align-center"><a href="#"><span class="fa fa-cog"></span>安全管控</a></li>
+            </ul>
+        </div>
+        <div class="grid-left center-content">
+            <div class="top">
+                <div class="user-name">
+                    <a href="#"><img src="" alt=""></a>
+                    <p>Hi,<span id="userName"></span></p>
+                    <a href="#"><span class="fa fa-twitch"></span>进入论坛</a>
+                </div>
+                <div class="user-balance">
+                    
+                </div>
+            </div>
+        </div>
+        <div class="grid-right"></div>
+    </div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
