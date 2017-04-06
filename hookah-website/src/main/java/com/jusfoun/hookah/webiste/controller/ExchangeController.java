@@ -28,13 +28,13 @@ public class ExchangeController {
         model.addAttribute("categoryInfo", categoryService.getCatTree());
         return "exchange/index";
     }
-    @RequestMapping(value = "/exchange/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/goods/list", method = RequestMethod.GET)
     public String list(Model model){
-        return "exchange/list";
+        return "goods/list";
     }
 
-    @RequestMapping(value = "/exchange/details", method = RequestMethod.GET)
+    @RequestMapping(value = "/goods/details", method = RequestMethod.GET)
     public String details(Model model){
-        return "exchange/details";
+        return "goods/details";
     }
 }
