@@ -1,16 +1,15 @@
-import '../../common/common';
-import accountRouting from './account.routing';
+import "../../common/common";
+import orderRouting from "./order.routing";
+
 const MODULE_NAME = 'Hookah';
 let app = angular.module(MODULE_NAME, [
   'ui.router',
   'Common'
 ]);
-app.config(accountRouting);
-app.config(['$httpProvider', function ($httpProvider) {
-  $httpProvider.defaults.withCredentials = true;
-}]);
+app.config(orderRouting);
+
 app.run(function ($rootScope, $state) {
-  $rootScope.currentProductId = 'account';
+  $rootScope.currentProductId = 'order';
   $rootScope.config = {
     "navScene": 'main',
     "isSidebarFold": false,
@@ -33,15 +32,11 @@ app.run(function ($rootScope, $state) {
       "folded": false
     }
   };
-  $rootScope.config.title = '系统账号管理';
-  $rootScope.config.mainNav =[
+  $rootScope.config.title = '订单管理';
+  $rootScope.config.mainNav = [
     {
-      "title":"账号查询",
-      "url":"account.search"
-    },
-    {
-      "title":"新增账号",
-      "url":"account.add"
+      "title": "订单查询",
+      "url": "shelf.search"
     }
   ];
 

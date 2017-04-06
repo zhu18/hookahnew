@@ -1,7 +1,7 @@
 import AccountController from './AccountController';
 accountRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function accountRouting($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/items/search');
+  $urlRouterProvider.otherwise('/account/search');
   $stateProvider
     .state('account', {
       template: '<div ui-view></div>',

@@ -1644,12 +1644,89 @@ dl {
     height: 110px;
     background-color: #F3F3F3;
 }
+.goods-left .goods-details .goods-details-right .detail-money div{
+    font-size: 14px;
+    padding-left: 10px;
+    height: 55px;
+    line-height: 55px;
+}
+.goods-left .goods-details .goods-details-right .detail-money .convert{
+    display: inline-block;
+    width: 110px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    vertical-align: text-bottom;
+    border: 1px solid #ffa800;
+}
 .goodsDetails .goods-left .goods-table{
     background-color: white;
     height: 740px;
 }
+.goodsDetails .goods-left .goods-table .table-list{
+    height: 41px;
+    background-color: #F4F4F4;
+    border: 1px solid #efefef;
+}
+.goodsDetails .goods-left .goods-table .tab-list table tr{
+    height: 41px;
+    border: 1px solid #EFEFEF;
+    width: 170px;
+}
+.goodsDetails .goods-left .goods-table .table-list li{
+    float: left;
+    height: 41px;
+    font-size: 16px;
+    line-height: 41px;
+    text-align: center;
+    padding: 0px 20px;
+    border-right: 1px solid #EFEFEF;
+    background-color: #F4F4F4;
+}
+.goodsDetails .goods-left .goods-table .table-list li:last-child{
+    border-right: none;
+}
 .goodsDetails .goods-right{
-    width: 226px;
+
+}
+.goodsDetails .goods-right .recommend-one{
+    border: 1px solid #EFEFEF;
+    padding: 10px;
+    width: 200px;
     height: 302px;
     background-color: white;
+}
+.goodsDetails .goods-right .recommend-one .recommend-title{
+    font-size: 16px;
+    border-bottom: 1px solid #EFEFEF;
+}
+.goodsDetails .goods-right .recommend-one ul li{
+    padding: 10px;
+}
+.goodsDetails .goods-right .recommend-one ul li img{
+    width: 47px;
+    height: 47px;
+}
+.goodsDetails .goods-right .recommend-one ul li .img-info{
+    margin-top: 4px;
+    float: right;
+    width: 120px;
+}
+.goodsDetails .goods-right .recommend-two{
+    border: 1px solid #EFEFEF;
+    padding: 10px;
+    width: 200px;
+    height: 302px;
+    background-color: white;
+}
+.goodsDetails .goods-right .recommend-two .recommend-title{
+    font-size: 16px;
+    border-bottom: 1px solid #EFEFEF;
+}
+.goodsDetails .goods-right .recommend-two ul li{
+    padding: 10px;
+}
+.goodsDetails .goods-right .recommend-two ul li img{
+    width: 100%;
+    height: 47px;
 }

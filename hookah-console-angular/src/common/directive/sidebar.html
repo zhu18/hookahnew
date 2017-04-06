@@ -25,7 +25,7 @@
         <!--每个模块的下的子模块-->
         <ul class="sidebar-trans" style="">
           <!--商品管理-->
-          <li class="nav-item">
+          <li class="nav-item" ng-class="{'active':currentProductId == 'goods'}">
             <!--点击后跳到对应的路由-->
             <a href="/goods/" class="sidebar-trans"
                sidebar-tooltip="" tooltip-append-to-body="true" tooltip-placement="right" tooltip-animation="true">
@@ -34,58 +34,44 @@
             </a>
           </li>
           <!--货架管理-->
-          <li class="nav-item">
-            <a href="/dms" class="sidebar-trans"
+          <li class="nav-item" ng-class="{'active':currentProductId == 'shelf'}">
+            <a href="/shelf/" class="sidebar-trans"
                sidebar-tooltip="" tooltip-append-to-body="true" tooltip-placement="right" tooltip-animation="true">
               <div class="nav-icon sidebar-trans"><span class="icon-setup"></span></div>
               <span class="nav-title">货架管理&nbsp;</span>
             </a>
           </li>
           <!--订单管理-->
-          <li class="nav-item">
-            <a href="/dms" class="sidebar-trans"
+          <li class="nav-item" ng-class="{'active':currentProductId == 'order'}">
+            <a href="/order/" class="sidebar-trans"
                sidebar-tooltip="" tooltip-append-to-body="true" tooltip-placement="right" tooltip-animation="true">
               <div class="nav-icon sidebar-trans"><span class="icon-dms"></span></div>
               <span class="nav-title">订单管理&nbsp;</span>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="/dms" class="sidebar-trans"
+          <li class="nav-item" ng-class="{'active':currentProductId == 'user'}">
+            <a href="/user/" class="sidebar-trans"
                sidebar-tooltip="" tooltip-append-to-body="true" tooltip-placement="right" tooltip-animation="true">
               <div class="nav-icon sidebar-trans"><span class="icon-dms"></span></div>
               <span class="nav-title">用户中心&nbsp;</span>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="/dms" class="sidebar-trans"
-               sidebar-tooltip="" tooltip-append-to-body="true" tooltip-placement="right" tooltip-animation="true">
-              <div class="nav-icon sidebar-trans"><span class="icon-dms"></span></div>
-              <span class="nav-title">双创中心&nbsp;</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/dms" class="sidebar-trans"
+          <li class="nav-item" ng-class="{'active':currentProductId == 'information'}">
+            <a href="/information/" class="sidebar-trans"
                sidebar-tooltip="" tooltip-append-to-body="true" tooltip-placement="right" tooltip-animation="true">
               <div class="nav-icon sidebar-trans"><span class="icon-dms"></span></div>
               <span class="nav-title">资讯中心&nbsp;</span>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="/dms" class="sidebar-trans"
+          <li class="nav-item" ng-class="{'active':currentProductId == 'advert'}">
+            <a href="/advert/" class="sidebar-trans"
                sidebar-tooltip="" tooltip-append-to-body="true" tooltip-placement="right" tooltip-animation="true">
               <div class="nav-icon sidebar-trans"><span class="icon-dms"></span></div>
               <span class="nav-title">广告中心&nbsp;</span>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="/dms" class="sidebar-trans"
-               sidebar-tooltip="" tooltip-append-to-body="true" tooltip-placement="right" tooltip-animation="true">
-              <div class="nav-icon sidebar-trans"><span class="icon-info"></span></div>
-              <span class="nav-title">资讯中心&nbsp;</span>
-            </a>
-          </li>
           <li class="nav-item" ng-class="{'active':currentProductId == 'msc'}">
-            <a href="/console/msc" class="sidebar-trans"
+            <a href="/msc/" class="sidebar-trans"
                sidebar-tooltip="" tooltip-append-to-body="true" tooltip-placement="right" tooltip-animation="true">
               <div class="nav-icon sidebar-trans"><span class="icon-invite"></span></div>
               <span class="nav-title">消息中心&nbsp;</span>
@@ -118,7 +104,7 @@
           <li class="nav-item" ng-class="{'active':currentProductId == 'account'}"><a href="/account/" sidebar-tooltip="" tooltip-append-to-body="true"
                                          tooltip-placement="right" tooltip-animation="true">
             <div class="nav-icon"><span class="icon-invite"></span></div>
-            <span class="nav-title">账号管理</span></a></li>
+            <span class="nav-title">系统账号管理</span></a></li>
         </ul>
       </div>
     </div>
