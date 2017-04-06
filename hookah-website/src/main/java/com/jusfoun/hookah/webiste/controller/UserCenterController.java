@@ -41,15 +41,12 @@ public class UserCenterController {
     public String publishArticle() { return "1/usercenter/publishArticle"; }
 
 
-<<<<<<< HEAD
     @RequestMapping(value = "/usercenter/userInfo", method = RequestMethod.GET)
     public String userInfo() { return "usercenter/userInfo"; }
-=======
 
 
     @RequestMapping(value = "/usercenter", method = RequestMethod.GET)
     public String index(){
         return "usercenter/myseller/goodsManage";
     }
->>>>>>> 4d6168bfb3c26b5675b9230daa230e4eb60cca66
 }
