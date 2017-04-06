@@ -50,13 +50,14 @@
   127.0.0.1 auth.hookah.app
   127.0.0.1 admin.hokah.app
 ```
-* mongoDB，作为MySQL 数据库扩展，版本选用3.X，最新稳定版为3.4.2
+
+  * mongoDB，作为MySQL 数据库扩展，版本选用3.X，最新稳定版为3.4.2
     下载地址:https://www.mongodb.com/download-center<br>
     配置：（1）下载后解压，主要是bin目录和几个协议文件等。<br>
           （2）和bin同级添加data目录。<br>
            (3) 启动：命令行到 bin目录下，执行 mongod --dbpath <data目录><br>
 
-* RabbitMQ 作为消息中间件，主要应用于高并发下订单处理（如秒杀）
+  * RabbitMQ 作为消息中间件，主要应用于高并发下订单处理（如秒杀）
     需要 具备Erlang  OTP,按系统下载安装。<br>
     下载并安装 RabbitMQ,  http://www.rabbitmq.com/download.html,当前最新版本为 3.6.6<br>
     RabbitMQ会自动注册为服务且自动启动。<br>
