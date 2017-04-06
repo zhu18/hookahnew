@@ -30,7 +30,7 @@ import java.util.List;
  * @desc
  */
 @Controller
-@RequestMapping("1/goods/back")
+@RequestMapping("goods/back")
 public class GoodsBackController {
     @Resource
     GoodsService goodsService;

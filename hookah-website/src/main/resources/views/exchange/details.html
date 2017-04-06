@@ -1,0 +1,246 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/index/index.css">
+<link rel="stylesheet" href="/static/css/common.css">
+<link rel="stylesheet" href="/static/css/exchange/style.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 goodsDetails bdg-row ">
+    <div class="grid-row margin-top-20">
+        <div class="grid-left goods-left bdg-row">
+            <div class="goods-details">
+                 <div class="goods-details-img grid-left bdg-row"></div>
+                 <div class="goods-details-right grid-left bdg-row"></div>
+            </div>
+            <div class="goods-table margin-top-20"></div>
+        </div>
+        <div class="grid-right goods-right"></div>
+    </div>
+</div>
+<!--<div class="grid-0">-->
+    <!--<div class="grid-row">-->
+        <!--<div class="grid-left bdg-row">-->
+            <!--&lt;!&ndash;头部信息&ndash;&gt;-->
+            <!--<div class="goodsDetail-topInfo">-->
+                <!--<div class="bdg-row">-->
+                    <!--<div class="grid-left">-->
+                        <!--<div class="goodsDetail-topInfo-left">-->
+                            <!--<img class="goodsImg" id="goodsImg" onError="this.onerror=null;this.src='/images/public/defaut-goods-icon.png';" alt="默认图标"-->
+                                 <!--title="商品图标">-->
+                            <!--<div class="bdg-goods-pv">-->
+                                <!--<i class="fa fa-eye" style="color: #CCCCCC;"></i>&nbsp;浏览：<span class='pv'>3</span>&nbsp;&nbsp;-->
+                                <!--<i class="fa fa-heart" style="color: #CCCCCC;"></i>&nbsp;关注：<span class='collect'>1</span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="grid-right">-->
+                        <!--<div class="goodsDetail-topInfo-right">-->
+                            <!--<h1 class="overflow-ellipsis" id="goodsName">&nbsp;</h1>-->
+                            <!--<div id="goodsBrief"></div>-->
+                            <!--<div class="goodsDetail-priceInfo">-->
+                                <!--<span class="goodsBrief"></span>-->
+                                <!--<span class="goodsDetail-priceInfo-name">价格：</span>-->
+                                <!--<span class="goodsDetail-priceInfo-unit">￥</span>-->
+                                <!--<span id="shopPrice" class="goodsDetail-priceInfo-value">000</span>-->
+                                <!--<div class="goodsDetail-periodInfo">-->
+                                    <!--<span>规格：</span>-->
+                                    <!--<span class="goodsDetail-periodInfo-value">-->
+                                            <!--按次-->
+                                        <!--</span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="bdg-goods-rank-focus">-->
+                                <!--评分：<i class="rank"><i class="rank-score"></i></i>-->
+                                <!--&lt;!&ndash;关注：<i class="focus"></i>&ndash;&gt;-->
+                            <!--</div>-->
+                            <!--<div class="goodsDetail-countInfo">-->
+                                <!--<span>数量：</span>-->
+                                <!--<span id="goodNum" class="spinner"></span>-->
+                                <!--<span class="goodsDetail-payInfo">-->
+                                         <!--<a class="bdg-btn bdg-btn-warning" id="makerPay"  href="javascript:;">立刻购买</a>-->
+                                <!--</span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div style="min-height:250px;margin-bottom: 30px;">-->
+                <!--&lt;!&ndash;信息简介&ndash;&gt;-->
+                <!--<div class="goodsDetail-middleInfo">-->
+                    <!--<ul class='goodsDetail-middleInfo-tab'>-->
+                        <!--<li class="active">基本信息</li>-->
+                        <!--<li>详情介绍</li>-->
+                        <!--<li>返回参数</li>-->
+                        <!--<li>评论</li>-->
+                    <!--</ul>-->
+                    <!--<div class="goodsDetail-middleInfo-panel" style="display: block;">-->
+                        <!--<ul class="list-unstyled goodsDesc-brief">-->
+                            <!--<li>接口地址：<span id="reqUrl"></span></li>-->
+                            <!--<li>支持格式：<span id="supportFmt"> </span></li>-->
+                            <!--<li>请求方式：<span id="reqMethod"></span></li>-->
+                            <!--<li>请求示例：<span id="reqEg"></span></li>-->
+                            <!--<li>接口描述：<span id="description"></span></li>-->
+                        <!--</ul>-->
+                        <!--<h6>请求参数说明：</h6>-->
+                        <!--<table class="table table-striped table-hover bdg-table">-->
+                            <!--<thead>-->
+                            <!--<tr>-->
+                                <!--<td width="100">名称</td>-->
+                                <!--<td width="100">类型</td>-->
+                                <!--<td width="50">必填</td>-->
+                                <!--<td>说明</td>-->
+                            <!--</tr>-->
+                            <!--</thead>-->
+                            <!--<tbody id="reqParams">-->
+                            <!--<tr>-->
+                                <!--<td colspan="4">暂无</td>-->
+                            <!--</tr>-->
+                            <!--</tbody>-->
+                        <!--</table>-->
+                    <!--</div>-->
+                    <!--<div class="goodsDetail-middleInfo-panel">-->
+                        <!--<p class="goodsDesc" id="goodsDesc"></p>-->
+                    <!--</div>-->
+                    <!--<div class="goodsDetail-middleInfo-panel">-->
+                        <!--<h6>返回参数说明：</h6>-->
+                        <!--<table class="table table-striped table-hover bdg-table">-->
+                            <!--<thead>-->
+                            <!--<tr>-->
+                                <!--<td width="100">名称</td>-->
+                                <!--<td>类型</td>-->
+                                <!--<td>说明</td>-->
+                            <!--</tr>-->
+                            <!--</thead>-->
+                            <!--<tbody id="respParams">-->
+                            <!--<tr>-->
+                                <!--<td colspan="3">暂无</td>-->
+                            <!--</tr>-->
+                            <!--</tbody>-->
+                        <!--</table>-->
+                    <!--</div>-->
+                    <!--<div class="goodsDetail-middleInfo-panel">-->
+                        <!--&lt;!&ndash;评论&ndash;&gt;-->
+                        <!--<div class="goodsDetail-bottomInfo">-->
+                            <!--<ul class="goods-comment  list-unstyled"></ul>-->
+                            <!--&lt;!&ndash;分页&ndash;&gt;-->
+                            <!--<div class="pageBox" style="text-align: right;">-->
+                                <!--<ul id="pagination" class="pagination">-->
+                                    <!--<li class="first disabled" jp-role="first" jp-data="1"><a href="javascript:void(0);">首页</a></li>-->
+                                    <!--<li class="prev disabled" jp-role="prev" jp-data="0"><a href="javascript:void(0);">上一页</a></li>-->
+                                    <!--<li class="page active" jp-role="page" jp-data="1"><a href="javascript:void(0);">1</a></li>-->
+                                    <!--<li class="next disabled" jp-role="next" jp-data="2"><a href="javascript:void(0);">下一页</a></li>-->
+                                    <!--<li class="last disabled" jp-role="last" jp-data="1"><a href="javascript:void(0);">尾页</a></li>-->
+                                <!--</ul>-->
+                            <!--</div>-->
+                            <!--<h5>我要评论</h5>-->
+                            <!--<a href="javascript:;" id="addComment">撰写评论></a>-->
+                            <!--<div class="goods-addComment">-->
+                                <!--<table>-->
+                                    <!--<tr>-->
+                                        <!--<td style="line-height: 32px;text-align: right;width: 100px;">商品满意度：</td>-->
+                                        <!--<td class="goods-addComment-star">-->
+                                            <!--<i class="fa fa-star"></i>-->
+                                            <!--<i class="fa fa-star"></i>-->
+                                            <!--<i class="fa fa-star"></i>-->
+                                            <!--<i class="fa fa-star"></i>-->
+                                            <!--<i class="fa fa-star"></i>-->
+                                        <!--</td>-->
+                                    <!--</tr>-->
+                                    <!--<tr>-->
+                                        <!--<td style="vertical-align: top;text-align: right;">评论内容：</td>-->
+                                        <!--<td>-->
+                                            <!--<textarea id="comment-content" placeholder="商品是否给力？快分享你的购物心得吧!"></textarea>-->
+                                        <!--</td>-->
+                                    <!--</tr>-->
+                                    <!--<tr>-->
+                                        <!--<td colspan="2" style="text-align: center;padding-top: 10px;">-->
+                                            <!--<a href="javascript:;" class="bdg-btn bdg-btn-warning" id="cancelComment">取消</a>-->
+                                            <!--<a href="javascript:;" id="submitComment" class="bdg-btn bdg-btn-primary" style="display: inline-block;margin: 0 10px;">提交</a>-->
+                                            <!--<label><input type="checkbox" value="0" id="anonymous"> 匿名评价</label>-->
+                                        <!--</td>-->
+                                    <!--</tr>-->
+                                <!--</table>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="grid-right bdg-row">-->
+            <!--&lt;!&ndash;基本信息&ndash;&gt;-->
+            <!--<div class="goodsDetail-baseInfo">-->
+                <!--<div class="goodsDetail-baseInfo-header">-->
+                    <!--<h2 class="goodsDetail-baseInfo-title">推荐数据</h2>-->
+                <!--</div>-->
+                <!--<div class="goodsDetail-baseInfo-body">-->
+                    <!--<ul class="list-unstyled">-->
+                        <!--<li>-->
+                            <!--<img class="img-item" src="http://mall.galaxybigdata.com/shop-admin/upload/image/20170213/6e59fbbc-9588-4b0d-b4fe-80432645f4cd.png"-->
+                                 <!--alt="推荐数据">-->
+                            <!--<a class="img-inifo" href="goodsDetails.html?goodsId=893">-->
+                                <!--<span>数字化信贷风险管理...</span> <br>-->
+                                <!--<span style='color:#fda428'>￥800000/次</span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<img class="img-item" src="http://mall.galaxybigdata.com/shop-admin/upload/image/20160914/minzheng.png"-->
+                                 <!--alt="推荐数据">-->
+                            <!--<a class="img-inifo" href="goodsDetails.html?goodsId=1380">-->
+                                <!--<span>失信被执行人查询...</span> <br>-->
+                                <!--<span style='color:#fda428'>￥0.1/次</span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<img class="img-item" src="http://mall.galaxybigdata.com/shop-admin/upload/image/20160914/default_new.png"-->
+                                 <!--alt="推荐数据">-->
+                            <!--<a class="img-inifo" href="goodsDetails.html?goodsId=1405">-->
+                                <!--<span>货车实时位置查询</span> <br>-->
+                                <!--<span style='color:#fda428'>￥2/次</span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<img class="img-item" src="http://mall.galaxybigdata.com/shop-admin/upload/image/20160914/quyuhuanjingjingzhengli.png"-->
+                                 <!--alt="推荐数据">-->
+                            <!--<a class="img-inifo" href="goodsDetails.html?goodsId=1277">-->
+                                <!--<span>区域政府调规经济竞...</span> <br>-->
+                                <!--<span style='color:#fda428'>￥899/次</span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<img class="img-item" src="http://mall.galaxybigdata.com/shop-admin/upload/image/20161103/default_new.png"-->
+                                 <!--alt="推荐数据">-->
+                            <!--<a class="img-inifo" href="goodsDetails.html?goodsId=1312">-->
+                                <!--<span>在线可视化工具</span> <br>-->
+                                <!--<span style='color:#fda428'>￥220000/次</span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<img class="img-item" src="http://mall.galaxybigdata.com/shop-admin/upload/image/20160914/jiucifang.png"-->
+                                 <!--alt="推荐数据">-->
+                            <!--<a class="img-inifo" href="goodsDetails.html?goodsId=856">-->
+                                <!--<span>九次方可视化</span> <br>-->
+                                <!--<span style='color:#fda428'>￥800000/次</span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<img class="img-item" src="http://mall.galaxybigdata.com/shop-admin/upload/image/20161104/91a81c25-a5c9-4d8c-b60a-42ddd348d663.png"-->
+                                 <!--alt="推荐数据">-->
+                            <!--<a class="img-inifo" href="goodsDetails.html?goodsId=856">-->
+                                <!--<span>大数据可视化工具</span> <br>-->
+                                <!--<span style='color:#fda428'>￥200000/次</span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
