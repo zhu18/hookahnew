@@ -46,7 +46,16 @@ public class UserCenterController {
 
 
     @RequestMapping(value = "/usercenter/goodsManage", method = RequestMethod.GET)
-    public String index(){
+    public String goodsManage(){
         return "usercenter/myseller/goodsManage";
+    }
+
+    @RequestMapping(value = "/usercenter/goodsPublish", method = RequestMethod.GET)
+    public String goodsPublish(){
+        return "usercenter/myseller/goodsPublish";
+    }
+    @RequestMapping(value = "/usercenter/goodsEdit", method = RequestMethod.GET)
+    public String goodsEdit(){
+        return "usercenter/myseller/goodsEdit";
     }
 }
