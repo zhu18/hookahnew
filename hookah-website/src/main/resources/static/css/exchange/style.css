@@ -20,6 +20,15 @@
     line-height: 40px;
     height: 38px;
 }
+.exchange-index-menu div{
+    display: inline-block;
+    width: 338px;
+    height: 172px;
+    top: 0;
+    left: 190px;
+    position: absolute;
+    background-color: white;
+}
 
 /*****banner******/
 .banner-tab {
@@ -773,7 +782,7 @@ lesshat-selector {
 .module-wrap [data-hover-container] .layer img {
     width: 400px;
     position: absolute;
-    right: 410px;
+    right: 250px;
     top: 20px;
 }
 
@@ -884,14 +893,14 @@ lesshat-selector {
     padding: 0 10px;
     color: white;
     border-bottom: 1px solid white;
-    line-height: 40px;
-    height: 38px;
+    line-height: 42px;
+    height: 42px;
 }
 .exchange-index .index-banner .exchange-index-menu .menu-list li:last-child{
     border-bottom: 2px solid #3E557B;
 }
 .exchange-index .index-banner .exchange-index-banner{
-    width: 815px;
+    width: 1009px;
     position: absolute;
     top: 0;
     left: 190px;
@@ -1273,7 +1282,7 @@ lesshat-selector {
     background-color:#E6E6E6 ;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-rank>ul li:nth-child(1) div{
-    width: 106px;
+    width: 167px;
     padding: 20px 17px;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-rank>ul li:nth-child(1) img{

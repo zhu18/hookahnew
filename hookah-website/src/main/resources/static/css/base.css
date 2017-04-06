@@ -64,7 +64,7 @@
     position: relative;
 }
 .header-bottom-bar li{
-    padding: 0 30px;
+    padding: 0 56px;
 }
 .header-bottom-bar li.active{
     background: #2d3f5c;
