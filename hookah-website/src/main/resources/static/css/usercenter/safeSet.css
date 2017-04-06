@@ -1,0 +1,112 @@
+.safe-set-box{
+    width: 950px;
+    height: 900px;
+    border:1px solid #EDEDED;
+    background-color: #fff;
+    margin:10px 5px;
+    padding:0 20px;
+}
+.safe-set-box .header{
+    height: 31px;
+    padding-top:10px;
+    border-bottom: 1px solid #EDEDED;
+}
+.safe-set-box .safe-set-title{
+    height: 20px;
+    font:14px/20px "microsoft yahei";
+    padding-left:10px;
+    border-left:2px solid #237DE7;
+}
+.login-info{
+    width: 950px;
+    height: 183px;
+    border-bottom:1px solid #EDEDED;
+}
+.user-header{
+    padding-top:28px;
+    width: 100px;
+    margin-right:20px;
+}
+#modify-head{
+    text-align: center;
+    color: #3185E9;
+    margin-top:10px;
+}
+.login-account{
+    padding-top:41px;
+}
+.login-account p{
+    font-size:14px;
+    margin-bottom:15px;
+}
+.login-account p span{
+    color: #333;
+}
+.login-account .isAuth{
+    color: #F17D17;
+}
+.safe-degree{
+    height: 54px;
+    padding-top:41px;
+    border-bottom:1px solid #EDEDED;
+}
+.safe-degree div{
+    margin-right:25px;
+}
+.safe-bar{
+    margin-top:5px;
+    width: 269px;
+    height: 10px;
+    -webkit-border-radius:10%;
+    -moz-border-radius:10%;
+    border-radius:10%;
+    background: -webkit-linear-gradient(left,rgba(255,0,0,0),rgba(255,0,0,1));
+    background: -o-linear-gradient(right,rgba(255,0,0,0),rgba(255,0,0,1));
+    background: -moz-linear-gradient(right,rgba(255,0,0,0),rgba(255,0,0,1));
+    background: linear-gradient(to left, rgba(255,0,0,0), rgba(255,0,0,1));
+}
+.degree{
+    color: #F49D50;
+}
+.login-info-box{
+    height: 54px;
+    padding-top:41px;
+    border-bottom:1px solid #EDEDED;
+}
+.login-info-box .pwd{
+    padding:0 20px 0 25px;
+    margin-right:64px;
+}
+.description{
+    width: 544px;
+    margin-right:104px;
+}
+.set-btn p{
+    color: #72BC79;;
+}
+.set-btn .fa{
+    margin-right:10px;
+    color: #72BC79;;
+}
+.modify-btn span{
+    color: #3185E9;
+}
+.login-info-box .pho{
+    padding:0 20px 0 25px;
+    margin-right:64px;
+}
+.modify-btn span{
+    color: #3185E9;
+}
+.set-btn .fa-warning{
+    color: #F17D17;
+}
+.set-btn .noset{
+    color: #F17D17;
+}
+#safeNotice{
+    color: #DC5F5F;
+}
+#safeNotice p{
+    color: #DC5F5F;
+}
