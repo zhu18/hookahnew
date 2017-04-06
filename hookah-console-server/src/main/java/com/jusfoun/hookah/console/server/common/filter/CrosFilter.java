@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 @Order(1)
 public class CrosFilter implements Filter {
 
-    final String domain = "ziroot.app";
+    final String domain = "hookah.app";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

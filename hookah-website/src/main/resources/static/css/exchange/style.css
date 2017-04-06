@@ -1,0 +1,261 @@
+
+.exchange-index{
+    font-size: 14px;
+    background-color: #F6F6F6;
+}
+.exchange-index .exchange-category-top{
+    background-color: white;
+    height: 145px;
+}
+.exchange-index .exchange-category-top ul li{
+    background-color:#E2E2E2;
+    position: relative;
+    float: left;
+    display: inline-block;
+    width: 300px;
+    height: 145px;
+}
+
+.exchange-index .exchange-category-top ul li i{
+    display: inline-block;
+    width: 285px;
+    color: #DADADA;
+    height: 145px;
+    font-size: 100px;
+    line-height: 145px;
+    text-align: right;
+}
+.exchange-index .exchange-category-top ul li i div{
+    position: absolute;
+    top: 38px;
+    left: 28px;
+}
+.exchange-index .exchange-category-top ul li i div p{
+    line-height: 0;
+    text-align: left;
+}
+.exchange-index .exchange-category-top ul li i div p:nth-child(1){
+    font-size: 18px;
+    height: 25px;
+}
+.exchange-index .exchange-category-top ul li i div p:nth-child(2){
+    font-size: 16px;
+    height: 25px;
+}
+.exchange-index .exchange-category-top ul li i div p:nth-child(3){
+    font-size: 16px;
+    height: 25px;
+}
+.exchange-index .exchange-category-top ul li:nth-child(2n){
+    background-color: #ECECEC;
+
+}
+/*推荐*/
+.exchange-index .exchange-recommend-resource{
+    height: 580px;
+    background-color:#F0F0F0 ;
+}
+.exchange-recommend-resource .recommend-resource-top{
+    height: 66px;
+}
+.exchange-recommend-resource .recommend-resource-top .recommend-resource-top-left{
+    height: 66px;
+    width: 250px;
+    font-size: 20px;
+    box-shadow:inset 0px -3px 0 blue;
+}
+.exchange-recommend-resource .recommend-resource-top .recommend-resource-top-left .d{
+    display: inline-block;
+    padding-top: 27px;
+    padding-left: 10px;
+}
+.exchange-recommend-resource .recommend-resource-top .recommend-resource-top-left i:nth-child(1){
+    font-size: 25px;
+}
+.exchange-recommend-resource .recommend-resource-top .recommend-resource-top-left span:last-child{
+    font-size: 16px;
+    color: #333333;
+    padding-left: 5px;
+    border-left: 2px solid #333333;
+}
+.exchange-recommend-resource .recommend-resource-top .recommend-resource-top-right span{
+    display: inline-block;
+    padding-top: 34px;
+    font-size: 14px;
+}
+.exchange-recommend-resource .recommend-resource-down{
+    border-top:1px solid #333333;
+    padding-top: 10px;
+    height: 516px;
+}
+.exchange-recommend-resource .recommend-resource-down ul li{
+    width: 288px;
+    height: 225px;
+    background-color: #FAFAFA;
+    float: left;
+    margin-top: 10px;
+    margin-right: 16px;
+}
+.exchange-recommend-resource .recommend-resource-down ul li div:nth-child(1){
+    height: 131px;
+    background-color: white;
+}
+.exchange-recommend-resource .recommend-resource-down ul li:nth-child(4n){
+    margin-right: 0px;
+}
+.exchange-index .exchange-center-bar{
+    height: 86px;background-color: #00081F;
+}
+
+/*热门*/
+
+.exchange-index .exchange-hot-resource{
+    height: 487px;background-color: bisque;
+}
+.exchange-hot-resource .hot-resource-top{
+    height: 66px;
+}
+.exchange-hot-resource .hot-resource-top .hot-resource-top-left{
+    height: 66px;
+    width: 250px;
+    font-size: 20px;
+    background-color: palegoldenrod;
+    box-shadow:inset 0px -3px 0 blue;
+}
+.exchange-hot-resource .hot-resource-top .hot-resource-top-left .d{
+    display: inline-block;
+    padding-top: 27px;
+    padding-left: 10px;
+}
+.exchange-hot-resource .hot-resource-top .hot-resource-top-left i:nth-child(1){
+    font-size: 25px;
+}
+.exchange-hot-resource .hot-resource-top .hot-resource-top-left span:last-child{
+    font-size: 16px;
+    color: #333333;
+    padding-left: 5px;
+    border-left: 2px solid #333333;
+}
+.exchange-hot-resource .hot-resource-top .hot-resource-top-right span{
+    display: inline-block;
+    padding-top: 34px;
+    font-size: 14px;
+}
+.exchange-hot-resource .hot-resource-down{
+    border-top:1px solid #333333;
+    padding-top: 10px;
+    font-size:0;/*取消空隙*/
+    letter-spacing:-4px; /*实际情况下 -4这个值可能还要调整*/
+    word-spacing:-4px; /*实际情况下 -4这个值可能还要调整*/
+    height: 516px;
+}
+.exchange-hot-resource .hot-resource-down .hot-down-left{
+    width: 192px;
+    height: 374px;
+    background-color: pink;
+    display:inline-block;
+    zoom:1;
+    font-size:12px;
+    letter-spacing:normal;
+    word-spacing:normal;
+}
+.exchange-hot-resource .hot-resource-down .hot-down-table{
+    width: 784px;
+    height: 374px;
+    background-color: pink;
+    display:inline-block;
+    text-align: center;
+    zoom:1;
+    font-size:12px;
+    letter-spacing:normal;
+    word-spacing:normal;
+}
+.exchange-hot-resource .hot-resource-down .hot-down-table table{
+    width: 784px;
+}
+.exchange-hot-resource .hot-resource-down .hot-down-table table tr th{
+
+    height: 45px;
+    background-color: #3b4050;
+}
+.exchange-hot-resource .hot-resource-down .hot-down-table table tr td{
+    height: 66px;
+    background-color: #777F84;
+}
+.exchange-hot-resource .hot-resource-down .hot-down-table table tr td:nth-child(1){
+     width: 20%;
+ }
+.exchange-hot-resource .hot-resource-down .hot-down-table table tr td:nth-child(2){
+    width: 40%;
+}
+.exchange-hot-resource .hot-resource-down .hot-down-table table tr td:nth-child(3){
+     width: 20%;
+ }
+.exchange-hot-resource .hot-resource-down .hot-down-table table tr td:nth-child(4){
+      width: 20%;
+  }
+
+.exchange-hot-resource .hot-resource-down .hot-down-rank{
+    margin-left:18px;
+    width: 198px;
+    height: 374px;
+    background-color: pink;
+}
+/*行业*/
+.exchange-index .exchange-industry-resource{
+    height: 590px;
+}
+.exchange-industry-resource .industry-resource-top{
+    height: 66px;
+}
+.exchange-industry-resource .industry-resource-top .industry-resource-top-left{
+    height: 66px;
+    width: 250px;
+    font-size: 20px;
+    background-color: palegoldenrod;
+    box-shadow:inset 0px -3px 0 blue;
+}
+.exchange-industry-resource .industry-resource-top .industry-resource-top-left .d{
+    display: inline-block;
+    padding-top: 27px;
+    padding-left: 10px;
+}
+.exchange-industry-resource .industry-resource-top .industry-resource-top-left i:nth-child(1){
+    font-size: 25px;
+}
+.exchange-industry-resource .industry-resource-top .industry-resource-top-left span:last-child{
+    font-size: 16px;
+    color: #333333;
+    padding-left: 5px;
+    border-left: 2px solid #333333;
+}
+.exchange-industry-resource .industry-resource-top .industry-resource-top-right span{
+    display: inline-block;
+    padding-top: 34px;
+    font-size: 14px;
+}
+.exchange-industry-resource .industry-resource-down{
+    border-top:1px solid #333333;
+    padding-top: 10px;
+    height: 516px;background-color: #ECECEC;
+}
+.exchange-industry-resource .industry-resource-down ul li{
+    float: left;
+    width: 20%;
+    height: 450px;
+    background-color: white;
+}
+.exchange-index .exchange-category-down{
+    height:460px;background-color: #00A1CB;
+}
+.exchange-index .exchange-category-down .category-left{
+    width: 974px;
+    height: 388px;
+    background-color: white;
+}
+.exchange-index .exchange-category-down .category-right{
+    width: 199px;
+    height: 388px;
+    background-color: white;
+    margin-left: 23px;
+}

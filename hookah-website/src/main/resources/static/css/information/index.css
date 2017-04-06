@@ -1,0 +1,101 @@
+ul li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.clearfix:after {
+    visibility: hidden;
+    clear: both;
+    display: block;
+    content: ".";
+    height: 0;
+    font-size: 0;
+    zoom: 1;
+}
+.box {
+    background: #F8F8F8;
+}
+/*中心动态*/
+.information .content .leftSide {
+    font-size: 15px;
+    float: left;
+}
+.information .content .leftSide .top{
+    width: 235px;
+    height: 138px;
+    background: #fff;
+}
+.information .content .leftSide .top ul li {
+    line-height: 46px;
+    padding-left:30px;
+    border-bottom:1px solid #E9E9E9;
+}
+.information .content .leftSide .top ul li span{
+    margin-right: 10px;
+}
+.information .content .leftSide .top ul li:nth-child(3){
+    border-bottom:none;
+}
+/*资讯热文*/
+.information .content .leftSide  .bot{
+    width: 215px;
+    height: 456px;
+    background: #fff;
+}
+.information .content .leftSide  .bot .hot h4{
+    display: inline-block;
+    line-height: 50px;
+    font-size: 18px;
+}
+.information .content .leftSide  .bot .hot span{
+    border: 2px solid #237DE7;
+}
+.information .content .leftSide  .bot .line,.information .content .rightCenter .line,.information .content .rightCenter .public .line{
+    border-bottom: 1px solid #E5E5E5;
+}
+.information .content .leftSide  .bot .description {
+    font-size: 12px;
+    line-height: 23px;
+    color:#8C8C8C;
+}
+
+/*右侧内容*/
+.information .content .rightCenter {
+    width: 905px;
+    background: #fff;
+    float: left;
+}
+.information .content .rightCenter .title {
+    line-height: 50px;
+}
+.information .content .rightCenter .title h3{
+    display: inline-block;
+    line-height: 35px;
+    font-size: 16px;
+}
+.information .content .rightCenter .title span{
+    border-left:2px solid #237DE7;
+}
+.information .content .rightCenter .public{
+    height: 120px;
+}
+.information .content .rightCenter .public img  {
+    float: left;
+}
+.information .content .rightCenter .public p:nth-child(2){
+    font-size: 15px;
+    font-weight: 700;
+}
+.information .content .rightCenter .public p:nth-child(3){
+    line-height: 18px;
+}
+.information .content .rightCenter .public .auth {
+    float: left;
+}
+.information .content .rightCenter .public .auth span{
+    width: 12px;
+    height: 12px;
+}
+.information .content .rightCenter .public .line {
+    margin-top:60px;
+}
