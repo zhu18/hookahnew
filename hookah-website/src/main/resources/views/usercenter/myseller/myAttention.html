@@ -2,87 +2,168 @@
 var head = {
 %>
 <link rel="stylesheet" href="/static/css/usercenter/user-center-menu.css">
-<link rel="stylesheet" type="text/css" href=" /lib/sweetalert/sweetalert.css"/>
-<link rel="stylesheet" href="/static/css/usercenter/myAttention.css">
+<link rel="stylesheet" type="text/css" href="/static/css/plugins/sweetalert/sweetalert.css"/>
+<link rel="stylesheet" href="/static/css/usercenter/myseller/myAttention.css">
 <%};%>
 
 <%
 var htmlPart = {
 %>
-
-<div class="myAttention">
-    <div class="bdg-container">
-        <div class="bdg-row">
-            <div class="bdg-col-md-12">
-                <table class="table table-striped table-hover bdg-table">
-                    <thead>
-                    <tr>
-                        <td class="text-left"><input class="selAllInput" type="checkbox" />全选</td>
-                        <td>项目名称</td>
-                        <td>购买周期</td>
-                        <td>单价</td>
-                        <td>数量</td>
-                        <td>资费</td>
-                        <td>操作</td>
-                    </tr>
-                    </thead>
-                    <tbody id="tableList">
-                    <tr>
-                        <td class="text-left">
-                            <input class="selOpt" type="checkbox" value="01"/>
-                        </td>
-                        <td>
-                            <a class="title" href="javascript:;">第五届（2016）全国研究生数学建模竞赛（NPMCM）试题（含内容数据）</a>
-                        </td>
-                        <td>
-                            按次
-                        </td>
-                        <td class="cost">
-                            ￥99.00
-                        </td>
-                        <td>
-                            <span class="goodNum Spinner"></span>
-                        </td>
-                        <td class="cost">￥99.00</td>
-                        <td>
-                            <p><a  href="javascript:;" onclick="myAttentionOpt.deleteItem(1,event)">取消关注</a></p>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <p id="shop-flage"></p>
-                <ul class="bottom">
-                    <li class="first">
-                        <input class="selAllInput" type="checkbox"/>
-                        <a class="selAll" href="javascript:;">全选</a>
-                        <a id="delAll" class="delAll" href="javascript:;">取消选中</a>
-                    </li>
-                    <li class="second">
-                        <p>
-                            <span>已选</span>
-                            <em id="sumCount">0</em>
-                            <span>件</span>
-                        </p>
-                        <p class="sum">
-                            <span>合计</span>
-                            <em id="total">￥0.00</em>
-                            <span>元</span>
-                        </p>
-                        <p>
-                            <a id="pay" class="pay" href="javascript:;">结算</a>
-                        </p>
-                    </li>
-                </ul>
-            </div>
+<div class="grid-0 backgorund-gray">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="grid-left myAttention">
+            <table class="table table-striped table-hover bdg-table">
+                <thead>
+                <tr>
+                    <td><input class="selAllInput" type="checkbox"/>全选</td>
+                    <td>项目名称</td>
+                    <td>购买周期</td>
+                    <td>单价</td>
+                    <td>数量</td>
+                    <td>资费</td>
+                    <td>操作</td>
+                </tr>
+                </thead>
+                <tbody id="tableList">
+                <tr>
+                    <td class="text-left">
+                        <input class="selOpt" type="checkbox" value="01"/>1
+                    </td>
+                    <td>
+                        <a class="title" href="javascript:;">银行卡实名认证接口（需个人授权）</a>
+                    </td>
+                    <td>
+                        按次
+                    </td>
+                    <td class="cost">
+                        ￥1.5
+                    </td>
+                    <td>
+                        <span class="goodNum Spinner">3</span>
+                    </td>
+                    <td class="cost">￥1.5</td>
+                    <td>
+                        <p><a href="javascript:;" onclick="myAttentionOpt.deleteItem(1,event)">取消关注</a></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-left">
+                        <input class="selOpt" type="checkbox" value="01"/>2
+                    </td>
+                    <td>
+                        <a class="title" href="javascript:;">银行卡实名认证接口（需个人授权）</a>
+                    </td>
+                    <td>
+                        按次
+                    </td>
+                    <td class="cost">
+                        ￥1.5
+                    </td>
+                    <td>
+                        <span class="goodNum Spinner">10</span>
+                    </td>
+                    <td class="cost">￥1.5</td>
+                    <td>
+                        <p><a href="javascript:;" onclick="myAttentionOpt.deleteItem(1,event)">取消关注</a></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-left">
+                        <input class="selOpt" type="checkbox" value="01"/>3
+                    </td>
+                    <td>
+                        <a class="title" href="javascript:;">银行卡实名认证接口（需个人授权）</a>
+                    </td>
+                    <td>
+                        按次
+                    </td>
+                    <td class="cost">
+                        ￥1.5
+                    </td>
+                    <td>
+                        <span class="goodNum Spinner">10</span>
+                    </td>
+                    <td class="cost">￥1.5</td>
+                    <td>
+                        <p><a href="javascript:;" onclick="myAttentionOpt.deleteItem(1,event)">取消关注</a></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-left">
+                        <input class="selOpt" type="checkbox" value="01"/>4
+                    </td>
+                    <td>
+                        <a class="title" href="javascript:;">银行卡实名认证接口（需个人授权）</a>
+                    </td>
+                    <td>
+                        按次
+                    </td>
+                    <td class="cost">
+                        ￥1.5
+                    </td>
+                    <td>
+                        <span class="goodNum Spinner">10</span>
+                    </td>
+                    <td class="cost">￥1.5</td>
+                    <td>
+                        <p><a href="javascript:;" onclick="myAttentionOpt.deleteItem(1,event)">取消关注</a></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-left">
+                        <input class="selOpt" type="checkbox" value="01"/>5
+                    </td>
+                    <td>
+                        <a class="title" href="javascript:;">银行卡实名认证接口（需个人授权）</a>
+                    </td>
+                    <td>
+                        按次
+                    </td>
+                    <td class="cost">
+                        ￥1.5
+                    </td>
+                    <td>
+                        <span class="goodNum Spinner">10</span>
+                    </td>
+                    <td class="cost">￥1.5</td>
+                    <td>
+                        <p><a href="javascript:;" onclick="myAttentionOpt.deleteItem(1,event)">取消关注</a></p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <p id="shop-flage"></p>
+            <ul class="bottom">
+                <li class="first">
+                    <input class="selAllInput" type="checkbox"/>
+                    <a class="selAll" href="javascript:;">全选</a>
+                    <a id="delAll" class="delAll" href="javascript:;">取消选中</a>
+                </li>
+                <li class="second">
+                    <p class="">
+                        <span>已选</span>
+                        <em id="sumCount">0</em>
+                        <span>件</span>
+                    </p>
+                    <p class="sum">
+                        <span>合计</span>
+                        <em id="total">￥0.00</em>
+                        <span>元</span>
+                    </p>
+                    <p>
+                        <a id="pay" class="pay" href="javascript:;">结算</a>
+                    </p>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
-
 
 
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
 
-<script type="text/javascript" src=" /lib/spinner/jquery.Spinner.js"></script>
-<script type="text/javascript" src=" /lib/sweetalert/sweetalert.js"></script>
+<script type="text/javascript" src="/static/js/plugins/spinner/jquery.Spinner.js"></script>
+<script type="text/javascript" src="/static/js/plugins/sweetalert/sweetalert.min.js"></script>

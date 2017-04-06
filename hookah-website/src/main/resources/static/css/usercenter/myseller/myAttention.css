@@ -1,349 +1,22 @@
-@charset "UTF-8";
-/*
-* container styles
-*/
-dl {
-    display: inline-block;
+.myAttention {
+    margin-top: 14px;
+    width: 980px;
+    background-color: #fff;
+    padding:32px 15px 26px 15px;
+    border:1px solid #E9E9E9;
+    margin-left: 5px;
 }
-
-body {
-    background-color: #F8F8F8;
-}
-
-/*�ҵ���Ŀ��ʽ*/
-.myProject .pannel .title {
-    margin-top: 30px;
-    border-bottom: 1px solid #E9E9E9;
-}
-
-.myProject .pannel .title ul li {
-    height: 45px;
-    float: left;
-    line-height: 30px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    cursor: pointer;
-    padding-left: 14px;
-    padding-right: 14px;
-    padding-bottom: 10px;
-    margin-bottom: -1px;
-    margin-right: 15px;
-}
-
-.myProject .pannel .title ul li span {
-    cursor: pointer;
-    color: #9F9F9F;
-    font-size: 18px;
-}
-
-.myProject .pannel .title ul li:hover {
-    border-bottom: 1px solid #0084ff;
-}
-
-.myProject .pannel .title ul li:hover span {
-    color: #0084ff;
-}
-
-.myProject .pannel .title ul li.floatRt {
-    float: right;
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-bottom: 12px;
-}
-
-.myProject .pannel .title ul li.floatRt:hover em {
-    background-position: -228px -171px;
-}
-
-.myProject .pannel .title ul li.floatRt em {
-    display: inline-block;
-    margin-right: 5px;
-    height: 20px;
-    width: 20px;
-    vertical-align: middle;
-    background: url(/images/progress-bar/array.png) no-repeat;
-    background-position: -228px -149px;
-}
-
-.myProject .pannel .title ul li.floatRt span {
-    font-size: 14px;
-}
-
-.myProject .pannel .title ul li.searchInput {
-    float: right;
-    border-bottom: none;
-    margin-right: 0px;
-    padding: 0px;
-}
-
-.myProject .pannel .title ul li.searchInput p {
-    position: relative;
-    display: inline-block;
-    height: 30px;
-    width: 176px;
-    border: 1px solid #eee;
-}
-
-.myProject .pannel .title ul li.searchInput p input {
-    height: 100%;
-    width: 100%;
-    background: transparent;
-    border: none;
-    text-indent: 7px;
-    padding-right: 33px;
-    color: #000;
-}
-
-.myProject .pannel .title ul li.searchInput p i {
-    position: absolute;
-    right: 0px;
-    top: 50%;
-    z-index: 11;
-    -webkit-transform: translate(-5px, -50%);
-    -moz-transform: translate(-5px, -50%);
-    -ms-transform: translate(-5px, -50%);
-    transform: translate(-5px, -50%);
-    height: 22px;
-    width: 22px;
-    background: url(/images/progress-bar/array.png) no-repeat;
-    background-position: -199px -149px;
-}
-
-.myProject .pannel .title ul li.active {
-    border-bottom: 1px solid #0084ff !important;
-}
-
-.myProject .pannel .title ul li.active span {
-    color: #0084ff !important;
-}
-
-.myProject .pannel .title ul li.active em.rublishIcon {
-    background-position: -228px -171px;
-}
-
-.myProject .pannel .title ul:before, .myProject .pannel .title ul:after {
-    content: " ";
-    display: table;
-}
-
-.myProject .pannel .title ul:after {
-    clear: both;
-}
-
-.myProject .pannel .pannel-body {
-    margin-top: 20px;
-}
-
-.myProject .pannel .pannel-body .noData {
-    padding-top: 50px;
-    padding-bottom: 50px;
-    text-align: center;
-    color: #8ea4b9;
-    font-size: 20px;
-}
-
-.myProject .pannel .pannel-body .selOpt {
-    line-height: 48px;
-    padding-left: 10px;
-}
-
-.myProject .pannel .pannel-body .selOpt input {
-    height: 14px;
-    width: 14px;
-    vertical-align: middle;
-    margin-right: 3px;
-}
-
-.myProject .pannel .pannel-body .selOpt span {
-    color: #ccc;
-    margin-right: 10px;
-}
-
-.myProject .pannel .pannel-body .selOpt a {
-    padding: 2px 8px;
-    vertical-align: middle;
-    text-decoration: none;
-    border: 1px solid #161616;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    color: #ccc;
-}
-
-.myProject .pannel .pannel-body .selOpt a:focus {
-    color: #ccc;
-    border: 1px solid #0099df;
-}
-
-.myProject .pannel .pannel-body .selOpt a:hover {
-    color: #e60012;
-    border: 1px solid #f7b52b;
-}
-
-.myProject .pannel .pannel-body .selOpt a:active {
-    color: #e60012;
-    border: 1px solid #0099df;
-}
-
-.myProject .pannel .pannel-body .selOpt a.delAll {
-    margin-right: 20px;
-}
-
-.myProject .pannel .pannel-body table {
-    margin-bottom: 10px;
-    width: -moz-calc(100% + 1px);
-    width: calc(100% + 1px);
-    border-collapse: separate;
-    text-align: center;
-}
-
-.myProject .pannel .pannel-body table tr td {
-    min-width: 120px;
-    color: #5C5C5C;
-}
-
-.myProject .pannel .pannel-body table thead tr {
-    height: 40px;
-    background: #F4F4F4;
-}
-
-.myProject .pannel .pannel-body table thead tr p span {
-    margin-left: 15px;
-    margin-right: 50px;
-}
-
-.myProject .pannel .pannel-body table thead tr p input[type='checkbox'] {
-    margin-left: 15px;
-    height: 14px;
-    width: 14px;
-}
-
-.myProject .pannel .pannel-body table tbody tr td {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    border: 1px solid #E9E9E9;
-    border-right: none;
-}
-
-.myProject .pannel .pannel-body table tbody tr td:nth-last-child(1) {
-    border-right: 1px solid #E9E9E9;
-}
-
-.myProject .pannel .pannel-body table tbody tr td .totalAmount {
-    margin-bottom: 12px;
-}
-
-.myProject .pannel .pannel-body table tbody tr td .ptIcon {
-    margin-right: 20px;
-    margin-left: 20px;
-    height: 70px;
-    width: 70px;
-}
-
-.myProject .pannel .pannel-body table tbody tr td div {
-    display: inline-block;
-    vertical-align: middle;
-}
-
-.myProject .pannel .pannel-body table tbody tr td div.name {
-    margin-right: 40px;
-}
-
-.myProject .pannel .pannel-body table tbody tr td div.name p {
-    width: 200px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.myProject .pannel .pannel-body table tbody tr td div.name p a {
-    text-decoration: none;
-    color: #000;
-}
-
-.myProject .pannel .pannel-body table tbody tr td div.name p.buyTime {
-    margin-top: 3px;
-}
-
-.myProject .pannel .pannel-body table tbody tr td div.number span {
-    margin-right: 4px;
-}
-
-.myProject .pannel .pannel-body table tbody tr td div.extra {
-    position: relative;
-    right: -30px;
-}
-
-.myProject .pannel .pannel-body table tbody tr td div.extra button {
-    background: #ffba00;
-    border: none;
-    padding: 5px 7px;
-    color: #fff;
-}
-
-.myProject .pannel .pannel-body table tbody tr td p.evaluated {
-    margin-bottom: 5px;
-}
-
-.myProject .pannel .pannel-body table tbody tr td p.goPay {
-    margin-bottom: 5px;
-}
-
-.myProject .pannel .pannel-body table tbody tr td p.goPay a {
-    color: #4e78f1;
-    text-decoration: underline;
-}
-
-.myProject .pannel .pannel-body table tbody tr td p.cancel {
-    margin-bottom: 5px;
-}
-
-.myProject .pannel .pannel-body table tbody tr td p.cancel a {
-    color: #ffba00;
-    text-decoration: underline;
-}
-
-.myProject .pannel .pannel-body table tbody tr td p.evaluate {
-    margin-bottom: 5px;
-}
-
-.myProject .pannel .pannel-body table tbody tr td p.evaluate a {
-    color: #fb5300;
-    text-decoration: underline;
-}
-
-.myProject .pannel .pannel-body table tbody tr td p.delete {
-    margin-bottom: 5px;
-}
-
-.myProject .pannel .pannel-body table tbody tr td p.delete a {
-    color: #8ea4b9;
-    text-decoration: underline;
-}
-
-.myProject .pannel .pannel-body table tbody tr td p.restoreOrder {
-    margin-bottom: 5px;
-}
-
-.myProject .pannel .pannel-body table tbody tr td p.restoreOrder a {
-    color: #e60012;
-    text-decoration: underline;
-}
-
-/*�ҵĹ�ע��ʽ*/
 .myAttention table {
-    margin-top: 30px;
     margin-bottom: 0px;
-    width: 100%;
     text-align: center;
+    border:1px solid #E9E9E9;
 }
-
 .myAttention table td {
-    min-width: 120px;
+    min-width: 131px;
 }
 
 .myAttention table thead tr {
+    height: 40px;
     background: #F4F4F4;
     color: #5C5C5C;
 }
@@ -357,13 +30,16 @@ body {
 }
 
 .myAttention table tbody tr {
-    height: 110px;
+    height: 45px;
+    border: 1px solid #F1F1F1;
 }
 
 .myAttention table tbody tr td input[type='checkbox'] {
     height: 14px;
     width: 14px;
-    margin-left: 35px;
+    margin-left: 18px;
+    vertical-align: middle;
+    margin-right: 17px;
 }
 
 .myAttention table tbody tr td a.title {
@@ -424,8 +100,7 @@ body {
 }
 
 .myAttention ul.bottom {
-    width: -moz-calc(100% - 1px);
-    width: calc(100% - 1px);
+    width: 978px;
     height: 75px;
     line-height: 75px;
     border-left: 1px solid #E9E9E9;
@@ -440,7 +115,7 @@ body {
 .myAttention ul.bottom li.first input[type='checkbox'] {
     height: 14px;
     width: 14px;
-    margin-left: 43px;
+    margin-left: 55px;
     vertical-align: middle;
 }
 
@@ -476,19 +151,20 @@ body {
 }
 
 .myAttention ul.bottom li.second p em {
+    font-style: normal;
     color: #fd6100;
 }
 
 .myAttention ul.bottom li.second p a.pay {
-    margin-right: 25px;
-    padding: 8px 40px;
+    margin-right: 13px;
+    padding: 8px 25px;
     background: #dd662b;
     color: #fff;
 }
 
-.myAttention ul.bottom li.second p.sum {
-    margin-left: 22px;
-    margin-right: 48px;
+.myAttention ul.bottom li.second p {
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 .myAttention ul.bottom:before, .myAttention ul.bottom:after {

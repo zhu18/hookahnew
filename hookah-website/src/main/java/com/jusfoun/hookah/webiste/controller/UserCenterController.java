@@ -105,6 +105,11 @@ public class UserCenterController {
     public String goodsPublish(){
         return "usercenter/myseller/goodsPublish";
     }
+    @RequestMapping(value = "/usercenter/myAttention", method = RequestMethod.GET)
+    public String myAttention(){
+        return "usercenter/myseller/myAttention";
+    }
+
     @RequestMapping(value = "/usercenter/goodsEdit", method = RequestMethod.GET)
     public String goodsEdit(){
         return "usercenter/myseller/goodsEdit";
