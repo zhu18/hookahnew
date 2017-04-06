@@ -1,11 +1,11 @@
 import '../../common/common';
-import goodsRouting from './account.routing';
+import accountRouting from './account.routing';
 const MODULE_NAME = 'Hookah';
 let app = angular.module(MODULE_NAME, [
   'ui.router',
   'Common'
 ]);
-app.config(goodsRouting);
+app.config(accountRouting);
 app.config(['$httpProvider', function ($httpProvider) {
   $httpProvider.defaults.withCredentials = true;
 }]);
