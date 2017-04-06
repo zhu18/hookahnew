@@ -1,4 +1,4 @@
-class AccountController {
+class GoodsController {
   constructor($scope, $rootScope,$http, $uibModal, usSpinnerService,growl) {
     console.log($rootScope.config);
     var promise = $http({
@@ -35,4 +35,4 @@ class AccountController {
   }
 }
 
-export default AccountController;
+export default GoodsController;

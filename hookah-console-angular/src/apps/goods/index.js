@@ -8,7 +8,7 @@ let app = angular.module(MODULE_NAME, [
 app.config(goodsRouting);
 
 app.run(function ($rootScope, $state) {
-  $rootScope.currentProductId = 'msc';
+  $rootScope.currentProductId = 'goods';
   $rootScope.config = {
     "navScene": 'main',
     "isSidebarFold": false,
@@ -36,10 +36,6 @@ app.run(function ($rootScope, $state) {
     {
       "title":"商品查询",
       "url":"items.search"
-    },
-    {
-      "title":"新增商品",
-      "url":"items.add"
     },
     {
       "title":"商品分类",

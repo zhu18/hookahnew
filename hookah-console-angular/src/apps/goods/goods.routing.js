@@ -1,3 +1,4 @@
+import GoodsController from './GoodsController';
 goodsRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function goodsRouting($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/items/search');
@@ -9,21 +10,16 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
     .state('items.search', {
       url: '/items/search',
       template: require('./list.html'),
-      controller: 'WorkorderListCtrl',
-    })
-    .state('items.add', {
-      url: '/items/add',
-      template: require('./add.html'),
-      controller: 'WorkorderListCtrl',
+      controller: GoodsController,
     })
     .state('items.category', {
       url: '/items/category',
       template: require('./list.html'),
-      controller: 'WorkorderListCtrl',
+      controller: GoodsController,
     })
     .state('items.detail', {
       url: '/innerMsg/read/{categoryId:[0-9]{1,4}}',
       templateUrl: '/msc/list',
-      controller: 'WorkorderListCtrl',
+      controller: GoodsController,
     })
 };

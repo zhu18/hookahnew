@@ -335,6 +335,17 @@ var htmlPart = {
                                     </div>
                                 </td>
                             </tr>
+                            <tr>
+                                <td class="bar">关键词：</td>
+                                <td>
+                                    <div class="text-box"><input name="keywords" id="keywords" type="text" maxlength="10">
+                                        <span class="input-count"><strong>0</strong>/10</span>
+                                    </div>
+                                    <div class="errors">
+                                        <span class="errorinfo">请填写商品关键词，不能超过10个字!</span>
+                                    </div>
+                                </td>
+                            </tr>
                         </table>
                     </div>
                     <h1>售后保障信息：</h1>
@@ -667,7 +678,7 @@ var htmlPart = {
                 data.goodsArea = province;
             }
 
-
+            data.keywords = $('#keywords').val();
             data.catId = catId; //此ID为url上的id
             data.isOnsale = $('input[name="isOnsale"]:checked').val();
             if (data.isOnsale == 1){
@@ -717,6 +728,7 @@ var htmlPart = {
                 success:function(data){
                     if(data.code == "1") {
                         $.alert('发布成功');
+                        window.location.href = '/1/myseller/tradeing';
                     }else{
                         alert(data.message);
                     }

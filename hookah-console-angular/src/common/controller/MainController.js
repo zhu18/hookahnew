@@ -45,14 +45,14 @@ class MainController{
     //loading提示
     $rootScope.loadingState = false;
     $rootScope.startSpin = function () {
-      console.log("spinner stop");
+      // console.log("spinner start");
       $rootScope.showSpinner = true;
       $rootScope.paginationSupport = false;
       $rootScope.loadingState = true;
       usSpinnerService.spin('showSpinner');
     };
     $rootScope.stopSpin = function () {
-      console.log("spinner stop");
+      // console.log("spinner stop");
       $rootScope.showSpinner = false;
       $rootScope.paginationSupport = true;
       $rootScope.loadingState = false;

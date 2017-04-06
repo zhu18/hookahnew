@@ -27,9 +27,9 @@ angular.element(document).ready(function () {
       });
     },
     error: function (XMLHttpRequest, textStatus, errorThrown) {
-      console.log(XMLHttpRequest);
+      // console.log(XMLHttpRequest);
       var currUrl = window.location;
-      console.log(currUrl);
+      // console.log(currUrl);
       if (401 === XMLHttpRequest.status) {
         window.location.href = "http://auth.hookah.app/oauth/authorize?client_id=admin&response_type=code&redirect_uri=" + currUrl;
       }
@@ -111,7 +111,7 @@ export default angular.module('Common', [
   })
   .controller("MainController", MainController)
   .run(function ($rootScope) {
-    console.log("common init..");
+    // console.log("common init..");
     $rootScope.user = config.user;
     $rootScope.site = config.site;
   });

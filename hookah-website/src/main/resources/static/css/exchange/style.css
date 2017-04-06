@@ -1608,14 +1608,41 @@ dl {
 }
 .goodsDetails .goods-left .goods-details .goods-details-img{
     width: 220px;
-    background-color: #00A1CB;
     height: 300px;
 }
-.goodsDetails .goods-left .goods-details .goods-details-right{
+.goods-left .goods-details .goods-details-img .img-box{
+    width: 200px;
+    height: 200px;
+    border: 1px solid #EFEFEF;
+}
+.goods-left .goods-details .goods-details-img .collect-box{
+
+}
+ .goods-left .goods-details .goods-details-right{
     width: 700px;
     height: 300px;
-    background-color: #00A1CB;
 
+}
+.goods-left .goods-details .goods-details-right .detail-title{
+    height: 30px;
+    font-size: 22px;
+    color: black;
+}
+.goods-left .goods-details .goods-details-right .detail-title .icon{
+    color: white;
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    font-size: 12px;
+    text-align: center;
+    line-height: 22px;
+}
+.goods-left .goods-details .goods-details-right .detail-info{
+
+}
+.goods-left .goods-details .goods-details-right .detail-money{
+    height: 110px;
+    background-color: #F3F3F3;
 }
 .goodsDetails .goods-left .goods-table{
     background-color: white;
