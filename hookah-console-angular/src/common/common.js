@@ -96,7 +96,7 @@ export default angular.module('Common', [
   // 添加对应的 Interceptors
   .config(['$httpProvider', function ($httpProvider) {
     $httpProvider.defaults.withCredentials = true;
-    $httpProvider.defaults.headers.common ={'cookie':'ssss'};
+    $httpProvider.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded;charset=utf-8";
     $httpProvider.interceptors.push(HttpInterceptor);
   }])
   .filter('yesNo', function () {
@@ -119,10 +119,6 @@ function HttpInterceptor($q, $rootScope, $location, $window) {
   return {
     request: function (config) {
       $rootScope.startSpin();
-      console.log("11111");
-      console.log(config.headers);
-      config.headers = config.headers || {};
-      config.headers.cookies ="ssss";
       config.requestTimestamp = new Date().getTime();
 
       return config;
