@@ -1,0 +1,121 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/usercenter/user-center-menu.css">
+<link rel="stylesheet" href="/static/css/usercenter/admin/articlePublish.css">
+<link rel="stylesheet" href="/static/css/plugins/wangEditor/wangEditor.min.css">
+<script src="/static/js/plugins/wangEditor/wangEditor.min.js"></script>
+<script src="/static/js/plugins/ajaxfileupload/ajaxfileupload.js"></script>
+<script type="text/javascript">
+    var pagePath = '/sysNews/list';
+    var pageType = 'get';
+    var dataParm = {};
+    dataParm.pageNumber = 1;
+    dataParm.pageSize = 10;
+
+</script>
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray padding-top-10">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="usercenter-right-box grid-right">
+            <form name="publishArticle" id="publishArticle">
+                <table>
+                    <tr>
+                        <td class="bar"><em>*</em>文章分类：</td>
+                        <td>
+                            <div class="select-box">
+                                <select name="newsGroup" id="newsGroup" onchange="changes(this)">
+                                    <option value="0">请选择分类</option>
+                                    <option value="innovation">双创中心</option>
+                                    <option value="exposition">博览会</option>
+                                    <option value="information">资讯中心</option>
+                                </select>
+                                <span class="select-line select-hide">-</span>
+                                <select name="newsSonGroup" id="newsSonGroup" class="select-hide">
+                                    <option value="0">请选择分类</option>
+                                    <option value="1">中心动态</option>
+                                    <option value="2">行业咨询</option>
+                                    <option value="3">中心公告</option>
+                                </select>
+                            </div>
+                            <div class="errors">
+                                <ul>
+                                    <li><span class="errorinfo">请选择文章分类!</span></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bar">文章标题：</td>
+                        <td>
+                            <div class="text-box">
+                                <input id="newsTitle" name="newsTitle" type="text">
+                                <span class="input-count"><strong>0</strong>/60</span>
+                            </div>
+                            <div class="errors">
+                                <ul>
+                                    <li><span class="errorinfo">不能超过60个字符!</span></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bar">资讯热文：</td>
+                        <td>
+                            <div class="radio-box">
+                                <label>
+                                    <input type="radio" name="isHot" value="1">是
+                                </label>
+                                <label>
+                                    <input type="radio" checked="" name="isHot" value="0" name="122">否
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bar">图片：</td>
+                        <td>
+                            <div class="block info" style="margin: 0px 0px 3px;">
+                                图片大小不能超过3MB。
+                            </div>
+                            <div class="multimage-wrap">
+                                <ul class="image-list">
+                                    <li>
+                                        <div class="preview" id="preview-div">
+                                            <a title="上传图片" class="upload-tip">+</a>
+                                            <img class="preview-img" id="preview-img">
+                                            <input type="file" id="filename" name="filename" class="preview-btn">
+                                            <a href="javascript:void(0)" class="replace-btn" id="replace-btn">替换图片</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bar">文章内容：</td>
+                        <td>
+                            <div class="wangEditor-wrapper">
+                                <textarea name="content" id="content" style="height:500px;"></textarea>
+                            </div>
+                            <span id="preview-content" class="preview-content-btn grid-right">预览内容</span>
+                        </td>
+                    </tr>
+                </table>
+                <div class="pulish-btn">
+                    <button type="button" id="submit-article" value="立即发表" onclick="published()">立即发表</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+<script type="text/javascript" src="/static/js/usercenter/admin/articlePublish.js"></script>

@@ -1,5 +1,5 @@
-import '../../common/common';
-import shelfRouting from './shelf.routing';
+import "../../common/common";
+import shelfRouting from "./shelf.routing";
 
 const MODULE_NAME = 'Hookah';
 let app = angular.module(MODULE_NAME, [
@@ -33,18 +33,14 @@ app.run(function ($rootScope, $state) {
     }
   };
   $rootScope.config.title = '货架管理';
-  $rootScope.config.mainNav =[
+  $rootScope.config.mainNav = [
     {
-      "title":"商品查询",
-      "url":"items.search"
+      "title": "货架查询",
+      "url": "shelf.search"
     },
     {
-      "title":"新增商品",
-      "url":"items.add"
-    },
-    {
-      "title":"商品分类",
-      "url":"items.category"
+      "title": "新增货架",
+      "url": "shelf.add"
     }
   ];
 
