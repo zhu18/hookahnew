@@ -116,7 +116,7 @@ public class UserCenterController {
     }
     @RequestMapping(value = "/usercenter/admin", method = RequestMethod.GET)
     public String admin(){
-        return "usercenter/userAdmin/index";
+        return "usercenter/admin/index";
     }
 
 }

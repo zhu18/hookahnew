@@ -36,7 +36,7 @@ app.run(function ($rootScope, $state) {
   $rootScope.config.mainNav = [
     {
       "title": "订单查询",
-      "url": "shelf.search"
+      "url": "order.search"
     }
   ];
 
