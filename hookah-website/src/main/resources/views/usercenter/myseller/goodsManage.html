@@ -3,6 +3,14 @@ var head = {
 %>
 <link rel="stylesheet" href="/static/css/usercenter/user-center-menu.css">
 <link rel="stylesheet" href="/static/css/usercenter/myseller/goodsManage.css">
+<script type="text/javascript">
+    var pagePath = '/goods/back/list';
+    var pageType = 'get';
+    var dataParm = {};
+    dataParm.pageNumber = 1;
+    dataParm.pageSize = 20;
+
+</script>
 <%};%>
 
 <%
@@ -26,29 +34,31 @@ var htmlPart = {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="text-center">
-                                <a href="javascript:void(0)">
-                                    <img src="../../static/1/img/zheng.jpg" alt="">
-                                    <p>这个是商品的title</p>
-                                </a>
-                            </td>
-                            <td>分类二</td>
-                            <td class="text-right">8000</td>
-                            <td class="text-center">2017-02-18 19:20:00</td>
-                            <td class="text-center">失败</td>
-                            <td class="text-center">
-                                <a href="javascript:void(0)">重新审核</a>
-                                <a href="javascript:void(0)">修改</a>
-                            </td>
-                        </tr>
+                        <!--<tr>-->
+                            <!--<td class="text-center">-->
+                                <!--<a href="javascript:void(0)">-->
+                                    <!--<img src="../../static/1/img/zheng.jpg" alt="">-->
+                                    <!--<p>这个是商品的title</p>-->
+                                <!--</a>-->
+                            <!--</td>-->
+                            <!--<td>分类二</td>-->
+                            <!--<td class="text-right">8000</td>-->
+                            <!--<td class="text-center">2017-02-18 19:20:00</td>-->
+                            <!--<td class="text-center">失败</td>-->
+                            <!--<td class="text-center">-->
+                                <!--<a href="javascript:void(0)">重新审核</a>-->
+                                <!--<a href="javascript:void(0)">修改</a>-->
+                            <!--</td>-->
+                        <!--</tr>-->
                     </tbody>
 
                 </table>
             </div>
+            <%include("/layout/pageaction.html"){} %>
         </div>
     </div>
 </div>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
+<script type="text/javascript" src="/static/js/usercenter/myseller/goodsManage.js"></script>
