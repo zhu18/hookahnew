@@ -61,8 +61,8 @@ public class IndexController {
 
     @RequestMapping(value = "/s", method = RequestMethod.GET)
     public String sayhello(Model model) {
-        String s = userService.sayhello();
-        System.out.println(s);
+//        String s = userService.sayhello();
+//        System.out.println(s);
         return "index";
     }
 
