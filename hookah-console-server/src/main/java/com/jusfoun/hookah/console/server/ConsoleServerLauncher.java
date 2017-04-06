@@ -53,6 +53,7 @@ public class ConsoleServerLauncher {
             "classpath*:hookah_rpc_server.xml",
             "classpath*:hookah_rpc_server_goods.xml",
             "classpath*:hookah_rpc_server_order.xml",
+            "classpath*:hookah_rpc_server_region.xml",
             "classpath*:hookah_rpc_server_system.xml",
             "classpath*:hookah_rpc_server_other.xml",
             "classpath*:hookah_rpc_client.xml",

@@ -25,6 +25,11 @@ ul li {
     height: 138px;
     background: #fff;
 }
+.information .content .leftSide .top ul .active {
+    background: #E1EFFF;
+    color: #247DE8;
+    border-left: 2px solid #247DE8;
+}
 .information .content .leftSide .top ul li {
     line-height: 46px;
     padding-left:30px;
@@ -48,7 +53,7 @@ ul li {
     font-size: 18px;
 }
 .information .content .leftSide  .bot .hot span{
-    border: 2px solid #237DE7;
+    border: 1px solid #237DE7;
 }
 .information .content .leftSide  .bot .line,.information .content .rightCenter .line,.information .content .rightCenter .public .line{
     border-bottom: 1px solid #E5E5E5;
