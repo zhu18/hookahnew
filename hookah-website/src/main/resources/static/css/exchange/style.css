@@ -1273,6 +1273,7 @@ lesshat-selector {
     background-color:#E6E6E6 ;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-rank>ul li:nth-child(1) div{
+    width: 106px;
     padding: 20px 17px;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-rank>ul li:nth-child(1) img{
