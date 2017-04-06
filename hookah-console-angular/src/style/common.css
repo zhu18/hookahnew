@@ -1,0 +1,13 @@
+.markdown-body table {
+  display: table;
+  width: 100%;
+  overflow: auto;
+}
+.markdown-body blockquote, .markdown-body dl, .markdown-body ol, .markdown-body p, .markdown-body pre, .markdown-body table, .markdown-body ul {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+.markdown-body table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}

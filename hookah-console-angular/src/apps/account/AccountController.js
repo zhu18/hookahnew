@@ -1,14 +1,13 @@
-class HomeController {
+class AccountController {
   constructor($scope, $rootScope, $uibModal, usSpinnerService) {
     $rootScope.config.productNavBar = 'disabled';
     $rootScope.config.sidebar = 'full';
     console.log($rootScope.config);
     $.ajax({
       type: "GET",
-      url: $rootScope.site.apiServer+"/api/org/owner",
+      url: $rootScope.site.apiServer+"/api/account/sys_all",
       success: function (data) {
-        console.log(data);
-        $scope.owner = data.data;
+        $scope.sysAccount = data.data;
       },
       error: function (XMLHttpRequest, textStatus, errorThrown) {
         console.log(XMLHttpRequest);
@@ -22,4 +21,4 @@ class HomeController {
   }
 }
 
-export default HomeController;
+export default AccountController;

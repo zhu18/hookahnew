@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jusfoun.hookah.core.generic.GenericModel;
 
 import javax.persistence.Id;
@@ -133,6 +134,7 @@ public class Organization extends GenericModel {
      *
      * @mbggenerated
      */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date addTime;
 
     /**
@@ -141,6 +143,7 @@ public class Organization extends GenericModel {
      *
      * @mbggenerated
      */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
     /**
@@ -189,6 +192,7 @@ public class Organization extends GenericModel {
      *
      * @mbggenerated
      */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date licenseExpiryDate;
 
     /**
@@ -197,6 +201,7 @@ public class Organization extends GenericModel {
      *
      * @mbggenerated
      */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date taxExpiryDate;
 
     /**
@@ -213,6 +218,7 @@ public class Organization extends GenericModel {
      *
      * @mbggenerated
      */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date certificteExpiryDate;
 
     /**

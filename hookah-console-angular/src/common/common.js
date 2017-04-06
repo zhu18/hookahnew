@@ -1,5 +1,11 @@
 var config ={
-  user:""
+  user:"",
+  site:{
+    apiServer:"http://console.hookah.app"
+  },
+  url:{
+    loginUrl:"http://auth.hookah.app/oauth/authorize?client_id=admin&response_type=code&redirect_uri="
+  }
 };
 angular.element(document).ready(function () {
   $.ajaxSetup({
@@ -13,7 +19,7 @@ angular.element(document).ready(function () {
   // });
   $.ajax({
     type: "GET",
-    url: "http://console.hookah.app/api/auth/current_user",
+    url: config.site.apiServer+"/api/auth/current_user",
     success: function (data) {
       config.user = data.data;
       angular.element(document).ready(function () {
@@ -45,7 +51,7 @@ export default angular.module('Common', [
   'angularSpinner',
 ])
   .constant('apiServer', {
-    "admin": "http://api.console.ziroot.app/console/admin",
+    "admin": "http://console.hookah.app",
   })
   .constant('loginUrl', "http://auth.ziroot.app/oauth/authorize?client_id=test&response_type=code&redirect_uri=")
   .config(['growlProvider', function (growlProvider) {
@@ -106,6 +112,7 @@ export default angular.module('Common', [
   .run(function ($rootScope) {
     console.log("common init..");
     $rootScope.user = config.user;
+    $rootScope.site = config.site;
   });
 function HttpInterceptor($q, $rootScope, $location, $window) {
   return {

@@ -1,5 +1,7 @@
 package com.jusfoun.hookah.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jusfoun.hookah.core.generic.GenericModel;
 
 import javax.persistence.GeneratedValue;
@@ -32,6 +34,7 @@ public class User extends GenericModel {
      *
      * @mbggenerated
      */
+    @JsonIgnore
     private String password;
 
     /**
@@ -64,6 +67,7 @@ public class User extends GenericModel {
      *
      * @mbggenerated
      */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date regTime;
 
     /**
@@ -88,6 +92,7 @@ public class User extends GenericModel {
      *
      * @mbggenerated
      */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date lastLoginTime;
 
     /**
@@ -96,6 +101,7 @@ public class User extends GenericModel {
      *
      * @mbggenerated
      */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date addTime;
 
     /**
