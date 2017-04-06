@@ -10,7 +10,7 @@ var catId = $.getUrlParam('catId'),
     url = '/category/findAttr';
 $(document).ready(function () {
     var editor = new wangEditor('textarea1');
-    editor.config.uploadImgUrl = '/upload/fileUpload';//上传图片（举例）
+    editor.config.uploadImgUrl = '/upload/wangeditor';//上传图片（举例）
     editor.config.uploadImgFileName = 'filename';
     editor.config.menuFixed = false;//关闭菜单栏fixed
     editor.config.menus = $.map(wangEditor.config.menus, function(item, key) {
