@@ -26,8 +26,15 @@
 .box .detail .bot .leftContent h3{
     font-size: 20px;
 }
-.box .detail .bot .leftContent .auth span{
-    line-height: 24px;
+.box .detail .bot .leftContent .auth {
+    color:#B2B2B2;
+    position:relative;
+}
+.box .detail .bot .leftContent .auth img {
+    position:absolute;
+}
+.box .detail .bot .leftContent .auth span span:nth-child(1){
+    color:#3B93EC;
 }
 .box .detail .bot .leftContent .auth span:nth-child(3){
     float: right;
@@ -63,10 +70,12 @@
 .box .detail .bot .rightSide .info .info-top span:nth-child(1){
     float: left;
     font-size: 18px;
+    color:#333;
 }
 .box .detail .bot .rightSide .info .info-top span:nth-child(2){
     float: right;
     font-size: 15px;
+    color:#B2B2B2;
 }
 .box .detail .bot .rightSide .info .line {
     border: 1px solid #EBEBEB;
@@ -89,7 +98,7 @@
 .box .detail .rightSide  .bot .hot span{
     border: 2px solid #237DE7;
 }
-.box .detail .bot .rightSide  .bot .lines{
+.box .detail .rightSide  .bot .lines{
     border-bottom: 1px solid #E5E5E5;
 }
 .box .detail .rightSide  .bot .description {

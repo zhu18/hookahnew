@@ -61,5 +61,9 @@ public class UserCenterController {
     public String goodsEdit(){
         return "usercenter/myseller/goodsEdit";
     }
+    @RequestMapping(value = "/usercenter/admin", method = RequestMethod.GET)
+    public String admin(){
+        return "usercenter/userAdmin/index";
+    }
 
 }
