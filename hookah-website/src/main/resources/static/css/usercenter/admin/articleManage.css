@@ -1,0 +1,60 @@
+
+.select-title{
+    font-size: 16px;
+    color:#757575;
+    margin: 20px 0;
+}
+.select-title select{
+    height:30px;
+    font-size: 14px;
+}
+.select-hide{display: none;}
+.article-box .order-items{
+    border: 1px solid #ccc;
+    width:100%;
+    margin-bottom:20px;
+}
+.article-box .order-items .order-head th{
+    padding:0 10px;
+}
+.article-box .order-items .order-head{
+    line-height: 40px;
+    background: #f1f1f1;
+    overflow: hidden;
+
+    font-size:13px;
+}
+.article-box .order-items tr div{
+    width: 60px;
+    padding: 10px 0;
+    display: inline-block;
+}
+.article-box table tr{
+    border-bottom: 1px solid #ccc;
+}
+.article-box table tr td{padding:0 10px;}
+.article-box table tr .imgs{
+    text-align: center;
+}
+.article-box table tr td img{
+    width:100%;
+}
+.article-box table tr td a{display: block;}
+.article-box table tr .operation{
+    text-align: center;
+}
+.article-box table tr td.unpaid span{
+    color:#ff6700;
+}
+.article-boxbutton {
+    cursor: pointer;
+    float:right;
+    background: #f8f8f8;
+    width:80px;
+    line-height: 28px;
+    display: inline-block;
+    text-align: center;
+    border:none;
+    border:1px solid #00C1DE;
+    outline: none;
+}
