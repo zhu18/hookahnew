@@ -17,4 +17,23 @@ public class IntroductionController {
         return "/introduction/index";
     }
 
+    @RequestMapping(value = "/introduction/glory", method = RequestMethod.GET)
+    public String glory(){
+        return "/introduction/glory";
+    }
+
+    @RequestMapping(value = "/introduction/leader", method = RequestMethod.GET)
+    public String leader(){
+        return "/introduction/leader";
+    }
+
+    @RequestMapping(value = "/introduction/media", method = RequestMethod.GET)
+    public String media(){
+        return "/introduction/media";
+    }
+
+    @RequestMapping(value = "/introduction/strategy", method = RequestMethod.GET)
+    public String strategy(){
+        return "/introduction/strategy";
+    }
 }

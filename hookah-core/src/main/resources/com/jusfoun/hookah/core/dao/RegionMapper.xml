@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jusfoun.hookah.core.dao.RegionMapper" >
+
+
+    <resultMap id="RsMap" type="com.jusfoun.hookah.core.domain.Region">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="pid" jdbcType="BIGINT" property="pid" />
+        <result column="lel" jdbcType="TINYINT" property="lel" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="merger_name" jdbcType="VARCHAR" property="mergerName" />
+    </resultMap>
+
+    <select id="selectAllProvince" resultMap="RsMap">
+        select r.id, r.pid, r.lel, r.name, r.merger_name from region r where r.lel = 1 or r.lel = 0
+    </select>
+
+    <select id="selectAllCitys" resultMap="RsMap" parameterType="java.lang.Long">
+        select r.id, r.pid, r.lel, r.name, r.merger_name from region r where r.pid = #{parentId}
+    </select>
+</mapper>

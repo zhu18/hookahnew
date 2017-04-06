@@ -1,5 +1,5 @@
 class AccountController {
-  constructor($scope, $rootScope,$http, $uibModal, usSpinnerService) {
+  constructor($scope, $rootScope,$http, $uibModal, usSpinnerService,growl) {
     console.log($rootScope.config);
     // $.ajax({
     //   type: "GET",
@@ -21,13 +21,8 @@ class AccountController {
       url: $rootScope.site.apiServer + "/api/account/sys_all"
     });
     promise.then(function (res, status, config, headers) {
-      // $scope.tableData = data.data;
-      // $rootScope.pagination.totalItems = data.totalItems;
-      // $rootScope.pagination.currentPage = data.currentPage;
-      // console.log(res.data);
       $rootScope.loadingState = false;
-      console.log($rootScope.pagination);
-      $scope.sysAccount = res.data;
+      $scope.sysAccount = res.data.data;
       growl.addSuccessMessage("数据加载完毕。。。");
     });
 
@@ -37,27 +32,19 @@ class AccountController {
     $scope.add = function(){
       console.log("add。。。。");
     };
-    $scope.edit = function(){
-      console.log("edit。。。。");
+    $scope.edit = function(event,item){
+      console.log(item);
     };
     $scope.save = function(){
-      var ss= $("#userForm").serialize();
       var promise = $http({
         method: 'POST',
         url: $rootScope.site.apiServer + "/api/account/save",
         data: $("#userForm").serialize()
       });
       promise.then(function (res, status, config, headers) {
-        // $scope.tableData = data.data;
-        // $rootScope.pagination.totalItems = data.totalItems;
-        // $rootScope.pagination.currentPage = data.currentPage;
-        // console.log(res.data);
         $rootScope.loadingState = false;
-        console.log($rootScope.pagination);
-
         growl.addSuccessMessage("数据加载完毕。。。");
       });
-      console.log("save。。。。"+ss);
 
     };
   }

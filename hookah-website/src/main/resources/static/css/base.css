@@ -59,10 +59,12 @@
     height:46px;
     line-height: 46px;
     background: #3e557b;
-    overflow: hidden;
+}
+.header-bottom-bar .grid-row{
+    position: relative;
 }
 .header-bottom-bar li{
-    padding: 0 20px;
+    padding: 0 30px;
 }
 .header-bottom-bar li.active{
     background: #2d3f5c;
