@@ -1,7 +1,205 @@
 
-.center-content{
-    width: 746px;
+.center-content {
+    width: 743px;
     height: 600px;
-    border: 1px solid #000;
-    margin:0 10px;
+    margin: 10px 10px;
+}
+
+.center-content .top {
+    width: 744px;
+    height: 170px;
+    border: 1px solid #ededed;
+}
+
+.top .user-name {
+    height: 150px;
+    width: 170px;
+    background-color: #F9F9F9;
+    text-align: center;
+    font-size: 14px;
+    color: #333;
+    padding-top:20px;
+}
+
+.top .user-name p {
+    margin-bottom: 10px;
+}
+
+#enterForum {
+    color: #3C90E9;
+}
+
+#enterForum span {
+    margin-right: 5px;
+}
+
+.user-balance {
+    width: 573px;
+    height: 170px;
+    background-color: #fff;
+}
+.balance-info{
+    width:262px;
+    padding:34px 50px 40px 50px;
+}
+.balance-info .account-balance{
+    color: #666;
+    font:14px "microsoft yahei";
+}
+.balance-box .money-count{
+    color: #F53839;
+    font-size:20px;
+    margin-right:12px;
+}
+.recharge{
+    height: 26px;
+    width: 57px;
+    background-color: #F8A336;
+    color: #fff;
+    font-size:14px;
+    border-style:none;
+    margin-right:18px;
+}
+.balance-box  a{
+    color: #FF9B34;
+    font-size:14px;
+    text-decoration: underline;
+}
+.last-login-time{
+    margin-top:30px;
+}
+.balance-img{
+
+}
+.money-icon{
+    width: 162px;
+    height: 63px;
+    background: url("/static/images/user-money-icon.png") no-repeat right bottom;;
+}
+.bottom-img{
+    width: 162px;
+    height: 108px;
+    background: url("/static/images/user-balance.png") no-repeat 0 0;
+}
+.center-content .bottom{
+    height: 364px;
+    width: 704px;
+    border: 1px solid #EDEDED;
+    background-color: #fff;
+    margin-top:10px;
+    padding:0 20px;
+}
+.bottom .header{
+    height: 31px;
+    padding-top:10px;
+    border-bottom: 1px solid #EDEDED;
+}
+.header .my-order{
+    width: 100px;
+    height: 20px;
+    font:14px/20px "microsoft yahei";
+    padding-left:10px;
+    border-left:2px solid #237DE7;
+}
+.more a{
+    color: #4B99EB;
+}
+.my-order-list{
+    padding-top:20px;
+    padding-left:8px;
+}
+.order-info{
+    width: 320px;
+    height: 98px;
+    background-color: #FBFBFB;
+    padding:17px 0 15px 23px;
+    margin-right:5px;
+    margin-bottom:8px;
+}
+.order-info .img-box{
+    margin-right:22px;
+}
+.detail-info h4{
+    padding-bottom:10px;
+    border-bottom: 1px solid #F1F1F1;
+}
+.detail-info p{
+    margin:3px 0;
+}
+.detail-info .many{
+    color: #F53839;
+}
+.detail-info .read{
+    color: #559DE9;
+}
+
+.forum-hot{
+    width: 214px;
+    height: 170px;
+    border:1px solid #EDEDED;
+    background-color: #fff;
+    margin:10px 0;
+    padding:0 20px;
+}
+.forum-hot .header{
+    height: 31px;
+    padding-top:10px;
+    border-bottom: 1px solid #EDEDED;
+}
+.forum-hot h4{
+    width: 100%;
+    height: 20px;
+    font:14px/20px "microsoft yahei";
+    padding-left:10px;
+    border-left:2px solid #237DE7;
+}
+.forum-hot .hot-list{
+     padding-top:22px;
+ }
+.forum-hot .item{
+    height: 30px;
+}
+.forum-hot .hot-icon{
+    display: inline-block;
+    width: 32px;
+    height: 18px;
+    background-color: #F98D00;
+    color: #fff;
+    text-align: center;
+    vertical-align: middle;
+    margin-right:5px;
+}
+.notice{
+    margin-top:0;
+    height: 364px;
+}
+.bottom-content{
+    padding-top:22px;
+}
+.bottom-content .line-box{
+    margin-right:8px;
+}
+.notice .bottom-content .active{
+    background-color: #F98D00;
+}
+.notice .line{
+    position: relative;
+    width: 2px;
+    height: 50px;
+    background-color: #D6D6D6;
+}
+.notice .round{
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    top:0;
+    left:-4px;
+    border-radius: 50%;
+    background-color: #D6D6D6;
+}
+.notice-list .notice-item{
+    margin-bottom:15px;
+}
+.notice-list .current{
+    color: #F98D00;
 }

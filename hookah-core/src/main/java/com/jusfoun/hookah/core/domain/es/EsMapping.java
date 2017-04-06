@@ -12,7 +12,6 @@ public class EsMapping {
 	private EsAllMapping _all;
 	private Map<String,EsFieldMapping> properties;
 	
-
 	public EsMapping() {}
 
 	public EsMapping(EsAllMapping _all, Map<String, EsFieldMapping> properties) {

@@ -41,9 +41,9 @@ public class UserCenterController {
     public String publishArticle() { return "1/usercenter/publishArticle"; }
 
 
+
     @RequestMapping(value = "/usercenter/userInfo", method = RequestMethod.GET)
     public String userInfo() { return "usercenter/userInfo"; }
-
 
     @RequestMapping(value = "/usercenter/goodsManage", method = RequestMethod.GET)
     public String goodsManage(){
@@ -58,4 +58,5 @@ public class UserCenterController {
     public String goodsEdit(){
         return "usercenter/myseller/goodsEdit";
     }
+
 }
