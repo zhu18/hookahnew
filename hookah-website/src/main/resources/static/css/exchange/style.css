@@ -1668,6 +1668,11 @@ dl {
     background-color: #F4F4F4;
     border: 1px solid #efefef;
 }
+.goodsDetails .goods-left .goods-table .tab-list table tr{
+    height: 41px;
+    border: 1px solid #EFEFEF;
+    width: 170px;
+}
 .goodsDetails .goods-left .goods-table .table-list li{
     float: left;
     height: 41px;
@@ -1682,25 +1687,46 @@ dl {
     border-right: none;
 }
 .goodsDetails .goods-right{
+
+}
+.goodsDetails .goods-right .recommend-one{
     border: 1px solid #EFEFEF;
     padding: 10px;
     width: 200px;
     height: 302px;
     background-color: white;
 }
-.goodsDetails .goods-right .recommend-title{
+.goodsDetails .goods-right .recommend-one .recommend-title{
     font-size: 16px;
     border-bottom: 1px solid #EFEFEF;
 }
-.goodsDetails .goods-right ul li{
+.goodsDetails .goods-right .recommend-one ul li{
     padding: 10px;
 }
-.goodsDetails .goods-right ul li img{
+.goodsDetails .goods-right .recommend-one ul li img{
     width: 47px;
     height: 47px;
 }
-.goodsDetails .goods-right ul li .img-info{
+.goodsDetails .goods-right .recommend-one ul li .img-info{
     margin-top: 4px;
     float: right;
     width: 120px;
+}
+.goodsDetails .goods-right .recommend-two{
+    border: 1px solid #EFEFEF;
+    padding: 10px;
+    width: 200px;
+    height: 302px;
+    background-color: white;
+}
+.goodsDetails .goods-right .recommend-two .recommend-title{
+    font-size: 16px;
+    border-bottom: 1px solid #EFEFEF;
+}
+.goodsDetails .goods-right .recommend-two ul li{
+    padding: 10px;
+}
+.goodsDetails .goods-right .recommend-two ul li img{
+    width: 100%;
+    height: 47px;
 }
