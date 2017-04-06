@@ -92,10 +92,6 @@ ul li {
 .information .content .rightCenter .public .auth {
     float: left;
 }
-.information .content .rightCenter .public .auth span{
-    width: 12px;
-    height: 12px;
-}
 .information .content .rightCenter .public .line {
     margin-top:60px;
 }
