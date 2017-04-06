@@ -115,6 +115,16 @@ public class User extends GenericModel {
 
     private Long orgId;
 
+    private String creatorId;
+
+
+    public String getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(String creatorId) {
+        this.creatorId = creatorId;
+    }
 
     public Long getOrgId() {
         return orgId;
