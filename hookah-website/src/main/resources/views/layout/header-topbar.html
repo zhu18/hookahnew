@@ -11,8 +11,9 @@
                     <div class="userInfos-con">
                         <img src="../../static/1/img/zheng.jpg" alt="">
                         <% if(shiro.hasRole("Admin")){%>
+                        <a href="/usercenter/admin">个人中心</a>
                         <%}else{%>
-                        <a href="/usercenter">个人中心</a>
+                        <a href="/usercenter/userinfo">个人中心</a>
                         <%}%>
                     </div>
                     <a href="/logout">退出</a>
