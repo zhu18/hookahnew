@@ -24,3 +24,19 @@
     color: #247DE8;
     background-color: #E9E9E9;
 }
+.usercenter-right-box{
+    border: 1px solid #dbdbdb;
+    padding:20px;
+    width: 968px;
+    background: #fff;
+}
+.usercenter-right-box .center-title {
+    font-size: 18px;
+    height: 30px;
+    line-height: 20px;
+    border-bottom: 1px solid #ccc;
+}
+.usercenter-right-box .center-title .btn{
+    padding: 3px 10px;
+    font-weight: normal;
+}

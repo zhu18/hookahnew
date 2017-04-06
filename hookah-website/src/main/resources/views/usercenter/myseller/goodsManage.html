@@ -8,9 +8,45 @@ var head = {
 <%
 var htmlPart = {
 %>
-<div class="grid-0 backgorund-gray">
+<div class="grid-0 backgorund-gray padding-top-10">
     <div class="grid-row clearfix">
         <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="usercenter-right-box grid-right">
+            <h3 class="center-title">商品管理 <a href="/usercenter/goodsPublish" class="grid-right btn btn-full-orange">发布商品</a></h3>
+            <div class="trade-box margin-top-10">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="text-center">宝贝</th>
+                            <th>分类</th>
+                            <th class="text-right">单价（元）</th>
+                            <th class="text-center">添加时间</th>
+                            <th class="text-center">审核状态</th>
+                            <th class="text-center">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-center">
+                                <a href="javascript:void(0)">
+                                    <img src="../../static/1/img/zheng.jpg" alt="">
+                                    <p>这个是商品的title</p>
+                                </a>
+                            </td>
+                            <td>分类二</td>
+                            <td class="text-right">8000</td>
+                            <td class="text-center">2017-02-18 19:20:00</td>
+                            <td class="text-center">失败</td>
+                            <td class="text-center">
+                                <a href="javascript:void(0)">重新审核</a>
+                                <a href="javascript:void(0)">修改</a>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 <%};
