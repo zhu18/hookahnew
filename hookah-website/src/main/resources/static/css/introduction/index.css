@@ -13,122 +13,14 @@ ul li {
     font-size: 0;
     zoom: 1;
 }
-.box {
-    background: #F8F8F8;
-}
+
 .box .trading {
     padding: 20px 0px;
 }
 
-.box .trading .trading-sidebar {
-    width: 235px;
-    margin-right: 10px;
-    float: left;
-}
-
-.box .trading .trading-sidebar .topList {
-    height: 230px;
-    background: #fff;
-    margin-bottom: 10px;
-}
-
-.box .trading .trading-sidebar .topList ul {
-    font-size: 15px;
-}
-
-.box .trading .trading-sidebar .topList ul .active {
-    background: #E1EFFF;
-    color: #247DE8;
-    border-left: 2px solid #247DE8;
-}
-
-.box .trading .trading-sidebar .topList ul .active a {
-    color: #247DE8;
-}
-
-.box .trading .trading-sidebar .topList ul li {
-    line-height: 45px;
-    padding-left: 30px;
-    border-bottom: 1px solid #E9E9E9;
-    position: relative;
-    color: #999;
-}
-
-.box .trading .trading-sidebar .topList ul li:hover {
-    cursor: pointer;
-}
-
-.box .trading .trading-sidebar .topList ul li:nth-child(5) {
-    border-bottom: none;
-}
-
-.box .trading .trading-sidebar .topList ul li a {
-    text-decoration: none;
-    color: #333;
-}
-
-.box .trading .trading-sidebar .topList ul li span {
-    margin-right: 15px;
-}
-
-.box .trading .trading-sidebar .contact {
-    height: 325px;
-    background: #fff;
-}
-
-.box .trading .trading-sidebar .contact ul li {
-    padding-left: 30px;
-    margin-right: 20px;
-    line-height: 50px;
-}
-
-.box .trading .trading-sidebar .contact ul li span:nth-child(1) {
-    color: #247de8;
-    margin-right: 10px;
-}
-
-.box .trading .trading-sidebar .contact ul li span:nth-child(2) {
-    color: #333;
-}
-
-.box .trading .trading-sidebar .contact ul li.one {
-    padding-top: 20px;
-    margin-left:-10px;
-}
-
-.box .trading .trading-sidebar .contact ul li.one span:nth-child(1) {
-    border-right: 2px solid #247de8;
-    margin-right: 10px;
-}
-
-.box .trading .trading-sidebar .contact ul li.one span:nth-child(2) {
-    font-size: 18px;
-}
-
-.box .trading .trading-sidebar .contact ul li:nth-child(4) {
-    line-height: 20px;
-    position: relative;
-    padding-top: 10px;
-    height: 60px;
-}
-
-.box .trading .trading-sidebar .contact ul li:nth-child(4) p {
-    position: absolute;
-    top: 8px;
-    left: 56px;
-}
-
-.box .trading .trading-sidebar .contact ul li:nth-child(4) p span {
-    color: #333;
-}
-
-.box .trading .trading-sidebar .contact ul li:nth-child(5) {
-    padding-top: 10px;
-}
 
 .box .trading .trading-content {
     width: 955px;
-    /*height: 1000px;*/
     background: #fff;
     float: left;
     color: #000;
