@@ -9,11 +9,12 @@ var head = {
 <%
 var htmlPart = {
 %>
-<div class="grif-0 exchange-list">
+<div class="grid-0 exchange-list">
     <div class="grid-row">
         <div class="search" style="width: 1200px; ">
-            <div class="bdg-row">
+            <div class="bdg-row" style="position: relative">
                 <!--头部类目展示模块-->
+                <%include("/layout/menu.html"){} %>
                 <div class="search-category">
                     <div class="panel-title">
                         <span>全部结果:</span>
@@ -341,6 +342,8 @@ var htmlPart = {
         </div>
     </div>
 </div>
+<script src="/static/js/exchange/common.js"></script>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
+<!--<%include("/static/js/exchange/common.js"){} %>-->

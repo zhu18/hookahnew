@@ -9,8 +9,18 @@ var head = {
 <%
 var htmlPart = {
 %>
-<div class="grif-0 exchange-index">
-        <!--顶部分类-->
+<div class="grid-0 exchange-index">
+        <!--顶部轮播图-->
+        <div class="index-banner">
+            <div class="grid-row bdg-row" style="position: relative">
+                <!--菜单-->
+                <%include("/layout/menu.html"){} %>
+                <div class="exchange-index-banner">
+                    <%include("/layout/index_top_banner.html"){} %>
+                </div>
+                <div class="exchange-index-adv display-inline-block"></div>
+            </div>
+        </div>
         <div class="exchange-category-top grid-row">
             <ul>
                 <li>
@@ -673,6 +683,8 @@ var htmlPart = {
         </div>
 
 </div>
+<script src="/static/js/exchange/common.js">
+</script>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
