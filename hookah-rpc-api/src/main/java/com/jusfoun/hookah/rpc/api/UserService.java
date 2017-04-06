@@ -10,7 +10,4 @@ import com.jusfoun.hookah.core.generic.GenericService;
  */
 public interface UserService extends GenericService<User, String> {
 
-    User insert(User user);
-
-    String sayhello();
 }

@@ -1,5 +1,5 @@
 import '../../common/common';
-import goodsRouting from './goods.routing';
+import goodsRouting from './account.routing';
 const MODULE_NAME = 'Hookah';
 let app = angular.module(MODULE_NAME, [
   'ui.router',
@@ -8,7 +8,7 @@ let app = angular.module(MODULE_NAME, [
 app.config(goodsRouting);
 
 app.run(function ($rootScope, $state) {
-  $rootScope.currentProductId = 'msc';
+  $rootScope.currentProductId = 'account';
   $rootScope.config = {
     "navScene": 'main',
     "isSidebarFold": false,
@@ -31,19 +31,15 @@ app.run(function ($rootScope, $state) {
       "folded": false
     }
   };
-  $rootScope.config.title = '商品管理';
+  $rootScope.config.title = '系统账号管理';
   $rootScope.config.mainNav =[
     {
-      "title":"商品查询",
-      "url":"items.search"
+      "title":"账号查询",
+      "url":"account.search"
     },
     {
-      "title":"新增商品",
-      "url":"items.add"
-    },
-    {
-      "title":"商品分类",
-      "url":"items.category"
+      "title":"新增账号",
+      "url":"account.add"
     }
   ];
 
