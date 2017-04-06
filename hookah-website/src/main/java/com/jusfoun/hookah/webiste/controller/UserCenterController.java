@@ -48,6 +48,9 @@ public class UserCenterController {
     @RequestMapping(value = "/usercenter/safeSet", method = RequestMethod.GET)
     public String safeSet() { return "usercenter/safeSet"; }
 
+    @RequestMapping(value = "/usercenter/infoCenter", method = RequestMethod.GET)
+    public String infoCenter() { return "usercenter/infoCenter"; }
+
     @RequestMapping(value = "/usercenter/goodsManage", method = RequestMethod.GET)
     public String goodsManage(){
         return "usercenter/myseller/goodsManage";

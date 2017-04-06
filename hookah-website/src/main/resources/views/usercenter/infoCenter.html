@@ -1,0 +1,39 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/usercenter/user-center-menu.css">
+<link rel="stylesheet" href="/static/css/usercenter/infoCenter.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="grid-left info-center-box ">
+            <div class="header clearfix">
+                <h4 class="grid-left info-center-title">消息中心</h4>
+                <button class="grid-right">恢复默认</button>
+                <button class="grid-right receive-btn">消息接收人管理</button>
+            </div>
+            <div class="bottom">
+                <div class="notice-tip">
+                    提醒：您设置接收人，不会将接收人信息对外纰漏或向第三方提供，账户，产品，故障等重要信息，建议您务必设置接受，防止消息遗漏造成损失。
+                </div>
+                <table>
+                    <thead>
+                    <tr><td>消息类型</td><td>接收人信息</td><td>操作</td><td>邮箱</td><td>短信</td></tr>
+                    </thead>
+                    <tbody>
+                    <tr></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
