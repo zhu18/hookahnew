@@ -8,32 +8,31 @@ angular.element(document).ready(function () {
     }
   });
   // 手动加载模块
-  angular.element(document).ready(function () {
-    angular.bootstrap(document, ['Hookah']);
-  });
-  // $.ajax({
-  //   type: "GET",
-  //   url: "http://api.console.ziroot.app/console/current_user",
-  //   success: function (data) {
-  //     config.user = data;
-  //     angular.element(document).ready(function () {
-  //       angular.bootstrap(document, ['Hookah']);
-  //     });
-  //   },
-  //   error: function (XMLHttpRequest, textStatus, errorThrown) {
-  //     console.log(XMLHttpRequest);
-  //     var currUrl = window.location;
-  //     console.log(currUrl);
-  //     if (401 === XMLHttpRequest.status) {
-  //       window.location.href = "http://auth.ziroot.app/oauth/authorize?client_id=test&response_type=code&redirect_uri=" + currUrl;
-  //     }
-  //   }
+  // angular.element(document).ready(function () {
+  //   angular.bootstrap(document, ['Hookah']);
   // });
+  $.ajax({
+    type: "GET",
+    url: "http://console.hookah.app/api/auth/current_user",
+    success: function (data) {
+      config.user = data.data;
+      angular.element(document).ready(function () {
+        angular.bootstrap(document, ['Hookah']);
+      });
+    },
+    error: function (XMLHttpRequest, textStatus, errorThrown) {
+      console.log(XMLHttpRequest);
+      var currUrl = window.location;
+      console.log(currUrl);
+      if (401 === XMLHttpRequest.status) {
+        window.location.href = "http://auth.hookah.app/oauth/authorize?client_id=admin&response_type=code&redirect_uri=" + currUrl;
+      }
+    }
+  });
 });
-import TopBarDirective from './directive/TopBarDirective';
-import SideBarDirective from './directive/SideBarDirective';
-import ProductNavbarDirective from './directive/ProductNavbarDirective';
-
+import TopBarDirective from "./directive/TopBarDirective";
+import SideBarDirective from "./directive/SideBarDirective";
+import ProductNavbarDirective from "./directive/ProductNavbarDirective";
 import "bootstrapCss";
 import "angular-growl-v2-css";
 import "../style/console1412.css";
