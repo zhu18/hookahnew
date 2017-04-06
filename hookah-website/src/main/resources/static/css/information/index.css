@@ -83,16 +83,34 @@ ul li {
 }
 .information .content .rightCenter .public{
     height: 120px;
+    position: relative;
 }
 .information .content .rightCenter .public img  {
     float: left;
 }
-.information .content .rightCenter .public  a:nth-child(2) p{
+.information .content .rightCenter .public  .size{
     font-size: 15px;
     font-weight: 700;
 }
-.information .content .rightCenter .public p:nth-child(3){
-    line-height: 18px;
+.information .content .rightCenter .public .square {
+    width: 25px;
+    line-height: 17px;
+    text-align: center;
+    display: inline-block;
+    background: #1F87E5;
+    position: absolute;
+    right:15px;
+    color:#fff;
+}
+.information .content .rightCenter .public .triangle{
+    width:0;
+    height:0;
+    border-top:5px solid transparent;
+    border-bottom:5px solid transparent;
+    border-right:5px solid #1F87E5;
+    position: absolute;
+    top: 4px;
+    left: -5px;
 }
 .information .content .rightCenter .public .auth {
     float: left;
