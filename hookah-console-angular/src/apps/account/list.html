@@ -9,7 +9,7 @@
       <div class="pull-left"><h5>账号查询</h5></div>
       <div class="pull-right">
         <button class="btn btn-default" data-ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span> 刷新</button>
-        <a ui-sref="items.search" target="_blank" href="http://www.hookah.app/myseller" class="btn btn-primary">新增</a>
+        <a ui-sref="account.add" data-ng-click="add()" class="btn btn-primary">新增</a>
       </div>
     </div>
     <div class="row margin-top">
@@ -28,13 +28,13 @@
           <table class="table table-hover" style="margin-bottom: 57px;">
             <thead>
             <tr>
-              <th width="10">
-                <input type="checkbox" data-ng-model="tableState.selectAll"
-                       ng-change="changeSelectionAll()" class=" ">
-              </th>
-              <th class="state-column"></th>
-              <th>Id</th>
-              <th>用户名</th>
+              <!--<th width="10">-->
+                <!--<input type="checkbox" data-ng-model="tableState.selectAll"-->
+                       <!--ng-change="changeSelectionAll()" class=" ">-->
+              <!--</th>-->
+              <!--<th class="state-column"></th>-->
+              <!--<th>Id</th>-->
+              <th>账户名</th>
               <th class="">邮箱</th>
               <th width="135">电话</th>
               <th width="135">创建时间</th>
@@ -45,19 +45,19 @@
             </thead>
             <tbody>
             <tr data-ng-if="!loadingState" data-ng-repeat="item in sysAccount" class="">
-              <td width="10">
-                <input type="checkbox" data-ng-model="item.selected" ng-change="changeSelection({data: item})"
-                       class=" ">
-              </td>
-              <td class="state-column">
-                <span class="state-unread " ng-if="item.Status*1===0">●</span>
-              </td>
-              <td>
-                <a ng-class="{'title-unread':item.Status*1===0,'title-read':item.Status*1!==0}" href="javascript:;"
-                   class=" title-unread">
-                  <span text-length="50" ng-bind="item.userId"></span>
-                </a>
-              </td>
+              <!--<td width="10">-->
+                <!--<input type="checkbox" data-ng-model="item.selected" ng-change="changeSelection({data: item})"-->
+                       <!--class=" ">-->
+              <!--</td>-->
+              <!--<td class="state-column">-->
+                <!--<span class="state-unread " ng-if="item.Status*1===0">●</span>-->
+              <!--</td>-->
+              <!--<td>-->
+                <!--<a ng-class="{'title-unread':item.Status*1===0,'title-read':item.Status*1!==0}" href="javascript:;"-->
+                   <!--class=" title-unread">-->
+                  <!--<span text-length="50" ng-bind="item.userId"></span>-->
+                <!--</a>-->
+              <!--</td>-->
               <td>
                 <a ng-class="{'title-unread':item.Status*1===0,'title-read':item.Status*1!==0}" href="javascript:;"
                    class="">
@@ -80,7 +80,7 @@
                 <span class="column-text" ng-bind="item.isEnable | yesNo"></span>
               </td>
               <td class="text-right">
-                <a href="javascript:;" ng-click="editProduct($event,item)">修改</a>
+                <a ui-sref="account.edit" ng-click="edit($event,item)">修改</a>
                 <span class="text-explode">|</span>
                 <i class="link-space"></i>
                 <a href="javascript:;" target="_blank">删除</a>

@@ -33,4 +33,10 @@ public class AccountApi {
         List<User> sysUser = userService.selectList(filters);
         return ReturnData.success(sysUser);
     }
+
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public ReturnData saveSysAccount(User user,HttpServletRequest request, HttpServletResponse response) {
+        User savedUser=userService.insert(user);
+        return ReturnData.success(savedUser);
+    }
 }

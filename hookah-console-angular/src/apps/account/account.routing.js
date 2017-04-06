@@ -17,9 +17,9 @@ export default function accountRouting($stateProvider, $urlRouterProvider) {
       template: require('./add.html'),
       controller: AccountController,
     })
-    .state('account.detail', {
-      url: '/innerMsg/read/{categoryId:[0-9]{1,4}}',
-      templateUrl: '/msc/list',
+    .state('account.edit', {
+      url: '/account/edit',
+      template: require('./edit.html'),
       controller: AccountController,
     })
 };
