@@ -39,6 +39,66 @@
     border:1px solid #DDD;
     margin:20px 0;
 }
-thead{
-
+table{
+    width: 950px;
 }
+thead{
+    height: 36px;
+    width: 933px;
+    background-color: #fff;
+    border:1px solid #DDD;
+    padding-left:17px;
+}
+thead .list1{
+    width: 280px;
+    height: 36px;
+    padding-left:17px;
+}
+tbody{
+    width: 933px;
+    background-color: #fff;
+    border:1px solid #DDD;
+    padding-left:17px;
+}
+tbody .account-title{
+    height: 36px;
+    width: 950px;
+    background-color: #F6F7FA;
+    border:1px solid #DDD;
+}
+.account-info-title{
+    line-height: 36px;
+    padding-left:17px;
+}
+.account-title button{
+    position: relative;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    background-color: #F6F7FA;
+    border-style:none;
+    border-left:1px solid #e0e0e0;
+}
+.fa .fa-angle-up{
+    position: absolute;
+    left:0;
+    top:0;
+    font-size:20px;
+}
+tbody .item{
+    height: 36px;
+    border:1px solid #DDD;
+    border-top:none;
+}
+tbody .list1{
+    padding-left:17px;
+}
+.modify a{
+    color: #3185E9;
+}
+/*复选框被选中后，改变背景色*/
+/*.item input:checked{*/
+     /*!*-webkit-appearance:none;*!*/
+    /*background-color: #237DE7;*/
+    /*border:1px solid #237DE7;*/
+ /*}*/
