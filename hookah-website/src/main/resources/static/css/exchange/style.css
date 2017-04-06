@@ -580,8 +580,21 @@
     margin-left: 23px;
 }
 .exchange-index .exchange-category-down .category-right .common-problems{
-    height: 37px;
+    padding: 10px;
     background-color: #F2F2F2;
+}
+.exchange-index .exchange-category-down .category-right .common-problems i{
+    display: inline-block;
+    width: 4px;
+    margin-bottom: 1px;
+    height: 14px;
+    margin-right: 5px;
+    vertical-align: middle;
+    background-color: blue;
+}
+.exchange-index .exchange-category-down .category-right .common-problems span:last-child{
+    margin-left: 65px;
+
 }
 .exchange-index .exchange-category-down .category-right .common-problems-list{
     margin: 0 10px;
