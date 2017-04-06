@@ -109,7 +109,7 @@ public class UploadfileController {
         String url = "http://";
         try {
             List<UploadResult> results = UploadUtil.uploadFile(request, myfiles);
-            url = results.get(0).getAbsPath();
+            url += results.get(0).getAbsPath();
         } catch (HookahException e) {
             e.printStackTrace();
         } catch (IOException e) {
