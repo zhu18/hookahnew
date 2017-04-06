@@ -32,8 +32,8 @@ public class UserServiceImpl extends GenericServiceImpl<User, String> implements
         return u;
     }
 
-    @Override
-    public String sayhello() {
-        return "hi guy";
-    }
+//    @Override
+//    public String sayhello() {
+//        return "hi guy";
+//    }
 }
