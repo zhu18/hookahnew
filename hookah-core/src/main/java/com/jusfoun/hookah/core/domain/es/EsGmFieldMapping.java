@@ -19,6 +19,8 @@ public class EsGmFieldMapping extends EsFieldMapping implements Serializable{
 	/*是否存储*/
 	private Boolean store;
 
+	private String[] copy_to;
+
 	public EsGmFieldMapping() {}
 
 	public EsGmFieldMapping(String index, String type) {
@@ -74,5 +76,13 @@ public class EsGmFieldMapping extends EsFieldMapping implements Serializable{
 
 	public void setFormat(String format) {
 		this.format = format;
+	}
+
+	public String[] getCopy_to() {
+		return copy_to;
+	}
+
+	public void setCopy_to(String[] copy_to) {
+		this.copy_to = copy_to;
 	}
 }

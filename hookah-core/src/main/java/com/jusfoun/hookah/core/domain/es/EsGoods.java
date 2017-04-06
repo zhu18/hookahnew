@@ -20,11 +20,13 @@ public class EsGoods implements Serializable {
     @EsField(type = Type.KEYWORD)
     private String goodsId;
     @EsField(analyzeOpt= AnalyzeOpt.ANALYZED, analyzer= Analyzer.IK_MAX_WORD,
-            termVector= TermVector.OFFSETS, isStore = true, searchAnalyzer = Analyzer.IK_SMART)
+            termVector= TermVector.OFFSETS, isStore = true, searchAnalyzer = Analyzer.IK_MAX_WORD, copyTo = "goodsNameAll")
     private String goodsName;
     @EsField(analyzeOpt= AnalyzeOpt.ANALYZED, analyzer= Analyzer.PINYIN,
-            termVector= TermVector.OFFSETS, isStore = true, searchAnalyzer = Analyzer.PINYIN)
+            termVector= TermVector.OFFSETS, isStore = true, searchAnalyzer = Analyzer.PINYIN, copyTo = "goodsNameAll")
     private String goodsNamePy;
+    @EsField
+    private String goodsNameAll;
     @EsField
     private String goodsBrief;
     @EsField
@@ -48,9 +50,10 @@ public class EsGoods implements Serializable {
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @EsField(type = Type.DATE)
     private Date addTime;
-    @EsField(type = Type.COMPLETION, analyzer= Analyzer.IK_MAX_WORD,
-            searchAnalyzer = Analyzer.IK_MAX_WORD, payloads = true)
+    @EsField(type = Type.COMPLETION, analyzer= Analyzer.IK_MAX_WORD, searchAnalyzer = Analyzer.IK_MAX_WORD)
     private List<String> suggest;
+    @EsField(type = Type.COMPLETION, analyzer= Analyzer.PINYIN, searchAnalyzer = Analyzer.PINYIN)
+    private List<String> suggestPy;
 
     public String getGoodsId() {
         return goodsId;
@@ -156,11 +159,27 @@ public class EsGoods implements Serializable {
         this.goodsAreas = goodsAreas;
     }
 
+    public String getGoodsNameAll() {
+        return goodsNameAll;
+    }
+
+    public void setGoodsNameAll(String goodsNameAll) {
+        this.goodsNameAll = goodsNameAll;
+    }
+
     public List<String> getSuggest() {
         return suggest;
     }
 
     public void setSuggest(List<String> suggest) {
         this.suggest = suggest;
+    }
+
+    public List<String> getSuggestPy() {
+        return suggestPy;
+    }
+
+    public void setSuggestPy(List<String> suggestPy) {
+        this.suggestPy = suggestPy;
     }
 }
