@@ -74,6 +74,16 @@ var htmlPart = {
                                 </td>
                             </tr>
                             <tr>
+                                <td class="bar">商品地域：</td>
+                                <td>
+                                    <div class="selectbox">
+                                        <select name="province" id="province" onchange="getChild(this)"></select>
+                                        <select name="city" id="city" onchange="getChild(this)"><option value="-1">全部</option></select>
+                                        <select name="county" id="county"><option value="-1">全部</option></select>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td class="bar">商品图片：</td>
                                 <td>
                                     <div class="block info" style="margin: 0px 0px 3px;">
@@ -95,45 +105,45 @@ var htmlPart = {
                             </tr>
                             <!---------------------------------------------------------------->
                             <!--<tr>-->
-                                <!--<td class="bar">单价及库存：</td>-->
-                                <!--<td>-->
-                                    <!--<div class="table-box">-->
-                                        <!--<table class="price-table">-->
-                                            <!--<thead>-->
-                                            <!--<tr>-->
-                                                <!--<th>单价（元）</th>-->
-                                                <!--<th>总库存（件）</th>-->
-                                                <!--<th>商家编码</th>-->
-                                                <!--<th>商品条形码</th>-->
-                                            <!--</tr>-->
-                                            <!--</thead>-->
-                                            <!--<tbody>-->
-                                            <!--<tr>-->
-                                                <!--<td>-->
-                                                    <!--<div class="texbox">-->
-                                                        <!--<div class="inputbox"><input type="text"></div>-->
-                                                    <!--</div>-->
-                                                <!--</td>-->
-                                                <!--<td>-->
-                                                    <!--<div class="texbox">-->
-                                                        <!--<div class="inputbox"><input type="text"></div>-->
-                                                    <!--</div>-->
-                                                <!--</td>-->
-                                                <!--<td>-->
-                                                    <!--<div class="texbox" id="outerId">-->
-                                                        <!--<div class="inputbox"><input type="text"></div>-->
-                                                    <!--</div>-->
-                                                <!--</td>-->
-                                                <!--<td>-->
-                                                    <!--<div class="texbox" id="barcode">-->
-                                                        <!--<div class="inputbox"><input type="text"></div>-->
-                                                    <!--</div>-->
-                                                <!--</td>-->
-                                            <!--</tr>-->
-                                            <!--</tbody>-->
-                                        <!--</table>-->
-                                    <!--</div>-->
-                                <!--</td>-->
+                            <!--<td class="bar">单价及库存：</td>-->
+                            <!--<td>-->
+                            <!--<div class="table-box">-->
+                            <!--<table class="price-table">-->
+                            <!--<thead>-->
+                            <!--<tr>-->
+                            <!--<th>单价（元）</th>-->
+                            <!--<th>总库存（件）</th>-->
+                            <!--<th>商家编码</th>-->
+                            <!--<th>商品条形码</th>-->
+                            <!--</tr>-->
+                            <!--</thead>-->
+                            <!--<tbody>-->
+                            <!--<tr>-->
+                            <!--<td>-->
+                            <!--<div class="texbox">-->
+                            <!--<div class="inputbox"><input type="text"></div>-->
+                            <!--</div>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                            <!--<div class="texbox">-->
+                            <!--<div class="inputbox"><input type="text"></div>-->
+                            <!--</div>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                            <!--<div class="texbox" id="outerId">-->
+                            <!--<div class="inputbox"><input type="text"></div>-->
+                            <!--</div>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                            <!--<div class="texbox" id="barcode">-->
+                            <!--<div class="inputbox"><input type="text"></div>-->
+                            <!--</div>-->
+                            <!--</td>-->
+                            <!--</tr>-->
+                            <!--</tbody>-->
+                            <!--</table>-->
+                            <!--</div>-->
+                            <!--</td>-->
                             <!--</tr>-->
                             <tr>
                                 <td class="bar">规格及价格：</td>
@@ -144,34 +154,34 @@ var htmlPart = {
                                     <div class="table-box">
                                         <table class="price-table table-plus" d-type="priceHtml">
                                             <thead>
-                                                <tr>
-                                                    <th>规格</th>
-                                                    <th>类型</th>
-                                                    <th>价格（元）</th>
-                                                    <th>操作</th>
-                                                </tr>
+                                            <tr>
+                                                <th>规格</th>
+                                                <th>类型</th>
+                                                <th>价格（元）</th>
+                                                <th>操作</th>
+                                            </tr>
                                             </thead>
                                             <tbody>
-                                                <tr class="parent-tr">
-                                                    <td class="number-input">
-                                                        <div class="inputbox"><input type="number" datatype="number" placeholder="请输入规格"></div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="selectbox">
-                                                            <select name="format">
-                                                                <option value="0">次</option>
-                                                                <option value="1">天</option>
-                                                                <option value="2">年</option>
-                                                            </select>
-                                                        </div>
-                                                    </td>
-                                                    <td class="price-input">
-                                                        <div class="inputbox"><input class="price-input" datatype="price" type="number" placeholder="请输入价格"></div>
-                                                    </td>
-                                                    <td>
-                                                        <span class="table-plus-btn" onclick="tablePlus(this)">+</span>
-                                                    </td>
-                                                </tr>
+                                            <tr class="parent-tr">
+                                                <td class="number-input">
+                                                    <div class="inputbox"><input type="number" datatype="number" placeholder="请输入规格"></div>
+                                                </td>
+                                                <td>
+                                                    <div class="selectbox">
+                                                        <select name="format">
+                                                            <option value="0">次</option>
+                                                            <option value="1">天</option>
+                                                            <option value="2">年</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <td class="price-input">
+                                                    <div class="inputbox"><input class="price-input" datatype="price" type="number" placeholder="请输入价格"></div>
+                                                </td>
+                                                <td>
+                                                    <span class="table-plus-btn" onclick="tablePlus(this)">+</span>
+                                                </td>
+                                            </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -236,52 +246,52 @@ var htmlPart = {
                                     <div class="table-box">
                                         <table class="price-table table-plus" d-type="requestHtml">
                                             <thead>
-                                                <tr>
-                                                    <th>名称</th>
-                                                    <th>类型</th>
-                                                    <th>默认值</th>
-                                                    <th>必填</th>
-                                                    <th>示例</th>
-                                                    <th>描述</th>
-                                                    <th>操作</th>
-                                                </tr>
+                                            <tr>
+                                                <th>名称</th>
+                                                <th>类型</th>
+                                                <th>默认值</th>
+                                                <th>必填</th>
+                                                <th>示例</th>
+                                                <th>描述</th>
+                                                <th>操作</th>
+                                            </tr>
                                             </thead>
                                             <tbody>
-                                                <tr class="parent-tr">
-                                                    <td class="name-input">
-                                                        <div class="inputbox"><input type="text" name="fieldName" placeholder="请输入名称"></div>
-                                                    </td>
-                                                    <td class="type-input">
-                                                        <div class="selectbox">
-                                                            <select name="fieldType">
-                                                                <option value="String">String</option>
-                                                                <option value="int">int</option>
-                                                            </select>
-                                                        </div>
-                                                    </td>
-                                                    <td class="type-input">
-                                                        <div class="inputbox"><input type="text" name="fieldDefault" placeholder="请输入默认值"></div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="radio-box">
-                                                            <label>
-                                                                <input type="radio" name="isMust0" checked value="0">否
-                                                            </label>
-                                                            <label>
-                                                                <input type="radio" name="isMust0" value="1">是
-                                                            </label>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="inputbox"><input type="text" name="fieldSample" placeholder="请输入示例"></div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="inputbox"><textarea name="describle" placeholder="请输入描述"></textarea></div>
-                                                    </td>
-                                                    <td>
-                                                        <span class="table-plus-btn itemNum" onclick="tablePlus(this)">+</span>
-                                                    </td>
-                                                </tr>
+                                            <tr class="parent-tr">
+                                                <td class="name-input">
+                                                    <div class="inputbox"><input type="text" name="fieldName" placeholder="请输入名称"></div>
+                                                </td>
+                                                <td class="type-input">
+                                                    <div class="selectbox">
+                                                        <select name="fieldType">
+                                                            <option value="String">String</option>
+                                                            <option value="int">int</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <td class="type-input">
+                                                    <div class="inputbox"><input type="text" name="fieldDefault" placeholder="请输入默认值"></div>
+                                                </td>
+                                                <td>
+                                                    <div class="radio-box">
+                                                        <label>
+                                                            <input type="radio" name="isMust0" checked value="0">否
+                                                        </label>
+                                                        <label>
+                                                            <input type="radio" name="isMust0" value="1">是
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="inputbox"><input type="text" name="fieldSample" placeholder="请输入示例"></div>
+                                                </td>
+                                                <td>
+                                                    <div class="inputbox"><textarea name="describle" placeholder="请输入描述"></textarea></div>
+                                                </td>
+                                                <td>
+                                                    <span class="table-plus-btn itemNum" onclick="tablePlus(this)">+</span>
+                                                </td>
+                                            </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -302,24 +312,24 @@ var htmlPart = {
                                     <div class="table-box">
                                         <table class="price-table table-plus" d-type="returnHtml">
                                             <thead>
-                                                <tr>
-                                                    <th>错误码</th>
-                                                    <th>说明</th>
-                                                    <th>操作</th>
-                                                </tr>
+                                            <tr>
+                                                <th>错误码</th>
+                                                <th>说明</th>
+                                                <th>操作</th>
+                                            </tr>
                                             </thead>
                                             <tbody>
-                                                <tr class="parent-tr">
-                                                    <td class="errorNum-input">
-                                                        <div class="inputbox"><input type="text" name="fieldName" placeholder="请输入错误码"></div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="inputbox"><textarea name="describle" placeholder="请输入说明"></textarea></div>
-                                                    </td>
-                                                    <td>
-                                                        <span class="table-plus-btn" onclick="tablePlus(this)">+</span>
-                                                    </td>
-                                                </tr>
+                                            <tr class="parent-tr">
+                                                <td class="errorNum-input">
+                                                    <div class="inputbox"><input type="text" name="fieldName" placeholder="请输入错误码"></div>
+                                                </td>
+                                                <td>
+                                                    <div class="inputbox"><textarea name="describle" placeholder="请输入说明"></textarea></div>
+                                                </td>
+                                                <td>
+                                                    <span class="table-plus-btn" onclick="tablePlus(this)">+</span>
+                                                </td>
+                                            </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -421,6 +431,19 @@ var htmlPart = {
         category = $.getUrlParam('category'),
         url = '/category/findAttr';
     $(document).ready(function () {
+
+        $.ajax({
+            type:'POST',
+            url:'/region/province',
+            success:function(rs){
+                rs.forEach(function(e){
+                    var option = '<option value=' + e.id + '>' + e.name + '</option>';
+                    $("#province").append(option);
+                })
+            }
+        });
+
+
         var editor = new wangEditor('textarea1');
         editor.config.uploadImgUrl = '/upload/fileUpload';//上传图片（举例）
         editor.config.uploadImgFileName = 'filename';
@@ -631,6 +654,20 @@ var htmlPart = {
             data.shopPrice = data.formatList[0].price;
             data.goodsType = $('input[name="goodsTypes"]:checked').val();
             data.goodsDesc = $('#textarea1').val();
+
+
+            var county = $('#county').val();
+            var city = $('#city').val();
+            var province = $('#province').val();
+            if(county != undefined && county != '-1'){
+                data.goodsArea = county;
+            }else if(city != undefined && city != '-1'){
+                data.goodsArea = city;
+            }else{
+                data.goodsArea = province;
+            }
+
+
             data.catId = catId; //此ID为url上的id
             data.isOnsale = $('input[name="isOnsale"]:checked').val();
             if (data.isOnsale == 1){
@@ -719,6 +756,34 @@ var htmlPart = {
         }else{
             return '确定要离开吗';
         }
+    }
+
+     function getChild(obj){
+        $(obj).nextAll().empty();
+        $.ajax({
+            type:'POST',
+            url:'/region/city?parentId='+obj.value,
+            success:function(rs){
+                rs.forEach(function(e){
+                    var option = '<option value=' + e.id + '>' + e.name + '</option>';
+                    $(obj).next().append(option);
+                })
+                getCounty(rs[0].id);
+            }
+        });
+    }
+
+    function getCounty(pid){
+        $.ajax({
+            type:'POST',
+            url:'/region/city?parentId='+pid,
+            success:function(rs){
+                rs.forEach(function(e){
+                    var option = '<option value=' + e.id + '>' + e.name + '</option>';
+                    $("#county").append(option);
+                })
+            }
+        });
     }
 </script>
 
