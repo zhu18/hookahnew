@@ -1,7 +1,5 @@
 class AccountController {
-  constructor($scope, $rootScope, $uibModal, usSpinnerService) {
-    $rootScope.config.productNavBar = 'disabled';
-    $rootScope.config.sidebar = 'full';
+  constructor($scope, $rootScope,$http, $uibModal, usSpinnerService) {
     console.log($rootScope.config);
     $.ajax({
       type: "GET",
@@ -18,6 +16,35 @@ class AccountController {
         // }
       }
     });
+    $scope.search = function(){
+      console.log("查询。。。。");
+    };
+    $scope.add = function(){
+      console.log("add。。。。");
+    };
+    $scope.edit = function(){
+      console.log("edit。。。。");
+    };
+    $scope.save = function(){
+      var ss= $("#userForm").serialize();
+      var promise = $http({
+        method: 'POST',
+        url: $rootScope.site.apiServer + "/api/account/save",
+        data: $("#userForm").serialize()
+      });
+      promise.then(function (res, status, config, headers) {
+        // $scope.tableData = data.data;
+        // $rootScope.pagination.totalItems = data.totalItems;
+        // $rootScope.pagination.currentPage = data.currentPage;
+        // console.log(res.data);
+        $rootScope.loadingState = false;
+        console.log($rootScope.pagination);
+
+        growl.addSuccessMessage("数据加载完毕。。。");
+      });
+      console.log("save。。。。"+ss);
+
+    };
   }
 }
 
