@@ -1,29 +1,4 @@
-.left-bar{
-    width: 180px;
-    background-color: #fff;
-}
-.left-bar li{
-    height: 46px;
-    font-size:14px;
-    line-height: 46px;
-    border-bottom:1px solid #E9E9E9;
-}
-.left-bar li span{
-    margin-right:22px;
-}
-.left-bar ul li:nth-child(1){
-    font-size:15px;
-    font-weight:bold;
 
-}
-.left-bar ul:nth-child(2) li:nth-last-child(1){
-    border-bottom:none;
-}
-.left-bar .active{
-    border-left:2px solid #247DE8;
-    color: #247DE8;
-    background-color: #E9E9E9;
-}
 .center-content{
     width: 746px;
     height: 600px;
