@@ -32,6 +32,7 @@ public class ExchangeController {
     public String list(Model model){
         return "exchange/list";
     }
+
     @RequestMapping(value = "/exchange/details", method = RequestMethod.GET)
     public String details(Model model){
         return "exchange/details";
