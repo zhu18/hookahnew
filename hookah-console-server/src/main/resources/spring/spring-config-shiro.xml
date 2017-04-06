@@ -11,15 +11,15 @@
   <!--</bean>-->
 
   <!-- Realm实现 -->
-  <bean id="oAuth2Realm" class="com.ziroot.lomen.web.console.shiro.OAuth2Realm">
-    <property name="cachingEnabled" value="false"/>
+  <bean id="oAuth2Realm" class="com.jusfoun.hookah.console.server.shiro.OAuth2Realm">
+    <property name="cachingEnabled" value="true"/>
     <property name="authenticationCachingEnabled" value="true"/>
     <property name="authorizationCacheName" value="authorizationCache"/>
-    <property name="clientId" value="test"/>
-    <property name="clientSecret" value="test"/>
-    <property name="accessTokenUrl" value="http://auth.ziroot.app/oauth/accessToken"/>
-    <property name="userInfoUrl" value="http://auth.ziroot.app/userInfo"/>
-    <property name="redirectUrl" value="http://console.ziroot.app/login"/>
+    <property name="clientId" value="${myconf.oauth2.clientId}"/>
+    <property name="clientSecret" value="${myconf.oauth2.clientSecret}"/>
+    <property name="accessTokenUrl" value="${myconf.oauth2.accessTokenUrl}"/>
+    <property name="userInfoUrl" value="${myconf.oauth2.userInfoUrl}"/>
+    <property name="redirectUrl" value="${myconf.oauth2.redirectUrl}"/>
   </bean>
 
   <!-- 会话ID生成器 -->
@@ -27,8 +27,8 @@
 
   <!-- 会话Cookie模板 -->
   <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
-    <constructor-arg value="ssid"/>
-    <property name="domain" value="ziroot.app"/>
+    <constructor-arg value="console_ssid"/>
+    <!--<property name="domain" value="hookah.app"/>-->
     <property name="httpOnly" value="true"/>
     <property name="maxAge" value="-1"/>
   </bean>
@@ -58,13 +58,14 @@
     <property name="sessionValidationInterval" value="1800000"/>
     <property name="sessionManager" ref="sessionManager"/>
   </bean>
-  <bean id="mySessionListener" class="com.ziroot.lomen.web.console.shiro.MySessionListener"/>
+  <bean id="mySessionListener" class="com.jusfoun.hookah.console.server.shiro.MySessionListener"/>
   <!-- 会话管理器 -->
   <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+    <property name="sessionIdUrlRewritingEnabled" value="false"/>
     <property name="globalSessionTimeout" value="1800000"/>
     <property name="deleteInvalidSessions" value="true"/>
     <property name="sessionValidationSchedulerEnabled" value="true"/>
-    <property name="sessionValidationScheduler" ref="sessionValidationScheduler"/>
+    <!--<property name="sessionValidationScheduler" ref="sessionValidationScheduler"/>-->
     <property name="sessionDAO" ref="sessionDAO"/>
     <property name="sessionIdCookieEnabled" value="true"/>
     <property name="sessionIdCookie" ref="sessionIdCookie"/>
@@ -80,7 +81,7 @@
   </bean>
 
   <!-- OAuth2身份验证过滤器 -->
-  <bean id="oAuth2AuthenticationFilter" class="com.ziroot.lomen.web.console.shiro.OAuth2AuthenticationFilter">
+  <bean id="oAuth2AuthenticationFilter" class="com.jusfoun.hookah.console.server.shiro.OAuth2AuthenticationFilter">
     <property name="authcCodeParam" value="code"/>
     <property name="failureUrl" value="/error/oauth2Failure"/>
   </bean>
@@ -89,7 +90,7 @@
   <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
     <property name="securityManager" ref="securityManager"/>
     <property name="loginUrl"
-              value="http://auth.ziroot.app/oauth/authorize?client_id=test&amp;response_type=code&amp;redirect_uri=http://api.console.ziroot.app/login"/>
+              value="${myconf.oauth2.loginUrl}"/>
     <property name="successUrl" value="/"/>
     <property name="filters">
       <util:map>
@@ -99,13 +100,10 @@
     <property name="filterChainDefinitions">
       <value>
         /static/** anon
-        <!--/admin* = oauth2Authc-->
-        <!--/admin/** = oauth2Authc-->
-        / = anon
+        /api* = oauth2Authc
+        /api/** = oauth2Authc
         /error/** = anon
         /login** = oauth2Authc
-        /console* = oauth2Authc
-        /console/** = oauth2Authc
         /logout = logout
         <!--/** = user-->
       </value>

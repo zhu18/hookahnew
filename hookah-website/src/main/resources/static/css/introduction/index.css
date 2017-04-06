@@ -17,10 +17,7 @@ ul li {
     background: #F8F8F8;
 }
 .box .trading {
-    width: 1200px;
-    padding-bottom: 30px;
-    padding-top:20px;
-    margin: 0px auto;
+    padding: 20px 0px;
 }
 
 .box .trading .trading-sidebar {

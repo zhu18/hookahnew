@@ -13,6 +13,8 @@ package com.jusfoun.hookah.webiste.controller;
  * Why & What is modified: <修改原因描述>
  */
 
+import com.jusfoun.hookah.core.domain.UploadResult;
+import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.webiste.util.UploadUtil;
@@ -23,6 +25,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.List;
 
 /**
  *
@@ -98,4 +102,20 @@ public class UploadfileController {
 //
 //		return result;
 	}
+
+    @RequestMapping(value="wangeditor", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @ResponseBody
+    public String upload(HttpServletRequest request, @RequestParam("filename") MultipartFile[] myfiles) {
+        String url = "http://";
+        try {
+            List<UploadResult> results = UploadUtil.uploadFile(request, myfiles);
+            url += results.get(0).getAbsPath();
+        } catch (HookahException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("=============" + url);
+        return url;
+    }
 }

@@ -19,7 +19,7 @@ public @interface EsField {
     Analyzer analyzer() default Analyzer.NONE;
     TermVector termVector() default TermVector.NONE;
     Type type() default Type.TEXT;
-    boolean payloads() default false;
     Analyzer searchAnalyzer() default Analyzer.NONE;
     boolean isStore() default false;
+    String[] copyTo() default {};
 }

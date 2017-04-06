@@ -1,6 +1,5 @@
 import '../../common/common';
 import goodsRouting from './goods.routing';
-
 const MODULE_NAME = 'Hookah';
 let app = angular.module(MODULE_NAME, [
   'ui.router',

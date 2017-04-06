@@ -1,5 +1,11 @@
 var config ={
-  user:""
+  user:"",
+  site:{
+    apiServer:"http://console.hookah.app"
+  },
+  url:{
+    loginUrl:"http://auth.hookah.app/oauth/authorize?client_id=admin&response_type=code&redirect_uri="
+  }
 };
 angular.element(document).ready(function () {
   $.ajaxSetup({
@@ -8,32 +14,31 @@ angular.element(document).ready(function () {
     }
   });
   // 手动加载模块
-  angular.element(document).ready(function () {
-    angular.bootstrap(document, ['Hookah']);
-  });
-  // $.ajax({
-  //   type: "GET",
-  //   url: "http://api.console.ziroot.app/console/current_user",
-  //   success: function (data) {
-  //     config.user = data;
-  //     angular.element(document).ready(function () {
-  //       angular.bootstrap(document, ['Hookah']);
-  //     });
-  //   },
-  //   error: function (XMLHttpRequest, textStatus, errorThrown) {
-  //     console.log(XMLHttpRequest);
-  //     var currUrl = window.location;
-  //     console.log(currUrl);
-  //     if (401 === XMLHttpRequest.status) {
-  //       window.location.href = "http://auth.ziroot.app/oauth/authorize?client_id=test&response_type=code&redirect_uri=" + currUrl;
-  //     }
-  //   }
+  // angular.element(document).ready(function () {
+  //   angular.bootstrap(document, ['Hookah']);
   // });
+  $.ajax({
+    type: "GET",
+    url: config.site.apiServer+"/api/auth/current_user",
+    success: function (data) {
+      config.user = data.data;
+      angular.element(document).ready(function () {
+        angular.bootstrap(document, ['Hookah']);
+      });
+    },
+    error: function (XMLHttpRequest, textStatus, errorThrown) {
+      console.log(XMLHttpRequest);
+      var currUrl = window.location;
+      console.log(currUrl);
+      if (401 === XMLHttpRequest.status) {
+        window.location.href = "http://auth.hookah.app/oauth/authorize?client_id=admin&response_type=code&redirect_uri=" + currUrl;
+      }
+    }
+  });
 });
-import TopBarDirective from './directive/TopBarDirective';
-import SideBarDirective from './directive/SideBarDirective';
-import ProductNavbarDirective from './directive/ProductNavbarDirective';
-
+import TopBarDirective from "./directive/TopBarDirective";
+import SideBarDirective from "./directive/SideBarDirective";
+import ProductNavbarDirective from "./directive/ProductNavbarDirective";
 import "bootstrapCss";
 import "angular-growl-v2-css";
 import "../style/console1412.css";
@@ -46,7 +51,7 @@ export default angular.module('Common', [
   'angularSpinner',
 ])
   .constant('apiServer', {
-    "admin": "http://api.console.ziroot.app/console/admin",
+    "admin": "http://console.hookah.app",
   })
   .constant('loginUrl', "http://auth.ziroot.app/oauth/authorize?client_id=test&response_type=code&redirect_uri=")
   .config(['growlProvider', function (growlProvider) {
@@ -91,6 +96,7 @@ export default angular.module('Common', [
   // 添加对应的 Interceptors
   .config(['$httpProvider', function ($httpProvider) {
     $httpProvider.defaults.withCredentials = true;
+    $httpProvider.defaults.headers.common ={'cookie':'ssss'};
     $httpProvider.interceptors.push(HttpInterceptor);
   }])
   .filter('yesNo', function () {
@@ -107,12 +113,18 @@ export default angular.module('Common', [
   .run(function ($rootScope) {
     console.log("common init..");
     $rootScope.user = config.user;
+    $rootScope.site = config.site;
   });
 function HttpInterceptor($q, $rootScope, $location, $window) {
   return {
     request: function (config) {
       $rootScope.startSpin();
+      console.log("11111");
+      console.log(config.headers);
+      config.headers = config.headers || {};
+      config.headers.cookies ="ssss";
       config.requestTimestamp = new Date().getTime();
+
       return config;
     },
     requestError: function (err) {

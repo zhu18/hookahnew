@@ -1,0 +1,141 @@
+<style>
+  .control-label {
+    width: 80px;
+  }
+</style>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="console-title console-title-border clearfix">
+      <div class="pull-left"><h5>账号查询</h5></div>
+      <div class="pull-right">
+        <button class="btn btn-default" data-ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span> 刷新</button>
+        <a ui-sref="account.add" data-ng-click="add()" class="btn btn-primary">新增</a>
+      </div>
+    </div>
+    <div class="row margin-top">
+      <div class="col-sm-12">
+        <div class="searchSection">
+          <form class="form-inline">
+            <div class="form-group">
+              <label class="control-label" for="form-field-1">账户名</label>
+              <input id="form-field-1" name="code" ng-model="searchForm.code" type="text" class="form-control">
+              <button type="submit" class="btn btn-primary" data-ng-click="search()">搜索</button>
+            </div>
+          </form>
+        </div>
+        <div class="gridSection">
+          <div us-spinner ng-show="showSpinner" spinner-start-active="true" spinner-key="showSpinner"></div>
+          <table class="table table-hover" style="margin-bottom: 57px;">
+            <thead>
+            <tr>
+              <!--<th width="10">-->
+                <!--<input type="checkbox" data-ng-model="tableState.selectAll"-->
+                       <!--ng-change="changeSelectionAll()" class=" ">-->
+              <!--</th>-->
+              <!--<th class="state-column"></th>-->
+              <!--<th>Id</th>-->
+              <th>账户名</th>
+              <th class="">邮箱</th>
+              <th width="135">电话</th>
+              <th width="135">创建时间</th>
+              <th width="135">最后登录时间</th>
+              <th width="40">禁用</th>
+              <th width="130" class="text-right">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-if="!loadingState" data-ng-repeat="item in sysAccount" class="">
+              <!--<td width="10">-->
+                <!--<input type="checkbox" data-ng-model="item.selected" ng-change="changeSelection({data: item})"-->
+                       <!--class=" ">-->
+              <!--</td>-->
+              <!--<td class="state-column">-->
+                <!--<span class="state-unread " ng-if="item.Status*1===0">●</span>-->
+              <!--</td>-->
+              <!--<td>-->
+                <!--<a ng-class="{'title-unread':item.Status*1===0,'title-read':item.Status*1!==0}" href="javascript:;"-->
+                   <!--class=" title-unread">-->
+                  <!--<span text-length="50" ng-bind="item.userId"></span>-->
+                <!--</a>-->
+              <!--</td>-->
+              <td>
+                <a ng-class="{'title-unread':item.Status*1===0,'title-read':item.Status*1!==0}" href="javascript:;"
+                   class="">
+                  <span ng-bind="item.userName"></span>
+                </a>
+              </td>
+              <td>
+                <span class="column-text" ng-bind="item.email"></span>
+              </td>
+              <td>
+                <span class="column-text" ng-bind="item.mobile"></span>
+              </td>
+              <td>
+                <span class="" ng-bind="item.regTime"></span>
+              </td>
+              <td>
+                <span class="" ng-bind="item.lastLoginTime"></span>
+              </td>
+              <td>
+                <span class="column-text" ng-bind="item.isEnable | yesNo"></span>
+              </td>
+              <td class="text-right">
+                <a ui-sref="account.edit" ng-click="edit($event,item)">修改</a>
+                <span class="text-explode">|</span>
+                <i class="link-space"></i>
+                <a href="javascript:;" target="_blank">删除</a>
+                <span class="text-explode">|</span>
+                <i class="link-space"></i>
+                <a href="javascript:;" target="_blank">关闭</a>
+              </td>
+            </tr>
+            </tbody>
+            <tfoot ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">
+            <tr>
+              <td width="10" style="width: 29px;">
+                <input type="checkbox" data-ng-model="tableState.selectAll" ng-change="changeSelectionAll()"
+                       class="">
+              </td>
+              <td colspan="9">
+                <div class="pull-left">
+                  <div toolbar="" biz-type="innerMsgToolbar" raw-data="selectedItems" class="">
+                    <a href="javascript:;" class="btn btn-default " biz-type="innerMsg" action="markRead"
+                       item-field="rawData" key-field="msgId" data-ng-disabled="!rawData || rawData.length==0"
+                       disabled="disabled">
+                      <span class=""> 修改 </span>
+                    </a>
+                    <span class="margin-right "></span>
+                    <a href="javascript:;" class="btn btn-default " biz-type="innerMsg" action="delete"
+                       item-field="rawData" key-field="msgId" data-ng-disabled="!rawData || rawData.length==0"
+                       disabled="disabled">
+                      <span class=""> 删除 </span>
+                    </a>
+                  </div>
+                </div>
+                <div class="pull-right page-box">
+                  <div class="pagination-info">共有{{pagination.totalItems}}条，每页显示：{{pagination.pageSize}}条</div>
+                  <ul uib-pagination ng-change="pageChanged(page)" total-items="pagination.totalItems"
+                      ng-model="pagination.currentPage" items-per-page="pagination.pageSize"
+                      max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"
+                      force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"
+                      last-text="末页">
+
+                  </ul>
+                </div>
+              </td>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="simple-grid-none-data-wrap">
+          <div class="simple-grid-none-data text-center " ng-if="showNoneDataInfoTip && !loadingState">
+            <div class="row-padding row-margin text-center">
+              <span class="text-size-24 blue icon-info-1" style="vertical-align: middle"></span>
+              <div class="text-size-18 tip-text inline-block">没有查询到符合条件的记录</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -24,7 +24,7 @@ public class AnnotationUtil {
             Id id = field.getAnnotation(Id.class);
             if (esField != null) {
                 EsGmFieldMapping esGmFieldMapping;
-                if("suggest".equals(field.getName())) {
+                if(field.getName().indexOf("suggest") >= 0) {
                     esGmFieldMapping = new EsGmFieldMapping();
                     esGmFieldMapping.setType(esField.type().val);
                     esGmFieldMapping.setAnalyzer(esField.analyzer().val);
@@ -32,6 +32,9 @@ public class AnnotationUtil {
                 }else {
                      esGmFieldMapping = new EsGmFieldMapping(esField.analyzeOpt().val, esField.type().val,
                             esField.analyzer().val, esField.termVector().val, esField.isStore(), esField.searchAnalyzer().val);
+                    if(esField.copyTo() != null && esField.copyTo().length > 0) {
+                        esGmFieldMapping.setCopy_to(esField.copyTo());
+                    }
                 }
                 properties.put(field.getName(), esGmFieldMapping);
             }
