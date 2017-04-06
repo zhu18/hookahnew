@@ -85,7 +85,6 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
                             List<String> input = new ArrayList<>();
                             input.add(goods.getGoodsId());
                             input.add(goods.getGoodsName());
-                            input.add(goods.getGoodsNamePy());
                             goods.setSuggest(input);
                             maps.add(AnnotationUtil.convert2Map(goods));
                         }
