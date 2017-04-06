@@ -1,0 +1,80 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/index/index.css">
+<link rel="stylesheet" href="/static/css/common.css">
+<link rel="stylesheet" href="/static/css/exchange/style.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grif-0 exchange-list">
+    <div class="grid-row">
+        <div class="search" style="width: 1200px; ">
+            <div class="bdg-row">
+                <!--头部类目展示模块-->
+                <div class="search-category">
+                    <div class="panel-title">
+                        <span>全部结果:</span>
+                    </div>
+                    <ul class="conditionCon">
+                         <li>
+                            <span name="品牌">品牌：</span>
+                             <ul>
+                                 <li></li>
+                             </ul>
+                         </li>
+                    </ul>
+                </div>
+                <!--中间主体列表展示模块-->
+                <div class="search-order">
+                    <div class="order" >
+                        <ul>
+                            <li><a href="javascript:;" class="active" type="">综合排序</a></li>
+                            <li><a href="javascript:;" type="onSaleDate">上架时间</a></li>
+                            <li><a href="javascript:;" type="orders">下载量</a></li>
+                            <li><a href="javascript:;" type="commentRank">评分</a></li>
+                            <li>
+                                <a href="javascript:;" type="shopPrice">价格:</a>
+                                <div class="priceBox">
+                                    <input type="text" onkeyup="this.value=this.value.replace(/[^\d.]/g,'') " onafterpaste="this.value=this.value.replace(/[^\d]/g,'') " class="startPrice" placeholder="￥  请输入" />
+                                    <em></em>
+                                    <input type="text" onkeyup="this.value=this.value.replace(/[^\d.]/g,'') " onafterpaste="this.value=this.value.replace(/[^\d]/g,'') " class="endPrice" placeholder="￥  请输入" />
+                                    <span class="empty d" >清空</span>
+                                    <span class="ensure">确定</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="order-list">
+                        <ul>
+                            <li>
+                            <div class="item-top">
+                            <p><img src="../images/1.png" alt=""/></p>
+                            <p>你的名字</p>
+                            <p>￥1200.00</p>
+                            <p ><span>数据源</span></p>
+                            </div>
+                            <div class="item-down">
+                            <span>编号：<s>18769883892</s></span>
+                            <a href="">下载使用</a>
+                            </div>
+                            </li>
+                        </ul>
+                        <div class="info">暂无数据，请联系客服！</div>
+                    </div>
+                    <div class="order-page">
+                        <div class="pageBox">
+                            <ul id="page" class="pagination" ></ul>
+                            <p><span id="total"></span>资源，共<span id="totalPage"></span>页，跳转到第<input id="inputValue" type="text"/>页<span id="pageBtn">确定</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
