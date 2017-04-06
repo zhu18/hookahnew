@@ -1,0 +1,31 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/usercenter/user-center-menu.css">
+<link rel="stylesheet" href="/static/css/usercenter/userInfo.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="grid-left center-content">
+            <div class="top">
+                <div class="user-name">
+                    <a href="#"><img src="" alt=""></a>
+                    <p>Hi,<span id="userName"></span></p>
+                    <a href="#"><span class="fa fa-twitch"></span>进入论坛</a>
+                </div>
+                <div class="user-balance">
+                    d
+                </div>
+            </div>
+        </div>
+        <div class="grid-right"></div>
+    </div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>

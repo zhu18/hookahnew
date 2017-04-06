@@ -39,4 +39,13 @@ public class InformationController {
     public String index2(){
         return "/introduction/index";
     }
+
+
+
+
+
+    @RequestMapping(value = "/information", method = RequestMethod.GET)
+    public String index3(){
+        return "/information/index";
+    }
 }
