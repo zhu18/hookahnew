@@ -18,8 +18,7 @@ ul li {
 }
 .box .trading {
     width: 1200px;
-    padding-bottom: 30px;
-    padding-top:20px;
+    padding: 20px 0px;
     margin: 0px auto;
 }
 

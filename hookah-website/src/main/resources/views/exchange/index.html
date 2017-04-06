@@ -1,0 +1,156 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/index/index.css">
+<link rel="stylesheet" href="/static/css/common.css">
+<link rel="stylesheet" href="/static/css/exchange/style.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grif-0 exchange-index">
+        <!--顶部分类-->
+        <div class="exchange-category-top grid-row">
+            <ul>
+                <li><i class="fa fa-bar-chart" aria-hidden="true">
+                    <div>
+                        <p>数据推荐</p>
+                        <p>京东指数-洞察趋势，主动市场先机</p>
+                        <p>查看详情</p>
+                    </div>
+                </i></li>
+                <li><i class="fa fa-cube" aria-hidden="true"></i></li>
+                <li><i class="fa fa-line-chart" aria-hidden="true"></i></li>
+                <li><i class="fa fa-th-large" aria-hidden="true"></i></li>
+            </ul>
+        </div>
+        <!--推荐资讯-->
+        <div class="exchange-recommend-resource " >
+            <div class="grid-row">
+                <div class="recommend-resource-top" style="">
+                    <div class="recommend-resource-top-left grid-left">
+                        <div class="d">
+                            <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                            <span>推荐资源</span>
+                            <span>优质资源汇总</span>
+                        </div>
+                    </div>
+                    <div class="recommend-resource-top-right grid-right">
+                        <span>更多>></span>
+                    </div>
+                </div>
+                <div class="recommend-resource-down">
+                    <ul>
+                        <li>
+                            <div>
+                                <div>
+                                    <img style="width: 68px;height: 68px;display: inline-block" src="" alt="">
+                                    <div>
+                                        <p style="display: inline-block">失信被执行人查询</p>
+                                        <p style="display: inline-block">借贷机构可用于查询人的信誉得失。</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="exchange-center-bar">
+
+        </div>
+        <!--热门资讯-->
+        <div class="exchange-hot-resource grid-row" >
+            <div class="hot-resource-top" style="">
+                <div class="hot-resource-top-left grid-left">
+                    <div class="d">
+                        <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                        <span>热门资源</span>
+                        <span>最热资源汇总</span>
+                    </div>
+                </div>
+                <div class="hot-resource-top-right grid-right">
+                    <span>更多>></span>
+                </div>
+            </div>
+            <div class="hot-resource-down">
+              <div  class="hot-down-left "></div>
+              <div class="hot-down-table ">
+                  <table>
+                      <tr>
+                          <th>资源标识</th>
+                          <th>资源名称</th>
+                          <th>金额</th>
+                          <th>操作</th>
+                      </tr>
+                      <tr>
+                          <td>123</td>
+                          <td>123</td>
+                          <td>123</td>
+                          <td>123</td>
+                      </tr>
+                      <tr>
+                          <td>123</td>
+                          <td>123</td>
+                          <td>123</td>
+                          <td>123</td>
+                      </tr>
+                      <tr>
+                          <td>123</td>
+                          <td>123</td>
+                          <td>123</td>
+                          <td>123</td>
+                      </tr>
+                      <tr>
+                          <td>123</td>
+                          <td>123</td>
+                          <td>123</td>
+                          <td>123</td>
+                      </tr>
+                      <tr>
+                          <td>123</td>
+                          <td>123</td>
+                          <td>123</td>
+                          <td>123</td>
+                      </tr>
+                  </table>
+              </div>
+              <div class="hot-down-rank display-inline-block"></div>
+            </div>
+        </div>
+        <!--行业资讯-->
+        <div class="exchange-industry-resource ">
+            <div class="industry-resource-top grid-row">
+                <div class="industry-resource-top-left grid-left">
+                    <div class="d">
+                        <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                        <span>行业资源</span>
+                        <span>行业资源汇总</span>
+                    </div>
+                </div>
+                <div class="industry-resource-top-right grid-right">
+                    <span>更多>></span>
+                </div>
+            </div>
+            <div class="industry-resource-down">
+                <ul>
+                    <li>123</li>
+                    <li>123</li>
+                    <li>123</li>
+                    <li>123</li>
+                    <li>123</li>
+                </ul>
+            </div>
+        </div>
+        <!--底部分类-->
+        <div class="exchange-category-down grid-row">
+             <div class="category-left display-inline-block"></div>
+             <div class="category-right display-inline-block"></div>
+        </div>
+
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
