@@ -6,7 +6,9 @@ let app = angular.module(MODULE_NAME, [
   'Common'
 ]);
 app.config(goodsRouting);
-
+app.config(['$httpProvider', function ($httpProvider) {
+  $httpProvider.defaults.withCredentials = true;
+}]);
 app.run(function ($rootScope, $state) {
   $rootScope.currentProductId = 'account';
   $rootScope.config = {
