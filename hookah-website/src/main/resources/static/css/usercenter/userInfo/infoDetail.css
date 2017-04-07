@@ -1,0 +1,20 @@
+.info-center-box{
+    width: 950px;
+    height: 700px;
+    border:1px solid #EDEDED;
+    background-color: #fff;
+    margin:10px 5px;
+    padding:0 20px;
+}
+.info-center-box .header{
+    height: 31px;
+    padding-top:10px;
+    border-bottom: 1px solid #EDEDED;
+}
+.info-center-title{
+    width: 100px;
+    height: 20px;
+    font:14px/20px "microsoft yahei";
+    padding-left:10px;
+    border-left:2px solid #237DE7;
+}

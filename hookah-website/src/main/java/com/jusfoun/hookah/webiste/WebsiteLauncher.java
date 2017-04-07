@@ -50,6 +50,7 @@ public class WebsiteLauncher {
                 "classpath*:hookah_rpc_client_order.xml",
                 "classpath*:hookah_rpc_client_other.xml",
                 "classpath*:hookah_rpc_client_region.xml",
+                "classpath*:hookah_rpc_client_goodsShelves.xml",
                 "classpath*:hookah_rpc_client_system.xml",
                 WebsiteLauncher.class},args);
         MotanSwitcherUtil.setSwitcherValue(MotanConstants.REGISTRY_HEARTBEAT_SWITCHER, true);
