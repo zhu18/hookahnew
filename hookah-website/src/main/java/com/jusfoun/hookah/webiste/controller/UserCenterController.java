@@ -119,4 +119,9 @@ public class UserCenterController {
         return "usercenter/admin/index";
     }
 
+    @RequestMapping(value = "/usercenter/buyer", method = RequestMethod.GET)
+    public String evaluation(){
+        return "usercenter/buyer/evaluation";
+    }
+
 }
