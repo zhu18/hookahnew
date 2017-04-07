@@ -7,6 +7,7 @@ import com.jusfoun.hookah.core.domain.SysNews;
 import com.jusfoun.hookah.core.domain.vo.SysNewsVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
+import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.CategoryService;
 import com.jusfoun.hookah.rpc.api.SysNewsService;
@@ -60,17 +61,17 @@ public class SysNewsController {
     @ResponseBody
     @RequestMapping(value = "details", method = RequestMethod.GET)
     public ReturnData details(String id) {
-        ReturnData result = new ReturnData();
+        ReturnData returnData = new ReturnData();
+        SysNewsVo sysN = new SysNewsVo();
         try {
-            SysNewsVo sysN = new SysNewsVo();
             sysN = sysNewsService.selectNewsByID(id);
-            result.setData(sysN);
-            result.success();
+            returnData.setData(sysN);
         } catch (Exception e) {
-            result.setCode("0");
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
             e.printStackTrace();
         }
-        return result;
+        return returnData;
     }
 
     /**
@@ -83,12 +84,15 @@ public class SysNewsController {
     @ResponseBody
     @RequestMapping(value = "deleteInfo", method = RequestMethod.POST)
     public ReturnData deleteInfo(@RequestBody String[] ids) {
+        ReturnData returnData = new ReturnData();
         try {
             sysNewsService.delete(ids);
         } catch (Exception e) {
-            return ReturnData.fail();
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
         }
-        return ReturnData.success();
+        return returnData;
     }
 
 
@@ -102,13 +106,15 @@ public class SysNewsController {
     @ResponseBody
     @RequestMapping(value = "deleteOne", method = RequestMethod.GET)
     public ReturnData deleteOne(String id) {
+        ReturnData returnData = new ReturnData();
         try {
             sysNewsService.delete(id);
         } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
             e.printStackTrace();
-            return ReturnData.fail();
         }
-        return ReturnData.success();
+        return returnData;
     }
 
 
@@ -125,6 +131,7 @@ public class SysNewsController {
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public ReturnData list(String pageNumber, String pageSize, String newsGroup, String newsSonGroup) {
         Pagination<SysNews> page = new Pagination<>();
+        ReturnData returnData = new ReturnData();
         try {
             List<Condition> filters = new ArrayList();
             List<OrderBy> orderBys = new ArrayList();
@@ -151,12 +158,13 @@ public class SysNewsController {
             }
 
             page = sysNewsService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
-
+            returnData.setData(page);
         } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
             e.printStackTrace();
-            return ReturnData.error("exception");
         }
-        return ReturnData.success(page);
+        return returnData;
     }
 
 
@@ -172,7 +180,8 @@ public class SysNewsController {
     @ResponseBody
     @RequestMapping(value = "listByGroup", method = RequestMethod.GET)
     public ReturnData listByGroup(String pageNumber, String pageSize, String newsGroup, String newsSonGroup) {
-
+        Pagination<SysNewsVo> page = new Pagination<>();
+        ReturnData returnData = new ReturnData();
         try {
             //参数校验
             int pageNumberNew = PAGE_NUM;
@@ -186,17 +195,24 @@ public class SysNewsController {
             Map<String, Object> map = new HashMap<String, Object>();
             Map<String, Object> infos = sysNewsService.getNewsList(newsGroup, newsSonGroup, pageSizeNew);
             List<List<SysNewsVo>> data = (List<List<SysNewsVo>>) infos.get("dataList");
+            page.setList(data.get((pageNumberNew - 1)));
+            page.setTotalItems( Long.valueOf(infos.get("totalItem").toString()));
+            page.setCurrentPage(pageNumberNew);
+            page.setPageSize(pageSizeNew);
+            page.setTotalPage(Integer.parseInt(infos.get("totalCount").toString()));
+            returnData.setData(page);
+           /*
             map.put("dataList", data.get((pageNumberNew - 1)));
             map.put("totalPage", infos.get("totalCount"));
             map.put("totalItems", infos.get("totalItem"));//总条数
             map.put("pageSize", 10);//每页条数
-            map.put("currentPage", pageNumber);//当前页
-            return ReturnData.success(map);
-
+            map.put("currentPage", pageNumber);//当前页*/
         } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
             e.printStackTrace();
-            return ReturnData.error("exception");
         }
+       return returnData;
     }
 
 
@@ -220,21 +236,19 @@ public class SysNewsController {
     @ResponseBody
     @RequestMapping(value = "insert", method = RequestMethod.POST)
     public ReturnData insert(SysNews model) {
-        ReturnData result = new ReturnData();
+        ReturnData returnData = new ReturnData();
         try {
             SysNews snews = new SysNews();
             snews = model;
             snews.setSytTime(new Date());
+            snews.setSysUser("857a17ef0f9d11e796c56a3b07101c5a");
             sysNewsService.insert(snews);
-            Category cy = new Category();
-            cy.setAddUser("ddddddddddd");
-            categoryService.insert(cy);
-            result.success();
         } catch (Exception e) {
-            result.setCode("0");
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
             e.printStackTrace();
         }
-        return result;
+        return returnData;
     }
 
     /**
@@ -246,19 +260,19 @@ public class SysNewsController {
     @ResponseBody
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public ReturnData update(SysNews model) {
-        ReturnData result = new ReturnData();
+        ReturnData returnData = new ReturnData();
         try {
             SysNews snews = new SysNews();
             snews = model;
             snews.setSytTime(new Date());
             snews.setUpdateTime(new Date());
             sysNewsService.updateById(snews);
-            result.success();
         } catch (Exception e) {
-            result.setCode("0");
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
             e.printStackTrace();
         }
-        return result;
+        return returnData;
     }
 
 

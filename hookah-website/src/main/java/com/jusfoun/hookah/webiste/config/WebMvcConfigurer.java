@@ -17,7 +17,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
 
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new CommonInterceptor()).addPathPatterns("/**");
-        registry.addInterceptor(new CategoryInterceptor()).addPathPatterns("/exchange*");
+        registry.addInterceptor(new CategoryInterceptor()).addPathPatterns("/exchange").addPathPatterns("/exchange/**");
     }
 
     @Override
