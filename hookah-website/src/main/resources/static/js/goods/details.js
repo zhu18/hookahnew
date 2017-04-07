@@ -81,6 +81,7 @@ $.getUrlParam = function (key) {
 };
 var id = $.getUrlParam('goodsId');
 renderDetails();
+var formatId = '';
 function renderDetails(){
     $.ajax({
         url:'/goods/back/findById',
@@ -91,6 +92,7 @@ function renderDetails(){
         success:function(data){
             // return JSON.stringify(data);
             if(data.code == "1") {
+                formatId = data.data.shopFormat;
                 $('#J_goodsImg').attr('src',data.data.goodsImg);
                 $('#J_goodsTitle').html(data.data.goodsName);
                 $('#J_goodsBrief').html(data.data.goodsBrief);
@@ -105,7 +107,7 @@ function renderDetails(){
                 }
                 $('#J_goodsNumber').html((data.data.shopNumber <= 1 ? '' : data.data.shopNumber)+shopFormat);
                 $('#J_goodsDesc').html(data.data.goodsDesc);
-
+                $('#J_addCart').attr('href','javascript:addCart('+data.data.goodsId+');')
 
 
                 function add(m){ return m < 10 ? '0'+ m:m };
@@ -126,6 +128,22 @@ function renderDetails(){
     });
 }
 // 加入购物车
-function addCart(){
-
+function addCart(goodsId){
+    $.ajax({
+        url:'/cart/add',
+        type:'post',
+        data:{
+            goodsId:goodsId,
+            formatId:formatId,
+            goodsNumber:$('#J_buyNumber').val()
+        },
+        success:function(data){
+            // return JSON.stringify(data);
+            if(data.code == "1") {
+                $.alert('加入购物车成功')
+            }else{
+                $.alert(data.message);
+            }
+        }
+    });
 }
