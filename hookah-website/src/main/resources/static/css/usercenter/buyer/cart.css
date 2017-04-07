@@ -1,0 +1,129 @@
+.user-center-box{
+    width:970px;
+    background: #fff;
+    padding:0px 20px;
+}
+.user-center-box  .cart {
+    height: 31px;
+    padding-top: 10px;
+    border-bottom: 1px solid #EDEDED;
+    font-size: 20px;
+}
+.user-center-box  .cart .center-title {
+    font:14px/20px "microsoft yahei";
+    padding-left:10px;
+    border-left:2px solid #237DE7;
+}
+
+.order-manage .order-box .order-items thead .order-body {
+    line-height: 30px;
+}
+.order-manage .order-box .order-items{
+    border: 1px solid #ccc;
+    width:100%;
+    margin-bottom:20px;
+}
+
+.order-manage .order-box table tr{
+    border-bottom: 1px solid #ccc;
+}
+.order-manage .order-box .order-items .order-body .img img{
+    width: 120px;
+}
+.order-manage .order-box .order-items .order-body .order {
+    position: relative;
+}
+.order-manage .order-box .order-items .order-body .order a{
+    position: absolute;
+    right:105px;
+}
+.order-manage .order-box .order-items .order-body .order a:nth-child(1){
+    top:6px;
+}
+.order-manage .order-box .order-items .order-body .order a:nth-child(2){
+    top:23px;
+    right:116px;
+}
+.order-manage .order-box .order-items .order-body .order a:nth-child(3){
+    top:38px;
+}
+.order-manage .order-box .order-items .order-body .order a:nth-child(4){
+     top:55px;
+    right:116px;
+ }
+.order-manage .order-box .order-items .order-body .order a:nth-child(5){
+    top:73px;
+}
+.order-manage .order-box .order-items.cart-list-title,.cart-list-bottom{
+    margin-top:10px;
+}
+.order-manage .order-box .order-items.cart-list-title,.order-manage .order-box .order-items.cart-list-title tr{
+    border:none;
+}
+.order-manage .cart-box .order-items .checkbox{width:7%}
+.order-manage .cart-box .order-items .img{width:15%}
+.order-manage .cart-box .order-items .name{width:15%;word-break: break-word;}
+.order-manage .cart-box .order-items .price{width:8%;text-align: right;}
+.order-manage .cart-box .order-items .number{width:18%;text-align: center}
+.order-manage .cart-box .order-items .number div{display: inline-block}
+.order-manage .cart-box .order-items .number .btn{
+    width: 20px;
+    height: 26px;
+    background: #f0f0f0;
+    display: inline-block;
+    float: left;
+    border: 1px solid #e5e5e5;
+    text-align: center;
+    line-height: 26px;
+    cursor: pointer;
+}
+.order-manage .cart-box .order-items .number input{
+    width: 46px;
+    text-align: center;
+    float: left;
+    height: 26px;
+    border: 1px solid #aaa;
+}
+.order-manage .cart-box .order-items .number .btn:hover{
+    color:#f68300;
+    border-color:#f68300;
+}
+.order-manage .cart-box .order-items .number .testcalss{
+    cursor: default;
+    color:#ccc;
+}
+.order-manage .cart-box .order-items .number .testcalss:hover{
+    color:#ccc;
+    border-color:#e5e5e5;
+}
+.order-manage .cart-box .order-items .money{
+    width:8%;
+    text-align: right;
+    position: relative;
+}
+.order-manage .cart-box .order-items .money span {
+    position: absolute;
+}
+.order-manage .cart-box .order-items .operation{
+    width:26%;
+    text-align:center
+}
+.order-manage .order-box .order-items.cart-list-bottom,.order-manage .order-box .order-items.cart-list-bottom tr{
+    border:none;
+}
+.order-manage .order-box .order-items.cart-list-bottom{
+    background: #e5e5e5;
+    height: 40px;
+}
+.order-manage .order-box .order-items.cart-list-bottom .operation{padding:0;}
+.order-manage .order-box .order-items.cart-list-bottom .buy-btn{
+    width: 80px;
+    height: 41px;
+    background-color: #00C1DE;
+    text-align: center;
+    color: #fff;
+    line-height: 40px;
+    font-size: 14px;
+    border:none;
+    float: right;
+}

@@ -1,35 +1,46 @@
 
-
+/*menu*/
 .exchange-index-menu{
-    display: none;
     position: absolute;
-    top: 0;
+    top: -46px;
     left: 0;
     z-index: 1000;
     width: 190px;
-    height: 430px;
-    background-color: white;
 }
+.exchange-index-menu .menu-title{
+    background-color: transparent;
+    width: 190px;
+    height: 46px;
+}
+
 .exchange-index-menu .menu-list{
+    display: none;
     background-color: #3E557B;
 }
 .exchange-index-menu .menu-list li{
     padding: 0 10px;
     color: white;
     border-bottom: 1px solid white;
-    line-height: 40px;
-    height: 38px;
+    line-height: 42px;
+    height: 42px;
 }
-.exchange-index-menu div{
-    display: inline-block;
+.exchange-index-menu .menu-list li:last-child{
+border-bottom: 2px solid #3E557B;
+}
+.exchange-index-menu .menu-son-list{
+    /*display: inline-block;*/
+    display: none;
     width: 338px;
-    height: 172px;
     top: 0;
+    padding: 10px;
     left: 190px;
     position: absolute;
     background-color: white;
 }
-
+.exchange-index-menu .menu-son-list ul li{
+    float: left;
+    margin: 5px;
+}
 /*****banner******/
 .banner-tab {
     z-index: 989;
@@ -877,28 +888,28 @@ lesshat-selector {
     background-color: #2F3C4D;
     height: 431px;
 }
-.exchange-index .index-banner .exchange-index-menu{
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    width: 190px;
-    height: 430px;
-    background-color: white;
-}
-.exchange-index .index-banner .exchange-index-menu .menu-list{
-    background-color: #3E557B;
-}
-.exchange-index .index-banner .exchange-index-menu .menu-list li{
-    padding: 0 10px;
-    color: white;
-    border-bottom: 1px solid white;
-    line-height: 42px;
-    height: 42px;
-}
-.exchange-index .index-banner .exchange-index-menu .menu-list li:last-child{
-    border-bottom: 2px solid #3E557B;
-}
+/*.exchange-index .index-banner .exchange-index-menu{*/
+    /*position: absolute;*/
+    /*top: 0;*/
+    /*left: 0;*/
+    /*z-index: 1000;*/
+    /*width: 190px;*/
+    /*height: 430px;*/
+    /*background-color: white;*/
+/*}*/
+/*.exchange-index .index-banner .exchange-index-menu .menu-list{*/
+    /*background-color: #3E557B;*/
+/*}*/
+/*.exchange-index .index-banner .exchange-index-menu .menu-list li{*/
+    /*padding: 0 10px;*/
+    /*color: white;*/
+    /*border-bottom: 1px solid white;*/
+    /*line-height: 42px;*/
+    /*height: 42px;*/
+/*}*/
+/*.exchange-index .index-banner .exchange-index-menu .menu-list li:last-child{*/
+    /*border-bottom: 2px solid #3E557B;*/
+/*}*/
 .exchange-index .index-banner .exchange-index-banner{
     width: 1009px;
     position: absolute;
@@ -2569,6 +2580,46 @@ dl {
     text-align: center;
     vertical-align: text-bottom;
     border: 1px solid #ffa800;
+}
+.goods-details .goods-details-right .detail-count .purchase-quantity{
+    position: relative;
+    display: inline-block;
+    width: 85px;
+    height: 25px;
+    border: 1px solid #4490F6;
+}
+.goods-details .goods-details-right .detail-count .purchase-quantity button{
+    position: absolute;
+    border: none;
+    width: 25px;
+    height: 25px;
+    background-color: #4490F6;
+    color: white;
+}
+.goods-details .goods-details-right .detail-count .purchase-quantity button:nth-child(1){
+    top:0;
+    left: 0;
+}
+.goods-details .goods-details-right .detail-count .purchase-quantity button:last-child{
+    top:0;
+    right: 0;
+}
+.goods-details .goods-details-right .detail-count .purchase-quantity input{
+    position: absolute;
+    top:0;
+    left: 25px;
+    width: 32px;
+    height: 21px;
+}
+.goods-left .goods-details .goods-details-right .detail-count a{
+    text-align: center;
+    line-height: 32px;
+    display: inline-block;
+    width: 110px;
+    height: 32px;
+    background-color: #FDA428;
+    color: white;
+    font-size: 14px;
 }
 .goodsDetails .goods-left .goods-table{
     background-color: white;

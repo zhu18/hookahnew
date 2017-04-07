@@ -122,4 +122,14 @@ public class UserCenterController {
         return "usercenter/mybuyer/myAttention";
     }
 
+    @RequestMapping(value = "/usercenter/buyer", method = RequestMethod.GET)
+    public String evaluation(){
+        return "usercenter/buyer/evaluation";
+    }
+
+    @RequestMapping(value = "usercenter/buyer/cart", method = RequestMethod.GET)
+    public String cart(){
+        return "usercenter/buyer/cart";
+    }
+
 }
