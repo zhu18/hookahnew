@@ -23,19 +23,26 @@
     border-bottom: 1px solid white;
     line-height: 42px;
     height: 42px;
+    position: relative;
 }
-.exchange-index-menu .menu-list li:last-child{
+.exchange-index-menu .menu-list li > a.Bh{color:#0c182d;}
+.exchange-index-menu .menu-list li > a.Bh:hover{
+color:#7791bd;
+}
+.exchange-index-menu .menu-list > li:last-child{
 border-bottom: 2px solid #3E557B;
 }
+.menu-son-list a:hover{color:#FFA800;}
 .exchange-index-menu .menu-son-list{
-    /*display: inline-block;*/
     display: none;
     width: 338px;
-    top: 0;
+    top:-2px;
     padding: 10px;
-    left: 190px;
+    left: 189px;
     position: absolute;
     background-color: white;
+    border:1px solid #ccc;
+    border-left:0;
 }
 .exchange-index-menu .menu-son-list ul li{
     float: left;
@@ -1668,8 +1675,7 @@ dl {
 
 .search .search-order .order {
     border: 1px solid #E9E9E9;
-    border-bottom: none;
-    background-color: #F4F4F4;
+    background-color: #fff;
     height: 40px;
     font-size: 12px;
 }
@@ -1768,15 +1774,18 @@ dl {
 
 .search .search-order .order-list ul li {
     height: 238px;
-    width: 238px;
+    width: 230px;
     float: left;
     color: black;
     background-color: white;
     border: 1px solid #E5E5E5;
+    margin:10px 10px 0 0;
 }
-
+.search .search-order .order-list ul li:nth-child(5n){
+    margin-right: 0;
+}
 .search .search-order .order-list ul li .item-top {
-    cursor: pointer;
+    display: block;
 }
 
 .search .search-order .order-list ul li .item-top p {
@@ -1784,50 +1793,34 @@ dl {
     padding: 4px 0;
 }
 
-.search .search-order .order-list ul li .item-top p:nth-child(1) img {
+.search .search-order .order-list ul li .item-top .goods-img img {
     width: 70px;
     margin-top: 18px;
 }
 
-.search .search-order .order-list ul li .item-top p:nth-child(2) {
+.search .search-order .order-list ul li .item-top .goods-name {
     font-size: 14px;
 }
-
-.search .search-order .order-list ul li .item-top p:nth-child(2) a {
-    max-width: 200px;
-    display: inline-block;
+.search .search-order .order-list ul li .item-top .goods-brief{
+    padding:0 5px 3px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    width:calc(100% - 10px);
 }
 
-.search .search-order .order-list ul li .item-top p:nth-child(3) {
-    color: #fdb868;
-    font-size: 22px;
-}
 
-.search .search-order .order-list ul li .item-top p:nth-child(4) {
-    padding-bottom: 10px;
-}
 
-.search .search-order .order-list ul li .item-top p:nth-child(4) span {
-    border: 1px solid #a2def2;
-    padding: 0px 5px;
-    color: #a2def2;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-}
 
 .search .search-order .order-list ul li .item-down {
     border-top: 1px solid #E5E5E5;
     line-height: 38px;
-    padding: 0 21px;
+    padding: 0 10px;
 }
 
 .search .search-order .order-list ul li .item-down span {
     color: #B2B2B2;
-    padding-left: 14px;
-    padding-right: 15px;
 }
 
 .search .search-order .order-list ul li .item-down span label {
@@ -1835,6 +1828,10 @@ dl {
     padding-right: 10px;
 }
 
+.search .search-order .order-list ul li .item-down .goods-price span{
+    color: #fdb868;
+    font-size: 22px;
+}
 .search .search-order .order-list .info {
     font-size: 20px;
     text-align: center;
@@ -2584,6 +2581,7 @@ dl {
     left: 25px;
     width: 32px;
     height: 21px;
+    text-align: center;
 }
 .goods-left .goods-details .goods-details-right .detail-count a{
     text-align: center;
@@ -2591,8 +2589,6 @@ dl {
     display: inline-block;
     width: 110px;
     height: 32px;
-    background-color: #FDA428;
-    color: white;
     font-size: 14px;
 }
 
@@ -2600,6 +2596,11 @@ dl {
 .goodsDetails .goods-left .goods-table{
     background-color: white;
     border: 1px solid #E9E9E9;
+}
+.goods-table .fiexd{
+    position: fixed;
+    top:0;
+    width: 1200px;
 }
 .goods-table .table-title{
     font-size: 16px;
@@ -2611,9 +2612,11 @@ dl {
 }
 .goods-table .table-title li{
     cursor: pointer;
+    width: 10%;
+    position: relative;
     text-align: center;
     line-height: 30px;
-    padding: 0 20px;
+    padding: 0 10px;
     margin: 5px 0;
     border-right: 1px solid #E9E9E9;
 }
@@ -2624,6 +2627,17 @@ dl {
     height:35px;
     color: #078cfc;
     border-bottom:2px solid #078cfc;
+}
+.goods-table .table-title li.active:after{
+    content: '';
+    position: absolute;
+    border-left: 5px solid transparent;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid #078cfc;
+    border-right: 5px solid transparent;
+    right: 50%;
+    margin-right: -10px;
+    bottom: 0px;
 }
 .goods-table .table-content{
     padding:0 20px;
@@ -2721,4 +2735,4 @@ dl {
     height: 47px;
 }
 /*-----*/
-
+.exchange-list{background: #f5f6f6;}

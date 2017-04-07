@@ -379,8 +379,40 @@
 
 /******** publish-wrapper end ********/
 /******** trade-wrapper end ********/
-.trade-wrapper{}
-.trade-box{}
+.info-center-box .user-center-box {
+    background-color: white;
+    width: 988px;
+    margin-left: 10px;
+    padding: 10px;
+    border: 1px solid #e9e9e9;
+}
+.user-center-box .trade-wrapper{
+
+}
+.user-center-box .wrapper-tab{
+    margin-bottom: 10px;
+    border-bottom: 1px solid #e9e9e9;
+}
+.user-center-box .wrapper-tab li{
+    float: left;
+    height:30px;
+    width: 15%;
+    font-size: 16px;
+    text-align: center;
+    line-height: 30px;
+}
+.user-center-box  .wrapper-tab .active{
+    height:30px;
+    width: 133px;
+    display: inline-block;
+    border-bottom: 1px solid #237DE7;
+}
+.user-center-box  .wrapper-tab .active a{
+    color: #237DE7;
+}
+.user-center-box  .wrapper-tab .trade-box{
+
+}
 .trade-box table{
     width:100%;
 }
@@ -389,12 +421,12 @@
 }
 .trade-box table th {
     background: #f5f6fa;
-    height: 30px;
-    line-height: 30px;
-    padding:0 10px;
+    padding: 10px 10px;
 }
 .trade-box table td {
+    text-align: center;
     padding:0 10px;
+    height: 30px;
 }
 .trade-box table td a{
     display: block;
@@ -411,7 +443,30 @@
 }
 .trade-box .text-right{text-align: right}
 .trade-box .text-center{text-align: center}
-/******** trade-wrapper end ********/
+
+
+.user-center-box  .wrapper-tab .rate-box{
+
+}
+.rate-box table{
+    width: 100%;
+}
+.rate-box table tr{
+    border: 1px solid #e9e9e9;
+
+}
+.rate-box table th{
+    text-align: center;
+    background-color: #F5F6FA;
+    padding: 10px 10px
+}
+.rate-box table th,td{
+    width: 10%;
+    padding: 5px;
+    text-align: center;
+
+}
+    /******** trade-wrapper end ********/
 
 .category-item-box{
     border: 1px solid #ccc;
