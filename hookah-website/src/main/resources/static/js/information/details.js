@@ -8,7 +8,7 @@ renderDetails();
 function renderDetails(){
     $.ajax({
         url:'/sysNews/details',
-        type:'post',
+        type:'get',
         data:{
             id:id
         },

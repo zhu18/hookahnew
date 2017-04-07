@@ -23,10 +23,16 @@
     border-bottom: 1px solid white;
     line-height: 42px;
     height: 42px;
+    position: relative;
 }
-.exchange-index-menu .menu-list li:last-child{
+.exchange-index-menu .menu-list li > a.Bh{color:#fff;}
+.exchange-index-menu .menu-list li > a.Bh:hover{
+color:#7791bd;
+}
+.exchange-index-menu .menu-list > li:last-child{
 border-bottom: 2px solid #3E557B;
 }
+.menu-son-list a:hover{color:#FFA800;}
 .exchange-index-menu .menu-son-list{
     /*display: inline-block;*/
     display: none;
