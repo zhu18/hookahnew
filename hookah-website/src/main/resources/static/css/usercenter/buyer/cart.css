@@ -27,6 +27,9 @@
 .order-manage .order-box table tr{
     border-bottom: 1px solid #ccc;
 }
+.order-manage .order-box table.second tr {
+    height: 110px;
+}
 .order-manage .order-box .order-items .order-body .img img{
     width: 120px;
 }
