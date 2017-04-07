@@ -1,26 +1,29 @@
 class GoodsController {
-  constructor($scope, $rootScope,$http, $uibModal, usSpinnerService,growl) {
+  constructor($scope, $rootScope, $http, $uibModal, usSpinnerService, growl) {
     console.log($rootScope.config);
-    var promise = $http({
-      method: 'GET',
-      url: $rootScope.site.apiServer + "/api/account/sys_all"
-    });
-    promise.then(function (res, status, config, headers) {
-      $rootScope.loadingState = false;
-      $scope.sysAccount = res.data.data;
-      growl.addSuccessMessage("数据加载完毕。。。");
-    });
 
-    $scope.search = function(){
+    $scope.search = function () {
       console.log("查询。。。。");
+      var promise = $http({
+        method: 'GET',
+        url: $rootScope.site.apiServer + "/api/goods/all",
+        params: $rootScope.pagination
+      });
+      promise.then(function (res, status, config, headers) {
+        $rootScope.loadingState = false;
+        // $scope.sysAccount = res.data.data;
+        console.log($rootScope.pagination);
+        // $rootScope.pagination.store =
+        growl.addSuccessMessage("数据加载完毕。。。");
+      });
     };
-    $scope.add = function(){
+    $scope.add = function () {
       console.log("add。。。。");
     };
-    $scope.edit = function(event,item){
+    $scope.edit = function (event, item) {
       console.log(item);
     };
-    $scope.save = function(){
+    $scope.save = function () {
       var promise = $http({
         method: 'POST',
         url: $rootScope.site.apiServer + "/api/account/save",
@@ -32,6 +35,8 @@ class GoodsController {
       });
 
     };
+
+    $scope.search();
   }
 }
 

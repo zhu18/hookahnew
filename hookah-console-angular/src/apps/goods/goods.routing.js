@@ -1,4 +1,5 @@
 import GoodsController from './GoodsController';
+import pagination from 'angular-ui-bootstrap/src/pagination';
 goodsRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function goodsRouting($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/items/search');

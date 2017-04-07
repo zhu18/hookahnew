@@ -14,9 +14,6 @@ angular.element(document).ready(function () {
     }
   });
   // 手动加载模块
-  // angular.element(document).ready(function () {
-  //   angular.bootstrap(document, ['Hookah']);
-  // });
   $.ajax({
     type: "GET",
     url: config.site.apiServer+"/api/auth/current_user",
@@ -27,11 +24,12 @@ angular.element(document).ready(function () {
       });
     },
     error: function (XMLHttpRequest, textStatus, errorThrown) {
-      // console.log(XMLHttpRequest);
       var currUrl = window.location;
       // console.log(currUrl);
+      //TODO...
+      console.log(XMLHttpRequest);
       if (401 === XMLHttpRequest.status) {
-        window.location.href = "http://auth.hookah.app/oauth/authorize?client_id=admin&response_type=code&redirect_uri=" + currUrl;
+        // window.location.href = "http://auth.hookah.app/oauth/authorize?client_id=admin&response_type=code&redirect_uri=" + currUrl;
       }
     }
   });
@@ -46,14 +44,16 @@ import MainController from "./controller/MainController";
 
 
 export default angular.module('Common', [
-  'ui.bootstrap',
+  'ui.bootstrap.modal',
+  'ui.bootstrap.tooltip',
   'angular-growl',
   'angularSpinner',
+  // tooltip,pagination,modal
 ])
   .constant('apiServer', {
     "admin": "http://console.hookah.app",
   })
-  .constant('loginUrl', "http://auth.ziroot.app/oauth/authorize?client_id=test&response_type=code&redirect_uri=")
+  .constant('loginUrl', "http://auth.hookah.app/oauth/authorize?client_id=test&response_type=code&redirect_uri=")
   .config(['growlProvider', function (growlProvider) {
     /**
      * 配置消息提示
@@ -133,10 +133,10 @@ function HttpInterceptor($q, $rootScope, $location, $window) {
       res.config.responseTimestamp = new Date().getTime();
       var time = res.config.responseTimestamp - res.config.requestTimestamp;
       console.log('The request took ' + (time / 1000) + ' seconds.');
-      if (res.data.totalItems) {
-        $rootScope.pagination.store = res.data.list;
-        $rootScope.pagination.currentPage = res.data.currentPage;
-        $rootScope.pagination.totalItems = res.data.totalItems;
+      if (res.data.data !== undefined && res.data.data.totalItems) {
+        $rootScope.pagination.store = res.data.data.list;
+        $rootScope.pagination.currentPage = res.data.data.currentPage;
+        $rootScope.pagination.totalItems = res.data.data.totalItems;
         $rootScope.paginationSupport = true;
         // if(res.data.totalPages >1){
         //
