@@ -3,6 +3,8 @@ package com.jusfoun.hookah.rpc.api;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.domain.vo.EsGoodsVo;
 
+import java.util.List;
+
 /**
  * Created by wangjl on 2017-3-28.
  */
@@ -21,4 +23,8 @@ public interface ElasticSearchService {
     void deleteIndex(String indexName) throws Exception;
 
     Pagination search(EsGoodsVo vo) throws Exception;
+
+    List<String> goodsSuggestion(String prefix, Integer size) throws Exception;
+
+    List<String> goodsSuggestion(String prefix) throws Exception;
 }

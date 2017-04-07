@@ -1,0 +1,33 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/usercenter/user-center-menu.css">
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/infoDetail.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="grid-left info-center-box ">
+            <div class="header">
+                <h4 class="info-center-title">消息详情</h4>
+            </div>
+            <div class="bottom">
+                <div style="margin: 30px 50px;"><a href="javascript:void(0)"> <img src="/static/images/paoxian.png" alt=""></a></div>
+                <textarea name="" id="" cols="155" rows="20">
+                    信息详情信息详情信息详情信息详情信息详情信息详情
+                </textarea>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+
+
+
