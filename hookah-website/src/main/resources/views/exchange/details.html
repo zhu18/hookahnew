@@ -10,13 +10,14 @@ var head = {
 var htmlPart = {
 %>
 <div class="grid-0 goodsDetails bdg-row " >
-
     <div class="grid-row" style="position: relative">
         <%include("/layout/menu.html"){} %>
         <div class="grid-left goods-left bdg-row margin-top-20">
             <div class="goods-details">
                  <div class="goods-details-img grid-left bdg-row">
-                     <div class="img-box"></div>
+                     <div class="img-box">
+                         <img src="/static/images/4-3.jpg" alt="" id="J_goodsImg">
+                     </div>
                      <div class="collect-box margin-top-20">
                          <p class="display-inline-block">
                              <i class="fa fa-eye" aria-hidden="true"></i>
@@ -32,152 +33,276 @@ var htmlPart = {
                  </div>
                   <!--详细信息-->
                  <div class="goods-details-right grid-left bdg-row">
-                     <div class="detail-title margin-bottom-10">
-                         <span class="font-weight-bold vertical-align-middle">小区附近周边楼盘价格</span>
+                     <div class="detail-title margin-bottom-20">
+                         <span class="font-weight-bold vertical-align-middle" id="J_goodsTitle">小区附近周边楼盘价格</span>
                          <div class="display-inline-block">
                              <span class="icon backgorund-icon-orange">免</span>
                              <span class="icon backgorund-icon-blue">企</span>
                          </div>
                      </div>
-                     <div class="detail-info margin-bottom-10">
-                          <span class="font-size-14">小区附近周边楼盘价格精准定位，看房找房一步到手，好房不用等待</span>
+                     <div class="detail-info margin-bottom-20">
+                          <span class="font-size-14" id="J_goodsBrief">小区附近周边楼盘价格精准定位，看房找房一步到手，好房不用等待</span>
                      </div>
-                     <div class="detail-money margin-bottom-10">
+                     <div class="detail-money margin-bottom-20">
                          <div>
                              <span>价格：</span>
                              <i class="fa fa-jpy font-size-14 color-orange" aria-hidden="true"></i>
-                             <span class="font-size-24 color-orange">123546</span>
-                             <span class="convert color-orange">折合0.0001元/次</span>
+                             <span class="font-size-24 color-orange" id="J_goodsPrice">123546</span>
+                             <span class="convert color-orange" id="J_goodsNumber">折合0.0001元/次</span>
                          </div>
-                         <div>
+                         <div class="money-standard">
                              <span>规格：</span>
-                             <a href="">1000/次</a>
-                             <a href="">2000/次</a>
-                             <a href="">3000/次</a>
-                             <a href="">10000/次</a>
+                             <a href="javascript:void(0)">1000/次</a>
+                             <a href="javascript:void(0);">2000/次</a>
+                             <a href="javascript:void(0);">3000/次</a>
+                             <a href="javascript:void(0);">10000/次</a>
                          </div>
                      </div>
-                     <div class="detail-star margin-bottom-10">
+                     <div class="detail-star margin-bottom-20 padding-left-10">
                          <span class="font-size-14">评分：</span>
                          <div class="display-inline-block">
-                             <i class="fa fa-heart color-orange" aria-hidden="true"></i>
-                             <i class="fa fa-heart color-orange" aria-hidden="true"></i>
-                             <i class="fa fa-heart color-orange" aria-hidden="true"></i>
-                             <i class="fa fa-heart color-orange" aria-hidden="true"></i>
-                             <i class="fa fa-heart" aria-hidden="true"></i>
+                             <i class="fa fa-star color-orange font-size-18" aria-hidden="true"></i>
+                             <i class="fa fa-star color-orange font-size-18" aria-hidden="true"></i>
+                             <i class="fa fa-star color-orange font-size-18" aria-hidden="true"></i>
+                             <i class="fa fa-star color-orange font-size-18" aria-hidden="true"></i>
+                             <i class="fa fa-star-o color-orange font-size-18" aria-hidden="true"></i>
                          </div>
                      </div>
-                     <div class="detail-count margin-bottom-10">
-                         <span class="font-size-14">数量:</span>
-                         <div class="display-inline-block">3333</div>
-                         <a href="">立即购买</a>
+                     <div class="detail-count margin-bottom-20 padding-left-10 margin-top-10">
+                         <span class="font-size-14">数量：</span>
+                         <div class="purchase-quantity vertical-align-middle">
+                             <a href="javascript:void(0)" class=" btn-a btn-sub">-</a>
+                             <input type="text" value="1">
+                             <a href="javascript:void(0)" class="btn-a btn-plus">+</a>
+                         </div>
+                         <a href="javascript:void(0);" class="vertical-align-middle btn btn-full-orange margin-left-10">立即购买</a>
+                         <a href="javascript:void(0);" class="vertical-align-middle btn btn-full-blue margin-left-10">加入购物车</a>
                      </div>
                  </div>
             </div>
             <!--table切换-->
-            <div class="goods-table margin-top-20 ">
-                <div>
-                    <ul class="table-list">
-                        <li>API详情</li>
-                        <li>详细介绍</li>
-                        <li>返回参数</li>
-                        <li>评论</li>
-                    </ul>
+            <div class="goods-table margin-top-20 margin-bottom-10">
+                    <div class="table-title">
+                        <ul>
+                            <li class="grid-left active">API详情</li>
+                            <li class="grid-left">详情介绍</li>
+                            <li class="grid-left">返回参数</li>
+                            <li class="grid-left">评价</li>
+                        </ul>
+                    </div>
+                    <div class="table-content">
+                        <div class="table-item active">
+                            <h1 class="font-size-14 margin-bottom-10">小区周楼盘房价</h1>
+                            <table class="tab-one">
+                                <caption><h3>标示信息</h3></caption>
+                                <tr>
+                                    <td>接口地址：</td>
+                                    <td>http://open.galaxybigdata.com/api/gbd/200/6/communityAroundRealEstatePrices</td>
+                                </tr>
+                                <tr>
+                                    <td>请求示例：</td>
+                                    <td>http://open.galaxybigdata.com/api/gbd/200/6/communityAroundRealEstatePrices</td>
+                                </tr>
+                                <tr>
+                                    <td>接口描述：</td>
+                                    <td>
+                                        可在全国选定任一小区（楼盘）名称或百度坐标点，然后根据房产用途（住宅、商铺、办公）、距离范围（1000米），查询周边小区（楼
+                                        盘）特征信息和当前房价情况。 查询结果包括：周边小区（楼盘）名称、经度、纬度、行政区名称、道路、方位、距离、用途、建筑类型、价格。
+                                        查询范围覆盖全国366个城市，基本上有商品房交易的地区都可以查询。
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="tab-two margin-top-20 margin-bottom-40">
+                                <caption><h3>请求参数</h3></caption>
+                                <tr>
+                                <th>名称</th>
+                                <th>类型</th>
+                                <th>必填</th>
+                                <th>示例值</th>
+                                <th>描述</th>
+                                </tr>
+                                <tr>
+                                <td>appkey</td>
+                                <td>String</td>
+                                <td>是</td>
+                                <td></td>
+                                <td>你申请的appkey</td>
+                                </tr>
+                                <tr>
+                                <td>keyword</td>
+                                <td>String</td>
+                                <td>否</td>
+                                <td></td>
+                                <td>关键字（模糊匹配标题）</td>
+                                </tr>
+                                <tr>
+                                <td>place</td>
+                                <td>String</td>
+                                <td>是</td>
+                                <td>山东</td>
+                                <td>省/市</td>
+                                </tr>
+                                <tr>
+                                <td>doc_type</td>
+                                <td>String</td>
+                                <td>否</td>
+                                <td>中标广告</td>
+                                <td>类型</td>
+                                </tr>
+                                <tr>
+                                <td>appkey</td>
+                                <td>String</td>
+                                <td>是</td>
+                                <td></td>
+                                <td>你申请的appkey</td>
+                                </tr>
+                                <tr>
+                                <td>keyword</td>
+                                <td>String</td>
+                                <td>否</td>
+                                <td></td>
+                                <td>关键字（模糊匹配标题）</td>
+                                </tr>
+                                <tr>
+                                <td>place</td>
+                                <td>String</td>
+                                <td>是</td>
+                                <td>山东</td>
+                                <td>省/市</td>
+                                </tr>
+                                <tr>
+                                <td>doc_type</td>
+                                <td>String</td>
+                                <td>否</td>
+                                <td>中标广告</td>
+                                <td>类型</td>
+                                </tr>
+                            </table>
+
+                            <!---->
+                            <!--<div class="table-box">-->
+                                <!--<table>-->
+
+                                <!--</table>-->
+                            <!--</div>-->
+                        </div>
+                        <div class="table-item detail" id="J_goodsDesc">
+                            <h3 class="font-size-14">借口详解</h3>
+                            <p class="margin-top-10 margin-bottom-10">中国各省市招投标信息查询，数据来源于中国招标网，助您了解最新、最全、最可靠的招标信息！</p>
+                            <p class="margin-bottom-10">
+                                本商品里的“招标投标活动“”遵循公开、公平、公正和诚实信用的原则，在货物、工程和服务的采购行为中，招标人可以通过本接口了解事先公布的采购和要求，按照同等条件进行平等竞争，按照规定程序并组织技术、经济和法律等方面专家对众多的投标人进行综合评审，从中择优选定项目的中标人的行为过程。其实质是以较低的价格获得最优的货物、工程和服务。</p>
+                            <ul>
+                                <li><label>覆盖范围：</label>全国</li>
+                                <li><label>数据量：</label>数百万条</li>
+                                <li><label>更新频率：</label>每天</li>
+                                <li><label>应用场景：</label>可应用于企业进行招投标参考工具、帮助用户了解市场相关讯息、政府部门的决策风向、快速定位所需查找的招投标信息</li>
+                            </ul>
+                        </div>
+                        <!--返回参数-->
+                        <div class="table-item">
+                                <table>
+                                    <caption><h3>返回参数</h3></caption>
+                                    <tr>
+                                        <th>错误码</th>
+                                        <th>说明</th>
+                                    </tr>
+                                    <tr>
+                                        <td>10000</td>
+                                        <td>查询成功</td>
+                                    </tr>
+                                    <tr>
+                                        <td>10001</td>
+                                        <td>错误的请求appkey</td>
+                                    </tr>
+                                    <tr>
+                                        <td>10002</td>
+                                        <td>调用的服务商借口异常，请联系管理员</td>
+                                    </tr>
+                                    <tr>
+                                        <td>10003</td>
+                                        <td>不存在想用的数据信息</td>
+                                    </tr>
+                                    <tr>
+                                        <td>10004</td>
+                                        <td>URL上appkey参数不能为空</td>
+                                    </tr>
+                                    <tr>
+                                        <td>10010</td>
+                                        <td>接口需要付费，请充值</td>
+                                    </tr>
+                                    <tr>
+                                        <td>10020</td>
+                                        <td>系统繁忙，请稍后再试</td>
+                                    </tr>
+                                </table>
+                        </div>
+                        <div class="table-item">
+                            <h1 class="font-size-14 margin-bottom-10">最新评论</h1>
+                            <ol>
+                                <li>
+                                    <div class="comment-title margin-bottom-10">
+                                        <span class="name padding-left-10">wu******dy</span>
+                                        <span class="date padding-left-20">2017年03月13日 17:12:28</span>
+                                        <a href="javascript:void(0)" class="padding-left-20">回复</a>
+                                    </div>
+                                    <div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>
+                                </li>
+                                <li>
+                                    <div class="comment-title margin-bottom-10">
+                                        <span class="name padding-left-10">wu******dy</span>
+                                        <span class="date padding-left-20">2017年03月13日 17:12:28</span>
+                                        <a href="javascript:void(0)" class="padding-left-20">回复</a>
+                                    </div>
+                                    <div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>
+                                </li>
+                                <li>
+                                    <div class="comment-title margin-bottom-10">
+                                        <span class="name padding-left-10">wu******dy</span>
+                                        <span class="date padding-left-20">2017年03月13日 17:12:28</span>
+                                        <a href="javascript:void(0)" class="padding-left-20">回复</a>
+                                    </div>
+                                    <div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>
+                                </li>
+                                <li>
+                                    <div class="comment-title margin-bottom-10">
+                                        <span class="name padding-left-10">wu******dy</span>
+                                        <span class="date padding-left-20">2017年03月13日 17:12:28</span>
+                                        <a href="javascript:void(0)" class="padding-left-20">回复</a>
+                                    </div>
+                                    <div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
                 </div>
-                <div class="tab-list padding-15">
-                    <span>小区卡夫卡收到回复飞</span>
-                    <table class="grid-0">
-                        <tr>
-                            <th>标识信息</th>
-                            <th></th>
-                        </tr>
-                         <tr>
-                             <td>接口地址:</td>
-                             <td>3234654654654646546546546546546465</td>
-                         </tr>
-                        <tr>
-                            <td>请求视力:</td>
-                            <td>3234654654654646546546546546546465</td>
-                        </tr>
-                        <tr>
-                            <td>接口详情:</td>
-                            <td>3234654654654646546546546546546465</td>
-                        </tr>
-                    </table>
-                    <table class="grid-0 margin-top-20">
-                        <tr>
-                            <th>标识信息</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                        <tr>
-                            <th>标识信息</th>
-                            <th>类型</th>
-                            <th>必填</th>
-                            <th>势力制</th>
-                            <th>描述</th>
-                        </tr>
-                        <tr>
-                            <td>appkey</td>
-                            <td>String</td>
-                            <td>否</td>
-                            <td></td>
-                            <td>您申请的appkey</td>
-                        </tr>
-                        <tr>
-                            <td>appkey</td>
-                            <td>String</td>
-                            <td>否</td>
-                            <td></td>
-                            <td>您申请的appkey</td>
-                        </tr>
-                        <tr>
-                            <td>appkey</td>
-                            <td>String</td>
-                            <td>否</td>
-                            <td></td>
-                            <td>您申请的appkey</td>
-                        </tr>
-                        <tr>
-                            <td>appkey</td>
-                            <td>String</td>
-                            <td>否</td>
-                            <td></td>
-                            <td>您申请的appkey</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
         </div>
-        <div class="grid-right goods-right">
+        <div class="grid-right goods-right margin-top-20">
             <div class="recommend-one">
                 <div class="recommend-title font-weight-bold">数据推荐</div>
                 <ul>
                     <li>
-                        <img src="" alt="">
+                        <img src="/static/images/a1.png" alt="">
                         <div class="img-info">
                             <p>失信被执行人查询</p>
                             <p class="color-orange">￥100/次</p>
                         </div>
                     </li>
                     <li>
-                        <img src="" alt="">
+                        <img src="/static/images/a1.png" alt="">
                         <div class="img-info">
                             <p>失信被执行人查询</p>
                             <p class="color-orange">￥100/次</p>
                         </div>
                     </li>
                     <li>
-                        <img src="" alt="">
+                        <img src="/static/images/a1.png" alt="">
                         <div class="img-info">
                             <p>失信被执行人查询</p>
                             <p class="color-orange">￥100/次</p>
                         </div>
                     </li>
                     <li>
-                        <img src="" alt="">
+                        <img src="/static/images/a1.png" alt="">
                         <div class="img-info">
                             <p>失信被执行人查询</p>
                             <p class="color-orange">￥100/次</p>
@@ -189,24 +314,24 @@ var htmlPart = {
                 <div class="recommend-title font-weight-bold">活动推荐</div>
                 <ul>
                     <li>
-                        <img src="" alt="">
+                        <img src="/static/images/a1.png" alt="">
                     </li>
                     <li>
-                        <img src="" alt="">
+                        <img src="/static/images/a1.png" alt="">
                     </li>
                     <li>
-                        <img src="" alt="">
+                        <img src="/static/images/a1.png" alt="">
                     </li>
                     <li>
-                        <img src="" alt="">
+                        <img src="/static/images/a1.png" alt="">
                     </li>
                 </ul>
             </div>
         </div>
     </div>
 </div>
-
-<script src="/static/js/exchange/common.js"></script>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
+<script src="/static/js/exchange/common.js"></script>
+<script src="/static/js/goods/details.js"></script>

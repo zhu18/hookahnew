@@ -1,0 +1,41 @@
+
+.clearfix:after {
+    visibility: hidden;
+    clear: both;
+    display: block;
+    content: ".";
+    height: 0;
+    font-size: 0;
+    zoom: 1;
+}
+
+.box .detail .top {
+    line-height: 40px;
+    color:#8A8A8A;
+}
+/*左侧内容*/
+.box .detail .bot .leftContent {
+    width: 1000px;
+    background: #fff;
+    margin:0 auto;
+}
+.box .detail .bot .leftContent h3{
+    font-size: 20px;
+}
+.box .detail .bot .leftContent .auth {
+    color:#B2B2B2;
+    position:relative;
+}
+.box .detail .bot .leftContent .auth img {
+    position:absolute;
+}
+.box .detail .bot .leftContent .auth span span:nth-child(1){
+    color:#3B93EC;
+}
+.box .detail .bot .leftContent .auth span:nth-child(3){
+    float: right;
+}
+.box .detail .bot .leftContent .content p {
+    line-height: 20px;
+}
+

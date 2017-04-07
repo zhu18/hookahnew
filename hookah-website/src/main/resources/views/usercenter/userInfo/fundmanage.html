@@ -1,0 +1,37 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/usercenter/user-center-menu.css">
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/fundmanage.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="grid-left info-center-box ">
+            <div class="user-center-box grid-right">
+                <h3 class="center-title">资金管理</h3>
+                <div class="fundmanage-box">
+                    <div class="fundmanage-bd">
+                        <div class="user-infos grid-left">
+                            <div class="user-head-img"><img src="/static/images/zheng.jpg" alt=""></div>
+                            <p>Hi,<span>nickname</span></p>
+                        </div>
+                        <div class="user-balance grid-left">
+                            <div class="title">余额:</div>
+                            <div class="price">8000<span>.00元</span></div>
+                            <div class="operation"><a href="/usercenter/recharge">充值</a><a href="/usercenter/withdrawals" class="btn-2">提现</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>

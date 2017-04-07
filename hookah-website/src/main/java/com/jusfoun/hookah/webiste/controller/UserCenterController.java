@@ -40,19 +40,17 @@ public class UserCenterController {
         return "1/usercenter/index";
     }
 
-    @RequestMapping(value = "/1/usercenter/fundmanage", method = RequestMethod.GET)
-    public String fundmanage() { return "1/usercenter/fundmanage"; }
-
     @RequestMapping(value = "/1/usercenter/safeset", method = RequestMethod.GET)
     public String safeset() { return "1/usercenter/safeset"; }
 
     @RequestMapping(value = "/1/usercenter/recharge", method = RequestMethod.GET)
-    public String recharge() { return "1/usercenter/recharge"; }
+    public String recharge1() { return "1/usercenter/recharge"; }
 
     @RequestMapping(value = "/1/usercenter/withdrawals", method = RequestMethod.GET)
-    public String withdrawals() { return "1/usercenter/withdrawals"; }
+    public String withdrawals1() { return "1/usercenter/withdrawals"; }
 
-
+    @RequestMapping(value = "/1/usercenter/fundmanage", method = RequestMethod.GET)
+    public String fundmanage1() { return "1/usercenter/fundmanage"; }
 
     @RequestMapping(value = "/1/usercenter/publishArticle", method = RequestMethod.GET)
     public String publishArticle() { return "1/usercenter/publishArticle"; }
@@ -60,13 +58,36 @@ public class UserCenterController {
 
 
     @RequestMapping(value = "/usercenter/userInfo", method = RequestMethod.GET)
-    public String userInfo() { return "usercenter/userInfo"; }
+    public String userInfo() { return "usercenter/userInfo/userInfo"; }
 
     @RequestMapping(value = "/usercenter/safeSet", method = RequestMethod.GET)
-    public String safeSet() { return "usercenter/safeSet"; }
+    public String safeSet() { return "usercenter/userInfo/safeSet"; }
 
     @RequestMapping(value = "/usercenter/infoCenter", method = RequestMethod.GET)
-    public String infoCenter() { return "usercenter/infoCenter"; }
+    public String infoCenter() { return "usercenter/userInfo/infoCenter"; }
+
+    @RequestMapping(value = "/usercenter/infoCenterA", method = RequestMethod.GET)
+    public String infoCenterA() { return "usercenter/userInfo/infoCenterA"; }
+
+    @RequestMapping(value = "/usercenter/infoDetail", method = RequestMethod.GET)
+    public String infoDetail() { return "usercenter/userInfo/infoDetail"; }
+
+    @RequestMapping(value = "/usercenter/userProfile", method = RequestMethod.GET)
+    public String userProfile() { return "usercenter/userInfo/userProfile"; }
+
+    @RequestMapping(value = "/usercenter/fundmanage", method = RequestMethod.GET)
+    public String fundmanage() { return "usercenter/userInfo/fundmanage"; }
+
+    @RequestMapping(value = "/usercenter/recharge", method = RequestMethod.GET)
+    public String recharge() { return "/usercenter/userInfo/recharge"; }
+
+    @RequestMapping(value = "/usercenter/withdrawals", method = RequestMethod.GET)
+    public String withdrawals() { return "/usercenter/userInfo/withdrawals"; }
+
+    @RequestMapping(value = "/usercenter/cash", method = RequestMethod.GET)
+    public String cash() { return "/usercenter/userInfo/cash"; }
+    @RequestMapping(value = "/usercenter/createOrder", method = RequestMethod.GET)
+    public String createOrder() { return "/usercenter/userInfo/createOrder"; }
 
     @RequestMapping(value = "/usercenter/goodsManage", method = RequestMethod.GET)
     public String goodsManage(String pageNumber, String pageSize, String goodsName, Byte checkStatus, Model model) {
@@ -105,10 +126,6 @@ public class UserCenterController {
     public String goodsPublish(){
         return "usercenter/myseller/goodsPublish";
     }
-    @RequestMapping(value = "/usercenter/myAttention", method = RequestMethod.GET)
-    public String myAttention(){
-        return "usercenter/myseller/myAttention";
-    }
 
     @RequestMapping(value = "/usercenter/goodsEdit", method = RequestMethod.GET)
     public String goodsEdit(){
@@ -118,5 +135,50 @@ public class UserCenterController {
     public String admin(){
         return "usercenter/admin/index";
     }
+    @RequestMapping(value = "/usercenter/myAttention", method = RequestMethod.GET)
+    public String myAttention(){
+        return "usercenter/mybuyer/myAttention";
+    }
 
+    @RequestMapping(value = "/usercenter/buyer/evaluation", method = RequestMethod.GET)
+    public String evaluation(){
+        return "usercenter/buyer/evaluation";
+    }
+
+    @RequestMapping(value = "usercenter/buyer/cart", method = RequestMethod.GET)
+    public String cart(){ return "usercenter/buyer/cart"; }
+
+    @RequestMapping(value = "/usercenter/buyer/orderManagement", method = RequestMethod.GET)
+    public String orderManagement(){ return "/usercenter/buyer/orderManagement"; }
+
+
+    @RequestMapping(value = "usercenter/customer", method = RequestMethod.GET)
+    public String customer(){
+        return "usercenter/myseller/customer";
+    }
+
+    @RequestMapping(value = "usercenter/custom", method = RequestMethod.GET)
+    public String custom(){
+        return "usercenter/myseller/custom";
+    }
+
+    @RequestMapping(value = "usercenter/illegal", method = RequestMethod.GET)
+    public String illegal(){
+        return "usercenter/myseller/illegal";
+    }
+
+    @RequestMapping(value = "usercenter/rate", method = RequestMethod.GET)
+    public String rate(){
+        return "usercenter/myseller/rate";
+    }
+
+    @RequestMapping(value = "usercenter/trade", method = RequestMethod.GET)
+    public String trade(){
+        return "usercenter/myseller/trade";
+    }
+
+    @RequestMapping(value = "usercenter/tradeing", method = RequestMethod.GET)
+    public String tradeing(){
+        return "usercenter/myseller/tradeing";
+    }
 }

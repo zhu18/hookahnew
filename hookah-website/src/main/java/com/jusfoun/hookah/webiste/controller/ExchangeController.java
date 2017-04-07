@@ -25,7 +25,6 @@ public class ExchangeController {
     }
     @RequestMapping(value = "/exchange", method = RequestMethod.GET)
     public String index(Model model){
-        model.addAttribute("categoryInfo", categoryService.getCatTree());
         return "exchange/index";
     }
     @RequestMapping(value = "/exchange/list", method = RequestMethod.GET)
