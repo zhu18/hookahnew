@@ -1549,46 +1549,8 @@ lesshat-selector {
 
 /*搜索页面*/
 
-@charset "UTF-8";
-/*
-* container styles
-*/
 dl {
     display: inline-block;
-}
-
-/*��ҳ*/
-.pageBox {
-    text-align: center;
-    padding: 30px 0px;
-}
-
-.pageBox .pagination {
-    overflow: hidden;
-    display: inline-block;
-    margin: 0px;
-}
-
-.pageBox .pagination li {
-    display: inline-block;
-    float: left;
-    overflow: hidden;
-    margin-right: 5px !important;
-}
-
-.pageBox .pagination li a {
-    display: inline-block;
-    padding: 0px 13px;
-    background: white;
-    height: 30px;
-    border: 1px solid #D4D4D4;
-    line-height: 30px;
-    color: black;
-}
-
-.pageBox .pagination .active a {
-    background: #D4D4D4;
-    color: white;
 }
 
 
@@ -2544,6 +2506,10 @@ dl {
     height: 200px;
     border: 1px solid #EFEFEF;
 }
+.goods-left .goods-details .goods-details-img .img-box img{
+    width: 200px;
+    height: 200px;
+}
 .goods-left .goods-details .goods-details-img .collect-box{
 
 }
@@ -2581,12 +2547,19 @@ dl {
 }
 .goods-left .goods-details .goods-details-right .detail-money .convert{
     display: inline-block;
-    width: 110px;
+    padding: 0 10px;
+    margin-left: 5px;
     height: 22px;
     line-height: 22px;
     text-align: center;
     vertical-align: text-bottom;
     border: 1px solid #ffa800;
+}
+.goods-left .goods-details .goods-details-right .detail-money .money-standard a{
+    display: inline-block;
+    line-height: 22px;
+    padding: 0 5px;
+    border: 1px solid #333;
 }
 .goods-details .goods-details-right .detail-count .purchase-quantity{
     position: relative;
@@ -2595,19 +2568,20 @@ dl {
     height: 25px;
     border: 1px solid #4490F6;
 }
-.goods-details .goods-details-right .detail-count .purchase-quantity button{
+.goods-details .goods-details-right .detail-count .purchase-quantity .btn-a{
     position: absolute;
-    border: none;
     width: 25px;
     height: 25px;
+    font-size: 25px;
+    line-height: 23px;
     background-color: #4490F6;
     color: white;
 }
-.goods-details .goods-details-right .detail-count .purchase-quantity button:nth-child(1){
+.goods-details .goods-details-right .detail-count .purchase-quantity .btn-sub{
     top:0;
     left: 0;
 }
-.goods-details .goods-details-right .detail-count .purchase-quantity button:last-child{
+.goods-details .goods-details-right .detail-count .purchase-quantity .btn-plus{
     top:0;
     right: 0;
 }
@@ -2628,36 +2602,108 @@ dl {
     color: white;
     font-size: 14px;
 }
+
+/*接口详情*/
 .goodsDetails .goods-left .goods-table{
     background-color: white;
-    height: 740px;
+    border: 1px solid #E9E9E9;
 }
-.goodsDetails .goods-left .goods-table .table-list{
-    height: 41px;
-    background-color: #F4F4F4;
-    border: 1px solid #efefef;
+.goods-table .fiexd{
+    position: fixed;
+    top:0;
+    width: 1200px;
 }
-.goodsDetails .goods-left .goods-table .tab-list table tr{
-    height: 41px;
-    border: 1px solid #EFEFEF;
-    width: 170px;
-}
-.goodsDetails .goods-left .goods-table .table-list li{
-    float: left;
-    height: 41px;
+.goods-table .table-title{
     font-size: 16px;
-    line-height: 41px;
-    text-align: center;
-    padding: 0px 20px;
-    border-right: 1px solid #EFEFEF;
+    margin-bottom: 20px;
+}
+.goods-table .table-title ul{
+    height:40px;
     background-color: #F4F4F4;
 }
-.goodsDetails .goods-left .goods-table .table-list li:last-child{
+.goods-table .table-title li{
+    cursor: pointer;
+    width: 10%;
+    position: relative;
+    text-align: center;
+    line-height: 30px;
+    padding: 0 10px;
+    margin: 5px 0;
+    border-right: 1px solid #E9E9E9;
+}
+.goods-table .table-title li:last-child{
     border-right: none;
 }
-.goodsDetails .goods-right{
+.goods-table .table-title li.active{
+    height:35px;
+    color: #078cfc;
+    border-bottom:2px solid #078cfc;
+}
+.goods-table .table-title li.active:after{
+    content: '';
+    position: absolute;
+    border-left: 5px solid transparent;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid #078cfc;
+    border-right: 5px solid transparent;
+    right: 50%;
+    margin-right: -10px;
+    bottom: 0px;
+}
+.goods-table .table-content{
+    padding:0 20px;
+}
+.goods-table .table-content .table-item{
 
 }
+.goods-table .table-content .table-item table{
+    width: 100%;
+}
+.goods-table .table-content .table-item table caption{
+    height: 40px;
+    line-height: 40px;
+    padding-left: 20px;
+    text-align: left;
+    border: 1px solid #e9e9e9;
+    border-bottom: none;
+}
+.goods-table .table-content .table-item table tr{
+     height: 40px;
+     border: 1px solid #E9E9E9;
+ }
+.goods-table .table-content .table-item .tab-one td:first-child{
+    padding-left: 20px;
+    width: 60px;
+    text-align: right;
+}
+.goods-table .table-content .table-item table {
+    text-align: left;
+}
+.goods-table .table-content .table-item table  td,th{
+    padding-left: 20px;
+}
+.goods-table .table-content .table-item:last-child ol .comment-title{
+   background-color: #F1F1F1;
+    display: inline-block;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+}
+
+.goods-table .table-content .detail{
+
+}
+.goods-table .table-content .detail li{
+    height: 40px;
+    line-height: 40px;
+
+}
+.goods-table .table-content .detail li label{
+    width: 100px;
+    display: inline-block;
+}
+ /*推荐信息 */
+.goodsDetails .goods-right{}
 .goodsDetails .goods-right .recommend-one{
     border: 1px solid #EFEFEF;
     padding: 10px;

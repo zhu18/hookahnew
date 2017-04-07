@@ -1,0 +1,242 @@
+.info-center-box{
+    margin-left:20px;
+    margin-top:20px;
+
+}
+.center-title{
+    height: 40px;
+    line-height:40px;
+    font-size:18px;
+    border-bottom:1px solid #e0e0e0;
+}
+.user-center-box{
+    width:970px;
+}
+.hello-user{
+    font-size: 16px;
+    line-height: 40px;
+}
+.hello-user span{
+    margin: 0 10px;
+    color: #00c1de;
+}
+.user-info{
+    padding: 20px 0 200px 30px;
+    background: #f1f1f1;
+}
+.user-info .user-head-portrait{
+    display: block;
+    width: 100px;
+    height: 100px;
+    border: 1px solid #ccc;
+    text-align: center;
+    line-height: 100px;
+    font-size: 30px;
+    position: relative;
+    background: #fff;
+}
+.user-info .user-head-portrait img{
+    width:100%;
+}
+.user-info .user-head-portrait span{
+    display: none;
+    position: absolute;
+    font-size: 12px;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top:0;
+    background: rgba(0,0,0,0.8);
+    color: #fff;
+    cursor: pointer;
+}
+.user-info .user-head-portrait:hover span{
+
+    display: block;
+}
+.user-info ul{}
+.user-info li{
+    position: relative;
+    line-height: 60px;
+    padding-left: 100px;
+    min-height: 60px;
+    font-size:14px;
+}
+.user-info .tip-title{
+    line-height: 20px;
+    min-height: 20px;
+    color: #bd2424;
+}
+.user-info label{
+    position: absolute;
+    left: 0;
+}
+.user-info .except{
+    width: auto;
+    margin-right: 10px;
+    position: static;
+    display: inline;
+}
+.user-info span{}
+.user-info .input-txt{
+    padding: 4px;
+    width: 220px;
+    height: 30px;
+    border: 1px solid #ccc;
+    line-height: 30px;
+    font-size: 14px;
+    color: #222;
+    background: #fff;
+}
+.user-info .input-txt:focus{
+    outline: none;
+    border:1px solid #00c1de;
+}
+.user-info .submit-btn{
+    min-width:100px;
+    height:36px;
+    border:0;
+    background:#00c1de;
+    color:#fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+/******fund-manage start*******/
+.fundmanage-box{
+    padding-top: 20px;
+}
+.fundmanage-box .fundmanage-bd{
+    border:1px solid #ccc;
+    overflow: hidden;
+}
+.fundmanage-box .fundmanage-bd .user-infos{
+    width:200px;
+    height:240px;
+    background: #f1f1f1;
+}
+.fundmanage-box .fundmanage-bd .user-infos .user-head-img{
+    width:100px;
+    height:100px;
+    margin:30px auto;
+}
+.fundmanage-box .fundmanage-bd .user-infos .user-head-img img{width:100%;}
+.fundmanage-box .fundmanage-bd .user-infos p{
+    text-align: center;
+    font-size: 14px;
+}
+.fundmanage-box .fundmanage-bd .user-infos p span{
+    color:#00a2c9;
+}
+.fundmanage-box .fundmanage-bd .user-balance{
+    width: 708px;
+    padding:30px;
+}
+.fundmanage-box .fundmanage-bd .user-balance .title{
+    font-size: 18px;
+}
+.fundmanage-box .fundmanage-bd .user-balance .price{
+    font-size: 30px;
+    line-height: 100px;
+    padding-left:20px;
+}
+.fundmanage-box .fundmanage-bd .user-balance .price span{
+    font-size: 14px;
+}
+.fundmanage-box .fundmanage-bd .user-balance .operation a{
+    min-width:100px;
+    height:36px;
+    line-height: 36px;
+    text-align: center;
+    background:#00c1de;
+    color:#fff;
+    font-size: 16px;
+    margin-right:20px;
+    text-decoration: none;
+    display: inline-block;
+}
+.fundmanage-box .fundmanage-bd .user-balance .operation a.btn-2{
+    background:#f9cf02;
+}
+/******fund-manage end*******/
+/******safe-set start*******/
+.user-center .user-center-bd .user-center-box .safeset-box.user-info li a{
+    margin-left:50px;
+}
+
+.title-item {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e6e6e6;
+    clear: both;
+}
+.title-big {
+    font-size: 20px;
+    display: inline-block;
+}
+.font-normal {
+    font-size: 14px;
+}
+.slider-area {
+    position: relative;
+}
+.slider-bar-bg {
+    border: 1px solid #ddd;
+    background: #e6e6e6;
+    height: 2px;
+    overflow: hidden;
+}
+.slider-bar-line {
+    background: #ec6a3d;
+    height: 4px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    overflow: hidden;
+}
+.drag-ico {
+    display: inline-block;
+    zoom: 1;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    left: 200px;
+    top: -7px;
+    z-index: 2;
+    background: #fff;
+    border:1px solid #ccc;
+    border-radius: 50%;
+}
+.font-normal {
+    font-size: 14px;
+}
+.dis-inb {
+    display: inline-block;
+}
+.score_2 {
+    color: rgb(255,102,0);
+}
+.light-num {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ff7e00;
+    padding: 0 2px;
+}
+
+/******safe-set start*******/
+.price-input{
+    font-size: 14px;
+}
+.price-input input{
+    width: 200px;
+    height: 36px;
+    border: 1px solid #ccc;
+    padding: 2px 10px;
+    font-size: 16px;
+    color: #333;
+}
+.withdrawals-btn{
+    padding-left: 155px;
+    padding-top: 30px;
+}
