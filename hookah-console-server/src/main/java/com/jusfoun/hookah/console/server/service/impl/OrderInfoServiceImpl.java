@@ -103,7 +103,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         orderinfo.setCallbackStatus("true");
         orderinfo.setLastmodify(date);
         orderinfo.setEmail("");
-        orderinfo.setIsDeleted(new Integer(0).byteValue());
+        orderinfo.setIsDeleted((byte)0);
         orderinfo.setCommentFlag(0);
         return orderinfo;
     }
@@ -177,7 +177,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             orderInfo.setOrderAmount(goodsAmount);
 
             if(ordergoodsList!=null&&ordergoodsList.size()>0){
-                orderInfo.setIsDeleted(new Integer(0).byteValue());
+                orderInfo.setIsDeleted((byte)0);
                 OrderInfoVo orderInfoVo = (OrderInfoVo)orderInfo;
                 orderInfoVo.setMgOrderGoodsList(ordergoodsList);
                 orderinfoMapper.insert(orderInfo);
