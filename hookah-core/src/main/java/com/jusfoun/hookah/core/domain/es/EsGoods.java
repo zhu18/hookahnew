@@ -51,6 +51,12 @@ public class EsGoods implements Serializable {
     private Date addTime;
     @EsField(type = Type.COMPLETION, analyzer= Analyzer.IK_MAX_WORD, searchAnalyzer = Analyzer.IK_MAX_WORD)
     private Suggest suggest;
+    @EsField(type = Type.KEYWORD)
+    private Long shopPrice;
+    @EsField(type = Type.INTEGER)
+    private Integer shopNumber;
+    @EsField(type = Type.BYTE)
+    private Byte shopFormat;
 
     public String getGoodsId() {
         return goodsId;
@@ -170,5 +176,29 @@ public class EsGoods implements Serializable {
 
     public void setSuggest(Suggest suggest) {
         this.suggest = suggest;
+    }
+
+    public Long getShopPrice() {
+        return shopPrice;
+    }
+
+    public void setShopPrice(Long shopPrice) {
+        this.shopPrice = shopPrice;
+    }
+
+    public Integer getShopNumber() {
+        return shopNumber;
+    }
+
+    public void setShopNumber(Integer shopNumber) {
+        this.shopNumber = shopNumber;
+    }
+
+    public Byte getShopFormat() {
+        return shopFormat;
+    }
+
+    public void setShopFormat(Byte shopFormat) {
+        this.shopFormat = shopFormat;
     }
 }
