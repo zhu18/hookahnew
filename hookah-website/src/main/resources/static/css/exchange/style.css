@@ -28,7 +28,8 @@
 border-bottom: 2px solid #3E557B;
 }
 .exchange-index-menu .menu-son-list{
-    display: inline-block;
+    /*display: inline-block;*/
+    display: none;
     width: 338px;
     top: 0;
     padding: 10px;
