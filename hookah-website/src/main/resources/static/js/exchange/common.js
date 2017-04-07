@@ -3,58 +3,62 @@
  */
 
 $(function () {
-    var url=window.location.pathname;
-    $(".exchange-index-menu div").css('display', 'none');
-    if(url=='/exchange/list' || url=='/exchange/details'){
-    $("#exchange_menu").hover(function () {
-    $(".exchange-index-menu").css('display','block')
-    });
+    var url = window.location.pathname;
+    $(".exchange-index-menu .menu-son-list").css('display', 'none');
+    // 控制进入那个页面
+    if (url == '/exchange/list' || url == '/exchange/details') {
 
-    $(".exchange-index-menu").mouseleave(function () {
-    $(".exchange-index-menu").css('display','none')
-    })
+        $(".exchange-index-menu .menu-title").hover(function () {
 
-    $(".exchange-index-menu").css('display','none');
+            $(".exchange-index-menu .menu-list").css('display', 'block')
+        });
 
-    }else {
-        $(".exchange-index-menu").css('display', 'block');
+        $(".exchange-index-menu").mouseleave(function () {
+
+            $(".exchange-index-menu .menu-list").css('display', 'none')
+        })
+
+        $(".exchange-index-menu .menu-list").css('display', 'none');
+
+    } else {
+        $(".exchange-index-menu .menu-list").css('display', 'block');
     }
 
     $(".exchange-index-menu .menu-list li").hover(function () {
-        var index=$(this).index();
-        var height=$(this).height()+1;
-        var _this=$(this);
-
-        $(this).parent().siblings().css({
-            "top":index*height,
-            'display':"block"
+        var index = $(this).index();
+        var height = $(this).height()+1;
+        var _this = $(this);
+        $(this).parent().siblings('.menu-son-list').css({
+            "top": 46 + index * height,
+            'display': "block"
         }).mouseleave(function () {
+            console.log($(this));
             $(this).css({
-                'display':"none"
-            })
+                'display': "none"
+            });
             _this.css({
-                'backgroundColor':'#3E557B',
-                 'color':'white'
+                'backgroundColor': '#3E557B',
+                'color': 'white'
             })
         });
+
         $(this).css({
-            'backgroundColor':'white',
-            'color':'#000000'
+            'backgroundColor': 'white',
+            'color': '#000000'
         }).siblings().css({
-            'backgroundColor':'#3E557B',
-            'color':'white'
+            'backgroundColor': '#3E557B',
+            'color': 'white'
         });
     })
     $(".exchange-index-menu .menu-son-list li ").hover(function () {
-        console.log(1);
         $(this).css({
-            'backgroundColor':'#3E557B'
+            'backgroundColor': '#3E557B'
         }).find('a').css({
-            'color':'white'
+            'color': 'white'
         }).parent().siblings().css({
-            'backgroundColor':'white'
+            'backgroundColor': 'white'
         }).find('a').css({
-            'color':'#000000'
+            'color': '#000000'
         })
     })
 
