@@ -20,7 +20,7 @@ $(function () {
         $(".exchange-index-menu").css('display', 'block');
     }
 
-    $(".exchange-index-menu li").hover(function () {
+    $(".exchange-index-menu .menu-list li").hover(function () {
         var index=$(this).index();
         var height=$(this).height()+1;
         var _this=$(this);
@@ -43,13 +43,19 @@ $(function () {
         }).siblings().css({
             'backgroundColor':'#3E557B',
             'color':'white'
+        });
+    })
+    $(".exchange-index-menu .menu-son-list li ").hover(function () {
+        console.log(1);
+        $(this).css({
+            'backgroundColor':'#3E557B'
+        }).find('a').css({
+            'color':'white'
+        }).parent().siblings().css({
+            'backgroundColor':'white'
+        }).find('a').css({
+            'color':'#000000'
         })
-        // $(".exchange-index-menu div").mouseleave(function () {
-        //     $(this).css({
-        //         'backgroundColor':'#3E557B',
-        //         'color':'white'
-        //     })
-        // })
     })
 
-})
+});
