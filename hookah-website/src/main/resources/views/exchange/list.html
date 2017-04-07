@@ -4,6 +4,20 @@ var head = {
 <link rel="stylesheet" href="/static/css/index/index.css">
 <link rel="stylesheet" href="/static/css/common.css">
 <link rel="stylesheet" href="/static/css/exchange/style.css">
+<script type="text/javascript">
+    $.getUrlParam = function (key) {
+        var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+        var result = window.location.search.substr(1).match(reg);
+        return result ? decodeURIComponent(result[2]) : null;
+    };
+    var catId = $.getUrlParam('catId');
+    var pagePath = '/search/v1/goods';
+    var pageType = 'get';
+    var dataParm = {};
+    dataParm.pageNumber = 1;
+    dataParm.pageSize = 20;
+    dataParm.catIds = catId;
+</script>
 <%};%>
 
 <%
@@ -15,7 +29,7 @@ var htmlPart = {
             <div class="bdg-row" style="position: relative">
                 <!--头部类目展示模块-->
                 <%include("/layout/menu.html"){} %>
-                <div class="search-category">
+                <div class="search-category margin-top-20">
                     <div class="panel-title">
                         <span>全部结果:</span>
                     </div>
@@ -331,19 +345,20 @@ var htmlPart = {
                         </ul>
                         <!--<div class="info">暂无数据，请联系客服！</div>-->
                     </div>
-                    <div class="order-page">
-                        <div class="pageBox">
-                            <ul id="page" class="pagination" ></ul>
-                            <p><span id="total"></span>资源，共<span id="totalPage"></span>页，跳转到第<input id="inputValue" type="text"/>页<span id="pageBtn">确定</span></p>
-                        </div>
-                    </div>
+                    <%include("/layout/pageaction.html"){} %>
+                    <!--<div class="order-page">-->
+                        <!--<div class="pageBox">-->
+                            <!--<ul id="page" class="pagination" ></ul>-->
+                            <!--<p><span id="total"></span>资源，共<span id="totalPage"></span>页，跳转到第<input id="inputValue" type="text"/>页<span id="pageBtn">确定</span></p>-->
+                        <!--</div>-->
+                    <!--</div>-->
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script src="/static/js/exchange/common.js"></script>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
-<!--<%include("/static/js/exchange/common.js"){} %>-->
+<script src="/static/js/exchange/common.js"></script>
+<script src="/static/js/exchange/list.js"></script>

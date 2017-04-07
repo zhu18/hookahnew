@@ -25,7 +25,7 @@
     height: 42px;
     position: relative;
 }
-.exchange-index-menu .menu-list li > a.Bh{color:#fff;}
+.exchange-index-menu .menu-list li > a.Bh{color:#0c182d;}
 .exchange-index-menu .menu-list li > a.Bh:hover{
 color:#7791bd;
 }
@@ -34,14 +34,15 @@ border-bottom: 2px solid #3E557B;
 }
 .menu-son-list a:hover{color:#FFA800;}
 .exchange-index-menu .menu-son-list{
-    /*display: inline-block;*/
     display: none;
     width: 338px;
-    top: 0;
+    top:-2px;
     padding: 10px;
-    left: 190px;
+    left: 189px;
     position: absolute;
     background-color: white;
+    border:1px solid #ccc;
+    border-left:0;
 }
 .exchange-index-menu .menu-son-list ul li{
     float: left;
@@ -1712,8 +1713,7 @@ dl {
 
 .search .search-order .order {
     border: 1px solid #E9E9E9;
-    border-bottom: none;
-    background-color: #F4F4F4;
+    background-color: #fff;
     height: 40px;
     font-size: 12px;
 }
@@ -1812,13 +1812,16 @@ dl {
 
 .search .search-order .order-list ul li {
     height: 238px;
-    width: 238px;
+    width: 230px;
     float: left;
     color: black;
     background-color: white;
     border: 1px solid #E5E5E5;
+    margin:10px 10px 0 0;
 }
-
+.search .search-order .order-list ul li:nth-child(5n){
+    margin-right: 0;
+}
 .search .search-order .order-list ul li .item-top {
     cursor: pointer;
 }
@@ -1865,13 +1868,11 @@ dl {
 .search .search-order .order-list ul li .item-down {
     border-top: 1px solid #E5E5E5;
     line-height: 38px;
-    padding: 0 21px;
+    padding: 0 10px;
 }
 
 .search .search-order .order-list ul li .item-down span {
     color: #B2B2B2;
-    padding-left: 14px;
-    padding-right: 15px;
 }
 
 .search .search-order .order-list ul li .item-down span label {
@@ -2699,4 +2700,4 @@ dl {
     height: 47px;
 }
 /*-----*/
-
+.exchange-list{background: #f5f6f6;}

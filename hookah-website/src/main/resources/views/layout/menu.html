@@ -2,15 +2,16 @@
     <div class="menu-title"></div>
     <ul class="menu-list">
         <% for(menuList in categoryInfo){%>
-        <li>
+        <li class="menu-item">
             <i class="fa fa-list margin-right-5" aria-hidden="true"></i>
-            <span class="Bh">${menuList.catName}</span>
+            <!--<a href="/exchange/list?catId=${menuList.catId}" class="Bh">${menuList.catName}</a>-->
+            <span>${menuList.catName}</span>
             <i class="fa fa-angle-right grid-right" style="line-height: 42px;" aria-hidden="true"></i>
             <% if(menuList.children.~size > 0){ %>
             <div class="menu-son-list">
                 <ul>
                     <% for(list in menuList.children){%>
-                    <li><a href="javascript:void(0)">${list.catName} </a> </li>
+                    <li><a href="/exchange/list?catId=${list.catId}">${list.catName} </a> </li>
                     <% } %>
                 </ul>
             </div>
