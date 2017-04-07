@@ -1,8 +1,8 @@
 function loadPageData(data){ //渲染页面数据
     // return console.log(JSON.stringify(data))
 
-    if(data.data.dataList){
-        var list = data.data.dataList;
+    if(data.data.list){
+        var list = data.data.list;
         var html = '';
         for(var i=0; i<list.length; i++){
             html += '<div class="public padding-left-10 padding-top-30 padding-bottom-30 ">';

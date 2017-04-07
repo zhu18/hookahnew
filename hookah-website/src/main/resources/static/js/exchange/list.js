@@ -1,19 +1,17 @@
 function loadPageData(data){ //渲染页面数据
-    // return console.log(JSON.stringify(data))
     if(data.data.list){
         var list = data.data.list;
         var html = '';
         for(var i=0; i<list.length; i++){
             html += '<li>';
-            html += '<div class="item-top">';
-            html += '<p><img src="'+list.goodsImg+'" alt=""/></p>';
-            html += '<p>'+list.goodsName+'</p>';
-            html += '<p>'+list.goodsBrief+'</p>';
-            html += '<p ><span>'+list.goodsName+'</span></p>';
-            html += '</div>';
+            html += '<a class="item-top" href="/exchange/details?goodsId='+list[i].goodsId+'">';
+            html += '<p class="goods-img"><img src="'+list[i].goodsImg+'" alt=""/></p>';
+            html += '<p class="goods-name">'+list[i].goodsName+'</p>';
+            html += '<p class="goods-brief">'+list[i].goodsBrief+'</p>';
+            html += '</a>';
             html += '<div class="item-down">';
-            html += '<span class="grid-left">编号：<s>18769883892</s></span>';
-            html += '<a class="grid-right" href="javascript:void(0)">下载使用</a>';
+            html += '<span class="grid-left goods-price"><span>'+Number(list[i].shopPrice)/100+'</span>/'+list[i].shopNumber == 1 ? '':list[i].shopNumber+list[i].shopFormat+'</span>';
+            html += '<a class="grid-right" href="javascript:void(0)">加入购物车</a>';
             html += '</div>';
             html += '</li>';
         }
