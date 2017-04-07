@@ -2601,6 +2601,11 @@ dl {
     background-color: white;
     border: 1px solid #E9E9E9;
 }
+.goods-table .fiexd{
+    position: fixed;
+    top:0;
+    width: 1200px;
+}
 .goods-table .table-title{
     font-size: 16px;
     margin-bottom: 20px;
@@ -2611,9 +2616,11 @@ dl {
 }
 .goods-table .table-title li{
     cursor: pointer;
+    width: 10%;
+    position: relative;
     text-align: center;
     line-height: 30px;
-    padding: 0 20px;
+    padding: 0 10px;
     margin: 5px 0;
     border-right: 1px solid #E9E9E9;
 }
@@ -2624,6 +2631,17 @@ dl {
     height:35px;
     color: #078cfc;
     border-bottom:2px solid #078cfc;
+}
+.goods-table .table-title li.active:after{
+    content: '';
+    position: absolute;
+    border-left: 5px solid transparent;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid #078cfc;
+    border-right: 5px solid transparent;
+    right: 50%;
+    margin-right: -10px;
+    bottom: 0px;
 }
 .goods-table .table-content{
     padding:0 20px;
