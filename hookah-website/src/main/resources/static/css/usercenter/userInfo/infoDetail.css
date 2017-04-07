@@ -1,20 +1,41 @@
-.info-center-box{
-    width: 950px;
-    height: 700px;
-    border:1px solid #EDEDED;
-    background-color: #fff;
-    margin:10px 5px;
-    padding:0 20px;
+
+.clearfix:after {
+    visibility: hidden;
+    clear: both;
+    display: block;
+    content: ".";
+    height: 0;
+    font-size: 0;
+    zoom: 1;
 }
-.info-center-box .header{
-    height: 31px;
-    padding-top:10px;
-    border-bottom: 1px solid #EDEDED;
+
+.box .detail .top {
+    line-height: 40px;
+    color:#8A8A8A;
 }
-.info-center-title{
-    width: 100px;
-    height: 20px;
-    font:14px/20px "microsoft yahei";
-    padding-left:10px;
-    border-left:2px solid #237DE7;
+/*左侧内容*/
+.box .detail .bot .leftContent {
+    width: 1000px;
+    background: #fff;
+    margin:0 auto;
 }
+.box .detail .bot .leftContent h3{
+    font-size: 20px;
+}
+.box .detail .bot .leftContent .auth {
+    color:#B2B2B2;
+    position:relative;
+}
+.box .detail .bot .leftContent .auth img {
+    position:absolute;
+}
+.box .detail .bot .leftContent .auth span span:nth-child(1){
+    color:#3B93EC;
+}
+.box .detail .bot .leftContent .auth span:nth-child(3){
+    float: right;
+}
+.box .detail .bot .leftContent .content p {
+    line-height: 20px;
+}
+

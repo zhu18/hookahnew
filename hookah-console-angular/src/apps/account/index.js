@@ -42,6 +42,10 @@ app.run(function ($rootScope, $state) {
     {
       "title":"新增账号",
       "url":"account.add"
+    },
+    {
+      "title":"新增账号111",
+      "url":"account.add"
     }
   ];
 
