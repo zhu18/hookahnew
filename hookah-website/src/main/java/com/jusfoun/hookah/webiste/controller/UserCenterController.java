@@ -124,4 +124,9 @@ public class UserCenterController {
         return "usercenter/buyer/evaluation";
     }
 
+    @RequestMapping(value = "usercenter/buyer/cart", method = RequestMethod.GET)
+    public String cart(){
+        return "usercenter/buyer/cart";
+    }
+
 }
