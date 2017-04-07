@@ -7,6 +7,7 @@ $(function () {
     $(".exchange-index-menu .menu-son-list").css('display', 'none');
     // 控制进入那个页面
     if (url == '/exchange/list' || url == '/exchange/details') {
+        $(".exchange-index-menu .menu-list").css('display', 'none');
 
         $(".exchange-index-menu .menu-title").hover(function () {
 
@@ -15,13 +16,19 @@ $(function () {
 
         $(".exchange-index-menu").mouseleave(function () {
 
-            $(".exchange-index-menu .menu-list").css('display', 'none')
+            $(".exchange-index-menu .menu-list").css('display', 'none');
+            $(".exchange-index-menu .menu-son-list").css('display', 'none');
+
         })
-
-        $(".exchange-index-menu .menu-list").css('display', 'none');
-
     } else {
         $(".exchange-index-menu .menu-list").css('display', 'block');
+        $(".exchange-index-menu").mouseleave(function () {
+            $(".exchange-index-menu .menu-son-list").css('display', 'none');
+            $(".exchange-index-menu .menu-list li").css({
+                'backgroundColor': '#3E557B',
+                'color': 'white'
+            })
+        })
     }
 
     $(".exchange-index-menu .menu-list li").hover(function () {

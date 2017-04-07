@@ -60,13 +60,16 @@ public class UserCenterController {
 
 
     @RequestMapping(value = "/usercenter/userInfo", method = RequestMethod.GET)
-    public String userInfo() { return "usercenter/userInfo"; }
+    public String userInfo() { return "usercenter/userInfo/userInfo"; }
 
     @RequestMapping(value = "/usercenter/safeSet", method = RequestMethod.GET)
-    public String safeSet() { return "usercenter/safeSet"; }
+    public String safeSet() { return "usercenter/userInfo/safeSet"; }
 
     @RequestMapping(value = "/usercenter/infoCenter", method = RequestMethod.GET)
-    public String infoCenter() { return "usercenter/infoCenter"; }
+    public String infoCenter() { return "usercenter/userInfo/infoCenter"; }
+
+    @RequestMapping(value = "/usercenter/infoCenterA", method = RequestMethod.GET)
+    public String infoCenterA() { return "usercenter/userInfo/infoCenterA"; }
 
     @RequestMapping(value = "/usercenter/goodsManage", method = RequestMethod.GET)
     public String goodsManage(String pageNumber, String pageSize, String goodsName, Byte checkStatus, Model model) {
@@ -105,10 +108,6 @@ public class UserCenterController {
     public String goodsPublish(){
         return "usercenter/myseller/goodsPublish";
     }
-    @RequestMapping(value = "/usercenter/myAttention", method = RequestMethod.GET)
-    public String myAttention(){
-        return "usercenter/myseller/myAttention";
-    }
 
     @RequestMapping(value = "/usercenter/goodsEdit", method = RequestMethod.GET)
     public String goodsEdit(){
@@ -117,6 +116,10 @@ public class UserCenterController {
     @RequestMapping(value = "/usercenter/admin", method = RequestMethod.GET)
     public String admin(){
         return "usercenter/admin/index";
+    }
+    @RequestMapping(value = "/usercenter/myAttention", method = RequestMethod.GET)
+    public String myAttention(){
+        return "usercenter/mybuyer/myAttention";
     }
 
     @RequestMapping(value = "/usercenter/buyer", method = RequestMethod.GET)
