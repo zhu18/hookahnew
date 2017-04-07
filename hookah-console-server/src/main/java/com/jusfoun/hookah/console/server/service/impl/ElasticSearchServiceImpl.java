@@ -5,13 +5,12 @@ import com.jusfoun.hookah.console.server.config.ESTemplate;
 import com.jusfoun.hookah.console.server.config.ESTransportClient;
 import com.jusfoun.hookah.console.server.util.AnnotationUtil;
 import com.jusfoun.hookah.core.common.Pagination;
+import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.GoodsMapper;
-import com.jusfoun.hookah.core.domain.es.EsAllMapping;
-import com.jusfoun.hookah.core.domain.es.EsFieldMapping;
-import com.jusfoun.hookah.core.domain.es.EsGoods;
-import com.jusfoun.hookah.core.domain.es.EsMapping;
+import com.jusfoun.hookah.core.domain.es.*;
 import com.jusfoun.hookah.core.domain.vo.EsGoodsVo;
 import com.jusfoun.hookah.core.exception.HookahException;
+import com.jusfoun.hookah.core.utils.ShopUtils;
 import com.jusfoun.hookah.rpc.api.ElasticSearchService;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
@@ -83,9 +82,12 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
                     if (list != null && list.size() > 0) {
                         for(EsGoods goods : list) {
                             List<String> input = new ArrayList<>();
-                            input.add(goods.getGoodsId());
                             input.add(goods.getGoodsName());
-                            goods.setSuggest(input);
+                            if(ShopUtils.isContainChinese(goods.getGoodsName())) {
+                                input.add(ShopUtils.getFullSpell(goods.getGoodsName()));
+                                input.add(ShopUtils.getFirstSpell(goods.getGoodsName()));
+                            }
+                            goods.setSuggest(new Suggest(input));
                             maps.add(AnnotationUtil.convert2Map(goods));
                         }
                     }
@@ -128,4 +130,26 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
                 "goods", map, pagination, orderField, order);
         return pagination;
     }
+
+    /**
+     * 商品搜索Suggest
+     * @param prefix
+     * @param size
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<String> goodsSuggestion(String prefix, Integer size) throws Exception {
+        if(size == null)
+            size = HookahConstants.PAGE_SIZE;
+        List<String> list = esTemplate.suggest(esTransportClient.getObject(), prefix, size, "qingdao-goods-v1",
+                "goods", "suggest", "suggest1");
+        return list;
+    }
+
+    @Override
+    public List<String> goodsSuggestion(String prefix) throws Exception {
+        return goodsSuggestion(prefix, null);
+    }
+
 }
