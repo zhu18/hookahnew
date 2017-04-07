@@ -4,6 +4,15 @@
 $(function () {
     // 列表切换功能
     function switchHover() {
+        $(".goods-table .table-content .table-item").each(function () {
+            if($(this).hasClass('active')){
+                $(this).css({
+                    'display':'block'
+                }).siblings().css({
+                    'display':'none'
+                })
+            }
+        })
       $(".goods-table .table-title li").on('click',function () {
           $(this).addClass('active').siblings().removeClass('active');
           var index=$(this).index();

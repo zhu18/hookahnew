@@ -2595,6 +2595,8 @@ dl {
     color: white;
     font-size: 14px;
 }
+
+/*接口详情*/
 .goodsDetails .goods-left .goods-table{
     background-color: white;
     border: 1px solid #E9E9E9;
@@ -2655,6 +2657,27 @@ dl {
 .goods-table .table-content .table-item table  td,th{
     padding-left: 20px;
 }
+.goods-table .table-content .table-item:last-child ol .comment-title{
+   background-color: #F1F1F1;
+    display: inline-block;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+}
+
+.goods-table .table-content .detail{
+
+}
+.goods-table .table-content .detail li{
+    height: 40px;
+    line-height: 40px;
+
+}
+.goods-table .table-content .detail li label{
+    width: 100px;
+    display: inline-block;
+}
+ /*推荐信息 */
 .goodsDetails .goods-right{}
 .goodsDetails .goods-right .recommend-one{
     border: 1px solid #EFEFEF;
