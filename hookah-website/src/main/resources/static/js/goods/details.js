@@ -30,6 +30,17 @@ $(function () {
     // 购买数量功能
     function purchaseQuantity() {
           var conut='';
+           // 对输入框中的数据进行格式化
+        $('.purchase-quantity input').blur(function(){
+            var val = $(this).val();
+            if(isNaN(val)){
+                $(this).val(1);
+            }else if(val < 1 || val > 999){
+                $.alert('数量只能在1-999之间')
+                $(this).val(1);
+            }
+
+        })
         $(".purchase-quantity .btn-sub").on('click',function () {
             var val=$('.purchase-quantity input').val();
             if(val==1){
@@ -41,22 +52,13 @@ $(function () {
         $(".purchase-quantity .btn-plus").on('click',function () {
             var val=$('.purchase-quantity input').val();
             if(val == 999){
-                return
+                return;
             }
             val=parseInt(val)+1;
             $('.purchase-quantity input').val(val);
         });
     }
-    $('.purchase-quantity input').blur(function(){
-        var val = $(this).val();
-        if(isNaN(val)){
-            $(this).val(1);
-        }else if(val < 1 || val > 999){
-            $.alert('数量只能在1-999之间')
-            $(this).val(1);
-        }
 
-    })
     // 悬浮框
     function suspensionBox() {
         var nav=$(".goods-table .table-title"); //得到导航对象
