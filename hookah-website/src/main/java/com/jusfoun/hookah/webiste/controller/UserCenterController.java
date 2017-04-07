@@ -43,13 +43,14 @@ public class UserCenterController {
     @RequestMapping(value = "/1/usercenter/safeset", method = RequestMethod.GET)
     public String safeset() { return "1/usercenter/safeset"; }
 
-//    @RequestMapping(value = "/1/usercenter/recharge", method = RequestMethod.GET)
-//    public String recharge() { return "1/usercenter/recharge"; }
-//
-//    @RequestMapping(value = "/1/usercenter/withdrawals", method = RequestMethod.GET)
-//    public String withdrawals() { return "1/usercenter/withdrawals"; }
+    @RequestMapping(value = "/1/usercenter/recharge", method = RequestMethod.GET)
+    public String recharge1() { return "1/usercenter/recharge"; }
 
+    @RequestMapping(value = "/1/usercenter/withdrawals", method = RequestMethod.GET)
+    public String withdrawals1() { return "1/usercenter/withdrawals"; }
 
+    @RequestMapping(value = "/1/usercenter/fundmanage", method = RequestMethod.GET)
+    public String fundmanage1() { return "1/usercenter/fundmanage"; }
 
     @RequestMapping(value = "/1/usercenter/publishArticle", method = RequestMethod.GET)
     public String publishArticle() { return "1/usercenter/publishArticle"; }
@@ -83,8 +84,10 @@ public class UserCenterController {
     @RequestMapping(value = "/usercenter/withdrawals", method = RequestMethod.GET)
     public String withdrawals() { return "/usercenter/userInfo/withdrawals"; }
 
-//    @RequestMapping(value = "/usercenter/cash", method = RequestMethod.GET)
-//    public String cash() { return "/usercenter/userInfo/cash"; }
+    @RequestMapping(value = "/usercenter/cash", method = RequestMethod.GET)
+    public String cash() { return "/usercenter/userInfo/cash"; }
+    @RequestMapping(value = "/usercenter/createOrder", method = RequestMethod.GET)
+    public String createOrder() { return "/usercenter/userInfo/createOrder"; }
 
     @RequestMapping(value = "/usercenter/goodsManage", method = RequestMethod.GET)
     public String goodsManage(String pageNumber, String pageSize, String goodsName, Byte checkStatus, Model model) {
