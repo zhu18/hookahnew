@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.webiste.config;
 
+import com.jusfoun.hookah.webiste.interceptor.CategoryInterceptor;
 import com.jusfoun.hookah.webiste.interceptor.CommonInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -16,6 +17,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
 
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new CommonInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(new CategoryInterceptor()).addPathPatterns("/exchange*");
     }
 
     @Override
