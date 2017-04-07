@@ -10,9 +10,6 @@ $(document).ready(function () {
         var elementVal = $(this).children('a').attr('href');
         if (pathname.indexOf(elementVal) >= 0) {
             $(this).addClass('active').siblings()
-            console.log('有')
-        } else {
-            console.log('木有')
         }
         if(pathname == '/'){
             $('#menu_index').addClass('active');

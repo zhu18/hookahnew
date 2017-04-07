@@ -24,48 +24,23 @@ $(function () {
         $(".exchange-index-menu .menu-list").css('display', 'block');
         $(".exchange-index-menu").mouseleave(function () {
             $(".exchange-index-menu .menu-son-list").css('display', 'none');
-            $(".exchange-index-menu .menu-list li").css({
+            $(".exchange-index-menu .menu-list .menu-item").css({
                 'backgroundColor': '#3E557B',
                 'color': 'white'
             })
         })
     }
+    $(".exchange-index-menu .menu-list .menu-item").hover(function () {
 
-    $(".exchange-index-menu .menu-list li").hover(function () {
-        var index = $(this).index();
-        var height = $(this).height()+1;
-        var _this = $(this);
-        $(this).parent().siblings('.menu-son-list').css({
-            "top": 46 + index * height,
-            'display': "block"
-        }).mouseleave(function () {
-            console.log($(this));
-            $(this).css({
-                'display': "none"
-            });
-            _this.css({
-                'backgroundColor': '#3E557B',
-                'color': 'white'
-            })
-        });
-
-        $(this).css({
-            'backgroundColor': 'white',
-            'color': '#000000'
-        }).siblings().css({
+        $(this).children('.menu-son-list').show();
+        $(this).siblings().children('.menu-son-list').hide();
+        $(this).css({'backgroundColor': '#fff', 'color': '#3E557B', 'border-left': '1px solid #3E557B'}).siblings().css({'backgroundColor': '#3E557B', 'color': '#fff', 'border-left': 'none'})
+    })
+    $(".exchange-index-menu").mouseleave(function () {
+        $(".exchange-index-menu .menu-son-list").css('display', 'none');
+        $(".exchange-index-menu .menu-list .menu-item").css({
             'backgroundColor': '#3E557B',
             'color': 'white'
-        });
-    })
-    $(".exchange-index-menu .menu-son-list li ").hover(function () {
-        $(this).css({
-            'backgroundColor': '#3E557B'
-        }).find('a').css({
-            'color': 'white'
-        }).parent().siblings().css({
-            'backgroundColor': 'white'
-        }).find('a').css({
-            'color': '#000000'
         })
     })
 
