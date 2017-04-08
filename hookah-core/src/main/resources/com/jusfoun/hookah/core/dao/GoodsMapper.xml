@@ -5,6 +5,9 @@
         <id column="goods_id" jdbcType="VARCHAR" property="goodsId" />
         <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
         <result column="goods_name_py" jdbcType="VARCHAR" property="goodsNamePy" />
+        <result column="shop_price" jdbcType="BIGINT" property="shopPrice" />
+        <result column="shop_number" jdbcType="INTEGER" property="shopNumber" />
+        <result column="shop_format" jdbcType="TINYINT" property="shopFormat" />
         <result column="goods_brief" jdbcType="VARCHAR" property="goodsBrief" />
         <result column="goods_desc" jdbcType="VARCHAR" property="goodsDesc" />
         <result column="keywords" jdbcType="VARCHAR" property="keywords" />
@@ -20,6 +23,9 @@
             goods_id,
             goods_name,
             goods_name goods_name_py,
+            shop_price,
+            shop_number,
+            shop_format,
             goods_brief,
             goods_desc,
             keywords,

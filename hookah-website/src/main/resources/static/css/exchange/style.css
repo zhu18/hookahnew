@@ -1785,7 +1785,7 @@ dl {
     margin-right: 0;
 }
 .search .search-order .order-list ul li .item-top {
-    cursor: pointer;
+    display: block;
 }
 
 .search .search-order .order-list ul li .item-top p {
@@ -1793,39 +1793,25 @@ dl {
     padding: 4px 0;
 }
 
-.search .search-order .order-list ul li .item-top p:nth-child(1) img {
+.search .search-order .order-list ul li .item-top .goods-img img {
     width: 70px;
     margin-top: 18px;
 }
 
-.search .search-order .order-list ul li .item-top p:nth-child(2) {
+.search .search-order .order-list ul li .item-top .goods-name {
     font-size: 14px;
 }
-
-.search .search-order .order-list ul li .item-top p:nth-child(2) a {
-    max-width: 200px;
-    display: inline-block;
+.search .search-order .order-list ul li .item-top .goods-brief{
+    padding:0 5px 3px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    width:calc(100% - 10px);
 }
 
-.search .search-order .order-list ul li .item-top p:nth-child(3) {
-    color: #fdb868;
-    font-size: 22px;
-}
 
-.search .search-order .order-list ul li .item-top p:nth-child(4) {
-    padding-bottom: 10px;
-}
 
-.search .search-order .order-list ul li .item-top p:nth-child(4) span {
-    border: 1px solid #a2def2;
-    padding: 0px 5px;
-    color: #a2def2;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-}
 
 .search .search-order .order-list ul li .item-down {
     border-top: 1px solid #E5E5E5;
@@ -1842,6 +1828,10 @@ dl {
     padding-right: 10px;
 }
 
+.search .search-order .order-list ul li .item-down .goods-price span{
+    color: #fdb868;
+    font-size: 22px;
+}
 .search .search-order .order-list .info {
     font-size: 20px;
     text-align: center;
@@ -2591,6 +2581,7 @@ dl {
     left: 25px;
     width: 32px;
     height: 21px;
+    text-align: center;
 }
 .goods-left .goods-details .goods-details-right .detail-count a{
     text-align: center;
@@ -2598,8 +2589,6 @@ dl {
     display: inline-block;
     width: 110px;
     height: 32px;
-    background-color: #FDA428;
-    color: white;
     font-size: 14px;
 }
 

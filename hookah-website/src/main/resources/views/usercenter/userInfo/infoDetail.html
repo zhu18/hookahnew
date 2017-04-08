@@ -1,33 +1,58 @@
 <%
 var head = {
 %>
-<link rel="stylesheet" href="/static/css/usercenter/user-center-menu.css">
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/infoDetail.css">
+<link rel="stylesheet" href="/static/css/common.css">
 <%};%>
 
 <%
 var htmlPart = {
 %>
-<div class="grid-0 backgorund-gray">
-    <div class="grid-row clearfix">
-        <%include("/usercenter/user-center-menu.html"){} %>
-        <div class="grid-left info-center-box ">
-            <div class="header">
-                <h4 class="info-center-title">消息详情</h4>
-            </div>
-            <div class="bottom">
-                <div style="margin: 30px 50px;"><a href="javascript:void(0)"> <img src="/static/images/paoxian.png" alt=""></a></div>
-                <textarea name="" id="" cols="155" rows="20">
-                    信息详情信息详情信息详情信息详情信息详情信息详情
-                </textarea>
+<div class="box padding-bottom-50 backgorund-gray">
+    <div class="detail grid-row">
+        <div class="bot clearfix">
+            <div class="leftContent margin-right-10 padding-right-70 padding-left-70 ">
+                <button class="margin-top-30 ">返回</button>
+                <h3 class="padding-top-30 padding-bottom-20">账户资金相关信息详情</h3>
+                <div class="auth padding-bottom-30 clearfix" >
+                    <img src="/static/images/touxiang.png" alt="" >
+                    <span class="margin-left-40">
+                        <span >赵小雷</span>&nbsp;
+                        <span ><svg class="icon" style="color:#F07D17;width: 1.0068359375em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1031 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15339"><path d="M18.2784 61.97248 432.4096 61.97248 432.4096 156.78464 386.37056 156.78464 570.40896 583.04512 754.58048 156.78464 662.49216 156.78464 662.49216 62.09536 1030.70208 62.09536 1030.70208 156.78464 892.70272 156.78464 524.48768 962.02752 432.4096 962.02752 110.3616 156.78464 18.2784 156.78464 18.2784 61.97248Z" p-id="15340"></path></svg></span>
+                        &nbsp;管理员&nbsp;2016-11-03&nbsp;15:36:36&nbsp;
+                    </span>
+                    <!--<span>收藏:3&nbsp;&nbsp;&nbsp;评论:8</span>-->
+                </div>
+                <img src="/static/images/paoxian.png" alt="" class="padding-bottom-30">
+                <div class="content">
+                    <p class="padding-bottom-30"><strong>保险行业发展现状</strong></p>
+                    <p>随着科技的不断发展和进步，尤其是互联网的兴起，移动智能设备的广泛应用，保险企业传统的营销渠道和模式也被迫发生变化，传统的保险代理人模式逐渐失去特色。</p>
+                    <p>保险行业对传统的数据应用有着悠久的历史。但随着互联网带来的即时性、多样性的海量数据，保险企业传统数据分析经验已不足以支撑其业务的深度发展。如何利用大数据，促进业务发展已成为各大保险企业关注的重点。</p>
+                    <p class="padding-bottom-30 padding-top-30"><strong>保险行业面临的问题</strong></p>
+                    <p>1、 保险企业自有的用户数据源较单一，如何从数据源头上解决数据缺失的问题，从而进一步实现全方位数据的整合和用户洞察？</p>
+                    <p>2、 用户需求日趋多样化，更倾向个性化的服务，保险企业如何全面了解受众对保险的需求？从而更好的挖掘潜客，维护老客户。</p>
+                    <p>3、 保险企业需要可持续发展，如何创新、运营、优化不同类型的保险产品，建立行业的领先性，逐步提升企业区域乃至全国范围内的品牌影响力？</p>
+                    <p class="padding-bottom-30 padding-top-30"><strong>百分点解决方案</strong></p>
+                    <p >1、 整合多源异构数据，为保险企业经营提供丰富的数据支撑</p>
+                    <p>以往，保险企业的数据有限，主要为第一方数据，例如：自建网站用户行为数据，保险企业对于外部数据采集相对较少，如第三方数据、互联网公开数据、用户在互联网上的消费行为等。使用百分点大数据采集技术可广泛获取各渠道数据，同时利用百分点专业手段，对汇集数据进行清理、分析和整合，从而帮助保险企业发挥多源异构数据的价值。</p>
+                    <p class="padding-top-30">2、 将用户需求作为企业导向，深入了解用户，全方位洞察用户</p>
+                    <p>保险企业需要不断动态的了解用户需求，只有不断的贴合用户需求，研发具有吸引力的产品，才可能有效引导用户，发掘新用户，留存老用户，持续拓展保险市场。这就需要保险企业秉承用户至上的理念，结合保险业务特性对用户数据加以有效分析，多角度、全方位洞察用户。</p>
+                    <p>随着移动互联网的盛行，很多保险企业开始建立了属于自己的网络平台，如：自有保险销售网站、App、微信公众号等，基于此，保险企业可以获取与传统保险数据有差别的、大量的受众网络行为数据，丰富了保险数据分析维度，如：用户在网站的浏览偏好、浏览时间、浏览时长、浏览频率等；为了更加深入的了解用户特征，保险企业在广泛数据采集的基础上，需要进行数据的融合，实现各方数据的拉通，以形成丰富、立体化的用户画像化。</p>
+                    <p>百分点通过对保险用户多样信息采集、整合、结构化、标签化等过程，为用户打上丰富的标签，建立符合保险企业特性的用户画像，有效得描绘受众群体属性、兴趣图谱、偏好等各类特征，实现从用户的微观画像到宏观画像，全渠道的统一视角画像展现，满足保险业务人员深入了解用户的需求，为精准营销提供数据支持，在降低成本的同时提升业务效率。</p>
+                    <p class="padding-top-30">3、 保险企业运营平台分析及优化，构建完善运营体系</p>
+                    <p>保险行业在产业发展过程中需要不断探索网络平台的经营方式，多角度、多维度分析自营平台，依托采集、分析平台数据，形成量化运营指标，指导网络平台建设和发展。</p>
+                    <p>当前保险的运营平台可以主要分为三类：WEB官网，APP端，微信公众号。针对不同的运营平台其分析指标也有所差异。以官网运营为例，需要从运营视角出发，多维度采集运营数据，综合了解网站整体状况，包括：总体概况，如：有多少访客浏览了网站，浏览量如何，访问的页数有多少等；网站访问渠道分析，如：访客是直接进入，还是通过搜索引擎，或者是外部链接的方式进入等，访客特征分析，如对访问网站的人群进行地域和上网特征分析，了解受众特点，通过分析有针对性的推荐保险产品，优化推广和宣传策略。</p>
+                    <p class="padding-top-30">4、 个性化信息服务，提升受众服务满意度</p>
+                    <p>百分点基于对用户的全面洞察分析，帮助保险企业制定相应的营销策划并予以执行，同时全程监测效果，以不断优化和完善策略。</p>
+                    <p>在自有网站或者APP中，基于用户画像实现的用户即时个性化推荐也是一种营销举措。百分点的个性化推荐依托用户画像，分析用户当下需求和潜在需求，当用户进入网站或者启动APP后，保险企业能够快速有效的在合适的时间为用户推荐合适的产品，以提高用户的满意度。</p>
+                    <p>保险行业的传统服务中，如Call Center，投诉意见等同样需要对用户进行分析，分析其个性化需求，在完善营销话术，推行二次营销、交叉销售等方面具有极强的借鉴意义。</p>
+                    <p class="padding-top-30">5、 依托大数据技术，实现保险的有效风险防控</p>
+                    <p class="padding-bottom-30">保险业需要能够有效的防范潜在的风险。而大数据可以基于大量的线上和线下数据实现综合分析，在风控工作的各个环节把关，及早发现风险，及时规避风险，例如，投保前，结合投保人和被保人的各种信息及线上行为（寿险可跟踪被保人各种线上行为、体检信息等；车险可监测车辆传感器数据、违章数据等），以及与保险责任对象相关的信息，综合评估保单风险，辅助个性化定价；承保中，实时跟踪监控投保人、被保人及保险责任对象的各种状况，为风险预警提供信息输入；理赔中，通过投保人、被保人及保险责任对象的数据信息，综合分析保险欺诈风险，辅助理赔案件减损。</p>
+                </div>
             </div>
         </div>
     </div>
 </div>
-</div>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
-
-
-
