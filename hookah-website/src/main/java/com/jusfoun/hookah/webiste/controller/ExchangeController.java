@@ -27,6 +27,7 @@ public class ExchangeController {
     public String index(Model model){
         return "exchange/index";
     }
+
     @RequestMapping(value = "/exchange/list", method = RequestMethod.GET)
     public String list(Model model){
         return "exchange/list";
@@ -35,5 +36,10 @@ public class ExchangeController {
     @RequestMapping(value = "/exchange/details", method = RequestMethod.GET)
     public String details(Model model){
         return "exchange/details";
+    }
+
+    @RequestMapping(value = "/exchange/search", method = RequestMethod.GET)
+    public String search(Model model){
+        return "exchange/search";
     }
 }
