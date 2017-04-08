@@ -9,8 +9,4 @@ import java.util.List;
  * Created by admin on 2017/4/5/0005.
  */
 public interface RegionService extends GenericService<Region,String> {
-
-    List<Region> getProvinces();
-
-    List<Region> getCitys(Long parentId);
 }

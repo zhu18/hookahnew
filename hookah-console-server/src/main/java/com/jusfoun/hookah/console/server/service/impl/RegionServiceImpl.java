@@ -23,16 +23,4 @@ public class RegionServiceImpl extends GenericServiceImpl<Region, String> implem
         super.setDao(regionMapper);
     }
 
-    @Override
-    public List<Region> getProvinces() {
-        List<Region> list = regionMapper.selectAllProvince();
-        return list;
-
-    }
-
-    @Override
-    public List<Region> getCitys(Long parentId) {
-        return regionMapper.selectAllCitys(parentId);
-    }
-
 }

@@ -1,19 +1,18 @@
 package com.jusfoun.hookah.webiste.controller;
 
-import javax.annotation.Resource;
-
-
 import com.jusfoun.hookah.rpc.api.PayCoreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
+
 /**
  * z支付接口
  */
 @Controller
-@RequestMapping("/1/payCore")
+@RequestMapping("/payCore")
 public class PayCoreController {
 
 	protected final static Logger logger = LoggerFactory.getLogger(PayCoreController.class);

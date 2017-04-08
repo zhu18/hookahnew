@@ -7,8 +7,4 @@ import java.util.List;
 
 public interface RegionMapper extends GenericDao<Region> {
 
-    List<Region> selectAllProvince();
-
-    List<Region> selectAllCitys(Long parentId);
-
 }

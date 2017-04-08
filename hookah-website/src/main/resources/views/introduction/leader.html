@@ -2,7 +2,7 @@
 var head = {
 %>
 <link rel="stylesheet" href="/static/css/introduction/trading-sidebar.css">
-<link rel="stylesheet" href="/static/css/introduction/leader.css">
+<link rel="stylesheet" href="/static/css/introduction/index.css">
 <link rel="stylesheet" href="/static/css/common.css">
 <%};%>
 
@@ -10,13 +10,23 @@ var head = {
 var htmlPart = {
 %>
 <div class="box">
-    <div class="leader clearfix grid-row padding-top-10">
+    <div class="leader clearfix grid-row padding-top-10 padding-bottom-30">
         <!--左侧栏-->
         <% include("/introduction/trading-sidebar.html"){} %>
 
         <!--右侧内容-->
         <div class="leader-content">
-            领导关怀
+            <div class="cont" id="leader">
+                <div class="public">
+                    <span></span>
+                    <h3>领导关怀</h3>
+                </div>
+                <div class="line"></div>
+                <p>2015 年，九次方大数据联合贵阳市政府成立全球首家大数据交易所——贵阳大数据交易所，交易所于2015年5月8日得到了李克强总理的亲自批示，马凯副总理、公安部郭声琨部长、财政部刘昆副部长、工信部陈英副司长、国家信息中心杜平常务副主任、国家信息化专家咨询委员会周宏仁常务副主任等到公司指导工作。</p>
+                <div class="leader">
+                    <img src="/static/images/attention.jpg" alt="">
+                </div>
+            </div>
         </div>
     </div>
 </div>

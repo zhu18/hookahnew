@@ -87,7 +87,7 @@ public class OrderInfoController extends BaseController {
             ReturnData.error("系统异常");
         }
 
-        return "/1/error/500";
+        return "/error/500";
     }
 
     /**
