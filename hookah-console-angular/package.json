@@ -13,7 +13,7 @@
     "start": "npm run server"
   },
   "dependencies": {
-    "angular": "^1.6.0",
+    "angular": "1.6.1",
     "angular-growl-v2": "^0.7.5",
     "angular-spinner": "^0.8.1",
     "angular-ui-bootstrap": "^2.3.1",
