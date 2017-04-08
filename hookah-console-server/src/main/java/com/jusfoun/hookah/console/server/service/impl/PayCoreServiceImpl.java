@@ -40,7 +40,7 @@ import java.util.Map;
 public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> implements PayCoreService {
 
 	//@Value("${walletId}")
-	private String walletId;
+	private String walletId ="1";
 	//@Value("${rechargeUrl}")
 	private String rechargeUrl;
 //	@Value("${alipayFeeRate}")
@@ -108,8 +108,14 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 				&&
 				PayCore.PayStatus.success.getValue() == paied.getPayStatus().intValue())
 			return null;
-		//PayVo payVo = orderService.getPayParam(orderId);
-		PayVo payVo = null;
+
+		PayVo payVo = new PayVo();
+		payVo.setOrderSn("001");
+		payVo.setPayId(1);
+		payVo.setTotalFee(new BigDecimal("0.1"));
+
+
+		/*PayVo payVo = orderService.getPayParam(orderId);*/
 		if (null == payVo || payVo.getPayId().intValue() == 0)
 			throw new RuntimeException("订单 [id : " + orderId + "] 信息有误");
 		if (payVo.getTotalFee().doubleValue() < 0)
