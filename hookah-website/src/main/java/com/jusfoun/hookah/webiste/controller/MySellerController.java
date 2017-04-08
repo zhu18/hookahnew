@@ -38,58 +38,8 @@ public class MySellerController {
     @Resource
     MgGoodsService mgGoodsService;
 
-    @RequestMapping(value = "/1/myseller", method = RequestMethod.GET)
-    public String index(Model model) {
-
-//        Subject subject = SecurityUtils.getSubject();
-//        if (subject.isAuthenticated()) {
-//            Object user = subject.getPrincipal();
-//            System.out.println("-----");
-//            System.out.println("-----"+subject.getPrincipals().toString());
-//            model.addAttribute("user", user);
-//
-//        }
-
-        // 默认加载分类
-        try {
-            model.addAttribute("categoryList", categoryService.getCatTree());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "/1/myseller/index";
-    }
-
-    @RequestMapping(value = "/1/myseller/publish", method = RequestMethod.GET)
-    public String publish(String id, Model model) {
-        if (StringUtils.isNotBlank(id)) {
-            // 查询商品信息
-            List<Condition> filters = new ArrayList<>();
-            filters.add(Condition.eq("goodsId", id));
-            filters.add(Condition.eq("domainId", "123"));
-            filters.add(Condition.eq("isOnsale", "1"));
-            Goods goods = goodsService.selectOne(filters);
-            if (goods != null && StringUtils.isNotBlank(goods.getGoodsId())) {
-                GoodsVo goodsVo = new GoodsVo();
-                BeanUtils.copyProperties(goods, goodsVo);
-                MgGoods mgGoods = mgGoodsService.selectById(id);
-                if (mgGoods != null) {
-                    goodsVo.setFormatList(mgGoods.getFormatList());
-                    goodsVo.setImgList(mgGoods.getImgList());
-                    goodsVo.setAttrTypeList(mgGoods.getAttrTypeList());
-                    model.addAttribute("goodsInfo", goodsVo);
-                }
-            }
-        }
-        return "/1/myseller/publish";
-    }
-
-    @RequestMapping(value = "/1/myseller/trade", method = RequestMethod.GET)
-    public String trade() {
-        return "/1/myseller/trade";
-    }
-
-    @RequestMapping(value = "/1/myseller/tradeing", method = RequestMethod.GET)
-    public String tradeing(String pageNumber, String pageSize, String goodsName, Byte checkStatus, Model model) {
+    @RequestMapping(value = "/usercenter/goodsManage", method = RequestMethod.GET)
+    public String goodsManage(String pageNumber, String pageSize, String goodsName, Byte checkStatus, Model model) {
         Pagination<Goods> page = new Pagination<>();
         try {
             List<Condition> filters = new ArrayList();
@@ -118,26 +68,64 @@ public class MySellerController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "/1/myseller/tradeing";
+        return "usercenter/myseller/goodsManage";
     }
 
-    @RequestMapping(value = "/1/myseller/rate", method = RequestMethod.GET)
-    public String mysellrate() {
-        return "/1/myseller/rate";
+    @RequestMapping(value = "/usercenter/goodsPublish", method = RequestMethod.GET)
+    public String goodsPublish(){
+        return "usercenter/myseller/goodsPublish";
     }
 
-    @RequestMapping(value = "/1/myseller/custom", method = RequestMethod.GET)
-    public String custom() {
-        return "/1/myseller/custom";
+    @RequestMapping(value = "/usercenter/goodsEdit", method = RequestMethod.GET)
+    public String publish(String id, Model model) {
+        if (StringUtils.isNotBlank(id)) {
+            // 查询商品信息
+            List<Condition> filters = new ArrayList<>();
+            filters.add(Condition.eq("goodsId", id));
+            filters.add(Condition.eq("domainId", "123"));
+            filters.add(Condition.eq("isOnsale", "1"));
+            Goods goods = goodsService.selectOne(filters);
+            if (goods != null && StringUtils.isNotBlank(goods.getGoodsId())) {
+                GoodsVo goodsVo = new GoodsVo();
+                BeanUtils.copyProperties(goods, goodsVo);
+                MgGoods mgGoods = mgGoodsService.selectById(id);
+                if (mgGoods != null) {
+                    goodsVo.setFormatList(mgGoods.getFormatList());
+                    goodsVo.setImgList(mgGoods.getImgList());
+                    goodsVo.setAttrTypeList(mgGoods.getAttrTypeList());
+                    model.addAttribute("goodsInfo", goodsVo);
+                }
+            }
+        }
+        return "usercenter/myseller/goodsEdit";
     }
 
-    @RequestMapping(value = "/1/myseller/customer", method = RequestMethod.GET)
-    public String customer() {
-        return "/1/myseller/customer";
+    @RequestMapping(value = "usercenter/trade", method = RequestMethod.GET)
+    public String trade(){
+        return "usercenter/myseller/trade";
     }
 
-    @RequestMapping(value = "/1/myseller/illegal", method = RequestMethod.GET)
-    public String illegal() {
-        return "/1/myseller/illegal";
+    @RequestMapping(value = "usercenter/rate", method = RequestMethod.GET)
+    public String rate(){
+        return "usercenter/myseller/rate";
     }
+
+    @RequestMapping(value = "usercenter/custom", method = RequestMethod.GET)
+    public String custom(){
+        return "usercenter/myseller/custom";
+    }
+
+    @RequestMapping(value = "usercenter/customer", method = RequestMethod.GET)
+    public String customer(){
+        return "usercenter/myseller/customer";
+    }
+
+    @RequestMapping(value = "usercenter/illegal", method = RequestMethod.GET)
+    public String illegal(){
+        return "usercenter/myseller/illegal";
+    }
+
+
+
+
 }
