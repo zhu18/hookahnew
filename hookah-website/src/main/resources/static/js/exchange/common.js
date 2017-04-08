@@ -7,7 +7,7 @@ $(function () {
         var url = window.location.pathname;
         $(".exchange-index-menu .menu-son-list").css('display', 'none');
         // 控制进入那个页面
-        if (url == '/exchange/index') {
+        if (url == '/exchange') {
             console.log(1);
             $(".exchange-index-menu .menu-list").css('display', 'block');
             $(".exchange-index-menu").mouseleave(function () {
