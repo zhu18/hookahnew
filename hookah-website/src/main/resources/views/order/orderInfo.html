@@ -1,1 +1,82 @@
-11111
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/order/orderInfo.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 order-info backgorund-gray">
+    <div class="grid-row" style=" background-color: white;">
+        <div class="order-info-top">
+            <div class="order-logo display-inline-block">
+                <a class="display-inline-block" href="">
+                    <img class="display-inline-block" src="/static/images/logo.png" alt="">
+                </a>
+            </div>
+            <div class="order-progress-bar">
+                <ul>
+                    <li>确认订单信息</li>
+                    <li>提交订单成功</li>
+                </ul>
+            </div>
+        </div>
+        <div class="order-info-down">
+             <div><h1>填写并核对订单信息</h1></div>
+             <div>
+                 <table>
+                     <tr><th colspan="9"><h5>新订购服务</h5></th></tr>
+                     <tr>
+                         <th></th>
+                         <th>商品名称</th>
+                         <th>订购项目</th>
+                         <th>订购数量</th>
+                         <th>价格(元)</th>
+                         <th>优惠(元)</th>
+                         <th>实付(元)</th>
+                     </tr>
+                     <tr>
+                         <td>1</td>
+                         <td>学信网授权数据</td>
+                         <td>￥120.00/100次</td>
+                         <td>1</td>
+                         <td>120.00</td>
+                         <td>暂无</td>
+                         <td>120.00</td>
+                     </tr>
+                     <tr>
+                         <td>1</td>
+                         <td>学信网授权数据</td>
+                         <td>￥120.00/100次</td>
+                         <td>1</td>
+                         <td>120.00</td>
+                         <td>暂无</td>
+                         <td>120.00</td>
+                     </tr>
+                     <tr>
+                         <td colspan="9">
+                             付款小计：120.00元
+                         </td>
+                     </tr>
+                     <tr>
+                         <td colspan="9">
+                             <div>
+                                 <span>请阅读</span>
+                                 <a href="">订购协议</a>
+                             </div>
+                         </td>
+                     </tr>
+                     <tr>
+                         <td colspan="9">
+                             <div></div>
+                         </td>
+                     </tr>
+                 </table>
+             </div>
+        </div>
+    </div>
+</div>
+<%};
+include("/layout/other-base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
