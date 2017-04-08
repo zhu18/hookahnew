@@ -72,4 +72,28 @@ public class HookahConstants {
             this.val = val;
         }
     }
+
+    /**
+     * 审核状态
+     * 0    审核中
+     * 1    审核通过
+     * 2    审核失败
+     */
+    public enum CheckStatus {
+
+        audit("0"),
+        audit_success("1"),
+        audit_fail("2");
+
+        public String code;
+
+        CheckStatus(String code){
+            this.code = code;
+        }
+
+        public String getCode() {
+            return code;
+        }
+    }
+
 }
