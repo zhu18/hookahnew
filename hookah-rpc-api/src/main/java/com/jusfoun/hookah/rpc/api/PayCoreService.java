@@ -16,6 +16,7 @@ import java.util.Map;
  * 支付接口
  */
 public interface PayCoreService extends GenericService<PayCore,String> {
+
 	/**根据订单Id查询支付信息
 	 * @param orderId
 	 * @return
@@ -30,7 +31,7 @@ public interface PayCoreService extends GenericService<PayCore,String> {
 
 	/**更新支付状态
 	 * @param paied
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public void updatePayCore(PayCore paied) throws Exception;
 
@@ -62,16 +63,16 @@ public interface PayCoreService extends GenericService<PayCore,String> {
 	public void updateCheckStatus(PayCore pay);
 
 	public Pagination<PayCore> findRechargeList(RechargeVo vo, Integer pageNum,
-                                                Integer pageSize);
+												Integer pageSize);
 
 	public boolean verifyAlipay(Map<String, String> request);
 
 	/**开通银联支付
 	 * @param orderId
 	 * @param accNo
-	 * @param userId 
+	 * @param userId
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public String openUnionpay(Integer orderId, String accNo, String userId) throws Exception;
 
@@ -90,28 +91,29 @@ public interface PayCoreService extends GenericService<PayCore,String> {
 	/**银联支付时发送短信验证码
 	 * @param orderSn
 	 * @param accNo
-	 * @param amount 
+	 * @param amount
 	 * @param userId
 	 */
 	public String unionpaySendSMS(String orderSn, String accNo, BigDecimal amount, String userId);
 
 	/**银联支付付款
 	 * @param payVo
-	 * @param orderId 
-	 * @param userId 
+	 * @param orderId
+	 * @param userId
 	 * @param accNo
-	 * @param smsCode 
+	 * @param smsCode
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public String unionpayConsume(PayVo payVo, Integer orderId, String userId, String accNo, String smsCode) throws Exception;
 
 	/**解除绑定
-	 * @param orderSn 
+	 * @param orderSn
 	 * @param accNo
 	 * @param userId
 	 * @return
 	 */
 	public String deleteAccno(String orderSn, String accNo, String userId);
+
 
 }

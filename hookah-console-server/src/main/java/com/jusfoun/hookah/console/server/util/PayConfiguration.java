@@ -23,7 +23,7 @@ public class PayConfiguration {
     static {
 		InputStream in;
 		try {
-			in = PropertiesUtil.class.getResourceAsStream("/pay-conf-mall.properties");
+			in = PropertiesUtil.class.getResourceAsStream("/pay-conf-mall.online.properties");
 			properties = new Properties();
 			properties.load(in);
 			initConfig();

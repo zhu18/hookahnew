@@ -12,30 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class InformationController {
 
-    @RequestMapping(value = "/1/information", method = RequestMethod.GET)
-    public String index(){
-        return "1/information/index";
-    }
-
-    @RequestMapping(value = "/1/information/center_dynamic", method = RequestMethod.GET)
-    public String centerDynamic(){
-        return "1/information/center_dynamic";
-    }
-
-    @RequestMapping(value = "/1/information/industry_consulting", method = RequestMethod.GET)
-    public String industryConsulting(){
-        return "1/information/industry_consulting";
-    }
-
-    @RequestMapping(value = "/1/information/center_announcement", method = RequestMethod.GET)
-    public String centerAnnouncement(){
-        return "1/information/center_announcement";
-    }
-
-    @RequestMapping(value = "/1/information/details", method = RequestMethod.GET)
-    public String details(){ return "1/information/details"; }
-
-
     @RequestMapping(value = "/information", method = RequestMethod.GET)
     public String index2(){
         return "/information/index";

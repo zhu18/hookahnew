@@ -38,6 +38,10 @@ public class OrderInfoController extends BaseController {
         return "redirect:/order/list";
     }
 
+    @RequestMapping(value = "/order/orderInfo", method = RequestMethod.GET)
+    public String orderInfo() {
+        return "order/orderInfo";
+    }
     /**
      * 分页查询
      *

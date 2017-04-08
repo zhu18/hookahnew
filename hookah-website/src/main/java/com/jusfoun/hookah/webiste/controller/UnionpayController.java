@@ -1,15 +1,9 @@
 package com.jusfoun.hookah.webiste.controller;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.jusfoun.hookah.core.domain.PayCore;
-import com.jusfoun.hookah.core.utils.Result;
 import com.jusfoun.hookah.rpc.api.AccNoTokenService;
 import com.jusfoun.hookah.rpc.api.OrderInfoService;
 import com.jusfoun.hookah.rpc.api.PayCoreService;
@@ -23,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 
 @RestController
@@ -68,7 +61,7 @@ public class UnionpayController extends BaseController{
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value="/ocf", method = RequestMethod.POST)
+	/*@RequestMapping(value="/ocf", method = RequestMethod.POST)
 	ModelAndView openCardFrontUrl(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		ModelAndView view = null;
 		Map<String, String> params = getRequestParams(request);
@@ -94,12 +87,12 @@ public class UnionpayController extends BaseController{
 		return view;
 	}
 	
-	/**开通卡并支付，后台通知地址
+	*//**开通卡并支付，后台通知地址
 	 * @param request
 	 * @param response
 	 * @return
 	 * @throws Exception
-	 */
+	 *//*
 	@RequestMapping(value="/ocb", method = RequestMethod.POST)
 	String openCardBackUrl(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		Map<String, String> params = getRequestParams(request);
@@ -144,14 +137,14 @@ public class UnionpayController extends BaseController{
 			return params;
 	}
 	
-	/**获取用户银行卡列表
+	*//**获取用户银行卡列表
 	 * @param session
 	 * @return
-	 */
+	 *//*
 	@RequestMapping(value = "/accnos", method = RequestMethod.GET)
 	public Result accNoList(HttpSession session) {
 		Result result = new Result();
-		/*result.setRetCode(Result.RETCODE_SUCCESS);
+		*//*result.setRetCode(Result.RETCODE_SUCCESS);
 		try {
 			result.setData(accNoTokenService.findAccNoList(getUserId(session)));
 		} catch (ShopException e) {
@@ -160,25 +153,25 @@ public class UnionpayController extends BaseController{
 		} catch (Exception e) {
 			result.setRetCode(Result.RETCODE_ERROR);
 			result.setErrMsg("系统异常");
-		}*/
+		}*//*
 		return result;
 	} 
 	
 
-	/**
+	*//**
 	 *交易时发送短信
 	 * @param orderId
 	 * @param accNo
 	 * @param session
 	 * @return
 	 * @throws Exception
-	 */
+	 *//*
 	@RequestMapping(value = "/sendSms", method = RequestMethod.GET)
 	public Result sendSms(@RequestParam(required=true) Integer orderId, 
 			@RequestParam(required=true) String accNo,
 			HttpSession session) throws Exception {
 		Result result = new Result();
-	/*	result.setRetCode(Result.RETCODE_SUCCESS);
+	*//*	result.setRetCode(Result.RETCODE_SUCCESS);
 		try {
 			PayVo payVo = orderService.getPayParam(orderId);
 			result.setData(payCoreService.unionpaySendSMS(payVo.getOrderSn(), accNo, payVo.getTotalFee(), getUserId(session)));
@@ -188,24 +181,24 @@ public class UnionpayController extends BaseController{
 		} catch (Exception e) {
 			result.setRetCode(Result.RETCODE_ERROR);
 			result.setErrMsg("系统异常");
-		}*/
+		}*//*
 		return result;
 	}
 	
 	
-	/**解除绑定
+	*//**解除绑定
 	 * @param orderId
 	 * @param accNo
 	 * @return
 	 * @throws Exception
-	 */
+	 *//*
 	@RequestMapping(value = "/deleteAccno", method = RequestMethod.GET)
 	public Result deleteAccno(@RequestParam(required=true) Integer orderId,
 			@RequestParam(required=true) String accNo,
 			@RequestParam(required=true) String password,
 			HttpSession session) throws Exception {
 		Result result = new Result();
-	/*	result.setRetCode(Result.RETCODE_SUCCESS);
+	*//*	result.setRetCode(Result.RETCODE_SUCCESS);
 		try {
 			String userId = getUserId(session);
 			//验证登录密码
@@ -224,23 +217,23 @@ public class UnionpayController extends BaseController{
 		} catch (Exception e) {
 			result.setRetCode(Result.RETCODE_ERROR);
 			result.setErrMsg("系统异常");
-		}*/
+		}*//*
 		return result;
 	}
 	
-	/**交易
+	*//**交易
 	 * @param orderId
 	 * @param accNo
 	 * @return
 	 * @throws Exception
-	 */
+	 *//*
 	@RequestMapping(value= "/1/pay", method = RequestMethod.GET)
 	ModelAndView pay(@RequestParam(required=true) Integer orderId,
 			@RequestParam(required=true) String accNo,
 			@RequestParam(required=true) String smsCode,
 			HttpSession session) throws Exception {
 		ModelAndView view = null;
-		/*PayVo payVo = orderService.getPayParam(orderId);
+		*//*PayVo payVo = orderService.getPayParam(orderId);
 		String url = "redirect:/pages/payError.html?orderSn="+payVo.getOrderSn();
 		try {
 			String res = payCoreService.unionpayConsume(payVo,orderId, getUserId(session), accNo, smsCode);
@@ -251,16 +244,16 @@ public class UnionpayController extends BaseController{
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
-		view = new ModelAndView(url);*/
+		view = new ModelAndView(url);*//*
 		return view;
 	}
 	
-	/**交易后台通知地址
+	*//**交易后台通知地址
 	 * @param request
 	 * @param response
 	 * @return
 	 * @throws Exception
-	 */
+	 *//*
 	@RequestMapping(value="/cb", method = RequestMethod.POST)
 	String consumeBackUrl(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		Map<String, String> params = getRequestParams(request);
@@ -279,5 +272,5 @@ public class UnionpayController extends BaseController{
 		}else{
 			return "fail";
 		}
-	}
+	}*/
 }

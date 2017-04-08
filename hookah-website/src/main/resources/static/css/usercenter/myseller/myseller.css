@@ -379,6 +379,9 @@
 
 /******** publish-wrapper end ********/
 /******** trade-wrapper end ********/
+.info-center-box{
+    margin-top: 10px;
+}
 .info-center-box .user-center-box {
     background-color: white;
     width: 965px;

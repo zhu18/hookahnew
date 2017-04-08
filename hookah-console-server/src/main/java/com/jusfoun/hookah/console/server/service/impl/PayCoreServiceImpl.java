@@ -1,14 +1,10 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.util.StringUtil;
+import com.google.gson.Gson;
 import com.jusfoun.hookah.console.server.pay.alipay.AlipayBuilder;
 import com.jusfoun.hookah.console.server.pay.alipay.AlipayNotify;
 import com.jusfoun.hookah.console.server.pay.unionpay.UnionpayBuilder;
@@ -29,20 +25,22 @@ import com.jusfoun.hookah.rpc.api.OrderInfoService;
 import com.jusfoun.hookah.rpc.api.PayCoreService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.PageHelper;
-import com.google.gson.Gson;
+import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> implements PayCoreService {
 
 	//@Value("${walletId}")
-	private String walletId;
+	private String walletId ="1";
 	//@Value("${rechargeUrl}")
 	private String rechargeUrl;
 //	@Value("${alipayFeeRate}")
@@ -53,26 +51,26 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 	private String findUserIdByPhoneOrEmail;
 //	@Value("${usrDetailUrl}")
 	private String usrDetailUrl;
-	@Autowired
+	@Resource
 	private PayCoreMapper mapper;
-	
-	@Autowired
+
+	@Resource
 	private OrderInfoService orderService;
-	@Autowired
+	@Resource
 	private AccNoTokenMapper accNoTokenMapper;
-	
-	
 
-
-	@SuppressWarnings("rawtypes")
-	public List select2(PayCore t){
-		return mapper.select3(t);
+	@Resource
+	public void setDao(PayCoreMapper mapper) {
+		super.setDao(mapper);
 	}
+
+
 	@Override
 	public PayCore findPayCoreByOrderId(Integer orderId) {
 		List<PayCore> pays = mapper.getPayCoreByOrderId(orderId);
 		return (pays==null || pays.size()==0) ? null : pays.get(0);
 	}
+
 
 	@Override
 	public String buildRequestParams(PayVo payVo) {
@@ -106,18 +104,18 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 	public String doPay(Integer orderId, String userId) throws Exception {
 		// 检查
 		PayCore paied = findPayCoreByOrderId(orderId);
-		if (paied != null 
-				&& 
+		if (paied != null
+				&&
 				PayCore.PayStatus.success.getValue() == paied.getPayStatus().intValue())
-			// (PayStatus.success.getValue() == paied.getPayStatus().intValue()
-			// || PayStatus.paying.getValue() ==
-			// paied.getPayStatus().intValue()))
 			return null;
 
-		//暂时屏蔽的一行
-		/*PayVo payVo = orderService.getPayParam(orderId);*/
 		PayVo payVo = new PayVo();
+		payVo.setOrderSn("001");
+		payVo.setPayId(1);
+		payVo.setTotalFee(new BigDecimal("0.1"));
 
+
+		/*PayVo payVo = orderService.getPayParam(orderId);*/
 		if (null == payVo || payVo.getPayId().intValue() == 0)
 			throw new RuntimeException("订单 [id : " + orderId + "] 信息有误");
 		if (payVo.getTotalFee().doubleValue() < 0)
@@ -129,6 +127,7 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 			enterAccount(orderId, payVo);
 		return html;
 	}
+
 
 	private void enterAccount(Integer orderId, PayVo payVo) throws Exception {
 		PayCore pay = new PayCore();

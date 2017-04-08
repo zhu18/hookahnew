@@ -1,16 +1,16 @@
 import '../../common/common';
-import informationRouting from './information.routing';
+import newsRouting from './news.routing';
 const MODULE_NAME = 'Hookah';
 let app = angular.module(MODULE_NAME, [
   'ui.router',
   'Common'
 ]);
-app.config(informationRouting);
+app.config(newsRouting);
 app.config(['$httpProvider', function ($httpProvider) {
   $httpProvider.defaults.withCredentials = true;
 }]);
 app.run(function ($rootScope, $state) {
-  $rootScope.currentProductId = 'information';
+  $rootScope.currentProductId = 'news';
   $rootScope.config = {
     "navScene": 'main',
     "isSidebarFold": false,
