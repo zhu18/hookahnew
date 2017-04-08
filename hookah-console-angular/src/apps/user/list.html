@@ -17,7 +17,7 @@
         <div class="searchSection">
           <form class="form-inline">
             <div class="form-group">
-              <label class="control-label" for="form-field-1">账户名</label>
+              <label class="control-label" for="form-field-1">用户名</label>
               <input id="form-field-1" name="code" ng-model="searchForm.code" type="text" class="form-control">
               <button type="submit" class="btn btn-primary" data-ng-click="search()">搜索</button>
             </div>
@@ -34,9 +34,9 @@
               <!--</th>-->
               <!--<th class="state-column"></th>-->
               <!--<th>Id</th>-->
-              <th>账户名</th>
-              <th class="">邮箱</th>
+              <th>用户名</th>
               <th width="135">电话</th>
+              <th class="">邮箱</th>
               <th width="135">创建时间</th>
               <th width="135">最后登录时间</th>
               <th width="40">禁用</th>
@@ -44,7 +44,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr data-ng-if="!loadingState" data-ng-repeat="item in sysAccount" class="">
+            <tr data-ng-if="!loadingState" data-ng-repeat="item in pagination.store" class="">
               <!--<td width="10">-->
                 <!--<input type="checkbox" data-ng-model="item.selected" ng-change="changeSelection({data: item})"-->
                        <!--class=" ">-->
@@ -65,10 +65,10 @@
                 </a>
               </td>
               <td>
-                <span class="column-text" ng-bind="item.email"></span>
+                <span class="column-text" ng-bind="item.mobile"></span>
               </td>
               <td>
-                <span class="column-text" ng-bind="item.mobile"></span>
+                <span class="column-text" ng-bind="item.email"></span>
               </td>
               <td>
                 <span class="" ng-bind="item.regTime"></span>
@@ -92,10 +92,10 @@
             </tbody>
             <tfoot ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">
             <tr>
-              <td width="10" style="width: 29px;">
-                <input type="checkbox" data-ng-model="tableState.selectAll" ng-change="changeSelectionAll()"
-                       class="">
-              </td>
+              <!--<td width="10" style="width: 29px;">-->
+                <!--<input type="checkbox" data-ng-model="tableState.selectAll" ng-change="changeSelectionAll()"-->
+                       <!--class="">-->
+              <!--</td>-->
               <td colspan="9">
                 <div class="pull-left">
                   <div toolbar="" biz-type="innerMsgToolbar" raw-data="selectedItems" class="">

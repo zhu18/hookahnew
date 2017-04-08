@@ -2,16 +2,52 @@
 var head = {
 %>
 <link rel="stylesheet" href="/static/css/usercenter/user-center-menu.css">
+<link rel="stylesheet" href="/static/css/common.css">
 <link rel="stylesheet" href="/static/css/usercenter/buyer/evaluation.css">
 <%};%>
 
 <%
 var htmlPart = {
 %>
-<div class="grid-0 backgorund-gray padding-top-20 padding-bottom-20">
+<div class="grid-0 backgorund-gray ">
     <div class="grid-row clearfix">
         <%include("/usercenter/user-center-menu.html"){} %>
-
+        <div class="evaluation grid-right margin-top-10">
+            <div class="my">
+                <h3 class="myeval">我的评价</h3>
+            </div>
+            <div class="level">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="one">评价级别</th>
+                            <th class="two">评价内容</th>
+                            <th class="three">商家名称</th>
+                            <th class="four">商品信息</th>
+                            <th class="five">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td >好评</td>
+                            <td>接口好用，速度快，信息量大</td>
+                            <td>商家or卖家名称</td>
+                            <td>
+                                <a href="">
+                                    <p>身份证实名认证</p>
+                                    <p>借贷机构可用于查询申请人互联网申请借款</p>
+                                    <p>借贷机构可用于查询申请人互联网申请借款</p>
+                                </a>
+                                <p>￥800.00</p>
+                            </td>
+                            <td>
+                                <a href="">修改评价</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 </div>

@@ -38,7 +38,7 @@ class MainController{
     $rootScope.pagination = {
       totalItems: 0,
       currentPage: 1,
-      pageSize: 20,
+      pageSize: 10,
       maxSize: 5,
       store: null
     };

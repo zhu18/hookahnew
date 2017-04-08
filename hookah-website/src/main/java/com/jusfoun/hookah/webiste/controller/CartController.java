@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -67,8 +66,8 @@ public class CartController extends BaseController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/1/cart/add", method = RequestMethod.POST)
-    public ReturnData add(@Valid Cart cart, Model model) {
+    @RequestMapping(value = "/cart/add", method = RequestMethod.POST)
+    public ReturnData add(Cart cart, Model model) {
         try {
             //需要先获取当前用户id
             String userId = this.getCurrentUser().getUserId();

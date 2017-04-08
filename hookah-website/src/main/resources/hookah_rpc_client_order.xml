@@ -21,5 +21,4 @@
     <motan:referer id="payCordeService"
                    interface="com.jusfoun.hookah.rpc.api.PayCoreService"
                    connectTimeout="300" requestTimeout="300" basicReferer="HookahRPCClientBasicConfig"/>
-
 </beans>

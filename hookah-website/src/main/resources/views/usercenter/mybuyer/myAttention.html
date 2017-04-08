@@ -164,6 +164,9 @@ var htmlPart = {
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
-
+<script type="text/javascript" src="/static/js/plugins/jquery/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="/static/js/plugins/spinner/jquery.Spinner.js"></script>
 <script type="text/javascript" src="/static/js/plugins/sweetalert/sweetalert.min.js"></script>
+<script>
+    $("#goodsNum0").Spinner({value:1, min:1, len:4, max:1000});
+</script>
