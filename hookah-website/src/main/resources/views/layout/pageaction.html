@@ -6,6 +6,7 @@
     goPage("1");
     function goPage(pageNumber){ //请求页面数据   **需要在当前页面声明pagePath**
         dataParm.pageNumber = pageNumber;
+//        debugger;
         $.ajax({
             type:pageType,
             url:pagePath,
