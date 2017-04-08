@@ -17,6 +17,8 @@
         <result column="goods_area" jdbcType="VARCHAR" property="goodsArea" />
         <result column="goods_areas" jdbcType="VARCHAR" property="goodsAreas" />
         <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+        <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+        <result column="last_update_time_key" jdbcType="TIMESTAMP" property="lastUpdateTimeKey" />
     </resultMap>
     <select id="getNeedEsGoods" resultMap="EsResultMap">
         SELECT
@@ -34,10 +36,13 @@
             getCategoryParentList(cat_id) cat_ids,
             goods_area goodsArea,
             getRegionParentList(goods_area) goods_areas,
-            add_time
-        FROM
+            add_time,
+            last_update_time,
+            last_update_time last_update_time_key
+        from
             goods
         where is_delete = 1
         and is_onsale = 1
+        order by last_update_time desc
     </select>
 </mapper>

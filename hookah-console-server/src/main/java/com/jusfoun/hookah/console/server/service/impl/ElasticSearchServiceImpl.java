@@ -118,6 +118,8 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         Integer pageNum = vo.getPageNum();
         String orderField = vo.getOrderFiled();
         String order = vo.getOrder();
+        vo.setOrderFiled("last_update_time");
+        vo.setOrder("desc");
 
         Pagination pagination = new Pagination();
         pagination.setPageSize(pageSize);
