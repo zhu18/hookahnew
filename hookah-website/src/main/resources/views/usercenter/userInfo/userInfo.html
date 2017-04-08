@@ -11,26 +11,39 @@ var htmlPart = {
 <div class="grid-0 backgorund-gray">
     <div class="grid-row clearfix">
         <%include("/usercenter/user-center-menu.html"){} %>
-        <div class="grid-left center-content">
-            <div class="top clearfix">
-                <div class="user-name grid-left">
-                    <a href="javascript:void(0);"><img src="/static/images/user-head.png" alt=""></a>
-                    <p>Hi,<span id="userName">XXXX</span></p>
-                    <a  id="enterForum" href="javascript:void(0);"><span class="fa fa-twitch"></span>进入论坛</a>
+        <div class="top grid-left">
+            <div class="user-name grid-left">
+                <a href="javascript:void(0);"><img src="/static/images/user-head.png" alt=""></a>
+                <p>Hi,<span id="userName">XXXX</span></p>
+                <a  id="enterForum" href="javascript:void(0);"><span class="fa fa-twitch"></span>进入论坛</a>
+            </div>
+            <div class="user-balance grid-left">
+                <div class="balance-info grid-left">
+                    <p class="account-balance">账户余额</p>
+                    <div class="balance-box clearfix"><p class="grid-left money-count"><span class="fa fa-cny"></span>199.00.00</p><button class=" grid-left recharge">充值</button>
+                        <a class="grid-left " href="javascript:void(0);">索要发票</a></div>
+                    <p class="last-login-time">上次登陆时间 <span id="last-time">2017-01-03 18:00:00</span></p>
                 </div>
-                <div class="user-balance grid-right">
-                    <div class="balance-info grid-left">
-                        <p class="account-balance">账户余额</p>
-                        <div class="balance-box clearfix"><p class="grid-left money-count"><span class="fa fa-cny"></span>199.00.00</p><button class=" grid-left recharge">充值</button>
-                            <a class="grid-left " href="javascript:void(0);">索要发票</a></div>
-                        <p class="last-login-time">上次登陆时间 <span id="last-time">2017-01-03 18:00:00</span></p>
-                    </div>
-                    <div class="balance-img grid-left">
-                        <div class="money-icon"></div>
-                        <div class="bottom-img"></div>
-                    </div>
+                <div class="balance-img grid-left">
+                    <div class="money-icon"></div>
+                    <div class="bottom-img"></div>
                 </div>
             </div>
+            <div class="auth-introduce grid-left">
+                <p>如果您想购买数据，可进行个人用户认证</p>
+                <div class="margin-10">
+                    <a href="#" class="large-btn">我要成为个人用户</a>
+                    <a href="#" class="blue">如何认证?</a>
+                </div>
+                <p>如果您想购买企业专享数据，可进行企业用户认证</p>
+                <div class="margin-10">
+                    <a href="#" class="large-btn">我要成为企业用户</a>
+                    <a href="#" class="blue">如何认证?</a>
+                </div>
+            </div>
+        </div>
+        <div class="grid-left center-content">
+
             <div class="bottom">
                 <div class="header clearfix">
                     <h4 class="grid-left my-order">我购买的数据</h4>
@@ -76,16 +89,18 @@ var htmlPart = {
                 </div>
             </div>
         </div>
-        <div class="grid-right forum-hot">
-            <div class="header">
-                <h4>论坛热点</h4>
-            </div>
-            <ul class="hot-list">
-                <li class="item"><span class="hot-icon">热点</span><a href="javascript:void(0)">从windows迁移到数据库</a></li>
-                <li class="item"><span class="hot-icon">热点</span><a href="javascript:void(0)">从windows迁移到数据库</a></li>
-                <li class="item"><span class="hot-icon">热点</span><a href="javascript:void(0)">从windows迁移到数据库</a></li>
-            </ul>
-        </div>
+        <!--以下代码暂时不要-->
+        <!--<div class="grid-right forum-hot">-->
+            <!--<div class="header">-->
+                <!--<h4>论坛热点</h4>-->
+            <!--</div>-->
+            <!--<ul class="hot-list">-->
+                <!--<li class="item"><span class="hot-icon">热点</span><a href="javascript:void(0)">从windows迁移到数据库</a></li>-->
+                <!--<li class="item"><span class="hot-icon">热点</span><a href="javascript:void(0)">从windows迁移到数据库</a></li>-->
+                <!--<li class="item"><span class="hot-icon">热点</span><a href="javascript:void(0)">从windows迁移到数据库</a></li>-->
+            <!--</ul>-->
+        <!--</div>-->
+        <!--以上代码暂时不要-->
         <div class="grid-right forum-hot notice">
             <div class="header">
                 <h4>公告</h4>
