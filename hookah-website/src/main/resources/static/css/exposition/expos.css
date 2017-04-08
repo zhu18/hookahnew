@@ -1,0 +1,39 @@
+
+.innovation-center {
+    background: #F8F8F8;
+}
+.innovation-center .innovation-padding {
+    padding:10px 0px 30px 0px;
+}
+
+.innovation-content  {
+    width: 955px;
+    background: #fff;
+    box-sizing: border-box;
+    padding: 10px 40px;
+}
+.innovation-content .public span {
+    border-left: 2px solid #237DE7;
+    margin-right: 10px;
+}
+.innovation-content .public h3 {
+    display: inline;
+    line-height: 25px;
+    font-size: 15px;
+}
+.innovation-content .public {
+    border-bottom: 1px solid #F0F0F0;
+    padding-bottom: 10px;
+    margin-bottom:20px;
+}
+.innovation-content .innovation-info .info-title {
+    font-size: 12px;
+    padding:5px 0px;
+}
+.innovation-content .innovation-info .info-text{
+    text-indent: 20px;
+}
+.expositionContent img  {
+    width: 95%;
+}
+
