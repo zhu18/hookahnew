@@ -7,6 +7,7 @@
 }
 .pay-wrapper{
     background-color: #fff;
+    border: 1px solid #EDEDED;
 }
 .order-wrapper{
     position: relative;

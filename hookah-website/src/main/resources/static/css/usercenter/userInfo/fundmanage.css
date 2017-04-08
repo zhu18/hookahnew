@@ -1,7 +1,8 @@
 .info-center-box{
-    margin:10px 5px;
-    padding:0 20px;
+    margin:10px 10px 30px 10px;
+    padding:0 15px;
     background-color: #fff;
+    border: 1px solid #EDEDED;
 
 }
 .info-center-box .header{
@@ -16,7 +17,7 @@
     border-left:2px solid #237DE7;
 }
 .user-center-box{
-    width:970px;
+    width:965px;
 }
 .hello-user{
     font-size: 16px;
