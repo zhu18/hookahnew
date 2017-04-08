@@ -7,7 +7,18 @@ $(function () {
         var url = window.location.pathname;
         $(".exchange-index-menu .menu-son-list").css('display', 'none');
         // 控制进入那个页面
-        if (url == '/exchange/list' || url == '/exchange/details') {
+        if (url == '/exchange/index') {
+            console.log(1);
+            $(".exchange-index-menu .menu-list").css('display', 'block');
+            $(".exchange-index-menu").mouseleave(function () {
+                $(".exchange-index-menu .menu-son-list").css('display', 'none');
+                $(".exchange-index-menu .menu-list .menu-item").css({
+                    'backgroundColor': '#3E557B',
+                    'color': 'white'
+                })
+            })
+        } else {
+            console.log(2);
             $(".exchange-index-menu .menu-list").css('display', 'none');
 
             $(".exchange-index-menu .menu-title").hover(function () {
@@ -20,15 +31,6 @@ $(function () {
                 $(".exchange-index-menu .menu-list").css('display', 'none');
                 $(".exchange-index-menu .menu-son-list").css('display', 'none');
 
-            })
-        } else {
-            $(".exchange-index-menu .menu-list").css('display', 'block');
-            $(".exchange-index-menu").mouseleave(function () {
-                $(".exchange-index-menu .menu-son-list").css('display', 'none');
-                $(".exchange-index-menu .menu-list .menu-item").css({
-                    'backgroundColor': '#3E557B',
-                    'color': 'white'
-                })
             })
         }
         $(".exchange-index-menu .menu-list .menu-item").hover(function () {
