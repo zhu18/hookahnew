@@ -31,6 +31,6 @@
                    ref="invoiceService" export="hookah:5001" basicService="serviceBasicConfig">
     </motan:service>
     <motan:service interface="com.jusfoun.hookah.rpc.api.PayCoreService"
-                   ref="invoiceService" export="hookah:5001" basicService="serviceBasicConfig">
+                   ref="payCoreService" export="hookah:5001" basicService="serviceBasicConfig">
     </motan:service>
 </beans>
