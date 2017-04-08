@@ -34,17 +34,16 @@
               <!--</th>-->
               <!--<th class="state-column"></th>-->
               <!--<th>Id</th>-->
-              <th>店铺名</th>
-              <th class="">邮箱</th>
-              <th width="135">电话</th>
+              <th width="100">店铺名</th>
+              <th class="">简介</th>
               <th width="135">创建时间</th>
-              <th width="135">最后登录时间</th>
-              <th width="40">禁用</th>
+              <th width="135">状态</th>
+              <th width="40">锁定</th>
               <th width="130" class="text-right">操作</th>
             </tr>
             </thead>
             <tbody>
-            <tr data-ng-if="!loadingState" data-ng-repeat="item in sysAccount" class="">
+            <tr data-ng-if="!loadingState" data-ng-repeat="item in pagination.store" class="">
               <!--<td width="10">-->
                 <!--<input type="checkbox" data-ng-model="item.selected" ng-change="changeSelection({data: item})"-->
                        <!--class=" ">-->
@@ -61,23 +60,20 @@
               <td>
                 <a ng-class="{'title-unread':item.Status*1===0,'title-read':item.Status*1!==0}" href="javascript:;"
                    class="">
-                  <span ng-bind="item.userName"></span>
+                  <span ng-bind="item.shopName"></span>
                 </a>
               </td>
               <td>
-                <span class="column-text" ng-bind="item.email"></span>
+                <span class="column-text" ng-bind="item.shopDesc"></span>
               </td>
               <td>
-                <span class="column-text" ng-bind="item.mobile"></span>
+                <span class="column-text" ng-bind="item.addTime"></span>
               </td>
               <td>
-                <span class="" ng-bind="item.regTime"></span>
+                <span class="" ng-bind="item.status | shopStatus"></span>
               </td>
               <td>
-                <span class="" ng-bind="item.lastLoginTime"></span>
-              </td>
-              <td>
-                <span class="column-text" ng-bind="item.isEnable | yesNo"></span>
+                <span class="" ng-bind="item.isLocked | yesNo"></span>
               </td>
               <td class="text-right">
                 <a ui-sref="account.edit" ng-click="edit($event,item)">修改</a>
@@ -92,10 +88,10 @@
             </tbody>
             <tfoot ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">
             <tr>
-              <td width="10" style="width: 29px;">
-                <input type="checkbox" data-ng-model="tableState.selectAll" ng-change="changeSelectionAll()"
-                       class="">
-              </td>
+              <!--<td width="10" style="width: 29px;">-->
+                <!--<input type="checkbox" data-ng-model="tableState.selectAll" ng-change="changeSelectionAll()"-->
+                       <!--class="">-->
+              <!--</td>-->
               <td colspan="9">
                 <div class="pull-left">
                   <div toolbar="" biz-type="innerMsgToolbar" raw-data="selectedItems" class="">

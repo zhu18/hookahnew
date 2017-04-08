@@ -15,7 +15,7 @@ function renderDetails(){
         success:function(data){
             if(data.code == "1") {
                 $('#newsTitle').html(data.data.newsTitle);
-                $('#newsAdminName').html(data.data.sysUser);
+                $('#newsAdminName').html(data.data.userName);
                 $('#newsTime').html(format(data.data.sytTime));
                 $('#content').html(data.data.content);
                 $('#userImg').attr('src',data.data.headImg);

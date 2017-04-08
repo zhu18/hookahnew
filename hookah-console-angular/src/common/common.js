@@ -104,6 +104,21 @@ export default angular.module('Common', [
       return input ? '是' : '否';
     }
   })
+  .filter('shopStatus', function () {
+    return function (input) {
+      switch(input) {
+        case 1:
+          return '正常营业';
+          break;
+        case 2:
+          return '歇业';
+          break;
+        default:
+          return '盘点';
+      }
+      return input ? '是' : '否';
+    }
+  })
   .filter('Status', function () {
     return function (input) {
       return input == 1 ? '启用' : '禁用';
@@ -133,23 +148,23 @@ function HttpInterceptor($q, $rootScope, $location, $window) {
       res.config.responseTimestamp = new Date().getTime();
       var time = res.config.responseTimestamp - res.config.requestTimestamp;
       console.log('The request took ' + (time / 1000) + ' seconds.');
-      // if (res.data.data !== undefined && res.data.data.totalItems) {
-      //   $rootScope.pagination.store = res.data.data.list;
-      //   $rootScope.pagination.currentPage = res.data.data.currentPage;
-      //   $rootScope.pagination.totalItems = res.data.data.totalItems;
-      //   $rootScope.paginationSupport = true;
-      //   // if(res.data.totalPages >1){
-      //   //
-      //   // }
-      //   if (res.data.totalItems == 0) {
-      //     $rootScope.showNoneDataInfoTip = true;
-      //     $rootScope.showPageHelpInfo = false;
-      //   } else {
-      //     $rootScope.showNoneDataInfoTip = false;
-      //     $rootScope.showPageHelpInfo = true;
-      //   }
-      //   $rootScope.stopSpin();
-      // }
+      if (res.data.data !== undefined && res.data.data.totalItems) {
+        $rootScope.pagination.store = res.data.data.list;
+        $rootScope.pagination.currentPage = res.data.data.currentPage;
+        $rootScope.pagination.totalItems = res.data.data.totalItems;
+        $rootScope.paginationSupport = true;
+        // if(res.data.totalPages >1){
+        //
+        // }
+        if (res.data.totalItems == 0) {
+          $rootScope.showNoneDataInfoTip = true;
+          $rootScope.showPageHelpInfo = false;
+        } else {
+          $rootScope.showNoneDataInfoTip = false;
+          $rootScope.showPageHelpInfo = true;
+        }
+        $rootScope.stopSpin();
+      }
 
       $rootScope.stopSpin();
       return res;

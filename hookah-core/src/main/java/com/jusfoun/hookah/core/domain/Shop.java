@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jusfoun.hookah.core.generic.GenericModel;
 
 import javax.persistence.GeneratedValue;
@@ -30,10 +31,30 @@ public class Shop extends GenericModel {
 
     private String orgId;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date addTime;
 
     private Integer version;
 
+    private Integer isLocked;
+
+    private Integer status;
+
+    public Integer getIsLocked() {
+        return isLocked;
+    }
+
+    public void setIsLocked(Integer isLocked) {
+        this.isLocked = isLocked;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
     public String getShopDesc() {
         return shopDesc;
