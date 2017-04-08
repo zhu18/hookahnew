@@ -20,3 +20,26 @@ $(document).ready(function () {
 
 
 })
+
+
+
+var Loading = {};
+Loading.start = function(){
+    var loadingHtml = '';
+    loadingHtml += '<div class="loading-wrapper">';
+    loadingHtml += '<div class="loading-bg">';
+    loadingHtml += '</div>';
+    loadingHtml += '<div class="spinner">';
+    loadingHtml += '<div class="rect1"></div>';
+    loadingHtml += '<div class="rect2"></div>';
+    loadingHtml += '<div class="rect3"></div>';
+    loadingHtml += '<div class="rect4"></div>';
+    loadingHtml += '<div class="rect5"></div>';
+    loadingHtml += '<div class="rect6"></div>';
+    loadingHtml += '</div>';
+    loadingHtml += '</div>';
+    $('body').append(loadingHtml);
+};
+Loading.stop = function(){
+    $('.loading-wrapper').remove();
+};

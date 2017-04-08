@@ -1,4 +1,4 @@
-class InformationController {
+class NewsController {
   constructor($scope, $rootScope, $http, $uibModal, usSpinnerService, growl) {
     console.log($rootScope.config);
     $scope.search = function () {
@@ -34,4 +34,4 @@ class InformationController {
   }
 }
 
-export default InformationController;
+export default NewsController;

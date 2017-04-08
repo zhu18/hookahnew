@@ -1,15 +1,15 @@
-import InformationController from './InformationController';
+import NewsController from './NewsController';
 accountRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function accountRouting($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/information/search');
+  $urlRouterProvider.otherwise('/news/search');
   $stateProvider
-    .state('information', {
+    .state('news', {
       template: '<div ui-view></div>',
       showSubMenu: true
     })
-    .state('information.search', {
-      url: '/information/search',
+    .state('news.search', {
+      url: '/news/search',
       template: require('./list.html'),
-      controller: InformationController,
+      controller: NewsController,
     })
 };
