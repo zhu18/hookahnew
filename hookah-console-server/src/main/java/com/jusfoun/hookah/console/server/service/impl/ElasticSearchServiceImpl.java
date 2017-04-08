@@ -118,6 +118,8 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         Integer pageNum = vo.getPageNum();
         String orderField = vo.getOrderFiled();
         String order = vo.getOrder();
+        vo.setOrderFiled("lastUpdateTimeKey");
+        vo.setOrder("desc");
 
         Pagination pagination = new Pagination();
         pagination.setPageSize(pageSize);
@@ -127,7 +129,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             map = AnnotationUtil.convert2Map(vo.getEsGoods());
         }
         esTemplate.search(esTransportClient.getObject(), "qingdao-goods-v1",
-                "goods", map, pagination, orderField, order);
+                "goods", map, pagination, orderField, order, "goodsNameAll", "goodsName", "goodsNamePy");
         return pagination;
     }
 
