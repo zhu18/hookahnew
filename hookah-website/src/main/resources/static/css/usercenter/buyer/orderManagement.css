@@ -50,10 +50,6 @@ ul li {
     right:8px;
     color:#E5E5E5;
 }
-.orderManagement .list:nth-child(2){
-    display: none;
-}
-
 .orderManagement .order {
     border: 1px solid #E1E1E1;
 }
