@@ -65,8 +65,8 @@
                   <span ng-bind="item.goodsSn"></span>
                 </a>
               </td>
-              <td>
-                <span class="column-text" ng-bind="item.goodsName"></span>
+              <td >
+                <span class="column-text" style="width: 100px;white-space:nowrap;"  ng-bind="item.goodsName"></span>
               </td>
               <td>
                 <span class="column-text" ng-bind="item.phone"></span>
@@ -115,7 +115,7 @@
                 </div>
                 <div class="pull-right page-box">
                   <div class="pagination-info">共有{{pagination.totalItems}}条，每页显示：{{pagination.pageSize}}条</div>
-                  <ul uib-pagination ng-change="pageChanged(page)" total-items="pagination.totalItems"
+                  <ul uib-pagination ng-change="pageChanged()" total-items="pagination.totalItems"
                       ng-model="pagination.currentPage" items-per-page="pagination.pageSize"
                       max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"
                       force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"

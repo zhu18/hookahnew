@@ -3,11 +3,10 @@ class GoodsController {
     console.log($rootScope.config);
 
     $scope.search = function () {
-      console.log("查询。。。。");
       var promise = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/goods/all",
-        params: $rootScope.pagination
+        params: {currentPage: $rootScope.pagination.currentPage, pageSize: $rootScope.pagination.pageSize}
       });
       promise.then(function (res, status, config, headers) {
         $rootScope.loadingState = false;
@@ -35,7 +34,10 @@ class GoodsController {
       });
 
     };
-
+    $scope.pageChanged = function () {
+      $scope.search();
+      console.log('Page changed to: ' + $rootScope.pagination.currentPage);
+    };
     $scope.search();
   }
 }
