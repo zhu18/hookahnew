@@ -1,13 +1,16 @@
+/**
+ * Created by ki on 2017/4/7.
+ */
+
 .user-center-box{
     width:970px;
     background: #fff;
     padding:0px 20px;
 }
 .user-center-box  .cart {
-    height: 31px;
+    height: 30px;
     padding-top: 10px;
     border-bottom: 1px solid #EDEDED;
-    font-size: 20px;
 }
 .user-center-box  .cart .center-title {
     font:14px/20px "microsoft yahei";
