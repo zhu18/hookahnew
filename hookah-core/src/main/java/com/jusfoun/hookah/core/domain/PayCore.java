@@ -172,7 +172,7 @@ public class PayCore extends GenericModel {
 		this.haveChecked = haveChecked;
 	}
 
-	@Override
+	/*@Override
 	public String toString() {
 		return "PayCore [id="+id
 				+", userId="+userId
@@ -187,6 +187,6 @@ public class PayCore extends GenericModel {
 				+", incomeFlag="+incomeFlag
 				+", haveChecked="+haveChecked
 				+"]";
-	}
+	}*/
 	
 }

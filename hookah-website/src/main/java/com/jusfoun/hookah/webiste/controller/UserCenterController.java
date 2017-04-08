@@ -148,6 +148,12 @@ public class UserCenterController {
 
     @RequestMapping(value = "/usercenter/buyer/orderManagement", method = RequestMethod.GET)
     public String orderManagement(){ return "/usercenter/buyer/orderManagement"; }
+    @RequestMapping(value = "/usercenter/invoice", method = RequestMethod.GET)
+    public String invoice(){ return "/usercenter/buyer/invoice"; }
+    @RequestMapping(value = "/usercenter/invoiceList", method = RequestMethod.GET)
+    public String invoiceList(){ return "/usercenter/buyer/invoiceList"; }
+    @RequestMapping(value = "/usercenter/info", method = RequestMethod.GET)
+    public String info(){ return "/usercenter/buyer/info"; }
 
     @RequestMapping(value = "usercenter/customer", method = RequestMethod.GET)
     public String customer(){
