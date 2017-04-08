@@ -8,7 +8,7 @@ $(function(){
     $('.topList ul li').each(function () {
         var href = $(this).children('a').attr('href');
         if (url.indexOf(href) >= 0) {
-            $(this).addClass('active').siblings()
+            $(this).addClass('active').siblings().removeClass("active");
         }
     })
 })

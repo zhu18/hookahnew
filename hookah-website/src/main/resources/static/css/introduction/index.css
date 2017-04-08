@@ -14,7 +14,7 @@ ul li {
     zoom: 1;
 }
 
-.box .trading .trading-content {
+ .trading .trading-content,  .strategy .strategy-content ,.leader .leader-content,.box .media .media-content,.glory .glory-content{
     width: 955px;
     background: #fff;
     float: left;
@@ -24,28 +24,29 @@ ul li {
     padding: 10px 40px;
 }
 
-.box .trading .trading-content #media h3 {
+.box  #media .h3 {
     padding: 10px 40px;
+    font-size: 16px;
 }
 
-.box .trading .trading-content #media h3, .box .trading .trading-content #media span {
+.box  #media h4, .box  #media span {
     color: #247de8;
 }
 
-.box .trading .trading-content #media p {
+.box  #media p {
     padding: 10px 40px;
 }
 
-.box .trading .trading-content #media p span {
+.box  #media p span {
     padding-right: 10px;
 }
 
-.box .trading .trading-content #glory ul {
+.box  #glory ul {
     position: relative;
     padding: 20px 0px;
 }
 
-.box .trading .trading-content #glory ul li {
+.box  #glory ul li {
     height: 32px;
     line-height: 32px;
     background: #EFEFEF;
@@ -53,7 +54,7 @@ ul li {
     color: #333;
 }
 
-.box .trading .trading-content #glory ul li span {
+.box  #glory ul li span {
     color: #fff;
     font-size: 15px;
     width: 170px;
@@ -68,52 +69,52 @@ ul li {
     /*display: none;*/
 }
 
-.box .trading .trading-content .cont img {
+.box  .cont img {
     margin: 0 auto;
 }
 
-.box .trading .trading-content .cont .public span {
+.box  .cont .public span {
     border-left: 2px solid #237DE7;
     margin-right: 10px;
 }
 
-.box .trading .trading-content .cont .public h3 {
+.box  .cont .public h3 {
     display: inline;
     line-height: 25px;
     font-size: 15px;
 }
 
-.box .trading .trading-content .cont .line {
+.box  .cont .line {
     width: 100%;
     border-bottom: 1px solid #F0F0F0;
     margin: 10px 0px;
 }
 
-.box .trading .trading-content .cont .nav-title {
+.box  .cont .nav-title {
     margin: 20px -20px;
     position: relative;
 }
-.box .trading .trading-content .cont .nav-title p {
+.box  .cont .nav-title p {
     position: absolute;
     font-size: 23px;
     color:#fff;
     left:13px;
 }
-.box .trading .trading-content .cont .nav-title p:nth-child(2){
+.box  .cont .nav-title p:nth-child(2){
     top: 50px;
 }
-.box .trading .trading-content .cont .nav-title p:nth-child(3){
+.box  .cont .nav-title p:nth-child(3){
     top: 90px;
 }
-.box .trading .trading-content .cont p {
-    font-size: 15px;
+.box  .cont p {
+    font-size: 14px;
     color: #333333;
     line-height: 30px;
     padding-top: 15px;
-    text-indent: 26px;
+    text-indent: 28px;
 }
 
-.box .trading .trading-content .cont .picBot {
+.box  .cont .picBot {
     margin: 35px 40px;
     width: 800px;
     height: 278px;
@@ -121,15 +122,15 @@ ul li {
     border-radius: 4px;
 }
 
-.box .trading .trading-content .cont .picBot .conBot {
+.box  .cont .picBot .conBot {
     padding: 20px 80px;
     line-height: 52px;
     font-size: 20px;
 }
-.box .trading .trading-content .cont .picBot .conBot .public-style {
+.box  .cont .picBot .conBot .public-style {
     position: relative;
 }
-.box .trading .trading-content .cont .picBot .conBot .public-style span:nth-child(1) {
+.box  .cont .picBot .conBot .public-style span:nth-child(1) {
     width: 135px;
     height: 45px;
     line-height: 45px;
@@ -140,11 +141,11 @@ ul li {
     position: relative;
     margin-right: 25px;
 }
-.box .trading .trading-content .cont .picBot .conBot .public-style .zColor {
+.box  .cont .picBot .conBot .public-style .zColor {
     color:#247DE8;
     padding-left: 36px;
 }
-.box .trading .trading-content .cont .picBot .conBot .public-style span:nth-child(1) span {
+.box  .cont .picBot .conBot .public-style span:nth-child(1) span {
     width: 32px;
     height: 32px;
     background: #F7F7F7;
@@ -159,14 +160,16 @@ ul li {
     top:10px;
 }
 
-.box .trading .trading-content .cont:nth-child(2) p {
+.box .strategy .cont p {
     color: #247de8;
+    font-size: 15px;
+    padding:10px 0px;
 }
 
-.box .trading .trading-content .cont .round {
+.box  .cont .round {
     margin: 0px 90px;
 }
 
-.box .trading .trading-content .cont .leader {
+.box  .cont .leader {
     margin: 20px 90px;
 }
