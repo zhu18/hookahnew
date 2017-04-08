@@ -30,7 +30,7 @@ public class GoodsApi {
     GoodsService goodsService;
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public ReturnData getListInPage(String currentPage, String maxSize, String pageSize, HttpServletRequest request) {
+    public ReturnData getListInPage(String currentPage, String pageSize, HttpServletRequest request) {
         Pagination<Goods> page = new Pagination<>();
         try {
             List<Condition> filters = new ArrayList();
