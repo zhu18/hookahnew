@@ -8,10 +8,14 @@
 
     <!-- 业务具体实现类 -->
     <bean id="regionService" class="com.jusfoun.hookah.console.server.service.impl.RegionServiceImpl"/>
+    <bean id="industryCodeService" class="com.jusfoun.hookah.console.server.service.impl.IndustryCodeServiceImpl"/>
 
     <!-- 具体rpc服务配置，声明实现的接口类。-->
     <motan:service interface="com.jusfoun.hookah.rpc.api.RegionService"
                    ref="regionService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+    <motan:service interface="com.jusfoun.hookah.rpc.api.IndustryCodeService"
+                   ref="industryCodeService" export="hookah:5001" basicService="serviceBasicConfig">
     </motan:service>
 
 </beans>
