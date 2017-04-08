@@ -11,35 +11,39 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class MyBuyerController {
+    
+    @RequestMapping(value = "/usercenter/buyer/orderManagement", method = RequestMethod.GET)
+    public String orderManagement() { return "/usercenter/buyer/orderManagement"; }
 
-    @RequestMapping(value = "/1/mybuyer/order", method = RequestMethod.GET)
-    public String index() {
-        return "redirect:/order/list";
+    @RequestMapping(value = "/usercenter/invoice", method = RequestMethod.GET)
+    public String invoice() { return "/usercenter/buyer/invoice"; }
+
+    @RequestMapping(value = "/usercenter/invoiceList", method = RequestMethod.GET)
+    public String invoiceList() { return "/usercenter/buyer/invoiceList"; }
+
+    @RequestMapping(value = "/usercenter/info", method = RequestMethod.GET)
+    public String info() { return "/usercenter/buyer/info"; }
+
+    @RequestMapping(value = "usercenter/buyer/cart", method = RequestMethod.GET)
+    public String cart() { return "usercenter/buyer/cart"; }
+
+    @RequestMapping(value = "/usercenter/buyer/evaluation", method = RequestMethod.GET)
+    public String evaluation(){
+        return "usercenter/buyer/evaluation";
     }
 
-    @RequestMapping(value = "/1/mybuyer/invoice", method = RequestMethod.GET)
-    public String invoice() {
-        return "/1/mybuyer/invoice/index";
+    @RequestMapping(value = "/usercenter/myAttention", method = RequestMethod.GET)
+    public String myAttention(){
+        return "usercenter/mybuyer/myAttention";
     }
 
-    @RequestMapping(value = "/1/mybuyer/invoice/info", method = RequestMethod.GET)
-    public String invoiceinfo() {
-        return "/1/mybuyer/invoice/info";
-    }
 
-    @RequestMapping(value = "/1/mybuyer/rate", method = RequestMethod.GET)
-    public String rate() {
-        return "/1/mybuyer/rate";
-    }
 
-    @RequestMapping(value = "/1/mybuyer/attention_item", method = RequestMethod.GET)
-    public String attentionitem() {
-        return "/1/mybuyer/attention_item";
-    }
 
-    @RequestMapping(value = "/1/mybuyer/attention_shop", method = RequestMethod.GET)
-    public String attentionshop() {
-        return "/1/mybuyer/attention_shop";
-    }
+
+
+
+
+
 
 }
