@@ -49,13 +49,13 @@ public class AuthController {
     }
 
     /**
-     * 用户认证，个人，企业首页
+     * 用户，个人，企业认证首页
      *
      * @param model
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/auth", method = RequestMethod.GET)
+    @RequestMapping(value = "/auth/index", method = RequestMethod.GET)
     public String auth(Model model) throws Exception {
         return "/auth/auth_index";
     }
