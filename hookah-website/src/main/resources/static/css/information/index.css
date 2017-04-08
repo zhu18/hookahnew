@@ -32,8 +32,11 @@ ul li {
 }
 .information .content .leftSide .top ul li {
     line-height: 46px;
-    padding-left:30px;
     border-bottom:1px solid #E9E9E9;
+}
+.information .content .leftSide .top ul li a{
+    display: block;
+    padding-left:30px;
 }
 .information .content .leftSide .top ul li span{
     margin-right: 10px;
@@ -87,6 +90,10 @@ ul li {
 }
 .information .content .rightCenter .public img  {
     float: left;
+}
+.information .content .rightCenter .public .news-img{
+    width:160px;
+    height:120px;
 }
 .information .content .rightCenter .public  .size{
     font-size: 15px;

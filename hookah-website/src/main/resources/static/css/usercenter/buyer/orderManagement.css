@@ -1,0 +1,111 @@
+/**
+ * Created by ki on 2017/4/7.
+ */
+ul li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.orderManagement {
+    background: #fff;
+    width: 978px;
+    border: 1px solid #EDEDED;
+    padding:0px 15px;
+}
+.orderManagement .title {
+    border-bottom: 2px solid #E5E5E5;
+}
+.orderManagement .title ul li {
+    float: left;
+    line-height: 50px;
+    font-size: 15px;
+    width: 120px;
+}
+.orderManagement .title ul li:hover{
+    cursor: pointer;
+}
+.orderManagement .title ul li.active{
+    border-bottom: 2px solid #F17D17;
+    color:#F17D17;
+}
+.orderManagement .title ul li span{
+    border-right:1px solid #E5E5E5;
+}
+.orderManagement .title .search {
+    position: relative;
+}
+.orderManagement .title .search input{
+    width: 190px;
+    height: 30px;
+    line-height: 50px;
+    border: 1px solid #E5E5E5;
+    margin-top:10px;
+    padding-left:5px;
+}
+.orderManagement .title .search span{
+    font-size: 20px;
+    position: absolute;
+    top:15px;
+    right:8px;
+    color:#E5E5E5;
+}
+.orderManagement .list:nth-child(2){
+    display: none;
+}
+
+.orderManagement .order {
+    border: 1px solid #E1E1E1;
+}
+.orderManagement .order .top{
+    line-height: 40px;
+    background: #F1F1F1;
+    font-weight:700;
+    font-size: 13px;
+    border-bottom: 1px solid #E1E1E1;
+}
+.orderManagement .order .top .money{
+    padding-left:90px;
+}
+.orderManagement .order .bot{
+   height: 110px;
+}
+.orderManagement .order .bot img{
+    padding:20px 70px 20px 50px;
+    float: left;
+}
+.orderManagement .order .bot span{
+    float: left;
+    margin-top: 40px;
+    font-size: 12px;
+}
+
+.orderManagement .order .bot .yuan {
+    color:#F17D17;
+}
+.orderManagement .order .bot .operat a{
+    position: absolute;
+    clear: both;
+    margin-left: 45px;
+}
+.orderManagement .order .bot .operat .fu {
+    margin-top:-24px;
+    width: 70px;
+    height: 30px;
+    line-height: 30px;
+    background: #F17D17;
+    text-align: center;
+    color:#fff;
+}
+.orderManagement .order .bot .operat .ping {
+    margin-left: 50px;
+    margin-top: 10px;
+}
+.orderManagement .order .bot .operat .cancel{
+    margin-top: 30px;
+    margin-left: 66px;
+}
+.orderManagement .order .bot .operat .cha{
+    margin-top:-14px;
+    margin-left: 50px;
+}

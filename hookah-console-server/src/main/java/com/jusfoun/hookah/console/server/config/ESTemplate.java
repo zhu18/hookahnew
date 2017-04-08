@@ -33,6 +33,10 @@ import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.elasticsearch.search.sort.SortOrder;
+import org.elasticsearch.search.suggest.Suggest;
+import org.elasticsearch.search.suggest.SuggestBuilder;
+import org.elasticsearch.search.suggest.completion.CompletionSuggestion;
+import org.elasticsearch.search.suggest.completion.CompletionSuggestionBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -741,5 +745,43 @@ public class ESTemplate {
         }
         if(list != null && list.size() > 0)
             pagination.setList(list);
+    }
+
+    /**
+     * suggest
+     * @param client
+     * @param prefix 搜索关键字
+     * @param size 展示结果个数
+     * @param indexName 索引名称
+     * @param type 索引类型
+     * @param suggestName 定义suggest名称
+     * @param searchSuggestName 搜索时候suggest查询名称
+     * @return
+     */
+    public List<String> suggest(TransportClient client, String prefix, Integer size, String indexName,
+                                String type, String suggestName, String searchSuggestName) {
+        List<String> listResult = new ArrayList<>();
+        CompletionSuggestionBuilder suggestionBuilder = new CompletionSuggestionBuilder(suggestName);
+        suggestionBuilder.text(prefix);
+        suggestionBuilder.size(size);
+        SuggestBuilder sb = new SuggestBuilder();
+        sb.addSuggestion(searchSuggestName, suggestionBuilder);
+        SearchResponse resp = client.prepareSearch().setIndices(indexName).setTypes(type)
+                .setQuery(QueryBuilders.matchAllQuery()).suggest(sb).get();
+        Suggest sugg = resp.getSuggest();
+        if(sugg != null) {
+            CompletionSuggestion suggestion = sugg.getSuggestion(searchSuggestName);
+            List<CompletionSuggestion.Entry> list = suggestion.getEntries();
+            for (int i = 0; i < list.size(); i++) {
+                List<?> options = list.get(i).getOptions();
+                for (int j = 0; j < options.size(); j++) {
+                    if (options.get(j) instanceof CompletionSuggestion.Entry.Option) {
+                        CompletionSuggestion.Entry.Option op = (CompletionSuggestion.Entry.Option) options.get(j);
+                        listResult.add(op.getText().toString());
+                    }
+                }
+            }
+        }
+        return listResult;
     }
 }

@@ -48,8 +48,8 @@ module.exports = function makeWebpackConfig() {
    * Karma will set this when it's a test build
    */
   config.entry = isTest ? {} : {
-      vendor: ['jquery', 'bootstrap', 'angular', 'angular-ui-router', 'spin', 'angular-spinner'],
-      uibootstrap:['angular-ui-bootstrap','angular-growl-v2']
+      vendor: ['jquery', 'bootstrap', 'angular', 'angular-ui-bootstrap', 'angular-ui-router', 'spin', 'angular-spinner'],
+      uibootstrap: ['angular-growl-v2']
     };
   config.entry = Object.assign({}, config.entry, newEntries);
   console.log(config.entry);
@@ -219,13 +219,13 @@ module.exports = function makeWebpackConfig() {
     files.forEach(function (f) {
       // var name = /.*\/(apps\/.*?\/index)\.js/.exec(f)[1];//得到apps/question/index这样的文件名
       var name = /.*\/apps\/(.*?)\/index\.js/.exec(f)[1];
-      var nname =  name + '/' + name;
+      var nname = name + '/' + name;
       config.plugins.push(
         new HtmlWebpackPlugin({
           filename: name + '/index.html',
           template: './src/public/index.html',
           inject: 'body',
-          chunks: [nname,'uibootstrap', 'vendor']
+          chunks: [nname, 'uibootstrap', 'vendor']
         })
       )
     });

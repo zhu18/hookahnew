@@ -3,8 +3,8 @@
     height: 900px;
     border:1px solid #EDEDED;
     background-color: #fff;
-    margin:10px 5px;
-    padding:0 20px;
+    margin:10px 10px 30px 10px;
+    padding:0 15px;
 }
 .info-center-box .header{
     height: 31px;
@@ -17,6 +17,9 @@
     font:14px/20px "microsoft yahei";
     padding-left:10px;
     border-left:2px solid #237DE7;
+}
+.bottom{
+    padding-top:10px;
 }
 table{
     width: 950px;
@@ -57,9 +60,9 @@ tbody .list1{
 }
 .round{
     display: inline-block;
-    width: 10px;
-    height: 10px;
-    background-color: #0000ff;
+    width: 6px;
+    height: 6px;
+    background-color: #037aff;
     -webkit-border-radius:50%;
     -moz-border-radius:50%;
     border-radius:50%;
@@ -70,7 +73,7 @@ tbody .list1{
 }
 .operate{
     height: 40px;
-    width: 931px;
+    width: 917px;
     background-color: #fff;
     border:1px solid #DDD;
     border-top:none;
@@ -83,4 +86,13 @@ tbody .list1{
 button{
     padding:0 10px;
     margin-right:10px;
+}
+.no-info{
+    width: 100%;
+    height: 100px;
+    line-height:100px;
+    text-align: center;
+    font-size:18px;
+    color: #ffa800;
+    border: 1px solid #DDD;
 }
