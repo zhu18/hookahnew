@@ -129,13 +129,15 @@ public class UserCenterController {
     public String goodsEdit(){
         return "usercenter/myseller/goodsEdit";
     }
+
     @RequestMapping(value = "/usercenter/admin", method = RequestMethod.GET)
     public String admin(){
         return "usercenter/admin/index";
     }
+
     @RequestMapping(value = "/usercenter/myAttention", method = RequestMethod.GET)
     public String myAttention(){
-        return "usercenter/mybuyer/myAttention";
+        return "usercenter/buyer/myAttention";
     }
 
     @RequestMapping(value = "/usercenter/buyer/evaluation", method = RequestMethod.GET)
@@ -148,10 +150,13 @@ public class UserCenterController {
 
     @RequestMapping(value = "/usercenter/buyer/orderManagement", method = RequestMethod.GET)
     public String orderManagement(){ return "/usercenter/buyer/orderManagement"; }
+
     @RequestMapping(value = "/usercenter/invoice", method = RequestMethod.GET)
     public String invoice(){ return "/usercenter/buyer/invoice"; }
+
     @RequestMapping(value = "/usercenter/invoiceList", method = RequestMethod.GET)
     public String invoiceList(){ return "/usercenter/buyer/invoiceList"; }
+
     @RequestMapping(value = "/usercenter/info", method = RequestMethod.GET)
     public String info(){ return "/usercenter/buyer/info"; }
 
