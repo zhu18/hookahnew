@@ -133,23 +133,23 @@ function HttpInterceptor($q, $rootScope, $location, $window) {
       res.config.responseTimestamp = new Date().getTime();
       var time = res.config.responseTimestamp - res.config.requestTimestamp;
       console.log('The request took ' + (time / 1000) + ' seconds.');
-      if (res.data.data !== undefined && res.data.data.totalItems) {
-        $rootScope.pagination.store = res.data.data.list;
-        $rootScope.pagination.currentPage = res.data.data.currentPage;
-        $rootScope.pagination.totalItems = res.data.data.totalItems;
-        $rootScope.paginationSupport = true;
-        // if(res.data.totalPages >1){
-        //
-        // }
-        if (res.data.totalItems == 0) {
-          $rootScope.showNoneDataInfoTip = true;
-          $rootScope.showPageHelpInfo = false;
-        } else {
-          $rootScope.showNoneDataInfoTip = false;
-          $rootScope.showPageHelpInfo = true;
-        }
-        $rootScope.stopSpin();
-      }
+      // if (res.data.data !== undefined && res.data.data.totalItems) {
+      //   $rootScope.pagination.store = res.data.data.list;
+      //   $rootScope.pagination.currentPage = res.data.data.currentPage;
+      //   $rootScope.pagination.totalItems = res.data.data.totalItems;
+      //   $rootScope.paginationSupport = true;
+      //   // if(res.data.totalPages >1){
+      //   //
+      //   // }
+      //   if (res.data.totalItems == 0) {
+      //     $rootScope.showNoneDataInfoTip = true;
+      //     $rootScope.showPageHelpInfo = false;
+      //   } else {
+      //     $rootScope.showNoneDataInfoTip = false;
+      //     $rootScope.showPageHelpInfo = true;
+      //   }
+      //   $rootScope.stopSpin();
+      // }
 
       $rootScope.stopSpin();
       return res;

@@ -62,11 +62,11 @@
               <td>
                 <a ng-class="{'title-unread':item.Status*1===0,'title-read':item.Status*1!==0}" href="javascript:;"
                    class="">
-                  <span ng-bind="item.goodsSn"></span>
+                  <span ng-bind="item.goodsSn "></span>
                 </a>
               </td>
-              <td >
-                <span class="column-text" style="width: 100px;white-space:nowrap;"  ng-bind="item.goodsName"></span>
+              <td>
+                <span class="column-text" style="width: 100px;white-space:nowrap;" ng-bind="item.goodsName | limitTo:10"></span>
               </td>
               <td>
                 <span class="column-text" ng-bind="item.phone"></span>
