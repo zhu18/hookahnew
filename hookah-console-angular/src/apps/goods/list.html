@@ -29,53 +29,49 @@
           <table class="table table-hover" style="margin-bottom: 57px;">
             <thead>
             <tr>
-              <th width="10">
-                <input type="checkbox" data-ng-model="tableState.selectAll"
-                       ng-change="changeSelectionAll()" class=" ">
-              </th>
-              <th class="state-column"></th>
-              <th>Id</th>
-              <th>用户名</th>
-              <th class="">邮箱</th>
-              <th width="135">电话</th>
+              <!--<th width="10">-->
+                <!--<input type="checkbox" data-ng-model="tableState.selectAll"-->
+                       <!--ng-change="changeSelectionAll()" class=" ">-->
+              <!--</th>-->
+              <!--<th class="state-column"></th>-->
+              <th>编号</th>
+              <th>名称</th>
+              <th class="">所属者</th>
+              <th >所属店铺</th>
               <th width="135">创建时间</th>
-              <th width="135">最后登录时间</th>
-              <th width="40">禁用</th>
+              <th width="70">上下架</th>
               <th width="130" class="text-right">操作</th>
             </tr>
             </thead>
             <tbody>
             <tr data-ng-if="!loadingState" data-ng-repeat="item in pagination.store" class="">
-              <td width="10">
-                <input type="checkbox" data-ng-model="item.selected" ng-change="changeSelection({data: item})"
-                       class=" ">
-              </td>
-              <td class="state-column">
-                <span class="state-unread " ng-if="item.Status*1===0">●</span>
-              </td>
+              <!--<td width="10">-->
+                <!--<input type="checkbox" data-ng-model="item.selected" ng-change="changeSelection({data: item})"-->
+                       <!--class=" ">-->
+              <!--</td>-->
+              <!--<td class="state-column">-->
+                <!--<span class="state-unread " ng-if="item.Status*1===0">●</span>-->
+              <!--</td>-->
               <td>
                 <a ng-class="{'title-unread':item.Status*1===0,'title-read':item.Status*1!==0}" href="javascript:;"
                    class=" title-unread">
-                  <span text-length="50" ng-bind="item.id"></span>
+                  <span text-length="50" ng-bind="item.goodsSn"></span>
                 </a>
               </td>
               <td>
                 <a ng-class="{'title-unread':item.Status*1===0,'title-read':item.Status*1!==0}" href="javascript:;"
                    class="">
-                  <span ng-bind="item.goodsSn "></span>
+                  <span class="column-text" style="width: 100px;white-space:nowrap;" ng-bind="item.goodsName | limitTo:10"></span>
                 </a>
               </td>
               <td>
-                <span class="column-text" style="width: 100px;white-space:nowrap;" ng-bind="item.goodsName | limitTo:10"></span>
+                <span class="column-text" style="width: 100px;white-space:nowrap;" ng-bind="item.userName"></span>
               </td>
               <td>
-                <span class="column-text" ng-bind="item.phone"></span>
+                <span class="column-text" ng-bind="item.shopName"></span>
               </td>
               <td>
-                <span class="" ng-bind="item.createTime"></span>
-              </td>
-              <td>
-                <span class="" ng-bind="item.lastLoginTime"></span>
+                <span class="" ng-bind="item.addTime"></span>
               </td>
               <td>
                 <span class="column-text" ng-bind="item.openStatus | yesNo"></span>
@@ -93,10 +89,10 @@
             </tbody>
             <tfoot ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">
             <tr>
-              <td width="10" style="width: 29px;">
-                <input type="checkbox" data-ng-model="tableState.selectAll" ng-change="changeSelectionAll()"
-                       class="">
-              </td>
+              <!--<td width="10" style="width: 29px;">-->
+                <!--<input type="checkbox" data-ng-model="tableState.selectAll" ng-change="changeSelectionAll()"-->
+                       <!--class="">-->
+              <!--</td>-->
               <td colspan="9">
                 <div class="pull-left">
                   <div toolbar="" biz-type="innerMsgToolbar" raw-data="selectedItems" class="">

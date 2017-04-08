@@ -1,8 +1,16 @@
 class ShopController {
   constructor($scope, $rootScope,$http, $uibModal, usSpinnerService,growl) {
-    console.log($rootScope.config);
     $scope.search = function(){
-      console.log("查询。。。。");
+      var promise = $http({
+        method: 'GET',
+        url: $rootScope.site.apiServer + "/api/shop/all",
+        params: {currentPage: $rootScope.pagination.currentPage, pageSize: $rootScope.pagination.pageSize}
+      });
+      promise.then(function (res, status, config, headers) {
+        $rootScope.loadingState = false;
+        console.log($rootScope.pagination);
+        growl.addSuccessMessage("数据加载完毕。。。");
+      });
     };
     $scope.add = function(){
       console.log("add。。。。");
@@ -22,6 +30,8 @@ class ShopController {
       });
 
     };
+
+    $scope.search();
   }
 }
 
