@@ -64,7 +64,6 @@ $(function () {
         var nav=$(".goods-table .table-title"); //得到导航对象
         $(window).scroll(function(){
             if($(document).scrollTop()>=580){
-                console.log(1);
                 nav.addClass('fiexd');
                 nav.fadeIn();
             }else{
