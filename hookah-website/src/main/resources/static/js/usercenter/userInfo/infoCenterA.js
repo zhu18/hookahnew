@@ -5,7 +5,8 @@ $(function () {
     //蓝色小圆点的显示和隐藏，点击后字体颜色的变化
     //定义标识符，标识信息：是否已读 false:未读，true:已读
     $(".item .info").on("click", function () {
-        $(this).addClass("active").find(".round").css("visibility", "hidden");
+        // $(this).addClass("active").find(".round").css("visibility", "hidden");
+        $(this).addClass("active");
     });
 //全选
     $("body").on("click", ".checkbox-title", function () {
@@ -38,15 +39,6 @@ $(function () {
             $(".bottom").html("<div class='no-info'>暂时没有消息</div>");//显示加载动画
         }
     });
-//标记已读
-    $(".readed").click(function () {
-        if ($(".checkbox:checked")) {
-            $(".checkbox:checked").parent("td").parent("tr").addClass("active").find(".round").css("visibility", "hidden");
-        }
-    });
-//全部已读
-    $(".read-all").click(function () {
-        $(".checkbox").parent("td").parent("tr").addClass("active").find(".round").css("visibility", "hidden");
-    });
+
 
 });

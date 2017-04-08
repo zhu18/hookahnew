@@ -1,17 +1,34 @@
 /****************/
-/*.pay-wrapper{overflow: hidden}*/
+.box{
+    padding:20px 0;
+}
+.pay-wrapper{
+    overflow: hidden;
+}
+.pay-wrapper{
+    background-color: #fff;
+    border: 1px solid #EDEDED;
+}
 .order-wrapper{
     position: relative;
     margin:10px 100px 0;
     font-size: 14px;
     border-bottom: 3px solid #b3b3b3;
 }
+.order-wrapper .header{
+    height: 31px;
+    padding-top:10px;
+    border-bottom: 1px solid #EDEDED;
+}
  .order-wrapper .order-title {
-    width: 600px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    margin-top: 15px;
+     height: 20px;
+     font:14px/20px "microsoft yahei";
+     padding-left:10px;
+     border-left:2px solid #237DE7;
+     width: 600px;
+    /*overflow: hidden;*/
+     white-space: nowrap;
+     text-overflow: ellipsis;
 }
 .order-details{
     display: none;
@@ -25,7 +42,7 @@
  .order-amount {
     position: absolute;
     right: 100px;
-    top: 16px;
+    top: 7px;
     text-align: right;
 }
 .pay-wrapper .order-wrapper .order-amount span {
@@ -40,6 +57,7 @@
 .pay-wrapper .order-wrapper .od-tb tr{
     padding: 2px 0;
     line-height: 24px;
+    color: #666;
 }
 .pay-wrapper .order-wrapper .od-tb th.sub-th {
     vertical-align: top;
