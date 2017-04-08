@@ -130,6 +130,8 @@
         / = anon
         /error/** = anon
         /login** = oauth2Authc
+        /auth* = oauth2Authc
+        /auth/** = oauth2Authc
         /myseller* = oauth2Authc
         /myseller/** = oauth2Authc
         /usercenter* = oauth2Authc
