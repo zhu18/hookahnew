@@ -649,7 +649,7 @@ public class ESTemplate {
      * @return
      */
     public Pagination search(TransportClient client,String indexName,String type,Map<String,Object> filterMap,
-                                      Pagination pagination, String orderField, String order ){
+                                      Pagination pagination, String orderField, String order , String ... highLightFields){
         SearchRequestBuilder requestBuilder = client.prepareSearch(indexName);
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
         QueryStringQueryBuilder queryString = null;
@@ -667,6 +667,11 @@ public class ESTemplate {
             boolQueryBuilder.must(matchAll);
         }
 
+        HighlightBuilder highlightBuilder = new HighlightBuilder().field("*").requireFieldMatch(false);
+        highlightBuilder.preTags("<span style=\"color:red\">");
+        highlightBuilder.postTags("</span>");
+        requestBuilder.highlighter(highlightBuilder);
+
         requestBuilder.setTypes(type).setQuery(boolQueryBuilder);
         if(StringUtils.isNotBlank(orderField)) {
             requestBuilder.addSort(orderField, StringUtils.isNotBlank(order) &&
@@ -675,7 +680,27 @@ public class ESTemplate {
         requestBuilder.setFrom((pagination.getCurrentPage() -1) * pagination.getPageSize())
                 .setSize(pagination.getPageSize());
         SearchResponse searchResponse = requestBuilder.execute().actionGet();
-        pagination.setList(result2MapData(searchResponse));
+
+        List<Map<String, Object>> list = new ArrayList();
+        for (SearchHit hit : searchResponse.getHits()) {
+            Map<String, HighlightField> highlightFields = hit.getHighlightFields();
+            //title高亮
+            Map<String, Object> source = hit.getSource();
+            for(String filed : highLightFields) {
+                HighlightField titleField = highlightFields.get(filed);
+                if(titleField!=null){
+                    Text[] fragments = titleField.fragments();
+                    String name = "";
+                    for (Text text : fragments) {
+                        name += text;
+                    }
+                    source.put(filed, name);
+                }
+            }
+            list.add(source);
+        }
+
+        pagination.setList(list);
         pagination.setTotalItems(searchResponse.getHits().getTotalHits());
         return pagination;
     }

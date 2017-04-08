@@ -24,7 +24,7 @@ public class EsGoods implements Serializable {
     @EsField(analyzeOpt= AnalyzeOpt.ANALYZED, analyzer= Analyzer.PINYIN,
             termVector= TermVector.OFFSETS, isStore = true, searchAnalyzer = Analyzer.PINYIN, copyTo = "goodsNameAll")
     private String goodsNamePy;
-    @EsField
+    @EsField(analyzeOpt= AnalyzeOpt.ANALYZED, analyzer= Analyzer.PINYIN, searchAnalyzer = Analyzer.PINYIN)
     private String goodsNameAll;
     @EsField
     private String goodsBrief;
@@ -57,6 +57,12 @@ public class EsGoods implements Serializable {
     private Integer shopNumber;
     @EsField(type = Type.BYTE)
     private Byte shopFormat;
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @EsField(type = Type.DATE, copyTo = "lastUpdateTimeKey")
+    private Date lastUpdateTime;
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @EsField(type = Type.KEYWORD)
+    private Date lastUpdateTimeKey;
 
     public String getGoodsId() {
         return goodsId;
@@ -200,5 +206,21 @@ public class EsGoods implements Serializable {
 
     public void setShopFormat(Byte shopFormat) {
         this.shopFormat = shopFormat;
+    }
+
+    public Date getLastUpdateTime() {
+        return lastUpdateTime;
+    }
+
+    public void setLastUpdateTime(Date lastUpdateTime) {
+        this.lastUpdateTime = lastUpdateTime;
+    }
+
+    public Date getLastUpdateTimeKey() {
+        return lastUpdateTimeKey;
+    }
+
+    public void setLastUpdateTimeKey(Date lastUpdateTimeKey) {
+        this.lastUpdateTimeKey = lastUpdateTimeKey;
     }
 }
