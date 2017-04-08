@@ -1,8 +1,5 @@
 package com.jusfoun.hookah.webiste.controller;
 
-import org.apache.oltu.oauth2.client.URLConnectionClient;
-import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
-import org.apache.oltu.oauth2.client.response.OAuthClientResponse;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
@@ -10,8 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.Map;
 
 /**
  * All rights Reserved, Designed By
@@ -51,5 +46,39 @@ public class AuthController {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
         return "redirect:http://localhost:9900/logout";
+    }
+
+    /**
+     * 用户认证，个人，企业首页
+     *
+     * @param model
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/auth", method = RequestMethod.GET)
+    public String auth(Model model) throws Exception {
+        return "/auth/auth_index";
+    }
+
+    /**
+     * 个人认证
+     * @param model
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/auth/user_auth_init", method = RequestMethod.GET)
+    public String userAuth(Model model) throws Exception {
+        return "/auth/user_auth_init";
+    }
+
+    /**
+     * 公司认证
+     * @param model
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/auth/company_auth_init", method = RequestMethod.GET)
+    public String companyAuth(Model model) throws Exception {
+        return "/auth/company_auth_init";
     }
 }
