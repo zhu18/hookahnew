@@ -116,7 +116,20 @@ export default angular.module('Common', [
         default:
           return '盘点';
       }
-      return input ? '是' : '否';
+    }
+  })
+  .filter('newsGroup', function () {
+    return function (input) {
+      switch(input) {
+        case 'innovation':
+          return '双创中心';
+          break;
+        case 'exposition':
+          return '博览中心';
+          break;
+        default:
+          return '咨询中心';
+      }
     }
   })
   .filter('Status', function () {
