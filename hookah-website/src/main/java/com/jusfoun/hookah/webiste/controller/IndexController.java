@@ -54,9 +54,9 @@ public class IndexController {
     MailService mailService;
 
 
-    @RequestMapping(value = "/1/", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home(Model model) {
-        return "/1/index";
+        return "index";
     }
 
     @RequestMapping(value = "/s", method = RequestMethod.GET)
@@ -183,11 +183,6 @@ public class IndexController {
     public Object sendMsg(String msg,Model model) {
         mqSenderService.send(msg);
         return "sucess";
-    }
-
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String Nhome(Model model) {
-        return "index";
     }
 
 }
