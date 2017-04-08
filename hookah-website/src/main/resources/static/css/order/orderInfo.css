@@ -1,4 +1,129 @@
 
 .order-info{
+    color: #666;
+    font-family: "Microsoft YaHei","SimHei";
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+.order-info .order-info-top{
+    height: 50px;
+    padding: 25px 0;
+}
+.order-info .order-info-top ul li{
+    border-top: 3px solid #EEEEEE;
+    position: relative;
+    line-height: 50px;
+    font-size: 16px;
+    color: #666;
+    text-align: center;
+    float: left;
+    height: 50px;
+    width: 250px;
+}
+.order-info .order-info-top ul .active{
+    display: block;
+    border-top: 3px solid #e34f4f ;
+}
+.order-info .order-info-top ul .active:after{
+    display: block;
+    background-color: #e34f4f;
+}
+.order-info .order-info-top ul li:after{
+    content: attr(data-tip);
+    display: block;
+    position: absolute;
+    top: -12px;
+    font-size: 16px;
+    height: 20px;
+    width: 20px;
+    line-height: 20px;
+    left: 50%;
+    margin-left: -10px;
+    color: white;
+    background-color: #EEEEEE;
+    border-radius: 50%;
+}
 
+.order-info .order-info-down{
+
+}
+.order-info .order-info-down h1{
+    font-size: 20px;
+    font-weight: 400;
+    color: #666;
+    margin: 10px 0;
+}
+.order-info .order-info-down table{
+    width: 100%;
+    border: 1px solid #EDEDED;
+}
+.order-info .order-info-down table .tab-title{
+
+}
+.order-info .order-info-down table .tab-title th{
+    background: #ededed;
+    font-size: 13px;
+    height: 30px;
+    padding: 5px;
+    text-align: left;
+}
+.order-info .order-info-down table .tab-title-th th{
+    text-align: center;
+    height: 30px;
+    font-size: 13px;
+    border: 1px solid #EDEDED;
+    background-color: #F7F7F7;
+}
+.order-info .order-info-down table .tab-item td{
+    text-align: center;
+    height: 20px;
+    line-height: 20px;
+    font-size: 12px;
+    padding: 12px 5px;
+    border: 1px solid #EDEDED;
+}
+.order-info .order-info-down table .tab-pay td{
+    text-align: center;
+    height: 20px;
+    line-height: 20px;
+    font-size: 12px;
+    padding: 12px 5px;
+    border: 1px solid #EDEDED;
+}
+.order-info .order-info-down table .tab-agreement td{
+    text-align: right;
+    height: 60px;
+    vertical-align: top;
+    line-height: 20px;
+    font-size: 12px;
+    padding: 12px 15px;
+    border: 1px solid #EDEDED;
+}
+.order-info .order-info-down table .tab-submit td{
+    text-align: right;
+    height: 60px;
+    line-height: 20px;
+    font-size: 12px;
+    padding: 12px 15px;
+    border: 1px solid #EDEDED;
+}
+.order-info .order-info-down table .tab-submit td a{
+    display: inline-block;
+    height: 38px;
+    line-height: 38px;
+    text-align: center;
+    color: white;
+    font-size: 20px;
+    border-radius: 5px;
+    width: 200px;
+    margin: 5px 0;
+}
+.order-info .order-info-down table .tab-submit td a:hover{
+}
+.order-info .order-info-down table .tab-submit .pay-box{
+    display: inline-block;
+    height: 38px;
+    width: 200px;
+    line-height: 38px;
 }
