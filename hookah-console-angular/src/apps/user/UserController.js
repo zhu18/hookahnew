@@ -1,18 +1,18 @@
 class UserController {
   constructor($scope, $rootScope,$http, $uibModal, usSpinnerService,growl) {
     console.log($rootScope.config);
-    var promise = $http({
-      method: 'GET',
-      url: $rootScope.site.apiServer + "/api/account/sys_all"
-    });
-    promise.then(function (res, status, config, headers) {
-      $rootScope.loadingState = false;
-      $scope.sysAccount = res.data.data;
-      growl.addSuccessMessage("数据加载完毕。。。");
-    });
+
 
     $scope.search = function(){
-      console.log("查询。。。。");
+      var promise = $http({
+        method: 'GET',
+        url: $rootScope.site.apiServer + "/api/user/all"
+      });
+      promise.then(function (res, status, config, headers) {
+        $rootScope.loadingState = false;
+        // $scope.sysAccount = res.data.data;
+        growl.addSuccessMessage("数据加载完毕。。。");
+      });
     };
     $scope.add = function(){
       console.log("add。。。。");
@@ -32,6 +32,8 @@ class UserController {
       });
 
     };
+
+    $scope.search();
   }
 }
 
