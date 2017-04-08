@@ -151,7 +151,6 @@ public class UserCenterController {
     @RequestMapping(value = "/usercenter/buyer/orderManagement", method = RequestMethod.GET)
     public String orderManagement(){ return "/usercenter/buyer/orderManagement"; }
 
-
     @RequestMapping(value = "usercenter/customer", method = RequestMethod.GET)
     public String customer(){
         return "usercenter/myseller/customer";

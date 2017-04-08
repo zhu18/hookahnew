@@ -1,12 +1,12 @@
 /**
- * Created by ki on 2017/4/7.
+ * Created by ki on 2017/4/8.
  */
 ul li {
     padding: 0;
     margin: 0;
     list-style: none;
 }
-
+/*全部订单*/
 .orderManagement {
     background: #fff;
     width: 978px;
@@ -50,58 +50,57 @@ ul li {
     right:8px;
     color:#E5E5E5;
 }
-.orderManagement .order {
-    border: 1px solid #E1E1E1;
-}
-.orderManagement .order .top{
+/*订单信息*/
+.orderManagement .order table thead {
     line-height: 40px;
     background: #F1F1F1;
-    font-weight:700;
-    font-size: 13px;
-    border-bottom: 1px solid #E1E1E1;
-}
-.orderManagement .order .top .money{
-    padding-left:90px;
-}
-.orderManagement .order .bot{
-   height: 110px;
-}
-.orderManagement .order .bot img{
-    padding:20px 70px 20px 50px;
-    float: left;
-}
-.orderManagement .order .bot span{
-    float: left;
-    margin-top: 40px;
-    font-size: 12px;
-}
-
-.orderManagement .order .bot .yuan {
-    color:#F17D17;
-}
-.orderManagement .order .bot .operat a{
-    position: absolute;
-    clear: both;
-    margin-left: 45px;
-}
-.orderManagement .order .bot .operat .fu {
-    margin-top:-24px;
-    width: 70px;
-    height: 30px;
-    line-height: 30px;
-    background: #F17D17;
     text-align: center;
+    border-top:1px solid #E1E1E1;
+    border-bottom:1px solid #E1E1E1;
+}
+.orderManagement .order table .one {
+    width: 180px;
+}
+.orderManagement .order table .two {
+    width: 250px;
+}
+.orderManagement .order table .three {
+    width: 120px;
+}
+.orderManagement .order table .four {
+    width: 120px;
+}
+.orderManagement .order table .five {
+    width: 150px;
+}
+.orderManagement .order table .six {
+    width: 158px;
+}
+.orderManagement .order table tbody .operate {
+    position: relative;
+}
+.orderManagement .order table tbody .operate a{
+    position: absolute;
+    color:#297EF1;
+}
+.orderManagement .order table tbody .operate .cha {
+    top:32px;
+    left: 50px;
+}
+.orderManagement .order table tbody .operate .fu{
+    top:20px;
+    left: 44px;
+    width: 70px;
     color:#fff;
+    line-height: 30px;
+    text-align: center;
+    background: #F17D17;
 }
-.orderManagement .order .bot .operat .ping {
-    margin-left: 50px;
-    margin-top: 10px;
+.orderManagement .order table tbody .operate .ping{
+    top:56px;
+    left: 52px;
 }
-.orderManagement .order .bot .operat .cancel{
-    margin-top: 30px;
-    margin-left: 66px;
-}
-.orderManagement .order .bot .operat .cha{
-    margin-top:-14px;
-    margin-left: 50px;
+.orderManagement .order table tbody .operate .cancel{
+    top: 75px;
+    left: 65px;
 }
