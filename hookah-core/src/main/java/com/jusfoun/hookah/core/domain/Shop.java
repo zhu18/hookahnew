@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jusfoun.hookah.core.generic.GenericModel;
 
 import javax.persistence.GeneratedValue;
@@ -30,6 +31,7 @@ public class Shop extends GenericModel {
 
     private String orgId;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date addTime;
 
     private Integer version;
