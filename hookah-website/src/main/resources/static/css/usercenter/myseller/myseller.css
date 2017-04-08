@@ -381,13 +381,14 @@
 /******** trade-wrapper end ********/
 .info-center-box .user-center-box {
     background-color: white;
-    width: 988px;
-    margin-left: 10px;
-    padding: 10px;
+    width: 965px;
+    margin:10px 10px 30px 10px;
+    padding:0 15px;
     border: 1px solid #e9e9e9;
 }
 .user-center-box .trade-wrapper{
-
+    padding-top:20px;
+    padding-bottom:20px;
 }
 .user-center-box .wrapper-tab{
     margin-bottom: 10px;
@@ -405,10 +406,10 @@
     height:30px;
     width: 133px;
     display: inline-block;
-    border-bottom: 1px solid #237DE7;
+    border-bottom: 2px solid #F17D17;
 }
 .user-center-box  .wrapper-tab .active a{
-    color: #237DE7;
+    color: #F17D17;
 }
 .user-center-box  .wrapper-tab .trade-box{
 
@@ -445,8 +446,9 @@
 .trade-box .text-center{text-align: center}
 
 
-.user-center-box  .wrapper-tab .rate-box{
-
+.rate-manage{
+    padding-top:20px;
+    padding-bottom:20px;
 }
 .rate-box table{
     width: 100%;
