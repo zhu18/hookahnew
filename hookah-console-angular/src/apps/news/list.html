@@ -17,7 +17,7 @@
         <div class="searchSection">
           <form class="form-inline">
             <div class="form-group">
-              <label class="control-label" for="form-field-1">账户名</label>
+              <label class="control-label" for="form-field-1">资讯名</label>
               <input id="form-field-1" name="code" ng-model="searchForm.code" type="text" class="form-control">
               <button type="submit" class="btn btn-primary" data-ng-click="search()">搜索</button>
             </div>
@@ -34,17 +34,16 @@
               <!--</th>-->
               <!--<th class="state-column"></th>-->
               <!--<th>Id</th>-->
-              <th>账户名</th>
-              <th class="">邮箱</th>
-              <th width="135">电话</th>
+              <th>资讯名</th>
+              <th class="">作者</th>
               <th width="135">创建时间</th>
-              <th width="135">最后登录时间</th>
-              <th width="40">禁用</th>
+              <th width="135">所属分组</th>
+              <!--<th width="40">禁用</th>-->
               <th width="130" class="text-right">操作</th>
             </tr>
             </thead>
             <tbody>
-            <tr data-ng-if="!loadingState" data-ng-repeat="item in sysAccount" class="">
+            <tr data-ng-if="!loadingState" data-ng-repeat="item in pagination.store" class="">
               <!--<td width="10">-->
                 <!--<input type="checkbox" data-ng-model="item.selected" ng-change="changeSelection({data: item})"-->
                        <!--class=" ">-->
@@ -61,23 +60,17 @@
               <td>
                 <a ng-class="{'title-unread':item.Status*1===0,'title-read':item.Status*1!==0}" href="javascript:;"
                    class="">
-                  <span ng-bind="item.userName"></span>
+                  <span ng-bind="item.newsTitle"></span>
                 </a>
               </td>
               <td>
-                <span class="column-text" ng-bind="item.email"></span>
+                <span class="column-text" ng-bind="item.userName"></span>
               </td>
               <td>
-                <span class="column-text" ng-bind="item.mobile"></span>
+                <span class="column-text" ng-bind="item.sytTime"></span>
               </td>
               <td>
-                <span class="" ng-bind="item.regTime"></span>
-              </td>
-              <td>
-                <span class="" ng-bind="item.lastLoginTime"></span>
-              </td>
-              <td>
-                <span class="column-text" ng-bind="item.isEnable | yesNo"></span>
+                <span class="" ng-bind="item.newsGroup | newsGroup"></span>
               </td>
               <td class="text-right">
                 <a ui-sref="account.edit" ng-click="edit($event,item)">修改</a>
@@ -92,10 +85,10 @@
             </tbody>
             <tfoot ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">
             <tr>
-              <td width="10" style="width: 29px;">
-                <input type="checkbox" data-ng-model="tableState.selectAll" ng-change="changeSelectionAll()"
-                       class="">
-              </td>
+              <!--<td width="10" style="width: 29px;">-->
+                <!--<input type="checkbox" data-ng-model="tableState.selectAll" ng-change="changeSelectionAll()"-->
+                       <!--class="">-->
+              <!--</td>-->
               <td colspan="9">
                 <div class="pull-left">
                   <div toolbar="" biz-type="innerMsgToolbar" raw-data="selectedItems" class="">
@@ -114,7 +107,7 @@
                 </div>
                 <div class="pull-right page-box">
                   <div class="pagination-info">共有{{pagination.totalItems}}条，每页显示：{{pagination.pageSize}}条</div>
-                  <ul uib-pagination ng-change="pageChanged(page)" total-items="pagination.totalItems"
+                  <ul uib-pagination ng-change="pageChanged()" total-items="pagination.totalItems"
                       ng-model="pagination.currentPage" items-per-page="pagination.pageSize"
                       max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"
                       force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"

@@ -10,11 +10,11 @@ var head = {
 <%
 var htmlPart = {
 %>
-<div class="grid-0 backgorund-gray padding-top-20 padding-bottom-20">
+<div class="grid-0 backgorund-gray ">
     <div class="grid-row clearfix">
         <%include("/usercenter/user-center-menu.html"){} %>
-        <div class="orderManagement margin-left-10  grid-right padding-bottom-40">
-            <div class="title clearfix">
+        <div class="orderManagement margin-left-10 margin-top-10 grid-right padding-bottom-20">
+            <div class="title clearfix margin-bottom-15">
                 <ul class="grid-left all">
                     <li class="padding-left-30 active">全部订单 <span class="padding-right-40">50</span></li>
                     <li class="padding-left-60 ">待付款<span class="padding-left-5 padding-right-60">2</span></li>
@@ -28,50 +28,70 @@ var htmlPart = {
             </div>
             <div class="list" >
                 <div class="order">
-                    <div class="top">
-                        <span class="timer padding-left-20 padding-right-5">2017-02-28&nbsp;&nbsp;19:20:20</span>
-                        <span class="xiangmu padding-left-20">项目号: <span class="num">2017022813474081863964</span></span>
-                        <span class="num padding-left-60">数量</span>
-                        <span class="money">金额</span>
-                        <span class="status padding-left-70 padding-right-10">状态</span>
-                        <span class="act padding-left-70">操作</span>
-                    </div>
-                    <div class="bot">
-                        <img src="/static/images/xm.png" alt="">
-                        <span class="bank padding-left-20 padding-right-20">银行卡实名认证接口（需个人授权）</span>
-                        <span class="an padding-left-40 padding-right-40">按次&nbsp;x&nbsp;1</span>
-                        <span class="yuan padding-left-20 padding-right-40">￥&nbsp;200.00</span>
-                        <span class="pay padding-left-20">己付款</span>
-                        <span class="operat padding-left-20">
-                        <a href="" class="cha">查看详情</a>
-                        <a href="" class="ping">评价晒单</a>
-                        <a href="" class="cancel">取消</a>
-                    </span>
-                    </div>
+                    <table>
+                        <thead>
+                            <tr >
+                                <th class="one">2017-02-28&nbsp;&nbsp;19:20:20</th>
+                                <th class="two">项目号: <span>2017022813474081863964</span></th>
+                                <th class="three">数量</th>
+                                <th class="four">金额</th>
+                                <th class="five">状态</th>
+                                <th class="six">操作</th>
+                            </tr>
+                        </thead>
+                        <tabody>
+                            <tr class="content" style="height:115px;">
+                                <td>
+                                    <img src="/static/images/xm.png" alt="" class="padding-left-50 ">
+                                </td>
+                                <td class="padding-left-30">
+                                    <a href="">银行卡实名认证接口（需个人授权）</a>
+                                </td>
+                                <td class="padding-left-40">按次&nbsp;x&nbsp;1</td>
+                                <td class="padding-left-40">￥&nbsp;200.00</td>
+                                <td class="padding-left-60">已付款</td>
+                                <td class="operate padding-left-40">
+                                    <a href="" class="cha">查看详情</a>
+                                    <a href="" class="ping">评价晒单</a>
+                                    <a href="" class="cancel">取消</a>
+                                </td>
+                            </tr>
+                        </tabody>
+                    </table>
                 </div>
             </div>
-            <div class="list" >
+            <div class="list" style="display: none" >
                 <div class="order">
-                    <div class="top">
-                        <span class="timer padding-left-20 padding-right-5">2017-02-28&nbsp;&nbsp;19:20:20</span>
-                        <span class="xiangmu padding-left-20">项目号: <span class="num">2017022813474081863964</span></span>
-                        <span class="num padding-left-60">数量</span>
-                        <span class="money">金额</span>
-                        <span class="status padding-left-70 padding-right-10">状态</span>
-                        <span class="act padding-left-70">操作</span>
-                    </div>
-                    <div class="bot">
-                        <img src="/static/images/xm.png" alt="">
-                        <span class="bank padding-left-20 padding-right-20">银行卡实名认证接口（需个人授权）</span>
-                        <span class="an padding-left-40 padding-right-40">按次&nbsp;x&nbsp;1</span>
-                        <span class="yuan padding-left-20 padding-right-40">￥&nbsp;200.00</span>
-                        <span class="pay padding-left-20">未付款</span>
-                        <span class="operat padding-left-20">
-                        <a href="" class="fu">付款</a>
-                        <a href="" class="ping">评价晒单</a>
-                        <a href="" class="cancel">取消</a>
-                    </span>
-                    </div>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th class="one">2017-02-28&nbsp;&nbsp;19:20:20</th>
+                            <th class="two">项目号: <span>2017022813474081863964</span></th>
+                            <th class="three">数量</th>
+                            <th class="four">金额</th>
+                            <th class="five">状态</th>
+                            <th class="six">操作</th>
+                        </tr>
+                        </thead>
+                        <tabody>
+                            <tr class="content" style="height:115px;">
+                                <td>
+                                    <img src="/static/images/xm.png" alt="" class="padding-left-50 ">
+                                </td>
+                                <td class="padding-left-30">
+                                    <a href="">银行卡实名认证接口（需个人授权）</a>
+                                </td>
+                                <td class="padding-left-40">按次&nbsp;x&nbsp;1</td>
+                                <td class="padding-left-40">￥&nbsp;200.00</td>
+                                <td class="padding-left-60">未付款</td>
+                                <td class="operate padding-left-40">
+                                    <a href="" class="fu">付款</a>
+                                    <a href="" class="ping">评价晒单</a>
+                                    <a href="" class="cancel">取消</a>
+                                </td>
+                            </tr>
+                        </tabody>
+                    </table>
                 </div>
             </div>
         </div>
