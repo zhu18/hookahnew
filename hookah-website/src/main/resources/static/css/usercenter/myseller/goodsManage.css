@@ -22,11 +22,13 @@
 }
 .trade-box table tr {
     border: 1px solid #e5e5e5;
+
 }
+
 .trade-box table th {
     background: #f5f6fa;
-    height: 30px;
-    line-height: 30px;
+    height: 39px;
+    line-height: 39px;
     padding: 0 10px;
 }
 .trade-box table td {

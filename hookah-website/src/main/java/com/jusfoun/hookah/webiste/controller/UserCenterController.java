@@ -84,8 +84,6 @@ public class UserCenterController {
     @RequestMapping(value = "/usercenter/withdrawals", method = RequestMethod.GET)
     public String withdrawals() { return "/usercenter/userInfo/withdrawals"; }
 
-    @RequestMapping(value = "/usercenter/cash", method = RequestMethod.GET)
-    public String cash() { return "/usercenter/userInfo/cash"; }
     @RequestMapping(value = "/usercenter/createOrder", method = RequestMethod.GET)
     public String createOrder() { return "/usercenter/userInfo/createOrder"; }
 
@@ -151,7 +149,6 @@ public class UserCenterController {
     @RequestMapping(value = "/usercenter/buyer/orderManagement", method = RequestMethod.GET)
     public String orderManagement(){ return "/usercenter/buyer/orderManagement"; }
 
-
     @RequestMapping(value = "usercenter/customer", method = RequestMethod.GET)
     public String customer(){
         return "usercenter/myseller/customer";
@@ -180,5 +177,10 @@ public class UserCenterController {
     @RequestMapping(value = "usercenter/tradeing", method = RequestMethod.GET)
     public String tradeing(){
         return "usercenter/myseller/tradeing";
+    }
+
+    @RequestMapping(value = "usercenter/cash", method = RequestMethod.GET)
+    public String cash(){
+        return "usercenter/pay/cash";
     }
 }
