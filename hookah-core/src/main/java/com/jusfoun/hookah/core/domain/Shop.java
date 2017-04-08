@@ -34,6 +34,25 @@ public class Shop extends GenericModel {
 
     private Integer version;
 
+    private Integer isLocked;
+
+    private Integer status;
+
+    public Integer getIsLocked() {
+        return isLocked;
+    }
+
+    public void setIsLocked(Integer isLocked) {
+        this.isLocked = isLocked;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
     public String getShopDesc() {
         return shopDesc;
