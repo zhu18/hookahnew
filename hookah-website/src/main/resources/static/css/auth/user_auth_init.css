@@ -1,0 +1,194 @@
+
+.personModule {
+    width: 1200px;
+    margin: 0 auto;
+    overflow: hidden;
+    border: 1px solid #e2e2e2;
+    padding: 0px 370px 0px 370px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background-color: #fff;
+    padding-bottom:30px;
+}
+
+.personModule .title {
+    border-left: 4px solid #237DE7;
+    height: 24px;
+    line-height: 24px;
+    color: #666666;
+    font-size: 20px;
+    text-indent: 5px;
+    margin-bottom: 50px;
+    margin-top: 40px;
+}
+
+.personModule .titleIdent {
+    margin-bottom: 20px;
+}
+
+.personModule .title a {
+    float: right;
+    color: #247DE8;
+    font-size: 14px;
+    vertical-align: bottom;
+    height: 24px;
+    line-height: 30px;
+}
+
+.personModule form {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e2e2e2;
+}
+
+.personModule label {
+    height: 40px;
+    line-height: 40px;
+    margin-bottom: 15px;
+    display: block;
+    font-size: 14px;
+    color: #5e5e5e;
+}
+
+.personModule label span {
+    height: 40px;
+    line-height: 40px;
+    display: inline-block;
+    width: 78px;
+}
+
+.personModule label input[type=text] {
+    float: right;
+    height: 40px;
+    line-height: 40px;
+    margin-bottom: 15px;
+    width: 370px;
+    border: 1px solid #e5e5e5;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    text-indent: 10px;
+}
+
+.personModule label input[type=password] {
+    float: right;
+    height: 40px;
+    line-height: 40px;
+    margin-bottom: 15px;
+    width: 370px;
+    border: 1px solid #e5e5e5;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    text-indent: 10px;
+}
+
+.personModule label .checkBox {
+    width: 370px;
+    float: right;
+}
+
+.personModule label .validateBox {
+    width: 370px;
+    float: right;
+}
+
+.personModule label .checkBox #check {
+    width: 100px;
+    float: left;
+}
+
+.personModule label p {
+    float: left;
+    width: 100px;
+    float: left;
+    margin-left: 15px;
+    display: inline-block;
+}
+
+.personModule label .checkBox img {
+    margin-left: 20px;
+    width: 100px;
+    height: 40px;
+    border: 1px solid #e2e2e2;
+    float: left;
+}
+
+.personModule form label .validate {
+    width: 150px;
+    float: left;
+}
+
+.personModule label .validateBox a {
+    display: inline-block;
+    width: 93px;
+    height: 35px;
+    line-height: 35px;
+    background: #247DE8;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    margin-left: 20px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.personModule label #clickCheck {
+    float: left;
+    margin-top: 14px;
+}
+
+.personModule .button {
+    width: 366px;
+    height: 42px;
+    line-height: 42px;
+    text-align: center;
+    background: #247DE8;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    color: #fff;
+    margin: 0 auto;
+}
+
+.personModule ul {
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.personModule ul li {
+    width: 215px;
+    height: 135px;
+    float: left;
+    padding: 0px 7px;
+    position: relative;
+}
+
+.personModule ul li input {
+    display: none;
+}
+
+.personModule ul li label {
+    width: 215px;
+    height: 135px;
+    background: transparent;
+    position: absolute;
+    left: 7px;
+    top: 0px;
+    z-index: 1;
+}
+
+.personModule ul li img {
+    width: 215px;
+    height: 135px;
+    position: absolute;
+    left: 7px;
+    top: 0px;
+    z-index: 0;
+}
+
+.personModule .red {
+    color: #e73e4a;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.personModule .button {
+    cursor: pointer;
+}

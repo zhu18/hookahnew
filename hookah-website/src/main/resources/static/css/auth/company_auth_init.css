@@ -1,0 +1,279 @@
+.comparyModule {
+    width: 1200px;
+    margin: 0 auto;
+    border: 1px solid #e2e2e2;
+    padding: 0px 370px 0px 370px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-bottom:30px;
+    background-color: #fff;
+}
+
+.comparyModule .title {
+    border-left: 4px solid #237DE7;
+    height: 24px;
+    line-height: 24px;
+    color: #666666;
+    font-size: 20px;
+    text-indent: 5px;
+    margin-bottom: 50px;
+    margin-top: 40px;
+}
+
+.comparyModule .titleIdent {
+    margin-bottom: 20px;
+}
+
+.comparyModule .title a {
+    float: right;
+    color: #247DE8;
+    font-size: 14px;
+    vertical-align: bottom;
+    height: 24px;
+    line-height: 30px;
+}
+
+.comparyModule .compary, .comparyModule .infor {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e2e2e2;
+}
+
+.comparyModule label {
+    height: 40px;
+    line-height: 40px;
+    margin-bottom: 15px;
+    display: block;
+    font-size: 14px;
+    color: #5e5e5e;
+}
+
+.comparyModule label span {
+    height: 40px;
+    line-height: 40px;
+    display: inline-block;
+    width: 78px;
+}
+
+.comparyModule label input[type=text] {
+    float: right;
+    height: 40px;
+    line-height: 40px;
+    margin-bottom: 15px;
+    width: 370px;
+    border: 1px solid #e5e5e5;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    text-indent: 10px;
+}
+
+.comparyModule label input[type=password] {
+    float: right;
+    height: 40px;
+    line-height: 40px;
+    margin-bottom: 15px;
+    width: 370px;
+    border: 1px solid #e5e5e5;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    text-indent: 10px;
+}
+
+.comparyModule label .checkBox {
+    width: 370px;
+    float: right;
+}
+
+.comparyModule label .validateBox {
+    width: 370px;
+    float: right;
+}
+
+.comparyModule label .checkBox #check {
+    width: 100px;
+    float: left;
+}
+
+.comparyModule label p {
+    float: left;
+    width: 100px;
+    float: left;
+    margin-left: 15px;
+    display: inline-block;
+}
+
+.comparyModule label .checkBox img {
+    margin-left: 20px;
+    width: 100px;
+    height: 40px;
+    border: 1px solid #e2e2e2;
+    float: left;
+}
+
+.comparyModule form label .validate {
+    width: 150px;
+    float: left;
+}
+
+.comparyModule label .validateBox a {
+    display: inline-block;
+    width: 93px;
+    height: 35px;
+    line-height: 35px;
+    background: #237DE7;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    margin-left: 20px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.comparyModule label #clickCheck {
+    float: left;
+    margin-top: 14px;
+}
+
+.comparyModule .button {
+    width: 366px;
+    height: 42px;
+    line-height: 42px;
+    text-align: center;
+    background: #237DE7;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    color: #fff;
+    margin: 0 auto;
+}
+
+.comparyModule .red {
+    color: #e73e4a;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.comparyModule .button {
+    cursor: pointer;
+}
+
+.comparyModule .type ul {
+    width: 370px;
+    height: 40px;
+    line-height: 40px;
+    float: right;
+}
+
+.comparyModule .type li {
+    display: block;
+    float: left;
+    width: 50px;
+    height: 25px;
+    line-height: 25px;
+    margin: 7px 10px 0px 0px;
+    text-align: center;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.comparyModule .type .active {
+    background: #237DE7;
+    color: #fff;
+}
+
+.comparyModule .linkage {
+    width: 370px;
+    height: 40px;
+    float: right;
+    display: inline-block;
+}
+
+.comparyModule .linkage select {
+    width: 140px;
+    height: 34px;
+    margin-right: 20px;
+    text-indent: 5px;
+}
+
+.comparyModule .update {
+    width: 370px;
+    height: 200px;
+    margin-left: 90px;
+    position: relative;
+    padding-top: 10px;
+}
+
+.comparyModule .update label {
+    width: 212px;
+    height: 133px;
+    display: inline-block;
+    position: absolute;
+    z-index: 1;
+}
+
+.comparyModule .update input {
+    display: none;
+}
+
+.comparyModule .update img {
+    width: 212px;
+    height: 133px;
+    display: inline-block;
+    position: absolute;
+    z-index: 0;
+}
+
+.comparyModule .update p {
+    position: absolute;
+    top: 200px;
+    color: #f00;
+    font-size: 12px;
+    top: 156px;
+    left: 0px;
+}
+
+.comparyModule .industry {
+    overflow: hidden;
+    padding-left: 90px;
+    position: relative;
+}
+
+.comparyModule .industry span {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    font-size: 14px;
+    color: #5e5e5e;
+}
+
+.comparyModule .industry .selectBtn {
+    cursor: pointer;
+}
+
+.comparyModule .industry .selectBtn b {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    background: url(../images/dengluzhuce/add.png) no-repeat;
+    margin-right: 3px;
+}
+
+.comparyModule .industry ul li {
+    display: inline-block;
+    height: 28px;
+    line-height: 28px;
+    padding: 0px 8px;
+    background: #e73e4a;
+    color: #fff;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    font-size: 12px;
+    margin: 0px 12px 10px 0px;
+}
+
+.comparyModule .typeBox > li {
+    display: none;
+}
+
+.comparyModule .typeBox .activeLi {
+    display: block;
+}
