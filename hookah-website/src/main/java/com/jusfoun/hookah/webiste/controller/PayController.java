@@ -16,7 +16,7 @@ import javax.annotation.Resource;
  * @desc
  */
 @Controller
-@RequestMapping("/1/pay")
+@RequestMapping("pay")
 public class PayController {
 
     @Resource
@@ -25,12 +25,12 @@ public class PayController {
 
     @RequestMapping(value = "/createOrder", method = RequestMethod.GET)
     public String createOrder() {
-        return "/1/pay/createOrder";
+        return "pay/createOrder";
     }
 
     @RequestMapping(value = "/cash", method = RequestMethod.GET)
-    public String cash() {
-        return "/1/pay/cash";
+    public String cash(){
+        return "pay/cash";
     }
 
     @RequestMapping(value = "/pay2", method = RequestMethod.GET)

@@ -1,19 +1,9 @@
 <%
 var head = {
 %>
-<link rel="stylesheet" href="/static/css/innovation/index.css">
-<link rel="stylesheet" href="/static/css/common.css">
 <link rel="stylesheet" href="/static/css/font-awesome-4.7.0/css/font-awesome.min.css">
-<!--<script type="text/javascript">-->
-    <!--var pagePath = '/sysNews/listByGroup';-->
-    <!--var pageType = 'get';-->
-    <!--var dataParm = {};-->
-    <!--dataParm.pageNumber = 1;-->
-    <!--dataParm.pageSize = 20;-->
-    <!--dataParm.newsGroup = 'information';-->
-    <!--dataParm.newsSonGroup = 1;-->
-
-<!--</script>-->
+<link rel="stylesheet" href="/static/css/common.css">
+<link rel="stylesheet" href="/static/css/innovation/index.css">
 <%};%>
 
 <%
@@ -95,19 +85,44 @@ var htmlPart = {
                 </div>
             </div>
             <!--右侧内容-->
-            <div class="rightCenter padding-left-20 padding-right-30">
+            <div class="rightCenter padding-left-20 padding-right-30 margin-bottom-30">
                 <div class="title">
                     <span class="margin-right-10"></span>
                     <h3 id="J_pageTitle">中心动态</h3>
                 </div>
-                <div class="line"></div>
-                <div class="public-box"></div>
+                <div class="img-box">
+                    <a href="javascript:void(0)"><img src="/static/images/innovation/u4639.png" alt=""></a>
+                </div>
+                <div class="detail">
+                    <div class="header">
+                        <h4 class="center-title">创客中心介绍</h4>
+                    </div>
+                    <div class="content">
+                        <p>
+                            全国瞩目的贵州省大数据信息产业近年发展迅速，贵阳大数据交易中心立足国家大数据（贵州）综合试验区，先试先行，始终紧跟大数据产业发展趋势。据介绍，自2015年4月正式运营以来，贵阳大数据交易中心动态链入全国政府公开数据，已接入200多家数据源公司的优质数据源，发展中信银行、海尔、天弘基金等500多家企业成为会员，交易驱动全国数据要素流通融合，支撑大数据政用、商用、民用，较好服务了贵州大数据产业发展。
+                            市场全国瞩目的贵州省大数据信息产业近年发展迅速，贵阳大数据交易中心立足国家大数据（贵州）综合试验区，先试先行，始终紧跟大数据产业发展趋势。据介绍，自2015年4月正式运营以来，贵阳大数据交易中心动态链入全国政府公开数据，已接入200多家数据源公司的优质数据源，发展中信银行、海尔、天弘基金等500多家企业成为会员，交易驱动全国数据要素流通融合，支撑大数据政用、商用、民用，较好服务了贵州大数据产业发展。
+                            市场全国瞩目的贵州省大数据信息产业近年发展迅速，贵阳大数据交易中心立足国家大数据（贵州）综合试验区。
+                        </p>
+
+                        <div class="adress">
+                            <h5 class="subtitle">大赛组委会秘书处</h5>
+
+                            <p>联系人:<span>王海宽</span></p>
+
+                            <p>电话: <span>010-6666666</span></p>
+
+                            <p>电子邮箱: <span>cnmaker@miit.gov.cn</span><br/>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                &nbsp; &nbsp; <span>cnmaker@miit.gov.cn</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <%include("/layout/pageaction.html"){} %>
+
         </div>
     </div>
 </div>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
-<!--<script type="text/javascript" src="/static/js/information/index.js"></script>-->
+<script type="text/javascript" src="/static/js/innovation/index.js"></script>

@@ -25,26 +25,12 @@ public class AdminController {
     @Resource
     SysNewsService sysNewsService;
 
-    @RequestMapping(value = "/1/admin/articleManagement", method = RequestMethod.GET)
-    public String articleManagement(Model model) {
-
-        Pagination<SysNews> page = new Pagination<>();
-        try {
-            List<Condition> filters = new ArrayList();
-            List<OrderBy> orderBys = new ArrayList();
-            orderBys.add(OrderBy.desc("sytTime"));
-            //参数校验
-            int pageNumberNew = 1;
-            int pageSizeNew = 10;
-            filters.add(Condition.eq("newsGroup", SysNews.Innovation));
-            page = sysNewsService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        }
-        model.addAttribute("pageInfo",page);
-        return "1/admin/articleManagement";
+    @RequestMapping(value = "/usercenter/admin", method = RequestMethod.GET)
+    public String admin(){
+        return "usercenter/admin/index";
     }
+
+
     @RequestMapping(value = "admin/articleManage", method = RequestMethod.GET)
     public String articleManage(Model model) {
 

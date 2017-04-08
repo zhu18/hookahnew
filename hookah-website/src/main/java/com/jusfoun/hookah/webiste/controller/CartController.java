@@ -137,7 +137,7 @@ public class CartController extends BaseController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/1/cart/edit", method = RequestMethod.POST)
+    @RequestMapping(value = "/cart/edit", method = RequestMethod.POST)
     public ReturnData edit(Cart cart, Model model) {
         if (StringUtils.isBlank(cart.getRecId())) {
             return ReturnData.invalidParameters("The field[recId] CANNOT be null!");
@@ -158,7 +158,7 @@ public class CartController extends BaseController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/1/cart/delete/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/cart/delete/{id}", method = RequestMethod.GET)
     public ReturnData delete(@PathVariable String id) {
         logger.info("逻辑删除购物车：{}", id);
         try {
@@ -177,7 +177,7 @@ public class CartController extends BaseController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/1/cart/deleteAll", method = RequestMethod.POST)
+    @RequestMapping(value = "/cart/deleteAll", method = RequestMethod.POST)
     public ReturnData deleteAll(String[] ids) {
         logger.info("逻辑删除购物车：{}", ids);
         try {
