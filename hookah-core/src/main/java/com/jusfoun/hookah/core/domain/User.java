@@ -67,7 +67,7 @@ public class User extends GenericModel {
      *
      * @mbggenerated
      */
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date regTime;
 
     /**
@@ -92,7 +92,7 @@ public class User extends GenericModel {
      *
      * @mbggenerated
      */
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastLoginTime;
 
     /**
@@ -101,7 +101,7 @@ public class User extends GenericModel {
      *
      * @mbggenerated
      */
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addTime;
 
     /**
@@ -117,6 +117,25 @@ public class User extends GenericModel {
 
     private String creatorId;
 
+    private String orgName;
+
+    private String creatorName;
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
+
+    public String getCreatorName() {
+        return creatorName;
+    }
+
+    public void setCreatorName(String creatorName) {
+        this.creatorName = creatorName;
+    }
 
     public String getCreatorId() {
         return creatorId;
@@ -139,7 +158,6 @@ public class User extends GenericModel {
      * This method returns the value of the database column user.user_id
      *
      * @return the value of user.user_id
-     *
      * @mbggenerated
      */
     public String getUserId() {
@@ -151,7 +169,6 @@ public class User extends GenericModel {
      * This method sets the value of the database column user.user_id
      *
      * @param userId the value for user.user_id
-     *
      * @mbggenerated
      */
     public void setUserId(String userId) {
@@ -163,7 +180,6 @@ public class User extends GenericModel {
      * This method returns the value of the database column user.user_name
      *
      * @return the value of user.user_name
-     *
      * @mbggenerated
      */
     public String getUserName() {
@@ -175,7 +191,6 @@ public class User extends GenericModel {
      * This method sets the value of the database column user.user_name
      *
      * @param userName the value for user.user_name
-     *
      * @mbggenerated
      */
     public void setUserName(String userName) {
@@ -187,7 +202,6 @@ public class User extends GenericModel {
      * This method returns the value of the database column user.password
      *
      * @return the value of user.password
-     *
      * @mbggenerated
      */
     public String getPassword() {
@@ -199,7 +213,6 @@ public class User extends GenericModel {
      * This method sets the value of the database column user.password
      *
      * @param password the value for user.password
-     *
      * @mbggenerated
      */
     public void setPassword(String password) {
@@ -211,7 +224,6 @@ public class User extends GenericModel {
      * This method returns the value of the database column user.mobile
      *
      * @return the value of user.mobile
-     *
      * @mbggenerated
      */
     public String getMobile() {
@@ -223,7 +235,6 @@ public class User extends GenericModel {
      * This method sets the value of the database column user.mobile
      *
      * @param mobile the value for user.mobile
-     *
      * @mbggenerated
      */
     public void setMobile(String mobile) {
@@ -235,7 +246,6 @@ public class User extends GenericModel {
      * This method returns the value of the database column user.email
      *
      * @return the value of user.email
-     *
      * @mbggenerated
      */
     public String getEmail() {
@@ -247,7 +257,6 @@ public class User extends GenericModel {
      * This method sets the value of the database column user.email
      *
      * @param email the value for user.email
-     *
      * @mbggenerated
      */
     public void setEmail(String email) {
@@ -259,7 +268,6 @@ public class User extends GenericModel {
      * This method returns the value of the database column user.head_img
      *
      * @return the value of user.head_img
-     *
      * @mbggenerated
      */
     public String getHeadImg() {
@@ -271,7 +279,6 @@ public class User extends GenericModel {
      * This method sets the value of the database column user.head_img
      *
      * @param headImg the value for user.head_img
-     *
      * @mbggenerated
      */
     public void setHeadImg(String headImg) {
@@ -283,7 +290,6 @@ public class User extends GenericModel {
      * This method returns the value of the database column user.reg_time
      *
      * @return the value of user.reg_time
-     *
      * @mbggenerated
      */
     public Date getRegTime() {
@@ -295,7 +301,6 @@ public class User extends GenericModel {
      * This method sets the value of the database column user.reg_time
      *
      * @param regTime the value for user.reg_time
-     *
      * @mbggenerated
      */
     public void setRegTime(Date regTime) {
@@ -307,7 +312,6 @@ public class User extends GenericModel {
      * This method returns the value of the database column user.is_enable
      *
      * @return the value of user.is_enable
-     *
      * @mbggenerated
      */
     public Byte getIsEnable() {
@@ -319,7 +323,6 @@ public class User extends GenericModel {
      * This method sets the value of the database column user.is_enable
      *
      * @param isEnable the value for user.is_enable
-     *
      * @mbggenerated
      */
     public void setIsEnable(Byte isEnable) {
@@ -331,7 +334,6 @@ public class User extends GenericModel {
      * This method returns the value of the database column user.last_login_ip
      *
      * @return the value of user.last_login_ip
-     *
      * @mbggenerated
      */
     public String getLastLoginIp() {
@@ -343,7 +345,6 @@ public class User extends GenericModel {
      * This method sets the value of the database column user.last_login_ip
      *
      * @param lastLoginIp the value for user.last_login_ip
-     *
      * @mbggenerated
      */
     public void setLastLoginIp(String lastLoginIp) {
@@ -355,7 +356,6 @@ public class User extends GenericModel {
      * This method returns the value of the database column user.last_login_time
      *
      * @return the value of user.last_login_time
-     *
      * @mbggenerated
      */
     public Date getLastLoginTime() {
@@ -367,7 +367,6 @@ public class User extends GenericModel {
      * This method sets the value of the database column user.last_login_time
      *
      * @param lastLoginTime the value for user.last_login_time
-     *
      * @mbggenerated
      */
     public void setLastLoginTime(Date lastLoginTime) {
@@ -379,7 +378,6 @@ public class User extends GenericModel {
      * This method returns the value of the database column user.add_time
      *
      * @return the value of user.add_time
-     *
      * @mbggenerated
      */
     public Date getAddTime() {
@@ -391,7 +389,6 @@ public class User extends GenericModel {
      * This method sets the value of the database column user.add_time
      *
      * @param addTime the value for user.add_time
-     *
      * @mbggenerated
      */
     public void setAddTime(Date addTime) {
@@ -403,7 +400,6 @@ public class User extends GenericModel {
      * This method returns the value of the database column user.version
      *
      * @return the value of user.version
-     *
      * @mbggenerated
      */
     public Integer getVersion() {
@@ -415,7 +411,6 @@ public class User extends GenericModel {
      * This method sets the value of the database column user.version
      *
      * @param version the value for user.version
-     *
      * @mbggenerated
      */
     public void setVersion(Integer version) {
