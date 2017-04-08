@@ -2,7 +2,7 @@
 var head = {
 %>
 <link rel="stylesheet" href="/static/css/introduction/trading-sidebar.css">
-<link rel="stylesheet" href="/static/css/introduction/media.css">
+<link rel="stylesheet" href="/static/css/introduction/index.css">
 <link rel="stylesheet" href="/static/css/common.css">
 <%};%>
 
@@ -10,13 +10,77 @@ var head = {
 var htmlPart = {
 %>
 <div class="box">
-    <div class="media clearfix grid-row padding-top-10">
+    <div class="media clearfix grid-row padding-top-10 padding-bottom-30">
         <!--左侧栏-->
         <% include("/introduction/trading-sidebar.html"){} %>
 
         <!--右侧内容-->
         <div class="media-content">
-            媒体关注
+            <div class="cont" id="media">
+                <div class="public">
+                    <span></span>
+                    <h3>媒体关注</h3>
+                </div>
+                <div class="line"></div>
+                <h4 class="h3">2016</h4>
+                <p><span>12-06</span>网易新闻 王叁寿：大数据创业就像运营自来水公司</p>
+                <p><span >11-25</span>环球网 王叁寿：不性感的大数据公司都会死掉 </p>
+                <p><span >11-24</span>科技控 王叁寿：终究有一天，大数据智能会取代搜索引擎 </p>
+                <p><span >11-22</span>东方网 王叁寿：大数据产业现阶段仅仅是朵浪花，何谈过热?</p>
+                <p><span >11-21</span>重庆晚报 王叁寿：大数据是传统信息化厂商的掘墓人</p>
+                <p><span >11-17</span>网易青岛 王叁寿：大数据时代如何能保证信息安全</p>
+                <p><span >11-16</span>中国投资网 王叁寿：2016年是大数据与传统信息化厂商的决战之年</p>
+                <p><span >11-14</span>东方财富网 王叁寿:内蒙古前三十年靠“羊煤土气” 今天靠大数据“扬眉吐气”</p>
+                <p><span >11-08</span>新浪新闻 王叁寿：城市发展大数据产业应该打组合拳 </p>
+                <p><span >11-05</span>光明网 王叁寿：大数据将彻底结束传统农耕文化 </p>
+                <p><span >11-04</span>网易新闻 王叁寿：政府大数据云如何才能下雨</p>
+                <p><span >11-04</span>财经网 王叁寿：利用大数据服务“一带一路”</p>
+                <p><span >11-03</span>齐鲁晚报 王叁寿：大数据产业的内聚和外延 </p>
+                <p><span >10-27</span>中国网 王叁寿：大数据四要素“预警、预测、决策、智能”</p>
+                <p><span >10-20</span>搜狐网 王叁寿：中国大数据交易产业发展三要素</p>
+                <p><span >10-17</span>搜狐财经 王叁寿：“政务数据"和"政府的数据"的区别</p>
+                <p><span >09-30</span>财经网 王叁寿：大数据产业的三大痛点</p>
+                <p><span >09-19</span>网易新闻 王叁寿：如何释放政府数据</p>
+                <p><span >09-08</span>站长之家 王叁寿：大数据终将超越人类感知，对预测提出新观点</p>
+                <p><span >09-07</span>数据观 王叁寿：只有数据源服务商才有资格构建大数据生态圈</p>
+                <p><span >09-06</span>网易新闻 王叁寿：大数据与赣州发展</p>
+                <p><span >08-31</span>搜狐财经 王叁寿：大数据与传统信息化的区别</p>
+                <p><span >08-24</span>中华网 王叁寿:我没有在BAT工作过，就像拉里·佩奇没有在雅虎工作过</p>
+                <p><span >08-16</span>数据观 王叁寿：数据时代，传统互联网巨头都将是没落贵族</p>
+                <p><span >08-08</span>数据观 王叁寿：未来中国媒体行业的格局预测</p>
+                <p><span >08-03</span>网络传播 王叁寿：数据的价值终将超过土地</p>
+                <p><span >07-31</span>网络传播 王叁寿：新闻媒体运用大数据的四个方向和五大来源</p>
+                <p><span >07-29</span>站长之家 王叁寿谈大数据如何改变新闻业</p>
+                <p><span >07-29</span>凤凰资讯 王叁寿：生态环境大数据应实现预警、预测、决策、智能</p>
+                <p><span >07-12</span>数据观 王叁寿：数据信息“新规”，为数据交易撑起保护伞</p>
+                <p><span >07-11</span>中国网 王叁寿：工商大数据如何服务于“一带一路”</p>
+                <p><span >06-28</span>中外管理 王叁寿：像斯巴达斗士一样去创业</p>
+                <p><span >06-02</span>环球网 王叁寿：如何理解李克强总理说的数据钻石</p>
+                <p><span >05-31</span>财经网 王叁寿：激活政府数据资源，就是最大的供给侧改革</p>
+                <p><span >05-27</span>贵阳网 王叁寿：大数据将颠覆未来很多产业的竞争模式</p>
+                <p><span >05-12</span>数据观 王叁寿：打通信息壁垒 推动城市数据共享</p>
+                <p><span >04-29</span>新华网 王叁寿：做中国大数据“首席清洗工”</p>
+                <p><span >04-25</span>中国网 王叁寿：地方大数据发展创新之路</p>
+                <p><span >04-25</span>光明网 王叁寿：我的梦想是数据星河</p>
+                <p><span >04-08</span>腾讯财经 王叁寿：政府大数据应用场景为王</p>
+                <p><span >03-30</span>中国经济网 王叁寿：电信运营商大数据在银行业的几大用途</p>
+                <h4 class="h3">2015</h4>
+                <p><span>12-07</span>央视网 王叁寿：我为大数据狂，争做大数据产业的执牛耳者 ▏视频</p>
+                <p><span>12-02</span>BTV《财经锋汇》 王叁寿： 探讨国家大数据战略</p>
+                <p><span>11-06</span>国际金融报 王叁寿：大数据行业一定会出一个“富士康”</p>
+                <p><span>08-31</span>贵阳网 王叁寿：用数据驱动价值</p>
+                <p><span>08-04</span>光明网 王叁寿：DT时代，大数据如何服务产业经济？</p>
+                <p><span>07-17</span>光明网 王叁寿：“互联网+”时代，大数据该如何交易？</p>
+                <p><span>06-11</span>中国证券报 王叁寿：大数据资产流通产生价值</p>
+                <p><span>05-27</span>搜狐科技 王叁寿：大数据交易所的使命就是“大数据X”</p>
+                <p><span>04-29</span>腾讯科技 王叁寿：大数据是创业的下一个暴风口</p>
+                <h4 class="h3">2014</h4>
+                <p><span>12-31</span>《经济观察报》 王叁寿：大数据将成为21世纪新兴技术及产业，唯一能够实现弯道超车的行业</p>
+                <p><span>10-17</span>36大数据 王叁寿：抓住大数据的3.0时代</p>
+                <p><span>06-24</span>21CN科技 王叁寿：银行内部客户数据转化为大数据才有价值</p>
+                <p><span>06-24</span>21CN科技 王叁寿：大数据助力政府精细化管理</p>
+                <p><span>05-16</span>新华网 王叁寿：中国发展大数据产业有三个比较优势</p>
+            </div>
         </div>
     </div>
 </div>

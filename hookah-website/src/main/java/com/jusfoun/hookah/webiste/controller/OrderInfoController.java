@@ -38,6 +38,10 @@ public class OrderInfoController extends BaseController {
         return "redirect:/order/list";
     }
 
+    @RequestMapping(value = "/order/orderInfo", method = RequestMethod.GET)
+    public String orderInfo() {
+        return "order/orderInfo";
+    }
     /**
      * 分页查询
      *
@@ -83,7 +87,7 @@ public class OrderInfoController extends BaseController {
             ReturnData.error("系统异常");
         }
 
-        return "/1/error/500";
+        return "/error/500";
     }
 
     /**
