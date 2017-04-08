@@ -33,6 +33,7 @@ public class ExchangeController {
         model.addAttribute("categoryInfo", categoryService.getCatTree());
         return "exchange/index";
     }
+
     @RequestMapping(value = "/exchange/list", method = RequestMethod.GET)
     public String list(Model model){
         return "exchange/list";
@@ -58,5 +59,10 @@ public class ExchangeController {
         }
         model.addAttribute("exchange/details", goodsVo);
         return "exchange/details";
+    }
+
+    @RequestMapping(value = "/exchange/search", method = RequestMethod.GET)
+    public String search(Model model){
+        return "exchange/search";
     }
 }
