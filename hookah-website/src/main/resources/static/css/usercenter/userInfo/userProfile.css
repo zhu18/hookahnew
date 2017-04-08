@@ -1,15 +1,21 @@
 .info-center-box{
-    margin-left:20px;
-    margin-top:20px;
+    margin:10px 5px;
+    padding:0 20px;
+    background-color: #fff;
 
 }
-.center-title{
-    height: 40px;
-    line-height:40px;
-    font-size:18px;
-    border-bottom:1px solid #e0e0e0;
+.info-center-box .header{
+    height: 31px;
+    padding-top:10px;
+    border-bottom: 1px solid #EDEDED;
 }
-.user-center-box{
+.info-center-box .center-title{
+    height: 20px;
+    font:14px/20px "microsoft yahei";
+    padding-left:10px;
+    border-left:2px solid #237DE7;
+}
+ .user-center-box{
     width:970px;
 }
  .hello-user{
@@ -22,7 +28,6 @@
 }
  .user-info{
     padding: 20px 0 200px 30px;
-    background: #f1f1f1;
 }
  .user-info .user-head-portrait{
     display: block;
