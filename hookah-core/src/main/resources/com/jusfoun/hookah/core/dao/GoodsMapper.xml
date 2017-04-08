@@ -18,7 +18,6 @@
         <result column="goods_areas" jdbcType="VARCHAR" property="goodsAreas" />
         <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
         <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
-        <result column="last_update_time_key" jdbcType="TIMESTAMP" property="lastUpdateTimeKey" />
     </resultMap>
     <select id="getNeedEsGoods" resultMap="EsResultMap">
         SELECT
@@ -37,8 +36,7 @@
             goods_area goodsArea,
             getRegionParentList(goods_area) goods_areas,
             add_time,
-            last_update_time,
-            last_update_time last_update_time_key
+            last_update_time
         from
             goods
         where is_delete = 1
