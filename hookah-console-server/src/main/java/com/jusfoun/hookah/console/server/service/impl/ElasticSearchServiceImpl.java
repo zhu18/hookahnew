@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.jusfoun.hookah.console.server.config.Constants;
 import com.jusfoun.hookah.console.server.config.ESTemplate;
 import com.jusfoun.hookah.console.server.config.ESTransportClient;
 import com.jusfoun.hookah.console.server.util.AnnotationUtil;
@@ -128,8 +129,9 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         if(vo.getEsGoods() != null) {
             map = AnnotationUtil.convert2Map(vo.getEsGoods());
         }
-        esTemplate.search(esTransportClient.getObject(), "qingdao-goods-v1",
-                "goods", map, pagination, orderField, order, "goodsNameAll", "goodsName", "goodsNamePy");
+        esTemplate.search(esTransportClient.getObject(), Constants.GOODS_INDEX,
+                Constants.GOODS_TYPE, map, pagination, orderField, order,
+                "goodsNameAll", "goodsName", "goodsNamePy");
         return pagination;
     }
 
@@ -144,8 +146,8 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     public List<String> goodsSuggestion(String prefix, Integer size) throws Exception {
         if(size == null)
             size = HookahConstants.PAGE_SIZE;
-        List<String> list = esTemplate.suggest(esTransportClient.getObject(), prefix, size, "qingdao-goods-v1",
-                "goods", "suggest", "suggest1");
+        List<String> list = esTemplate.suggest(esTransportClient.getObject(), prefix, size, Constants.GOODS_INDEX,
+                Constants.GOODS_TYPE, "suggest", "suggest1");
         return list;
     }
 
