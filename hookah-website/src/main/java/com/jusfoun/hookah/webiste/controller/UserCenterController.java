@@ -13,6 +13,7 @@ import javax.annotation.Resource;
  * @desc
  */
 @Controller
+@RequestMapping(value = "/usercenter")
 public class UserCenterController {
 
     @Resource
@@ -27,39 +28,51 @@ public class UserCenterController {
     MgGoodsService mgGoodsService;
 
 
-    @RequestMapping(value = "/usercenter", method = RequestMethod.GET)
-    public String userInfo() { return "usercenter/userInfo/userInfo"; }
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public String userInfo() {
+        return "usercenter/userInfo/userInfo";
+    }
 
-    @RequestMapping(value = "/usercenter/userProfile", method = RequestMethod.GET)
-    public String userProfile() { return "usercenter/userInfo/userProfile"; }
+    @RequestMapping(value = "/userProfile", method = RequestMethod.GET)
+    public String userProfile() {
+        return "usercenter/userInfo/userProfile";
+    }
 
-    @RequestMapping(value = "/usercenter/infoCenter", method = RequestMethod.GET)
-    public String infoCenterA() { return "usercenter/userInfo/infoCenter"; }
+    @RequestMapping(value = "/infoCenter", method = RequestMethod.GET)
+    public String infoCenterA() {
+        return "usercenter/userInfo/infoCenter";
+    }
 
-    @RequestMapping(value = "/usercenter/infoDetail", method = RequestMethod.GET)
-    public String infoDetail() { return "usercenter/userInfo/infoDetail"; }
+    @RequestMapping(value = "/infoDetail", method = RequestMethod.GET)
+    public String infoDetail() {
+        return "usercenter/userInfo/infoDetail";
+    }
 
-    @RequestMapping(value = "/usercenter/fundmanage", method = RequestMethod.GET)
-    public String fundmanage() { return "usercenter/userInfo/fundmanage"; }
+    @RequestMapping(value = "/fundmanage", method = RequestMethod.GET)
+    public String fundmanage() {
+        return "usercenter/userInfo/fundmanage";
+    }
 
-    @RequestMapping(value = "/usercenter/recharge", method = RequestMethod.GET)
-    public String recharge() { return "/usercenter/userInfo/recharge"; }
+    @RequestMapping(value = "/recharge", method = RequestMethod.GET)
+    public String recharge() {
+        return "/usercenter/userInfo/recharge";
+    }
 
-    @RequestMapping(value = "/usercenter/withdrawals", method = RequestMethod.GET)
-    public String withdrawals() { return "/usercenter/userInfo/withdrawals"; }
+    @RequestMapping(value = "/withdrawals", method = RequestMethod.GET)
+    public String withdrawals() {
+        return "/usercenter/userInfo/withdrawals";
+    }
 
-    @RequestMapping(value = "/usercenter/safeSet", method = RequestMethod.GET)
-    public String safeSet() { return "usercenter/userInfo/safeSet"; }
+    @RequestMapping(value = "/safeSet", method = RequestMethod.GET)
+    public String safeSet() {
+        return "usercenter/userInfo/safeSet";
+    }
 
 
-
-
-
-
-
-    @RequestMapping(value = "/usercenter/createOrder", method = RequestMethod.GET)
-    public String createOrder() { return "/usercenter/userInfo/createOrder"; }
-
+    @RequestMapping(value = "/createOrder", method = RequestMethod.GET)
+    public String createOrder() {
+        return "/usercenter/userInfo/createOrder";
+    }
 
 
 }
