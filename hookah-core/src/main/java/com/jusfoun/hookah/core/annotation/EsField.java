@@ -22,4 +22,5 @@ public @interface EsField {
     Analyzer searchAnalyzer() default Analyzer.NONE;
     boolean isStore() default false;
     String[] copyTo() default {};
+    boolean fielddata() default false;
 }

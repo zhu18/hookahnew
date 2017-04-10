@@ -23,7 +23,7 @@ import java.util.List;
  * Created by wangjl on 2017-3-15.
  */
 @RestController
-@RequestMapping("category")
+@RequestMapping("/category")
 public class CategoryController {
     protected final static Logger logger = LoggerFactory.getLogger(CategoryController.class);
 
@@ -37,7 +37,7 @@ public class CategoryController {
      * @param catSign ： 0 普通； 1 系统
      * @return
      */
-    @RequestMapping(value = "findAll/{catSign}", method= RequestMethod.GET)
+    @RequestMapping(value = "/findAll/{catSign}", method= RequestMethod.GET)
     public ReturnData findAll(@PathVariable String catSign) {
         ReturnData<List<Category>> returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
@@ -56,7 +56,7 @@ public class CategoryController {
         return returnData;
     }
 
-    @RequestMapping("findAll")
+    @RequestMapping("/findAll")
     public ReturnData findAll() {
         ReturnData<List<CategoryVo>> returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
@@ -76,7 +76,7 @@ public class CategoryController {
      * @param pid
      * @return
      */
-    @RequestMapping("findByPId/{catSign}")
+    @RequestMapping("/findByPId/{catSign}")
     public ReturnData findByPId(String pid, @PathVariable Byte catSign) {
         ReturnData<List<Category>> returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
@@ -100,7 +100,7 @@ public class CategoryController {
      * @param catId 商品某分类
      * @return
      */
-    @RequestMapping("findAttr")
+    @RequestMapping("/findAttr")
     public ReturnData findGoodsAttr(String catId) {
         ReturnData<MgCategoryAttrType> returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);

@@ -4,7 +4,8 @@ import orderRouting from "./order.routing";
 const MODULE_NAME = 'Hookah';
 let app = angular.module(MODULE_NAME, [
   'ui.router',
-  'Common'
+  'Common',
+  'ui.bootstrap'
 ]);
 app.config(orderRouting);
 

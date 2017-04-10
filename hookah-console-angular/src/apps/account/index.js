@@ -3,7 +3,8 @@ import accountRouting from './account.routing';
 const MODULE_NAME = 'Hookah';
 let app = angular.module(MODULE_NAME, [
   'ui.router',
-  'Common'
+  'Common',
+  'ui.bootstrap'
 ]);
 app.config(accountRouting);
 app.config(['$httpProvider', function ($httpProvider) {

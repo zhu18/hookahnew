@@ -1,17 +1,15 @@
 import '../../common/common';
-import userRouting from './user.routing';
+import helpRouting from './help.routing';
 const MODULE_NAME = 'Hookah';
 let app = angular.module(MODULE_NAME, [
-  'ui.router',
   'Common',
+  'ui.router',
   'ui.bootstrap'
 ]);
-app.config(userRouting);
-app.config(['$httpProvider', function ($httpProvider) {
-  $httpProvider.defaults.withCredentials = true;
-}]);
+app.config(helpRouting);
+
 app.run(function ($rootScope, $state) {
-  $rootScope.currentProductId = 'user';
+  $rootScope.currentProductId = 'help';
   $rootScope.config = {
     "navScene": 'main',
     "isSidebarFold": false,
@@ -34,15 +32,19 @@ app.run(function ($rootScope, $state) {
       "folded": false
     }
   };
-  $rootScope.config.title = '用户管理';
+  $rootScope.config.title = '帮助中心';
   $rootScope.config.mainNav =[
     {
-      "title":"用户查询",
-      "url":"user.search"
+      "title":"帮助查询",
+      "url":"help.search"
     },
     {
-      "title":"新增用户",
-      "url":"user.add"
+      "title":"商品分类",
+      "url":"help.category"
+    },
+    {
+      "title":"新增",
+      "url":"help.category"
     }
   ];
 

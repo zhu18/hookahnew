@@ -38,7 +38,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping("upload")
+@RequestMapping("/upload")
 public class UploadfileController {
 	private static Logger logger = LoggerFactory.getLogger(UploadfileController.class);
 
