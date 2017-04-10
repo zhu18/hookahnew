@@ -33,11 +33,6 @@ public class MyBuyerController {
         return "/usercenter/buyer/info";
     }
 
-    @RequestMapping(value = "/buyer/cart", method = RequestMethod.GET)
-    public String cart() {
-        return "usercenter/buyer/cart";
-    }
-
     @RequestMapping(value = "/buyer/evaluation", method = RequestMethod.GET)
     public String evaluation() {
         return "usercenter/buyer/evaluation";
