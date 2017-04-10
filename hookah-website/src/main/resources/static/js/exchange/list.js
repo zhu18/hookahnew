@@ -12,7 +12,7 @@ function loadPageData(data){ //渲染页面数据
                 shopFormat = '年';
             }
             html += '<li>';
-            html += '<a class="item-top" href="/exchange/details?goodsId='+list[i].goodsId+'">';
+            html += '<a class="item-top" href="/exchange/details?id='+list[i].goodsId+'">';
             html += '<p class="goods-img"><img src="'+list[i].goodsImg+'" alt=""/></p>';
             html += '<p class="goods-name">'+list[i].goodsName+'</p>';
             html += '<p class="goods-brief">'+list[i].goodsBrief+'</p>';
