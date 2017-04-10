@@ -1,116 +1,190 @@
-
-.personModule {
-    width: 1200px;
-    margin: 0 auto;
-    overflow: hidden;
+.auth-box{
     border: 1px solid #e2e2e2;
-    padding: 0px 370px 0px 370px;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
     background-color: #fff;
-    padding-bottom:30px;
-}
 
-.personModule .title {
-    border-left: 4px solid #237DE7;
-    height: 24px;
-    line-height: 24px;
-    color: #666666;
-    font-size: 20px;
-    text-indent: 5px;
-    margin-bottom: 50px;
-    margin-top: 40px;
 }
-
-.personModule .titleIdent {
-    margin-bottom: 20px;
+.auth-title{
+    height: 50px;
+    line-height:50px;
+    padding:0 10px;
+    border-bottom:1px solid #e2e2e2;
 }
-
-.personModule form {
-    padding-bottom: 20px;
-    border-bottom: 1px solid #e2e2e2;
+.auth-title h3{
+    font-weight:normal;
+    font-size:18px;
 }
-
-.personModule label {
-    height: 40px;
-    line-height: 40px;
-    margin-bottom: 15px;
-    display: block;
-    font-size: 14px;
-    color: #5e5e5e;
+.blue{
+    color: #00b1ff;
 }
+.auth-box .auth-content{
 
-.personModule label span {
-    height: 40px;
-    line-height: 40px;
-    display: inline-block;
-    width: 78px;
+ }
+.auth-box .auth-content .steps{
+    padding:40px 0 25px;
 }
-
-.personModule label input[type=text] {
-    float: right;
-    height: 40px;
-    line-height: 40px;
-    margin-bottom: 15px;
-    width: 370px;
-    border: 1px solid #e5e5e5;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    text-indent: 10px;
+.steps .img-show{
+    width: 690px;
+    height: 18px;
+    margin:0 auto;
+    background: url(/static/images/auth/step1.png) no-repeat;
 }
-
-.personModule label #clickCheck {
-    float: left;
-    margin-top: 14px;
+.steps .img-show .step1{
+    background-position: 0 -20px;
 }
-
-.personModule .button {
-    width: 366px;
-    height: 42px;
-    line-height: 42px;
+.steps .txt{
+    width: 760px;
+    margin:0 auto;
+}
+.steps .txt li{
+    width: 226px;
+    line-height:30px;
+    font-size:14px;
+    color: #ccc;
+}
+.steps .txt .last{
+    width: 40px;
+    margin-left:23px;
+}
+.agreement-tips{
+    background: #fffbee;
+    line-height:30px;
     text-align: center;
-    background: #247DE8;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    color: #fff;
-    margin: 0 auto;
+    color: #ff8000;
+}
+.agreement-text{
+    padding:35px 100px 50px;
+}
+.agreement-text .agreement-title{
+    padding-bottom:20px;
+    font-size:24px;
+    text-align: center;
+    color: #666;
+}
+.agreement-text h3{
+    font-size:18px;
+    color: #333;
+    font-weight:normal;
+    margin:10px 0;
+}
+.agreement-text p{
+    padding:10px 0;
+    font-size:14px;
+    line-height:24px;
+
 }
 
-.personModule ul {
-    overflow: hidden;
-    margin-bottom: 15px;
-}
+/*.personModule {*/
+    /*width: 1200px;*/
+    /*margin: 0 auto;*/
+    /*overflow: hidden;*/
+    /*border: 1px solid #e2e2e2;*/
+    /*padding: 0px 370px 0px 370px;*/
+    /*-moz-box-sizing: border-box;*/
+    /*box-sizing: border-box;*/
+    /*background-color: #fff;*/
+    /*padding-bottom:30px;*/
+/*}*/
 
-.personModule ul li {
-    width: 215px;
-    height: 135px;
-    float: left;
-    padding: 0px 7px;
-    position: relative;
-}
+/*.personModule .title {*/
+    /*border-left: 4px solid #237DE7;*/
+    /*height: 24px;*/
+    /*line-height: 24px;*/
+    /*color: #666666;*/
+    /*font-size: 20px;*/
+    /*text-indent: 5px;*/
+    /*margin-bottom: 50px;*/
+    /*margin-top: 40px;*/
+/*}*/
 
-.personModule ul li input {
-    display: none;
-}
+/*.personModule .titleIdent {*/
+    /*margin-bottom: 20px;*/
+/*}*/
 
-.personModule ul li label {
-    width: 215px;
-    height: 135px;
-    background: transparent;
-    position: absolute;
-    left: 7px;
-    top: 0px;
-    z-index: 1;
-}
+/*.personModule form {*/
+    /*padding-bottom: 20px;*/
+    /*border-bottom: 1px solid #e2e2e2;*/
+/*}*/
 
-.personModule ul li img {
-    width: 215px;
-    height: 135px;
-    position: absolute;
-    left: 7px;
-    top: 0px;
-    z-index: 0;
-}
+/*.personModule label {*/
+    /*height: 40px;*/
+    /*line-height: 40px;*/
+    /*margin-bottom: 15px;*/
+    /*display: block;*/
+    /*font-size: 14px;*/
+    /*color: #5e5e5e;*/
+/*}*/
+
+/*.personModule label span {*/
+    /*height: 40px;*/
+    /*line-height: 40px;*/
+    /*display: inline-block;*/
+    /*width: 78px;*/
+/*}*/
+
+/*.personModule label input[type=text] {*/
+    /*float: right;*/
+    /*height: 40px;*/
+    /*line-height: 40px;*/
+    /*margin-bottom: 15px;*/
+    /*width: 370px;*/
+    /*border: 1px solid #e5e5e5;*/
+    /*-moz-box-sizing: border-box;*/
+    /*box-sizing: border-box;*/
+    /*text-indent: 10px;*/
+/*}*/
+
+/*.personModule label #clickCheck {*/
+    /*float: left;*/
+    /*margin-top: 14px;*/
+/*}*/
+
+/*.personModule .button {*/
+    /*width: 366px;*/
+    /*height: 42px;*/
+    /*line-height: 42px;*/
+    /*text-align: center;*/
+    /*background: #247DE8;*/
+    /*-moz-border-radius: 5px;*/
+    /*border-radius: 5px;*/
+    /*color: #fff;*/
+    /*margin: 0 auto;*/
+/*}*/
+
+/*.personModule ul {*/
+    /*overflow: hidden;*/
+    /*margin-bottom: 15px;*/
+/*}*/
+
+/*.personModule ul li {*/
+    /*width: 215px;*/
+    /*height: 135px;*/
+    /*float: left;*/
+    /*padding: 0px 7px;*/
+    /*position: relative;*/
+/*}*/
+
+/*.personModule ul li input {*/
+    /*display: none;*/
+/*}*/
+
+/*.personModule ul li label {*/
+    /*width: 215px;*/
+    /*height: 135px;*/
+    /*background: transparent;*/
+    /*position: absolute;*/
+    /*left: 7px;*/
+    /*top: 0px;*/
+    /*z-index: 1;*/
+/*}*/
+
+/*.personModule ul li img {*/
+    /*width: 215px;*/
+    /*height: 135px;*/
+    /*position: absolute;*/
+    /*left: 7px;*/
+    /*top: 0px;*/
+    /*z-index: 0;*/
+/*}*/
 /*遮层*/
 .shadeBottom {
     display: none;
