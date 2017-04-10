@@ -3,7 +3,8 @@ import userRouting from './user.routing';
 const MODULE_NAME = 'Hookah';
 let app = angular.module(MODULE_NAME, [
   'ui.router',
-  'Common'
+  'Common',
+  'ui.bootstrap'
 ]);
 app.config(userRouting);
 app.config(['$httpProvider', function ($httpProvider) {
