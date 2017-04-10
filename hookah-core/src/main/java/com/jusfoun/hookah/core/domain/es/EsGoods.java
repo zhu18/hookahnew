@@ -34,7 +34,7 @@ public class EsGoods implements Serializable {
     private String keywords;
     @EsField
     private String goodsImg;
-    @EsField
+    @EsField//(fielddata = true)
     private String catId;
     @EsField(analyzeOpt= AnalyzeOpt.ANALYZED, analyzer= Analyzer.WHITESPACE,
             termVector= TermVector.OFFSETS, isStore = true, searchAnalyzer = Analyzer.WHITESPACE)

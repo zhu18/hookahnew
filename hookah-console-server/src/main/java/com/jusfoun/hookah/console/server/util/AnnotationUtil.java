@@ -32,6 +32,9 @@ public class AnnotationUtil {
                 }else {
                      esGmFieldMapping = new EsGmFieldMapping(esField.analyzeOpt().val, esField.type().val,
                             esField.analyzer().val, esField.termVector().val, esField.isStore(), esField.searchAnalyzer().val);
+                    if(esField.fielddata()) {
+                        esGmFieldMapping.setFielddata(esField.fielddata());
+                    }
                     if(esField.copyTo() != null && esField.copyTo().length > 0) {
                         esGmFieldMapping.setCopy_to(esField.copyTo());
                     }

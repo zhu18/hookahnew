@@ -117,10 +117,10 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     public Pagination search(EsGoodsVo vo) throws Exception {
         Integer pageSize = vo.getPageSize();
         Integer pageNum = vo.getPageNumber();
-        String orderField = vo.getOrderFiled();
-        String order = vo.getOrder();
         vo.setOrderFiled("lastUpdateTimeKey");
         vo.setOrder("desc");
+        String orderField = vo.getOrderFiled();
+        String order = vo.getOrder();
 
         Pagination pagination = new Pagination();
         pagination.setPageSize(pageSize);
