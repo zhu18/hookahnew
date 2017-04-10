@@ -1800,19 +1800,20 @@ dl {
 
 .search .search-order .order-list ul li .item-top .goods-name {
     font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 30px 0 20px;
 }
 .search .search-order .order-list ul li .item-top .goods-brief{
-    padding:0 5px 3px;
+    padding: 0 10px 3px;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
     overflow: hidden;
-    width:calc(100% - 10px);
+    width: calc(100% - 20px);
+    text-align: justify;
 }
-
-
-
-
 .search .search-order .order-list ul li .item-down {
     border-top: 1px solid #E5E5E5;
     line-height: 38px;
@@ -2118,6 +2119,7 @@ dl {
 .goods-table .table-title{
     font-size: 16px;
     margin-bottom: 20px;
+    height: 40px;
 }
 .goods-table .table-title ul{
     height:40px;

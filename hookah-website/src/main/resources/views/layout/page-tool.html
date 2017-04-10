@@ -1,0 +1,31 @@
+<div class="float-tool" style="  width: 38px;height: initial;margin-bottom:50px;">
+    <div id="J_gotoTop" style="cursor: pointer; display: none;">
+        <img style="width: 38px;" src="/static/images/TB1fekgNXXXXXasXpXXXXXXXXXX-80-80.jpg">
+    </div>
+    <!--<div style="position: absolute;bottom: -197px;right: 0;">-->
+    <!--<div style="position: relative;">-->
+    <!--<span id="img-img-close"-->
+    <!--style="display: inline-block;width: 30px;height: 30px;position: absolute;right: 0;top:0;z-index: 10;background: #fff;filter:alpha(opacity=0);opacity: 0; "></span><a-->
+    <!--href="_" target="_blank"-->
+    <!--style="position: relative;z-index: 9;">-->
+    <!--<img height="165"-->
+    <!--src="/static/img/TB1BLQsPpXXXXXNXXXXXXXXXXXX-440-330.jpg"-->
+    <!--hover="/static/img/TB1BLQsPpXXXXXNXXXXXXXXXXXX-440-330.jpg"></a>-->
+    <!--</div>-->
+    <!--</div>-->
+</div>
+<script class="text/javascript">
+    $(window).scroll(function () {
+        var windowHeight = parseFloat($(window).height())
+        var totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());
+        if (totalheight - windowHeight >= 500) {
+            $('#J_gotoTop').show();
+        } else {
+            $('#J_gotoTop').hide();
+        }
+    });
+    $("#J_gotoTop").click(function() {
+        $("html,body").animate({scrollTop:0}, 600);
+    });
+
+</script>
