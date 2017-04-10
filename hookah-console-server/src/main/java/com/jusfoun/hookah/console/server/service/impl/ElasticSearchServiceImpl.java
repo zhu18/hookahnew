@@ -115,7 +115,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     @Override
     public Pagination search(EsGoodsVo vo) throws Exception {
         Integer pageSize = vo.getPageSize();
-        Integer pageNum = vo.getPageNum();
+        Integer pageNum = vo.getPageNumber();
         String orderField = vo.getOrderFiled();
         String order = vo.getOrder();
         vo.setOrderFiled("lastUpdateTimeKey");
