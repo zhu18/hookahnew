@@ -12,37 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class ExpositionController {
 
-    @RequestMapping(value = "/1/exposition", method = RequestMethod.GET)
-    public String index(){
-        return "1/exposition/index";
-    }
-
-    @RequestMapping(value = "/1/exposition/data_trading", method = RequestMethod.GET)
-    public String datatrading(){
-        return "1/exposition/data_trading";
-    }
-
-    @RequestMapping(value = "/1/exposition/data_crowdsourcing", method = RequestMethod.GET)
-    public String datacrowdsourcing(){
-        return "1/exposition/data_crowdsourcing";
-    }
-
-    @RequestMapping(value = "/1/exposition/financial_innovation", method = RequestMethod.GET)
-    public String financialinnovation(){
-        return "1/exposition/financial_innovation";
-    }
-
-    @RequestMapping(value = "/1/exposition/solve_plan", method = RequestMethod.GET)
-    public String solveplan(){
-        return "1/exposition/solve_plan";
-    }
-
-
-    @RequestMapping(value = "/exposition", method = RequestMethod.GET)
-    public String index2(){
-        return "/exposition/index";
-    }
-
     @RequestMapping(value = "/exposition/data_trading", method = RequestMethod.GET)
     public String datatrading2(){
         return "/exposition/data_trading";
