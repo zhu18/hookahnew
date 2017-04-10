@@ -2,9 +2,7 @@ package com.jusfoun.hookah.console.server.controller;
 
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
-import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.GoodsCheck;
-import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
@@ -15,15 +13,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -48,14 +43,10 @@ public class GoodsCheckController extends BaseController{
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
 
-        if (StringUtils.isBlank(goodsCheck.getGoodsId())) {
-            return ReturnData.invalidParameters("参数goodsId不可为空");
+        if (StringUtils.isBlank(goodsCheck.getGoodsId()) || StringUtils.isBlank(goodsCheck.getCheckStatus().toString())) {
+            returnData.setCode(ExceptionConst.InvalidParameters);
+            return returnData;
         }
-
-        if (StringUtils.isBlank(goodsCheck.getCheckStatus().toString())) {
-            return ReturnData.invalidParameters("参数checkStatus不可为空");
-        }
-
         try {
             goodsCheck.setCheckUser(getCurrentUser().getUserId());
             goodsCheckService.insertRecord(goodsCheck);
