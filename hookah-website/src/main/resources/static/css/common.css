@@ -440,24 +440,26 @@
     top:0;
     left:0;
     z-index: 10001;
-    background: rgba(255,255,255,0.9);
-    -webkit-filter: blur(15px);
-    -moz-filter: blur(15px);
-    -o-filter: blur(15px);
-    -ms-filter: blur(15px);
-    filter: blur(15px);
+    background: rgba(0,0,0,0.1);
+    /*-webkit-filter: blur(15px);*/
+    /*-moz-filter: blur(15px);*/
+    /*-o-filter: blur(15px);*/
+    /*-ms-filter: blur(15px);*/
+    /*filter: blur(15px);*/
 }
 .spinner {
     position: absolute;
     z-index: 10002;
-    margin-top: 200px auto;
-    width: 100%;
+    width: 100px;
     height: 60px;
     text-align: center;
+    top: 50%;
+    left: 50%;
+    margin: -30px 0 0 -50px;
 }
 
 .spinner > div {
-    background-color: #67CF22;
+    background-color: #ec5e5e;
     height: 100%;
     width: 5px;
     display: inline-block;

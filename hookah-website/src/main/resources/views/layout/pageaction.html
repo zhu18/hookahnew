@@ -8,8 +8,10 @@
         dataParm.pageNumber = pageNumber;
 //        debugger;
         if(pageType == 'get'){
+            Loading.start();
             ajaxGet(pageType,pagePath,dataParm,pageNumber)
         }else if(pageType == 'post'){
+            Loading.start();
             ajaxPost(pageType,pagePath,dataParm,pageNumber)
         }
     }
@@ -21,7 +23,9 @@
             success:function(data){
                 if(data.code == "1") {
                     chenggong(data,pageNumber)
+                    Loading.stop();
                 }else{
+                    Loading.stop();
                     console.log(data.message);
                 }
             }
@@ -38,8 +42,10 @@
             data:JSON.stringify(dataParm),
             success:function(data){
                 if(data.code == "1") {
+                    Loading.stop();
                     chenggong(data,pageNumber)
                 }else{
+                    Loading.stop();
                     console.log(data.message);
                 }
             }

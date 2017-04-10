@@ -25,6 +25,9 @@ $(function () {
                  })
               }
           })
+          if($(document).scrollTop()>=570){
+              $("body").animate({scrollTop:570}, 300);
+          }
       })
     }
     // 购买数量功能
@@ -61,9 +64,9 @@ $(function () {
 
     // 悬浮框
     function suspensionBox() {
-        var nav=$(".goods-table .table-title"); //得到导航对象
+        var nav=$(".goods-table .table-title").children('ul'); //得到导航对象
         $(window).scroll(function(){
-            if($(document).scrollTop()>=580){
+            if($(document).scrollTop()>=570){
                 nav.addClass('fiexd');
                 nav.fadeIn();
             }else{
