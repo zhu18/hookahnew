@@ -13,22 +13,20 @@
     font-weight:normal;
     font-size:18px;
 }
-.blue{
+.auth-box .steps li.blue{
     color: #00b1ff;
 }
-.auth-box .auth-content{
-
- }
-.auth-box .auth-content .steps{
+/*协议信息开始*/
+.auth-box .auth-content auth-agreement .steps{
     padding:40px 0 25px;
 }
-.steps .img-show{
-    width: 690px;
-    height: 18px;
+auth-agreement .steps .img-show{
+    width: 700px;
+    height: 22px;
     margin:0 auto;
     background: url(/static/images/auth/step1.png) no-repeat;
 }
-.steps .img-show .step1{
+auth-agreement .steps .img-show .step1{
     background-position: 0 -20px;
 }
 .steps .txt{
@@ -72,200 +70,176 @@
     line-height:24px;
 
 }
-
-/*.personModule {*/
-    /*width: 1200px;*/
-    /*margin: 0 auto;*/
-    /*overflow: hidden;*/
-    /*border: 1px solid #e2e2e2;*/
-    /*padding: 0px 370px 0px 370px;*/
-    /*-moz-box-sizing: border-box;*/
-    /*box-sizing: border-box;*/
-    /*background-color: #fff;*/
-    /*padding-bottom:30px;*/
-/*}*/
-
-/*.personModule .title {*/
-    /*border-left: 4px solid #237DE7;*/
-    /*height: 24px;*/
-    /*line-height: 24px;*/
-    /*color: #666666;*/
-    /*font-size: 20px;*/
-    /*text-indent: 5px;*/
-    /*margin-bottom: 50px;*/
-    /*margin-top: 40px;*/
-/*}*/
-
-/*.personModule .titleIdent {*/
-    /*margin-bottom: 20px;*/
-/*}*/
-
-/*.personModule form {*/
-    /*padding-bottom: 20px;*/
-    /*border-bottom: 1px solid #e2e2e2;*/
-/*}*/
-
-/*.personModule label {*/
-    /*height: 40px;*/
-    /*line-height: 40px;*/
-    /*margin-bottom: 15px;*/
-    /*display: block;*/
-    /*font-size: 14px;*/
-    /*color: #5e5e5e;*/
-/*}*/
-
-/*.personModule label span {*/
-    /*height: 40px;*/
-    /*line-height: 40px;*/
-    /*display: inline-block;*/
-    /*width: 78px;*/
-/*}*/
-
-/*.personModule label input[type=text] {*/
-    /*float: right;*/
-    /*height: 40px;*/
-    /*line-height: 40px;*/
-    /*margin-bottom: 15px;*/
-    /*width: 370px;*/
-    /*border: 1px solid #e5e5e5;*/
-    /*-moz-box-sizing: border-box;*/
-    /*box-sizing: border-box;*/
-    /*text-indent: 10px;*/
-/*}*/
-
-/*.personModule label #clickCheck {*/
-    /*float: left;*/
-    /*margin-top: 14px;*/
-/*}*/
-
-/*.personModule .button {*/
-    /*width: 366px;*/
-    /*height: 42px;*/
-    /*line-height: 42px;*/
-    /*text-align: center;*/
-    /*background: #247DE8;*/
-    /*-moz-border-radius: 5px;*/
-    /*border-radius: 5px;*/
-    /*color: #fff;*/
-    /*margin: 0 auto;*/
-/*}*/
-
-/*.personModule ul {*/
-    /*overflow: hidden;*/
-    /*margin-bottom: 15px;*/
-/*}*/
-
-/*.personModule ul li {*/
-    /*width: 215px;*/
-    /*height: 135px;*/
-    /*float: left;*/
-    /*padding: 0px 7px;*/
-    /*position: relative;*/
-/*}*/
-
-/*.personModule ul li input {*/
-    /*display: none;*/
-/*}*/
-
-/*.personModule ul li label {*/
-    /*width: 215px;*/
-    /*height: 135px;*/
-    /*background: transparent;*/
-    /*position: absolute;*/
-    /*left: 7px;*/
-    /*top: 0px;*/
-    /*z-index: 1;*/
-/*}*/
-
-/*.personModule ul li img {*/
-    /*width: 215px;*/
-    /*height: 135px;*/
-    /*position: absolute;*/
-    /*left: 7px;*/
-    /*top: 0px;*/
-    /*z-index: 0;*/
-/*}*/
-/*遮层*/
-.shadeBottom {
-    display: none;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.2);
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    z-index: 999;
-}
-
-.shadeContent {
-    width: 950px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: -200px 0 0 -499px;
-    background: #fff;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    overflow: hidden;
-    border: 4px solid rgba(0, 0, 0, 0.25);
-}
-
-.shadeTop {
-    height: 30px;
-    width: 100%;
-    background: #f3f3f3;
-    line-height: 30px;
-    font-size: 14px;
-    color: #333;
-    padding-left: 13px;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
-
-.shadeTop i {
-    display: inline-block;
-    float: right;
-    width: 27px;
-    height: 27px;
-    background: url(../images/dengluzhuce/close.png) no-repeat;
-    cursor: pointer;
-}
-
-.shadeSection {
-    width: 100%;
-    overflow: hidden;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    padding: 20px 20px 27px;
-}
-
-.shadeSection ul {
-    list-style: none;
-    color: #333;
-    font-size: 14px;
-    line-height: 22px;
-    height: 265px;
-    overflow-y: auto;
-}
-
-.shadeSection ul h3 {
-    margin: 0;
-    font-size: 14px;
-    line-height: 22px;
-    font-weight: 700;
-}
-
-.shadeSection a {
-    display: block;
-    width: 300px;
-    height: 40px;
-    line-height: 40px;
-    background: #247DE8;
-    margin: 4px auto;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    text-decoration: none;
-    color: #fff;
-    font-size: 16px;
+.auth-content .agreement-btn{
+    margin:50px;
+    padding-top:30px;
+    border-top:1px solid #e5e5e5;
     text-align: center;
 }
+.agreement-btn .gray-btn2{
+    display: inline-block;
+    width: 100px;
+    height: 34px;
+    color: #fff;
+    text-align: center;
+    font:14px/34px "microsoft yahei";
+    background-color: #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+/*协议信息结束*/
+/*认证信息开始*/
+.auth-content .auth-info{
+    height: 800px;
+    padding:30px 50px 30px;
+    border-top:1px solid #e5e5e5;
+
+}
+.auth-box .auth-content .auth-info .steps{
+    padding:40px 0 25px;
+}
+.auth-info .steps .img-show{
+    width: 700px;
+    height: 22px;
+    margin:0 auto;
+    background: url(/static/images/auth/step2.png) no-repeat;
+}
+#authForm{
+    padding:0 100px 30px;
+}
+.auth-info h3{
+    height: 30px;
+    padding-left:10px;
+    font:16px/30px "microsoft yahei";
+    font-weight:normal;
+    border-left:2px solid #00a8ff;
+    margin-bottom:30px;
+}
+.auth-info li{
+    padding:15px 0;
+    min-height:32px;
+}
+.auth-info li .tit{
+    width: 230px;
+    text-align: right;
+    line-height:32px;
+    font-size:14px;
+    color: #999;
+    float: left;
+}
+.auth-info input.txt{
+    width: 400px;
+    height: 30px;
+    padding:0 5px;
+    line-height:30px;
+    border:1px solid #ddd;
+    color: rgb(169, 169, 169);
+}
+.auth-info .submit-file{
+    width: 215px;
+    height: 135px;
+    float: left;
+    padding:0 0 0 180px;
+    margin:10px 0 20px 0;
+    position: relative;
+}
+.submit-file form{
+    padding-bottom:20px;
+}
+.submit-file form label{
+    position: absolute;
+    width: 215px;
+    height: 135px;
+    left:7px;
+    top:0;
+    z-index:1;
+    background-color: transparent;
+
+}
+#submit1{
+    display: none;
+}
+#submit2 {
+    display: none;
+}
+.submit-file form img{
+    position: absolute;
+    width: 215px;
+    height: 135px;
+    left:7px;
+    top:0;
+    z-index:0;
+}
+.auth-info .auth-submit{
+    text-align: center;
+}
+.auth-info .auth-submit label{
+    display: block;
+    margin:40px 0;
+}
+.auth-info .auth-submit .button {
+width: 366px;
+height: 42px;
+line-height: 42px;
+text-align: center;
+background: #247DE8;
+-moz-border-radius: 5px;
+border-radius: 5px;
+color: #fff;
+margin: 0 auto;
+}
+/*认证信息结束*/
+.auth-content .auth-verify .steps{
+    padding:40px 0 25px;
+}
+.auth-verify .steps .img-show{
+    width: 700px;
+    height: 22px;
+    margin:0 auto;
+    /*该处图片需要更换*/
+    background: url(/static/images/auth/step2.png) no-repeat;
+}
+.auth-verify .auth-verify-info{
+    height: 100px;
+    border:1px solid #eee;
+    text-align: center;
+    padding:100px 0;
+    font-size:20px;
+    color: #666;
+}
+/*认证审核结束*/
+/*认证完成开始*/
+.auth-content .auth-finished .steps{
+    padding:40px 0 25px;
+}
+.auth-finished .steps .img-show{
+    width: 700px;
+    height: 22px;
+    margin:0 auto;
+    /*该处图片需要更换*/
+    background: url(/static/images/auth/step2.png) no-repeat;
+}
+.auth-finished .auth-finished-info{
+    height: 100px;
+    border:1px solid #eee;
+    text-align: center;
+    padding:100px 0;
+    font-size:20px;
+    color: #666;
+}
+.auth-finished-info strong{
+    font-weight:normal;
+}
+.fa-check-circle{
+    font-size:20px;
+    margin-right:10px;
+}
+.enter-company-auth {
+    margin-top:20px;
+    font-size:14px;
+    color: #666;
+}
+.choose-auth-type{
+    color: dodgerblue;
+}
+/*认证完成结束*/
