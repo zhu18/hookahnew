@@ -10,29 +10,30 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @desc
  */
 @Controller
+@RequestMapping("/introduction")
 public class IntroductionController {
 
-    @RequestMapping(value = "/introduction", method = RequestMethod.GET)
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(){
         return "/introduction/index";
     }
 
-    @RequestMapping(value = "/introduction/glory", method = RequestMethod.GET)
+    @RequestMapping(value = "/glory", method = RequestMethod.GET)
     public String glory(){
         return "/introduction/glory";
     }
 
-    @RequestMapping(value = "/introduction/leader", method = RequestMethod.GET)
+    @RequestMapping(value = "/leader", method = RequestMethod.GET)
     public String leader(){
         return "/introduction/leader";
     }
 
-    @RequestMapping(value = "/introduction/media", method = RequestMethod.GET)
+    @RequestMapping(value = "/media", method = RequestMethod.GET)
     public String media(){
         return "/introduction/media";
     }
 
-    @RequestMapping(value = "/introduction/strategy", method = RequestMethod.GET)
+    @RequestMapping(value = "/strategy", method = RequestMethod.GET)
     public String strategy(){
         return "/introduction/strategy";
     }

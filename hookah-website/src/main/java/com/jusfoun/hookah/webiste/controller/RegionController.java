@@ -19,7 +19,7 @@ import java.util.List;
  */
 
 @Controller
-@RequestMapping("region")
+@RequestMapping("/region")
 public class RegionController {
 
     @Resource

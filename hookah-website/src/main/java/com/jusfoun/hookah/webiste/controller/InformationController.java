@@ -10,14 +10,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @desc
  */
 @Controller
+@RequestMapping("/information")
 public class InformationController {
 
-    @RequestMapping(value = "/information", method = RequestMethod.GET)
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index2(){
         return "/information/index";
     }
 
-    @RequestMapping(value = "/information/details", method = RequestMethod.GET)
+    @RequestMapping(value = "/details", method = RequestMethod.GET)
     public String detail(){
         return "/information/details";
     }

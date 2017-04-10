@@ -56,14 +56,7 @@ public class IndexController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home(Model model) {
-        return "index";
-    }
-
-    @RequestMapping(value = "/s", method = RequestMethod.GET)
-    public String sayhello(Model model) {
-//        String s = userService.sayhello();
-//        System.out.println(s);
-        return "index";
+        return "default/index";
     }
 
     @RequestMapping(value = "/select", method = RequestMethod.GET)
