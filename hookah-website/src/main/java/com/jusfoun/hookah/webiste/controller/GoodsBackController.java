@@ -30,21 +30,23 @@ import java.util.List;
  * @desc
  */
 @Controller
-@RequestMapping("goods/back")
+@RequestMapping("/goods/back")
 public class GoodsBackController {
+
     @Resource
     GoodsService goodsService;
     @Resource
     MgGoodsService mgGoodsService;
 
 
-    @RequestMapping("add")
-    public @ResponseBody ReturnData addGoodsBack(@Valid @RequestBody GoodsVo obj) {
+    @RequestMapping("/add")
+    @ResponseBody
+    public ReturnData addGoodsBack(@Valid @RequestBody GoodsVo obj) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
             goodsService.addGoods(obj);
-        }catch (Exception e) {
+        } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());
             e.printStackTrace();
@@ -52,8 +54,9 @@ public class GoodsBackController {
         return returnData;
     }
 
-    @RequestMapping(value = "list", method = RequestMethod.GET)
-    public @ResponseBody ReturnData list( String pageNumber, String pageSize, String goodsName, Byte checkStatus) {
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnData list(String pageNumber, String pageSize, String goodsName, Byte checkStatus) {
 
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
@@ -65,22 +68,22 @@ public class GoodsBackController {
             filters.add(Condition.eq("isDelete", 1));
             //参数校验
             int pageNumberNew = HookahConstants.PAGE_NUM;
-            if(StringUtils.isNotBlank(pageNumber)){
+            if (StringUtils.isNotBlank(pageNumber)) {
                 pageNumberNew = Integer.parseInt(pageNumber);
             }
             int pageSizeNew = HookahConstants.PAGE_SIZE;
-            if(StringUtils.isNotBlank(pageSize)){
+            if (StringUtils.isNotBlank(pageSize)) {
                 pageSizeNew = Integer.parseInt(pageSize);
             }
-            if( StringUtils.isNotBlank(goodsName)){
+            if (StringUtils.isNotBlank(goodsName)) {
                 filters.add(Condition.eq("goodsName", goodsName.trim()));
             }
-            if(checkStatus != null){
+            if (checkStatus != null) {
                 filters.add(Condition.like("checkStatus", checkStatus));
             }
             page = goodsService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
             returnData.setData(page);
-        }catch (Exception e) {
+        } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());
             e.printStackTrace();
@@ -91,18 +94,20 @@ public class GoodsBackController {
 
     /**
      * 根据id查询商品详情
+     *
      * @param id
      * @return
      */
-    @RequestMapping("findById")
-    public @ResponseBody ReturnData findGoodsById(String id) {
+    @RequestMapping("/findById")
+    @ResponseBody
+    public ReturnData findGoodsById(String id) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
             Goods goods = goodsService.selectById(id);
             if (goods == null || goods.getGoodsId() == null) {
                 returnData.setCode(ExceptionConst.empty);
-            }else {
+            } else {
                 GoodsVo goodsVo = new GoodsVo();
                 BeanUtils.copyProperties(goods, goodsVo);
                 MgGoods mgGoods = mgGoodsService.selectById(id);
@@ -113,7 +118,7 @@ public class GoodsBackController {
                 }
                 returnData.setData(goodsVo);
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());
             e.printStackTrace();
@@ -121,13 +126,14 @@ public class GoodsBackController {
         return returnData;
     }
 
-    @RequestMapping("update")
-    public @ResponseBody ReturnData update(@Valid @RequestBody GoodsVo obj) {
+    @RequestMapping("/update")
+    @ResponseBody
+    public ReturnData update(@Valid @RequestBody GoodsVo obj) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
-        try{
+        try {
             goodsService.updateGoods(obj);
-        }catch (Exception e) {
+        } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());
             e.printStackTrace();

@@ -28,6 +28,7 @@ import java.util.List;
  * @desc 卖家中心
  */
 @Controller
+@RequestMapping("/usercenter")
 public class MySellerController {
     @Resource
     CategoryService categoryService;
@@ -38,7 +39,7 @@ public class MySellerController {
     @Resource
     MgGoodsService mgGoodsService;
 
-    @RequestMapping(value = "/usercenter/goodsManage", method = RequestMethod.GET)
+    @RequestMapping(value = "/goodsManage", method = RequestMethod.GET)
     public String goodsManage(String pageNumber, String pageSize, String goodsName, Byte checkStatus, Model model) {
         Pagination<Goods> page = new Pagination<>();
         try {
@@ -71,12 +72,12 @@ public class MySellerController {
         return "usercenter/myseller/goodsManage";
     }
 
-    @RequestMapping(value = "/usercenter/goodsPublish", method = RequestMethod.GET)
+    @RequestMapping(value = "/goodsPublish", method = RequestMethod.GET)
     public String goodsPublish(){
         return "usercenter/myseller/goodsPublish";
     }
 
-    @RequestMapping(value = "/usercenter/goodsEdit", method = RequestMethod.GET)
+    @RequestMapping(value = "/goodsEdit", method = RequestMethod.GET)
     public String publish(String id, Model model) {
         if (StringUtils.isNotBlank(id)) {
             // 查询商品信息
@@ -100,27 +101,27 @@ public class MySellerController {
         return "usercenter/myseller/goodsEdit";
     }
 
-    @RequestMapping(value = "usercenter/trade", method = RequestMethod.GET)
+    @RequestMapping(value = "/trade", method = RequestMethod.GET)
     public String trade(){
         return "usercenter/myseller/trade";
     }
 
-    @RequestMapping(value = "usercenter/rate", method = RequestMethod.GET)
+    @RequestMapping(value = "/rate", method = RequestMethod.GET)
     public String rate(){
         return "usercenter/myseller/rate";
     }
 
-    @RequestMapping(value = "usercenter/custom", method = RequestMethod.GET)
+    @RequestMapping(value = "/custom", method = RequestMethod.GET)
     public String custom(){
         return "usercenter/myseller/custom";
     }
 
-    @RequestMapping(value = "usercenter/customer", method = RequestMethod.GET)
+    @RequestMapping(value = "/customer", method = RequestMethod.GET)
     public String customer(){
         return "usercenter/myseller/customer";
     }
 
-    @RequestMapping(value = "usercenter/illegal", method = RequestMethod.GET)
+    @RequestMapping(value = "/illegal", method = RequestMethod.GET)
     public String illegal(){
         return "usercenter/myseller/illegal";
     }

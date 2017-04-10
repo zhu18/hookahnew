@@ -26,7 +26,7 @@ import java.util.*;
  * 新闻资讯类接口
  */
 @Controller
-@RequestMapping("sysNews")
+@RequestMapping("/sysNews")
 public class SysNewsController {
     protected final static Logger logger = LoggerFactory.getLogger(SysNewsController.class);
 

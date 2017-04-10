@@ -21,6 +21,8 @@ public class EsGmFieldMapping extends EsFieldMapping implements Serializable{
 
 	private String[] copy_to;
 
+	private Boolean fielddata;
+
 	public EsGmFieldMapping() {}
 
 	public EsGmFieldMapping(String index, String type) {
@@ -84,5 +86,13 @@ public class EsGmFieldMapping extends EsFieldMapping implements Serializable{
 
 	public void setCopy_to(String[] copy_to) {
 		this.copy_to = copy_to;
+	}
+
+	public Boolean getFielddata() {
+		return fielddata;
+	}
+
+	public void setFielddata(Boolean fielddata) {
+		this.fielddata = fielddata;
 	}
 }
