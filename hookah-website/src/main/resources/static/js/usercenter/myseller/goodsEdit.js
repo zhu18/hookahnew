@@ -272,6 +272,7 @@ $('.pusGoods-btn').click(function(){
             success:function(data){
                 if(data.code == "1") {
                     Loading.stop()
+                    $('.pusGoods-btn').addClass('trues');
                     $.confirm('<h3>发布成功</h3><p>继续发布商品吗?</p>',null,function(type){
                         if(type == 'yes'){
                             window.location.href = "/usercenter/goodsPublish";

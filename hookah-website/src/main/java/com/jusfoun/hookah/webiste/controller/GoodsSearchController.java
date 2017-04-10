@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.webiste.controller;
 
+import com.jusfoun.hookah.core.domain.es.EsGoods;
 import com.jusfoun.hookah.core.domain.vo.EsGoodsVo;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
@@ -16,6 +17,11 @@ public class GoodsSearchController {
     @Autowired
     ElasticSearchService elasticSearchService;
 
+    /**
+     * 根据条件查询商品信息
+     * @param vo
+     * @return
+     */
     @RequestMapping(value = "/v1/goods", method = RequestMethod.POST)
     public ReturnData searchByCondition(@RequestBody(required = false) EsGoodsVo vo) {
         ReturnData returnData = new ReturnData<>();
@@ -33,6 +39,12 @@ public class GoodsSearchController {
         return returnData;
     }
 
+    /**
+     * 检索提示
+     * @param prefix
+     * @param size
+     * @return
+     */
     @RequestMapping("/v1/goods/suggest")
     public ReturnData suggest (@RequestParam String prefix, @RequestParam(required = false) Integer size) {
         ReturnData returnData = new ReturnData<>();
@@ -43,6 +55,25 @@ public class GoodsSearchController {
             }else {
                 returnData.setData(elasticSearchService.goodsSuggestion(prefix, size));
             }
+        } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
+
+    /**
+     * 查询分类和属性下的数据
+     * @param esGoods
+     * @return
+     */
+    @RequestMapping(value = "/v1/goods/types", method = RequestMethod.POST)
+    public ReturnData getTypes (@RequestBody EsGoods esGoods) {
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            returnData.setData(elasticSearchService.getTypes(esGoods));
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());

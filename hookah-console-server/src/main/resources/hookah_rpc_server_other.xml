@@ -13,6 +13,7 @@
     <bean id="mgSmsValidateService" class="com.jusfoun.hookah.console.server.service.impl.MgSmsValidateServiceImpl"/>
     <bean id="mailService" class="com.jusfoun.hookah.console.server.service.impl.MailServiceImpl"/>
     <bean id="sysNewsService" class="com.jusfoun.hookah.console.server.service.impl.SysNewsServiceImpl"/>
+    <bean id="helpService" class="com.jusfoun.hookah.console.server.service.impl.HelpServiceImpl"/>
 
     <!-- 具体rpc服务配置，声明实现的接口类。-->
     <motan:service interface="com.jusfoun.hookah.rpc.api.MqSenderService"
@@ -28,5 +29,10 @@
     </motan:service>
     <motan:service interface="com.jusfoun.hookah.rpc.api.SysNewsService"
                    ref="sysNewsService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+
+    <!-- 服务中心 -->
+    <motan:service interface="com.jusfoun.hookah.rpc.api.HelpService"
+                   ref="helpService" export="hookah:5001" basicService="serviceBasicConfig">
     </motan:service>
 </beans>

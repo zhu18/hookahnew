@@ -114,6 +114,9 @@
     width:26%;
     text-align:center
 }
+.order-manage .cart-box .order-items .operation a{
+    display: block;
+}
 .order-manage .order-box .order-items.cart-list-bottom,.order-manage .order-box .order-items.cart-list-bottom tr{
     border:none;
 }
@@ -133,3 +136,9 @@
     border:none;
     float: right;
 }
+.noDataBox{
+    line-height: 50px;
+    text-align: center;
+}
+.noDataBox a{
+    color: #247DE8;}

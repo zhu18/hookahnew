@@ -4,7 +4,7 @@ server:
     protocal: http://
 myconf:
   beetl:
-    templatesPath: views/default/
+    templatesPath: views/
     contentType: text/html;charset:UTF-8
     prefix:
     suffix: .html

@@ -1,8 +1,12 @@
 package com.jusfoun.hookah.webiste.controller;
 
+import com.jusfoun.hookah.rpc.api.HelpService;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.annotation.Resource;
 
 /**
  * @author huang lei
@@ -13,8 +17,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/help")
 public class HelpController {
 
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public String index() {
+    @Resource
+    HelpService helpService;
+
+    @RequestMapping(value = "/{id}.html", method = RequestMethod.GET)
+    public String index(@PathVariable("id") String id) {
         return "/help/help_index";
     }
 }

@@ -5,7 +5,8 @@ import "../../style/common.css";
 const MODULE_NAME = 'Hookah';
 let app = angular.module(MODULE_NAME, [
   'ui.router',
-  'Common'
+  'Common',
+  'ui.bootstrap'
 ]);
 /**
  * 配置路由

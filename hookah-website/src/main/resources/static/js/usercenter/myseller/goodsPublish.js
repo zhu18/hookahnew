@@ -64,8 +64,6 @@ function loadData(url,pid){
                     html += '</div>';
                     $('.select-category-box').append(html);
                     isTrue = true;
-                    console.log('0:'+isTrue);
-
                 }else{
                     isTrue = false;
                 }

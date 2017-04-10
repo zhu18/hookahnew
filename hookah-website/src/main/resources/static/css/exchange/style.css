@@ -2040,7 +2040,7 @@ dl {
 
 }
 .goods-left .goods-details .goods-details-right .detail-money{
-    height: 110px;
+    /*height: 110px;*/
     background-color: #F3F3F3;
 }
 .goods-left .goods-details .goods-details-right .detail-money div{
@@ -2064,6 +2064,10 @@ dl {
     line-height: 22px;
     padding: 0 5px;
     border: 1px solid #333;
+}
+.goods-left .goods-details .goods-details-right .detail-money .money-standard a.active{
+    color: #ffa800;
+    border-color: #ffa800;
 }
 .goods-details .goods-details-right .detail-count .purchase-quantity{
     position: relative;
