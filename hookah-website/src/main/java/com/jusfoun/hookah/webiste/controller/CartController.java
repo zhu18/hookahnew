@@ -3,6 +3,7 @@ package com.jusfoun.hookah.webiste.controller;
 import com.jusfoun.hookah.core.domain.Cart;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
+import com.jusfoun.hookah.core.domain.vo.CartVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.JSONUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
@@ -11,6 +12,7 @@ import com.jusfoun.hookah.rpc.api.GoodsService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,8 +50,17 @@ public class CartController extends BaseController {
             filters.add(Condition.eq("userId", userId));
             filters.add(Condition.eq("isDeleted", new Integer(0).shortValue()));
             List<Cart> carts = cartService.selectList(filters);
-            model.addAttribute("cartList", carts);
-            logger.info(JSONUtils.toString(carts));
+            List<CartVo> cartVos = new ArrayList<>(carts.size());
+            Goods goods = null;
+            for(Cart cart:carts){
+                CartVo vo = new CartVo();
+                BeanUtils.copyProperties(cart,vo);
+                goods = goodsService.selectById(cart.getGoodsId());
+                vo.setIsOnSale(goods.getIsOnsale());
+                vo.setCheckStatus(goods.getCheckStatus());
+                cartVos.add(vo);
+            }
+            model.addAttribute("cartList", cartVos);
             return "usercenter/buyer/cart";
         } catch (Exception e) {
             e.printStackTrace();
@@ -181,7 +192,7 @@ public class CartController extends BaseController {
     public ReturnData deleteAll(String[] ids) {
         logger.info("逻辑删除购物车：{}", ids);
         try {
-
+            cartService.deleteBatchByLogic(ids);
             return ReturnData.success();
         } catch (Exception e) {
             logger.info(e.getMessage());
