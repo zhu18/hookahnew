@@ -24,9 +24,6 @@ public class MyBuyerController {
     @RequestMapping(value = "/usercenter/info", method = RequestMethod.GET)
     public String info() { return "/usercenter/buyer/info"; }
 
-    @RequestMapping(value = "usercenter/buyer/cart", method = RequestMethod.GET)
-    public String cart() { return "usercenter/buyer/cart"; }
-
     @RequestMapping(value = "/usercenter/buyer/evaluation", method = RequestMethod.GET)
     public String evaluation(){
         return "usercenter/buyer/evaluation";

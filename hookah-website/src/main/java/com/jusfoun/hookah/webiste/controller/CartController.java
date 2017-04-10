@@ -38,7 +38,7 @@ public class CartController extends BaseController {
     @Autowired
     private GoodsService goodsService;
 
-    @RequestMapping(value = "/1/cart", method = RequestMethod.GET)
+    @RequestMapping(value = "usercenter/buyer/cart", method = RequestMethod.GET)
     public String cart(Model model) {
         try {
             String userId = this.getCurrentUser().getUserId();
@@ -50,7 +50,7 @@ public class CartController extends BaseController {
             List<Cart> carts = cartService.selectList(filters);
             model.addAttribute("cartList", carts);
             logger.info(JSONUtils.toString(carts));
-            return "/1/mybuyer/cart";
+            return "usercenter/buyer/cart";
         } catch (Exception e) {
             e.printStackTrace();
             logger.error(e.getMessage());
