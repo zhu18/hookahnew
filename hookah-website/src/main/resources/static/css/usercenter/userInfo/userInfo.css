@@ -6,11 +6,11 @@
 }
 
  .top {
-    width: 1005px;
+    width: 1008px;
     height: 170px;
     border: 1px solid #ededed;
-     margin-left: 10px;
-     margin-top:10px;
+    margin-left: 10px;
+    margin-top:10px;
 }
 
 .top .user-name {
@@ -54,7 +54,7 @@
     margin-right:12px;
 }
 .top .auth-introduce{
-    width: 370px;
+    width: 373px;
     height: 130px;
     background-color: #fff;
     padding-top:20px;
