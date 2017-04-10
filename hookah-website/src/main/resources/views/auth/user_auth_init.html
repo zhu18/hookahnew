@@ -1,18 +1,36 @@
 <%
 var head = {
 %>
-
+<link rel="stylesheet" href="/static/css/auth/user_auth_init.css">
 <%};%>
 
 <%
 var htmlPart = {
 %>
 <div class="grid-0  backgorund-gray">
-  <div class="grid-row padding-bottom-30 padding-top-10" >
-    <div style="height: 400px;">asdfasfdasf</div>
-  </div>
+    <div class="grid-row padding-bottom-30 padding-top-10">
+        <div class="personModule">
+            <div class="title titleIdent">认证信息</div>
+            <label><span>姓名：</span> <input type="text" placeholder="请输入身份证上所写的姓名" id="realname"/></label>
+            <label><span>身份证号：</span> <input type="text" placeholder="请输入身份证号" id="idnumber"/></label>
+            <ul>
+                <li>
+                    <form id="zform" enctype="multipart/form-data">
+                        <label for="submit1"></label><input type="file" id="submit1" multiple="multiple" name="photo"/> <img src="/static/images/auth/z.png" alt="" id="zm"/>
+                    </form>
+                </li>
+                <li>
+                    <form id="fform" enctype="multipart/form-data">
+                        <label for="submit2"></label><input type="file" id="submit2" multiple="multiple" name="photo"/> <img src="/static/images/auth/f.png" alt="" id="fm"/>
+                    </form>
+                </li>
+            </ul>
+            <input id="zpath" value="" type="hidden"/> <input id="fpath" value="" type="hidden"/> <label for="clickCheck"><input type="checkbox" id="clickCheck" checked/>我已阅读并同意《<a href="javascript:;">九连环用户注册协议</a>》</label>
+
+            <div class="button">立即注册</div>
+        </div>
+    </div>
 </div>
-<!--<script src="/static/js/buyer/buyer.js"></script>-->
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>

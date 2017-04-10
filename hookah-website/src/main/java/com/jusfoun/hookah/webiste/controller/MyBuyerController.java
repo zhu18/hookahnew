@@ -34,7 +34,7 @@ public class MyBuyerController {
 
     @RequestMapping(value = "/usercenter/myAttention", method = RequestMethod.GET)
     public String myAttention(){
-        return "usercenter/mybuyer/myAttention";
+        return "usercenter/buyer/myAttention";
     }
 
 

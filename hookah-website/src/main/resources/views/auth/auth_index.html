@@ -1,15 +1,42 @@
 <%
 var head = {
 %>
-
+<link rel="stylesheet" href="/static/css/auth/auth_index.css">
 <%};%>
 <%
 var htmlPart = {
 %>
 <div class="grid-0  backgorund-gray">
-  <div class="grid-row padding-bottom-30 padding-top-10" >
-    <div style="height: 400px;">asdfasfdasf</div>
-  </div>
+    <div class="grid-row padding-bottom-30 padding-top-10">
+        <div class="enterModule">
+            <ul>
+                <li>
+                    <div class="person">
+                        <div class="title">
+                            <div class="headline">个人账户</div>
+                            <p>为个人用户提供商城资源查看、免费试用九连环大数据平台功能等服务，认证后还可进行交易、数据存储、计算等</p>
+                        </div>
+                        <div class="personC">
+                            <div class="personC_title">适用于个人用户</div>
+                        </div>
+                        <a href="javascript:;">个人用户注册</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="enterprise">
+                        <div class="title">
+                            <div class="headline">企业账户</div>
+                            <p>为企业用户提供商城资源查看、免费试用九连环大数据平台功能等服务，认证后还可进行交易、数据存储、计算等</p>
+                        </div>
+                        <div class="personE">
+                            <div class="personC_title">适用于企业用户</div>
+                        </div>
+                        <a href="javascript:;">企业用户注册</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}

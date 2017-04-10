@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.core.domain.vo;
 
+import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.es.EsGoods;
 
 import java.io.Serializable;
@@ -9,8 +10,8 @@ import java.io.Serializable;
  */
 public class EsGoodsVo implements Serializable {
     private EsGoods esGoods;
-    private Integer PageNum = 1;
-    private Integer PageSize = 10;
+    private Integer PageNumber = HookahConstants.PAGE_NUM;
+    private Integer PageSize = HookahConstants.PAGE_SIZE;
     private String orderFiled;
     private String order;
 
@@ -22,12 +23,13 @@ public class EsGoodsVo implements Serializable {
         this.esGoods = esGoods;
     }
 
-    public int getPageNum() {
-        return PageNum;
+
+    public Integer getPageNumber() {
+        return PageNumber;
     }
 
-    public void setPageNum(Integer pageNum) {
-        PageNum = pageNum;
+    public void setPageNumber(Integer pageNumber) {
+        PageNumber = pageNumber;
     }
 
     public Integer getPageSize() {
