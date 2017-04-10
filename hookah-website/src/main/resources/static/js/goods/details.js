@@ -97,7 +97,7 @@ function renderDetails() {
                 $('#J_goodsImg').attr('src', data.data.goodsImg);
                 $('#J_goodsTitle').html(data.data.goodsName);
                 $('#J_goodsBrief').html(data.data.goodsBrief);
-                $('#J_goodsPrice').html(Number(data.data.formatList[0].price) / 100);
+                $('#J_goodsPrice').html(Number(data.data.formatList[0].price) / 100).attr('formatid',data.data.formatList[0].formatId);
 
                 function formatType(type) {
                     if (type == 0) {
@@ -121,7 +121,7 @@ function renderDetails() {
                     $.each(listData, function (index, item) {
                         var active = '';
                         index == 0 ? active = 'active' : active = '';
-                        html += '<a href="javascript:;" onclick="editPrice(this, ' + item.price + ')" class="margin-right-5 ' + active + '" formatid="' + item.formatId + '" price="' + item.price + '">' + item.number + formatType(item.format) + '</a>';
+                        html += '<a href="javascript:;" onclick="editPrice(this, ' + item.price + ', ' + item.formatId + ')" class="margin-right-5 ' + active + '" formatid="' + item.formatId + '" price="' + item.price + '">' + item.number + formatType(item.format) + '</a>';
                     })
                     html += '</div>';
                     $("#J_detail-money").append(html)
@@ -154,7 +154,7 @@ function addCart(goodsId) {
         type: 'post',
         data: {
             goodsId: goodsId,
-            formatId: formatId,
+            formatId: $('#J_goodsPrice').attr('formatid'),
             goodsNumber: $('#J_buyNumber').val()
         },
         success: function (data) {
@@ -167,7 +167,7 @@ function addCart(goodsId) {
         }
     });
 }
-function editPrice(that,price){
+function editPrice(that,price,formatId){
     $(that).addClass('active').siblings('a').removeClass('active');
-    $('#J_goodsPrice').html(Number(price) / 100);
+    $('#J_goodsPrice').html(Number(price) / 100).attr('formatid',formatId);
 }
