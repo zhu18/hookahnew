@@ -20,6 +20,7 @@ import javax.annotation.Resource;
  * @desc
  */
 @Controller
+@RequestMapping("/exchange")
 public class ExchangeController {
     @Resource
     CategoryService categoryService;
@@ -28,13 +29,13 @@ public class ExchangeController {
     @Resource
     MgGoodsService mgGoodsService;
 
-    @RequestMapping(value = "/exchange", method = RequestMethod.GET)
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(Model model){
         model.addAttribute("categoryInfo", categoryService.getCatTree());
         return "exchange/index";
     }
 
-    @RequestMapping(value = "/exchange/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(Model model){
         return "exchange/list";
     }
@@ -45,7 +46,7 @@ public class ExchangeController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/exchange/details", method = RequestMethod.GET)
+    @RequestMapping(value = "/details", method = RequestMethod.GET)
     public String details(@RequestParam(required = true) String id, Model model){
         GoodsVo goodsVo = new GoodsVo();
         BeanUtils.copyProperties(goodsService.selectById(id), goodsVo);
@@ -61,7 +62,7 @@ public class ExchangeController {
         return "exchange/details";
     }
 
-    @RequestMapping(value = "/exchange/search", method = RequestMethod.GET)
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
     public String search(Model model){
         return "exchange/search";
     }

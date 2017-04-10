@@ -59,13 +59,6 @@ public class IndexController {
         return "index";
     }
 
-    @RequestMapping(value = "/s", method = RequestMethod.GET)
-    public String sayhello(Model model) {
-//        String s = userService.sayhello();
-//        System.out.println(s);
-        return "index";
-    }
-
     @RequestMapping(value = "/select", method = RequestMethod.GET)
     @ResponseBody
     public Object select(Model model) {

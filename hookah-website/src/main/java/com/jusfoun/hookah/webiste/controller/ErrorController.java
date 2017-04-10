@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
  * @desc 买家中心
  */
 @Controller
-@RequestMapping(value = "/error/")
+@RequestMapping(value = "/error")
 public class ErrorController {
 
     @RequestMapping(value = "404", method = RequestMethod.GET)

@@ -2,7 +2,6 @@ package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
-import com.jusfoun.hookah.core.domain.GoodsCheck;
 import com.jusfoun.hookah.core.domain.GoodsFavorite;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
@@ -20,6 +19,7 @@ import java.util.List;
 
 /**
  * Created by dengxu on 2017/4/8/0008.
+ * 商品关注
  */
 @Controller
 @RequestMapping("goodsFavorite")
@@ -29,7 +29,8 @@ public class GoodsFavoriteController extends BaseController {
     GoodsFavoriteService goodsFavoriteService;
 
     @RequestMapping("add")
-    public @ResponseBody ReturnData addFavorite(GoodsFavorite goodsFavorite) {
+    @ResponseBody
+    public ReturnData addFavorite(GoodsFavorite goodsFavorite) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
 
@@ -40,7 +41,7 @@ public class GoodsFavoriteController extends BaseController {
         }
         try {
             goodsFavoriteService.insert(goodsFavorite);
-        }catch (Exception e) {
+        } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());
             e.printStackTrace();
@@ -49,7 +50,8 @@ public class GoodsFavoriteController extends BaseController {
     }
 
     @RequestMapping("del")
-    public @ResponseBody ReturnData delFavorite(String id) {
+    @ResponseBody
+    public ReturnData delFavorite(String id) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         if (StringUtils.isBlank(id)) {
@@ -59,7 +61,7 @@ public class GoodsFavoriteController extends BaseController {
         }
         try {
             goodsFavoriteService.delete(id);
-        }catch (Exception e) {
+        } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());
             e.printStackTrace();
@@ -68,7 +70,8 @@ public class GoodsFavoriteController extends BaseController {
     }
 
     @RequestMapping("list")
-    public @ResponseBody ReturnData listFavorite(String pageNumber, String pageSize) {
+    @ResponseBody
+    public ReturnData listFavorite(String pageNumber, String pageSize) {
 
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
@@ -80,16 +83,16 @@ public class GoodsFavoriteController extends BaseController {
             List<OrderBy> orderBys = new ArrayList();
             orderBys.add(OrderBy.desc("addTime"));
             int pageNumberNew = HookahConstants.PAGE_NUM;
-            if(StringUtils.isNotBlank(pageNumber)){
+            if (StringUtils.isNotBlank(pageNumber)) {
                 pageNumberNew = Integer.parseInt(pageNumber);
             }
             int pageSizeNew = HookahConstants.PAGE_SIZE;
-            if(StringUtils.isNotBlank(pageSize)){
+            if (StringUtils.isNotBlank(pageSize)) {
                 pageSizeNew = Integer.parseInt(pageSize);
             }
             page = goodsFavoriteService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
             returnData.setData(page);
-        }catch (Exception e) {
+        } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());
             e.printStackTrace();

@@ -14,7 +14,7 @@ import javax.annotation.Resource;
  * Created by wangjl on 2017-3-23.
  */
 @RestController
-@RequestMapping("shelves/back")
+@RequestMapping("/shelves/back")
 public class ShelvesBackController {
     @Resource
     ShelvesService shelvesService;

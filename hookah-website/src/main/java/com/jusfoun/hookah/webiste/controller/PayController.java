@@ -16,7 +16,7 @@ import javax.annotation.Resource;
  * @desc
  */
 @Controller
-@RequestMapping("pay")
+@RequestMapping("/pay")
 public class PayController {
 
     @Resource
