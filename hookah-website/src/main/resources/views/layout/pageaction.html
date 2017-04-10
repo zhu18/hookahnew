@@ -22,7 +22,7 @@
             data:dataParm,
             success:function(data){
                 if(data.code == "1") {
-                    chenggong(data,pageNumber)
+                    successFn(data,pageNumber)
                     Loading.stop();
                 }else{
                     Loading.stop();
@@ -43,7 +43,7 @@
             success:function(data){
                 if(data.code == "1") {
                     Loading.stop();
-                    chenggong(data,pageNumber)
+                    successFn(data,pageNumber)
                 }else{
                     Loading.stop();
                     console.log(data.message);
@@ -51,8 +51,7 @@
             }
         });
     }
-    function chenggong(data,pageNumber){
-        console.log('pppppppppp'+pageNumber)
+    function successFn(data,pageNumber){
         totalPages = data.data.totalPage;
         loadPageData(data);
         if(pageNumber == 1){
