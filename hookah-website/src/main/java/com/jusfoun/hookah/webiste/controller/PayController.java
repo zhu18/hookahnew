@@ -40,7 +40,7 @@ public class PayController {
             System.out.print("ddddddddddddddddddddddddddddddddddddddddddddddddddddd");
 
             //.findPayCoreByOrderSn(null);
-            reqHtml = payCoreService.doPay(orderId,null);
+            reqHtml = payCoreService.doPay(23,"62cb01c71c4711e796c56a3b07101c5a");
         } catch (Exception e) {
             e.printStackTrace();
         }
