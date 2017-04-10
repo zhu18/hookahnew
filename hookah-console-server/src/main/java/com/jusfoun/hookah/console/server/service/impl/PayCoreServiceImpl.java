@@ -24,6 +24,7 @@ import com.jusfoun.hookah.core.utils.HttpClientUtil;
 import com.jusfoun.hookah.rpc.api.OrderInfoService;
 import com.jusfoun.hookah.rpc.api.PayCoreService;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.bag.SynchronizedSortedBag;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,7 +45,7 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 	//@Value("${rechargeUrl}")
 	private String rechargeUrl;
 //	@Value("${alipayFeeRate}")
-	private String alipayFeeRate;
+	private String alipayFeeRate ="0.0055";
 	//@Value("${getBalanceUrl}")
 	private String getBalanceUrl;
 	//@Value("${findUserIdByPhoneOrEmail}")
@@ -113,6 +114,8 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 		payVo.setOrderSn("001");
 		payVo.setPayId(1);
 		payVo.setTotalFee(new BigDecimal("0.1"));
+		payVo.setUserId("62cb01c71c4711e796c56a3b07101c5a");
+
 
 
 		/*PayVo payVo = orderService.getPayParam(orderId);*/
@@ -122,6 +125,8 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 			throw new RuntimeException("订单金额不合法");
 		payVo.setUserId(userId);
 		String html = buildRequestParams(payVo);
+
+		System.out.print(html  +"            ------------------------------------------    ") ;
 		// 记账
 		if (StringUtils.isNotEmpty(html))
 			enterAccount(orderId, payVo);
@@ -133,7 +138,8 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 		PayCore pay = new PayCore();
 		pay.setOrderId(orderId);
 		pay.setOrderSn(payVo.getOrderSn());
-		pay.setUserId(payVo.getUserId());
+		pay.setUserId("62cb01c71c4711e796c56a3b07101c5a");
+		System.out.print(payVo.getUserId() +"          ==============================");
 		pay.setAmount(payVo.getTotalFee());//金额
 		pay.setPayDate(new Date());
 //		pay.setPayStatus(PayStatus.paying.getValue());
