@@ -26,15 +26,6 @@
     margin-bottom: 20px;
 }
 
-.personModule .title a {
-    float: right;
-    color: #247DE8;
-    font-size: 14px;
-    vertical-align: bottom;
-    height: 24px;
-    line-height: 30px;
-}
-
 .personModule form {
     padding-bottom: 20px;
     border-bottom: 1px solid #e2e2e2;
@@ -66,68 +57,6 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     text-indent: 10px;
-}
-
-.personModule label input[type=password] {
-    float: right;
-    height: 40px;
-    line-height: 40px;
-    margin-bottom: 15px;
-    width: 370px;
-    border: 1px solid #e5e5e5;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    text-indent: 10px;
-}
-
-.personModule label .checkBox {
-    width: 370px;
-    float: right;
-}
-
-.personModule label .validateBox {
-    width: 370px;
-    float: right;
-}
-
-.personModule label .checkBox #check {
-    width: 100px;
-    float: left;
-}
-
-.personModule label p {
-    float: left;
-    width: 100px;
-    float: left;
-    margin-left: 15px;
-    display: inline-block;
-}
-
-.personModule label .checkBox img {
-    margin-left: 20px;
-    width: 100px;
-    height: 40px;
-    border: 1px solid #e2e2e2;
-    float: left;
-}
-
-.personModule form label .validate {
-    width: 150px;
-    float: left;
-}
-
-.personModule label .validateBox a {
-    display: inline-block;
-    width: 93px;
-    height: 35px;
-    line-height: 35px;
-    background: #247DE8;
-    text-align: center;
-    text-decoration: none;
-    color: #fff;
-    margin-left: 20px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
 }
 
 .personModule label #clickCheck {
@@ -182,13 +111,87 @@
     top: 0px;
     z-index: 0;
 }
-
-.personModule .red {
-    color: #e73e4a;
-    font-size: 12px;
-    margin-bottom: 10px;
+/*遮层*/
+.shadeBottom {
+    display: none;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 999;
 }
 
-.personModule .button {
+.shadeContent {
+    width: 950px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -200px 0 0 -499px;
+    background: #fff;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    overflow: hidden;
+    border: 4px solid rgba(0, 0, 0, 0.25);
+}
+
+.shadeTop {
+    height: 30px;
+    width: 100%;
+    background: #f3f3f3;
+    line-height: 30px;
+    font-size: 14px;
+    color: #333;
+    padding-left: 13px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.shadeTop i {
+    display: inline-block;
+    float: right;
+    width: 27px;
+    height: 27px;
+    background: url(../images/dengluzhuce/close.png) no-repeat;
     cursor: pointer;
+}
+
+.shadeSection {
+    width: 100%;
+    overflow: hidden;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 20px 20px 27px;
+}
+
+.shadeSection ul {
+    list-style: none;
+    color: #333;
+    font-size: 14px;
+    line-height: 22px;
+    height: 265px;
+    overflow-y: auto;
+}
+
+.shadeSection ul h3 {
+    margin: 0;
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: 700;
+}
+
+.shadeSection a {
+    display: block;
+    width: 300px;
+    height: 40px;
+    line-height: 40px;
+    background: #247DE8;
+    margin: 4px auto;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
 }
