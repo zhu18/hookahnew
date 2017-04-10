@@ -1,7 +1,9 @@
 package com.jusfoun.hookah.rpc.api;
 
 import com.jusfoun.hookah.core.common.Pagination;
+import com.jusfoun.hookah.core.domain.es.EsGoods;
 import com.jusfoun.hookah.core.domain.vo.EsGoodsVo;
+import com.jusfoun.hookah.core.domain.vo.EsTypesVo;
 
 import java.util.List;
 
@@ -17,9 +19,6 @@ public interface ElasticSearchService {
 
     void bulkInsert(String keyField, String index, String type) throws Exception;
 
-    Pagination search(Pagination pagination, String key, String index, String type,
-                      Boolean isHighLight, String... fields) throws Exception;
-
     void deleteIndex(String indexName) throws Exception;
 
     Pagination search(EsGoodsVo vo) throws Exception;
@@ -27,4 +26,6 @@ public interface ElasticSearchService {
     List<String> goodsSuggestion(String prefix, Integer size) throws Exception;
 
     List<String> goodsSuggestion(String prefix) throws Exception;
+
+    EsTypesVo getTypes(EsGoods vo) throws Exception;
 }

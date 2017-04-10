@@ -17,6 +17,14 @@ public class HookahConstants {
     /** 短信过期时间，单位 分 */
     public static final Integer CAPTCHA_DURATION_MINITE = 30;
 
+    /** es操作(增删改查)默认字段 */
+    public static final String GOODS_ORDER_FIELD = "lastUpdateTimeKey";
+    public static final String GOODS_ORDER_SORT = "desc";
+    public static final String GOODS_AGG_CATEGORY = "catAgg";
+    public static final String GOODS_AGG_CATEGORY_FIELD = "catId";
+    public static final String GOODS_AGG_ATTR = "attrAgg";
+    public static final String GOODS_AGG_ATTR_FIELD = "attrId";
+
     public enum AnalyzeOpt {
         ANALYZED("analyzed"),
         NOT_ANALYZED("not_analyzed");
