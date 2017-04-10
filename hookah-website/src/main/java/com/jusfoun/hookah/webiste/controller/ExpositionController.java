@@ -12,23 +12,28 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class ExpositionController {
 
+    @RequestMapping(value = "/exposition", method = RequestMethod.GET)
+    public String index(){
+        return "/exposition/index";
+    }
+
     @RequestMapping(value = "/exposition/data_trading", method = RequestMethod.GET)
-    public String datatrading2(){
+    public String datatrading(){
         return "/exposition/data_trading";
     }
 
     @RequestMapping(value = "/exposition/data_crowdsourcing", method = RequestMethod.GET)
-    public String datacrowdsourcing2(){
+    public String datacrowdsourcing(){
         return "/exposition/data_crowdsourcing";
     }
 
     @RequestMapping(value = "/exposition/financial_innovation", method = RequestMethod.GET)
-    public String financialinnovation2(){
+    public String financialinnovation(){
         return "/exposition/financial_innovation";
     }
 
     @RequestMapping(value = "/exposition/solve_plan", method = RequestMethod.GET)
-    public String solveplan2(){
+    public String solveplan(){
         return "/exposition/solve_plan";
     }
 }
