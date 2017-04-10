@@ -7,23 +7,52 @@
     function goPage(pageNumber){ //请求页面数据   **需要在当前页面声明pagePath**
         dataParm.pageNumber = pageNumber;
 //        debugger;
+        if(pageType == 'get'){
+            ajaxGet(pageType,pagePath,dataParm,pageNumber)
+        }else if(pageType == 'post'){
+            ajaxPost(pageType,pagePath,dataParm,pageNumber)
+        }
+    }
+    function ajaxGet(pageType,pagePath,dataParm,pageNumber){
         $.ajax({
             type:pageType,
             url:pagePath,
             data:dataParm,
             success:function(data){
                 if(data.code == "1") {
-                    totalPages = data.data.totalPage;
-                    loadPageData(data);
-                    if(pageNumber == 1){
-                        $('.pageaction').html('').append('<div class="tcdPageCode"></div>');
-                        renderPage(data.data.totalPage, data.data.currentPage);
-                    }
+                    chenggong(data,pageNumber)
                 }else{
                     console.log(data.message);
                 }
             }
         });
+    }
+
+    function ajaxPost(pageType,pagePath,dataParm,pageNumber){
+        console.log(dataParm)
+        $.ajax({
+            type:pageType,
+            url:pagePath,
+            dataType: "json",
+            contentType: 'application/json',
+            data:JSON.stringify(dataParm),
+            success:function(data){
+                if(data.code == "1") {
+                    chenggong(data,pageNumber)
+                }else{
+                    console.log(data.message);
+                }
+            }
+        });
+    }
+    function chenggong(data,pageNumber){
+        console.log('pppppppppp'+pageNumber)
+        totalPages = data.data.totalPage;
+        loadPageData(data);
+        if(pageNumber == 1){
+            $('.pageaction').html('').append('<div class="tcdPageCode"></div>');
+            renderPage(data.data.totalPage, data.data.currentPage);
+        }
     }
     function renderPage(totalPages,currentPage){ //渲染分页
         if(totalPages > 1){

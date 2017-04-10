@@ -82,9 +82,7 @@ var itemNum = 0;
 function tablePlus(that){
     if($(that).hasClass('itemNum')){
         itemNum += 1 ;
-        console.log(itemNum)
     }
-    console.log(itemNum)
     var priceHtml = '';//规格与价格
     priceHtml += '<tr class="parent-tr">';
     priceHtml += '<td class="number-input"><div class="inputbox"><input type="number" datatype="number" placeholder="请输入规格"></div></td>';
@@ -209,11 +207,14 @@ $('.pusGoods-btn').click(function(){
 
     $('table[d-type="priceHtml"] tbody tr').each(function(){
         var listData = {};
+        listData.formatId = $(this).index();
         listData.number = $(this).find('input[datatype="number"]').val();
         listData.format = $(this).find('select[name="format"]').val();
         listData.price = ($(this).find('input[datatype="price"]').val())*100;
         data.formatList.push(listData);
+
     });
+    alert(JSON.stringify(data.formatList));
     data.shopNumber = data.formatList[0].number;
     data.shopFormat = data.formatList[0].format;
     data.shopPrice = data.formatList[0].price;

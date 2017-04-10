@@ -1,20 +1,17 @@
-package com.jusfoun.hookah.console.server.controller;
+package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.GoodsCheck;
+import com.jusfoun.hookah.core.domain.GoodsFavorite;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
-import com.jusfoun.hookah.rpc.api.GoodsCheckService;
-import com.jusfoun.hookah.rpc.api.GoodsService;
+import com.jusfoun.hookah.rpc.api.GoodsFavoriteService;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -22,34 +19,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by admin on 2017/4/7/0007.
+ * Created by dengxu on 2017/4/8/0008.
  */
 @Controller
-@RequestMapping("goodsCheck")
-public class GoodsCheckController extends BaseController{
-
-    private static final Logger logger = LoggerFactory.getLogger(OrderInfoController.class);
+@RequestMapping("goodsFavorite")
+public class GoodsFavoriteController extends BaseController {
 
     @Resource
-    GoodsCheckService goodsCheckService;
+    GoodsFavoriteService goodsFavoriteService;
 
-    @Resource
-    GoodsService goodsService;
-
-
-    @RequestMapping(value = "addCheck", method = RequestMethod.GET)
-    public @ResponseBody ReturnData goodsCheck(GoodsCheck goodsCheck){
-
+    @RequestMapping("add")
+    public @ResponseBody ReturnData addFavorite(GoodsFavorite goodsFavorite) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
 
-        if (StringUtils.isBlank(goodsCheck.getGoodsId()) || StringUtils.isBlank(goodsCheck.getCheckStatus().toString())) {
-            returnData.setCode(ExceptionConst.InvalidParameters);
+        if (StringUtils.isBlank(goodsFavorite.getGoodsId()) || StringUtils.isBlank(goodsFavorite.getUserId())) {
+            returnData.setCode(ExceptionConst.AssertFailed);
+            returnData.setMessage(ExceptionConst.get(ExceptionConst.AssertFailed));
             return returnData;
         }
         try {
-            goodsCheck.setCheckUser(getCurrentUser().getUserId());
-            goodsCheckService.insertRecord(goodsCheck);
+            goodsFavoriteService.insert(goodsFavorite);
         }catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());
@@ -58,16 +48,37 @@ public class GoodsCheckController extends BaseController{
         return returnData;
     }
 
-    @RequestMapping(value = "list", method = RequestMethod.GET)
-    public @ResponseBody ReturnData list(String pageNumber, String pageSize, String checkUser, Byte checkStatus) {
+    @RequestMapping("del")
+    public @ResponseBody ReturnData delFavorite(String id) {
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        if (StringUtils.isBlank(id)) {
+            returnData.setCode(ExceptionConst.AssertFailed);
+            returnData.setMessage(ExceptionConst.get(ExceptionConst.AssertFailed));
+            return returnData;
+        }
+        try {
+            goodsFavoriteService.delete(id);
+        }catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
+
+    @RequestMapping("list")
+    public @ResponseBody ReturnData listFavorite(String pageNumber, String pageSize) {
 
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
-            Pagination<GoodsCheck> page = new Pagination<>();
+            Pagination<GoodsFavorite> page = new Pagination<>();
             List<Condition> filters = new ArrayList();
+            filters.add(Condition.eq("isDelete", 1));
+            filters.add(Condition.eq("userId", getCurrentUser().getUserId()));
             List<OrderBy> orderBys = new ArrayList();
-            orderBys.add(OrderBy.desc("checkTime"));
+            orderBys.add(OrderBy.desc("addTime"));
             int pageNumberNew = HookahConstants.PAGE_NUM;
             if(StringUtils.isNotBlank(pageNumber)){
                 pageNumberNew = Integer.parseInt(pageNumber);
@@ -76,13 +87,7 @@ public class GoodsCheckController extends BaseController{
             if(StringUtils.isNotBlank(pageSize)){
                 pageSizeNew = Integer.parseInt(pageSize);
             }
-            if (checkStatus != null) {
-                filters.add(Condition.eq("checkStatus", checkStatus));
-            }
-            if (checkUser != null) {
-                filters.add(Condition.eq("checkUser", checkUser));
-            }
-            page = goodsCheckService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
+            page = goodsFavoriteService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
             returnData.setData(page);
         }catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
@@ -91,4 +96,5 @@ public class GoodsCheckController extends BaseController{
         }
         return returnData;
     }
+
 }

@@ -80,7 +80,7 @@ $.getUrlParam = function (key) {
     var result = window.location.search.substr(1).match(reg);
     return result ? decodeURIComponent(result[2]) : null;
 };
-var id = $.getUrlParam('goodsId');
+var id = $.getUrlParam('id');
 renderDetails();
 var formatId = '';
 function renderDetails(){
@@ -108,7 +108,7 @@ function renderDetails(){
                 }
                 $('#J_goodsNumber').html((data.data.shopNumber <= 1 ? '' : data.data.shopNumber)+shopFormat);
                 $('#J_goodsDesc').html(data.data.goodsDesc);
-                $('#J_addCart').attr('href','javascript:addCart('+data.data.goodsId+');')
+                $('#J_addCart').attr('href','javascript:addCart("'+data.data.goodsId+'");')
 
 
                 function add(m){ return m < 10 ? '0'+ m:m };

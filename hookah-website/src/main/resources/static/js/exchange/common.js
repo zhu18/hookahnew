@@ -8,7 +8,6 @@ $(function () {
         $(".exchange-index-menu .menu-son-list").css('display', 'none');
         // 控制进入那个页面
         if (url == '/exchange') {
-            console.log(1);
             $(".exchange-index-menu .menu-list").css('display', 'block');
             $(".exchange-index-menu").mouseleave(function () {
                 $(".exchange-index-menu .menu-son-list").css('display', 'none');
@@ -18,7 +17,6 @@ $(function () {
                 })
             })
         } else {
-            console.log(2);
             $(".exchange-index-menu .menu-list").css('display', 'none');
 
             $(".exchange-index-menu .menu-title").hover(function () {
