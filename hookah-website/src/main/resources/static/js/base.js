@@ -25,6 +25,7 @@ $(document).ready(function () {
 
 var Loading = {};
 Loading.start = function(){
+    Loading.stop();
     var loadingHtml = '';
     loadingHtml += '<div class="loading-wrapper">';
     loadingHtml += '<div class="loading-bg">';
