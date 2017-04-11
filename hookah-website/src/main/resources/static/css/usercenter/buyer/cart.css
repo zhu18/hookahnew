@@ -71,6 +71,7 @@
 .order-manage .cart-box .order-items .name{width:15%;word-break: break-word;}
 .order-manage .cart-box .order-items .price{width:8%;text-align: right;}
 .order-manage .cart-box .order-items .number{width:18%;text-align: center}
+.order-manage .cart-box .order-items .format{width:10%;text-align: center}
 .order-manage .cart-box .order-items .number div{display: inline-block}
 .order-manage .cart-box .order-items .number .btn{
     width: 20px;

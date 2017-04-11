@@ -1,4 +1,6 @@
-
+.auth-box .auth-title .blue{
+    color: #00b1ff;
+}
 .auth-box .auth-content{
     padding-bottom:150px;
 }

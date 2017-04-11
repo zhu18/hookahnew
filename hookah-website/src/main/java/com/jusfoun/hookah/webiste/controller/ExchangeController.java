@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.webiste.controller;
 
+import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.rpc.api.CategoryService;
@@ -30,27 +31,28 @@ public class ExchangeController {
     MgGoodsService mgGoodsService;
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public String index(Model model){
+    public String index(Model model) {
         model.addAttribute("categoryInfo", categoryService.getCatTree());
         return "exchange/index";
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String list(Model model){
+    public String list(Model model) {
         return "exchange/list";
     }
 
     /**
      * 商品查询
+     *
      * @param id
      * @param model
      * @return
      */
     @RequestMapping(value = "/details", method = RequestMethod.GET)
-    public String details(@RequestParam(required = true) String id, Model model){
+    public String details(@RequestParam(required = true) String id, Model model) {
         GoodsVo goodsVo = new GoodsVo();
         BeanUtils.copyProperties(goodsService.selectById(id), goodsVo);
-        if(goodsVo != null) {
+        if (goodsVo != null) {
             MgGoods mgGoods = mgGoodsService.selectById(id);
             if (mgGoods != null) {
                 goodsVo.setFormatList(mgGoods.getFormatList());
@@ -58,12 +60,19 @@ public class ExchangeController {
                 goodsVo.setAttrTypeList(mgGoods.getAttrTypeList());
             }
         }
-        model.addAttribute("exchange/details", goodsVo);
+        model.addAttribute("goodsDetails", goodsVo);
         return "exchange/details";
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public String search(Model model){
+    public String search(Model model) {
         return "exchange/search";
+    }
+
+    @RequestMapping(value = "/addToCart", method = RequestMethod.GET)
+    public String addToCart(String goodsId, Model model) {
+        Goods goods = goodsService.selectById(goodsId);
+        model.addAttribute("goodsInfo", goods);
+        return "exchange/addToCart";
     }
 }

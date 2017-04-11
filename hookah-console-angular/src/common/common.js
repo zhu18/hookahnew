@@ -137,6 +137,30 @@ export default angular.module('Common', [
       return input == 1 ? '启用' : '禁用';
     }
   })
+  .filter('UserType', function () {
+    return function (input) {
+      switch(input) {
+        case 0:
+          return '系统';
+          break;
+        case 1:
+          return '未认证';
+          break;
+        case 2:
+          return '个人';
+          break;
+        case 3:
+          return '个人待审核';
+          break;
+        case 4:
+          return '企业';
+          break;
+        case 5:
+          return '企业待审核';
+          break;
+      }
+    }
+  })
   .controller("MainController", MainController)
   .run(function ($rootScope) {
     // console.log("common init..");
@@ -169,7 +193,7 @@ function HttpInterceptor($q, $rootScope, $location, $window) {
         // if(res.data.totalPages >1){
         //
         // }
-        if (res.data.totalItems == 0) {
+        if (res.data.data.totalItems == 0) {
           $rootScope.showNoneDataInfoTip = true;
           $rootScope.showPageHelpInfo = false;
         } else {
