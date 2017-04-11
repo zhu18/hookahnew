@@ -33,7 +33,7 @@ $(document).ready(function () {
             });
             $('.shopping-cart .shopping-cart-top').css({
                 'backgroundColor':'white',
-                'boxShadow':'0px -1px 1px #DFDFDF',
+                'boxShadow':'0px 0px 5px rgba(0,0,0,.2)',
                 'border':'none'
             });
             $(this).mouseleave(function () {

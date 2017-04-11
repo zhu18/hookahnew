@@ -23,7 +23,7 @@ function switchHover() {
                     'display': 'none'
                 })
             }
-        })
+        });
         if ($(document).scrollTop() >= 570) {
             $("body").animate({scrollTop: 570}, 300);
         }

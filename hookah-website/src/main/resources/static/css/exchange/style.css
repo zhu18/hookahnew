@@ -1363,62 +1363,170 @@ lesshat-selector {
     font-size: 14px;
 }
 .exchange-industry-resource .industry-resource-down{
-    border-top:1px solid #333333;
-    padding-top: 25px;
     height: 516px;
+    position: relative;
 }
-.exchange-industry-resource .industry-resource-down ul li{
+.exchange-industry-resource .industry-resource-down .screen{
+    width: 100%;
+    height: 450px;
+    overflow: hidden;
+}
+.exchange-industry-resource .industry-resource-down #arr{
+    display: none;
+}
+.exchange-industry-resource .industry-resource-down #arrow-left{
+    position: absolute;
+    display: inline-block;
+    top: 0;
+    width: 100px;
+    left: 0;
+    line-height: 450px;
+    text-align: center;
+    z-index: 1000;
+    color: white;
+    font-size: 60px;
+    background: #161A1D;
+    opacity: 0.4;
+    height: 450px;
+}
+.exchange-industry-resource .industry-resource-down #arrow-right{
+    position: absolute;
+    display: inline-block;
+    top: 0;
+    width: 100px;
+    color: white;
+    right: 0;
+    line-height: 450px;
+    text-align: center;
+    z-index: 1000;
+    font-size: 60px;
+    background: #161A1D;
+    opacity: 0.4;
+    height: 450px;
+}
+.exchange-industry-resource .industry-resource-down ul .slide-item{
     float: left;
+    position: relative;
     width: 20%;
     height: 450px;
-    box-shadow: inset -1px 0px 0 #ECECEC;
     background-color: white;
 }
-.exchange-industry-resource .industry-resource-down ul li:last-child{
-    border:none;
-}
-.exchange-industry-resource .industry-resource-down ul li>div:nth-child(1){
-    text-align: center;
+.exchange-industry-resource .industry-resource-down ul .slide-item a{
     display: inline-block;
-    padding: 48px 51px;
-    background-color: black;
+    width: 100%;
+    height: 450px;
 }
-.exchange-industry-resource .industry-resource-down ul li>div:nth-child(1) i{
-   font-size: 63px;
+.exchange-industry-resource .industry-resource-down ul .slide-item img{
+    float: left;
+    width: 100%;
+    height: 450px;
+}
+.exchange-industry-resource .industry-resource-down ul .slide-item .bg{
+   position: absolute;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom:0 ;
+}
+.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-bg{
+    position: absolute;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom:0 ;
+    background: #161A1D;
+    opacity: 0.6;
+}
+.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content{
+  position: absolute;
+  top: 130px;
+  width: 100%;
+  text-align: center;
+}
+.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-content-img{
+    width: 100%;
+    height: 67px;
+}
+.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-content-img img{
+    position: absolute;
+    top:0;
+    left: 50%;
+    margin-left: -34px;
+    width: 68px;
+    height: 68px;
+}
+.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-boundary {
+    height: 50px;
+}
+.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-boundary i{
+    width: 20px;
+    height: 2px;
+    display: inline-block;
+    background-color: white;
+}
+.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-title{
+
+    font-size: 22px;
+    line-height: 24px;
     color: white;
 }
-.exchange-industry-resource .industry-resource-down ul li>div:nth-child(1) p{
+.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-info{
+    opacity: 0;
+    margin-top: 40px;
     font-size: 14px;
+    line-height: 14px;
     color: white;
+    padding: 0 10px;
 }
-.exchange-industry-resource .industry-resource-down ul li>div:nth-child(1) p:nth-child(1){
-    font-size: 24px;
+.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-btn {
+    opacity: 0;
+    display: inline-block;
+    border: 1px solid #fff;
+    width: 120px;
+    height: 36px;
+    line-height: 36px;
+    font-size: 14px;
+    color: #fff;
+    text-decoration: none;
+    margin-top: 62px;
 }
-.exchange-industry-resource .industry-resource-down ul li>div:nth-child(2){
-    margin: 0 10px;
 
-    text-align: center;
+.exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-bg{
+    background-color: #00c2de;
+}
+.exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-content{
+    transition: transform 0.3s linear 0s;
+    transform: translateY(-45px);
+}
+.exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-title{
+   margin-top: 15px;
+}
+.exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-boundary{
+    display: none;
+}
+.exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-content .bg-info{
+    transition: transform 0.3s linear 0s;
+    transform: translateY(-20px);
+    animation:show 0.5s ease-in-out 0s 1 alternate forwards;
+    -moz-animation:show 0.5s ease-in-out 0s 1 alternate forwards; /* Firefox */
+    -webkit-animation:show 0.5s ease-in-out 0s 1 alternate forwards; /* Safari and Chrome */
+    -o-animation:show 0.5s ease-in-out 0s 1 alternate forwards; /* Opera */
+}
+.exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-content .bg-btn{
+    transition: transform 0.3s linear 0s;
+    transform: translateY(-30px);
+    animation:show 0.5s ease-in-out 0s 1 alternate forwards;
+    -moz-animation:show 0.5s ease-in-out 0s 1 alternate forwards; /* Firefox */
+    -webkit-animation:show 0.5s ease-in-out 0s 1 alternate forwards; /* Safari and Chrome */
+    -o-animation:show 0.5s ease-in-out 0s 1 alternate forwards; /* Opera */
+}
 
+@keyframes show
+{
+    from {opacity: 0;}
+    to {opacity: 1;}
 }
-.exchange-industry-resource .industry-resource-down ul li>div:nth-child(2)>div:nth-child(1){
-    height: 108px;
-    border-bottom: 1px solid #ECECEC;
-}
-.exchange-industry-resource .industry-resource-down ul li>div:nth-child(2)>div:nth-child(1)>p:nth-child(1){
-    padding-top: 27px;
-    color: black;
-    margin-bottom: 10px;
-}
-.exchange-industry-resource .industry-resource-down ul li>div:nth-child(2)>div:nth-child(2){
-    height: 108px;
-    color: #FF0000;
-}
-.exchange-industry-resource .industry-resource-down ul li>div:nth-child(2)>div:nth-child(2)>p:nth-child(1){
-    padding-top: 27px;
-    color: black;
-    margin-bottom: 10px;
-}
-/*最有一个大模块*/
+    /*最有一个大模块*/
 .exchange-index .exchange-category-down{
     height:460px;
 }
@@ -1428,7 +1536,7 @@ lesshat-selector {
     background-color: white;
     border: 1px solid #efefef;
 }
-.exchange-index .exchange-category-down .category-left>div:nth-child(1) ul li{
+.exchange-index .exchange-category-down .category-left .category-box ul li{
     width: 194px;
     height: 37px;
     text-align: center;
@@ -1477,11 +1585,11 @@ lesshat-selector {
     color:#3B7AB0;
 }
 /*---------------------*/
-.exchange-index .exchange-category-down .category-left>div:nth-child(2)>div:nth-child(2){
+.exchange-index .exchange-category-down .category-left .category-item>div:nth-child(2){
     width: 769px;
     margin-top: 16px;
 }
-.exchange-index .exchange-category-down .category-left>div:nth-child(2)>div:nth-child(2) ul li{
+.exchange-index .exchange-category-down .category-left .category-item>div:nth-child(2) ul li{
     float: left;
     text-align: center;
     width: 189px;
@@ -1490,18 +1598,29 @@ lesshat-selector {
     border-right: 1px solid #ECECEC;
 }
 
-.exchange-index .exchange-category-down .category-left>div:nth-child(2)>div:nth-child(2) ul li:nth-child(n+5){
+.exchange-index .exchange-category-down .category-left .category-item>div:nth-child(2) ul li:nth-child(n+5){
     border-bottom: none;
 }
-.exchange-index .exchange-category-down .category-left>div:nth-child(2)>div:nth-child(2) ul li:nth-child(4n){
+.exchange-index .exchange-category-down .category-left .category-item>div:nth-child(2) ul li:nth-child(4n){
     border-right: none;
 }
-.exchange-index .exchange-category-down .category-left>div:nth-child(2)>div:nth-child(2) ul li img{
+.exchange-index .exchange-category-down .category-left .category-item>div:nth-child(2) ul li img{
     margin-top: 10px;
     width: 68px;
     height: 68px;
 }
-
+.exchange-index .exchange-category-down .category-left .category-box .active{
+    display: inline-block;
+    width: 194px;
+    height: 37px;
+    background-color: white;
+}
+.exchange-index .exchange-category-down .category-item {
+    display: none;
+}
+.exchange-index .exchange-category-down .category-left .item-active{
+    display: block;
+}
 /*常见问题*/
 .exchange-index .exchange-category-down .category-right{
     width: 199px;
