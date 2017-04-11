@@ -1,5 +1,5 @@
-import HelpController from './HelpController';
-import pagination from 'angular-ui-bootstrap/src/pagination';
+import HelpController from "./HelpController";
+import HelpCategoryController from "./HelpCategoryController";
 helpRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function helpRouting($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/help/search');
@@ -13,14 +13,23 @@ export default function helpRouting($stateProvider, $urlRouterProvider) {
       template: require('./list.html'),
       controller: HelpController,
     })
-    .state('help.category', {
-      url: '/help/category',
-      template: require('./list.html'),
+    .state('help.add', {
+      url: '/help/add',
+      template: require('./add.html'),
       controller: HelpController,
     })
-    .state('help.detail', {
-      url: '/innerMsg/read/{categoryId:[0-9]{1,4}}',
-      templateUrl: '/msc/list',
-      controller: HelpController,
+    .state('help.category', {
+      template: '<div ui-view></div>',
+      showSubMenu: true
+    })
+    .state('help.category.search', {
+      url: '/help/category/search',
+      template: require('./help_category_list.html'),
+      controller: HelpCategoryController,
+    })
+    .state('help.category.add', {
+      url: '/help/category/add',
+      template: require('./help_category_add.html'),
+      controller: HelpCategoryController,
     })
 };

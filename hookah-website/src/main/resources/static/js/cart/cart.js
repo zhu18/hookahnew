@@ -78,7 +78,8 @@ function moneyFn(that, goodsNumber){ //点击加减按钮之后进行操作
     $(that).parents('.number').siblings('.money').html(money);
     editAjax(recId, goodsNumber)
 }
-function editAjax(that,recId, goodsNumber){ //请求
+function editAjax(recId, goodsNumber){ //请求
+    console.log(recId, goodsNumber);
     $.ajax({
         type: "POST",
         url: '/cart/edit',

@@ -2,9 +2,15 @@ package com.jusfoun.hookah.console.server.service.impl;
 
 import com.jusfoun.hookah.core.dao.CartMapper;
 import com.jusfoun.hookah.core.domain.Cart;
+import com.jusfoun.hookah.core.domain.Goods;
+import com.jusfoun.hookah.core.domain.mongo.MgGoods;
+import com.jusfoun.hookah.core.domain.vo.CartVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
+import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.rpc.api.CartService;
+import com.jusfoun.hookah.rpc.api.GoodsService;
+import org.springframework.beans.BeanUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -20,6 +26,9 @@ public class CartServiceImpl extends GenericServiceImpl<Cart, String> implements
 
     @Resource
     private CartMapper cartMapper;
+
+    @Resource
+    private GoodsService goodsService;
 
 
     @Resource
@@ -41,6 +50,7 @@ public class CartServiceImpl extends GenericServiceImpl<Cart, String> implements
 
     }
 
+
     @Override
     public void deleteByLogic(String id) {
         Cart cart = new Cart();
@@ -56,5 +66,22 @@ public class CartServiceImpl extends GenericServiceImpl<Cart, String> implements
         List<Condition> filters = new ArrayList<>();
         filters.add(Condition.in("recId", ids));
         super.updateByCondition(cart, filters);
+    }
+
+    @Override
+    public List<CartVo> selectDetailList(List<Condition> filters, List<OrderBy> orderBys) throws  Exception {
+        List<Cart> carts = super.selectList(filters,orderBys);
+        List<CartVo> cartVos = new ArrayList<>(carts.size());
+        Goods goods = null;
+        for(Cart cart:carts){
+            CartVo vo = new CartVo();
+            BeanUtils.copyProperties(cart,vo);
+            goods = goodsService.selectById(cart.getGoodsId());
+            MgGoods.FormatBean format = goodsService.getFormat(cart.getGoodsId(),cart.getFormatId());
+            vo.setGoods(goods);
+            vo.setFormat(format);
+            cartVos.add(vo);
+        }
+        return cartVos;
     }
 }

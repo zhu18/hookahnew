@@ -39,13 +39,18 @@ app.run(function ($rootScope, $state) {
       "url":"help.search"
     },
     {
-      "title":"商品分类",
-      "url":"help.category"
+      "title":"新增帮助",
+      "url":"help.add"
     },
     {
-      "title":"新增",
-      "url":"help.category"
+      "title":"分类查询",
+      "url":"help.category.search"
+    },
+    {
+      "title":"新增分类",
+      "url":"help.category.add"
     }
+
   ];
 
 });
