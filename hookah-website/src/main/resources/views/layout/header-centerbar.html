@@ -1,73 +1,78 @@
 <div class="grid-0 header-centerbar">
-    <div class="grid-row" style="position: relative">
-        <div class="logo grid-left"><a href="/"><img src="/static/images/logo.png" alt=""></a></div>
-        <div class="search grid-left">
-            <div class="search-input">
-                <span class="fa fa-search text-align-center"></span>
-                <input type="text" placeholder="请输入...">
-                <button class="btn btn-full-red">搜索</button>
-            </div>
-            <div class="search-text">
-                <a href="javascript:void(0)" class="margin-right-10">认证接口</a>
-                <a href="javascript:void(0)" class="margin-right-10">交通违规</a>
-                <a href="javascript:void(0)" class="margin-right-10">数据清洗工具</a>
-                <a href="javascript:void(0)" class="margin-right-10">身份认证</a>
-            </div>
-        </div>
-        <div class="shopping-cart grid-right">
-            <div class="shopping-cart-top  grid-right">
-                <i class="fa fa-shopping-cart color-red" aria-hidden="true"></i>
-                <a href="/usercenter/buyer/cart" class="display-inline-block">我的购物车</a>
-                <span>${cartSize}</span>
-                <i class="fa fa-angle-right" aria-hidden="true"></i>
-            </div>
-            <div class="showLine"></div>
-            <div class="shopping-cart-down grid-right">
-                <%if(cartSize == 0){%>
-                <div class="shopping-cart-down-title"><h1>你还没有登录</h1></div>
-                <div class="goLogin text-align-center"><a href="/login" class="color-blue">去登陆</a></div>
-                <%}else{%>
-                <div class="shopping-cart-down-title"><h1>最新加入的商品</h1></div>
-                <div class="shopping-cart-down-content">
-                    <ul>
-                        <li>
-                            <div class="content-top clearfix">
-                                <div class="font-weight-normal grid-left"><span>满减</span>购满599元，即可享受满减优惠</div>
-                                <div class="grid-right">小计：<span>￥299.00</span></div>
-                            </div>
-                            <div class="content-down">
-                                <img src="" alt="">
-                                <div class="content-down-name display-inline-block" title="ochirly欧时力新女春装压褶荷叶花朵雪纺长袖衬衫ochirly欧时力新女春装压褶荷叶花朵雪纺长袖衬衫">ochirly欧时力新女春装压褶荷叶花朵雪纺长袖衬衫朵雪纺长袖衬衫朵雪纺长袖衬衫</div>
-                                <div class="grid-right font-weight-bold">
-                                    <div class="font-size-14">￥1233×1</div>
-                                    <a href="" class="grid-right font-weight-normal">删除</a>
-                                </div>
-                            </div>
-                        </li>
-
-                        <!--<li>-->
-                            <!--<div class="content-top clearfix">-->
-                                <!--<div class="font-weight-normal grid-left"><span>满减</span>购满599元，即可享受满减优惠</div>-->
-                                <!--<div class="grid-right">小计：<span>￥299.00</span></div>-->
-                            <!--</div>-->
-                            <!--<div class="content-down">-->
-                                <!--<img src="" alt="">-->
-                                <!--<div class="content-down-name display-inline-block" title="ochirly欧时力新女春装压褶荷叶花朵雪纺长袖衬衫ochirly欧时力新女春装压褶荷叶花朵雪纺长袖衬衫">ochirly欧时力新女春装压褶荷叶花朵雪纺长袖衬衫朵雪纺长袖衬衫朵雪纺长袖衬衫</div>-->
-                                <!--<div class="grid-right font-weight-bold">-->
-                                    <!--<div class="font-size-14">￥1233×1</div>-->
-                                    <!--<a href="" class="grid-right font-weight-normal">删除</a>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</li>-->
-                    </ul>
-                </div>
-                <div class="shopping-cart-down-pay">
-                    <div class="display-inline-block">共<span>1</span>件商品</div>
-                    <div class="display-inline-block margin-left-10">共<span>￥589622</span></div>
-                    <a href="/usercenter/buyer/cart" class="display-inline-block grid-right btn btn-full-red">去购物车</a>
-                </div>
-                <%}%>
-            </div>
-        </div>
+  <div class="grid-row" style="position: relative">
+    <div class="logo grid-left"><a href="/"><img src="/static/images/logo.png" alt=""></a></div>
+    <div class="search grid-left">
+      <div class="search-input">
+        <span class="fa fa-search text-align-center"></span>
+        <input type="text" placeholder="请输入...">
+        <button class="btn btn-full-red">搜索</button>
+      </div>
+      <div class="search-text">
+        <a href="javascript:void(0)" class="margin-right-10">认证接口</a>
+        <a href="javascript:void(0)" class="margin-right-10">交通违规</a>
+        <a href="javascript:void(0)" class="margin-right-10">数据清洗工具</a>
+        <a href="javascript:void(0)" class="margin-right-10">身份认证</a>
+      </div>
     </div>
+    <div class="shopping-cart grid-right">
+      <div class="shopping-cart-top  grid-right">
+        <i class="fa fa-shopping-cart color-red" aria-hidden="true"></i>
+        <a href="/usercenter/buyer/cart" class="display-inline-block">我的购物车</a>
+        <span>${cartSize!"0"}</span>
+        <i class="fa fa-angle-right" aria-hidden="true"></i>
+      </div>
+      <div class="showLine"></div>
+      <div class="shopping-cart-down grid-right">
+        <%if(has(cartSize)){%>
+        <%if(cartSize == 0){%>
+        <div class="shopping-cart-down-title"><h1>你还没有登录</h1></div>
+        <div class="goLogin text-align-center"><a href="/login" class="color-blue">去登陆</a></div>
+        <%}%>
+        <%}else{%>
+        <div class="shopping-cart-down-title"><h1>最新加入的商品</h1></div>
+        <div class="shopping-cart-down-content">
+          <ul>
+            <li>
+              <div class="content-top clearfix">
+                <div class="font-weight-normal grid-left"><span>满减</span>购满599元，即可享受满减优惠</div>
+                <div class="grid-right">小计：<span>￥299.00</span></div>
+              </div>
+              <div class="content-down">
+                <img src="" alt="">
+                <div class="content-down-name display-inline-block"
+                     title="ochirly欧时力新女春装压褶荷叶花朵雪纺长袖衬衫ochirly欧时力新女春装压褶荷叶花朵雪纺长袖衬衫">
+                  ochirly欧时力新女春装压褶荷叶花朵雪纺长袖衬衫朵雪纺长袖衬衫朵雪纺长袖衬衫
+                </div>
+                <div class="grid-right font-weight-bold">
+                  <div class="font-size-14">￥1233×1</div>
+                  <a href="" class="grid-right font-weight-normal">删除</a>
+                </div>
+              </div>
+            </li>
+
+            <!--<li>-->
+            <!--<div class="content-top clearfix">-->
+            <!--<div class="font-weight-normal grid-left"><span>满减</span>购满599元，即可享受满减优惠</div>-->
+            <!--<div class="grid-right">小计：<span>￥299.00</span></div>-->
+            <!--</div>-->
+            <!--<div class="content-down">-->
+            <!--<img src="" alt="">-->
+            <!--<div class="content-down-name display-inline-block" title="ochirly欧时力新女春装压褶荷叶花朵雪纺长袖衬衫ochirly欧时力新女春装压褶荷叶花朵雪纺长袖衬衫">ochirly欧时力新女春装压褶荷叶花朵雪纺长袖衬衫朵雪纺长袖衬衫朵雪纺长袖衬衫</div>-->
+            <!--<div class="grid-right font-weight-bold">-->
+            <!--<div class="font-size-14">￥1233×1</div>-->
+            <!--<a href="" class="grid-right font-weight-normal">删除</a>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</li>-->
+          </ul>
+        </div>
+        <div class="shopping-cart-down-pay">
+          <div class="display-inline-block">共<span>1</span>件商品</div>
+          <div class="display-inline-block margin-left-10">共<span>￥589622</span></div>
+          <a href="/usercenter/buyer/cart" class="display-inline-block grid-right btn btn-full-red">去购物车</a>
+        </div>
+        <%}%>
+      </div>
+    </div>
+  </div>
 </div>
