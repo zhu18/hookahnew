@@ -1,7 +1,10 @@
 package com.jusfoun.hookah.rpc.api;
 
 import com.jusfoun.hookah.core.domain.Cart;
+import com.jusfoun.hookah.core.domain.vo.CartVo;
+import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericService;
+import com.jusfoun.hookah.core.generic.OrderBy;
 
 import java.util.List;
 
@@ -16,4 +19,6 @@ public interface CartService extends GenericService<Cart,String> {
     void deleteByLogic(String id);
 
     void deleteBatchByLogic(String[] ids);
+
+    List<CartVo> selectDetailList(List<Condition> filters, List<OrderBy> orderBys) throws  Exception;
 }
