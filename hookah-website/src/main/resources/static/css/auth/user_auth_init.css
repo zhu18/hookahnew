@@ -13,6 +13,9 @@
     font-weight:normal;
     font-size:18px;
 }
+.auth-box .auth-title .blue{
+    color: #00b1ff;
+}
 .auth-box .steps li.blue{
     color: #00b1ff;
 }
@@ -28,6 +31,9 @@
 }
 .auth-agreement .steps .img-show.step1{
     background-position: 0 -18px;
+}
+.agreement-book:hover{
+    color: #00b1ff;
 }
 .steps .txt{
     width: 760px;
@@ -83,7 +89,7 @@
     color: #fff;
     text-align: center;
     font:14px/34px "microsoft yahei";
-    background-color: #ccc;
+    background-color: #00b1ff;
     border-radius: 5px;
     cursor: pointer;
 }
@@ -105,7 +111,7 @@
     background: url(/static/images/auth/steps-bg.png) no-repeat;
 }
 .auth-info .steps .img-show.step2{
-    background-position: 0 -3px;
+    background-position: 0 -38px;
 }
 #authForm{
     padding:0 100px 30px;

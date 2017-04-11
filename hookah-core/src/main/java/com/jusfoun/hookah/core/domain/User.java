@@ -112,7 +112,6 @@ public class User extends GenericModel {
      */
     private Integer version;
 
-
     private Long orgId;
 
     private String creatorId;
@@ -120,6 +119,17 @@ public class User extends GenericModel {
     private String orgName;
 
     private String creatorName;
+
+    //0系统,1未认证,2个人,3个人待审核,4企业,5企业待审核
+    private Integer userType;
+
+    public Integer getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Integer userType) {
+        this.userType = userType;
+    }
 
     public String getOrgName() {
         return orgName;

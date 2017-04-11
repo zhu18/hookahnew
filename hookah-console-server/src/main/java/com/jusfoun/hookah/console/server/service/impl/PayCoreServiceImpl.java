@@ -40,16 +40,23 @@ import java.util.Map;
 @Service
 public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> implements PayCoreService {
 
+	//支付方式‘钱包’的id
 	//@Value("${walletId}")
 	private String walletId ="1";
+
+	//充值地址
 	//@Value("${rechargeUrl}")
 	private String rechargeUrl;
+	//淘宝手续费费率
 //	@Value("${alipayFeeRate}")
 	private String alipayFeeRate ="0.0055";
+	//账户余额
 	//@Value("${getBalanceUrl}")
 	private String getBalanceUrl;
+	//根据手机号/邮箱查询用户ID
 	//@Value("${findUserIdByPhoneOrEmail}")
 	private String findUserIdByPhoneOrEmail;
+	//账户信息地址
 //	@Value("${usrDetailUrl}")
 	private String usrDetailUrl;
 	@Resource

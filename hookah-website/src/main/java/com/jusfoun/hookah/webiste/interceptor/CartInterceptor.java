@@ -37,12 +37,15 @@ public class CartInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
         boolean ajax = "XMLHttpRequest".equals(httpServletRequest.getHeader("X-Requested-With"));
-        try {
-            BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(httpServletRequest.getServletContext());
-            cartService = (CartService) factory.getBean("cartService");
-            if(!ajax){
+        Map<String, Object> model = null;
+        if(!ajax && modelAndView!=null){
+            model = modelAndView.getModel();
+            try {
+                BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(httpServletRequest.getServletContext());
+                cartService = (CartService) factory.getBean("cartService");
+
                 Subject subject = SecurityUtils.getSubject();
-                Map<String, Object> model = modelAndView.getModel();
+
                 if (subject != null && subject.isAuthenticated()) {
                     List<Condition> filters = new ArrayList<>();
                     filters.add(Condition.eq("userId", subject.getPrincipal()));
@@ -50,13 +53,13 @@ public class CartInterceptor implements HandlerInterceptor {
 
                     model.put("cartList", cartVos);
                     model.put("cartSize", cartVos.size());
-                }else{
-                    model.put("cartList", new ArrayList(0));
-                    model.put("cartSize", 0);
                 }
+            } catch (UnavailableSecurityManagerException e) {
+                //e.printStackTrace();
+                System.out.println(e.getMessage());
+                model.put("cartList", new ArrayList(0));
+                model.put("cartSize", 0);
             }
-        } catch (UnavailableSecurityManagerException e) {
-            e.printStackTrace();
         }
     }
 
