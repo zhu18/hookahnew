@@ -48,8 +48,16 @@ $(document).ready(function () {
         })
 
     }
-    shopCart();
+    // shopCart();
+  $(".shopping-cart").mouseenter(function(){
+    $(this).addClass('hover')
+  });
+  $(".shopping-cart").mouseleave(function(){
+    $(this).removeClass('hover')
+  });
 })
+
+
 
 
 

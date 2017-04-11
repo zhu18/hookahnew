@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.webiste.interceptor;
 
+import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.vo.CartVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.rpc.api.CartService;
@@ -47,8 +48,9 @@ public class CartInterceptor implements HandlerInterceptor {
                 Subject subject = SecurityUtils.getSubject();
 
                 if (subject != null && subject.isAuthenticated()) {
+                    User user = (User)subject.getPrincipal();
                     List<Condition> filters = new ArrayList<>();
-                    filters.add(Condition.eq("userId", subject.getPrincipal()));
+                    filters.add(Condition.eq("userId", user.getUserId()));
                     List<CartVo> cartVos = cartService.selectDetailList(filters,null);
 
                     model.put("cartList", cartVos);
