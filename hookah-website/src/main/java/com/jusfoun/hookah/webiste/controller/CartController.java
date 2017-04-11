@@ -82,7 +82,7 @@ public class CartController extends BaseController {
                 MgGoods.FormatBean format= goodsService.getFormat(cart.getGoodsId(),cart.getFormatId());
 
                 //补充商品信息
-                existCart.setGoodsNumber(existCart.getGoodsNumber()+cart.getFormatNumber());
+                existCart.setGoodsNumber(existCart.getGoodsNumber()+cart.getGoodsNumber());
                 //入库
 
                 cartService.updateByIdSelective(existCart);
