@@ -1506,7 +1506,7 @@ lesshat-selector {
     background-color: white;
     border: 1px solid #efefef;
 }
-.exchange-index .exchange-category-down .category-left > div:nth-child(1) ul li {
+.exchange-index .exchange-category-down .category-left .category-box ul li {
     width: 194px;
     height: 37px;
     text-align: center;
@@ -1555,11 +1555,11 @@ lesshat-selector {
     color: #3B7AB0;
 }
 /*---------------------*/
-.exchange-index .exchange-category-down .category-left > div:nth-child(2) > div:nth-child(2) {
+.exchange-index .exchange-category-down .category-left .category-item > div:nth-child(2) {
     width: 769px;
     margin-top: 16px;
 }
-.exchange-index .exchange-category-down .category-left > div:nth-child(2) > div:nth-child(2) ul li {
+.exchange-index .exchange-category-down .category-left .category-item > div:nth-child(2) ul li {
     float: left;
     text-align: center;
     width: 189px;
@@ -1567,16 +1567,28 @@ lesshat-selector {
     border-bottom: 1px solid #ECECEC;
     border-right: 1px solid #ECECEC;
 }
-.exchange-index .exchange-category-down .category-left > div:nth-child(2) > div:nth-child(2) ul li:nth-child(n+5) {
+.exchange-index .exchange-category-down .category-left .category-item > div:nth-child(2) ul li:nth-child(n+5) {
     border-bottom: none;
 }
-.exchange-index .exchange-category-down .category-left > div:nth-child(2) > div:nth-child(2) ul li:nth-child(4n) {
+.exchange-index .exchange-category-down .category-left .category-item > div:nth-child(2) ul li:nth-child(4n) {
     border-right: none;
 }
-.exchange-index .exchange-category-down .category-left > div:nth-child(2) > div:nth-child(2) ul li img {
+.exchange-index .exchange-category-down .category-left .category-item> div:nth-child(2) ul li img {
     margin-top: 10px;
     width: 68px;
     height: 68px;
+}
+.exchange-index .exchange-category-down .category-left .category-box .active{
+    display: inline-block;
+    width: 194px;
+    height: 37px;
+    background-color: white;
+}
+.exchange-index .exchange-category-down .category-item {
+    display: none;
+}
+.exchange-index .exchange-category-down .category-left .item-active{
+    display: block;
 }
 /*常见问题*/
 .exchange-index .exchange-category-down .category-right {
