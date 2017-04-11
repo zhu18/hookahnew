@@ -406,6 +406,9 @@
 .font-weight-bold{
     font-weight: bold !important;
 }
+.font-weight-normal{
+    font-weight: normal !important;
+}
 
 /*font-size*/
 .font-size-14{
