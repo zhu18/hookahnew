@@ -2,7 +2,7 @@
 .exchange-index-menu {
     position: absolute;
     top: -46px;
-    left: 0;
+    left:75px;
     z-index: 1000;
     width: 190px;
 }
@@ -539,7 +539,7 @@ lesshat-selector {
 .module-wrap .left-header {
     color: #000;
     top: 110px;
-    left: 70px;
+    left: 342px;
     text-align: left;
     line-height: 50px;
 }
@@ -733,7 +733,7 @@ lesshat-selector {
 .module-wrap [data-hover-container] .layer img {
     width: 400px;
     position: absolute;
-    right: 250px;
+    right: 140px;
     top: 20px;
 }
 .module-wrap .banner-container.dark {
@@ -833,10 +833,7 @@ lesshat-selector {
 /*border-bottom: 2px solid #3E557B;*/
 /*}*/
 .exchange-index .index-banner .exchange-index-banner {
-    width: 1009px;
-    position: absolute;
-    top: 0;
-    left: 190px;
+    width: 100%;
 }
 .exchange-index .index-banner .exchange-index-adv {
     width: 190px;
