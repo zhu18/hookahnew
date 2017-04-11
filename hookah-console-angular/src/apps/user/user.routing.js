@@ -24,7 +24,21 @@ export default function userRouting($stateProvider, $urlRouterProvider) {
       controller: UserController,
     })
     .state('user.verify', {
-      url: '/user/verify',
+      template: '<div ui-view></div>',
+      showSubMenu: true
+    })
+    .state('user.verify.all', {
+      url: '/user/verify/all',
+      template: require('./list.html'),
+      controller: UserVerifyController,
+    })
+    .state('user.verify.person', {
+      url: '/user/verify/person',
+      template: require('./list.html'),
+      controller: UserVerifyController,
+    })
+    .state('user.verify.company', {
+      url: '/user/verify/company',
       template: require('./list.html'),
       controller: UserVerifyController,
     })

@@ -46,7 +46,7 @@ public class CartController extends BaseController {
 
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.eq("userId", userId));
-            filters.add(Condition.eq("isDeleted", new Integer(0).shortValue()));
+            filters.add(Condition.eq("isDeleted", (byte)0));
 
             List<CartVo> cartVos = cartService.selectDetailList(filters,null);
             model.addAttribute("cartList", cartVos);
