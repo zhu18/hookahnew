@@ -16,7 +16,7 @@ function goOrder(params) {
     data:params,
     success: function (data) {
       if (data.code == 1) {
-
+      
       }else{
         $.alert(data.message)
       }
