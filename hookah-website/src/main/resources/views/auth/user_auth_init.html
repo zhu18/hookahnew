@@ -16,7 +16,7 @@ var htmlPart = {
             </div>
             <div class="auth-content">
                 <!--认证协议开始-->
-                <div class="auth-agreement" style="display:none;">
+                <div class="auth-agreement" style="display: none;">
                     <div class="steps">
                         <div class="img-show step1"></div>
                         <ul class="txt clearfix">
@@ -126,9 +126,9 @@ var htmlPart = {
                 </div>
                 <!--认证协议结束-->
                 <!--认证信息开始-->
-                <div class="auth-info" >
+                <div class="auth-info" style="display: none;">
                     <div class="steps">
-                        <div class="img-show"></div>
+                        <div class="img-show step2"></div>
                         <ul class="txt clearfix">
                             <li class="grid-left blue">阅读购买协议</li>
                             <li class="grid-left blue">提交认证信息</li>
@@ -149,16 +149,12 @@ var htmlPart = {
                                     <input type="text" id="userCode" class="txt" placeholder="请正确填写本人身份证号码">
                                 </li>
                                 <li class="submit-file">
-                                    <form id="zform" enctype="multipart/form-data">
-                                        <label for="submit1"></label><input type="file" id="submit1" multiple="multiple" name="photo"/>
+                                        <label for="submit1" class="left-pic"></label><input type="file" id="submit1" multiple="multiple" name="photo"/>
                                         <img src="/static/images/auth/z.png" alt="" id="zm"/>
-                                    </form>
                                 </li>
                                 <li class="submit-file">
-                                    <form id="fform" enctype="multipart/form-data">
-                                        <label for="submit2"></label><input type="file" id="submit2" multiple="multiple" name="photo"/>
+                                        <label for="submit2" class="right-pic"></label><input type="file" id="submit2" multiple="multiple" name="photo"/>
                                         <img src="/static/images/auth/f.png" alt="" id="fm"/>
-                                    </form>
                                 </li>
                                 <li class="auth-submit">
                                     <label for="clickCheck">
@@ -176,7 +172,7 @@ var htmlPart = {
                 <!--认证审核开始-->
                 <div class="auth-verify" style="display: none;">
                     <div class="steps">
-                        <div class="img-show"></div>
+                        <div class="img-show step3"></div>
                         <ul class="txt clearfix">
                             <li class="grid-left blue">阅读购买协议</li>
                             <li class="grid-left blue">提交认证信息</li>
@@ -190,9 +186,9 @@ var htmlPart = {
                 </div>
                 <!--认证审核结束-->
                 <!--认证完成开始-->
-                <div class="auth-finished" style="display: none;">
+                <div class="auth-finished">
                     <div class="steps">
-                        <div class="img-show"></div>
+                        <div class="img-show step4"></div>
                         <ul class="txt clearfix">
                             <li class="grid-left blue">阅读购买协议</li>
                             <li class="grid-left blue">提交认证信息</li>
