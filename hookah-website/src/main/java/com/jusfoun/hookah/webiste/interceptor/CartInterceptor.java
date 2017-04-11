@@ -19,8 +19,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @description:
- * @author: huanglei
+ * @description: 购物车全局变量
+ * @author: jsshao
  * @date:2016/12/19 12:09
  */
 public class CartInterceptor implements HandlerInterceptor {
@@ -36,22 +36,24 @@ public class CartInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
+        boolean ajax = "XMLHttpRequest".equals(httpServletRequest.getHeader("X-Requested-With"));
         try {
             BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(httpServletRequest.getServletContext());
             cartService = (CartService) factory.getBean("cartService");
+            if(!ajax){
+                Subject subject = SecurityUtils.getSubject();
+                Map<String, Object> model = modelAndView.getModel();
+                if (subject != null && subject.isAuthenticated()) {
+                    List<Condition> filters = new ArrayList<>();
+                    filters.add(Condition.eq("userId", subject.getPrincipal()));
+                    List<CartVo> cartVos = cartService.selectDetailList(filters,null);
 
-            Subject subject = SecurityUtils.getSubject();
-            Map<String, Object> model = modelAndView.getModel();
-            if (subject != null && subject.isAuthenticated()) {
-                List<Condition> filters = new ArrayList<>();
-                filters.add(Condition.eq("userId", subject.getPrincipal()));
-                List<CartVo> cartVos = cartService.selectDetailList(filters,null);
-
-                model.put("cartList", cartVos);
-                model.put("cartSize", cartVos.size());
-            }else{
-                model.put("cartList", new ArrayList(0));
-                model.put("cartSize", 0);
+                    model.put("cartList", cartVos);
+                    model.put("cartSize", cartVos.size());
+                }else{
+                    model.put("cartList", new ArrayList(0));
+                    model.put("cartSize", 0);
+                }
             }
         } catch (UnavailableSecurityManagerException e) {
             e.printStackTrace();
