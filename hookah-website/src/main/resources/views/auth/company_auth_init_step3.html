@@ -1,0 +1,45 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/auth/user_auth_init.css">
+<link rel="stylesheet" href="/static/css/auth/company_auth_init.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0  backgorund-gray">
+    <div class="grid-row padding-bottom-30 padding-top-10">
+
+        <div class="auth-box">
+            <div class="auth-title clearfix">
+                <h3 class="grid-left">企业认证</h3>
+                <p class="grid-right"><a class="blue" href="javascript:void(0)">去用户中心</a></p>
+            </div>
+            <div class="auth-content">
+                <!--认证审核开始-->
+                <div class="auth-verify">
+                    <div class="steps">
+                        <div class="img-show step3"></div>
+                        <ul class="txt clearfix">
+                            <li class="grid-left blue">阅读购买协议</li>
+                            <li class="grid-left blue">提交认证信息</li>
+                            <li class="grid-left blue">等待审核</li>
+                            <li class="grid-left last">完成</li>
+                        </ul>
+                    </div>
+                    <div class="auth-verify-info">
+                        信息正在审核，请您耐心等待！
+                    </div>
+                </div>
+                <!--认证审核结束-->
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+<script type="text/javascript" src="/static/js/auth/company_auth_init.js"></script>

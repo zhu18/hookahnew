@@ -70,7 +70,18 @@ public class AuthController {
     public String userAuth(Model model) throws Exception {
         return "/auth/user_auth_init";
     }
-
+    @RequestMapping(value = "/auth/user_auth_init_step2", method = RequestMethod.GET)
+    public String userAuth2(Model model) throws Exception {
+        return "/auth/user_auth_init_step2";
+    }
+    @RequestMapping(value = "/auth/user_auth_init_step3", method = RequestMethod.GET)
+    public String userAuth3(Model model) throws Exception {
+        return "/auth/user_auth_init_step3";
+    }
+    @RequestMapping(value = "/auth/user_auth_init_step4", method = RequestMethod.GET)
+    public String userAuth4(Model model) throws Exception {
+        return "/auth/user_auth_init_step4";
+    }
     /**
      * 公司认证
      * @param model
@@ -80,5 +91,17 @@ public class AuthController {
     @RequestMapping(value = "/auth/company_auth_init", method = RequestMethod.GET)
     public String companyAuth(Model model) throws Exception {
         return "/auth/company_auth_init";
+    }
+    @RequestMapping(value = "/auth/company_auth_init_step2", method = RequestMethod.GET)
+    public String companyAuth2(Model model) throws Exception {
+        return "/auth/company_auth_init_step2";
+    }
+    @RequestMapping(value = "/auth/company_auth_init_step3", method = RequestMethod.GET)
+    public String companyAuth3(Model model) throws Exception {
+        return "/auth/company_auth_init_step3";
+    }
+    @RequestMapping(value = "/auth/company_auth_init_step4", method = RequestMethod.GET)
+    public String companyAuth4(Model model) throws Exception {
+        return "/auth/company_auth_init_step4";
     }
 }
