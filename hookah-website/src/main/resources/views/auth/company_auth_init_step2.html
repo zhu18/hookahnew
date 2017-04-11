@@ -1,0 +1,94 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/auth/user_auth_init.css">
+<link rel="stylesheet" href="/static/css/auth/company_auth_init.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0  backgorund-gray">
+    <div class="grid-row padding-bottom-30 padding-top-10">
+
+        <div class="auth-box">
+            <div class="auth-title clearfix">
+                <h3 class="grid-left">企业认证</h3>
+                <p class="grid-right"><a class="blue" href="javascript:void(0)">去用户中心</a></p>
+            </div>
+            <div class="auth-content">
+                <!--认证信息开始-->
+                <div class="auth-info">
+                    <div class="steps">
+                        <div class="img-show step2"></div>
+                        <ul class="txt clearfix">
+                            <li class="grid-left blue">阅读购买协议</li>
+                            <li class="grid-left">提交认证信息</li>
+                            <li class="grid-left">等待审核</li>
+                            <li class="grid-left last">完成</li>
+                        </ul>
+                    </div>
+                    <form id="authForm" enctype="multipart/form-data">
+                        <div class="auth-info">
+                            <h3>企业认证信息</h3>
+                            <ul class="typeBox">
+                                <li>
+                                    <label>政府全称：<input type="text" placeholder="请输入政府全称" id="governmentName"/></label>
+                                    <label>信用代码：<input type="text" placeholder="请输入信用代码" /></label>
+                                    <div class="update">
+                                        <label for="submit1"></label>
+                                        <input type="file" name="photo" id="submit1"/>
+                                        <img src="/static/images/auth/bk.png" alt="" id="img1"/>
+                                        <p>*上传加盖公章的扫描件</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <label>营业执照：<input type="text" placeholder="请输入营业执照到期时间" /></label>
+                                    <div class="update">
+                                        <label for="submit1"></label>
+                                        <input type="file" name="photo" hidden="hidden"/>
+                                        <img src="/static/images/auth/bk.png" alt=""/>
+                                        <p>*上传加盖公章的营业执照扫描件</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <label>税务登记证：<input type="text" placeholder="请输入税务登记证到期时间" /></label>
+                                    <div class="update">
+                                        <label for="submit1"></label>
+                                        <input type="file" name="photo" hidden="hidden"/>
+                                        <img src="/static/images/auth/bk.png" alt=""/>
+                                        <p>*上传加盖公章的税务登记证扫描件</p>
+                                    </div>
+                                </li>
+                            </ul>
+                            <label class="padding-left-210">法人代表：<input type="text" placeholder="请输入公司的法人代表"/></label>
+                            <label class="padding-left-210">主营业务：<input type="text" placeholder="请输入主营业务" id="mainBusiness"/></label>
+                            <label class="padding-left-210">所在地：
+                                <div class="linkage">
+                                    <select id="scountry">
+                                        <option>选择省份</option>
+                                    </select> <select id="scity">
+                                    <option>选择城市</option>
+                                </select>
+                                </div>
+                            </label>
+                            <label class="padding-left-210">详细地址：<input type="text" placeholder="请输入详细地址" id="address"/></label>
+                            <label class="padding-left-210">联系电话：<input type="text" placeholder="请输入联系电话" id="tel"/></label>
+                            <label class="padding-left-210" for="clickCheck"><input type="checkbox" id="clickCheck" checked/>我已阅读并同意《<a href="./company_auth_init" class="agreement-book">九连环用户注册协议</a>》</label>
+                            <div class="button">
+                                <button id="verifyBtn">立即认证</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!--认证信息结束-->
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+<script type="text/javascript" src="/static/js/auth/company_auth_init.js"></script>

@@ -16,7 +16,7 @@ var htmlPart = {
             </div>
             <div class="auth-content">
                 <!--认证协议开始-->
-                <div class="auth-agreement" style="display: none;">
+                <div class="auth-agreement">
                     <div class="steps">
                         <div class="img-show step1"></div>
                         <ul class="txt clearfix">
@@ -121,89 +121,10 @@ var htmlPart = {
                     <div class="agreement-btn">
                         <input type="checkbox" id="check">
                         我已阅读并同意《青岛交易中心用户协议》
-                        <a href="javascript:;" class="gray-btn2" id="next">下一步</a>
+                        <a href="./user-auth_init_step2" class="gray-btn2" id="next">下一步</a>
                     </div>
                 </div>
                 <!--认证协议结束-->
-                <!--认证信息开始-->
-                <div class="auth-info" style="display: none;">
-                    <div class="steps">
-                        <div class="img-show step2"></div>
-                        <ul class="txt clearfix">
-                            <li class="grid-left blue">阅读购买协议</li>
-                            <li class="grid-left blue">提交认证信息</li>
-                            <li class="grid-left">等待审核</li>
-                            <li class="grid-left last">完成</li>
-                        </ul>
-                    </div>
-                    <form action="" id="authForm" enctype="multipart/form-data">
-                        <div class="auth-info">
-                            <h3>个人认证信息</h3>
-                            <ul class="clearfix">
-                                <li>
-                                    <label for="userName" class="tit">姓名：</label>
-                                    <input type="text" id="userName" class="txt" placeholder="建议填写本人真实姓名，便于我们提供技术支持">
-                                </li>
-                                <li>
-                                    <label for="userCode" class="tit">身份证号：</label>
-                                    <input type="text" id="userCode" class="txt" placeholder="请正确填写本人身份证号码">
-                                </li>
-                                <li class="submit-file">
-                                        <label for="submit1" class="left-pic"></label><input type="file" id="submit1" multiple="multiple" name="photo"/>
-                                        <img src="/static/images/auth/z.png" alt="" id="zm"/>
-                                </li>
-                                <li class="submit-file">
-                                        <label for="submit2" class="right-pic"></label><input type="file" id="submit2" multiple="multiple" name="photo"/>
-                                        <img src="/static/images/auth/f.png" alt="" id="fm"/>
-                                </li>
-                                <li class="auth-submit">
-                                    <label for="clickCheck">
-                                        <input type="checkbox" id="clickCheck" checked/>我已阅读并同意《
-                                        <a href="javascript:;">九连环用户注册协议</a>》
-                                    </label>
-                                    <div class="button">立即认证</div>
-                                </li>
-
-                            </ul>
-                        </div>
-                    </form>
-                </div>
-                <!--认证信息结束-->
-                <!--认证审核开始-->
-                <div class="auth-verify" style="display: none;">
-                    <div class="steps">
-                        <div class="img-show step3"></div>
-                        <ul class="txt clearfix">
-                            <li class="grid-left blue">阅读购买协议</li>
-                            <li class="grid-left blue">提交认证信息</li>
-                            <li class="grid-left blue">等待审核</li>
-                            <li class="grid-left last">完成</li>
-                        </ul>
-                    </div>
-                    <div class="auth-verify-info">
-                        信息正在审核，请您耐心等待！
-                    </div>
-                </div>
-                <!--认证审核结束-->
-                <!--认证完成开始-->
-                <div class="auth-finished">
-                    <div class="steps">
-                        <div class="img-show step4"></div>
-                        <ul class="txt clearfix">
-                            <li class="grid-left blue">阅读购买协议</li>
-                            <li class="grid-left blue">提交认证信息</li>
-                            <li class="grid-left blue">等待审核</li>
-                            <li class="grid-left blue last">完成</li>
-                        </ul>
-                    </div>
-                    <div class="auth-finished-info">
-                        <strong><span class="fa fa-check-circle"></span>恭喜您已个人完成认证！</strong>
-
-                        <p class="enter-company-auth">如需购买企业专享数据，请完成 <a href="">企业认证</a></p>
-
-                    </div>
-                </div>
-                <!--认证完成结束-->
             </div>
         </div>
     </div>
@@ -211,3 +132,4 @@ var htmlPart = {
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
+<script type="text/javascript" src="/static/js/auth/user_auth_init.js"></script>
