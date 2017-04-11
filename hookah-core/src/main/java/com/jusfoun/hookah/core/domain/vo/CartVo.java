@@ -1,25 +1,37 @@
 package com.jusfoun.hookah.core.domain.vo;
 
 import com.jusfoun.hookah.core.domain.Cart;
+import com.jusfoun.hookah.core.domain.Goods;
+import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 
 public class CartVo extends Cart {
-    private Byte isOnSale;
+    private Goods goods;
 
-    private Byte checkStatus;
+    private MgGoods.FormatBean format;
 
-    public Byte getIsOnSale() {
-        return isOnSale;
+    private Long priceChange;
+
+    public Goods getGoods() {
+        return goods;
     }
 
-    public void setIsOnSale(Byte isOnSale) {
-        this.isOnSale = isOnSale;
+    public void setGoods(Goods goods) {
+        this.goods = goods;
     }
 
-    public Byte getCheckStatus() {
-        return checkStatus;
+    public MgGoods.FormatBean getFormat() {
+        return format;
     }
 
-    public void setCheckStatus(Byte checkStatus) {
-        this.checkStatus = checkStatus;
+    public void setFormat(MgGoods.FormatBean format) {
+        this.format = format;
+    }
+
+    public void setPriceChange(Long priceChange) {
+        this.priceChange = priceChange;
+    }
+
+    public Long getPriceChange() {
+        return this.getGoodsPrice()-format.getPrice();
     }
 }
