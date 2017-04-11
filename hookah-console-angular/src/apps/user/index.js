@@ -43,6 +43,9 @@ app.run(function ($rootScope, $state) {
     {
       "title":"新增用户",
       "url":"user.add"
+    },{
+      "title":"待审核",
+      "url":"user.verify"
     }
   ];
 

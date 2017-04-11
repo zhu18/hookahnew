@@ -1,4 +1,5 @@
 import UserController from './UserController';
+import UserVerifyController from './UserVerifyController';
 userRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function userRouting($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/user/search');
@@ -21,5 +22,10 @@ export default function userRouting($stateProvider, $urlRouterProvider) {
       url: '/user/edit',
       template: require('./edit.html'),
       controller: UserController,
+    })
+    .state('user.verify', {
+      url: '/user/verify',
+      template: require('./list.html'),
+      controller: UserVerifyController,
     })
 };
