@@ -193,7 +193,7 @@ function HttpInterceptor($q, $rootScope, $location, $window) {
         // if(res.data.totalPages >1){
         //
         // }
-        if (res.data.totalItems == 0) {
+        if (res.data.data.totalItems == 0) {
           $rootScope.showNoneDataInfoTip = true;
           $rootScope.showPageHelpInfo = false;
         } else {
