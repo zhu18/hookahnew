@@ -49,7 +49,7 @@ module.exports = function makeWebpackConfig() {
    */
   config.entry = isTest ? {} : {
       vendor: ['jquery', 'bootstrap', 'angular', 'angular-ui-bootstrap', 'angular-ui-router', 'spin', 'angular-spinner'],
-      uibootstrap: ['angular-growl-v2']
+      uibootstrap: [ 'wangEditor', 'angular-growl-v2']
     };
   config.entry = Object.assign({}, config.entry, newEntries);
   console.log(config.entry);
@@ -58,6 +58,8 @@ module.exports = function makeWebpackConfig() {
       'jquery': __dirname + '/node_modules/jquery/dist/jquery.js',
       'bootstrapCss': __dirname + '/node_modules/bootstrap/dist/css/bootstrap.css',
       'bootstrap': __dirname + '/node_modules/bootstrap/dist/js/bootstrap.min.js',
+      'wangEditor': __dirname + '/vendor/wangEditor/wangEditor.min.js',
+      'wangEditorCss': __dirname + '/vendor/wangEditor/wangEditor.min.css',
       'angular-growl-v2': __dirname + '/vendor/angular-growl/build/angular-growl.js',
       'angular-growl-v2-css': __dirname + '/node_modules/angular-growl-v2/build/angular-growl.css',
       'spin': __dirname + '/node_modules/spin.js/spin.js',

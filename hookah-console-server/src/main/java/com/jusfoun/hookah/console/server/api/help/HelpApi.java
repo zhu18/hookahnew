@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,7 +24,7 @@ import java.util.List;
  * @desc
  */
 @RestController
-@RequestMapping("/help")
+@RequestMapping("/api/help")
 public class HelpApi {
 
     @Resource
@@ -53,4 +54,42 @@ public class HelpApi {
         return ReturnData.success(page);
     }
 
+    @RequestMapping(value = "/category/add", method = RequestMethod.POST)
+    public ReturnData addCategory(Help help) {
+//        help.setCreatorId();
+        help.setAddTime(new Date());
+        help.setParentId("0");
+        Help result = helpService.insert(help);
+        return ReturnData.success(result);
+    }
+
+    @RequestMapping(value = "/category/category", method = RequestMethod.GET)
+    public ReturnData category(String currentPage, String pageSize) {
+        Pagination<Help> page = new Pagination<>();
+
+        List<Condition> filters = new ArrayList();
+        filters.add(Condition.eq("parentId", "0"));
+        List<OrderBy> orderBys = new ArrayList();
+        orderBys.add(OrderBy.desc("addTime"));
+
+        int pageNumberNew = HookahConstants.PAGE_NUM;
+        if (StringUtils.isNotBlank(currentPage)) {
+            pageNumberNew = Integer.parseInt(currentPage);
+        }
+        int pageSizeNew = HookahConstants.PAGE_SIZE;
+        if (StringUtils.isNotBlank(pageSize)) {
+            pageSizeNew = Integer.parseInt(pageSize);
+        }
+        page = helpService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
+
+        return ReturnData.success(page);
+    }
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public ReturnData add(Help help) {
+//        help.setCreatorId();
+        help.setAddTime(new Date());
+        Help result = helpService.insert(help);
+        return ReturnData.success(result);
+    }
 }
