@@ -1,15 +1,22 @@
-.comparyModule {
-    width: 1200px;
-    margin: 0 auto;
-    border: 1px solid #e2e2e2;
-    padding: 0px 370px 0px 370px;
+
+.auth-box .auth-content .auth-info .steps{
+    padding:40px 0 25px;
+}
+.auth-info .steps .img-show{
+    width: 700px;
+    height: 22px;
+    margin:0 auto;
+    background: url(/static/images/auth/step2.png) no-repeat;
+}
+.auth-box .auth-content .auth-info {
+    height: 1000px;
+    padding:30px 50px 30px;
+    border-top: 1px solid #e2e2e2;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    padding-bottom:30px;
-    background-color: #fff;
 }
 
-.comparyModule .title {
+.auth-info .title {
     border-left: 4px solid #237DE7;
     height: 24px;
     line-height: 24px;
@@ -20,32 +27,32 @@
     margin-top: 40px;
 }
 
-.comparyModule .titleIdent {
+.auth-info .titleIdent {
     margin-bottom: 20px;
 }
 
- .comparyModule .infor {
+ .auth-info .infor {
     padding-bottom: 20px;
 }
 
-.comparyModule label {
+.auth-info label {
     height: 40px;
     line-height: 40px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     display: block;
     font-size: 14px;
     color: #5e5e5e;
 }
 
-.comparyModule label span {
+.auth-info label span {
     height: 40px;
     line-height: 40px;
     display: inline-block;
     width: 78px;
 }
 
-.comparyModule label input[type=text] {
-    float: right;
+.auth-info label input[type=text] {
+    /*float: left;*/
     height: 40px;
     line-height: 40px;
     margin-bottom: 15px;
@@ -56,12 +63,12 @@
     text-indent: 10px;
 }
 
-.comparyModule label #clickCheck {
+.auth-info label #clickCheck {
     float: left;
     margin-top: 14px;
 }
 
-.comparyModule .button {
+.auth-info .button {
     width: 366px;
     height: 42px;
     line-height: 42px;
@@ -70,50 +77,50 @@
     -moz-border-radius: 5px;
     border-radius: 5px;
     color: #fff;
-    margin: 0 auto;
     cursor: pointer;
 }
 
-.comparyModule .type ul {
-    width: 370px;
-    height: 40px;
-    line-height: 40px;
+.auth-info .type ul {
+    width: 720px;
+    height: 30px;
+    line-height: 30px;
     float: right;
 }
 
-.comparyModule .type li {
+.auth-info .type li {
     display: block;
     float: left;
     width: 50px;
     height: 25px;
     line-height: 25px;
-    margin: 7px 10px 0px 0px;
+    margin: -10px 10px 0px 0px;
     text-align: center;
     -moz-border-radius: 3px;
     border-radius: 3px;
     cursor: pointer;
 }
 
-.comparyModule .type .active {
+.auth-info .type .active {
     background: #237DE7;
     color: #fff;
 }
 
-.comparyModule .linkage {
+.auth-info .linkage {
     width: 370px;
     height: 40px;
-    float: right;
     display: inline-block;
 }
 
-.comparyModule .linkage select {
+.auth-info .linkage select {
     width: 140px;
     height: 34px;
     margin-right: 20px;
     text-indent: 5px;
+    border:1px solid #eee;
+    margin-left:10px;
 }
 
-.comparyModule .update {
+.auth-info .update {
     width: 370px;
     height: 200px;
     margin-left: 90px;
@@ -121,7 +128,7 @@
     padding-top: 10px;
 }
 
-.comparyModule .update label {
+.auth-info .update label {
     width: 212px;
     height: 133px;
     display: inline-block;
@@ -129,11 +136,11 @@
     z-index: 1;
 }
 
-.comparyModule .update input {
+.auth-info .update input {
     display: none;
 }
 
-.comparyModule .update img {
+.auth-info .update img {
     width: 212px;
     height: 133px;
     display: inline-block;
@@ -141,7 +148,7 @@
     z-index: 0;
 }
 
-.comparyModule .update p {
+.auth-info .update p {
     position: absolute;
     top: 200px;
     color: #f00;
@@ -150,13 +157,13 @@
     left: 0px;
 }
 
-.comparyModule .industry {
+.auth-info .industry {
     overflow: hidden;
     padding-left: 90px;
     position: relative;
 }
 
-.comparyModule .industry span {
+.auth-info .industry span {
     position: absolute;
     left: 0px;
     top: 0px;
@@ -164,11 +171,11 @@
     color: #5e5e5e;
 }
 
-.comparyModule .industry .selectBtn {
+.auth-info .industry .selectBtn {
     cursor: pointer;
 }
 
-.comparyModule .industry .selectBtn b {
+.auth-info .industry .selectBtn b {
     width: 10px;
     height: 10px;
     display: inline-block;
@@ -176,7 +183,7 @@
     margin-right: 3px;
 }
 
-.comparyModule .industry ul li {
+.auth-info .industry ul li {
     display: inline-block;
     height: 28px;
     line-height: 28px;
@@ -189,94 +196,10 @@
     margin: 0px 12px 10px 0px;
 }
 
-.comparyModule .typeBox > li {
+.auth-info .typeBox > li {
     display: none;
 }
 
-.comparyModule .typeBox .activeLi {
+.auth-info .typeBox .activeLi {
     display: block;
-}
-/*遮层*/
-.shadeBottom {
-    display: none;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.2);
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    z-index: 999;
-}
-
-.shadeContent {
-    width: 950px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: -200px 0 0 -499px;
-    background: #fff;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    overflow: hidden;
-    border: 4px solid rgba(0, 0, 0, 0.25);
-}
-
-.shadeTop {
-    height: 30px;
-    width: 100%;
-    background: #f3f3f3;
-    line-height: 30px;
-    font-size: 14px;
-    color: #333;
-    padding-left: 13px;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
-
-.shadeTop i {
-    display: inline-block;
-    float: right;
-    width: 27px;
-    height: 27px;
-    background: url(../images/dengluzhuce/close.png) no-repeat;
-    cursor: pointer;
-}
-
-.shadeSection {
-    width: 100%;
-    overflow: hidden;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    padding: 20px 20px 27px;
-}
-
-.shadeSection ul {
-    list-style: none;
-    color: #333;
-    font-size: 14px;
-    line-height: 22px;
-    height: 265px;
-    overflow-y: auto;
-}
-
-.shadeSection ul h3 {
-    margin: 0;
-    font-size: 14px;
-    line-height: 22px;
-    font-weight: 700;
-}
-
-.shadeSection a {
-    display: block;
-    width: 300px;
-    height: 40px;
-    line-height: 40px;
-    background: #247DE8;
-    margin: 4px auto;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    text-decoration: none;
-    color: #fff;
-    font-size: 16px;
-    text-align: center;
 }

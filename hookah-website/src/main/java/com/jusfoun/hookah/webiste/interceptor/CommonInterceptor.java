@@ -6,12 +6,10 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.UnavailableSecurityManagerException;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.BeanFactory;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -25,7 +23,6 @@ import java.util.Map;
 public class CommonInterceptor implements HandlerInterceptor {
 
 
-
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         return true;
@@ -34,23 +31,25 @@ public class CommonInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
         boolean ajax = "XMLHttpRequest".equals(httpServletRequest.getHeader("X-Requested-With"));
-        Map<String, Object> model = modelAndView.getModel();
-        try{
+
+        try {
             Subject subject = SecurityUtils.getSubject();
             if (subject != null && subject.isAuthenticated()) {
-                if(!ajax){
+                if (!ajax) {
+                    Map<String, Object> model = modelAndView.getModel();
                     model.put("user", subject.getPrincipal());
                 }
 
             }
-        }catch (UnavailableSecurityManagerException e){
+        } catch (UnavailableSecurityManagerException e) {
 
         }
-        if(!ajax){
+        if (!ajax && modelAndView != null) {
             BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(httpServletRequest.getServletContext());
             HelpService helpService = (HelpService) factory.getBean("helpService");
             List<Help> helpList = helpService.selectList();
-            model.put("help",helpList);
+            Map<String, Object> model = modelAndView.getModel();
+            model.put("help", helpList);
         }
 
     }

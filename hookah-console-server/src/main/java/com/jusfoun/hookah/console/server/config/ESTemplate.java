@@ -2,6 +2,9 @@ package com.jusfoun.hookah.console.server.config;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jusfoun.hookah.core.common.Pagination;
+import com.jusfoun.hookah.core.domain.es.EsAgg;
+import com.jusfoun.hookah.core.domain.es.EsAggResult;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.ElasticsearchException;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
@@ -29,6 +32,9 @@ import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.index.query.*;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.aggregations.Aggregation;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.bucket.terms.StringTerms;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
@@ -41,11 +47,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import java.io.IOException;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by wangjl on 2017-3-27.
@@ -648,31 +650,16 @@ public class ESTemplate {
      * @param order
      * @return
      */
-    public Pagination search(TransportClient client,String indexName,String type,Map<String,Object> filterMap,
-                                      Pagination pagination, String orderField, String order , String ... highLightFields){
+    public Pagination search(TransportClient client, String indexName, String type, Map<String,Object> filterMap,
+                             Pagination pagination, String orderField, String order, String ... highLightFields){
         SearchRequestBuilder requestBuilder = client.prepareSearch(indexName);
-        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
-        QueryStringQueryBuilder queryString = null;
-        MatchAllQueryBuilder matchAll = null;
-        if(filterMap != null && !filterMap.isEmpty()){
-            for(Map.Entry entry : filterMap.entrySet()){
-                if(entry.getValue() != null) {
-                    queryString = QueryBuilders.queryStringQuery(String.valueOf(entry.getValue()));
-                    queryString.field(String.valueOf(entry.getKey()));
-                    boolQueryBuilder.must(queryString);
-                }
-            }
-        }else{//检索全部
-            matchAll = QueryBuilders.matchAllQuery();
-            boolQueryBuilder.must(matchAll);
-        }
+
 
         HighlightBuilder highlightBuilder = new HighlightBuilder().field("*").requireFieldMatch(false);
         highlightBuilder.preTags("<span style=\"color:red\">");
         highlightBuilder.postTags("</span>");
         requestBuilder.highlighter(highlightBuilder);
-
-        requestBuilder.setTypes(type).setQuery(boolQueryBuilder);
+        requestBuilder.setTypes(type).setQuery(getBoolQueryBuilder(filterMap));
         if(StringUtils.isNotBlank(orderField)) {
             requestBuilder.addSort(orderField, StringUtils.isNotBlank(order) &&
                     order.equals(SortOrder.DESC.toString()) ? SortOrder.DESC : SortOrder.ASC);
@@ -699,77 +686,28 @@ public class ESTemplate {
             }
             list.add(source);
         }
-
         pagination.setList(list);
         pagination.setTotalItems(searchResponse.getHits().getTotalHits());
         return pagination;
     }
 
-    /**
-     * 搜索
-     * @param client
-     * @param key 搜索关键词
-     * @param index 索引
-     * @param type
-     * @param pagination
-     * @param fields
-     * @return
-     * @throws UnknownHostException
-     */
-    public void search(TransportClient client, String key, String index, String type,
-                       Pagination pagination, Boolean isHighLight, String... fields) throws UnknownHostException {
-        //创建查询索引,要查询的索引库为index
-        SearchRequestBuilder builder = client.prepareSearch();
-        builder.setIndices(index);
-        builder.setTypes(type);
-        builder.setFrom((pagination.getCurrentPage() - 1) * pagination.getPageSize());
-        builder.setSize(pagination.getCurrentPage() * pagination.getPageSize());
-
-        //设置查询类型：1.SearchType.DFS_QUERY_THEN_FETCH 精确查询； 2.SearchType.SCAN 扫描查询,无序
-        builder.setSearchType(SearchType.DFS_QUERY_AND_FETCH);
-        if(StringUtils.isNotBlank(key)){
-            // 设置查询关键词
-            builder.setQuery(QueryBuilders.multiMatchQuery(key, fields));
-        }
-
-        //设置是否按查询匹配度排序
-        builder.setExplain(true);
-        //设置高亮显示
-        if(isHighLight) {
-            HighlightBuilder highlightBuilder = new HighlightBuilder().field("*").requireFieldMatch(false);
-            highlightBuilder.preTags("<span style=\"color:red\">");
-            highlightBuilder.postTags("</span>");
-            builder.highlighter(highlightBuilder);
-        }
-
-        //执行搜索,返回搜索响应信息
-        SearchResponse searchResponse = builder.get();
-        SearchHits searchHits = searchResponse.getHits();
-
-        //总命中数
-        long total = searchHits.getTotalHits();
-        SearchHit[] hits = searchHits.getHits();
-        pagination.setTotalItems(total);
-        List<Map<String, Object>> list = new ArrayList();
-        for (SearchHit hit : hits) {
-            Map<String, HighlightField> highlightFields = hit.getHighlightFields();
-            //title高亮
-            Map<String, Object> source = hit.getSource();
-            for(String filed : fields) {
-                HighlightField titleField = highlightFields.get(filed);
-                if(titleField!=null){
-                    Text[] fragments = titleField.fragments();
-                    String name = "";
-                    for (Text text : fragments) {
-                        name += text;
-                    }
-                    source.put(filed, name);
+    public BoolQueryBuilder getBoolQueryBuilder(Map<String,Object> filterMap) {
+        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+        QueryStringQueryBuilder queryString = null;
+        MatchAllQueryBuilder matchAll = null;
+        if(filterMap != null && !filterMap.isEmpty()){
+            for(Map.Entry entry : filterMap.entrySet()){
+                if(entry.getValue() != null) {
+                    queryString = QueryBuilders.queryStringQuery(String.valueOf(entry.getValue()));
+                    queryString.field(String.valueOf(entry.getKey()));
+                    boolQueryBuilder.must(queryString);
                 }
             }
-            list.add(source);
+        }else{//检索全部
+            matchAll = QueryBuilders.matchAllQuery();
+            boolQueryBuilder.must(matchAll);
         }
-        if(list != null && list.size() > 0)
-            pagination.setList(list);
+        return boolQueryBuilder;
     }
 
     /**
@@ -808,5 +746,34 @@ public class ESTemplate {
             }
         }
         return listResult;
+    }
+
+    public Map<String, List<EsAggResult>> getCounts(TransportClient client, String indexName, String type,
+                                              Map<String,Object> filterMap, List<EsAgg> listCnt) {
+        Map<String, List<EsAggResult>> map = new HashedMap();
+        SearchRequestBuilder requestBuilder = client.prepareSearch()
+                .setIndices(indexName).setTypes(type)
+                .setQuery(getBoolQueryBuilder(filterMap));
+        if (listCnt != null && listCnt.size() > 0) {
+            for (EsAgg obj : listCnt) {
+                requestBuilder.addAggregation(AggregationBuilders.terms(obj.getAggName()).field(obj.getFieldName()));
+            }
+
+            SearchResponse sr = requestBuilder.execute().actionGet();
+            if (sr != null) {
+                for(EsAgg obj : listCnt) {
+                    List<EsAggResult> list = new ArrayList<>();
+                    Map<String, Aggregation> aggMap = sr.getAggregations().asMap();
+                    StringTerms terms = (StringTerms) aggMap.get(obj.getAggName());
+                    Iterator<Terms.Bucket> bucketIterator = terms.getBuckets().iterator();
+                    while(bucketIterator.hasNext()) {
+                        Terms.Bucket bucket = bucketIterator.next();
+                        list.add(new EsAggResult((String) bucket.getKey(), bucket.getDocCount()));
+                    }
+                    map.put(obj.getAggName(), list);
+                }
+            }
+        }
+        return map;
     }
 }

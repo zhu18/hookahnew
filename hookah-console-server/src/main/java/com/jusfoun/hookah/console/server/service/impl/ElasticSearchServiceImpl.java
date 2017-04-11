@@ -7,15 +7,20 @@ import com.jusfoun.hookah.console.server.config.ESTransportClient;
 import com.jusfoun.hookah.console.server.util.AnnotationUtil;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.dao.CategoryMapper;
 import com.jusfoun.hookah.core.dao.GoodsMapper;
+import com.jusfoun.hookah.core.domain.Category;
 import com.jusfoun.hookah.core.domain.es.*;
+import com.jusfoun.hookah.core.domain.vo.EsCategoryVo;
 import com.jusfoun.hookah.core.domain.vo.EsGoodsVo;
+import com.jusfoun.hookah.core.domain.vo.EsTypesVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.utils.ShopUtils;
 import com.jusfoun.hookah.rpc.api.ElasticSearchService;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.client.transport.TransportClient;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +40,8 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     ESTemplate esTemplate;
     @Autowired
     GoodsMapper goodsMapper;
+    @Autowired
+    CategoryMapper categoryMapper;
 
     // 创建索引
     @Override
@@ -102,13 +109,6 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     }
 
     @Override
-    public Pagination search(Pagination pagination, String key, String index, String type,
-                             Boolean isHighLight, String... fields) throws Exception {
-        esTemplate.search(esTransportClient.getObject(), key, index, type, pagination, isHighLight, fields);
-        return pagination;
-    }
-
-    @Override
     public void deleteIndex(String indexName) throws Exception{
         esTemplate.deleteIndex(esTransportClient.getObject(), indexName);
     }
@@ -117,8 +117,6 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     public Pagination search(EsGoodsVo vo) throws Exception {
         Integer pageSize = vo.getPageSize();
         Integer pageNum = vo.getPageNumber();
-        vo.setOrderFiled("lastUpdateTimeKey");
-        vo.setOrder("desc");
         String orderField = vo.getOrderFiled();
         String order = vo.getOrder();
 
@@ -131,7 +129,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         }
         esTemplate.search(esTransportClient.getObject(), Constants.GOODS_INDEX,
                 Constants.GOODS_TYPE, map, pagination, orderField, order,
-                "goodsNameAll", "goodsName", "goodsNamePy");
+                "goodsNameAll");
         return pagination;
     }
 
@@ -154,6 +152,33 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     @Override
     public List<String> goodsSuggestion(String prefix) throws Exception {
         return goodsSuggestion(prefix, null);
+    }
+
+    @Override
+    public EsTypesVo getTypes(EsGoods goods) throws Exception {
+        List<EsAgg> listCnt = new ArrayList<>();
+        EsTypesVo esTypesVo = new EsTypesVo();
+        List<EsCategoryVo> categoryList = new ArrayList<>();
+        listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_CATEGORY, HookahConstants.GOODS_AGG_CATEGORY_FIELD));
+        //按查询条件查询分类集合
+        Map<String, List<EsAggResult>> map = esTemplate.getCounts(esTransportClient.getObject(),
+                Constants.GOODS_INDEX, Constants.GOODS_TYPE, AnnotationUtil.convert2Map(goods), listCnt);
+        if (map != null && map.size() > 0) {
+            for (Map.Entry<String, List<EsAggResult>> entry : map.entrySet()) {
+                if(HookahConstants.GOODS_AGG_CATEGORY.equals(entry.getKey())) {
+                    List<EsAggResult> esAggResults = entry.getValue();
+                    for(EsAggResult result : esAggResults) {
+                        Category category = categoryMapper.selectByPrimaryKey(result.getId());
+                        EsCategoryVo categoryVo = new EsCategoryVo();
+                        BeanUtils.copyProperties(category, categoryVo);
+                        categoryVo.setCnt(result.getCnt());
+                        categoryList.add(categoryVo);
+                    }
+                }
+            }
+        }
+        esTypesVo.setCategoryList(categoryList);
+        return esTypesVo;
     }
 
 }
