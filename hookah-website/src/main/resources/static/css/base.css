@@ -70,21 +70,23 @@
     background-color: #F9F9F9;
     border: 1px solid #DFDFDF;
 }
-.header-centerbar .shopping-cart-top:after{
-    content: '0';
-    color: white;
-    position: absolute;
-    top: -5px;
-    right: 23px;
-    background-color: #e34f4f;
-    width: 15px;
-    height: 15px;
-    line-height: 15px;
-    border-radius: 7px 7px 7px 0;
-    display: block;
+
+.header-centerbar .shopping-cart-top a{
+    margin-right: 15px;
 }
 .header-centerbar .shopping-cart-top span{
-    margin-right: 15px;
+    position: absolute;
+    top: -6px;
+    left: 104px;
+    display: inline-block;
+    padding: 1px 2px;
+    font-size: 12px;
+    line-height: 12px;
+    color: #fff;
+    background-color: #c81623;
+    border-radius: 7px 7px 7px 0;
+    min-width: 12px;
+    text-align: center;
 }
 .header-centerbar .shopping-cart-down{
     position: absolute;
@@ -94,7 +96,7 @@
     border: 1px solid #DFDFDF;
     right:0;
     top: 37px;
-    z-index: 2;
+    z-index: 102;
     box-shadow: 0 0 5px rgba(0,0,0,.2);
 }
 .header-centerbar .showLine{
@@ -121,7 +123,11 @@ display: block;
     line-height: 24px;
     padding: 10px;
 }
-.header-centerbar .shopping-cart-down .goLogin
+.header-centerbar .shopping-cart-down .goLogin{
+    height: 24px;
+    line-height: 24px;
+    padding:0 10px 10px;
+}
 .header-centerbar .shopping-cart-down .shopping-cart-down-content{
     padding: 0;
 }
@@ -166,14 +172,10 @@ border-bottom: 1px dotted #ccc;
     line-height: 35px;
     background-color: #F9F9F9;
 }
-.header-centerbar .shopping-cart-down .shopping-cart-down-pay div:last-child{
-    width: 65px;
-    height: 34px;
-    line-height: 34px;
-    text-align: center;
-    background-color: #e34f4f;
-    color: white;
-    border-radius: 5px;
+.header-centerbar .shopping-cart-down .shopping-cart-down-pay a{
+    padding:3px;
+    font-size: 12px;
+    line-height: 22px;
 }
 .header-bottom-bar{
     height:46px;
