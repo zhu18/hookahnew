@@ -2,7 +2,7 @@
 .exchange-index-menu {
     position: absolute;
     top: -46px;
-    left:75px;
+    left:0px;
     z-index: 1000;
     width: 190px;
 }
