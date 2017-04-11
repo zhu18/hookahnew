@@ -3,8 +3,8 @@ package com.jusfoun.hookah.webiste.controller;
 import com.jusfoun.hookah.core.domain.Cart;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
+import com.jusfoun.hookah.core.domain.vo.CartVo;
 import com.jusfoun.hookah.core.generic.Condition;
-import com.jusfoun.hookah.core.utils.JSONUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.CartService;
 import com.jusfoun.hookah.rpc.api.GoodsService;
@@ -47,9 +47,9 @@ public class CartController extends BaseController {
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.eq("userId", userId));
             filters.add(Condition.eq("isDeleted", new Integer(0).shortValue()));
-            List<Cart> carts = cartService.selectList(filters);
-            model.addAttribute("cartList", carts);
-            logger.info(JSONUtils.toString(carts));
+
+            List<CartVo> cartVos = cartService.selectDetailList(filters,null);
+            model.addAttribute("cartList", cartVos);
             return "usercenter/buyer/cart";
         } catch (Exception e) {
             e.printStackTrace();
@@ -72,23 +72,42 @@ public class CartController extends BaseController {
             //需要先获取当前用户id
             String userId = this.getCurrentUser().getUserId();
             logger.info("当前用户是:{}", userId);
-            cart.setUserId(userId);
-            cart.setAddTime(new Date());
-            cart.setIsGift(new Integer(0).shortValue());
-            cart.setIsDeleted(new Byte("0"));
 
-            MgGoods.FormatBean format= goodsService.getFormat(cart.getGoodsId(),cart.getFormatId());
+            List<Condition> filters = new ArrayList<>();
+            filters.add(Condition.eq("userId", userId));
+            filters.add(Condition.eq("goodsId", cart.getGoodsId()));
+            filters.add(Condition.eq("formatId", cart.getFormatId()));
+            Cart existCart  = cartService.selectOne(filters);
+            if(existCart!=null){
+                MgGoods.FormatBean format= goodsService.getFormat(cart.getGoodsId(),cart.getFormatId());
 
-            //补充商品信息
-            Goods goods = goodsService.selectById(cart.getGoodsId());
-            cart.setGoodsSn(goods.getGoodsSn());
-            cart.setGoodsName(goods.getGoodsName());
-            cart.setGoodsImg(goods.getGoodsImg());
-            cart.setGoodsFormat(format.getFormat());
-            cart.setFormatNumber((long)format.getNumber());
-            cart.setGoodsPrice(format.getPrice());
-            //入库
-            cartService.insert(cart);
+                //补充商品信息
+                existCart.setGoodsNumber(existCart.getGoodsNumber()+cart.getFormatNumber());
+                //入库
+
+                cartService.updateByIdSelective(existCart);
+            }else{
+                cart.setUserId(userId);
+                cart.setAddTime(new Date());
+                cart.setIsGift(new Integer(0).shortValue());
+                cart.setIsDeleted(new Byte("0"));
+
+                MgGoods.FormatBean format= goodsService.getFormat(cart.getGoodsId(),cart.getFormatId());
+
+                //补充商品信息
+                Goods goods = goodsService.selectById(cart.getGoodsId());
+                cart.setGoodsSn(goods.getGoodsSn());
+                cart.setGoodsName(goods.getGoodsName());
+                cart.setGoodsImg(goods.getGoodsImg());
+                cart.setGoodsFormat(format.getFormat());
+                cart.setFormatNumber((long)format.getNumber());
+                cart.setGoodsPrice(format.getPrice());
+                //入库
+
+                cartService.insert(cart);
+            }
+
+
 
             return ReturnData.success();
         } catch (Exception e) {
@@ -181,7 +200,7 @@ public class CartController extends BaseController {
     public ReturnData deleteAll(String[] ids) {
         logger.info("逻辑删除购物车：{}", ids);
         try {
-
+            cartService.deleteBatchByLogic(ids);
             return ReturnData.success();
         } catch (Exception e) {
             logger.info(e.getMessage());

@@ -1,4 +1,7 @@
 
+.auth-box .auth-content{
+    padding-bottom:150px;
+}
 .auth-box .auth-content .auth-info .steps{
     padding:40px 0 25px;
 }
@@ -6,10 +9,13 @@
     width: 700px;
     height: 22px;
     margin:0 auto;
-    background: url(/static/images/auth/step2.png) no-repeat;
+    background: url(/static/images/auth/steps-bg.png) no-repeat;
+}
+.auth-info .steps .img-show.step2{
+    background-position: 0 -38px;
 }
 .auth-box .auth-content .auth-info {
-    height: 1000px;
+    height: 1400px;
     padding:30px 50px 30px;
     border-top: 1px solid #e2e2e2;
     -moz-box-sizing: border-box;
@@ -34,7 +40,9 @@
  .auth-info .infor {
     padding-bottom: 20px;
 }
-
+.auth-info .padding-left-210{
+    padding-left:210px;
+}
 .auth-info label {
     height: 40px;
     line-height: 40px;
@@ -43,12 +51,17 @@
     font-size: 14px;
     color: #5e5e5e;
 }
+.auth-info .typeBox  label{
+    padding-left:210px;
 
+}
 .auth-info label span {
     height: 40px;
     line-height: 40px;
     display: inline-block;
     width: 78px;
+    padding-left:210px;
+    float: left;
 }
 
 .auth-info label input[type=text] {
@@ -67,8 +80,10 @@
     float: left;
     margin-top: 14px;
 }
-
-.auth-info .button {
+.auth-info .button{
+    padding-left:250px;
+}
+.auth-info .button>button {
     width: 366px;
     height: 42px;
     line-height: 42px;
@@ -78,33 +93,9 @@
     border-radius: 5px;
     color: #fff;
     cursor: pointer;
-}
+    border: none;
 
-.auth-info .type ul {
-    width: 720px;
-    height: 30px;
-    line-height: 30px;
-    float: right;
 }
-
-.auth-info .type li {
-    display: block;
-    float: left;
-    width: 50px;
-    height: 25px;
-    line-height: 25px;
-    margin: -10px 10px 0px 0px;
-    text-align: center;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    cursor: pointer;
-}
-
-.auth-info .type .active {
-    background: #237DE7;
-    color: #fff;
-}
-
 .auth-info .linkage {
     width: 370px;
     height: 40px;
@@ -126,6 +117,7 @@
     margin-left: 90px;
     position: relative;
     padding-top: 10px;
+    padding-left:210px;
 }
 
 .auth-info .update label {
@@ -136,16 +128,13 @@
     z-index: 1;
 }
 
-.auth-info .update input {
-    display: none;
-}
-
 .auth-info .update img {
     width: 212px;
     height: 133px;
     display: inline-block;
     position: absolute;
     z-index: 0;
+    left:190px;
 }
 
 .auth-info .update p {
@@ -155,51 +144,8 @@
     font-size: 12px;
     top: 156px;
     left: 0px;
+    padding-left: 220px;
 }
 
-.auth-info .industry {
-    overflow: hidden;
-    padding-left: 90px;
-    position: relative;
-}
 
-.auth-info .industry span {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    font-size: 14px;
-    color: #5e5e5e;
-}
 
-.auth-info .industry .selectBtn {
-    cursor: pointer;
-}
-
-.auth-info .industry .selectBtn b {
-    width: 10px;
-    height: 10px;
-    display: inline-block;
-    background: url(../images/dengluzhuce/add.png) no-repeat;
-    margin-right: 3px;
-}
-
-.auth-info .industry ul li {
-    display: inline-block;
-    height: 28px;
-    line-height: 28px;
-    padding: 0px 8px;
-    background: #e73e4a;
-    color: #fff;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    font-size: 12px;
-    margin: 0px 12px 10px 0px;
-}
-
-.auth-info .typeBox > li {
-    display: none;
-}
-
-.auth-info .typeBox .activeLi {
-    display: block;
-}

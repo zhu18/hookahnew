@@ -2,12 +2,15 @@ package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.domain.OrderInfo;
+import com.jusfoun.hookah.core.domain.vo.CartVo;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.OrderHelper;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.rpc.api.CartService;
+import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.OrderInfoService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,20 +30,37 @@ import java.util.List;
  *
  * @author zhanghanqing
  * @created 2016年6月28日
+ *
  */
 @Controller
 public class OrderInfoController extends BaseController {
     @Autowired
     private OrderInfoService orderInfoService;
 
+    @Autowired
+    private CartService cartService;
+
+    @Autowired
+    private GoodsService goodsService;
+
     @RequestMapping(value = "/order", method = RequestMethod.GET)
     public String index() {
         return "redirect:/order/list";
     }
 
-    @RequestMapping(value = "/order/orderInfo", method = RequestMethod.GET)
-    public String orderInfo() {
-        return "order/orderInfo";
+    @RequestMapping(value = "/order/orderInfo", method = RequestMethod.POST)
+    public String orderInfo(String[] cartIds,Model model) {
+        try {
+            List<Condition> filters = new ArrayList<>();
+            filters.add(Condition.in("recId",cartIds));
+            List<CartVo> carts = cartService.selectDetailList(filters,null);
+            model.addAttribute("cartList",carts);
+            return "order/orderInfo";
+        }catch (Exception e){
+            logger.info(e.getMessage());
+            return "/error/500";
+        }
+
     }
     /**
      * 分页查询
@@ -111,7 +131,6 @@ public class OrderInfoController extends BaseController {
         }
     }
 
-
     /**
      * 订单结算
      *
@@ -119,15 +138,16 @@ public class OrderInfoController extends BaseController {
      * @param cartIds
      * @return
      */
-    @RequestMapping(value = "/order/settle", method = RequestMethod.POST)
-    public ReturnData settle(OrderInfo orderinfo, String cartIds) {
+    @RequestMapping(value = "/order/createOrder", method = RequestMethod.GET)
+    public String createOrder(OrderInfo orderinfo, String cartIds,Model model) {
         try {
             init(orderinfo);
             orderinfo = orderInfoService.insert(orderinfo, cartIds);
-            return ReturnData.success(orderinfo);
+            model.addAttribute("orderInfo",orderinfo);
+            return  "pay/cash";
         } catch (Exception e) {
             logger.error("插入错误", e);
-            return ReturnData.error("系统异常");
+            return "/error/500";
         }
     }
 
@@ -139,15 +159,16 @@ public class OrderInfoController extends BaseController {
      * @param goodsNumber
      * @return
      */
-    @RequestMapping(value = "/order/direct", method = RequestMethod.POST)
-    public ReturnData directCreate(OrderInfo orderinfo, String goodsId, Integer formatId,Long goodsNumber) {
+    @RequestMapping(value = "/order/direct", method = RequestMethod.GET)
+    public String directCreate(OrderInfo orderinfo, String goodsId, Integer formatId,Long goodsNumber,Model model) {
         try {
             init(orderinfo);
             orderinfo = orderInfoService.insert(orderinfo, goodsId, formatId,goodsNumber);
-            return ReturnData.success(orderinfo);
+            model.addAttribute("orderInfo",orderinfo);
+            return  "pay/cash";
         } catch (Exception e) {
             logger.error("插入错误", e);
-            return ReturnData.error("系统异常");
+            return "/error/500";
         }
     }
 

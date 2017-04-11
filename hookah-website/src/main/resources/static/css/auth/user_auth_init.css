@@ -17,17 +17,17 @@
     color: #00b1ff;
 }
 /*协议信息开始*/
-.auth-box .auth-content auth-agreement .steps{
+.auth-box .auth-content .auth-agreement .steps{
     padding:40px 0 25px;
 }
-auth-agreement .steps .img-show{
+.auth-agreement .steps .img-show{
     width: 700px;
     height: 22px;
     margin:0 auto;
-    background: url(/static/images/auth/step1.png) no-repeat;
+    background: url(/static/images/auth/steps-bg.png) no-repeat;
 }
-auth-agreement .steps .img-show .step1{
-    background-position: 0 -20px;
+.auth-agreement .steps .img-show.step1{
+    background-position: 0 -18px;
 }
 .steps .txt{
     width: 760px;
@@ -102,7 +102,10 @@ auth-agreement .steps .img-show .step1{
     width: 700px;
     height: 22px;
     margin:0 auto;
-    background: url(/static/images/auth/step2.png) no-repeat;
+    background: url(/static/images/auth/steps-bg.png) no-repeat;
+}
+.auth-info .steps .img-show.step2{
+    background-position: 0 -3px;
 }
 #authForm{
     padding:0 100px 30px;
@@ -143,14 +146,27 @@ auth-agreement .steps .img-show .step1{
     margin:10px 0 20px 0;
     position: relative;
 }
-.submit-file form{
-    padding-bottom:20px;
-}
-.submit-file form label{
+
+.submit-file .right-pic{
     position: absolute;
     width: 215px;
     height: 135px;
     left:7px;
+    top:0;
+    z-index:1;
+    background-color: transparent;
+
+}
+.submit-file #fm{
+    position: absolute;
+    left:10px;
+    top:0;
+}
+.submit-file  label.left-pic{
+    position: absolute;
+    width: 215px;
+    height: 135px;
+    left:180px;
     top:0;
     z-index:1;
     background-color: transparent;
@@ -196,8 +212,10 @@ margin: 0 auto;
     width: 700px;
     height: 22px;
     margin:0 auto;
-    /*该处图片需要更换*/
-    background: url(/static/images/auth/step2.png) no-repeat;
+    background: url(/static/images/auth/steps-bg.png) no-repeat;
+}
+.auth-verify .steps .img-show.step3{
+    background-position: 0 -58px;
 }
 .auth-verify .auth-verify-info{
     height: 100px;
@@ -217,7 +235,10 @@ margin: 0 auto;
     height: 22px;
     margin:0 auto;
     /*该处图片需要更换*/
-    background: url(/static/images/auth/step2.png) no-repeat;
+    background: url(/static/images/auth/steps-bg.png) no-repeat;
+}
+.auth-finished .steps .img-show.step4 {
+    background-position: 0 -98px;
 }
 .auth-finished .auth-finished-info{
     height: 100px;
@@ -233,6 +254,7 @@ margin: 0 auto;
 .fa-check-circle{
     font-size:20px;
     margin-right:10px;
+    color: deepskyblue;
 }
 .enter-company-auth {
     margin-top:20px;
