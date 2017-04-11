@@ -17,14 +17,15 @@
         <div class="shopping-cart grid-right">
             <div class="shopping-cart-top  grid-right">
                 <i class="fa fa-shopping-cart color-red" aria-hidden="true"></i>
-                <span class="display-inline-block">我的购物车</span>
+                <a href="/usercenter/buyer/cart" class="display-inline-block">我的购物车</a>
+                <span>${cartSize}</span>
                 <i class="fa fa-angle-right" aria-hidden="true"></i>
             </div>
             <div class="showLine"></div>
             <div class="shopping-cart-down grid-right">
                 <%if(cartSize == 0){%>
                 <div class="shopping-cart-down-title"><h1>你还没有登录</h1></div>
-                <div class="goLogin"><a href="/login" class="color-blue grid-right">去登陆</a></div>
+                <div class="goLogin text-align-center"><a href="/login" class="color-blue">去登陆</a></div>
                 <%}else{%>
                 <div class="shopping-cart-down-title"><h1>最新加入的商品</h1></div>
                 <div class="shopping-cart-down-content">
@@ -63,7 +64,7 @@
                 <div class="shopping-cart-down-pay">
                     <div class="display-inline-block">共<span>1</span>件商品</div>
                     <div class="display-inline-block margin-left-10">共<span>￥589622</span></div>
-                    <div class="display-inline-block grid-right">去购物车</div>
+                    <a href="/usercenter/buyer/cart" class="display-inline-block grid-right btn btn-full-red">去购物车</a>
                 </div>
                 <%}%>
             </div>
