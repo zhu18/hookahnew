@@ -90,11 +90,11 @@
         </includes>
       </resource>
       <!-- 打包时注释下面的resource -->
-      <resource>
-        <targetPath>${project.build.directory}/classes</targetPath>
-        <directory>src/main/resources</directory>
-        <filtering>false</filtering>
-      </resource>
+      <!--<resource>-->
+        <!--<targetPath>${project.build.directory}/classes</targetPath>-->
+        <!--<directory>src/main/resources</directory>-->
+        <!--<filtering>false</filtering>-->
+      <!--</resource>-->
     </resources>
     <pluginManagement>
       <plugins>
@@ -118,7 +118,7 @@
           <archive>
             <addMavenDescriptor>true</addMavenDescriptor>
             <manifest>
-              <mainClass>com.jusfoun.hookah.server.StaticServerLauncher</mainClass>
+              <mainClass>com.jusfoun.hookah.staticserver.StaticServerLauncher</mainClass>
               <addClasspath>true</addClasspath>
               <classpathPrefix>lib/</classpathPrefix>
             </manifest>
