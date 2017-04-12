@@ -1,0 +1,85 @@
+<%
+var head = {
+%>
+<link type="text/css" rel="stylesheet" href="/static/css/verify.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div id="content">
+	<div class="content-layout">
+		<div class="maincenter" style="position: relative">
+			<ol class="ui-step ui-step-3">
+				<li class="ui-step-start ui-step-done">
+					<div class="ui-step-line">-</div>
+					<div class="ui-step-icon">
+						<i class="iconfont">y</i>
+						<i class="ui-step-number">1</i>
+						<span class="ui-step-text"> 验证身份 </span>
+					</div>
+				</li>
+				<li class="ui-step-active">
+					<div class="ui-step-line">-</div>
+					<div class="ui-step-icon">
+						<i class="iconfont">y</i>
+						<i class="ui-step-number">2</i>
+						<span class="ui-step-text"> 修改邮箱 </span>
+					</div>
+				</li>
+				<li class="ui-step-end">
+					<div class="ui-step-line">-</div>
+					<div class="ui-step-icon">
+						<i class="iconfont">y</i>
+						<i class="iconfont ui-step-number"></i>
+						<span class="ui-step-text"> 完成 </span>
+					</div>
+				</li>
+			</ol>
+			<div class="maincenter-box">
+				<style>
+					#newPwdStrengthWrap .ui-pwd-strength-word {
+						display: none;
+					}
+				</style>
+				<form method="post" class="ui-form" id="J_Form" novalidate="novalidate" data-widget-cid="widget-0">
+					<input name="_tb_token_" type="hidden" value="Wj32BtAYWq">
+					<input type="hidden" name="action" value="password_action">
+					<input type="hidden" name="event_submit_do_modify_password" value="notNull">
+
+					<div id="pass-form">
+
+						<div class="ui-form-item ui-form-item-error">
+							<label class="ui-label"> 新邮箱 ： </label>
+
+							<div class="checkcode-warp">
+								<input name="_fm-mo-_0-ch" id="J_Phone_Checkcode" class="ui-input ui-input-checkcode-new"
+									   type="text" maxlength="6" placeholder=" 6位数字 " data-widget-cid="widget-3"
+									   data-explain="">
+								<button id="J_GetCode" class="getcheckcode"> 发送确认邮件</button>
+							</div>
+							<div class="ui-form-explain"><i class="ui-tiptext-icon iconfont"></i> 请输入新邮箱</div>
+						</div>
+						<div class="ui-form-item ui-form-item-error" style="z-index: 98;">
+							<label class="ui-label"> 校验码 ：</label>
+							<input autocomplete="off" name="_fm-pas-_0-o" class="ui-input" type="password" id="oldPwd"
+								   data-widget-cid="widget-1" data-pop="J-pop-_fm-pas-_0-o">
+							<div class="ui-form-explain"><i class="ui-tiptext-icon iconfont"></i> 请输入校验码</div>
+						</div>
+					</div>
+					<div class="ui-form-item">
+						<input type="submit" value=" 确定 " class="ui-button ui-button-lorange">
+					</div>
+					<input type="hidden" name="ua" id="UA_InputId"
+						   value="089#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">
+				</form>
+
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
