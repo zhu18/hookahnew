@@ -3,7 +3,6 @@ package com.jusfoun.hookah.webiste.controller;
 import com.jusfoun.hookah.core.domain.Cart;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
-import com.jusfoun.hookah.core.domain.vo.CartVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.CartService;
@@ -41,7 +40,7 @@ public class CartController extends BaseController {
     @RequestMapping(value = "usercenter/buyer/cart", method = RequestMethod.GET)
     public String cart(Model model) {
         try {
-            String userId = this.getCurrentUser().getUserId();
+            /*String userId = this.getCurrentUser().getUserId();
             logger.info("当前用户是:{}", userId);
 
             List<Condition> filters = new ArrayList<>();
@@ -49,7 +48,8 @@ public class CartController extends BaseController {
             filters.add(Condition.eq("isDeleted", (byte)0));
 
             List<CartVo> cartVos = cartService.selectDetailList(filters);
-            model.addAttribute("cartList", cartVos);
+            logger.info(JSONUtils.toString(cartVos));*/
+            //model.addAttribute("cartList", cartVos);
             return "usercenter/buyer/cart";
         } catch (Exception e) {
             e.printStackTrace();
