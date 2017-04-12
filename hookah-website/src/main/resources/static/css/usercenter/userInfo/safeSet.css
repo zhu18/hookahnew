@@ -94,6 +94,7 @@
 }
 .modify-btn span{
     color: #3185E9;
+    cursor: pointer;
 }
 .set-btn .fa-warning{
     color: #F17D17;

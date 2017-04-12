@@ -16,17 +16,18 @@ $(document).ready(function () {
 		} else {
 			$('#menu_index').removeClass('active');
 		}
-	})
+	});
 
-  $(".shopping-cart").mouseenter(function(){
-    $(this).addClass('hover')
-  });
-  $(".shopping-cart").mouseleave(function(){
-    $(this).removeClass('hover')
-  });
-})
+	$(".shopping-cart").mouseenter(function () {
+		$(this).addClass('hover')
+	});
+	$(".shopping-cart").mouseleave(function () {
+		$(this).removeClass('hover')
+	});
+	$(window).load(function () {
 
-
+	});
+});
 
 var Loading = {};
 Loading.start = function () {
