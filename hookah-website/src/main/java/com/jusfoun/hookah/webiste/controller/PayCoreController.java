@@ -39,7 +39,7 @@ public class PayCoreController {
 	 * @throws Exception 
 	 */
 	@RequestMapping
-	Object pay(@RequestParam(required=true) Integer orderId,
+	Object pay(@RequestParam(required=true) String orderId,
 			   HttpSession session,
 			   HttpServletRequest request, HttpServletResponse response) throws Exception {
 		//TODO 锁

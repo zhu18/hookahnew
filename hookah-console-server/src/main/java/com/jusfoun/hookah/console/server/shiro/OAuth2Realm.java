@@ -19,6 +19,7 @@ import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,9 +84,9 @@ public class OAuth2Realm extends AuthorizingRealm {
         if (principals == null) {
             throw new OAuth2AuthenticationException("PrincipalCollection method argument cannot be null.");
         }
-        HashMap<String,String> user = (HashMap<String,String>)principals.getPrimaryPrincipal();
-        String userId = user.get("userId");
-        Set<String> roleNames = roleService.selectRolesByUserId(userId);
+        Session session = SecurityUtils.getSubject().getSession();
+        Map<String,String> user = (Map<String,String>)session.getAttribute("user");
+        Set<String> roleNames = roleService.selectRolesByUserId(user.get("userId"));
 //        String username = (String) getAvailablePrincipal(principals);
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo(roleNames);
         return authorizationInfo;
@@ -135,7 +136,7 @@ public class OAuth2Realm extends AuthorizingRealm {
             Map<String,String> user = new HashMap<String,String>();
             user.put("userId",jsonObject.getString("userId"));
             user.put("userName",jsonObject.getString("userName"));
-            SecurityUtils.getSubject().getSession().setAttribute("user",user);
+//            SecurityUtils.getSubject().getSession().setAttribute("user",user);
             return user;
         } catch (Exception e) {
             logger.error(e.toString());

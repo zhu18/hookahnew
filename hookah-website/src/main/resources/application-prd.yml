@@ -2,11 +2,15 @@ server:
   port: 9000
   http:
     protocal: http://
+  session:
+    cookie:
+      domain: hookah.app
+      name: hookah_sid
 myconf:
   beetl:
-    templatesPath: views/default/
+    templatesPath: views/
     contentType: text/html;charset:UTF-8
-    prefix:
+    prefix: /
     suffix: .html
     cache: false
 

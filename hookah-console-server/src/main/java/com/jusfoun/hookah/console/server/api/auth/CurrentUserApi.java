@@ -2,6 +2,7 @@ package com.jusfoun.hookah.console.server.api.auth;
 
 import com.jusfoun.hookah.core.utils.ReturnData;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,9 +22,9 @@ public class CurrentUserApi {
 
     @RequestMapping(value = "/current_user",method = RequestMethod.GET)
     public ReturnData getCurrentUser(HttpServletRequest request, HttpServletResponse response){
-        Subject subject = SecurityUtils.getSubject();
-        if(subject.isAuthenticated()){
-            return ReturnData.success(subject.getPrincipal());
+        Session session = SecurityUtils.getSubject().getSession();
+        if(session != null){
+            return ReturnData.success(session.getAttribute("user"));
         }else{
             return ReturnData.error("没有权限");
         }
