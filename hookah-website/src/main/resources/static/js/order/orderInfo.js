@@ -8,7 +8,7 @@ $.getUrlParam = function (key) {
 };
 
 var params = $.getUrlParam('ids');
-goOrder(params);
+// goOrder(params);
 function goOrder(params) {
   $.ajax({
     url:'/order/orderInfo',

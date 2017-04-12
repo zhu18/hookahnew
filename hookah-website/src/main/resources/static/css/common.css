@@ -381,6 +381,7 @@
     border:none;
 }
 .btn-full-orange:hover{
+    color:#fff;
     background: #eb9c03;
 }
 .btn-full-blue{
@@ -389,6 +390,7 @@
     border:none;
 }
 .btn-full-blue:hover{
+    color:#fff;
     background: #0781e8;
 }
 .btn-full-red{
@@ -397,6 +399,7 @@
     border:none;
 }
 .btn-full-red:hover{
+    color:#fff;
     background: #d64242;
 }
 

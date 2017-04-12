@@ -11,6 +11,10 @@ var head = {
         return result ? decodeURIComponent(result[2]) : null;
     };
     var catId = $.getUrlParam('catId');
+    var prId = $.getUrlParam('prId');
+    var prNm = $.getUrlParam('prNm');
+    var msId = $.getUrlParam('msId');
+    var msNm = $.getUrlParam('msNm');
     var pagePath = '/search/v1/goods';
     var pageType = 'post';
     var dataParm = {};
@@ -30,7 +34,8 @@ var htmlPart = {
             <div class="bdg-row" style="position: relative">
                 <!--头部类目展示模块-->
                 <%include("/layout/menu.html"){} %>
-                <div class="search-category margin-top-20">
+
+                <div class="search-category" id="J_searchCategory">
                     <div class="panel-title">
                         <span>全部结果:</span>
                     </div>
