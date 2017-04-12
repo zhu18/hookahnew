@@ -34,11 +34,11 @@ public class PayController {
     }
 
     @RequestMapping(value = "/pay2", method = RequestMethod.GET)
-    public Object pay (Integer orderId){
+    public Object pay (String orderId){
         String reqHtml = null;
         try {
             //.findPayCoreByOrderSn(null);
-            reqHtml = payCoreService.doPay(23,"62cb01c71c4711e796c56a3b07101c5a");
+            reqHtml = payCoreService.doPay(orderId,"62cb01c71c4711e796c56a3b07101c5a");
         } catch (Exception e) {
             e.printStackTrace();
         }

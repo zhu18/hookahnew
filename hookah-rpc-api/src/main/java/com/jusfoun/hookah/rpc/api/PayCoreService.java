@@ -21,7 +21,7 @@ public interface PayCoreService extends GenericService<PayCore,String> {
 	 * @param orderId
 	 * @return
 	 */
-	public PayCore findPayCoreByOrderId(Integer orderId);
+	public PayCore findPayCoreByOrderId(String orderId);
 
 	/**处理请求参数
 	 * @param
@@ -43,7 +43,7 @@ public interface PayCoreService extends GenericService<PayCore,String> {
 	 * @return
 	 * @throws Exception
 	 */
-	public String doPay(Integer orderId, String userId) throws Exception;
+	public String doPay(String orderId, String userId) throws Exception;
 
 	public Pagination<PayCore> findPageByVo(PayCoreVo payCoreVo, int pageNo, int pageSize);
 
@@ -74,7 +74,7 @@ public interface PayCoreService extends GenericService<PayCore,String> {
 	 * @return
 	 * @throws Exception
 	 */
-	public String openUnionpay(Integer orderId, String accNo, String userId) throws Exception;
+	public String openUnionpay(String orderId, String accNo, String userId) throws Exception;
 
 	/**银联验签
 	 * @param requestParams
@@ -105,7 +105,7 @@ public interface PayCoreService extends GenericService<PayCore,String> {
 	 * @return
 	 * @throws Exception
 	 */
-	public String unionpayConsume(PayVo payVo, Integer orderId, String userId, String accNo, String smsCode) throws Exception;
+	public String unionpayConsume(PayVo payVo, String orderId, String userId, String accNo, String smsCode) throws Exception;
 
 	/**解除绑定
 	 * @param orderSn
