@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class EsTypesVo implements Serializable {
     private List<EsCategoryVo> categoryList;
-//    private List<GoodsAttrType> attrTypes;
+    private List<EsGoodsAttrVo> goodsAttrTypeList;
 
     public List<EsCategoryVo> getCategoryList() {
         return categoryList;
@@ -16,5 +16,13 @@ public class EsTypesVo implements Serializable {
 
     public void setCategoryList(List<EsCategoryVo> categoryList) {
         this.categoryList = categoryList;
+    }
+
+    public List<EsGoodsAttrVo> getGoodsAttrTypeList() {
+        return goodsAttrTypeList;
+    }
+
+    public void setGoodsAttrTypeList(List<EsGoodsAttrVo> goodsAttrTypeList) {
+        this.goodsAttrTypeList = goodsAttrTypeList;
     }
 }

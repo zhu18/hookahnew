@@ -39,8 +39,13 @@ public class EsGoods implements Serializable {
     @EsField(analyzeOpt= AnalyzeOpt.ANALYZED, analyzer= Analyzer.WHITESPACE,
             termVector= TermVector.OFFSETS, isStore = true, searchAnalyzer = Analyzer.WHITESPACE)
     private String catIds;
-    @EsField
-    private String attrId;
+    @EsField(fielddata = true)
+    private String[] attrId;
+    @EsField(analyzeOpt= AnalyzeOpt.ANALYZED, analyzer= Analyzer.WHITESPACE,
+            termVector= TermVector.OFFSETS, isStore = true, searchAnalyzer = Analyzer.WHITESPACE)
+    private String attrIds;
+    @EsField(fielddata = true)
+    private String[] attrTypeId;
     @EsField
     private String goodsArea;
     @EsField(analyzeOpt= AnalyzeOpt.ANALYZED, analyzer= Analyzer.WHITESPACE,
@@ -126,14 +131,6 @@ public class EsGoods implements Serializable {
 
     public void setCatId(String catId) {
         this.catId = catId;
-    }
-
-    public String getAttrId() {
-        return attrId;
-    }
-
-    public void setAttrId(String attrId) {
-        this.attrId = attrId;
     }
 
     public Date getAddTime() {
@@ -222,5 +219,29 @@ public class EsGoods implements Serializable {
 
     public void setLastUpdateTimeKey(Date lastUpdateTimeKey) {
         this.lastUpdateTimeKey = lastUpdateTimeKey;
+    }
+
+    public String[] getAttrTypeId() {
+        return attrTypeId;
+    }
+
+    public void setAttrTypeId(String[] attrTypeId) {
+        this.attrTypeId = attrTypeId;
+    }
+
+    public String getAttrIds() {
+        return attrIds;
+    }
+
+    public void setAttrIds(String attrIds) {
+        this.attrIds = attrIds;
+    }
+
+    public String[] getAttrId() {
+        return attrId;
+    }
+
+    public void setAttrId(String[] attrId) {
+        this.attrId = attrId;
     }
 }
