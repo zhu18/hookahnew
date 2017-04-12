@@ -3,7 +3,9 @@ package com.jusfoun.hookah.webiste.shiro;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.rpc.api.RoleService;
+import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.oltu.oauth2.client.OAuthClient;
 import org.apache.oltu.oauth2.client.URLConnectionClient;
 import org.apache.oltu.oauth2.client.request.OAuthBearerClientRequest;
@@ -20,14 +22,14 @@ import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * @author huang lei
@@ -40,6 +42,9 @@ public class OAuth2Realm extends AuthorizingRealm {
 
     @Resource
     private RoleService roleService;
+
+    @Resource
+    private UserService userService;
 
     private String clientId;
     private String clientSecret;
@@ -84,9 +89,12 @@ public class OAuth2Realm extends AuthorizingRealm {
         if (principals == null) {
             throw new OAuth2AuthenticationException("PrincipalCollection method argument cannot be null.");
         }
-        HashMap<String,String> user = (HashMap<String,String>)principals.getPrimaryPrincipal();
-        String userId = user.get("userId");
-        Set<String> roleNames = roleService.selectRolesByUserId(userId);
+        Session session = SecurityUtils.getSubject().getSession();
+        String userName = (String)principals.getPrimaryPrincipal();
+        List<Condition> filters = new ArrayList();
+        filters.add(Condition.eq("userName", userName));
+        User user = userService.selectOne(filters);
+        Set<String> roleNames = roleService.selectRolesByUserId(user.getUserId());
 //        String username = (String) getAvailablePrincipal(principals);
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo(roleNames);
         return authorizationInfo;
@@ -136,7 +144,9 @@ public class OAuth2Realm extends AuthorizingRealm {
             Map<String,String> user = new HashMap<String,String>();
             user.put("userId",jsonObject.getString("userId"));
             user.put("userName",jsonObject.getString("userName"));
-            SecurityUtils.getSubject().getSession().setAttribute("user",user);
+            Session s = SecurityUtils.getSubject().getSession();
+            Serializable id = s.getId();
+            s.setAttribute("user",user);
             return user;
         } catch (Exception e) {
             logger.error(e.toString());
