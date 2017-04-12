@@ -1524,7 +1524,16 @@ select {
 label.control-label {
   font-weight: normal;
   font-size: 12px;
-  color: #666
+  color: #666;
+  position: relative;
+}
+
+label.control-label .must {
+  display: inline-block;
+  position: absolute;
+  right: 5px;
+  line-height: 20px;
+  color: #ff4902;
 }
 
 .form-inline .form-group {
