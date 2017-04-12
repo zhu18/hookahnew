@@ -1,6 +1,8 @@
 package com.jusfoun.hookah.webiste.interceptor;
 
 import com.jusfoun.hookah.core.domain.Help;
+import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.rpc.api.HelpService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.UnavailableSecurityManagerException;
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 

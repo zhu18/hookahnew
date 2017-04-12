@@ -90,16 +90,9 @@ public class OAuth2Realm extends AuthorizingRealm {
             throw new OAuth2AuthenticationException("PrincipalCollection method argument cannot be null.");
         }
         Session session = SecurityUtils.getSubject().getSession();
-        String userName = (String)principals.getPrimaryPrincipal();
-        List<Condition> filters = new ArrayList();
-        filters.add(Condition.eq("userName", userName));
-        User user = userService.selectOne(filters);
-        Set<String> roleNames = roleService.selectRolesByUserId(user.getUserId());
-//        String username = (String) getAvailablePrincipal(principals);
-        Map<String,String> userMap = new HashMap<String,String>();
-        userMap.put("userId",user.getUserId());
-        userMap.put("userName",user.getUserName());
-        session.setAttribute("user",userMap);
+        Map<String,String> user = (Map<String,String>)session.getAttribute("user");
+
+        Set<String> roleNames = roleService.selectRolesByUserId(user.get("userId"));
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo(roleNames);
         return authorizationInfo;
     }
