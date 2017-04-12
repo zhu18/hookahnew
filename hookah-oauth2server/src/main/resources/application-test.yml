@@ -70,12 +70,12 @@ myconf:
   beetl:
     templatesPath: views/
     contentType: text/html;charset:UTF-8
-    prefix:
+    prefix: /
     suffix: .html
     cache: false
   host:
-    website: ${server.http.protocal}www.hookah.test
-    static: ${server.http.protocal}static.hookah.test
-    auth: ${server.http.protocal}auth.hookah.test
-    console: ${server.http.protocal}console.hookah.test
+    website: ${server.http.protocal}www.hookah.app
+    static: ${server.http.protocal}static.hookah.app
+    auth: ${server.http.protocal}auth.hookah.app
+    console: ${server.http.protocal}console.hookah.app
 debug: true

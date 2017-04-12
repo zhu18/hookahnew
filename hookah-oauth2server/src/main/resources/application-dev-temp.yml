@@ -70,7 +70,7 @@ myconf:
   beetl:
     templatesPath: views/
     contentType: text/html;charset:UTF-8
-    prefix:
+    prefix: /
     suffix: .html
     cache: false
   host:
