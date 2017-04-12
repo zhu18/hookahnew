@@ -27,8 +27,8 @@
 
   <!-- 会话Cookie模板 -->
   <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
-    <constructor-arg value="hookah_sid"/>
-    <property name="domain" value="hookah.app"/>
+    <constructor-arg value="${server.session.cookie.name}"/>
+    <property name="domain" value="${server.session.cookie.domain}"/>
     <property name="httpOnly" value="true"/>
     <property name="maxAge" value="-1"/>
   </bean>

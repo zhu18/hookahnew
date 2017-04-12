@@ -2,6 +2,10 @@ server:
   port: 9900
   http:
       protocal: http://
+  session:
+    cookie:
+      domain: hookah.app
+      name: hookah_sid
 spring:
   datasource:
     url: jdbc:log4jdbc:mysql://192.168.15.90:3306/hookah?characterEncoding=utf8&useSSL=false&autoReconnect=true&failOverReadOnly=false&autoReconnectForPools=true
