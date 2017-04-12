@@ -200,15 +200,16 @@
     margin:40px 0;
 }
 .auth-info .auth-submit .button {
-width: 366px;
-height: 42px;
-line-height: 42px;
-text-align: center;
-background: #247DE8;
--moz-border-radius: 5px;
-border-radius: 5px;
-color: #fff;
-margin: 0 auto;
+    width: 366px;
+    height: 42px;
+    line-height: 42px;
+    text-align: center;
+    background: #247DE8;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    color: #fff;
+    margin: 0 auto;
+    cursor: pointer;
 }
 /*认证信息结束*/
 .auth-content .auth-verify .steps{
