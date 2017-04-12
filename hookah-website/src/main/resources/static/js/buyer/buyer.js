@@ -5,7 +5,6 @@
 $(function(){
     $(".all").on("click","li",function(){
         var index = $(this).siblings().removeClass("active").end().addClass("active").index();
-        console.log(index);
         $(".list").hide().eq(index).show();
     })
 })
