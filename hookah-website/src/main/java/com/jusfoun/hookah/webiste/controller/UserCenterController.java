@@ -1,11 +1,16 @@
 package com.jusfoun.hookah.webiste.controller;
 
+import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.domain.UserDetail;
 import com.jusfoun.hookah.rpc.api.*;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 
 /**
  * @author huang lei
@@ -18,14 +23,24 @@ public class UserCenterController {
 
     @Resource
     SysNewsService sysNewsService;
+
     @Resource
     CategoryService categoryService;
+
     @Resource
     MgCategoryAttrTypeService mgCategoryAttrTypeService;
+
     @Resource
     GoodsService goodsService;
+
     @Resource
     MgGoodsService mgGoodsService;
+
+    @Resource
+    UserService userService;
+
+    @Resource
+    UserDetailService userDetailService;
 
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
@@ -34,7 +49,8 @@ public class UserCenterController {
     }
 
     @RequestMapping(value = "/userProfile", method = RequestMethod.GET)
-    public String userProfile() {
+    public String userProfile(Model model) {
+
         return "usercenter/userInfo/userProfile";
     }
 
@@ -43,10 +59,10 @@ public class UserCenterController {
         return "usercenter/userInfo/infoCenter";
     }
 
-    @RequestMapping(value = "/infoDetail", method = RequestMethod.GET)
-    public String infoDetail() {
-        return "usercenter/userInfo/infoDetail";
-    }
+//    @RequestMapping(value = "/infoDetail", method = RequestMethod.GET)
+//    public String infoDetail() {
+//        return "usercenter/userInfo/infoDetail";
+//    }
 
     @RequestMapping(value = "/fundmanage", method = RequestMethod.GET)
     public String fundmanage() {
@@ -63,8 +79,19 @@ public class UserCenterController {
         return "/usercenter/userInfo/withdrawals";
     }
 
+    /**
+     * 安全设置
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/safeSet", method = RequestMethod.GET)
-    public String safeSet() {
+    public String safeSet(Model model) {
+        HashMap<String, String> o = (HashMap<String, String>) SecurityUtils.getSubject().getPrincipal();
+        String userId = o.get("userId");
+        User user = userService.selectById(userId);
+        UserDetail userDetail = userDetailService.selectById(userId);
+        model.addAttribute("userCur",user);
+        model.addAttribute("userDetail",userDetail);
         return "usercenter/userInfo/safeSet";
     }
 

@@ -7,7 +7,6 @@ import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.vo.CartVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
-import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.rpc.api.CartService;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import org.springframework.beans.BeanUtils;
@@ -69,8 +68,8 @@ public class CartServiceImpl extends GenericServiceImpl<Cart, String> implements
     }
 
     @Override
-    public List<CartVo> selectDetailList(List<Condition> filters, List<OrderBy> orderBys) throws  Exception {
-        List<Cart> carts = super.selectList(filters,orderBys);
+    public List<CartVo> selectDetailList(List<Condition> filters) throws  Exception {
+        List<Cart> carts = super.selectList(filters);
         List<CartVo> cartVos = new ArrayList<>(carts.size());
         Goods goods = null;
         for(Cart cart:carts){

@@ -1,8 +1,6 @@
 class UserController {
   constructor($scope, $rootScope,$http, $uibModal, usSpinnerService,growl) {
-    console.log($rootScope.config);
-
-
+    $scope.title = '用户查询';
     $scope.search = function(){
       var promise = $http({
         method: 'GET',

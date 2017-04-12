@@ -53,7 +53,7 @@ public class OrderInfoController extends BaseController {
         try {
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.in("recId",cartIds));
-            List<CartVo> carts = cartService.selectDetailList(filters,null);
+            List<CartVo> carts = cartService.selectDetailList(filters);
             model.addAttribute("cartList",carts);
             return "order/orderInfo";
         }catch (Exception e){

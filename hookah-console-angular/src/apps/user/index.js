@@ -40,9 +40,13 @@ app.run(function ($rootScope, $state) {
       "title":"用户查询",
       "url":"user.search"
     },
+    // {
+    //   "title":"新增用户",
+    //   "url":"user.add"
+    // },
     {
-      "title":"新增用户",
-      "url":"user.add"
+      "title":"待审核",
+      "url":"user.verify.all"
     }
   ];
 
