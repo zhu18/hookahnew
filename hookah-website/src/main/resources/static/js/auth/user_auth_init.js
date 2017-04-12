@@ -7,6 +7,7 @@ $("#next").click(function(){
     if($("#check").is(":checked")){
         $(this).attr("href","./user_auth_init_step2");
     }else{
-
+        $(this).attr("href","#");
+        alert("请您勾选我已阅读并同意按钮！");
     }
 });

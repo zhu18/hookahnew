@@ -1,7 +1,10 @@
 package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.common.Pagination;
+import com.jusfoun.hookah.core.domain.Cart;
+import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.OrderInfo;
+import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
 import com.jusfoun.hookah.core.domain.vo.CartVo;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.exception.HookahException;
@@ -49,13 +52,27 @@ public class OrderInfoController extends BaseController {
     }
 
     @RequestMapping(value = "/order/orderInfo", method = RequestMethod.POST)
-    public String orderInfo(String cartIdStr,Model model) {
-        logger.info("结算购物车列表:{}",cartIdStr);
+    public String orderInfo(String[] cartIds,Model model) {
         try {
-            String[] cartIds = cartIdStr.trim().split(",");
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.in("recId",cartIds));
             List<CartVo> carts = cartService.selectDetailList(filters);
+            List<MgOrderGoods> ordergoodsList = null;
+            Long goodsAmount = new Long(0);
+            if(carts!=null&&carts.size()>0) {
+
+                for (Cart cart : carts) {
+                    //验证商品是否下架
+                    Goods g = goodsService.selectById(cart.getGoodsId());
+                    if (g.getIsOnsale() == null || g.getIsOnsale() != 1) {
+                        throw new HookahException("商品[" + g.getGoodsName() + "]未上架");
+                    }
+                    if (cart.getGoodsPrice() != null && cart.getGoodsNumber() != null) {
+                        goodsAmount += cart.getGoodsPrice() * cart.getFormatNumber() * cart.getGoodsNumber();  //商品单价 * 套餐内数量 * 购买套餐数量
+                    }
+                }
+            }
+            model.addAttribute("orderAmount",goodsAmount);
             model.addAttribute("cartList",carts);
             return "order/orderInfo";
         }catch (Exception e){
