@@ -43,8 +43,8 @@ public class UploadUtil {
                 File localFile = new File(tmpPath + fileName);
                 file.transferTo(localFile);
             }
-            String filePath1 = tmpPath + fileName;
-            list.add(new UploadResult(fileName, filePath1, url + datePath + "/" + fileName));
+            String filePath1 = datePath + "/" + fileName;
+            list.add(new UploadResult(fileName, filePath1, url + filePath1));
         }
         return list;
     }
