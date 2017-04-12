@@ -97,6 +97,8 @@
         /userInfo* = anon
         /clients* = anon
         /client/** = anon
+        /verify** = authc
+        /verify/** = authc
         /logout = logout
         # admin role
         #/admin/** = authc, role["Admin"]
