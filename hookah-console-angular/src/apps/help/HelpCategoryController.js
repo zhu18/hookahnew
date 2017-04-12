@@ -1,7 +1,5 @@
 class HelpCategoryController {
   constructor($scope, $rootScope, $http, $uibModal, usSpinnerService, growl) {
-    console.log($rootScope.config);
-
     $scope.search = function () {
       var promise = $http({
         method: 'GET',
@@ -11,7 +9,6 @@ class HelpCategoryController {
       promise.then(function (res, status, config, headers) {
         $rootScope.loadingState = false;
         // $scope.sysAccount = res.data.data;
-        console.log($rootScope.pagination);
         // $rootScope.pagination.store =
         growl.addSuccessMessage("数据加载完毕。。。");
       });
@@ -21,6 +18,18 @@ class HelpCategoryController {
     };
     $scope.edit = function (event, item) {
       console.log(item);
+    };
+    $scope.delete = function (event,item){
+      console.log(item);
+      var promise = $http({
+        method: 'POST',
+        url: $rootScope.site.apiServer + "/api/help/category/delete/"+item.helpId
+      });
+      promise.then(function (res, status, config, headers) {
+        $rootScope.loadingState = false;
+        growl.addSuccessMessage("数据加载完毕。。。");
+        $scope.search();
+      });
     };
     $scope.saveCategory = function () {
       var promise = $http({

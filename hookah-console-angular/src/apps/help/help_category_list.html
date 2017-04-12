@@ -73,13 +73,13 @@
                 <span class="" ng-bind="item.addTime"></span>
               </td>
               <td class="text-right">
-                <a href="javascript:;" ng-click="editProduct($event,item)">修改</a>
+                <a href="javascript:;" ng-click="edit($event,item)">修改</a>
                 <span class="text-explode">|</span>
                 <i class="link-space"></i>
-                <a href="javascript:;" target="_blank">删除</a>
-                <span class="text-explode">|</span>
-                <i class="link-space"></i>
-                <a href="javascript:;" target="_blank">关闭</a>
+                <a href="javascript:;" target="_blank" ng-click="delete($event,item)">删除</a>
+                <!--<span class="text-explode">|</span>-->
+                <!--<i class="link-space"></i>-->
+                <!--<a href="javascript:;" target="_blank">关闭</a>-->
               </td>
             </tr>
             </tbody>
