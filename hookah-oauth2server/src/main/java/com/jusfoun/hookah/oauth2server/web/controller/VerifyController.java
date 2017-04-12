@@ -16,6 +16,6 @@ public class VerifyController {
     @RequestMapping(value = "/verify", method = RequestMethod.GET)
     public String search(Model model) {
         model.addAttribute("title","验证身份");
-        return "edits/verify";
+        return "modify/verify";
     }
 }

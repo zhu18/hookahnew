@@ -1,3 +1,10 @@
+@font-face {
+	font-family: rei;
+	src: url(/static/css/rei/rei.eot);
+	src: url(/static/css/rei/rei.eot?#iefix) format("embedded-opentype"), url(/static/css/rei/rei.woff) format("woff"), url(/static/css/rei/rei.ttf) format("truetype"), url(/static/css/rei/rei.svg#rei) format("svg");
+	font-weight: 400;
+	font-style: normal
+}
 #content {
 	width: 100%;
 	min-height: 500px;
@@ -99,9 +106,9 @@
 	line-height: 14px;
 	font-style: normal;
 	position: absolute;
-	top: 7px;
+	top: 9px;
 	left: 0;
-	padding: 0 20px;
+	padding: 0 21px;
 	font-weight: 700;
 	color: #fff;
 }
@@ -135,4 +142,272 @@
 	text-align: center;
 	left: -25px;
 	font-family: tahoma;
+}
+.ui-step-end .ui-step-number {
+	background: transparent;
+	font-size: 12px;
+	font-style: normal;
+	left: 18px;
+	line-height: 12px;
+	padding: 0;
+	text-shadow: none;
+	top: 10px;
+}
+.ui-step-end .ui-step-number {
+	background: transparent;
+}
+.maincenter-box {
+	padding: 20px 0;
+	background-color: #fff;
+}
+body .ft-orange {
+	color: #f40;
+}
+.ui-form {
+	font-size: 12px;
+	line-height: 1.5;
+}
+.ui-form, .ui-form * {
+	list-style: none;
+}
+.maincenter .ui-form {
+	margin-top: 30px;
+	color: #6c6c6c;
+}
+.ui-form-item {
+	padding: 0 5px 20px 190px;
+	zoom: 1;
+}
+.ui-form-item:after {
+	clear: both;
+	content: '.';
+	display: block;
+	height: 0;
+	visibility: hidden;
+}
+.ui-label {
+	float: left;
+	width: 210px;
+	margin-left: -220px;
+	padding-top: 5px;
+	text-align: right;
+	font-size: 14px;
+}
+.ui-form-item input {
+	vertical-align: middle;
+}
+.ui-form-text {
+	display: inline-block;
+	margin-top: 6px;
+}
+a:link {
+	color: #f40;
+}
+a:hover, a:visited {
+	color: #f40;
+	text-decoration: underline;
+}
+.checkcode-warp {
+	position: relative;
+	width: 300px;
+}
+.ui-input {
+	width: 190px;
+	padding: 8px 9px;
+	line-height: 18px;
+	border: 1px solid #ddd;
+	color: #595959;
+	font-size: 12px;
+}
+.ui-input-checkcode-new {
+	border: 1px solid #ddd;
+	height: 24px;
+	line-height: 24px;
+	padding: 5px 10px;
+	width: 278px;
+}
+.ui-form-item input {
+	vertical-align: middle;
+}
+.ui-form-item .ui-input {
+	font-size: 12px;
+	color: #6C6C6C;
+	vertical-align: middle;
+}
+.checkcode-warp .getcheckcode {
+	position: absolute;
+	right: 10px;
+	top: 9px;
+	background: #fff;
+	border: 0;
+	cursor: pointer;
+}
+.ui-tiptext-success .ui-tiptext-icon {
+	color: #b5de70;
+}
+.ui-form-explain {
+	margin: 0;
+	font-size: 12px;
+	color: #B2B2B2;
+}
+.ui-button {
+	display: inline-block;
+	text-align: center;
+	text-decoration: none;
+	vertical-align: middle;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: 700;
+	border-radius: 2px;
+	padding: 0 20px;
+	background-image: none;
+}
+.ui-button-lorange, .ui-button-morange, .ui-button-sorange {
+	color: #fff;
+	border: 1px solid #f40;
+	background-color: #f40;
+}
+.ui-button-lorange {
+	line-height: 36px;
+	height: 36px;
+	min-width: 150px;
+}
+.ui-form-item input {
+	vertical-align: middle;
+}
+.ui-tiptext-icon {
+	display: inline-block;
+}
+.ui-tiptext .iconfont, .ui-form-item .iconfont {
+	font-size: 1.33em;
+	line-height: 1em;
+	text-shadow: 0 1px 0 #fff;
+	position: relative;
+	top: 2px;
+	margin-right: 2px;
+}
+.ui-tiptext-message .ui-tiptext-icon {
+	color: #68b5e2;
+}
+.ui-form-item-error .ui-form-explain, .ui-form-item-error .ui-form-explain .iconfont {
+	color: #FF5243;
+}
+.ui-step .ui-step-done .ui-step-line {
+	background: #f40;
+}
+.ui-step .ui-step-done .iconfont {
+	color: #f40;
+}
+.ui-tipbox {
+	position: relative;
+	zoom: 1;
+	font-size: 12px;
+	line-height: 22px;
+}
+.ui-tipbox-success {
+	border: 1px solid #E1E1CA;
+	background: #edfed0;
+}
+.ui-tipbox .ui-tipbox-icon {
+	background: #fff;
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	top: 22px;
+	left: 48px;
+}
+.ui-tipbox-icon .iconfont {
+	font-size: 36px;
+	position: absolute;
+	top: -7px;
+	left: -7px;
+	width: 32px;
+	height: 32px;
+	line-height: 36px;
+	text-shadow: 0 1px 0 #fff;
+}
+.ui-tipbox-success .ui-tipbox-icon .iconfont {
+	color: #b5de70;
+}
+.ui-tipbox-content {
+	margin: 14px 0 14px 87px;
+}
+.ui-tipbox-content .ui-tipbox-title {
+	margin: 0;
+	padding: 0;
+}
+.ui-tipbox-content h3.ui-tipbox-title, .ui-tipbox-content-simple h3.ui-tipbox-title {
+	color: #333;
+	font-size: 16px;
+	font-weight: 700;
+}
+.ui-tipbox-explain {
+	margin: 0;
+	padding: 0;
+	color: gray;
+}
+.ui-form-item-error .ui-input, .ui-form-item-error .ui-textarea {
+	border: 1px #ff6749 solid;
+	color: red;
+}
+.maincenter-box-tip {
+	display: block;
+	padding-bottom: 10px;
+}
+body .ft-14 {
+	font-size: 14px;
+}
+.maincenter-box-tip .ui-tiptext {
+	font-size: 14px;
+}
+.bottom-tips {
+	background-color: #fffbed;
+	border: 1px solid #f9efd3;
+	padding: 30px 30px 15px;
+}
+.bottom-tips .bottom-tips-title {
+	color: #646565;
+	font-size: 14px;
+	line-height: 14px;
+	font-weight: 700;
+}
+.ui-list {
+	margin: 0;
+	padding: 10px 0;
+	list-style: square inside;
+}
+.ui-list-nosquare {
+	list-style: none;
+}
+.ui-list-item {
+	font-size: 9px;
+	line-height: 22px;
+	color: #08c;
+}
+.ui-list-item {
+	color: #737373;
+}
+.ui-list-item-text {
+	font-size: 12px;
+}
+.ui-form-item select {
+	vertical-align: middle;
+	margin: 4px 0 0;
+}
+.ui-form-item select {
+	height: 22px;
+}
+.maincenter .ui-select-trigger {
+	background: url(https://gtms03.alicdn.com/tps/i3/TB11acLLXXXXXbrXXXXoI1ZFVXX-30-40.png) right -10px no-repeat;
+	display: inline-block;
+	border: 1px solid #ddd;
+	text-decoration: none;
+	line-height: 34px;
+	height: 34px;
+	color: #6C6C6C;
+	cursor: pointer;
+	padding: 0 29px 0 10px;
+	background-repeat: no-repeat;
+	overflow: hidden;
+	vertical-align: top;
 }
