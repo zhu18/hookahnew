@@ -16,6 +16,12 @@ $(function () {
                 });
         })
     }
+    function hotSwitchHover() {
+        $('.hot-resource-down .hot-down-rank ul li').hover(function () {
+            $(this).addClass('active').siblings().removeClass('active');
+            $(this).children().removeClass('li-rank').parent().siblings().children().addClass("li-rank")
+        })
+    }
         //要做实现找人
         var box = $(".exchange-industry-resource .industry-resource-down");
         var screen = $(".screen");
@@ -44,9 +50,6 @@ $(function () {
         console.log(ul.width());
         console.log(len);
         console.log(liWidth);
-
-
-
         // playNext();
     });
     arrLeft.on('click',function () {
@@ -123,7 +126,6 @@ $(function () {
             }, 15)
         }
 
-
-    // carousel();
+    hotSwitchHover();
     switchHover();
 });
