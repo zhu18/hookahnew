@@ -111,10 +111,10 @@ public class UploadfileController {
     @RequestMapping(value="wangeditor", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseBody
     public String upload(HttpServletRequest request, @RequestParam("filename") MultipartFile[] myfiles) {
-        String url = "http://";
+        String url = "";
         try {
             List<UploadResult> results = UploadUtil.uploadFile(request, myfiles);
-            url += results.get(0).getAbsPath();
+            url = results.get(0).getAbsPath();
         } catch (HookahException e) {
             e.printStackTrace();
         } catch (IOException e) {
