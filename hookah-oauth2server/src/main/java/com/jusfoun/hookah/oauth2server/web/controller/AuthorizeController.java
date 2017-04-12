@@ -99,8 +99,12 @@ public class AuthorizeController {
                 builder.setCode(authCode);
                 //得到到客户端重定向地址
                 String req_redirectURI = oauthRequest.getParam(OAuth.OAUTH_REDIRECT_URI);
+                String backUrl = oauthRequest.getParam("backurl");
                 //客户端注册时配置的返回地址，内部系统不需要
 //                String redirectURI = oauthClient.getRedirectUri();
+                if(!StringUtils.isEmpty(backUrl)){
+                    builder.setParam("backurl",backUrl);
+                }
                 builder.setParam("redirect_uri",req_redirectURI);
                 //构建响应
                 final OAuthResponse oAuthResponse = builder.location(req_redirectURI).buildQueryMessage();

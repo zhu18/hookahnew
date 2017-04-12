@@ -1,5 +1,5 @@
 function loadPageData(data){ //渲染页面数据
-    if(data.data.list){
+	if(data.data.list){
         var list = data.data.list;
         var html = '';
         for(var i=0; i<list.length; i++){
@@ -25,6 +25,18 @@ function loadPageData(data){ //渲染页面数据
         }
         $('.order-list ul').html(html);
     }
+}
+if(prId){
+	var html = '';
+	html += '<div class="crumbs-nav margin-top-20 padding-bottom-10" id="J_crimbsNav">';
+	if(msId){
+		html += '分类：<a href="/exchange/list?catId='+prId+'&prId='+prId+'&prNm='+prNm+'">'+prNm+'</a><span class="fa fa-angle-right margin-left-5 margin-right-5"></span><span class="color-blue">'+msNm+'</span></div>';
+    }else{
+		html += '分类：<span class="color-blue">'+prNm+'</span></div>';
+    }
+	$('#J_searchCategory').before(html)
+}else{
+	$('#J_searchCategory').addClass('margin-top-20')
 }
 
 

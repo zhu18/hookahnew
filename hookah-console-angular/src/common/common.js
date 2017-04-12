@@ -1,10 +1,15 @@
-var config ={
-  user:"",
-  site:{
-    apiServer:"http://console.hookah.app"
+var config = {
+  user: "",
+  site: {
+    adminServer: "http://admin.hookah.app",
+    apiServer: "http://console.hookah.app",
+    websiteServer: "http://www.hookah.app",
+    authServer: "http://auth.hookah.app",
+    staticServer: "http://static.hookah.app"
   },
-  url:{
-    loginUrl:"http://auth.hookah.app/oauth/authorize?client_id=admin&response_type=code&redirect_uri="
+  url: {
+    loginUrl: "http://auth.hookah.app/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://console.hookah.app/login&backurl=",
+    uploadUrl: "http://static.hookah.app/upload/fileUpload"
   }
 };
 angular.element(document).ready(function () {
@@ -16,7 +21,7 @@ angular.element(document).ready(function () {
   // 手动加载模块
   $.ajax({
     type: "GET",
-    url: config.site.apiServer+"/api/auth/current_user",
+    url: config.site.apiServer + "/api/auth/current_user",
     success: function (data) {
       config.user = data.data;
       angular.element(document).ready(function () {
@@ -25,11 +30,11 @@ angular.element(document).ready(function () {
     },
     error: function (XMLHttpRequest, textStatus, errorThrown) {
       var currUrl = window.location;
-      // console.log(currUrl);
+      console.log(currUrl);
       //TODO...
       console.log(XMLHttpRequest);
       if (401 === XMLHttpRequest.status) {
-        // window.location.href = "http://auth.hookah.app/oauth/authorize?client_id=admin&response_type=code&redirect_uri=" + currUrl;
+        window.location.href = config.url.loginUrl + currUrl;
       }
     }
   });
@@ -50,9 +55,9 @@ export default angular.module('Common', [
   'angularSpinner',
   // tooltip,pagination,modal
 ])
-  .constant('apiServer', {
-    "admin": "http://console.hookah.app",
-  })
+// .constant('apiServer', {
+//   "admin": config.site.apiServer,
+// })
   .constant('loginUrl', "http://auth.hookah.app/oauth/authorize?client_id=test&response_type=code&redirect_uri=")
   .config(['growlProvider', function (growlProvider) {
     /**
@@ -106,7 +111,7 @@ export default angular.module('Common', [
   })
   .filter('shopStatus', function () {
     return function (input) {
-      switch(input) {
+      switch (input) {
         case 1:
           return '正常营业';
           break;
@@ -120,7 +125,7 @@ export default angular.module('Common', [
   })
   .filter('newsGroup', function () {
     return function (input) {
-      switch(input) {
+      switch (input) {
         case 'innovation':
           return '双创中心';
           break;
@@ -139,7 +144,7 @@ export default angular.module('Common', [
   })
   .filter('UserType', function () {
     return function (input) {
-      switch(input) {
+      switch (input) {
         case 0:
           return '系统';
           break;
@@ -165,6 +170,7 @@ export default angular.module('Common', [
   .run(function ($rootScope) {
     // console.log("common init..");
     $rootScope.user = config.user;
+    $rootScope.url = config.url;
     $rootScope.site = config.site;
   });
 function HttpInterceptor($q, $rootScope, $location, $window) {
@@ -186,7 +192,7 @@ function HttpInterceptor($q, $rootScope, $location, $window) {
       var time = res.config.responseTimestamp - res.config.requestTimestamp;
       console.log('The request took ' + (time / 1000) + ' seconds.');
       // console.log(res);
-      if(res.data.data != null){
+      if (res.data.data != null) {
         if (res.data.data !== undefined && res.data.data.totalItems) {
           $rootScope.pagination.store = res.data.data.list;
           $rootScope.pagination.currentPage = res.data.data.currentPage;
