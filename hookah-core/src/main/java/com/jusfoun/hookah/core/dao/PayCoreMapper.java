@@ -16,8 +16,6 @@ import java.util.List;
 
 
 public interface PayCoreMapper extends GenericDao<PayCore> {
-	@Select("select * from pay_core where order_id = #{orderId}")
-	List<PayCore> getPayCoreByOrderId(@Param("orderId") Integer orderId);
 
 	/*@Update("update pay_core set pay_status=#{payStatus},trade_no=#{tradeNo} where order_sn=#{orderSn}")*/
 	void updatePayStatusAndTradeNo(PayCore pay);

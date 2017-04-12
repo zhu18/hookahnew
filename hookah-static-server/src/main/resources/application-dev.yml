@@ -1,0 +1,21 @@
+server:
+  port: 9600
+  http:
+    protocal: http://
+myconf:
+  host:
+    website: ${server.http.protocal}www.hookah.app
+    static: ${server.http.protocal}static.hookah.app
+    auth: ${server.http.protocal}auth.hookah.app
+    console: ${server.http.protocal}console.hookah.app
+debug: true
+spring:
+  data:
+    mongodb:
+      uri:  mongodb://192.168.15.90:27017/hookah
+  mvc:
+      static-path-pattern: /static/**
+upload:
+  file-path: /webapp/static/
+  replace-path: /target
+  url: http://localhost:9600/

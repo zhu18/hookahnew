@@ -2,28 +2,32 @@ server:
   port: 9000
   http:
     protocal: http://
+  session:
+    cookie:
+      domain: hookah.app
+      name: hookah_sid
 myconf:
   beetl:
-    templatesPath: views/default/
+    templatesPath: views/
     contentType: text/html;charset:UTF-8
-    prefix:
+    prefix: /
     suffix: .html
     cache: false
 
   host:
-    website: ${server.http.protocal}www.hookah.test
-    static: ${server.http.protocal}static.hookah.test
-    auth: ${server.http.protocal}auth.hookah.test
-    console: ${server.http.protocal}console.hookah.test
+    website: ${server.http.protocal}www.hookah.app
+    static: ${server.http.protocal}static.hookah.app
+    auth: ${server.http.protocal}auth.hookah.app
+    console: ${server.http.protocal}console.hookah.app
   oauth2:
     clientId: website
     clientSecret: Yqn2ht4DYkMHlDvTY7CV
-    regUrl: http://auth.hookah.test/reg
-    loginUrl: http://auth.hookah.test/oauth/authorize?client_id=website&response_type=code&redirect_uri=http://www.hookah.test/login
-    logoutUrl: http://auth.hookah.test/logout?redirect_uri=http://www.hookah.test/login
-    accessTokenUrl: http://auth.hookah.test/oauth/accessToken
-    userInfoUrl: http://auth.hookah.test/userInfo
-    redirectUrl: http://auth.hookah.test/login
+    regUrl: http://auth.hookah.app/reg
+    loginUrl: http://auth.hookah.app/oauth/authorize?client_id=website&response_type=code&redirect_uri=http://www.hookah.app/login
+    logoutUrl: http://auth.hookah.app/logout?redirect_uri=http://www.hookah.app/login
+    accessTokenUrl: http://auth.hookah.app/oauth/accessToken
+    userInfoUrl: http://auth.hookah.app/userInfo
+    redirectUrl: http://auth.hookah.app/login
 debug: true
 spring:
   data:
@@ -31,6 +35,7 @@ spring:
       uri:  mongodb://192.168.15.90:27017/hookah
   mvc:
       static-path-pattern: /static/**
+
 redis:
   ip: 192.168.15.90
   port: 6379
@@ -42,3 +47,5 @@ redis:
     maxIdle: 200
     #当调用borrow Object方法时，是否进行有效性检查
     testOnBorrow: false
+
+

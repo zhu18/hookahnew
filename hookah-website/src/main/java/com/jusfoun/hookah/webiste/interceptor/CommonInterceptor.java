@@ -42,7 +42,6 @@ public class CommonInterceptor implements HandlerInterceptor {
             if (subject != null && subject.isAuthenticated()) {
                 if (!ajax) {
                     Session session = subject.getSession();
-                    Serializable sessionId = session.getId();
                     Map user = (Map)session.getAttribute("user");
                     Map<String, Object> model = modelAndView.getModel();
                     model.put("user", user);

@@ -48,8 +48,10 @@ public class PayCore extends GenericModel {
 
 	private String userId;
 	private Date payDate;
-	private Integer orderId;
+	private String orderId;
+
 	/** 订单编号*/
+
 	private String orderSn;
 	/** 支付方式代码*/
 	private String payMode;
@@ -68,13 +70,12 @@ public class PayCore extends GenericModel {
 	
 	public PayCore(){}
 
-	public Integer getOrderId() {
+	public String getOrderId() {
 		return orderId;
 	}
 
-	public PayCore setOrderId(Integer orderId) {
+	public void setOrderId(String orderId) {
 		this.orderId = orderId;
-		return this;
 	}
 
 	public String getOrderSn() {
