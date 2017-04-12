@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.server;
+package com.jusfoun.hookah.staticserver;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

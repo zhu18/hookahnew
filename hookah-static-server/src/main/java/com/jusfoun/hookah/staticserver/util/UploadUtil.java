@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.server.util;
+package com.jusfoun.hookah.staticserver.util;
 
 import com.jusfoun.hookah.core.domain.UploadResult;
 import com.jusfoun.hookah.core.exception.HookahException;
@@ -20,7 +20,6 @@ public class UploadUtil {
     private static String filePath = PropertiesManager.getInstance().getProperty("upload.filepath");
     private static String url = PropertiesManager.getInstance().getProperty("upload.url");
 
-
     public static List<UploadResult> uploadFile(HttpServletRequest request, MultipartFile[] files) throws HookahException, IOException {
         if (files.length <= 0)
             throw new HookahException("未找到上传文件！");
@@ -36,11 +35,7 @@ public class UploadUtil {
             String datePath = DateUtils.toDateText(new Date(), "yyyyMMdd");
             //如果名称不为“”,说明该文件存在，否则说明该文件不存在
             if (fileName.trim() != "") {
-                //TODO 这里文件路径有问题，需要更正判断文件夹是否存在，如果不存在新建文件夹
-//                pathReal = Class.class.getClass().getResource("/").getPath().replace("/target/classes", "/resources")
-
                 tmpPath = filePath + datePath + "/";
-                System.out.println("======url=========" + tmpPath);
                 File pathFile = new File(tmpPath);
                 if (!pathFile.exists() && !pathFile.isDirectory()) {
                     pathFile.mkdirs();
