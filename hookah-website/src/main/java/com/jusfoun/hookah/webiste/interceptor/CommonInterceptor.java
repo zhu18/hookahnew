@@ -1,9 +1,12 @@
 package com.jusfoun.hookah.webiste.interceptor;
 
 import com.jusfoun.hookah.core.domain.Help;
+import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.rpc.api.HelpService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.UnavailableSecurityManagerException;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -12,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -36,8 +41,10 @@ public class CommonInterceptor implements HandlerInterceptor {
             Subject subject = SecurityUtils.getSubject();
             if (subject != null && subject.isAuthenticated()) {
                 if (!ajax) {
+                    Session session = subject.getSession();
+                    Map user = (Map)session.getAttribute("user");
                     Map<String, Object> model = modelAndView.getModel();
-                    model.put("user", subject.getPrincipal());
+                    model.put("user", user);
                 }
 
             }

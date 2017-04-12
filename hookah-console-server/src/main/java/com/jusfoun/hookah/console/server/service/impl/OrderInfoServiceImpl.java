@@ -10,6 +10,7 @@ import com.jusfoun.hookah.core.domain.OrderInfo;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
+import com.jusfoun.hookah.core.domain.vo.PayVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
@@ -25,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -284,4 +286,32 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         logger.info(JSONUtils.toString(pagination));
         return pagination;
     }
+
+    @Override
+    public PayVo getPayParam(String orderId) {
+        OrderInfo orderInfo = orderinfoMapper.selectByPrimaryKey(orderId);
+        if(orderInfo!=null){
+            PayVo payVo = new PayVo();
+            payVo.setOrderSn(orderInfo.getOrderSn());
+            payVo.setPayId(Integer.parseInt(orderInfo.getPayId()));
+            BigDecimal totalFee = new BigDecimal(orderInfo.getGoodsAmount());
+            payVo.setTotalFee(totalFee);
+            /*OrderGoods t = new OrderGoods();
+            t.setOrderId(orderId);
+            List<OrderGoods> list = orderGoodsService.list(t );
+            if(list!=null&&list.size()>0){
+                StringBuilder sb = new StringBuilder();
+                for(int i=0;i<list.size();i++){
+                    sb.append(list.get(i).getGoodsName());
+                    if(i<list.size()-1){
+                        sb.append(",");
+                    }
+                }
+                payVo.setOrderTitle(sb.toString());
+            }*/
+            return payVo;
+        }
+        return null;
+    }
+
 }

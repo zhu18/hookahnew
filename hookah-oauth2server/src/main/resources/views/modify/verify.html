@@ -1,0 +1,255 @@
+<%
+var head = {
+%>
+<link type="text/css" rel="stylesheet" href="/static/css/verify.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div id="content">
+	<div class="content-layout">
+		<div class="maincenter">
+			<ol class="ui-step ui-step-3" style="overflow: visible">
+				<li class="ui-step-start ui-step-active">
+					<div class="ui-step-line">-</div>
+					<div class="ui-step-icon">
+						<i class="iconfont">y</i>
+						<i class="ui-step-number">1</i>
+						<span class="ui-step-text">验证身份</span>
+					</div>
+				</li>
+				<li>
+					<div class="ui-step-line">-</div>
+					<div class="ui-step-icon">
+						<i class="iconfont">y</i>
+						<i class="ui-step-number">2</i>
+						<span class="ui-step-text">修改密码</span>
+					</div>
+				</li>
+
+				<li class="ui-step-end">
+					<div class="ui-step-line">-</div>
+					<div class="ui-step-icon">
+						<i class="iconfont">y</i>
+						<i class="iconfont ui-step-number"></i>
+						<span class="ui-step-text">完成</span>
+					</div>
+				</li>
+			</ol>
+
+			<div class="maincenter-box">
+				<div style="width: 80%;margin:0 auto;font-size: 14px;">
+					<label style="margin-right: 16px">手机验证码验证</label>账户 <em class="ft-orange">b********8</em>
+					为确认是你本人操，请完成以下验证
+					<hr style="height:1px;background: #b9b9b9;border:none;margin-top: 2px">
+				</div>
+
+				<form name="validateParams" method="POST" class="ui-form" id="J_Form" novalidate="novalidate"
+					  data-widget-cid="widget-0">
+					<input name="_tb_token_" type="hidden" value="ARR8XbK1Xq">
+					<input type="hidden" name="action" value="verify_action">
+					<input type="hidden" name="event_submit_do_validate" value="notNull">
+					<input type="hidden" name="_fm.v._0.t" value="8">
+					<input type="hidden" name="_fm.v._0.h" value="gyLNtRokTMmG8hIgOeSzYjNoFPme1NW7fH3DMkk73ww">
+					<input type="hidden" name="_fm.v._0.ty" value="8">
+					<input type="hidden" name="_fm.v._0.c" value="pc">
+					<div class="ui-form-item">
+						<label class="ui-label">手机号码：</label>
+						<input type="hidden" value="*******3261" id="J_MobileVal" data="86" name="_fm.v._0.p">
+						<div class="ui-form-text"> *******3261</div>
+						<input type="hidden" name="_fm.v._0.a" value="86" id="areaCode">
+						<div class="ui-form-text">
+							<a href="//service.taobao.com/support/main/complain_user.htm?spm=0.0.0.0.o7sDVI"
+							   class="user-phone-switch" target="_blank" id="J_Phone_Switch">[手机不可用？点此修改]</a>
+						</div>
+					</div>
+
+
+					<div class="ui-form-item  ui-form-item-error">
+						<label class="ui-label">验证码：</label>
+
+						<div class="checkcode-warp">
+							<input name="_fm.v._0.ph" id="J_Phone_Checkcode" class="ui-input ui-input-checkcode-new"
+								   type="text" maxlength="6" placeholder="6位数字" data-widget-cid="widget-1"
+								   data-explain="">
+							<button id="J_GetCode" class="getcheckcode ft-orange" type="button"
+									data-widget-cid="widget-2">获取短信校验码
+							</button>
+							<a class="getcheckcode fn-hide" id="J_GetUpmsg">获取其他验证方式</a>
+						</div>
+						<div class="ui-form-explain"><i class="ui-tiptext-icon iconfont"></i>请输入验证码</div>
+					</div>
+					<style>
+						.identityError {
+							color: #FF5243;
+						}
+
+						.identityError .iconfont {
+							color: #FF5243;
+						}
+					</style>
+
+
+					<!--<script type="text/javascript">-->
+						<!--seajs.use(['arale/validator/0.9.5/validator', '$', 'alipay/button-count/1.1.2/button-count', 'arale/select/0.9.9/select.js'], function (Validator, jQuery, ButtonCount, Select) {-->
+							<!--jQuery(function () {-->
+								<!--function showExp(ele, msg, toggleClass) {-->
+									<!--var item = jQuery(ele).parent(".ui-form-item");-->
+									<!--var explain = item.find(".ui-form-explain");-->
+									<!--if (explain.length === 0) {-->
+										<!--explain = jQuery('<div class="ui-form-explain"></div>').appendTo(item);-->
+									<!--}-->
+									<!--var className = 'ui-form-item ' + toggleClass;-->
+									<!--explain.html(msg);-->
+									<!--item.attr('class', className);-->
+								<!--}-->
+
+								<!--var errorIcon = '<i class="ui-tiptext-icon iconfont">&#xF045;</i>',-->
+									<!--successIcon = '<i class="ui-tiptext-icon iconfont">&#xF049;</i>';-->
+
+
+								<!--//校验提示信息-->
+								<!--var messages = {-->
+									<!--checkCodeRequired: errorIcon + '请输入验证码'-->
+								<!--};-->
+
+								<!--Validator.addRule('limLength', function (options) {-->
+									<!--var element = options.element;-->
+									<!--var rule = /^[+\-]?[0-9][0-9]*(\.[0-9]+)?([eE][+\-][1-9][0-9]*)?$|^[+\-]?0?\.[0-9]+([eE][+\-][1-9][0-9]*)?$/;-->
+									<!--var l = element.val().length;-->
+									<!--return rule.test(element.val()) && l === Number(options.len);-->
+								<!--}, errorIcon + '{{display}}是{{len}}位数字，请重新输入');-->
+
+								<!--var validator = new Validator({-->
+									<!--element: '#J_Form',-->
+									<!--autoSubmit: true,-->
+									<!--onItemValidate: function (element) {-->
+										<!--if (jQuery(element).attr('type') === 'text') {-->
+											<!--var val = jQuery(element).val();-->
+											<!--val = jQuery.trim(val);-->
+											<!--jQuery(element).val(val);-->
+										<!--}-->
+									<!--}-->
+								<!--});-->
+
+
+								<!--validator.addItem({-->
+									<!--element: '#J_Phone_Checkcode',-->
+									<!--required: true,-->
+									<!--rule: "limLength{len:6}",-->
+									<!--errormessageRequired: messages.checkCodeRequired,-->
+									<!--display: '验证码'-->
+								<!--});-->
+
+
+								<!--var action;-->
+								<!--var buttonCount = new ButtonCount({-->
+									<!--element: jQuery('#J_GetCode'),-->
+									<!--disabledClass: 'ft-gray',-->
+									<!--enabledClass: 'ft-orange',-->
+									<!--initialize: true,-->
+									<!--hook: {-->
+										<!--url: 'https://passport.alibaba.com/iv/phone/send_code.do?htoken=gyLNtRokTMmG8hIgOeSzYjNoFPme1NW7fH3DMkk73ww',-->
+										<!--type: "GET",-->
+										<!--dataType: "json",-->
+										<!--data: {},-->
+										<!--cache: false-->
+									<!--},-->
+									<!--count: 60,-->
+									<!--countTemplate: '{{count}} 秒后，重新获取验证码'-->
+								<!--}).on('success', function (data) {-->
+									<!--var data = data[0];-->
+									<!--if (data.content.success) {-->
+
+										<!--if (data.content.nextAction) {-->
+											<!--action = data.content.action;-->
+										<!--}-->
+										<!--var txt = successIcon + '验证码已发送到你的手机，15分钟内输入有效，验证码等同于密码，打死也不能告诉别人';-->
+										<!--showExp(jQuery('.checkcode-warp'), txt, 'ui-tiptext-success');-->
+
+									<!--} else {-->
+										<!--buttonCount.stop();-->
+										<!--showExp(jQuery('.checkcode-warp'), errorIcon + data.content.value, 'ui-form-item-error');-->
+									<!--}-->
+								<!--}).on('error', function (data) {-->
+									<!--buttonCount.stop();-->
+									<!--showExp(jQuery('.checkcode-warp'), errorIcon + '网络异常，请稍后再试', 'ui-form-item-error');-->
+								<!--}).on('click', function () {-->
+									<!--var ajaxHook = this.get('hook');-->
+
+									<!--if (jQuery('#J_MobileVal').length > 0) {-->
+										<!--ajaxHook.data.phone = jQuery('#J_MobileVal').val();-->
+										<!--//ajaxHook.data.common = "false";-->
+										<!--ajaxHook.data.type = "phone";-->
+										<!--ajaxHook.data.area = jQuery('#J_MobileVal').attr("data");-->
+										<!--ajaxHook.data.tag = jQuery('#J_MobileVal').attr("data");-->
+										<!--jQuery('#areaCode').val(ajaxHook.data.area);-->
+										<!--this.set('hook', ajaxHook);-->
+										<!--showExp(jQuery('.checkcode-warp'), '正在发送验证码&hellip;', 'ui-form-item-loading');-->
+										<!--return;-->
+									<!--}-->
+									<!--ajaxHook.data.phone = jQuery('#J_Mobile').find('option:checked').val();-->
+									<!--ajaxHook.data.type = "phone";-->
+									<!--ajaxHook.data.area = jQuery('#J_Mobile').find('option:checked').attr("data");-->
+									<!--if (jQuery('#J_MobileTxt').length > 0 && jQuery('#J_MobileTxt').val() !== '') {-->
+										<!--ajaxHook.data.area = jQuery('#country').find('option:checked').val();-->
+										<!--ajaxHook.data.tag = jQuery('#country').find('option:checked').val();-->
+									<!--} else {-->
+										<!--ajaxHook.data.area = jQuery('#J_Mobile').find('option:checked').attr("data");-->
+										<!--ajaxHook.data.tag = jQuery('#J_Mobile').find('option:checked').attr("data");-->
+									<!--}-->
+									<!--jQuery('#areaCode').val(ajaxHook.data.area);-->
+									<!--this.set('hook', ajaxHook);-->
+									<!--showExp(jQuery('.checkcode-warp'), '正在发送验证码&hellip;', 'ui-form-item-loading');-->
+								<!--}).on('stop', function () {-->
+									<!--jQuery('#J_GetCode').html('重新获取验证码');-->
+
+									<!--if (action) {-->
+										<!--jQuery('#J_GetCode').hide();-->
+										<!--jQuery('#J_GetUpmsg').attr('href', action);-->
+										<!--jQuery('#J_GetUpmsg').show();-->
+										<!--jQuery('#J_GetUpmsg').parent(".ui-form-item").find(".ui-form-explain").hide();-->
+
+									<!--}-->
+								<!--});-->
+
+
+								<!--if (jQuery('#J_Mobile').length > 0) {-->
+									<!--var a = new Select({-->
+										<!--trigger: '#J_Mobile'-->
+									<!--}).render();-->
+
+
+									<!--a.on('change', function (target) {-->
+										<!--var code = target.attr('data-value');-->
+
+									<!--});-->
+
+								<!--}-->
+
+							<!--});-->
+						<!--});-->
+
+					<!--</script>-->
+
+
+					<div class="ui-form-item">
+						<input type="submit" value=" 确定" class="ui-button ui-button-lorange">
+						<a href="https://passport.alibaba.com/iv/verify_modes.htm?htoken=gyLNtRokTMmG8hIgOeSzYjNoFPme1NW7fH3DMkk73ww&amp;app_name="
+						   target="_self" class="ui-form-other">其他验证方式</a>
+					</div>
+
+					<input type="hidden" name="ua" id="UA_InputId"
+						   value="089#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">
+				</form>
+
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+</script>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>

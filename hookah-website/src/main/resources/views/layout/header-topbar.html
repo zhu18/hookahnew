@@ -13,15 +13,23 @@
             <img src="/static/images/zheng.jpg" alt="">
             <% if(shiro.hasRole("Admin")){%>
             <a href="/usercenter/admin">个人中心</a>
+            <a href="${host.admin}/home">后台管理</a>
             <%}else{%>
             <a href="/usercenter/index">个人中心</a>
             <%}%>
           </div>
-          <a href="/logout">退出</a>
+          <a href="${host.auth}/logout">退出</a>
         </div>
       </li>
       <%}%>
-      <li class="display-inline-block"><a href="/usercenter/index">个人中心</a></li>
+      <li class="display-inline-block">
+        <% if(shiro.hasRole("Admin")){%>
+        <a href="/usercenter/admin">个人中心</a>
+        <a href="${host.admin}/home" target="_blank">后台管理</a>
+        <%}else{%>
+        <a href="/usercenter/index">个人中心</a>
+        <%}%>
+      </li>
       <li class="display-inline-block">|</li>
       <li class="display-inline-block"><a href="javascript:void(0)"><span
         class="fa fa-question-circle-o margin-right-5"></span>常见问题</a></li>

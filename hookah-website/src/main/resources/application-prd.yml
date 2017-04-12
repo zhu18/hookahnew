@@ -2,11 +2,15 @@ server:
   port: 9000
   http:
     protocal: http://
+  session:
+    cookie:
+      domain: hookah.app
+      name: hookah_sid
 myconf:
   beetl:
-    templatesPath: views/default/
+    templatesPath: views/
     contentType: text/html;charset:UTF-8
-    prefix:
+    prefix: /
     suffix: .html
     cache: false
 
@@ -15,6 +19,7 @@ myconf:
     static: ${server.http.protocal}static.hookah.app
     auth: ${server.http.protocal}auth.hookah.app
     console: ${server.http.protocal}console.hookah.app
+    admin: ${server.http.protocal}admin.hookah.app
   oauth2:
     clientId: website
     clientSecret: Yqn2ht4DYkMHlDvTY7CV

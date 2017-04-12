@@ -8,6 +8,7 @@ import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.HelpService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,6 +55,14 @@ public class HelpApi {
         return ReturnData.success(page);
     }
 
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public ReturnData add(Help help) {
+//        help.setCreatorId();
+        help.setAddTime(new Date());
+        Help result = helpService.insert(help);
+        return ReturnData.success(result);
+    }
+
     @RequestMapping(value = "/category/add", method = RequestMethod.POST)
     public ReturnData addCategory(Help help) {
 //        help.setCreatorId();
@@ -85,11 +94,14 @@ public class HelpApi {
         return ReturnData.success(page);
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ReturnData add(Help help) {
-//        help.setCreatorId();
-        help.setAddTime(new Date());
-        Help result = helpService.insert(help);
-        return ReturnData.success(result);
+    @RequestMapping(value = "/category/delete/{id}", method = RequestMethod.POST)
+    public ReturnData categoryDelete(@PathVariable("id") String helpId) {
+        try {
+            helpService.delete(helpId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ReturnData.success();
     }
+
 }
