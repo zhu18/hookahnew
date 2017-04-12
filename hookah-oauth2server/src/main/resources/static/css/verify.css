@@ -1,0 +1,138 @@
+#content {
+	width: 100%;
+	min-height: 500px;
+	border-top: 1px solid #fff;
+}
+.content-layout {
+	margin: 0 auto;
+	padding: 30px 0;
+	width: 990px;
+	height: auto;
+}
+.maincenter {
+	margin: 0 auto;
+	width: 774px;
+	height: auto;
+}
+.ui-step {
+	padding: 0 40px;
+	margin: 0 auto;
+	font-size: 14px;
+	list-style: none;
+	zoom: 1;
+	position: relative;
+	color: #b7b7b7;
+	overflow: hidden;
+}
+.maincenter .ui-step {
+	margin-bottom: 30px;
+}
+.ui-step li {
+	float: left;
+	height: 54px;
+	margin: 0;
+	width: 50%;
+	position: relative;
+}
+.ui-step-3 li {
+	width: 50%;
+}
+.ui-step:after {
+	clear: both;
+	content: " ";
+	display: block;
+	font-size: 0;
+	height: 0;
+	visibility: hidden;
+}
+.ui-step .ui-step-active {
+	color: #f40;
+}
+.ui-step li.ui-step-end {
+	position: absolute;
+	top: 0;
+	right: -110px;
+	width: 150px;
+	zoom: 1;
+	_clear: both;
+}
+.ui-step li .ui-step-line {
+	height: 3px;
+	background: #b9b9b9;
+	display: block;
+	margin-top: 14px;
+	line-height: 1;
+	overflow: hidden;
+}
+.ui-step li .ui-step-icon {
+	height: 50px;
+	position: absolute;
+	top: 0;
+	width: 150px;
+	text-align: center;
+	left: -25px;
+	font-family: tahoma;
+}
+.iconfont {
+	font-family: rei;
+	font-style: normal;
+	cursor: default;
+	-webkit-font-smoothing: antialiased;
+}
+.ui-step-icon .iconfont {
+	font-size: 30px;
+	margin: 0;
+	color: #b7b7b7;
+	color: rgba(0,0,0,.25);
+	line-height: 30px;
+	background: #fff;
+	padding: 0 10px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	text-shadow: 1px 1px 2px #fff, 0 0 0 #ccc, 1px 1px 2px #fff;
+}
+.ui-step .ui-step-active .iconfont {
+	color: #f40;
+}
+.ui-step-icon .ui-step-number {
+	line-height: 14px;
+	font-style: normal;
+	position: absolute;
+	top: 7px;
+	left: 0;
+	padding: 0 20px;
+	font-weight: 700;
+	color: #fff;
+}
+.ui-step .ui-step-active i.ui-step-number {
+	color: #FFF;
+}
+.ui-step-icon .ui-step-text {
+	height: 20px;
+	line-height: 20px;
+	position: relative;
+	text-shadow: 0 1px 0 #fff;
+	top: 34px;
+	left: -50px;
+}
+.ui-step li .ui-step-line {
+	height: 3px;
+	background: #b9b9b9;
+	display: block;
+	margin-top: 14px;
+	line-height: 1;
+	overflow: hidden;
+}
+.ui-step li.ui-step-end .ui-step-line {
+	display: none;
+}
+.ui-step li .ui-step-icon {
+	height: 50px;
+	position: absolute;
+	top: 0;
+	width: 150px;
+	text-align: center;
+	left: -25px;
+	font-family: tahoma;
+}
