@@ -8,8 +8,8 @@
     <!-- 具体referer配置。使用方通过beanid使用服务接口类 -->
     <motan:referer id="regionService"
                    interface="com.jusfoun.hookah.rpc.api.RegionService"
-                   connectTimeout="300" requestTimeout="300" basicReferer="HookahRPCClientBasicConfig"/>
+                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
     <motan:referer id="industryCodeService"
                    interface="com.jusfoun.hookah.rpc.api.IndustryCodeService"
-                   connectTimeout="300" requestTimeout="300" basicReferer="HookahRPCClientBasicConfig"/>
+                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
 </beans>

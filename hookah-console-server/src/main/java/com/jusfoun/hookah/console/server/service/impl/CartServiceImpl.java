@@ -68,19 +68,24 @@ public class CartServiceImpl extends GenericServiceImpl<Cart, String> implements
     }
 
     @Override
-    public List<CartVo> selectDetailList(List<Condition> filters) throws  Exception {
+    public List<CartVo> selectDetailList(List<Condition> filters){
         List<Cart> carts = super.selectList(filters);
         List<CartVo> cartVos = new ArrayList<>(carts.size());
         Goods goods = null;
-        for(Cart cart:carts){
-            CartVo vo = new CartVo();
-            BeanUtils.copyProperties(cart,vo);
-            goods = goodsService.selectById(cart.getGoodsId());
-            MgGoods.FormatBean format = goodsService.getFormat(cart.getGoodsId(),cart.getFormatId());
-            vo.setGoods(goods);
-            vo.setFormat(format);
-            cartVos.add(vo);
+        try{
+            for(Cart cart:carts){
+                CartVo vo = new CartVo();
+                BeanUtils.copyProperties(cart,vo);
+                goods = goodsService.selectById(cart.getGoodsId());
+                MgGoods.FormatBean format = goodsService.getFormat(cart.getGoodsId(),cart.getFormatId());
+                vo.setGoods(goods);
+                vo.setFormat(format);
+                cartVos.add(vo);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
+
         return cartVos;
     }
 }
