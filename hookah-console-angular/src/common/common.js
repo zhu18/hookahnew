@@ -185,7 +185,7 @@ function HttpInterceptor($q, $rootScope, $location, $window) {
       res.config.responseTimestamp = new Date().getTime();
       var time = res.config.responseTimestamp - res.config.requestTimestamp;
       console.log('The request took ' + (time / 1000) + ' seconds.');
-      console.log(res);
+      // console.log(res);
       if(res.data.data != null){
         if (res.data.data !== undefined && res.data.data.totalItems) {
           $rootScope.pagination.store = res.data.data.list;
