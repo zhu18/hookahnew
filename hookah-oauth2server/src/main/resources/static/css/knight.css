@@ -1894,7 +1894,7 @@ a.y-btn-anti.y-btn-disabled,a.y-btn-anti:active.y-btn-disabled,a.y-btn-anti:hove
 }
 
 @font-face {
-  font-family:'iconfont';src:url(/aliyun/www-dpl/0.5.73/knight/fonts/iconfont.eot?rk2faw);src:url(/aliyun/www-dpl/0.5.73/knight/fonts/iconfont.eot?#iefixrk2faw) format('embedded-opentype'),url(/aliyun/www-dpl/0.5.73/knight/fonts/iconfont.woff?rk2faw) format('woff'),url(/aliyun/www-dpl/0.5.73/knight/fonts/iconfont.ttf?rk2faw) format('truetype'),url(/aliyun/www-dpl/0.5.73/knight/fonts/iconfont.svg?rk2faw#icofont) format('svg');font-weight:400;font-style:normal
+  font-family:'iconfont';src:url(/static/fonts/iconfont.eot?rk2faw);src:url(/static/fonts/iconfont.eot?#iefixrk2faw) format('embedded-opentype'),url(/static/fonts/iconfont.woff?rk2faw) format('woff'),url(/static/fonts/iconfont.ttf?rk2faw) format('truetype'),url(/static/fonts/iconfont.svg?rk2faw#icofont) format('svg');font-weight:400;font-style:normal
 }[class*=" icon-"],[class^=icon-] {
    font-family: 'iconfont';
    speak: none;
@@ -3838,17 +3838,17 @@ a.y-btn-anti.y-btn-disabled,a.y-btn-anti:active.y-btn-disabled,a.y-btn-anti:hove
 }
 
 .cloud-helper-box-icon1 {
-  background: url(/aliyun/www-dpl/0.5.73/knight/images/cloud_helper/cloud_helper.gif) no-repeat 0 0;
+  background: url(/static/fonts/images/cloud_helper/cloud_helper.gif) no-repeat 0 0;
   margin-left: 10px
 }
 
 .cloud-helper-box-icon2 {
-  background: url(/aliyun/www-dpl/0.5.73/knight/images/cloud_helper/cloud_helper.gif) no-repeat -16px 0;
+  background: url(/static/fonts/images/cloud_helper/cloud_helper.gif) no-repeat -16px 0;
   margin-left: 10px
 }
 
 .cloud-helper-box-icon3 {
-  background: url(/aliyun/www-dpl/0.5.73/knight/images/cloud_helper/cloud_helper.gif) no-repeat -32px 0;
+  background: url(/static/fonts/images/cloud_helper/cloud_helper.gif) no-repeat -32px 0;
   margin-left: 10px
 }
 
@@ -3879,7 +3879,7 @@ a.y-btn-anti.y-btn-disabled,a.y-btn-anti:active.y-btn-disabled,a.y-btn-anti:hove
 
 .cloud-helper-box-bar-search {
   width: 365px;
-  background: url(/aliyun/www-dpl/0.5.73/knight/images/cloud_helper/cloud_helper.gif) 0 -215px no-repeat;
+  background: url(/static/fonts/images/cloud_helper/cloud_helper.gif) 0 -215px no-repeat;
   background-color: #fff;
   padding-left: 35px
 }
@@ -3901,7 +3901,7 @@ a.y-btn-anti.y-btn-disabled,a.y-btn-anti:active.y-btn-disabled,a.y-btn-anti:hove
   color: #ccc;
   padding-left: 35px;
   width: 365px;
-  background: url(/aliyun/www-dpl/0.5.73/knight/images/cloud_helper/cloud_helper.gif) 0 -215px no-repeat #fff
+  background: url(/static/fonts/images/cloud_helper/cloud_helper.gif) 0 -215px no-repeat #fff
 }
 
 .cloud-helper-search-ipt-keep,.cloud-helper-search-ipt-ready {
@@ -3935,27 +3935,27 @@ a.y-btn-anti.y-btn-disabled,a.y-btn-anti:active.y-btn-disabled,a.y-btn-anti:hove
 }
 
 .cloud-helper-box-close a {
-  background: url(/aliyun/www-dpl/0.5.73/knight/images/cloud_helper/cloud_helper.gif) no-repeat 0 -16px
+  background: url(/static/fonts/images/cloud_helper/cloud_helper.gif) no-repeat 0 -16px
 }
 
 .cloud-helper-box-close a:hover {
-  background: url(/aliyun/www-dpl/0.5.73/knight/images/cloud_helper/cloud_helper.gif) no-repeat -20px -16px
+  background: url(/static/fonts/images/cloud_helper/cloud_helper.gif) no-repeat -20px -16px
 }
 
 .cloud-helper-box-change a {
-  background: url(/aliyun/www-dpl/0.5.73/knight/images/cloud_helper/cloud_helper.gif) no-repeat 0 -36px
+  background: url(/static/fonts/images/cloud_helper/cloud_helper.gif) no-repeat 0 -36px
 }
 
 .cloud-helper-box-change a:hover {
-  background: url(/aliyun/www-dpl/0.5.73/knight/images/cloud_helper/cloud_helper.gif) no-repeat -20px -36px
+  background: url(/static/fonts/images/cloud_helper/cloud_helper.gif) no-repeat -20px -36px
 }
 
 .cloud-helper-box-arrow-right a {
-  background: url(/aliyun/www-dpl/0.5.73/knight/images/cloud_helper/cloud_helper.gif) no-repeat 0 -56px
+  background: url(/static/fonts/images/cloud_helper/cloud_helper.gif) no-repeat 0 -56px
 }
 
 .cloud-helper-box-arrow-right a:hover {
-  background: url(/aliyun/www-dpl/0.5.73/knight/images/cloud_helper/cloud_helper.gif) no-repeat -20px -56px
+  background: url(/static/fonts/images/cloud_helper/cloud_helper.gif) no-repeat -20px -56px
 }
 
 .cloud-helper-box-info {
@@ -4039,7 +4039,7 @@ a.y-btn-anti.y-btn-disabled,a.y-btn-anti:active.y-btn-disabled,a.y-btn-anti:hove
   width: 24px;
   height: 24px;
   vertical-align: middle;
-  background: url(/aliyun/www-dpl/0.5.73/knight/images/cloud_helper/cloud_helper.gif) 0 -187px
+  background: url(/static/fonts/images/cloud_helper/cloud_helper.gif) 0 -187px
 }
 
 .cloud-helper-box-subsec {
@@ -4063,11 +4063,11 @@ a.y-btn-anti.y-btn-disabled,a.y-btn-anti:active.y-btn-disabled,a.y-btn-anti:hove
 }
 
 .cloud-helper-box-icon-up {
-  background: url(/aliyun/www-dpl/0.5.73/knight/images/cloud_helper/cloud_helper.gif) 0 -76px no-repeat
+  background: url(/static/fonts/images/cloud_helper/cloud_helper.gif) 0 -76px no-repeat
 }
 
 .cloud-helper-box-icon-down {
-  background: url(/aliyun/www-dpl/0.5.73/knight/images/cloud_helper/cloud_helper.gif) -16px 76px no-repeat
+  background: url(/static/fonts/images/cloud_helper/cloud_helper.gif) -16px 76px no-repeat
 }
 
 .cloud-helper-robot-main {
@@ -4110,7 +4110,7 @@ a.y-btn-anti.y-btn-disabled,a.y-btn-anti:active.y-btn-disabled,a.y-btn-anti:hove
 
 .cloud-helper-robot-answer-head {
   padding-left: 35px;
-  background: url(/aliyun/www-dpl/0.5.73/knight/images/cloud_helper/cloud_helper.gif) no-repeat 0 -92px;
+  background: url(/static/fonts/images/cloud_helper/cloud_helper.gif) no-repeat 0 -92px;
   height: 30px;
   line-height: 30px
 }
@@ -4179,22 +4179,22 @@ a.y-btn-anti.y-btn-disabled,a.y-btn-anti:active.y-btn-disabled,a.y-btn-anti:hove
 
 .cloud-helper-robot-clear {
   width: 45px;
-  background: url(/aliyun/www-dpl/0.5.73/knight/images/cloud_helper/cloud_helper.gif) no-repeat 0 -138px
+  background: url(/static/fonts/images/cloud_helper/cloud_helper.gif) no-repeat 0 -138px
 }
 
 .cloud-helper-robot-clear:hover {
-  background: url(/aliyun/www-dpl/0.5.73/knight/images/cloud_helper/cloud_helper.gif) no-repeat 0 -122px;
+  background: url(/static/fonts/images/cloud_helper/cloud_helper.gif) no-repeat 0 -122px;
   color: #333
 }
 
 .cloud-helper-robot-derive {
   width: 66px;
-  background: url(/aliyun/www-dpl/0.5.73/knight/images/cloud_helper/cloud_helper.gif) no-repeat 0 -154px
+  background: url(/static/fonts/images/cloud_helper/cloud_helper.gif) no-repeat 0 -154px
 }
 
 .cloud-helper-robot-derive:hover {
   width: 66px;
-  background: url(/aliyun/www-dpl/0.5.73/knight/images/cloud_helper/cloud_helper.gif) no-repeat 0 -170px;
+  background: url(/static/fonts/images/cloud_helper/cloud_helper.gif) no-repeat 0 -170px;
   color: #333
 }
 
@@ -4283,11 +4283,11 @@ a.y-btn-anti.y-btn-disabled,a.y-btn-anti:active.y-btn-disabled,a.y-btn-anti:hove
   display: inline-block;
   width: 22px;
   height: 22px;
-  background-image: url(/aliyun/www-dpl/0.5.73/knight/images/footer-168-169.png);
-  background-image: -webkit-image-set(url(/aliyun/www-dpl/0.5.73/knight/images/footer-168-169.png) 1x,url(/aliyun/www-dpl/0.5.73/knight/images/footer-336-338.png) 2x);
-  background-image: -moz-image-set(url(/aliyun/www-dpl/0.5.73/knight/images/footer-168-169.png) 1x,url(/aliyun/www-dpl/0.5.73/knight/images/footer-336-338.png) 2x);
-  background-image: -ms-image-set(url(/aliyun/www-dpl/0.5.73/knight/images/footer-168-169.png) 1x,url(/aliyun/www-dpl/0.5.73/knight/images/footer-336-338.png) 2x);
-  background-image: -o-image-set(url(/aliyun/www-dpl/0.5.73/knight/images/footer-168-169.png) 1x,url(/aliyun/www-dpl/0.5.73/knight/images/footer-336-338.png) 2x)
+  background-image: url(/static/fonts/images/footer-168-169.png);
+  background-image: -webkit-image-set(url(/static/fonts/images/footer-168-169.png) 1x,url(/static/fonts/images/footer-336-338.png) 2x);
+  background-image: -moz-image-set(url(/static/fonts/images/footer-168-169.png) 1x,url(/static/fonts/images/footer-336-338.png) 2x);
+  background-image: -ms-image-set(url(/static/fonts/images/footer-168-169.png) 1x,url(/static/fonts/images/footer-336-338.png) 2x);
+  background-image: -o-image-set(url(/static/fonts/images/footer-168-169.png) 1x,url(/static/fonts/images/footer-336-338.png) 2x)
 }
 
 .copyright-100 .copyright .img-1 {
