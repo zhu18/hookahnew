@@ -3,39 +3,30 @@
     <div class="console-title console-title-border clearfix">
       <div class="pull-left"><h5>新增分类</h5></div>
       <div class="pull-right">
-        <button class="btn btn-default" data-ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span> 返回</button>
+        <!--<button class="btn btn-default" data-ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span> 返回</button>-->
       </div>
     </div>
   </div>
   <div class="col-sm-12">
     <form class="form-horizontal" role="form" id="help" name="help">
-      <fieldset>
-        <h5 style="padding: 0px 20px;">基本信息</h5>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="helpId">分类ID</label>
-          <div class="col-sm-4">
-            <input type="text" id="helpId" name="helpId" class="form-control"/>
-          </div>
-          <div class="col-sm-4">
-            使用英文字符，不可有特殊字符
-          </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="helpId">分类ID<span class="must">*</span></label>
+        <div class="col-sm-4">
+          <input type="text" id="helpId" name="helpId" class="form-control"/>
         </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="helpTitle">分类名称</label>
-          <div class="col-sm-4">
-            <input type="text" id="helpTitle" name="helpTitle" class="form-control" value=""/>
-          </div>
-          <div class="col-sm-4">
-            使用中文
-          </div>
+        <div class="col-sm-4">
+          <label class="control-label">使用英文字符，不可有特殊字符</label>
         </div>
-        <!--<div class="form-group">-->
-          <!--<label class="col-sm-2 control-label" for="content">内容</label>-->
-          <!--<div class="col-sm-4">-->
-            <!--<input type="text" id="content" name="content" class="form-control" />-->
-          <!--</div>-->
-        <!--</div>-->
-      </fieldset>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" style="" for="helpTitle">分类名称<span class="must">*</span></label>
+        <div class="col-sm-4">
+          <input type="text" id="helpTitle" name="helpTitle" class="form-control" value=""/>
+        </div>
+        <div class="col-sm-4">
+          <label class="control-label">使用中文</label>
+        </div>
+      </div>
       <div class="form-group">
         <div class="col-sm-2"></div>
         <div class="col-sm-4">
