@@ -49,8 +49,10 @@ public class OrderInfoController extends BaseController {
     }
 
     @RequestMapping(value = "/order/orderInfo", method = RequestMethod.POST)
-    public String orderInfo(String[] cartIds,Model model) {
+    public String orderInfo(String cartIdStr,Model model) {
+        logger.info("结算购物车列表:{}",cartIdStr);
         try {
+            String[] cartIds = cartIdStr.trim().split(",");
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.in("recId",cartIds));
             List<CartVo> carts = cartService.selectDetailList(filters);

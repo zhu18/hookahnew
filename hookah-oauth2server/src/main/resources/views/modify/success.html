@@ -1,0 +1,28 @@
+<%
+var head = {
+%>
+<link type="text/css" rel="stylesheet" href="/static/css/verify.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div id="content">
+	<div class="content-layout">
+		<div class="ui-tipbox ui-tipbox-success">
+			<div class="ui-tipbox-icon">
+				<i class="iconfont" title=" 成功 "></i>
+			</div>
+			<div class="ui-tipbox-content">
+				<h3 class="ui-tipbox-title"> 修改成功，请牢记新的登录密码 </h3>
+				<p class="ui-tipbox-explain"></p>
+				<p class="ui-tipbox-explain">
+					<a href="https://passport.alibaba.com/logout.htm?site=6&amp;toURL=https%3A%2F%2Faccount.aliyun.com%2Flogout%2Flogout.htm"> 重新登录 </a>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>

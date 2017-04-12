@@ -19,6 +19,7 @@ import com.jusfoun.hookah.core.domain.PayCore;
 import com.jusfoun.hookah.core.domain.vo.PayCoreVo;
 import com.jusfoun.hookah.core.domain.vo.PayVo;
 import com.jusfoun.hookah.core.domain.vo.RechargeVo;
+import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.HttpClientUtil;
 import com.jusfoun.hookah.rpc.api.OrderInfoService;
@@ -32,10 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> implements PayCoreService {
@@ -74,8 +72,10 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 
 
 	@Override
-	public PayCore findPayCoreByOrderId(Integer orderId) {
-		List<PayCore> pays = mapper.getPayCoreByOrderId(orderId);
+	public PayCore findPayCoreByOrderId(String orderId) {
+		List<Condition> filters = new ArrayList();
+		filters.add(Condition.eq("orderId", orderId));
+		List<PayCore> pays =this.selectList(filters);
 		return (pays==null || pays.size()==0) ? null : pays.get(0);
 	}
 
@@ -109,7 +109,7 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 
 	@Transactional(readOnly=false)
 	@Override
-	public String doPay(Integer orderId, String userId) throws Exception {
+	public String doPay(String orderId, String userId) throws Exception {
 		// 检查
 		PayCore paied = findPayCoreByOrderId(orderId);
 		if (paied != null
@@ -141,7 +141,7 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 	}
 
 
-	private void enterAccount(Integer orderId, PayVo payVo) throws Exception {
+	private void enterAccount(String orderId, PayVo payVo) throws Exception {
 		PayCore pay = new PayCore();
 		pay.setOrderId(orderId);
 		pay.setOrderSn(payVo.getOrderSn());
@@ -297,12 +297,10 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 
 	@Transactional(readOnly=false)
 	@Override
-	public String openUnionpay(Integer orderId, String accNo, String userId) throws Exception {
+	public String openUnionpay(String orderId, String accNo, String userId) throws Exception {
 		//根据orderId查询order信息
 		//暂时屏蔽的一行
-		/*PayVo payVo = orderService.getPayParam(orderId);*/
-		PayVo payVo = new PayVo();
-
+		PayVo payVo = orderService.getPayParam(orderId);
 		if (null == payVo || payVo.getPayId().intValue() == 0)
 			throw new RuntimeException("订单 [id : " + orderId + "] 信息有误");
 		if (payVo.getTotalFee().doubleValue() < 0)
@@ -349,7 +347,7 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 
 	@Transactional(readOnly=false)
 	@Override
-	public String unionpayConsume(PayVo payVo, Integer orderId, String userId, String accNo, String smsCode) throws Exception {
+	public String unionpayConsume(PayVo payVo, String orderId, String userId, String accNo, String smsCode) throws Exception {
 		// 记账
 		payVo.setUserId(userId);
 		enterAccount(orderId, payVo);

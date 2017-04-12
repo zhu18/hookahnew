@@ -5,17 +5,21 @@ import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author huang lei
@@ -41,8 +45,13 @@ public class UsernameAndPasswordShiroRealm extends AuthorizingRealm {
         List<Condition> conditions = new ArrayList<>();
         conditions.add(Condition.eq("userName", username));
         User user = userService.selectOne(conditions);
-
+        Session session = SecurityUtils.getSubject().getSession();
         if (user != null) {
+            Map<String,String> userMap = new HashMap<String,String>();
+            userMap.put("userId",user.getUserId());
+            userMap.put("userName",user.getUserName());
+            session.setAttribute("user",userMap);
+
             //权限信息对象info,用来存放查出的用户的所有的角色（role）及权限（permission）
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
             //用户的角色集合
@@ -82,7 +91,15 @@ public class UsernameAndPasswordShiroRealm extends AuthorizingRealm {
 
         if (user != null) {
             // 若存在，将此用户存放到登录认证info中，无需自己做密码对比，Shiro会为我们进行密码对比校验
-            return new SimpleAuthenticationInfo(user.getUserName(), user.getPassword(), getName());
+            AuthenticationInfo info = new SimpleAuthenticationInfo(user.getUserName(), user.getPassword(), getName());
+            if(info !=null){
+                Session session = SecurityUtils.getSubject().getSession(true);
+                Map<String,String> userMap = new HashMap<String,String>();
+                userMap.put("userId",user.getUserId());
+                userMap.put("userName",user.getUserName());
+                session.setAttribute("user",userMap);
+            }
+            return info;
         }
         return null;
     }

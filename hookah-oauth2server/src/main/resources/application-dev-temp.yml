@@ -2,6 +2,10 @@ server:
   port: 9900
   http:
       protocal: http://
+  session:
+    cookie:
+      domain: hookah.app
+      name: hookah_sid
 spring:
   datasource:
     url: jdbc:log4jdbc:mysql://192.168.15.90:3306/hookah?characterEncoding=utf8&useSSL=false&autoReconnect=true&failOverReadOnly=false&autoReconnectForPools=true
@@ -66,11 +70,22 @@ spring:
 #        dialect : org.hibernate.dialect.MySQL5Dialect
   mvc:
     static-path-pattern: /static/**
+redis:
+  ip: 192.168.15.90
+  port: 6379
+  password: Yqn2ht4DYkMHlDvTY7CV
+  pool:
+    #最大分配的对象数
+    maxTotal: 1024
+    #最大能够保持idel状态的对象数
+    maxIdle: 200
+    #当调用borrow Object方法时，是否进行有效性检查
+    testOnBorrow: false
 myconf:
   beetl:
     templatesPath: views/
     contentType: text/html;charset:UTF-8
-    prefix: /
+    prefix:
     suffix: .html
     cache: false
   host:

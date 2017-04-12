@@ -1,5 +1,9 @@
 server:
   port: 9100
+  session:
+    cookie:
+      domain: hookah.app
+      name: hookah_sid
 spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
@@ -62,6 +66,17 @@ spring:
 #        dialect : org.hibernate.dialect.MySQL5Dialect
   mvc:
     static-path-pattern: /static/**
+redis:
+  ip: 192.168.15.90
+  port: 6379
+  password: Yqn2ht4DYkMHlDvTY7CV
+  pool:
+    #最大分配的对象数
+    maxTotal: 1024
+    #最大能够保持idel状态的对象数
+    maxIdle: 200
+    #当调用borrow Object方法时，是否进行有效性检查
+    testOnBorrow: false
 myconf:
   beetl:
     templatesPath: views/
@@ -70,8 +85,17 @@ myconf:
     suffix: .html
     cache: false
   host:
-    server: ${server.http.protocal}localhost:9100
-    static: ${server.http.protocal}localhost:9100
-    auth: ${server.http.protocal}localhost:9100
-    console: ${server.http.protocal}localhost:9100
+      website: ${server.http.protocal}www.hookah.app
+      static: ${server.http.protocal}static.hookah.app
+      auth: ${server.http.protocal}auth.hookah.app
+      console: ${server.http.protocal}console.hookah.app
+  oauth2:
+    clientId: admin
+    clientSecret: Yqn2ht4DYkMHlDvTY7CV
+    regUrl: http://auth.hookah.app/reg
+    loginUrl: http://auth.hookah.app/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://admin.hookah.app/home
+    logoutUrl: http://auth.hookah.app/logout?redirect_uri=http://www.hookah.app/login
+    accessTokenUrl: http://auth.hookah.app/oauth/accessToken
+    userInfoUrl: http://auth.hookah.app/userInfo
+    redirectUrl: http://auth.hookah.app/login
 debug: true
