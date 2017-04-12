@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.server.config;
+package com.jusfoun.hookah.staticserver.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;

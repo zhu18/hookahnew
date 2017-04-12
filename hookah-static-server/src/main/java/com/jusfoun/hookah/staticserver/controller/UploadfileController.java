@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.server.controller;
+package com.jusfoun.hookah.staticserver.controller;
 /**
  * All rights Reserved, Designed By ZTE-ITS
  * Copyright:    Copyright(C) 2016-2020
@@ -17,7 +17,7 @@ import com.jusfoun.hookah.core.domain.UploadResult;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
-import com.jusfoun.hookah.server.util.UploadUtil;
+import com.jusfoun.hookah.staticserver.util.UploadUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
