@@ -96,6 +96,10 @@ public class OAuth2Realm extends AuthorizingRealm {
         User user = userService.selectOne(filters);
         Set<String> roleNames = roleService.selectRolesByUserId(user.getUserId());
 //        String username = (String) getAvailablePrincipal(principals);
+        Map<String,String> userMap = new HashMap<String,String>();
+        userMap.put("userId",user.getUserId());
+        userMap.put("userName",user.getUserName());
+        session.setAttribute("user",userMap);
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo(roleNames);
         return authorizationInfo;
     }
