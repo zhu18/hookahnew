@@ -32,11 +32,21 @@ public class RegionController {
      */
     @RequestMapping("/getRegionCodeByPid")
     @ResponseBody
-    public List<Region> getRegionCodeByPid(Long parentId) {
-        List<Condition> filters = new ArrayList<>();
-        filters.add(Condition.eq("pid", parentId));
-        List<Region> list = (List) regionService.selectList(filters);
-        return list;
+    public ReturnData getRegionCodeByPid(Long parentId) {
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            List<Condition> filters = new ArrayList<>();
+            filters.add(Condition.eq("pid", parentId));
+            returnData.setData(regionService.selectList(filters));
+        } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
+
+
     }
 
 }
