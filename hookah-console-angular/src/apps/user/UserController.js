@@ -14,7 +14,6 @@ class UserController {
     $scope.detail = function (event, item) {
 
       $rootScope.cuser = item;
-      console.log($scope.cuser);
       var promise = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/user/"+item.userId
