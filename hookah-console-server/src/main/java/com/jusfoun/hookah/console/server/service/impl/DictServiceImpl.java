@@ -26,20 +26,21 @@ public class DictServiceImpl extends GenericServiceImpl<Dict, Long> implements D
         super.setDao(dictMapper);
     }
 
-    private List<Dict> resultNodes = new ArrayList<Dict>();
+
     private List<Dict> nodes;
 
     public List<Dict> selectTree(){
         nodes = super.selectList();
-        List<Dict> dictTreeList = buildTree();
-        return dictTreeList;
+        List<Dict> resultNodes =new ArrayList<Dict>();
+        buildTree(resultNodes);
+        return resultNodes;
     }
 
     /**
      * 构建树形结构list
      * @return 返回树形结构List列表
      */
-    private List<Dict> buildTree() {
+    private List<Dict> buildTree(List<Dict> resultNodes) {
 
         for (Dict node : nodes) {
             if (node.getParentId() == null) {//通I过循环一级节点 就可以通过递归获取二级以下节点
@@ -58,7 +59,7 @@ public class DictServiceImpl extends GenericServiceImpl<Dict, Long> implements D
         List<Dict> children = getChildren(node);
         if (!children.isEmpty()) {//如果存在子节点
             for (Dict child : children) {//将子节点遍历加入返回值中
-                resultNodes.add(child);
+                node.getChildren().add(child);
                 build(child);
             }
         }

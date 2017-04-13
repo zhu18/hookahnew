@@ -4,7 +4,8 @@ const MODULE_NAME = 'Hookah';
 let app = angular.module(MODULE_NAME, [
   'Common',
   'ui.router',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'treeGrid'
 ]);
 app.config(sysRouting);
 
