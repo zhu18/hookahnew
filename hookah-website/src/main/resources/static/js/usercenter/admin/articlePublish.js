@@ -47,41 +47,23 @@ var imgSrc = '';
 //上传图片
 
 //选择文件之后执行上传
-$('#preview-div').click(function(){
-    if($('#preview-img').attr('src')){
-        console.log('ysessss');
-        $('#filename').val("");
-        sda();
-    }else{
-        console.log("nononono");
-        sda();
-    }
-    function sda(){
-        $('#filename').on('change', function() {
-            $.ajaxFileUpload({
-                url:'/upload/fileUpload',
-                secureuri:false,
-                fileElementId:'filename',//file标签的id
-                dataType: 'json',//返回数据的类型
-                success: function (data, status) {
-                    //把图片替换
-                    var obj= data.data[0];
-                    $("#preview-img").attr("src", "http://"+obj.absPath);
-                    imgSrc = obj.absPath;
-                    if(typeof(data.error) != 'undefined') {
-                        if(data.error != '') {
-                            alert(data.error);
-                        } else {
-                            alert(data.msg);
-                        }
-                    }
-                },
-                error: function (data, status, e) {
-                    alert(e);
-                }
-            });
-        });
-    }
+var fileUploadUrl = host.static+'/upload/fileUpload';
+$('#filename').fileupload({
+	url: fileUploadUrl,
+	dataType: 'json',
+	done: function (e, data) {
+		if(data.result.code == 1){
+			var obj = data.result.data[0];
+			$("#preview-img").attr("src", obj.absPath);
+			imgSrc = obj.absPath;
+		}else{
+			$.alert(data.result.message)
+		}
+
+	},
+	progressall: function (e, data) {
+
+	}
 })
 function changes(that){
     var thisVal = $(that).val();

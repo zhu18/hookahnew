@@ -155,7 +155,7 @@ function check() {
 	});
 	if (flag > 0) {
 		// console.log(cartIds);
-		$('#J_cartIdStr').val(JSON.stringify(cartIds));
+		$('#J_cartIdStr').val(cartIds);
 		// var	 vals = $('J_cartIdStr').val();
 		// window.location.href ='/order/orderInfo?ids='+JSON.stringify(params);
 		$('#J_cart').submit();

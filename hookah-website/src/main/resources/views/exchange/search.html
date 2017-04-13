@@ -4,59 +4,60 @@ var head = {
 <link rel="stylesheet" href="/static/css/index/index.css">
 <link rel="stylesheet" href="/static/css/exchange/style.css">
 <script type="text/javascript">
-    $.getUrlParam = function (key) {
-        var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
-        var result = window.location.search.substr(1).match(reg);
-        return result ? decodeURIComponent(result[2]) : null;
-    };
-    var catId = $.getUrlParam('catId');
-    var pagePath = '/search/v1/goods';
-    var pageType = 'get';
-    var dataParm = {};
-    dataParm.pageNumber = 1;
-    dataParm.pageSize = 20;
-    dataParm.catIds = catId;
+	$.getUrlParam = function (key) {
+		var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+		var result = window.location.search.substr(1).match(reg);
+		return result ? decodeURIComponent(result[2]) : null;
+	};
+	var names = $.getUrlParam('names');
+	var pagePath = '/search/v1/goods';
+	var pageType = 'post';
+	var dataParm = {};
+	dataParm.pageNumber = 1;
+	dataParm.pageSize = 20;
+	dataParm.goodsNameAll = names;
+	$('#J_searchInput').val(1)
 </script>
 <%};%>
-
 <%
 var htmlPart = {
 %>
 <div class="grid-0 backgorund-gray clearfix">
-    <div class="grid-row  clearfix" style="position: relative">
-        <div class="exchange-search">
-            <%include("/layout/menu.html"){} %>
-            <div class="order-list">
-                <ul>
-                    <li>
-                        <a class="item-top" href="javascript:void(0)">
-                            <p class="goods-img"><img src="/static/images/4-3.jpg" alt=""/></p>
-                            <p class="goods-name">信用查询</p>
-                            <p class="goods-brief">查询关于人的乙烯类信息哈哈</p>
-                        </a>
-                        <div class="item-down">
-                            <span class="grid-left goods-price"><span>22222</span>元</span>
-                            <a class="grid-right" href="javascript:void(0)">加入购物车</a>
-                        </div>
-                    </li>
-                    <li>
-                        <a class="item-top" href="javascript:void(0)">
-                            <p class="goods-img"><img src="/static/images/4-3.jpg" alt=""/></p>
-                            <p class="goods-name">信用查询</p>
-                            <p class="goods-brief">查询关于人的乙烯类信息哈哈</p>
-                        </a>
-                        <div class="item-down">
-                            <span class="grid-left goods-price"><span>22222</span>元</span>
-                            <a class="grid-right" href="javascript:void(0)">加入购物车</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-    </div>
+	<div class="grid-row  clearfix" style="position: relative">
+		<div class="exchange-search">
+			<%include("/layout/menu.html"){} %>
+			<div class="order-list">
+				<ul>
+					<li>
+						<a class="item-top" href="javascript:void(0)">
+							<p class="goods-img"><img src="/static/images/4-3.jpg" alt=""/></p>
+							<p class="goods-name">信用查询</p>
+							<p class="goods-brief">查询关于人的乙烯类信息哈哈</p>
+						</a>
+						<div class="item-down">
+							<span class="grid-left goods-price"><span>22222</span>元</span>
+							<a class="grid-right" href="javascript:void(0)">加入购物车</a>
+						</div>
+					</li>
+					<li>
+						<a class="item-top" href="javascript:void(0)">
+							<p class="goods-img"><img src="/static/images/4-3.jpg" alt=""/></p>
+							<p class="goods-name">信用查询</p>
+							<p class="goods-brief">查询关于人的乙烯类信息哈哈</p>
+						</a>
+						<div class="item-down">
+							<span class="grid-left goods-price"><span>22222</span>元</span>
+							<a class="grid-right" href="javascript:void(0)">加入购物车</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<%include("/layout/pageaction.html"){} %>
+		</div>
+	</div>
 </div>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
 <script src="/static/js/exchange/common.js"></script>
+<script src="/static/js/exchange/search.js"></script>
