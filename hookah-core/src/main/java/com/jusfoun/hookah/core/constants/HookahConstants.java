@@ -27,6 +27,10 @@ public class HookahConstants {
     public static final String GOODS_AGG_ATTR_TYPE = "attrTypeAgg";
     public static final String GOODS_AGG_ATTR_TYPE_FIELD = "attrTypeId";
 
+    /**缓存*/
+    public static final String CACHE_GOODS_CATEGORY = "categoryInfo";
+    public static final String CACHE_GOODS_ATTR = "goodsAttrInfo";
+
     public enum AnalyzeOpt {
         ANALYZED("analyzed"),
         NOT_ANALYZED("not_analyzed");

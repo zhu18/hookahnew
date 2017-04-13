@@ -6,9 +6,9 @@ import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.GoodsAttrTypeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -18,7 +18,7 @@ import java.util.List;
 //@RestController
 @RequestMapping("attrType")
 public class GoodsAttrTypeController {
-    @Autowired
+    @Resource
     GoodsAttrTypeService goodsAttrTypeService;
 
     /**

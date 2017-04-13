@@ -10,4 +10,5 @@ import com.jusfoun.hookah.core.generic.GenericService;
  */
 public interface MgCategoryAttrTypeService extends GenericService<MgCategoryAttrType,String> {
 
+    MgCategoryAttrType findGoodsAttr(String catId);
 }

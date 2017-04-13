@@ -7,6 +7,7 @@ import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.rpc.api.CategoryService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -28,6 +29,13 @@ public class CategoryServiceImpl extends GenericServiceImpl<Category, String> im
     public void setDao(CategoryMapper categoryMapper) {
         super.setDao(categoryMapper);
     }
+
+    @Cacheable(value = "categoryInfo")
+    @Override
+    public Category selectById(String id) {
+        return categoryMapper.selectByPrimaryKey(id);
+    }
+
 
     public List<CategoryVo> getCatTree() {
         List<CategoryVo> vo = new ArrayList<>();
