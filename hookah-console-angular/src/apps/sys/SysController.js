@@ -7,7 +7,8 @@ class SysController {
       });
       promise.then(function (res, status, config, headers) {
         $rootScope.loadingState = false;
-        console.log(res);
+        console.log(res.data);
+        $scope.treeData = [];
         growl.addSuccessMessage("数据加载完毕。。。");
       });
     };

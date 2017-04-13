@@ -23,9 +23,9 @@ public class DictApi {
     private DictService dictService;
 
     @RequestMapping(value = "/tree", method = RequestMethod.GET)
-    public ReturnData getListInPage() {
+    public Object getListInPage() {
 
         List<Dict> dictTreeList = dictService.selectTree();
-        return ReturnData.success(dictTreeList);
+        return dictTreeList;
     }
 }

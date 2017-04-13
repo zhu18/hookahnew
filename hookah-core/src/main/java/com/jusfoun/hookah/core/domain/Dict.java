@@ -4,7 +4,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jusfoun.hookah.core.generic.GenericModel;
 
 import javax.persistence.Id;
+import javax.persistence.Transient;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author huang lei
@@ -26,10 +29,23 @@ public class Dict extends GenericModel {
     //默认0没有，1有
     private String hasChild;
 
+
     private String property;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addTime;
+
+    @Transient
+    private List<Dict> children;
+
+
+    public List<Dict> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Dict> children) {
+        this.children = children;
+    }
 
     public Long getDictId() {
         return dictId;
