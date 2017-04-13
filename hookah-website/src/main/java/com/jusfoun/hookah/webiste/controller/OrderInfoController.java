@@ -189,7 +189,7 @@ public class OrderInfoController extends BaseController {
      * @param cartIds
      * @return
      */
-    @RequestMapping(value = "/order/createOrder", method = RequestMethod.GET)
+    @RequestMapping(value = "/order/createOrder", method = RequestMethod.POST)
     public String createOrder(OrderInfo orderinfo, String[] cartIds,Model model) {
         try {
             init(orderinfo);
