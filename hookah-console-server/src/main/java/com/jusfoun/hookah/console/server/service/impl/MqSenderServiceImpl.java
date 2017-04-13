@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
 import com.jusfoun.hookah.console.server.config.mq.RabbitMqSender;
+import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.domain.SysMessage;
 import com.jusfoun.hookah.rpc.api.MqSenderService;
 import org.apache.shiro.SecurityUtils;
@@ -40,6 +41,6 @@ public class MqSenderServiceImpl implements MqSenderService {
         message.setMsgText(msg);
         message.setType((short)1);
 
-        sender.sendMessageRabbitmqDirect(message);
+        sender.sendRabbitmqDirect(RabbitmqQueue.CONTRACE_MESSAGE,message);
     }
 }

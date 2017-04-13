@@ -69,13 +69,14 @@ public class OrderInfoController extends BaseController {
                     if (g.getIsOnsale() == null || g.getIsOnsale() != 1) {
                         throw new HookahException("商品[" + g.getGoodsName() + "]未上架");
                     }
+
                     if (cart.getFormat().getPrice() != null && cart.getGoodsNumber() != null) {
-                        goodsAmount += cart.getGoodsPrice() * cart.getFormatNumber() * cart.getGoodsNumber();  //商品单价 * 套餐内数量 * 购买套餐数量
+                        goodsAmount += cart.getFormat().getPrice() * cart.getFormat().getNumber() * cart.getGoodsNumber();  //商品单价 * 套餐内数量 * 购买套餐数量
                     }
                 }
             }
             model.addAttribute("orderAmount",goodsAmount);
-            model.addAttribute("cartList",carts);
+            model.addAttribute("cartOrder",carts);
             return "order/orderInfo";
         }catch (Exception e){
             logger.info(e.getMessage());
@@ -96,15 +97,15 @@ public class OrderInfoController extends BaseController {
                 throw new HookahException("商品[" + g.getGoodsName() + "]未上架");
             }
             MgGoods.FormatBean format = goodsService.getFormat(goodsId,formatId);
-
             goodsAmount += format.getPrice() * format.getNumber() * goodsNumber;  //商品单价 * 套餐内数量 * 购买套餐数量
+
             CartVo vo = new CartVo();
             vo.setGoodsNumber(goodsNumber);
             vo.setFormat(format);
             vo.setGoods(g);
             list.add(vo);
             model.addAttribute("orderAmount",goodsAmount);
-            model.addAttribute("cartList",list);
+            model.addAttribute("cartOrder",list);
             return "order/orderInfo";
         }catch (Exception e){
             logger.info(e.getMessage());
@@ -227,7 +228,7 @@ public class OrderInfoController extends BaseController {
      * @param goodsNumber
      * @return
      */
-    @RequestMapping(value = "/order/directOrder", method = RequestMethod.GET)
+    @RequestMapping(value = "/order/directOrder", method = RequestMethod.POST)
     public String directCreate(OrderInfo orderinfo, String goodsId, Integer formatId,Long goodsNumber,Model model) {
         try {
             init(orderinfo);
