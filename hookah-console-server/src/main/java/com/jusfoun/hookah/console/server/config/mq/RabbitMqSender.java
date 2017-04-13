@@ -1,8 +1,6 @@
 package com.jusfoun.hookah.console.server.config.mq;
 
 import com.jusfoun.hookah.core.constants.RabbitmqExchange;
-import com.jusfoun.hookah.core.constants.RabbitmqQueue;
-import com.jusfoun.hookah.core.domain.SysMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -25,10 +23,26 @@ public class RabbitMqSender implements RabbitTemplate.ConfirmCallback {
         this.rabbitTemplate.setConfirmCallback(this);
     }
 
-    public void sendMessageRabbitmqDirect(SysMessage message) {
+    /**
+     * 发送到 指定routekey的指定queue
+     * @param queue
+     * @param obj
+     */
+    public void sendRabbitmqDirect(String queue,Object obj) {
         CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
         LOGGER.info("send: " + correlationData.getId());
-        this.rabbitTemplate.convertAndSend(RabbitmqExchange.CONTRACT_DIRECT, RabbitmqQueue.CONTRACE_MESSAGE, message, correlationData);
+        this.rabbitTemplate.convertAndSend(RabbitmqExchange.CONTRACT_DIRECT, queue , obj, correlationData);
+    }
+
+    /**
+     * 所有发送到Topic Exchange的消息被转发到所有关心RouteKey中指定Topic的Queue上
+     * @param queue
+     * @param obj
+     */
+    public void sendRabbitmqTopic(String queue,Object obj) {
+        CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
+        LOGGER.info("send: " + correlationData.getId());
+        this.rabbitTemplate.convertAndSend(RabbitmqExchange.CONTRACT_TOPIC, queue , obj, correlationData);
     }
 
 
