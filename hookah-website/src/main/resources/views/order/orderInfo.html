@@ -3,91 +3,86 @@ var head = {
 %>
 <link rel="stylesheet" href="/static/css/order/orderInfo.css">
 <%};%>
-
 <%
 var htmlPart = {
 %>
 <div class="grid-0  backgorund-gray">
-    <div class="grid-row padding-bottom-30 padding-top-10" >
-        <div class="order-info" style=" background-color: white;">
-            <div class="order-info-top">
-                <div class="order-logo display-inline-block grid-left">
-                    <a class="display-inline-block" href="javascript:void(0)">
-                        <img class="display-inline-block" src="/static/images/logo.png" alt="">
-                    </a>
-                </div>
-                <div class="order-progress-bar grid-right">
-                    <ul class="margin-top-10">
-                        <li class="active" data-tip="1">确认订单信息</li>
-                        <li data-tip="2">提交订单成功</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="order-info-down">
-                <div><h1><i class="fa fa-pencil-square-o padding-right-10" aria-hidden="true"></i>填写并核对订单信息</h1></div>
-                <div>
-                    <table>
-                        <tr class="tab-title"><th colspan="9"><h5>新订购服务</h5></th></tr>
-                        <tr class="tab-title-th">
-                            <th></th>
-                            <th>商品名称</th>
-                            <th>订购项目</th>
-                            <th>订购数量</th>
-                            <th>价格(元)</th>
-                            <th>优惠(元)</th>
-                            <th>实付(元)</th>
-                        </tr>
-                        <tr class="tab-item">
-                            <td>1</td>
-                            <td>学信网授权数据</td>
-                            <td>￥120.00/100次</td>
-                            <td>1</td>
-                            <td>120.00</td>
-                            <td>暂无</td>
-                            <td>120.00</td>
-                        </tr>
-                        <tr class="tab-item">
-                            <td>1</td>
-                            <td>学信网授权数据</td>
-                            <td>￥120.00/100次</td>
-                            <td>1</td>
-                            <td>120.00</td>
-                            <td>暂无</td>
-                            <td>120.00</td>
-                        </tr>
-                        <tr class="tab-pay">
-                            <td colspan="9">
-                                <span>付款小计：</span>
-                                <span class="color-orange">120.00</span>
-                                <span>元</span>
-                            </td>
-                        </tr>
-                        <tr class="tab-agreement">
-                            <td colspan="9">
-                                <div>
-                                    <span>请阅读</span>
-                                    <a href="javascript:void(0)" class="color-blue">订购协议</a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="tab-submit">
-                            <td colspan="9">
-                                <div>
-                                    <div class="pay-box display-inline-block">
-                                        <span>应付总额：</span>
-                                        <span class="color-orange font-size-20">120.00</span>
-                                        <span>元</span>
-                                    </div>
-                                    <a href="javascript:void(0)" class="btn-full-red">同意协议并付款</a>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-    </div>
+	<div class="grid-row padding-bottom-30 padding-top-10">
+		<div class="order-info" style=" background-color: white;">
+			<div class="order-info-top">
+				<div class="order-logo display-inline-block grid-left">
+					<a class="display-inline-block" href="javascript:void(0)">
+						<img class="display-inline-block" src="/static/images/logo.png" alt="">
+					</a>
+				</div>
+				<div class="order-progress-bar grid-right">
+					<ul class="margin-top-10">
+						<li class="active" data-tip="1">确认订单信息</li>
+						<li data-tip="2">提交订单成功</li>
+					</ul>
+				</div>
+			</div>
+			<div class="order-info-down">
+				<div><h1><i class="fa fa-pencil-square-o padding-right-10" aria-hidden="true"></i>填写并核对订单信息</h1></div>
+				<div>
+					<table>
+						<tr class="tab-title">
+							<th colspan="9"><h5>新订购服务</h5></th>
+						</tr>
+						<tr class="tab-title-th">
+							<th>序号</th>
+							<th>商品名称</th>
+							<th>订购规格</th>
+							<th>单价(元)</th>
+							<th>订购数量</th>
+							<th>优惠(元)</th>
+							<th>总价(元)</th>
+						</tr>
+						<%for(list in cartList){%>
+						<tr class="tab-item">
+							<td>1</td>
+							<td>${list.goodsName}</td>
+							<td>
+								<% if(list.formatNumber > 1){%>${list.formatNumber}<%}%>${decode(list.goodsFormat,0,"次",1,"月",2,"年")}
+							</td>
+							<td>${trunc(list.goodsPrice / 100, 2)}</td>
+							<td>${list.goodsNumber}</td>
+							<td>${list.goodsName}</td>
+							<td>${trunc((list.goodsPrice * list.goodsNumber) / 100, 2)}</td>
+						</tr>
+						<%}%>
+						<tr class="tab-pay">
+							<td colspan="9">
+								<span>付款小计：</span>
+								<span class="color-orange">${orderAmount / 100}</span>
+								<span>元</span>
+							</td>
+						</tr>
+						<tr class="tab-agreement">
+							<td colspan="9">
+								<div>
+									<span>请阅读</span>
+									<a href="javascript:void(0)" class="color-blue">订购协议</a>
+								</div>
+							</td>
+						</tr>
+						<tr class="tab-submit">
+							<td colspan="9">
+								<div>
+									<div class="pay-box display-inline-block">
+										<span>应付总额：</span>
+										<span class="color-orange font-size-20">${orderAmount / 100}</span>
+										<span>元</span>
+									</div>
+									<a href="javascript:void(0)" class="btn-full-red">同意协议并付款</a>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <%};
 include("/layout/other-base.html",{headSection:head,htmlSection:htmlPart}){}

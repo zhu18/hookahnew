@@ -4,121 +4,95 @@ var head = {
 <link rel="stylesheet" href="/static/css/usercenter/user-center-menu.css">
 <link rel="stylesheet" href="/static/css/usercenter/buyer/cart.css">
 <%};%>
-
 <%
 var htmlPart = {
 %>
 <div class="grid-0 backgorund-gray ">
-  <div class="grid-row clearfix">
-    <%include("/usercenter/user-center-menu.html"){} %>
-    <div class="user-center-box grid-right margin-top-10">
-      <div class="cart">
-        <h3 class="center-title">购物车</h3>
-      </div>
-      <div class="order-manage">
-        <div class="order-box cart-box">
-          <% if(cartList.~size > 1){ %>
-          <table class="cart-list-title order-items">
-            <thead>
-            <tr class="order-body">
-              <td class="checkbox padding-left-10"><label><input type="checkbox" class="checkall" name="checkall">
-                全选</label></td>
-              <td class="img"></td>
-              <td class="name">商品信息</td>
-              <td class="price">单价(元)</td>
-              <td class="number">数量</td>
-              <td class="format">规格</td>
-              <td class="money">金额(元)</td>
-              <td class="operation">操作</td>
-            </tr>
-            </thead>
-          </table>
-          <table class="order-items second">
-            <tbody>
-            <% for(list in cartList){ %>
-            <tr class="order-body">
-              <td class="checkbox padding-left-10"><input type="checkbox" name="items" value="${list.recId}"
-                                                          price="${list.goodsPrice}" number="${list.goodsNumber}"></td>
-              <td class="img">
-                <div><img src="${list.goodsImg}" alt=""></div>
-              </td>
-              <td class="name">${list.goodsName}</td>
-              <td class="price">${trunc(list.goodsPrice / 100, 2)}</td>
-              <td class="number" recId="${list.recId}">
-                <div>
-                  <span class="reduce-btn btn <% if(list.goodsNumber <= 1){ %>testcalss<% } %>"
-                        onclick="reduceFn(this)">-</span>
-                  <input type="text" class="numberInput" value="${list.goodsNumber}"
-                         onkeydown="return kkdown(this,event)" onfocus="numFocusFn(this)">
-                  <span class="plus-btn btn" onclick="plusFn(this)">+</span>
-                </div>
-              </td>
-              <td class="format">
-                <% if(list.formatNumber > 1){%>${list.formatNumber}<%}%><%if(list.goodsFormat == 0){%>次<%}else if(list.goodsFormat == 1){%>月<%}else if(list.goodsFormat == 2){%>年<%}%>
-                </td>
-              <td class="money">${trunc((list.goodsPrice * list.goodsNumber) / 100, 2)}</td>
-              <td class="operation">
-                <a href="javascript:void(0)">商品详情</a>
-                <a href="javascript:delThis('${list.recId}')">删除</a>
-              </td>
-            </tr>
-            <% } %>
-
-            <!--<tr class="order-body">-->
-            <!--<td class="checkbox padding-left-10">-->
-            <!--<input type="checkbox" class="checkboxes">-->
-            <!--</td>-->
-            <!--<td class="img">-->
-            <!--<div>-->
-            <!--<img src="../../static/1/img/TB1BLQsPpXXXXXNXXXXXXXXXXXX-440-330.jpg" alt="">-->
-            <!--</div>-->
-            <!--</td>-->
-            <!--<td class="name">银行卡类型查询</td>-->
-            <!--<td class="price">￥8000.00</td>-->
-            <!--<td class="number">-->
-            <!--<div>-->
-            <!--<span class="reduce-btn btn">-</span>-->
-            <!--<input type="text" value="1">-->
-            <!--<span class="plus-btn btn">+</span>-->
-            <!--</div>-->
-            <!--</td>-->
-            <!--<td class="money">￥8000.00</td>-->
-            <!--<td class="operation order">-->
-            <!--<a href="javascript:void(0)">商品详情</a>-->
-            <!--<a href="javascript:void(0)">评价</a>-->
-            <!--<a href="javascript:void(0)">申请售后</a>-->
-            <!--<a href="javascript:void(0)">删除</a>-->
-            <!--<a href="javascript:void(0)">再次购买</a>-->
-            <!--</td>-->
-            <!--</tr>-->
-            </tbody>
-          </table>
-          <table class="cart-list-bottom order-items">
-            <tr class="order-body">
-              <td class="checkbox padding-left-10">
-                <label>
-                  <input class="checkall" type="checkbox" name="checkall"> 全选
-                </label>
-              </td>
-              <td class="img">
-                <a href="javascript:void(0)" id="delBtn" class="del">删除</a>
-              </td>
-              <td class="name"></td>
-              <td class="price"></td>
-              <td class="number">已选商品 <span>0</span>件</td>
-              <td class="money">总金额：￥<span id="J_totalAmount">0.00</span></td>
-              <td class="operation">
-                <button class="buy-btn" id="J_buyBtn">结算</button>
-              </td>
-            </tr>
-          </table>
-          <%}else{%>
-          <div class="noDataBox">购物车没有商品 >>><a href="/">去购物</a></div>
-          <%}%>
-        </div>
-      </div>
-    </div>
-  </div>
+	<div class="grid-row clearfix">
+		<%include("/usercenter/user-center-menu.html"){} %>
+		<div class="user-center-box grid-right margin-top-10">
+			<div class="cart">
+				<h3 class="center-title">购物车</h3>
+			</div>
+			<div class="order-manage">
+				<div class="order-box cart-box">
+					<form action="/order/orderInfo" name="cartList" id="J_cart" method="post">
+						<input type="hidden" name="cartIds" id="J_cartIdStr">
+						<% if(cartList.~size > 0){ %>
+						<table class="cart-list-title order-items">
+							<thead>
+							<tr class="order-body">
+								<td class="checkbox padding-left-10">
+									<label><input type="checkbox" class="checkall" name="checkall">全选</label></td>
+								<td class="img"></td>
+								<td class="name">商品信息</td>
+								<td class="price">单价(元)</td>
+								<td class="number">数量</td>
+								<td class="format">规格</td>
+								<td class="money">金额(元)</td>
+								<td class="operation">操作</td>
+							</tr>
+							</thead>
+						</table>
+						<table class="order-items second">
+							<tbody>
+							<% for(list in cartList){ %>
+							<tr class="order-body">
+								<td class="checkbox padding-left-10">
+									<input type="checkbox" name="items" value="${list.recId}" recId="${list.recId}" price="${list.goodsPrice}" number="${list.goodsNumber}">
+								</td>
+								<td class="img">
+									<div><img src="${list.goodsImg}" alt=""></div>
+								</td>
+								<td class="name">${list.goodsName}</td>
+								<td class="price">${trunc(list.goodsPrice / 100, 2)}</td>
+								<td class="number" recId="${list.recId}">
+									<div>
+										<span class="reduce-btn btn <% if(list.goodsNumber <= 1){ %>testcalss<% } %>" onclick="reduceFn(this)">-</span>
+										<input type="text" class="numberInput" value="${list.goodsNumber}"
+											   onkeydown="return kkdown(this,event)" onfocus="numFocusFn(this)">
+										<span class="plus-btn btn" onclick="plusFn(this)">+</span>
+									</div>
+								</td>
+								<td class="format">
+									<% if(list.formatNumber > 1){%>${list.formatNumber}<%}%>${decode(list.goodsFormat,0,"次",1,"月",2,"年")}
+								</td>
+								<td class="money">${trunc((list.goodsPrice * list.goodsNumber) / 100, 2)}</td>
+								<td class="operation">
+									<a href="javascript:void(0)">商品详情</a>
+									<a href="javascript:delThis('${list.recId}')">删除</a>
+								</td>
+							</tr>
+							<% } %>
+							</tbody>
+						</table>
+						<table class="cart-list-bottom order-items">
+							<tr class="order-body">
+								<td class="checkbox padding-left-10">
+									<label>
+										<input class="checkall" type="checkbox" name="checkall"> 全选
+									</label>
+								</td>
+								<td class="img">
+									<a href="javascript:void(0)" id="delBtn" class="del">删除</a>
+								</td>
+								<td class="name"></td>
+								<td class="price"></td>
+								<td class="number">已选商品 <span>0</span>件</td>
+								<td class="money">总金额：￥<span id="J_totalAmount">0.00</span></td>
+								<td class="operation">
+									<button class="buy-btn" id="J_buyBtn" type="button"  onclick="return check()">结算</button>
+								</td>
+							</tr>
+						</table>
+						<%}else{%>
+					</form>
+					<div class="noDataBox">购物车没有商品 >>><a href="/">去购物</a></div>
+					<%}%>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 </div>
 <script src="/static/js/cart/cart.js"></script>

@@ -125,8 +125,8 @@
     <property name="filterChainDefinitions">
       <value>
         /static/** anon
-        /api* = oauth2Authc
-        /api/** = oauth2Authc
+        /api* = oauth2Authc, roles["Admin"]
+        /api/** = oauth2Authc, roles["Admin"]
         /error/** = anon
         /login** = oauth2Authc
         /logout = logout

@@ -153,11 +153,8 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
     @Transactional(readOnly=false)
     @Override
-    public OrderInfo insert(OrderInfo orderInfo,String cartIds) throws Exception {
+    public OrderInfo insert(OrderInfo orderInfo,String[] cartIdArray) throws Exception {
         init(orderInfo);
-
-        String[] cartIdArray = cartIds.split(",");
-
         List<Cart> cartList= cartService.selectByIds(cartIdArray);
         List<MgOrderGoods> ordergoodsList = null;
         if(cartList!=null&&cartList.size()>0){

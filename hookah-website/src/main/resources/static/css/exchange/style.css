@@ -2346,3 +2346,6 @@ dl {
     color: #e34f4f;
 }
 /*搜索结果页-end*/
+.crumbs-nav{
+    font-size: 14px;
+}

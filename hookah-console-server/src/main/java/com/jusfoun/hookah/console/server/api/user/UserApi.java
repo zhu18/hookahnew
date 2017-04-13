@@ -3,11 +3,14 @@ package com.jusfoun.hookah.console.server.api.user;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.domain.UserDetail;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.rpc.api.UserDetailService;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +32,9 @@ public class UserApi {
 
     @Resource
     UserService userService;
+
+    @Resource
+    UserDetailService userDetailService;
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ReturnData getAllUser(String currentPage, String pageSize, HttpServletRequest request, HttpServletResponse response) {
@@ -57,6 +63,13 @@ public class UserApi {
         return ReturnData.success(page);
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ReturnData getUserById(@PathVariable String id) {
+        UserDetail userDetail = userDetailService.selectById(id);
+        return ReturnData.success(userDetail);
+    }
+
+
     @RequestMapping(value = "/verify/all", method = RequestMethod.GET)
     public ReturnData getAllVerifyUser(String currentPage, String pageSize, HttpServletRequest request, HttpServletResponse response) {
         Pagination<User> page = new Pagination<>();
@@ -65,7 +78,7 @@ public class UserApi {
             List<OrderBy> orderBys = new ArrayList();
             orderBys.add(OrderBy.desc("addTime"));
             //只查询组织ID不为0的用户
-            filters.add(Condition.in("userType", new Integer[]{3,5}));
+            filters.add(Condition.in("userType", new Integer[]{3, 5}));
             //参数校验
             int pageNumberNew = HookahConstants.PAGE_NUM;
 
