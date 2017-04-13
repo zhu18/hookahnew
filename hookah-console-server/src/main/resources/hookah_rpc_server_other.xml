@@ -16,6 +16,7 @@
     <bean id="helpService" class="com.jusfoun.hookah.console.server.service.impl.HelpServiceImpl"/>
     <bean id="userDetailService" class="com.jusfoun.hookah.console.server.service.impl.UserDetailServiceImpl"/>
     <bean id="advertService" class="com.jusfoun.hookah.console.server.service.impl.AdvertServiceImpl"/>
+    <bean id="dictService" class="com.jusfoun.hookah.console.server.service.impl.DictServiceImpl"/>
     <!-- 具体rpc服务配置，声明实现的接口类。-->
     <motan:service interface="com.jusfoun.hookah.rpc.api.MqSenderService"
                    ref="mqSenderService" export="hookah:5001" basicService="serviceBasicConfig">
@@ -44,5 +45,10 @@
     <!-- 广告管理 -->
     <motan:service interface="com.jusfoun.hookah.rpc.api.AdvertService"
                    ref="advertService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+
+    <!-- 字典管理 -->
+    <motan:service interface="com.jusfoun.hookah.rpc.api.DictService"
+                   ref="dictService" export="hookah:5001" basicService="serviceBasicConfig">
     </motan:service>
 </beans>
