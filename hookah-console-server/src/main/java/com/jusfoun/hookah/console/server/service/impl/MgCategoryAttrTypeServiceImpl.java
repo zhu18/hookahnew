@@ -8,4 +8,8 @@ import com.jusfoun.hookah.rpc.api.MgCategoryAttrTypeService;
  * Created by wangjl on 2017-3-16.
  */
 public class MgCategoryAttrTypeServiceImpl extends GenericMongoServiceImpl<MgCategoryAttrType, String> implements MgCategoryAttrTypeService {
+    @Override
+    public MgCategoryAttrType findGoodsAttr(String catId) {
+        return null;
+    }
 }

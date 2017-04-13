@@ -105,7 +105,7 @@ public class CategoryController {
         ReturnData<MgCategoryAttrType> returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
-            MgCategoryAttrType obj = mgCategoryAttrTypeService.selectById(catId);
+            MgCategoryAttrType obj = mgCategoryAttrTypeService.findGoodsAttr(catId);
             returnData.setData(obj);
         }catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
