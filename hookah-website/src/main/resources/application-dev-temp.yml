@@ -36,7 +36,12 @@ spring:
       uri:  mongodb://192.168.15.90:27017/hookah
   mvc:
       static-path-pattern: /static/**
-
+  rabbitmq:
+      addresses: 192.168.15.90:5672
+      username: root
+      password: password
+      publisher-confirms: true
+      virtual-host: /
 redis:
   ip: 192.168.15.90
   port: 6379
