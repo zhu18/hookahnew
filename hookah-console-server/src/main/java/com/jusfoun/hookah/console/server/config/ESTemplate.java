@@ -752,8 +752,10 @@ public class ESTemplate {
                                               Map<String,Object> filterMap, List<EsAgg> listCnt) {
         Map<String, List<EsAggResult>> map = new HashedMap();
         SearchRequestBuilder requestBuilder = client.prepareSearch()
-                .setIndices(indexName).setTypes(type)
-                .setQuery(getBoolQueryBuilder(filterMap));
+                .setIndices(indexName).setTypes(type);
+        if(filterMap != null) {
+            requestBuilder.setQuery(getBoolQueryBuilder(filterMap));
+        }
         if (listCnt != null && listCnt.size() > 0) {
             for (EsAgg obj : listCnt) {
                 requestBuilder.addAggregation(AggregationBuilders.terms(obj.getAggName()).field(obj.getFieldName()));
