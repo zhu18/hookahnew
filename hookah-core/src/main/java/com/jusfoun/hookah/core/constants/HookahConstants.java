@@ -24,6 +24,8 @@ public class HookahConstants {
     public static final String GOODS_AGG_CATEGORY_FIELD = "catId";
     public static final String GOODS_AGG_ATTR = "attrAgg";
     public static final String GOODS_AGG_ATTR_FIELD = "attrId";
+    public static final String GOODS_AGG_ATTR_TYPE = "attrTypeAgg";
+    public static final String GOODS_AGG_ATTR_TYPE_FIELD = "attrTypeId";
 
     public enum AnalyzeOpt {
         ANALYZED("analyzed"),
