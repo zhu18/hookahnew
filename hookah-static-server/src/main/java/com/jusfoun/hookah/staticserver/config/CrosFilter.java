@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.staticserver.config;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +21,10 @@ import java.util.regex.Pattern;
 @Order(1)
 public class CrosFilter implements Filter {
 
-    final String domain = "hookah.app";
+    @Autowired
+    MyProps myProps;
+
+    final String domain = myProps.getHost().get("domain");
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
