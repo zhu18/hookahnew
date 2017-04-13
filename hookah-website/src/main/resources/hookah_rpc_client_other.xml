@@ -5,24 +5,30 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
        http://api.weibo.com/schema/motan http://api.weibo.com/schema/motan.xsd">
 
-    <!-- 具体referer配置。使用方通过beanid使用服务接口类 -->
-    <motan:referer id="mqSenderService"
-                   interface="com.jusfoun.hookah.rpc.api.MqSenderService"
-                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
-    <motan:referer id="mailService"
-                   interface="com.jusfoun.hookah.rpc.api.MailService"
-                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
-    <motan:referer id="sysNewsService"
-                   interface="com.jusfoun.hookah.rpc.api.SysNewsService"
-                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
-    <motan:referer id="mgSmsValidateService"
-                   interface="com.jusfoun.hookah.rpc.api.MgSmsValidateService"
-                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+  <!-- 具体referer配置。使用方通过beanid使用服务接口类 -->
+  <motan:referer id="mqSenderService"
+                 interface="com.jusfoun.hookah.rpc.api.MqSenderService"
+                 connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+  <motan:referer id="mailService"
+                 interface="com.jusfoun.hookah.rpc.api.MailService"
+                 connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+  <motan:referer id="sysNewsService"
+                 interface="com.jusfoun.hookah.rpc.api.SysNewsService"
+                 connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+  <motan:referer id="mgSmsValidateService"
+                 interface="com.jusfoun.hookah.rpc.api.MgSmsValidateService"
+                 connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
 
-    <motan:referer id="helpService"
-                   interface="com.jusfoun.hookah.rpc.api.HelpService"
-                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
-    <motan:referer id="userDetailService"
-                   interface="com.jusfoun.hookah.rpc.api.UserDetailService"
-                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+  <motan:referer id="helpService"
+                 interface="com.jusfoun.hookah.rpc.api.HelpService"
+                 connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+  <motan:referer id="userDetailService"
+                 interface="com.jusfoun.hookah.rpc.api.UserDetailService"
+                 connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+  <motan:referer id="advertService"
+                 interface="com.jusfoun.hookah.rpc.api.AdvertService"
+                 connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+  <motan:referer id="dictService"
+                 interface="com.jusfoun.hookah.rpc.api.DictService"
+                 connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
 </beans>

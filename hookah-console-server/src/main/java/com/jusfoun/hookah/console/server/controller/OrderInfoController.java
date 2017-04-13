@@ -118,7 +118,7 @@ public class OrderInfoController {
      * @return
      */
     @RequestMapping(value = "/order/insert", method = RequestMethod.POST)
-    public ReturnData insert(OrderInfo orderinfo, String cartIds) {
+    public ReturnData insert(OrderInfo orderinfo, String[] cartIds) {
         try {
             init(orderinfo);
             orderinfo = orderInfoService.insert(orderinfo, cartIds);

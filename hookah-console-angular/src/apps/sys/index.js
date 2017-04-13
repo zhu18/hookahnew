@@ -1,17 +1,15 @@
-import '../../common/common';
-import newsRouting from './news.routing';
+import "../../common/common";
+import sysRouting from "./sys.routing";
 const MODULE_NAME = 'Hookah';
 let app = angular.module(MODULE_NAME, [
-  'ui.router',
   'Common',
+  'ui.router',
   'ui.bootstrap'
 ]);
-app.config(newsRouting);
-app.config(['$httpProvider', function ($httpProvider) {
-  $httpProvider.defaults.withCredentials = true;
-}]);
+app.config(sysRouting);
+
 app.run(function ($rootScope, $state) {
-  $rootScope.currentProductId = 'news';
+  $rootScope.currentProductId = 'sys';
   $rootScope.config = {
     "navScene": 'main',
     "isSidebarFold": false,
@@ -34,12 +32,27 @@ app.run(function ($rootScope, $state) {
       "folded": false
     }
   };
-  $rootScope.config.title = '资讯管理';
-  $rootScope.config.mainNav =[
+  $rootScope.config.title = '系统设置';
+  $rootScope.config.mainNav = [
     {
-      "title":"资讯查询",
-      "url":"news.search"
+      "title": "商品查询",
+      "url": "items.search"
+    },
+    {
+      "title": "字典管理",
+      "showChild": true,
+      "childs": [
+        {
+          "title": "字典查询",
+          "url": "sys.dict.search"
+        }
+        , {
+          "title": "新增",
+          "url": "sys.dict.add"
+        }
+      ]
     }
+
   ];
 
 });

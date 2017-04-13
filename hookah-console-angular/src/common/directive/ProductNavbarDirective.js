@@ -17,7 +17,6 @@ class ProductNavbarDirectiveController {
     this.$rootScope = $rootScope;
   }
   collapseProductNavbar() {
-    console.log("navbar click");
     this.$rootScope.config.productNavBar = this.$rootScope.config.productNavBar == 'col-1' ? '' : 'col-1';
   }
 }
