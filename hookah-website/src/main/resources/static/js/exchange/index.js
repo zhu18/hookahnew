@@ -54,8 +54,7 @@ $(function () {
         var left="";
         var flag='';
         var j=0;
-        var k="";
-
+        // 右箭头点击事件
         arrRight.on('click',function () {
             if(ul.css('left')=="0px"){
                 pic=1;
@@ -102,7 +101,7 @@ $(function () {
                 }
             }
         });
-
+        // 左箭头点击事件
         arrLeft.on('click',function () {
             if(ul.css('left')=="0px"){
                 pic=0;
