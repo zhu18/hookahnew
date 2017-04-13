@@ -1,6 +1,5 @@
-package com.jusfoun.hookah.console.server.common.filter;
+package com.jusfoun.hookah.staticserver.config;
 
-import com.jusfoun.hookah.console.server.config.MyProps;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;

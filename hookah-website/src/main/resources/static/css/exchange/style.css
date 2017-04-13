@@ -835,6 +835,9 @@ lesshat-selector {
     width: 300px;
     height: 145px;
 }
+.exchange-index .exchange-category-top ul li:hover i{
+    font-size: 120px;
+}
 .exchange-index .exchange-category-top ul li i {
     display: inline-block;
     color: #DADADA;
@@ -1029,9 +1032,6 @@ lesshat-selector {
 .exchange-hot-resource .hot-resource-down {
     border-top: 1px solid #333333;
     padding-top: 10px;
-    /*font-size:0;!*取消空隙*!*/
-    /*letter-spacing:-4px; !*实际情况下 -4这个值可能还要调整*!*/
-    /*word-spacing:-4px; !*实际情况下 -4这个值可能还要调整*!*/
     height: 516px;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-left {
