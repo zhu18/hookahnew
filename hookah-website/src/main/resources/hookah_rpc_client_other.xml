@@ -25,4 +25,7 @@
     <motan:referer id="userDetailService"
                    interface="com.jusfoun.hookah.rpc.api.UserDetailService"
                    connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+    <motan:referer id="advertService"
+                   interface="com.jusfoun.hookah.rpc.api.AdvertService"
+                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
 </beans>
