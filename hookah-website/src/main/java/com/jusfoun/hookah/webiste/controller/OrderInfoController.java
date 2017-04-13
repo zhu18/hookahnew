@@ -1,15 +1,17 @@
 package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.common.Pagination;
-import com.jusfoun.hookah.core.domain.Cart;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.OrderInfo;
+import com.jusfoun.hookah.core.domain.Payment;
+import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
 import com.jusfoun.hookah.core.domain.vo.CartVo;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
+import com.jusfoun.hookah.core.utils.JSONUtils;
 import com.jusfoun.hookah.core.utils.OrderHelper;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.CartService;
@@ -61,13 +63,13 @@ public class OrderInfoController extends BaseController {
             Long goodsAmount = new Long(0);
             if(carts!=null&&carts.size()>0) {
 
-                for (Cart cart : carts) {
+                for (CartVo cart : carts) {
                     //验证商品是否下架
-                    Goods g = goodsService.selectById(cart.getGoodsId());
+                    Goods g = cart.getGoods();
                     if (g.getIsOnsale() == null || g.getIsOnsale() != 1) {
                         throw new HookahException("商品[" + g.getGoodsName() + "]未上架");
                     }
-                    if (cart.getGoodsPrice() != null && cart.getGoodsNumber() != null) {
+                    if (cart.getFormat().getPrice() != null && cart.getGoodsNumber() != null) {
                         goodsAmount += cart.getGoodsPrice() * cart.getFormatNumber() * cart.getGoodsNumber();  //商品单价 * 套餐内数量 * 购买套餐数量
                     }
                 }
@@ -81,6 +83,36 @@ public class OrderInfoController extends BaseController {
         }
 
     }
+
+    @RequestMapping(value = "/order/directInfo", method = RequestMethod.POST)
+    public String orderInfo(String goodsId, Integer formatId,Long goodsNumber,Model model) {
+        List<CartVo> list = new ArrayList<>(1);
+        try {
+            Long goodsAmount = new Long(0);
+
+            //验证商品是否下架
+            Goods g = goodsService.selectById(goodsId);
+            if (g.getIsOnsale() == null || g.getIsOnsale() != 1) {
+                throw new HookahException("商品[" + g.getGoodsName() + "]未上架");
+            }
+            MgGoods.FormatBean format = goodsService.getFormat(goodsId,formatId);
+
+            goodsAmount += format.getPrice() * format.getNumber() * goodsNumber;  //商品单价 * 套餐内数量 * 购买套餐数量
+            CartVo vo = new CartVo();
+            vo.setGoodsNumber(goodsNumber);
+            vo.setFormat(format);
+            vo.setGoods(g);
+            list.add(vo);
+            model.addAttribute("orderAmount",goodsAmount);
+            model.addAttribute("cartList",list);
+            return "order/orderInfo";
+        }catch (Exception e){
+            logger.info(e.getMessage());
+            return "/error/500";
+        }
+
+    }
+
     /**
      * 分页查询
      *
@@ -158,16 +190,33 @@ public class OrderInfoController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/order/createOrder", method = RequestMethod.GET)
-    public String createOrder(OrderInfo orderinfo, String cartIds,Model model) {
+    public String createOrder(OrderInfo orderinfo, String[] cartIds,Model model) {
         try {
             init(orderinfo);
             orderinfo = orderInfoService.insert(orderinfo, cartIds);
+            model.addAttribute("payments",initPaymentList());
             model.addAttribute("orderInfo",orderinfo);
+            logger.info("订单信息:{}", JSONUtils.toString(orderinfo));
+            logger.info("支付列表:{}", JSONUtils.toString(initPaymentList()));
             return  "pay/cash";
         } catch (Exception e) {
             logger.error("插入错误", e);
             return "/error/500";
         }
+    }
+
+    private List<Payment> initPaymentList(){
+        String[] codes = {"1","2","3"};
+        String[] payNames = {"支付宝","钱包","银联"};
+        List<Payment> list = new ArrayList<>(3);
+        for(int i=0;i<3;i++){
+            Payment pay = new Payment();
+            pay.setPayCode(codes[i]);
+            pay.setPayName(payNames[i]);
+            list.add(pay);
+        }
+        return list;
+
     }
 
     /**
@@ -178,12 +227,13 @@ public class OrderInfoController extends BaseController {
      * @param goodsNumber
      * @return
      */
-    @RequestMapping(value = "/order/direct", method = RequestMethod.GET)
+    @RequestMapping(value = "/order/directOrder", method = RequestMethod.GET)
     public String directCreate(OrderInfo orderinfo, String goodsId, Integer formatId,Long goodsNumber,Model model) {
         try {
             init(orderinfo);
             orderinfo = orderInfoService.insert(orderinfo, goodsId, formatId,goodsNumber);
             model.addAttribute("orderInfo",orderinfo);
+            model.addAttribute("payments",initPaymentList());
             return  "pay/cash";
         } catch (Exception e) {
             logger.error("插入错误", e);
