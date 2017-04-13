@@ -77,6 +77,18 @@ var htmlPart = {
                                     </div>
                                 </td>
                             </tr>
+                            <tr class="region-box">
+                                <td class="bar">所属区域：</td>
+                                <td>
+                                    <div class="select-box">
+                                        <select name="province" id="province" onchange="loadRegion('city', this)">
+                                            <option value="-1">全部</option>
+                                        </select>
+                                        <select name="city" id="city" onchange="loadRegion('county', this)"><option value="-1">全部</option></select>
+                                        <select name="county" id="county"><option value="-1">全部</option></select>
+                                    </div>
+                                </td>
+                            </tr>
                             <tr>
                                 <td class="bar">商品图片：</td>
                                 <td>

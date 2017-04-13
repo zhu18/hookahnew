@@ -64,6 +64,9 @@ h1{
     color: #333;
     padding: 2px 5px;
 }
+.select-box select{
+    height:30px;
+}
 .errors{
     white-space: normal;
     word-wrap: break-word;

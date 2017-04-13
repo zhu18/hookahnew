@@ -14,7 +14,7 @@ import java.util.Date;
 public class Dict extends GenericModel {
 
     @Id
-    private Long id;
+    private Long dictId;
 
     private Long parentId;
 
@@ -31,12 +31,12 @@ public class Dict extends GenericModel {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addTime;
 
-    public Long getId() {
-        return id;
+    public Long getDictId() {
+        return dictId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setDictId(Long dictId) {
+        this.dictId = dictId;
     }
 
     public Long getParentId() {
