@@ -152,8 +152,6 @@ $(function () {
             }
         });
     }
-
-
     hotSwitchHover();
     switchHover();
     carousel();

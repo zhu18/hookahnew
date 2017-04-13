@@ -15,10 +15,9 @@ import com.jusfoun.hookah.core.domain.GoodsAttrType;
 import com.jusfoun.hookah.core.domain.es.*;
 import com.jusfoun.hookah.core.domain.mongo.MgCategoryAttrType;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
-import com.jusfoun.hookah.core.domain.vo.EsCategoryVo;
-import com.jusfoun.hookah.core.domain.vo.EsGoodsAttrVo;
 import com.jusfoun.hookah.core.domain.vo.EsGoodsVo;
 import com.jusfoun.hookah.core.domain.vo.EsTypesVo;
+import com.jusfoun.hookah.core.domain.vo.EsTreeVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.utils.ShopUtils;
 import com.jusfoun.hookah.rpc.api.ElasticSearchService;
@@ -26,7 +25,6 @@ import com.jusfoun.hookah.rpc.api.MgGoodsService;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.client.transport.TransportClient;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -204,14 +202,16 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     public EsTypesVo getTypes(EsGoods goods) throws Exception {
         List<EsAgg> listCnt = new ArrayList<>();
         EsTypesVo esTypesVo = new EsTypesVo();
-        List<EsCategoryVo> categoryList = new ArrayList<>();
-        List<EsGoodsAttrVo> goodsAttrTypeList = new ArrayList<>();
-        listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_CATEGORY, HookahConstants.GOODS_AGG_CATEGORY_FIELD));
+        List<EsTreeVo<Category>> categoryList = new ArrayList<>();
+        List<EsTreeVo<GoodsAttrType>> goodsAttrTypeList = new ArrayList<>();
+        if(goods != null && StringUtils.isNotBlank(goods.getCatIds())) {
+            listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_CATEGORY, HookahConstants.GOODS_AGG_CATEGORY_FIELD));
+        }
         listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_ATTR, HookahConstants.GOODS_AGG_ATTR_FIELD));
         listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_ATTR_TYPE, HookahConstants.GOODS_AGG_ATTR_TYPE_FIELD));
         //按查询条件查询分类集合
         Map<String, List<EsAggResult>> map = esTemplate.getCounts(esTransportClient.getObject(),
-                Constants.GOODS_INDEX, Constants.GOODS_TYPE, AnnotationUtil.convert2Map(goods), listCnt);
+                Constants.GOODS_INDEX, Constants.GOODS_TYPE, goods != null ? AnnotationUtil.convert2Map(goods) : null, listCnt);
         if (map != null && map.size() > 0) {
             for (Map.Entry<String, List<EsAggResult>> entry : map.entrySet()) {
                 switch (entry.getKey()) {
@@ -235,14 +235,13 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
      * @param entry
      * @param categoryList
      */
-    private void getCategoryTypes(Map.Entry<String, List<EsAggResult>> entry, List<EsCategoryVo> categoryList) {
+    private void getCategoryTypes(Map.Entry<String, List<EsAggResult>> entry, List<EsTreeVo<Category>> categoryList) {
         List<EsAggResult> esAggResults = entry.getValue();
         for(EsAggResult result : esAggResults) {
             Category category = categoryMapper.selectByPrimaryKey(result.getId());
             if(category.getLevel() == 3) {
-                EsCategoryVo categoryVo = new EsCategoryVo();
-                BeanUtils.copyProperties(category, categoryVo);
-                categoryVo.setCnt(result.getCnt());
+                EsTreeVo<Category> categoryVo = new EsTreeVo(category.getCatId(), category.getCatName(),
+                        category.getLevel(), category.getParentId(), result.getCnt());
                 categoryList.add(categoryVo);
             }
         }
@@ -253,14 +252,13 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
      * @param entry
      * @param goodsAttrTypeList
      */
-    private void getGoodsAttrType(Map.Entry<String, List<EsAggResult>> entry, List<EsGoodsAttrVo> goodsAttrTypeList) {
+    private void getGoodsAttrType(Map.Entry<String, List<EsAggResult>> entry, List<EsTreeVo<GoodsAttrType>> goodsAttrTypeList) {
         List<EsAggResult> esAggResults = entry.getValue();
         for(EsAggResult result : esAggResults) {
             GoodsAttrType goodsAttrType = goodsAttrTypeMapper.selectByPrimaryKey(result.getId());
             if(goodsAttrType != null) {
-                EsGoodsAttrVo esGoodsAttrVo = new EsGoodsAttrVo();
-                BeanUtils.copyProperties(goodsAttrType, esGoodsAttrVo);
-                esGoodsAttrVo.setCnt(result.getCnt());
+                EsTreeVo<GoodsAttrType> esGoodsAttrVo = new EsTreeVo(goodsAttrType.getTypeId(), goodsAttrType.getTypeName(),
+                        goodsAttrType.getLevel(), goodsAttrType.getParentId(), result.getCnt());
                 goodsAttrTypeList.add(esGoodsAttrVo);
             }
         }
@@ -271,20 +269,18 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
      * @param entry
      * @param goodsAttrTypeList
      */
-    private void getGoodsAttr(Map.Entry<String, List<EsAggResult>> entry, List<EsGoodsAttrVo> goodsAttrTypeList) {
+    private void getGoodsAttr(Map.Entry<String, List<EsAggResult>> entry, List<EsTreeVo<GoodsAttrType>> goodsAttrTypeList) {
         List<EsAggResult> esAggResults = entry.getValue();
         if(goodsAttrTypeList != null) {
-            for(EsGoodsAttrVo vo : goodsAttrTypeList) {
-                List<EsGoodsAttrVo> children =  new ArrayList<>();
+            for(EsTreeVo<GoodsAttrType> vo : goodsAttrTypeList) {
+                List<EsTreeVo<GoodsAttrType>> children =  new ArrayList<>();
                 for(EsAggResult result : esAggResults) {
                     GoodsAttrType goodsAttr = goodsAttrTypeMapper.selectByPrimaryKey(result.getId());
                     if(goodsAttr != null) {
-                        if(vo.getTypeId().equals(goodsAttr.getParentId())) {
-                            EsGoodsAttrVo esGoodsAttrVo = new EsGoodsAttrVo();
-                            BeanUtils.copyProperties(goodsAttr, esGoodsAttrVo);
-                            esGoodsAttrVo.setCnt(result.getCnt());
+                        if(vo.getNodeId().equals(goodsAttr.getParentId())) {
+                            EsTreeVo<GoodsAttrType> esGoodsAttrVo = new EsTreeVo(goodsAttr.getTypeId(), goodsAttr.getTypeName(),
+                                    goodsAttr.getLevel(), goodsAttr.getParentId(), result.getCnt());
                             children.add(esGoodsAttrVo);
-                            esAggResults.remove(result);
                         }
                     }
                 }

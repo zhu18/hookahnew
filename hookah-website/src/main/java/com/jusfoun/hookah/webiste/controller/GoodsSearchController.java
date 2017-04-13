@@ -69,7 +69,7 @@ public class GoodsSearchController {
      * @return
      */
     @RequestMapping(value = "/v1/goods/types", method = RequestMethod.POST)
-    public ReturnData getTypes (@RequestBody EsGoods esGoods) {
+    public ReturnData getTypes (@RequestBody(required = false) EsGoods esGoods) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
