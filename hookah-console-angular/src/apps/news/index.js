@@ -38,7 +38,7 @@ app.run(function ($rootScope, $state) {
   $rootScope.config.mainNav =[
     {
       "title":"资讯查询",
-      "url":"information.search"
+      "url":"news.search"
     }
   ];
 
