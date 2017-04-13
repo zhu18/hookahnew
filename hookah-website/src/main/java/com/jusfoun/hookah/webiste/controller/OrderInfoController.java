@@ -76,7 +76,7 @@ public class OrderInfoController extends BaseController {
                 }
             }
             model.addAttribute("orderAmount",goodsAmount);
-            model.addAttribute("cartList",carts);
+            model.addAttribute("cartOrder",carts);
             return "order/orderInfo";
         }catch (Exception e){
             logger.info(e.getMessage());
@@ -105,7 +105,7 @@ public class OrderInfoController extends BaseController {
             vo.setGoods(g);
             list.add(vo);
             model.addAttribute("orderAmount",goodsAmount);
-            model.addAttribute("cartList",list);
+            model.addAttribute("cartOrder",list);
             return "order/orderInfo";
         }catch (Exception e){
             logger.info(e.getMessage());
