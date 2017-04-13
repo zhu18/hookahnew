@@ -15,6 +15,7 @@ myconf:
     cache: false
 
   host:
+    domain: hookah.app
     website: ${server.http.protocal}www.hookah.app
     static: ${server.http.protocal}static.hookah.app
     auth: ${server.http.protocal}auth.hookah.app
