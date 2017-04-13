@@ -36,7 +36,7 @@ public class Dict extends GenericModel {
     private Date addTime;
 
     @Transient
-    private List<Dict> children = new ArrayList<Dict>();
+    private List<Dict> children;
 
 
     public List<Dict> getChildren() {

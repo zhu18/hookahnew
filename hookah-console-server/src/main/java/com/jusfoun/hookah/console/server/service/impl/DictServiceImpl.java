@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -58,8 +59,9 @@ public class DictServiceImpl extends GenericServiceImpl<Dict, Long> implements D
     private void build(Dict node) {
         List<Dict> children = getChildren(node);
         if (!children.isEmpty()) {//如果存在子节点
+            node.setChildren(children);
             for (Dict child : children) {//将子节点遍历加入返回值中
-                node.getChildren().add(child);
+//                child.getChildren().add(child);
                 build(child);
             }
         }
