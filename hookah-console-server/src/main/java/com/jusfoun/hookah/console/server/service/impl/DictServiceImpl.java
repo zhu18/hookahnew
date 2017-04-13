@@ -69,7 +69,7 @@ public class DictServiceImpl extends GenericServiceImpl<Dict, Long> implements D
      */
     private List<Dict> getChildren(Dict node) {
         List<Dict> children = new ArrayList<Dict>();
-        Long id = node.getId();
+        Long id = node.getDictId();
         for (Dict child : nodes) {
             if (id.equals(child.getParentId())) {//如果id等于父id
                 children.add(child);//将该节点加入循环列表中
