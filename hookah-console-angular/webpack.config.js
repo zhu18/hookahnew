@@ -61,6 +61,7 @@ module.exports = function makeWebpackConfig() {
       'wangEditor': __dirname + '/vendor/wangEditor/wangEditor.min.js',
       'wangEditorCss': __dirname + '/vendor/wangEditor/wangEditor.min.css',
       'angular-growl-v2': __dirname + '/vendor/angular-growl/build/angular-growl.js',
+      'treeGridCss': __dirname + '/node_modules/angular-bootstrap-grid-tree',
       'angular-growl-v2-css': __dirname + '/node_modules/angular-growl-v2/build/angular-growl.css',
       'spin': __dirname + '/node_modules/spin.js/spin.js',
     }
