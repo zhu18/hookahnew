@@ -301,8 +301,16 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 	public String openUnionpay(String orderId, String accNo, String userId) throws Exception {
 		//根据orderId查询order信息
 		//暂时屏蔽的一行
-	/*	System.out.print(" 测试的一行 测测测错错错错错错错错错");
-		PayVo payVo = orderService.getPayParam(orderId);
+
+		//PayVo payVo = orderService.getPayParam(orderId);
+
+		PayVo payVo = new PayVo();
+		payVo.setOrderSn("001");
+		payVo.setPayId(1);
+		payVo.setTotalFee(new BigDecimal("0.1"));
+		payVo.setUserId("62cb01c71c4711e796c56a3b07101c5a");
+		payVo.setOrderTitle("商品名称");
+
 		if (null == payVo || payVo.getPayId().intValue() == 0)
 			throw new RuntimeException("订单 [id : " + orderId + "] 信息有误");
 		if (payVo.getTotalFee().doubleValue() < 0)
@@ -324,8 +332,7 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 			payVo.setUserId(userId);
 			enterAccount(orderId, payVo);
 		}
-		return html;*/
-		return  null;
+		return html;
 	}
 
 	@Override

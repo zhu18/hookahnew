@@ -8,8 +8,15 @@ package com.jusfoun.hookah.rpc.api;
 public interface MqSenderService{
 
     /**
-     * 发送消息
+     * 发送消息，需要订阅
      * @param msg
      */
-    public void send(String msg);
+    public void sendTopic(String msg);
+
+
+    /**
+     * 发送消息，需要监听
+     * @param msg
+     */
+    public void sendDirect(String msg);
 }

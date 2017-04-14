@@ -24,7 +24,28 @@ public class MqSenderServiceImpl implements MqSenderService {
     RabbitMqSender sender;
 
     @Override
-    public void send(String msg) {
+    public void sendTopic(String msg) {
+        SysMessage message = new SysMessage();
+        try {
+            Subject subject = SecurityUtils.getSubject();
+
+            Map userMap = null;
+            if (subject != null && subject.isAuthenticated()) {
+                userMap = (HashMap) SecurityUtils.getSubject().getSession().getAttribute("user");
+            }
+            message.setSenderId((String) userMap.get("userId"));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        message.setCreateTime(new Date());
+        message.setMsgText(msg);
+        message.setType((short)1);
+
+        sender.sendRabbitmqTopic(RabbitmqQueue.CONTRACE_MESSAGE,message);
+    }
+
+    @Override
+    public void sendDirect(String msg) {
         SysMessage message = new SysMessage();
         try {
             Subject subject = SecurityUtils.getSubject();
