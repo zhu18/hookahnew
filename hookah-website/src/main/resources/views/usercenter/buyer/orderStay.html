@@ -5,6 +5,19 @@ var head = {
 <link rel="stylesheet" href="/static/css/common.css">
 <link rel="stylesheet" href="/static/css/font-awesome-4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="/static/css/usercenter/buyer/orderManagement.css">
+<link rel="stylesheet" href="/static/css/plugins/jedate/jedate.css">
+
+<script src="/static/js/plugins/jedate/jquery.jedate.min.js"></script>
+<script type="text/javascript">
+    var pagePath = '/order/list';
+    var pageType = 'get';
+    var dataParm = {};
+    dataParm.pageNumber = 1;
+    dataParm.pageSize = 20;
+    dataParm.payStatus = 0;//0:未付款，1：已付款
+    dataParm.startDate = '';
+    dataParm.endDate = '';
+</script>
 <%};%>
 
 <%
@@ -16,14 +29,19 @@ var htmlPart = {
         <div class="orderManagement margin-left-10 margin-top-10 grid-right padding-bottom-20">
             <div class="title clearfix margin-bottom-15">
                 <ul class="grid-left all">
-                    <li class="padding-left-30 active"><a href="/usercenter/buyer/orderManagement">全部订单 <span class="padding-right-40">50</span></a></li>
+                    <li class="padding-left-30 active"><a href="/usercenter/buyer/orderManagement">已付款 <span class="padding-right-40">50</span></a></li>
                     <li class="padding-left-60 "><a href="javascript:void(0)">待付款<span class="padding-left-5 padding-right-60">2</span></a></li>
                 </ul>
-                <div class="search grid-right">
-
-                        <input type="search" name="search" placeholder="商品名称/订单号/商品编号">
-                        <span class="fa fa-search"></span>
-
+                <!--<div class="search grid-right">-->
+                        <!--<input type="search" name="search" placeholder="商品名称/订单号/商品编号">-->
+                        <!--<span class="fa fa-search"></span>-->
+                <!--</div>-->
+            </div>
+            <div class="searchQuery padding-top-10 clearfix" id="noPaySearch">
+                <div class="date clearfix">
+                    <label for="startDate" class="start-date grid-left">开始时间：<input id="startDate" type="text" placeholder="请选择开始时间" readonly=""></label>
+                    <label for="endDate" class="end-date grid-left">结束时间：<input id="endDate" type="text" placeholder="请选择结束时间" readonly=""></label>
+                    <button class="search grid-left">查询</button>
                 </div>
             </div>
             <div class="list">

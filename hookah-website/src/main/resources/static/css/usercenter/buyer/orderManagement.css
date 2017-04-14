@@ -50,6 +50,35 @@ ul li {
     right:8px;
     color:#E5E5E5;
 }
+/*搜索条件样式开始*/
+.searchQuery{
+    width: 936px;
+    height: 80px;
+    padding-left:20px;
+    padding-right:20px;
+}
+.searchQuery .date{
+    width: 100%;
+    margin-bottom:20px;
+}
+.searchQuery .start-date,.searchQuery .end-date{
+    margin-right:150px;
+}
+.searchQuery .comment-status{
+    margin-right:240px;
+}
+.searchQuery .search{
+    width: 100px;
+    height: 30px;
+    border:none;
+    font:14px/30px "microsoft yahei";
+    color: #fff;
+    background-color: #eb9c03;
+}
+#noPaySearch{
+    height: 40px;
+}
+/*搜索条件样式结束*/
 /*订单信息*/
 .orderManagement .order table{
     width:100%;
