@@ -38,5 +38,5 @@ public interface GoodsShelvesService extends GenericService<GoodsShelves,String>
      * @param shevlesGoodsVoId
      * @return
      */
-    GoodsShelvesVo findByShevlesGoodsVoId(String shevlesGoodsVoId);
+    ReturnData<GoodsShelvesVo> findByShevlesGoodsVoId(String shevlesGoodsVoId);
 }

@@ -8,6 +8,7 @@ import com.jusfoun.hookah.rpc.api.MgGoodsShelvesGoodsService;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -63,6 +64,12 @@ public class MgGoodsShelvesGoodsController {
         return goodsShelvesService.selectAllShelf();
     }
 
+
+    @RequestMapping("/findById/{id}")
+    @ResponseBody
+    public  ReturnData findByShevlesGoodsVoId(@PathVariable String id){
+        return  goodsShelvesService.findByShevlesGoodsVoId(id);
+    }
 
     @RequestMapping("/shelveGoodsList")
     @ResponseBody
