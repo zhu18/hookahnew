@@ -1,14 +1,18 @@
 package com.jusfoun.hookah.core.utils;
 
 
-public class ReturnData<T> {
+import java.io.Serializable;
+
+public class ReturnData<T> implements Serializable {
+
+    private static final long serialVersionUID = -5163980836046019923L;
 
     private static String Success = ExceptionConst.Success;
     
     private static String Error = ExceptionConst.Error;
     
     private static String Fail = ExceptionConst.Failed;
-    
+
     private static String InvalidParameters = ExceptionConst.InvalidParameters;
 
     /**
