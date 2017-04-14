@@ -1,3 +1,15 @@
+<style>
+  .hookah-lego-console-notice .module-wrap .notice-list li {
+    float: left;
+    list-style: none;
+    margin-right: 20px;
+    line-height: 30px;
+  }
+  .hookah-lego-console-notice .module-wrap .notice-list li .date {
+    color: #999999;
+    margin-right: 6px;
+  }
+</style>
 <div>
   <!--公告 -->
   <div home-section-notice="" ng-if="!hideBusinessPart">
@@ -5,12 +17,10 @@
       <div class="notice-lego">
         <span class="inline-block notice-title">公告:</span>
         <div class="inline-block">
-          <!-- exported styles -->
-          <link rel="stylesheet" href="//g.alicdn.com/ali-mod/aliyun-lego-console-notice/0.0.3/index.css">
           <!--region -->
-          <div data-guid="195853" id="guid-195853" data-hidden="" class="aliyun-lego-console-notice J_Module">
+          <div class="hookah-lego-console-notice J_Module">
             <div class="module-wrap J_tb_lazyload">
-              <ul class="notice-list" id="J-aliyun-lego-console-notice-wrap">
+              <ul class="notice-list" id="J-hookah-lego-console-notice-wrap">
                 <li><span class="date">[4.1]</span><a href="#" target="_blank">通知1</a></li>
                 <li><span class="date">[3.31]</span><a href="#" target="_blank">通知2</a></li>
                 <li><a href="#" target="_blank">更多&gt;&gt;</a></li>
@@ -18,7 +28,7 @@
             </div>
           </div>
 
-          <!--<script src="//g.alicdn.com/ali-mod/aliyun-lego-console-notice/0.0.3/index.js"></script>-->
+          <!--<script src="//g.alicdn.com/ali-mod/hookah-lego-console-notice/0.0.3/index.js"></script>-->
         </div>
       </div>
     </div>
@@ -55,7 +65,7 @@
                     <span class="title-strong ng-binding">平台介绍</span>
                   </div>
                   <div class="section-content clearfix markdown-body">
-                    <table>
+                    <table class="table">
                       <tbody>
                       <tr>
                         <td>平台所有者：</td>

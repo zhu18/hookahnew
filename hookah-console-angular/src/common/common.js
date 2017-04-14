@@ -43,7 +43,7 @@ import TopBarDirective from "./directive/TopBarDirective";
 import SideBarDirective from "./directive/SideBarDirective";
 import ProductNavbarDirective from "./directive/ProductNavbarDirective";
 import "bootstrapCss";
-import "angular-growl-v2-css";
+import "../../vendor/angular-growl/build/angular-growl.min.css";
 import "../style/console1412.css";
 import MainController from "./controller/MainController";
 
@@ -53,11 +53,7 @@ export default angular.module('Common', [
   'ui.bootstrap.tooltip',
   'angular-growl',
   'angularSpinner',
-  // tooltip,pagination,modal
 ])
-// .constant('apiServer', {
-//   "admin": config.site.apiServer,
-// })
   .constant('loginUrl', "http://auth.hookah.app/oauth/authorize?client_id=test&response_type=code&redirect_uri=")
   .config(['growlProvider', function (growlProvider) {
     /**
