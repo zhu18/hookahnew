@@ -22,6 +22,7 @@ import java.util.Map;
  * @author: huanglei
  */
 @Component
+@ConfigurationProperties(prefix = "myconf")
 public class MyProps {
 
     private Map<String, String> beetl = new HashMap<>();
