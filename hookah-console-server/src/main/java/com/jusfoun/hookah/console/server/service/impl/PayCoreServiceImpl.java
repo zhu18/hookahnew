@@ -296,11 +296,12 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 		return AlipayNotify.verify(request);
 	}
 
-	@Transactional(readOnly=false)
+	//@Transactional(readOnly=false)
 	@Override
 	public String openUnionpay(String orderId, String accNo, String userId) throws Exception {
 		//根据orderId查询order信息
 		//暂时屏蔽的一行
+	/*	System.out.print(" 测试的一行 测测测错错错错错错错错错");
 		PayVo payVo = orderService.getPayParam(orderId);
 		if (null == payVo || payVo.getPayId().intValue() == 0)
 			throw new RuntimeException("订单 [id : " + orderId + "] 信息有误");
@@ -323,7 +324,8 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 			payVo.setUserId(userId);
 			enterAccount(orderId, payVo);
 		}
-		return html;
+		return html;*/
+		return  null;
 	}
 
 	@Override

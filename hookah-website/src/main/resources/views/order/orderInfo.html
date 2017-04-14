@@ -41,7 +41,7 @@ var htmlPart = {
 						<%for(list in cartOrder){%>
 						<tr class="tab-item">
 							<td>1</td>
-							<td>${list.goodsName}</td>
+							<td>${list.goodsName}-------${list.recId}</td>
 							<td>
 								<% if(list.formatNumber > 1){%>${list.formatNumber}<%}%>${decode(list.goodsFormat,0,"次",1,"月",2,"年")}
 							</td>

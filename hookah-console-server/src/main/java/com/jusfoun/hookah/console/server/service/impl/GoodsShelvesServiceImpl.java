@@ -1,12 +1,19 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
 import com.jusfoun.hookah.core.dao.GoodsShelvesMapper;
+import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.GoodsShelves;
+import com.jusfoun.hookah.core.domain.mongo.MgShelvesGoods;
+import com.jusfoun.hookah.core.domain.vo.GoodsShelvesVo;
 import com.jusfoun.hookah.core.domain.vo.OptionalShelves;
+import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.GoodsShelvesService;
+import com.jusfoun.hookah.rpc.api.MgGoodsShelvesGoodsService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -20,6 +27,12 @@ public class GoodsShelvesServiceImpl extends GenericServiceImpl<GoodsShelves, St
     private GoodsShelvesMapper goodsShelvesMapper;
 
     @Resource
+    private MgGoodsShelvesGoodsService mgGoodsShelvesGoodsService;
+
+    @Resource
+    private GoodsService goodsService;
+
+    @Resource
     public void setDao(GoodsShelvesMapper goodsShelvesMapper) {
         super.setDao(goodsShelvesMapper);
     }
@@ -27,6 +40,44 @@ public class GoodsShelvesServiceImpl extends GenericServiceImpl<GoodsShelves, St
     @Override
     public GoodsShelves addGoodsShelves(GoodsShelves goodsShelves) {
         return super.insert(goodsShelves);
+    }
+
+    @Override
+    public Map<String,GoodsShelvesVo> getShevlesGoodsVoList(Map<String, Object> params) {
+        //查询有效货架集合
+        List<Condition> filters = new ArrayList<Condition>();
+        filters.add(Condition.eq("shelvesStatus", 1));
+        List<GoodsShelves> shelfs =  super.selectList(filters);
+
+        Map<String,GoodsShelvesVo> goodsShelvesVoMap = new HashMap<String,GoodsShelvesVo>();
+        if(Objects.nonNull(shelfs) && shelfs.size() != 0 ){
+            for (GoodsShelves goods : shelfs){
+               //查询货架下的商品Id集合
+               String shelvesId = goods.getShelvesId();
+               MgShelvesGoods mgShelvesGoods = mgGoodsShelvesGoodsService.selectById(shelvesId);
+
+               //获取货架商品集合注入到GoodsShelvesVo
+               GoodsShelvesVo goodsShelvesVo = new GoodsShelvesVo();
+               BeanUtils.copyProperties(goods, goodsShelvesVo);
+               if(Objects.nonNull(mgShelvesGoods)){
+                   List<String> sgIds = mgShelvesGoods.getGoodsIdList();
+                   if(Objects.nonNull(sgIds) && sgIds.size() != 0 ){
+                       //商品Id集对应的商品集
+                       List<Condition> goodsfilters = new ArrayList<Condition>();
+                       goodsfilters.add(Condition.in("goodsId",sgIds.toArray()));
+                       List<Goods> goodsList = goodsService.selectList(goodsfilters);
+                       goodsShelvesVo.setGoods(goodsList);
+                   }
+               }
+                goodsShelvesVoMap.put(goods.getShelvesName(),goodsShelvesVo);
+            }
+        }
+        return goodsShelvesVoMap;
+    }
+
+    @Override
+    public GoodsShelvesVo findByShevlesGoodsVoId(String shevlesGoodsVoId) {
+        return null;
     }
 
     @Override
@@ -47,4 +98,7 @@ public class GoodsShelvesServiceImpl extends GenericServiceImpl<GoodsShelves, St
 
         return returnData;
     }
+
+
+
 }
