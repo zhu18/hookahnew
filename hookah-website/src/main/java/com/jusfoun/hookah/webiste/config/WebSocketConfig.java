@@ -19,7 +19,6 @@ import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
 @Configuration
 @EnableWebSocket
-@EnableWebMvc
 public class WebSocketConfig extends WebMvcConfigurerAdapter implements
         WebSocketConfigurer {
 
