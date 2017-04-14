@@ -63,6 +63,7 @@ $(document).ready(function () {
 			}
 			if(!$("#J_searchInput").val()){
 				$("#J_searchInput").focus();
+
 				return;
 			}
 			var itemLen = $('.search-sug li').length - 1;
@@ -93,7 +94,6 @@ $(document).ready(function () {
 			}else{
 				event.initEvent("keydown", true, true);
 			}
-			console.log(ds);
 		}
 	});
 	$("#J_searchInput").on("input blur", function () {
