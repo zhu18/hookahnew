@@ -63,7 +63,7 @@ public class EsGoods implements Serializable {
     @EsField(type = Type.BYTE)
     private Byte shopFormat;
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    @EsField(type = Type.DATE, copyTo = "lastUpdateTimeKey")
+    @EsField(type = Type.KEYWORD, copyTo = "lastUpdateTimeKey")
     private Date lastUpdateTime;
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @EsField(type = Type.KEYWORD)

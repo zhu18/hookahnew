@@ -41,6 +41,5 @@
             goods
         where is_delete = 1
         and is_onsale = 1
-        order by last_update_time desc
     </select>
 </mapper>

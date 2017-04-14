@@ -19,7 +19,7 @@ public class HookahConstants {
 
     /** es操作(增删改查)默认字段 */
     // 聚合字段
-    public static final String GOODS_ORDER_FIELD = "lastUpdateTimeKey";
+    public static final String GOODS_ORDER_FIELD = "lastUpdateTime";
     public static final String GOODS_ORDER_SORT = "desc";
     public static final String GOODS_AGG_CATEGORY = "catAgg";
     public static final String GOODS_AGG_CATEGORY_FIELD = "catId";
