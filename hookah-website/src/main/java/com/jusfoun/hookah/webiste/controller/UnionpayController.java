@@ -12,7 +12,6 @@ import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.AccNoTokenService;
 import com.jusfoun.hookah.rpc.api.OrderInfoService;
 import com.jusfoun.hookah.rpc.api.PayCoreService;
-import jdk.nashorn.internal.ir.annotations.Reference;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -38,12 +38,12 @@ import java.util.Map;
 public class UnionpayController extends BaseController{
 	
 	private static final Logger logger = LoggerFactory.getLogger(UnionpayController.class);
-	
-	@Reference
+
+	@Resource
 	private PayCoreService payCoreService;
-	@Reference
+	@Resource
 	private AccNoTokenService accNoTokenService;
-	@Reference
+	@Resource
 	private OrderInfoService orderService;
 	
 	/**开通卡并消费
@@ -60,15 +60,26 @@ public class UnionpayController extends BaseController{
 			@RequestParam(required=true) String accNo,
 			HttpSession session,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-		System.out.print(orderId    +"      555555555555555      "+ accNo);
 		//处理请求
-		String reqHtml = payCoreService.openUnionpay(orderId, accNo, "00003443e3ce74e3fbf2ca02b3baa64c");
+		String reqHtml = payCoreService.openUnionpay("23", "6221558812340000", "00003443e3ce74e3fbf2ca02b3baa64c");
+		System.out.print(reqHtml +" ---------------------------------------------------m   ");
 		if(StringUtils.isEmpty(reqHtml)){
 			return "redirect:/404.html";
 		}else
 			return new ResponseEntity<String>(reqHtml, HttpStatus.OK);
 	}
+
+	@RequestMapping(value = "/pay2", method = RequestMethod.GET)
+	public Object pay5 ()throws Exception {
+		//处理请求
+		String reqHtml = payCoreService.openUnionpay("23", "423424f", "00003443e3ce74e3fbf2ca02b3baa64c");
+		System.out.print(reqHtml +" ---------------------------------------------------m   ");
+		if(StringUtils.isEmpty(reqHtml)){
+			return "redirect:/404.html";
+		}else
+			return new ResponseEntity<String>(reqHtml, HttpStatus.OK);
+	}
+
 	
 	/**开通卡并支付，前台通知地址
 	 * @param request

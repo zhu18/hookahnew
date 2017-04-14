@@ -25,19 +25,13 @@ var htmlPart = {
                                                               class="goGoodsDetails"><img
                 src="${goodsInfo.goodsImg}"></a></div>
               <div class="p-info grid-left">
-                <div class="p-name">
+                <div class="p-name padding-top-10 padding-bottom-10">
                   <a href="javascript:history.go(-1)" class="goGoodsDetails">${goodsInfo.goodsName}</a>
                 </div>
-                <div class="p-extra">
-                                    <span class="txt" title="价格">价格：${trunc(goodsInfo.shopPrice / 100, 2)}&nbsp;&nbsp;规格：${goodsInfo.shopNumber}
-                                    <% if(goodsInfo.shopFormat == 0){%>
-                                        次
-                                    <%}else if(goodsInfo.shopFormat == 1){%>
-                                        月
-                                    <%}else if(goodsInfo.shopFormat == 2){%>
-                                        年
-                                    <%}%>
-                                    </span><span class="txt" id="goodsNum">/  数量：<span></span></span>
+                <div class="p-extra padding-top-10">
+                                    <span class="txt" title="价格">价格：${trunc(goodsInfo.shopPrice / 100, 2)}&nbsp;&nbsp;&nbsp;&nbsp;
+                                        规格：${goodsInfo.shopNumber}${decode(goodsInfo.shopFormat,0,"次",1,"天",2,"年")}
+                                    </span><span class="txt" id="goodsNum">&nbsp;&nbsp;&nbsp;&nbsp;数量：<span></span></span>
                 </div>
               </div>
             </div>

@@ -130,3 +130,98 @@ ul li {
     font-size: 16px;
     line-height: 50px;
 }
+
+/*details页面*/
+.box .detail .top {
+    line-height: 40px;
+    color:#8A8A8A;
+}
+/*左侧内容*/
+.box .detail .bot .leftContent {
+    width: 815px;
+    background: #fff;
+    float: left;
+}
+.box .detail .bot .leftContent h3{
+    font-size: 20px;
+}
+.box .detail .bot .leftContent .auth {
+    color:#B2B2B2;
+    position:relative;
+}
+.box .detail .bot .leftContent .auth img {
+    position:absolute;
+}
+.box .detail .bot .leftContent .auth span span:nth-child(1){
+    color:#3B93EC;
+}
+.box .detail .bot .leftContent .auth span:nth-child(3){
+    float: right;
+}
+.box .detail .bot .leftContent .content p {
+    line-height: 20px;
+}
+/*右侧*/
+.box .detail .bot .rightSide {
+    float: left;
+}
+.box .detail .bot .rightSide .fabu{
+    width: 235px;
+    line-height: 38px;
+    background: #6482B4;
+    border-radius: 5px;
+}
+.box .detail .bot .rightSide .fabu span{
+    text-align: center;
+    font-size: 17px;
+    color:white;
+}
+.box .detail .bot .rightSide .line{
+    border: 1px solid #E5E5E5;
+}
+.box .detail .bot .rightSide .info{
+    background: #fff;
+    height: 145px;
+}
+.box .detail .bot .rightSide .info .info-top {
+    line-height: 50px;
+}
+.box .detail .bot .rightSide .info .info-top span:nth-child(1){
+    float: left;
+    font-size: 18px;
+    color:#333;
+}
+.box .detail .bot .rightSide .info .info-top span:nth-child(2){
+    float: right;
+    font-size: 15px;
+    color:#B2B2B2;
+}
+.box .detail .bot .rightSide .info .line {
+    border: 1px solid #EBEBEB;
+}
+.box .detail .bot .rightSide .info p{
+    font-size: 15px;
+    line-height: 20px;
+}
+/*资讯热文*/
+.box .detail .rightSide  .bot{
+    width: 215px;
+    height: 456px;
+    background: #fff;
+}
+.box .detail .rightSide  .bot .hot h4{
+    display: inline-block;
+    line-height: 50px;
+    font-size: 18px;
+}
+.box .detail .rightSide  .bot .hot span{
+    border: 1px solid #237DE7;
+}
+.box .detail .rightSide  .bot .lines{
+    border-bottom: 1px solid #E5E5E5;
+}
+.box .detail .rightSide  .bot .description {
+    font-size: 12px;
+    line-height: 23px;
+    color:#8C8C8C;
+}

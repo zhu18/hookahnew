@@ -35,12 +35,12 @@ public class MgShelvesGoods extends GenericModel {
         return shelvesGoodsId;
     }
 
-    public String getShelvesGoodsName() {
-        return shelvesGoodsName;
-    }
-
     public void setShelvesGoodsId(String shelvesGoodsId) {
         this.shelvesGoodsId = shelvesGoodsId;
+    }
+
+    public String getShelvesGoodsName() {
+        return shelvesGoodsName;
     }
 
     public void setShelvesGoodsName(String shelvesGoodsName) {

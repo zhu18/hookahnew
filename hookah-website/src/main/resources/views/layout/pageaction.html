@@ -63,8 +63,8 @@
       $(".tcdPageCode").createPage({
         pageCount: totalPages,
         current: currentPage,
-        backFn: function (p) {
-          goPage(p)
+        backFn: function (pageNum) {
+          goPage(pageNum)
         }
       });
     }
