@@ -13,6 +13,7 @@ public class GoodsVo extends Goods {
     private List<MgCategoryAttrType.AttrTypeBean> attrTypeList;
     private List<MgGoods.FormatBean> formatList;
     private List<MgGoods.ImgBean> imgList;
+    private MgGoods.ApiInfoBean apiInfo;
 
     public List<MgCategoryAttrType.AttrTypeBean> getAttrTypeList() {
         return attrTypeList;
@@ -36,5 +37,13 @@ public class GoodsVo extends Goods {
 
     public void setImgList(List<MgGoods.ImgBean> imgList) {
         this.imgList = imgList;
+    }
+
+    public MgGoods.ApiInfoBean getApiInfo() {
+        return apiInfo;
+    }
+
+    public void setApiInfo(MgGoods.ApiInfoBean apiInfo) {
+        this.apiInfo = apiInfo;
     }
 }

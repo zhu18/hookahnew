@@ -16,7 +16,7 @@ import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.generic.OrderBy;
-import com.jusfoun.hookah.core.utils.JSONUtils;
+import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.OrderHelper;
 import com.jusfoun.hookah.rpc.api.CartService;
 import com.jusfoun.hookah.rpc.api.GoodsService;
@@ -152,6 +152,34 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         return og;
     }
 
+    @Override
+    public Pagination<OrderInfoVo> findByPage(Integer pageNum, Integer pageSize, Integer payStatus, Integer commentFlag, Date startDate, Date endDate, String domainName) throws  HookahException{
+        List<Condition> filters = new ArrayList<>();
+        if (startDate != null) {
+            filters.add(Condition.ge("addTime", startDate));
+        }
+        if (endDate != null) {
+            filters.add(Condition.le("addTime", endDate));
+        }
+        if (payStatus != null) {
+            filters.add(Condition.eq("payStatus", payStatus));
+        }
+        if (commentFlag != null) {
+            filters.add(Condition.eq("commentFlag", commentFlag));
+        }
+        if (domainName != null) {
+            filters.add(Condition.like("domainName", "%" + domainName + "%"));
+        }
+        String userId = getCurrentUser().getUserId();
+        filters.add(Condition.eq("userId", userId));
+        filters.add(Condition.eq("isDeleted", 0));
+
+        List<OrderBy> orderBys = new ArrayList<>();
+        orderBys.add(OrderBy.desc("addTime"));
+        Pagination<OrderInfoVo> pOrders = this.getDetailListInPage(pageNum, pageSize, filters, orderBys);
+        return pOrders;
+    }
+
     @Transactional(readOnly=false)
     @Override
     public OrderInfo insert(OrderInfo orderInfo,String[] cartIdArray) throws Exception {
@@ -170,7 +198,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                     throw new HookahException("商品["+g.getGoodsName()+"]未上架");
                 }
 
-                goodsAmount += cart.getFormat().getPrice() * cart.getFormat().getNumber() * cart.getGoodsNumber();  //商品单价 * 套餐内数量 * 购买套餐数量
+                goodsAmount += cart.getFormat().getPrice()  * cart.getGoodsNumber();  //商品单价 * 套餐内数量 * 购买套餐数量
 
                 MgOrderGoods og = getMgOrderGoodsByCart(cart);
                 ordergoodsList.add(og);
@@ -212,7 +240,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         }
         MgGoods.FormatBean format= goodsService.getFormat(goodsId,formatId);
         if(goodsNumber!=null){
-            goodsAmount += format.getPrice() * format.getNumber() * goodsNumber;  //商品单价 * 套餐内数量 * 购买套餐数量
+            goodsAmount += format.getPrice()  * goodsNumber;  //商品单价 * 套餐内数量 * 购买套餐数量
         }
         MgOrderGoods og = getMgOrderGoodsByGoodsFormat(g,format,goodsNumber);
         ordergoodsList.add(og);
@@ -284,7 +312,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         pagination.setPageSize(pageSize);
         pagination.setCurrentPage(pageNum);
         pagination.setList(page);
-        logger.info(JSONUtils.toString(pagination));
+        logger.info(JsonUtils.toJson(pagination));
         return pagination;
     }
 

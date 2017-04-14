@@ -18,6 +18,7 @@ public class HookahConstants {
     public static final Integer CAPTCHA_DURATION_MINITE = 30;
 
     /** es操作(增删改查)默认字段 */
+    // 聚合字段
     public static final String GOODS_ORDER_FIELD = "lastUpdateTimeKey";
     public static final String GOODS_ORDER_SORT = "desc";
     public static final String GOODS_AGG_CATEGORY = "catAgg";
@@ -26,10 +27,17 @@ public class HookahConstants {
     public static final String GOODS_AGG_ATTR_FIELD = "attrId";
     public static final String GOODS_AGG_ATTR_TYPE = "attrTypeAgg";
     public static final String GOODS_AGG_ATTR_TYPE_FIELD = "attrTypeId";
+    public static final String GOODS_AGG_AREA_COUNTRY = "countryAgg";
+    public static final String GOODS_AGG_AREA_COUNTRY_FIELD = "areaCountry";
+    public static final String GOODS_AGG_AREA_PROVINCE = "provinceAgg";
+    public static final String GOODS_AGG_AREA_PROVINCE_FIELD = "areaProvince";
+    public static final String GOODS_AGG_AREA_CITY = "cityAgg";
+    public static final String GOODS_AGG_AREA_CITY_FIELD = "areaCity";
 
-    /**缓存*/
-    public static final String CACHE_GOODS_CATEGORY = "categoryInfo";
-    public static final String CACHE_GOODS_ATTR = "goodsAttrInfo";
+    /** 缓存 */
+    public static final String CACHE_GOODS_CATEGORY = "categoryInfo";//商品分类信息
+    public static final String CACHE_GOODS_ATTR = "goodsAttrInfo";//商品属性
+    public static final String CACHE_GOODS_AREA = "regionInfo";//地域信息
 
     public enum AnalyzeOpt {
         ANALYZED("analyzed"),

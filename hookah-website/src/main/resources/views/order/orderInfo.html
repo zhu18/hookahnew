@@ -41,7 +41,7 @@ var htmlPart = {
 						<%for(list in cartOrder){%>
 						<tr class="tab-item">
 							<td>1</td>
-							<td>${list.goodsName}</td>
+							<td>${list.goodsName}-------${list.recId}</td>
 							<td>
 								<% if(list.formatNumber > 1){%>${list.formatNumber}<%}%>${decode(list.goodsFormat,0,"次",1,"月",2,"年")}
 							</td>
@@ -54,7 +54,7 @@ var htmlPart = {
 						<tr class="tab-pay">
 							<td colspan="9">
 								<span>付款小计：</span>
-								<span class="color-orange">${orderAmount / 100}</span>
+								<span class="color-orange">${trunc(orderAmount / 100, 2)}</span>
 								<span>元</span>
 							</td>
 						</tr>
@@ -71,7 +71,7 @@ var htmlPart = {
 								<div>
 									<div class="pay-box display-inline-block">
 										<span>应付总额：</span>
-										<span class="color-orange font-size-20">${orderAmount / 100}</span>
+										<span class="color-orange font-size-20">${trunc(orderAmount / 100, 2)}</span>
 										<span>元</span>
 									</div>
 									<a href="javascript:void(0)" class="btn-full-red">同意协议并付款</a>

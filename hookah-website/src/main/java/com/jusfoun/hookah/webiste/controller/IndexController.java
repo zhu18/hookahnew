@@ -1,12 +1,16 @@
 package com.jusfoun.hookah.webiste.controller;
 
+import com.google.gson.Gson;
+import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.domain.Goods;
+import com.jusfoun.hookah.core.domain.SysMessage;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgSmsValidate;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.*;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -174,8 +178,13 @@ public class IndexController {
     @RequestMapping(value = "/send", method = RequestMethod.GET)
     @ResponseBody
     public Object sendMsg(String msg,Model model) {
-        mqSenderService.send(msg);
+        mqSenderService.sendDirect(msg);
         return "sucess";
+    }
+
+    @RabbitListener(queues = RabbitmqQueue.CONTRACE_MESSAGE)
+    public void receiveContractQueue(SysMessage message) {
+        System.out.println("Received contract<" + new Gson().toJson(message) + ">---------------------------------------");
     }
 
 }

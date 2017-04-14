@@ -68,6 +68,12 @@ public class EsGoods implements Serializable {
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @EsField(type = Type.KEYWORD)
     private Date lastUpdateTimeKey;
+    @EsField(fielddata = true)
+    private String areaCountry;
+    @EsField(fielddata = true)
+    private String areaProvince;
+    @EsField(fielddata = true)
+    private String areaCity;
 
     public String getGoodsId() {
         return goodsId;
@@ -243,5 +249,29 @@ public class EsGoods implements Serializable {
 
     public void setAttrId(String[] attrId) {
         this.attrId = attrId;
+    }
+
+    public String getAreaCountry() {
+        return areaCountry;
+    }
+
+    public void setAreaCountry(String areaCountry) {
+        this.areaCountry = areaCountry;
+    }
+
+    public String getAreaProvince() {
+        return areaProvince;
+    }
+
+    public void setAreaProvince(String areaProvince) {
+        this.areaProvince = areaProvince;
+    }
+
+    public String getAreaCity() {
+        return areaCity;
+    }
+
+    public void setAreaCity(String areaCity) {
+        this.areaCity = areaCity;
     }
 }

@@ -1,7 +1,8 @@
 package com.jusfoun.hookah.console.server.common.filter;
 
+import com.jusfoun.hookah.console.server.config.MyProps;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -9,8 +10,6 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,24 +20,16 @@ import java.util.regex.Pattern;
  */
 @Component()
 @Order(1)
-@ConfigurationProperties(prefix = "myconf")
 public class CrosFilter implements Filter {
 
-    private Map<String, String> host = new HashMap<>();
+    @Autowired
+    private MyProps myProps;
 
-    final String domain = host.get("domain");
-
-    public Map<String, String> getHost() {
-        return host;
-    }
-
-    public void setHost(Map<String, String> host) {
-        this.host = host;
-    }
+    String domain;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
+        domain = myProps.getHost().get("domain");
     }
 
     @Override

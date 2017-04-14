@@ -160,7 +160,7 @@ function addCart(goodsId) {
         success: function (data) {
             // return JSON.stringify(data);
             if (data.code == "1") {
-                $.alert('加入购物车成功')
+				window.location.href = "/exchange/addToCart?goodsId=" + goodsId + "&number=" + $('#J_buyNumber').val();
             } else {
                 $.alert(data.message);
             }

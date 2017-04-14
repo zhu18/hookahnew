@@ -115,6 +115,7 @@ public class GoodsBackController {
                     goodsVo.setFormatList(mgGoods.getFormatList());
                     goodsVo.setImgList(mgGoods.getImgList());
                     goodsVo.setAttrTypeList(mgGoods.getAttrTypeList());
+                    goodsVo.setApiInfo(mgGoods.getApiInfo());
                 }
                 returnData.setData(goodsVo);
             }
