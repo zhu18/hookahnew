@@ -9,7 +9,8 @@ var head = {
 <script src="/static/js/plugins/chosen/chosen.jquery.js"></script>
 <script src="/static/js/plugins/jedate/jquery.jedate.min.js"></script>
 <script src="/static/js/plugins/wangEditor/wangEditor.min.js"></script>
-<script src="/static/js/plugins/ajaxfileupload/ajaxfileupload.js"></script>
+<script src="/static/js/plugins/widget/jquery.ui.widget.js"></script>
+<script src="/static/js/plugins/fileupload/jquery.fileupload.js"></script>
 <%};%>
 
 <%
@@ -77,6 +78,18 @@ var htmlPart = {
                                     </div>
                                 </td>
                             </tr>
+                            <tr class="region-box">
+                                <td class="bar">所属区域：</td>
+                                <td>
+                                    <div class="select-box">
+                                        <select name="province" id="province" onchange="loadRegion('city', this)">
+                                            <option value="-1">全部</option>
+                                        </select>
+                                        <select name="city" id="city" onchange="loadRegion('county', this)"><option value="-1">全部</option></select>
+                                        <select name="county" id="county"><option value="-1">全部</option></select>
+                                    </div>
+                                </td>
+                            </tr>
                             <tr>
                                 <td class="bar">商品图片：</td>
                                 <td>
@@ -89,7 +102,7 @@ var htmlPart = {
                                                 <div class="preview" id="preview-div">
                                                     <a title="上传图片" class="upload-tip "><span class="fa fa-plus"></span></a>
                                                     <img class="preview-img" id="preview-img">
-                                                    <input type="file" id="filename" name="filename" class="preview-btn">
+                                                    <input id="fileupload" type="file" name="filename" multiple="" class="preview-btn">
                                                     <a href="javascript:void(0)" class="replace-btn"
                                                        id="replace-btn">替换图片</a>
                                                 </div>
@@ -160,7 +173,7 @@ var htmlPart = {
                                             <tbody>
                                             <tr class="parent-tr">
                                                 <td class="name-input">
-                                                    <div class="inputbox"><input type="text" datatype="name" placeholder="请输入规格"></div>
+                                                    <div class="inputbox"><input type="text" datatype="name" placeholder="请输入名称"></div>
                                                 </td>
                                                 <td class="number-input">
                                                     <div class="inputbox"><input type="number" datatype="number" placeholder="请输入规格"></div>

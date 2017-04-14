@@ -9,6 +9,7 @@ import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.OrderInfo;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
+import com.jusfoun.hookah.core.domain.vo.CartVo;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.domain.vo.PayVo;
 import com.jusfoun.hookah.core.exception.HookahException;
@@ -153,25 +154,24 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
     @Transactional(readOnly=false)
     @Override
-    public OrderInfo insert(OrderInfo orderInfo,String cartIds) throws Exception {
+    public OrderInfo insert(OrderInfo orderInfo,String[] cartIdArray) throws Exception {
         init(orderInfo);
-
-        String[] cartIdArray = cartIds.split(",");
-
-        List<Cart> cartList= cartService.selectByIds(cartIdArray);
+        List<Condition> filters = new ArrayList<>();
+        filters.add(Condition.in("recId",cartIdArray));
+        List<CartVo> cartList = cartService.selectDetailList(filters);
         List<MgOrderGoods> ordergoodsList = null;
         if(cartList!=null&&cartList.size()>0){
             ordergoodsList = new ArrayList<MgOrderGoods>();
             Long goodsAmount = new Long(0);
-            for(Cart cart:cartList){
+            for(CartVo cart:cartList){
                 //验证商品是否下架
-                Goods g = goodsService.selectById(cart.getGoodsId());
+                Goods g = cart.getGoods();
                 if(g.getIsOnsale()==null||g.getIsOnsale()!=1){
                     throw new HookahException("商品["+g.getGoodsName()+"]未上架");
                 }
-                if(cart.getGoodsPrice()!=null&&cart.getGoodsNumber()!=null){
-                    goodsAmount += cart.getGoodsPrice() * cart.getFormatNumber() * cart.getGoodsNumber();  //商品单价 * 套餐内数量 * 购买套餐数量
-                }
+
+                goodsAmount += cart.getFormat().getPrice() * cart.getFormat().getNumber() * cart.getGoodsNumber();  //商品单价 * 套餐内数量 * 购买套餐数量
+
                 MgOrderGoods og = getMgOrderGoodsByCart(cart);
                 ordergoodsList.add(og);
             }
@@ -202,32 +202,33 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
         List<MgOrderGoods> ordergoodsList = null;
 
-            ordergoodsList = new ArrayList<MgOrderGoods>();
-            Long goodsAmount = new Long(0);
-                //验证商品是否下架
-                Goods g = goodsService.selectById(goodsId);
-                if(g.getIsOnsale()==null||g.getIsOnsale()!=1){
-                    throw new HookahException("商品["+g.getGoodsName()+"]未上架");
-                }
-                MgGoods.FormatBean format= goodsService.getFormat(goodsId,formatId);
-                if(goodsNumber!=null){
-                    goodsAmount += format.getPrice() * format.getNumber() * goodsNumber;  //商品单价 * 套餐内数量 * 购买套餐数量
-                }
-                MgOrderGoods og = getMgOrderGoodsByGoodsFormat(g,format,goodsNumber);
-                ordergoodsList.add(og);
-            orderInfo.setGoodsAmount(goodsAmount);
-            orderInfo.setOrderAmount(goodsAmount);
+        ordergoodsList = new ArrayList<MgOrderGoods>();
+        Long goodsAmount = new Long(0);
 
-            if(ordergoodsList!=null&&ordergoodsList.size()>0){
-                orderInfo.setIsDeleted(new Integer(0).byteValue());
-                OrderInfoVo orderInfoVo = (OrderInfoVo)orderInfo;
-                orderInfoVo.setMgOrderGoodsList(ordergoodsList);
-                orderinfoMapper.insert(orderInfo);
-                mgOrderInfoService.insert(orderInfoVo);
-            }
-            if(goodsAmount.compareTo(0L)==0){
-                updatePayStatus(orderInfo.getOrderSn(),2);
-            }
+        //验证商品是否下架
+        Goods g = goodsService.selectById(goodsId);
+        if(g.getIsOnsale()==null||g.getIsOnsale()!=1){
+            throw new HookahException("商品["+g.getGoodsName()+"]未上架");
+        }
+        MgGoods.FormatBean format= goodsService.getFormat(goodsId,formatId);
+        if(goodsNumber!=null){
+            goodsAmount += format.getPrice() * format.getNumber() * goodsNumber;  //商品单价 * 套餐内数量 * 购买套餐数量
+        }
+        MgOrderGoods og = getMgOrderGoodsByGoodsFormat(g,format,goodsNumber);
+        ordergoodsList.add(og);
+        orderInfo.setGoodsAmount(goodsAmount);
+        orderInfo.setOrderAmount(goodsAmount);
+
+        if(ordergoodsList!=null&&ordergoodsList.size()>0){
+            orderInfo.setIsDeleted(new Integer(0).byteValue());
+            OrderInfoVo orderInfoVo = (OrderInfoVo)orderInfo;
+            orderInfoVo.setMgOrderGoodsList(ordergoodsList);
+            orderinfoMapper.insert(orderInfo);
+            mgOrderInfoService.insert(orderInfoVo);
+        }
+        if(goodsAmount.compareTo(0L)==0){
+            updatePayStatus(orderInfo.getOrderSn(),2);
+        }
 
         return orderInfo;
     }

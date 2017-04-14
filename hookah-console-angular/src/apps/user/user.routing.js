@@ -13,14 +13,9 @@ export default function userRouting($stateProvider, $urlRouterProvider) {
       template: require('./list.html'),
       controller: UserController,
     })
-    .state('user.add', {
-      url: '/user/add',
-      template: require('./add.html'),
-      controller: UserController,
-    })
-    .state('user.edit', {
-      url: '/user/edit',
-      template: require('./edit.html'),
+    .state('user.detail', {
+      url: '/user/detail',
+      template: require('./detail.html'),
       controller: UserController,
     })
     .state('user.verify', {

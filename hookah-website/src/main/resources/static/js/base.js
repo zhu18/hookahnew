@@ -24,10 +24,46 @@ $(document).ready(function () {
 	$(".shopping-cart").mouseleave(function () {
 		$(this).removeClass('hover')
 	});
-	$(window).load(function () {
-
+	$("#J_searchInput").on("input propertychange",function(){
+		if($(this).val()==""){
+			$('.search-sug').hide();
+		}else{
+			getSearchSug($(this).val())
+		}
 	});
+	$("#J_searchInput").on("input focus",function(){
+		if($(this).val()){
+			$('.search-sug').show();
+		}
+	});
+	// $("#J_searchInput").on("input change",function(){
+	// 	$('.search-sug').hide();
+	// })
 });
+function getSearchSug(sugText){
+	$.ajax({
+		url:host.website+'/search/v1/goods/suggest',
+		type:'post',
+		data:{
+			prefix:sugText,
+			size:10
+		},
+		success:function(data){
+			if(data.code == 1){
+				showSugBox(data.data);
+			}else{
+				console.log(data.message);
+			}
+		}
+	})
+}
+function showSugBox(data){
+	var html = '';
+	data.forEach(function(list){
+		html += '<li><a target="_blank" href="/exchange/search?names='+list+'">'+list+'</a></li>';
+	});
+	$('.search-sug').show().children('ul').html(html);
+}
 
 var Loading = {};
 Loading.start = function () {

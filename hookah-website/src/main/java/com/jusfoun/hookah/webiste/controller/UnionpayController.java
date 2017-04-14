@@ -13,6 +13,7 @@ import com.jusfoun.hookah.rpc.api.AccNoTokenService;
 import com.jusfoun.hookah.rpc.api.OrderInfoService;
 import com.jusfoun.hookah.rpc.api.PayCoreService;
 import jdk.nashorn.internal.ir.annotations.Reference;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -55,16 +56,17 @@ public class UnionpayController extends BaseController{
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/oac", method = RequestMethod.GET)
-	Object openAndConsume(@RequestParam(required=true) Integer orderId, 
+	Object openAndConsume(@RequestParam(required=true) String orderId,
 			@RequestParam(required=true) String accNo,
 			HttpSession session,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String reqHtml = null;
+
+		System.out.print(orderId    +"      555555555555555      "+ accNo);
 		//处理请求
-		/*String reqHtml = payCoreService.openUnionpay(orderId, accNo, getUserId(session));
+		String reqHtml = payCoreService.openUnionpay(orderId, accNo, "00003443e3ce74e3fbf2ca02b3baa64c");
 		if(StringUtils.isEmpty(reqHtml)){
 			return "redirect:/404.html";
-		}else*/
+		}else
 			return new ResponseEntity<String>(reqHtml, HttpStatus.OK);
 	}
 	

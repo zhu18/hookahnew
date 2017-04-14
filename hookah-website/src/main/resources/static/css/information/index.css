@@ -125,3 +125,8 @@ ul li {
 .information .content .rightCenter .public .line {
     margin-top:60px;
 }
+.noData{
+    text-align: center;
+    font-size: 16px;
+    line-height: 50px;
+}

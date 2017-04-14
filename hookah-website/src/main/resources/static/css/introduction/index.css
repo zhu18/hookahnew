@@ -57,7 +57,7 @@ ul li {
 .box  #glory ul li span {
     color: #fff;
     font-size: 15px;
-    width: 170px;
+    width: 140px;
     height: 32px;
     display: inline-block;
     background: #247de8;
@@ -148,7 +148,7 @@ ul li {
 .box  .cont .picBot .conBot .public-style span:nth-child(1) span {
     width: 32px;
     height: 32px;
-    background: #F7F7F7;
+    background: #f5faff;
     position: absolute;
     top: -16px;
     left: -13px;

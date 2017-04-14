@@ -64,6 +64,9 @@ h1{
     color: #333;
     padding: 2px 5px;
 }
+.select-box select{
+    height:30px;
+}
 .errors{
     white-space: normal;
     word-wrap: break-word;
@@ -185,6 +188,7 @@ h1{
     vertical-align: middle;
     max-width: 100%;
     max-height: 100%;
+    background: #f6f6f6;
 }
 .multimage-wrap .image-list li .preview .preview-btn {
     font-size: 100%;

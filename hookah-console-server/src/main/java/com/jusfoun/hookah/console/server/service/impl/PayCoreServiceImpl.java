@@ -122,6 +122,7 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 		payVo.setPayId(1);
 		payVo.setTotalFee(new BigDecimal("0.1"));
 		payVo.setUserId("62cb01c71c4711e796c56a3b07101c5a");
+		payVo.setOrderTitle("商品名称");
 
 
 

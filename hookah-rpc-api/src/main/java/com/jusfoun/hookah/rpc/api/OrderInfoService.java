@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface OrderInfoService extends GenericService<OrderInfo,String> {
 
-    public OrderInfo insert(OrderInfo orderInfo, String cartIds) throws Exception;
+    public OrderInfo insert(OrderInfo orderInfo, String[] cartIdArray) throws Exception;
 
     public OrderInfo insert(OrderInfo orderInfo, String goodsId, Integer formatId,Long goodsNumber) throws Exception;
 
