@@ -18,4 +18,8 @@ public interface MgGoodsShelvesGoodsService extends GenericService<MgShelvesGood
     ReturnData<MgShelvesGoods> findByIdGSMongo(String shelvesGoodsId);
 
     ReturnData<MgShelvesGoods> delGSMongo(String shelvesGoodsId);
+
+    ReturnData<Integer> countShelvesGoods(String shelvesGoodsId);
+
+    ReturnData<List<MgShelvesGoods>> selectMgShelveGoodsList(MgShelvesGoods mgShelvesGoods);
 }
