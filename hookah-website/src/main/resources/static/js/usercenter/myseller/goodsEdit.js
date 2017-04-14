@@ -11,7 +11,7 @@ var catId = $.getUrlParam('catId'),
 	url = '/category/findAttr';
 $(document).ready(function () {
 	var editor = new wangEditor('textarea1');
-	editor.config.uploadImgUrl = '/upload/wangeditor';//上传图片（举例）
+	editor.config.uploadImgUrl = host.static+'/upload/wangeditor';//上传图片（举例）
 	editor.config.uploadImgFileName = 'filename';
 	editor.config.menuFixed = false;//关闭菜单栏fixed
 	editor.config.menus = $.map(wangEditor.config.menus, function (item, key) {
@@ -134,40 +134,6 @@ function tablePlus(that) {
 		$(that).addClass('table-delete-btn').removeClass('table-plus-btn').text('-').attr('onclick', 'tableDelete(this)');
 	}
 };
-$('#preview-div').click(function () {
-	if ($('#preview-img').attr('src')) {
-		$('#filename').val("");
-		sda();
-	} else {
-		sda();
-	}
-	function sda() {
-		$('#filename').on('change', function () {
-			$.ajaxFileUpload({
-				url: '/upload/fileUpload',
-				secureuri: false,
-				fileElementId: 'filename',//file标签的id
-				dataType: 'json',//返回数据的类型
-				success: function (data, status) {
-					//把图片替换
-					var obj = data.data[0];
-					$("#preview-img").attr("src", "http://" + obj.absPath);
-					imgSrc = obj.absPath;
-					if (typeof(data.error) != 'undefined') {
-						if (data.error != '') {
-							alert(data.error);
-						} else {
-							alert(data.msg);
-						}
-					}
-				},
-				error: function (data, status, e) {
-					alert(e);
-				}
-			});
-		});
-	}
-})
 $('#preview-div').hover(function () {
 	if ($('#preview-img').attr('src')) {
 		$('#replace-btn').toggle();
@@ -215,7 +181,7 @@ $('.pusGoods-btn').click(function () {
 		data.formatList.push(listData);
 
 	});
-	alert(JSON.stringify(data.formatList));
+	// alert(JSON.stringify(data.formatList));
 	data.shopNumber = data.formatList[0].number;
 	data.shopFormat = data.formatList[0].format;
 	data.shopPrice = data.formatList[0].price;
@@ -324,7 +290,7 @@ function loadRegion(id,regionParam) {
 	}else{
 		parentId = $(regionParam).val();
 	}
-	$(regionParam).nextAll().html('<option value="-1">全部</option>');
+	$(regionParam).nextAll().html('<option value="-1"></option>')
 	$.ajax({
 		type: "get",
 		url: host.website+'/region/getRegionCodeByPid',
@@ -349,6 +315,25 @@ function renderRegion(id,data){
 	});
 	$('#'+id).html(html);
 }
+
+var fileUploadUrl = host.static+'/upload/fileUpload';
+$('#fileupload').fileupload({
+	url: fileUploadUrl,
+	dataType: 'json',
+	done: function (e, data) {
+		if(data.result.code == 1){
+			var obj = data.result.data[0];
+			$("#preview-img").attr("src", obj.absPath);
+			imgSrc = obj.absPath;
+		}else{
+			$.alert(data.result.message)
+		}
+
+	},
+	progressall: function (e, data) {
+
+	}
+})
 
 
 

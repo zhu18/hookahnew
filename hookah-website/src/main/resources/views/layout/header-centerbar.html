@@ -43,13 +43,13 @@
 							<!--<div class="grid-right">小计：<span>￥299.00</span></div>-->
 							<!--</div>-->
 							<div class="content-down">
-								<a class="img" href="/exchange/details?id=${list.goodsId}"><img src="${list.goodsName}" alt=""></a>
+								<a class="img" href="/exchange/details?id=${list.goodsId}"><img src="${list.goodsImg}" alt=""></a>
 								<div class="content-down-name display-inline-block">
 									<a href="/exchange/details?id=${list.goodsId}">${list.goodsName}</a>
 								</div>
 								<div class="grid-right font-weight-bold">
 									<div class="font-size-14">￥${list.goodsPrice}×${list.goodsNumber}</div>
-									<a href="" class="grid-right font-weight-normal">删除</a>
+									<!--<a href="" class="grid-right font-weight-normal">删除</a>-->
 								</div>
 							</div>
 						</li>
@@ -62,7 +62,7 @@
 				<%}%>
 				<div class="shopping-cart-down-pay">
 					<div class="display-inline-block">共<span>${cartSize!"0"}</span>件商品</div>
-					<div class="display-inline-block margin-left-10">共<span>￥</span></div>
+					<!--<div class="display-inline-block margin-left-10">共<span>￥</span></div>-->
 					<a href="/usercenter/buyer/cart" class="display-inline-block grid-right btn btn-full-red">去购物车</a>
 				</div>
 				<%}%>

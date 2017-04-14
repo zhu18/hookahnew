@@ -1,10 +1,10 @@
 .myAttention {
-    margin-top: 14px;
-    width: 980px;
+    margin-top: 10px;
+    width: 978px;
     background-color: #fff;
-    padding:32px 15px 26px 15px;
-    border:1px solid #E9E9E9;
-    margin-left: 5px;
+    padding: 31px 15px 26px 15px;
+    border: 1px solid #E9E9E9;
+    margin-left: 10px;
 }
 .myAttention table {
     margin-bottom: 0px;

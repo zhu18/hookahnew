@@ -1,14 +1,17 @@
 import "../../common/common";
 import sysRouting from "./sys.routing";
+import "treeGridCss";
 const MODULE_NAME = 'Hookah';
 let app = angular.module(MODULE_NAME, [
   'Common',
   'ui.router',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'treeGrid'
 ]);
 app.config(sysRouting);
 
 app.run(function ($rootScope, $state) {
+  $rootScope.tree_data = [];
   $rootScope.currentProductId = 'sys';
   $rootScope.config = {
     "navScene": 'main',

@@ -44,7 +44,7 @@ function loadPageData(data) { //渲染页面数据
 
 		$('.public-box').html(html);
 	}else{
-		html += '<div class="">暂无数据</div>';
+		html += '<div class="noData">暂无数据</div>';
 		$('.public-box').html(html);
 	}
 }

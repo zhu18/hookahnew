@@ -24,10 +24,12 @@ public class MgCategoryAttrType extends GenericModel {
 //    @JsonSerializableSchema
     public static class AttrTypeBean implements Serializable {
         private String typeId;
+        private String typeName;
         private List<AttrBean> attrList;
 
         public static class AttrBean implements Serializable{
             private String attrId;
+            private String attrName;
             private Integer level;
 
             public String getAttrId() {
@@ -44,6 +46,14 @@ public class MgCategoryAttrType extends GenericModel {
 
             public void setLevel(Integer level) {
                 this.level = level;
+            }
+
+            public String getAttrName() {
+                return attrName;
+            }
+
+            public void setAttrName(String attrName) {
+                this.attrName = attrName;
             }
         }
 
@@ -62,7 +72,15 @@ public class MgCategoryAttrType extends GenericModel {
         public void setAttrList(List<AttrBean> attrList) {
             this.attrList = attrList;
         }
+
+    public String getTypeName() {
+        return typeName;
     }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+}
 
     public String getCatId() {
         return catId;

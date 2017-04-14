@@ -1,5 +1,10 @@
 class SysController {
   constructor($scope, $rootScope, $http, $uibModal, usSpinnerService, growl) {
+    $scope.col_defs = [
+      {
+        field: "propery",
+        displayName: "属性"
+      }];
     $scope.search = function () {
       var promise = $http({
         method: 'GET',
@@ -7,7 +12,8 @@ class SysController {
       });
       promise.then(function (res, status, config, headers) {
         $rootScope.loadingState = false;
-        console.log(res);
+        console.log(res.data);
+        $scope.tree_data = res.data;
         growl.addSuccessMessage("数据加载完毕。。。");
       });
     };
