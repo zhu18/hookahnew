@@ -49,6 +49,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             mgGoods.setFormatList(obj.getFormatList());
             mgGoods.setImgList(obj.getImgList());
             mgGoods.setGoodsId(obj.getGoodsId());
+            mgGoods.setApiInfo(obj.getApiInfo());
             mongoTemplate.insert(mgGoods);
     }
 

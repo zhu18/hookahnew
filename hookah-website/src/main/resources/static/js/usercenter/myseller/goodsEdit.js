@@ -226,6 +226,7 @@ $('.pusGoods-btn').click(function () {
 	} else if (!!!data.goodsImg) {
 		alert("请上传图片");
 	} else {
+		alert(JSON.stringify(data));
 		Loading.start();
 		$.ajax({
 			type: 'POST',

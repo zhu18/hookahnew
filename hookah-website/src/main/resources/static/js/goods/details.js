@@ -83,7 +83,7 @@ $.getUrlParam = function (key) {
     return result ? decodeURIComponent(result[2]) : null;
 };
 var id = $.getUrlParam('id');
-renderDetails();
+// renderDetails();
 function renderDetails() {
     $.ajax({
         url: '/goods/back/findById',
@@ -94,10 +94,10 @@ function renderDetails() {
         success: function (data) {
             // return JSON.stringify(data);
             if (data.code == "1") {
-                $('#J_goodsImg').attr('src', data.data.goodsImg);
-                $('#J_goodsTitle').html(data.data.goodsName);
-                $('#J_goodsBrief').html(data.data.goodsBrief);
-                $('#J_goodsPrice').html(Number(data.data.formatList[0].price) / 100).attr('formatid',data.data.formatList[0].formatId);
+                // $('#J_goodsImg').attr('src', data.data.goodsImg);
+                // $('#J_goodsTitle').html(data.data.goodsName);
+                // $('#J_goodsBrief').html(data.data.goodsBrief);
+                // $('#J_goodsPrice').html(Number(data.data.formatList[0].price) / 100).attr('formatid',data.data.formatList[0].formatId);
 
                 function formatType(type) {
                     if (type == 0) {
@@ -124,7 +124,7 @@ function renderDetails() {
                         html += '<a href="javascript:;" onclick="editPrice(this, ' + item.price + ', ' + item.formatId + ')" class="margin-right-5 ' + active + '" formatid="' + item.formatId + '" price="' + item.price + '">' + item.number + formatType(item.format) + '</a>';
                     })
                     html += '</div>';
-                    $("#J_detail-money").append(html)
+                    // $("#J_detail-money").append(html)
                 }
 
                 function add(m) {
@@ -170,4 +170,26 @@ function addCart(goodsId) {
 function editPrice(that,price,formatId){
     $(that).addClass('active').siblings('a').removeClass('active');
     $('#J_goodsPrice').html(Number(price) / 100).attr('formatid',formatId);
+}
+
+function check() {
+	var flag = 0;
+	var cartIds = [];
+	$("[name=items]:checkbox").each(function () {
+		if (this.checked) {
+			flag += 1;
+			cartIds.push($(this).attr('recId'))
+		}
+	});
+	if (flag > 0) {
+		// console.log(cartIds);
+		$('#J_cartIdStr').val(cartIds);
+		// var	 vals = $('J_cartIdStr').val();
+		// window.location.href ='/order/orderInfo?ids='+JSON.stringify(params);
+		$('#J_cart').submit();
+		return true;
+	} else {
+		$.alert('请选择要结算的商品')
+		return false;
+	}
 }
