@@ -15,6 +15,7 @@
 
     <bean id="invoiceService" class="com.jusfoun.hookah.console.server.service.impl.CartServiceImpl"/>
     <bean id="payCoreService" class="com.jusfoun.hookah.console.server.service.impl.PayCoreServiceImpl"/>
+    <bean id="accNoTokenService" class="com.jusfoun.hookah.console.server.service.impl.AccNoTokenServiceImpl"/>
 
     <!-- 具体rpc服务配置，声明实现的接口类。-->
     <motan:service interface="com.jusfoun.hookah.rpc.api.CartService"
@@ -32,5 +33,8 @@
     </motan:service>
     <motan:service interface="com.jusfoun.hookah.rpc.api.PayCoreService"
                    ref="payCoreService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+    <motan:service interface="com.jusfoun.hookah.rpc.api.AccNoTokenService"
+                   ref="accNoTokenService" export="hookah:5001" basicService="serviceBasicConfig">
     </motan:service>
 </beans>
