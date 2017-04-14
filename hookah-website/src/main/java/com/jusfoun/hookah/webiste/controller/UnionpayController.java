@@ -60,7 +60,8 @@ public class UnionpayController extends BaseController{
 			@RequestParam(required=true) String accNo,
 			HttpSession session,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
-	
+
+		System.out.print(orderId    +"      555555555555555      "+ accNo);
 		//处理请求
 		String reqHtml = payCoreService.openUnionpay(orderId, accNo, "00003443e3ce74e3fbf2ca02b3baa64c");
 		if(StringUtils.isEmpty(reqHtml)){
