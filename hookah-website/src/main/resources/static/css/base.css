@@ -213,8 +213,8 @@
 .header-bottom-bar .grid-row {
 	position: relative;
 }
-.header-bottom-bar li {
-	padding: 0 56px;
+.header-bottom-bar li:hover {
+	background: #2F3C4D;
 }
 .header-bottom-bar li.active {
 	background: #2d3f5c;
@@ -223,6 +223,7 @@
 	font-size: 16px;
 	color: #fff;
 	display: block;
+    padding: 0 56px;
 }
 /************/
 .footer-bar {
