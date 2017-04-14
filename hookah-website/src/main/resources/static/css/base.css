@@ -118,6 +118,8 @@
 	top: 37px;
 	z-index: 102;
 	box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+	height: 430px;
+	overflow-y: scroll;
 }
 .header-centerbar .showLine {
 	display: none;

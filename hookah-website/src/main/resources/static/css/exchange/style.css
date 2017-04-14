@@ -2322,6 +2322,9 @@ dl {
 .success-top {
     color: #71b247;
 }
+.p-img img{
+    width:100px;
+}
 .success-top b {
     font-size: 30px;
 }
