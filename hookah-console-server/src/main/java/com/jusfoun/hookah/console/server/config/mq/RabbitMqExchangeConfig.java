@@ -113,6 +113,13 @@ public class RabbitMqExchangeConfig {
         return binding;
     }
 
+    @Bean
+    Binding bindingExchangeOrder(Queue queueOrder, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueOrder).to(exchange).with(RabbitmqQueue.CONTRACE_ORDER);
+        rabbitAdmin.declareBinding(binding);
+        return binding;
+    }
+
     /**
      * 所有关于contract exchange的queue
      *
@@ -136,6 +143,13 @@ public class RabbitMqExchangeConfig {
     @Bean
     Queue queueMessage(RabbitAdmin rabbitAdmin) {
         Queue queue = new Queue(RabbitmqQueue.CONTRACE_MESSAGE, true);
+        rabbitAdmin.declareQueue(queue);
+        return queue;
+    }
+
+    @Bean
+    Queue queueOrder(RabbitAdmin rabbitAdmin) {
+        Queue queue = new Queue(RabbitmqQueue.CONTRACE_ORDER, true);
         rabbitAdmin.declareQueue(queue);
         return queue;
     }

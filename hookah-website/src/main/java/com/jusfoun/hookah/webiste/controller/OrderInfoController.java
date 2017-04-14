@@ -10,8 +10,7 @@ import com.jusfoun.hookah.core.domain.vo.CartVo;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
-import com.jusfoun.hookah.core.generic.OrderBy;
-import com.jusfoun.hookah.core.utils.JSONUtils;
+import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.OrderHelper;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.CartService;
@@ -129,29 +128,7 @@ public class OrderInfoController extends BaseController {
     @RequestMapping(value = "/order/list", method = RequestMethod.GET)
     public String findByPage(@RequestParam(defaultValue = PAGE_NUM) Integer pageNum, @RequestParam(defaultValue = PAGE_SIZE) Integer pageSize, Integer payStatus, Integer commentFlag, Date startDate, Date endDate, String domainName, Model model) {
         try {
-            List<Condition> filters = new ArrayList<>();
-            if (startDate != null) {
-                filters.add(Condition.ge("addTime", startDate));
-            }
-            if (endDate != null) {
-                filters.add(Condition.le("addTime", endDate));
-            }
-            if (payStatus != null) {
-                filters.add(Condition.eq("payStatus", payStatus));
-            }
-            if (commentFlag != null) {
-                filters.add(Condition.eq("commentFlag", commentFlag));
-            }
-            if (domainName != null) {
-                filters.add(Condition.like("domainName", "%" + domainName + "%"));
-            }
-            String userId = getCurrentUser().getUserId();
-            filters.add(Condition.eq("userId", userId));
-            filters.add(Condition.eq("isDeleted", 0));
-
-            List<OrderBy> orderBys = new ArrayList<>();
-            orderBys.add(OrderBy.desc("addTime"));
-            Pagination<OrderInfoVo> pOrders = orderInfoService.getDetailListInPage(pageNum, pageSize, filters, orderBys);
+            Pagination<OrderInfoVo> pOrders = orderInfoService.findByPage(pageNum,pageSize,payStatus,commentFlag,startDate,endDate,domainName);
             model.addAttribute("orderList", pOrders);
             return "/1/mybuyer/order";
         } catch (Exception e) {
@@ -197,8 +174,8 @@ public class OrderInfoController extends BaseController {
             orderinfo = orderInfoService.insert(orderinfo, cartIds);
             model.addAttribute("payments",initPaymentList());
             model.addAttribute("orderInfo",orderinfo);
-            logger.info("订单信息:{}", JSONUtils.toString(orderinfo));
-            logger.info("支付列表:{}", JSONUtils.toString(initPaymentList()));
+            logger.info("订单信息:{}", JsonUtils.toJson(orderinfo));
+            logger.info("支付列表:{}", JsonUtils.toJson(initPaymentList()));
             return  "pay/cash";
         } catch (Exception e) {
             logger.error("插入错误", e);
