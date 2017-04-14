@@ -173,23 +173,14 @@ function editPrice(that,price,formatId){
 }
 
 function check() {
-	var flag = 0;
-	var cartIds = [];
-	$("[name=items]:checkbox").each(function () {
-		if (this.checked) {
-			flag += 1;
-			cartIds.push($(this).attr('recId'))
-		}
-	});
-	if (flag > 0) {
-		// console.log(cartIds);
-		$('#J_cartIdStr').val(cartIds);
-		// var	 vals = $('J_cartIdStr').val();
-		// window.location.href ='/order/orderInfo?ids='+JSON.stringify(params);
-		$('#J_cart').submit();
+    $('#J_formatId').val($('#J_goodsPrice').attr('formatid'));
+    var goodsId = $('#J_goodsId').val();
+    var goodsNumber = $('#J_buyNumber').val();
+    var formatId = $('#J_formatId').val();
+	if (goodsId && goodsNumber && formatId) {
 		return true;
 	} else {
-		$.alert('请选择要结算的商品')
+		$.alert('');
 		return false;
 	}
 }

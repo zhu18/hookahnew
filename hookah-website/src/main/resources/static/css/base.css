@@ -228,6 +228,9 @@
 .header-bottom-bar li.active {
 	background: #2d3f5c;
 }
+.header-bottom-bar li#exchange_menu.active{
+	background: #ffa800;
+}
 .header-bottom-bar li a {
 	font-size: 16px;
 	color: #fff;
