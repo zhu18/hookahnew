@@ -10,7 +10,7 @@
 }
 .left-bar li a {
     display: inline-block;
-    padding:0px 44px;
+    padding:0px 43px;
 }
 .left-bar li span{
     margin-right:22px;
@@ -25,7 +25,7 @@
 }
 .left-bar .active{
     border-left:2px solid #247DE8;
-    color: #247DE8;
+    /*color: #247DE8;*/
     background-color: #E9E9E9;
 }
 .usercenter-right-box{

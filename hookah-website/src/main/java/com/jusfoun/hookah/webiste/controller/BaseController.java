@@ -2,7 +2,7 @@ package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.exception.HookahException;
-import com.jusfoun.hookah.core.utils.JSONUtils;
+import com.jusfoun.hookah.core.utils.JsonUtils;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
@@ -48,7 +48,7 @@ public abstract class BaseController {
             e.printStackTrace();
             throw new HookahException("获取用户信息出错！",e);
         }
-        logger.info(JSONUtils.toString(user));
+        logger.info(JsonUtils.toJson(user));
         return user;
     }
 }
