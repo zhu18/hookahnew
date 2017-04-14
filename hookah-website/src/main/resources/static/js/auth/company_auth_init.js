@@ -7,7 +7,7 @@ $("#next").click(function(){
     if($("#check").is(":checked")){
         $(this).attr("href","./company_auth_init_step2");
     }else{
-        $(this).attr("href","#");
+        $(this).attr("href","javascript:;");
         alert("请您勾选我已阅读并同意按钮！");
     }
 });

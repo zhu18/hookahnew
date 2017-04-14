@@ -5,11 +5,13 @@ import com.jusfoun.hookah.console.server.config.Constants;
 import com.jusfoun.hookah.console.server.config.ESTemplate;
 import com.jusfoun.hookah.console.server.config.ESTransportClient;
 import com.jusfoun.hookah.console.server.util.AnnotationUtil;
+import com.jusfoun.hookah.console.server.util.DictionaryUtil;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.GoodsMapper;
 import com.jusfoun.hookah.core.domain.Category;
 import com.jusfoun.hookah.core.domain.GoodsAttrType;
+import com.jusfoun.hookah.core.domain.Region;
 import com.jusfoun.hookah.core.domain.es.*;
 import com.jusfoun.hookah.core.domain.mongo.MgCategoryAttrType;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
@@ -114,6 +116,15 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         List<EsGoods> list = goodsMapper.getNeedEsGoods();
         if (list != null && list.size() > 0) {
             for(EsGoods goods : list) {
+                // 如果有地区给省市县赋值
+                if(goods.getGoodsAreas() != null && !"".equals(goods.getGoodsAreas())) {
+                    String[] region = goods.getGoodsAreas().split(" ");
+                    goods.setAreaCountry(region[1]);
+                    if(region.length == 3)
+                        goods.setAreaProvince(region[2]);
+                    if(region.length == 4)
+                        goods.setAreaCity(region[3]);
+                }
                 //查询mongo中的数据
                 MgGoods mgGoods = mgGoodsService.selectById(goods.getGoodsId());
                 List<String> input = new ArrayList<>();
@@ -204,11 +215,18 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         EsTypesVo esTypesVo = new EsTypesVo();
         List<EsTreeVo<Category>> categoryList = new ArrayList<>();
         List<EsTreeVo<GoodsAttrType>> goodsAttrTypeList = new ArrayList<>();
+        List<EsTreeVo<Region>> areaCountryList = new ArrayList<>();
+        List<EsTreeVo<Region>> areaProvinceList = new ArrayList<>();
+        List<EsTreeVo<Region>> areaCityList = new ArrayList<>();
+        //添加需要聚合的字段
         if(goods != null && StringUtils.isNotBlank(goods.getCatIds())) {
             listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_CATEGORY, HookahConstants.GOODS_AGG_CATEGORY_FIELD));
         }
         listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_ATTR, HookahConstants.GOODS_AGG_ATTR_FIELD));
         listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_ATTR_TYPE, HookahConstants.GOODS_AGG_ATTR_TYPE_FIELD));
+        listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_AREA_COUNTRY, HookahConstants.GOODS_AGG_AREA_COUNTRY_FIELD));
+        listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_AREA_PROVINCE, HookahConstants.GOODS_AGG_AREA_PROVINCE_FIELD));
+        listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_AREA_CITY, HookahConstants.GOODS_AGG_AREA_CITY_FIELD));
         //按查询条件查询分类集合
         Map<String, List<EsAggResult>> map = esTemplate.getCounts(esTransportClient.getObject(),
                 Constants.GOODS_INDEX, Constants.GOODS_TYPE, goods != null ? AnnotationUtil.convert2Map(goods) : null, listCnt);
@@ -220,13 +238,28 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
                         break;
                     case HookahConstants.GOODS_AGG_ATTR_TYPE:
                         this.getGoodsAttrType(entry, goodsAttrTypeList);
+                        break;
                     case HookahConstants.GOODS_AGG_ATTR :
                         this.getGoodsAttr(entry, goodsAttrTypeList);
+                        break;
+                    case HookahConstants.GOODS_AGG_AREA_COUNTRY :
+                        this.getRegions(entry, areaCountryList);
+                        break;
+                    case HookahConstants.GOODS_AGG_AREA_PROVINCE :
+                        this.getRegions(entry, areaProvinceList);
+                        break;
+                    case HookahConstants.GOODS_AGG_AREA_CITY :
+                        this.getRegions(entry, areaCityList);
+                        break;
+
                 }
             }
         }
         esTypesVo.setCategoryList(categoryList);
         esTypesVo.setGoodsAttrTypeList(goodsAttrTypeList);
+        esTypesVo.setAreaCountryList(areaCountryList);
+        esTypesVo.setAreaProvinceList(areaProvinceList);
+        esTypesVo.setAreaCityList(areaCityList);
         return esTypesVo;
     }
 
@@ -238,8 +271,8 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     private void getCategoryTypes(Map.Entry<String, List<EsAggResult>> entry, List<EsTreeVo<Category>> categoryList) {
         List<EsAggResult> esAggResults = entry.getValue();
         for(EsAggResult result : esAggResults) {
-            Category category = categoryService.selectById(result.getId());
-            if(category.getLevel() == 3) {
+            Category category = DictionaryUtil.getCategoryById(result.getId());
+            if(category != null && category.getLevel() == 3) {
                 EsTreeVo<Category> categoryVo = new EsTreeVo(category.getCatId(), category.getCatName(),
                         category.getLevel(), category.getParentId(), result.getCnt());
                 categoryList.add(categoryVo);
@@ -255,7 +288,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     private void getGoodsAttrType(Map.Entry<String, List<EsAggResult>> entry, List<EsTreeVo<GoodsAttrType>> goodsAttrTypeList) {
         List<EsAggResult> esAggResults = entry.getValue();
         for(EsAggResult result : esAggResults) {
-            GoodsAttrType goodsAttrType = goodsAttrTypeService.selectById(result.getId());
+            GoodsAttrType goodsAttrType = DictionaryUtil.getAttrById(result.getId());
             if(goodsAttrType != null) {
                 EsTreeVo<GoodsAttrType> esGoodsAttrVo = new EsTreeVo(goodsAttrType.getTypeId(), goodsAttrType.getTypeName(),
                         goodsAttrType.getLevel(), goodsAttrType.getParentId(), result.getCnt());
@@ -275,7 +308,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             for(EsTreeVo<GoodsAttrType> vo : goodsAttrTypeList) {
                 List<EsTreeVo<GoodsAttrType>> children =  new ArrayList<>();
                 for(EsAggResult result : esAggResults) {
-                    GoodsAttrType goodsAttr = goodsAttrTypeService.selectById(result.getId());
+                    GoodsAttrType goodsAttr = DictionaryUtil.getAttrById(result.getId());
                     if(goodsAttr != null) {
                         if(vo.getNodeId().equals(goodsAttr.getParentId())) {
                             EsTreeVo<GoodsAttrType> esGoodsAttrVo = new EsTreeVo(goodsAttr.getTypeId(), goodsAttr.getTypeName(),
@@ -285,6 +318,23 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
                     }
                 }
                 vo.setChildren(children);
+            }
+        }
+    }
+
+    /**
+     * 获取有效的商品分类
+     * @param entry
+     * @param regionList
+     */
+    private void getRegions(Map.Entry<String, List<EsAggResult>> entry, List<EsTreeVo<Region>> regionList) {
+        List<EsAggResult> esAggResults = entry.getValue();
+        for(EsAggResult result : esAggResults) {
+            Region region = DictionaryUtil.getRegionById(result.getId());
+            if(region != null) {
+                EsTreeVo<Region> regionVo = new EsTreeVo(region.getId() + "", region.getName(),
+                        region.getLel(), region.getPid() + "", result.getCnt());
+                regionList.add(regionVo);
             }
         }
     }
