@@ -47,6 +47,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.*;
 
 /**
@@ -690,6 +691,72 @@ public class ESTemplate {
         pagination.setTotalItems(searchResponse.getHits().getTotalHits());
         return pagination;
     }
+    /**
+     * 搜索
+     * @param client
+     * @param key 搜索关键词
+     * @param index 索引
+     * @param type
+     * @param pagination
+     * @param fields
+     * @return
+     * @throws UnknownHostException
+     */
+    public void search(TransportClient client, String key, String index, String type,
+                       Pagination pagination, Boolean isHighLight, String... fields) throws UnknownHostException {
+        //创建查询索引,要查询的索引库为index
+        SearchRequestBuilder builder = client.prepareSearch();
+        builder.setIndices(index);
+        builder.setTypes(type);
+        builder.setFrom(pagination.getCurrentPage()*pagination.getPageSize());
+        builder.setSize(pagination.getPageSize());
+
+        //设置查询类型：1.SearchType.DFS_QUERY_THEN_FETCH 精确查询； 2.SearchType.SCAN 扫描查询,无序
+        builder.setSearchType(SearchType.DFS_QUERY_AND_FETCH);
+        if(StringUtils.isNotBlank(key)){
+            // 设置查询关键词
+            builder.setQuery(QueryBuilders.multiMatchQuery(key, fields));
+        }
+
+        //设置是否按查询匹配度排序
+        builder.setExplain(true);
+        //设置高亮显示
+        if(isHighLight) {
+            HighlightBuilder highlightBuilder = new HighlightBuilder().field("*").requireFieldMatch(false);
+            highlightBuilder.preTags("<span style=\"color:red\">");
+            highlightBuilder.postTags("</span>");
+            builder.highlighter(highlightBuilder);
+        }
+
+        //执行搜索,返回搜索响应信息
+        SearchResponse searchResponse = builder.get();
+        SearchHits searchHits = searchResponse.getHits();
+
+        //总命中数
+        long total = searchHits.getTotalHits();
+        SearchHit[] hits = searchHits.getHits();
+        pagination.setTotalItems(total);
+        List<Map<String, Object>> list = new ArrayList();
+        for (SearchHit hit : hits) {
+            Map<String, HighlightField> highlightFields = hit.getHighlightFields();
+            //title高亮
+            Map<String, Object> source = hit.getSource();
+            for(String filed : fields) {
+                HighlightField titleField = highlightFields.get(filed);
+                if(titleField!=null){
+                    Text[] fragments = titleField.fragments();
+                    String name = "";
+                    for (Text text : fragments) {
+                        name += text;
+                    }
+                    source.put(filed, name);
+                }
+            }
+            list.add(source);
+        }
+        if(list != null && list.size() > 0)
+            pagination.setList(list);
+    }
 
     public BoolQueryBuilder getBoolQueryBuilder(Map<String,Object> filterMap) {
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
@@ -697,11 +764,9 @@ public class ESTemplate {
         MatchAllQueryBuilder matchAll = null;
         if(filterMap != null && !filterMap.isEmpty()){
             for(Map.Entry entry : filterMap.entrySet()){
-                if(entry.getValue() != null) {
-                    queryString = QueryBuilders.queryStringQuery(String.valueOf(entry.getValue()));
-                    queryString.field(String.valueOf(entry.getKey()));
-                    boolQueryBuilder.must(queryString);
-                }
+                queryString = QueryBuilders.queryStringQuery(String.valueOf(entry.getValue()));
+                queryString.field(String.valueOf(entry.getKey()));
+                boolQueryBuilder.must(queryString);
             }
         }else{//检索全部
             matchAll = QueryBuilders.matchAllQuery();
