@@ -2,8 +2,10 @@ package com.jusfoun.hookah.console.server.util;
 
 import com.jusfoun.hookah.core.domain.Category;
 import com.jusfoun.hookah.core.domain.GoodsAttrType;
+import com.jusfoun.hookah.core.domain.Region;
 import com.jusfoun.hookah.rpc.api.CategoryService;
 import com.jusfoun.hookah.rpc.api.GoodsAttrTypeService;
+import com.jusfoun.hookah.rpc.api.RegionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +21,8 @@ public class DictionaryUtil {
     CategoryService categoryService;
     @Autowired
     GoodsAttrTypeService goodsAttrTypeService;
+    @Autowired
+    RegionService regionService;
     private static DictionaryUtil dictionaryUtil;
 
     @PostConstruct
@@ -26,6 +30,7 @@ public class DictionaryUtil {
         dictionaryUtil = this;
         dictionaryUtil.categoryService = this.categoryService;
         dictionaryUtil.goodsAttrTypeService = this.goodsAttrTypeService;
+        dictionaryUtil.regionService = this.regionService;
     }
 
     /**
@@ -44,5 +49,9 @@ public class DictionaryUtil {
      */
     public static GoodsAttrType getAttrById(String id) {
         return dictionaryUtil.goodsAttrTypeService.selectById(id);
+    }
+
+    public static Region getRegionById(String id) {
+        return dictionaryUtil.regionService.selectById(id);
     }
 }
