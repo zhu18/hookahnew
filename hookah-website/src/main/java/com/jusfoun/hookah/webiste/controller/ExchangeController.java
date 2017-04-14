@@ -5,6 +5,7 @@ import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.rpc.api.CategoryService;
 import com.jusfoun.hookah.rpc.api.GoodsService;
+import com.jusfoun.hookah.rpc.api.GoodsShelvesService;
 import com.jusfoun.hookah.rpc.api.MgGoodsService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 
 /**
  * @author huang lei
@@ -29,10 +31,13 @@ public class ExchangeController {
     GoodsService goodsService;
     @Resource
     MgGoodsService mgGoodsService;
+    @Resource
+    GoodsShelvesService goodsShelvesService;
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(Model model) {
         model.addAttribute("categoryInfo", categoryService.getCatTree());
+        model.addAttribute("goodsShelvesVoInfo",goodsShelvesService.getShevlesGoodsVoList(new HashMap<String,Object>()));
         return "exchange/index";
     }
 
