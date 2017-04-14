@@ -71,7 +71,7 @@ public class OrderInfoController extends BaseController {
                     }
 
                     if (cart.getFormat().getPrice() != null && cart.getGoodsNumber() != null) {
-                        goodsAmount += cart.getFormat().getPrice() * cart.getFormat().getNumber() * cart.getGoodsNumber();  //商品单价 * 套餐内数量 * 购买套餐数量
+                        goodsAmount += cart.getFormat().getPrice() *  cart.getGoodsNumber();  //商品单价 * 套餐内数量 * 购买套餐数量
                     }
                 }
             }
@@ -97,7 +97,7 @@ public class OrderInfoController extends BaseController {
                 throw new HookahException("商品[" + g.getGoodsName() + "]未上架");
             }
             MgGoods.FormatBean format = goodsService.getFormat(goodsId,formatId);
-            goodsAmount += format.getPrice() * format.getNumber() * goodsNumber;  //商品单价 * 套餐内数量 * 购买套餐数量
+            goodsAmount += format.getPrice() * goodsNumber;  //商品单价 * 套餐内数量 * 购买套餐数量
 
             CartVo vo = new CartVo();
             vo.setGoodsNumber(goodsNumber);

@@ -2,6 +2,7 @@ package com.jusfoun.hookah.staticserver.config;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -9,6 +10,8 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,13 +25,13 @@ import java.util.regex.Pattern;
 public class CrosFilter implements Filter {
 
     @Autowired
-    MyProps myProps;
+    private MyProps myProps;
 
-    final String domain = myProps.getHost().get("domain");
+    String domain;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
+        domain = myProps.getHost().get("domain");
     }
 
     @Override

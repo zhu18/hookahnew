@@ -18,6 +18,11 @@ public class MyBuyerController {
         return "/usercenter/buyer/orderManagement";
     }
 
+    @RequestMapping(value = "/buyer/orderStay", method = RequestMethod.GET)
+    public String orderStay() {
+        return "/usercenter/buyer/orderStay";
+    }
+
     @RequestMapping(value = "/invoice", method = RequestMethod.GET)
     public String invoice() {
         return "/usercenter/buyer/invoice";

@@ -14,7 +14,7 @@ ul li {
     padding:0px 15px;
 }
 .orderManagement .title {
-    border-bottom: 2px solid #E5E5E5;
+    border-bottom: 1px solid #E5E5E5;
 }
 .orderManagement .title ul li {
     float: left;
@@ -51,6 +51,9 @@ ul li {
     color:#E5E5E5;
 }
 /*订单信息*/
+.orderManagement .order table{
+    width:100%;
+}
 .orderManagement .order table thead {
     line-height: 40px;
     background: #F1F1F1;
@@ -58,49 +61,15 @@ ul li {
     border-top:1px solid #E1E1E1;
     border-bottom:1px solid #E1E1E1;
 }
-.orderManagement .order table .one {
-    width: 180px;
+.orderManagement .order table th{
+    padding:5px;
 }
-.orderManagement .order table .two {
-    width: 250px;
+.orderManagement .order table tr{
 }
-.orderManagement .order table .three {
-    width: 120px;
+.orderManagement .order table td{
+    padding:5px;
 }
-.orderManagement .order table .four {
-    width: 120px;
-}
-.orderManagement .order table .five {
-    width: 150px;
-}
-.orderManagement .order table .six {
-    width: 158px;
-}
-.orderManagement .order table tbody .operate {
-    position: relative;
-}
-.orderManagement .order table tbody .operate a{
-    position: absolute;
-    color:#297EF1;
-}
-.orderManagement .order table tbody .operate .cha {
-    top:32px;
-    left: 50px;
-}
-.orderManagement .order table tbody .operate .fu{
-    top:20px;
-    left: 44px;
+.orderManagement .order table tbody .goPay{
     width: 70px;
-    color:#fff;
     line-height: 30px;
-    text-align: center;
-    background: #F17D17;
-}
-.orderManagement .order table tbody .operate .ping{
-    top:56px;
-    left: 52px;
-}
-.orderManagement .order table tbody .operate .cancel{
-    top: 75px;
-    left: 65px;
 }
