@@ -46,12 +46,14 @@ $(document).ready(function () {
 			} else if (event.keyCode == 13) {
 				$("#J_searchInput").blur();
 				window.open(host.website+'/exchange/search?names=' + $(this).val());
+				return;
 			}
 		});
 	});
 	$('#J_searchBtn').click(function(){
 		$("#J_searchInput").blur();
 		window.open(host.website+'/exchange/search?names=' + $("#J_searchInput").val());
+		return;
 	});
 	var ds = -1;
 	$(document).keydown(function (event) {
@@ -61,6 +63,7 @@ $(document).ready(function () {
 			}
 			if(!$("#J_searchInput").val()){
 				$("#J_searchInput").focus();
+
 				return;
 			}
 			var itemLen = $('.search-sug li').length - 1;
@@ -85,12 +88,12 @@ $(document).ready(function () {
 					if($(this).hasClass('current')){
 						$("#J_searchInput").blur();
 						window.open($(this).children('a').attr('href'));
+						return;
 					}
 				})
 			}else{
 				event.initEvent("keydown", true, true);
 			}
-			console.log(ds);
 		}
 	});
 	$("#J_searchInput").on("input blur", function () {
