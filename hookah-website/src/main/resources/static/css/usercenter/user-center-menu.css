@@ -8,6 +8,10 @@
     line-height: 46px;
     border-bottom:1px solid #E9E9E9;
 }
+.left-bar li a {
+    display: inline-block;
+    padding:0px 44px;
+}
 .left-bar li span{
     margin-right:22px;
 }

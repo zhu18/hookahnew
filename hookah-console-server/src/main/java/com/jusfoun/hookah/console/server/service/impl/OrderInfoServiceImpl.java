@@ -170,7 +170,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                     throw new HookahException("商品["+g.getGoodsName()+"]未上架");
                 }
 
-                goodsAmount += cart.getFormat().getPrice() * cart.getFormat().getNumber() * cart.getGoodsNumber();  //商品单价 * 套餐内数量 * 购买套餐数量
+                goodsAmount += cart.getFormat().getPrice()  * cart.getGoodsNumber();  //商品单价 * 套餐内数量 * 购买套餐数量
 
                 MgOrderGoods og = getMgOrderGoodsByCart(cart);
                 ordergoodsList.add(og);
@@ -212,7 +212,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         }
         MgGoods.FormatBean format= goodsService.getFormat(goodsId,formatId);
         if(goodsNumber!=null){
-            goodsAmount += format.getPrice() * format.getNumber() * goodsNumber;  //商品单价 * 套餐内数量 * 购买套餐数量
+            goodsAmount += format.getPrice()  * goodsNumber;  //商品单价 * 套餐内数量 * 购买套餐数量
         }
         MgOrderGoods og = getMgOrderGoodsByGoodsFormat(g,format,goodsNumber);
         ordergoodsList.add(og);
