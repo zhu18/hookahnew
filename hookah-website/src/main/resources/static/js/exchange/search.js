@@ -26,5 +26,5 @@ function loadPageData(data){ //渲染页面数据
         $('.order-list ul').html(html);
     }
 }
-
+$('#J_searchInput').val(names);
 
