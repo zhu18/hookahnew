@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.console.server.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -21,26 +22,25 @@ import java.util.Map;
  * @author: huanglei
  */
 @Component
-@ConfigurationProperties(prefix="myconf")
 public class MyProps {
 
-  private Map<String,String> beetl = new HashMap<>();
+    private Map<String, String> beetl = new HashMap<>();
 
-  private Map<String,String> host = new HashMap<>();
+    private Map<String, String> host = new HashMap<>();
 
-  public Map<String, String> getBeetl() {
-    return beetl;
-  }
+    public Map<String, String> getBeetl() {
+        return beetl;
+    }
 
-  public void setBeetl(Map<String, String> beetl) {
-    this.beetl = beetl;
-  }
+    public void setBeetl(Map<String, String> beetl) {
+        this.beetl = beetl;
+    }
 
-  public Map<String, String> getHost() {
-    return host;
-  }
+    public Map<String, String> getHost() {
+        return host;
+    }
 
-  public void setHost(Map<String, String> host) {
-    this.host = host;
-  }
+    public void setHost(Map<String, String> host) {
+        this.host = host;
+    }
 }

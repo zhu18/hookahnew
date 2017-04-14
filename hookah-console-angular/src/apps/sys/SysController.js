@@ -4,7 +4,12 @@ class SysController {
       {
         field: "propery",
         displayName: "属性"
-      }];
+      }, {
+        field: "aa",
+        displayName: "操作",
+        cellTemplate: '<a ui-sref="account.edit" ng-click="edit($event,item)">修改</a> <span class="text-explode">|</span> <i class="link-space"></i> <a href="javascript:;" target="_blank">删除</a> <span class="text-explode">|</span> <i class="link-space"></i> <a href="javascript:;" target="_blank">关闭</a>'
+      }
+    ];
     $scope.search = function () {
       var promise = $http({
         method: 'GET',
