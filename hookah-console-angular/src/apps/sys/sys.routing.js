@@ -1,4 +1,4 @@
-import SysController from "./SysController";
+import SysDictController from "./SysDictController";
 goodsRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function goodsRouting($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/sys/dict/search');
@@ -14,16 +14,26 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
     .state('sys.dict.search', {
       url: '/sys/dict/search',
       template: require('./dict_list.html'),
-      controller: SysController,
+      controller: SysDictController,
     })
     .state('sys.dict.add', {
       url: '/sys/dict/add',
       template: require('./dict_add.html'),
-      controller: SysController,
+      controller: SysDictController,
     })
     .state('sys.dict.edit', {
       url: '/sys/dict/edit',
-      templateUrl: '/msc/dict_add.html',
-      controller: SysController,
+      template: require('./dict_add.html'),
+      controller: SysDictController,
+    })
+    .state('sys.dict.add_child', {
+      url: '/sys/dict/add_child',
+      template: require('./dict_add_child.html'),
+      controller: SysDictController,
+    })
+    .state('sys.dict.edit_child', {
+      url: '/sys/dict/edit_child',
+      template: require('./dict_add_child.html'),
+      controller: SysDictController,
     })
 };

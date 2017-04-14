@@ -65,6 +65,10 @@
 	z-index: 1000;
 	width:calc(100% - 2px);
 }
+.search-sug.keyActive{display:block}
+.search-sug .active{
+
+}
 .search-sug li{
 	line-height: 30px;
 }
@@ -72,8 +76,11 @@
 	display:block;
 	padding:0 10px ;
 }
+.search-sug li.current{
+	background: #e4e4e4;
+}
 .search-sug li a:hover{
-	background: #f5f5f5;
+	background: #e4e4e4;
 }
 .header-centerbar .shopping-cart {
 	width: 141px;
