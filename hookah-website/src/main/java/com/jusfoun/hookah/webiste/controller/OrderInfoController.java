@@ -10,6 +10,7 @@ import com.jusfoun.hookah.core.domain.vo.CartVo;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
+import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.OrderHelper;
 import com.jusfoun.hookah.core.utils.ReturnData;
@@ -22,7 +23,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -126,11 +126,20 @@ public class OrderInfoController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/order/list", method = RequestMethod.GET)
-    public String findByPage(@RequestParam(defaultValue = PAGE_NUM) Integer pageNum, @RequestParam(defaultValue = PAGE_SIZE) Integer pageSize, Integer payStatus, Integer commentFlag, Date startDate, Date endDate, String domainName, Model model) {
+    public String findByPage(Integer pageNum, Integer pageSize, Integer payStatus, Integer commentFlag, String startDateStr, String endDateStr, String domainName, Model model) {
         try {
-            Pagination<OrderInfoVo> pOrders = orderInfoService.findByPage(pageNum,pageSize,payStatus,commentFlag,startDate,endDate,domainName);
+            if (pageNum==null) pageNum = Integer.parseInt(PAGE_NUM);
+            if (pageSize==null) pageSize = Integer.parseInt(PAGE_SIZE);
+            Date startDate = null,endDate = null;
+            if(StringUtils.isNotBlank(startDateStr)) {
+                startDate = DateUtils.getDate(startDateStr, "yyyy-MM-dd HH:mm:ss");
+            }
+            if(StringUtils.isNotBlank(endDateStr)) {
+                endDate = DateUtils.getDate(endDateStr, "yyyy-MM-dd HH:mm:ss");
+            }
+            Pagination<OrderInfoVo> pOrders = orderInfoService.findByPage(this.getCurrentUser().getUserId(),pageNum,pageSize,payStatus,commentFlag,startDate,endDate,domainName);
             model.addAttribute("orderList", pOrders);
-            return "/1/mybuyer/order";
+            return "/usercenter/buyer/orderManagement";
         } catch (Exception e) {
             logger.error("分页查询订单错误", e);
             ReturnData.error("系统异常");
