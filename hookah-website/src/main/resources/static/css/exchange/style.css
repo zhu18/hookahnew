@@ -1257,12 +1257,13 @@ lesshat-selector {
 .exchange-industry-resource .industry-resource-down {
     position: relative;
     overflow: hidden;
-    height: 450px;
+    height: 393.458px;
 }
 .exchange-industry-resource .industry-resource-down .screen{
-    height: 450px;
+    height: 393.458px;
     overflow: hidden;
 }
+
 .exchange-industry-resource .industry-resource-down #arr{
     display: none;
 }
@@ -1270,43 +1271,45 @@ lesshat-selector {
     position: absolute;
     display: inline-block;
     top: 0;
-    width: 100px;
+    width: 55px;
     left: 0;
-    line-height: 450px;
+    line-height: 393.458px;
     text-align: center;
     z-index: 1000;
     color: white;
     font-size: 60px;
     background: #161A1D;
     opacity: 0.4;
-    height: 450px;
+    height: 393.458px;
     cursor: pointer;
 }
 .exchange-industry-resource .industry-resource-down #arrow-right{
     position: absolute;
     display: inline-block;
     top: 0;
-    width: 100px;
+    width: 55px;
     color: white;
     right: 0;
-    line-height: 450px;
+    line-height: 393.458px;
     text-align: center;
     z-index: 1000;
     font-size: 60px;
     background: #161A1D;
     opacity: 0.4;
-    height: 450px;
+    height: 393.458px;
     cursor: pointer;
 }
 .exchange-industry-resource .industry-resource-down ul{
     position: absolute;
     top:0;
+    transform: translate(0px);
+    /*transition: all 0.5s linear;*/
 }
 .exchange-industry-resource .industry-resource-down ul .slide-item{
     float: left;
     position: relative;
     width: 269.8px;
-    height: 450px;
+    height: 393.458px;
     background-color: white;
 }
 .exchange-industry-resource .industry-resource-down ul .slide-item a{
