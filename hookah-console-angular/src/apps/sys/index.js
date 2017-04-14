@@ -37,23 +37,13 @@ app.run(function ($rootScope, $state) {
   };
   $rootScope.config.title = '系统设置';
   $rootScope.config.mainNav = [
-    {
-      "title": "商品查询",
-      "url": "items.search"
-    },
+    // {
+    //   "title": "商品查询",
+    //   "url": "items.search"
+    // },
     {
       "title": "字典管理",
-      "showChild": true,
-      "childs": [
-        {
-          "title": "字典查询",
-          "url": "sys.dict.search"
-        }
-        , {
-          "title": "新增",
-          "url": "sys.dict.add"
-        }
-      ]
+      "url": "sys.dict.search"
     }
 
   ];
