@@ -4,10 +4,12 @@ import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.domain.OrderInfo;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.domain.vo.PayVo;
+import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericService;
 import com.jusfoun.hookah.core.generic.OrderBy;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,5 +34,7 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
      * @return
      */
     public PayVo getPayParam(String orderId);
+
+    public Pagination<OrderInfoVo> findByPage(Integer pageNum, Integer pageSize, Integer payStatus, Integer commentFlag, Date startDate, Date endDate, String domainName) throws HookahException;
 
 }
