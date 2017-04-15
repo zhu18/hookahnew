@@ -2,7 +2,7 @@
     margin-top: 10px;
     width: 978px;
     background-color: #fff;
-    padding: 31px 15px 26px 15px;
+    padding: 0px 15px 26px 15px;
     border: 1px solid #E9E9E9;
     margin-left: 10px;
 }
@@ -108,87 +108,193 @@
     border-bottom: 1px solid #E9E9E9;
 }
 
-.myAttention ul.bottom li.first {
-    float: left;
+/*order-list*/
+
+.myAttention .atten {
+    height: 30px;
+    padding-top: 10px;
+    border-bottom: 1px solid #EDEDED;
+}
+.myAttention .atten .myeval{
+    font:15px/20px "microsoft yahei";
+    padding-left:10px;
+    border-left:2px solid #237DE7;
 }
 
-.myAttention ul.bottom li.first input[type='checkbox'] {
-    height: 14px;
-    width: 14px;
-    margin-left: 55px;
-    vertical-align: middle;
+.order-list {
+    padding-left: 10px;
+    padding-top: 10px;
 }
 
-.myAttention ul.bottom li.first a {
-    text-decoration: underline;
+.order-list ul {
+    list-style: none;
+    padding: 0;
 }
-
-.myAttention ul.bottom li.first a:focus {
-    outline: none;
-}
-
-.myAttention ul.bottom li.first a.selAll {
-    margin-left: 5px;
-    margin-right: 35px;
-    color: #00a8ff;
-    text-decoration: none;
-}
-
-.myAttention ul.bottom li.first a.delAll {
-    color: #eb1d1e;
-}
-
-.myAttention ul.bottom li.second {
-    float: right;
-}
-
-.myAttention ul.bottom li.second p {
-    display: inline-block;
-}
-
-.myAttention ul.bottom li.second p span {
-    color: #5C5C5C;
-}
-
-.myAttention ul.bottom li.second p em {
-    font-style: normal;
-    color: #fd6100;
-}
-
-.myAttention ul.bottom li.second p a.pay {
-    margin-right: 13px;
-    padding: 8px 25px;
-    background: #dd662b;
-    color: #fff;
-}
-
-.myAttention ul.bottom li.second p {
-    margin-left: 20px;
-    margin-right: 20px;
-}
-
-.myAttention ul.bottom:before, .myAttention ul.bottom:after {
+.order-list ul:before,  .order-list ul:after {
     content: " ";
     display: table;
 }
-
-.myAttention ul.bottom:after {
+.order-list ul:after {
     clear: both;
 }
-
-.myAttention ul.positionFix {
-    position: fixed;
-    bottom: 0px;
-    z-index: 1000;
-    background-color: #2A3D4A;
-    width: 1200px;
+.order-list ul li {
+    height: 238px;
+    width: 230px;
+    float: left;
+    color: black;
+    background-color: white;
+    border: 1px solid #E5E5E5;
+    margin: 10px 10px 0 0;
+}
+.order-list ul li:nth-child(5n) {
+    margin-right: 0;
+}
+.order-list ul li .item-top {
+    display: block;
+}
+.order-list ul li .item-top p {
+    text-align: center;
+    padding: 4px 0;
+}
+.order-list ul li .item-top .goods-img img {
+    width: 70px;
+    margin-top: 18px;
+}
+.order-list ul li .item-top .goods-name {
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 30px 0 20px;
+}
+.order-list ul li .item-top .goods-brief {
+    padding: 0 10px 3px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    width: calc(100% - 20px);
+    text-align: justify;
+}
+.order-list ul li .item-down {
+    border-top: 1px solid #E5E5E5;
+    border-bottom: 1px solid #E5E5E5;
+    height: 38px;
+    line-height: 38px;
+    padding: 0 10px;
+}
+.order-list ul li .item-down span {
+    color: #B2B2B2;
+}
+.order-list ul li .item-down span label {
+    color: black;
+    padding-right: 10px;
+}
+.order-list ul li .item-down .goods-price span {
+    color: #fdb868;
+    font-size: 22px;
+}
+.order-list ul li .cancel{
+    line-height: 30px;
+    background: #f9f9f9;
+}
+.order-list ul li .cancel:hover{
+    cursor: pointer;
+}
+.order-list ul li .cancel a {
+    display: inline-block;
+    padding-left: 40px;
+}
+.order-list .info {
+    font-size: 20px;
+    text-align: center;
+    padding-top: 60px;
 }
 
-.sweet-alert button {
-    padding: 8px 25px;
-}
+/*.myAttention ul.bottom li.first {*/
+    /*float: left;*/
+/*}*/
 
-.sweet-alert h2 {
-    margin-top: 40px;
-    margin-bottom: 0px;
-}
+/*.myAttention ul.bottom li.first input[type='checkbox'] {*/
+    /*height: 14px;*/
+    /*width: 14px;*/
+    /*margin-left: 55px;*/
+    /*vertical-align: middle;*/
+/*}*/
+
+/*.myAttention ul.bottom li.first a {*/
+    /*text-decoration: underline;*/
+/*}*/
+
+/*.myAttention ul.bottom li.first a:focus {*/
+    /*outline: none;*/
+/*}*/
+
+/*.myAttention ul.bottom li.first a.selAll {*/
+    /*margin-left: 5px;*/
+    /*margin-right: 35px;*/
+    /*color: #00a8ff;*/
+    /*text-decoration: none;*/
+/*}*/
+
+/*.myAttention ul.bottom li.first a.delAll {*/
+    /*color: #eb1d1e;*/
+/*}*/
+
+/*.myAttention ul.bottom li.second {*/
+    /*float: right;*/
+/*}*/
+
+/*.myAttention ul.bottom li.second p {*/
+    /*display: inline-block;*/
+/*}*/
+
+/*.myAttention ul.bottom li.second p span {*/
+    /*color: #5C5C5C;*/
+/*}*/
+
+/*.myAttention ul.bottom li.second p em {*/
+    /*font-style: normal;*/
+    /*color: #fd6100;*/
+/*}*/
+
+/*.myAttention ul.bottom li.second p a.pay {*/
+    /*margin-right: 13px;*/
+    /*padding: 8px 25px;*/
+    /*background: #dd662b;*/
+    /*color: #fff;*/
+/*}*/
+
+/*.myAttention ul.bottom li.second p {*/
+    /*margin-left: 20px;*/
+    /*margin-right: 20px;*/
+/*}*/
+
+/*.myAttention ul.bottom:before, .myAttention ul.bottom:after {*/
+    /*content: " ";*/
+    /*display: table;*/
+/*}*/
+
+/*.myAttention ul.bottom:after {*/
+    /*clear: both;*/
+/*}*/
+
+/*.myAttention ul.positionFix {*/
+    /*position: fixed;*/
+    /*bottom: 0px;*/
+    /*z-index: 1000;*/
+    /*background-color: #2A3D4A;*/
+    /*width: 1200px;*/
+/*}*/
+
+/*.sweet-alert button {*/
+    /*padding: 8px 25px;*/
+/*}*/
+
+/*.sweet-alert h2 {*/
+    /*margin-top: 40px;*/
+    /*margin-bottom: 0px;*/
+/*}*/
+
+
+
