@@ -27,7 +27,9 @@ $(function () {
         var box = $(".exchange-industry-resource .industry-resource-down");
         var screen = $(".screen");
         var ul = $(".screen ul");
+        // 获取到每个li
         var ulLis = $(".screen ul li");
+        // li的个数
         var len=ulLis.length;
         var liWidth=ulLis.width();
         var arr = $("#arr");
@@ -43,72 +45,43 @@ $(function () {
                 'display':'none'
             })
         });
-        ul.css({
-            'width':len*liWidth
-        });
 
         var pic =0;
         var i=0;
-        var len1=len-5-parseInt((len-5)/5)*5;
-        var lis=ulLis.slice(-len1-5);
+        // 计算出多出来的li的个数
+        var len1=len-parseInt((len)/5)*5;
+        // 把多出来的li从总的li中截取出来
+        var lis=ulLis.slice(-len1);
+        // 截取首页的li
+        var top5 = $(".screen ul li").slice(0,5);
+        // 把首页的li追加到li后面
+        top5.each(function () {
+            var item=$(this).clone();
+            ul.append(item)
+        });
+        var newLis = $(".screen ul li").length;
+        // 给ul赋予新的宽度
+        ul.css({
+            'width':newLis*liWidth
+        });
         var left="";
         var flag='';
         var j=0;
         var k=0;
         // 右箭头点击事件
         arrRight.on('click',function () {
-                if(parseInt(ul.css('transform').split(',').slice(-2,-1))==0){
-                    pic=0;
-                    j=0;
-                    i=0;
-                }
-                if(j==1){
-                    ul.css({
-                        'transform': "translateX("+(ul.css('transform').split(',').slice(-2, -1)-screen.width())+"px)",
-                        'transition': 'all 0.5s linear'
-                    });
-                    j=0;
-                    k=1;
-                    pic=0;
-                    return
-                }
-                if(k==1){
-                    ul.css({
-                        'transform': "translateX(0px)",
-                        'transition': "none",
-                        'left': 0
-                    });
-                    k=0;
-                    i=0;
-                    pic=0;
-                }
-                if(pic<Math.ceil((len-5)/5)-2 && i==0){
-                    ul.css({
-                        'transform': "translateX("+(ul.css('transform').split(',').slice(-2, -1)-screen.width())+"px)",
-                        'transition': 'all 0.5s linear'
-                    });
-                    pic++;
-                }else if(lis.length-5<5 && i<lis.length-5 && i==0){
-                    i++;
-                    ul.css({
-                        'transform': "translateX("+(ul.css('transform').split(',').slice(-2, -1) - liWidth*(lis.length-5) )+"px)"
-                    });
-                }else if(i!=0){
-
-                    ul.css({
-                        'transform': "translateX("+(parseInt(ul.css('transform').split(',').slice(-2,-1))-screen.width())+"px)"
-                    });
-                    // 记录是不是进入最后一张
-                    k=1;
-                    i=0;
-                }
-
+            playRight()
         });
+
         // 左箭头点击事件
         arrLeft.on('click',function () {
+            playLeft()
+        });
 
+        function playLeft() {
+            arrLeft.unbind("click");
             if(parseInt(ul.css('transform').split(',').slice(-2, -1))>=0){
-                pic=Math.ceil((len-5)/5)-2;
+                pic=Math.ceil(len/5)-2;
                 i=0;
                 flag=1;
                 j=1;
@@ -119,34 +92,97 @@ $(function () {
                 ul.css({
                     'transform': "translateX(0px)",
                     'transition': "none",
-                    'left': -(len - 5) * liWidth
+                    'left': -len  * liWidth
                 });
                 k=0;
-                ul.css({
-                    'transform': "translateX("+(parseInt(ul.css('left'))+screen.width())+"px)",
-                    'transition': 'all 0.3s linear',
-                    'left':'0px'
+
+                ul.transition({transform: "translateX("+(parseInt(ul.css('left'))+screen.width())+"px)",
+                               left:'0px'
+                }, 500, 'linear', function(){
+                    arrRight.on("click",function () {
+                        playLeft()
+                    });
                 });
-                return
+                // ul.css({
+                //     'left':'0px'
+                // });
+                return;
             }
-                if(pic<=(Math.ceil((len-5)/5)-2) && pic >0 && i==0){
-                    pic--;
-                    ul.css({
-                        'transform': "translateX("+(parseInt(ul.css('transform').split(',').slice(-2, -1))+screen.width())+"px)",
-                        'transition': 'all 0.3s linear',
-                        'left':'0px'
+            if(pic<=(Math.ceil(len/5)-2) && pic >0 && i==0){
+                pic--;
+                ul.transition({transform: "translateX("+(parseInt(ul.css('transform').split(',').slice(-2, -1))+screen.width())+"px)"}, 500, 'linear', function(){
+                    arrRight.on("click",function () {
+                        playLeft()
                     });
+                });
 
-                }else if(lis.length-5<5 && i<=lis.length-5 && i==0){
-                    i++;
-                    ul.css({
-                        'transform': "translateX("+(parseInt(ul.css('transform').split(',').slice(-2, -1))+liWidth*(lis.length-5))+"px)",
-                        'transition': 'all 0.3s linear'
+            }else if(lis.length<5 && i<=lis.length && i==0){
+                i++;
+
+                ul.transition({transform: "translateX("+(parseInt(ul.css('transform').split(',').slice(-2, -1))+liWidth*lis.length)+"px)"}, 500, 'linear', function(){
+                    arrRight.on("click",function () {
+                        playLeft()
                     });
-                }
-        });
+                });
+            }else if(i!=0){
 
+            }
+        }
+        function playRight() {
+            arrRight.unbind("click");
 
+            if(parseInt(ul.css('transform').split(',').slice(-2,-1))==0){
+                pic=0;
+                j=0;
+                i=0;
+            }
+            if(j==1){
+                ul.transition({transform: "translateX("+(ul.css('transform').split(',').slice(-2, -1)-screen.width())+"px)"}, 500, 'linear', function(){
+                    arrRight.on("click",function () {
+                        playRight()
+                    });
+                });
+                j=0;
+                k=1;
+                pic=0;
+                return;
+            }
+            if(k==1){
+                ul.css({
+                    'transform': "translateX(0px)",
+                    'transition': "none",
+                    'left': 0
+                });
+                k=0;
+                i=0;
+                pic=0;
+            }
+            if(pic<Math.ceil(len/5)-2 && i==0){
+                ul.transition({transform: "translateX("+(ul.css('transform').split(',').slice(-2, -1)-screen.width())+"px)"}, 500, 'linear', function(){
+                    arrRight.on("click",function () {
+                        playRight()
+                    });
+                });
+                pic++;
+            }else if(lis.length<5 && i<lis.length && i==0){
+                i++;
+                ul.transition({transform: "translateX("+(ul.css('transform').split(',').slice(-2, -1) - liWidth*lis.length )+"px)"}, 500, 'linear', function(){
+                    arrRight.on("click",function () {
+                        playRight()
+                    });
+                });
+            }else if(i!=0){
+                ul.transition({transform: "translateX("+(parseInt(ul.css('transform').split(',').slice(-2,-1))-screen.width())+"px)"}, 500, 'linear', function(){
+                    arrRight.on("click",function () {
+                        playRight()
+                    });
+                });
+                // 记录是不是进入最后一张
+                k=1;
+                i=0;
+            }
+
+        }
 
 
     }

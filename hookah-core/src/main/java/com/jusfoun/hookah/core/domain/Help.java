@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jusfoun.hookah.core.generic.GenericModel;
 
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author huang lei
@@ -16,7 +18,7 @@ public class Help extends GenericModel {
     @Id
     private String helpId;
 
-    private String helpTitle;
+    private String name;
 
     private String content;
 
@@ -31,6 +33,17 @@ public class Help extends GenericModel {
 
     private boolean isLeaf;
 
+    @Transient
+    private List<Help> children;
+
+    public List<Help> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Help> children) {
+        this.children = children;
+    }
+
     public String getHelpId() {
         return helpId;
     }
@@ -39,12 +52,12 @@ public class Help extends GenericModel {
         this.helpId = helpId;
     }
 
-    public String getHelpTitle() {
-        return helpTitle;
+    public String getName() {
+        return name;
     }
 
-    public void setHelpTitle(String helpTitle) {
-        this.helpTitle = helpTitle;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getContent() {

@@ -29,7 +29,7 @@ function loadPageData(data){ //渲染页面数据
 		var html = '';
 		html += '<ul class="conditionCon">';
 		if(data.data2.categoryList){
-			html += '<li>';
+			html += '<li class="parLi">';
 			html += '<span>分类：</span>';
 			html += '<ul>';
 			data.data2.categoryList.forEach(function(item){
@@ -39,7 +39,7 @@ function loadPageData(data){ //渲染页面数据
 			html += '</li>';
 		}
 		if(data.data2.goodsAttrTypeList){
-			html += '<li>';
+			html += '<li class="parLi">';
 			html += '<span>属性：</span>';
 			html += '<ul>';
 			data.data2.goodsAttrTypeList.forEach(function(item){
@@ -49,7 +49,7 @@ function loadPageData(data){ //渲染页面数据
 			html += '</li>';
 		}
 		if(data.data2.areaCountryList){
-			html += '<li>';
+			html += '<li class="parLi">';
 			html += '<span>国家：</span>';
 			html += '<ul>';
 			data.data2.areaCountryList.forEach(function(item){
@@ -59,7 +59,7 @@ function loadPageData(data){ //渲染页面数据
 			html += '</li>';
 		}
 		if(data.data2.areaProvinceList){
-			html += '<li>';
+			html += '<li class="parLi">';
 			html += '<span>省份：</span>';
 			html += '<ul>';
 			data.data2.areaProvinceList.forEach(function(item){
@@ -69,66 +69,27 @@ function loadPageData(data){ //渲染页面数据
 			html += '</li>';
 		}
 		if(data.data2.areaCityList){
-			html += '<li>';
-			html += '<span>城市：</span>';
-			html += '<ul>';
-			data.data2.areaCityList.forEach(function(item){
-				html += '<li><a href="javascript:void(0)">'+item.nodeName+'</a></li>';
-			});
-			html += '</ul>';
-			html += '</li>';
+			renderSelector(data.data2.areaCityList,'城市')
 		}
 		html += '</ul>';
 		$('#J_searchCategory').html(html)
 	}
+
 }
+function renderSelector(datas,name){
+	html += '<li class="parLi">';
+	html += '<span>name：</span>';
+	html += '<ul>';
+	datas.forEach(function(item){
+		html += '<li><a href="javascript:void(0)">'+item.nodeName+'</a></li>';
+	});
+	html += '</ul>';
+	html += '</li>';
+}
+function selectCategory(){
 
-
-
-html += '<li>';
-html += '<span>地区：</span>';
-html += '<ul>';
-html += '<li><a href="javascript:void(0)">北京市</a></li>';
-html += '<li><a href="javascript:void(0)">广东省</a></li>';
-html += '</ul>';
-html += '</li>';
-html += '<li>';
-html += '<span>付费方式：</span>';
-html += '<ul>';
-html += '<li><a href="javascript:void(0)">数据源</a></li>';
-html += '<li><a href="javascript:void(0)">大数据应用场景</a></li>';
-html += '<li><a href="javascript:void(0)">大数据模型</a></li>';
-html += '<li><a href="javascript:void(0)">大数据开发工具</a></li>';
-html += '</ul>';
-html += '</li>';
-html += '<li>';
-html += '<span>数据格式：</span>';
-html += '<ul>';
-html += '<li><a href="javascript:void(0)">数据源</a></li>';
-html += '<li><a href="javascript:void(0)">大数据应用场景</a></li>';
-html += '<li><a href="javascript:void(0)">大数据模型</a></li>';
-html += '<li><a href="javascript:void(0)">大数据开发工具</a></li>';
-html += '</ul>';
-html += '</li>';
-html += '<li>';
-html += '<span>数据大小：</span>';
-html += '<ul>';
-html += '<li><a href="javascript:void(0)">数据源</a></li>';
-html += '<li><a href="javascript:void(0)">大数据应用场景</a></li>';
-html += '<li><a href="javascript:void(0)">大数据模型</a></li>';
-html += '<li><a href="javascript:void(0)">大数据开发工具</a></li>';
-html += '</ul>';
-html += '</li>';
-html += '</ul>';
-
-
-
-
-
-
-
-
-if(prId){
+}
+if(prId){//渲染分类
 	var html = '';
 	html += '<div class="crumbs-nav margin-top-20 padding-bottom-10" id="J_crimbsNav">';
 	if(msId){
