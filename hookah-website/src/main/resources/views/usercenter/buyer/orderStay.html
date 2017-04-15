@@ -15,8 +15,9 @@ var head = {
     dataParm.pageNumber = 1;
     dataParm.pageSize = 20;
     dataParm.payStatus = 0;//0:未付款，1：已付款
-    dataParm.startDate = '';
-    dataParm.endDate = '';
+    dataParm.startDate = null;
+    dataParm.endDate = null;
+    dataParm.commentFlag = null;
 </script>
 <%};%>
 
@@ -29,18 +30,24 @@ var htmlPart = {
         <div class="orderManagement margin-left-10 margin-top-10 grid-right padding-bottom-20">
             <div class="title clearfix margin-bottom-15">
                 <ul class="grid-left all">
-                    <li class="padding-left-30 active"><a href="/usercenter/buyer/orderManagement">已付款 <span class="padding-right-40">50</span></a></li>
-                    <li class="padding-left-60 "><a href="javascript:void(0)">待付款<span class="padding-left-5 padding-right-60">2</span></a></li>
+                    <li class="padding-left-30"><a href="/usercenter/buyer/orderManagement">已付款 <span
+                            class="padding-right-40">50</span></a></li>
+                    <li class="padding-left-60 active"><a href="javascript:void(0)">待付款<span
+                            class="padding-left-5 padding-right-60">2</span></a></li>
                 </ul>
                 <!--<div class="search grid-right">-->
-                        <!--<input type="search" name="search" placeholder="商品名称/订单号/商品编号">-->
-                        <!--<span class="fa fa-search"></span>-->
+                <!--<input type="search" name="search" placeholder="商品名称/订单号/商品编号">-->
+                <!--<span class="fa fa-search"></span>-->
                 <!--</div>-->
             </div>
             <div class="searchQuery padding-top-10 clearfix" id="noPaySearch">
                 <div class="date clearfix">
-                    <label for="startDate" class="start-date grid-left">开始时间：<input id="startDate" type="text" placeholder="请选择开始时间" readonly=""></label>
-                    <label for="endDate" class="end-date grid-left">结束时间：<input id="endDate" type="text" placeholder="请选择结束时间" readonly=""></label>
+                    <label for="startDate" class="start-date grid-left">开始时间：<input id="startDate" type="text"
+                                                                                    placeholder="请选择开始时间"
+                                                                                    readonly=""></label>
+                    <label for="endDate" class="end-date grid-left">结束时间：<input id="endDate" type="text"
+                                                                                placeholder="请选择结束时间"
+                                                                                readonly=""></label>
                     <button class="search grid-left">查询</button>
                 </div>
             </div>
@@ -48,7 +55,7 @@ var htmlPart = {
                 <div class="order">
                     <table>
                         <thead>
-                        <tr >
+                        <tr>
                             <th class="">订单号</th>
                             <th class="text-align-center">商品信息</span></th>
                             <th class="text-align-center">数量</th>
@@ -82,12 +89,13 @@ var htmlPart = {
                     </table>
                     </table>
                 </div>
+                <%include("/layout/pageaction.html"){} %>
             </div>
         </div>
     </div>
 </div>
 </div>
-<script src="/static/js/usercenter/mybuyer/orderStay.js"></script>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
+<script src="/static/js/usercenter/mybuyer/orderStay.js"></script>

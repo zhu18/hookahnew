@@ -3,7 +3,7 @@ var head = {
 %>
 <link rel="stylesheet" href="/static/css/usercenter/user-center-menu.css">
 <link rel="stylesheet" href="/static/css/common.css">
-<link rel="stylesheet" href="/static/css/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/static/css/font-aNwesome-4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="/static/css/usercenter/buyer/orderManagement.css">
 <link rel="stylesheet" href="/static/css/plugins/jedate/jedate.css">
 <link rel="stylesheet" href="/static/css/usercenter/buyer/buyer.css">
@@ -14,7 +14,7 @@ var head = {
     	var dataParm = {};
     	dataParm.pageNumber = 1;
     	dataParm.pageSize = 20;
-    	dataParm.payStatus = 0;//0:未付款，1：已付款
+    	dataParm.payStatus = 1;//0:未付款，1：已付款
         dataParm.startDate = null;
         dataParm.endDate = null;
         dataParm.commentFlag = null;
@@ -114,7 +114,7 @@ var htmlPart = {
     </div>
 </div>
 </div>
-<script src="/static/js/usercenter/mybuyer/orderManage.js"></script>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
+<script src="/static/js/usercenter/mybuyer/orderManage.js"></script>
