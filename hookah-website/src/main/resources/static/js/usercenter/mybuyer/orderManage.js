@@ -4,13 +4,13 @@ function loadPageData(data){
         var html = '';
         for(var i=0; i<list.length; i++){
             html += '<tr class="content border-bottom">';
-            html += '<td class="text-align-center">list[i].mgOrderGoodsList.orderId</td>';
+            html += '<td class="text-align-center">'+list[i].mgOrderGoodsList.orderId+'</td>';
             html += '<td class="text-align-center">';
-            html += '<a href="" class="display-block">list[i].mgOrderGoodsList.goodsName</a>';
+            html += '<a href="" class="display-block">'+list[i].mgOrderGoodsList.goodsName+'</a>';
             html += '</td>';
-            html += '<td class="text-align-center">list[i].mgOrderGoodsList.goodsNumber</td>';
+            html += '<td class="text-align-center">'+list[i].mgOrderGoodsList.goodsNumber+'</td>';
             html += '<td class="text-align-center">次</td>';
-            html += '<td class="text-align-right">￥&nbsp;list[i].mgOrderGoodsList.goodsPrice</td>';
+            html += '<td class="text-align-right">￥&nbsp;‘+list[i].mgOrderGoodsList.goodsPrice+’</td>';
             html += '<td>'+format(list[i].addTime)+'</td>';
             html += '<td>已付款</td>';
             html += '<td class="text-align-center">';
