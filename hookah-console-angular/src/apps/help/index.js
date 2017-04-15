@@ -1,10 +1,12 @@
 import '../../common/common';
 import helpRouting from './help.routing';
+import "treeGridCss";
 const MODULE_NAME = 'Hookah';
 let app = angular.module(MODULE_NAME, [
   'Common',
   'ui.router',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'treeGrid'
 ]);
 app.config(helpRouting);
 
