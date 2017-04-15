@@ -26,6 +26,7 @@ class HelpController {
       promise.then(function (res, status, config, headers) {
         $rootScope.loadingState = false;
         $scope.tree_data = res.data;
+        console.log(res);
         growl.addSuccessMessage("数据加载完毕。。。");
       });
     };
@@ -75,7 +76,7 @@ class HelpController {
         , {
           field: "aa",
           displayName: "操作",
-          cellTemplate: '<a ng-click="cellTemplateScope.edit(row.branch)">修改</a> <span class="text-explode">|</span> <i class="link-space"></i> <a href="javascript:;" ng-click="cellTemplateScope.delete(row.branch)" target="_blank">删除</a> <span class="text-explode">|</span> <i class="link-space"></i> <a href="javascript:;" ng-click="cellTemplateScope.addChild(row.branch)" target="_blank">增加子字典</a>',
+          cellTemplate: '<a ng-click="cellTemplateScope.edit(row.branch)">修改</a> <span class="text-explode">|</span> <i class="link-space"></i> <a href="javascript:;" ng-click="cellTemplateScope.delete(row.branch)" target="_blank">删除</a> <span class="text-explode">|</span> <i class="link-space"></i> <a href="javascript:;" ng-click="cellTemplateScope.addChild(row.branch)" target="_blank">增加子项</a>',
           cellTemplateScope: {
             edit: function (data) {
               $scope.edit(data);
@@ -90,6 +91,7 @@ class HelpController {
         }
       ];
       $scope.dict_tree = {};
+      $scope.tree_data = {};
     }
 
   }

@@ -128,6 +128,8 @@
       <value>
         /static/** = anon
         / = anon
+        /help** = anon
+        /help/** = anon
         /error/** = anon
         /login** = oauth2Authc
         /auth* = oauth2Authc
