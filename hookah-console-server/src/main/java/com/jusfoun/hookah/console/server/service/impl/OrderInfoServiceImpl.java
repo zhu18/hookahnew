@@ -153,7 +153,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     }
 
     @Override
-    public Pagination<OrderInfoVo> findByPage(Integer pageNum, Integer pageSize, Integer payStatus, Integer commentFlag, Date startDate, Date endDate, String domainName) throws  HookahException{
+    public Pagination<OrderInfoVo> findByPage(String userId,Integer pageNum, Integer pageSize, Integer payStatus, Integer commentFlag, Date startDate, Date endDate, String domainName) throws  HookahException{
         List<Condition> filters = new ArrayList<>();
         if (startDate != null) {
             filters.add(Condition.ge("addTime", startDate));
@@ -170,7 +170,6 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         if (domainName != null) {
             filters.add(Condition.like("domainName", "%" + domainName + "%"));
         }
-        String userId = getCurrentUser().getUserId();
         filters.add(Condition.eq("userId", userId));
         filters.add(Condition.eq("isDeleted", 0));
 
