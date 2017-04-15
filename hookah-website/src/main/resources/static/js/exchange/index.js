@@ -77,7 +77,6 @@ $(function () {
         arrLeft.on('click',function () {
             playLeft()
         });
-
         function playLeft() {
             arrLeft.unbind("click");
             if(parseInt(ul.css('transform').split(',').slice(-2, -1))>=0){
@@ -105,15 +104,6 @@ $(function () {
                 });
                 return;
             }
-
-            // if(i!=0){
-            //     ul.transition({transform: "translateX("+(parseInt(ul.css('transform').split(',').slice(-2, -1))+screen.width())+"px)"}, 500, 'linear', function(){
-            //         arrLeft.on("click",function () {
-            //             playLeft()
-            //         });
-            //     });
-            //     i=0;
-            // }
             if(pic<=(Math.ceil(len/5)-2) && pic >0 ){
                 pic--;
                 ul.transition({transform: "translateX("+(parseInt(ul.css('transform').split(',').slice(-2, -1))+screen.width())+"px)"}, 500, 'linear', function(){
@@ -187,8 +177,6 @@ $(function () {
             }
 
         }
-
-
     }
     hotSwitchHover();
     switchHover();
