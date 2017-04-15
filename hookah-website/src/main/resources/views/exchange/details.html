@@ -46,15 +46,14 @@ var htmlPart = {
 						<div>
 							<span>价格：</span>
 							<i class="fa fa-jpy font-size-14 color-orange" aria-hidden="true"></i>
-							<span class="font-size-24 color-orange" id="J_goodsPrice">${trunc(goodsDetails.shopPrice / 100)}</span>
-							<!--<% if(goodsDetails.shopNumber > 1){%>${goodsDetails.shopNumber}<%}%>${decode(goodsDetails.shopFormat,0,"次",1,"天",2,"年")}-->
+							<span class="font-size-24 color-orange" formatid="${goodsDetails.formatList[0].formatId}" id="J_goodsPrice">${trunc(goodsDetails.shopPrice / 100)}</span>
 							<!--<span class="convert color-orange" id="J_goodsNumber">折合0.0001元/次</span>-->
 						</div>
 						<%if(goodsDetails.formatList.~size > 0){%>
 						<div class="money-standard">
 							<span>规格：</span>
 							<%for(item in goodsDetails.formatList){%>
-							<a href="javascript:;" onclick="editPrice(this, ${item.price}, ${item.formatId})" class="margin-right-5 " formatid="${item.formatId}" price="${item.price}">${item.number}${decode(item.format,0,"次",1,"天",2,"年")}</a>
+							<a href="javascript:;" onclick="editPrice(this, ${item.price}, ${item.formatId})" class="margin-right-5 " formatid="${item.formatId}" price="${item.price}">${item.number}${decode(item.format,0,"次",1,"天",2,"年","未知")}  </a>
 							<%}%>
 						</div>
 						<%}%>
@@ -71,14 +70,14 @@ var htmlPart = {
 
 					</div>
 					<div class="detail-count margin-bottom-20 padding-left-10 margin-top-10">
-						<form action="/order/directInfo" name="goodsDetail" id="J_goodsDetail" method="post">
+						<form action="${host.website}/order/directInfo" name="goodsDetail" id="J_goodsDetail" method="post">
 							<span class="font-size-14">数量：</span>
 							<div class="purchase-quantity vertical-align-middle">
 								<a href="javascript:void(0)" class=" btn-a btn-sub">-</a>
 								<input id="J_buyNumber" type="text" name="goodsNumber" value="1">
 								<a href="javascript:void(0)" class="btn-a btn-plus">+</a>
 							</div>
-							<input type="hidden" name="goodsId" id="J_goodsId">
+							<input type="hidden" name="goodsId" id="J_goodsId" value="${goodsDetails.goodsId}">
 							<input type="hidden" name="formatId" id="J_formatId">
 							<button class="vertical-align-middle btn btn-full-orange margin-left-10 padding-5 padding-left-20 padding-right-20" onclick="return check()" style="cursor: pointer">
 								立即购买
@@ -92,18 +91,18 @@ var htmlPart = {
 			<div class="goods-table margin-top-20 margin-bottom-10">
 				<div class="table-title">
 					<ul>
-						<%if(has(goodsDetails.apiInfo)){%>
-						<li class="grid-left active">API详情</li>
-						<%}%>
-						<li class="grid-left">详情介绍</li>
+						<li class="grid-left active">详情介绍</li>
+						<li class="grid-left">API详情</li>
 						<li class="grid-left">返回参数</li>
 						<li class="grid-left">评价</li>
 					</ul>
 				</div>
 				<div class="table-content">
-					<%if(has(goodsDetails.apiInfo)){%>
-					<div class="table-item active">
-						<h1 class="font-size-14 margin-bottom-10">小区周楼盘房价</h1>
+					<div class="table-item active detail" id="J_goodsDesc">
+						${goodsDetails.goodsDesc}
+					</div>
+					<div class="table-item">
+						<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
 						<table class="tab-one">
 							<caption><h3>标示信息</h3></caption>
 							<tr>
@@ -137,17 +136,13 @@ var htmlPart = {
 							<tr>
 								<td>${items.fieldName}</td>
 								<td>${items.fieldType}</td>
-								<td>${decode(items.isMust,0,"否",1,"是")}</td>
+								<td>${decode(items.isMust,"0","否","1","是","未知")}</td>
 								<td>${items.fieldSample}</td>
 								<td>${items.fieldDefault}</td>
 								<td>${items.describle}</td>
 							</tr>
 							<%}%>
 						</table>
-					</div>
-					<%}%>
-					<div class="table-item detail" id="J_goodsDesc">
-						${goodsDetails.goodsDesc}
 					</div>
 					<!--返回参数-->
 					<div class="table-item">
@@ -157,34 +152,12 @@ var htmlPart = {
 								<th>错误码</th>
 								<th>说明</th>
 							</tr>
+							<%for(items in goodsDetails.apiInfo.respParamList){%>
 							<tr>
-								<td>10000</td>
-								<td>查询成功</td>
+								<td>${items.fieldName}</td>
+								<td>${items.describle}</td>
 							</tr>
-							<tr>
-								<td>10001</td>
-								<td>错误的请求appkey</td>
-							</tr>
-							<tr>
-								<td>10002</td>
-								<td>调用的服务商借口异常，请联系管理员</td>
-							</tr>
-							<tr>
-								<td>10003</td>
-								<td>不存在想用的数据信息</td>
-							</tr>
-							<tr>
-								<td>10004</td>
-								<td>URL上appkey参数不能为空</td>
-							</tr>
-							<tr>
-								<td>10010</td>
-								<td>接口需要付费，请充值</td>
-							</tr>
-							<tr>
-								<td>10020</td>
-								<td>系统繁忙，请稍后再试</td>
-							</tr>
+							<%}%>
 						</table>
 					</div>
 					<div class="table-item">
