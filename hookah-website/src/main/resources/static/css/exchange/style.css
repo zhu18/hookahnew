@@ -1156,6 +1156,7 @@ lesshat-selector {
 .exchange-hot-resource .hot-resource-down .hot-down-rank > ul li {
 	position: relative;
 	height: 46px;
+    transition: height 0.5s;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-rank > ul li .li-rank {
 	margin: 0 20px;
@@ -1164,6 +1165,10 @@ lesshat-selector {
 	width: 166px;
 	border-bottom: 1px solid #ECECEC;
 	line-height: 40px;
+}
+.exchange-hot-resource .hot-resource-down .hot-down-rank > ul li .li-rank img{
+
+	display: none;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-rank > ul li .li-rank > span:nth-child(1) {
 	display: inline-block;
