@@ -31,6 +31,7 @@ public class GoodsSearchController {
                 vo = new EsGoodsVo();
             }
             returnData.setData(elasticSearchService.search(vo));
+            returnData.setData2(elasticSearchService.getTypes(vo.getEsGoods()));
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());
