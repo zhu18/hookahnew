@@ -20,7 +20,7 @@
 	color: white;
 	border-bottom: 1px solid white;
 	line-height: 42px;
-	height: 42px;
+	height: 41.95px;
 	position: relative;
 }
 .exchange-index-menu .menu-list li > a.Bh {
@@ -809,7 +809,7 @@ lesshat-selector {
 	background-color: #F6F6F6;
 }
 .exchange-index .index-banner {
-    height: 431px;
+    height: 430px;
 }
 .exchange-index .index-banner .exchange-index-banner {
 	width: 100%;
@@ -2253,14 +2253,19 @@ dl {
 }
 .exchange-search .order-list ul li .item-top .goods-name {
 	font-size: 14px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding: 0 30px 0 20px;
 }
 .exchange-search .order-list ul li .item-top .goods-brief {
-	padding: 0 5px 3px;
+	padding: 0 10px 3px;
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 3;
 	overflow: hidden;
-	width: calc(100% - 10px);
+	width: calc(100% - 20px);
+	height: 52px;
 }
 .exchange-search .order-list ul li .item-down {
 	border-top: 1px solid #E5E5E5;
