@@ -39,4 +39,13 @@ if(prId){
 	$('#J_searchCategory').addClass('margin-top-20')
 }
 
+function getGoodsType() {
+	$.ajax({
+		url:'/search/v1/goods/types',
+		data:{
+			catIds
+		}
+	})
+}
+
 
