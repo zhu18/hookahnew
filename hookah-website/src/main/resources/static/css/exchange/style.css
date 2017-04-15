@@ -1160,12 +1160,17 @@ lesshat-selector {
     height: 46px;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-rank > ul li .li-rank {
-    margin: 0 20px;
+    margin: 0 16px;
     display: inline-block;
     height: 40px;
     width: 166px;
     border-bottom: 1px solid #ECECEC;
     line-height: 40px;
+}
+.exchange-hot-resource .hot-resource-down .hot-down-rank > ul li .li-rank img{
+
+    display:none;
+
 }
 .exchange-hot-resource .hot-resource-down .hot-down-rank > ul li .li-rank > span:nth-child(1) {
     display: inline-block;
@@ -1190,21 +1195,37 @@ lesshat-selector {
     height: 102px;
     background-color: #E6E6E6;
 }
+@keyframes animate
+{
+    from {height: 10px;}
+    to {height: 66px;}
+}
+
+
 .exchange-hot-resource .hot-resource-down .hot-down-rank > ul .active div {
     width: 167px;
     padding: 20px 17px;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-rank > ul .active img {
     width: 66px;
-    height: 66px;
-    background-color: #00A1CB;
+    height: 10px;
     vertical-align: middle;
+    animation:animate 0.5s ease-in-out 0s 1 alternate forwards;
+    -moz-animation:animate 0.5s ease-in-out 0s 1 alternate forwards; /* Firefox */
+    -webkit-animation:animate 0.5s ease-in-out 0s 1 alternate forwards; /* Safari and Chrome */
+    -o-animation:animate 0.5s ease-in-out 0s 1 alternate forwards; /* Opera */
 }
 .exchange-hot-resource .hot-resource-down .hot-down-rank > ul .active > div > div {
     display: inline-block;
     width: 90px;
+    overflow: hidden;
+    height: 66px;
     vertical-align: middle;
     padding: 0 0 0 4px;
+    animation:animate 0.5s ease-in-out 0s 1 alternate forwards;
+    -moz-animation:animate 0.5s ease-in-out 0s 1 alternate forwards; /* Firefox */
+    -webkit-animation:animate 0.5s ease-in-out 0s 1 alternate forwards; /* Safari and Chrome */
+    -o-animation:animate 0.5s ease-in-out 0s 1 alternate forwards; /* Opera */
 }
 .exchange-hot-resource .hot-resource-down .hot-down-rank > ul .active span {
     position: absolute;
@@ -1254,8 +1275,7 @@ lesshat-selector {
 }
 /*行业推荐下面*/
 .exchange-industry-resource .industry-resource-down {
-    /*position: relative;*/
-    /*width: 100%;*/
+
 }
 .exchange-industry-resource .industry-resource-down .carousel-box{
     position: relative;
