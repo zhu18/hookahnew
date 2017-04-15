@@ -23,7 +23,7 @@
           <button class="btn btn-primary" ui-sref="sys.dict.add"  data-ng-click="add()"><span class="glyphicon glyphicon-refresh"></span> 新建一级字典
           </button>
         </div>
-        <div class="">
+        <div class="gridSection">
           <div us-spinner ng-show="showSpinner" spinner-start-active="true" spinner-key="showSpinner"></div>
           <tree-grid tree-data="tree_data" tree-control="dict_tree" col-defs="col_defs" expand-on="expanding_property" icon-leaf="glyphicon" on-select="treehandler(branch)"></tree-grid>
         </div>
