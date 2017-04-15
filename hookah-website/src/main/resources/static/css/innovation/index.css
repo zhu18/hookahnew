@@ -49,10 +49,6 @@ ul li {
     margin-right: 10px;
 }
 
- .leftSide .top ul li:nth-child(3) {
-    border-bottom: none;
-}
-
 /*右侧内容*/
  .rightCenter {
     width: 905px;
