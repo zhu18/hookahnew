@@ -57,6 +57,7 @@ module.exports = function makeWebpackConfig() {
     alias: {
       'jquery': __dirname + '/node_modules/jquery/dist/jquery.js',
       'bootstrap': __dirname + '/node_modules/bootstrap/dist/js/bootstrap.min.js',
+      'bootstrapCss': __dirname + '/node_modules/bootstrap/dist/css/bootstrap.css',
       'wangEditor': __dirname + '/vendor/wangEditor/wangEditor.min.js',
       'wangEditorCss': __dirname + '/vendor/wangEditor/wangEditor.min.css',
       'angular-growl-v2': __dirname + '/vendor/angular-growl/build/angular-growl.js',
@@ -77,7 +78,7 @@ module.exports = function makeWebpackConfig() {
 
       // Output path from the view of the page
       // Uses webpack-dev-server in development
-      publicPath: isProd ? '/' : 'http://localhost:9500/',
+      publicPath: isProd ? '/' : 'http://localhost:9500',
 
       // Filename for entry points
       // Only adds hash in build mode
