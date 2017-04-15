@@ -1710,17 +1710,17 @@ dl {
 }
 .search .search-category .conditionCon li span {
     float: left;
-    width: 140px;
     color: #666666;
     display: inline-block;
     background-color: #F5F5F5;
-    height: 44px;
-    padding-left: 23px;
-    line-height: 45px;
+    height: 34px;
+    line-height: 35px;
+    padding: 0 10px;
 }
 .search .search-category .conditionCon li ul {
     overflow: hidden;
     background-color: white;
+    padding: 5px 0;
 }
 .search .search-category .conditionCon li ul li {
     float: left;
@@ -1729,7 +1729,7 @@ dl {
 }
 .search .search-category .conditionCon li ul li a {
     display: inline-block;
-    padding: 16px 30px;
+    margin: 3px 10px;
 }
 .search .search-order {
     margin-top: 10px;
