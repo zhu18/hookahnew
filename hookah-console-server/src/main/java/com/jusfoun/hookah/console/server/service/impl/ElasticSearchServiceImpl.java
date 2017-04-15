@@ -184,7 +184,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         }
         esTemplate.search(esTransportClient.getObject(), Constants.GOODS_INDEX,
                 Constants.GOODS_TYPE, map, pagination, orderField, order,
-                "goodsNameAll");
+                "goodsNameAll", "goodsName");
         return pagination;
     }
 

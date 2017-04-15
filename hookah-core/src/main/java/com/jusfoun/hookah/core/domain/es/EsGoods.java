@@ -24,7 +24,7 @@ public class EsGoods implements Serializable {
     @EsField(analyzeOpt= AnalyzeOpt.ANALYZED, analyzer= Analyzer.PINYIN,
             termVector= TermVector.OFFSETS, isStore = true, searchAnalyzer = Analyzer.PINYIN, copyTo = "goodsNameAll")
     private String goodsNamePy;
-    @EsField(analyzeOpt= AnalyzeOpt.ANALYZED, analyzer= Analyzer.PINYIN, searchAnalyzer = Analyzer.PINYIN)
+    @EsField(analyzeOpt= AnalyzeOpt.ANALYZED, isStore = true, analyzer= Analyzer.PINYIN, searchAnalyzer = Analyzer.PINYIN)
     private String goodsNameAll;
     @EsField
     private String goodsBrief;
