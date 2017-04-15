@@ -57,3 +57,4 @@ $(".searchQuery .search").on("click",function(){
     dataParm.endDate = $("#endDate").val();
     goPage(1);
 });
+//点击tab切换
