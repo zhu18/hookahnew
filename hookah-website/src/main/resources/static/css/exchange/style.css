@@ -809,8 +809,7 @@ lesshat-selector {
 	background-color: #F6F6F6;
 }
 .exchange-index .index-banner {
-	background-color: #2F3C4D;
-	height: 431px;
+    height: 431px;
 }
 .exchange-index .index-banner .exchange-index-banner {
 	width: 100%;
@@ -999,7 +998,6 @@ lesshat-selector {
 }
 /*热门*/
 .exchange-index .exchange-hot-resource {
-	height: 487px;
 }
 .exchange-hot-resource .hot-resource-top {
 	height: 66px;
@@ -1030,9 +1028,8 @@ lesshat-selector {
 	font-size: 14px;
 }
 .exchange-hot-resource .hot-resource-down {
-	border-top: 1px solid #333333;
-	padding-top: 10px;
-	height: 516px;
+    border-top: 1px solid #333333;
+    padding-top: 10px;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-left {
 	float: left;
@@ -1059,13 +1056,13 @@ lesshat-selector {
 	margin: 20px 20px 0px 20px;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-left > div:nth-child(2) span {
-	width: 74px;
-	height: 29px;
-	text-align: center;
-	line-height: 29px;
-	display: inline-block;
-	color: white;
-	background-color: #D27877;
+    width: 70px;
+    height: 29px;
+    text-align: center;
+    line-height: 29px;
+    display: inline-block;
+    color: white;
+    background-color: #D27877;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-left > div:nth-child(2) a {
 	display: inline-block;
@@ -1223,7 +1220,7 @@ lesshat-selector {
 }
 /*行业*/
 .exchange-index .exchange-industry-resource {
-	height: 550px;
+    margin-bottom: 30px;
 }
 .exchange-industry-resource .industry-resource-top {
 	height: 66px;
@@ -1255,106 +1252,115 @@ lesshat-selector {
 }
 /*行业推荐下面*/
 .exchange-industry-resource .industry-resource-down {
-	position: relative;
-	overflow: hidden;
-	height: 393.458px;
+
 }
-.exchange-industry-resource .industry-resource-down .screen {
-	height: 393.458px;
-	overflow: hidden;
+.exchange-industry-resource .industry-resource-down .carousel-box{
+    position: relative;
+    overflow: hidden;
+    min-width: 1180px;
+    max-width: 1440px;
+    height: 393.458px;
+    margin-left: auto;
+    margin-right: auto;
+    zoom: 1;
 }
-.exchange-industry-resource .industry-resource-down #arr {
-	display: none;
+.exchange-industry-resource .industry-resource-down .screen{
+    height: 393.458px;
+    overflow: hidden;
 }
-.exchange-industry-resource .industry-resource-down #arrow-left {
-	position: absolute;
-	display: inline-block;
-	top: 0;
-	width: 55px;
-	left: 0;
-	line-height: 393.458px;
-	text-align: center;
-	z-index: 1000;
-	color: white;
-	font-size: 60px;
-	background: #161A1D;
-	opacity: 0.4;
-	height: 393.458px;
-	cursor: pointer;
+
+.exchange-industry-resource .industry-resource-down #arr{
+    display: none;
 }
-.exchange-industry-resource .industry-resource-down #arrow-right {
-	position: absolute;
-	display: inline-block;
-	top: 0;
-	width: 55px;
-	color: white;
-	right: 0;
-	line-height: 393.458px;
-	text-align: center;
-	z-index: 1000;
-	font-size: 60px;
-	background: #161A1D;
-	opacity: 0.4;
-	height: 393.458px;
-	cursor: pointer;
+.exchange-industry-resource .industry-resource-down #arrow-left{
+    position: absolute;
+    display: inline-block;
+    top: 0;
+    width: 55px;
+    left: 0;
+    line-height: 393.458px;
+    text-align: center;
+    z-index: 1000;
+    color: white;
+    font-size: 60px;
+    background: #161A1D;
+    opacity: 0.4;
+    height: 393.458px;
+    cursor: pointer;
 }
-.exchange-industry-resource .industry-resource-down ul {
-	position: absolute;
-	top: 0;
-	height: 393.458px;
-	transform: translate(0px);
-	/*transition: all 0.5s linear;*/
+.exchange-industry-resource .industry-resource-down #arrow-right{
+    position: absolute;
+    display: inline-block;
+    top: 0;
+    width: 55px;
+    color: white;
+    right: 0;
+    line-height: 393.458px;
+    text-align: center;
+    z-index: 1000;
+    font-size: 60px;
+    background: #161A1D;
+    opacity: 0.4;
+    height: 393.458px;
+    cursor: pointer;
 }
-.exchange-industry-resource .industry-resource-down ul .slide-item {
-	float: left;
-	position: relative;
-	width: 269.8px;
-	height: 393.458px;
-	background-color: white;
+.exchange-industry-resource .industry-resource-down ul{
+    position: absolute;
+    top:0;
+    height: 393.458px;
+    transform: translate(0px);
+    /*transition: all 0.5s linear;*/
 }
-.exchange-industry-resource .industry-resource-down ul .slide-item a {
-	display: inline-block;
-	width: 100%;
-	height: 450px;
+.exchange-industry-resource .industry-resource-down ul .slide-item{
+    float: left;
+    position: relative;
+    width: 269.8px;
+    height: 393.458px;
+    background-color: white;
 }
-.exchange-industry-resource .industry-resource-down ul .slide-item img {
-	float: left;
-	width: 100%;
-	height: 393.458px;
+.exchange-industry-resource .industry-resource-down ul .slide-item a{
+    display: inline-block;
+    width: 100%;
+    height: 450px;
 }
-.exchange-industry-resource .industry-resource-down ul .slide-item .bg {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
+.exchange-industry-resource .industry-resource-down ul .slide-item img{
+    float: left;
+    width: 100%;
+    height: 393.458px;
 }
-.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-bg {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background: #161A1D;
-	opacity: 0.6;
+.exchange-industry-resource .industry-resource-down ul .slide-item .bg{
+    position: absolute;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom:0 ;
 }
-.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content {
-	position: absolute;
-	top: 130px;
-	width: 100%;
-	text-align: center;
+.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-bg{
+    position: absolute;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom:0 ;
+    background: #161A1D;
+    opacity: 0.6;
 }
-.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-content-img {
-	width: 100%;
-	height: 67px;
+.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content{
+    position: absolute;
+    top: 100px;
+    width: 100%;
+    text-align: center;
 }
-.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-content-img img {
-	position: absolute;
-	top: 0;
-	left: 50%;
-	margin-left: -34px;
-	width: 68px;
-	height: 68px;
+.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-content-img{
+    width: 100%;
+    height: 67px;
+}
+.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-content-img img{
+    position: absolute;
+    top:0;
+    left: 50%;
+    margin-left: -34px;
+    width: 68px;
+    height: 68px;
 }
 .exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-boundary {
 	height: 50px;
@@ -1380,29 +1386,33 @@ lesshat-selector {
 	padding: 0 10px;
 }
 .exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-btn {
-	opacity: 0;
-	display: inline-block;
-	border: 1px solid #fff;
-	width: 120px;
-	height: 36px;
-	line-height: 36px;
-	font-size: 14px;
-	color: #fff;
-	text-decoration: none;
-	margin-top: 62px;
+    opacity: 0;
+    display: inline-block;
+    border: 1px solid #fff;
+    width: 120px;
+    height: 36px;
+    line-height: 36px;
+    font-size: 14px;
+    color: #fff;
+    text-decoration: none;
+    margin-top: 62px;
 }
-.exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-bg {
-	background-color: #00c2de;
+
+.exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-bg{
+    background-color: #00c2de;
 }
-.exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-content {
-	transition: transform 0.3s linear 0s;
-	transform: translateY(-45px);
+
+.exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-content{
+    transition: transform 0.3s linear 0s;
+    transform: translateY(-50px);
 }
-.exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-title {
-	margin-top: 15px;
+
+.exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-title{
+    margin-top: 15px;
 }
-.exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-boundary {
-	display: none;
+
+.exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-boundary{
+    display: none;
 }
 /*最有一个大模块*/
 .exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-content .bg-info {
@@ -1429,57 +1439,6 @@ lesshat-selector {
 		opacity: 1;
 	}
 }
-/*!*最底下的模块*!*/
-/*.exchange-industry-resource .industry-resource-down ul li {*/
-/*float: left;*/
-/*width: 20%;*/
-/*height: 450px;*/
-/*box-shadow: inset -1px 0px 0 #ECECEC;*/
-/*background-color: white;*/
-/*}*/
-/*.exchange-industry-resource .industry-resource-down ul li:last-child {*/
-/*border: none;*/
-/*}*/
-/*.exchange-industry-resource .industry-resource-down ul li > div:nth-child(1) {*/
-/*text-align: center;*/
-/*display: inline-block;*/
-/*padding: 48px 51px;*/
-/*background-color: black;*/
-/*}*/
-/*.exchange-industry-resource .industry-resource-down ul li > div:nth-child(1) i {*/
-/*font-size: 63px;*/
-/*color: white;*/
-/*}*/
-/*.exchange-industry-resource .industry-resource-down ul li > div:nth-child(1) p {*/
-/*font-size: 14px;*/
-/*color: white;*/
-/*}*/
-/*.exchange-industry-resource .industry-resource-down ul li > div:nth-child(1) p:nth-child(1) {*/
-/*font-size: 24px;*/
-/*}*/
-/*.exchange-industry-resource .industry-resource-down ul li > div:nth-child(2) {*/
-/*margin: 0 10px;*/
-/*text-align: center;*/
-/*}*/
-/*.exchange-industry-resource .industry-resource-down ul li > div:nth-child(2) > div:nth-child(1) {*/
-/*height: 108px;*/
-/*border-bottom: 1px solid #ECECEC;*/
-/*}*/
-/*.exchange-industry-resource .industry-resource-down ul li > div:nth-child(2) > div:nth-child(1) > p:nth-child(1) {*/
-/*padding-top: 27px;*/
-/*color: black;*/
-/*margin-bottom: 10px;*/
-/*}*/
-/*.exchange-industry-resource .industry-resource-down ul li > div:nth-child(2) > div:nth-child(2) {*/
-/*height: 108px;*/
-/*color: #FF0000;*/
-/*}*/
-/*.exchange-industry-resource .industry-resource-down ul li > div:nth-child(2) > div:nth-child(2) > p:nth-child(1) {*/
-/*padding-top: 27px;*/
-/*color: black;*/
-/*margin-bottom: 10px;*/
-/*}*/
-
 /*最有一个大模块*/
 .exchange-index .exchange-category-down {
 	height: 460px;

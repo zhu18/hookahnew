@@ -478,12 +478,13 @@ public class ESTemplate {
                                         Map<String,Object> filterMap,String... callFields){
         long totalCount = 0;
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
-        QueryStringQueryBuilder queryString = null;
+        QueryBuilder queryString = null;
         MatchAllQueryBuilder matchAll = null;
         if(filterMap != null && !filterMap.isEmpty()){
             for(Map.Entry entry : filterMap.entrySet()){
+//                    queryString = QueryBuilders.multiMatchQuery(entry.getValue(), "goodsName", "goodsNamePy");
                 queryString = QueryBuilders.queryStringQuery(String.valueOf(entry.getValue()));
-                queryString.field(String.valueOf(entry.getKey()));
+                ((QueryStringQueryBuilder)queryString).field(String.valueOf(entry.getKey()));
                 boolQueryBuilder.must(queryString);
             }
         }else{//检索全部
@@ -672,6 +673,7 @@ public class ESTemplate {
             Map<String, HighlightField> highlightFields = hit.getHighlightFields();
             //title高亮
             Map<String, Object> source = hit.getSource();
+            int i = 0;
             for(String filed : highLightFields) {
                 HighlightField titleField = highlightFields.get(filed);
                 if(titleField!=null){
@@ -681,6 +683,13 @@ public class ESTemplate {
                         name += text;
                     }
                     source.put(filed, name);
+
+                    if(filed.equals("goodsName")) {
+                        i ++;
+                    }
+                    if(filed.equals("goodsNameAll") && i == 0) {
+                        source.put("goodsName", name);
+                    }
                 }
             }
             list.add(source);
@@ -692,13 +701,18 @@ public class ESTemplate {
 
     public BoolQueryBuilder getBoolQueryBuilder(Map<String,Object> filterMap) {
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
-        QueryStringQueryBuilder queryString = null;
+        QueryBuilder queryString = null;
+//        QueryStringQueryBuilder
         MatchAllQueryBuilder matchAll = null;
         if(filterMap != null && !filterMap.isEmpty()){
             for(Map.Entry entry : filterMap.entrySet()){
                 if(entry.getValue() != null) {
-                    queryString = QueryBuilders.queryStringQuery(String.valueOf(entry.getValue()));
-                    queryString.field(String.valueOf(entry.getKey()));
+                    if(entry.getKey().equals("goodsNameAll")) {
+                        queryString = QueryBuilders.multiMatchQuery(entry.getValue(), "goodsName", "goodsNameAll");
+                    }else {
+                        queryString = QueryBuilders.queryStringQuery(String.valueOf(entry.getValue()));
+                        ((QueryStringQueryBuilder)queryString).field(String.valueOf(entry.getKey()));
+                    }
                     boolQueryBuilder.must(queryString);
                 }
             }

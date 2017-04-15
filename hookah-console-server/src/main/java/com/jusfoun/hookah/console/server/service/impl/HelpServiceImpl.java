@@ -43,7 +43,7 @@ public class HelpServiceImpl extends GenericServiceImpl<Help, String> implements
     private List<Help> buildTree(List<Help> resultNodes) {
 
         for (Help node : nodes) {
-            if (node.getParentId() == null) {//通I过循环一级节点 就可以通过递归获取二级以下节点
+            if (node.getParentId().equals("0")) {//通I过循环一级节点 就可以通过递归获取二级以下节点
                 resultNodes.add(node);//添加一级节点
                 build(node);//递归获取二级、三级、。。。节点
             }
