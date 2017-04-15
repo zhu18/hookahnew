@@ -49,7 +49,7 @@ function loadPageData(data){ //渲染页面数据
 			html += '<span>'+name+'：</span>';
 			html += '<ul>';
 			datas.forEach(function(item){
-				html += '<li><a href="javascript:selectCategory('+item.nodeId+',\''+fnName+'\',\''+item.nodeName+'\')">'+item.nodeName+'</a></li>';
+				html += '<li><a href="javascript:selectCategory(this,'+item.nodeId+',\''+fnName+'\',\''+item.nodeName+'\')">'+item.nodeName+'</a></li>';
 			});
 			html += '</ul>';
 			html += '</li>';
@@ -63,7 +63,7 @@ function loadPageData(data){ //渲染页面数据
 				html += '<span>'+item.nodeName+'：</span>';
 				html += '<ul>';
 				item.children.forEach(function(items){
-					html += '<li><a href="javascript:selectCategory('+items.nodeId+',\''+fnName+'\','+items.nodeName+')">'+items.nodeName+'</a></li>';
+					html += '<li><a href="javascript:selectCategory(this,'+items.nodeId+',\''+fnName+'\',\''+items.nodeName+'\')">'+items.nodeName+'</a></li>';
 				});
 				html += '</ul>';
 				html += '</li>';
@@ -85,17 +85,12 @@ function loadPageData(data){ //渲染页面数据
 
 }
 
-function selectCategory(id,fnName,name){
-	if(fnName == 'category'){
-		$('#J_crimbsNav').attr('category',true).append('<span class="tags">'+name+'</span>');
-
-	}else if(fnName == 'attrType'){
-		console.log(123123123);
-	}else if(fnName == 'country'){
-
-	}else if(fnName == 'province'){
-
-	}else if(fnName == 'city'){
+function selectCategory(that,id,fnName,name){
+	if($('#J_crimbsNav').attr(fnName) == fnName){
+		return;
+	}else{
+	$(that).parents('.parLi').remove();
+	$('#J_crimbsNav').attr(fnName,true).append('<span class="tags">'+name+'<a href="JavaScript:void(0)" class="fa fa-close"></a></span>');
 
 	}
 }

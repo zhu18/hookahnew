@@ -2322,3 +2322,17 @@ dl {
 .crumbs-nav {
 	font-size: 14px;
 }
+.crumbs-nav .tags{
+	padding: 0px 3px;
+	border: 1px dashed #6b6b6b;
+	margin-left: 5px;
+	-webkit-transition:all .3s linear;
+	transition:all .3s linear
+}
+.crumbs-nav .tags:hover{
+	border: 1px dashed #078cfc;
+	color:#078cfc;
+}
+.crumbs-nav .tags a{
+	margin-left:2px;
+}
