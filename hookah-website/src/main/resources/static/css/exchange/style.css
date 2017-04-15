@@ -1506,6 +1506,9 @@ lesshat-selector {
     color: black;
     background-color: #F1F1F1;
 }
+.exchange-index .exchange-category-down .category-left .category-box ul li:hover{
+    cursor: pointer;
+}
 /*-------------------------*/
 .exchange-index .exchange-category-down .category-left .resource-two {
     float: left;
@@ -1702,6 +1705,9 @@ dl {
     background-color: #F5F5F5;
     border-bottom: 1px dashed #B0B0B0;
 }
+.search .search-category .conditionCon li:last-child {
+    border-bottom: none;
+}
 .search .search-category .conditionCon li span {
     float: left;
     width: 140px;
@@ -1847,7 +1853,7 @@ dl {
     -webkit-line-clamp: 3;
     overflow: hidden;
     width: calc(100% - 20px);
-    text-align: justify;
+    height: 52px;
 }
 .search .search-order .order-list ul li .item-down {
     border-top: 1px solid #E5E5E5;
