@@ -9,7 +9,8 @@ var config = {
   },
   url: {
     loginUrl: "http://auth.hookah.app/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://console.hookah.app/login&backurl=",
-    uploadUrl: "http://static.hookah.app/upload/fileUpload"
+    uploadUrl: "http://static.hookah.app/upload/fileUpload",
+    uploadEditor:"http://static.hookah.app/upload/wangeditor",
   }
 };
 angular.element(document).ready(function () {

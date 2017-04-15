@@ -23,10 +23,8 @@
     height: 100%;
     left: 0;
     top: 0;
-    background: #000;
-    opacity: .7;
-    display: none;
-    filter: alpha(opacity=70); }
+    display: none
+}
 
 .ui-dialog-title {
     background-color: #288df0;

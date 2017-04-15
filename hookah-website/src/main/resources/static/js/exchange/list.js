@@ -14,8 +14,8 @@ function loadPageData(data){ //渲染页面数据
             html += '<li>';
             html += '<a class="item-top" href="/exchange/details?id='+list[i].goodsId+'">';
             html += '<p class="goods-img"><img src="'+list[i].goodsImg+'" alt=""/></p>';
-            html += '<p class="goods-name">'+list[i].goodsName+'</p>';
-            html += '<p class="goods-brief">'+list[i].goodsBrief+'</p>';
+            html += '<p class="goods-name" title="'+list[i].goodsName+'">'+list[i].goodsName+'</p>';
+            html += '<p class="goods-brief" title="'+list[i].goodsBrief+'">'+list[i].goodsBrief+'</p>';
             html += '</a>';
             html += '<div class="item-down">';
             html += '<span class="grid-left goods-price"><span>'+Number(list[i].shopPrice)/100+'</span>/'+(list[i].shopNumber == 1 ? '':list[i].shopNumber)+shopFormat+'</span>';
@@ -25,8 +25,71 @@ function loadPageData(data){ //渲染页面数据
         }
         $('.order-list ul').html(html);
     }
+    if(data.data2){
+		var html = '';
+		html += '<ul class="conditionCon">';
+		if(data.data2.categoryList){
+			html += '<li class="parLi">';
+			html += '<span>分类：</span>';
+			html += '<ul>';
+			data.data2.categoryList.forEach(function(item){
+				html += '<li><a href="javascript:void(0)">'+item.nodeName+'</a></li>';
+			});
+			html += '</ul>';
+			html += '</li>';
+		}
+		if(data.data2.goodsAttrTypeList){
+			html += '<li class="parLi">';
+			html += '<span>属性：</span>';
+			html += '<ul>';
+			data.data2.goodsAttrTypeList.forEach(function(item){
+				html += '<li><a href="javascript:void(0)">'+item.nodeName+'</a></li>';
+			});
+			html += '</ul>';
+			html += '</li>';
+		}
+		if(data.data2.areaCountryList){
+			html += '<li class="parLi">';
+			html += '<span>国家：</span>';
+			html += '<ul>';
+			data.data2.areaCountryList.forEach(function(item){
+				html += '<li><a href="javascript:void(0)">'+item.nodeName+'</a></li>';
+			});
+			html += '</ul>';
+			html += '</li>';
+		}
+		if(data.data2.areaProvinceList){
+			html += '<li class="parLi">';
+			html += '<span>省份：</span>';
+			html += '<ul>';
+			data.data2.areaProvinceList.forEach(function(item){
+				html += '<li><a href="javascript:void(0)">'+item.nodeName+'</a></li>';
+			});
+			html += '</ul>';
+			html += '</li>';
+		}
+		if(data.data2.areaCityList){
+			renderSelector(data.data2.areaCityList,'城市')
+		}
+		html += '</ul>';
+		$('#J_searchCategory').html(html)
+	}
+
 }
-if(prId){
+function renderSelector(datas,name){
+	html += '<li class="parLi">';
+	html += '<span>name：</span>';
+	html += '<ul>';
+	datas.forEach(function(item){
+		html += '<li><a href="javascript:void(0)">'+item.nodeName+'</a></li>';
+	});
+	html += '</ul>';
+	html += '</li>';
+}
+function selectCategory(){
+
+}
+if(prId){//渲染分类
 	var html = '';
 	html += '<div class="crumbs-nav margin-top-20 padding-bottom-10" id="J_crimbsNav">';
 	if(msId){
@@ -38,5 +101,7 @@ if(prId){
 }else{
 	$('#J_searchCategory').addClass('margin-top-20')
 }
+
+
 
 

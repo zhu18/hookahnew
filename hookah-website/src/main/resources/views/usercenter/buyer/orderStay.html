@@ -9,8 +9,8 @@ var head = {
 <link rel="stylesheet" href="/static/css/usercenter/buyer/buyer.css">
 <script src="/static/js/plugins/jedate/jquery.jedate.min.js"></script>
 <script type="text/javascript">
-    var pagePath = '/order/list';
-    var pageType = 'get';
+    var pagePath = '/order/pageData';
+    var pageType = 'post';
     var dataParm = {};
     dataParm.pageNumber = 1;
     dataParm.pageSize = 20;
@@ -65,7 +65,7 @@ var htmlPart = {
                                 2017022813474081863964
                             </td>
                             <td class="text-align-center">
-                                <img src="/static/images/xm.png" alt="">
+                                <!--<img src="/static/images/xm.png" alt="">-->
                                 <a href="" class="display-block">银行卡实名认证接口（需个人授权）</a>
                             </td>
                             <td class="text-align-center">1</td>
@@ -87,7 +87,7 @@ var htmlPart = {
     </div>
 </div>
 </div>
-<script src="/static/js/buyer/buyer.js"></script>
+<script src="/static/js/usercenter/mybuyer/orderStay.js"></script>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>

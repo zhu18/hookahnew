@@ -809,7 +809,6 @@ lesshat-selector {
     background-color: #F6F6F6;
 }
 .exchange-index .index-banner {
-    background-color: #2F3C4D;
     height: 431px;
 }
 .exchange-index .index-banner .exchange-index-banner {
@@ -999,7 +998,7 @@ lesshat-selector {
 }
 /*热门*/
 .exchange-index .exchange-hot-resource {
-    height: 487px;
+
 }
 .exchange-hot-resource .hot-resource-top {
     height: 66px;
@@ -1032,7 +1031,6 @@ lesshat-selector {
 .exchange-hot-resource .hot-resource-down {
     border-top: 1px solid #333333;
     padding-top: 10px;
-    height: 516px;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-left {
     float: left;
@@ -1059,7 +1057,7 @@ lesshat-selector {
     margin: 20px 20px 0px 20px;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-left > div:nth-child(2) span {
-    width: 74px;
+    width: 70px;
     height: 29px;
     text-align: center;
     line-height: 29px;
@@ -1223,7 +1221,7 @@ lesshat-selector {
 }
 /*行业*/
 .exchange-index .exchange-industry-resource {
-    height: 550px;
+    margin-bottom: 30px;
 }
 .exchange-industry-resource .industry-resource-top {
     height: 66px;
@@ -1255,9 +1253,18 @@ lesshat-selector {
 }
 /*行业推荐下面*/
 .exchange-industry-resource .industry-resource-down {
+    /*position: relative;*/
+    /*width: 100%;*/
+}
+.exchange-industry-resource .industry-resource-down .carousel-box{
     position: relative;
     overflow: hidden;
+    min-width: 1180px;
+    max-width: 1440px;
     height: 393.458px;
+    margin-left: auto;
+    margin-right: auto;
+    zoom: 1;
 }
 .exchange-industry-resource .industry-resource-down .screen{
     height: 393.458px;
@@ -1302,6 +1309,7 @@ lesshat-selector {
 .exchange-industry-resource .industry-resource-down ul{
     position: absolute;
     top:0;
+    height: 393.458px;
     transform: translate(0px);
     /*transition: all 0.5s linear;*/
 }
@@ -1320,7 +1328,7 @@ lesshat-selector {
 .exchange-industry-resource .industry-resource-down ul .slide-item img{
     float: left;
     width: 100%;
-    height: 450px;
+    height: 393.458px;
 }
 .exchange-industry-resource .industry-resource-down ul .slide-item .bg{
     position: absolute;
@@ -1340,7 +1348,7 @@ lesshat-selector {
 }
 .exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content{
     position: absolute;
-    top: 130px;
+    top: 100px;
     width: 100%;
     text-align: center;
 }
@@ -1401,7 +1409,7 @@ lesshat-selector {
 
 .exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-content{
     transition: transform 0.3s linear 0s;
-    transform: translateY(-45px);
+    transform: translateY(-50px);
 }
 
 .exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-title{
@@ -1435,57 +1443,6 @@ lesshat-selector {
     to {opacity: 1;}
 }
 
-/*!*最底下的模块*!*/
-/*.exchange-industry-resource .industry-resource-down ul li {*/
-    /*float: left;*/
-    /*width: 20%;*/
-    /*height: 450px;*/
-    /*box-shadow: inset -1px 0px 0 #ECECEC;*/
-    /*background-color: white;*/
-/*}*/
-/*.exchange-industry-resource .industry-resource-down ul li:last-child {*/
-    /*border: none;*/
-/*}*/
-/*.exchange-industry-resource .industry-resource-down ul li > div:nth-child(1) {*/
-    /*text-align: center;*/
-    /*display: inline-block;*/
-    /*padding: 48px 51px;*/
-    /*background-color: black;*/
-/*}*/
-/*.exchange-industry-resource .industry-resource-down ul li > div:nth-child(1) i {*/
-    /*font-size: 63px;*/
-    /*color: white;*/
-/*}*/
-/*.exchange-industry-resource .industry-resource-down ul li > div:nth-child(1) p {*/
-    /*font-size: 14px;*/
-    /*color: white;*/
-/*}*/
-/*.exchange-industry-resource .industry-resource-down ul li > div:nth-child(1) p:nth-child(1) {*/
-    /*font-size: 24px;*/
-/*}*/
-/*.exchange-industry-resource .industry-resource-down ul li > div:nth-child(2) {*/
-    /*margin: 0 10px;*/
-    /*text-align: center;*/
-/*}*/
-/*.exchange-industry-resource .industry-resource-down ul li > div:nth-child(2) > div:nth-child(1) {*/
-    /*height: 108px;*/
-    /*border-bottom: 1px solid #ECECEC;*/
-/*}*/
-/*.exchange-industry-resource .industry-resource-down ul li > div:nth-child(2) > div:nth-child(1) > p:nth-child(1) {*/
-    /*padding-top: 27px;*/
-    /*color: black;*/
-    /*margin-bottom: 10px;*/
-/*}*/
-/*.exchange-industry-resource .industry-resource-down ul li > div:nth-child(2) > div:nth-child(2) {*/
-    /*height: 108px;*/
-    /*color: #FF0000;*/
-/*}*/
-/*.exchange-industry-resource .industry-resource-down ul li > div:nth-child(2) > div:nth-child(2) > p:nth-child(1) {*/
-    /*padding-top: 27px;*/
-    /*color: black;*/
-    /*margin-bottom: 10px;*/
-/*}*/
-
 
 
 /*最有一个大模块*/
@@ -1505,6 +1462,9 @@ lesshat-selector {
     line-height: 37px;
     color: black;
     background-color: #F1F1F1;
+}
+.exchange-index .exchange-category-down .category-left .category-box ul li:hover{
+    cursor: pointer;
 }
 /*-------------------------*/
 .exchange-index .exchange-category-down .category-left .resource-two {
@@ -1702,19 +1662,22 @@ dl {
     background-color: #F5F5F5;
     border-bottom: 1px dashed #B0B0B0;
 }
+.search .search-category .conditionCon li:last-child {
+    border-bottom: none;
+}
 .search .search-category .conditionCon li span {
     float: left;
-    width: 140px;
     color: #666666;
     display: inline-block;
     background-color: #F5F5F5;
-    height: 44px;
-    padding-left: 23px;
-    line-height: 45px;
+    height: 34px;
+    line-height: 35px;
+    padding: 0 10px;
 }
 .search .search-category .conditionCon li ul {
     overflow: hidden;
     background-color: white;
+    padding: 5px 0;
 }
 .search .search-category .conditionCon li ul li {
     float: left;
@@ -1723,7 +1686,7 @@ dl {
 }
 .search .search-category .conditionCon li ul li a {
     display: inline-block;
-    padding: 16px 30px;
+    margin: 3px 10px;
 }
 .search .search-order {
     margin-top: 10px;
@@ -1847,7 +1810,7 @@ dl {
     -webkit-line-clamp: 3;
     overflow: hidden;
     width: calc(100% - 20px);
-    text-align: justify;
+    height: 52px;
 }
 .search .search-order .order-list ul li .item-down {
     border-top: 1px solid #E5E5E5;
@@ -2253,7 +2216,6 @@ dl {
 /*商品详情-end*/
 /*搜索结果页-start*/
 .exchange-list {
-    background: #f5f6f6;
 }
 .exchange-search .order-list ul {
     list-style: none;

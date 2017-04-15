@@ -372,12 +372,19 @@
   background: #fff;
   border: 1px solid #ccc;
   padding: 10px;
-  top: 29px;
+  top: 30px;
   left: 0px;
   display: none;
-  z-index: 1;
+  z-index: 19999;
 }
-
+.userInfos .userInfos-box .spacer{
+  position: absolute;
+  top:-2px;
+  left: 0px;
+  height: 5px;
+  width: 115px;
+  background: #fff;
+}
 .userInfos .userInfos-box a {
   color: #333;
   float: right;

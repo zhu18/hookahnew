@@ -10,7 +10,6 @@ import com.jusfoun.hookah.core.domain.vo.CartVo;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
-import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.OrderHelper;
 import com.jusfoun.hookah.core.utils.ReturnData;
@@ -23,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -95,7 +95,12 @@ public class OrderInfoController extends BaseController {
             goodsAmount += format.getPrice() * goodsNumber;  //商品单价 * 套餐内数量 * 购买套餐数量
 
             CartVo vo = new CartVo();
+            vo.setRecId("-1");
             vo.setGoodsNumber(goodsNumber);
+            vo.setGoodsName(g.getGoodsName());
+            vo.setGoodsFormat(formatId);
+            vo.setFormatNumber((long)format.getNumber());
+            vo.setGoodsPrice(format.getPrice());
             vo.setFormat(format);
             vo.setGoods(g);
             list.add(vo);
@@ -117,28 +122,24 @@ public class OrderInfoController extends BaseController {
     /**
      * 分页查询
      *
-     * @param pageNum
+     * @param pageNumber
      * @param pageSize
      * @param payStatus   支付状态
      * @param commentFlag 是否评论
-     * @param startDateStr
-     * @param endDateStr     结束日期
+     * @param startDate
+     * @param endDate     结束日期
      * @param domainName  店铺名 模糊查询
      * @return
      */
     @RequestMapping(value = "/order/pageData", method = RequestMethod.POST)
-    public ReturnData findByPage(Integer pageNum, Integer pageSize, Integer payStatus, Integer commentFlag, String startDateStr, String endDateStr, String domainName, Model model) {
+    @ResponseBody
+    public ReturnData findByPage(Integer pageNumber, Integer pageSize, Integer payStatus, Integer commentFlag, Date startDate, Date endDate, String domainName, Model model) {
         try {
-            if (pageNum==null) pageNum = Integer.parseInt(PAGE_NUM);
+            if (pageNumber==null) pageNumber = Integer.parseInt(PAGE_NUM);
             if (pageSize==null) pageSize = Integer.parseInt(PAGE_SIZE);
-            Date startDate = null,endDate = null;
-            if(StringUtils.isNotBlank(startDateStr)) {
-                startDate = DateUtils.getDate(startDateStr, "yyyy-MM-dd HH:mm:ss");
-            }
-            if(StringUtils.isNotBlank(endDateStr)) {
-                endDate = DateUtils.getDate(endDateStr, "yyyy-MM-dd HH:mm:ss");
-            }
-            Pagination<OrderInfoVo> pOrders = orderInfoService.findByPage(this.getCurrentUser().getUserId(),pageNum,pageSize,payStatus,commentFlag,startDate,endDate,domainName);
+
+            Pagination<OrderInfoVo> pOrders = orderInfoService.findByPage(this.getCurrentUser().getUserId(),pageNumber,pageSize,payStatus,commentFlag,startDate,endDate,domainName);
+            logger.info(JsonUtils.toJson(pOrders));
             return ReturnData.success(pOrders);
         } catch (Exception e) {
             logger.error("分页查询订单错误", e);
@@ -153,6 +154,7 @@ public class OrderInfoController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/order/update", method = RequestMethod.POST)
+    @ResponseBody
     public ReturnData update(OrderInfoVo orderInfo) {
         if (StringUtils.isBlank(orderInfo.getOrderId())) {
             return ReturnData.invalidParameters("参数orderId不可为空");
@@ -169,16 +171,24 @@ public class OrderInfoController extends BaseController {
 
     /**
      * 订单结算
-     *
      * @param orderinfo
-     * @param cartIds
+     * @param cartIdArray
+     * @param goodsId
+     * @param formatId
+     * @param goodsNumber
+     * @param model
      * @return
      */
     @RequestMapping(value = "/order/createOrder", method = RequestMethod.POST)
-    public String createOrder(OrderInfo orderinfo, String[] cartIds,Model model) {
+    public String createOrder(OrderInfo orderinfo, String[] cartIdArray,String goodsId, Integer formatId,Long goodsNumber,Model model) {
         try {
             init(orderinfo);
-            orderinfo = orderInfoService.insert(orderinfo, cartIds);
+            if(cartIdArray[0].equals("-1")){
+                orderinfo = orderInfoService.insert(orderinfo, goodsId, formatId,goodsNumber);
+            }else{
+                orderinfo = orderInfoService.insert(orderinfo, cartIdArray);
+            }
+
             model.addAttribute("payments",initPaymentList());
             model.addAttribute("orderInfo",orderinfo);
             logger.info("订单信息:{}", JsonUtils.toJson(orderinfo));
