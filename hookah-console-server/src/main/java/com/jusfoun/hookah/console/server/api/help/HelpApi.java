@@ -8,6 +8,8 @@ import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.HelpService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +19,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -32,35 +35,31 @@ public class HelpApi {
     HelpService helpService;
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public ReturnData getListInPage(String currentPage, String pageSize, HttpServletRequest request) {
-        Pagination<Help> page = new Pagination<>();
-        try {
-            List<Condition> filters = new ArrayList();
-            List<OrderBy> orderBys = new ArrayList();
-            //参数校验
-            int pageNumberNew = HookahConstants.PAGE_NUM;
-
-            if (StringUtils.isNotBlank(currentPage)) {
-                pageNumberNew = Integer.parseInt(currentPage);
-            }
-            int pageSizeNew = HookahConstants.PAGE_SIZE;
-            if (StringUtils.isNotBlank(pageSize)) {
-                pageSizeNew = Integer.parseInt(pageSize);
-            }
-            page = helpService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return ReturnData.success(page);
+    public Object all(HttpServletRequest request) {
+        List<Help> helpTreeList = helpService.selectTree();
+        return helpTreeList;
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ReturnData add(Help help) {
 //        help.setCreatorId();
+        Session session = SecurityUtils.getSubject().getSession();
+        HashMap<String,String> user = (HashMap<String,String>)session.getAttribute("user");
+        help.setCreatorId(user.get("userId"));
+        help.setCreatorName(user.get("userName"));
         help.setAddTime(new Date());
         Help result = helpService.insert(help);
         return ReturnData.success(result);
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    public ReturnData delete(@PathVariable("id") String helpId) {
+        try {
+            helpService.delete(helpId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ReturnData.success();
     }
 
     @RequestMapping(value = "/category/add", method = RequestMethod.POST)

@@ -9,8 +9,7 @@ class SysController {
       $scope.title = "新增字典子项";
     } else if ($state.$current.name == "sys.dict.edit_child") {
       $scope.title = "修改字典子项";
-    }
-    ;
+    };
     $scope.expanding_property = "name";
     $scope.col_defs = [
       {
