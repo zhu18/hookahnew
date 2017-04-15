@@ -23,16 +23,16 @@
         <label class="col-sm-1 control-label" for="parentId">所属分类<span class="must">*</span></label>
         <div class="col-sm-4">
           <select class="form-control" id="parentId" name="parentId">
-            <option data-ng-repeat="item in pagination.store" value="{{item.helpId}}">{{item.helpTitle}}</option>
+            <option data-ng-repeat="item in pagination.store" value="{{item.helpId}}">{{item.name}}</option>
           </select>
         </div>
         <div class="col-sm-4">
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-1 control-label" for="helpTitle">名称<span class="must">*</span></label>
+        <label class="col-sm-1 control-label" for="name">名称<span class="must">*</span></label>
         <div class="col-sm-4">
-          <input type="text" id="helpTitle" name="helpTitle" class="form-control" value=""/>
+          <input type="text" id="name" name="name" class="form-control" value=""/>
         </div>
         <div class="col-sm-4">
           <label class="control-label">使用中文</label>
