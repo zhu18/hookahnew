@@ -21,6 +21,11 @@ public class ReturnData<T> implements Serializable {
     private T data;
 
     /**
+     * @Fields data : 返回数据主体内容2
+     */
+    private T data2;
+
+    /**
      * @Fields code : 返回结果代码
      */
     private String code;
@@ -120,5 +125,13 @@ public class ReturnData<T> implements Serializable {
     }
     public static ReturnData invalidParameters(String paramName){
     	return new ReturnData(InvalidParameters,paramName+"is null or illegal format!",null);
+    }
+
+    public T getData2() {
+        return data2;
+    }
+
+    public void setData2(T data2) {
+        this.data2 = data2;
     }
 }
