@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.console.server.common.endpoint;
+package com.jusfoun.hookah.webiste.common.endpoint;
 
 /**
  * @author:jsshao
