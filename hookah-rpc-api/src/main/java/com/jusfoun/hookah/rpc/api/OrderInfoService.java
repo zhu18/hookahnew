@@ -35,6 +35,6 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
      */
     public PayVo getPayParam(String orderId);
 
-    public Pagination<OrderInfoVo> findByPage(Integer pageNum, Integer pageSize, Integer payStatus, Integer commentFlag, Date startDate, Date endDate, String domainName) throws HookahException;
+    public Pagination<OrderInfoVo> findByPage(String userId,Integer pageNum, Integer pageSize, Integer payStatus, Integer commentFlag, Date startDate, Date endDate, String domainName) throws HookahException;
 
 }

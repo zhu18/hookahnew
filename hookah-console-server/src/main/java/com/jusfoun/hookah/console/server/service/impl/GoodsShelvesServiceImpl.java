@@ -13,6 +13,7 @@ import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.GoodsShelvesService;
 import com.jusfoun.hookah.rpc.api.MgGoodsShelvesGoodsService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -76,8 +77,37 @@ public class GoodsShelvesServiceImpl extends GenericServiceImpl<GoodsShelves, St
     }
 
     @Override
-    public GoodsShelvesVo findByShevlesGoodsVoId(String shevlesGoodsVoId) {
-        return null;
+    public ReturnData<GoodsShelvesVo> findByShevlesGoodsVoId(String shevlesGoodsVoId) {
+        ReturnData<GoodsShelvesVo> returnData = new ReturnData<GoodsShelvesVo>();
+        returnData.setCode(ExceptionConst.Success);
+
+        if(StringUtils.isBlank(shevlesGoodsVoId)){
+            returnData.setCode(ExceptionConst.InvalidParameters);
+            returnData.setMessage(ExceptionConst.get(ExceptionConst.InvalidParameters));
+            return returnData;
+        }
+
+        GoodsShelves goodsShelves = super.selectById(shevlesGoodsVoId);
+        if(Objects.nonNull(goodsShelves)){
+            //获取货架商品集合注入到GoodsShelvesVo
+            GoodsShelvesVo goodsShelvesVo = new GoodsShelvesVo();
+            BeanUtils.copyProperties(goodsShelves, goodsShelvesVo);
+
+            MgShelvesGoods mgShelvesGoods = mgGoodsShelvesGoodsService.selectById(shevlesGoodsVoId);
+            if(Objects.nonNull(mgShelvesGoods)){
+                List<String> sgIds = mgShelvesGoods.getGoodsIdList();
+                if(Objects.nonNull(sgIds) && sgIds.size() != 0 ){
+                    //商品Id集对应的商品集
+                    List<Condition> goodsfilters = new ArrayList<Condition>();
+                    goodsfilters.add(Condition.in("goodsId",sgIds.toArray()));
+                    List<Goods> goodsList = goodsService.selectList(goodsfilters);
+                    goodsShelvesVo.setGoods(goodsList);
+                }
+            }
+            returnData.setData(goodsShelvesVo);
+        }
+        returnData.setMessage(ExceptionConst.get(ExceptionConst.InvalidParameters));
+        return returnData;
     }
 
     @Override
