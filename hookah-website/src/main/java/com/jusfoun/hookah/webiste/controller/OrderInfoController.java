@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -131,6 +132,7 @@ public class OrderInfoController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/order/pageData", method = RequestMethod.POST)
+    @ResponseBody
     public ReturnData findByPage(Integer pageNumber, Integer pageSize, Integer payStatus, Integer commentFlag, Date startDate, Date endDate, String domainName, Model model) {
         try {
             if (pageNumber==null) pageNumber = Integer.parseInt(PAGE_NUM);
@@ -152,6 +154,7 @@ public class OrderInfoController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/order/update", method = RequestMethod.POST)
+    @ResponseBody
     public ReturnData update(OrderInfoVo orderInfo) {
         if (StringUtils.isBlank(orderInfo.getOrderId())) {
             return ReturnData.invalidParameters("参数orderId不可为空");
