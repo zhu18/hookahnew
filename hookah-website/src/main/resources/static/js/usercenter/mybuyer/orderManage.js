@@ -6,7 +6,6 @@ function loadPageData(data){
             html += '<tr class="content border-bottom">';
             html += '<td class="text-align-center">list[i].mgOrderGoodsList.orderId</td>';
             html += '<td class="text-align-center">';
-            html += '<img src=’+list.mgOrderGoodsList.goodsImg+‘alt="">';
             html += '<a href="" class="display-block">list[i].mgOrderGoodsList.goodsName</a>';
             html += '</td>';
             html += '<td class="text-align-center">list[i].mgOrderGoodsList.goodsNumber</td>';
