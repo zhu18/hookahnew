@@ -120,8 +120,8 @@ public class OrderInfoController extends BaseController {
      * @param pageSize
      * @param payStatus   支付状态
      * @param commentFlag 是否评论
-     * @param startDate
-     * @param endDate     结束日期
+     * @param startDateStr
+     * @param endDateStr     结束日期
      * @param domainName  店铺名 模糊查询
      * @return
      */
