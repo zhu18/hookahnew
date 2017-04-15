@@ -14,7 +14,7 @@ function loadPageData(data){
             html+= '<td class="text-align-center">1</td>';
             html+= '<td class="text-align-center">次</td>';
             html+= '<td class="text-align-right">￥&nbsp;200.00</td>';
-            html+= '<td>2017-02-28&nbsp;&nbsp;19:20:20</td>';
+            html+= '<td>'+format(list[i].addTime)+'</td>';
             html+= '<td>未付款</td>';
             html+= '<td class="text-align-center">';
             html+= '<a href="" class="display-inline-block goPay btn btn-full-orange">去支付</a>';
