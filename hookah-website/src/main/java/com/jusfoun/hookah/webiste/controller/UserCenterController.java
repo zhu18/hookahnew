@@ -4,6 +4,7 @@ import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.UserDetail;
 import com.jusfoun.hookah.rpc.api.*;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -81,17 +82,19 @@ public class UserCenterController {
 
     /**
      * 安全设置
+     *
      * @param model
      * @return
      */
     @RequestMapping(value = "/safeSet", method = RequestMethod.GET)
     public String safeSet(Model model) {
-        HashMap<String, String> o = (HashMap<String, String>) SecurityUtils.getSubject().getPrincipal();
+        Session session = SecurityUtils.getSubject().getSession();
+        HashMap<String, String> o = (HashMap<String, String>) session.getAttribute("user");
         String userId = o.get("userId");
         User user = userService.selectById(userId);
         UserDetail userDetail = userDetailService.selectById(userId);
-        model.addAttribute("userCur",user);
-        model.addAttribute("userDetail",userDetail);
+        model.addAttribute("userCur", user);
+        model.addAttribute("userDetail", userDetail);
         return "usercenter/userInfo/safeSet";
     }
 
