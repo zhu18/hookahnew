@@ -107,6 +107,15 @@ $(document).ready(function () {
 	$('.search-sug').hover(function () {
 		$(this).toggleClass('active');
 	});
+	$('img').each(function(){
+		var img = $(this);
+		img.on('load',function(){
+			console.log('111111---------'+img.attr('src'))
+		})
+		img.on('error',function(){
+			img.attr('src','/static/images/timg.jpeg')
+		})
+	})
 });
 function getSearchSug(sugText) {
 	$.ajax({
