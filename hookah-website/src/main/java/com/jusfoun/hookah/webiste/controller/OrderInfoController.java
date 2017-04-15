@@ -47,10 +47,6 @@ public class OrderInfoController extends BaseController {
     @Autowired
     private GoodsService goodsService;
 
-    @RequestMapping(value = "/order", method = RequestMethod.GET)
-    public String index() {
-        return "redirect:/order/list";
-    }
 
     @RequestMapping(value = "/order/orderInfo", method = RequestMethod.POST)
     public String orderInfo(String[] cartIds,Model model) {
@@ -76,7 +72,7 @@ public class OrderInfoController extends BaseController {
             }
             model.addAttribute("orderAmount",goodsAmount);
             model.addAttribute("cartOrder",carts);
-            return "order/orderInfo";
+            return "/order/orderInfo";
         }catch (Exception e){
             logger.info(e.getMessage());
             return "/error/500";
@@ -105,12 +101,17 @@ public class OrderInfoController extends BaseController {
             list.add(vo);
             model.addAttribute("orderAmount",goodsAmount);
             model.addAttribute("cartOrder",list);
-            return "order/orderInfo";
+            return "/order/orderInfo";
         }catch (Exception e){
             logger.info(e.getMessage());
             return "/error/500";
         }
 
+    }
+
+    @RequestMapping(value = "/order/list", method = RequestMethod.GET)
+    public String list(Model model) {
+            return "/usercenter/buyer/orderManagement";
     }
 
     /**
@@ -125,8 +126,8 @@ public class OrderInfoController extends BaseController {
      * @param domainName  店铺名 模糊查询
      * @return
      */
-    @RequestMapping(value = "/order/list", method = RequestMethod.GET)
-    public String findByPage(Integer pageNum, Integer pageSize, Integer payStatus, Integer commentFlag, String startDateStr, String endDateStr, String domainName, Model model) {
+    @RequestMapping(value = "/order/pageData", method = RequestMethod.POST)
+    public ReturnData findByPage(Integer pageNum, Integer pageSize, Integer payStatus, Integer commentFlag, String startDateStr, String endDateStr, String domainName, Model model) {
         try {
             if (pageNum==null) pageNum = Integer.parseInt(PAGE_NUM);
             if (pageSize==null) pageSize = Integer.parseInt(PAGE_SIZE);
@@ -138,14 +139,11 @@ public class OrderInfoController extends BaseController {
                 endDate = DateUtils.getDate(endDateStr, "yyyy-MM-dd HH:mm:ss");
             }
             Pagination<OrderInfoVo> pOrders = orderInfoService.findByPage(this.getCurrentUser().getUserId(),pageNum,pageSize,payStatus,commentFlag,startDate,endDate,domainName);
-            model.addAttribute("orderList", pOrders);
-            return "/usercenter/buyer/orderManagement";
+            return ReturnData.success(pOrders);
         } catch (Exception e) {
             logger.error("分页查询订单错误", e);
-            ReturnData.error("系统异常");
+            return ReturnData.error("分页查询错误");
         }
-
-        return "/error/500";
     }
 
     /**
