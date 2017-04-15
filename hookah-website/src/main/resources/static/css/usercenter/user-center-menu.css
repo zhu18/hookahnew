@@ -20,7 +20,7 @@
     font-weight:bold;
 
 }
-.left-bar ul:nth-child(2) li:nth-last-child(1){
+.left-bar ul:nth-child(2) {
     border-bottom:none;
 }
 .left-bar .active{

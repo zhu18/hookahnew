@@ -89,9 +89,9 @@
     color: #fff;
     text-align: center;
     font:14px/34px "microsoft yahei";
-    background-color: #00b1ff;
+    background-color: gray;
     border-radius: 5px;
-    cursor: pointer;
+    cursor: not-allowed;
 }
 /*协议信息结束*/
 /*认证信息开始*/
