@@ -9,7 +9,6 @@ function loadPageData(data){
             html+= '<tr class="content border-bottom">';
             html+= '<td class="text-align-center">'+ 2017022813474081863964 +'</td>';
             html+= '<td class="text-align-center">';
-            html+= '<img src='+"/static/images/xm.png"+' alt="">';
             html+= '<a href="" class="display-block">银行卡实名认证接口（需个人授权）</a>';
             html+= '</td>';
             html+= '<td class="text-align-center">1</td>';
@@ -53,3 +52,4 @@ $(".searchQuery .search").on("click",function(){
     dataParm.endDate = $("#endDate").val();
     goPage(1);
 });
+
