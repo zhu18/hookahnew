@@ -2,8 +2,10 @@ $(document).ready(function () {
 	var pathname = window.location.pathname
 	if (pathname.indexOf('/exchange') >= 0) {
 		$('#exchange_menu').show();
+		$(".header-bottom-bar ul li").css("width","14.28%");
 	} else {
 		$('#exchange_menu').hide();
+        $(".header-bottom-bar ul li").css("width","16.61%");
 	}
 
 	$('.header-bottom-bar ul li').each(function () {
