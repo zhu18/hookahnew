@@ -1683,6 +1683,10 @@ dl {
 	border-bottom: none;
 	background-color: white;
 }
+.search .search-category .conditionCon li ul li.op_i.active a{
+	color: #ccc;
+	cursor: no-drop;
+}
 .search .search-category .conditionCon li ul li.parLi {
 	float: none;
 }
