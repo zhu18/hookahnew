@@ -85,7 +85,10 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             case "onSale":
                 //TODO 放入审核mq
                 break;
-
+            case "offSale":
+                obj.setIsOnsale((byte) 0);
+                goodsMapper.updateByPrimaryKeySelective(obj);
+                break;
         }
     }
 
