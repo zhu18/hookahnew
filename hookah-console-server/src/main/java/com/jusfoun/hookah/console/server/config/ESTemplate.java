@@ -2,6 +2,7 @@ package com.jusfoun.hookah.console.server.config;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jusfoun.hookah.core.common.Pagination;
+import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.es.EsAgg;
 import com.jusfoun.hookah.core.domain.es.EsAggResult;
 import org.apache.commons.collections.map.HashedMap;
@@ -97,8 +98,8 @@ public class ESTemplate {
     public boolean putMapping(TransportClient client,String indexName,String type,Map<String,Map<String,String>> mappings) throws IOException{
         XContentBuilder mappingSource = XContentFactory.jsonBuilder()
                 .startObject().startObject(type)
-                .startObject("_all").field("analyzer", "ik_max_word")
-                .field("search_analyzer", "ik_max_word")
+                .startObject("_all").field("analyzer", HookahConstants.Analyzer.LC_INDEX.val)
+                .field("search_analyzer", HookahConstants.Analyzer.LC_SEARCH.val)
                 .field("term_vector", "no").endObject()
                 //----初始
                 .startObject("properties");
@@ -683,13 +684,6 @@ public class ESTemplate {
                         name += text;
                     }
                     source.put(filed, name);
-
-                    if(filed.equals("goodsName")) {
-                        i ++;
-                    }
-                    if(filed.equals("goodsNameAll") && i == 0) {
-                        source.put("goodsName", name);
-                    }
                 }
             }
             list.add(source);
@@ -707,12 +701,13 @@ public class ESTemplate {
         if(filterMap != null && !filterMap.isEmpty()){
             for(Map.Entry entry : filterMap.entrySet()){
                 if(entry.getValue() != null) {
-                    if(entry.getKey().equals("goodsNameAll")) {
-                        queryString = QueryBuilders.multiMatchQuery(entry.getValue(), "goodsName", "goodsNameAll");
-                    }else {
-                        queryString = QueryBuilders.queryStringQuery(String.valueOf(entry.getValue()));
-                        ((QueryStringQueryBuilder)queryString).field(String.valueOf(entry.getKey()));
-                    }
+//                    if(entry.getKey().equals("goodsNameAll")) {
+//                        queryString = QueryBuilders.multiMatchQuery(entry.getValue(), "goodsName", "goodsNameAll");
+//                    }else {
+//                    queryString = QueryBuilders.queryStringQuery(String.valueOf(entry.getValue()));
+//                    ((QueryStringQueryBuilder)queryString).field(String.valueOf(entry.getKey()));
+//                    }
+                    queryString = QueryBuilders.matchPhraseQuery(String.valueOf(entry.getKey()), entry.getValue());
                     boolQueryBuilder.must(queryString);
                 }
             }

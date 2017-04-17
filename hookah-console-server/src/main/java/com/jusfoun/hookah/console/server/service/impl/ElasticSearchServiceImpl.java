@@ -8,8 +8,10 @@ import com.jusfoun.hookah.console.server.util.AnnotationUtil;
 import com.jusfoun.hookah.console.server.util.DictionaryUtil;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.dao.GoodsMapper;
 import com.jusfoun.hookah.core.domain.Category;
+import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.GoodsAttrType;
 import com.jusfoun.hookah.core.domain.Region;
 import com.jusfoun.hookah.core.domain.es.*;
@@ -19,6 +21,7 @@ import com.jusfoun.hookah.core.domain.vo.EsGoodsVo;
 import com.jusfoun.hookah.core.domain.vo.EsTreeVo;
 import com.jusfoun.hookah.core.domain.vo.EsTypesVo;
 import com.jusfoun.hookah.core.exception.HookahException;
+import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.ShopUtils;
 import com.jusfoun.hookah.rpc.api.CategoryService;
 import com.jusfoun.hookah.rpc.api.ElasticSearchService;
@@ -27,6 +30,7 @@ import com.jusfoun.hookah.rpc.api.MgGoodsService;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.client.transport.TransportClient;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -133,7 +137,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
                     input.add(ShopUtils.getFullSpell(goods.getGoodsName()));
                     input.add(ShopUtils.getFirstSpell(goods.getGoodsName()));
                 }
-                goods.setSuggest(new Suggest(input));
+                goods.setSuggest(goods.getGoodsName());
                 //获取商品属性
                 if(mgGoods != null) {
                     List<MgCategoryAttrType.AttrTypeBean> list1 = mgGoods.getAttrTypeList();
@@ -183,8 +187,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             map = AnnotationUtil.convert2Map(vo.getEsGoods());
         }
         esTemplate.search(esTransportClient.getObject(), Constants.GOODS_INDEX,
-                Constants.GOODS_TYPE, map, pagination, orderField, order,
-                "goodsNameAll", "goodsName");
+                Constants.GOODS_TYPE, map, pagination, orderField, order, "goodsName");
         return pagination;
     }
 
@@ -219,7 +222,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         List<EsTreeVo<Region>> areaProvinceList = new ArrayList<>();
         List<EsTreeVo<Region>> areaCityList = new ArrayList<>();
         //添加需要聚合的字段
-        if(goods != null && StringUtils.isNotBlank(goods.getCatIds())) {
+        if(goods != null && StringUtils.isNotBlank(goods.getCatIds()) && goods.getCatIds().length() != 9) {
             listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_CATEGORY, HookahConstants.GOODS_AGG_CATEGORY_FIELD));
         }
         listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_ATTR, HookahConstants.GOODS_AGG_ATTR_FIELD));
@@ -336,6 +339,18 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
                         region.getLel(), region.getPid() + "", result.getCnt());
                 regionList.add(regionVo);
             }
+        }
+    }
+
+    /**
+     * 当goodsb表数据有更新时，同步更新es
+     * @param goodsId
+     */
+    @RabbitListener(queues = RabbitmqQueue.CONTRACE_GOODS_ID)
+    public void operaEs(String goodsId) {
+        Goods goods = goodsMapper.selectByPrimaryKey(goodsId);
+        if(goods != null && goods.getOnsaleStartDate().before(DateUtils.now())) {
+
         }
     }
 }

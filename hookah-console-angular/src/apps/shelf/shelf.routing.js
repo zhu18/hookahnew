@@ -14,7 +14,17 @@ export default function shelfRouting($stateProvider, $urlRouterProvider) {
     })
     .state('shelf.add', {
       url: '/shelf/add',
-      template: require('./list.html'),
+      template: require('./add.html'),
+      controller: ShelfController,
+    })
+    .state('shelf.update', {
+      url: '/shelf/update',
+      template: require('./update.html'),
+      controller: ShelfController,
+    })
+    .state('shelf.manageGoods', {
+      url: '/shelf/manageGoods',
+      template: require('./manageGoods.html'),
       controller: ShelfController,
     })
     .state('shelf.category', {

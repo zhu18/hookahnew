@@ -8,6 +8,7 @@ import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.rpc.api.GoodsCheckService;
 import com.jusfoun.hookah.rpc.api.GoodsService;
+import com.jusfoun.hookah.rpc.api.MqSenderService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -29,6 +30,9 @@ public class GoodsCheckServiceImpl extends GenericServiceImpl<GoodsCheck, String
     @Resource
     GoodsService goodsService;
 
+    @Resource
+    MqSenderService mqSenderService;
+
     @Override
     public void insertRecord(GoodsCheck goodsCheck) throws HookahException {
         if (goodsCheck == null)
@@ -44,6 +48,7 @@ public class GoodsCheckServiceImpl extends GenericServiceImpl<GoodsCheck, String
         if(goodsCheck.getCheckStatus() == 1){
             goods.setCheckStatus(Byte.parseByte(HookahConstants.CheckStatus.audit_success.getCode()));
             goodsService.updateByIdSelective(goods);
+            mqSenderService.sendDirect(goodsCheck.getGoodsId());
         }else if(goodsCheck.getCheckStatus() == 2){
             goods.setCheckStatus(Byte.parseByte(HookahConstants.CheckStatus.audit_fail.getCode()));
             goodsService.updateByIdSelective(goods);

@@ -30,7 +30,7 @@ public class ESConfig implements CommandLineRunner {
         logger.info("===========初始化ES-begin=============");
         //如果索引不存在创建索引并导入数据
         try {
-            String goodsKeyField = elasticSearchService.initEs(EsGoods.class, Analyzer.IK_MAX_WORD.val,
+            String goodsKeyField = elasticSearchService.initEs(EsGoods.class, Analyzer.LC_INDEX.val,
                     Constants.GOODS_INDEX, Constants.GOODS_TYPE, Constants.GOODS_SHARDS, Constants.GOODS_REPLICAS);
             //如果能获取到主键字段说明是新创建的type，导入数据
             elasticSearchService.bulkInsert(goodsKeyField, Constants.GOODS_INDEX, Constants.GOODS_TYPE);
