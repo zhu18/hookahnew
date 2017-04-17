@@ -512,3 +512,8 @@
            -webkit-transform: scaleY(1.0);
        }
 }
+.noData{
+    text-align: center;
+    font-size: 16px;
+    line-height: 50px;
+}

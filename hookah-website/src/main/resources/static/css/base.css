@@ -236,6 +236,10 @@
   background-color: #3e567c;
 }
 
+.header-centerbar .shopping-cart-down .shopping-cart-down-content .content-down .content-down-money {
+  /*width: 80px;*/
+}
+
 .header-centerbar .shopping-cart-down .shopping-cart-down-content .content-down .content-down-name {
   height: 58px;
   width: 120px;
