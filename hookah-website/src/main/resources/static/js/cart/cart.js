@@ -131,10 +131,7 @@ function kkdown(that, e) {
 function delThis(id) {
 	$.ajax({
 		type: "get",
-		url: '/cart/delete',
-		data: {
-			id: id
-		},
+		url: '/cart/delete/'+id,
 		success: function (msg) {
 			if (msg.code == 1) {
 				$.alert('删除成功');
