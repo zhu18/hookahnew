@@ -66,7 +66,6 @@ class SysController {
     };
     $scope.delete = function (data) {
       if (data.children.length == 0) {
-        console.log(data);
         var modalInstance = $rootScope.openConfirmDialogModal("确定要删除" + '<span style="font-weight: bold;color: #6b3100">' + data.name + '</span>' + "字典项吗？");
         modalInstance.result.then(function () {
           var promise = $http({
@@ -93,7 +92,6 @@ class SysController {
 
     };
     $scope.save = function () {
-      console.log($("#dictId").val());
       if ($("#dictId").val() != null && $("#dictId").val() != '') {
         var promise = $http({
           method: 'POST',
@@ -102,7 +100,6 @@ class SysController {
         });
         promise.then(function (res, status, config, headers) {
           $rootScope.loadingState = false;
-          console.log(res.data);
           if (res.data.code == 1) {
             growl.addSuccessMessage("保存成功。。。");
           } else {

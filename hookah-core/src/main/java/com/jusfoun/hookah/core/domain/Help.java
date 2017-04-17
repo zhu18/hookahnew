@@ -31,10 +31,30 @@ public class Help extends GenericModel {
 
     private String parentId;
 
+    private String parentName;
+
     private boolean isLeaf;
 
     @Transient
     private List<Help> children;
+
+    private String helpUrl;
+
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
+
+    public String getHelpUrl() {
+        return helpUrl;
+    }
+
+    public void setHelpUrl(String helpUrl) {
+        this.helpUrl = helpUrl;
+    }
 
     public List<Help> getChildren() {
         return children;
