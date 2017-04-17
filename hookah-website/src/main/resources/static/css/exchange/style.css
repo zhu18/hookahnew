@@ -1191,6 +1191,7 @@ lesshat-selector {
 }
 .exchange-hot-resource .hot-resource-down .hot-down-rank > ul .active {
 	height: 102px;
+	overflow: hidden;
 	background-color: #E6E6E6;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-rank > ul .active div {
