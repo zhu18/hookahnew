@@ -18,6 +18,11 @@ export default function helpRouting($stateProvider, $urlRouterProvider) {
       template: require('./add.html'),
       controller: HelpController,
     })
+    .state('help.edit', {
+      url: '/help/edit',
+      template: require('./add.html'),
+      controller: HelpController,
+    })
     .state('help.category', {
       template: '<div ui-view></div>',
       showSubMenu: true
@@ -29,6 +34,11 @@ export default function helpRouting($stateProvider, $urlRouterProvider) {
     })
     .state('help.category.add', {
       url: '/help/category/add',
+      template: require('./help_category_add.html'),
+      controller: HelpCategoryController,
+    })
+    .state('help.category.edit', {
+      url: '/help/category/edit',
       template: require('./help_category_add.html'),
       controller: HelpCategoryController,
     })

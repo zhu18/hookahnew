@@ -42,11 +42,11 @@ public class HelpApi {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ReturnData add(Help help) {
-//        help.setCreatorId();
         Session session = SecurityUtils.getSubject().getSession();
-        HashMap<String,String> user = (HashMap<String,String>)session.getAttribute("user");
+        HashMap<String, String> user = (HashMap<String, String>) session.getAttribute("user");
         help.setCreatorId(user.get("userId"));
         help.setCreatorName(user.get("userName"));
+        help.setHelpUrl("/help/" + help.getHelpId() + ".html");
         help.setAddTime(new Date());
         Help result = helpService.insert(help);
         return ReturnData.success(result);
@@ -64,7 +64,10 @@ public class HelpApi {
 
     @RequestMapping(value = "/category/add", method = RequestMethod.POST)
     public ReturnData addCategory(Help help) {
-//        help.setCreatorId();
+        Session session = SecurityUtils.getSubject().getSession();
+        HashMap<String, String> curUser = (HashMap<String, String>) session.getAttribute("user");
+        help.setCreatorId(curUser.get("userId"));
+        help.setCreatorName(curUser.get("userName"));
         help.setAddTime(new Date());
         help.setParentId("0");
         Help result = helpService.insert(help);

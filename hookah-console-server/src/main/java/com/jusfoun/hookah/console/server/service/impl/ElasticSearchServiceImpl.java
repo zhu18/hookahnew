@@ -133,7 +133,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
                     input.add(ShopUtils.getFullSpell(goods.getGoodsName()));
                     input.add(ShopUtils.getFirstSpell(goods.getGoodsName()));
                 }
-                goods.setSuggest(new Suggest(input));
+                goods.setSuggest(goods.getGoodsName());
                 //获取商品属性
                 if(mgGoods != null) {
                     List<MgCategoryAttrType.AttrTypeBean> list1 = mgGoods.getAttrTypeList();
@@ -183,8 +183,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             map = AnnotationUtil.convert2Map(vo.getEsGoods());
         }
         esTemplate.search(esTransportClient.getObject(), Constants.GOODS_INDEX,
-                Constants.GOODS_TYPE, map, pagination, orderField, order,
-                "goodsNameAll", "goodsName");
+                Constants.GOODS_TYPE, map, pagination, orderField, order, "goodsName");
         return pagination;
     }
 
