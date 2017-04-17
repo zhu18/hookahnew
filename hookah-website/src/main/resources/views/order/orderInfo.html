@@ -23,67 +23,74 @@ var htmlPart = {
 				</div>
 			</div>
 			<div class="order-info-down">
-				<div><h1><i class="fa fa-pencil-square-o padding-right-10" aria-hidden="true"></i>填写并核对订单信息</h1></div>
+				<div><h1><i class="fa fa-pencil-square-o padding-right-10" aria-hidden="true"></i>核对订单信息</h1></div>
 				<div>
-					<table>
-						<tr class="tab-title">
-							<th colspan="9"><h5>新订购服务</h5></th>
-						</tr>
-						<tr class="tab-title-th">
-							<th>序号</th>
-							<th>商品名称</th>
-							<th>订购规格</th>
-							<th>单价(元)</th>
-							<th>订购数量</th>
-							<th>优惠(元)</th>
-							<th>总价(元)</th>
-						</tr>
-						<%for(list in cartOrder){%>
-						<tr class="tab-item">
-							<td>1</td>
-							<td>${list.goodsName}-------${list.recId}</td>
-							<td>
-								<% if(list.formatNumber > 1){%>${list.formatNumber}<%}%>${decode(list.goodsFormat,0,"次",1,"月",2,"年")}
-							</td>
-							<td>${trunc(list.goodsPrice / 100, 2)}</td>
-							<td>${list.goodsNumber}</td>
-							<td>${list.goodsName}</td>
-							<td>${trunc((list.goodsPrice * list.goodsNumber) / 100, 2)}</td>
-						</tr>
-						<%}%>
-						<tr class="tab-pay">
-							<td colspan="9">
-								<span>付款小计：</span>
-								<span class="color-orange">${trunc(orderAmount / 100, 2)}</span>
-								<span>元</span>
-							</td>
-						</tr>
-						<tr class="tab-agreement">
-							<td colspan="9">
-								<div>
-									<span>请阅读</span>
-									<a href="javascript:void(0)" class="color-blue">订购协议</a>
-								</div>
-							</td>
-						</tr>
-						<tr class="tab-submit">
-							<td colspan="9">
-								<div>
-									<div class="pay-box display-inline-block">
-										<span>应付总额：</span>
-										<span class="color-orange font-size-20">${trunc(orderAmount / 100, 2)}</span>
-										<span>元</span>
+					<form action="/order/createOrder" name="orderInfo" id="J_orderInfo" method="post">
+						<table>
+							<tr class="tab-title">
+								<th colspan="9"><h5>新订购服务</h5></th>
+							</tr>
+							<tr class="tab-title-th">
+								<th>序号</th>
+								<th>商品名称</th>
+								<th>订购规格</th>
+								<th>单价(元)</th>
+								<th>订购数量</th>
+								<th>优惠(元)</th>
+								<th>总价(元)</th>
+							</tr>
+							<%for(list in cartOrder){%>
+							<input type="hidden" name="cartIdArray" value="${list.recId}">
+							<input type="hidden" name="goodsId" value="${list.goodsId}">
+							<input type="hidden" name="formatId" value="${list.formatId}">
+							<input type="hidden" name="goodsNumber" value="${list.goodsNumber}">
+							<tr class="tab-item">
+								<td>${listLP.index}</td>
+								<td>${list.goodsName}-------${list.recId}</td>
+								<td>
+									<% if(list.formatNumber > 1){%>${list.formatNumber}<%}%>${decode(list.goodsFormat,0,"次",1,"月",2,"年")}
+								</td>
+								<td>${trunc(list.goodsPrice / 100, 2)}</td>
+								<td>${list.goodsNumber}</td>
+								<td>${list.goodsName}</td>
+								<td>${trunc((list.goodsPrice * list.goodsNumber) / 100, 2)}</td>
+							</tr>
+							<%}%>
+							<tr class="tab-pay">
+								<td colspan="9">
+									<span>付款小计：</span>
+									<span class="color-orange">${trunc(orderAmount / 100, 2)}</span>
+									<span>元</span>
+								</td>
+							</tr>
+							<tr class="tab-agreement">
+								<td colspan="9">
+									<div>
+										<span>请阅读</span>
+										<a href="javascript:void(0)" class="color-blue">订购协议</a>
 									</div>
-									<a href="javascript:void(0)" class="btn-full-red">同意协议并付款</a>
-								</div>
-							</td>
-						</tr>
-					</table>
+								</td>
+							</tr>
+							<tr class="tab-submit">
+								<td colspan="9">
+									<div>
+										<div class="pay-box display-inline-block">
+											<span>应付总额：</span>
+											<span class="color-orange font-size-20">${trunc(orderAmount / 100, 2)}</span>
+											<span>元</span>
+										</div>
+										<button type="submit" class="btn btn-full-red padding-10">同意协议并付款</button>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</form>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<script src="/static/js/order/orderInfo.js"></script>
 <%};
 include("/layout/other-base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
