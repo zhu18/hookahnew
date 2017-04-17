@@ -1,6 +1,6 @@
 function loadPageData(data){ //渲染页面数据
 	var currentPage = data.data.currentPage;
-	if(data.data.list){
+	if(data.data.list > 0){
         var list = data.data.list;
         var html = '';
         for(var i=0; i<list.length; i++){
@@ -25,7 +25,9 @@ function loadPageData(data){ //渲染页面数据
             html += '</li>';
         }
         $('.order-list ul').html(html);
-    }
+    }else{
+		$('.order-list ul').html('<div class="noData">暂无数据</div>');
+	}
     if(data.data2){
 		var html = '';
 		html += '<ul class="conditionCon">';
@@ -33,7 +35,7 @@ function loadPageData(data){ //渲染页面数据
 			renderSelector(data.data2.categoryList,'分类','category');
 		}
 		if(data.data2.goodsAttrTypeList.length > 0){
-			renderSelector2(data.data2.goodsAttrTypeList,'属性','attrType');
+			renderSelector2(data.data2.goodsAttrTypeList,'属性','attrtype');
 		}
 		if(data.data2.areaCountryList.length > 0){
 			renderSelector(data.data2.areaCountryList,'国家','country');
@@ -62,7 +64,7 @@ function loadPageData(data){ //渲染页面数据
 				html += '<span>'+item.nodeName+'：</span>';
 				html += '<ul typeid ='+item.nodeId+'>';
 				item.children.forEach(function(items){
-					html += '<li class="op_i '+fnName+'" typeid="'+items.nodeId+'"><a href="javascript:;" onclick="selectCategory(this,'+items.nodeId+',\''+fnName+'\',\''+items.nodeName+'\')">'+items.nodeName+'</a></li>';
+					html += '<li class="op_i '+fnName+'" typeid="'+items.nodeId+'"><a href="javascript:;" onclick="selectAttr(this,'+items.nodeId+',\''+fnName+'\',\''+items.nodeName+'\')">'+items.nodeName+'</a></li>';
 				});
 				html += '</ul>';
 				html += '</li>';
@@ -99,8 +101,25 @@ function selectCategory(that,id,fnName,name){
 	getDataForin();
 
 }
+function selectAttr(that,id,fnName,name){
+	var ulId = $(that).parent().parent().attr('typeid');
+	if($('#J_crimbsNav').attr(fnName+'name'+ulId) == name){
+		return;
+	}else{
+		var parName = $(that).parents('ul').siblings('span').text();
+		$('.tags').each(function(){
+			if($(this).attr(fnName+'name'+ulId)){
+				$(this).remove();
+			}
+		});
+		$('#J_crimbsNav').attr(fnName+'name'+ulId,name).attr(fnName+'id'+ulId,id).append('<span class="tags" '+fnName+'name'+ulId+'='+name+' '+fnName+'id'+ulId+'id='+id+' type='+fnName+'id'+ulId+'>'+parName+name+'<a href="JavaScript:;" onclick="removeTag(this)" class="fa fa-close"></a></span>');
+		// $(that).parent('.op_i').addClass('active').siblings().removeClass('active');
+	}
+	getDataForin();
+}
 function removeTag(that){
-	var ats = $(that).attr('type');
+	var ats = $(that).parent('.tags').attr('type');
+	console.log(ats);
 	$('#J_crimbsNav').removeAttr(ats);
 	$(that).parent('.tags').remove();
 	getDataForin();
@@ -111,17 +130,23 @@ function getDataForin(){
 	dataParm.esGoods.goodsAreas = '';
 	if($('#J_crimbsNav').attr('category')){
 		dataParm.esGoods.catIds = $('#J_crimbsNav').attr('categoryid');
+	}else{
+		dataParm.esGoods.catIds = catId;
 	}
-	if($('#J_crimbsNav').attr('attrType')){
+	for(var i=1;i<=5;i++){
+		if($('#J_crimbsNav').attr('attrtypeid'+i)){
+			dataParm.esGoods.attrIds += $('#J_crimbsNav').attr('attrtypeid'+i)+' ';
+		}
 	}
+	console.log(dataParm.esGoods.attrIds)
 	if($('#J_crimbsNav').attr('country')){
-
+		dataParm.esGoods.goodsAreas += $('#J_crimbsNav').attr('country');
 	}
 	if($('#J_crimbsNav').attr('province')){
-
+		dataParm.esGoods.goodsAreas += $('#J_crimbsNav').attr('province');
 	}
 	if($('#J_crimbsNav').attr('city')){
-
+		dataParm.esGoods.goodsAreas += $('#J_crimbsNav').attr('city');
 	}
 	goPage('1')
 }
