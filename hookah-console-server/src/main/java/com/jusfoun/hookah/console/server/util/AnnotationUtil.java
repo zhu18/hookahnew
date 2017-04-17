@@ -57,8 +57,8 @@ public class AnnotationUtil {
             fieldsCache.put(clazz, fields);
         }
         for (Field field : fields) {
+            field.setAccessible(true);
             if(field.get(t) != null && !"".equals(field.get(t))) {
-                field.setAccessible(true);
                 maps.put(field.getName(), field.get(t));
                 field.setAccessible(false);
             }
