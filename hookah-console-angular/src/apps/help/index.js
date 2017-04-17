@@ -49,7 +49,7 @@ app.run(function ($rootScope, $state) {
       "url":"help.category.search"
     },
     {
-      "title":"新增分类",
+      "title":"新增一级分类",
       "url":"help.category.add"
     }
 

@@ -8,6 +8,7 @@ import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.MgGoodsService;
+import com.jusfoun.hookah.rpc.api.MqSenderService;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,8 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
     private MongoTemplate mongoTemplate;
     @Resource
     MgGoodsService mgGoodsService;
+    @Resource
+    MqSenderService mqSenderService;
 
     @Resource
     public void setDao(GoodsMapper goodsMapper) {
@@ -67,6 +70,25 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             mgGoods.setImgList(obj.getImgList());
             mgGoods.setGoodsId(obj.getGoodsId());
             mongoTemplate.save(mgGoods);
+        }
+    }
+
+    public void onOrDeleteGoods(String goodsId, String status) throws HookahException {
+        Goods obj = new Goods();
+        obj.setGoodsId(goodsId);
+        switch (status) {
+            case "del":
+                obj.setIsDelete((byte) 0);
+                goodsMapper.updateByPrimaryKeySelective(obj);
+                mqSenderService.sendDirect(goodsId);
+                break;
+            case "onSale":
+                //TODO 放入审核mq
+                break;
+            case "offSale":
+                obj.setIsOnsale((byte) 0);
+                goodsMapper.updateByPrimaryKeySelective(obj);
+                break;
         }
     }
 
