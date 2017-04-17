@@ -24,6 +24,7 @@ class ShelfController {
         promise.then(function (res, status, config, headers) {
             console.log(res.data)
             if(res.data.code == "1"){
+                growl.addSuccessMessage("数据添加完毕。。。");
                 $state.go('shelf.search');
             }
         });
@@ -38,6 +39,7 @@ class ShelfController {
         promise.then(function (res, status, config, headers) {
             console.log(res.data)
             if(res.data.code == "1"){
+                growl.addSuccessMessage("数据修改完毕。。。");
                 $state.go('shelf.search');
             }
         });
@@ -62,6 +64,22 @@ class ShelfController {
                   $scope.search();
               }
           });
+    };
+
+    $scope.manageGoods = function (event, item) {
+
+            $state.go('shelf.manageGoods');
+          // console.log(item.shelvesId, item.shelvesStatus);
+          // var promise = $http({
+          //     method: 'POST',
+          //     url: $rootScope.site.apiServer + "/api/shelf/updateStatus",
+          //     params: {shelvesId: item.shelvesId}
+          // });
+          // promise.then(function (res, status, config, headers) {
+          //     if(res.data.code == 1){
+          //         $scope.search();
+          //     }
+          // });
     };
 
     $scope.updateShelf = function (event, item) {
