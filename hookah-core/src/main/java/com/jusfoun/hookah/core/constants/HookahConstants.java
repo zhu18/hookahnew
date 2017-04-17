@@ -54,6 +54,8 @@ public class HookahConstants {
         IK_SMART("ik_smart"),
         PINYIN("pinyin"),
         WHITESPACE("whitespace"),
+        LC_INDEX("lc_index"),
+        LC_SEARCH("lc_search"),
         NONE(null);
 
         public String val;

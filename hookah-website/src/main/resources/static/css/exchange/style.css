@@ -4,11 +4,11 @@
 	top: -46px;
 	left: 0px;
 	z-index: 1000;
-	width: 190px;
+	width: 171px;
 }
 .exchange-index-menu .menu-title {
 	background-color: transparent;
-	width: 190px;
+	width: 171px;
 	height: 46px;
 }
 .exchange-index-menu .menu-list {
@@ -38,9 +38,9 @@
 .exchange-index-menu .menu-son-list {
 	display: none;
 	width: 338px;
-	top: -2px;
+	top: -1px;
 	padding: 10px;
-	left: 189px;
+	left: 170px;
 	position: absolute;
 	background-color: white;
 	border: 1px solid #ccc;
@@ -1191,6 +1191,7 @@ lesshat-selector {
 }
 .exchange-hot-resource .hot-resource-down .hot-down-rank > ul .active {
 	height: 102px;
+	overflow: hidden;
 	background-color: #E6E6E6;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-rank > ul .active div {
@@ -1682,6 +1683,10 @@ dl {
 	float: left;
 	border-bottom: none;
 	background-color: white;
+}
+.search .search-category .conditionCon li ul li.op_i.active a{
+	color: #ccc;
+	cursor: no-drop;
 }
 .search .search-category .conditionCon li ul li.parLi {
 	float: none;

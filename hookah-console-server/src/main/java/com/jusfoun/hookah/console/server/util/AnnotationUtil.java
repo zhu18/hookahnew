@@ -58,8 +58,10 @@ public class AnnotationUtil {
         }
         for (Field field : fields) {
             field.setAccessible(true);
-            maps.put(field.getName(), field.get(t));
-            field.setAccessible(false);
+            if(field.get(t) != null && !"".equals(field.get(t))) {
+                maps.put(field.getName(), field.get(t));
+                field.setAccessible(false);
+            }
         }
         return maps;
     }

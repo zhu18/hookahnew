@@ -236,6 +236,10 @@
   background-color: #3e567c;
 }
 
+.header-centerbar .shopping-cart-down .shopping-cart-down-content .content-down .content-down-money {
+  /*width: 80px;*/
+}
+
 .header-centerbar .shopping-cart-down .shopping-cart-down-content .content-down .content-down-name {
   height: 58px;
   width: 120px;
@@ -270,7 +274,9 @@
 .header-bottom-bar li:hover {
   background: #2F3C4D;
 }
-
+.header-bottom-bar ul li {
+  width:16.61%;
+}
 .header-bottom-bar li.active {
   background: #2d3f5c;
 }
@@ -283,7 +289,7 @@
   font-size: 16px;
   color: #fff;
   display: block;
-  padding: 0 56px;
+  text-align: center;
 }
 
 /************/
