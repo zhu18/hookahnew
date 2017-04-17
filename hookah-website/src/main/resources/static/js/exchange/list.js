@@ -1,4 +1,5 @@
 function loadPageData(data){ //渲染页面数据
+	var currentPage = data.data.currentPage;
 	if(data.data.list){
         var list = data.data.list;
         var html = '';
@@ -29,66 +30,72 @@ function loadPageData(data){ //渲染页面数据
 		var html = '';
 		html += '<ul class="conditionCon">';
 		if(data.data2.categoryList){
-			html += '<li class="parLi">';
-			html += '<span>分类：</span>';
-			html += '<ul>';
-			data.data2.categoryList.forEach(function(item){
-				html += '<li><a href="javascript:void(0)">'+item.nodeName+'</a></li>';
-			});
-			html += '</ul>';
-			html += '</li>';
+			renderSelector(data.data2.categoryList,'分类','category');
 		}
 		if(data.data2.goodsAttrTypeList){
-			html += '<li class="parLi">';
-			html += '<span>属性：</span>';
-			html += '<ul>';
-			data.data2.goodsAttrTypeList.forEach(function(item){
-				html += '<li><a href="javascript:void(0)">'+item.nodeName+'</a></li>';
-			});
-			html += '</ul>';
-			html += '</li>';
+			renderSelector2(data.data2.goodsAttrTypeList,'属性','attrType');
 		}
 		if(data.data2.areaCountryList){
-			html += '<li class="parLi">';
-			html += '<span>国家：</span>';
-			html += '<ul>';
-			data.data2.areaCountryList.forEach(function(item){
-				html += '<li><a href="javascript:void(0)">'+item.nodeName+'</a></li>';
-			});
-			html += '</ul>';
-			html += '</li>';
+			renderSelector(data.data2.areaCountryList,'国家','country');
 		}
 		if(data.data2.areaProvinceList){
+			renderSelector(data.data2.areaProvinceList,'省份','province');
+		}
+		if(data.data2.areaCityList){
+			renderSelector(data.data2.areaCityList,'城市','city');
+		}
+		function renderSelector(datas,name,fnName){
 			html += '<li class="parLi">';
-			html += '<span>省份：</span>';
+			html += '<span>'+name+'：</span>';
 			html += '<ul>';
-			data.data2.areaProvinceList.forEach(function(item){
-				html += '<li><a href="javascript:void(0)">'+item.nodeName+'</a></li>';
+			datas.forEach(function(item){
+				html += '<li><a href="javascript:selectCategory(this,'+item.nodeId+',\''+fnName+'\',\''+item.nodeName+'\')">'+item.nodeName+'</a></li>';
 			});
 			html += '</ul>';
 			html += '</li>';
 		}
-		if(data.data2.areaCityList){
-			renderSelector(data.data2.areaCityList,'城市')
+		function renderSelector2(datas,name,fnName){
+			html += '<li class="parLi">';
+			html += '<span>'+name+'：</span>';
+			html += '<ul>';
+			datas.forEach(function(item){
+				html += '<li class="parLi">';
+				html += '<span>'+item.nodeName+'：</span>';
+				html += '<ul>';
+				item.children.forEach(function(items){
+					html += '<li><a href="javascript:selectCategory(this,'+items.nodeId+',\''+fnName+'\',\''+items.nodeName+'\')">'+items.nodeName+'</a></li>';
+				});
+				html += '</ul>';
+				html += '</li>';
+				html +='</li>';
+			});
+			html += '</ul>';
+			html += '</li>';
 		}
+
 		html += '</ul>';
 		$('#J_searchCategory').html(html)
 	}
 
-}
-function renderSelector(datas,name){
-	html += '<li class="parLi">';
-	html += '<span>name：</span>';
-	html += '<ul>';
-	datas.forEach(function(item){
-		html += '<li><a href="javascript:void(0)">'+item.nodeName+'</a></li>';
-	});
-	html += '</ul>';
-	html += '</li>';
-}
-function selectCategory(){
+	$('img').each(function(){
+		$(this).on('error',function(){
+			$(this).attr('src','/static/images/timg.jpeg')
+		})
+	})
 
 }
+
+function selectCategory(that,id,fnName,name){
+	if($('#J_crimbsNav').attr(fnName) == fnName){
+		return;
+	}else{
+	$(that).parents('.parLi').remove();
+	$('#J_crimbsNav').attr(fnName,true).append('<span class="tags">'+name+'<a href="JavaScript:void(0)" class="fa fa-close"></a></span>');
+
+	}
+}
+
+
 if(prId){//渲染分类
 	var html = '';
 	html += '<div class="crumbs-nav margin-top-20 padding-bottom-10" id="J_crimbsNav">';
