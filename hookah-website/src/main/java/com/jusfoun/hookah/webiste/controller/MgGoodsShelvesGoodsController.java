@@ -65,9 +65,15 @@ public class MgGoodsShelvesGoodsController {
     }
 
 
-    @RequestMapping("/findById/{id}")
+//    @RequestMapping("/findById/{id}")
+//    @ResponseBody
+//    public  ReturnData findByShevlesGoodsVoId(@PathVariable String id){
+//        return  goodsShelvesService.findByShevlesGoodsVoId(id);
+//    }
+
+    @RequestMapping("/findById")
     @ResponseBody
-    public  ReturnData findByShevlesGoodsVoId(@PathVariable String id){
+    public  ReturnData findByShevlesGoodsVoId(String id){
         return  goodsShelvesService.findByShevlesGoodsVoId(id);
     }
 
