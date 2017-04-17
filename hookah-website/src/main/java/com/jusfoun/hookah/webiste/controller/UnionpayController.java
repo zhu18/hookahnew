@@ -5,10 +5,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.util.StringUtil;
 import com.jusfoun.hookah.core.domain.PayCore;
 import com.jusfoun.hookah.core.domain.vo.PayVo;
-import com.jusfoun.hookah.core.utils.ExceptionConst;
-import com.jusfoun.hookah.core.utils.HttpRequestUtil;
+import com.jusfoun.hookah.core.utils.*;
 
-import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.AccNoTokenService;
 import com.jusfoun.hookah.rpc.api.OrderInfoService;
 import com.jusfoun.hookah.rpc.api.PayCoreService;
@@ -27,7 +25,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.transform.Result;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -214,24 +212,25 @@ public class UnionpayController extends BaseController{
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/deleteAccno", method = RequestMethod.GET)
-	public ReturnData deleteAccno(@RequestParam(required=true) Integer orderId,
+	public ReturnData deleteAccno(@RequestParam(required=true) String orderId,
 			@RequestParam(required=true) String accNo,
 			@RequestParam(required=true) String password,
 			HttpSession session) throws Exception {
 		ReturnData result = new ReturnData();
 
 		try {
-			/*String userId = getUserId(session);
+			/*String userId = getUserId(session);*/
+			String userId = "00003443e3ce74e3fbf2ca02b3baa64c";
 			//验证登录密码
-			String postResult = HttpRequestUtil.sendPost("http://192.168.15.15:8080/user/checkUserPassword", "userid="+userId+"&password="+ StringUtil.encoderByMd5(password));
+			/*String postResult = HttpRequestUtil.sendPost("http://192.168.15.15:8080/user/checkUserPassword", "userid="+userId+"&password="+ StrUtil.encoderByMd5(password));
 			Result parseObject = JSONObject.parseObject(postResult, Result.class);
 			if(parseObject.getRetCode()==0){
 				result.setCode(ExceptionConst.Failed);
 				result.setMessage("密码不正确");
 				return result;
-			}
+			}*/
 			PayVo payVo = orderService.getPayParam(orderId);
-			result.setData(payCoreService.deleteAccno(payVo.getOrderSn(), accNo, userId));*/
+			result.setData(payCoreService.deleteAccno(payVo.getOrderSn(), accNo, userId));
 		} catch (Exception e) {
 			result.setCode(ExceptionConst.Failed);
 			result.setMessage(e.toString());
@@ -246,22 +245,24 @@ public class UnionpayController extends BaseController{
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value= "/1/pay", method = RequestMethod.GET)
-	ModelAndView pay(@RequestParam(required=true) Integer orderId,
+	@RequestMapping(value= "/pay", method = RequestMethod.GET)
+	ModelAndView pay(@RequestParam(required=true) String orderId,
 					 @RequestParam(required=true) String accNo,
 					 @RequestParam(required=true) String smsCode,
 					 HttpSession session) throws Exception {
 		ModelAndView view = null;
-		/*PayVo payVo = orderService.getPayParam(orderId);
-		String url = "redirect:/pages/payError.html?orderSn="+payVo.getOrderSn();
+		PayVo payVo = orderService.getPayParam(orderId);
+		/*String url = "redirect:/pages/payError.html?orderSn="+payVo.getOrderSn();*/
+		String url = "redirect:/pages/payError.html?orderSn="+"42343";
 		try {
-			String res = payCoreService.unionpayConsume(payVo,orderId, getUserId(session), accNo, smsCode);
+			/*String res = payCoreService.unionpayConsume(payVo,orderId, getUserId(session), accNo, smsCode);*/
+			String res = payCoreService.unionpayConsume(payVo,"23", "00003443e3ce74e3fbf2ca02b3baa64c","6221558812340000", "123456");
 			if("ok".equals(res))
 				 url = "redirect:/pages/paySucess.html?orderSn="+payVo.getOrderSn();
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
-		view = new ModelAndView(url);*/
+		view = new ModelAndView(url);
 		return view;
 	}
 	
