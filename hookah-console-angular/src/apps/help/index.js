@@ -40,10 +40,10 @@ app.run(function ($rootScope, $state) {
       "title":"帮助查询",
       "url":"help.search"
     },
-    {
-      "title":"新增帮助",
-      "url":"help.add"
-    },
+    // {
+    //   "title":"新增帮助",
+    //   "url":"help.add"
+    // },
     {
       "title":"分类查询",
       "url":"help.category.search"
