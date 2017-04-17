@@ -23,6 +23,7 @@ import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.MgOrderInfoService;
 import com.jusfoun.hookah.rpc.api.OrderInfoService;
 import org.apache.http.HttpException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -207,7 +208,8 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
             if(ordergoodsList!=null&&ordergoodsList.size()>0){
                 orderInfo.setIsDeleted((byte)0);
-                OrderInfoVo orderInfoVo = (OrderInfoVo)orderInfo;
+                OrderInfoVo orderInfoVo = new OrderInfoVo();
+                BeanUtils.copyProperties(orderInfo,orderInfoVo);
                 orderInfoVo.setMgOrderGoodsList(ordergoodsList);
                 orderinfoMapper.insert(orderInfo);
                 mgOrderInfoService.insert(orderInfoVo);
@@ -248,7 +250,8 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
         if(ordergoodsList!=null&&ordergoodsList.size()>0){
             orderInfo.setIsDeleted(new Integer(0).byteValue());
-            OrderInfoVo orderInfoVo = (OrderInfoVo)orderInfo;
+            OrderInfoVo orderInfoVo = new OrderInfoVo();
+            BeanUtils.copyProperties(orderInfo,orderInfoVo);
             orderInfoVo.setMgOrderGoodsList(ordergoodsList);
             orderinfoMapper.insert(orderInfo);
             mgOrderInfoService.insert(orderInfoVo);
