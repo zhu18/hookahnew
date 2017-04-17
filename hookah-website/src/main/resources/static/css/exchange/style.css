@@ -1617,6 +1617,9 @@ dl {
 	text-decoration: none;
 }
 .search .search-category {
+
+}
+.search .search-category>ul{
 	border: 1px solid #E9E9E9;
 }
 .search .search-category .panel-title {

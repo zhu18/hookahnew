@@ -8,19 +8,10 @@ class HelpCategoryController {
       });
       promise.then(function (res, status, config, headers) {
         $rootScope.loadingState = false;
-        // $scope.sysAccount = res.data.data;
-        // $rootScope.pagination.store =
         growl.addSuccessMessage("数据加载完毕。。。");
       });
     };
-    $scope.add = function () {
-      console.log("add。。。。");
-    };
-    $scope.edit = function (event, item) {
-      console.log(item);
-    };
     $scope.delete = function (event,item){
-      console.log(item);
       var promise = $http({
         method: 'POST',
         url: $rootScope.site.apiServer + "/api/help/category/delete/"+item.helpId
@@ -39,7 +30,10 @@ class HelpCategoryController {
       });
       promise.then(function (res, status, config, headers) {
         $rootScope.loadingState = false;
-        growl.addSuccessMessage("数据加载完毕。。。");
+        console.log(res);
+        if(res.data.code == "1"){
+          growl.addSuccessMessage("保存成功。。。");
+        }
       });
 
     };

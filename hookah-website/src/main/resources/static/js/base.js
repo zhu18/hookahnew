@@ -64,7 +64,6 @@ $(document).ready(function () {
 			}
 			if(!$("#J_searchInput").val()){
 				$("#J_searchInput").focus();
-
 				return;
 			}
 			var itemLen = $('.search-sug li').length - 1;

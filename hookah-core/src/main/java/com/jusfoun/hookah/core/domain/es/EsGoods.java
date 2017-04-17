@@ -18,14 +18,9 @@ public class EsGoods implements Serializable {
     @Id
     @EsField(type = Type.KEYWORD)
     private String goodsId;
-    @EsField(analyzeOpt= AnalyzeOpt.ANALYZED, analyzer= Analyzer.IK_MAX_WORD,
-            termVector= TermVector.OFFSETS, isStore = true, searchAnalyzer = Analyzer.IK_MAX_WORD, copyTo = "goodsNameAll")
+    @EsField(analyzeOpt= AnalyzeOpt.ANALYZED, analyzer= Analyzer.LC_INDEX,
+            termVector= TermVector.OFFSETS, isStore = true, searchAnalyzer = Analyzer.LC_SEARCH)
     private String goodsName;
-    @EsField(analyzeOpt= AnalyzeOpt.ANALYZED, analyzer= Analyzer.PINYIN,
-            termVector= TermVector.OFFSETS, isStore = true, searchAnalyzer = Analyzer.PINYIN, copyTo = "goodsNameAll")
-    private String goodsNamePy;
-    @EsField(analyzeOpt= AnalyzeOpt.ANALYZED, isStore = true, analyzer= Analyzer.PINYIN, searchAnalyzer = Analyzer.PINYIN)
-    private String goodsNameAll;
     @EsField
     private String goodsBrief;
     @EsField
@@ -54,8 +49,8 @@ public class EsGoods implements Serializable {
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @EsField(type = Type.DATE)
     private Date addTime;
-    @EsField(type = Type.COMPLETION, analyzer= Analyzer.IK_MAX_WORD, searchAnalyzer = Analyzer.IK_MAX_WORD)
-    private Suggest suggest;
+    @EsField(type = Type.COMPLETION, analyzer= Analyzer.LC_INDEX, searchAnalyzer = Analyzer.LC_SEARCH)
+    private String suggest;
     @EsField(type = Type.KEYWORD)
     private Long shopPrice;
     @EsField(type = Type.INTEGER)
@@ -89,14 +84,6 @@ public class EsGoods implements Serializable {
 
     public void setGoodsName(String goodsName) {
         this.goodsName = goodsName;
-    }
-
-    public String getGoodsNamePy() {
-        return goodsNamePy;
-    }
-
-    public void setGoodsNamePy(String goodsNamePy) {
-        this.goodsNamePy = goodsNamePy;
     }
 
     public String getGoodsBrief() {
@@ -171,19 +158,11 @@ public class EsGoods implements Serializable {
         this.goodsAreas = goodsAreas;
     }
 
-    public String getGoodsNameAll() {
-        return goodsNameAll;
-    }
-
-    public void setGoodsNameAll(String goodsNameAll) {
-        this.goodsNameAll = goodsNameAll;
-    }
-
-    public Suggest getSuggest() {
+    public String getSuggest() {
         return suggest;
     }
 
-    public void setSuggest(Suggest suggest) {
+    public void setSuggest(String suggest) {
         this.suggest = suggest;
     }
 

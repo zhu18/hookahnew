@@ -1,6 +1,6 @@
 function loadPageData(data){ //渲染页面数据
 	var currentPage = data.data.currentPage;
-	if(data.data.list > 0){
+	if(data.data.list.length > 0){
         var list = data.data.list;
         var html = '';
         for(var i=0; i<list.length; i++){
@@ -47,7 +47,7 @@ function loadPageData(data){ //渲染页面数据
 			renderSelector(data.data2.areaCityList,'城市','city');
 		}
 		function renderSelector(datas,name,fnName){
-			html += '<li class="parLi">';
+			html += '<li class="parLi '+fnName+'">';
 			html += '<span>'+name+'：</span>';
 			html += '<ul>';
 			datas.forEach(function(item){
@@ -55,9 +55,9 @@ function loadPageData(data){ //渲染页面数据
 			});
 			html += '</ul>';
 			html += '</li>';
+
 		}
 		function renderSelector2(datas,name,fnName){
-			html += '<li class="parLi">';
 
 			datas.forEach(function(item){
 				html += '<li class="parLi">';
@@ -68,13 +68,31 @@ function loadPageData(data){ //渲染页面数据
 				});
 				html += '</ul>';
 				html += '</li>';
-				html +='</li>';
 			});
-			html += '</li>';
 		}
 
 		html += '</ul>';
 		$('#J_searchCategory').html(html)
+		var country = $('#J_crimbsNav').attr('country');
+		var province = $('#J_crimbsNav').attr('province');
+		var city = $('#J_crimbsNav').attr('city');
+		if(country && province && !city){
+			$('.country').remove();
+			$('.province').remove();
+		}else if(country && !province){
+			$('.country').remove();
+			$('.city').remove();
+		}else if(!country && province && !city){
+			$('.country').remove();
+			$('.province').remove();
+		}else if(city){
+			$('.country').remove();
+			$('.province').remove();
+			$('.city').remove();
+		}else{
+			$('.province').remove();
+			$('.city').remove();
+		}
 	}
 
 	$('img').each(function(){
@@ -82,6 +100,7 @@ function loadPageData(data){ //渲染页面数据
 			$(this).attr('src','/static/images/timg.jpeg')
 		})
 	})
+
 
 }
 
@@ -112,7 +131,7 @@ function selectAttr(that,id,fnName,name){
 				$(this).remove();
 			}
 		});
-		$('#J_crimbsNav').attr(fnName+'name'+ulId,name).attr(fnName+'id'+ulId,id).append('<span class="tags" '+fnName+'name'+ulId+'='+name+' '+fnName+'id'+ulId+'id='+id+' type='+fnName+'id'+ulId+'>'+parName+name+'<a href="JavaScript:;" onclick="removeTag(this)" class="fa fa-close"></a></span>');
+		$('#J_crimbsNav').attr(fnName+'name'+ulId,name).attr(fnName+'id'+ulId,id).append('<span class="tags" '+fnName+'name'+ulId+'='+name+' '+fnName+'id'+ulId+'='+id+' type='+fnName+'id'+ulId+'>'+parName+name+'<a href="JavaScript:;" onclick="removeTag(this)" class="fa fa-close"></a></span>');
 		// $(that).parent('.op_i').addClass('active').siblings().removeClass('active');
 	}
 	getDataForin();
@@ -140,13 +159,13 @@ function getDataForin(){
 	}
 	console.log(dataParm.esGoods.attrIds)
 	if($('#J_crimbsNav').attr('country')){
-		dataParm.esGoods.goodsAreas += $('#J_crimbsNav').attr('country');
+		dataParm.esGoods.goodsAreas = $('#J_crimbsNav').attr('countryid');
 	}
 	if($('#J_crimbsNav').attr('province')){
-		dataParm.esGoods.goodsAreas += $('#J_crimbsNav').attr('province');
+		dataParm.esGoods.goodsAreas = $('#J_crimbsNav').attr('provinceid');
 	}
 	if($('#J_crimbsNav').attr('city')){
-		dataParm.esGoods.goodsAreas += $('#J_crimbsNav').attr('city');
+		dataParm.esGoods.goodsAreas = $('#J_crimbsNav').attr('cityid');
 	}
 	goPage('1')
 }
