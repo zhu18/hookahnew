@@ -17,7 +17,7 @@ var htmlPart = {
                     <h4 class="order-title">充值</h4>
                 </div>
                 <div class="order-seller">&nbsp;&nbsp; 收款方&nbsp;:<span> 山东省大数据交易中心</span></div>
-                <div class="order-amount"><span>3000.00</span>元</div>
+                <div class="order-amount"><span>${orderInfo.goodsAmount}</span>元</div>
                 <a class="order-ext-trigger" href="javascript:void(0)">
                     订单详情
                 </a>
@@ -26,15 +26,15 @@ var htmlPart = {
                         <tbody>
                         <tr>
                             <td class="sub-th" align="right">交易号：</td>
-                            <td>20170311210500100000430004172120</td>
+                            <td>${orderInfo.orderSn}</td>
                         </tr>
                         <tr>
                             <td class="sub-th" align="right">交易金额：</td>
-                            <td>3000.00元</td>
+                            <td>${orderInfo.goodsAmount}元</td>
                         </tr>
                         <tr>
                             <td class="sub-th" align="right">购买时间：</td>
-                            <td>2017年03月11日 13:34:26</td>
+                            <td>${orderInfo.addTime,'yyyy-MM-dd hh:mm:ss'}</td>
                         </tr>
                         <tr>
                             <td class="sub-th" align="right">交易类型：</td>
