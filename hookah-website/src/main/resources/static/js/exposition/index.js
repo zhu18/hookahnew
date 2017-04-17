@@ -1,7 +1,6 @@
 /**
- * Created by ki on 2017/4/7.
+ * Created by ki on 2017/4/17.
  */
-
 $(function(){
     var url=window.location.pathname;
     console.log("url:"+url);
@@ -10,8 +9,8 @@ $(function(){
         console.log("href:"+href);
         if (url.indexOf(href) >= 0 ) {
             $(this).addClass('active').siblings().removeClass("active");
-            if(url.indexOf("introduction")){
-                $(".header-bottom-bar ul li ").eq(6).addClass("active");
+            if(url.indexOf("exposition")){
+                $(".header-bottom-bar ul li ").eq(4).addClass("active");
             }
         }
     })
