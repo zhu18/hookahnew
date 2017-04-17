@@ -1,0 +1,71 @@
+<div class="row" xmlns="http://www.w3.org/1999/html">
+  <div class="col-sm-12">
+    <div class="console-title console-title-border clearfix">
+      <div class="pull-left"><h5>管理货架商品</h5></div>
+      <div class="pull-right">
+        <!--<button class="btn btn-default" data-ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span> 返回-->
+        <!--</button>-->
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12">
+    <!--<form class="form-horizontal" role="form" id="shelfForm" name="shelf">-->
+      <form class="form-inline">
+        <div class="form-group text-center col-sm-5">
+          <label>货架中商品</label>
+          <table class="table table-hover" style="margin-bottom: 57px;">
+            <thead>
+            <tr>
+              <th width="10">
+                <input type="checkbox" data-ng-model="tableState.selectAll" ng-change="changeSelectionAll()" class=" ">
+              </th>
+              <th>商品名称</th>
+              <th>商品类型</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-if="!loadingState" data-ng-repeat="item in pagination.store" class="">
+              <td width="10">
+                <input type="checkbox" data-ng-model="item.selected" ng-change="changeSelection({data: item})" class=" ">
+              </td>
+              <td>
+                <span class="column-text" ng-bind="item.shelvesName"></span>
+              </td>
+              <td>
+                <span class="column-text" ng-bind="item.goodsNumber"></span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="form-group text-center col-sm-5">
+          <label>货架外商品</label>
+          <table class="table table-hover" style="margin-bottom: 57px;">
+            <thead>
+            <tr>
+              <th width="10">
+                <input type="checkbox" data-ng-model="tableState.selectAll" ng-change="changeSelectionAll()" class=" ">
+              </th>
+              <th>商品名称</th>
+              <th>商品类型</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-if="!loadingState" data-ng-repeat="item in pagination.store" class="">
+              <td width="10">
+                <input type="checkbox" data-ng-model="item.selected" ng-change="changeSelection({data: item})" class=" ">
+              </td>
+              <td>
+                <span class="column-text" ng-bind="item.shelvesName"></span>
+              </td>
+              <td>
+                <span class="column-text" ng-bind="item.goodsNumber"></span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </form>
+  </div>
+</div>
