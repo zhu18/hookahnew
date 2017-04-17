@@ -113,6 +113,20 @@ public class RabbitMqExchangeConfig {
         return binding;
     }
 
+    @Bean
+    Binding bindingExchangeGoodsId(Queue queueMessage, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueMessage).to(exchange).with(RabbitmqQueue.CONTRACE_GOODS_ID);
+        rabbitAdmin.declareBinding(binding);
+        return binding;
+    }
+
+    @Bean
+    Binding bindingExchangeGoodsId(Queue queueMessage, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueMessage).to(exchange).with(RabbitmqQueue.CONTRACE_GOODS_ID);
+        rabbitAdmin.declareBinding(binding);
+        return binding;
+    }
+
     /**
      * 所有关于contract exchange的queue
      *
@@ -136,6 +150,13 @@ public class RabbitMqExchangeConfig {
     @Bean
     Queue queueMessage(RabbitAdmin rabbitAdmin) {
         Queue queue = new Queue(RabbitmqQueue.CONTRACE_MESSAGE, true);
+        rabbitAdmin.declareQueue(queue);
+        return queue;
+    }
+
+    @Bean
+    Queue queueGoodsId(RabbitAdmin rabbitAdmin) {
+        Queue queue = new Queue(RabbitmqQueue.CONTRACE_GOODS_ID, true);
         rabbitAdmin.declareQueue(queue);
         return queue;
     }
