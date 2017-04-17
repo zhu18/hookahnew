@@ -5,7 +5,6 @@ $(document).ready(function () {
 		$(".header-bottom-bar ul li").css("width","14.28%");
 	} else {
 		$('#exchange_menu').hide();
-        $(".header-bottom-bar ul li").css("width","16.61%");
 	}
 
 	$('.header-bottom-bar ul li').each(function () {
