@@ -274,7 +274,9 @@
 .header-bottom-bar li:hover {
   background: #2F3C4D;
 }
-
+.header-bottom-bar ul li {
+  width:16.61%;
+}
 .header-bottom-bar li.active {
   background: #2d3f5c;
 }
