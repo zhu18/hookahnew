@@ -26,15 +26,23 @@ class HelpController {
       promise.then(function (res, status, config, headers) {
         $rootScope.loadingState = false;
         $scope.tree_data = res.data;
-        console.log(res);
         growl.addSuccessMessage("数据加载完毕。。。");
       });
     };
-    $scope.add = function () {
-      console.log("add。。。。");
+    $scope.addChild = function (data) {
+      $rootScope.helpParent = data;
+      $state.go("help.add");
     };
-    $scope.edit = function (event, item) {
-      console.log(item);
+    $scope.edit = function (item) {
+      $rootScope.editData = item;
+      if (item.children.length > 0) {
+        $state.go("help.category.edit");
+      } else {
+
+        $state.go("help.edit");
+        $("#content").html(item.content);
+
+      }
     };
     $scope.save = function () {
       var promise = $http({
@@ -47,18 +55,20 @@ class HelpController {
         growl.addSuccessMessage("保存成功。。。");
       });
     };
-    $scope.delete = function (event, item) {
+    $scope.refresh = function () {
+      $scope.search();
+    };
+    $scope.delete = function (item) {
       var promise = $http({
         method: 'POST',
-        url: $rootScope.site.apiServer + "/api/help/delete/"+item.helpId
+        url: $rootScope.site.apiServer + "/api/help/delete/" + item.helpId
       });
       promise.then(function (res, status, config, headers) {
         $rootScope.loadingState = false;
-        if(res.data.code ==1){
+        if (res.data.code == 1) {
           $scope.search();
           growl.addSuccessMessage("删除成功。。。");
         }
-
       });
     };
     if ($state.current.name == "help.search") {
@@ -70,19 +80,38 @@ class HelpController {
           displayName: "属性"
         }
         , {
-          field: "hrefUrl",
-          displayName: "连接"
+          field: "helpUrl",
+          displayName: "连接",
+          cellTemplate: "<a target='_blank' href='" + $rootScope.site.websiteServer + "{{ row.branch[col.field] }}'>{{ row.branch[col.field] }}</a>",
+        },
+        {
+          field: "creatorName",
+          displayName: "创建者"
+        },
+        {
+          field: "addTime",
+          displayName: "创建时间"
         }
+
         , {
           field: "aa",
           displayName: "操作",
-          cellTemplate: '<a ng-click="cellTemplateScope.edit(row.branch)">修改</a> <span class="text-explode">|</span> <i class="link-space"></i> <a href="javascript:;" ng-click="cellTemplateScope.delete(row.branch)" target="_blank">删除</a> <span class="text-explode">|</span> <i class="link-space"></i> <a href="javascript:;" ng-click="cellTemplateScope.addChild(row.branch)" target="_blank">增加子项</a>',
+          cellTemplate: ' <a href="javascript:;" ng-click="cellTemplateScope.delete(row.branch)" target="_blank">删除</a> <span class="text-explode">|</span> <i class="link-space"></i> <a href="javascript:;" ng-click="cellTemplateScope.addChild(row.branch)" target="_blank">增加子项</a>',
           cellTemplateScope: {
             edit: function (data) {
               $scope.edit(data);
             },
             delete: function (data) {
-              $scope.delete(data);
+              if (data.children.length == 0) {
+                var modalInstance = $rootScope.openConfirmDialogModal("确定要删除" + '<span style="font-weight: bold;color: #6b3100">' + data.name + '</span>' + "吗？");
+                modalInstance.result.then(function () {
+                  $scope.delete(data);
+                }, function () {
+                });
+              } else {
+                $rootScope.openErrorDialogModal('<span style="font-weight: bold;color: #6b3100">' + data.name + '</span>' + "下有子项，请先删除所有子项");
+              }
+
             },
             addChild: function (data) {
               $scope.addChild(data);
