@@ -219,7 +219,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         List<EsTreeVo<Region>> areaProvinceList = new ArrayList<>();
         List<EsTreeVo<Region>> areaCityList = new ArrayList<>();
         //添加需要聚合的字段
-        if(goods != null && StringUtils.isNotBlank(goods.getCatIds())) {
+        if(goods != null && StringUtils.isNotBlank(goods.getCatIds()) && goods.getCatIds().length() != 9) {
             listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_CATEGORY, HookahConstants.GOODS_AGG_CATEGORY_FIELD));
         }
         listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_ATTR, HookahConstants.GOODS_AGG_ATTR_FIELD));
