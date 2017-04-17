@@ -23,7 +23,9 @@
     height: 100%;
     left: 0;
     top: 0;
-    display: none
+    display: none;
+    background: #ccc;
+    opacity: 0.2;
 }
 
 .ui-dialog-title {
@@ -156,7 +158,9 @@
 
 .ui-alert {
     border-radius: 5px;
-    overflow: hidden; }
+    overflow: hidden;
+    box-shadow: 0 0 5px 2px #8a8a8a;
+}
 
 .ui-alert .ui-dialog-close {
     display: none; }
