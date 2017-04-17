@@ -17,11 +17,11 @@ function loadPageData(data){
             html += '<td class="text-right">'+list[i].shopNumber+'</td>';
             html += '<td class="text-center">'+format(list[i].addTime)+'</td>';
             if(list[i].checkStatus == 0){
-                html += '<td class="text-center">审核中</td>';
+                html += '<td class="text-center color-orange">审核中</td>';
             }else if(list[i].checkStatus == 1){
-                html += '<td class="text-center">通过</td>';
+                html += '<td class="text-center color-blue">通过</td>';
             }else if(list[i].checkStatus == 2){
-                html += '<td class="text-center">不通过</td>';
+                html += '<td class="text-center color-red">不通过</td>';
             }
             html += '<td>';
             html += '<a href="javascript:void(0)">下架</a>';
