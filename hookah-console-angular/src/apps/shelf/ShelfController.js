@@ -48,7 +48,7 @@ class ShelfController {
     $scope.pageChanged = function () {
           $scope.search();
           console.log('Page changed to: ' + $rootScope.pagination.currentPage);
-      };
+    };
 
     $scope.search();
 

@@ -12,4 +12,5 @@ public interface RabbitmqQueue {
     public final String CONTRACE_TENANT ="CONTRACT_TENANT";
     public final String CONTRACE_ORDER ="CONTRACT_ORDER";
     public final String CONTRACE_MESSAGE ="CONTRACT_MESSAGE";
+    public final String CONTRACT_GOODSCHECK ="CONTRACT_GOODSCHECK";
 }
