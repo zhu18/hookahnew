@@ -10,6 +10,7 @@ import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.core.utils.StrUtil;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.GoodsShelvesService;
 import com.jusfoun.hookah.rpc.api.MgGoodsShelvesGoodsService;
@@ -53,23 +54,27 @@ public class GoodsShelvesServiceImpl extends GenericServiceImpl<GoodsShelves, St
         Map<String,GoodsShelvesVo> goodsShelvesVoMap = new HashMap<String,GoodsShelvesVo>();
         if(Objects.nonNull(shelfs) && shelfs.size() != 0 ){
             for (GoodsShelves goods : shelfs){
-               //查询货架下的商品Id集合
-               String shelvesId = goods.getShelvesId();
-               MgShelvesGoods mgShelvesGoods = mgGoodsShelvesGoodsService.selectById(shelvesId);
+                //查询货架下的商品Id集合
+                String shelvesId = goods.getShelvesId();
+                MgShelvesGoods mgShelvesGoods = mgGoodsShelvesGoodsService.selectById(shelvesId);
 
-               //获取货架商品集合注入到GoodsShelvesVo
-               GoodsShelvesVo goodsShelvesVo = new GoodsShelvesVo();
-               BeanUtils.copyProperties(goods, goodsShelvesVo);
-               if(Objects.nonNull(mgShelvesGoods)){
-                   List<String> sgIds = mgShelvesGoods.getGoodsIdList();
-                   if(Objects.nonNull(sgIds) && sgIds.size() != 0 ){
-                       //商品Id集对应的商品集
-                       List<Condition> goodsfilters = new ArrayList<Condition>();
-                       goodsfilters.add(Condition.in("goodsId",sgIds.toArray()));
-                       List<Goods> goodsList = goodsService.selectList(goodsfilters);
-                       goodsShelvesVo.setGoods(goodsList);
-                   }
-               }
+                //获取货架商品集合注入到GoodsShelvesVo
+                GoodsShelvesVo goodsShelvesVo = new GoodsShelvesVo();
+                BeanUtils.copyProperties(goods, goodsShelvesVo);
+                if(Objects.nonNull(mgShelvesGoods)){
+                    List<String> sgIds = mgShelvesGoods.getGoodsIdList();
+                    if(Objects.nonNull(sgIds) && sgIds.size() != 0 ){
+                        //商品Id集对应的商品集
+                        List<Condition> goodsfilters = new ArrayList<Condition>();
+                        goodsfilters.add(Condition.in("goodsId",sgIds.toArray()));
+                        List<Goods> goodsList = goodsService.selectList(goodsfilters);
+                        goodsShelvesVo.setGoods(goodsList);
+                    }
+                }
+                //把货架标签按逗号拆分拼装
+                String shelvesTag = goods.getShelvesTag();
+                goodsShelvesVo.setShelvesTagList(str2StrArray(shelvesTag,"[,，]+"));
+
                 goodsShelvesVoMap.put(goods.getShelvesType(),goodsShelvesVo);
             }
         }
@@ -104,9 +109,14 @@ public class GoodsShelvesServiceImpl extends GenericServiceImpl<GoodsShelves, St
                     goodsShelvesVo.setGoods(goodsList);
                 }
             }
+
+            //把货架标签按逗号拆分拼装
+            goodsShelvesVo.setShelvesTagList(str2StrArray(goodsShelves.getShelvesTag(),"[,，]+"));
+
             returnData.setData(goodsShelvesVo);
+        }else{
+            returnData.setMessage(ExceptionConst.get(ExceptionConst.InvalidParameters));
         }
-        returnData.setMessage(ExceptionConst.get(ExceptionConst.InvalidParameters));
         return returnData;
     }
 
@@ -129,6 +139,20 @@ public class GoodsShelvesServiceImpl extends GenericServiceImpl<GoodsShelves, St
         return returnData;
     }
 
+    /**
+     * @Title: str2LongArray
+     * @Description:  按照正则表达式拆分数字字符串转成Long数组
+     * @param target
+     * @param regex
+     * @return
+     */
+    public static String[] str2StrArray(String target,String regex){
+        String[] strArray = null;
+        if(null != target && target.length() > 0){
+            strArray = target.split(regex);
+        }
+        return strArray;
+    }
 
 
 }

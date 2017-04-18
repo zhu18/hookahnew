@@ -35,7 +35,7 @@
     clear: both;
 }
 .order-list ul li {
-    height: 238px;
+    height:auto;
     width: 230px;
     float: left;
     color: black;
@@ -72,13 +72,12 @@
     overflow: hidden;
     width: calc(100% - 20px);
     text-align: justify;
-    height: 54px;
 }
 .order-list ul li .item-down {
     border-top: 1px solid #E5E5E5;
     border-bottom: 1px solid #E5E5E5;
     height: 38px;
-    line-height: 38px;
+    line-height: 36px;
     padding: 0 10px;
 }
 .order-list ul li .item-down span {
@@ -93,15 +92,15 @@
     font-size: 22px;
 }
 .order-list ul li .cancel{
-    line-height: 29px;
+    line-height: 30px;
     background: #f9f9f9;
 }
 .order-list ul li .cancel:hover{
     cursor: pointer;
 }
 .order-list ul li .cancel a {
-    display: inline-block;
-    padding-left: 40px;
+    display: block;
+    text-align: center;
 }
 .order-list .info {
     font-size: 20px;

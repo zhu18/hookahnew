@@ -5,1458 +5,1208 @@ var head = {
 <link rel="stylesheet" href="/static/css/common.css">
 <link rel="stylesheet" href="/static/css/exchange/style.css">
 <%};%>
-
 <%
 var htmlPart = {
 %>
 <div class="grid-0 exchange-index">
-        <!--顶部轮播图-->
-        <div class="index-banner">
-            <div class="grid-row bdg-row" style="position: relative">
-                <!--菜单-->
-                <%include("/layout/menu.html"){} %>
-            </div>
-            <div class="exchange-index-banner">
-                <%include("/layout/index_top_banner.html"){} %>
-            </div>
-        </div>
-        <div class="exchange-category-top grid-row">
-            <ul>
-                <li>
-                    <div>
-                        <h3>数据推荐</h3>
-                        <p>京东指数-洞察趋势，主动市场先机</p>
-                    </div>
-                    <a href="">查看详情</a>
-                    <div class="category-top-img">
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <h3>数据推荐</h3>
-                        <p>京东指数-洞察趋势，主动市场先机</p>
-                    </div>
-                    <a href="">查看详情</a>
-                    <div class="category-top-img">
-                    </div>
-                <li>
-                    <div>
-                        <h3>数据推荐</h3>
-                        <p>京东指数-洞察趋势，主动市场先机</p>
-                    </div>
-                    <a href="">查看详情</a>
-                    <div class="category-top-img">
-                    </div>
-                <li>
-                    <div>
-                        <h3>数据推荐</h3>
-                        <p>京东指数-洞察趋势，主动市场先机</p>
-                    </div>
-                    <a href="">查看详情</a>
-                   <div class="category-top-img">
-                   </div>
-            </ul>
-        </div>
-        <!--推荐资讯-->
-        <div class="exchange-recommend-resource " >
-            <div class="grid-row">
-                <div class="recommend-resource-top" style="">
-                    <div class="recommend-resource-top-left grid-left">
-                        <div class="d">
-                            <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                            <span>推荐资源</span>
-                            <span>优质资源汇总</span>
-                        </div>
-                    </div>
-                    <div class="recommend-resource-top-right grid-right">
-                        <span>更多>></span>
-                    </div>
-                </div>
-                <div class="recommend-resource-down">
-                    <ul>
-                        <li>
-                            <div>
-                                <img  src="/static/images/06.svg" alt="">
-                                <div>
-                                    <p style="display: inline-block">失信被执行人查询</p>
-                                    <p style="display: inline-block">借贷机构可用于查询人的信誉得失。</p>
-                                </div>
-                            </div>
-                            <div class="down">
-                                  <div>
-                                      <div>评分:<span>
+	<!--顶部轮播图-->
+	<div class="index-banner">
+		<div class="grid-row bdg-row" style="position: relative">
+			<!--菜单-->
+			<%include("/layout/menu.html"){} %>
+		</div>
+		<div class="exchange-index-banner">
+			<%include("/layout/index_top_banner.html"){} %>
+		</div>
+	</div>
+	<!--<div class="exchange-category-top grid-row">-->
+	<!--<ul>-->
+	<!--<li>-->
+	<!--<div>-->
+	<!--<h3>数据推荐</h3>-->
+	<!--<p>京东指数-洞察趋势，主动市场先机</p>-->
+	<!--</div>-->
+	<!--<a href="">查看详情</a>-->
+	<!--<div class="category-top-img">-->
+	<!--</div>-->
+	<!--</li>-->
+	<!--<li>-->
+	<!--<div>-->
+	<!--<h3>数据推荐</h3>-->
+	<!--<p>京东指数-洞察趋势，主动市场先机</p>-->
+	<!--</div>-->
+	<!--<a href="">查看详情</a>-->
+	<!--<div class="category-top-img">-->
+	<!--</div>-->
+	<!--<li>-->
+	<!--<div>-->
+	<!--<h3>数据推荐</h3>-->
+	<!--<p>京东指数-洞察趋势，主动市场先机</p>-->
+	<!--</div>-->
+	<!--<a href="">查看详情</a>-->
+	<!--<div class="category-top-img">-->
+	<!--</div>-->
+	<!--<li>-->
+	<!--<div>-->
+	<!--<h3>数据推荐</h3>-->
+	<!--<p>京东指数-洞察趋势，主动市场先机</p>-->
+	<!--</div>-->
+	<!--<a href="">查看详情</a>-->
+	<!--<div class="category-top-img">-->
+	<!--</div>-->
+	<!--</ul>-->
+	<!--</div>-->
+	<!--推荐资讯-->
+	<%if(goodsShelvesVoInfo.recomm_data != ''){%>
+	<div class="exchange-recommend-resource ">
+		<div class="grid-row">
+			<div class="recommend-resource-top" style="">
+				<div class="recommend-resource-top-left grid-left">
+					<div class="d">
+						<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+						<span>${goodsShelvesVoInfo.recomm_data.shelvesName}</span>
+						<span>${goodsShelvesVoInfo.recomm_data.shelvesDesc}</span>
+					</div>
+				</div>
+				<div class="recommend-resource-top-right grid-right">
+					<span>更多>></span>
+				</div>
+			</div>
+			<div class="recommend-resource-down">
+				<ul>
+					<%for(item in goodsShelvesVoInfo.recomm_data.goods){%>
+					<li>
+						<div>
+							<a href="${host.website}/exchange/details?id=${item.goodsId}"><img src="${item.goodsImg}" alt=""></a>
+							<div class="padding-left-5">
+								<a href="${host.website}/exchange/details?id=${item.goodsId}"><p class="title">
+									${item.goodsName}</p></a>
+								<a href="${host.website}/exchange/details?id=${item.goodsId}"><p class="subtitle">
+									${item.goodsBrief}</p></a>
+							</div>
+						</div>
+						<div class="down">
+							<div>
+								<div>评分:
+									<span>
                                           <i class="fa fa-star" aria-hidden="true"></i>
                                           <i class="fa fa-star" aria-hidden="true"></i>
                                           <i class="fa fa-star" aria-hidden="true"></i>
                                           <i class="fa fa-star" aria-hidden="true"></i>
                                           <i class="fa fa-star" aria-hidden="true"></i>
                                       </span>
-                                      </div>
-                                      <span><i class="fa fa-heart" aria-hidden="true"></i>收藏</span>
-                                  </div>
-                                  <div>
-                                      <span><i class="fa fa-jpy" aria-hidden="true"></i>120364</span>
-                                      <a href="">查看详情</a>
-                                  </div>
-                            </div>
-                            <div class="li-hover">
-
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                <img  src="" alt="">
-                                <div>
-                                    <p style="display: inline-block">失信被执行人查询</p>
-                                    <p style="display: inline-block">借贷机构可用于查询人的信誉得失。</p>
-                                </div>
-                            </div>
-                            <div class="down">
-                                <div>
-                                    <div>评分:<span>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                      </span>
-                                    </div>
-                                    <span><i class="fa fa-heart" aria-hidden="true"></i>收藏</span>
-                                </div>
-                                <div>
-                                    <span><i class="fa fa-jpy" aria-hidden="true"></i>120364</span>
-                                    <a href="">查看详情</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                <img  src="" alt="">
-                                <div>
-                                    <p style="display: inline-block">失信被执行人查询</p>
-                                    <p style="display: inline-block">借贷机构可用于查询人的信誉得失。</p>
-                                </div>
-                            </div>
-                            <div class="down">
-                                <div>
-                                    <div>评分:<span>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                      </span>
-                                    </div>
-                                    <span><i class="fa fa-heart" aria-hidden="true"></i>收藏</span>
-                                </div>
-                                <div>
-                                    <span><i class="fa fa-jpy" aria-hidden="true"></i>120364</span>
-                                    <a href="">查看详情</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                <img  src="" alt="">
-                                <div>
-                                    <p style="display: inline-block">失信被执行人查询</p>
-                                    <p style="display: inline-block">借贷机构可用于查询人的信誉得失。</p>
-                                </div>
-                            </div>
-                            <div class="down">
-                                <div>
-                                    <div>评分:<span>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                      </span>
-                                    </div>
-                                    <span><i class="fa fa-heart" aria-hidden="true"></i>收藏</span>
-                                </div>
-                                <div>
-                                    <span><i class="fa fa-jpy" aria-hidden="true"></i>120364</span>
-                                    <a href="">查看详情</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                <img  src="" alt="">
-                                <div>
-                                    <p style="display: inline-block">失信被执行人查询</p>
-                                    <p style="display: inline-block">借贷机构可用于查询人的信誉得失。</p>
-                                </div>
-                            </div>
-                            <div class="down">
-                                <div>
-                                    <div>评分:<span>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                      </span>
-                                    </div>
-                                    <span><i class="fa fa-heart" aria-hidden="true"></i>收藏</span>
-                                </div>
-                                <div>
-                                    <span><i class="fa fa-jpy" aria-hidden="true"></i>120364</span>
-                                    <a href="">查看详情</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                <img  src="" alt="">
-                                <div>
-                                    <p style="display: inline-block">失信被执行人查询</p>
-                                    <p style="display: inline-block">借贷机构可用于查询人的信誉得失。</p>
-                                </div>
-                            </div>
-                            <div class="down">
-                                <div>
-                                    <div>评分:<span>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                      </span>
-                                    </div>
-                                    <span><i class="fa fa-heart" aria-hidden="true"></i>收藏</span>
-                                </div>
-                                <div>
-                                    <span><i class="fa fa-jpy" aria-hidden="true"></i>120364</span>
-                                    <a href="">查看详情</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                <img  src="" alt="">
-                                <div>
-                                    <p style="display: inline-block">失信被执行人查询</p>
-                                    <p style="display: inline-block">借贷机构可用于查询人的信誉得失。</p>
-                                </div>
-                            </div>
-                            <div class="down">
-                                <div>
-                                    <div>评分:<span>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                      </span>
-                                    </div>
-                                    <span><i class="fa fa-heart" aria-hidden="true"></i>收藏</span>
-                                </div>
-                                <div>
-                                    <span><i class="fa fa-jpy" aria-hidden="true"></i>120364</span>
-                                    <a href="">查看详情</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                <img  src="" alt="">
-                                <div>
-                                    <p style="display: inline-block">失信被执行人查询</p>
-                                    <p style="display: inline-block">借贷机构可用于查询人的信誉得失。</p>
-                                </div>
-                            </div>
-                            <div class="down">
-                                <div>
-                                    <div>评分:<span>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                      </span>
-                                    </div>
-                                    <span><i class="fa fa-heart" aria-hidden="true"></i>收藏</span>
-                                </div>
-                                <div>
-                                    <span><i class="fa fa-jpy" aria-hidden="true"></i>120364</span>
-                                    <a href="">查看详情</a>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="exchange-center-bar">
-
-        </div>
-        <!--热门资讯-->
-        <div class="exchange-hot-resource grid-row" >
-            <div class="hot-resource-top" style="">
-                <div class="hot-resource-top-left grid-left">
-                    <div class="d">
-                        <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                        <span>热门资源</span>
-                        <span>最热资源汇总</span>
-                    </div>
-                </div>
-                <div class="hot-resource-top-right grid-right">
-                    <span>更多>></span>
-                </div>
-            </div>
-            <div class="hot-resource-down clearfix">
-              <div class="hot-down-left ">
-                    <div>
-                        <p>资源</p>
-                        <p>最热资源汇总</p>
-                    </div>
-                    <div>
-                        <span>资源汇总</span>
-                        <span>资源汇总</span>
-                        <a href="">查看更多>></a>
-                    </div>
-              </div>
-              <div class="hot-down-table ">
-                  <table>
-                      <tr>
-                          <th>资源标识</th>
-                          <th>资源名称</th>
-                          <th>金额</th>
-                          <th>操作</th>
-                      </tr>
-                      <tr>
-                          <td><img src="" alt=""></td>
-                          <td>活动策划模型</td>
-                          <td><span>0.3</span><span>元/次</span></td>
-                          <td>
-                              <span>免</span>
-                              <span>企</span>
-                          </td>
-                      </tr>
-                      <tr>
-                          <td><img src="" alt=""></td>
-                          <td>活动策划模型</td>
-                          <td><span>0.3</span><span>元/次</span></td>
-                          <td>
-                              <span>免</span>
-                              <span>企</span>
-                          </td>
-                      </tr>
-                      <tr>
-                          <td><img src="" alt=""></td>
-                          <td>活动策划模型</td>
-                          <td><span>0.3</span><span>元/次</span></td>
-                          <td>
-                              <span>免</span>
-                              <span>企</span>
-                          </td>
-                      </tr>
-                      <tr>
-                          <td><img src="" alt=""></td>
-                          <td>活动策划模型</td>
-                          <td><span>0.3</span><span>元/次</span></td>
-                          <td>
-                              <span>免</span>
-                              <span>企</span>
-                          </td>
-                      </tr>
-                      <tr>
-                          <td><img src="" alt=""></td>
-                          <td>活动策划模型</td>
-                          <td><span>0.3</span><span>元/次</span></td>
-                          <td>
-                              <span>免</span>
-                              <span>企</span>
-                          </td>
-                      </tr>
-                  </table>
-              </div>
-              <div class="hot-down-rank display-inline-block">
-                  <div><i></i><span>热销榜</span></div>
-                  <ul>
-                      <li class="active">
-                          <div >
-                              <span>1</span>
-                              <img  src="/static/images/a1.png" alt="">
-                              <div>
-                                  <p>失信被执行人查询</p>
-                                  <p class="p-none">0.3元/次</p>
-                              </div>
-                          </div>
-                      </li>
-                      <li>
-                          <div class="li-rank">
-                              <span>2</span>
-                              <img  src="/static/images/a1.png" alt="">
-                              <div>
-                                  <p>失信被执行人查询</p>
-                                  <p class="p-none">0.3元/次</p>
-                              </div>
-                          </div>
-                      </li>
-                      <li>
-                          <div class="li-rank">
-                              <span>3</span>
-                              <img  src="/static/images/a1.png" alt="">
-                              <div>
-                                  <p>失信被执行人查询</p>
-                                  <p class="p-none">0.3元/次</p>
-                              </div>
-                          </div>
-                      </li>
-                      <li>
-                          <div class="li-rank">
-                              <span>4</span>
-                              <img  src="/static/images/a1.png" alt="">
-                              <div>
-                                  <p>失信被执行人查询</p>
-                                  <p class="p-none">0.3元/次</p>
-                              </div>
-                          </div>
-                      </li>
-                      <li>
-                          <div class="li-rank">
-                              <span>5</span>
-                              <img  src="/static/images/a1.png" alt="">
-                              <div>
-                                  <p>失信被执行人查询</p>
-                                  <p class="p-none">0.3元/次</p>
-                              </div>
-                          </div>
-                      </li>
-                      <li>
-                          <div class="li-rank">
-                              <span>6</span>
-                              <img  src="/static/images/a1.png" alt="">
-                              <div>
-                                  <p>失信被执行人查询</p>
-                                  <p class="p-none">0.3元/次</p>
-                              </div>
-                          </div>
-                      </li>
-                  </ul>
-              </div>
-            </div>
-        </div>
-        <!--行业资讯-->
-        <div class="exchange-industry-resource ">
-            <div class="industry-resource-top grid-row">
-                <div class="industry-resource-top-left grid-left">
-                    <div class="d">
-                        <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                        <span>行业资源</span>
-                        <span>行业资源汇总</span>
-                    </div>
-                </div>
-                <div class="industry-resource-top-right grid-right">
-                    <span>更多>></span>
-                </div>
-            </div>
-            <div class="industry-resource-down ">
-                <div class="carousel-box">
-                    <div id="arr">
-                        <div   id="arrow-left"><</div>
-                        <div id="arrow-right">></div>
-                    </div>
-                    <div class="screen">
-                        <ul class="clearfix">
-                            <li class="slide-item">
-                                <a href="">
-                                    <img src="https://img.alicdn.com/tps/TB16hkwLXXXXXX6XXXXXXXXXXXX-576-840.jpg" alt="">
-                                    <div class="bg">
-                                        <div class="bg-bg"></div>
-                                        <div class="bg-content">
-                                            <div class="bg-content-img">
-                                                <img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-                                            </div>
-                                            <p class="bg-boundary"><i></i></p>
-                                            <h3 class="bg-title">银行信贷</h3>
-                                            <p class="bg-info">专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-                                            <div class="bg-btn">
-                                                查看详情
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="slide-item">
-                                <a href="">
-                                    <img src="https://img.alicdn.com/tps/TB19Jz6LXXXXXacaXXXXXXXXXXX-576-840.jpg" alt="">
-                                    <div class="bg">
-                                        <div class="bg-bg"></div>
-                                        <div class="bg-content">
-                                            <div class="bg-content-img">
-                                                <img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-                                            </div>
-                                            <p class="bg-boundary"><i></i></p>
-                                            <h3 class="bg-title">银行信贷</h3>
-                                            <p class="bg-info">专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-                                            <div class="bg-btn">
-                                                查看详情
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="slide-item">
-                                <a href="">
-                                    <img src="https://img.alicdn.com/tps/TB1RJ_8LXXXXXX9aXXXXXXXXXXX-576-840.jpg" alt="">
-                                    <div class="bg">
-                                        <div class="bg-bg"></div>
-                                        <div class="bg-content">
-                                            <div class="bg-content-img">
-                                                <img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-                                            </div>
-                                            <p class="bg-boundary"><i></i></p>
-                                            <h3 class="bg-title">银行信贷</h3>
-                                            <p class="bg-info">专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-                                            <div class="bg-btn">
-                                                查看详情
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="slide-item">
-                                <a href="">
-                                    <img src="https://img.alicdn.com/tps/TB1dDT4LXXXXXabaXXXXXXXXXXX-576-840.jpg" alt="">
-                                    <div class="bg">
-                                        <div class="bg-bg"></div>
-                                        <div class="bg-content">
-                                            <div class="bg-content-img">
-                                                <img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-                                            </div>
-                                            <p class="bg-boundary"><i></i></p>
-                                            <h3 class="bg-title">银行信贷</h3>
-                                            <p class="bg-info">专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-                                            <div class="bg-btn">
-                                                查看详情
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="slide-item">
-                                <a href="">
-                                    <img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">
-                                    <div class="bg">
-                                        <div class="bg-bg"></div>
-                                        <div class="bg-content">
-                                            <div class="bg-content-img">
-                                                <img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-                                            </div>
-                                            <p class="bg-boundary"><i></i></p>
-                                            <h3 class="bg-title">银行信贷</h3>
-                                            <p class="bg-info">专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-                                            <div class="bg-btn">
-                                                查看详情
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <!--1-->
-                            <li class="slide-item">
-                                <a href="">
-                                    <img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">
-                                    <div class="bg">
-                                        <div class="bg-bg"></div>
-                                        <div class="bg-content">
-                                            <div class="bg-content-img">
-                                                <img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-                                            </div>
-                                            <p class="bg-boundary"><i></i></p>
-                                            <h3 class="bg-title">1</h3>
-                                            <p class="bg-info">专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-                                            <div class="bg-btn">
-                                                查看详情
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="slide-item">
-                                <a href="">
-                                    <img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">
-                                    <div class="bg">
-                                        <div class="bg-bg"></div>
-                                        <div class="bg-content">
-                                            <div class="bg-content-img">
-                                                <img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-                                            </div>
-                                            <p class="bg-boundary"><i></i></p>
-                                            <h3 class="bg-title">银行信贷</h3>
-                                            <p class="bg-info">专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-                                            <div class="bg-btn">
-                                                查看详情
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="slide-item">
-                                <a href="">
-                                    <img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">
-                                    <div class="bg">
-                                        <div class="bg-bg"></div>
-                                        <div class="bg-content">
-                                            <div class="bg-content-img">
-                                                <img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-                                            </div>
-                                            <p class="bg-boundary"><i></i></p>
-                                            <h3 class="bg-title">银行信贷</h3>
-                                            <p class="bg-info">专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-                                            <div class="bg-btn">
-                                                查看详情
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="slide-item">
-                                <a href="">
-                                    <img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">
-                                    <div class="bg">
-                                        <div class="bg-bg"></div>
-                                        <div class="bg-content">
-                                            <div class="bg-content-img">
-                                                <img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-                                            </div>
-                                            <p class="bg-boundary"><i></i></p>
-                                            <h3 class="bg-title">银行信贷</h3>
-                                            <p class="bg-info">专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-                                            <div class="bg-btn">
-                                                查看详情
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="slide-item">
-                                <a href="">
-                                    <img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">
-                                    <div class="bg">
-                                        <div class="bg-bg"></div>
-                                        <div class="bg-content">
-                                            <div class="bg-content-img">
-                                                <img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-                                            </div>
-                                            <p class="bg-boundary"><i></i></p>
-                                            <h3 class="bg-title">银行信贷</h3>
-                                            <p class="bg-info">专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-                                            <div class="bg-btn">
-                                                查看详情
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-
-                            <!--3-->
-                            <li class="slide-item">
-                                <a href="">
-                                    <img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">
-                                    <div class="bg">
-                                        <div class="bg-bg"></div>
-                                        <div class="bg-content">
-                                            <div class="bg-content-img">
-                                                <img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-                                            </div>
-                                            <p class="bg-boundary"><i></i></p>
-                                            <h3 class="bg-title">3</h3>
-                                            <p class="bg-info">专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-                                            <div class="bg-btn">
-                                                查看详情
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="slide-item">
-                                <a href="">
-                                    <img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">
-                                    <div class="bg">
-                                        <div class="bg-bg"></div>
-                                        <div class="bg-content">
-                                            <div class="bg-content-img">
-                                                <img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-                                            </div>
-                                            <p class="bg-boundary"><i></i></p>
-                                            <h3 class="bg-title">4</h3>
-                                            <p class="bg-info">专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-                                            <div class="bg-btn">
-                                                查看详情
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <!--追加的-->
-
-                        </ul>
-                    </div>
-                </div>
-
-
-            </div>
-        </div>
-        <!--底部分类-->
-        <div class="exchange-category-down grid-row">
-             <div class="category-left grid-left">
-                 <div class="category-box">
-                     <ul>
-                         <li class="grid-left active">数据源</li>
-                         <li class="grid-left">模型</li>
-                         <li class="grid-left">应用场景</li>
-                         <li class="grid-left">平台</li>
-                         <li class="grid-left">工具</li>
-                     </ul>
-                 </div>
-                 <div class="category-item item-active">
-                     <div class="grid-left resource-two">
-                         <div>
-                             <p>数据源</p>
-                             <p>数据分析平台</p>
-                         </div>
-                         <div>
-                             <span>资源汇总</span>
-                             <span>资源汇总</span>
-                             <a href="">查看更多>></a>
-                         </div>
-                     </div>
-                     <div class="grid-right">
-                         <ul>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                         </ul>
-                     </div>
-                 </div>
-                 <div class="category-item">
-                     <div class="grid-left resource-two">
-                         <div>
-                             <p>模型</p>
-                             <p>模型分析平台</p>
-                         </div>
-                         <div>
-                             <span>资源汇总</span>
-                             <span>资源汇总</span>
-                             <a href="">查看更多>></a>
-                         </div>
-                     </div>
-                     <div class="grid-right">
-                         <ul>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                         </ul>
-                     </div>
-                 </div>
-                 <div class="category-item">
-                     <div class="grid-left resource-two">
-                         <div>
-                             <p>应用场景</p>
-                             <p>应用场景分析平台</p>
-                         </div>
-                         <div>
-                             <span>资源汇总</span>
-                             <span>资源汇总</span>
-                             <a href="">查看更多>></a>
-                         </div>
-                     </div>
-                     <div class="grid-right">
-                         <ul>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                         </ul>
-                     </div>
-                 </div>
-                 <div class="category-item">
-                     <div class="grid-left resource-two">
-                         <div>
-                             <p>平台</p>
-                             <p>平台分析平台</p>
-                         </div>
-                         <div>
-                             <span>资源汇总</span>
-                             <span>资源汇总</span>
-                             <a href="">查看更多>></a>
-                         </div>
-                     </div>
-                     <div class="grid-right">
-                         <ul>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                         </ul>
-                     </div>
-                 </div>
-                 <div class="category-item">
-                     <div class="grid-left resource-two">
-                         <div>
-                             <p>工具</p>
-                             <p>数据分析平台</p>
-                         </div>
-                         <div>
-                             <span>资源汇总</span>
-                             <span>资源汇总</span>
-                             <a href="">查看更多>></a>
-                         </div>
-                     </div>
-                     <div class="grid-right">
-                         <ul>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                             <li>
-                                 <img src="" alt="">
-                                 <p>数据挖掘工具</p>
-                                 <p>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                     <i class="fa fa-star color-orange" aria-hidden="true"></i>
-                                 </p>
-                                 <p>
-                                     <i class="fa fa-jpy color-red" aria-hidden="true"></i>
-                                     <span class="color-red">10352</span>
-                                     <span class="color-red">元</span>
-                                 </p>
-                             </li>
-                         </ul>
-                     </div>
-                 </div>
-             </div>
-             <div class="category-right grid-right">
-                 <div class="common-problems">
-                    <i></i><span>常见问题</span><span>更多>></span>
-                 </div>
-                 <ul class="common-problems-list">
-                     <li><span>1</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
-                     <li><span>2</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
-                     <li><span>3</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
-                     <li><span>4</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
-                     <li><span>5</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
-                     <li><span>6</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
-                     <li><span>7</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
-                     <li><span>8</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
-                     <li><span>9</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
-                 </ul>
-             </div>
-        </div>
+								</div>
+								<span><i class="fa fa-heart" aria-hidden="true"></i>收藏</span>
+							</div>
+							<div>
+								<span><i class="fa fa-jpy" aria-hidden="true"></i>${item.shopPrice}</span>
+								<a href="${host.website}/exchange/details?id=${item.goodsId}">查看详情</a>
+							</div>
+						</div>
+						<div class="li-hover">
+						</div>
+					</li>
+					<%}%>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<%}%>
+	<div class="exchange-center-bar">
+	</div>
+	<!--热门资讯-->
+	<%if(goodsShelvesVoInfo.hot_res_data != ''){%>
+	<div class="exchange-hot-resource grid-row">
+		<div class="hot-resource-top" style="">
+			<div class="hot-resource-top-left grid-left">
+				<div class="d">
+					<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+					<span>${goodsShelvesVoInfo.hot_res_data.shelvesName}</span>
+					<span>${goodsShelvesVoInfo.hot_res_data.shelvesDesc}</span>
+				</div>
+			</div>
+			<div class="hot-resource-top-right grid-right">
+				<span>更多>></span>
+			</div>
+		</div>
+		<div class="hot-resource-down clearfix">
+			<div class="hot-down-left ">
+				<div>
+					<p>${goodsShelvesVoInfo.hot_res_data.shelvesName}</p>
+					<p>${goodsShelvesVoInfo.hot_res_data.shelvesDesc}</p>
+				</div>
+				<!--<div>-->
+					<!--<span>资源汇总</span>-->
+					<!--<span>资源汇总</span>-->
+				<!--</div>-->
+			</div>
+			<div class="hot-down-table ">
+				<table>
+					<tr>
+						<th>资源标识</th>
+						<th>资源名称</th>
+						<th>金额</th>
+						<th>操作</th>
+					</tr>
+					<%for(item in goodsShelvesVoInfo.hot_res_data.goods){%>
+					<tr>
+						<td><img src="${item.goodsImg}" alt=""></td>
+						<td>${item.goodsName}</td>
+						<td><span>${item.shopPrice}</span></td><!--<span>元/次</span>-->
+						<td>
+							<a href="${host.website}/exchange/details?id=${item.goodsId}">查看详情</a>
+							<!--<span>免</span>-->
+							<!--<span>企</span>-->
+						</td>
+					</tr>
+					<%}%>
+				</table>
+			</div>
+			<div class="hot-down-rank display-inline-block">
+				<div class="h-title"><i></i><span>${goodsShelvesVoInfo.hot_sell_data.shelvesName}</span></div>
+				<ul>
+					<%for(item in goodsShelvesVoInfo.hot_sell_data.goods){%>
+					<li class="${decode(itemLP.index,1,'active','')}">
+						<img src="${item.goodsImg}" class="grid-left" alt="">
+						<div class="infoBox grid-right">
+							<p class="title">${item.goodsName}</p>
+							<p class="p-none ">${item.shopPrice}</p>
+						</div>
+					</li>
+					<%}%>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<%}%>
+	<!--行业资讯-->
+	<%if(goodsShelvesVoInfo.ind_res_data != ''){%>
+	<div class="exchange-industry-resource ">
+		<div class="industry-resource-top grid-row">
+			<div class="industry-resource-top-left grid-left">
+				<div class="d">
+					<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+					<span>${goodsShelvesVoInfo.ind_res_data.shelvesName}</span>
+					<span>${goodsShelvesVoInfo.ind_res_data.shelvesDesc}</span>
+				</div>
+			</div>
+			<div class="industry-resource-top-right grid-right">
+				<span>更多>></span>
+			</div>
+		</div>
+		<div class="industry-resource-down ">
+			<div class="carousel-box">
+				<div id="arr">
+					<div id="arrow-left"><</div>
+					<div id="arrow-right">></div>
+				</div>
+				<div class="screen">
+					<ul class="clearfix">
+						<%for(item in goodsShelvesVoInfo.ind_res_data.goods){%>
+						<li class="slide-item">
+							<a href="${host.website}/exchange/details?id=${item.goodsId}">
+								<img src="https://img.alicdn.com/tps/TB16hkwLXXXXXX6XXXXXXXXXXXX-576-840.jpg" alt="">
+								<div class="bg">
+									<div class="bg-bg"></div>
+									<div class="bg-content">
+										<div class="bg-content-img">
+											<img src="${item.goodsImg}" alt="">
+										</div>
+										<p class="bg-boundary"><i></i></p>
+										<h3 class="bg-title">${item.goodsName}</h3>
+										<p class="bg-info">${item.goodsBrief}</p>
+										<div class="bg-btn">
+											查看详情
+										</div>
+									</div>
+								</div>
+							</a>
+						</li>
+						<%}%>
+						<!--<li class="slide-item">-->
+							<!--<a href="">-->
+								<!--<img src="https://img.alicdn.com/tps/TB19Jz6LXXXXXacaXXXXXXXXXXX-576-840.jpg" alt="">-->
+								<!--<div class="bg">-->
+									<!--<div class="bg-bg"></div>-->
+									<!--<div class="bg-content">-->
+										<!--<div class="bg-content-img">-->
+											<!--<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">-->
+										<!--</div>-->
+										<!--<p class="bg-boundary"><i></i></p>-->
+										<!--<h3 class="bg-title">银行信贷</h3>-->
+										<!--<p class="bg-info">-->
+											<!--专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>-->
+										<!--<div class="bg-btn">-->
+											<!--查看详情-->
+										<!--</div>-->
+									<!--</div>-->
+								<!--</div>-->
+							<!--</a>-->
+						<!--</li>-->
+						<!--<li class="slide-item">-->
+							<!--<a href="">-->
+								<!--<img src="https://img.alicdn.com/tps/TB1RJ_8LXXXXXX9aXXXXXXXXXXX-576-840.jpg" alt="">-->
+								<!--<div class="bg">-->
+									<!--<div class="bg-bg"></div>-->
+									<!--<div class="bg-content">-->
+										<!--<div class="bg-content-img">-->
+											<!--<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">-->
+										<!--</div>-->
+										<!--<p class="bg-boundary"><i></i></p>-->
+										<!--<h3 class="bg-title">银行信贷</h3>-->
+										<!--<p class="bg-info">-->
+											<!--专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>-->
+										<!--<div class="bg-btn">-->
+											<!--查看详情-->
+										<!--</div>-->
+									<!--</div>-->
+								<!--</div>-->
+							<!--</a>-->
+						<!--</li>-->
+						<!--<li class="slide-item">-->
+							<!--<a href="">-->
+								<!--<img src="https://img.alicdn.com/tps/TB1dDT4LXXXXXabaXXXXXXXXXXX-576-840.jpg" alt="">-->
+								<!--<div class="bg">-->
+									<!--<div class="bg-bg"></div>-->
+									<!--<div class="bg-content">-->
+										<!--<div class="bg-content-img">-->
+											<!--<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">-->
+										<!--</div>-->
+										<!--<p class="bg-boundary"><i></i></p>-->
+										<!--<h3 class="bg-title">银行信贷</h3>-->
+										<!--<p class="bg-info">-->
+											<!--专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>-->
+										<!--<div class="bg-btn">-->
+											<!--查看详情-->
+										<!--</div>-->
+									<!--</div>-->
+								<!--</div>-->
+							<!--</a>-->
+						<!--</li>-->
+						<!--<li class="slide-item">-->
+							<!--<a href="">-->
+								<!--<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">-->
+								<!--<div class="bg">-->
+									<!--<div class="bg-bg"></div>-->
+									<!--<div class="bg-content">-->
+										<!--<div class="bg-content-img">-->
+											<!--<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">-->
+										<!--</div>-->
+										<!--<p class="bg-boundary"><i></i></p>-->
+										<!--<h3 class="bg-title">银行信贷</h3>-->
+										<!--<p class="bg-info">-->
+											<!--专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>-->
+										<!--<div class="bg-btn">-->
+											<!--查看详情-->
+										<!--</div>-->
+									<!--</div>-->
+								<!--</div>-->
+							<!--</a>-->
+						<!--</li>-->
+						<!--&lt;!&ndash;1&ndash;&gt;-->
+						<!--<li class="slide-item">-->
+							<!--<a href="">-->
+								<!--<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">-->
+								<!--<div class="bg">-->
+									<!--<div class="bg-bg"></div>-->
+									<!--<div class="bg-content">-->
+										<!--<div class="bg-content-img">-->
+											<!--<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">-->
+										<!--</div>-->
+										<!--<p class="bg-boundary"><i></i></p>-->
+										<!--<h3 class="bg-title">1</h3>-->
+										<!--<p class="bg-info">-->
+											<!--专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>-->
+										<!--<div class="bg-btn">-->
+											<!--查看详情-->
+										<!--</div>-->
+									<!--</div>-->
+								<!--</div>-->
+							<!--</a>-->
+						<!--</li>-->
+						<!--<li class="slide-item">-->
+							<!--<a href="">-->
+								<!--<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">-->
+								<!--<div class="bg">-->
+									<!--<div class="bg-bg"></div>-->
+									<!--<div class="bg-content">-->
+										<!--<div class="bg-content-img">-->
+											<!--<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">-->
+										<!--</div>-->
+										<!--<p class="bg-boundary"><i></i></p>-->
+										<!--<h3 class="bg-title">银行信贷</h3>-->
+										<!--<p class="bg-info">-->
+											<!--专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>-->
+										<!--<div class="bg-btn">-->
+											<!--查看详情-->
+										<!--</div>-->
+									<!--</div>-->
+								<!--</div>-->
+							<!--</a>-->
+						<!--</li>-->
+						<!--<li class="slide-item">-->
+							<!--<a href="">-->
+								<!--<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">-->
+								<!--<div class="bg">-->
+									<!--<div class="bg-bg"></div>-->
+									<!--<div class="bg-content">-->
+										<!--<div class="bg-content-img">-->
+											<!--<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">-->
+										<!--</div>-->
+										<!--<p class="bg-boundary"><i></i></p>-->
+										<!--<h3 class="bg-title">银行信贷</h3>-->
+										<!--<p class="bg-info">-->
+											<!--专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>-->
+										<!--<div class="bg-btn">-->
+											<!--查看详情-->
+										<!--</div>-->
+									<!--</div>-->
+								<!--</div>-->
+							<!--</a>-->
+						<!--</li>-->
+						<!--<li class="slide-item">-->
+							<!--<a href="">-->
+								<!--<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">-->
+								<!--<div class="bg">-->
+									<!--<div class="bg-bg"></div>-->
+									<!--<div class="bg-content">-->
+										<!--<div class="bg-content-img">-->
+											<!--<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">-->
+										<!--</div>-->
+										<!--<p class="bg-boundary"><i></i></p>-->
+										<!--<h3 class="bg-title">银行信贷</h3>-->
+										<!--<p class="bg-info">-->
+											<!--专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>-->
+										<!--<div class="bg-btn">-->
+											<!--查看详情-->
+										<!--</div>-->
+									<!--</div>-->
+								<!--</div>-->
+							<!--</a>-->
+						<!--</li>-->
+						<!--<li class="slide-item">-->
+							<!--<a href="">-->
+								<!--<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">-->
+								<!--<div class="bg">-->
+									<!--<div class="bg-bg"></div>-->
+									<!--<div class="bg-content">-->
+										<!--<div class="bg-content-img">-->
+											<!--<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">-->
+										<!--</div>-->
+										<!--<p class="bg-boundary"><i></i></p>-->
+										<!--<h3 class="bg-title">银行信贷</h3>-->
+										<!--<p class="bg-info">-->
+											<!--专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>-->
+										<!--<div class="bg-btn">-->
+											<!--查看详情-->
+										<!--</div>-->
+									<!--</div>-->
+								<!--</div>-->
+							<!--</a>-->
+						<!--</li>-->
+						<!--&lt;!&ndash;3&ndash;&gt;-->
+						<!--<li class="slide-item">-->
+							<!--<a href="">-->
+								<!--<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">-->
+								<!--<div class="bg">-->
+									<!--<div class="bg-bg"></div>-->
+									<!--<div class="bg-content">-->
+										<!--<div class="bg-content-img">-->
+											<!--<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">-->
+										<!--</div>-->
+										<!--<p class="bg-boundary"><i></i></p>-->
+										<!--<h3 class="bg-title">3</h3>-->
+										<!--<p class="bg-info">-->
+											<!--专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>-->
+										<!--<div class="bg-btn">-->
+											<!--查看详情-->
+										<!--</div>-->
+									<!--</div>-->
+								<!--</div>-->
+							<!--</a>-->
+						<!--</li>-->
+						<!--<li class="slide-item">-->
+							<!--<a href="">-->
+								<!--<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">-->
+								<!--<div class="bg">-->
+									<!--<div class="bg-bg"></div>-->
+									<!--<div class="bg-content">-->
+										<!--<div class="bg-content-img">-->
+											<!--<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">-->
+										<!--</div>-->
+										<!--<p class="bg-boundary"><i></i></p>-->
+										<!--<h3 class="bg-title">4</h3>-->
+										<!--<p class="bg-info">-->
+											<!--专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>-->
+										<!--<div class="bg-btn">-->
+											<!--查看详情-->
+										<!--</div>-->
+									<!--</div>-->
+								<!--</div>-->
+							<!--</a>-->
+						<!--</li>-->
+						<!--追加的-->
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<%}%>
+	<!--底部分类-->
+	<div class="exchange-category-down grid-row">
+		<div class="category-left grid-left">
+			<div class="category-box">
+				<ul>
+					<li class="grid-left active">数据源</li>
+					<li class="grid-left">模型</li>
+					<li class="grid-left">应用场景</li>
+					<li class="grid-left">平台</li>
+					<li class="grid-left">工具</li>
+				</ul>
+			</div>
+			<div class="category-item item-active">
+				<div class="grid-left resource-two">
+					<div>
+						<p>数据源</p>
+						<p>数据分析平台</p>
+					</div>
+					<div>
+						<span>资源汇总</span>
+						<span>资源汇总</span>
+						<a href="">查看更多>></a>
+					</div>
+				</div>
+				<div class="grid-right">
+					<ul>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="category-item">
+				<div class="grid-left resource-two">
+					<div>
+						<p>模型</p>
+						<p>模型分析平台</p>
+					</div>
+					<div>
+						<span>资源汇总</span>
+						<span>资源汇总</span>
+						<a href="">查看更多>></a>
+					</div>
+				</div>
+				<div class="grid-right">
+					<ul>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="category-item">
+				<div class="grid-left resource-two">
+					<div>
+						<p>应用场景</p>
+						<p>应用场景分析平台</p>
+					</div>
+					<div>
+						<span>资源汇总</span>
+						<span>资源汇总</span>
+						<a href="">查看更多>></a>
+					</div>
+				</div>
+				<div class="grid-right">
+					<ul>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="category-item">
+				<div class="grid-left resource-two">
+					<div>
+						<p>平台</p>
+						<p>平台分析平台</p>
+					</div>
+					<div>
+						<span>资源汇总</span>
+						<span>资源汇总</span>
+						<a href="">查看更多>></a>
+					</div>
+				</div>
+				<div class="grid-right">
+					<ul>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="category-item">
+				<div class="grid-left resource-two">
+					<div>
+						<p>工具</p>
+						<p>数据分析平台</p>
+					</div>
+					<div>
+						<span>资源汇总</span>
+						<span>资源汇总</span>
+						<a href="">查看更多>></a>
+					</div>
+				</div>
+				<div class="grid-right">
+					<ul>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+						<li>
+							<img src="" alt="">
+							<p>数据挖掘工具</p>
+							<p>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								<i class="fa fa-star color-orange" aria-hidden="true"></i>
+							</p>
+							<p>
+								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+								<span class="color-red">10352</span>
+								<span class="color-red">元</span>
+							</p>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="category-right grid-right">
+			<div class="common-problems">
+				<i></i><span>常见问题</span><span>更多>></span>
+			</div>
+			<ul class="common-problems-list">
+				<li><span>1</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
+				<li><span>2</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
+				<li><span>3</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
+				<li><span>4</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
+				<li><span>5</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
+				<li><span>6</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
+				<li><span>7</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
+				<li><span>8</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
+				<li><span>9</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
+			</ul>
+		</div>
+	</div>
 </div>
 <script src="/static/js/exchange/common.js"></script>
 <script src="/static/js/exchange/index.js"></script>

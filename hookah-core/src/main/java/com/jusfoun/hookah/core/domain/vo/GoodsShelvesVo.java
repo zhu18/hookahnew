@@ -11,7 +11,17 @@ import java.util.List;
  */
 public class GoodsShelvesVo extends GoodsShelves {
 
+    private String[] shelvesTagList;
+
     private List<Goods> goods = new ArrayList();
+
+    public String[] getShelvesTagList() {
+        return shelvesTagList;
+    }
+
+    public void setShelvesTagList(String[] shelvesTagList) {
+        this.shelvesTagList = shelvesTagList;
+    }
 
     public List<Goods> getGoods() {
         return goods;
