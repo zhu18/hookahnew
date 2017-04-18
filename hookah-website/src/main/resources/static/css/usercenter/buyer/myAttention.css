@@ -35,7 +35,7 @@
     clear: both;
 }
 .order-list ul li {
-    height: 238px;
+    height:auto;
     width: 230px;
     float: left;
     color: black;
@@ -72,7 +72,6 @@
     overflow: hidden;
     width: calc(100% - 20px);
     text-align: justify;
-    height: 54px;
 }
 .order-list ul li .item-down {
     border-top: 1px solid #E5E5E5;
@@ -93,7 +92,7 @@
     font-size: 22px;
 }
 .order-list ul li .cancel{
-    line-height: 29px;
+    line-height: 30px;
     background: #f9f9f9;
 }
 .order-list ul li .cancel:hover{

@@ -3,7 +3,9 @@
  */
 $(function () {
     //蓝色小圆点的显示和隐藏，点击后字体颜色的变化
+    //定义标识符，标识信息：是否已读 false:未读，true:已读
     $(".item .info").on("click", function () {
+        // $(this).addClass("active").find(".round").css("visibility", "hidden");
         $(this).addClass("active");
     });
 //全选

@@ -178,42 +178,6 @@ $(function () {
 
         }
     }
-    function imgHover() {
-         var flag=1;
-        var timer1=''
-
-        $('.exchange-category-top ul li').mouseenter(function () {
-            var _this=$(this);
-            timer1=setInterval(function () {
-                    var y=parseInt(_this.children('.category-top-img').css('background-position-y'));
-                    if(y<-10300){
-                        clearInterval(timer1);
-                        return;
-                    }else {
-                        _this.children('.category-top-img').css({
-                            'background-position-y':(y-175)+'px'
-                        }) ;
-                    }
-                console.log(1);
-            },10);
-
-        }).mouseleave(function () {
-            clearInterval(timer1);
-            var _this=$(this);
-                var timer2=setInterval(function () {
-                    var y=parseInt(_this.children('.category-top-img').css('background-position-y'));
-                    if(y==0){
-                        clearInterval(timer2);
-                        return;
-                    }else {
-                        _this.children('.category-top-img').css({
-                            'background-position-y':(y+175)+'px'
-                        }) ;
-                    }
-                },10);
-        })
-    }
-    imgHover();
     hotSwitchHover();
     switchHover();
     carousel();

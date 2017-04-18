@@ -100,9 +100,7 @@ function loadPageData(data){ //渲染页面数据
 			$(this).attr('src','/static/images/timg.jpeg')
 		})
 	})
-	if(!$('#J_searchCategory ul').html()){
-		$('#J_searchCategory ul').css('border','none')
-	}
+
 
 }
 

@@ -11,9 +11,18 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
       template: '<div ui-view></div>',
       showSubMenu: true
     })
+    .state('sys.region', {
+      template: '<div ui-view></div>',
+      showSubMenu: true
+    })
     .state('sys.dict.search', {
       url: '/sys/dict/search',
       template: require('./dict_list.html'),
+      controller: SysDictController,
+    })
+    .state('sys.region.search', {
+      url: '/sys/region/search',
+      template: require('./region_list.html'),
       controller: SysDictController,
     })
     .state('sys.dict.add', {
