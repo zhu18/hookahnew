@@ -1160,7 +1160,7 @@ lesshat-selector {
 }
 .exchange-hot-resource .hot-resource-down .hot-down-rank > ul li {
 	height: 40px;
-    transition: height 0.5s;
+    transition: all 0.5s;
 	border-top: 1px solid #ccc;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-rank > ul li img{
