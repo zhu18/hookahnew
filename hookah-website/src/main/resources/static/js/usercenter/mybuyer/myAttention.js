@@ -42,7 +42,7 @@ $(function(){
         if(text.length>=65){
             $(this).text(text.slice(0,65)+'...');
         }
-    });111
+    });
 })
 
 
