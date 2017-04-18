@@ -50,7 +50,7 @@ public class RegionServiceImpl extends GenericServiceImpl<Region, Long> implemen
     private List<Region> buildTree(List<Region> resultNodes) {
 
         for (Region node : nodes) {
-            if (node.getPid() == null) {//通I过循环一级节点 就可以通过递归获取二级以下节点
+            if (node.getPid() == 100000) {//通I过循环一级节点 就可以通过递归获取二级以下节点
                 resultNodes.add(node);//添加一级节点
                 build(node);//递归获取二级、三级、。。。节点
             }
