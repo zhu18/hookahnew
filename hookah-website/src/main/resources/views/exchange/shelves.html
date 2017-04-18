@@ -10,13 +10,18 @@ var head = {
         var result = window.location.search.substr(1).match(reg);
         return result ? decodeURIComponent(result[2]) : null;
     };
-    var id = $.getUrlParam('id');
-    var pagePath = '/mgGoodssg/findById';
+    var catId = $.getUrlParam('catId');
+    var prId = $.getUrlParam('prId');
+    var prNm = $.getUrlParam('prNm');
+    var msId = $.getUrlParam('msId');
+    var msNm = $.getUrlParam('msNm');
+    var pagePath = '/search/v1/goods';
     var pageType = 'post';
     var dataParm = {};
     dataParm.pageNumber = 1;
     dataParm.pageSize = 20;
-    dataParm.id = id;
+    dataParm.esGoods ={};
+    dataParm.esGoods.catIds = catId;
 </script>
 <%};%>
 
@@ -69,4 +74,4 @@ var htmlPart = {
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
 <script src="/static/js/exchange/common.js"></script>
-<script src="/static/js/exchange/shelves.js"></script>
+<script src="/static/js/exchange/list.js"></script>

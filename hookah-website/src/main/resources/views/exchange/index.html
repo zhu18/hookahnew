@@ -69,7 +69,7 @@ var htmlPart = {
 					</div>
 				</div>
 				<div class="recommend-resource-top-right grid-right">
-					<span>更多>></span>
+					<a href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.recomm_data.shelvesId}">更多>></a>
 				</div>
 			</div>
 			<div class="recommend-resource-down">
@@ -170,10 +170,10 @@ var htmlPart = {
 					for(var i=0;i<7;i++){
 					%>
 					<li class="${decode(i,0,'active','')}">
-						<img src="${hot_sell_data[i].goodsImg}" class="grid-left" alt="">
+						<a href="${host.website}/exchange/details?id=${hot_sell_data[i].goodsId}" class="grid-left display-block"><img src="${hot_sell_data[i].goodsImg}" alt=""></a>
 						<div class="infoBox grid-right">
-							<p class="title">${hot_sell_data[i].goodsName}</p>
-							<p class="p-none ">${trunc(hot_sell_data[i].shopPrice / 100)}</p>
+							<a href="${host.website}/exchange/details?id=${hot_sell_data[i].goodsId}"><p class="title">${hot_sell_data[i].goodsName}</p></a>
+							<a href="${host.website}/exchange/details?id=${hot_sell_data[i].goodsId}"><p class="p-none ">${trunc(hot_sell_data[i].shopPrice / 100)}</p></a>
 						</div>
 					</li>
 					<%}%>
@@ -480,7 +480,7 @@ var htmlPart = {
 					<ul>
 						<%for(item in goodsShelvesVoInfo.data_sur_data.goods){%>
 						<li>
-							<a href="" class="padding-5">
+							<a href="${host.website}/exchange/details?id=${item.goodsId}" class="padding-5">
 								<img src="${item.goodsImg}" alt=""><p class="title" title="${item.goodsName}">${item.goodsName}</p>
 								<p>
 									<i class="fa fa-star color-orange" aria-hidden="true"></i>
@@ -518,7 +518,7 @@ var htmlPart = {
 					<ul>
 						<%for(item in goodsShelvesVoInfo.model_data.goods){%>
 						<li>
-							<a href="" class="padding-5">
+							<a href="${host.website}/exchange/details?id=${item.goodsId}" class="padding-5">
 								<img src="${item.goodsImg}" alt=""><p class="title" title="${item.goodsName}">${item.goodsName}</p>
 								<p>
 									<i class="fa fa-star color-orange" aria-hidden="true"></i>
@@ -555,7 +555,7 @@ var htmlPart = {
 					<ul>
 						<%for(item in goodsShelvesVoInfo.scene_data.goods){%>
 						<li>
-							<a href="" class="padding-5">
+							<a href="${host.website}/exchange/details?id=${item.goodsId}" class="padding-5">
 								<img src="${item.goodsImg}" alt=""><p class="title" title="${item.goodsName}">${item.goodsName}</p>
 								<p>
 									<i class="fa fa-star color-orange" aria-hidden="true"></i>
@@ -592,7 +592,7 @@ var htmlPart = {
 					<ul>
 						<%for(item in goodsShelvesVoInfo.plat_data.goods){%>
 						<li>
-							<a href="" class="padding-5">
+							<a href="${host.website}/exchange/details?id=${item.goodsId}" class="padding-5">
 								<img src="${item.goodsImg}" alt=""><p class="title" title="${item.goodsName}">${item.goodsName}</p>
 								<p>
 									<i class="fa fa-star color-orange" aria-hidden="true"></i>
@@ -629,7 +629,7 @@ var htmlPart = {
 					<ul>
 						<%for(item in goodsShelvesVoInfo.tools_data.goods){%>
 						<li>
-							<a href="" class="padding-5">
+							<a href="${host.website}/exchange/details?id=${item.goodsId}" class="padding-5">
 								<img src="${item.goodsImg}" alt=""><p class="title" title="${item.goodsName}">${item.goodsName}</p>
 								<p>
 									<i class="fa fa-star color-orange" aria-hidden="true"></i>

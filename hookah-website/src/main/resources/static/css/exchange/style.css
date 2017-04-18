@@ -1027,7 +1027,7 @@ lesshat-selector {
 	padding-left: 5px;
 	border-left: 2px solid #333333;
 }
-.exchange-hot-resource .hot-resource-top .hot-resource-top-right span {
+.exchange-hot-resource .hot-resource-top .hot-resource-top-right a {
 	display: inline-block;
 	padding-top: 34px;
 	font-size: 14px;
