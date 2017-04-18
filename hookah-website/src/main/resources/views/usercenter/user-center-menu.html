@@ -22,7 +22,7 @@
         <li class="text-align-center"><a href="/usercenter/fundmanage"><span class="fa fa-life-buoy" aria-hidden="true"></span>资金管理</a></li>
         <li class="text-align-center"><a href="/usercenter/safeSet"><span class="fa fa-unlock-alt" aria-hidden="true"></span>安全设置</a></li>
     </ul>
-    <ul>
+    <ul class="u2">
         <li class="text-align-center"><span class="fa fa-caret-down"></span><span class="fa fa-caret-up" style="display: none;"></span>买家中心 <span class=""></span></li>
         <li class="text-align-center"><a href="/usercenter/buyer/orderManagement"><span class="fa fa-indent"></span>订单管理</a></li>
         <li class="text-align-center"><a href="/usercenter/invoice"><span class="fa fa-list-alt"></span>我的发票</a></li>
@@ -50,5 +50,9 @@
                 $(this).children('a').css("color","#247DE8");
             }
         })
+        if(url=="/usercenter/buyer/orderStay"){
+            $('.u2 li:nth-child(2)').addClass('active').siblings().removeClass("active");
+            $('.u2 li:nth-child(2)').children('a').css("color","#247DE8");
+        }
     })
 </script>
