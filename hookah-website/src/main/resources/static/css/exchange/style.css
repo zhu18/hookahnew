@@ -902,7 +902,7 @@ lesshat-selector {
 	padding-left: 5px;
 	border-left: 2px solid #333333;
 }
-.exchange-recommend-resource .recommend-resource-top .recommend-resource-top-right span {
+.exchange-recommend-resource .recommend-resource-top .recommend-resource-top-right a {
 	display: inline-block;
 	padding-top: 34px;
 	font-size: 14px;
@@ -1291,7 +1291,7 @@ lesshat-selector {
 	padding-left: 5px;
 	border-left: 2px solid #333333;
 }
-.exchange-industry-resource .industry-resource-top .industry-resource-top-right span {
+.exchange-industry-resource .industry-resource-top .industry-resource-top-right a {
 	display: inline-block;
 	padding-top: 34px;
 	font-size: 14px;
@@ -1801,6 +1801,7 @@ dl {
 	border: 1px solid #CCCCCC;
 	color: black;
 	width: 70px;
+	padding:0 5px;
 }
 .search .search-order .order li:nth-child(5) .priceBox span {
 	text-align: center;

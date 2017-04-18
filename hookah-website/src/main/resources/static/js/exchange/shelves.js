@@ -1,7 +1,7 @@
 function loadPageData(data){ //渲染页面数据
-	return alert(JSON.stringify(data))
-	if(data.data.list.length > 0){
-        var list = data.data.list;
+	// return alert(JSON.stringify(data))
+	if(data.data.goods.length > 0){
+        var list = data.data.goods;
         var html = '';
         for(var i=0; i<list.length; i++){
             var shopFormat = '';
