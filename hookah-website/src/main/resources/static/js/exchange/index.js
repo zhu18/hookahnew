@@ -214,7 +214,7 @@ $(function () {
         })
     }
     imgHover();
-    hotSwitchHover();
+    // hotSwitchHover();
     switchHover();
     carousel();
 });

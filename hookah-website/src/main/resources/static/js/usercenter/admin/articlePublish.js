@@ -9,7 +9,8 @@ function createEidtor(){
     //富文本
     var editor = new wangEditor('content');
     //上传图片（举例）
-    editor.config.uploadImgUrl = '/upload';
+    editor.config.uploadImgUrl = '/upload/wangeditor';
+	editor.config.uploadImgFileName = 'filename';
     //关闭菜单栏fixed
     editor.config.menuFixed = false;
     editor.config.menus = $.map(wangEditor.config.menus, function(item, key) {
@@ -133,7 +134,7 @@ function published(){
             data: data,
             success: function(msg){
                 if(msg.code == 1){
-                    $.alert('修改成功')
+                    $.alert('提交成功')
                 }else{
                     $.alert(msg.message)
                 }
