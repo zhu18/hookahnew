@@ -135,10 +135,10 @@ var htmlPart = {
 					<p>${goodsShelvesVoInfo.hot_res_data.shelvesName}</p>
 					<p>${goodsShelvesVoInfo.hot_res_data.shelvesDesc}</p>
 				</div>
-				<div>
-					<span>资源汇总</span>
-					<span>资源汇总</span>
-				</div>
+				<!--<div>-->
+					<!--<span>资源汇总</span>-->
+					<!--<span>资源汇总</span>-->
+				<!--</div>-->
 			</div>
 			<div class="hot-down-table ">
 				<table>
@@ -163,17 +163,14 @@ var htmlPart = {
 				</table>
 			</div>
 			<div class="hot-down-rank display-inline-block">
-				<div class="h-title"><i></i><span>热销榜</span></div>
+				<div class="h-title"><i></i><span>${goodsShelvesVoInfo.hot_sell_data.shelvesName}</span></div>
 				<ul>
-					<%
-					var hot_sellItem = goodsShelvesVoInfo.hot_sell_data.goods;
-					for(var i = 0; i < 5; i++){
-					%>
-					<li class="">
-						<img src="${hot_sellItem[i].goodsImg}" class="grid-left" alt="/static/images/timg.jpeg">
+					<%for(item in goodsShelvesVoInfo.hot_sell_data.goods){%>
+					<li class="${decode(itemLP.index,1,'active','')}">
+						<img src="${item.goodsImg}" class="grid-left" alt="">
 						<div class="infoBox grid-right">
-							<p class="title">${hot_sellItem.goodsName}</p>
-							<p class="p-none ">${hot_sellItem.shopPrice}</p>
+							<p class="title">${item.goodsName}</p>
+							<p class="p-none ">${item.shopPrice}</p>
 						</div>
 					</li>
 					<%}%>
@@ -189,8 +186,8 @@ var htmlPart = {
 			<div class="industry-resource-top-left grid-left">
 				<div class="d">
 					<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-					<span>行业资源</span>
-					<span>行业资源汇总</span>
+					<span>${goodsShelvesVoInfo.ind_res_data.shelvesName}</span>
+					<span>${goodsShelvesVoInfo.ind_res_data.shelvesDesc}</span>
 				</div>
 			</div>
 			<div class="industry-resource-top-right grid-right">
@@ -205,19 +202,19 @@ var htmlPart = {
 				</div>
 				<div class="screen">
 					<ul class="clearfix">
+						<%for(item in goodsShelvesVoInfo.ind_res_data.goods){%>
 						<li class="slide-item">
-							<a href="">
+							<a href="${host.website}/exchange/details?id=${item.goodsId}">
 								<img src="https://img.alicdn.com/tps/TB16hkwLXXXXXX6XXXXXXXXXXXX-576-840.jpg" alt="">
 								<div class="bg">
 									<div class="bg-bg"></div>
 									<div class="bg-content">
 										<div class="bg-content-img">
-											<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
+											<img src="${item.goodsImg}" alt="">
 										</div>
 										<p class="bg-boundary"><i></i></p>
-										<h3 class="bg-title">银行信贷</h3>
-										<p class="bg-info">
-											专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
+										<h3 class="bg-title">${item.goodsName}</h3>
+										<p class="bg-info">${item.goodsBrief}</p>
 										<div class="bg-btn">
 											查看详情
 										</div>
@@ -225,228 +222,229 @@ var htmlPart = {
 								</div>
 							</a>
 						</li>
-						<li class="slide-item">
-							<a href="">
-								<img src="https://img.alicdn.com/tps/TB19Jz6LXXXXXacaXXXXXXXXXXX-576-840.jpg" alt="">
-								<div class="bg">
-									<div class="bg-bg"></div>
-									<div class="bg-content">
-										<div class="bg-content-img">
-											<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-										</div>
-										<p class="bg-boundary"><i></i></p>
-										<h3 class="bg-title">银行信贷</h3>
-										<p class="bg-info">
-											专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-										<div class="bg-btn">
-											查看详情
-										</div>
-									</div>
-								</div>
-							</a>
-						</li>
-						<li class="slide-item">
-							<a href="">
-								<img src="https://img.alicdn.com/tps/TB1RJ_8LXXXXXX9aXXXXXXXXXXX-576-840.jpg" alt="">
-								<div class="bg">
-									<div class="bg-bg"></div>
-									<div class="bg-content">
-										<div class="bg-content-img">
-											<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-										</div>
-										<p class="bg-boundary"><i></i></p>
-										<h3 class="bg-title">银行信贷</h3>
-										<p class="bg-info">
-											专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-										<div class="bg-btn">
-											查看详情
-										</div>
-									</div>
-								</div>
-							</a>
-						</li>
-						<li class="slide-item">
-							<a href="">
-								<img src="https://img.alicdn.com/tps/TB1dDT4LXXXXXabaXXXXXXXXXXX-576-840.jpg" alt="">
-								<div class="bg">
-									<div class="bg-bg"></div>
-									<div class="bg-content">
-										<div class="bg-content-img">
-											<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-										</div>
-										<p class="bg-boundary"><i></i></p>
-										<h3 class="bg-title">银行信贷</h3>
-										<p class="bg-info">
-											专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-										<div class="bg-btn">
-											查看详情
-										</div>
-									</div>
-								</div>
-							</a>
-						</li>
-						<li class="slide-item">
-							<a href="">
-								<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">
-								<div class="bg">
-									<div class="bg-bg"></div>
-									<div class="bg-content">
-										<div class="bg-content-img">
-											<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-										</div>
-										<p class="bg-boundary"><i></i></p>
-										<h3 class="bg-title">银行信贷</h3>
-										<p class="bg-info">
-											专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-										<div class="bg-btn">
-											查看详情
-										</div>
-									</div>
-								</div>
-							</a>
-						</li>
-						<!--1-->
-						<li class="slide-item">
-							<a href="">
-								<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">
-								<div class="bg">
-									<div class="bg-bg"></div>
-									<div class="bg-content">
-										<div class="bg-content-img">
-											<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-										</div>
-										<p class="bg-boundary"><i></i></p>
-										<h3 class="bg-title">1</h3>
-										<p class="bg-info">
-											专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-										<div class="bg-btn">
-											查看详情
-										</div>
-									</div>
-								</div>
-							</a>
-						</li>
-						<li class="slide-item">
-							<a href="">
-								<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">
-								<div class="bg">
-									<div class="bg-bg"></div>
-									<div class="bg-content">
-										<div class="bg-content-img">
-											<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-										</div>
-										<p class="bg-boundary"><i></i></p>
-										<h3 class="bg-title">银行信贷</h3>
-										<p class="bg-info">
-											专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-										<div class="bg-btn">
-											查看详情
-										</div>
-									</div>
-								</div>
-							</a>
-						</li>
-						<li class="slide-item">
-							<a href="">
-								<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">
-								<div class="bg">
-									<div class="bg-bg"></div>
-									<div class="bg-content">
-										<div class="bg-content-img">
-											<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-										</div>
-										<p class="bg-boundary"><i></i></p>
-										<h3 class="bg-title">银行信贷</h3>
-										<p class="bg-info">
-											专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-										<div class="bg-btn">
-											查看详情
-										</div>
-									</div>
-								</div>
-							</a>
-						</li>
-						<li class="slide-item">
-							<a href="">
-								<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">
-								<div class="bg">
-									<div class="bg-bg"></div>
-									<div class="bg-content">
-										<div class="bg-content-img">
-											<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-										</div>
-										<p class="bg-boundary"><i></i></p>
-										<h3 class="bg-title">银行信贷</h3>
-										<p class="bg-info">
-											专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-										<div class="bg-btn">
-											查看详情
-										</div>
-									</div>
-								</div>
-							</a>
-						</li>
-						<li class="slide-item">
-							<a href="">
-								<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">
-								<div class="bg">
-									<div class="bg-bg"></div>
-									<div class="bg-content">
-										<div class="bg-content-img">
-											<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-										</div>
-										<p class="bg-boundary"><i></i></p>
-										<h3 class="bg-title">银行信贷</h3>
-										<p class="bg-info">
-											专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-										<div class="bg-btn">
-											查看详情
-										</div>
-									</div>
-								</div>
-							</a>
-						</li>
-						<!--3-->
-						<li class="slide-item">
-							<a href="">
-								<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">
-								<div class="bg">
-									<div class="bg-bg"></div>
-									<div class="bg-content">
-										<div class="bg-content-img">
-											<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-										</div>
-										<p class="bg-boundary"><i></i></p>
-										<h3 class="bg-title">3</h3>
-										<p class="bg-info">
-											专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-										<div class="bg-btn">
-											查看详情
-										</div>
-									</div>
-								</div>
-							</a>
-						</li>
-						<li class="slide-item">
-							<a href="">
-								<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">
-								<div class="bg">
-									<div class="bg-bg"></div>
-									<div class="bg-content">
-										<div class="bg-content-img">
-											<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-										</div>
-										<p class="bg-boundary"><i></i></p>
-										<h3 class="bg-title">4</h3>
-										<p class="bg-info">
-											专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-										<div class="bg-btn">
-											查看详情
-										</div>
-									</div>
-								</div>
-							</a>
-						</li>
+						<%}%>
+						<!--<li class="slide-item">-->
+							<!--<a href="">-->
+								<!--<img src="https://img.alicdn.com/tps/TB19Jz6LXXXXXacaXXXXXXXXXXX-576-840.jpg" alt="">-->
+								<!--<div class="bg">-->
+									<!--<div class="bg-bg"></div>-->
+									<!--<div class="bg-content">-->
+										<!--<div class="bg-content-img">-->
+											<!--<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">-->
+										<!--</div>-->
+										<!--<p class="bg-boundary"><i></i></p>-->
+										<!--<h3 class="bg-title">银行信贷</h3>-->
+										<!--<p class="bg-info">-->
+											<!--专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>-->
+										<!--<div class="bg-btn">-->
+											<!--查看详情-->
+										<!--</div>-->
+									<!--</div>-->
+								<!--</div>-->
+							<!--</a>-->
+						<!--</li>-->
+						<!--<li class="slide-item">-->
+							<!--<a href="">-->
+								<!--<img src="https://img.alicdn.com/tps/TB1RJ_8LXXXXXX9aXXXXXXXXXXX-576-840.jpg" alt="">-->
+								<!--<div class="bg">-->
+									<!--<div class="bg-bg"></div>-->
+									<!--<div class="bg-content">-->
+										<!--<div class="bg-content-img">-->
+											<!--<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">-->
+										<!--</div>-->
+										<!--<p class="bg-boundary"><i></i></p>-->
+										<!--<h3 class="bg-title">银行信贷</h3>-->
+										<!--<p class="bg-info">-->
+											<!--专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>-->
+										<!--<div class="bg-btn">-->
+											<!--查看详情-->
+										<!--</div>-->
+									<!--</div>-->
+								<!--</div>-->
+							<!--</a>-->
+						<!--</li>-->
+						<!--<li class="slide-item">-->
+							<!--<a href="">-->
+								<!--<img src="https://img.alicdn.com/tps/TB1dDT4LXXXXXabaXXXXXXXXXXX-576-840.jpg" alt="">-->
+								<!--<div class="bg">-->
+									<!--<div class="bg-bg"></div>-->
+									<!--<div class="bg-content">-->
+										<!--<div class="bg-content-img">-->
+											<!--<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">-->
+										<!--</div>-->
+										<!--<p class="bg-boundary"><i></i></p>-->
+										<!--<h3 class="bg-title">银行信贷</h3>-->
+										<!--<p class="bg-info">-->
+											<!--专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>-->
+										<!--<div class="bg-btn">-->
+											<!--查看详情-->
+										<!--</div>-->
+									<!--</div>-->
+								<!--</div>-->
+							<!--</a>-->
+						<!--</li>-->
+						<!--<li class="slide-item">-->
+							<!--<a href="">-->
+								<!--<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">-->
+								<!--<div class="bg">-->
+									<!--<div class="bg-bg"></div>-->
+									<!--<div class="bg-content">-->
+										<!--<div class="bg-content-img">-->
+											<!--<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">-->
+										<!--</div>-->
+										<!--<p class="bg-boundary"><i></i></p>-->
+										<!--<h3 class="bg-title">银行信贷</h3>-->
+										<!--<p class="bg-info">-->
+											<!--专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>-->
+										<!--<div class="bg-btn">-->
+											<!--查看详情-->
+										<!--</div>-->
+									<!--</div>-->
+								<!--</div>-->
+							<!--</a>-->
+						<!--</li>-->
+						<!--&lt;!&ndash;1&ndash;&gt;-->
+						<!--<li class="slide-item">-->
+							<!--<a href="">-->
+								<!--<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">-->
+								<!--<div class="bg">-->
+									<!--<div class="bg-bg"></div>-->
+									<!--<div class="bg-content">-->
+										<!--<div class="bg-content-img">-->
+											<!--<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">-->
+										<!--</div>-->
+										<!--<p class="bg-boundary"><i></i></p>-->
+										<!--<h3 class="bg-title">1</h3>-->
+										<!--<p class="bg-info">-->
+											<!--专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>-->
+										<!--<div class="bg-btn">-->
+											<!--查看详情-->
+										<!--</div>-->
+									<!--</div>-->
+								<!--</div>-->
+							<!--</a>-->
+						<!--</li>-->
+						<!--<li class="slide-item">-->
+							<!--<a href="">-->
+								<!--<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">-->
+								<!--<div class="bg">-->
+									<!--<div class="bg-bg"></div>-->
+									<!--<div class="bg-content">-->
+										<!--<div class="bg-content-img">-->
+											<!--<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">-->
+										<!--</div>-->
+										<!--<p class="bg-boundary"><i></i></p>-->
+										<!--<h3 class="bg-title">银行信贷</h3>-->
+										<!--<p class="bg-info">-->
+											<!--专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>-->
+										<!--<div class="bg-btn">-->
+											<!--查看详情-->
+										<!--</div>-->
+									<!--</div>-->
+								<!--</div>-->
+							<!--</a>-->
+						<!--</li>-->
+						<!--<li class="slide-item">-->
+							<!--<a href="">-->
+								<!--<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">-->
+								<!--<div class="bg">-->
+									<!--<div class="bg-bg"></div>-->
+									<!--<div class="bg-content">-->
+										<!--<div class="bg-content-img">-->
+											<!--<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">-->
+										<!--</div>-->
+										<!--<p class="bg-boundary"><i></i></p>-->
+										<!--<h3 class="bg-title">银行信贷</h3>-->
+										<!--<p class="bg-info">-->
+											<!--专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>-->
+										<!--<div class="bg-btn">-->
+											<!--查看详情-->
+										<!--</div>-->
+									<!--</div>-->
+								<!--</div>-->
+							<!--</a>-->
+						<!--</li>-->
+						<!--<li class="slide-item">-->
+							<!--<a href="">-->
+								<!--<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">-->
+								<!--<div class="bg">-->
+									<!--<div class="bg-bg"></div>-->
+									<!--<div class="bg-content">-->
+										<!--<div class="bg-content-img">-->
+											<!--<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">-->
+										<!--</div>-->
+										<!--<p class="bg-boundary"><i></i></p>-->
+										<!--<h3 class="bg-title">银行信贷</h3>-->
+										<!--<p class="bg-info">-->
+											<!--专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>-->
+										<!--<div class="bg-btn">-->
+											<!--查看详情-->
+										<!--</div>-->
+									<!--</div>-->
+								<!--</div>-->
+							<!--</a>-->
+						<!--</li>-->
+						<!--<li class="slide-item">-->
+							<!--<a href="">-->
+								<!--<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">-->
+								<!--<div class="bg">-->
+									<!--<div class="bg-bg"></div>-->
+									<!--<div class="bg-content">-->
+										<!--<div class="bg-content-img">-->
+											<!--<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">-->
+										<!--</div>-->
+										<!--<p class="bg-boundary"><i></i></p>-->
+										<!--<h3 class="bg-title">银行信贷</h3>-->
+										<!--<p class="bg-info">-->
+											<!--专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>-->
+										<!--<div class="bg-btn">-->
+											<!--查看详情-->
+										<!--</div>-->
+									<!--</div>-->
+								<!--</div>-->
+							<!--</a>-->
+						<!--</li>-->
+						<!--&lt;!&ndash;3&ndash;&gt;-->
+						<!--<li class="slide-item">-->
+							<!--<a href="">-->
+								<!--<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">-->
+								<!--<div class="bg">-->
+									<!--<div class="bg-bg"></div>-->
+									<!--<div class="bg-content">-->
+										<!--<div class="bg-content-img">-->
+											<!--<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">-->
+										<!--</div>-->
+										<!--<p class="bg-boundary"><i></i></p>-->
+										<!--<h3 class="bg-title">3</h3>-->
+										<!--<p class="bg-info">-->
+											<!--专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>-->
+										<!--<div class="bg-btn">-->
+											<!--查看详情-->
+										<!--</div>-->
+									<!--</div>-->
+								<!--</div>-->
+							<!--</a>-->
+						<!--</li>-->
+						<!--<li class="slide-item">-->
+							<!--<a href="">-->
+								<!--<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">-->
+								<!--<div class="bg">-->
+									<!--<div class="bg-bg"></div>-->
+									<!--<div class="bg-content">-->
+										<!--<div class="bg-content-img">-->
+											<!--<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">-->
+										<!--</div>-->
+										<!--<p class="bg-boundary"><i></i></p>-->
+										<!--<h3 class="bg-title">4</h3>-->
+										<!--<p class="bg-info">-->
+											<!--专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>-->
+										<!--<div class="bg-btn">-->
+											<!--查看详情-->
+										<!--</div>-->
+									<!--</div>-->
+								<!--</div>-->
+							<!--</a>-->
+						<!--</li>-->
 						<!--追加的-->
 					</ul>
 				</div>
