@@ -35,7 +35,7 @@
     clear: both;
 }
 .order-list ul li {
-    height: 238px;
+    height:auto;
     width: 230px;
     float: left;
     color: black;
