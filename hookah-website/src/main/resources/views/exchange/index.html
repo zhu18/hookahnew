@@ -148,16 +148,13 @@ var htmlPart = {
 						<th>金额</th>
 						<th>操作</th>
 					</tr>
-					<%
-					var hot_resItem = goodsShelvesVoInfo.hot_res_data.goods;
-					for(var i = 0; i < 5; i++){
-					%>
+					<%for(item in goodsShelvesVoInfo.hot_res_data.goods){%>
 					<tr>
-						<td><img src="${hot_resItem[i].goodsImg}" alt=""></td>
-						<td>${hot_resItem[i].goodsName}</td>
-						<td><span>${hot_resItem[i].shopPrice}</span></td><!--<span>元/次</span>-->
+						<td><img src="${item.goodsImg}" alt=""></td>
+						<td>${item.goodsName}</td>
+						<td><span>${item.shopPrice}</span></td><!--<span>元/次</span>-->
 						<td>
-							<a href="${host.website}/exchange/details?id=${hot_resItem[i].goodsId}">查看详情</a>
+							<a href="${host.website}/exchange/details?id=${item.goodsId}">查看详情</a>
 							<!--<span>免</span>-->
 							<!--<span>企</span>-->
 						</td>
@@ -172,8 +169,8 @@ var htmlPart = {
 					<li class="${decode(itemLP.index,1,'active','')}">
 						<img src="${item.goodsImg}" class="grid-left" alt="">
 						<div class="infoBox grid-right">
-							<p class="title">${item.goodsName}</p>
-							<p class="p-none ">${item.shopPrice}</p>
+							<p class="title">${hot_sellItem.goodsName}</p>
+							<p class="p-none ">${hot_sellItem.shopPrice}</p>
 						</div>
 					</li>
 					<%}%>
