@@ -2,7 +2,7 @@
  * Created by wcq on 2017/4/14.
  */
 function loadPageData(data){
-    if(data.data.list&&data.data.list.length){
+    if(data.data.list){
         var list = data.data.list;
         var html = '';
         for(var i=0; i<list.length; i++){
@@ -35,9 +35,6 @@ function loadPageData(data){
         };
         $('.order tbody').html(html);
     }
-    else{
-        $("tbody #noDataInfo").show().siblings("tr").hide();
-    }
 }
 $.jeDate("#startDate", {
     format: "YYYY-MM-DD hh:mm:ss",
@@ -51,9 +48,8 @@ $.jeDate("#endDate", {
 });
 //点击查询按钮
 $(".searchQuery .search").on("click",function(){
-    dataParm.startDate = new Date($("#startDate").val());
-    // console.log(dataParm.startDate);//Wed Apr 19 2017 11:28:34 GMT+0800 (中国标准时间)
-    dataParm.endDate =new Date($("#endDate").val());
+    dataParm.startDate = $("#startDate").val();
+    dataParm.endDate = $("#endDate").val();
     goPage(1);
 });
 

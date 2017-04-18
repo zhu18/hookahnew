@@ -142,12 +142,14 @@ $('#preview-div').hover(function () {
 function onfocusFn(that) {
 	$(that).parent().siblings('.errors').show();
 };
-$('#J-goodsName').on('keyup', function () {
+$('#J-goodsName').blur(function () {
 	if ($(this).val() && $(this).val().length <= 30) {
 		$(this).parents('.text-box').siblings('.errors').hide();
+	} else {
+		$(this).focus();
 	}
 });
-$('#J-goodsBrief').on('keyup', function () {
+$('#J-goodsBrief').blur(function () {
 	if ($(this).val() && $(this).val().length <= 200) {
 		$(this).parent().siblings('.errors').hide();
 	} else {
@@ -215,9 +217,6 @@ $('.pusGoods-btn').click(function () {
 			data.apiInfo.respParamList.push(listData);
 		});
 		data.apiInfo.respSample = $('.api-info-box').find('textarea[name="respSample"]').val();
-		data.apiInfo.country = $('#country').val();
-		data.apiInfo.province = $('#province').val();
-		data.apiInfo.city = $('#city').val();
 	}
 
 	if (!!!data.goodsName) {

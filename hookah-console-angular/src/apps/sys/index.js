@@ -44,6 +44,14 @@ app.run(function ($rootScope, $state) {
     {
       "title": "字典管理",
       "url": "sys.dict.search"
+    },
+    {
+      "title": "地域管理",
+      "url": "sys.region.search"
+    },
+    {
+      "title": "行业管理",
+      "url": "sys.industry.search"
     }
 
   ];

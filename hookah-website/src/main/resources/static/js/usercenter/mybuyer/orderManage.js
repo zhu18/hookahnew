@@ -1,5 +1,5 @@
 function loadPageData(data){
-    if(data.data.list&&data.data.list.length){
+    if(data.data.list){
         var list = data.data.list;
         var html = '';
         for(var i=0; i<list.length; i++){
@@ -37,9 +37,6 @@ function loadPageData(data){
         };
         $('.order tbody').html(html);
     }
-    else {
-    $("tbody #noDataInfo").show().siblings("tr").hide();
-    }
 }
 $.jeDate("#startDate", {
     format: "YYYY-MM-DD hh:mm:ss",
@@ -56,8 +53,8 @@ $(".searchQuery .search").on("click",function(){
     //评论状态：0：未评论；1：已评论
     var radioChecked = $(".comment-status input:radio[name='comment']:checked");
     dataParm.commentFlag = radioChecked.val();
-    dataParm.startDate = new Date($("#startDate").val());
-    dataParm.endDate = new Date($("#endDate").val());
+    dataParm.startDate = $("#startDate").val();
+    dataParm.endDate = $("#endDate").val();
     goPage(1);
 });
 

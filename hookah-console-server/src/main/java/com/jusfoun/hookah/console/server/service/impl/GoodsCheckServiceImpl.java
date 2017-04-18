@@ -47,6 +47,7 @@ public class GoodsCheckServiceImpl extends GenericServiceImpl<GoodsCheck, String
         goods.setGoodsId(goodsCheck.getGoodsId());
         if(goodsCheck.getCheckStatus() == 1){
             goods.setCheckStatus(Byte.parseByte(HookahConstants.CheckStatus.audit_success.getCode()));
+            goods.setIsOnsale(Byte.parseByte(HookahConstants.CheckStatus.audit_success.getCode()));
             goodsService.updateByIdSelective(goods);
             mqSenderService.sendDirect(goodsCheck.getGoodsId());
         }else if(goodsCheck.getCheckStatus() == 2){

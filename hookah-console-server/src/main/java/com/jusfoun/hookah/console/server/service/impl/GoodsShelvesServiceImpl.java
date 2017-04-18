@@ -70,7 +70,7 @@ public class GoodsShelvesServiceImpl extends GenericServiceImpl<GoodsShelves, St
                        goodsShelvesVo.setGoods(goodsList);
                    }
                }
-                goodsShelvesVoMap.put(goods.getShelvesType(),goodsShelvesVo);
+                goodsShelvesVoMap.put(goods.getShelvesName(),goodsShelvesVo);
             }
         }
         return goodsShelvesVoMap;

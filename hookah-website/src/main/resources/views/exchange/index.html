@@ -79,13 +79,16 @@ var htmlPart = {
 						<div>
 							<a href="${host.website}/exchange/details?id=${item.goodsId}"><img src="${item.goodsImg}" alt=""></a>
 							<div class="padding-left-5">
-								<a href="${host.website}/exchange/details?id=${item.goodsId}"><p class="title">${item.goodsName}</p></a>
-								<a href="${host.website}/exchange/details?id=${item.goodsId}"><p class="subtitle">${item.goodsBrief}</p></a>
+								<a href="${host.website}/exchange/details?id=${item.goodsId}"><p class="title">
+									${item.goodsName}</p></a>
+								<a href="${host.website}/exchange/details?id=${item.goodsId}"><p class="subtitle">
+									${item.goodsBrief}</p></a>
 							</div>
 						</div>
 						<div class="down">
 							<div>
-								<div>评分:<span>
+								<div>评分:
+									<span>
                                           <i class="fa fa-star" aria-hidden="true"></i>
                                           <i class="fa fa-star" aria-hidden="true"></i>
                                           <i class="fa fa-star" aria-hidden="true"></i>
@@ -104,7 +107,6 @@ var htmlPart = {
 						</div>
 					</li>
 					<%}%>
-
 				</ul>
 			</div>
 		</div>

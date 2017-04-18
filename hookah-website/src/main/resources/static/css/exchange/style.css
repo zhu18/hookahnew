@@ -828,23 +828,22 @@ lesshat-selector {
 }
 .exchange-index .exchange-category-top ul li {
 	background-color: #E2E2E2;
-	overflow: hidden;
 	position: relative;
 	float: left;
 	display: inline-block;
 	width: 300px;
 	height: 145px;
 }
-
-.exchange-index .exchange-category-top ul li .category-top-img {
-	z-index: 0;
-	width: 151px;
-	height: 175px;
+.exchange-index .exchange-category-top ul li:hover i {
+	font-size: 120px;
+}
+.exchange-index .exchange-category-top ul li i {
+	display: inline-block;
+	color: #DADADA;
+	font-size: 106px;
 	position: absolute;
-	right: -53px;
-	top: 0px;
-	background-size: 175px;
-	background-position: 0 0;
+	top: 21px;
+	right: 21px;
 }
 .exchange-index .exchange-category-top ul li div {
 	padding: 21px 10px 14px 20px;
@@ -873,18 +872,6 @@ lesshat-selector {
 }
 .exchange-index .exchange-category-top ul li:nth-child(2n) {
 	background-color: #ECECEC;
-}
-.exchange-index .exchange-category-top ul li:nth-child(1) .category-top-img{
-	background-image: url(/static/images/exchange/11.jpg);
-}
-.exchange-index .exchange-category-top ul li:nth-child(3) .category-top-img{
-	background-image: url(/static/images/exchange/55.jpg);
-}
-.exchange-index .exchange-category-top ul li:nth-child(2) .category-top-img{
-	background-image: url(/static/images/exchange/22.jpg);
-}
-.exchange-index .exchange-category-top ul li:nth-child(4) .category-top-img{
-	background-image: url(/static/images/exchange/99.jpg);
 }
 /*推荐*/
 /*推荐的标签*/
