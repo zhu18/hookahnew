@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.console.server;
 
+import com.jusfoun.hookah.console.server.pay.unionpay.sdk.SDKConfig;
 import com.weibo.api.motan.common.MotanConstants;
 import com.weibo.api.motan.util.MotanSwitcherUtil;
 import org.slf4j.Logger;
@@ -46,6 +47,8 @@ public class ConsoleServerLauncher {
     }
 
     public static void main(String[] args) {
+       //读取银联支付配置文件
+        SDKConfig.getConfig().loadPropertiesFromSrc();
 
         ApplicationContext ctx = SpringApplication.run(new Object[]{
 //      "classpath*:spring/rs-context.xml",
