@@ -33,9 +33,9 @@ public class MyBuyerController {
         return "/usercenter/buyer/invoiceList";
     }
 
-    @RequestMapping(value = "/invoiceInfo", method = RequestMethod.GET)
-    public String invoiceInfo() {
-        return "/usercenter/buyer/invoiceInfo";
+    @RequestMapping(value = "/info", method = RequestMethod.GET)
+    public String info() {
+        return "/usercenter/buyer/info";
     }
 
     @RequestMapping(value = "/buyer/evaluation", method = RequestMethod.GET)

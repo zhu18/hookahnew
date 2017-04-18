@@ -296,7 +296,7 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 		return AlipayNotify.verify(request);
 	}
 
-	@Transactional(readOnly=false)
+	//@Transactional(readOnly=false)
 	@Override
 	public String openUnionpay(String orderId, String accNo, String userId) throws Exception {
 		//根据orderId查询order信息

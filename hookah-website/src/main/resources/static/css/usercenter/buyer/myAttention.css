@@ -35,7 +35,6 @@
     clear: both;
 }
 .order-list ul li {
-    height:auto;
     width: 230px;
     float: left;
     color: black;
@@ -66,10 +65,6 @@
 }
 .order-list ul li .item-top .goods-brief {
     padding: 0 10px 3px;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    overflow: hidden;
     width: calc(100% - 20px);
     text-align: justify;
 }

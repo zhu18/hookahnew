@@ -106,9 +106,9 @@ public class MySellerController {
         return "usercenter/myseller/trade";
     }
 
-    @RequestMapping(value = "/tradeRate", method = RequestMethod.GET)
-    public String tradeRate(){
-        return "usercenter/myseller/tradeRate";
+    @RequestMapping(value = "/rate", method = RequestMethod.GET)
+    public String rate(){
+        return "usercenter/myseller/rate";
     }
 
     @RequestMapping(value = "/custom", method = RequestMethod.GET)
@@ -121,9 +121,9 @@ public class MySellerController {
         return "usercenter/myseller/customer";
     }
 
-    @RequestMapping(value = "/customega", method = RequestMethod.GET)
-    public String customega(){
-        return "usercenter/myseller/customega";
+    @RequestMapping(value = "/illegal", method = RequestMethod.GET)
+    public String illegal(){
+        return "usercenter/myseller/illegal";
     }
 
 

@@ -162,7 +162,6 @@ public class SDKConfig {
 	 *            不包含文件名的目录.
 	 */
 	public void loadPropertiesFromPath(String rootPath) {
-
 		if (StringUtils.isNotBlank(rootPath)) {
 			File file = new File(rootPath + File.separator + FILE_NAME);
 			InputStream in = null;

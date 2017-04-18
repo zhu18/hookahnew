@@ -75,47 +75,49 @@ ul li {
     padding-left: 30px;
     margin-right: 20px;
     line-height: 50px;
+}
+
+.trading-sidebar .contact ul li span:nth-child(1) {
+    color: #247de8;
+    margin-right: 10px;
+}
+
+.trading-sidebar .contact ul li span:nth-child(2) {
     color: #333;
 }
 
-/*.trading-sidebar .contact ul li span:nth-child(1) {*/
-    /*color: #247de8;*/
-    /*margin-right: 10px;*/
-/*}*/
-
-/*.trading-sidebar .contact ul li span:nth-child(2) {*/
-    /*color: #333;*/
-/*}*/
-
-.trading-sidebar .contact ul .one {
+.trading-sidebar .contact ul li.one {
     padding-top: 20px;
     margin-left:-10px;
-
 }
 
-.trading-sidebar .contact ul .one .one-space {
+.trading-sidebar .contact ul li.one span:nth-child(1) {
     border-right: 2px solid #247de8;
     margin-right: 10px;
 }
 
-.trading-sidebar .contact ul .three {
+.trading-sidebar .contact ul li.one span:nth-child(2) {
+    font-size: 18px;
+}
+
+.trading-sidebar .contact ul li:nth-child(4) {
     line-height: 20px;
     position: relative;
     padding-top: 10px;
     height: 60px;
 }
 
-.trading-sidebar .contact ul .three p {
+.trading-sidebar .contact ul li:nth-child(4) p {
     position: absolute;
     top: 8px;
     left: 56px;
 }
 
-.trading-sidebar .contact ul .three p span {
+.trading-sidebar .contact ul li:nth-child(4) p span {
     color: #333;
 }
 
-.trading-sidebar .contact ul .five {
+.trading-sidebar .contact ul li:nth-child(5) {
     padding-top: 10px;
 }
 

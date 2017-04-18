@@ -34,7 +34,18 @@ function loadPageData(data){
     }else{
 		$('.order-list').html('<div class="noData">暂无数据</div>');
     }
+    sliceString();
 }
+function sliceString(){
+    var goodsBrief = $(".item-top p:nth-last-child(1)");
+    $(goodsBrief).each(function(index,n){
+        var text = $(this).html();
+        if(text.length>=65){
+            $(this).text(text.slice(0,65)+'...');
+        }
+    });
+}
+
 
 
 
