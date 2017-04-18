@@ -35,16 +35,6 @@ function loadPageData(data){
 		$('.order-list').html('<div class="noData">暂无数据</div>');
     }
 }
-$(function(){
-    var goodsBrief = $(".item-top p:nth-last-child(1)");
-    $(goodsBrief).each(function(index,n){
-        var text = $(this).text();
-        if(text.length>=65){
-            $(this).text(text.slice(0,65)+'...');
-        }
-    });
-})
-
 
 
 

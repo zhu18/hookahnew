@@ -1160,7 +1160,7 @@ lesshat-selector {
 }
 .exchange-hot-resource .hot-resource-down .hot-down-rank > ul li {
 	height: 40px;
-    transition: height 0.5s;
+    transition: all 0.5s;
 	border-top: 1px solid #ccc;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-rank > ul li img{
@@ -1557,6 +1557,15 @@ lesshat-selector {
 	height: 160px;
 	border-bottom: 1px solid #ECECEC;
 	border-right: 1px solid #ECECEC;
+}
+.exchange-index .exchange-category-down .category-left .category-item > div:nth-child(2) ul li a{
+	display: block;
+}
+.exchange-index .exchange-category-down .category-left .category-item > div:nth-child(2) ul li a .title{
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 100%;
 }
 .exchange-index .exchange-category-down .category-left .category-item > div:nth-child(2) ul li:nth-child(n+5) {
 	border-bottom: none;
@@ -2203,7 +2212,6 @@ dl {
 	text-align: left;
 }
 .goods-table .table-content .table-item table td, th {
-	padding-left: 20px;
 }
 .goods-table .table-content .table-item:last-child ol .comment-title {
 	background-color: #F1F1F1;
