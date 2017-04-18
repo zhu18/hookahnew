@@ -121,8 +121,22 @@ public class RabbitMqExchangeConfig {
     }
 
     @Bean
+    Binding bindingExchangeGoodsId(Queue queueMessage, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueMessage).to(exchange).with(RabbitmqQueue.CONTRACE_GOODS_ID);
+        rabbitAdmin.declareBinding(binding);
+        return binding;
+    }
+
+    @Bean
     Binding bindingExchangeCheck(Queue queueCheck, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
         Binding binding = BindingBuilder.bind(queueCheck).to(exchange).with(RabbitmqQueue.CONTRACT_GOODSCHECK);
+        rabbitAdmin.declareBinding(binding);
+        return binding;
+    }
+
+    @Bean
+    Binding bindingExchangeGoodsId(Queue queueMessage, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueMessage).to(exchange).with(RabbitmqQueue.CONTRACE_GOODS_ID);
         rabbitAdmin.declareBinding(binding);
         return binding;
     }
@@ -157,6 +171,13 @@ public class RabbitMqExchangeConfig {
     @Bean
     Queue queueCheck(RabbitAdmin rabbitAdmin) {
         Queue queue = new Queue(RabbitmqQueue.CONTRACT_GOODSCHECK, true);
+        rabbitAdmin.declareQueue(queue);
+        return queue;
+    }
+
+    @Bean
+    Queue queueGoodsId(RabbitAdmin rabbitAdmin) {
+        Queue queue = new Queue(RabbitmqQueue.CONTRACE_GOODS_ID, true);
         rabbitAdmin.declareQueue(queue);
         return queue;
     }
