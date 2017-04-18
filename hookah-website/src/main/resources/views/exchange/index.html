@@ -145,14 +145,14 @@ var htmlPart = {
 					<tr>
 						<th>资源标识</th>
 						<th>资源名称</th>
-						<th>金额</th>
+						<th>金额(￥)</th>
 						<th>操作</th>
 					</tr>
 					<%for(item in goodsShelvesVoInfo.hot_res_data.goods){%>
 					<tr>
 						<td><img src="${item.goodsImg}" alt=""></td>
 						<td>${item.goodsName}</td>
-						<td><span>${item.shopPrice}</span></td><!--<span>元/次</span>-->
+						<td><span>${trunc(item.shopPrice / 100)}</span></td><!--<span>元/次</span>-->
 						<td>
 							<a href="${host.website}/exchange/details?id=${item.goodsId}">查看详情</a>
 							<!--<span>免</span>-->
@@ -165,12 +165,15 @@ var htmlPart = {
 			<div class="hot-down-rank display-inline-block">
 				<div class="h-title"><i></i><span>${goodsShelvesVoInfo.hot_sell_data.shelvesName}</span></div>
 				<ul>
-					<%for(item in goodsShelvesVoInfo.hot_sell_data.goods){%>
-					<li class="${decode(itemLP.index,1,'active','')}">
-						<img src="${item.goodsImg}" class="grid-left" alt="">
+					<%
+					var hot_sell_data = goodsShelvesVoInfo.hot_sell_data.goods;
+					for(var i=0;i<7;i++){
+					%>
+					<li class="${decode(i,0,'active','')}">
+						<img src="${hot_sell_data[i].goodsImg}" class="grid-left" alt="">
 						<div class="infoBox grid-right">
-							<p class="title">${item.goodsName}</p>
-							<p class="p-none ">${item.shopPrice}</p>
+							<p class="title">${hot_sell_data[i].goodsName}</p>
+							<p class="p-none ">${trunc(hot_sell_data[i].shopPrice / 100)}</p>
 						</div>
 					</li>
 					<%}%>
@@ -457,17 +460,17 @@ var htmlPart = {
 		<div class="category-left grid-left">
 			<div class="category-box">
 				<ul>
-					<li class="grid-left active">${goodsShelvesVoInfo.data_data.shelvesName}</li>
+					<li class="grid-left active">${goodsShelvesVoInfo.data_sur_data.shelvesName}</li>
 					<li class="grid-left">${goodsShelvesVoInfo.model_data.shelvesName}</li>
 					<li class="grid-left">${goodsShelvesVoInfo.scene_data.shelvesName}</li>
 					<li class="grid-left">${goodsShelvesVoInfo.plat_data.shelvesName}</li>
 					<li class="grid-left">${goodsShelvesVoInfo.tools_data.shelvesName}</li>
 				</ul>
 			</div>
-			<%if(goodsShelvesVoInfo.data_data != ''){%>
+			<%if(goodsShelvesVoInfo.data_sur_data != ''){%>
 			<div class="category-item item-active">
 				<div class="grid-left resource-two">
-					<div><p>${goodsShelvesVoInfo.data_data.shelvesName}</p><p>${goodsShelvesVoInfo.data_data.shelvesDesc}</p></div>
+					<div><p>${goodsShelvesVoInfo.data_sur_data.shelvesName}</p><p>${goodsShelvesVoInfo.data_sur_data.shelvesDesc}</p></div>
 					<div>
 						<!--<span>资源汇总</span><span>资源汇总</span>-->
 						<a href="">查看更多>></a>
@@ -475,10 +478,10 @@ var htmlPart = {
 				</div>
 				<div class="grid-right">
 					<ul>
-						<%for(item in goodsShelvesVoInfo.data_data.goods){%>
+						<%for(item in goodsShelvesVoInfo.data_sur_data.goods){%>
 						<li>
-							<a href="" class="padding-10">
-								<img src="${item.goodsImg}" alt=""><p class="title">${item.goodsName}</p>
+							<a href="" class="padding-5">
+								<img src="${item.goodsImg}" alt=""><p class="title" title="${item.goodsName}">${item.goodsName}</p>
 								<p>
 									<i class="fa fa-star color-orange" aria-hidden="true"></i>
 									<i class="fa fa-star color-orange" aria-hidden="true"></i>
@@ -488,11 +491,13 @@ var htmlPart = {
 								</p>
 								<p>
 									<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-									<span class="color-red">${item.shopPrice}</span>
+									<span class="color-red">${trunc(item.shopPrice / 100)}</span>
 									<span class="color-red">元</span>
 								</p>
 							</a>
 						</li>
+						<%}elsefor{%>
+						<div class="noData">暂无数据</div>
 						<%}%>
 					</ul>
 				</div>
@@ -501,580 +506,148 @@ var htmlPart = {
 			<div class="category-item">
 				<div class="grid-left resource-two">
 					<div>
-						<p>模型</p>
-						<p>模型分析平台</p>
+						<p>${goodsShelvesVoInfo.model_data.shelvesName}</p>
+						<p>${goodsShelvesVoInfo.model_data.shelvesDesc}</p>
 					</div>
 					<div>
-						<span>资源汇总</span>
-						<span>资源汇总</span>
+						<!--<span>资源汇总</span><span>资源汇总</span>-->
 						<a href="">查看更多>></a>
 					</div>
 				</div>
 				<div class="grid-right">
 					<ul>
+						<%for(item in goodsShelvesVoInfo.model_data.goods){%>
 						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
+							<a href="" class="padding-5">
+								<img src="${item.goodsImg}" alt=""><p class="title" title="${item.goodsName}">${item.goodsName}</p>
+								<p>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								</p>
+								<p>
+									<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+									<span class="color-red">${trunc(item.shopPrice / 100)}</span>
+									<span class="color-red">元</span>
+								</p>
+							</a>
 						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
+						<%}elsefor{%>
+						<div class="noData">暂无数据</div>
+						<%}%>
 					</ul>
 				</div>
 			</div>
 			<div class="category-item">
 				<div class="grid-left resource-two">
 					<div>
-						<p>应用场景</p>
-						<p>应用场景分析平台</p>
+						<p>${goodsShelvesVoInfo.scene_data.shelvesName}</p>
+						<p>${goodsShelvesVoInfo.scene_data.shelvesDesc}</p>
 					</div>
 					<div>
-						<span>资源汇总</span>
-						<span>资源汇总</span>
+						<!--<span>资源汇总</span><span>资源汇总</span>-->
 						<a href="">查看更多>></a>
 					</div>
 				</div>
 				<div class="grid-right">
 					<ul>
+						<%for(item in goodsShelvesVoInfo.scene_data.goods){%>
 						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
+							<a href="" class="padding-5">
+								<img src="${item.goodsImg}" alt=""><p class="title" title="${item.goodsName}">${item.goodsName}</p>
+								<p>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								</p>
+								<p>
+									<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+									<span class="color-red">${trunc(item.shopPrice / 100)}</span>
+									<span class="color-red">元</span>
+								</p>
+							</a>
 						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
+						<%}elsefor{%>
+						<div class="noData">暂无数据</div>
+						<%}%>
 					</ul>
 				</div>
 			</div>
 			<div class="category-item">
 				<div class="grid-left resource-two">
 					<div>
-						<p>平台</p>
-						<p>平台分析平台</p>
+						<p>${goodsShelvesVoInfo.plat_data.shelvesName}</p>
+						<p>${goodsShelvesVoInfo.plat_data.shelvesDesc}</p>
 					</div>
 					<div>
-						<span>资源汇总</span>
-						<span>资源汇总</span>
+						<!--<span>资源汇总</span><span>资源汇总</span>-->
 						<a href="">查看更多>></a>
 					</div>
 				</div>
 				<div class="grid-right">
 					<ul>
+						<%for(item in goodsShelvesVoInfo.plat_data.goods){%>
 						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
+							<a href="" class="padding-5">
+								<img src="${item.goodsImg}" alt=""><p class="title" title="${item.goodsName}">${item.goodsName}</p>
+								<p>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								</p>
+								<p>
+									<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+									<span class="color-red">${trunc(item.shopPrice / 100)}</span>
+									<span class="color-red">元</span>
+								</p>
+							</a>
 						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
+						<%}elsefor{%>
+						<div class="noData">暂无数据</div>
+						<%}%>
 					</ul>
 				</div>
 			</div>
 			<div class="category-item">
 				<div class="grid-left resource-two">
 					<div>
-						<p>工具</p>
-						<p>数据分析平台</p>
+						<p>${goodsShelvesVoInfo.tools_data.shelvesName}</p>
+						<p>${goodsShelvesVoInfo.tools_data.shelvesDesc}</p>
 					</div>
 					<div>
-						<span>资源汇总</span>
-						<span>资源汇总</span>
+						<!--<span>资源汇总</span><span>资源汇总</span>-->
 						<a href="">查看更多>></a>
 					</div>
 				</div>
 				<div class="grid-right">
 					<ul>
+						<%for(item in goodsShelvesVoInfo.tools_data.goods){%>
 						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
+							<a href="" class="padding-5">
+								<img src="${item.goodsImg}" alt=""><p class="title" title="${item.goodsName}">${item.goodsName}</p>
+								<p>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								</p>
+								<p>
+									<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+									<span class="color-red">${trunc(item.shopPrice / 100)}</span>
+									<span class="color-red">元</span>
+								</p>
+							</a>
 						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
+						<%}elsefor{%>
+						<div class="noData">暂无数据</div>
+						<%}%>
 					</ul>
 				</div>
 			</div>
