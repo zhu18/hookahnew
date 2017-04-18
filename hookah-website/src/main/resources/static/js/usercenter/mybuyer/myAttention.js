@@ -4,7 +4,7 @@ function loadPageData(data){
         var html = '';
         for(var i=0; i<list.length; i++){
 			html += '<li>';
-			html += '<a class="item-top" href="/exchange/details?id=3c615b22210111e796c56a3b07101c5a">';
+			html += '<a class="item-top" href="/exchange/details?id='+list[i].goodsId+'">';
 			html += '<p class="goods-img">';
 			html += '<img src="http://static.hookah.app/20170414/1851337921dcd56e2c413cba36a2515248549e.png" alt="">';
 			html += '</p>';
