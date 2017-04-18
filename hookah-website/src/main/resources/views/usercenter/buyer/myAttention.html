@@ -3,6 +3,14 @@ var head = {
 %>
 <link rel="stylesheet" href="/static/css/usercenter/user-center-menu.css">
 <link rel="stylesheet" href="/static/css/usercenter/buyer/myAttention.css">
+<script type="text/javascript">
+	var pagePath = '/goodsFavorite/list';
+	var pageType = 'get';
+	var dataParm = {};
+	dataParm.pageNumber = 1;
+	dataParm.pageSize = 20;
+
+</script>
 <%};%>
 
 <%
@@ -27,7 +35,7 @@ var htmlPart = {
                         </a>
                         <div class="item-down">
                             <span class="grid-left goods-price">
-                                <span>10</span>/次
+                                ￥<span>10</span>/次
                             </span>
                             <a class="grid-right" href="javascript:void(0)">加入购物车</a>
                         </div>
@@ -49,9 +57,7 @@ var htmlPart = {
                             </span>
                             <a class="grid-right" href="javascript:void(0)">加入购物车</a>
                         </div>
-                        <div class="cancel">
-                            <a href="">取消关注</a>
-                        </div>
+                        <div class="cancel"><a href="">取消关注</a></div>
                     </li>
                     <li>
                         <a class="item-top" href="/exchange/details?id=3c615b22210111e796c56a3b07101c5a">
@@ -91,10 +97,12 @@ var htmlPart = {
                     </li>
                 </ul>
             </div>
+            <%include("/layout/pageaction.html"){} %>
         </div>
     </div>
 </div>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
+<script type="text/javascript" src="/static/js/usercenter/mybuyer/myAttention.js"></script>
 
