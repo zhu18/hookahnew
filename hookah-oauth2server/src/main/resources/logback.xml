@@ -7,6 +7,7 @@
   <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
   <!-- 彩色日志格式 -->
   <property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}" />
+  <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%t] %-40.40logger{39} : %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
   <!-- Console 输出设置 -->
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
@@ -15,8 +16,24 @@
     </encoder>
   </appender>
 
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>/logs/hookah-oauth2.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <!-- rollover daily -->
+      <fileNamePattern>/logs/hookah-oauth2-%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
+      <!-- each file should be at most 100MB, keep 60 days worth of history, but at most 20GB -->
+      <maxFileSize>30MB</maxFileSize>
+      <maxHistory>60</maxHistory>
+      <totalSizeCap>20GB</totalSizeCap>
+    </rollingPolicy>
+    <encoder>
+      <pattern>${FILE_LOG_PATTERN}</pattern>
+      <charset>utf8</charset>
+    </encoder>
+  </appender>
 
-  <!-- 不带彩色的日志在控制台输出时候的设置 -->
+
+        <!-- 不带彩色的日志在控制台输出时候的设置 -->
   <!-- <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
       <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
            格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符
@@ -29,6 +46,6 @@
   <!-- 日志输出级别 -->
   <root level="INFO">
     <appender-ref ref="STDOUT" />
-    <!--<appender-ref ref="FILE" />-->
+    <appender-ref ref="FILE" />
   </root>
 </configuration>
