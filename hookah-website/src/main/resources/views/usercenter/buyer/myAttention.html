@@ -53,14 +53,4 @@ var htmlPart = {
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
-<script>
-    var goodsBrief = $(".item-top p:nth-last-child(1)");
-    $(goodsBrief).each(function(index,n){
-        var text = $(this).text();
-        if(text.length>=65){
-            $(this).text(text.slice(0,65)+'...');
-        }
-    })
-</script>
 <script type="text/javascript" src="/static/js/usercenter/mybuyer/myAttention.js"></script>
-
