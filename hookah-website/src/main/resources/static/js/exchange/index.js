@@ -26,9 +26,9 @@ $(function () {
         var ul = $(".screen ul");
         // 获取到每个li
         var ulLis = $(".screen ul li");
+        var liWidth=ulLis.width
         // li的个数
         var len=ulLis.length;
-        var liWidth=ulLis.width();
         var arr = $("#arr");
         var arrRight = $("#arrow-right");
         var arrLeft = $("#arrow-left");
@@ -42,8 +42,23 @@ $(function () {
                 'display':'none'
             })
         });
-
-        var pic =0;
+        // $(window).resize(function(){
+        //     if( $(window).width() > 1180 && $(window).width()<1440) {
+        //         var liWidth=$(window).width()/5;
+        //         ulLis.css({
+        //             'width':liWidth
+        //         });
+        //
+        //     }else {
+        //         var liWidth=1180/5;
+        //         ulLis.css({
+        //             'width':liWidth
+        //         });
+        //     }
+        //
+        //
+        // });
+        var pic=0;
         var i=0;
         // 计算出多出来的li的个数
         var len1=len-parseInt((len)/5)*5;
