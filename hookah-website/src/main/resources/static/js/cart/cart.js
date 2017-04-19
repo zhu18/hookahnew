@@ -27,12 +27,13 @@ $("#delBtn").click(function () {
 	$("[name=items]:checkbox:checked").each(function () {
 		str.push($(this).val());
 	});
-	str = JSON.stringify(str);
 	if (str.length >= 1) {
 		$.ajax({
 			type: "POST",
 			url: '/cart/deleteAll',
-			data: {ids: str},
+			data: JSON.stringify(str),
+			dataType: "json",
+			contentType: 'application/json',
 			success: function (msg) {
 				if (msg.code == 1) {
 					$.alert('删除成功')
