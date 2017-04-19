@@ -158,11 +158,11 @@ var htmlPart = {
 		</div>
 		<div class="hot-resource-down clearfix">
 			<div class="hot-down-left ">
-				<div>
-					<p>${hot_res_data.shelvesName}</p>
-					<p>${hot_res_data.shelvesDesc}</p>
+				<div class="headline-box">
+					<p class="main-headline">${hot_res_data.shelvesName}</p>
+					<p class="sub-headline">${hot_res_data.shelvesDesc}</p>
 				</div>
-				<!--<div>-->
+				<!--<div class="label-box">-->
 				<!--<span>资源汇总</span>-->
 				<!--<span>资源汇总</span>-->
 				<!--</div>-->
@@ -186,10 +186,10 @@ var htmlPart = {
 					for(var i=0;i< index1;i++){
 					%>
 					<tr>
-						<td><img src="${res_item[i].goodsImg}" alt=""></td>
-						<td>${res_item[i].goodsName}</td>
-						<td><span>${trunc(res_item[i].shopPrice / 100,2)}</span></td><!--<span>元/次</span>-->
-						<td>
+						<td class="td-one"><img src="${res_item[i].goodsImg}" alt=""></td>
+						<td class="td-two">${res_item[i].goodsName}</td>
+						<td class="td-three"><span class="td-three-money">${trunc(res_item[i].shopPrice / 100,2)}</span></td><!--<span>元/次</span>-->
+						<td class="td-four">
 							<a href="${host.website}/exchange/details?id=${res_item[i].goodsId}">查看详情</a>
 							<!--<span>免</span>-->
 							<!--<span>企</span>-->

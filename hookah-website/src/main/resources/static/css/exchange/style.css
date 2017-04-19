@@ -883,7 +883,7 @@ lesshat-selector {
 .exchange-index .exchange-category-top ul li:nth-child(2n) {
 	background-color: #ECECEC;
 }
-/*推荐*/
+/*----------------------------推荐模块-----------------------------*/
 /*推荐的标签*/
 .exchange-index .exchange-recommend-resource {
 	background-color: #F0F0F0;
@@ -1014,14 +1014,15 @@ lesshat-selector {
 .exchange-recommend-resource .recommend-resource-down ul li:first-child+li+li+li+li+li+li+li {
 	margin-right: 0px;
 }
-/*中间的全屏图*/
+/*----------------------------------中间的全屏图------------------------*/
 .exchange-index .exchange-center-bar {
 	height: 86px;
 	background-color: #00081F;
 }
-/*热门*/
+/*热门模块*/
 .exchange-index .exchange-hot-resource {
 }
+/*热门标签*/
 .exchange-hot-resource .hot-resource-top {
 	height: 66px;
 }
@@ -1050,6 +1051,7 @@ lesshat-selector {
 	padding-top: 34px;
 	font-size: 14px;
 }
+/*热门内容*/
 .exchange-hot-resource .hot-resource-down {
     border-top: 1px solid #333333;
     padding-top: 10px;
@@ -1061,24 +1063,24 @@ lesshat-selector {
 	background-color: #FDE9EB;
 	display: inline-block;
 }
-.exchange-hot-resource .hot-resource-down .hot-down-left > div:nth-child(1) {
+.exchange-hot-resource .hot-resource-down .hot-down-left .headline-box {
 	margin: 40px 20px 0px 20px;
 	padding-bottom: 10px;
 	border-bottom: 1px solid #A61615;
 }
-.exchange-hot-resource .hot-resource-down .hot-down-left > div:nth-child(1) > p:nth-child(1) {
+.exchange-hot-resource .hot-resource-down .hot-down-left .headline-box .main-headline {
 	font-size: 32px;
 	font-weight: bold;
 	color: #A61615;
 }
-.exchange-hot-resource .hot-resource-down .hot-down-left > div:nth-child(1) > p:nth-child(2) {
+.exchange-hot-resource .hot-resource-down .hot-down-left .headline-box .sub-headline {
 	font-size: 18px;
 	color: #A61615;
 }
-.exchange-hot-resource .hot-resource-down .hot-down-left > div:nth-child(2) {
+.exchange-hot-resource .hot-resource-down .hot-down-left .label-box {
 	margin: 20px 20px 0px 20px;
 }
-.exchange-hot-resource .hot-resource-down .hot-down-left > div:nth-child(2) span {
+.exchange-hot-resource .hot-resource-down .hot-down-left .label-box span {
     width: 70px;
     height: 29px;
     text-align: center;
@@ -1087,7 +1089,7 @@ lesshat-selector {
     color: white;
     background-color: #D27877;
 }
-.exchange-hot-resource .hot-resource-down .hot-down-left > div:nth-child(2) a {
+.exchange-hot-resource .hot-resource-down .hot-down-left .label-box a {
 	display: inline-block;
 	margin-top: 20px;
 	color: #A61615;
@@ -1104,7 +1106,13 @@ lesshat-selector {
 .exchange-hot-resource .hot-resource-down .hot-down-table table {
 	width: 784px;
 }
-.exchange-hot-resource .hot-resource-down .hot-down-table table tr:nth-child(2n) {
+.exchange-hot-resource .hot-resource-down .hot-down-table table tr:first-child+tr {
+	background-color: white;
+}
+.exchange-hot-resource .hot-resource-down .hot-down-table table tr:first-child+tr+tr+tr {
+	background-color: white;
+}
+.exchange-hot-resource .hot-resource-down .hot-down-table table tr:first-child+tr+tr+tr+tr+tr {
 	background-color: white;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-table table tr th {
@@ -1113,38 +1121,38 @@ lesshat-selector {
 .exchange-hot-resource .hot-resource-down .hot-down-table table tr td {
 	height: 66px;
 }
-.exchange-hot-resource .hot-resource-down .hot-down-table table tr td:nth-child(1) {
+.exchange-hot-resource .hot-resource-down .hot-down-table table tr .td-one {
 	width: 20%;
 }
-.exchange-hot-resource .hot-resource-down .hot-down-table table tr td:nth-child(1) img {
+.exchange-hot-resource .hot-resource-down .hot-down-table table tr .td-one img {
 	width: 57px;
 	height: 54px;
 	margin-top: 5px;
 	background-color: #00A1CB;
 }
-.exchange-hot-resource .hot-resource-down .hot-down-table table tr td:nth-child(2) {
+.exchange-hot-resource .hot-resource-down .hot-down-table table tr .td-two {
 	width: 40%;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
-.exchange-hot-resource .hot-resource-down .hot-down-table table tr td:nth-child(3) {
+.exchange-hot-resource .hot-resource-down .hot-down-table table tr .td-three {
 	width: 20%;
 }
-.exchange-hot-resource .hot-resource-down .hot-down-table table tr td:nth-child(3) > span {
+.exchange-hot-resource .hot-resource-down .hot-down-table table tr .td-three span {
 	color: #F20A0A;
 	font-size: 14px;
 	vertical-align: middle;
 }
-.exchange-hot-resource .hot-resource-down .hot-down-table table tr td:nth-child(3) > span:nth-child(1) {
+.exchange-hot-resource .hot-resource-down .hot-down-table table tr .td-three .td-three-money {
 	font-size: 24px;
 	margin-right: 5px;
 	vertical-align: middle;
 }
-.exchange-hot-resource .hot-resource-down .hot-down-table table tr td:nth-child(4) {
+.exchange-hot-resource .hot-resource-down .hot-down-table table tr .td-four {
 	width: 20%;
 }
-.exchange-hot-resource .hot-resource-down .hot-down-table table tr td:nth-child(4) > span {
+.exchange-hot-resource .hot-resource-down .hot-down-table table tr .td-four > span {
 	display: inline-block;
 	height: 24px;
 	width: 24px;
@@ -1152,7 +1160,7 @@ lesshat-selector {
 	margin-right: 10px;
 	background-color: #53996F;
 }
-.exchange-hot-resource .hot-resource-down .hot-down-table table tr td:nth-child(4) > span:nth-child(2) {
+.exchange-hot-resource .hot-resource-down .hot-down-table table tr .td-four > span:nth-child(2) {
 	background-color: #6193B9;
 	margin: 0;
 }
