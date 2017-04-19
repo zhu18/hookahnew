@@ -199,7 +199,6 @@ public class MgGoodsShelvesGoodsServiceImpl extends GenericMongoServiceImpl<MgSh
             for(String s : gidList){
                 if(s.equals(goodsId)){
                     gidList.remove(s);
-                    break;
                 }
             }
             mgShelvesGoods.setGoodsIdList(gidList);
