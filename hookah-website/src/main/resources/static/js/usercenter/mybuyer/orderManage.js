@@ -1,5 +1,5 @@
 function loadPageData(data){
-    if(data.data.list){
+    if(data.data.list.length > 0){
         var list = data.data.list;
         var html = '';
         for(var i=0; i<list.length; i++){
