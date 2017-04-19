@@ -1,5 +1,7 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
+import com.jusfoun.hookah.core.common.Pagination;
+import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.GoodsShelvesMapper;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.GoodsShelves;
@@ -8,6 +10,7 @@ import com.jusfoun.hookah.core.domain.vo.GoodsShelvesVo;
 import com.jusfoun.hookah.core.domain.vo.OptionalShelves;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
+import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StrUtil;
@@ -81,6 +84,7 @@ public class GoodsShelvesServiceImpl extends GenericServiceImpl<GoodsShelves, St
         return goodsShelvesVoMap;
     }
 
+
     @Override
     public ReturnData<GoodsShelvesVo> findByShevlesGoodsVoId(String shevlesGoodsVoId) {
         ReturnData<GoodsShelvesVo> returnData = new ReturnData<GoodsShelvesVo>();
@@ -121,6 +125,62 @@ public class GoodsShelvesServiceImpl extends GenericServiceImpl<GoodsShelves, St
     }
 
     @Override
+    public ReturnData findGoodsByShevlesId(String shevlesId, String pageNumber, String pageSize) {
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+
+        if(StringUtils.isBlank(shevlesId)){
+            returnData.setCode(ExceptionConst.InvalidParameters);
+            returnData.setMessage(ExceptionConst.get(ExceptionConst.InvalidParameters));
+            return returnData;
+        }
+
+
+        MgShelvesGoods mgShelvesGoods = mgGoodsShelvesGoodsService.selectById(shevlesId);
+        if(Objects.nonNull(mgShelvesGoods)){
+
+            try {
+                //查询mg里货架内的商品Id集合
+                List<String> sgIds = mgShelvesGoods.getGoodsIdList();
+
+                Pagination<Goods> page = new Pagination<>();
+                List<Condition> filters = new ArrayList();
+                filters.add(Condition.eq("isDelete", 1));
+                //从查询到的Id集合里查询商品
+                if(Objects.nonNull(sgIds) && sgIds.size() != 0 ){
+                    filters.add(Condition.in("goodsId",sgIds.toArray()));
+                }else{
+                    return returnData;
+                }
+
+                //参数校验
+                int pageNumberNew = HookahConstants.PAGE_NUM;
+                if (StringUtils.isNotBlank(pageNumber)) {
+                    pageNumberNew = Integer.parseInt(pageNumber);
+                }
+                int pageSizeNew = HookahConstants.PAGE_SIZE;
+                if (StringUtils.isNotBlank(pageSize)) {
+                    pageSizeNew = Integer.parseInt(pageSize);
+                }
+
+                List<OrderBy> orderBys = new ArrayList();
+                orderBys.add(OrderBy.desc("lastUpdateTime"));
+
+                page = goodsService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
+                returnData.setData(page);
+            } catch (Exception e) {
+                returnData.setCode(ExceptionConst.Failed);
+                returnData.setMessage(e.toString());
+                e.printStackTrace();
+            }
+
+        }else{
+            returnData.setMessage(ExceptionConst.get(ExceptionConst.InvalidParameters));
+        }
+        return returnData;
+    }
+
+    @Override
     public ReturnData<List<Map<String, GoodsShelves>>> selectAllShelf() {
         ReturnData<List<Map<String, GoodsShelves>>> returnData = new ReturnData<List<Map<String, GoodsShelves>>>();
         returnData.setCode(ExceptionConst.Success);
@@ -140,8 +200,8 @@ public class GoodsShelvesServiceImpl extends GenericServiceImpl<GoodsShelves, St
     }
 
     /**
-     * @Title: str2LongArray
-     * @Description:  按照正则表达式拆分数字字符串转成Long数组
+     * @Title: str2StrArray
+     * @Description:  按照正则表达式拆分数字字符串转成字符数组
      * @param target
      * @param regex
      * @return
