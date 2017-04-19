@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface RegionService extends GenericService<Region,Long> {
     @Cacheable(value = "regionInfo")
-    Region selectById(String id);
+    public Region selectById(String id);
 
     List<Region> selectTree();
 }

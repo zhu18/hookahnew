@@ -39,6 +39,13 @@ public class HookahConstants {
     public static final String CACHE_GOODS_ATTR = "goodsAttrInfo";//商品属性
     public static final String CACHE_GOODS_AREA = "regionInfo";//地域信息
 
+    /**  */
+    public static final Byte GOODS_STATUS_DELETE = 0;
+    public static final Byte GOODS_STATUS_UNDELETE = 1;
+    public static final Byte GOODS_STATUS_ONSALE = 1;
+    public static final Byte GOODS_STATUS_OFFSALE = 0;
+
+
     public enum AnalyzeOpt {
         ANALYZED("analyzed"),
         NOT_ANALYZED("not_analyzed");
