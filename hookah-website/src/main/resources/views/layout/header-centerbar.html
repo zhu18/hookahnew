@@ -32,7 +32,7 @@
 				<div class="shopping-cart-down-title"><h1>你还没有登录</h1></div>
 				<div class="goLogin text-align-center"><a href="${oauth2.loginUrl}" class="color-blue">去登陆</a></div>
 				<%}else{%>
-				<%if(has(cartSize) && cartSize > 1){%>
+				<%if(has(cartSize) && cartSize > 0){%>
 				<div class="shopping-cart-down-title"><h1>最新加入的商品</h1></div>
 				<div class="shopping-cart-down-content">
 					<ul>
@@ -48,7 +48,7 @@
 									<a href="/exchange/details?id=${list.goodsId}">${list.goodsName}</a>
 								</div>
 								<div class="grid-right font-weight-bold content-down-money">
-									<div class="font-size-14">￥${list.goodsPrice}×${list.goodsNumber}</div>
+									<div class=""><span class="color-red">￥${trunc(list.goodsPrice / 100,2)}</span>×${list.goodsNumber}</div>
 									<!--<a href="" class="grid-right font-weight-normal">删除</a>-->
 								</div>
 							</div>
@@ -57,12 +57,11 @@
 					</ul>
 				</div>
 				<%}else{%>
-				<div class="shopping-cart-down-title"><h1>你还没有登录</h1></div>
-				<div class="goLogin text-align-center"><a href="${oauth2.loginUrl}" class="color-blue">去登陆</a></div>
+				<div class="shopping-cart-down-title"><h1>购物车还没有商品</h1></div>
+				<div class="goLogin text-align-center"><a href="${host.websita}/exchange/index" class="color-blue">去购物</a></div>
 				<%}%>
 				<div class="shopping-cart-down-pay">
 					<div class="display-inline-block">共<span>${cartSize!"0"}</span>件商品</div>
-					<!--<div class="display-inline-block margin-left-10">共<span>￥</span></div>-->
 					<a href="/usercenter/buyer/cart" class="display-inline-block grid-right btn btn-full-red">去购物车</a>
 				</div>
 				<%}%>

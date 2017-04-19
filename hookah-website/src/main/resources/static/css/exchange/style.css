@@ -1418,6 +1418,7 @@ lesshat-selector {
 	background-color: white;
 }
 .exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-title {
+
 	font-size: 22px;
 	line-height: 24px;
 	color: white;
@@ -1429,7 +1430,6 @@ lesshat-selector {
 	line-height: 14px;
 	color: white;
 	padding: 0 10px;
-	word-wrap: break-word;
 }
 .exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-btn {
     opacity: 0;
@@ -1566,7 +1566,7 @@ lesshat-selector {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	padding: 0 10px;
+	width: 100%;
 }
 .exchange-index .exchange-category-down .category-left .category-item > div:nth-child(2) ul li:nth-child(n+5) {
 	border-bottom: none;
@@ -1855,9 +1855,6 @@ dl {
 	text-align: center;
 	padding: 4px 0;
 }
-.search .search-order .order-list ul li .item-top p.goods-img{
-	height:100px;
-}
 .search .search-order .order-list ul li .item-top .goods-img img {
 	width: 70px;
 	margin-top: 18px;
@@ -1881,11 +1878,11 @@ dl {
 }
 .search .search-order .order-list ul li .item-down {
 	border-top: 1px solid #E5E5E5;
+	line-height: 38px;
 	padding: 0 10px;
 }
 .search .search-order .order-list ul li .item-down span {
 	color: #B2B2B2;
-	line-height: 50px;
 }
 .search .search-order .order-list ul li .item-down span label {
 	color: black;
@@ -2217,7 +2214,6 @@ dl {
 	text-align: left;
 }
 .goods-table .table-content .table-item table td, th {
-	padding:0 5px;
 }
 .goods-table .table-content .table-item:last-child ol .comment-title {
 	background-color: #F1F1F1;

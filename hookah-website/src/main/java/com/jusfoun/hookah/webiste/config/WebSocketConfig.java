@@ -31,6 +31,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(systemWebSocketHandler(), "/websck").addInterceptors(new HandshakeInterceptor());
+        System.out.println("registed!");
         registry.addHandler(systemWebSocketHandler(), "/websck").addInterceptors(new HandshakeInterceptor())
                 .withSockJS();
     }
