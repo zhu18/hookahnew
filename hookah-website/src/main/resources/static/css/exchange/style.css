@@ -1863,6 +1863,9 @@ dl {
 	text-align: center;
 	padding: 4px 0;
 }
+.search .search-order .order-list ul li .item-top p.goods-img{
+	height:100px;
+}
 .search .search-order .order-list ul li .item-top .goods-img img {
 	width: 70px;
 	margin-top: 18px;
@@ -1886,11 +1889,14 @@ dl {
 }
 .search .search-order .order-list ul li .item-down {
 	border-top: 1px solid #E5E5E5;
-	line-height: 38px;
 	padding: 0 10px;
 }
 .search .search-order .order-list ul li .item-down span {
 	color: #B2B2B2;
+	line-height: 50px;
+}
+.search .search-order .order-list ul li .item-down a{
+
 }
 .search .search-order .order-list ul li .item-down span label {
 	color: black;

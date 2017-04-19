@@ -12,17 +12,17 @@ function loadPageData(data){ //渲染页面数据
             }else if(list[i].shopFormat == 2 ){
                 shopFormat = '年';
             }
-            html += '<li>';
-            html += '<a class="item-top" href="/exchange/details?id='+list[i].goodsId+'">';
-            html += '<p class="goods-img"><img src="'+list[i].goodsImg+'" alt=""/></p>';
-            html += '<p class="goods-name" title="'+list[i].goodsName+'">'+list[i].goodsName+'</p>';
-            html += '<p class="goods-brief" title="'+list[i].goodsBrief+'">'+list[i].goodsBrief+'</p>';
-            html += '</a>';
-            html += '<div class="item-down">';
-            html += '<span class="grid-left goods-price"><span>'+Number(list[i].shopPrice)/100+'</span>/'+(list[i].shopNumber == 1 ? '':list[i].shopNumber)+shopFormat+'</span>';
-            html += '<a class="grid-right" href="javascript:void(0)">加入购物车</a>';
-            html += '</div>';
-            html += '</li>';
+			html += '<li>';
+			html += '<a class="item-top" href="/exchange/details?id='+list[i].goodsId+'">';
+			html += '<p class="goods-img"><img src="'+list[i].goodsImg+'" alt=""/></p>';
+			html += '<p class="goods-name" title="'+list[i].goodsName+'">'+list[i].goodsName+'</p>';
+			html += '<p class="goods-brief" title="'+list[i].goodsBrief+'">'+list[i].goodsBrief+'</p>';
+			html += '</a>';
+			html += '<div class="item-down">';
+			html += '<span class="grid-left goods-price">￥<span>'+Number(list[i].shopPrice)/100+'</span>/'+(list[i].shopNumber == 1 ? '':list[i].shopNumber)+shopFormat+'</span>';
+			html += '<a class="grid-right btn btn-full-red padding-5 font-size-12 margin-top-10" href="javascript:void(0)">加入购物车</a>';
+			html += '</div>';
+			html += '</li>';
         }
         $('.order-list ul').html(html);
     }else{
