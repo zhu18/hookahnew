@@ -99,7 +99,7 @@ var htmlPart = {
 								<span><i class="fa fa-heart" aria-hidden="true"></i>收藏</span>
 							</div>
 							<div>
-								<span><i class="fa fa-jpy" aria-hidden="true"></i>${item.shopPrice}</span>
+								<span><i class="fa fa-jpy" aria-hidden="true"></i>${trunc(item.shopPrice / 100,2)}</span>
 								<a href="${host.website}/exchange/details?id=${item.goodsId}">查看详情</a>
 							</div>
 						</div>
@@ -152,7 +152,7 @@ var htmlPart = {
 					<tr>
 						<td><img src="${item.goodsImg}" alt=""></td>
 						<td>${item.goodsName}</td>
-						<td><span>${item.shopPrice}</span></td><!--<span>元/次</span>-->
+						<td><span>${trunc(item.shopPrice / 100,2)}</span></td><!--<span>元/次</span>-->
 						<td>
 							<a href="${host.website}/exchange/details?id=${item.goodsId}">查看详情</a>
 							<!--<span>免</span>-->
@@ -173,7 +173,7 @@ var htmlPart = {
 						<a href="${host.website}/exchange/details?id=${hot_sellItem[i].goodsId}"><img src="${hot_sellItem[i].goodsImg}" class="grid-left" alt=""></a>
 						<div class="infoBox grid-right">
 							<a href="${host.website}/exchange/details?id=${hot_sellItem[i].goodsId}"><p class="title">${hot_sellItem[i].goodsName}</p></a>
-							<a href="${host.website}/exchange/details?id=${hot_sellItem[i].goodsId}"><p class="p-none ">${hot_sellItem[i].shopPrice}</p></a>
+							<a href="${host.website}/exchange/details?id=${hot_sellItem[i].goodsId}"><p class="p-none ">￥${trunc(hot_sellItem[i].shopPrice / 100,2)}</p></a>
 						</div>
 					</li>
 					<%}%>
@@ -493,8 +493,7 @@ var htmlPart = {
 								</p>
 								<p>
 									<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-									<span class="color-red">${item.shopPrice}</span>
-									<span class="color-red">元</span>
+									<span class="color-red">${trunc(item.shopPrice / 100,2)}</span>
 								</p>
 							</a>
 						</li>
@@ -528,8 +527,7 @@ var htmlPart = {
 								</p>
 								<p>
 									<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-									<span class="color-red">${item.shopPrice}</span>
-									<span class="color-red">元</span>
+									<span class="color-red">${trunc(item.shopPrice / 100,2)}</span>
 								</p>
 							</a>
 						</li>
@@ -563,8 +561,7 @@ var htmlPart = {
 								</p>
 								<p>
 									<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-									<span class="color-red">${item.shopPrice}</span>
-									<span class="color-red">元</span>
+									<span class="color-red">${trunc(item.shopPrice / 100,2)}</span>
 								</p>
 							</a>
 						</li>
@@ -598,8 +595,7 @@ var htmlPart = {
 								</p>
 								<p>
 									<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-									<span class="color-red">${item.shopPrice}</span>
-									<span class="color-red">元</span>
+									<span class="color-red">${trunc(item.shopPrice / 100,2)}</span>
 								</p>
 							</a>
 						</li>
@@ -632,8 +628,7 @@ var htmlPart = {
 								</p>
 								<p>
 									<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-									<span class="color-red">${item.shopPrice}</span>
-									<span class="color-red">元</span>
+									<span class="color-red">${trunc(item.shopPrice / 100,2)}</span>
 								</p>
 							</a>
 						</li>
