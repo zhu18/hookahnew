@@ -333,7 +333,7 @@ public class OrderInfoController extends BaseController {
      * @param
      * @return
      */
-	@RequestMapping(value="/delete",method=RequestMethod.POST)
+	@RequestMapping(value="/deleteBatch",method=RequestMethod.POST)
     @ResponseBody
 	public ReturnData delete(@RequestBody  String[] orderIds){
 		try{
@@ -344,4 +344,21 @@ public class OrderInfoController extends BaseController {
             return ReturnData.error("删除错误");
         }
 	}
+
+    /**
+     * 删除订单
+     * @param
+     * @return
+     */
+    @RequestMapping(value="/delete",method=RequestMethod.POST)
+    @ResponseBody
+    public ReturnData delete(String orderId){
+        try{
+            orderInfoService.deleteByLogic(orderId);
+            return ReturnData.success();
+        }catch(Exception e){
+            logger.error("删除错误",e);
+            return ReturnData.error("删除错误");
+        }
+    }
 }
