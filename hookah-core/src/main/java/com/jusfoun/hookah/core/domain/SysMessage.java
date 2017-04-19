@@ -1,6 +1,12 @@
 package com.jusfoun.hookah.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jusfoun.hookah.core.generic.GenericModel;
+import org.springframework.data.annotation.Id;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import java.util.Date;
 
 public class SysMessage extends GenericModel {
@@ -10,6 +16,9 @@ public class SysMessage extends GenericModel {
      *
      * @mbggenerated
      */
+    @Id
+    @javax.persistence.Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String msgId;
 
     /**
@@ -50,6 +59,8 @@ public class SysMessage extends GenericModel {
      *
      * @mbggenerated
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /**

@@ -250,10 +250,11 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
         if(ordergoodsList!=null&&ordergoodsList.size()>0){
             orderInfo.setIsDeleted(new Integer(0).byteValue());
+            orderInfo = super.insert(orderInfo);
             OrderInfoVo orderInfoVo = new OrderInfoVo();
             BeanUtils.copyProperties(orderInfo,orderInfoVo);
             orderInfoVo.setMgOrderGoodsList(ordergoodsList);
-            orderinfoMapper.insert(orderInfo);
+
             mgOrderInfoService.insert(orderInfoVo);
         }
         if(goodsAmount.compareTo(0L)==0){
@@ -343,6 +344,19 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             return payVo;
         }
         return null;
+    }
+
+    @Override
+    public OrderInfoVo findDetailById(String orderId) throws HookahException {
+        // TODO Auto-generated method stub
+        OrderInfo order = super.selectById(orderId);
+
+        OrderInfoVo orderInfoVo = new OrderInfoVo();
+        BeanUtils.copyProperties(order,orderInfoVo);
+        OrderInfoVo mgOrder = mgOrderInfoService.selectById(orderInfoVo.getOrderId());
+        orderInfoVo.setMgOrderGoodsList(mgOrder.getMgOrderGoodsList());
+
+        return orderInfoVo;
     }
 
 }
