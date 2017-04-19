@@ -65,19 +65,4 @@ public class GoodsCheckServiceImpl extends GenericServiceImpl<GoodsCheck, String
         }
     }
 
-    /**
-     * 获取待审核商品
-     * @param goodsId
-     */
-    @RabbitListener(queues = RabbitmqQueue.CONTRACT_GOODSCHECK)
-    public void receiveGoodsCheckId(String goodsId) {
-        try{
-            System.out.println("Received contract<" + goodsId + ">---------------------------------------");
-            GoodsCheck goodsCheck = new GoodsCheck();
-            goodsCheck.setGoodsId(goodsId);
-            super.insert(goodsCheck);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
 }
