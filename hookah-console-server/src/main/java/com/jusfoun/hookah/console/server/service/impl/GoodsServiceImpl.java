@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.dao.GoodsMapper;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
@@ -56,7 +57,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         mgGoods.setGoodsId(obj.getGoodsId());
         mgGoods.setApiInfo(obj.getApiInfo());
         mongoTemplate.insert(mgGoods);
-        mqSenderService.sendDirect(obj.getGoodsId());
+        mqSenderService.sendDirect(RabbitmqQueue.CONTRACT_GOODSCHECK, obj.getGoodsId());
     }
 
     @Override
@@ -100,7 +101,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
     }
 
     /**
-     * 商品下架/删除
+     * 商品下架/删除/上架
      * @param goodsId
      * @return
      */
@@ -112,11 +113,18 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             case "del" :
                 goods.setIsDelete(HookahConstants.GOODS_STATUS_DELETE);
                 goods.setLastUpdateTime(DateUtils.now());
+                mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_GOODS_ID, goodsId);
                 break;
             case "offSale":
                 goods.setIsOnsale(HookahConstants.GOODS_STATUS_OFFSALE);
                 goods.setOnsaleEndDate(DateUtils.now());
+                mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_GOODS_ID, goodsId);
+                break;
+            case "onSale":
+                mqSenderService.sendDirect(RabbitmqQueue.CONTRACT_GOODSCHECK, goodsId);
                 break;
         }
     }
+
+
 }
