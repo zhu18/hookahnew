@@ -26,7 +26,7 @@ public interface MgGoodsShelvesGoodsService extends GenericService<MgShelvesGood
 
     ReturnData<List<MgShelvesGoods>> selectMgShelveGoodsList(MgShelvesGoods mgShelvesGoods);
 
-    Pagination<Goods> getData(int pageNumberNew, int pageSizeNew, String shelvesGoodsId) throws HookahException;
+    Pagination<Goods> getData(int pageNumberNew, int pageSizeNew, String shelvesGoodsId);
 
     ReturnData delSMongoGoodsById(String shelvesGoodsId, String goodsId) throws HookahException;
 

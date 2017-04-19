@@ -10,7 +10,7 @@ class ManageGoodsController {
 
     // 查询货架中商品
     $scope.search = function () {
-        $rootScope.shelvesId = $stateParams.data.shelvesId;
+        $rootScope.shelf = $stateParams.data;
         console.log("已进入货架管理。。。。");
         console.log($stateParams.data.shelvesId);
         var promise = $http({
@@ -25,7 +25,7 @@ class ManageGoodsController {
 
             $rootScope.loadingState = false;
             $scope.shelfGids = res.data.data.list;
-            console.log(res.data.data.list);
+            console.log(res.data.data);
             growl.addSuccessMessage("数据加载完毕。。。");
         });
     };
@@ -40,7 +40,7 @@ class ManageGoodsController {
         });
         promise.then(function (res, status, config, headers) {
             $rootScope.loadingState = false;
-            $scope.sysAccount = res.data.data;
+            $scope.allGoods = res.data.data.list;
             growl.addSuccessMessage("数据加载完毕。。。");
             console.log(res.data);
         });
@@ -51,21 +51,39 @@ class ManageGoodsController {
     // }
 
     // 移除商品
-    $scope.delGoods = function (shelveId, gid) {
+    $scope.delGoods = function (shelveId, goods) {
         console.log(shelveId);
-        console.log(gid.goodsId);
+        console.log(goods.goodsId);
         var promise = $http({
             method: 'GET',
             url: $rootScope.site.apiServer + "/api/mgGoodssg/delSMongoGoodsById",
-            params: {currentPage: $rootScope.pagination.currentPage, pageSize: $rootScope.pagination.pageSize}
+            params: {shelvesGoodsId:shelveId, goodsId:goods.goodsId}
         });
         promise.then(function (res, status, config, headers) {
             if(res.data.code == "1"){
                 $scope.search();
+                $scope.searchAllGoods();
                 growl.addSuccessMessage("数据重新加载完毕。。。");
             }
         });
+    }
 
+    // 添加商品
+    $scope.addGoods = function (shelveId, item) {
+        console.log(shelveId);
+        console.log(item.goodsId);
+        var promise = $http({
+            method: 'GET',
+            url: $rootScope.site.apiServer + "/api/mgGoodssg/addGidByMGid",
+            params: {shelvesId:shelveId, goodsId:item.goodsId}
+        });
+        promise.then(function (res, status, config, headers) {
+            if(res.data.code == "1"){
+                $scope.search();
+                $scope.searchAllGoods();
+                growl.addSuccessMessage("数据重新加载完毕。。。");
+            }
+        });
     }
 
     $scope.search();
