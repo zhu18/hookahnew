@@ -183,21 +183,20 @@ public class MgGoodsShelvesGoodsServiceImpl extends GenericMongoServiceImpl<MgSh
         try {
             MgShelvesGoods mgShelvesGoods = super.selectById(shelvesGoodsId);
             List<String> gidList = mgShelvesGoods.getGoodsIdList();
-            if(gidList == null)
-                throw new HookahException("空数据！");
-            for(String s : gidList){
-                if(s.equals(goodsId)){
-                    gidList.remove(s);
-                }
-            }
-//            mgShelvesGoods.setGoodsIdList(gidList);
-//            mongoTemplate.up
-//            super.updateById(mgShelvesGoods);
+            if(gidList != null){
 
-            Query query=new Query(Criteria.where("shelvesGoodsId").is(mgShelvesGoods.getShelvesGoodsId()));
-            Update update = new Update();
-            update.set("goodsIdList", gidList);
-            mongoTemplate.updateFirst(query, update, mgShelvesGoods.getClass());
+                for(String s : gidList){
+                    if(s.equals(goodsId)){
+                        gidList.remove(s);
+                        break;
+                    }
+                }
+
+                Query query=new Query(Criteria.where("shelvesGoodsId").is(mgShelvesGoods.getShelvesGoodsId()));
+                Update update = new Update();
+                update.set("goodsIdList", gidList);
+                mongoTemplate.updateFirst(query, update, mgShelvesGoods.getClass());
+            }
 
         }catch (Exception e){
             returnData.setCode(ExceptionConst.Error);
@@ -216,7 +215,13 @@ public class MgGoodsShelvesGoodsServiceImpl extends GenericMongoServiceImpl<MgSh
             if(mgShelvesGoods == null)
                 throw new HookahException("空数据！");
 
-            List<String> gidList = mgShelvesGoods.getGoodsIdList();
+            List<String> gidList = null;
+
+            if(mgShelvesGoods.getGoodsIdList() == null){
+                gidList = new ArrayList<>();
+            }else{
+                gidList = mgShelvesGoods.getGoodsIdList();
+            }
             gidList.add(goodsId);
             Query query=new Query(Criteria.where("shelvesGoodsId").is(mgShelvesGoods.getShelvesGoodsId()));
             Update update = new Update();
