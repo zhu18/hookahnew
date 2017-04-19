@@ -1,0 +1,72 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/index/index.css">
+<link rel="stylesheet" href="/static/css/common.css">
+<link rel="stylesheet" href="/static/css/exchange/style.css">
+<script type="text/javascript">
+	$.getUrlParam = function (key) {
+		var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+		var result = window.location.search.substr(1).match(reg);
+		return result ? decodeURIComponent(result[2]) : null;
+	};
+	var id = $.getUrlParam('id');
+	var pagePath = '/mgGoodssg/findById';
+	var pageType = 'get';
+	var dataParm = {};
+	dataParm.pageNumber = 1;
+	dataParm.pageSize = 20;
+	dataParm.id = id;
+</script>
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 exchange-list">
+    <div class="grid-row">
+        <div class="search">
+            <div class="bdg-row" style="position: relative">
+                <!--头部类目展示模块-->
+                <%include("/layout/menu.html"){} %>
+
+                <div class="search-category" id="J_searchCategory">
+                    <!--<div class="panel-title">-->
+                    <!--<span>全部结果:</span>-->
+                    <!--</div>-->
+
+                </div>
+                <!--中间主体列表展示模块-->
+                <div class="search-order">
+                    <div class="order" >
+                        <ul>
+                            <li><a href="javascript:;" class="active" type="">综合排序</a></li>
+                            <li><a href="javascript:;" type="onSaleDate">上架时间</a></li>
+                            <li><a href="javascript:;" type="orders">下载量</a></li>
+                            <li><a href="javascript:;" type="commentRank">评分</a></li>
+                            <li>
+                                <a href="javascript:;" type="shopPrice">价格:</a>
+                                <div class="priceBox">
+                                    <input type="text" onkeyup="this.value=this.value.replace(/[^\d.]/g,'') " onafterpaste="this.value=this.value.replace(/[^\d]/g,'') " class="startPrice" placeholder="￥  请输入" />
+                                    <em></em>
+                                    <input type="text" onkeyup="this.value=this.value.replace(/[^\d.]/g,'') " onafterpaste="this.value=this.value.replace(/[^\d]/g,'') " class="endPrice" placeholder="￥  请输入" />
+                                    <span class="empty d" >清空</span>
+                                    <span class="ensure">确定</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="order-list">
+                        <ul></ul>
+                    </div>
+                    <%include("/layout/pageaction.html"){} %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+<script src="/static/js/exchange/common.js"></script>
+<script src="/static/js/exchange/shelves.js"></script>

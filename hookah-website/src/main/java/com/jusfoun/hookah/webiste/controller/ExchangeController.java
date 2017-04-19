@@ -81,4 +81,9 @@ public class ExchangeController {
         model.addAttribute("goodsInfo", goods);
         return "exchange/addToCart";
     }
+
+    @RequestMapping(value = "/shelves", method = RequestMethod.GET)
+    public String shelves(Model model) {
+        return "exchange/shelves";
+    }
 }

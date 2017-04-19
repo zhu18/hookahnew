@@ -1,4 +1,5 @@
 import ShelfController from './ShelfController'
+import ManageGoodsController from './ManageGoodsController'
 shelfRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function shelfRouting($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/shelf/search');
@@ -23,9 +24,10 @@ export default function shelfRouting($stateProvider, $urlRouterProvider) {
       controller: ShelfController,
     })
     .state('shelf.manageGoods', {
+      params:{'data':null},
       url: '/shelf/manageGoods',
       template: require('./manageGoods.html'),
-      controller: ShelfController,
+      controller: ManageGoodsController,
     })
     .state('shelf.category', {
       url: '/shelf/category',
