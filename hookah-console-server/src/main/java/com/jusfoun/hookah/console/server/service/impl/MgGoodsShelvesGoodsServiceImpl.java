@@ -1,11 +1,15 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
+import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.mongo.MgShelvesGoods;
 import com.jusfoun.hookah.core.exception.HookahException;
+import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericMongoServiceImpl;
+import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.MgGoodsShelvesGoodsService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -16,7 +20,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
 import javax.annotation.Resource;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,6 +33,9 @@ public class MgGoodsShelvesGoodsServiceImpl extends GenericMongoServiceImpl<MgSh
 
     @Resource
     private MongoTemplate mongoTemplate;
+
+    @Resource
+    GoodsService goodsService;
 
 
     @Override
@@ -151,5 +158,78 @@ public class MgGoodsShelvesGoodsServiceImpl extends GenericMongoServiceImpl<MgSh
     @Override
     public ReturnData<List<MgShelvesGoods>> selectMgShelveGoodsList(MgShelvesGoods mgShelvesGoods) {
         return null;
+    }
+
+    @Override
+    public Pagination<Goods> getData(int pageNumberNew, int pageSizeNew, String shelvesGoodsId) throws HookahException {
+
+        MgShelvesGoods mgShelvesGoods = super.selectById(shelvesGoodsId);
+        List<String> gidList = mgShelvesGoods.getGoodsIdList();
+        if(gidList.size() < 1)
+            throw new HookahException("空数据！");
+
+        List<Condition> filters = new ArrayList();
+        List<OrderBy> orderBys = new ArrayList();
+        filters.add(Condition.in("goodsId", gidList.toArray()));
+        orderBys.add(OrderBy.desc("lastUpdateTime"));
+
+        Pagination<Goods> page = goodsService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
+
+//        PageHelper.startPage(pageNumberNew, pageSizeNew);
+//        List<Goods> list = goodsService.selectList(filters, orderBys);
+//        PageInfo<MgShelvesGoods> page = new PageInfo<>(list);
+//        Pagination<MgShelvesGoods> pagination = new Pagination<MgShelvesGoods>();
+//        pagination.setTotalItems(page.getTotal());
+//        pagination.setPageSize(pageSizeNew);
+//        pagination.setCurrentPage(pageNumberNew);
+//        pagination.setList(page.getList());
+        return page;
+    }
+
+    @Override
+    public ReturnData delSMongoGoodsById(String shelvesGoodsId, String goodsId) throws HookahException {
+
+        ReturnData<MgShelvesGoods> returnData = new ReturnData<MgShelvesGoods>();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            MgShelvesGoods mgShelvesGoods = super.selectById(shelvesGoodsId);
+            List<String> gidList = mgShelvesGoods.getGoodsIdList();
+            if(gidList.size() < 1)
+                throw new HookahException("空数据！");
+            for(String s : gidList){
+                if(s.equals(goodsId)){
+                    gidList.remove(s);
+                    break;
+                }
+            }
+            mgShelvesGoods.setGoodsIdList(gidList);
+            super.updateById(mgShelvesGoods);
+        }catch (Exception e){
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setMessage(e.toString());
+            logger.error(e.getMessage());
+        }
+        return returnData;
+    }
+
+    @Override
+    public ReturnData addGidByMGid(String shelvesId, String goodsId) {
+        ReturnData<MgShelvesGoods> returnData = new ReturnData<MgShelvesGoods>();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            MgShelvesGoods mgShelvesGoods = super.selectById(shelvesId);
+            if(mgShelvesGoods == null)
+                throw new HookahException("空数据！");
+
+            List<String> gidList = mgShelvesGoods.getGoodsIdList();
+            gidList.add(goodsId);
+            mgShelvesGoods.setGoodsIdList(gidList);
+            super.updateById(mgShelvesGoods);
+        }catch (Exception e){
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setMessage(e.toString());
+            logger.error(e.getMessage());
+        }
+        return returnData;
     }
 }

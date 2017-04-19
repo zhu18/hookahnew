@@ -2,12 +2,14 @@ package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.GoodsFavorite;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.GoodsFavoriteService;
+import com.jusfoun.hookah.rpc.api.GoodsService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +29,9 @@ public class GoodsFavoriteController extends BaseController {
 
     @Resource
     GoodsFavoriteService goodsFavoriteService;
+
+    @Resource
+    GoodsService goodsService;
 
     @RequestMapping("add")
     @ResponseBody
@@ -76,10 +81,20 @@ public class GoodsFavoriteController extends BaseController {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
-            Pagination<GoodsFavorite> page = new Pagination<>();
+            Pagination<Goods> page = new Pagination<>();
             List<Condition> filters = new ArrayList();
             filters.add(Condition.eq("isDelete", 1));
             filters.add(Condition.eq("userId", getCurrentUser().getUserId()));
+            List<GoodsFavorite> list = goodsFavoriteService.selectList(filters);
+            List<String> gfIdList = new ArrayList<>();
+            if(list.size() < 1){
+                returnData.setCode(ExceptionConst.AssertFailed);
+                returnData.setMessage(ExceptionConst.get(ExceptionConst.AssertFailed));
+                return returnData;
+            }
+            for(GoodsFavorite gf : list){
+                gfIdList.add(gf.getGoodsId());
+            }
             List<OrderBy> orderBys = new ArrayList();
             orderBys.add(OrderBy.desc("addTime"));
             int pageNumberNew = HookahConstants.PAGE_NUM;
@@ -90,7 +105,11 @@ public class GoodsFavoriteController extends BaseController {
             if (StringUtils.isNotBlank(pageSize)) {
                 pageSizeNew = Integer.parseInt(pageSize);
             }
-            page = goodsFavoriteService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
+
+            List<Condition> filtersGoods = new ArrayList();
+            filtersGoods.add(Condition.in("goodsId", gfIdList.toArray()));
+
+            page = goodsService.getListInPage(pageNumberNew, pageSizeNew, filtersGoods, orderBys);
             returnData.setData(page);
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);

@@ -73,8 +73,8 @@ public class MgGoodsShelvesGoodsController {
 
     @RequestMapping("/findById")
     @ResponseBody
-    public  ReturnData findByShevlesGoodsVoId(String id){
-        return  goodsShelvesService.findByShevlesGoodsVoId(id);
+    public  ReturnData findByShevlesGoodsVoId(String id,String pageNumber,String pageSize){
+        return  goodsShelvesService.findGoodsByShevlesId(id,pageNumber,pageSize);
     }
 
     @RequestMapping("/shelveGoodsList")
