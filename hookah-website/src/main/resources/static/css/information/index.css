@@ -12,11 +12,9 @@ ul li {
     font-size: 0;
     zoom: 1;
 }
-.box {
-    background: #F8F8F8;
+.overflow{
+    overflow: hidden;
 }
-
-
 /*中心动态*/
 .information .content .leftSide {
     font-size: 15px;
