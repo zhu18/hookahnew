@@ -1,14 +1,18 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
+import com.google.gson.Gson;
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.dao.GoodsCheckMapper;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.GoodsCheck;
+import com.jusfoun.hookah.core.domain.SysMessage;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.rpc.api.GoodsCheckService;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.MqSenderService;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -33,6 +37,11 @@ public class GoodsCheckServiceImpl extends GenericServiceImpl<GoodsCheck, String
     @Resource
     MqSenderService mqSenderService;
 
+    /**
+     * 审核商品
+     * @param goodsCheck
+     * @throws HookahException
+     */
     @Override
     public void insertRecord(GoodsCheck goodsCheck) throws HookahException {
         if (goodsCheck == null)
@@ -53,6 +62,22 @@ public class GoodsCheckServiceImpl extends GenericServiceImpl<GoodsCheck, String
         }else if(goodsCheck.getCheckStatus() == 2){
             goods.setCheckStatus(Byte.parseByte(HookahConstants.CheckStatus.audit_fail.getCode()));
             goodsService.updateByIdSelective(goods);
+        }
+    }
+
+    /**
+     * 获取待审核商品
+     * @param goodsId
+     */
+    @RabbitListener(queues = RabbitmqQueue.CONTRACT_GOODSCHECK)
+    public void receiveGoodsCheckId(String goodsId) {
+        try{
+            System.out.println("Received contract<" + goodsId + ">---------------------------------------");
+            GoodsCheck goodsCheck = new GoodsCheck();
+            goodsCheck.setGoodsId(goodsId);
+            super.insert(goodsCheck);
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 }
