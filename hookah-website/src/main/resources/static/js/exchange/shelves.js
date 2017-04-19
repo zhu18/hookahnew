@@ -1,7 +1,7 @@
 function loadPageData(data){ //渲染页面数据
 	// return alert(JSON.stringify(data))
-	if(data.data.goods.length > 0){
-        var list = data.data.goods;
+	if(data.data.list.length > 0){
+        var list = data.data.list;
         var html = '';
         for(var i=0; i<list.length; i++){
             var shopFormat = '';
@@ -19,8 +19,8 @@ function loadPageData(data){ //渲染页面数据
             html += '<p class="goods-brief" title="'+list[i].goodsBrief+'">'+list[i].goodsBrief+'</p>';
             html += '</a>';
             html += '<div class="item-down">';
-            html += '<span class="grid-left goods-price"><span>'+Number(list[i].shopPrice)/100+'</span>/'+(list[i].shopNumber == 1 ? '':list[i].shopNumber)+shopFormat+'</span>';
-            html += '<a class="grid-right" href="javascript:void(0)">加入购物车</a>';
+            html += '<span class="grid-left goods-price">￥<span>'+Number(list[i].shopPrice)/100+'</span>/'+(list[i].shopNumber == 1 ? '':list[i].shopNumber)+shopFormat+'</span>';
+            html += '<a class="grid-right btn btn-full-red padding-5 font-size-12 margin-top-10" href="javascript:void(0)">加入购物车</a>';
             html += '</div>';
             html += '</li>';
         }
