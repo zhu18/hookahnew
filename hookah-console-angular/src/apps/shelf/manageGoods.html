@@ -14,58 +14,96 @@
         <div class="form-group text-center col-sm-5">
           <label>货架中商品</label>
           <table class="table table-hover" style="margin-bottom: 57px;">
+            <input type="hidden" name="shelvesId" value="{{shelvesId}}" />
             <thead>
             <tr>
-              <th width="10">
-                <input type="checkbox" data-ng-model="tableState.selectAll" ng-change="changeSelectionAll()" class=" ">
-              </th>
-              <th>商品名称</th>
-              <th>商品类型</th>
+              <th width="120" class="text-center">商品名称</th>
+              <th width="180" class="text-center">操作</th>
             </tr>
             </thead>
             <tbody>
-            <tr data-ng-if="!loadingState" data-ng-repeat="item in pagination.store" class="">
-              <td width="10">
-                <input type="checkbox" data-ng-model="item.selected" ng-change="changeSelection({data: item})" class=" ">
-              </td>
+            <tr data-ng-if="!loadingState" data-ng-repeat="gid in shelfGids" class="">
+
               <td>
-                <span class="column-text" ng-bind="item.shelvesName"></span>
+                <span class="column-text" ng-bind="gid.goodsName"></span>
               </td>
-              <td>
-                <span class="column-text" ng-bind="item.goodsNumber"></span>
+
+              <!--<tr data-ng-repeat="item in pagination.store">-->
+                <!--<td data-ng-if="gid == item.goodsId">-->
+                  <!--<span class="column-text" ng-bind="item.goodsName"></span>-->
+                <!--</td>-->
+              <!--</tr>-->
+              <td class="text-center">
+                <!--<input type="hidden" name="goodsId" value="{{item.goodsId}}" />-->
+                <a href="javascript:;" ng-click="delGoods(shelvesId, gid)">移除商品</a>
               </td>
             </tr>
             </tbody>
+            <!--<tfoot ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">-->
+            <!--<tr>-->
+              <!--<td colspan="9">-->
+                <!--<div class="pull-right page-box">-->
+                  <!--<div class="pagination-info">共有{{pagination.totalItems}}条，每页显示：{{pagination.pageSize}}条</div>-->
+                  <!--<ul uib-pagination ng-change="pageChanged()" total-items="pagination.totalItems"-->
+                      <!--ng-model="pagination.currentPage" items-per-page="pagination.pageSize"-->
+                      <!--max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"-->
+                      <!--force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"-->
+                      <!--last-text="末页">-->
+                  <!--</ul>-->
+                <!--</div>-->
+              <!--</td>-->
+            <!--</tr>-->
+            <!--</tfoot>-->
           </table>
         </div>
 
         <div class="form-group text-center col-sm-5">
-          <label>货架外商品</label>
+          <label>待添加商品</label>
           <table class="table table-hover" style="margin-bottom: 57px;">
             <thead>
             <tr>
-              <th width="10">
-                <input type="checkbox" data-ng-model="tableState.selectAll" ng-change="changeSelectionAll()" class=" ">
-              </th>
-              <th>商品名称</th>
-              <th>商品类型</th>
+              <th width="120" class="text-center">商品名称</th>
+              <th width="180" class="text-center">操作</th>
             </tr>
             </thead>
             <tbody>
             <tr data-ng-if="!loadingState" data-ng-repeat="item in pagination.store" class="">
-              <td width="10">
-                <input type="checkbox" data-ng-model="item.selected" ng-change="changeSelection({data: item})" class=" ">
-              </td>
               <td>
-                <span class="column-text" ng-bind="item.shelvesName"></span>
+                <!--<input type="text" value="{{item.goodsId}}" />-->
+                <span class="column-text" ng-bind="item.goodsName"></span>
               </td>
-              <td>
-                <span class="column-text" ng-bind="item.goodsNumber"></span>
+              <td class="text-center">
+                <a href="javascript:;" ng-click="addGoods($event,item)">添加商品</a>
               </td>
             </tr>
             </tbody>
+            <tfoot ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">
+            <tr>
+              <td colspan="9">
+                <div class="pull-right page-box">
+                  <div class="pagination-info">共有{{pagination.totalItems}}条，每页显示：{{pagination.pageSize}}条</div>
+                  <ul uib-pagination ng-change="pageChanged()" total-items="pagination.totalItems"
+                      ng-model="pagination.currentPage" items-per-page="pagination.pageSize"
+                      max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"
+                      force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"
+                      last-text="末页">
+                  </ul>
+                </div>
+              </td>
+            </tr>
+            </tfoot>
           </table>
         </div>
+
+        <div class="form-group">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-4">
+            <button class="btn btn-primary" data-ng-click="add()">
+              <span class="glyphicon glyphicon-refresh"></span> 新增
+            </button>
+          </div>
+        </div>
+
       </form>
   </div>
 </div>
