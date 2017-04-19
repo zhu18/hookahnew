@@ -20,6 +20,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -144,6 +145,19 @@ public class OrderInfoController extends BaseController {
         } catch (Exception e) {
             logger.error("分页查询订单错误", e);
             return ReturnData.error("分页查询错误");
+        }
+    }
+
+    @RequestMapping(value = "/order/{orderId}", method = RequestMethod.GET)
+    public String getOrderDetail(@PathVariable String orderId,Model model){
+        try{
+            OrderInfoVo vo = orderInfoService.findDetailById(orderId);
+            model.addAttribute("order",vo);
+            logger.info(JsonUtils.toJson(vo));
+            return "";//不知道哪个页面
+        }catch (Exception e){
+            logger.info(e.getMessage());
+            return "/error/500";
         }
     }
 

@@ -32,7 +32,6 @@ $("#delBtn").click(function () {
 			type: "POST",
 			url: '/cart/deleteAll',
 			data: JSON.stringify(str),
-			dataType: "json",
 			contentType: 'application/json',
 			success: function (msg) {
 				if (msg.code == 1) {
