@@ -34,7 +34,20 @@ function loadPageData(data){
     }else{
 		$('.order-list').html('<div class="noData">暂无数据</div>');
     }
+    sliceString();
 }
+//解决浏览器中多行文字溢出时，省略号代替的兼容性问题
+function sliceString(){
+    var goodsBrief = $(".item-top p:nth-last-child(1)");
+    $(goodsBrief).each(function(index,n){
+        var text = $(this).html();
+        if(text.length>=65){
+            $(this).html(text.slice(0,65)+'...');
+        }
+    });
+}
+
+
 
 
 
