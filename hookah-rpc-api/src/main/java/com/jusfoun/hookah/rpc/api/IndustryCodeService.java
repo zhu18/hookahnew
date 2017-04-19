@@ -11,4 +11,6 @@ import java.util.List;
 public interface IndustryCodeService extends GenericService<IndustryCode, Long> {
 
     List<IndustryCode> getIndustryCodeList(String parentCode);
+
+    List<IndustryCode> selectTree();
 }

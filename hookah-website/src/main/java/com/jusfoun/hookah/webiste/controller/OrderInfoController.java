@@ -20,9 +20,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -144,6 +142,19 @@ public class OrderInfoController extends BaseController {
         } catch (Exception e) {
             logger.error("分页查询订单错误", e);
             return ReturnData.error("分页查询错误");
+        }
+    }
+
+    @RequestMapping(value = "/order/{orderId}", method = RequestMethod.GET)
+    public String getOrderDetail(@PathVariable String orderId,Model model){
+        try{
+            OrderInfoVo vo = orderInfoService.findDetailById(orderId);
+            model.addAttribute("order",vo);
+            logger.info(JsonUtils.toJson(vo));
+            return "/usercenter/buyer/orderDetails";//不知道哪个页面
+        }catch (Exception e){
+            logger.info(e.getMessage());
+            return "/error/500";
         }
     }
 
@@ -319,46 +330,18 @@ public class OrderInfoController extends BaseController {
 
     /**
      * 删除订单
-     * @param user
+     * @param
      * @return
      */
-	/*@RequestMapping(value="/delete",method=RequestMethod.POST)
-	public Result delete(String orderinfoIds){
-		Result result = new Result();
-		result.setRetCode(Result.RETCODE_SUCCESS);	
+	@RequestMapping(value="/delete",method=RequestMethod.POST)
+    @ResponseBody
+	public ReturnData delete(@RequestBody  String[] orderIds){
 		try{
-			service.deleteBatchByPK(orderinfoIds);
-		}catch(ShopException e){
-			result.setRetCode(Result.RETCODE_ERROR);
-			result.setErrMsg(e.getMessage());
-		}catch(Exception e){
-			logger.error("插入错误",e);
-			result.setRetCode(Result.RETCODE_ERROR);
-			result.setErrMsg("系统异常");
-		}
-		
-		return result;
-	}*/
-
-    /**
-     * 订单详情
-     * @param orderId
-     * @return
-     */
-	/*@RequestMapping(value="/detail",method=RequestMethod.GET)
-	public String detail(String orderId){
-		try{
-			OrderInfo orderInfo = service.findByPrimaryKey(orderId);
-			result.setData(orderInfo);
-		}catch(ShopException e){
-			result.setRetCode(Result.RETCODE_ERROR);
-			result.setErrMsg(e.getMessage());
-		}catch(Exception e){
-			logger.error("查询订单详情错误",e);
-			result.setRetCode(Result.RETCODE_ERROR);
-			result.setErrMsg("系统异常");
-		}
-		
-		return result;
-	}*/
+			orderInfoService.deleteBatchByLogic(orderIds);
+            return ReturnData.success();
+        }catch(Exception e){
+			logger.error("删除错误",e);
+            return ReturnData.error("删除错误");
+        }
+	}
 }
