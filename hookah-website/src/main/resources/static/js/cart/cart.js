@@ -27,11 +27,12 @@ $("#delBtn").click(function () {
 	$("[name=items]:checkbox:checked").each(function () {
 		str.push($(this).val());
 	});
+	str = JSON.stringify(str);
 	if (str.length >= 1) {
 		$.ajax({
 			type: "POST",
 			url: '/cart/deleteAll',
-			data: JSON.stringify({ids: str}),
+			data: {ids: str},
 			success: function (msg) {
 				if (msg.code == 1) {
 					$.alert('删除成功')
@@ -128,13 +129,14 @@ function kkdown(that, e) {
 	}
 
 }
-function delThis(id) {
+function delThis(id,that) {
 	$.ajax({
 		type: "get",
 		url: '/cart/delete/'+id,
 		success: function (msg) {
 			if (msg.code == 1) {
 				$.alert('删除成功');
+				$(that).parents('.order-body').remove()
 			} else {
 				$.alert(msg.message);
 			}
@@ -151,10 +153,7 @@ function check() {
 		}
 	});
 	if (flag > 0) {
-		// console.log(cartIds);
 		$('#J_cartIdStr').val(cartIds);
-		// var	 vals = $('J_cartIdStr').val();
-		// window.location.href ='/order/orderInfo?ids='+JSON.stringify(params);
 		$('#J_cart').submit();
 		return true;
 	} else {

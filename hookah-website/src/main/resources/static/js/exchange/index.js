@@ -19,7 +19,7 @@ $(function () {
     function hotSwitchHover() {
         $('.hot-resource-down .hot-down-rank ul li').hover(function () {
             $(this).addClass('active').siblings().removeClass('active');
-            // $(this).children().removeClass('li-rank').parent().siblings().children().addClass("li-rank");
+            $(this).children().removeClass('li-rank').parent().siblings().children().addClass("li-rank");
         })
     }
     // 交易中心轮播图--勿删
@@ -214,7 +214,7 @@ $(function () {
         })
     }
     imgHover();
-    hotSwitchHover();
+    // hotSwitchHover();
     switchHover();
     carousel();
 });
