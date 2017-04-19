@@ -17,5 +17,7 @@ public interface GoodsService extends GenericService<Goods,String> {
 
     MgGoods.FormatBean getFormat(String goodsId, Integer formatId) throws Exception;
 
-    void updateGoodsStatus(String goodsId, String status);
+    int updateGoodsStatus(String goodsId, String status);
+
+    int onsale(String goodsId, String dateTime);
 }

@@ -5,6 +5,7 @@ import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
+import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
@@ -152,7 +153,35 @@ public class GoodsBackController {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
-            goodsService.updateGoodsStatus(goodsId, opera);
+            int i = goodsService.updateGoodsStatus(goodsId, opera);
+            if(i <= 0)
+                throw new HookahException("操作失败！");
+        } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
+
+    /**
+     * 商品上架
+     * @param goodsId
+     * @param dateTime
+     * @return
+     */
+    @RequestMapping("/onsale")
+    @ResponseBody
+    public ReturnData onsale(String goodsId, @RequestParam(required = false) String dateTime) {
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            int i = goodsService.onsale(goodsId, dateTime);
+            if(i <= 0)
+                throw new HookahException("操作失败！");
+            else {
+                returnData.setMessage("商品操作成功，请耐心等待审核！");
+            }
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());
