@@ -158,11 +158,11 @@ var htmlPart = {
 		</div>
 		<div class="hot-resource-down clearfix">
 			<div class="hot-down-left ">
-				<div>
-					<p>${hot_res_data.shelvesName}</p>
-					<p>${hot_res_data.shelvesDesc}</p>
+				<div class="headline-box">
+					<p class="main-headline">${hot_res_data.shelvesName}</p>
+					<p class="sub-headline">${hot_res_data.shelvesDesc}</p>
 				</div>
-				<!--<div>-->
+				<!--<div class="label-box">-->
 				<!--<span>资源汇总</span>-->
 				<!--<span>资源汇总</span>-->
 				<!--</div>-->
@@ -186,10 +186,10 @@ var htmlPart = {
 					for(var i=0;i< index1;i++){
 					%>
 					<tr>
-						<td><img src="${res_item[i].goodsImg}" alt=""></td>
-						<td>${res_item[i].goodsName}</td>
-						<td><span>${trunc(res_item[i].shopPrice / 100,2)}</span></td><!--<span>元/次</span>-->
-						<td>
+						<td class="td-one"><img src="${res_item[i].goodsImg}" alt=""></td>
+						<td class="td-two">${res_item[i].goodsName}</td>
+						<td class="td-three"><span class="td-three-money">${trunc(res_item[i].shopPrice / 100,2)}</span></td><!--<span>元/次</span>-->
+						<td class="td-four">
 							<a href="${host.website}/exchange/details?id=${res_item[i].goodsId}">查看详情</a>
 							<!--<span>免</span>-->
 							<!--<span>企</span>-->
@@ -296,17 +296,17 @@ var htmlPart = {
 			</div>
 			<div class="category-item item-active">
 				<div class="grid-left resource-two">
-					<div>
-						<p>${goodsShelvesVoInfo.data_sur_data.shelvesName}</p>
-						<p>${goodsShelvesVoInfo.data_sur_data.shelvesDesc}</p>
+					<div class="headline-box">
+						<p class="main-headline">${goodsShelvesVoInfo.data_sur_data.shelvesName}</p>
+						<p class="sub-headline">${goodsShelvesVoInfo.data_sur_data.shelvesDesc}</p>
 					</div>
-					<div>
+					<div class="label-box">
 						<!--<span>资源汇总</span>-->
 						<!--<span>资源汇总</span>-->
-						<a href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.data_sur_data.shelvesId}">更多>></a>
+						<a class="more" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.data_sur_data.shelvesId}">更多>></a>
 					</div>
 				</div>
-				<div class="grid-right">
+				<div class="grid-right list-box">
 					<ul>
 						<%
 						var sur_item = goodsShelvesVoInfo.data_sur_data.goods;
@@ -341,17 +341,17 @@ var htmlPart = {
 			</div>
 			<div class="category-item">
 				<div class="grid-left resource-two">
-					<div>
-						<p>${goodsShelvesVoInfo.model_data.shelvesName}</p>
-						<p>${goodsShelvesVoInfo.model_data.shelvesDesc}</p>
+					<div class="headline-box">
+						<p class="main-headline">${goodsShelvesVoInfo.model_data.shelvesName}</p>
+						<p class="sub-headline">${goodsShelvesVoInfo.model_data.shelvesDesc}</p>
 					</div>
-					<div>
+					<div class="label-box">
 						<!--<span>资源汇总</span>-->
 						<!--<span>资源汇总</span>-->
-						<a href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.model_data.shelvesId}">更多>></a>
+						<a class="more" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.model_data.shelvesId}">更多>></a>
 					</div>
 				</div>
-				<div class="grid-right">
+				<div class="grid-right list-box">
 					<ul>
 						<%
 						var model_item = goodsShelvesVoInfo.model_data.goods;
@@ -386,17 +386,17 @@ var htmlPart = {
 			</div>
 			<div class="category-item">
 				<div class="grid-left resource-two">
-					<div>
-						<p>${goodsShelvesVoInfo.scene_data.shelvesName}</p>
-						<p>${goodsShelvesVoInfo.scene_data.shelvesDesc}</p>
+					<div class="headline-box">
+						<p class="main-headline">${goodsShelvesVoInfo.scene_data.shelvesName}</p>
+						<p class="sub-headline">${goodsShelvesVoInfo.scene_data.shelvesDesc}</p>
 					</div>
-					<div>
+					<div class="label-box">
 						<!--<span>资源汇总</span>-->
 						<!--<span>资源汇总</span>-->
-						<a href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.scene_data.shelvesId}">更多>></a>
+						<a class="more" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.scene_data.shelvesId}">更多>></a>
 					</div>
 				</div>
-				<div class="grid-right">
+				<div class="grid-right list-box">
 					<ul>
 						<%
 						var scene_item = goodsShelvesVoInfo.scene_data.goods;
@@ -431,17 +431,17 @@ var htmlPart = {
 			</div>
 			<div class="category-item">
 				<div class="grid-left resource-two">
-					<div>
-						<p>${goodsShelvesVoInfo.plat_data.shelvesName}</p>
-						<p>${goodsShelvesVoInfo.plat_data.shelvesDesc}</p>
+					<div class="headline-box">
+						<p class="main-headline">${goodsShelvesVoInfo.plat_data.shelvesName}</p>
+						<p class="sub-headline">${goodsShelvesVoInfo.plat_data.shelvesDesc}</p>
 					</div>
-					<div>
+					<div class="label-box">
 						<!--<span>资源汇总</span>-->
 						<!--<span>资源汇总</span>-->
-						<a href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.plat_data.shelvesId}">更多>></a>
+						<a class="more" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.plat_data.shelvesId}">更多>></a>
 					</div>
 				</div>
-				<div class="grid-right">
+				<div class="grid-right list-box">
 					<ul>
 						<%
 						var plat_item = goodsShelvesVoInfo.plat_data.goods;
@@ -476,17 +476,17 @@ var htmlPart = {
 			</div>
 			<div class="category-item">
 				<div class="grid-left resource-two">
-					<div>
-						<p>${goodsShelvesVoInfo.tools_data.shelvesName}</p>
-						<p>${goodsShelvesVoInfo.tools_data.shelvesDesc}</p>
+					<div class="headline-box">
+						<p class="main-headline">${goodsShelvesVoInfo.tools_data.shelvesName}</p>
+						<p class="sub-headline">${goodsShelvesVoInfo.tools_data.shelvesDesc}</p>
 					</div>
-					<div>
+					<div class="label-box">
 						<!--<span>资源汇总</span>-->
 						<!--<span>资源汇总</span>-->
-						<a href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.tools_data.shelvesId}">更多>></a>
+						<a class="more" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.tools_data.shelvesId}">更多>></a>
 					</div>
 				</div>
-				<div class="grid-right">
+				<div class="grid-right list-box">
 					<ul>
 						<%
 						var tools_item = goodsShelvesVoInfo.tools_data.goods;
