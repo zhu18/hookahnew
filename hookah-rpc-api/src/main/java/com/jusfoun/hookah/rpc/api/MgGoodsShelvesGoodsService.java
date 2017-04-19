@@ -1,6 +1,9 @@
 package com.jusfoun.hookah.rpc.api;
 
+import com.jusfoun.hookah.core.common.Pagination;
+import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.mongo.MgShelvesGoods;
+import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.GenericService;
 import com.jusfoun.hookah.core.utils.ReturnData;
 
@@ -22,4 +25,10 @@ public interface MgGoodsShelvesGoodsService extends GenericService<MgShelvesGood
     ReturnData<Integer> countShelvesGoods(String shelvesGoodsId);
 
     ReturnData<List<MgShelvesGoods>> selectMgShelveGoodsList(MgShelvesGoods mgShelvesGoods);
+
+    Pagination<Goods> getData(int pageNumberNew, int pageSizeNew, String shelvesGoodsId) throws HookahException;
+
+    ReturnData delSMongoGoodsById(String shelvesGoodsId, String goodsId) throws HookahException;
+
+    ReturnData addGidByMGid(String shelvesId, String goodsId);
 }
