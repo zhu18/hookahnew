@@ -43,9 +43,15 @@
     <maven.jar.plugin>3.0.2</maven.jar.plugin>
     <maven.assembly.plugin>2.6</maven.assembly.plugin>
     <jedis.version>2.9.0</jedis.version>
+    <guava.version>19.0</guava.version>
   </properties>
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>${guava.version}</version>
+      </dependency>
       <dependency>
         <!-- Import dependency management from Spring Boot -->
         <groupId>org.springframework.boot</groupId>

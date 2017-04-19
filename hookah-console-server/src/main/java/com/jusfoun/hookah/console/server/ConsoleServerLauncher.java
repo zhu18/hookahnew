@@ -49,7 +49,7 @@ public class ConsoleServerLauncher {
 
         ApplicationContext ctx = SpringApplication.run(new Object[]{
 //      "classpath*:spring/rs-context.xml",
-            "classpath*:spring/spring-config-shiro.xml",
+            "classpath*:spring/spring-config.xml",
             "classpath*:hookah_rpc_server.xml",
             "classpath*:hookah_rpc_server_goods.xml",
             "classpath*:hookah_rpc_server_order.xml",
