@@ -1,11 +1,19 @@
-
+.clearfix:after {
+    visibility: hidden;
+    clear: both;
+    display: block;
+    content: ".";
+    height: 0;
+    font-size: 0;
+    zoom: 1;
+}
 .center-content {
     width: 743px;
     height: 600px;
     margin:10px 10px 30px 10px;
 }
 
- .top {
+.top {
     width: 1008px;
     height: 170px;
     border: 1px solid #ededed;
