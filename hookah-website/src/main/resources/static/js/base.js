@@ -116,7 +116,23 @@ $(document).ready(function () {
 			img.attr('src','/static/images/timg.jpeg')
 		})
 	})
+    // 兼容性placeholder
+    compatibilityPL();
+
 });
+function compatibilityPL() {
+    if ((navigator.appName == "Microsoft Internet Explorer") && (document.documentMode < 10 || document.documentMode == undefined)) {
+        var $placeholder = $("input[placeholder]");
+        $placeholder.val($placeholder.attr("placeholder")).css({"color": "#ccc"});
+        $placeholder.focus(function () {
+            if ($(this).val() == $(this).attr("placeholder")) {$(this).val("").css({"color": "#333"})}
+        }).blur(function () {
+            if ($(this).val() == "") {
+                $(this).val($(this).attr("placeholder")).css({"color": "#ccc"})
+            }
+        });
+    }
+}
 function getSearchSug(sugText) {
 	$.ajax({
 		url: host.website + '/search/v1/goods/suggest',
