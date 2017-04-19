@@ -55,7 +55,7 @@ public class CartServiceImpl extends GenericServiceImpl<Cart, String> implements
         Cart cart = new Cart();
         cart.setRecId(id);
         cart.setIsDeleted(new Byte("1"));
-        super.updateById(cart);
+        super.updateByIdSelective(cart);
     }
 
     @Override
