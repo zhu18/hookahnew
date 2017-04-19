@@ -9,14 +9,17 @@ public interface MqSenderService{
 
     /**
      * 发送消息，需要订阅
-     * @param msg
+     *
+     * @param routeKey
+     * @param obj
      */
-    public void sendTopic(String msg);
+    public void sendTopic(String routeKey,Object obj);
 
 
     /**
      * 发送消息，需要监听
-     * @param msg
+     *
+     * @param routeKey
      */
-    public void sendDirect(String msg);
+    public void sendDirect(String routeKey,Object obj);
 }
