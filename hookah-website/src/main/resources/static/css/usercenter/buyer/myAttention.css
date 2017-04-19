@@ -2,7 +2,7 @@
     margin-top: 10px;
     width: 978px;
     background-color: #fff;
-    padding: 0px 15px 26px 15px;
+    padding: 0px 15px 0px 15px;
     border: 1px solid #E9E9E9;
     margin-left: 10px;
 }
@@ -42,9 +42,7 @@
     border: 1px solid #E5E5E5;
     margin: 10px 10px 0 0;
 }
-.order-list ul li:nth-child(5n) {
-    margin-right: 0;
-}
+
 .order-list ul li .item-top {
     display: block;
 }
@@ -98,7 +96,9 @@
 }
 .order-list ul li .cancel:hover{
     cursor: pointer;
+    color:#237DE7;
 }
+
 
 
 

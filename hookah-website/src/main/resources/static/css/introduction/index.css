@@ -77,16 +77,9 @@ ul li {
     line-height: 50px;
     color: #333;
 }
-
-/*.trading-sidebar .contact ul li span:nth-child(1) {*/
-    /*color: #247de8;*/
-    /*margin-right: 10px;*/
-/*}*/
-
-/*.trading-sidebar .contact ul li span:nth-child(2) {*/
-    /*color: #333;*/
-/*}*/
-
+.trading-sidebar .contact ul li i{
+    color: #247de8;
+}
 .trading-sidebar .contact ul .one {
     padding-top: 20px;
     margin-left:-10px;
@@ -118,7 +111,6 @@ ul li {
 .trading-sidebar .contact ul .five {
     padding-top: 10px;
 }
-
 
 /*右侧内容*/
  .trading .trading-content,  .strategy .strategy-content ,.leader .leader-content,.box .media .media-content,.glory .glory-content{
