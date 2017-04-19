@@ -402,10 +402,11 @@
     color:#fff;
     background: #d64242;
 }
-
+/*------------vertical-align-------------*/
 .vertical-align-middle{
     vertical-align: middle !important;
 }
+/*---------font-weight------------*/
 .font-weight-bold{
     font-weight: bold !important;
 }
@@ -426,7 +427,7 @@
 .font-size-24{
     font-size: 24px;
 }
-
+/*-------------position-----------*/
 .position-relative{
     position: relative;
 }
