@@ -2,7 +2,7 @@ class ShelfController {
   constructor($scope, $rootScope, $http, $state, $uibModal, usSpinnerService, growl) {
 
     $scope.search = function () {
-      console.log("查询。。。。");
+      console.log("货架查询。。。。");
         var promise = $http({
             method: 'GET',
             url: $rootScope.site.apiServer + "/api/shelf/all",
@@ -67,28 +67,17 @@ class ShelfController {
     };
 
     $scope.manageGoods = function (event, item) {
-
-            $state.go('shelf.manageGoods');
-          // console.log(item.shelvesId, item.shelvesStatus);
-          // var promise = $http({
-          //     method: 'POST',
-          //     url: $rootScope.site.apiServer + "/api/shelf/updateStatus",
-          //     params: {shelvesId: item.shelvesId}
-          // });
-          // promise.then(function (res, status, config, headers) {
-          //     if(res.data.code == 1){
-          //         $scope.search();
-          //     }
-          // });
+        console.log(item.shelvesId);
+        $state.go('shelf.manageGoods', {data: item});
+        console.log("即将进货架管理……");
     };
 
     $scope.updateShelf = function (event, item) {
         $rootScope.editData = item;
         $state.go('shelf.update', {data: item});
     };
+
   }
-
-
 }
 
 export default ShelfController;
