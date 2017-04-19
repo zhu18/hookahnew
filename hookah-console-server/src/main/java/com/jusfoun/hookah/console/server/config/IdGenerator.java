@@ -89,14 +89,14 @@ public class IdGenerator {
             return id;
         } catch (JedisConnectionException e) {
             if (jedis != null) {
-//                jedis.close();
-                jedisPool.returnBrokenResource(jedis);
+                jedis.close();
+//                jedisPool.returnBrokenResource(jedis);
             }
             logger.error("generate id error!", e);
         } finally {
             if (jedis != null) {
-//                jedis.close();
-                jedisPool.returnResource(jedis);
+                jedis.close();
+//                jedisPool.returnResource(jedis);
             }
         }
         return null;
@@ -121,5 +121,25 @@ public class IdGenerator {
         return re;
     }
 
+    public static void main(String[] args) {
+        String tab = "order";
+        long userId = 123456789;
+        GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
+        poolConfig.setMaxTotal(1024);
+        poolConfig.setMaxIdle(200);
+        poolConfig.setTestOnBorrow(false);
+        IdGenerator idGenerator = IdGenerator.builder()
+            .addHost(poolConfig, "192.168.15.90", 6379,0,"Yqn2ht4DYkMHlDvTY7CV", "c5809078fa6d652e0b0232d552a9d06d37fe819c")
+//				.addHost(poolConfig, "192.168.15.90", 7001,10000,"Yqn2ht4DYkMHlDvTY7CV", "accb7a987d4fb0fd85c57dc5a609529f80ec3722")
+//				.addHost(poolConfig, "192.168.15.90", 7002,10000,"Yqn2ht4DYkMHlDvTY7CV", "f55f781ca4a00a133728488e15a554c070b17255")
+            .build();
 
+        long id = idGenerator.next(tab, userId);
+
+        System.out.println("id:" + id);
+        List<Long> result = IdGenerator.parseId(id);
+
+        System.out.println("miliSeconds:" + result.get(0) + ", partition:"
+            + result.get(1) + ", seq:" + result.get(2));
+    }
 }
