@@ -61,7 +61,7 @@ var htmlPart = {
 	if(goodsShelvesVoInfo.recomm_data != '')
 	var recomm_data = goodsShelvesVoInfo.recomm_data;
 	{%>
-	<div class="exchange-recommend-resource ">
+	<div class="exchange-recommend-resource padding-bottom-30">
 		<div class="grid-row">
 			<div class="recommend-resource-top" style="">
 				<div class="recommend-resource-top-left grid-left">
@@ -75,7 +75,7 @@ var htmlPart = {
 					<a href="${host.website}/exchange/shelves?id=${recomm_data.shelvesId}">更多>></a>
 				</div>
 			</div>
-			<div class="recommend-resource-down">
+			<div class="recommend-resource-down clearfix">
 				<ul>
 					<%
 					var item = recomm_data.goods;
@@ -88,31 +88,43 @@ var htmlPart = {
 					for(var i=0;i< index;i++){
 					%>
 					<li>
-						<div>
-							<a href="${host.website}/exchange/details?id=${item[i].goodsId}"><img src="${item[i].goodsImg}" alt=""></a>
-							<div class="padding-left-5">
-								<a href="${host.website}/exchange/details?id=${item[i].goodsId}"><p class="title">
-									${item[i].goodsName}</p></a>
-								<a href="${host.website}/exchange/details?id=${item[i].goodsId}"><p class="subtitle">
-									${item[i].goodsBrief}</p></a>
-							</div>
+						<!--<div class="li-item-top">-->
+							<!--<a href="${host.website}/exchange/details?id=${item[i].goodsId}">-->
+								<!--<img src="${item[i].goodsImg}" alt="">-->
+							<!--</a>-->
+							<!--<div class="padding-left-5 top-box">-->
+								<!--<a href="${host.website}/exchange/details?id=${item[i].goodsId}">-->
+									<!--<p class="title">${item[i].goodsName}</p></a>-->
+								<!--<a href="${host.website}/exchange/details?id=${item[i].goodsId}">-->
+									<!--<p class="subtitle">${item[i].goodsBrief}</p></a>-->
+							<!--</div>-->
+						<!--</div>-->
+						<div class="li-item-top">
+							<a href="${host.website}/exchange/details?id=${item[i].goodsId}" class="top-box">
+								<img src="${item[i].goodsImg}" class="top-box-img" alt="">
+								<div class="padding-left-5 top-box-info">
+									<p class="title">${item[i].goodsName}</p>
+									<p class="subtitle">${item[i].goodsBrief}</p>
+								</div>
+							</a>
 						</div>
-						<div class="down">
-							<div>
-								<div>评分:
-									<span>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
+						<div class="li-item-down">
+							<div class="down-box-one">
+								<div class="grade">
+									<span class="grade-grade">评分:</span>
+									<span class="grade-star">
+                                          <i class="fa fa-star star-i-item" aria-hidden="true"></i>
+                                          <i class="fa fa-star star-i-item" aria-hidden="true"></i>
+                                          <i class="fa fa-star star-i-item" aria-hidden="true"></i>
+                                          <i class="fa fa-star star-i-item" aria-hidden="true"></i>
+                                          <i class="fa fa-star star-i-item" aria-hidden="true"></i>
                                       </span>
 								</div>
-								<span><i class="fa fa-heart" aria-hidden="true"></i>收藏</span>
+								<span class="collect"><i class="fa fa-heart collect-item" aria-hidden="true"></i>收藏</span>
 							</div>
-							<div>
-								<span><i class="fa fa-jpy" aria-hidden="true"></i>${trunc(item[i].shopPrice / 100,2)}</span>
-								<a href="${host.website}/exchange/details?id=${item[i].goodsId}">查看详情</a>
+							<div class="down-box-tow">
+								<span class="money"><i class="fa fa-jpy money-i-item" aria-hidden="true"></i>${trunc(item[i].shopPrice / 100,2)}</span>
+								<a class="detail" href="${host.website}/exchange/details?id=${item[i].goodsId}">查看详情</a>
 							</div>
 						</div>
 						<div class="li-hover">
