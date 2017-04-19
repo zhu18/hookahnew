@@ -25,24 +25,24 @@ public class RabbitMqSender implements RabbitTemplate.ConfirmCallback {
 
     /**
      * 发送到 指定routekey的指定queue
-     * @param queue
+     * @param routeKey
      * @param obj
      */
-    public void sendRabbitmqDirect(String queue,Object obj) {
+    public void sendRabbitmqDirect(String routeKey,Object obj) {
         CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
         LOGGER.info("send: " + correlationData.getId());
-        this.rabbitTemplate.convertAndSend(RabbitmqExchange.CONTRACT_DIRECT, queue , obj, correlationData);
+        this.rabbitTemplate.convertAndSend(RabbitmqExchange.CONTRACT_DIRECT, routeKey , obj, correlationData);
     }
 
     /**
      * 所有发送到Topic Exchange的消息被转发到所有关心RouteKey中指定Topic的Queue上
-     * @param queue
+     * @param routeKey
      * @param obj
      */
-    public void sendRabbitmqTopic(String queue,Object obj) {
+    public void sendRabbitmqTopic(String routeKey,Object obj) {
         CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
         LOGGER.info("send: " + correlationData.getId());
-        this.rabbitTemplate.convertAndSend(RabbitmqExchange.CONTRACT_TOPIC, queue , obj, correlationData);
+        this.rabbitTemplate.convertAndSend(RabbitmqExchange.CONTRACT_TOPIC, routeKey , obj, correlationData);
     }
 
 

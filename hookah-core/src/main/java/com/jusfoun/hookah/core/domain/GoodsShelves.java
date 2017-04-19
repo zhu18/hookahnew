@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jusfoun.hookah.core.generic.GenericModel;
 
 import javax.persistence.GeneratedValue;
@@ -90,6 +91,7 @@ public class GoodsShelves extends GenericModel {
      *
      * @mbggenerated
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date startTime;
 
     /**
@@ -98,6 +100,7 @@ public class GoodsShelves extends GenericModel {
      *
      * @mbggenerated
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addTime;
 
     /**
@@ -106,6 +109,7 @@ public class GoodsShelves extends GenericModel {
      *
      * @mbggenerated
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastUpdateTime;
 
     /**

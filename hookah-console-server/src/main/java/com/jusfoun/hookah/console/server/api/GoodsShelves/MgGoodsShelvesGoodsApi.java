@@ -67,10 +67,9 @@ public class MgGoodsShelvesGoodsApi {
     @RequestMapping(value = "/findGSMongoById", method = RequestMethod.GET)
     @ResponseBody
     public ReturnData getListInPage(String currentPage, String pageSize, String shelvesGoodsId) {
-        Pagination<Goods> page = new Pagination<>();
+        Pagination<Goods> page = null;
         try {
             int pageNumberNew = HookahConstants.PAGE_NUM;
-
             if (StringUtils.isNotBlank(currentPage)) {
                 pageNumberNew = Integer.parseInt(currentPage);
             }
