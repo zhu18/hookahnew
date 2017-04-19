@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.console.server.util;
+package com.jusfoun.hookah.core.utils;
 
 import com.jusfoun.hookah.core.annotation.EsField;
 import com.jusfoun.hookah.core.domain.es.EsFieldMapping;

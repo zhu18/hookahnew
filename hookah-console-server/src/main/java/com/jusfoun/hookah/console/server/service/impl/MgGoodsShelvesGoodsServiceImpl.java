@@ -161,28 +161,17 @@ public class MgGoodsShelvesGoodsServiceImpl extends GenericMongoServiceImpl<MgSh
     }
 
     @Override
-    public Pagination<Goods> getData(int pageNumberNew, int pageSizeNew, String shelvesGoodsId) throws HookahException {
-
+    public Pagination<Goods> getData(int pageNumberNew, int pageSizeNew, String shelvesGoodsId) {
+        Pagination<Goods> page = null;
         MgShelvesGoods mgShelvesGoods = super.selectById(shelvesGoodsId);
         List<String> gidList = mgShelvesGoods.getGoodsIdList();
-        if(gidList.size() < 1)
-            throw new HookahException("空数据！");
-
-        List<Condition> filters = new ArrayList();
-        List<OrderBy> orderBys = new ArrayList();
-        filters.add(Condition.in("goodsId", gidList.toArray()));
-        orderBys.add(OrderBy.desc("lastUpdateTime"));
-
-        Pagination<Goods> page = goodsService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
-
-//        PageHelper.startPage(pageNumberNew, pageSizeNew);
-//        List<Goods> list = goodsService.selectList(filters, orderBys);
-//        PageInfo<MgShelvesGoods> page = new PageInfo<>(list);
-//        Pagination<MgShelvesGoods> pagination = new Pagination<MgShelvesGoods>();
-//        pagination.setTotalItems(page.getTotal());
-//        pagination.setPageSize(pageSizeNew);
-//        pagination.setCurrentPage(pageNumberNew);
-//        pagination.setList(page.getList());
+        if(gidList != null){
+            List<Condition> filters = new ArrayList();
+            List<OrderBy> orderBys = new ArrayList();
+            filters.add(Condition.in("goodsId", gidList.toArray()));
+            orderBys.add(OrderBy.desc("lastUpdateTime"));
+            page = goodsService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
+        }
         return page;
     }
 
@@ -194,15 +183,21 @@ public class MgGoodsShelvesGoodsServiceImpl extends GenericMongoServiceImpl<MgSh
         try {
             MgShelvesGoods mgShelvesGoods = super.selectById(shelvesGoodsId);
             List<String> gidList = mgShelvesGoods.getGoodsIdList();
-            if(gidList.size() < 1)
-                throw new HookahException("空数据！");
-            for(String s : gidList){
-                if(s.equals(goodsId)){
-                    gidList.remove(s);
+            if(gidList != null){
+
+                for(String s : gidList){
+                    if(s.equals(goodsId)){
+                        gidList.remove(s);
+                        break;
+                    }
                 }
+
+                Query query=new Query(Criteria.where("shelvesGoodsId").is(mgShelvesGoods.getShelvesGoodsId()));
+                Update update = new Update();
+                update.set("goodsIdList", gidList);
+                mongoTemplate.updateFirst(query, update, mgShelvesGoods.getClass());
             }
-            mgShelvesGoods.setGoodsIdList(gidList);
-            super.updateById(mgShelvesGoods);
+
         }catch (Exception e){
             returnData.setCode(ExceptionConst.Error);
             returnData.setMessage(e.toString());
@@ -220,10 +215,18 @@ public class MgGoodsShelvesGoodsServiceImpl extends GenericMongoServiceImpl<MgSh
             if(mgShelvesGoods == null)
                 throw new HookahException("空数据！");
 
-            List<String> gidList = mgShelvesGoods.getGoodsIdList();
+            List<String> gidList = null;
+
+            if(mgShelvesGoods.getGoodsIdList() == null){
+                gidList = new ArrayList<>();
+            }else{
+                gidList = mgShelvesGoods.getGoodsIdList();
+            }
             gidList.add(goodsId);
-            mgShelvesGoods.setGoodsIdList(gidList);
-            super.updateById(mgShelvesGoods);
+            Query query=new Query(Criteria.where("shelvesGoodsId").is(mgShelvesGoods.getShelvesGoodsId()));
+            Update update = new Update();
+            update.set("goodsIdList", gidList);
+            mongoTemplate.updateFirst(query, update, mgShelvesGoods.getClass());
         }catch (Exception e){
             returnData.setCode(ExceptionConst.Error);
             returnData.setMessage(e.toString());

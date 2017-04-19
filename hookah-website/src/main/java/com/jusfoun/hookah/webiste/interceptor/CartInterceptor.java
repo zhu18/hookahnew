@@ -56,6 +56,7 @@ public class CartInterceptor implements HandlerInterceptor {
 
                     List<Condition> filters = new ArrayList<>();
                     filters.add(Condition.eq("userId", user.getUserId()));
+                    filters.add(Condition.eq("isDeleted", (byte)0));
                     List<CartVo> cartVos = cartService.selectDetailList(filters);
 
                     model.put("cartList", cartVos);

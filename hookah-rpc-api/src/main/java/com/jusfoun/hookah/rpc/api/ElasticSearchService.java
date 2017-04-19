@@ -6,6 +6,7 @@ import com.jusfoun.hookah.core.domain.vo.EsGoodsVo;
 import com.jusfoun.hookah.core.domain.vo.EsTypesVo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by wangjl on 2017-3-28.
@@ -28,4 +29,8 @@ public interface ElasticSearchService {
     List<String> goodsSuggestion(String prefix) throws Exception;
 
     EsTypesVo getTypes(EsGoods vo) throws Exception;
+
+    void deleteById(String indexName, String type, String goodsId) throws Exception;
+
+    void upsertById(String indexName, String type, String goodsId, Map<String, Object> map) throws Exception;
 }

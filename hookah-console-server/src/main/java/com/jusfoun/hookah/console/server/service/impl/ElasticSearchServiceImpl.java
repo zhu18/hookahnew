@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.jusfoun.hookah.console.server.config.Constants;
 import com.jusfoun.hookah.console.server.config.ESTemplate;
 import com.jusfoun.hookah.console.server.config.ESTransportClient;
-import com.jusfoun.hookah.console.server.util.AnnotationUtil;
+import com.jusfoun.hookah.core.utils.AnnotationUtil;
 import com.jusfoun.hookah.console.server.util.DictionaryUtil;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
@@ -19,7 +19,6 @@ import com.jusfoun.hookah.core.domain.vo.EsGoodsVo;
 import com.jusfoun.hookah.core.domain.vo.EsTreeVo;
 import com.jusfoun.hookah.core.domain.vo.EsTypesVo;
 import com.jusfoun.hookah.core.exception.HookahException;
-import com.jusfoun.hookah.core.utils.ShopUtils;
 import com.jusfoun.hookah.rpc.api.CategoryService;
 import com.jusfoun.hookah.rpc.api.ElasticSearchService;
 import com.jusfoun.hookah.rpc.api.GoodsAttrTypeService;
@@ -76,7 +75,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
 
     @Override
     public String initEs(Class clazz, String analyzer, String indexName, String type,
-                       Integer shards, Integer replicas) throws Exception {
+                         Integer shards, Integer replicas) throws Exception {
         TransportClient client = esTransportClient.getObject();
         String keyFieldName = "";
         //判断索引是否存在，如果不存在则创建索引
@@ -97,7 +96,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             switch (type) {
                 case "goods" :
                     maps = this.goodsBulkInsert();
-                 break;
+                    break;
             }
             esTemplate.bulkProcessorIndex(esTransportClient.getObject(), index, type,
                     keyField, 5, 10000, 60, 1, maps);
@@ -117,22 +116,16 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         if (list != null && list.size() > 0) {
             for(EsGoods goods : list) {
                 // 如果有地区给省市县赋值
-                if(goods.getGoodsAreas() != null && !"".equals(goods.getGoodsAreas())) {
+                if(goods.getGoodsArea() != null && !"".equals(goods.getGoodsArea())) {
                     String[] region = goods.getGoodsAreas().split(" ");
                     goods.setAreaCountry(region[1]);
-                    if(region.length == 3)
+                    if(region.length >= 3)
                         goods.setAreaProvince(region[2]);
                     if(region.length == 4)
                         goods.setAreaCity(region[3]);
                 }
                 //查询mongo中的数据
                 MgGoods mgGoods = mgGoodsService.selectById(goods.getGoodsId());
-                List<String> input = new ArrayList<>();
-                input.add(goods.getGoodsName());
-                if(ShopUtils.isContainChinese(goods.getGoodsName())) {
-                    input.add(ShopUtils.getFullSpell(goods.getGoodsName()));
-                    input.add(ShopUtils.getFirstSpell(goods.getGoodsName()));
-                }
                 goods.setSuggest(goods.getGoodsName());
                 //获取商品属性
                 if(mgGoods != null) {
@@ -233,7 +226,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             for (Map.Entry<String, List<EsAggResult>> entry : map.entrySet()) {
                 switch (entry.getKey()) {
                     case HookahConstants.GOODS_AGG_CATEGORY :
-                            this.getCategoryTypes(entry, categoryList);
+                        this.getCategoryTypes(entry, categoryList);
                         break;
                     case HookahConstants.GOODS_AGG_ATTR_TYPE:
                         this.getGoodsAttrType(entry, goodsAttrTypeList);
@@ -336,5 +329,17 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
                 regionList.add(regionVo);
             }
         }
+    }
+
+    @Override
+    public void deleteById(String indexName, String type, String id) throws Exception {
+        esTemplate.deleteById(esTransportClient.getObject(), indexName,
+                type, id);
+    }
+
+    @Override
+    public void upsertById(String indexName, String type, String goodsId, Map<String, Object> map) throws Exception {
+        esTemplate.upsertById(esTransportClient.getObject(), indexName,
+                type, goodsId, map);
     }
 }

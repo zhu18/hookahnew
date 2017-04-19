@@ -13,6 +13,7 @@ import org.elasticsearch.action.admin.indices.mapping.get.GetMappingsRequest;
 import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequestBuilder;
 import org.elasticsearch.action.bulk.*;
 import org.elasticsearch.action.delete.DeleteRequest;
+import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.get.MultiGetItemResponse;
 import org.elasticsearch.action.get.MultiGetResponse;
@@ -29,7 +30,6 @@ import org.elasticsearch.common.unit.ByteSizeUnit;
 import org.elasticsearch.common.unit.ByteSizeValue;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.common.xcontent.XContentBuilder;
-import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.index.query.*;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
@@ -49,6 +49,9 @@ import org.springframework.util.Assert;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+
+import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 
 /**
  * Created by wangjl on 2017-3-27.
@@ -96,7 +99,7 @@ public class ESTemplate {
      * @throws IOException
      */
     public boolean putMapping(TransportClient client,String indexName,String type,Map<String,Map<String,String>> mappings) throws IOException{
-        XContentBuilder mappingSource = XContentFactory.jsonBuilder()
+        XContentBuilder mappingSource = jsonBuilder()
                 .startObject().startObject(type)
                 .startObject("_all").field("analyzer", HookahConstants.Analyzer.LC_INDEX.val)
                 .field("search_analyzer", HookahConstants.Analyzer.LC_SEARCH.val)
@@ -785,5 +788,25 @@ public class ESTemplate {
             }
         }
         return map;
+    }
+
+    /**
+     * 按主键删除
+     * @param client
+     * @param indexName
+     * @param type
+     * @param id
+     */
+    public void deleteById(TransportClient client, String indexName, String type, String id) {
+        DeleteResponse response = client.prepareDelete(indexName, type, id).execute().actionGet();
+    }
+
+    public void upsertById(TransportClient client, String indexName, String type, String id, Map<String,Object> map) throws ExecutionException, InterruptedException {
+        IndexRequest indexRequest = new IndexRequest(indexName, type, id)
+                .source(map);
+        UpdateRequest updateRequest = new UpdateRequest(indexName, type, id)
+                .doc(map)
+                .upsert(indexRequest);
+        client.update(updateRequest).get();
     }
 }

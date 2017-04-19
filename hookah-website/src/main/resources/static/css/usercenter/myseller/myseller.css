@@ -1,3 +1,12 @@
+.clearfix:after {
+    visibility: hidden;
+    clear: both;
+    display: block;
+    content: ".";
+    height: 0;
+    font-size: 0;
+    zoom: 1;
+}
 /******** myseller-wrapper start ********/
 .myseller-wrapper .category-label{
     height:50px;

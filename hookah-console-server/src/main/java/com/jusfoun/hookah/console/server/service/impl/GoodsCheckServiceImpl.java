@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.dao.GoodsCheckMapper;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.GoodsCheck;
@@ -49,7 +50,7 @@ public class GoodsCheckServiceImpl extends GenericServiceImpl<GoodsCheck, String
             goods.setCheckStatus(Byte.parseByte(HookahConstants.CheckStatus.audit_success.getCode()));
             goods.setIsOnsale(Byte.parseByte(HookahConstants.CheckStatus.audit_success.getCode()));
             goodsService.updateByIdSelective(goods);
-            mqSenderService.sendDirect(goodsCheck.getGoodsId());
+            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_GOODS_ID,goodsCheck.getGoodsId());
         }else if(goodsCheck.getCheckStatus() == 2){
             goods.setCheckStatus(Byte.parseByte(HookahConstants.CheckStatus.audit_fail.getCode()));
             goodsService.updateByIdSelective(goods);

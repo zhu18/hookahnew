@@ -4,12 +4,14 @@ import com.jusfoun.hookah.console.server.controller.BaseController;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.GoodsShelves;
+import com.jusfoun.hookah.core.domain.mongo.MgShelvesGoods;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.GoodsShelvesService;
+import com.jusfoun.hookah.rpc.api.MgGoodsShelvesGoodsService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,6 +35,9 @@ public class ShelfApi extends BaseController {
 
     @Resource
     GoodsShelvesService goodsShelvesService;
+
+    @Resource
+    MgGoodsShelvesGoodsService mgGoodsShelvesGoodsService;
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ReturnData getListInPage(String currentPage, String pageSize, HttpServletRequest request) {
@@ -67,7 +72,13 @@ public class ShelfApi extends BaseController {
             goodsShelves.setAddUser(getCurrentUser().getUserName());
             goodsShelves.setAddTime(new Date());
             goodsShelves.setUserId(getCurrentUser().getUserId());
-            goodsShelvesService.insert(goodsShelves);
+            GoodsShelves result = goodsShelvesService.insert(goodsShelves);
+
+            MgShelvesGoods mgShelvesGoods = new MgShelvesGoods();
+            mgShelvesGoods.setShelvesGoodsId(result.getShelvesId());
+            mgShelvesGoods.setShelvesGoodsName(result.getShelvesName());
+            mgGoodsShelvesGoodsService.insert(mgShelvesGoods);
+
         } catch (HookahException e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());

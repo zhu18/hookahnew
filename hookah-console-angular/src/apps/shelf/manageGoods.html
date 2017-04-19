@@ -1,7 +1,7 @@
 <div class="row" xmlns="http://www.w3.org/1999/html">
   <div class="col-sm-12">
     <div class="console-title console-title-border clearfix">
-      <div class="pull-left"><h5>管理货架商品</h5></div>
+      <div class="pull-left"><h5>管理货架商品-{{shelf.shelvesName}}</h5></div>
       <div class="pull-right">
         <!--<button class="btn btn-default" data-ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span> 返回-->
         <!--</button>-->
@@ -14,7 +14,7 @@
         <div class="form-group text-center col-sm-5">
           <label>货架中商品</label>
           <table class="table table-hover" style="margin-bottom: 57px;">
-            <input type="hidden" name="shelvesId" value="{{shelvesId}}" />
+            <input type="hidden" name="shelvesId" value="{{shelf.shelvesId}}" />
             <thead>
             <tr>
               <th width="120" class="text-center">商品名称</th>
@@ -35,25 +35,25 @@
               <!--</tr>-->
               <td class="text-center">
                 <!--<input type="hidden" name="goodsId" value="{{item.goodsId}}" />-->
-                <a href="javascript:;" ng-click="delGoods(shelvesId, gid)">移除商品</a>
+                <a href="javascript:;" ng-click="delGoods(shelf.shelvesId, gid)">移除商品</a>
               </td>
             </tr>
             </tbody>
-            <!--<tfoot ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">-->
-            <!--<tr>-->
-              <!--<td colspan="9">-->
-                <!--<div class="pull-right page-box">-->
-                  <!--<div class="pagination-info">共有{{pagination.totalItems}}条，每页显示：{{pagination.pageSize}}条</div>-->
-                  <!--<ul uib-pagination ng-change="pageChanged()" total-items="pagination.totalItems"-->
-                      <!--ng-model="pagination.currentPage" items-per-page="pagination.pageSize"-->
-                      <!--max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"-->
-                      <!--force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"-->
-                      <!--last-text="末页">-->
-                  <!--</ul>-->
-                <!--</div>-->
-              <!--</td>-->
-            <!--</tr>-->
-            <!--</tfoot>-->
+            <tfoot ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">
+            <tr>
+              <td colspan="9">
+                <div class="pull-right page-box">
+                  <div class="pagination-info">共有{{shelfPages.totalItems}}条，每页显示：{{shelfPages.pageSize}}条</div>
+                  <ul uib-pagination ng-change="pageChangedShelf()" total-items="shelfPages.totalItems"
+                      ng-model="shelfPages.currentPage" items-per-page="shelfPages.pageSize"
+                      max-size="shelfPages.maxSize" class="pagination-sm" boundary-links="true"
+                      force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"
+                      last-text="末页">
+                  </ul>
+                </div>
+              </td>
+            </tr>
+            </tfoot>
           </table>
         </div>
 
@@ -67,13 +67,13 @@
             </tr>
             </thead>
             <tbody>
-            <tr data-ng-if="!loadingState" data-ng-repeat="item in pagination.store" class="">
+            <tr data-ng-if="!loadingState" data-ng-repeat="item in allGoods" class="">
               <td>
                 <!--<input type="text" value="{{item.goodsId}}" />-->
                 <span class="column-text" ng-bind="item.goodsName"></span>
               </td>
               <td class="text-center">
-                <a href="javascript:;" ng-click="addGoods($event,item)">添加商品</a>
+                <a href="javascript:;" ng-click="addGoods(shelf.shelvesId, item)">添加商品</a>
               </td>
             </tr>
             </tbody>
@@ -81,10 +81,10 @@
             <tr>
               <td colspan="9">
                 <div class="pull-right page-box">
-                  <div class="pagination-info">共有{{pagination.totalItems}}条，每页显示：{{pagination.pageSize}}条</div>
-                  <ul uib-pagination ng-change="pageChanged()" total-items="pagination.totalItems"
-                      ng-model="pagination.currentPage" items-per-page="pagination.pageSize"
-                      max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"
+                  <div class="pagination-info">共有{{allGoodsPages.totalItems}}条，每页显示：{{allGoodsPages.pageSize}}条</div>
+                  <ul uib-pagination ng-change="pageChanged()" total-items="allGoodsPages.totalItems"
+                      ng-model="allGoodsPages.currentPage" items-per-page="allGoodsPages.pageSize"
+                      max-size="allGoodsPages.maxSize" class="pagination-sm" boundary-links="true"
                       force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"
                       last-text="末页">
                   </ul>
@@ -94,16 +94,6 @@
             </tfoot>
           </table>
         </div>
-
-        <div class="form-group">
-          <div class="col-sm-2"></div>
-          <div class="col-sm-4">
-            <button class="btn btn-primary" data-ng-click="add()">
-              <span class="glyphicon glyphicon-refresh"></span> 新增
-            </button>
-          </div>
-        </div>
-
       </form>
   </div>
 </div>
