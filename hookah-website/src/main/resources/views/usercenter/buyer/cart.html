@@ -59,8 +59,8 @@ var htmlPart = {
 								</td>
 								<td class="money">${trunc((list.goodsPrice * list.goodsNumber) / 100, 2)}</td>
 								<td class="operation">
-									<a href="javascript:void(0)">商品详情</a>
-									<a href="javascript:delThis('${list.recId}')">删除</a>
+									<a href="${host.website}/exchange/details?id=${list.goodsId}">商品详情</a>
+									<a href="javascript:void(0);" onclick="delThis('${list.recId}',this)">删除</a>
 								</td>
 							</tr>
 							<% } %>

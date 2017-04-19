@@ -20,11 +20,7 @@ public class CommonInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-//        Subject subject = SecurityUtils.getSubject();
-//        if (subject != null && subject.isAuthenticated()) {
-//            Map<String, Object> model = modelAndView.getModel();
-//            model.put("username", subject.getPrincipal());
-//        }
+
     }
 
     @Override

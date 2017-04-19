@@ -99,7 +99,7 @@ var htmlPart = {
 								<span><i class="fa fa-heart" aria-hidden="true"></i>收藏</span>
 							</div>
 							<div>
-								<span><i class="fa fa-jpy" aria-hidden="true"></i>${item.shopPrice}</span>
+								<span><i class="fa fa-jpy" aria-hidden="true"></i>${trunc(item.shopPrice / 100,2)}</span>
 								<a href="${host.website}/exchange/details?id=${item.goodsId}">查看详情</a>
 							</div>
 						</div>
@@ -152,7 +152,7 @@ var htmlPart = {
 					<tr>
 						<td><img src="${item.goodsImg}" alt=""></td>
 						<td>${item.goodsName}</td>
-						<td><span>${item.shopPrice}</span></td><!--<span>元/次</span>-->
+						<td><span>${trunc(item.shopPrice / 100,2)}</span></td><!--<span>元/次</span>-->
 						<td>
 							<a href="${host.website}/exchange/details?id=${item.goodsId}">查看详情</a>
 							<!--<span>免</span>-->
@@ -172,8 +172,10 @@ var htmlPart = {
 					<li class="">
 						<img src="${hot_sellItem[i].goodsImg}" class="grid-left" alt="/static/images/timg.jpeg">
 						<div class="infoBox grid-right">
-							<p class="title">${hot_sellItem[i].goodsName}</p>
-							<p class="p-none ">${hot_sellItem[i].shopPrice}</p>
+							<a href="${host.website}/exchange/details?id=${hot_sellItem[i].goodsId}"><p class="title">
+								${hot_sellItem[i].goodsName}</p></a>
+							<a href="${host.website}/exchange/details?id=${hot_sellItem[i].goodsId}"><p class="p-none ">
+								￥${trunc(hot_sellItem[i].shopPrice / 100,2)}</p></a>
 						</div>
 					</li>
 					<%}%>
@@ -480,134 +482,25 @@ var htmlPart = {
 				</div>
 				<div class="grid-right">
 					<ul>
+						<%for(item in goodsShelvesVoInfo.data_sur_data.goods){%>
 						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
+							<a href="${host.website}/exchange/details?id=${item.goodsId}">
+								<img src="${item.goodsImg}" alt="">
+								<p class="title">${item.goodsName}</p>
+								<p>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								</p>
+								<p>
+									<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+									<span class="color-red">${trunc(item.shopPrice / 100,2)}</span>
+								</p>
+							</a>
 						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
-						<li>
-							<img src="" alt="">
-							<p>数据挖掘工具</p>
-							<p>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-								<i class="fa fa-star color-orange" aria-hidden="true"></i>
-							</p>
-							<p>
-								<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-								<span class="color-red">10352</span>
-								<span class="color-red">元</span>
-							</p>
-						</li>
+						<%}%>
 					</ul>
 				</div>
 			</div>
@@ -625,6 +518,25 @@ var htmlPart = {
 				</div>
 				<div class="grid-right">
 					<ul>
+						<<<<<<< HEAD
+						<%for(item in goodsShelvesVoInfo.model_data.goods){%>
+						<li>
+							<a href="${host.website}/exchange/details?id=${item.goodsId}">
+								<img src="${item.goodsImg}" alt="">
+								<p class="title">${item.goodsName}</p>
+								<p>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								</p>
+								<p>
+									<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+									<span class="color-red">${trunc(item.shopPrice / 100,2)}</span>
+								</p>
+							</a>
+							=======
 						<li>
 							<img src="" alt="">
 							<p>数据挖掘工具</p>
@@ -752,6 +664,7 @@ var htmlPart = {
 								<span class="color-red">10352</span>
 								<span class="color-red">元</span>
 							</p>
+							>>>>>>> 8212bf22a6c1350b78dfa7b946e2a956fa561620
 						</li>
 					</ul>
 				</div>
@@ -770,6 +683,25 @@ var htmlPart = {
 				</div>
 				<div class="grid-right">
 					<ul>
+						<<<<<<< HEAD
+						<%for(item in goodsShelvesVoInfo.scene_data.goods){%>
+						<li>
+							<a href="${host.website}/exchange/details?id=${item.goodsId}">
+								<img src="${item.goodsImg}" alt="">
+								<p class="title">${item.goodsName}</p>
+								<p>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								</p>
+								<p>
+									<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+									<span class="color-red">${trunc(item.shopPrice / 100,2)}</span>
+								</p>
+							</a>
+							=======
 						<li>
 							<img src="" alt="">
 							<p>数据挖掘工具</p>
@@ -897,6 +829,7 @@ var htmlPart = {
 								<span class="color-red">10352</span>
 								<span class="color-red">元</span>
 							</p>
+							>>>>>>> 8212bf22a6c1350b78dfa7b946e2a956fa561620
 						</li>
 					</ul>
 				</div>
@@ -915,6 +848,25 @@ var htmlPart = {
 				</div>
 				<div class="grid-right">
 					<ul>
+						<<<<<<< HEAD
+						<%for(item in goodsShelvesVoInfo.plat_data.goods){%>
+						<li>
+							<a href="${host.website}/exchange/details?id=${item.goodsId}">
+								<img src="${item.goodsImg}" alt="">
+								<p class="title">${item.goodsName}</p>
+								<p>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								</p>
+								<p>
+									<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+									<span class="color-red">${trunc(item.shopPrice / 100,2)}</span>
+								</p>
+							</a>
+							=======
 						<li>
 							<img src="" alt="">
 							<p>数据挖掘工具</p>
@@ -1042,6 +994,7 @@ var htmlPart = {
 								<span class="color-red">10352</span>
 								<span class="color-red">元</span>
 							</p>
+							>>>>>>> 8212bf22a6c1350b78dfa7b946e2a956fa561620
 						</li>
 					</ul>
 				</div>
@@ -1060,6 +1013,25 @@ var htmlPart = {
 				</div>
 				<div class="grid-right">
 					<ul>
+						<<<<<<< HEAD
+						<%for(item in goodsShelvesVoInfo.tools_data.goods){%>
+						<li>
+							<a href="${host.website}/exchange/details?id=${item.goodsId}">
+								<img src="${item.goodsImg}" alt="">
+								<p class="title">${item.goodsName}</p>
+								<p>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+								</p>
+								<p>
+									<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+									<span class="color-red">${trunc(item.shopPrice / 100,2)}</span>
+								</p>
+							</a>
+							=======
 						<li>
 							<img src="" alt="">
 							<p>数据挖掘工具</p>
@@ -1187,6 +1159,7 @@ var htmlPart = {
 								<span class="color-red">10352</span>
 								<span class="color-red">元</span>
 							</p>
+							>>>>>>> 8212bf22a6c1350b78dfa7b946e2a956fa561620
 						</li>
 					</ul>
 				</div>
