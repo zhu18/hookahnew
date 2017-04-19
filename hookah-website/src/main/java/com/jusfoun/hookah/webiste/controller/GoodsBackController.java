@@ -14,10 +14,7 @@ import com.jusfoun.hookah.rpc.api.MgGoodsService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -134,6 +131,28 @@ public class GoodsBackController {
         returnData.setCode(ExceptionConst.Success);
         try {
             goodsService.updateGoods(obj);
+        } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
+
+    /**
+     * 商品删除：/status/del
+     * 商品下架：/status/offSale
+     * @param goodsId
+     * @param opera
+     * @return
+     */
+    @RequestMapping("/status/{opera}")
+    @ResponseBody
+    public ReturnData update(String goodsId, @PathVariable String opera) {
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            goodsService.updateGoodsStatus(goodsId, opera);
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());

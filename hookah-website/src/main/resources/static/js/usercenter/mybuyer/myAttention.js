@@ -5,10 +5,6 @@ function loadPageData(data){
         var list = data.data.list;
         var html = '';
         for(var i=0; i<list.length; i++){
-            // console.log("goodsName:"+list[i].goodsName);
-            // console.log("goodsBrief:"+list[i].goodsBrief);
-            // console.log("shopPrice:"+list[i].shopPrice);
-            // console.log("goodsImg:"+list[i].goodsImg);
             html += '<li>';
 			html += '<a class="item-top" href="/exchange/details?id='+list[i].goodsId+'">';
 			html += '<p class="goods-img">';
@@ -22,7 +18,7 @@ function loadPageData(data){
 			html += '</span>';
 			html += '<a class="grid-right" href="javascript:addCart('+list[i].goodsId+','+list[i].shop_format+','+list[i].shopNumber+')">加入购物车</a>';
 			html += '</div>';
-			html += '<div class="cancel" onclick="cancelAttention('+list[i].goodsId+')"><a href="javascript:void(0)">取消关注</a></div>';
+			html += '<div class="cancel" onclick="cancelAttention('+list[i].goodsId+')">取消关注</div>';
 			html += '</li>';
         }
         $('.order-list ul').html(html);
@@ -70,6 +66,7 @@ function cancelAttention(id){
         },
         success:function(data){
             if(data.code=="1"){
+                location.reload();
                 loadPageData(data);
             }else{
                 $.alert(data.message);

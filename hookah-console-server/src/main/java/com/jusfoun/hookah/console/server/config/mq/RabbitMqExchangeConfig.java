@@ -7,6 +7,7 @@ package com.jusfoun.hookah.console.server.config.mq;
 
 import com.jusfoun.hookah.core.constants.RabbitmqExchange;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
+import com.jusfoun.hookah.core.constants.RabbitmqRoutekey;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -14,29 +15,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * 基本使用的为topic，
- * 此处更多是以案例给出
- * @author yjpfj1203
+ * 新增业务时，两个步骤
+ * 1、增加 queue bean ，参照queueXXXX方法
+ * 2增加 queue 和 exchange的binding,参照 bindingExchangeXXXX方法(topic类似于模糊查询，对不同的routekey中特定关键词进行消费)
+ * @author jsshao
  */
 @Configuration
 @AutoConfigureAfter(RabbitMqConfig.class)
 public class RabbitMqExchangeConfig {
 
-//	/**
-//	 * 合同广播型
-//	 *
-//	 * @param rabbitAdmin
-//	 * @return
-//	 */
-//	@Bean
-//	FanoutExchange contractFanoutExchange(RabbitAdmin rabbitAdmin) {
-//		FanoutExchange contractFanoutExchange = new FanoutExchange(RabbitmqExchange.CONTRACT_FANOUT);
-//		rabbitAdmin.declareExchange(contractFanoutExchange);
-//		return contractFanoutExchange;
-//	}
-
+    /*************   开始 Exchange 交换机 定义  *******************/
     /**
-     * 合同->匹配型 默认：, durable = true, autoDelete = false
+     * 主题型 交换机
+     * 默认:durable = true, autoDelete = false
      *
      * @param rabbitAdmin
      * @return
@@ -49,10 +40,7 @@ public class RabbitMqExchangeConfig {
     }
 
     /**
-     * 合同直连型
-     *
-     * @param rabbitAdmin
-     * @return
+     * 直连型交换机
      */
     @Bean
     DirectExchange contractDirectExchange(RabbitAdmin rabbitAdmin) {
@@ -61,105 +49,7 @@ public class RabbitMqExchangeConfig {
         return contractDirectExchange;
     }
 
-
-
-//	@Bean
-//	Binding bindingExchangeContract(Queue queueContract, FanoutExchange exchange, RabbitAdmin rabbitAdmin) {
-//		Binding binding = BindingBuilder.bind(queueContract).to(exchange);
-//		rabbitAdmin.declareBinding(binding);
-//		return binding;
-//	}
-
-    @Bean
-    Binding bindingExchangeContract(Queue queueContract, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
-        Binding binding = BindingBuilder.bind(queueContract).to(exchange).with(RabbitmqQueue.CONTRACE_SELF);
-        rabbitAdmin.declareBinding(binding);
-        return binding;
-    }
-
-    @Bean
-    Binding bindingExchangeContract(Queue queueContract, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
-        Binding binding = BindingBuilder.bind(queueContract).to(exchange).with(RabbitmqQueue.CONTRACE_SELF);
-        rabbitAdmin.declareBinding(binding);
-        return binding;
-    }
-
-
-    @Bean
-    Binding bindingExchangeTenant(Queue queueTenant, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
-        Binding binding = BindingBuilder.bind(queueTenant).to(exchange).with(RabbitmqQueue.CONTRACE_TENANT);
-        rabbitAdmin.declareBinding(binding);
-        return binding;
-    }
-
-    @Bean
-    Binding bindingExchangeTenant(Queue queueTenant, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
-        Binding binding = BindingBuilder.bind(queueTenant).to(exchange).with(RabbitmqQueue.CONTRACE_TENANT);
-        rabbitAdmin.declareBinding(binding);
-        return binding;
-    }
-
-    @Bean
-    Binding bindingExchangeMessage(Queue queueMessage, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
-        Binding binding = BindingBuilder.bind(queueMessage).to(exchange).with(RabbitmqQueue.CONTRACE_MESSAGE);
-        rabbitAdmin.declareBinding(binding);
-        return binding;
-    }
-
-    @Bean
-    Binding bindingExchangeMessage(Queue queueMessage, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
-        Binding binding = BindingBuilder.bind(queueMessage).to(exchange).with(RabbitmqQueue.CONTRACE_MESSAGE);
-        rabbitAdmin.declareBinding(binding);
-        return binding;
-    }
-
-    @Bean
-    Binding bindingExchangeCheck(Queue queueCheck, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
-        Binding binding = BindingBuilder.bind(queueCheck).to(exchange).with(RabbitmqQueue.CONTRACT_GOODSCHECK);
-        rabbitAdmin.declareBinding(binding);
-        return binding;
-    }
-
-    @Bean
-    Binding bindingExchangeGoodsId(Queue queueMessage, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
-        Binding binding = BindingBuilder.bind(queueMessage).to(exchange).with(RabbitmqQueue.CONTRACE_GOODS_ID);
-        rabbitAdmin.declareBinding(binding);
-        return binding;
-    }
-
-    @Bean
-    Binding bindingExchangeCheck(Queue queueCheck, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
-        Binding binding = BindingBuilder.bind(queueCheck).to(exchange).with(RabbitmqQueue.CONTRACT_GOODSCHECK);
-        rabbitAdmin.declareBinding(binding);
-        return binding;
-    }
-
-    @Bean
-    Binding bindingExchangeGoodsId(Queue queueMessage, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
-        Binding binding = BindingBuilder.bind(queueMessage).to(exchange).with(RabbitmqQueue.CONTRACE_GOODS_ID);
-        rabbitAdmin.declareBinding(binding);
-        return binding;
-    }
-
-    /**
-     * 所有关于contract exchange的queue
-     *
-     * @param rabbitAdmin
-     * @return
-     */
-    @Bean
-    Queue queueContract(RabbitAdmin rabbitAdmin) {
-        Queue queue = new Queue(RabbitmqQueue.CONTRACE_SELF, true);
-        rabbitAdmin.declareQueue(queue);
-        return queue;
-    }
-
-    @Bean
-    Queue queueTenant(RabbitAdmin rabbitAdmin) {
-        Queue queue = new Queue(RabbitmqQueue.CONTRACE_TENANT, true);
-        rabbitAdmin.declareQueue(queue);
-        return queue;
-    }
+    /*************   开始 Queue队列  定义  *******************/
 
     @Bean
     Queue queueMessage(RabbitAdmin rabbitAdmin) {
@@ -182,4 +72,57 @@ public class RabbitMqExchangeConfig {
         return queue;
     }
 
+
+
+    /*************   开始  将 queue 绑定到 指定交换机   *******************/
+
+
+    @Bean
+    Binding bindingExchangeMessage(Queue queueMessage, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueMessage).to(exchange).with(RabbitmqQueue.CONTRACE_MESSAGE);
+        rabbitAdmin.declareBinding(binding);
+        return binding;
+    }
+
+    @Bean
+    Binding bindingExchangeCommonMessage(Queue queueMessage, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueMessage).to(exchange).with(RabbitmqRoutekey.CONTRACE_RK_MESSAGE_COMMON);
+        rabbitAdmin.declareBinding(binding);
+        return binding;
+    }
+
+    @Bean
+    Binding bindingExchangeSystemMessage(Queue queueMessage, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueMessage).to(exchange).with(RabbitmqRoutekey.CONTRACE_RK_MESSAGE_SYSTEM);
+        rabbitAdmin.declareBinding(binding);
+        return binding;
+    }
+
+    @Bean
+    Binding bindingExchangeCheck(Queue queueCheck, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueCheck).to(exchange).with(RabbitmqQueue.CONTRACT_GOODSCHECK);
+        rabbitAdmin.declareBinding(binding);
+        return binding;
+    }
+
+    @Bean
+    Binding bindingExchangeGoodsId(Queue queueGoodsId, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueGoodsId).to(exchange).with(RabbitmqQueue.CONTRACE_GOODS_ID);
+        rabbitAdmin.declareBinding(binding);
+        return binding;
+    }
+
+    @Bean
+    Binding bindingExchangeCheck(Queue queueCheck, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueCheck).to(exchange).with(RabbitmqQueue.CONTRACT_GOODSCHECK);
+        rabbitAdmin.declareBinding(binding);
+        return binding;
+    }
+
+    @Bean
+    Binding bindingExchangeGoodsId(Queue queueGoodsId, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueGoodsId).to(exchange).with(RabbitmqQueue.CONTRACE_GOODS_ID);
+        rabbitAdmin.declareBinding(binding);
+        return binding;
+    }
 }

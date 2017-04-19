@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+  <!-- 日志文件属性 -->
+  <!--<property name="logBase" value="/logs" />-->
+  <!--<property name="logFileName" value="hookah-oauth2" />-->
   <!-- 彩色日志 -->
   <!-- 彩色日志依赖的渲染类 -->
   <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
@@ -16,11 +19,12 @@
     </encoder>
   </appender>
 
+  <!-- 日志文件 输出设置 -->
   <!--<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
-    <!--<file>/logs/hookah-oauth2.log</file>-->
+    <!--<file>${logBase}/${logFileName}.log</file>-->
     <!--<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">-->
       <!--&lt;!&ndash; rollover daily &ndash;&gt;-->
-      <!--<fileNamePattern>/logs/hookah-oauth2-%d{yyyy-MM-dd}.%i.gz</fileNamePattern>-->
+      <!--<fileNamePattern>${logBase}/${logFileName}-%d{yyyy-MM-dd}.%i.gz</fileNamePattern>-->
       <!--&lt;!&ndash; each file should be at most 100MB, keep 60 days worth of history, but at most 20GB &ndash;&gt;-->
       <!--<maxFileSize>30MB</maxFileSize>-->
       <!--<maxHistory>60</maxHistory>-->
@@ -33,7 +37,7 @@
   <!--</appender>-->
 
 
-        <!-- 不带彩色的日志在控制台输出时候的设置 -->
+  <!-- 不带彩色的日志在控制台输出时候的设置 -->
   <!-- <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
       <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
            格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符
