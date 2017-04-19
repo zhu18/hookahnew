@@ -16,4 +16,6 @@ public interface GoodsService extends GenericService<Goods,String> {
     void updateGoods(GoodsVo obj) throws HookahException;
 
     MgGoods.FormatBean getFormat(String goodsId, Integer formatId) throws Exception;
+
+    void updateGoodsStatus(String goodsId, String status);
 }
