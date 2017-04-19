@@ -1106,6 +1106,9 @@ lesshat-selector {
 }
 .exchange-hot-resource .hot-resource-down .hot-down-table table tr td:nth-child(2) {
 	width: 40%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-table table tr td:nth-child(3) {
 	width: 20%;
@@ -1430,6 +1433,11 @@ lesshat-selector {
 	line-height: 14px;
 	color: white;
 	padding: 0 10px;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 5;
+	overflow: hidden;
+	word-wrap: break-word;
 }
 .exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-btn {
     opacity: 0;
@@ -1566,7 +1574,7 @@ lesshat-selector {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	width: 100%;
+	padding:0 5px;
 }
 .exchange-index .exchange-category-down .category-left .category-item > div:nth-child(2) ul li:nth-child(n+5) {
 	border-bottom: none;
