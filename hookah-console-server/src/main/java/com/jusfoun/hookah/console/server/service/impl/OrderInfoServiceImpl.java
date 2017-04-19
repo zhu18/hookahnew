@@ -180,6 +180,23 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         return pOrders;
     }
 
+    @Override
+    public void deleteByLogic(String id) {
+        OrderInfo order = new OrderInfo();
+        order.setOrderId(id);
+        order.setIsDeleted(new Byte("1"));
+        super.updateByIdSelective(order);
+    }
+
+    @Override
+    public void deleteBatchByLogic(String[] ids) {
+        OrderInfo order = new OrderInfo();
+        order.setIsDeleted(new Byte("1"));
+        List<Condition> filters = new ArrayList<>();
+        filters.add(Condition.in("orderId", ids));
+        super.updateByConditionSelective(order,filters);
+    }
+
     @Transactional(readOnly=false)
     @Override
     public OrderInfo insert(OrderInfo orderInfo,String[] cartIdArray) throws Exception {
@@ -207,7 +224,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             orderInfo.setOrderAmount(goodsAmount);
 
             if(ordergoodsList!=null&&ordergoodsList.size()>0){
-                orderInfo.setIsDeleted((byte)0);
+                orderInfo = super.insert(orderInfo);
                 OrderInfoVo orderInfoVo = new OrderInfoVo();
                 BeanUtils.copyProperties(orderInfo,orderInfoVo);
                 orderInfoVo.setMgOrderGoodsList(ordergoodsList);
@@ -249,7 +266,6 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         orderInfo.setOrderAmount(goodsAmount);
 
         if(ordergoodsList!=null&&ordergoodsList.size()>0){
-            orderInfo.setIsDeleted(new Integer(0).byteValue());
             orderInfo = super.insert(orderInfo);
             OrderInfoVo orderInfoVo = new OrderInfoVo();
             BeanUtils.copyProperties(orderInfo,orderInfoVo);
