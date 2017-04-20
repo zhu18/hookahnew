@@ -26,7 +26,7 @@ $(function () {
         var ul = $(".screen ul");
         // 获取到每个li
         var ulLis = $(".screen ul li");
-        var liWidth=ulLis.width
+        var liWidth=''
         // li的个数
         var len=ulLis.length;
         var arr = $("#arr");
@@ -42,22 +42,7 @@ $(function () {
                 'display':'none'
             })
         });
-        // $(window).resize(function(){
-        //     if( $(window).width() > 1180 && $(window).width()<1440) {
-        //         var liWidth=$(window).width()/5;
-        //         ulLis.css({
-        //             'width':liWidth
-        //         });
-        //
-        //     }else {
-        //         var liWidth=1180/5;
-        //         ulLis.css({
-        //             'width':liWidth
-        //         });
-        //     }
-        //
-        //
-        // });
+
         var pic=0;
         var i=0;
         // 计算出多出来的li的个数
@@ -73,6 +58,36 @@ $(function () {
         });
         var newLis = $(".screen ul li").length;
         // 给ul赋予新的宽度
+        if( $(window).width() > 1180 && $(window).width()<1440) {
+            liWidth=$(window).width()/5;
+            $(".screen ul li").css({
+                'width':liWidth
+            });
+
+        }else {
+            liWidth=1180/5;
+            $(".screen ul li").css({
+                'width':liWidth
+            });
+        }
+        $(window).resize(function(){
+            if( $(window).width() > 1180 && $(window).width()<1440) {
+                liWidth=$(window).width()/5;
+                $(".screen ul li").css({
+                    'width':liWidth
+                });
+            }else {
+                liWidth=1180/5;
+                $(".screen ul li").css({
+                    'width':liWidth
+                });
+            }
+            ul.css({
+                'width':newLis*liWidth
+            });
+            console.log(pic);
+            console.log(i);
+        });
         ul.css({
             'width':newLis*liWidth
         });
@@ -80,74 +95,138 @@ $(function () {
         var flag='';
         var j=0;
         var k=0;
-        // 右箭头点击事件
-        arrRight.on('click',function () {
-            playRight()
-        });
 
-        // 左箭头点击事件
-        arrLeft.on('click',function () {
-            playLeft()
-        });
         function playLeft() {
-            arrLeft.unbind("click");
-            if(parseInt(ul.css('transform').split(',').slice(-2, -1))>=0){
+            // if(parseInt(ul.css('transform').split(',').slice(-2, -1))>=0){
+            //     pic=Math.ceil(len/5)-2;
+            //     i=0;
+            //     flag=1;
+            //     j=1;
+            //     k=1;
+            // }
+            //
+            // if(k==1){
+            //     ul.css({
+            //         'transform': "translateX(0px)",
+            //         'transition': "none",
+            //         'left': -len  * liWidth
+            //     });
+            //     k=0;
+            //
+            //     ul.transition({transform: "translateX("+(parseInt(ul.css('left'))+screen.width())+"px)",
+            //                    left:'0px'
+            //     }, 500, 'linear', function(){
+            //         arrLeft.on("click",function () {
+            //             playLeft()
+            //         });
+            //     });
+            //     return;
+            // }
+            // if(pic<=(Math.ceil(len/5)-2) && pic >0 ){
+            //     pic--;
+            //     ul.transition({transform: "translateX("+(parseInt(ul.css('transform').split(',').slice(-2, -1))+screen.width())+"px)"}, 500, 'linear', function(){
+            //         arrLeft.on("click",function () {
+            //             playLeft()
+            //         });
+            //     });
+            //     i=0;
+            //
+            // }else if(lis.length<5 && i<=lis.length && i==0){
+            //     i++;
+            //     ul.transition({transform: "translateX("+(parseInt(ul.css('transform').split(',').slice(-2, -1))+liWidth*lis.length)+"px)"}, 500, 'linear', function(){
+            //         arrLeft.on("click",function () {
+            //             playLeft()
+            //         });
+            //     });
+            // }
+            // arrLeft.unbind("click");
+            if(parseInt(ul.css('left'))>=0){
                 pic=Math.ceil(len/5)-2;
+                ul.css({'left':'0px'});
                 i=0;
                 flag=1;
                 j=1;
                 k=1;
             }
-
             if(k==1){
                 ul.css({
-                    'transform': "translateX(0px)",
-                    'transition': "none",
                     'left': -len  * liWidth
                 });
                 k=0;
-
-                ul.transition({transform: "translateX("+(parseInt(ul.css('left'))+screen.width())+"px)",
-                               left:'0px'
-                }, 500, 'linear', function(){
-                    arrLeft.on("click",function () {
-                        playLeft()
-                    });
-                });
+                animate(ul,parseInt(ul.css('left'))+screen.width());
                 return;
             }
             if(pic<=(Math.ceil(len/5)-2) && pic >0 ){
                 pic--;
-                ul.transition({transform: "translateX("+(parseInt(ul.css('transform').split(',').slice(-2, -1))+screen.width())+"px)"}, 500, 'linear', function(){
-                    arrLeft.on("click",function () {
-                        playLeft()
-                    });
-                });
+                animate(ul,parseInt(ul.css('left'))+screen.width());
                 i=0;
-
             }else if(lis.length<5 && i<=lis.length && i==0){
                 i++;
-                ul.transition({transform: "translateX("+(parseInt(ul.css('transform').split(',').slice(-2, -1))+liWidth*lis.length)+"px)"}, 500, 'linear', function(){
-                    arrLeft.on("click",function () {
-                        playLeft()
-                    });
-                });
+                animate(ul,parseInt(ul.css('left'))+liWidth*lis.length);
+
             }
+
         }
         function playRight() {
-            arrRight.unbind("click");
-
-            if(parseInt(ul.css('transform').split(',').slice(-2,-1))==0){
+            // arrRight.unbind("click");
+            // if(parseInt(ul.css('transform').split(',').slice(-2,-1))==0){
+            //     pic=0;
+            //     j=0;
+            //     i=0;
+            // }
+            // if(j==1){
+            //     ul.transition({transform: "translateX("+(ul.css('transform').split(',').slice(-2, -1)-screen.width())+"px)"}, 500, 'linear', function(){
+            //         arrRight.on("click",function () {
+            //             playRight()
+            //         });
+            //     });
+            //     j=0;
+            //     k=1;
+            //     pic=0;
+            //     return;
+            // }
+            // if(k==1){
+            //     ul.css({
+            //         'transform': "translateX(0px)",
+            //         'transition': "none",
+            //         'left': 0
+            //     });
+            //     k=0;
+            //     i=0;
+            //     pic=0;
+            // }
+            // if(pic<Math.ceil(len/5)-2 && i==0){
+            //     ul.transition({transform: "translateX("+(ul.css('transform').split(',').slice(-2, -1)-screen.width())+"px)"}, 500, 'linear', function(){
+            //         arrRight.on("click",function () {
+            //             playRight()
+            //         });
+            //     });
+            //     pic++;
+            // }else if(lis.length<5 && i<lis.length && i==0){
+            //     i++;
+            //     ul.transition({transform: "translateX("+(ul.css('transform').split(',').slice(-2, -1) - liWidth*lis.length )+"px)"}, 500, 'linear', function(){
+            //         arrRight.on("click",function () {
+            //             playRight()
+            //         });
+            //     });
+            // }else if(i!=0){
+            //     ul.transition({transform: "translateX("+(parseInt(ul.css('transform').split(',').slice(-2,-1))-screen.width())+"px)"}, 500, 'linear', function(){
+            //         arrRight.on("click",function () {
+            //             playRight()
+            //         });
+            //     });
+            //     // 记录是不是进入最后一张
+            //     k=1;
+            //     i=0;
+            // }
+            // arrRight.unbind("click");
+            if(parseInt(ul.css('left'))==0){
                 pic=0;
                 j=0;
                 i=0;
             }
             if(j==1){
-                ul.transition({transform: "translateX("+(ul.css('transform').split(',').slice(-2, -1)-screen.width())+"px)"}, 500, 'linear', function(){
-                    arrRight.on("click",function () {
-                        playRight()
-                    });
-                });
+                animate(ul,parseInt(ul.css('left'))-screen.width());
                 j=0;
                 k=1;
                 pic=0;
@@ -155,8 +234,6 @@ $(function () {
             }
             if(k==1){
                 ul.css({
-                    'transform': "translateX(0px)",
-                    'transition': "none",
                     'left': 0
                 });
                 k=0;
@@ -164,30 +241,46 @@ $(function () {
                 pic=0;
             }
             if(pic<Math.ceil(len/5)-2 && i==0){
-                ul.transition({transform: "translateX("+(ul.css('transform').split(',').slice(-2, -1)-screen.width())+"px)"}, 500, 'linear', function(){
-                    arrRight.on("click",function () {
-                        playRight()
-                    });
-                });
+                animate(ul,parseInt(ul.css('left'))-screen.width());
                 pic++;
             }else if(lis.length<5 && i<lis.length && i==0){
                 i++;
-                ul.transition({transform: "translateX("+(ul.css('transform').split(',').slice(-2, -1) - liWidth*lis.length )+"px)"}, 500, 'linear', function(){
-                    arrRight.on("click",function () {
-                        playRight()
-                    });
-                });
+                animate(ul,parseInt(ul.css('left'))-liWidth*lis.length);
+
             }else if(i!=0){
-                ul.transition({transform: "translateX("+(parseInt(ul.css('transform').split(',').slice(-2,-1))-screen.width())+"px)"}, 500, 'linear', function(){
-                    arrRight.on("click",function () {
-                        playRight()
-                    });
-                });
-                // 记录是不是进入最后一张
+                animate(ul,parseInt(ul.css('left'))-screen.width());
                 k=1;
                 i=0;
             }
-
+        }
+        // 右箭头点击事件
+        arrRight.on('click',function () {
+            playRight()
+        });
+        // 左箭头点击事件
+        arrLeft.on('click',function () {
+            playLeft()
+        });
+        function animate(obj, target) {
+            console.log(target);
+            clearInterval(obj.timer);
+            obj.timer = setInterval(function () {
+                var step = 50;
+                var step = obj.offset().left < target ? step : -step;
+                if (Math.abs(obj.offset().left - target) > Math.abs(step)) {
+                    obj.css({
+                        'left':obj.offset().left + step
+                    })
+                    console.log(obj.offset().left + step);
+                } else {
+                    obj.css({
+                        'left':target
+                    });
+                    clearInterval(obj.timer);
+                    // arrRight.on("click",function () {playRight()});
+                    // arrLeft.on("click",function () {playLeft()});
+                }
+            }, 1)
         }
     }
     function imgHover() {
