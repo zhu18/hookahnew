@@ -1443,7 +1443,20 @@ lesshat-selector {
     right: 0;
     bottom:0 ;
     background: #161A1D;
-    opacity: 0.6;
+	/* older safari/Chrome browsers */
+	-webkit-opacity: 0.6;
+	/* Netscape and Older than Firefox 0.9 */
+	-moz-opacity: 0.6;
+	/* Safari 1.x (pre WebKit!) 老式khtml内核的Safari浏览器*/
+	-khtml-opacity: 0.6;
+	/* IE9 + etc...modern browsers */
+	opacity: .6;
+	/* IE 4-9 */
+	filter:alpha(opacity=60);
+	/*This works in IE 8 & 9 too*/
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+	/*IE4-IE9*/
+	filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
 }
 .exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content{
     position: absolute;
