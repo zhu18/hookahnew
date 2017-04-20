@@ -94,4 +94,6 @@ myconf:
     static: ${server.http.protocal}static.hookah.app
     auth: ${server.http.protocal}auth.hookah.app
     console: ${server.http.protocal}console.hookah.app
+  site:
+      user-default-img: /static/images/timg.jpeg
 debug: true
