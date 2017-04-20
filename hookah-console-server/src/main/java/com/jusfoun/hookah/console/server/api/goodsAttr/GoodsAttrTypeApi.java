@@ -2,6 +2,7 @@ package com.jusfoun.hookah.console.server.api.goodsAttr;
 
 import com.jusfoun.hookah.core.domain.Category;
 import com.jusfoun.hookah.core.domain.GoodsAttrType;
+import com.jusfoun.hookah.core.domain.vo.GoodsAttrTypeVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
@@ -18,10 +19,30 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/attrType")
-public class GoodsAttrTypeController {
+public class GoodsAttrTypeApi {
 
     @Resource
     GoodsAttrTypeService goodsAttrTypeService;
+
+
+
+    @RequestMapping("allTree")
+    public ReturnData selectTree(){
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            List<GoodsAttrTypeVo> goodsAttrTypeVos = goodsAttrTypeService.findTree();
+            if(goodsAttrTypeVos == null) {
+                throw new HookahException("操作失败");
+            }
+            returnData.setData(goodsAttrTypeVos);
+        }catch (Exception e) {
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
 
     /**
      * 新增商品属性分类
