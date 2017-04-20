@@ -91,8 +91,8 @@
       <scope>import</scope>
     </dependency>
     <!--<dependency>-->
-      <!--<groupId>org.springframework.boot</groupId>-->
-      <!--<artifactId>spring-boot-starter-web</artifactId>-->
+    <!--<groupId>org.springframework.boot</groupId>-->
+    <!--<artifactId>spring-boot-starter-web</artifactId>-->
     <!--</dependency>-->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -184,10 +184,18 @@
       <groupId>org.apache.oltu.oauth2</groupId>
       <artifactId>org.apache.oltu.oauth2.client</artifactId>
     </dependency>
-      <dependency>
-          <groupId>org.springframework.amqp</groupId>
-          <artifactId>spring-rabbit</artifactId>
-      </dependency>
+    <dependency>
+      <groupId>org.springframework.amqp</groupId>
+      <artifactId>spring-rabbit</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.github.pagehelper</groupId>
+      <artifactId>pagehelper</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>tk.mybatis</groupId>
+      <artifactId>mapper</artifactId>
+    </dependency>
   </dependencies>
   <build>
     <resources>
@@ -214,9 +222,9 @@
       </resource>
       <!-- 打包时注释下面的resource -->
       <resource>
-        <targetPath>${project.build.directory}/classes</targetPath>
-        <directory>src/main/resources</directory>
-        <filtering>false</filtering>
+      <targetPath>${project.build.directory}/classes</targetPath>
+      <directory>src/main/resources</directory>
+      <filtering>false</filtering>
       </resource>
     </resources>
     <pluginManagement>

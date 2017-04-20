@@ -11,7 +11,7 @@ function loadPageData(data){ //渲染页面数据
             html += '<td>'+judge(list[i].sysUser)+'</td>';
             html += '<td>';
             html += '<a href="javascript:deleteData(\''+list[i].newsId+'\');">删除</a>';
-            html += '<a href="/usercenter/publishArticle?id='+list[i].newsId+'">修改</a>';
+            html += '<a href="/admin/articleModify?id='+list[i].newsId+'">修改</a>';
             html += '</td>';
             html += '</tr>';
         }

@@ -55,4 +55,9 @@ public class AdminController {
     public String articlePublish(Model model) {
         return "usercenter/admin/articlePublish";
     }
+
+    @RequestMapping(value = "admin/articleModify", method = RequestMethod.GET)
+    public String articleModify1(Model model) {
+        return "usercenter/admin/articleModify";
+    }
 }
