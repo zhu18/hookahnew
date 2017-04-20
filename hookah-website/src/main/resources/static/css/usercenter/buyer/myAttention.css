@@ -73,7 +73,8 @@
 .order-list ul li .item-top .goods-brief {
     padding: 0 10px 3px;
     width: calc(100% - 20px);
-    text-align: justify;
+    text-align: center;
+    height: 75px;
 }
 .order-list ul li .item-down {
     border-top: 1px solid #E5E5E5;

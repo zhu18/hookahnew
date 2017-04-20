@@ -185,13 +185,12 @@ function check() {
 	}
 }
 
-function addAttention(goodsId,userId){
+function addAttention(goodsId){
     $.ajax({
         url:'/goodsFavorite/add',
         type:'get',
         data:{
             goodsId:goodsId,
-            userId:userId
         },
         success:function(data){
             if(data.code=="1"){
