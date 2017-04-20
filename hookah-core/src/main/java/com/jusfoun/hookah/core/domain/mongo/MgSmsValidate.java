@@ -14,7 +14,7 @@ import java.util.Date;
  */
 @Document
 public class MgSmsValidate extends GenericModel {
-    private String phoneNum;
+    private String mobile;
 
     private String smsContent;
 
@@ -28,12 +28,12 @@ public class MgSmsValidate extends GenericModel {
     private Date expireTime;
 
 
-    public String getPhoneNum() {
-        return phoneNum;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setPhoneNum(String phoneNum) {
-        this.phoneNum = phoneNum;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     public String getSmsContent() {

@@ -84,7 +84,7 @@ var htmlPart = {
 								   id="J_phone_Mobile"
 								   data-pattern="^(86){0,1}1\d{10}$" type="text" value=""
 								   data-inner_placeholder="r_p_input_inner_entermobile" placeholder="请输入手机验证码">
-							<button href="javascript:void(0)" id="J_captchaImg" type="button" class="mobile-text-btn">
+							<button href="javascript:void(0)" id="J_captchaImg" type="button" class="mobile-text-btn mobile-btn-disabled" disabled="disabled">
 								获取验证码
 							</button>
 						</div>
@@ -176,6 +176,7 @@ var htmlPart = {
 <script type="text/javascript" src="/static/js/dialog/dialog.js"></script>
 <script>
 	var pathName = window.location.pathname;
+	var isTrue = true;
 	if (pathName == '/reg') {
 		$('h2.logo-title').html('注册');
 	}
@@ -256,16 +257,19 @@ var htmlPart = {
 			success:function(data){
 				if(data.code == 1){
 					nickSuccessInfo(TRLang.TIP_REGISTER_NAME_SUCCESS);
+					isTrue = true;
 				}else if(data.code == 0){
+					isTrue = false;
 					nickErrorInfo(TRLang.ERROR_DUP_NICK_NAME);
 				}else{
 					$.alert(data.message);
+					isTrue = false;
 				}
 			}
 		});
 	}
 	function nickErrorInfo(info) {
-		$('#J_MsgNick').removeClass('msg-type-info').addClass('msg-type-error').show().children('.msg-cnt').html(info).siblings('.iconfont').html('󰅂');
+		$('#J_MsgNick').removeClass('msg-type-info').addClass('msg-type-error').show().children('.msg-cnt').html(info).siblings('.iconfont').html('󰅕');
 	}
 	function nickSuccessInfo(info) {
 		$('#J_MsgNick').removeClass('msg-type-error').addClass('msg-type-info').show().children('.msg-cnt').html(info).siblings('.iconfont').html('󰅂');
@@ -273,7 +277,7 @@ var htmlPart = {
 	$('#J_userName').blur(function () {
 		var thisVal = $(this).val();
 		if (strlen(thisVal) > 25 || strlen(thisVal) < 5) {
-			$('#J_MsgNick').removeClass('msg-type-info').addClass('msg-type-error').show().children('.msg-cnt').html(TRLang.ERROR_MALFORM_NICK_NAME).siblings('.iconfont').html('󰅂');
+			$('#J_MsgNick').removeClass('msg-type-info').addClass('msg-type-error').show().children('.msg-cnt').html(TRLang.ERROR_MALFORM_NICK_NAME).siblings('.iconfont').html('󰅕');
 		} else {
 			$('#J_MsgNick').hide();
 			nickTest(thisVal);
@@ -330,11 +334,11 @@ var htmlPart = {
 		var thisVal = $(this).val();
 		$('#J_PwdTip').hide();
 		if (strlen(thisVal) > 20 || strlen(thisVal) < 6) {
-			$('#J_MsgPassword').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_MALFORM_PASSWORD).siblings('.iconfont').html('󰅂');
+			$('#J_MsgPassword').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_MALFORM_PASSWORD).siblings('.iconfont').html('󰅕');
 		} else {
 			$('#J_PwdTip .pw-rule .pw-rule-item').each(function () {
 				if ($(this).children('.iconfont').hasClass('pw-icon-error')) {
-					$('#J_MsgPassword').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_MALFORM_PASSWORD).siblings('.iconfont').html('󰅂');
+					$('#J_MsgPassword').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_MALFORM_PASSWORD).siblings('.iconfont').html('󰅕');
 				} else {
 					$('#J_MsgPassword').show().removeClass('msg-type-error').addClass('msg-type-info').children('.msg-cnt').html(TRLang.r_ui_pwd_strength).siblings('.iconfont').html('󰅂');
 
@@ -357,26 +361,30 @@ var htmlPart = {
 		if ($(this).val() == $('#J_Password').val()) {
 			$('#J_MsgRePassword').hide();
 		} else {
-			$('#J_MsgRePassword').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_GENERAL_CONFIRM_PASSWORD_NOT_MATCH).siblings('.iconfont').html('󰅂');
+			$('#J_MsgRePassword').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_GENERAL_CONFIRM_PASSWORD_NOT_MATCH).siblings('.iconfont').html('󰅕');
 		}
 	});
+	$('#J_Mobile').on('focus',function () {
+		$('#J_captchaImg').attr("disabled", true).addClass('mobile-btn-disabled');
+	})
 	$('#J_Mobile').blur(function () {
 		var mobile = $(this).val();
 		if (mobile) {
 			if (testData.mobile(mobile)) {
 				$('#J_MsgMobile').hide();
+				mobileAvailable(mobile)
 			} else {
-				$('#J_MsgMobile').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_GENERAL_MOBILE_MALFORM).siblings('.iconfont').html('󰅂');
+				$('#J_MsgMobile').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_GENERAL_MOBILE_MALFORM).siblings('.iconfont').html('󰅕');
 			}
 		} else {
-			$('#J_MsgMobile').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_GENERAL_MOBILEPHONE_EMPTY).siblings('.iconfont').html('󰅂');
+			$('#J_MsgMobile').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_GENERAL_MOBILEPHONE_EMPTY).siblings('.iconfont').html('󰅕');
 		}
 	});
 	$('#J_captchaImg').on('click', function () {
 		var that = $(this);
 		var mobile = $('#J_Mobile').val();
 		if (!$('#J_Capcha').val()) {
-			$('#J_MsgCaptcha').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_IMAGECHECKCODE_MALFORM).siblings('.iconfont').html('󰅂');
+			$('#J_MsgCaptcha').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_IMAGECHECKCODE_MALFORM).siblings('.iconfont').html('󰅕');
 		} else {
 			$('#J_MsgCaptcha').hide();
 			if (mobile) {
@@ -384,10 +392,10 @@ var htmlPart = {
 					$('#J_MsgMobile').hide();
 					testCaptcha(that);
 				} else {
-					$('#J_MsgMobile').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_GENERAL_MOBILE_MALFORM).siblings('.iconfont').html('󰅂');
+					$('#J_MsgMobile').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_GENERAL_MOBILE_MALFORM).siblings('.iconfont').html('󰅕');
 				}
 			} else {
-				$('#J_MsgMobile').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_GENERAL_MOBILEPHONE_EMPTY).siblings('.iconfont').html('󰅂');
+				$('#J_MsgMobile').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_GENERAL_MOBILEPHONE_EMPTY).siblings('.iconfont').html('󰅕');
 			}
 		}
 	});
@@ -402,7 +410,7 @@ var htmlPart = {
 						getMobileVerify(that);
 					} else if (data.data == 0) {
 						$('#J_Capcha').focus().val('');
-						$('#J_MsgCaptcha').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_REGISTER_CHECKCODE_NOT_MATCH).siblings('.iconfont').html('󰅂');
+						$('#J_MsgCaptcha').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_REGISTER_CHECKCODE_NOT_MATCH).siblings('.iconfont').html('󰅕');
 					}
 					//成功之后请求手机号验证码
 				} else {
@@ -416,7 +424,7 @@ var htmlPart = {
 			url:'${host.auth}/reg/sendSms',
 			type:'post',
 			data:{
-				phoneNum:$('#J_Mobile').val()
+				mobile:$('#J_Mobile').val()
 			},
 			success:function(data){
 				if(data.code == 1){
@@ -549,7 +557,7 @@ var htmlPart = {
 		ERROR_GENERAL_MOBILEPHONE_MALFORM: '手机号码格式不正确，请重新输入',
 		ERROR_GENERAL_SESSION_TIMEOUT: '请求已过期，请重新注册',
 		ERROR_HAVANA_SERVICE_UNAVAILABLE: '系统错误，请稍后重试',
-		ERROR_MOBILE_IN_BLACK: '该手机号码注册账号过多，请更换手机号重试',
+		ERROR_MOBILE_IN_BLACK: '该手机号码已被注册，请更换手机号重试<br/>或者使用该手机号直接<a href=\'{loginLink}\'>登录</a>。'.replace("{loginLink}", "${host.auth}/login"),
 		ERROR_OVER_TIME: '激活链接已过期',
 		ERROR_SHANG_JIA_RU_ZHU: '您的账号正在审核中,暂不支持登录',
 		INPUT_ERROR: '参数错误',
@@ -605,7 +613,6 @@ var htmlPart = {
 	function toLogin() {
 		window.href = '${host.auth}/login';
 	}
-	;
 	$(document).ready(function () {
 
 		$('#J_BtnInfoForm').on("click", function (e) {
@@ -625,47 +632,71 @@ var htmlPart = {
 						if (rePassword == password) {
 							if (testData.mobile(mobile)) {
 								if(validSms){
-									mobileNumIsTrue(validSms)
+									if(isTrue){
+										mobileNumIsTrue(mobile,validSms)
+									}else{
+										$.alert('注册信息不完整');
+									}
 								}else{
-									$('#J_MobileSms').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_GENERAL_IMAGECHECKCODE_NOT_NULL).siblings('.iconfont').html('󰅂');
+									$('#J_MobileSms').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_GENERAL_IMAGECHECKCODE_NOT_NULL).siblings('.iconfont').html('󰅕');
 								}
 							} else {
-								$('#J_MsgMobile').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_GENERAL_MOBILE_MALFORM).siblings('.iconfont').html('󰅂');
+								$('#J_MsgMobile').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_GENERAL_MOBILE_MALFORM).siblings('.iconfont').html('󰅕');
 							}
 						} else {
-							$('#J_MsgRePassword').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_GENERAL_CONFIRM_PASSWORD_NOT_MATCH).siblings('.iconfont').html('󰅂');
+							$('#J_MsgRePassword').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_GENERAL_CONFIRM_PASSWORD_NOT_MATCH).siblings('.iconfont').html('󰅕');
 						}
 					} else {
-						$('#J_MsgPassword').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_MALFORM_PASSWORD).siblings('.iconfont').html('󰅂');
+						$('#J_MsgPassword').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_MALFORM_PASSWORD).siblings('.iconfont').html('󰅕');
 					}
 				} else {
-					$('#J_MsgNick').removeClass('msg-type-info').addClass('msg-type-error').show().children('.msg-cnt').html(TRLang.ERROR_MALFORM_NICK_NAME).siblings('.iconfont').html('󰅂');
+					$('#J_MsgNick').removeClass('msg-type-info').addClass('msg-type-error').show().children('.msg-cnt').html(TRLang.ERROR_MALFORM_NICK_NAME).siblings('.iconfont').html('󰅕');
 				}
 			} else {
-				$('#J_MsgNick').removeClass('msg-type-info').addClass('msg-type-error').show().children('.msg-cnt').html(TRLang.ERROR_MALFORM_NICK_NAME).siblings('.iconfont').html('󰅂');
+				$('#J_MsgNick').removeClass('msg-type-info').addClass('msg-type-error').show().children('.msg-cnt').html(TRLang.ERROR_MALFORM_NICK_NAME).siblings('.iconfont').html('󰅕');
 			}
 		})
 	});
-	function mobileNumIsTrue(validSms){ //验证手机验证码是否正确
+	function mobileAvailable(mobile){//验证手机号是否可用
 		$.ajax({
 			url:'${host.auth}/reg/checkMobile',
 			type:'post',
 			data:{
-				mobile:validSms
+				mobile:mobile
 			},
 			success:function(data){
 				if(data.code == 1){
-					return;
+					$('#J_captchaImg').removeAttr("disabled").removeClass('mobile-btn-disabled');
+				}else if(data.code == 0){
+					$('#J_MsgMobile').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_MOBILE_IN_BLACK).siblings('.iconfont').html('󰅕');
+				}else{
+					$.alert(data.message);
+				}
+			}
+		});
+	}
+	function mobileNumIsTrue(mobile,validSms){ //验证手机验证码是否正确
+		$.ajax({
+			url:'${host.auth}/reg/checkSms',
+			type:'post',
+			data:{
+				mobile:mobile,
+				validSms:validSms
+			},
+			success:function(data){
+				if(data.code == 1){
 					$.post("/reg", $("#J_InfoForm").serialize(), function (data) {
 						if (data.code == 1) {
 							$.alert("注册成功，马上跳转登录页面");
-							//setTimeout("toLogin()", 2000);
+							setTimeout("toLogin()", 2000);
 						} else {
 							$.alert(data.message);
 						}
 					});
+				}else if(data.code == 0){
+					$('#J_MobileSms').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_IMAGECHECKCODE_INVALID).siblings('.iconfont').html('󰅕');
 				}else{
-					$.alert('获取验证码失败，请重新获取');
+					$.alert(data.message);
 				}
 			}
 		});

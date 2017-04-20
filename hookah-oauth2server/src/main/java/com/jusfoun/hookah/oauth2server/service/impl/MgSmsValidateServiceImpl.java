@@ -25,8 +25,8 @@ public class MgSmsValidateServiceImpl extends GenericMongoServiceImpl<MgSmsValid
     @Override
     public MgSmsValidate insert(MgSmsValidate sms) {
         //发送短信
-        logger.info("发送短信，接收方：{}，内容为:{}",sms.getPhoneNum(),sms.getSmsContent());
-        SMSUtil.sendSMS(sms.getPhoneNum(),sms.getSmsContent());
+        logger.info("发送短信，接收方：{}，内容为:{}",sms.getMobile(),sms.getSmsContent());
+        SMSUtil.sendSMS(sms.getMobile(),sms.getSmsContent());
 
         //缓存短信
         sms.setSendTime(new Date());

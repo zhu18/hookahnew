@@ -24,13 +24,13 @@ public class SMSUtil {
 	private static String password ="263575";
 	private static String url = "http://61.145.229.28:8027/MWGate/wmgw.asmx/MongateMULTIXSend";
 	private static Logger logger = LoggerFactory.getLogger(SMSUtil.class);
-	public static void sendSMS(String phoneNum,String message){
-		if(StringUtils.isEmpty(phoneNum)){
+	public static void sendSMS(String mobile,String message){
+		if(StringUtils.isEmpty(mobile)){
 			logger.info(ExceptionConst.get(ExceptionConst.PHONE_NULL_ERROR));
 		}
 		try{
-			String multixmt = makeMultixmt(phoneNum,message);
-			HttpRequestUtil.sendGet(url,makeGetUrl(phoneNum,message,multixmt));
+			String multixmt = makeMultixmt(mobile,message);
+			HttpRequestUtil.sendGet(url,makeGetUrl(mobile,message,multixmt));
 		}catch(Exception e){
 			logger.info(ExceptionConst.get(ExceptionConst.SMS_ERROR_MSG));
 		}

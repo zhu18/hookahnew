@@ -23,7 +23,13 @@
 
 .header-centerbar .logo {
 }
-
+.header-centerbar .logo a{
+  display: inline-block;
+  width:377px;
+}
+.header-centerbar .logo a img{
+  width:100%;
+}
 .header-centerbar .search {
   margin-left: 76px;
   position: relative;

@@ -38,9 +38,6 @@ ul li {
     border-bottom: 2px solid #F17D17;
     color:#F17D17;
 }
-.orderManagement .title ul li span{
-    border-right:1px solid #E5E5E5;
-}
 .orderManagement .title .search {
     position: relative;
 }
