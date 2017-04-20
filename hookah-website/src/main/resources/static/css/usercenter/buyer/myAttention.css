@@ -74,6 +74,7 @@
     padding: 0 10px 3px;
     width: calc(100% - 20px);
     text-align: justify;
+    height: 38px;
 }
 .order-list ul li .item-down {
     border-top: 1px solid #E5E5E5;

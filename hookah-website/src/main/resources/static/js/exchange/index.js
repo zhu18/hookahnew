@@ -151,29 +151,35 @@ $(function () {
             if(parseInt(ul.css('left'))>=0){
                 pic=Math.ceil(len/5)-2;
                 ul.css({'left':'0px'});
-                i=0;
-                flag=1;
                 // 点击左键
-                j=1;
-                k=1;
-            }
-            if(k==1){
+                // j=1;
+                // k=1;
                 ul.css({
                     'left': -len  * liWidth
                 });
-                k=0;
-                // 跳到最后第二品
                 animate(ul,parseInt(ul.css('left'))+screen.width());
+                i=1;
                 return;
+            }
+            // if(j==1){
+            //     ul.css({
+            //         'left': -len  * liWidth
+            //     });
+            //     animate(ul,parseInt(ul.css('left'))+screen.width());
+            //     j=0;
+            // }
+            if(k==1){
+                k=0;
+                i=1;
+                animate(ul,parseInt(ul.css('left'))+screen.width());
+                  return;
             }
             if(pic<=(Math.ceil(len/5)-2) && pic >0 ){
                 pic--;
                 animate(ul,parseInt(ul.css('left'))+screen.width());
-                i=0;
-            }else if(lis.length<5 && i<=lis.length && i==0){
-                i++;
+            }else if(lis.length<5 && i<=lis.length && i!=0){
+                i--;
                 animate(ul,parseInt(ul.css('left'))+liWidth*lis.length);
-
             }
 
         }
@@ -236,13 +242,13 @@ $(function () {
                 j=0;
                 i=0;
             }
-            if(j==1 && pic!=0){
-                animate(ul,parseInt(ul.css('left'))-screen.width());
-                j=0;
-                k=1;
-                pic=0;
-                return;
-            }
+            // if(j==1 && pic!=0){
+            //     animate(ul,parseInt(ul.css('left'))-screen.width());
+            //     j=0;
+            //     k=1;
+            //     pic=0;
+            //     return;
+            // }
             // 如果进入最后一张
             if(k==1){
                 ul.css({'left': 0});
@@ -256,7 +262,6 @@ $(function () {
             }else if(lis.length<5 && i<lis.length && i==0){
                 i++;
                 animate(ul,parseInt(ul.css('left'))-liWidth*lis.length);
-
             }else if(i!=0){
                 animate(ul,parseInt(ul.css('left'))-screen.width());
                 // 是否进入最后一张

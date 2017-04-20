@@ -122,9 +122,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
                 }
                 break;
             case "offSale":
-                goods.setIsOnsale(HookahConstants.GOODS_STATUS_OFFSALE);
-                goods.setOnsaleEndDate(DateUtils.now());
-                i = super.updateByIdSelective(goods);
+                i = goodsMapper.updateOffSale(goodsId);
                 if(i > 0) {
                     mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_GOODS_ID, goodsId);
                 }
