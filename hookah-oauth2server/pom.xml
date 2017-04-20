@@ -102,6 +102,10 @@
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-mongodb</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-jdbc</artifactId>
     </dependency>
     <dependency>
@@ -194,6 +198,14 @@
       <version>3.1.0</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>tk.mybatis</groupId>
+      <artifactId>mapper</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.googlecode.log4jdbc</groupId>
+      <artifactId>log4jdbc</artifactId>
+    </dependency>
   </dependencies>
   <build>
     <resources>
@@ -219,11 +231,11 @@
         </includes>
       </resource>
       <!-- 打包时注释下面的resource -->
-      <resource>
-      <targetPath>${project.build.directory}/classes</targetPath>
-      <directory>src/main/resources</directory>
-      <filtering>false</filtering>
-      </resource>
+      <!--<resource>-->
+      <!--<targetPath>${project.build.directory}/classes</targetPath>-->
+      <!--<directory>src/main/resources</directory>-->
+      <!--<filtering>false</filtering>-->
+      <!--</resource>-->
     </resources>
     <pluginManagement>
       <plugins>
