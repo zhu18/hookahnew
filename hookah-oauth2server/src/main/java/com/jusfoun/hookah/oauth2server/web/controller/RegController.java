@@ -75,7 +75,7 @@ public class RegController {
             if (sms == null) { //验证码错误或者已过期
                 throw new UserRegExpiredSmsException("短信验证码验证未通过,短信验证码已过期");
             } else {
-                if (!sms.getSmsContent().equals(user.getValidSms())) {
+                if (!sms.getValidCode().equals(user.getValidSms())) {
                     throw new UserRegInvalidSmsException("短信验证码验证未通过,短信验证码错误");
                 }
             }
@@ -235,7 +235,7 @@ public class RegController {
         if (sms == null) { //验证码已过期
             return ReturnData.error("短信验证码验证未通过,短信验证码已过期");
         } else {
-            if (!sms.getSmsContent().equals(validSms)) {
+            if (!sms.getValidCode().equals(validSms)) {
                 return ReturnData.fail("短信验证码验证未通过,短信验证码错误");
             }
         }
