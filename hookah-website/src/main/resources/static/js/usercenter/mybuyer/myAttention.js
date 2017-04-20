@@ -33,8 +33,8 @@ function sliceString(){
     var goodsBrief = $(".item-top p:nth-last-child(1)");
     $(goodsBrief).each(function(index,n){
         var text = $(this).html();
-        if(text.length>=65){
-            $(this).html(text.slice(0,65)+'...');
+        if(text.length>=32){
+            $(this).html(text.slice(0,32)+'...');
         }
     });
 }
