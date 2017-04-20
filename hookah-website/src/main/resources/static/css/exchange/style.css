@@ -783,26 +783,26 @@ lesshat-selector {
 	color: #fff;
 	background: #373d41;
 }
-.module-wrap .index-top-banner > div:nth-child(1) {
-	background: -moz-linear-gradient(top, #19326b 0%, #182253 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #19326b), color-stop(100%, #182253));
-	background: -webkit-linear-gradient(top, #19326b 0%, #182253 100%);
-	background: -o-linear-gradient(top, #19326b 0%, #182253 100%);
-	background: -ms-linear-gradient(top, #19326b 0%, #182253 100%);
-	background: linear-gradient(to bottom, #19326b 0%, #182253 100%);
-}
-.module-wrap .index-top-banner > div:nth-child(2) {
-	background: #3a8c95;
-}
-.module-wrap .index-top-banner > div:nth-child(3) {
-	background: #772454;
-}
-.module-wrap .index-top-banner > div:nth-child(4) {
-	background: #e66905;
-}
-.module-wrap .index-top-banner > div:nth-child(5) {
-	background: #5c5566;
-}
+/*.module-wrap .index-top-banner > div:nth-child(1) {*/
+	/*background: -moz-linear-gradient(top, #19326b 0%, #182253 100%);*/
+	/*background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #19326b), color-stop(100%, #182253));*/
+	/*background: -webkit-linear-gradient(top, #19326b 0%, #182253 100%);*/
+	/*background: -o-linear-gradient(top, #19326b 0%, #182253 100%);*/
+	/*background: -ms-linear-gradient(top, #19326b 0%, #182253 100%);*/
+	/*background: linear-gradient(to bottom, #19326b 0%, #182253 100%);*/
+/*}*/
+/*.module-wrap .index-top-banner > div:nth-child(2) {*/
+	/*background: #3a8c95;*/
+/*}*/
+/*.module-wrap .index-top-banner > div:nth-child(3) {*/
+	/*background: #772454;*/
+/*}*/
+/*.module-wrap .index-top-banner > div:nth-child(4) {*/
+	/*background: #e66905;*/
+/*}*/
+/*.module-wrap .index-top-banner > div:nth-child(5) {*/
+	/*background: #5c5566;*/
+/*}*/
 /*****banner-end******/
 .clearfix:after {
 	visibility: hidden;
@@ -1359,9 +1359,22 @@ lesshat-selector {
     color: white;
     font-size: 60px;
     background: #161A1D;
-    opacity: 0.4;
     height: 393.458px;
     cursor: pointer;
+	/* older safari/Chrome browsers */
+	-webkit-opacity: 0.4;
+	/* Netscape and Older than Firefox 0.9 */
+	-moz-opacity: 0.4;
+	/* Safari 1.x (pre WebKit!) 老式khtml内核的Safari浏览器*/
+	-khtml-opacity: 0.4;
+	/* IE9 + etc...modern browsers */
+	opacity: .4;
+	/* IE 4-9 */
+	filter:alpha(opacity=40);
+	/*This works in IE 8 & 9 too*/
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
+	/*IE4-IE9*/
+	filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=40);
 }
 .exchange-industry-resource .industry-resource-down #arrow-right{
     position: absolute;
@@ -1375,9 +1388,22 @@ lesshat-selector {
     z-index: 1000;
     font-size: 60px;
     background: #161A1D;
-    opacity: 0.4;
     height: 393.458px;
     cursor: pointer;
+	/* older safari/Chrome browsers */
+	-webkit-opacity: 0.4;
+	/* Netscape and Older than Firefox 0.9 */
+	-moz-opacity: 0.4;
+	/* Safari 1.x (pre WebKit!) 老式khtml内核的Safari浏览器*/
+	-khtml-opacity: 0.4;
+	/* IE9 + etc...modern browsers */
+	opacity: .5;
+	/* IE 4-9 */
+	filter:alpha(opacity=40);
+	/*This works in IE 8 & 9 too*/
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
+	/*IE4-IE9*/
+	filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=40);
 }
 .exchange-industry-resource .industry-resource-down ul{
     position: absolute;

@@ -59,8 +59,6 @@ $(function () {
         var screeW='';
         var cab='';
         if( screen.width() >=1180 && screen.width()<=1440) {
-            console.log($(document).width());
-            console.log(1);
             screeW=screen.width();
             liWidth=screeW/5;
             $(".screen ul li").css({
@@ -74,6 +72,8 @@ $(function () {
             });
         }
         $(window).resize(function(){
+            console.log(screen.width());
+            console.log($(window).width());
             cab=screeW-screen.width();
             screeW=screen.width();
             if( screen.width() >=1180 && screen.width()<=1440) {
@@ -153,6 +153,7 @@ $(function () {
                 ul.css({'left':'0px'});
                 i=0;
                 flag=1;
+                // 点击左键
                 j=1;
                 k=1;
             }
@@ -161,6 +162,7 @@ $(function () {
                     'left': -len  * liWidth
                 });
                 k=0;
+                // 跳到最后第二品
                 animate(ul,parseInt(ul.css('left'))+screen.width());
                 return;
             }
@@ -228,23 +230,22 @@ $(function () {
             //     i=0;
             // }
             // arrRight.unbind("click");
-            console.log(screen.width());
+            // 初始值判断
             if(parseInt(ul.css('left'))==0){
                 pic=0;
                 j=0;
                 i=0;
             }
-            if(j==1){
+            if(j==1 && pic!=0){
                 animate(ul,parseInt(ul.css('left'))-screen.width());
                 j=0;
                 k=1;
                 pic=0;
                 return;
             }
+            // 如果进入最后一张
             if(k==1){
-                ul.css({
-                    'left': 0
-                });
+                ul.css({'left': 0});
                 k=0;
                 i=0;
                 pic=0;
@@ -258,6 +259,7 @@ $(function () {
 
             }else if(i!=0){
                 animate(ul,parseInt(ul.css('left'))-screen.width());
+                // 是否进入最后一张
                 k=1;
                 i=0;
             }
