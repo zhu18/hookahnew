@@ -103,10 +103,10 @@ public class RegController {
             }
             //4.2 手机
             filters.clear();
-            filters.add(Condition.eq("email", user.getEmail()));
+            filters.add(Condition.eq("mobile", user.getMobile()));
             isExists = userService.exists(filters);
             if (isExists) {
-                throw new UserRegExistMobileException("该邮箱已经被注册");
+                throw new UserRegExistMobileException("该手机已经被注册");
             }
             //4.1 邮箱
             filters.clear();
