@@ -70,7 +70,7 @@ public class RegController {
             //2、校验短信验证码
             //获取库里缓存的验证码
 
-            filters.add(Condition.eq("phoneNum", user.getMobile()));
+            filters.add(Condition.eq("mobile", user.getMobile()));
             MgSmsValidate sms = mgSmsValidateService.selectOne(filters);
             if (sms == null) { //验证码错误或者已过期
                 throw new UserRegExpiredSmsException("短信验证码验证未通过,短信验证码已过期");
@@ -142,14 +142,14 @@ public class RegController {
 
     /**
      * 发送注册短信
-     * @param phoneNum
+     * @param mobile
      * @return
      */
     @RequestMapping(value = "/reg/sendSms", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnData sendSms(String phoneNum) {
+    public ReturnData sendSms(String mobile) {
         List<Condition> filters = new ArrayList();
-        filters.add(Condition.eq("phoneNum",phoneNum));
+        filters.add(Condition.eq("mobile",mobile));
         MgSmsValidate sms = mgSmsValidateService.selectOne(filters);
         if(sms==null){//如果近期没有发送过
             String code = StrUtil.random(4);
@@ -157,7 +157,7 @@ public class RegController {
             content.append("验证码为：").append(code).append(",有效时间").append(HookahConstants.SMS_DURATION_MINITE).append("分钟。");
 
             sms = new MgSmsValidate();
-            sms.setPhoneNum(phoneNum);
+            sms.setMobile(mobile);
             sms.setSmsContent(content.toString());
             sms.setValidCode(code);
             mgSmsValidateService.insert(sms);
@@ -227,9 +227,9 @@ public class RegController {
      */
     @RequestMapping(value = "/reg/checkSms", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnData checkValidSms(String phoneNum,String validSms) {
+    public ReturnData checkValidSms(String mobile,String validSms) {
         List<Condition> filters = new ArrayList(1);
-        filters.add(Condition.eq("phoneNum",phoneNum));
+        filters.add(Condition.eq("mobile",mobile));
         MgSmsValidate sms = mgSmsValidateService.selectOne(filters);
 
         if (sms == null) { //验证码已过期
