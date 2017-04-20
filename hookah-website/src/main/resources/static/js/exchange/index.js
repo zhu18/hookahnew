@@ -72,6 +72,8 @@ $(function () {
             });
         }
         $(window).resize(function(){
+            console.log(screen.width());
+            console.log($(window).width());
             cab=screeW-screen.width();
             screeW=screen.width();
             if( screen.width() >=1180 && screen.width()<=1440) {
