@@ -2,6 +2,7 @@
 var head = {
 %>
 <link type="text/css" rel="stylesheet" href="/static/css/register.css">
+<link type="text/css" rel="stylesheet" href="/static/css/dialog/dialog.css">
 <%};%>
 
 <%
@@ -167,6 +168,7 @@ var htmlPart = {
 		</div>
 	</div>
 </div>
+<script type="text/javascript" src="/static/js/dialog/dialog.js"></script>
 <script>
 	var pathName = window.location.pathname;
 	if (pathName == '/reg') {
@@ -401,7 +403,7 @@ var htmlPart = {
 			}
 		});
 	}
-	var countdown = 60;
+	var countdown = 120;
 	function settime(that) {
 		if (countdown == 0) {
 			that.removeAttr("disabled");
