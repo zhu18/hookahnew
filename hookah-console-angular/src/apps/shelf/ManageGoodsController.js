@@ -67,8 +67,8 @@ class ManageGoodsController {
         console.log("查询所有商品。。。。");
         var promise = $http({
             method: 'GET',
-            url: $rootScope.site.apiServer + "/api/goods/all",
-            params: {currentPage: $rootScope.pagination.currentPage, pageSize: $rootScope.pagination.pageSize}
+            url: $rootScope.site.apiServer + "/api/goods/allNotInShelf",
+            params: {currentPage: $rootScope.pagination.currentPage, pageSize: $rootScope.pagination.pageSize, shelvesGoodsId: $stateParams.data.shelvesId}
         });
         promise.then(function (res, status, config, headers) {
             $rootScope.loadingState = false;
@@ -94,6 +94,7 @@ class ManageGoodsController {
         promise.then(function (res, status, config, headers) {
             if(res.data.code == "1"){
                 $scope.search();
+                $scope.searchAllGoods();
                 growl.addSuccessMessage("数据重新加载完毕。。。");
             }
         });
@@ -111,6 +112,7 @@ class ManageGoodsController {
         promise.then(function (res, status, config, headers) {
             if(res.data.code == "1"){
                 $scope.search();
+                $scope.searchAllGoods();
                 growl.addSuccessMessage("数据重新加载完毕。。。");
             }
         });
