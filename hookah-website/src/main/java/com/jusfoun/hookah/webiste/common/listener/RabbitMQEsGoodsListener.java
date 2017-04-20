@@ -22,24 +22,28 @@ public class RabbitMQEsGoodsListener {
      * @param goodsId
      */
     @RabbitListener(queues = RabbitmqQueue.CONTRACE_GOODS_ID)
-    public void operaEs(String goodsId) throws Exception {
-        Goods goods = goodsMapper.selectByPrimaryKey(goodsId);
-        if(goods != null) {
-            // 如果isDelete == 0 或者 is_onsale == 0 删除es中的商品
-            if(goods.getIsDelete() == HookahConstants.GOODS_STATUS_DELETE
-                    || goods.getIsOnsale() == HookahConstants.GOODS_STATUS_OFFSALE) {
+    public void operaEs(String goodsId) {
+        try {
+            Goods goods = goodsMapper.selectByPrimaryKey(goodsId);
+            if(goods != null) {
+                // 如果isDelete == 0 或者 is_onsale == 0 删除es中的商品
+                if(goods.getIsDelete() == HookahConstants.GOODS_STATUS_DELETE
+                        || goods.getIsOnsale() == HookahConstants.GOODS_STATUS_OFFSALE) {
+                    elasticSearchService.deleteById("qingdao-goods-v1",
+                            "goods", goodsId);
+                }else if(goods.getIsDelete() == HookahConstants.GOODS_STATUS_UNDELETE
+                        && goods.getIsOnsale() == HookahConstants.GOODS_STATUS_ONSALE) {
+                    // 如果isDelete == 1 并且 is_onsale == 1 添加或者修改es中的商品
+                    elasticSearchService.upsertById("qingdao-goods-v1",
+                            "goods", goodsId, AnnotationUtil.convert2Map(goods));
+                }
+            }else {
+                //删除ES中的商品
                 elasticSearchService.deleteById("qingdao-goods-v1",
                         "goods", goodsId);
-            }else if(goods.getIsDelete() == HookahConstants.GOODS_STATUS_UNDELETE
-                    && goods.getIsOnsale() == HookahConstants.GOODS_STATUS_ONSALE) {
-                // 如果isDelete == 1 并且 is_onsale == 1 添加或者修改es中的商品
-                elasticSearchService.upsertById("qingdao-goods-v1",
-                        "goods", goodsId, AnnotationUtil.convert2Map(goods));
             }
-        }else {
-            //删除ES中的商品
-            elasticSearchService.deleteById("qingdao-goods-v1",
-                    "goods", goodsId);
+        }catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
