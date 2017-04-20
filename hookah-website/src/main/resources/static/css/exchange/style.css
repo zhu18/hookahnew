@@ -2090,6 +2090,9 @@ dl {
 }
 .goods-left .goods-details .goods-details-img .collect-box {
 }
+.goods-left .goods-details .goods-details-img .collect-box .attention:hover {
+	cursor: pointer;
+}
 .goods-left .goods-details .goods-details-right {
 	width: 700px;
 	height: 300px;
