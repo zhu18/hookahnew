@@ -37,7 +37,7 @@ var htmlPart = {
                         <thead>
                         <tr>
                             <th width="10">
-                                <input type="checkbox" class="ng-pristine ng-valid"></th>
+                                <input type="checkbox" class="ng-pristine ng-valid checkbox-title"></th>
                             <th>订单编号</th>
                             <th>产品名称</th>
                             <th>类型</th>
@@ -47,7 +47,7 @@ var htmlPart = {
                         </thead>
                         <tbody>
                         <tr class="ng-scope">
-                            <td width="10"><input type="checkbox" class="ng-pristine ng-valid"></td>
+                            <td width="10"><input type="checkbox" class="ng-pristine ng-valid" name="checkbox"></td>
                             <td><span bo-text="item.outBizId">200520574370494</span></td>
                             <td><span bo-text="item.remark">银行卡类型查询</span></td>
                             <td><span bo-text="item.bizType | orderBizTypeFilter">订单</span></td>
@@ -56,7 +56,7 @@ var htmlPart = {
                             <td><span bo-text="item.bizTime|date:'yyyy-MM-dd'">2017-02-13</span></td>
                         </tr>
                         <tr class="ng-scope">
-                            <td width="10"><input type="checkbox" class="ng-pristine ng-valid"></td>
+                            <td width="10"><input type="checkbox" class="ng-pristine ng-valid" name="checkbox"></td>
                             <td><span bo-text="item.outBizId">D20165A1AC208207</span></td>
                             <td><span bo-text="item.remark">银行卡类型查询</span></td>
                             <td><span bo-text="item.bizType | orderBizTypeFilter">订单</span></td>
@@ -65,7 +65,7 @@ var htmlPart = {
                             <td><span bo-text="item.bizTime|date:'yyyy-MM-dd'">2016-07-08</span></td>
                         </tr>
                         <tr class="ng-scope">
-                            <td width="10"><input type="checkbox" class="ng-pristine ng-valid"></td>
+                            <td width="10"><input type="checkbox" class="ng-pristine ng-valid" name="checkbox"></td>
                             <td><span bo-text="item.outBizId">D20165A1AA808185</span></td>
                             <td><span bo-text="item.remark">银行卡类型查询</span></td>
                             <td><span bo-text="item.bizType | orderBizTypeFilter">订单</span></td>
@@ -74,7 +74,7 @@ var htmlPart = {
                             <td><span bo-text="item.bizTime|date:'yyyy-MM-dd'">2016-07-08</span></td>
                         </tr>
                         <tr class="ng-scope">
-                            <td width="10"><input type="checkbox" class="ng-pristine ng-valid"></td>
+                            <td width="10"><input type="checkbox" class="ng-pristine ng-valid" name="checkbox"></td>
                             <td><span bo-text="item.outBizId">D20163O0SWN00286</span></td>
                             <td><span bo-text="item.remark">银行卡类型查询</span></td>
                             <td><span bo-text="item.bizType | orderBizTypeFilter">订单</span></td>
@@ -88,7 +88,7 @@ var htmlPart = {
         </div>
     </div>
 </div>
-<script src="/static/js/buyer/buyer.js"></script>
+<script src="/static/js/usercenter/mybuyer/invoiceList.js"></script>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
