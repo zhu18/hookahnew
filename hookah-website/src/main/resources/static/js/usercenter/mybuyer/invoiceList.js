@@ -15,4 +15,3 @@ $("body").on("click", ".checkbox", function () {
         $(".checkbox-title").prop("checked", false);
     }
 });
-111

@@ -14,4 +14,4 @@ $("body").on("click", ".checkbox", function () {
     else {
         $(".checkbox-title").prop("checked", false);
     }
-});1111
+});
