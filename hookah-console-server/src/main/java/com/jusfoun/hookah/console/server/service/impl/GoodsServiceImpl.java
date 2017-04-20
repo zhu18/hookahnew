@@ -77,6 +77,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             mgGoods.setGoodsId(obj.getGoodsId());
             mongoTemplate.save(mgGoods);
         }
+        mqSenderService.sendDirect(RabbitmqQueue.CONTRACT_GOODSCHECK, obj.getGoodsId());
     }
 
     /**
