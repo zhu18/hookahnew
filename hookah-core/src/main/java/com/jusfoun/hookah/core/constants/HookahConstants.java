@@ -12,7 +12,7 @@ public class HookahConstants {
     public static final int PAGE_SIZE = 10;
 
     /** 短信过期时间，单位随 分 */
-    public static final Integer SMS_DURATION_MINITE = 2;
+    public static final Integer SMS_DURATION_MINITE = 10;
 
     /** 短信过期时间，单位 分 */
     public static final Integer CAPTCHA_DURATION_MINITE = 30;
