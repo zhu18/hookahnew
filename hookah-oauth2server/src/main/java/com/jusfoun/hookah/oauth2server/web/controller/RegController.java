@@ -180,7 +180,7 @@ public class RegController {
         filters.add(Condition.eq("email",email));
         boolean isExists = userService.exists(filters);
         if(isExists){
-            ReturnData.fail("该邮箱已经被注册");
+            return ReturnData.fail("该邮箱已经被注册");
         }
         return  ReturnData.success();
     }
@@ -197,7 +197,7 @@ public class RegController {
         filters.add(Condition.eq("mobile",mobile));
         boolean isExists = userService.exists(filters);
         if(isExists){
-            ReturnData.fail("该手机已经被注册");
+            return ReturnData.fail("该手机已经被注册");
         }
         return  ReturnData.success();
     }
@@ -214,7 +214,7 @@ public class RegController {
         filters.add(Condition.eq("userName",username));
         boolean isExists = userService.exists(filters);
         if(isExists){
-            ReturnData.fail("该用户名已经被注册");
+            return ReturnData.fail("该用户名已经被注册");
         }
         return  ReturnData.success();
     }
