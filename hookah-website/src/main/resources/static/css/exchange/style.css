@@ -1382,9 +1382,9 @@ lesshat-selector {
 .exchange-industry-resource .industry-resource-down ul{
     position: absolute;
     top:0;
+	left: 0;
     height: 393.458px;
     transform: translate(0px);
-    /*transition: all 0.5s linear;*/
 }
 .exchange-industry-resource .industry-resource-down ul .slide-item{
     float: left;
@@ -2089,6 +2089,9 @@ dl {
 	height: 200px;
 }
 .goods-left .goods-details .goods-details-img .collect-box {
+}
+.goods-left .goods-details .goods-details-img .collect-box .attention:hover {
+	cursor: pointer;
 }
 .goods-left .goods-details .goods-details-right {
 	width: 700px;
