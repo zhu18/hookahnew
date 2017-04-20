@@ -8,7 +8,6 @@ $(function () {
             $(this).addClass('active').siblings().removeClass('active');
             var index =$(this).index()+1;
             item.each(function () {
-                console.log($(this).index())
                 if (index == $(this).index()) {
                     $(this).addClass('item-active').siblings().removeClass('item-active');
                 }
@@ -58,19 +57,27 @@ $(function () {
         });
         var newLis = $(".screen ul li").length;
         // 给ul赋予新的宽度
+        var screeW='';
+        var cab='';
         if( $(window).width() > 1180 && $(window).width()<1440) {
+            console.log($(window).width());
+            console.log($(document).width());
+            screeW=$(window).width();
             liWidth=$(window).width()/5;
             $(".screen ul li").css({
                 'width':liWidth
             });
-
         }else {
+            screeW=1180;
             liWidth=1180/5;
             $(".screen ul li").css({
                 'width':liWidth
             });
         }
         $(window).resize(function(){
+
+            cab=screeW-$(window).width();
+            screeW=$(window).width();
             if( $(window).width() > 1180 && $(window).width()<1440) {
                 liWidth=$(window).width()/5;
                 $(".screen ul li").css({
@@ -85,6 +92,16 @@ $(function () {
             ul.css({
                 'width':newLis*liWidth
             });
+            console.log(cab);
+            if(parseInt(ul.css('left'))>=0){
+                console.log(1);
+            }else {
+                console.log(parseInt(ul.css('left')) +cab);
+                ul.css({
+                    'left':parseInt(ul.css('left'))+cab
+                });
+                console.log(parseInt(ul.css('left'))+cab);
+            }
             console.log(pic);
             console.log(i);
         });
@@ -262,10 +279,9 @@ $(function () {
             playLeft()
         });
         function animate(obj, target) {
-            console.log(target);
             clearInterval(obj.timer);
             obj.timer = setInterval(function () {
-                var step = 50;
+                var step = 30;
                 var step = obj.offset().left < target ? step : -step;
                 if (Math.abs(obj.offset().left - target) > Math.abs(step)) {
                     obj.css({
@@ -280,7 +296,7 @@ $(function () {
                     // arrRight.on("click",function () {playRight()});
                     // arrLeft.on("click",function () {playLeft()});
                 }
-            }, 1)
+            }, 5)
         }
     }
     function imgHover() {
