@@ -1,5 +1,5 @@
 function loadPageData(data){
-    if(data.data.list){
+    if(data.data.list.length > 0){
         var list = data.data.list;
         var html = '';
         for(var i=0; i<list.length; i++){
@@ -36,6 +36,8 @@ function loadPageData(data){
             return year+'-'+add(month)+'-'+add(date1)+' '+add(hours)+':'+add(minutes)+':'+add(seconds);
         };
         $('.order tbody').html(html);
+    }else{
+		$('.order tbody').html('<div class="noData">暂无数据</div>');
     }
 }
 $.jeDate("#startDate", {

@@ -57,50 +57,74 @@ var htmlPart = {
 	<!--</ul>-->
 	<!--</div>-->
 	<!--推荐资讯-->
-	<%if(goodsShelvesVoInfo.recomm_data != ''){%>
-	<div class="exchange-recommend-resource ">
+	<%
+	if(goodsShelvesVoInfo.recomm_data != '')
+	var recomm_data = goodsShelvesVoInfo.recomm_data;
+	{%>
+	<div class="exchange-recommend-resource padding-bottom-30">
 		<div class="grid-row">
 			<div class="recommend-resource-top" style="">
 				<div class="recommend-resource-top-left grid-left">
 					<div class="d">
 						<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-						<span>${goodsShelvesVoInfo.recomm_data.shelvesName}</span>
-						<span>${goodsShelvesVoInfo.recomm_data.shelvesDesc}</span>
+						<span>${recomm_data.shelvesName}</span>
+						<span>${recomm_data.shelvesDesc}</span>
 					</div>
 				</div>
 				<div class="recommend-resource-top-right grid-right">
-					<span>更多>></span>
+					<a href="${host.website}/exchange/shelves?id=${recomm_data.shelvesId}">更多>></a>
 				</div>
 			</div>
-			<div class="recommend-resource-down">
+			<div class="recommend-resource-down clearfix">
 				<ul>
-					<%for(item in goodsShelvesVoInfo.recomm_data.goods){%>
+					<%
+					var item = recomm_data.goods;
+					var index =0;
+					if(item.~size >8){
+					index =8;
+					}else{
+					index = item.~size;
+					}
+					for(var i=0;i< index;i++){
+					%>
 					<li>
-						<div>
-							<a href="${host.website}/exchange/details?id=${item.goodsId}"><img src="${item.goodsImg}" alt=""></a>
-							<div class="padding-left-5">
-								<a href="${host.website}/exchange/details?id=${item.goodsId}"><p class="title">
-									${item.goodsName}</p></a>
-								<a href="${host.website}/exchange/details?id=${item.goodsId}"><p class="subtitle">
-									${item.goodsBrief}</p></a>
-							</div>
+						<!--<div class="li-item-top">-->
+							<!--<a href="${host.website}/exchange/details?id=${item[i].goodsId}">-->
+								<!--<img src="${item[i].goodsImg}" alt="">-->
+							<!--</a>-->
+							<!--<div class="padding-left-5 top-box">-->
+								<!--<a href="${host.website}/exchange/details?id=${item[i].goodsId}">-->
+									<!--<p class="title">${item[i].goodsName}</p></a>-->
+								<!--<a href="${host.website}/exchange/details?id=${item[i].goodsId}">-->
+									<!--<p class="subtitle">${item[i].goodsBrief}</p></a>-->
+							<!--</div>-->
+						<!--</div>-->
+						<div class="li-item-top">
+							<a href="${host.website}/exchange/details?id=${item[i].goodsId}" class="top-box">
+								<img src="${item[i].goodsImg}" class="top-box-img" alt="">
+								<div class="padding-left-5 top-box-info">
+									<p class="title">${item[i].goodsName}</p>
+									<p class="subtitle">${item[i].goodsBrief}</p>
+								</div>
+							</a>
 						</div>
-						<div class="down">
-							<div>
-								<div>评分:
-									<span>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
-                                          <i class="fa fa-star" aria-hidden="true"></i>
+						<div class="li-item-down">
+							<div class="down-box-one">
+								<div class="grade">
+									<span class="grade-grade">评分:</span>
+									<span class="grade-star">
+                                          <i class="fa fa-star star-i-item" aria-hidden="true"></i>
+                                          <i class="fa fa-star star-i-item" aria-hidden="true"></i>
+                                          <i class="fa fa-star star-i-item" aria-hidden="true"></i>
+                                          <i class="fa fa-star star-i-item" aria-hidden="true"></i>
+                                          <i class="fa fa-star star-i-item" aria-hidden="true"></i>
                                       </span>
 								</div>
-								<span><i class="fa fa-heart" aria-hidden="true"></i>收藏</span>
+								<span class="collect"><i class="fa fa-heart collect-item" aria-hidden="true"></i>收藏</span>
 							</div>
-							<div>
-								<span><i class="fa fa-jpy" aria-hidden="true"></i>${trunc(item.shopPrice / 100,2)}</span>
-								<a href="${host.website}/exchange/details?id=${item.goodsId}">查看详情</a>
+							<div class="down-box-tow">
+								<span class="money"><i class="fa fa-jpy money-i-item" aria-hidden="true"></i>${trunc(item[i].shopPrice / 100,2)}</span>
+								<a class="detail" href="${host.website}/exchange/details?id=${item[i].goodsId}">查看详情</a>
 							</div>
 						</div>
 						<div class="li-hover">
@@ -115,46 +139,58 @@ var htmlPart = {
 	<div class="exchange-center-bar">
 	</div>
 	<!--热门资讯-->
-	<%if(goodsShelvesVoInfo.hot_res_data != ''){%>
+	<%
+	if(goodsShelvesVoInfo.hot_res_data != ''){
+	var hot_res_data = goodsShelvesVoInfo.hot_res_data;
+	%>
 	<div class="exchange-hot-resource grid-row">
 		<div class="hot-resource-top" style="">
 			<div class="hot-resource-top-left grid-left">
 				<div class="d">
 					<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-					<span>${goodsShelvesVoInfo.hot_res_data.shelvesName}</span>
-					<span>${goodsShelvesVoInfo.hot_res_data.shelvesDesc}</span>
+					<span>${hot_res_data.shelvesName}</span>
+					<span>${hot_res_data.shelvesDesc}</span>
 				</div>
 			</div>
 			<div class="hot-resource-top-right grid-right">
-				<span>更多>></span>
+				<a href="${host.website}/exchange/shelves?id=${hot_res_data.shelvesId}">更多>></a>
 			</div>
 		</div>
 		<div class="hot-resource-down clearfix">
 			<div class="hot-down-left ">
-				<div>
-					<p>${goodsShelvesVoInfo.hot_res_data.shelvesName}</p>
-					<p>${goodsShelvesVoInfo.hot_res_data.shelvesDesc}</p>
+				<div class="headline-box">
+					<p class="main-headline">${hot_res_data.shelvesName}</p>
+					<p class="sub-headline">${hot_res_data.shelvesDesc}</p>
 				</div>
-				<div>
-					<span>资源汇总</span>
-					<span>资源汇总</span>
-				</div>
+				<!--<div class="label-box">-->
+				<!--<span>资源汇总</span>-->
+				<!--<span>资源汇总</span>-->
+				<!--</div>-->
 			</div>
 			<div class="hot-down-table ">
 				<table>
 					<tr>
 						<th>资源标识</th>
 						<th>资源名称</th>
-						<th>金额</th>
+						<th>金额(￥)</th>
 						<th>操作</th>
 					</tr>
-					<%for(item in goodsShelvesVoInfo.hot_res_data.goods){%>
+					<%
+					var res_item = hot_res_data.goods;
+					var index1 =0;
+					if(res_item.~size >5){
+					index1 =5;
+					}else{
+					index1 = res_item.~size;
+					}
+					for(var i=0;i< index1;i++){
+					%>
 					<tr>
-						<td><img src="${item.goodsImg}" alt=""></td>
-						<td>${item.goodsName}</td>
-						<td><span>${trunc(item.shopPrice / 100,2)}</span></td><!--<span>元/次</span>-->
-						<td>
-							<a href="${host.website}/exchange/details?id=${item.goodsId}">查看详情</a>
+						<td class="td-one"><img src="${res_item[i].goodsImg}" alt=""></td>
+						<td class="td-two">${res_item[i].goodsName}</td>
+						<td class="td-three"><span class="td-three-money">${trunc(res_item[i].shopPrice / 100,2)}</span></td><!--<span>元/次</span>-->
+						<td class="td-four">
+							<a href="${host.website}/exchange/details?id=${res_item[i].goodsId}">查看详情</a>
 							<!--<span>免</span>-->
 							<!--<span>企</span>-->
 						</td>
@@ -167,10 +203,16 @@ var htmlPart = {
 				<ul>
 					<%
 					var hot_sellItem = goodsShelvesVoInfo.hot_sell_data.goods;
-					for(var i = 0; i < 5; i++){
+					var index2 =0;
+					if(hot_sellItem.~size >7){
+					index2 =7;
+					}else{
+					index2 = hot_sellItem.~size;
+					}
+					for(var i=0;i< index2;i++){
 					%>
-					<li class="">
-						<img src="${hot_sellItem[i].goodsImg}" class="grid-left" alt="/static/images/timg.jpeg">
+					<li class="${decode(i,0,'active','')}">
+						<img src="${hot_sellItem[i].goodsImg}" class="grid-left" alt="">
 						<div class="infoBox grid-right">
 							<a href="${host.website}/exchange/details?id=${hot_sellItem[i].goodsId}"><p class="title">
 								${hot_sellItem[i].goodsName}</p></a>
@@ -185,18 +227,21 @@ var htmlPart = {
 	</div>
 	<%}%>
 	<!--行业资讯-->
-	<%if(goodsShelvesVoInfo.ind_res_data != ''){%>
+	<%
+	if(goodsShelvesVoInfo.ind_res_data != ''){
+	var ind_res_data = goodsShelvesVoInfo.ind_res_data;
+	%>
 	<div class="exchange-industry-resource ">
 		<div class="industry-resource-top grid-row">
 			<div class="industry-resource-top-left grid-left">
 				<div class="d">
 					<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-					<span>行业资源</span>
-					<span>行业资源汇总</span>
+					<span>${ind_res_data.shelvesName}</span>
+					<span>${ind_res_data.shelvesDesc}</span>
 				</div>
 			</div>
 			<div class="industry-resource-top-right grid-right">
-				<span>更多>></span>
+				<a href="${host.website}/exchange/shelves?id=${ind_res_data.shelvesId}">更多>></a>
 			</div>
 		</div>
 		<div class="industry-resource-down ">
@@ -207,19 +252,21 @@ var htmlPart = {
 				</div>
 				<div class="screen">
 					<ul class="clearfix">
+						<%
+						for(item in ind_res_data.goods){
+						%>
 						<li class="slide-item">
-							<a href="">
+							<a href="${host.website}/exchange/details?id=${item.goodsId}">
 								<img src="https://img.alicdn.com/tps/TB16hkwLXXXXXX6XXXXXXXXXXXX-576-840.jpg" alt="">
 								<div class="bg">
 									<div class="bg-bg"></div>
 									<div class="bg-content">
 										<div class="bg-content-img">
-											<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
+											<img src="${item.goodsImg}" alt="">
 										</div>
 										<p class="bg-boundary"><i></i></p>
-										<h3 class="bg-title">银行信贷</h3>
-										<p class="bg-info">
-											专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
+										<h3 class="bg-title">${item.goodsName}</h3>
+										<p class="bg-info">${item.goodsBrief}</p>
 										<div class="bg-btn">
 											查看详情
 										</div>
@@ -227,228 +274,7 @@ var htmlPart = {
 								</div>
 							</a>
 						</li>
-						<li class="slide-item">
-							<a href="">
-								<img src="https://img.alicdn.com/tps/TB19Jz6LXXXXXacaXXXXXXXXXXX-576-840.jpg" alt="">
-								<div class="bg">
-									<div class="bg-bg"></div>
-									<div class="bg-content">
-										<div class="bg-content-img">
-											<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-										</div>
-										<p class="bg-boundary"><i></i></p>
-										<h3 class="bg-title">银行信贷</h3>
-										<p class="bg-info">
-											专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-										<div class="bg-btn">
-											查看详情
-										</div>
-									</div>
-								</div>
-							</a>
-						</li>
-						<li class="slide-item">
-							<a href="">
-								<img src="https://img.alicdn.com/tps/TB1RJ_8LXXXXXX9aXXXXXXXXXXX-576-840.jpg" alt="">
-								<div class="bg">
-									<div class="bg-bg"></div>
-									<div class="bg-content">
-										<div class="bg-content-img">
-											<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-										</div>
-										<p class="bg-boundary"><i></i></p>
-										<h3 class="bg-title">银行信贷</h3>
-										<p class="bg-info">
-											专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-										<div class="bg-btn">
-											查看详情
-										</div>
-									</div>
-								</div>
-							</a>
-						</li>
-						<li class="slide-item">
-							<a href="">
-								<img src="https://img.alicdn.com/tps/TB1dDT4LXXXXXabaXXXXXXXXXXX-576-840.jpg" alt="">
-								<div class="bg">
-									<div class="bg-bg"></div>
-									<div class="bg-content">
-										<div class="bg-content-img">
-											<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-										</div>
-										<p class="bg-boundary"><i></i></p>
-										<h3 class="bg-title">银行信贷</h3>
-										<p class="bg-info">
-											专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-										<div class="bg-btn">
-											查看详情
-										</div>
-									</div>
-								</div>
-							</a>
-						</li>
-						<li class="slide-item">
-							<a href="">
-								<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">
-								<div class="bg">
-									<div class="bg-bg"></div>
-									<div class="bg-content">
-										<div class="bg-content-img">
-											<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-										</div>
-										<p class="bg-boundary"><i></i></p>
-										<h3 class="bg-title">银行信贷</h3>
-										<p class="bg-info">
-											专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-										<div class="bg-btn">
-											查看详情
-										</div>
-									</div>
-								</div>
-							</a>
-						</li>
-						<!--1-->
-						<li class="slide-item">
-							<a href="">
-								<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">
-								<div class="bg">
-									<div class="bg-bg"></div>
-									<div class="bg-content">
-										<div class="bg-content-img">
-											<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-										</div>
-										<p class="bg-boundary"><i></i></p>
-										<h3 class="bg-title">1</h3>
-										<p class="bg-info">
-											专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-										<div class="bg-btn">
-											查看详情
-										</div>
-									</div>
-								</div>
-							</a>
-						</li>
-						<li class="slide-item">
-							<a href="">
-								<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">
-								<div class="bg">
-									<div class="bg-bg"></div>
-									<div class="bg-content">
-										<div class="bg-content-img">
-											<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-										</div>
-										<p class="bg-boundary"><i></i></p>
-										<h3 class="bg-title">银行信贷</h3>
-										<p class="bg-info">
-											专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-										<div class="bg-btn">
-											查看详情
-										</div>
-									</div>
-								</div>
-							</a>
-						</li>
-						<li class="slide-item">
-							<a href="">
-								<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">
-								<div class="bg">
-									<div class="bg-bg"></div>
-									<div class="bg-content">
-										<div class="bg-content-img">
-											<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-										</div>
-										<p class="bg-boundary"><i></i></p>
-										<h3 class="bg-title">银行信贷</h3>
-										<p class="bg-info">
-											专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-										<div class="bg-btn">
-											查看详情
-										</div>
-									</div>
-								</div>
-							</a>
-						</li>
-						<li class="slide-item">
-							<a href="">
-								<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">
-								<div class="bg">
-									<div class="bg-bg"></div>
-									<div class="bg-content">
-										<div class="bg-content-img">
-											<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-										</div>
-										<p class="bg-boundary"><i></i></p>
-										<h3 class="bg-title">银行信贷</h3>
-										<p class="bg-info">
-											专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-										<div class="bg-btn">
-											查看详情
-										</div>
-									</div>
-								</div>
-							</a>
-						</li>
-						<li class="slide-item">
-							<a href="">
-								<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">
-								<div class="bg">
-									<div class="bg-bg"></div>
-									<div class="bg-content">
-										<div class="bg-content-img">
-											<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-										</div>
-										<p class="bg-boundary"><i></i></p>
-										<h3 class="bg-title">银行信贷</h3>
-										<p class="bg-info">
-											专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-										<div class="bg-btn">
-											查看详情
-										</div>
-									</div>
-								</div>
-							</a>
-						</li>
-						<!--3-->
-						<li class="slide-item">
-							<a href="">
-								<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">
-								<div class="bg">
-									<div class="bg-bg"></div>
-									<div class="bg-content">
-										<div class="bg-content-img">
-											<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-										</div>
-										<p class="bg-boundary"><i></i></p>
-										<h3 class="bg-title">3</h3>
-										<p class="bg-info">
-											专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-										<div class="bg-btn">
-											查看详情
-										</div>
-									</div>
-								</div>
-							</a>
-						</li>
-						<li class="slide-item">
-							<a href="">
-								<img src="https://img.alicdn.com/tps/TB1C8gpLXXXXXaWXpXXXXXXXXXX-576-840.jpg" alt="">
-								<div class="bg">
-									<div class="bg-bg"></div>
-									<div class="bg-content">
-										<div class="bg-content-img">
-											<img src="https://img.alicdn.com/tps/TB1UhPlLXXXXXabaXXXXXXXXXXX-144-144.png" alt="">
-										</div>
-										<p class="bg-boundary"><i></i></p>
-										<h3 class="bg-title">4</h3>
-										<p class="bg-info">
-											专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用专业领先，高性能，高可用</p>
-										<div class="bg-btn">
-											查看详情
-										</div>
-									</div>
-								</div>
-							</a>
-						</li>
+						<%}%>
 						<!--追加的-->
 					</ul>
 				</div>
@@ -461,32 +287,41 @@ var htmlPart = {
 		<div class="category-left grid-left">
 			<div class="category-box">
 				<ul>
-					<li class="grid-left active">数据源</li>
-					<li class="grid-left">模型</li>
-					<li class="grid-left">应用场景</li>
-					<li class="grid-left">平台</li>
-					<li class="grid-left">工具</li>
+					<li class="grid-left active">${goodsShelvesVoInfo.data_sur_data.shelvesName}</li>
+					<li class="grid-left">${goodsShelvesVoInfo.model_data.shelvesName}</li>
+					<li class="grid-left">${goodsShelvesVoInfo.scene_data.shelvesName}</li>
+					<li class="grid-left">${goodsShelvesVoInfo.plat_data.shelvesName}</li>
+					<li class="grid-left">${goodsShelvesVoInfo.tools_data.shelvesName}</li>
 				</ul>
 			</div>
 			<div class="category-item item-active">
 				<div class="grid-left resource-two">
-					<div>
-						<p>数据源</p>
-						<p>数据分析平台</p>
+					<div class="headline-box">
+						<p class="main-headline">${goodsShelvesVoInfo.data_sur_data.shelvesName}</p>
+						<p class="sub-headline">${goodsShelvesVoInfo.data_sur_data.shelvesDesc}</p>
 					</div>
-					<div>
-						<span>资源汇总</span>
-						<span>资源汇总</span>
-						<a href="">查看更多>></a>
+					<div class="label-box">
+						<!--<span>资源汇总</span>-->
+						<!--<span>资源汇总</span>-->
+						<a class="more" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.data_sur_data.shelvesId}">更多>></a>
 					</div>
 				</div>
-				<div class="grid-right">
+				<div class="grid-right list-box">
 					<ul>
-						<%for(item in goodsShelvesVoInfo.data_sur_data.goods){%>
+						<%
+						var sur_item = goodsShelvesVoInfo.data_sur_data.goods;
+						var index3 =0;
+						if(sur_item.~size >8){
+						index3 =8;
+						}else{
+						index3 = sur_item.~size;
+						}
+						for(var i=0;i< index3;i++){
+						%>
 						<li>
-							<a href="${host.website}/exchange/details?id=${item.goodsId}">
-								<img src="${item.goodsImg}" alt="">
-								<p class="title">${item.goodsName}</p>
+							<a href="${host.website}/exchange/details?id=${sur_item[i].goodsId}">
+								<img src="${sur_item[i].goodsImg}" alt="">
+								<p class="title">${sur_item[i].goodsName}</p>
 								<p>
 									<i class="fa fa-star color-orange" aria-hidden="true"></i>
 									<i class="fa fa-star color-orange" aria-hidden="true"></i>
@@ -496,7 +331,7 @@ var htmlPart = {
 								</p>
 								<p>
 									<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-									<span class="color-red">${trunc(item.shopPrice / 100,2)}</span>
+									<span class="color-red">${trunc(sur_item[i].shopPrice / 100,2)}</span>
 								</p>
 							</a>
 						</li>
@@ -506,23 +341,32 @@ var htmlPart = {
 			</div>
 			<div class="category-item">
 				<div class="grid-left resource-two">
-					<div>
-						<p>模型</p>
-						<p>模型分析平台</p>
+					<div class="headline-box">
+						<p class="main-headline">${goodsShelvesVoInfo.model_data.shelvesName}</p>
+						<p class="sub-headline">${goodsShelvesVoInfo.model_data.shelvesDesc}</p>
 					</div>
-					<div>
-						<span>资源汇总</span>
-						<span>资源汇总</span>
-						<a href="">查看更多>></a>
+					<div class="label-box">
+						<!--<span>资源汇总</span>-->
+						<!--<span>资源汇总</span>-->
+						<a class="more" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.model_data.shelvesId}">更多>></a>
 					</div>
 				</div>
-				<div class="grid-right">
+				<div class="grid-right list-box">
 					<ul>
-						<%for(item in goodsShelvesVoInfo.model_data.goods){%>
+						<%
+						var model_item = goodsShelvesVoInfo.model_data.goods;
+						var index4 =0;
+						if(model_item.~size >8){
+						index4 =8;
+						}else{
+						index4 = model_item.~size;
+						}
+						for(var i=0;i< index4 ;i++){
+						%>
 						<li>
-							<a href="${host.website}/exchange/details?id=${item.goodsId}">
-								<img src="${item.goodsImg}" alt="">
-								<p class="title">${item.goodsName}</p>
+							<a href="${host.website}/exchange/details?id=${model_item[i].goodsId}">
+								<img src="${model_item[i].goodsImg}" alt="">
+								<p class="title">${model_item[i].goodsName}</p>
 								<p>
 									<i class="fa fa-star color-orange" aria-hidden="true"></i>
 									<i class="fa fa-star color-orange" aria-hidden="true"></i>
@@ -532,7 +376,7 @@ var htmlPart = {
 								</p>
 								<p>
 									<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-									<span class="color-red">${trunc(item.shopPrice / 100,2)}</span>
+									<span class="color-red">${trunc(model_item[i].shopPrice / 100,2)}</span>
 								</p>
 							</a>
 						</li>
@@ -542,23 +386,32 @@ var htmlPart = {
 			</div>
 			<div class="category-item">
 				<div class="grid-left resource-two">
-					<div>
-						<p>应用场景</p>
-						<p>应用场景分析平台</p>
+					<div class="headline-box">
+						<p class="main-headline">${goodsShelvesVoInfo.scene_data.shelvesName}</p>
+						<p class="sub-headline">${goodsShelvesVoInfo.scene_data.shelvesDesc}</p>
 					</div>
-					<div>
-						<span>资源汇总</span>
-						<span>资源汇总</span>
-						<a href="">查看更多>></a>
+					<div class="label-box">
+						<!--<span>资源汇总</span>-->
+						<!--<span>资源汇总</span>-->
+						<a class="more" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.scene_data.shelvesId}">更多>></a>
 					</div>
 				</div>
-				<div class="grid-right">
+				<div class="grid-right list-box">
 					<ul>
-						<%for(item in goodsShelvesVoInfo.scene_data.goods){%>
+						<%
+						var scene_item = goodsShelvesVoInfo.scene_data.goods;
+						var index5 =0;
+						if(scene_item.~size >8){
+							index5 =8;
+						}else{
+							index5 = scene_item.~size;
+						}
+						for(var i=0;i < index5;i++){
+						%>
 						<li>
-							<a href="${host.website}/exchange/details?id=${item.goodsId}">
-								<img src="${item.goodsImg}" alt="">
-								<p class="title">${item.goodsName}</p>
+							<a href="${host.website}/exchange/details?id=${scene_item[i].goodsId}">
+								<img src="${scene_item[i].goodsImg}" alt="">
+								<p class="title">${scene_item[i].goodsName}</p>
 								<p>
 									<i class="fa fa-star color-orange" aria-hidden="true"></i>
 									<i class="fa fa-star color-orange" aria-hidden="true"></i>
@@ -568,7 +421,7 @@ var htmlPart = {
 								</p>
 								<p>
 									<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-									<span class="color-red">${trunc(item.shopPrice / 100,2)}</span>
+									<span class="color-red">${trunc(scene_item[i].shopPrice / 100,2)}</span>
 								</p>
 							</a>
 						</li>
@@ -578,23 +431,32 @@ var htmlPart = {
 			</div>
 			<div class="category-item">
 				<div class="grid-left resource-two">
-					<div>
-						<p>平台</p>
-						<p>平台分析平台</p>
+					<div class="headline-box">
+						<p class="main-headline">${goodsShelvesVoInfo.plat_data.shelvesName}</p>
+						<p class="sub-headline">${goodsShelvesVoInfo.plat_data.shelvesDesc}</p>
 					</div>
-					<div>
-						<span>资源汇总</span>
-						<span>资源汇总</span>
-						<a href="">查看更多>></a>
+					<div class="label-box">
+						<!--<span>资源汇总</span>-->
+						<!--<span>资源汇总</span>-->
+						<a class="more" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.plat_data.shelvesId}">更多>></a>
 					</div>
 				</div>
-				<div class="grid-right">
+				<div class="grid-right list-box">
 					<ul>
-						<%for(item in goodsShelvesVoInfo.plat_data.goods){%>
+						<%
+						var plat_item = goodsShelvesVoInfo.plat_data.goods;
+						var index6 =0;
+						if(plat_item.~size >8){
+						index6 =8;
+						}else{
+						index6 = plat_item.~size;
+						}
+						for(var i=0;i< index6 ;i++){
+						%>
 						<li>
-							<a href="${host.website}/exchange/details?id=${item.goodsId}">
-								<img src="${item.goodsImg}" alt="">
-								<p class="title">${item.goodsName}</p>
+							<a href="${host.website}/exchange/details?id=${plat_item[i].goodsId}">
+								<img src="${plat_item[i].goodsImg}" alt="">
+								<p class="title">${plat_item[i].goodsName}</p>
 								<p>
 									<i class="fa fa-star color-orange" aria-hidden="true"></i>
 									<i class="fa fa-star color-orange" aria-hidden="true"></i>
@@ -604,7 +466,7 @@ var htmlPart = {
 								</p>
 								<p>
 									<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-									<span class="color-red">${trunc(item.shopPrice / 100,2)}</span>
+									<span class="color-red">${trunc(plat_item[i].shopPrice / 100,2)}</span>
 								</p>
 							</a>
 						</li>
@@ -614,23 +476,32 @@ var htmlPart = {
 			</div>
 			<div class="category-item">
 				<div class="grid-left resource-two">
-					<div>
-						<p>工具</p>
-						<p>数据分析平台</p>
+					<div class="headline-box">
+						<p class="main-headline">${goodsShelvesVoInfo.tools_data.shelvesName}</p>
+						<p class="sub-headline">${goodsShelvesVoInfo.tools_data.shelvesDesc}</p>
 					</div>
-					<div>
-						<span>资源汇总</span>
-						<span>资源汇总</span>
-						<a href="">查看更多>></a>
+					<div class="label-box">
+						<!--<span>资源汇总</span>-->
+						<!--<span>资源汇总</span>-->
+						<a class="more" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.tools_data.shelvesId}">更多>></a>
 					</div>
 				</div>
-				<div class="grid-right">
+				<div class="grid-right list-box">
 					<ul>
-						<%for(item in goodsShelvesVoInfo.tools_data.goods){%>
+						<%
+						var tools_item = goodsShelvesVoInfo.tools_data.goods;
+						var index7 =0;
+						if(tools_item.~size >8){
+						index7 =8;
+						}else{
+						index7 = tools_item.~size;
+						}
+						for(var i=0;i< index7 ;i++){
+						%>
 						<li>
-							<a href="${host.website}/exchange/details?id=${item.goodsId}">
-								<img src="${item.goodsImg}" alt="">
-								<p class="title">${item.goodsName}</p>
+							<a href="${host.website}/exchange/details?id=${tools_item[i].goodsId}">
+								<img src="${tools_item[i].goodsImg}" alt="">
+								<p class="title">${tools_item[i].goodsName}</p>
 								<p>
 									<i class="fa fa-star color-orange" aria-hidden="true"></i>
 									<i class="fa fa-star color-orange" aria-hidden="true"></i>
@@ -640,10 +511,10 @@ var htmlPart = {
 								</p>
 								<p>
 									<i class="fa fa-jpy color-red" aria-hidden="true"></i>
-									<span class="color-red">${trunc(item.shopPrice / 100,2)}</span>
+									<span class="color-red">${trunc(tools_item[i].shopPrice / 100,2)}</span>
 								</p>
 							</a>
-						<li>
+						</li>
 						<%}%>
 					</ul>
 				</div>

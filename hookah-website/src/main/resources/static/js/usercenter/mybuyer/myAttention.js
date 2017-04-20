@@ -66,7 +66,7 @@ function cancelAttention(id){
         },
         success:function(data){
             if(data.code=="1"){
-                loadPageData(data);
+                location.reload();
             }else{
                 $.alert(data.message);
             }

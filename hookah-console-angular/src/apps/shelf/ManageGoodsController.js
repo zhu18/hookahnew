@@ -2,11 +2,44 @@ class ManageGoodsController {
   constructor($scope, $rootScope, $stateParams, $http, $state, $uibModal, usSpinnerService, growl) {
 
 
+      // $rootScope.allGoodsPages.currentPage;
+      // $rootScope.shelfPages.currentPage;
+
     $scope.pageChanged = function () {
-          $scope.searchAllGoods();
-          console.log('Page changed to: ' + $rootScope.pagination.currentPage);
+          // $scope.searchAllGoods();
+        var promise = $http({
+            method: 'GET',
+            url: $rootScope.site.apiServer + "/api/goods/all",
+            params: {currentPage: $rootScope.allGoodsPages.currentPage, pageSize: $rootScope.allGoodsPages.pageSize}
+        });
+        promise.then(function (res, status, config, headers) {
+            $rootScope.loadingState = false;
+            $rootScope.allGoodsPages = res.data.data;
+            $rootScope.allGoodsPages.currentPage = res.data.data.currentPage;
+            $scope.allGoods = res.data.data.list;
+            growl.addSuccessMessage("数据加载完毕。。。");
+        });
+          console.log('Page changed to: ' + $rootScope.allGoodsPages.currentPage);
     };
 
+    $scope.pageChangedShelf = function () {
+          // $scope.search();
+        var promise = $http({
+            method: 'GET',
+            url: $rootScope.site.apiServer + "/api/mgGoodssg/findGSMongoById",  // 货架中商品
+            params: {currentPage: $rootScope.shelfPages.currentPage, pageSize: $rootScope.shelfPages.pageSize, shelvesGoodsId: $stateParams.data.shelvesId}
+        });
+        promise.then(function (res, status, config, headers) {
+            $rootScope.loadingState = false;
+            $scope.shelfGids = res.data.data.list;
+            $rootScope.shelfPages = res.data.data;
+            $rootScope.shelfPages.currentPage = res.data.data.currentPage;
+            console.log(res.data.data);
+            growl.addSuccessMessage("数据加载完毕。。。");
+        });
+
+          console.log('Page changed to: ' + $rootScope.shelfPages.currentPage);
+    };
 
     // 查询货架中商品
     $scope.search = function () {
@@ -20,11 +53,10 @@ class ManageGoodsController {
             params: {currentPage: $rootScope.pagination.currentPage, pageSize: $rootScope.pagination.pageSize, shelvesGoodsId: $stateParams.data.shelvesId}
         });
         promise.then(function (res, status, config, headers) {
-            // $scope.shelfGids = res.data.data.goodsIdList;
-            // console.log(res.data.data.goodsIdList);
-
             $rootScope.loadingState = false;
             $scope.shelfGids = res.data.data.list;
+            $rootScope.shelfPages = res.data.data;
+            $rootScope.allGoodsPages.currentPage = res.data.data.currentPage;
             console.log(res.data.data);
             growl.addSuccessMessage("数据加载完毕。。。");
         });
@@ -35,14 +67,14 @@ class ManageGoodsController {
         console.log("查询所有商品。。。。");
         var promise = $http({
             method: 'GET',
-            url: $rootScope.site.apiServer + "/api/goods/all",
-            params: {currentPage: $rootScope.pagination.currentPage, pageSize: $rootScope.pagination.pageSize}
+            url: $rootScope.site.apiServer + "/api/goods/allNotInShelf",
+            params: {currentPage: $rootScope.pagination.currentPage, pageSize: $rootScope.pagination.pageSize, shelvesGoodsId: $stateParams.data.shelvesId}
         });
         promise.then(function (res, status, config, headers) {
             $rootScope.loadingState = false;
+            $rootScope.allGoodsPages = res.data.data;
             $scope.allGoods = res.data.data.list;
             growl.addSuccessMessage("数据加载完毕。。。");
-            console.log(res.data);
         });
     };
 
@@ -86,9 +118,9 @@ class ManageGoodsController {
         });
     }
 
-    $scope.search();
-
     $scope.searchAllGoods();
+
+    $scope.search();
 
   }
 }

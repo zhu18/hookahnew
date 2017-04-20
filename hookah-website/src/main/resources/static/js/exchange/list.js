@@ -12,23 +12,23 @@ function loadPageData(data){ //渲染页面数据
             }else if(list[i].shopFormat == 2 ){
                 shopFormat = '年';
             }
-            html += '<li>';
-            html += '<a class="item-top" href="/exchange/details?id='+list[i].goodsId+'">';
-            html += '<p class="goods-img"><img src="'+list[i].goodsImg+'" alt=""/></p>';
-            html += '<p class="goods-name" title="'+list[i].goodsName+'">'+list[i].goodsName+'</p>';
-            html += '<p class="goods-brief" title="'+list[i].goodsBrief+'">'+list[i].goodsBrief+'</p>';
-            html += '</a>';
-            html += '<div class="item-down">';
-            html += '<span class="grid-left goods-price"><span>'+Number(list[i].shopPrice)/100+'</span>/'+(list[i].shopNumber == 1 ? '':list[i].shopNumber)+shopFormat+'</span>';
-            html += '<a class="grid-right" href="javascript:void(0)">加入购物车</a>';
-            html += '</div>';
-            html += '</li>';
+			html += '<li>';
+			html += '<a class="item-top" href="/exchange/details?id='+list[i].goodsId+'">';
+			html += '<p class="goods-img"><img src="'+list[i].goodsImg+'" alt=""/></p>';
+			html += '<p class="goods-name" title="'+list[i].goodsName+'">'+list[i].goodsName+'</p>';
+			html += '<p class="goods-brief" title="'+list[i].goodsBrief+'">'+list[i].goodsBrief+'</p>';
+			html += '</a>';
+			html += '<div class="item-down">';
+			html += '<span class="grid-left goods-price">￥<span>'+Number(list[i].shopPrice)/100+'</span>/'+(list[i].shopNumber == 1 ? '':list[i].shopNumber)+shopFormat+'</span>';
+			html += '<a class="grid-right btn btn-full-red padding-5 font-size-12 margin-top-10" href="javascript:void(0)">加入购物车</a>';
+			html += '</div>';
+			html += '</li>';
         }
         $('.order-list ul').html(html);
     }else{
 		$('.order-list ul').html('<div class="noData">暂无数据</div>');
 	}
-    if(data.data2){
+    if(data.data2){ //渲染分类数据
 		var html = '';
 		html += '<ul class="conditionCon">';
 		if(data.data2.categoryList.length > 0){
@@ -95,14 +95,18 @@ function loadPageData(data){ //渲染页面数据
 		}
 	}
 
-	$('img').each(function(){
+	$('img').each(function(){  //图片加载失败替换默认图片
 		$(this).on('error',function(){
 			$(this).attr('src','/static/images/timg.jpeg')
 		})
-	})
-	if(!$('#J_searchCategory ul').html()){
+	});
+	if(!$('#J_searchCategory ul').html()){ //渲染数据为空隐藏边框
 		$('#J_searchCategory ul').css('border','none')
 	}
+	$(".tags[endType='attrType']").each(function(){
+		var endTypeId = $(this).attr('endTypeId');
+		$(".parLi ul[typeid='"+endTypeId+"']").parent('.parLi').remove();
+	});
 }
 function selectCategory(that,id,fnName,name){
 	if($('#J_crimbsNav').attr(fnName) == name){
@@ -131,9 +135,10 @@ function selectAttr(that,id,fnName,name){
 				$(this).remove();
 			}
 		});
-		$('#J_crimbsNav').attr(fnName+'name'+ulId,name).attr(fnName+'id'+ulId,id).append('<span class="tags" '+fnName+'name'+ulId+'='+name+' '+fnName+'id'+ulId+'='+id+' type='+fnName+'id'+ulId+'>'+parName+name+'<a href="JavaScript:;" onclick="removeTag(this)" class="fa fa-close"></a></span>');
+		$('#J_crimbsNav').attr(fnName+'name'+ulId,name).attr(fnName+'id'+ulId,id).append('<span class="tags" '+fnName+'name'+ulId+'='+name+' '+fnName+'id'+ulId+'='+id+' type='+fnName+'name'+ulId+' endType="attrType" endTypeId='+ulId+'>'+parName+name+'<a href="JavaScript:;" onclick="removeTag(this)" class="fa fa-close"></a></span>');
 		// $(that).parent('.op_i').addClass('active').siblings().removeClass('active');
 	}
+	$(that).parents('.parLi').hide();
 	getDataForin();
 }
 function removeTag(that){
@@ -153,7 +158,7 @@ function getDataForin(){
 		dataParm.esGoods.catIds = catId;
 	}
 	for(var i=1;i<=5;i++){
-		if($('#J_crimbsNav').attr('attrtypeid'+i)){
+		if($('#J_crimbsNav').attr('attrtypename'+i)){
 			dataParm.esGoods.attrIds += $('#J_crimbsNav').attr('attrtypeid'+i)+' ';
 		}
 	}

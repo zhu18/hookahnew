@@ -4,23 +4,20 @@
 $(function () {
     function switchHover() {
         var item=$(".exchange-category-down .category-left .category-item");
-        $(".exchange-category-down .category-left .category-box ul li").on('click',function () {
-                $(this).addClass('active').siblings().removeClass('active');
-                var index =$(this).index()+1;
-            console.log(index);
+        $(".exchange-category-down .category-left .category-box ul li").hover(function () {
+            $(this).addClass('active').siblings().removeClass('active');
+            var index =$(this).index()+1;
             item.each(function () {
                 console.log($(this).index())
-                    if (index == $(this).index()) {
-                        $(this).addClass('item-active').siblings().removeClass('item-active');
-                    }
-                });
+                if (index == $(this).index()) {
+                    $(this).addClass('item-active').siblings().removeClass('item-active');
+                }
+            });
         })
     }
     function hotSwitchHover() {
         $('.hot-resource-down .hot-down-rank ul li').hover(function () {
-            $(this).addClass('active').siblings().removeClass('active');
-            $(this).children().removeClass('li-rank').parent().siblings().children().addClass("li-rank");
-        })
+            $(this).addClass('active').siblings().removeClass('active');})
     }
     // 交易中心轮播图--勿删
     function carousel() {
@@ -29,9 +26,9 @@ $(function () {
         var ul = $(".screen ul");
         // 获取到每个li
         var ulLis = $(".screen ul li");
+        var liWidth=ulLis.width
         // li的个数
         var len=ulLis.length;
-        var liWidth=ulLis.width();
         var arr = $("#arr");
         var arrRight = $("#arrow-right");
         var arrLeft = $("#arrow-left");
@@ -45,8 +42,23 @@ $(function () {
                 'display':'none'
             })
         });
-
-        var pic =0;
+        // $(window).resize(function(){
+        //     if( $(window).width() > 1180 && $(window).width()<1440) {
+        //         var liWidth=$(window).width()/5;
+        //         ulLis.css({
+        //             'width':liWidth
+        //         });
+        //
+        //     }else {
+        //         var liWidth=1180/5;
+        //         ulLis.css({
+        //             'width':liWidth
+        //         });
+        //     }
+        //
+        //
+        // });
+        var pic=0;
         var i=0;
         // 计算出多出来的li的个数
         var len1=len-parseInt((len)/5)*5;
@@ -179,7 +191,7 @@ $(function () {
         }
     }
     function imgHover() {
-         var flag=1;
+        var flag=1;
         var timer1=''
 
         $('.exchange-category-top ul li').mouseenter(function () {
@@ -213,8 +225,8 @@ $(function () {
                 },10);
         })
     }
-    imgHover();
-    // hotSwitchHover();
+    // imgHover();
+    hotSwitchHover();
     switchHover();
     carousel();
 });

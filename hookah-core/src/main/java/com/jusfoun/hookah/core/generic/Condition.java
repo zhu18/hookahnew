@@ -250,7 +250,19 @@ public class Condition<Type> implements Serializable {
 	public  static <T> Condition in(String property, T[] value) {
 		return new Condition<T[]>(property, Operator.In, value);
 	}
-	
+	/**
+	 * 返回包含筛选
+	 *
+	 * @param property
+	 *            属性
+	 * @param value
+	 *            值
+	 * @return 包含筛选
+	 */
+	public  static <T> Condition notIn(String property, T[] value) {
+		return new Condition<T[]>(property, Operator.NotIn, value);
+	}
+
 	/**
 	 * 返回包含筛选
 	 * 

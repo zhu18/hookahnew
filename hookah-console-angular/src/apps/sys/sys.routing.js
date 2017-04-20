@@ -1,4 +1,6 @@
 import SysDictController from "./SysDictController";
+import RegionController from "./RegionController";
+import IndustryController from "./IndustryController";
 goodsRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function goodsRouting($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/sys/dict/search');
@@ -15,6 +17,10 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
       template: '<div ui-view></div>',
       showSubMenu: true
     })
+    .state('sys.industry', {
+      template: '<div ui-view></div>',
+      showSubMenu: true
+    })
     .state('sys.dict.search', {
       url: '/sys/dict/search',
       template: require('./dict_list.html'),
@@ -23,7 +29,12 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
     .state('sys.region.search', {
       url: '/sys/region/search',
       template: require('./region_list.html'),
-      controller: SysDictController,
+      controller: RegionController,
+    })
+    .state('sys.industry.search', {
+      url: '/sys/industry/search',
+      template: require('./industry_list.html'),
+      controller: IndustryController,
     })
     .state('sys.dict.add', {
       url: '/sys/dict/add',

@@ -55,7 +55,7 @@ public class CartServiceImpl extends GenericServiceImpl<Cart, String> implements
         Cart cart = new Cart();
         cart.setRecId(id);
         cart.setIsDeleted(new Byte("1"));
-        super.updateById(cart);
+        super.updateByIdSelective(cart);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class CartServiceImpl extends GenericServiceImpl<Cart, String> implements
         cart.setIsDeleted(new Byte("1"));
         List<Condition> filters = new ArrayList<>();
         filters.add(Condition.in("recId", ids));
-        super.updateByCondition(cart, filters);
+        super.updateByConditionSelective(cart,filters);
     }
 
     @Override
