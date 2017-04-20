@@ -41,7 +41,6 @@ $(function () {
                 'display':'none'
             })
         });
-
         var pic=0;
         var i=0;
         // 计算出多出来的li的个数
@@ -75,7 +74,6 @@ $(function () {
             });
         }
         $(window).resize(function(){
-
             cab=screeW-$(window).width();
             screeW=$(window).width();
             if( $(window).width() > 1180 && $(window).width()<1440) {
@@ -92,9 +90,7 @@ $(function () {
             ul.css({
                 'width':newLis*liWidth
             });
-            console.log(cab);
             if(parseInt(ul.css('left'))>=0){
-                console.log(1);
             }else {
                 console.log(parseInt(ul.css('left')) +cab);
                 ul.css({
@@ -102,8 +98,6 @@ $(function () {
                 });
                 console.log(parseInt(ul.css('left'))+cab);
             }
-            console.log(pic);
-            console.log(i);
         });
         ul.css({
             'width':newLis*liWidth
@@ -112,7 +106,6 @@ $(function () {
         var flag='';
         var j=0;
         var k=0;
-
         function playLeft() {
             // if(parseInt(ul.css('transform').split(',').slice(-2, -1))>=0){
             //     pic=Math.ceil(len/5)-2;
