@@ -52,6 +52,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     @Resource
     MgOrderInfoService mgOrderInfoService;
 
+
     @Resource
     public void setDao(OrderInfoMapper orderinfoMapper) {
         super.setDao(orderinfoMapper);
@@ -327,9 +328,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             payVo.setPayId(Integer.parseInt(orderInfo.getPayId()));
             BigDecimal totalFee = new BigDecimal(orderInfo.getGoodsAmount());
             payVo.setTotalFee(totalFee);
-            /*OrderGoods t = new OrderGoods();
+           /* MgOrderGoods t = new MgOrderGoods();
             t.setOrderId(orderId);
-            List<OrderGoods> list = orderGoodsService.list(t );
+            List<MgOrderGoods> list = orderGoodsService.list(t );
             if(list!=null&&list.size()>0){
                 StringBuilder sb = new StringBuilder();
                 for(int i=0;i<list.size();i++){
