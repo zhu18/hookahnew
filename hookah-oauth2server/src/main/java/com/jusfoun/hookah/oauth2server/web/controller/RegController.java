@@ -210,11 +210,34 @@ public class RegController {
     @RequestMapping(value = "/reg/checkUsername", method = RequestMethod.POST)
     @ResponseBody
     public ReturnData checkUserName(String username) {
-        List<Condition> filters = new ArrayList();
+        List<Condition> filters = new ArrayList(1);
         filters.add(Condition.eq("userName",username));
         boolean isExists = userService.exists(filters);
         if(isExists){
             return ReturnData.fail("该用户名已经被注册");
+        }
+        return  ReturnData.success();
+    }
+
+
+    /**
+     * 校验手机验证码
+     * @param validSms
+     * @return
+     */
+    @RequestMapping(value = "/reg/checkSms", method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnData checkValidSms(String phoneNum,String validSms) {
+        List<Condition> filters = new ArrayList(1);
+        filters.add(Condition.eq("phoneNum",phoneNum));
+        MgSmsValidate sms = mgSmsValidateService.selectOne(filters);
+
+        if (sms == null) { //验证码已过期
+            return ReturnData.error("短信验证码验证未通过,短信验证码已过期");
+        } else {
+            if (!sms.getSmsContent().equals(validSms)) {
+                return ReturnData.fail("短信验证码验证未通过,短信验证码错误");
+            }
         }
         return  ReturnData.success();
     }
