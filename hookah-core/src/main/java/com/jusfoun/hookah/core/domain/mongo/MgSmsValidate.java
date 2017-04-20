@@ -28,12 +28,12 @@ public class MgSmsValidate extends GenericModel {
     private Date expireTime;
 
 
-    public String getPhoneNum() {
+    public String getMobile() {
         return mobile;
     }
 
-    public void setPhoneNum(String phoneNum) {
-        this.mobile = phoneNum;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     public String getSmsContent() {
