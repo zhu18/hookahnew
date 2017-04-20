@@ -1,19 +1,21 @@
 package com.jusfoun.hookah.console.server.api.category;
 
 import com.jusfoun.hookah.core.domain.Category;
+import com.jusfoun.hookah.core.domain.CategoryVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 /**
  * Created by ctp on 2017-4-16.
  */
-//@RestController
+@RestController
 @RequestMapping("/api/category")
 public class CategoryApi {
     @Autowired
@@ -26,14 +28,36 @@ public class CategoryApi {
      */
     @RequestMapping("add")
     public ReturnData addCategory(Category category) {
-        ReturnData<List<Category>> returnData = new ReturnData<>();
+//        ReturnData<List<Category>> returnData = new ReturnData<>();
+//        returnData.setCode(ExceptionConst.Success);
+//        try {
+//            category.setCatId("101");
+//            category = categoryService.insert(category);
+//            if(category == null) {
+//                throw new HookahException("操作失败");
+//            }
+//        }catch (Exception e) {
+//            returnData.setCode(ExceptionConst.Error);
+//            returnData.setMessage(e.toString());
+//            e.printStackTrace();
+//        }
+//        return returnData;
+        return categoryService.addCat(category);
+    }
+    //TODO delete
+    //TODO update
+    //TODO select
+
+    @RequestMapping("allTree")
+    public ReturnData selectTree(){
+        ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
-            category.setCatId("101");
-            category = categoryService.insert(category);
-            if(category == null) {
+            List<CategoryVo> goodsAttrTypeVos = categoryService.getCatTree();
+            if(goodsAttrTypeVos == null) {
                 throw new HookahException("操作失败");
             }
+            returnData.setData(goodsAttrTypeVos);
         }catch (Exception e) {
             returnData.setCode(ExceptionConst.Error);
             returnData.setMessage(e.toString());
@@ -41,7 +65,4 @@ public class CategoryApi {
         }
         return returnData;
     }
-    //TODO delete
-    //TODO update
-    //TODO select
 }

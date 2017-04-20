@@ -35,7 +35,7 @@ public class MgGoodsShelvesGoodsController {
     }
 
 
-    @RequestMapping("/saveGSMongo")
+    @RequestMapping("/updateGSMongo")
     @ResponseBody
     public ReturnData saveGoodsShelvesGoodsMongo(MgShelvesGoods mgShelvesGoods){
         return  mgGoodsShelvesGoodsService.updateMgGoodsSG(mgShelvesGoods);
