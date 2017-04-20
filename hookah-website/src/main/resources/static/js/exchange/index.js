@@ -58,11 +58,9 @@ $(function () {
         // 给ul赋予新的宽度
         var screeW='';
         var cab='';
-        if( $(window).width() > 1180 && $(window).width()<1440) {
-            console.log($(window).width());
-            console.log($(document).width());
-            screeW=$(window).width();
-            liWidth=$(window).width()/5;
+        if( screen.width() >=1180 && screen.width()<=1440) {
+            screeW=screen.width();
+            liWidth=screeW/5;
             $(".screen ul li").css({
                 'width':liWidth
             });
@@ -74,10 +72,12 @@ $(function () {
             });
         }
         $(window).resize(function(){
-            cab=screeW-$(window).width();
-            screeW=$(window).width();
-            if( $(window).width() > 1180 && $(window).width()<1440) {
-                liWidth=$(window).width()/5;
+            console.log(screen.width());
+            console.log($(window).width());
+            cab=screeW-screen.width();
+            screeW=screen.width();
+            if( screen.width() >=1180 && screen.width()<=1440) {
+                liWidth=screen.width()/5;
                 $(".screen ul li").css({
                     'width':liWidth
                 });
@@ -92,11 +92,9 @@ $(function () {
             });
             if(parseInt(ul.css('left'))>=0){
             }else {
-                console.log(parseInt(ul.css('left')) +cab);
                 ul.css({
                     'left':parseInt(ul.css('left'))+cab
                 });
-                console.log(parseInt(ul.css('left'))+cab);
             }
         });
         ul.css({
@@ -154,17 +152,27 @@ $(function () {
                 pic=Math.ceil(len/5)-2;
                 ul.css({'left':'0px'});
                 i=0;
-                flag=1;
+                // 点击左键
                 j=1;
-                k=1;
+                // k=1;
             }
-            if(k==1){
+            if(j==1){
                 ul.css({
                     'left': -len  * liWidth
                 });
-                k=0;
                 animate(ul,parseInt(ul.css('left'))+screen.width());
-                return;
+                j=0;
+            }
+            if(k==1){
+                pic=Math.ceil(len/5)-1;
+                // ul.css({
+                //     'left': -len  * liWidth
+                // });
+                k=0;
+                i=0;
+                // 跳到最后第二品
+                // animate(ul,parseInt(ul.css('left'))+screen.width());
+                // return;
             }
             if(pic<=(Math.ceil(len/5)-2) && pic >0 ){
                 pic--;
@@ -173,7 +181,6 @@ $(function () {
             }else if(lis.length<5 && i<=lis.length && i==0){
                 i++;
                 animate(ul,parseInt(ul.css('left'))+liWidth*lis.length);
-
             }
 
         }
@@ -230,22 +237,22 @@ $(function () {
             //     i=0;
             // }
             // arrRight.unbind("click");
+            // 初始值判断
             if(parseInt(ul.css('left'))==0){
                 pic=0;
                 j=0;
                 i=0;
             }
-            if(j==1){
-                animate(ul,parseInt(ul.css('left'))-screen.width());
-                j=0;
-                k=1;
-                pic=0;
-                return;
-            }
+            // if(j==1 && pic!=0){
+            //     animate(ul,parseInt(ul.css('left'))-screen.width());
+            //     j=0;
+            //     k=1;
+            //     pic=0;
+            //     return;
+            // }
+            // 如果进入最后一张
             if(k==1){
-                ul.css({
-                    'left': 0
-                });
+                ul.css({'left': 0});
                 k=0;
                 i=0;
                 pic=0;
@@ -256,9 +263,9 @@ $(function () {
             }else if(lis.length<5 && i<lis.length && i==0){
                 i++;
                 animate(ul,parseInt(ul.css('left'))-liWidth*lis.length);
-
             }else if(i!=0){
                 animate(ul,parseInt(ul.css('left'))-screen.width());
+                // 是否进入最后一张
                 k=1;
                 i=0;
             }
@@ -272,24 +279,19 @@ $(function () {
             playLeft()
         });
         function animate(obj, target) {
+            var obj=obj[0];
             clearInterval(obj.timer);
             obj.timer = setInterval(function () {
-                var step = 30;
-                var step = obj.offset().left < target ? step : -step;
-                if (Math.abs(obj.offset().left - target) > Math.abs(step)) {
-                    obj.css({
-                        'left':obj.offset().left + step
-                    })
-                    console.log(obj.offset().left + step);
+                var step = 25;
+                var step = obj.offsetLeft < target ? step : -step;
+                if (Math.abs(obj.offsetLeft - target) > Math.abs(step)) {
+                    obj.style.left = obj.offsetLeft + step + "px";
                 } else {
-                    obj.css({
-                        'left':target
-                    });
+                    obj.style.left = target + "px";
                     clearInterval(obj.timer);
-                    // arrRight.on("click",function () {playRight()});
-                    // arrLeft.on("click",function () {playLeft()});
                 }
             }, 5)
+
         }
     }
     function imgHover() {

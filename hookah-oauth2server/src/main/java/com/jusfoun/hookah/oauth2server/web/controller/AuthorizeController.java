@@ -17,7 +17,7 @@ import org.apache.oltu.oauth2.common.message.OAuthResponse;
 import org.apache.oltu.oauth2.common.message.types.ResponseType;
 import org.apache.oltu.oauth2.common.utils.OAuthUtils;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +47,7 @@ import java.net.URISyntaxException;
 public class AuthorizeController {
 
 
-    private static final Logger LOG = LoggerFactory.getLogger(AuthorizeController.class);
+    private static final Logger logger = LoggerFactory.getLogger(AuthorizeController.class);
 
     @Resource
     private OAuthService oAuthService;
@@ -75,6 +75,7 @@ public class AuthorizeController {
             if (!subject.isAuthenticated()) {
                 if (!isLogin(subject, request)) {//登录失败时跳转到登陆页面
                     model.addAttribute("client", clientService.selectById(oauthRequest.getClientId()));
+                    model.addAttribute("error", request.getAttribute("error"));
                     return "login";
                 }
             }
@@ -102,10 +103,10 @@ public class AuthorizeController {
                 String backUrl = oauthRequest.getParam("backurl");
                 //客户端注册时配置的返回地址，内部系统不需要
 //                String redirectURI = oauthClient.getRedirectUri();
-                if(!StringUtils.isEmpty(backUrl)){
-                    builder.setParam("backurl",backUrl);
+                if (!StringUtils.isEmpty(backUrl)) {
+                    builder.setParam("backurl", backUrl);
                 }
-                builder.setParam("redirect_uri",req_redirectURI);
+                builder.setParam("redirect_uri", req_redirectURI);
                 //构建响应
                 final OAuthResponse oAuthResponse = builder.location(req_redirectURI).buildQueryMessage();
 
@@ -115,7 +116,7 @@ public class AuthorizeController {
                 return new ResponseEntity(headers, HttpStatus.valueOf(oAuthResponse.getResponseStatus()));
             } else if (oauthRequest.isToken()) {
 
-                return new ResponseEntity("ss",HttpStatus.NOT_FOUND);
+                return new ResponseEntity("ss", HttpStatus.NOT_FOUND);
             } else {
                 OAuthResponse oAuthResponse = OAuthResponse.errorResponse(HttpServletResponse.SC_BAD_REQUEST)
                     .setError(OAuthError.CodeResponse.UNSUPPORTED_RESPONSE_TYPE)
@@ -171,6 +172,28 @@ public class AuthorizeController {
         try {
             subject.login(token);
             return true;
+        } catch (UnknownAccountException uae) {
+            logger.info("对用户[" + username + "]进行登录验证..验证未通过,未知账户");
+            request.setAttribute("error", "未知账户");
+            return false;
+        } catch (IncorrectCredentialsException ice) {
+            logger.info("对用户[" + username + "]进行登录验证..验证未通过,错误的凭证");
+            request.setAttribute("error", "密码不正确");
+            return false;
+        } catch (LockedAccountException lae) {
+            logger.info("对用户[" + username + "]进行登录验证..验证未通过,账户已锁定");
+            request.setAttribute("error", "账户已锁定");
+            return false;
+        } catch (ExcessiveAttemptsException eae) {
+            logger.info("对用户[" + username + "]进行登录验证..验证未通过,错误次数过多");
+            request.setAttribute("error", "用户名或密码错误次数过多");
+            return false;
+        } catch (AuthenticationException ae) {
+            //通过处理Shiro的运行时AuthenticationException就可以控制用户登录失败或密码错误时的情景
+            logger.info("对用户[" + username + "]进行登录验证..验证未通过,堆栈轨迹如下");
+            ae.printStackTrace();
+            request.setAttribute("error", "用户名或密码不正确");
+            return false;
         } catch (Exception e) {
             request.setAttribute("error", "登录失败:" + e.getClass().getName());
             return false;

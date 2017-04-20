@@ -39,12 +39,13 @@ public class GoodsFavoriteController extends BaseController {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
 
-        if (StringUtils.isBlank(goodsFavorite.getGoodsId()) || StringUtils.isBlank(goodsFavorite.getUserId())) {
+        if (StringUtils.isBlank(goodsFavorite.getGoodsId())) {
             returnData.setCode(ExceptionConst.AssertFailed);
             returnData.setMessage(ExceptionConst.get(ExceptionConst.AssertFailed));
             return returnData;
         }
         try {
+            goodsFavorite.setUserId(getCurrentUser().getUserId());
             goodsFavoriteService.insert(goodsFavorite);
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);

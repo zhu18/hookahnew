@@ -16,7 +16,7 @@ function loadPageData(data){
 			html += '<div class="item-down">';
 			html += '<span class="grid-left goods-price">￥<span>'+Number(list[i].shopPrice/100)+'</span>/次';
 			html += '</span>';
-			html += '<a class="grid-right" href="javascript:addCart('+list[i].goodsId+','+list[i].shop_format+','+list[i].shopNumber+')">加入购物车</a>';
+			html += '<a class="grid-right" href="javascript:addCart('+list[i].goodsId+','+list[i].shopFormat+','+list[i].shopNumber+')">加入购物车</a>';
 			html += '</div>';
 			html += '<div class="cancel" onclick="cancelAttention('+list[i].goodsId+')">取消关注</div>';
 			html += '</li>';
@@ -46,7 +46,7 @@ function addCart(goodsId,formatId,goodsNumber) {
         data: {
             goodsId: goodsId,
             formatId: formatId,
-            goodsNumber: 1
+            goodsNumber: '1'
         },
         success: function (data) {
             if (data.code == "1") {

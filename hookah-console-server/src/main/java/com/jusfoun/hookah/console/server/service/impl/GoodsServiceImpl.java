@@ -12,6 +12,7 @@ import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.MgGoodsService;
 import com.jusfoun.hookah.rpc.api.MqSenderService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -76,6 +77,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             mgGoods.setGoodsId(obj.getGoodsId());
             mongoTemplate.save(mgGoods);
         }
+        mqSenderService.sendDirect(RabbitmqQueue.CONTRACT_GOODSCHECK, obj.getGoodsId());
     }
 
     /**
@@ -106,24 +108,41 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
      * @return
      */
     @Override
-    public void updateGoodsStatus(String goodsId, String status) {
+    public int updateGoodsStatus(String goodsId, String status) {
+        int i = 0;
         Goods goods = new Goods();
         goods.setGoodsId(goodsId);
         switch (status) {
             case "del" :
                 goods.setIsDelete(HookahConstants.GOODS_STATUS_DELETE);
                 goods.setLastUpdateTime(DateUtils.now());
-                mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_GOODS_ID, goodsId);
+                i = super.updateByIdSelective(goods);
+                if(i > 0) {
+                    mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_GOODS_ID, goodsId);
+                }
                 break;
             case "offSale":
-                goods.setIsOnsale(HookahConstants.GOODS_STATUS_OFFSALE);
-                goods.setOnsaleEndDate(DateUtils.now());
-                mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_GOODS_ID, goodsId);
-                break;
-            case "onSale":
-                mqSenderService.sendDirect(RabbitmqQueue.CONTRACT_GOODSCHECK, goodsId);
+                i = goodsMapper.updateOffSale(goodsId);
+                if(i > 0) {
+                    mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_GOODS_ID, goodsId);
+                }
                 break;
         }
+        return i;
+    }
+
+    @Override
+    public int onsale(String goodsId, String dateTime) {
+        Goods goods = new Goods();
+        goods.setGoodsId(goodsId);
+        if(StringUtils.isNotBlank(dateTime)) {
+            goods.setOnsaleStartDate(DateUtils.getDate(dateTime));
+        }
+        int i = super.updateByIdSelective(goods);
+        if (i > 0) {
+            mqSenderService.sendDirect(RabbitmqQueue.CONTRACT_GOODSCHECK, goodsId);
+        }
+        return i;
     }
 
 
