@@ -243,13 +243,30 @@ var htmlPart = {
 		} else if (testData.nickIllegal(val)) {
 			nickErrorInfo(TRLang.ERROR_MALFORM_NICK_NAME_INVALID_CHARACTER);
 		}else{
-			console.log(val);
-
-			nickErrorInfo(TRLang.ERROR_DUP_NICK_NAME);
+			userNameIsTrue(val)
 		}
+	};
+	function userNameIsTrue(val){
+		$.ajax({
+			url:'${host.auth}/reg/checkUsername',
+			type:'post',
+			data:{
+				username:val
+			},
+			success:function(data){
+				if(data.code == 1){
+					nickSuccessInfo(TRLang.ERROR_DUP_NICK_NAME);
+				}else{
+					nickErrorInfo(TRLang.ERROR_DUP_NICK_NAME);
+				}
+			}
+		});
 	}
 	function nickErrorInfo(info) {
-		$('#J_MsgNick').show().children('.msg-cnt').html(info);
+		$('#J_MsgNick').addClass('msg-type-info').addClass('msg-type-error').show().children('.msg-cnt').html(info);
+	}
+	function nickSuccessInfo(info) {
+		$('#J_MsgNick').addClass('msg-type-error').addClass('msg-type-info').show().children('.msg-cnt').html(info);
 	}
 	$('#J_userName').blur(function () {
 		var thisVal = $(this).val();
