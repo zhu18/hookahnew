@@ -114,6 +114,7 @@
         /druid/** = anon
         /login = anon
         /reg = anon
+        /sendSms = anon
         /captcha* = anon
         /unauthorized = anon
         # OAuth anon
