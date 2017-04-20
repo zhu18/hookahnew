@@ -293,6 +293,42 @@ $(function () {
 
         }
     }
+    function compatibilityTS() {
+        if ((navigator.appName == "Microsoft Internet Explorer") && (document.documentMode < 10 || document.documentMode == undefined)) {
+
+            $(".exchange-industry-resource .industry-resource-down ul li").hover(function () {
+                $(this).find('.bg-content').css({
+                    'marginTop':'-50px'
+                })
+                $(this).find('.bg-info').css({
+                    "filter":"alpha(opacity=1)",
+                    "opacity":"1",
+                    'marginTop':'20px'
+
+                })
+                $(this).find('.bg-btn').css({
+                    "filter":"alpha(opacity=1)",
+                    "opacity":"1",
+                    'marginTop':'20px'
+                })
+                $(this).mouseleave(function () {
+                    $('.bg-content').css({
+                        'marginTop':'0px'
+                    })
+                    $(this).find('.bg-info').css({
+                        "filter":"alpha(opacity=0)",
+                        "opacity":"0"
+
+                    })
+                    $(this).find('.bg-btn').css({
+                        "filter":"alpha(opacity=0)",
+                        "opacity":"0"
+                    })
+                })
+            })
+
+        }
+    }
     function imgHover() {
         var flag=1;
         var timer1=''
@@ -329,6 +365,7 @@ $(function () {
         })
     }
     // imgHover();
+    compatibilityTS()
     hotSwitchHover();
     switchHover();
     carousel();

@@ -1486,26 +1486,42 @@ lesshat-selector {
 	background-color: white;
 }
 .exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-title {
-
 	font-size: 22px;
 	line-height: 24px;
+	height: 48px;
 	color: white;
 }
 .exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-info {
+	/* older safari/Chrome browsers */
+	-webkit-opacity: 0;
+	/* Netscape and Older than Firefox 0.9 */
+	-moz-opacity: 0;
+	/* Safari 1.x (pre WebKit!) 老式khtml内核的Safari浏览器*/
+	-khtml-opacity: 0;
+	/* IE9 + etc...modern browsers */
 	opacity: 0;
+	/* IE 4-9 */
+	filter:alpha(opacity=0);
 	margin-top: 40px;
 	font-size: 14px;
-	line-height: 14px;
+	line-height: 25px;
 	color: white;
 	padding: 0 10px;
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 5;
 	overflow: hidden;
-	word-wrap: break-word;
+	height: 73px;
+	text-align: center;
 }
 .exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-btn {
-    opacity: 0;
+	/* older safari/Chrome browsers */
+	-webkit-opacity: 0;
+	/* Netscape and Older than Firefox 0.9 */
+	-moz-opacity: 0;
+	/* Safari 1.x (pre WebKit!) 老式khtml内核的Safari浏览器*/
+	-khtml-opacity: 0;
+	/* IE9 + etc...modern browsers */
+	opacity: 0;
+	/* IE 4-9 */
+	filter:alpha(opacity=0);
     display: inline-block;
     border: 1px solid #fff;
     width: 120px;
@@ -1514,7 +1530,7 @@ lesshat-selector {
     font-size: 14px;
     color: #fff;
     text-decoration: none;
-    margin-top: 62px;
+    margin-top: 40px;
 }
 
 .exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-bg{
@@ -1524,6 +1540,7 @@ lesshat-selector {
 .exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-content{
     transition: transform 0.3s linear 0s;
     transform: translateY(-50px);
+	/*margin-top: -50px;*/
 }
 
 .exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-title{
