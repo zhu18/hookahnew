@@ -70,7 +70,7 @@ public class RegController {
             //2、校验短信验证码
             //获取库里缓存的验证码
 
-            filters.add(Condition.eq("phoneNum", user.getMobile()));
+            filters.add(Condition.eq("mobile", user.getMobile()));
             MgSmsValidate sms = mgSmsValidateService.selectOne(filters);
             if (sms == null) { //验证码错误或者已过期
                 throw new UserRegExpiredSmsException("短信验证码验证未通过,短信验证码已过期");
@@ -157,7 +157,7 @@ public class RegController {
             content.append("验证码为：").append(code).append(",有效时间").append(HookahConstants.SMS_DURATION_MINITE).append("分钟。");
 
             sms = new MgSmsValidate();
-            sms.setPhoneNum(mobile);
+            sms.setMobile(mobile);
             sms.setSmsContent(content.toString());
             sms.setValidCode(code);
             mgSmsValidateService.insert(sms);
