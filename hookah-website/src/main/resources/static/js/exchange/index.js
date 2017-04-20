@@ -58,11 +58,11 @@ $(function () {
         // 给ul赋予新的宽度
         var screeW='';
         var cab='';
-        if( $(window).width() > 1180 && $(window).width()<1440) {
-            console.log($(window).width());
+        if( screen.width() >=1180 && screen.width()<=1440) {
             console.log($(document).width());
-            screeW=$(window).width();
-            liWidth=$(window).width()/5;
+            console.log(1);
+            screeW=screen.width();
+            liWidth=screeW/5;
             $(".screen ul li").css({
                 'width':liWidth
             });
@@ -74,10 +74,10 @@ $(function () {
             });
         }
         $(window).resize(function(){
-            cab=screeW-$(window).width();
-            screeW=$(window).width();
-            if( $(window).width() > 1180 && $(window).width()<1440) {
-                liWidth=$(window).width()/5;
+            cab=screeW-screen.width();
+            screeW=screen.width();
+            if( screen.width() >=1180 && screen.width()<=1440) {
+                liWidth=screen.width()/5;
                 $(".screen ul li").css({
                     'width':liWidth
                 });
@@ -92,11 +92,9 @@ $(function () {
             });
             if(parseInt(ul.css('left'))>=0){
             }else {
-                console.log(parseInt(ul.css('left')) +cab);
                 ul.css({
                     'left':parseInt(ul.css('left'))+cab
                 });
-                console.log(parseInt(ul.css('left'))+cab);
             }
         });
         ul.css({
@@ -230,6 +228,7 @@ $(function () {
             //     i=0;
             // }
             // arrRight.unbind("click");
+            console.log(screen.width());
             if(parseInt(ul.css('left'))==0){
                 pic=0;
                 j=0;
@@ -272,24 +271,19 @@ $(function () {
             playLeft()
         });
         function animate(obj, target) {
+            var obj=obj[0];
             clearInterval(obj.timer);
             obj.timer = setInterval(function () {
-                var step = 30;
-                var step = obj.offset().left < target ? step : -step;
-                if (Math.abs(obj.offset().left - target) > Math.abs(step)) {
-                    obj.css({
-                        'left':obj.offset().left + step
-                    })
-                    console.log(obj.offset().left + step);
+                var step = 25;
+                var step = obj.offsetLeft < target ? step : -step;
+                if (Math.abs(obj.offsetLeft - target) > Math.abs(step)) {
+                    obj.style.left = obj.offsetLeft + step + "px";
                 } else {
-                    obj.css({
-                        'left':target
-                    });
+                    obj.style.left = target + "px";
                     clearInterval(obj.timer);
-                    // arrRight.on("click",function () {playRight()});
-                    // arrLeft.on("click",function () {playLeft()});
                 }
             }, 5)
+
         }
     }
     function imgHover() {
