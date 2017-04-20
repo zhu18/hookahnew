@@ -271,7 +271,7 @@ var htmlPart = {
 	$('#J_userName').blur(function () {
 		var thisVal = $(this).val();
 		if (strlen(thisVal) > 25 || strlen(thisVal) < 5) {
-			$('#J_MsgNick').show().children('.msg-cnt').html(TRLang.ERROR_MALFORM_NICK_NAME);
+			$('#J_MsgNick').addClass('msg-type-info').addClass('msg-type-error').show().children('.msg-cnt').html(TRLang.ERROR_MALFORM_NICK_NAME);
 		} else {
 			$('#J_MsgNick').hide();
 			nickTest(thisVal);
@@ -644,10 +644,10 @@ var htmlPart = {
 						$('#J_MsgPassword').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_MALFORM_PASSWORD);
 					}
 				} else {
-					$('#J_MsgNick').show().children('.msg-cnt').html(TRLang.ERROR_MALFORM_NICK_NAME);
+					$('#J_MsgNick').addClass('msg-type-info').addClass('msg-type-error').show().children('.msg-cnt').html(TRLang.ERROR_MALFORM_NICK_NAME);
 				}
 			} else {
-				$('#J_MsgNick').show().children('.msg-cnt').html(TRLang.ERROR_MALFORM_NICK_NAME);
+				$('#J_MsgNick').addClass('msg-type-info').addClass('msg-type-error').show().children('.msg-cnt').html(TRLang.ERROR_MALFORM_NICK_NAME);
 			}
 		})
 	});
