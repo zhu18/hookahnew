@@ -8,7 +8,7 @@ function loadPageData(data){
             html += '<li>';
 			html += '<a class="item-top" href="/exchange/details?id='+list[i].goodsId+'">';
 			html += '<p class="goods-img">';
-			html += '<img src="http://'+list[i].goodsImg+'" alt="">';
+			html += '<img src="'+list[i].goodsImg+'" alt="">';
 			html += '</p>';
 			html += '<p class="goods-name">'+list[i].goodsName+'</p>';
 			html += '<p class="goods-brief">'+list[i].goodsBrief+'</p>';
@@ -16,7 +16,7 @@ function loadPageData(data){
 			html += '<div class="item-down">';
 			html += '<span class="grid-left goods-price">￥<span>'+Number(list[i].shopPrice/100)+'</span>/次';
 			html += '</span>';
-			html += '<a class="grid-right" href="javascript:addCart('+list[i].goodsId+','+list[i].shopFormat+','+list[i].shopNumber+')">加入购物车</a>';
+			html += '<a class="grid-right" href="javascript:addCart('+list[i].goodsId+','+list[i].shopFormat+','+list[i].shopNumber+');">加入购物车</a>';
 			html += '</div>';
 			html += '<div class="cancel" onclick="cancelAttention('+list[i].goodsId+')">取消关注</div>';
 			html += '</li>';

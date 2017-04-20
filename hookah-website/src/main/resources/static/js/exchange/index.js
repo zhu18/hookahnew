@@ -43,6 +43,7 @@ $(function () {
         });
         var pic=0;
         var i=0;
+        var flag=0;
         // 计算出多出来的li的个数
         var len1=len-parseInt((len)/5)*5;
         // 把多出来的li从总的li中截取出来
@@ -105,6 +106,7 @@ $(function () {
         var j=0;
         var k=0;
         function playLeft() {
+            if(flag==1)return;
             // if(parseInt(ul.css('transform').split(',').slice(-2, -1))>=0){
             //     pic=Math.ceil(len/5)-2;
             //     i=0;
@@ -152,29 +154,23 @@ $(function () {
                 pic=Math.ceil(len/5)-2;
                 ul.css({'left':'0px'});
                 // 点击左键
-                // j=1;
+                j=1;
+                i=1;
                 // k=1;
                 ul.css({
                     'left': -len  * liWidth
                 });
                 animate(ul,parseInt(ul.css('left'))+screen.width());
-                i=1;
                 return;
             }
-            // if(j==1){
-            //     ul.css({
-            //         'left': -len  * liWidth
-            //     });
-            //     animate(ul,parseInt(ul.css('left'))+screen.width());
-            //     j=0;
-            // }
             if(k==1){
                 k=0;
                 i=1;
+                j=1;
                 animate(ul,parseInt(ul.css('left'))+screen.width());
-                  return;
+                return;
             }
-            if(pic<=(Math.ceil(len/5)-2) && pic >0 ){
+            if(pic<=(Math.ceil(len/5)-2) && pic>0){
                 pic--;
                 animate(ul,parseInt(ul.css('left'))+screen.width());
             }else if(lis.length<5 && i<=lis.length && i!=0){
@@ -184,6 +180,7 @@ $(function () {
 
         }
         function playRight() {
+            if(flag==1)return;
             // arrRight.unbind("click");
             // if(parseInt(ul.css('transform').split(',').slice(-2,-1))==0){
             //     pic=0;
@@ -242,19 +239,17 @@ $(function () {
                 j=0;
                 i=0;
             }
-            // if(j==1 && pic!=0){
-            //     animate(ul,parseInt(ul.css('left'))-screen.width());
-            //     j=0;
-            //     k=1;
-            //     pic=0;
-            //     return;
-            // }
-            // 如果进入最后一张
             if(k==1){
                 ul.css({'left': 0});
                 k=0;
                 i=0;
                 pic=0;
+            }
+            if(j==1 && pic!=0){
+                animate(ul,parseInt(ul.css('left'))-screen.width());
+                j=0;
+                k=1;
+                return
             }
             if(pic<Math.ceil(len/5)-2 && i==0){
                 animate(ul,parseInt(ul.css('left'))-screen.width());
@@ -281,6 +276,7 @@ $(function () {
             var obj=obj[0];
             clearInterval(obj.timer);
             obj.timer = setInterval(function () {
+                flag=1;
                 var step = 25;
                 var step = obj.offsetLeft < target ? step : -step;
                 if (Math.abs(obj.offsetLeft - target) > Math.abs(step)) {
@@ -288,11 +284,13 @@ $(function () {
                 } else {
                     obj.style.left = target + "px";
                     clearInterval(obj.timer);
+                    flag=0
                 }
             }, 5)
 
         }
     }
+    // 兼容
     function compatibilityTS() {
         if ((navigator.appName == "Microsoft Internet Explorer") && (document.documentMode < 10 || document.documentMode == undefined)) {
 
