@@ -15,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -80,14 +79,15 @@ public class RegController {
     }
 
     @RequestMapping(value = "/sendSms", method = RequestMethod.POST)
-    public ReturnData postLogin(String phoneNum, RedirectAttributes redirectAttributes) {
+    @ResponseBody
+    public ReturnData postLogin(String phoneNum) {
         List<Condition> filters = new ArrayList();
         filters.add(Condition.eq("phoneNum",phoneNum));
         MgSmsValidate sms = mgSmsValidateService.selectOne(filters);
         if(sms==null){//如果近期没有发送过
             String code = StrUtil.random(4);
             StringBuffer content =  new StringBuffer();
-            content.append("验证码为：").append(code).append(",有效时间").append(HookahConstants.SMS_DURATION_MINITE).append("分。");
+            content.append("验证码为：").append(code).append(",有效时间").append(HookahConstants.SMS_DURATION_MINITE).append("分钟。");
 
             sms = new MgSmsValidate();
             sms.setPhoneNum(phoneNum);
