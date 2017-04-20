@@ -55,7 +55,7 @@ public class RegController {
     }
 
     @RequestMapping(value = "/reg",method = RequestMethod.POST)
-    public String pReg(UserValidVo user, HttpServletRequest request, RedirectAttributes redirectAttributes, Model model) {
+    public ReturnData pReg(UserValidVo user, HttpServletRequest request, RedirectAttributes redirectAttributes, Model model) {
         boolean isExists = true,valid=true;
         List<Condition> filters = new ArrayList();
         //1、校验图片验证码 ,=======>可以跳过这步，我觉得不校验问题也不大
@@ -119,7 +119,7 @@ public class RegController {
         } catch (Exception e) {
             valid = false;
             logger.info(e.getMessage());
-            redirectAttributes.addFlashAttribute("message", e.getMessage());
+            ReturnData.error(e.getMessage());
         }
 
         Map<String,String> host = myProps.getHost();
@@ -134,9 +134,10 @@ public class RegController {
 
             //TODO...登录日志
             logger.info("用户[" + user.getUserName() + "]注册成功(这里可以进行一些注册通过后的一些系统参数初始化操作)");
-            return "redirect:"+host.get("website")+"/login";
+//            return "redirect:"+host.get("website")+"/login";
+            return ReturnData.success("注册成功");
         }else {
-            return "redirect:"+host.get("website")+"/reg";
+            return ReturnData.error();
         }
     }
 
