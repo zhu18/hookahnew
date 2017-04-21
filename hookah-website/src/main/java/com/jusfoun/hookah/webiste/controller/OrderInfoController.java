@@ -10,6 +10,7 @@ import com.jusfoun.hookah.core.domain.vo.CartVo;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
+import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.OrderHelper;
 import com.jusfoun.hookah.core.utils.ReturnData;
@@ -150,21 +151,28 @@ public class OrderInfoController extends BaseController {
             if (commentFlag != null) {
                 filters.add(Condition.eq("commentFlag", commentFlag));
             }
+            if (payStatus != null) {
+                filters.add(Condition.eq("payStatus", payStatus));
+            }
             if (domainName != null) {
                 filters.add(Condition.like("domainName", "%" + domainName + "%"));
             }
             filters.add(Condition.eq("userId", userId));
             filters.add(Condition.eq("isDeleted", 0));
 
+            //查询列表
+            List<OrderBy> orderBys = new ArrayList<>();
+            orderBys.add(OrderBy.desc("addTime"));
+            Pagination<OrderInfoVo> pOrders = orderInfoService.getDetailListInPage(pageNumber, pageSize, filters, orderBys);
+            map.put("orders",pOrders);
+
+            //查询数量
             filters.add(Condition.eq("payStatus", 1));
             Long paid = orderInfoService.count(filters);  //已支付数量
             map.put("paidCount",paid);
             filters.add(Condition.eq("payStatus", 0));
             Long unpaid = orderInfoService.count(filters); //未支付数量
             map.put("unpaidCount",unpaid);
-
-            Pagination<OrderInfoVo> pOrders = orderInfoService.findByPage(userId,pageNumber,pageSize,payStatus,commentFlag,startDate,endDate,domainName);
-            map.put("orders",pOrders);
 
             logger.info(JsonUtils.toJson(map));
             return ReturnData.success(map);
@@ -216,7 +224,7 @@ public class OrderInfoController extends BaseController {
      * @param goodsId
      * @param formatId
      * @param goodsNumber
-     * @param model
+     * @param redirectAttributes
      * @return
      */
     @RequestMapping(value = "/order/createOrder", method = RequestMethod.POST)
