@@ -94,6 +94,7 @@ public class OrderInfoController extends BaseController {
 
             CartVo vo = new CartVo();
             vo.setRecId("-1");
+            vo.setGoodsId(goodsId);
             vo.setGoodsNumber(goodsNumber);
             vo.setGoodsName(g.getGoodsName());
             vo.setGoodsFormat(formatId);
