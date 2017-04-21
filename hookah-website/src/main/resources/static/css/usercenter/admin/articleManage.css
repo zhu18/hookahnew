@@ -13,8 +13,9 @@
     margin: 20px 0;
 }
 .select-title select{
-    height:30px;
-    font-size: 14px;
+    height:28px;
+    line-height:18px;
+    padding:2px 0
 }
 .select-hide{display: none;}
 .article-box .order-items{
