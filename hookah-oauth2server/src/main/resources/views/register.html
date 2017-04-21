@@ -610,9 +610,7 @@ var htmlPart = {
 		ERROR_DUP_DEFAULT_NICK_NAME: '该会员名已被使用，请刷新页面或者设置新会员名',
 		ERROR_ACTIVATION_UNSUPPORT_USER_ALIPAY: '您的账号无法进行业务激活'
 	};
-	function toLogin() {
-		window.href = '${host.auth}/login';
-	}
+
 	$(document).ready(function () {
 
 		$('#J_BtnInfoForm').on("click", function (e) {
@@ -688,7 +686,9 @@ var htmlPart = {
 					$.post("${host.auth}/reg", $("#J_InfoForm").serialize(), function (data) {
 						if (data.code == 1) {
 							$.alert("注册成功，马上跳转登录页面");
-//							setTimeout("toLogin()", 2000);
+							setTimeout(function() {
+								window.location.href = '${host.auth}/login';
+							}, 2000);
 						} else {
 							$.alert(data.message);
 						}
