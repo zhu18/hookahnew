@@ -123,23 +123,6 @@ public class User extends GenericModel {
     //0系统,1未认证,2个人,3个人待审核,4企业,5企业待审核
     private Integer userType;
 
-
-    //账户余额
-
-    public Long getMoneyBalance() {
-        return moneyBalance;
-    }
-
-
-
-    private Long moneyBalance;
-
-    //支付密码
-    private String paymentPassword;
-
-    //支付密码状态  0 未设置 ,1 已设置
-    private Integer paymentPasswordStatus;
-
     public Integer getUserType() {
         return userType;
     }
@@ -178,26 +161,6 @@ public class User extends GenericModel {
 
     public void setOrgId(Long orgId) {
         this.orgId = orgId;
-    }
-
-    public void setMoneyBalance(Long moneyBalance) {
-        this.moneyBalance = moneyBalance;
-    }
-
-    public String getPaymentPassword() {
-        return paymentPassword;
-    }
-
-    public void setPaymentPassword(String paymentPassword) {
-        this.paymentPassword = paymentPassword;
-    }
-
-    public Integer getPaymentPasswordStatus() {
-        return paymentPasswordStatus;
-    }
-
-    public void setPaymentPasswordStatus(Integer paymentPasswordStatus) {
-        this.paymentPasswordStatus = paymentPasswordStatus;
     }
 
     /**

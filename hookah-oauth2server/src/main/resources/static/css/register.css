@@ -1903,11 +1903,3 @@ body .hide {
 .form-item .captcha-text-btn img {
 	width: 100%;
 }
-.loading_btns{
-	background: rgba(255,255,255,0.7) url(/static/img/ajax-loader-16x16.gif) no-repeat center center;
-	position: absolute;
-	width: 140px;
-	height: 40px;
-	z-index: 2;
-	display: none;
-}

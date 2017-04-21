@@ -53,7 +53,7 @@ class CategoryController {
             promise.then(function (res, status, config, headers) {
                 $rootScope.loadingState = false;
                 $scope.tree_data = res.data.data;
-                // console.log("11111111111112222------" + res.data.data);
+                console.log("11111111111112222------" + res.data.data);
                 growl.addSuccessMessage("数据加载完毕。。。");
             });
         };

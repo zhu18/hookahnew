@@ -75,8 +75,6 @@ h1{
 }
 .select-box select{
     height:30px;
-    line-height:20px;
-    padding:2px 0
 }
 .errors{
     white-space: normal;

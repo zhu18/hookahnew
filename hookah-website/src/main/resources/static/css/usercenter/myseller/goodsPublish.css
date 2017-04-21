@@ -40,9 +40,7 @@
 }
 .category-label select{
     width: 312px;
-    height:28px;
-    line-height:18px;
-    padding:2px 0
+    height: 32px;
 }
 .select-category-box{
     padding:10px;

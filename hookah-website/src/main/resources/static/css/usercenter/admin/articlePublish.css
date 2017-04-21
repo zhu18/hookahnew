@@ -1,12 +1,3 @@
-.clearfix:after {
-    visibility: hidden;
-    clear: both;
-    display: block;
-    content: ".";
-    height: 0;
-    font-size: 0;
-    zoom: 1;
-}
 table {
     width: 100%;
 }
@@ -59,9 +50,7 @@ table .tips ul li {
     line-height: 24px;
 }
 table .select-box select{
-    height:28px;
-    line-height:18px;
-    padding:2px 0
+    height:32px;
 }
 .pulish-btn {
     text-align: center;

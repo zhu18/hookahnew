@@ -37,6 +37,8 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
 
     public OrderInfoVo findDetailById(String orderId) throws HookahException;
 
+    public Pagination<OrderInfoVo> findByPage(String userId,Integer pageNum, Integer pageSize, Integer payStatus, Integer commentFlag, Date startDate, Date endDate, String domainName) throws HookahException;
+
     void deleteByLogic(String id);
 
     void deleteBatchByLogic(String[] ids);
