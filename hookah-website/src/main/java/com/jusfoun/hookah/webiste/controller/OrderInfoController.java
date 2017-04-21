@@ -10,6 +10,7 @@ import com.jusfoun.hookah.core.domain.vo.CartVo;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
+import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.OrderHelper;
 import com.jusfoun.hookah.core.utils.ReturnData;
@@ -23,9 +24,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -135,13 +134,48 @@ public class OrderInfoController extends BaseController {
     @RequestMapping(value = "/order/pageData", method = RequestMethod.POST)
     @ResponseBody
     public ReturnData findByPage(Integer pageNumber, Integer pageSize, Integer payStatus, Integer commentFlag, Date startDate, Date endDate, String domainName, Model model) {
+        Map map = new HashMap<>(3);
         try {
+            String userId = this.getCurrentUser().getUserId();
+
             if (pageNumber==null) pageNumber = Integer.parseInt(PAGE_NUM);
             if (pageSize==null) pageSize = Integer.parseInt(PAGE_SIZE);
 
-            Pagination<OrderInfoVo> pOrders = orderInfoService.findByPage(this.getCurrentUser().getUserId(),pageNumber,pageSize,payStatus,commentFlag,startDate,endDate,domainName);
-            logger.info(JsonUtils.toJson(pOrders));
-            return ReturnData.success(pOrders);
+            List<Condition> filters = new ArrayList<>();
+            if (startDate != null) {
+                filters.add(Condition.ge("addTime", startDate));
+            }
+            if (endDate != null) {
+                filters.add(Condition.le("addTime", endDate));
+            }
+            if (commentFlag != null) {
+                filters.add(Condition.eq("commentFlag", commentFlag));
+            }
+            if (payStatus != null) {
+                filters.add(Condition.eq("payStatus", payStatus));
+            }
+            if (domainName != null) {
+                filters.add(Condition.like("domainName", "%" + domainName + "%"));
+            }
+            filters.add(Condition.eq("userId", userId));
+            filters.add(Condition.eq("isDeleted", 0));
+
+            //查询列表
+            List<OrderBy> orderBys = new ArrayList<>();
+            orderBys.add(OrderBy.desc("addTime"));
+            Pagination<OrderInfoVo> pOrders = orderInfoService.getDetailListInPage(pageNumber, pageSize, filters, orderBys);
+            map.put("orders",pOrders);
+
+            //查询数量
+            filters.add(Condition.eq("payStatus", 1));
+            Long paid = orderInfoService.count(filters);  //已支付数量
+            map.put("paidCount",paid);
+            filters.add(Condition.eq("payStatus", 0));
+            Long unpaid = orderInfoService.count(filters); //未支付数量
+            map.put("unpaidCount",unpaid);
+
+            logger.info(JsonUtils.toJson(map));
+            return ReturnData.success(map);
         } catch (Exception e) {
             logger.error("分页查询订单错误", e);
             return ReturnData.error("分页查询错误");
@@ -190,7 +224,7 @@ public class OrderInfoController extends BaseController {
      * @param goodsId
      * @param formatId
      * @param goodsNumber
-     * @param model
+     * @param redirectAttributes
      * @return
      */
     @RequestMapping(value = "/order/createOrder", method = RequestMethod.POST)
