@@ -1,9 +1,9 @@
 package com.jusfoun.hookah.oauth2server.web.controller;
 
 import com.google.code.kaptcha.Constants;
+import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.User;
-import com.jusfoun.hookah.core.domain.mongo.MgSmsValidate;
 import com.jusfoun.hookah.core.domain.vo.UserValidVo;
 import com.jusfoun.hookah.core.exception.*;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -45,6 +45,9 @@ public class RegController {
     MyProps myProps;
 
     @Resource
+    RedisOperate redisOperate;
+
+    @Resource
     UserService userService;
 
     @Resource
@@ -69,17 +72,19 @@ public class RegController {
             if (!value.equals(captcha)) {
                 throw new UserRegInvalidCaptchaException("图片验证码验证未通过,验证码错误");
             }
+            session.removeAttribute(Constants.KAPTCHA_SESSION_KEY);
             //2、校验短信验证码
             //获取库里缓存的验证码
 
-            MgSmsValidate sms = (MgSmsValidate) session.getAttribute(HookahConstants.SMS_SESSION_KEY);  //存在session里
-            if (sms == null) { //验证码错误或者已过期
+            String cacheSms = redisOperate.get(user.getMobile());  //从 redis 获取缓存
+            if (cacheSms == null) { //验证码已过期
                 throw new UserRegExpiredSmsException("短信验证码验证未通过,短信验证码已过期");
             } else {
-                if (!sms.getValidCode().equals(user.getValidSms())) {
+                if (!cacheSms.equals(user.getValidSms())) {
                     throw new UserRegInvalidSmsException("短信验证码验证未通过,短信验证码错误");
                 }
             }
+            redisOperate.del(user.getMobile());  //删除缓存
 
             //3、校验密码一致
             String password = user.getPassword().trim();
@@ -146,26 +151,22 @@ public class RegController {
     @RequestMapping(value = "/reg/sendSms", method = RequestMethod.POST)
     @ResponseBody
     public ReturnData sendSms(String mobile, HttpServletRequest request) {
-        HttpSession session = request.getSession();
         String code = StrUtil.random(4);
         StringBuffer content = new StringBuffer();
         content.append("验证码为：").append(code).append(",有效时间").append(HookahConstants.SMS_DURATION_MINITE).append("分钟。");
 
-        MgSmsValidate sms = new MgSmsValidate();
-        sms.setMobile(mobile);
-        sms.setSmsContent(content.toString());
-        sms.setValidCode(code);
-        //mgSmsValidateService.insert(sms);
-        logger.info("sms: {}", code);
-        logger.info("发送短信，接收方：{}，内容为:{}",sms.getMobile(),sms.getSmsContent());
-        SMSUtil.sendSMS(sms.getMobile(),sms.getSmsContent());
+        logger.info("发送短信，接收方：{}，内容为:{},验证码为:{}",mobile,content,code);
+        try {
+            SMSUtil.sendSMS(mobile, content.toString());
 
-        //缓存短信
-        sms.setSendTime(new Date());
-
-        session.setAttribute(HookahConstants.SMS_SESSION_KEY, sms);  //存在session里
-        return ReturnData.success("短信验证码已经发送");
-
+            //缓存短信
+            redisOperate.set(mobile, code, HookahConstants.SMS_DURATION_MINITE * 60);
+            logger.info(redisOperate.get(mobile));
+            return ReturnData.success("短信验证码已经发送");
+        }catch (Exception e){
+            logger.error("发送短信出错");
+            return ReturnData.error("发送短信出错");
+        }
     }
 
     /**
@@ -232,18 +233,13 @@ public class RegController {
     @RequestMapping(value = "/reg/checkSms", method = RequestMethod.POST)
     @ResponseBody
     public ReturnData checkValidSms(String mobile, String validSms, HttpServletRequest request) {
-        HttpSession session = request.getSession();
         logger.info("mobile--validSms: {},{}", mobile, validSms);
-        MgSmsValidate sms = (MgSmsValidate) session.getAttribute(HookahConstants.SMS_SESSION_KEY);  //存在session里
+        String cacheSms = redisOperate.get(mobile);  //从 redis 获取缓存
 
-//        List<Condition> filters = new ArrayList(1);
-//        filters.add(Condition.eq("mobile",mobile));
-//        MgSmsValidate sms = mgSmsValidateService.selectOne(filters);
-
-        if (sms == null) { //验证码已过期
+        if (cacheSms == null) { //验证码已过期
             return ReturnData.error("短信验证码验证未通过,短信验证码已过期");
         } else {
-            if (!sms.getValidCode().equals(validSms)) {
+            if (!cacheSms.equals(validSms)) {
                 return ReturnData.fail("短信验证码验证未通过,短信验证码错误");
             }
         }
