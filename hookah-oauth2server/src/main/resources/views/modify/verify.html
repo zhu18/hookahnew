@@ -59,10 +59,10 @@ var htmlPart = {
 						<input type="hidden" value="${userObj.mobile}" id="J_MobileVal" data="86" name="_fm.v._0.p">
 						<div class="ui-form-text"> ${userObj.mobile}</div>
 						<input type="hidden" name="_fm.v._0.a" value="86" id="areaCode">
-						<div class="ui-form-text">
-							<a href="javascript:void(0)"
-							   class="user-phone-switch" target="_blank" id="J_Phone_Switch">[手机不可用？点此修改]</a>
-						</div>
+						<!--<div class="ui-form-text">-->
+							<!--<a href="javascript:void(0)"-->
+							   <!--class="user-phone-switch" target="_blank" id="J_Phone_Switch">[手机不可用？点此修改]</a>-->
+						<!--</div>-->
 					</div>
 
 
@@ -258,6 +258,11 @@ var htmlPart = {
 	function check(){
 		window.location.href = '${host.auth}/modify/'+type;
 	};
+	$('#J_Phone_Checkcode').on('blur', function(){
+		if($(this).val()){
+
+		}
+	});
 </script>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
