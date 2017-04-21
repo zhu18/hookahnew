@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -193,7 +194,7 @@ public class OrderInfoController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/order/createOrder", method = RequestMethod.POST)
-    public String createOrder(OrderInfo orderinfo, String[] cartIdArray,String goodsId, Integer formatId,Long goodsNumber,Model model) {
+    public String createOrder(OrderInfo orderinfo, String[] cartIdArray,String goodsId, Integer formatId,Long goodsNumber,RedirectAttributes redirectAttributes) {
         try {
             init(orderinfo);
             if(cartIdArray[0].equals("-1")){
@@ -202,11 +203,11 @@ public class OrderInfoController extends BaseController {
                 orderinfo = orderInfoService.insert(orderinfo, cartIdArray);
             }
 
-            model.addAttribute("payments",initPaymentList());
-            model.addAttribute("orderInfo",orderinfo);
+            redirectAttributes.addAttribute("payments",initPaymentList());
+            redirectAttributes.addAttribute("orderInfo",orderinfo);
             logger.info("订单信息:{}", JsonUtils.toJson(orderinfo));
             logger.info("支付列表:{}", JsonUtils.toJson(initPaymentList()));
-            return  "pay/cash";
+            return   "redirect:/pay/cash";
         } catch (Exception e) {
             logger.error("插入错误", e);
             return "/error/500";

@@ -40,7 +40,7 @@ var htmlPart = {
 
 			<div class="maincenter-box">
 				<div style="width: 80%;margin:0 auto;font-size: 14px;">
-					<label style="margin-right: 16px">手机验证码验证</label>账户 <em class="ft-orange">b********8</em>
+					<label style="margin-right: 16px">手机验证码验证</label>账户 <em class="ft-orange">${userObj.userName}</em>
 					为确认是你本人操，请完成以下验证
 					<hr style="height:1px;background: #b9b9b9;border:none;margin-top: 2px">
 				</div>
@@ -56,8 +56,8 @@ var htmlPart = {
 					<input type="hidden" name="_fm.v._0.c" value="pc">
 					<div class="ui-form-item">
 						<label class="ui-label">手机号码：</label>
-						<input type="hidden" value="*******3261" id="J_MobileVal" data="86" name="_fm.v._0.p">
-						<div class="ui-form-text"> *******3261</div>
+						<input type="hidden" value="${userObj.mobile}" id="J_MobileVal" data="86" name="_fm.v._0.p">
+						<div class="ui-form-text"> ${userObj.mobile}</div>
 						<input type="hidden" name="_fm.v._0.a" value="86" id="areaCode">
 						<div class="ui-form-text">
 							<a href="javascript:void(0)"
