@@ -2,12 +2,11 @@
  * Created by wcq on 2017/4/14.
  */
 function loadPageData(data){
-    if(data.data.list.length>0){
-        var list = data.data.list;
+    $("#payAccount").html(data.data.paidCount);
+    $("#noPayAccount").html(data.data.unpaidCount);
+    if(data.data.orders.list.length>0){
+        var list = data.data.orders.list;
         var html = '';
-
-        $("#payAccount").html(data.data.paidCount);
-        $("#noPayAccount").html(data.data.unpaidCount);
         for(var i=0; i<list.length; i++){
             html+= '<tr class="content border-bottom">';
             html+= '<td class="text-align-center">'+list[i].orderId+'</td>';
@@ -32,6 +31,8 @@ function loadPageData(data){
             return year+'-'+add(month)+'-'+add(date1)+' '+add(hours)+':'+add(minutes)+':'+add(seconds);
         };
         $('.order tbody').html(html);
+    }else{
+        $('.order tbody').html('<tr class="noData"><td colspan="5">您没有待付款订单！</td></tr>');
     }
 }
 $.jeDate("#startDate", {

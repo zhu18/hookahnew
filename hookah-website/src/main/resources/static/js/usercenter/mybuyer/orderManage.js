@@ -1,11 +1,10 @@
 function loadPageData(data){
-
-    if(data.data.list.length > 0){
-        var list = data.data.list;
+    $("#payAccount").html(data.data.paidCount);
+    $("#noPayAccount").html(data.data.unpaidCount);
+    if(data.data.orders.list.length > 0){
+        var list = data.data.orders.list;
         var html = '';
 
-        $("#payAccount").html(data.data.paidCount);
-        $("#noPayAccount").html(data.data.unpaidCount);
         for(var i=0; i<list.length; i++){
             html += '<tr class="content border-bottom">';
             html += '<td class="text-align-center">'+list[i].orderId+'</td>';
