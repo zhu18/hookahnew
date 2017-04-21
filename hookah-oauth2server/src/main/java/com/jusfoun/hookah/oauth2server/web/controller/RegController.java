@@ -55,8 +55,8 @@ public class RegController {
     }
 
     @RequestMapping(value = "/reg",method = RequestMethod.POST)
-    public String pReg(UserValidVo user, HttpServletRequest request, RedirectAttributes redirectAttributes, Model model) {
-        boolean isExists = true,valid=true;
+    public ReturnData pReg(UserValidVo user, HttpServletRequest request, RedirectAttributes redirectAttributes, Model model) {
+        boolean isExists = true;
         List<Condition> filters = new ArrayList();
         //1、校验图片验证码 ,=======>可以跳过这步，我觉得不校验问题也不大
         try {
@@ -117,27 +117,23 @@ public class RegController {
             }
             //其他校验规则
         } catch (Exception e) {
-            valid = false;
             logger.info(e.getMessage());
-            redirectAttributes.addFlashAttribute("message", e.getMessage());
+            return ReturnData.error(e.getMessage());
         }
 
         Map<String,String> host = myProps.getHost();
         Map<String,String> site = myProps.getSite();
-        if(valid){
-            user.setAddTime(new Date());
-            user.setRegTime(new Date());
-            user.setIsEnable((byte)1);
-            user.setHeadImg(site.get("user-default-img"));
-            User regUser = userService.insert((User)user);
-            //redirectAttributes.addAttribute(regUser);
+        user.setAddTime(new Date());
+        user.setRegTime(new Date());
+        user.setIsEnable((byte)1);
+        user.setHeadImg(site.get("user-default-img"));
+        User regUser = userService.insert((User)user);
+        //redirectAttributes.addAttribute(regUser);
 
-            //TODO...登录日志
-            logger.info("用户[" + user.getUserName() + "]注册成功(这里可以进行一些注册通过后的一些系统参数初始化操作)");
-            return "redirect:"+host.get("website")+"/login";
-        }else {
-            return "redirect:"+host.get("website")+"/reg";
-        }
+        //TODO...登录日志
+        logger.info("用户[" + user.getUserName() + "]注册成功(这里可以进行一些注册通过后的一些系统参数初始化操作)");
+//            return "redirect:"+host.get("website")+"/login";
+        return ReturnData.success("注册成功");
     }
 
     /**
@@ -147,7 +143,7 @@ public class RegController {
      */
     @RequestMapping(value = "/reg/sendSms", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnData sendSms(String mobile) {
+    public ReturnData sendSms(String mobile,HttpServletRequest request) {
         List<Condition> filters = new ArrayList();
         filters.add(Condition.eq("mobile",mobile));
         MgSmsValidate sms = mgSmsValidateService.selectOne(filters);
@@ -160,7 +156,10 @@ public class RegController {
             sms.setMobile(mobile);
             sms.setSmsContent(content.toString());
             sms.setValidCode(code);
-            mgSmsValidateService.insert(sms);
+            //mgSmsValidateService.insert(sms);
+            HttpSession session = request.getSession();
+            logger.info("capText: {}" , code);
+            session.setAttribute(HookahConstants.SMS_SESSION_KEY, sms);  //存在session里
             return ReturnData.success("短信验证码已经发送");
         }else{    //刚刚发送过验证码，避免重复发送
             ReturnData.error("请不要频繁发送短信验证码");
@@ -227,10 +226,14 @@ public class RegController {
      */
     @RequestMapping(value = "/reg/checkSms", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnData checkValidSms(String mobile,String validSms) {
-        List<Condition> filters = new ArrayList(1);
-        filters.add(Condition.eq("mobile",mobile));
-        MgSmsValidate sms = mgSmsValidateService.selectOne(filters);
+    public ReturnData checkValidSms(String mobile,String validSms,HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        logger.info("mobile--validSms: {},{}" , mobile,validSms);
+        MgSmsValidate sms =(MgSmsValidate) session.getAttribute(HookahConstants.SMS_SESSION_KEY);  //存在session里
+
+//        List<Condition> filters = new ArrayList(1);
+//        filters.add(Condition.eq("mobile",mobile));
+//        MgSmsValidate sms = mgSmsValidateService.selectOne(filters);
 
         if (sms == null) { //验证码已过期
             return ReturnData.error("短信验证码验证未通过,短信验证码已过期");
