@@ -242,6 +242,10 @@ a:hover, a:visited {
 	border: 0;
 	cursor: pointer;
 }
+.checkcode-warp .getcheckcode.btn-disabled{
+	color: #ccc;
+	cursor: no-drop;
+}
 .ui-tiptext-success .ui-tiptext-icon {
 	color: #b5de70;
 }
@@ -410,4 +414,13 @@ body .ft-14 {
 	background-repeat: no-repeat;
 	overflow: hidden;
 	vertical-align: top;
+}
+.ui-form-item.form_btn{position: relative}
+.loading_btns{
+	background: rgba(255,255,255,0.9) url(/static/img/ajax-loader-16x16.gif) no-repeat center center;
+	position: absolute;
+	width: 150px;
+	height: 36px;
+	z-index: 2;
+	display: none;
 }
