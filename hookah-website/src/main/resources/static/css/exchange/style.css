@@ -1876,33 +1876,33 @@ dl {
 	border-left: none;
 	background-color: white;
 }
-.search .search-order .order li:nth-child(1) a {
+.search .search-order .order li:first-child a {
 	border-left: 1px solid #CCCCCC;
 	margin-left: 23px;
 }
-.search .search-order .order li:nth-child(3) a {
+.search .search-order .order li:first-child+li+li a {
 	width: 60px;
 }
-.search .search-order .order li:nth-child(4) a {
+.search .search-order .order li:first-child+li+li+li a {
 	width: 45px;
 }
-.search .search-order .order li:nth-child(5) a {
+.search .search-order .order li:first-child+li+li+li+li a {
 	border: none;
 	text-align: right;
 	padding-right: 5px;
 	background-color: transparent;
 }
-.search .search-order .order li:nth-child(5) .priceBox {
+.search .search-order .order li:first-child+li+li+li+li .priceBox {
 	display: inline-block;
 }
-.search .search-order .order li:nth-child(5) .priceBox input {
+.search .search-order .order li:first-child+li+li+li+li .priceBox input {
 	height: 25px;
 	border: 1px solid #CCCCCC;
 	color: black;
 	width: 70px;
 	padding:0 5px;
 }
-.search .search-order .order li:nth-child(5) .priceBox span {
+.search .search-order .order li:first-child+li+li+li+li .priceBox span {
 	text-align: center;
 	color: white;
 	display: inline-block;
@@ -1911,13 +1911,13 @@ dl {
 	line-height: 25px;
 	margin-left: 5px;
 }
-.search .search-order .order li:nth-child(5) .priceBox span:last-child {
+.search .search-order .order li:first-child+li+li+li+li .priceBox span:last-child {
 	background-color: #2282e7;
 }
-.search .search-order .order li:nth-child(5) .priceBox .d {
+.search .search-order .order li:first-child+li+li+li+li .priceBox .d {
 	background-color: #D5D5D5;
 }
-.search .search-order .order li:nth-child(5) .priceBox em {
+.search .search-order .order li:first-child+li+li+li+li .priceBox em {
 	margin-bottom: 4px;
 	display: inline-block;
 	width: 10px;
@@ -1944,9 +1944,9 @@ dl {
 	border: 1px solid #E5E5E5;
 	margin: 10px 10px 0 0;
 }
-.search .search-order .order-list ul li:nth-child(5n) {
-	margin-right: 0;
-}
+/*.search .search-order .order-list ul li:nth-child(5n) {*/
+	/*margin-right: 0;*/
+/*}*/
 .search .search-order .order-list ul li .item-top {
 	display: block;
 }
@@ -2400,7 +2400,6 @@ dl {
 	clear: both;
 }
 .exchange-search .order-list ul li {
-	height: 238px;
 	width: 230px;
 	float: left;
 	color: black;
@@ -2420,6 +2419,8 @@ dl {
 }
 .exchange-search .order-list ul li .item-top .goods-img img {
 	width: 70px;
+	height: 70px;
+	display: inline-block;
 	margin-top: 18px;
 }
 .exchange-search .order-list ul li .item-top .goods-name {
@@ -2440,11 +2441,11 @@ dl {
 }
 .exchange-search .order-list ul li .item-down {
 	border-top: 1px solid #E5E5E5;
-	line-height: 38px;
 	padding: 0 10px;
 }
 .exchange-search .order-list ul li .item-down span {
 	color: #B2B2B2;
+	padding: 10px 0;
 }
 .exchange-search .order-list ul li .item-down span label {
 	color: black;
