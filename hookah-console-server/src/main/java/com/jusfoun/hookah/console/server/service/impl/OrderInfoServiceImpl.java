@@ -229,7 +229,6 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                 OrderInfoVo orderInfoVo = new OrderInfoVo();
                 BeanUtils.copyProperties(orderInfo,orderInfoVo);
                 orderInfoVo.setMgOrderGoodsList(ordergoodsList);
-                orderinfoMapper.insert(orderInfo);
                 mgOrderInfoService.insert(orderInfoVo);
             }
             if(goodsAmount.compareTo(0L)==0){
