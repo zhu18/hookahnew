@@ -179,3 +179,22 @@ Loading.start = function () {
 Loading.stop = function () {
 	$('.loading-wrapper').remove();
 };
+
+var Attention={};
+Attention.add=function(goodsId){
+    $.ajax({
+        url:'/goodsFavorite/add',
+        type:'get',
+        data:{
+            goodsId:goodsId
+        },
+        success:function(data){
+            if(data.code=="1"){
+                $.alert("您已关注该商品")
+                $('.attention span').html('已关注');
+            }else{
+                console.log(data.message);
+            }
+        }
+    })
+}

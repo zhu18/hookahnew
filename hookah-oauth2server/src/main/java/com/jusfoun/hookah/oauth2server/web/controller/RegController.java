@@ -8,6 +8,7 @@ import com.jusfoun.hookah.core.domain.vo.UserValidVo;
 import com.jusfoun.hookah.core.exception.*;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.core.utils.SMSUtil;
 import com.jusfoun.hookah.core.utils.StrUtil;
 import com.jusfoun.hookah.oauth2server.config.MyProps;
 import com.jusfoun.hookah.rpc.api.MgSmsValidateService;
@@ -49,14 +50,15 @@ public class RegController {
     @Resource
     private MgSmsValidateService mgSmsValidateService;
 
-    @RequestMapping(value = "/reg",method = RequestMethod.GET)
-    public String reg(Model model){
+    @RequestMapping(value = "/reg", method = RequestMethod.GET)
+    public String reg(Model model) {
         return "register";
     }
 
-    @RequestMapping(value = "/reg",method = RequestMethod.POST)
+    @RequestMapping(value = "/reg", method = RequestMethod.POST)
+    @ResponseBody
     public ReturnData pReg(UserValidVo user, HttpServletRequest request, RedirectAttributes redirectAttributes, Model model) {
-        boolean isExists = true,valid=true;
+        boolean isExists = true;
         List<Condition> filters = new ArrayList();
         //1、校验图片验证码 ,=======>可以跳过这步，我觉得不校验问题也不大
         try {
@@ -70,8 +72,7 @@ public class RegController {
             //2、校验短信验证码
             //获取库里缓存的验证码
 
-            filters.add(Condition.eq("mobile", user.getMobile()));
-            MgSmsValidate sms = mgSmsValidateService.selectOne(filters);
+            MgSmsValidate sms = (MgSmsValidate) session.getAttribute(HookahConstants.SMS_SESSION_KEY);  //存在session里
             if (sms == null) { //验证码错误或者已过期
                 throw new UserRegExpiredSmsException("短信验证码验证未通过,短信验证码已过期");
             } else {
@@ -109,68 +110,67 @@ public class RegController {
                 throw new UserRegExistMobileException("该手机已经被注册");
             }
             //4.1 邮箱
-            filters.clear();
-            filters.add(Condition.eq("email", user.getEmail()));
-            isExists = userService.exists(filters);
-            if (isExists) {
-                throw new UserRegExistEmailException("该邮箱已经被注册");
-            }
+//            filters.clear();
+//            filters.add(Condition.eq("email", user.getEmail()));
+//            isExists = userService.exists(filters);
+//            if (isExists) {
+//                throw new UserRegExistEmailException("该邮箱已经被注册");
+//            }
             //其他校验规则
         } catch (Exception e) {
-            valid = false;
             logger.info(e.getMessage());
-            ReturnData.error(e.getMessage());
+            return ReturnData.error(e.getMessage());
         }
 
-        Map<String,String> host = myProps.getHost();
-        Map<String,String> site = myProps.getSite();
-        if(valid){
-            user.setAddTime(new Date());
-            user.setRegTime(new Date());
-            user.setIsEnable((byte)1);
-            user.setHeadImg(site.get("user-default-img"));
-            User regUser = userService.insert((User)user);
-            //redirectAttributes.addAttribute(regUser);
+        Map<String, String> host = myProps.getHost();
+        Map<String, String> site = myProps.getSite();
+        user.setAddTime(new Date());
+        user.setRegTime(new Date());
+        user.setIsEnable((byte) 1);
+        user.setHeadImg(site.get("user-default-img"));
+        User regUser = userService.insert((User) user);
+        //redirectAttributes.addAttribute(regUser);
 
-            //TODO...登录日志
-            logger.info("用户[" + user.getUserName() + "]注册成功(这里可以进行一些注册通过后的一些系统参数初始化操作)");
+        //TODO...登录日志
+        logger.info("用户[" + user.getUserName() + "]注册成功(这里可以进行一些注册通过后的一些系统参数初始化操作)");
 //            return "redirect:"+host.get("website")+"/login";
-            return ReturnData.success("注册成功");
-        }else {
-            return ReturnData.error();
-        }
+        return ReturnData.success("注册成功");
     }
 
     /**
      * 发送注册短信
+     *
      * @param mobile
      * @return
      */
     @RequestMapping(value = "/reg/sendSms", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnData sendSms(String mobile) {
-        List<Condition> filters = new ArrayList();
-        filters.add(Condition.eq("mobile",mobile));
-        MgSmsValidate sms = mgSmsValidateService.selectOne(filters);
-        if(sms==null){//如果近期没有发送过
-            String code = StrUtil.random(4);
-            StringBuffer content =  new StringBuffer();
-            content.append("验证码为：").append(code).append(",有效时间").append(HookahConstants.SMS_DURATION_MINITE).append("分钟。");
+    public ReturnData sendSms(String mobile, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String code = StrUtil.random(4);
+        StringBuffer content = new StringBuffer();
+        content.append("验证码为：").append(code).append(",有效时间").append(HookahConstants.SMS_DURATION_MINITE).append("分钟。");
 
-            sms = new MgSmsValidate();
-            sms.setMobile(mobile);
-            sms.setSmsContent(content.toString());
-            sms.setValidCode(code);
-            mgSmsValidateService.insert(sms);
-            return ReturnData.success("短信验证码已经发送");
-        }else{    //刚刚发送过验证码，避免重复发送
-            ReturnData.error("请不要频繁发送短信验证码");
-        }
-        return  ReturnData.fail();
+        MgSmsValidate sms = new MgSmsValidate();
+        sms.setMobile(mobile);
+        sms.setSmsContent(content.toString());
+        sms.setValidCode(code);
+        //mgSmsValidateService.insert(sms);
+        logger.info("sms: {}", code);
+        logger.info("发送短信，接收方：{}，内容为:{}",sms.getMobile(),sms.getSmsContent());
+        SMSUtil.sendSMS(sms.getMobile(),sms.getSmsContent());
+
+        //缓存短信
+        sms.setSendTime(new Date());
+
+        session.setAttribute(HookahConstants.SMS_SESSION_KEY, sms);  //存在session里
+        return ReturnData.success("短信验证码已经发送");
+
     }
 
     /**
      * 校验邮箱
+     *
      * @param email
      * @return
      */
@@ -178,16 +178,17 @@ public class RegController {
     @ResponseBody
     public ReturnData checkEmail(String email) {
         List<Condition> filters = new ArrayList();
-        filters.add(Condition.eq("email",email));
+        filters.add(Condition.eq("email", email));
         boolean isExists = userService.exists(filters);
-        if(isExists){
+        if (isExists) {
             return ReturnData.fail("该邮箱已经被注册");
         }
-        return  ReturnData.success();
+        return ReturnData.success();
     }
 
     /**
      * 校验邮箱
+     *
      * @param mobile
      * @return
      */
@@ -195,16 +196,17 @@ public class RegController {
     @ResponseBody
     public ReturnData checkMobile(String mobile) {
         List<Condition> filters = new ArrayList();
-        filters.add(Condition.eq("mobile",mobile));
+        filters.add(Condition.eq("mobile", mobile));
         boolean isExists = userService.exists(filters);
-        if(isExists){
+        if (isExists) {
             return ReturnData.fail("该手机已经被注册");
         }
-        return  ReturnData.success();
+        return ReturnData.success();
     }
 
     /**
      * 校验邮箱
+     *
      * @param username
      * @return
      */
@@ -212,26 +214,31 @@ public class RegController {
     @ResponseBody
     public ReturnData checkUserName(String username) {
         List<Condition> filters = new ArrayList(1);
-        filters.add(Condition.eq("userName",username));
+        filters.add(Condition.eq("userName", username));
         boolean isExists = userService.exists(filters);
-        if(isExists){
+        if (isExists) {
             return ReturnData.fail("该用户名已经被注册");
         }
-        return  ReturnData.success();
+        return ReturnData.success();
     }
 
 
     /**
      * 校验手机验证码
+     *
      * @param validSms
      * @return
      */
     @RequestMapping(value = "/reg/checkSms", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnData checkValidSms(String mobile,String validSms) {
-        List<Condition> filters = new ArrayList(1);
-        filters.add(Condition.eq("mobile",mobile));
-        MgSmsValidate sms = mgSmsValidateService.selectOne(filters);
+    public ReturnData checkValidSms(String mobile, String validSms, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        logger.info("mobile--validSms: {},{}", mobile, validSms);
+        MgSmsValidate sms = (MgSmsValidate) session.getAttribute(HookahConstants.SMS_SESSION_KEY);  //存在session里
+
+//        List<Condition> filters = new ArrayList(1);
+//        filters.add(Condition.eq("mobile",mobile));
+//        MgSmsValidate sms = mgSmsValidateService.selectOne(filters);
 
         if (sms == null) { //验证码已过期
             return ReturnData.error("短信验证码验证未通过,短信验证码已过期");
@@ -240,6 +247,6 @@ public class RegController {
                 return ReturnData.fail("短信验证码验证未通过,短信验证码错误");
             }
         }
-        return  ReturnData.success();
+        return ReturnData.success();
     }
 }
