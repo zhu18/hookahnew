@@ -97,9 +97,26 @@ $(function () {
             console.log(cab);
             if(parseInt(ul.css('left'))>=0){
             }else {
-                ul.css({
-                    'left':parseInt(ul.css('left'))+cab
-                });
+                console.log(pic);
+                console.log(i);
+                console.log(k);
+                // ul.css({
+                //     'left':parseInt(ul.css('left'))+cab
+                // });
+                if(pic>0 && i==0 && k==0){
+                    ul.css({
+                        'left':parseInt(ul.css('left'))+cab*pic
+                    });
+                }else  if(i>0 && k==0){
+                    console.log((cab / 5) * lis.length);
+                    ul.css({
+                        'left':parseInt(ul.css('left'))+cab*pic+(cab/5)*lis.length
+                    });
+                }else if(k>0){
+                    ul.css({
+                        'left':parseInt(ul.css('left'))+cab*pic+cab*k+(cab/5)*lis.length
+                    });
+                }
             }
         };
         $(window).resize(function() {
