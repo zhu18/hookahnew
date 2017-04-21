@@ -15,14 +15,16 @@
     margin-bottom:20px;
 }
 .article-box .order-items .order-head th{
-    padding:0 10px;
+    padding:10px 10px;
 }
 .article-box .order-items .order-head{
-    line-height: 40px;
+    /*line-height: 40px;*/
     background: #f1f1f1;
     overflow: hidden;
-
     font-size:13px;
+}
+.article-box .order-items .order-head .d{
+    width: 50px;
 }
 .article-box .order-items tr div{
     width: 60px;
@@ -32,7 +34,9 @@
 .article-box table tr{
     border-bottom: 1px solid #ccc;
 }
-.article-box table tr td{padding:0 10px;}
+.article-box table tr td{
+    text-align: center;
+    padding:0 10px;}
 .article-box table tr .imgs{
     text-align: center;
 }
