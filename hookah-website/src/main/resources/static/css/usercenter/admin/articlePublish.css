@@ -59,7 +59,9 @@ table .tips ul li {
     line-height: 24px;
 }
 table .select-box select{
-    height:32px;
+    height:28px;
+    line-height:18px;
+    padding:2px 0
 }
 .pulish-btn {
     text-align: center;
