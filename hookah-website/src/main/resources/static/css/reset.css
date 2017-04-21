@@ -26,6 +26,7 @@ a {
 a:hover {
 	color: #078cfc;
 	text-decoration: none;
+	outline: none;
 }
 sup {
 	vertical-align: top;
