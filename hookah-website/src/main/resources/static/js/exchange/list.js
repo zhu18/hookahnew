@@ -12,7 +12,7 @@ function loadPageData(data){ //渲染页面数据
             }else if(list[i].shopFormat == 2 ){
                 shopFormat = '年';
             }
-            var n=5*i-1
+            var n=5*i-1;
 			if(i==n){
                 html += '<li class="margin-right-0">';
                 html += '<a class="item-top" href="/exchange/details?id='+list[i].goodsId+'">';
@@ -38,8 +38,6 @@ function loadPageData(data){ //渲染页面数据
                 html += '</div>';
                 html += '</li>';
 			}
-
-
         }
         $('.order-list ul').html(html);
     }else{
