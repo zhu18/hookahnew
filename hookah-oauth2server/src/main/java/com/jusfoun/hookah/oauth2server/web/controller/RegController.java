@@ -72,6 +72,7 @@ public class RegController {
             if (!value.equals(captcha)) {
                 throw new UserRegInvalidCaptchaException("图片验证码验证未通过,验证码错误");
             }
+            session.removeAttribute(Constants.KAPTCHA_SESSION_KEY);
             //2、校验短信验证码
             //获取库里缓存的验证码
 
@@ -83,6 +84,7 @@ public class RegController {
                     throw new UserRegInvalidSmsException("短信验证码验证未通过,短信验证码错误");
                 }
             }
+            redisOperate.del(user.getMobile());  //删除缓存
 
             //3、校验密码一致
             String password = user.getPassword().trim();
