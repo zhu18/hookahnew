@@ -1,4 +1,10 @@
 *{padding:0;margin:0 auto;}  /* 针对IE8的标准 */
+body{
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-ms-user-select:none;
+	user-select:none;
+}
 /*menu-start*/
 .exchange-index-menu {
 	position: absolute;

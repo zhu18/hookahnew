@@ -103,60 +103,15 @@ $(function () {
         });
         var left="";
         var flag='';
-        var j=0;
         var k=0;
         function playLeft() {
             if(flag==1)return;
-            // if(parseInt(ul.css('transform').split(',').slice(-2, -1))>=0){
-            //     pic=Math.ceil(len/5)-2;
-            //     i=0;
-            //     flag=1;
-            //     j=1;
-            //     k=1;
-            // }
-            //
-            // if(k==1){
-            //     ul.css({
-            //         'transform': "translateX(0px)",
-            //         'transition': "none",
-            //         'left': -len  * liWidth
-            //     });
-            //     k=0;
-            //
-            //     ul.transition({transform: "translateX("+(parseInt(ul.css('left'))+screen.width())+"px)",
-            //                    left:'0px'
-            //     }, 500, 'linear', function(){
-            //         arrLeft.on("click",function () {
-            //             playLeft()
-            //         });
-            //     });
-            //     return;
-            // }
-            // if(pic<=(Math.ceil(len/5)-2) && pic >0 ){
-            //     pic--;
-            //     ul.transition({transform: "translateX("+(parseInt(ul.css('transform').split(',').slice(-2, -1))+screen.width())+"px)"}, 500, 'linear', function(){
-            //         arrLeft.on("click",function () {
-            //             playLeft()
-            //         });
-            //     });
-            //     i=0;
-            //
-            // }else if(lis.length<5 && i<=lis.length && i==0){
-            //     i++;
-            //     ul.transition({transform: "translateX("+(parseInt(ul.css('transform').split(',').slice(-2, -1))+liWidth*lis.length)+"px)"}, 500, 'linear', function(){
-            //         arrLeft.on("click",function () {
-            //             playLeft()
-            //         });
-            //     });
-            // }
-            // arrLeft.unbind("click");
             if(parseInt(ul.css('left'))>=0){
                 pic=Math.ceil(len/5)-2;
                 ul.css({'left':'0px'});
                 // 点击左键
-                j=1;
                 i=1;
-                // k=1;
+                k=0;
                 ul.css({
                     'left': -len  * liWidth
                 });
@@ -164,92 +119,35 @@ $(function () {
                 return;
             }
             if(k==1){
+                pic=Math.ceil(len/5)-2;
                 k=0;
                 i=1;
-                j=1;
                 animate(ul,parseInt(ul.css('left'))+screen.width());
                 return;
             }
             if(pic<=(Math.ceil(len/5)-2) && pic>0){
                 pic--;
                 animate(ul,parseInt(ul.css('left'))+screen.width());
-            }else if(lis.length<5 && i<=lis.length && i!=0){
-                i--;
+                i=0;
+            }else if(lis.length<5 && i<=lis.length && i==0){
+                i++;
                 animate(ul,parseInt(ul.css('left'))+liWidth*lis.length);
             }
 
         }
         function playRight() {
             if(flag==1)return;
-            // arrRight.unbind("click");
-            // if(parseInt(ul.css('transform').split(',').slice(-2,-1))==0){
-            //     pic=0;
-            //     j=0;
-            //     i=0;
-            // }
-            // if(j==1){
-            //     ul.transition({transform: "translateX("+(ul.css('transform').split(',').slice(-2, -1)-screen.width())+"px)"}, 500, 'linear', function(){
-            //         arrRight.on("click",function () {
-            //             playRight()
-            //         });
-            //     });
-            //     j=0;
-            //     k=1;
-            //     pic=0;
-            //     return;
-            // }
-            // if(k==1){
-            //     ul.css({
-            //         'transform': "translateX(0px)",
-            //         'transition': "none",
-            //         'left': 0
-            //     });
-            //     k=0;
-            //     i=0;
-            //     pic=0;
-            // }
-            // if(pic<Math.ceil(len/5)-2 && i==0){
-            //     ul.transition({transform: "translateX("+(ul.css('transform').split(',').slice(-2, -1)-screen.width())+"px)"}, 500, 'linear', function(){
-            //         arrRight.on("click",function () {
-            //             playRight()
-            //         });
-            //     });
-            //     pic++;
-            // }else if(lis.length<5 && i<lis.length && i==0){
-            //     i++;
-            //     ul.transition({transform: "translateX("+(ul.css('transform').split(',').slice(-2, -1) - liWidth*lis.length )+"px)"}, 500, 'linear', function(){
-            //         arrRight.on("click",function () {
-            //             playRight()
-            //         });
-            //     });
-            // }else if(i!=0){
-            //     ul.transition({transform: "translateX("+(parseInt(ul.css('transform').split(',').slice(-2,-1))-screen.width())+"px)"}, 500, 'linear', function(){
-            //         arrRight.on("click",function () {
-            //             playRight()
-            //         });
-            //     });
-            //     // 记录是不是进入最后一张
-            //     k=1;
-            //     i=0;
-            // }
-            // arrRight.unbind("click");
             // 初始值判断
             if(parseInt(ul.css('left'))==0){
                 pic=0;
-                j=0;
                 i=0;
+                k=0;
             }
             if(k==1){
                 ul.css({'left': 0});
                 k=0;
                 i=0;
                 pic=0;
-            }
-            if(j==1 && pic!=0){
-                animate(ul,parseInt(ul.css('left'))-screen.width());
-                j=0;
-                k=1;
-                return
             }
             if(pic<Math.ceil(len/5)-2 && i==0){
                 animate(ul,parseInt(ul.css('left'))-screen.width());
