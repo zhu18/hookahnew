@@ -103,7 +103,7 @@ public class GenericServiceImpl<Model extends GenericModel, ID extends Serializa
     public Pagination<Model> getListInPage(Integer pageNum, Integer pageSize, List<Condition> filters,
                                            List<OrderBy> orderBys) {
         // TODO Auto-generated method stub
-        PageHelper.startPage(pageNum, pageSize, getOrderBy(orderBys));
+        PageHelper.startPage(pageNum, pageSize);
         Page<Model> page = (Page<Model>) dao.selectByExample(convertFilter2Example(filters, orderBys));
         Pagination<Model> pagination = new Pagination<Model>();
         pagination.setTotalItems(page.getTotal());
