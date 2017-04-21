@@ -1,0 +1,19 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/usercenter/buyer/buyer.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray ">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        viewDetails
+    </div>
+</div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
