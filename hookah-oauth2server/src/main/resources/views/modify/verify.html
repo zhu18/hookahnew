@@ -66,19 +66,17 @@ var htmlPart = {
 					</div>
 
 
-					<div class="ui-form-item  ui-form-item-error">
+					<div class="ui-form-item">
 						<label class="ui-label">验证码：</label>
 
 						<div class="checkcode-warp">
-							<input name="_fm.v._0.ph" id="J_Phone_Checkcode" class="ui-input ui-input-checkcode-new"
-								   type="text" maxlength="6" placeholder="6位数字" data-widget-cid="widget-1"
-								   data-explain="">
-							<button id="J_GetCode" class="getcheckcode ft-orange" type="button"
-									data-widget-cid="widget-2">获取短信校验码
+							<input name="captcha" id="J_Phone_Checkcode" class="ui-input ui-input-checkcode-new"
+								   type="text" placeholder="请输入验证码" >
+							<button id="J_GetCode" class="getcheckcode ft-orange" type="button">获取短信校验码
 							</button>
-							<a class="getcheckcode fn-hide" id="J_GetUpmsg">获取其他验证方式</a>
+							<!--<a class="getcheckcode fn-hide" id="J_GetUpmsg">获取其他验证方式</a>-->
 						</div>
-						<div class="ui-form-explain"><i class="ui-tiptext-icon iconfont"></i>请输入验证码</div>
+						<div class="ui-form-explain" style="display: none"><i class="ui-tiptext-icon iconfont"></i><span>请输入验证码</span></div>
 					</div>
 					<style>
 						.identityError {
@@ -239,9 +237,6 @@ var htmlPart = {
 						<a href="javascript:void(0)"
 						   target="_self" class="ui-form-other">其他验证方式</a>
 					</div>
-
-					<input type="hidden" name="ua" id="UA_InputId"
-						   value="089#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">
 				</form>
 
 			</div>
@@ -249,6 +244,7 @@ var htmlPart = {
 	</div>
 </div>
 <script>
+	var mobile = ${userObj.mobile};
 	$.getUrlParam = function (key) {
 		var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
 		var result = window.location.search.substr(1).match(reg);
@@ -256,13 +252,77 @@ var htmlPart = {
 	};
 	var type = $.getUrlParam('type');
 	function check(){
-		window.location.href = '${host.auth}/modify/'+type;
-	};
-	$('#J_Phone_Checkcode').on('blur', function(){
-		if($(this).val()){
+//		window.location.href = '${host.auth}/modify/'+type;
 
+	};
+	function mobileNumIsTrue(mobile,validSms){ //验证手机验证码是否正确
+		$('.loading_btns').show();
+		$.ajax({
+			url:'${host.auth}/sms/checkSms',
+			type:'post',
+			data:{
+				mobile:mobile,
+				validSms:validSms
+			},
+			success:function(data){
+				if(data.code == 1){
+
+				}else if(data.code == 0){
+					$('.loading_btns').hide();
+					$('#J_MobileSms').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_IMAGECHECKCODE_INVALID).siblings('.iconfont').html('󰅕');
+				}else{
+					$('.loading_btns').hide();
+					$.alert(data.message);
+				}
+			}
+		});
+	}
+	$('#J_Phone_Checkcode').on('blur', function(){
+		if(!$(this).val()){
+			$(this).parents('.ui-form-item').addClass('ui-form-item-error');
+			$(this).parents('.checkcode-warp').siblings('.ui-form-explain').show()
+		}else{
+			$(this).parents('.ui-form-item').removeClass('ui-form-item-error');
+			$(this).parents('.checkcode-warp').siblings('.ui-form-explain').hide()
 		}
 	});
+	$('#J_GetCode').click(function(){
+		var that = $(this);
+		$.ajax({
+			url:'${host.auth}/sms/sendSms',
+			type:'post',
+			data:{
+				mobile:mobile
+			},
+			success:function(data){
+				if(data.code == 1){
+					$.alert(data.data);
+					settime(that);
+				}else{
+					$.alert('获取验证码失败，请重新获取');
+				}
+			}
+		});
+	});
+	var countdown = 120;
+	function settime(that) {
+		if (countdown == 0) {
+			that.removeAttr("disabled");
+			that.html("重新获取验证码");
+			that.removeClass('btn-disabled');
+			countdown = 60;
+			return;
+		} else {
+			that.attr("disabled", true);
+			that.html("重新获取(" + countdown + ")");
+			that.addClass('btn-disabled');
+			countdown--;
+		}
+		setTimeout(function () {
+				settime(that)
+			}
+			, 1000)
+	}
 </script>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}

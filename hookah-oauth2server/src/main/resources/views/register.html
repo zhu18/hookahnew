@@ -422,7 +422,7 @@ var htmlPart = {
 	}
 	function getMobileVerify(that){ //发送手机号验证码
 		$.ajax({
-			url:'${host.auth}/reg/sendSms',
+			url:'${host.auth}/sms/sendSms',
 			type:'post',
 			data:{
 				mobile:$('#J_Mobile').val()
@@ -678,7 +678,7 @@ var htmlPart = {
 	function mobileNumIsTrue(mobile,validSms){ //验证手机验证码是否正确
 		$('.loading_btns').show();
 		$.ajax({
-			url:'${host.auth}/reg/checkSms',
+			url:'${host.auth}/sms/checkSms',
 			type:'post',
 			data:{
 				mobile:mobile,

@@ -242,6 +242,10 @@ a:hover, a:visited {
 	border: 0;
 	cursor: pointer;
 }
+.checkcode-warp .getcheckcode.btn-disabled{
+	color: #ccc;
+	cursor: no-drop;
+}
 .ui-tiptext-success .ui-tiptext-icon {
 	color: #b5de70;
 }
