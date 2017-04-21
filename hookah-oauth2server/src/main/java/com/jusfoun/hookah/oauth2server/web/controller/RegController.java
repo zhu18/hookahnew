@@ -143,7 +143,7 @@ public class RegController {
      */
     @RequestMapping(value = "/reg/sendSms", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnData sendSms(String mobile) {
+    public ReturnData sendSms(String mobile,HttpServletRequest request) {
         List<Condition> filters = new ArrayList();
         filters.add(Condition.eq("mobile",mobile));
         MgSmsValidate sms = mgSmsValidateService.selectOne(filters);
@@ -156,7 +156,10 @@ public class RegController {
             sms.setMobile(mobile);
             sms.setSmsContent(content.toString());
             sms.setValidCode(code);
-            mgSmsValidateService.insert(sms);
+            //mgSmsValidateService.insert(sms);
+            HttpSession session = request.getSession();
+            logger.info("capText: {}" , code);
+            session.setAttribute(HookahConstants.SMS_SESSION_KEY, sms);  //存在session里
             return ReturnData.success("短信验证码已经发送");
         }else{    //刚刚发送过验证码，避免重复发送
             ReturnData.error("请不要频繁发送短信验证码");
@@ -223,10 +226,14 @@ public class RegController {
      */
     @RequestMapping(value = "/reg/checkSms", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnData checkValidSms(String mobile,String validSms) {
-        List<Condition> filters = new ArrayList(1);
-        filters.add(Condition.eq("mobile",mobile));
-        MgSmsValidate sms = mgSmsValidateService.selectOne(filters);
+    public ReturnData checkValidSms(String mobile,String validSms,HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        logger.info("mobile--validSms: {},{}" , mobile,validSms);
+        MgSmsValidate sms =(MgSmsValidate) session.getAttribute(HookahConstants.SMS_SESSION_KEY);  //存在session里
+
+//        List<Condition> filters = new ArrayList(1);
+//        filters.add(Condition.eq("mobile",mobile));
+//        MgSmsValidate sms = mgSmsValidateService.selectOne(filters);
 
         if (sms == null) { //验证码已过期
             return ReturnData.error("短信验证码验证未通过,短信验证码已过期");

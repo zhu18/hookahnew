@@ -13,6 +13,7 @@ public class HookahConstants {
 
     /** 短信过期时间，单位随 分 */
     public static final Integer SMS_DURATION_MINITE = 10;
+    public static final String SMS_SESSION_KEY = "SMS_SESSION_KEY";
 
     /** 短信过期时间，单位 分 */
     public static final Integer CAPTCHA_DURATION_MINITE = 30;
