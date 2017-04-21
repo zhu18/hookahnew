@@ -2,15 +2,18 @@
  * Created by wcq on 2017/4/14.
  */
 function loadPageData(data){
-    $("#payAccount").html(data.data.paidCount);
-    $("#noPayAccount").html(data.data.unpaidCount);
-    if(data.data.orders.list.length>0){
-        var list = data.data.orders.list;
+    if(data.data.list){
+        var list = data.data.list;
         var html = '';
         for(var i=0; i<list.length; i++){
             html+= '<tr class="content border-bottom">';
-            html+= '<td class="text-align-center">'+list[i].orderId+'</td>';
-            html+= '<td class="text-align-right">￥&nbsp;'+list[i].orderAmount+'</td>';
+            html+= '<td class="text-align-center">'+list[i].mgOrderGoodsList.orderId+'</td>';
+            html+= '<td class="text-align-center">';
+            html+= '<a href="" class="display-block">'+list[i].mgOrderGoodsList.goodsName+'</a>';
+            html+= '</td>';
+            html+= '<td class="text-align-center">'+list[i].mgOrderGoodsList.goodsNumber+'</td>';
+            html+= '<td class="text-align-center">次</td>';
+            html+= '<td class="text-align-right">￥&nbsp;‘+list[i].mgOrderGoodsList.goodsPrice+‘</td>';
             html+= '<td>'+format(list[i].addTime)+'</td>';
             html+= '<td>未付款</td>';
             html+= '<td class="text-align-center">';
@@ -31,8 +34,6 @@ function loadPageData(data){
             return year+'-'+add(month)+'-'+add(date1)+' '+add(hours)+':'+add(minutes)+':'+add(seconds);
         };
         $('.order tbody').html(html);
-    }else{
-        $('.order tbody').html('<tr class="noData"><td colspan="5">您没有待付款订单！</td></tr>');
     }
 }
 $.jeDate("#startDate", {

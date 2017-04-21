@@ -1,21 +1,23 @@
 function loadPageData(data){
-    $("#payAccount").html(data.data.paidCount);
-    $("#noPayAccount").html(data.data.unpaidCount);
-    if(data.data.orders.list.length > 0){
-        var list = data.data.orders.list;
+    if(data.data.list.length > 0){
+        var list = data.data.list;
         var html = '';
-
         for(var i=0; i<list.length; i++){
             html += '<tr class="content border-bottom">';
-            html += '<td class="text-align-center">'+list[i].orderId+'</td>';
-            html += '<td class="text-align-right">￥&nbsp;'+list[i].orderAmount+'</td>';//订单总金额
+            html += '<td class="text-align-center">'+list[i].mgOrderGoodsList.orderId+'</td>';
+            html += '<td class="text-align-center">';
+            html += '<a href="" class="display-block">'+list[i].mgOrderGoodsList.goodsName+'</a>';
+            html += '</td>';
+            html += '<td class="text-align-center">'+list[i].mgOrderGoodsList.goodsNumber+'</td>';
+            html += '<td class="text-align-center">次</td>';
+            html += '<td class="text-align-right">￥&nbsp;‘+list[i].mgOrderGoodsList.goodsPrice+’</td>';
             html += '<td>'+format(list[i].addTime)+'</td>';
             html += '<td>已付款</td>';
             html += '<td class="text-align-center">';
             html += '<a href="" class="display-block">查看详情</a>';
-            if(list[i].commentFlag==0){
+            if(list.commentFlag==0){
                 html += '<a href="" class="display-block">未评价</a>';
-            }else if(list[i].commentFlag==1){
+            }else if(list.commentFlag==1){
                 html += '<a href="" class="display-block">已评价</a>';
             }
             html += '<a href="" class="display-block">删除</a>';
@@ -35,7 +37,7 @@ function loadPageData(data){
         };
         $('.order tbody').html(html);
     }else{
-		$('.order tbody').html('<tr class="noData"><td colspan="5">没有您的订单！</td></tr>');
+        $('.order tbody').html('<div class="noData">暂无数据</div>');
     }
 }
 $.jeDate("#startDate", {
