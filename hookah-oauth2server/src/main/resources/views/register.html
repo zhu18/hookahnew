@@ -68,7 +68,7 @@ var htmlPart = {
 		            <span class="star">*</span>验证码
               	</span>
 						<div id="register_no_captcha" class="nc-container" data-nc-idx="1">
-							<input class="form-text mobile-text-input" maxlength="20" name="capcha" id="J_Capcha"
+							<input class="form-text mobile-text-input" maxlength="20" name="captcha" id="J_Capcha"
 								   type="text" value="" placeholder="请输入验证码">
 							<div class="captcha-text-btn" id="J_captcha">
 								<img src="${host.host}/captcha">
@@ -685,10 +685,10 @@ var htmlPart = {
 			},
 			success:function(data){
 				if(data.code == 1){
-					$.post("/reg", $("#J_InfoForm").serialize(), function (data) {
+					$.post("${host.auth}/reg", $("#J_InfoForm").serialize(), function (data) {
 						if (data.code == 1) {
 							$.alert("注册成功，马上跳转登录页面");
-							setTimeout("toLogin()", 2000);
+//							setTimeout("toLogin()", 2000);
 						} else {
 							$.alert(data.message);
 						}
