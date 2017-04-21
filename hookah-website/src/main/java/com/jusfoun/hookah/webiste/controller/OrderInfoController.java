@@ -101,6 +101,7 @@ public class OrderInfoController extends BaseController {
             vo.setFormatNumber((long)format.getNumber());
             vo.setGoodsPrice(format.getPrice());
             vo.setFormat(format);
+            vo.setFormatId(formatId);
             vo.setGoods(g);
             list.add(vo);
             model.addAttribute("orderAmount",goodsAmount);
