@@ -1927,6 +1927,7 @@ dl {
 .search .search-order .order-list ul {
 	list-style: none;
 	padding: 0;
+	margin-right: -15px;
 }
 .search .search-order .order-list ul:before, .search .search-order .order-list ul:after {
 	content: " ";
@@ -1944,9 +1945,7 @@ dl {
 	border: 1px solid #E5E5E5;
 	margin: 10px 10px 0 0;
 }
-.search .search-order .order-list ul li:nth-child(5n) {
-	margin-right: 0;
-}
+
 .search .search-order .order-list ul li .item-top {
 	display: block;
 }
@@ -2391,6 +2390,7 @@ dl {
 .exchange-search .order-list ul {
 	list-style: none;
 	padding: 0;
+	margin-right: -15px;
 }
 .exchange-search .order-list ul:before, .search .search-order .order-list ul:after {
 	content: " ";
