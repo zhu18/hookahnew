@@ -23,9 +23,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -135,13 +133,41 @@ public class OrderInfoController extends BaseController {
     @RequestMapping(value = "/order/pageData", method = RequestMethod.POST)
     @ResponseBody
     public ReturnData findByPage(Integer pageNumber, Integer pageSize, Integer payStatus, Integer commentFlag, Date startDate, Date endDate, String domainName, Model model) {
+        Map map = new HashMap<>(3);
         try {
+            String userId = this.getCurrentUser().getUserId();
+
             if (pageNumber==null) pageNumber = Integer.parseInt(PAGE_NUM);
             if (pageSize==null) pageSize = Integer.parseInt(PAGE_SIZE);
 
-            Pagination<OrderInfoVo> pOrders = orderInfoService.findByPage(this.getCurrentUser().getUserId(),pageNumber,pageSize,payStatus,commentFlag,startDate,endDate,domainName);
-            logger.info(JsonUtils.toJson(pOrders));
-            return ReturnData.success(pOrders);
+            List<Condition> filters = new ArrayList<>();
+            if (startDate != null) {
+                filters.add(Condition.ge("addTime", startDate));
+            }
+            if (endDate != null) {
+                filters.add(Condition.le("addTime", endDate));
+            }
+            if (commentFlag != null) {
+                filters.add(Condition.eq("commentFlag", commentFlag));
+            }
+            if (domainName != null) {
+                filters.add(Condition.like("domainName", "%" + domainName + "%"));
+            }
+            filters.add(Condition.eq("userId", userId));
+            filters.add(Condition.eq("isDeleted", 0));
+
+            filters.add(Condition.eq("payStatus", 1));
+            Long paid = orderInfoService.count(filters);  //已支付数量
+            map.put("paidCount",paid);
+            filters.add(Condition.eq("payStatus", 0));
+            Long unpaid = orderInfoService.count(filters); //未支付数量
+            map.put("unpaidCount",unpaid);
+
+            Pagination<OrderInfoVo> pOrders = orderInfoService.findByPage(userId,pageNumber,pageSize,payStatus,commentFlag,startDate,endDate,domainName);
+            map.put("orders",pOrders);
+
+            logger.info(JsonUtils.toJson(map));
+            return ReturnData.success(map);
         } catch (Exception e) {
             logger.error("分页查询订单错误", e);
             return ReturnData.error("分页查询错误");
