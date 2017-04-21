@@ -128,9 +128,8 @@ $(function () {
             if(pic<=(Math.ceil(len/5)-2) && pic>0){
                 pic--;
                 animate(ul,parseInt(ul.css('left'))+screen.width());
-                i=0;
-            }else if(lis.length<5 && i<=lis.length && i==0){
-                i++;
+            }else if(lis.length<5 && i<=lis.length && i!=0){
+                i--;
                 animate(ul,parseInt(ul.css('left'))+liWidth*lis.length);
             }
 
@@ -149,7 +148,7 @@ $(function () {
                 i=0;
                 pic=0;
             }
-            if(pic<Math.ceil(len/5)-2 && i==0){
+            if(pic<Math.ceil(len/5)-2){
                 animate(ul,parseInt(ul.css('left'))-screen.width());
                 pic++;
             }else if(lis.length<5 && i<lis.length && i==0){
