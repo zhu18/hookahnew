@@ -44,8 +44,19 @@ public class ModifyController {
     }
 
     @RequestMapping(value = "/modify/success", method = RequestMethod.GET)
-    public String success(Model model) {
-        model.addAttribute("title", "修改成功");
+    public String success(String type,Model model) {
+        model.addAttribute("title", "成功");
+        if(type.equals("mobile")){
+            model.addAttribute("message", "手机号修改成功，请牢记");
+        }else if(type.equals("mail")){
+            model.addAttribute("message", "邮箱修改成功，请牢记");
+        }else if(type.equals("loginPassword")){
+            model.addAttribute("message", "登录密码修改成功，请牢记");
+        }else if(type.equals("payPassword")){
+            model.addAttribute("message", "支付密码修改成功，请牢记");
+        }else if(type.equals("setPayPassword")){
+            model.addAttribute("message", "支付密码设置成功，请牢记");
+        }
         return "modify/success";
     }
 
@@ -64,7 +75,7 @@ public class ModifyController {
             user.setMobile(userForm.getMobile());
             try {
                 userService.updateById(user);
-                return "redirect:/modify/success";
+                return "redirect:/modify/success?type=mobile";
             } catch (Exception e) {
                 model.addAttribute("error","修改错误");
                 return "modify/mobile";

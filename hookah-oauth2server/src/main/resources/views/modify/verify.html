@@ -87,155 +87,11 @@ var htmlPart = {
 							color: #FF5243;
 						}
 					</style>
-
-
-					<!--<script type="text/javascript">-->
-						<!--seajs.use(['arale/validator/0.9.5/validator', '$', 'alipay/button-count/1.1.2/button-count', 'arale/select/0.9.9/select.js'], function (Validator, jQuery, ButtonCount, Select) {-->
-							<!--jQuery(function () {-->
-								<!--function showExp(ele, msg, toggleClass) {-->
-									<!--var item = jQuery(ele).parent(".ui-form-item");-->
-									<!--var explain = item.find(".ui-form-explain");-->
-									<!--if (explain.length === 0) {-->
-										<!--explain = jQuery('<div class="ui-form-explain"></div>').appendTo(item);-->
-									<!--}-->
-									<!--var className = 'ui-form-item ' + toggleClass;-->
-									<!--explain.html(msg);-->
-									<!--item.attr('class', className);-->
-								<!--}-->
-
-								<!--var errorIcon = '<i class="ui-tiptext-icon iconfont">&#xF045;</i>',-->
-									<!--successIcon = '<i class="ui-tiptext-icon iconfont">&#xF049;</i>';-->
-
-
-								<!--//校验提示信息-->
-								<!--var messages = {-->
-									<!--checkCodeRequired: errorIcon + '请输入验证码'-->
-								<!--};-->
-
-								<!--Validator.addRule('limLength', function (options) {-->
-									<!--var element = options.element;-->
-									<!--var rule = /^[+\-]?[0-9][0-9]*(\.[0-9]+)?([eE][+\-][1-9][0-9]*)?$|^[+\-]?0?\.[0-9]+([eE][+\-][1-9][0-9]*)?$/;-->
-									<!--var l = element.val().length;-->
-									<!--return rule.test(element.val()) && l === Number(options.len);-->
-								<!--}, errorIcon + '{{display}}是{{len}}位数字，请重新输入');-->
-
-								<!--var validator = new Validator({-->
-									<!--element: '#J_Form',-->
-									<!--autoSubmit: true,-->
-									<!--onItemValidate: function (element) {-->
-										<!--if (jQuery(element).attr('type') === 'text') {-->
-											<!--var val = jQuery(element).val();-->
-											<!--val = jQuery.trim(val);-->
-											<!--jQuery(element).val(val);-->
-										<!--}-->
-									<!--}-->
-								<!--});-->
-
-
-								<!--validator.addItem({-->
-									<!--element: '#J_Phone_Checkcode',-->
-									<!--required: true,-->
-									<!--rule: "limLength{len:6}",-->
-									<!--errormessageRequired: messages.checkCodeRequired,-->
-									<!--display: '验证码'-->
-								<!--});-->
-
-
-								<!--var action;-->
-								<!--var buttonCount = new ButtonCount({-->
-									<!--element: jQuery('#J_GetCode'),-->
-									<!--disabledClass: 'ft-gray',-->
-									<!--enabledClass: 'ft-orange',-->
-									<!--initialize: true,-->
-									<!--hook: {-->
-										<!--url: 'https://passport.alibaba.com/iv/phone/send_code.do?htoken=gyLNtRokTMmG8hIgOeSzYjNoFPme1NW7fH3DMkk73ww',-->
-										<!--type: "GET",-->
-										<!--dataType: "json",-->
-										<!--data: {},-->
-										<!--cache: false-->
-									<!--},-->
-									<!--count: 60,-->
-									<!--countTemplate: '{{count}} 秒后，重新获取验证码'-->
-								<!--}).on('success', function (data) {-->
-									<!--var data = data[0];-->
-									<!--if (data.content.success) {-->
-
-										<!--if (data.content.nextAction) {-->
-											<!--action = data.content.action;-->
-										<!--}-->
-										<!--var txt = successIcon + '验证码已发送到你的手机，15分钟内输入有效，验证码等同于密码，打死也不能告诉别人';-->
-										<!--showExp(jQuery('.checkcode-warp'), txt, 'ui-tiptext-success');-->
-
-									<!--} else {-->
-										<!--buttonCount.stop();-->
-										<!--showExp(jQuery('.checkcode-warp'), errorIcon + data.content.value, 'ui-form-item-error');-->
-									<!--}-->
-								<!--}).on('error', function (data) {-->
-									<!--buttonCount.stop();-->
-									<!--showExp(jQuery('.checkcode-warp'), errorIcon + '网络异常，请稍后再试', 'ui-form-item-error');-->
-								<!--}).on('click', function () {-->
-									<!--var ajaxHook = this.get('hook');-->
-
-									<!--if (jQuery('#J_MobileVal').length > 0) {-->
-										<!--ajaxHook.data.phone = jQuery('#J_MobileVal').val();-->
-										<!--//ajaxHook.data.common = "false";-->
-										<!--ajaxHook.data.type = "phone";-->
-										<!--ajaxHook.data.area = jQuery('#J_MobileVal').attr("data");-->
-										<!--ajaxHook.data.tag = jQuery('#J_MobileVal').attr("data");-->
-										<!--jQuery('#areaCode').val(ajaxHook.data.area);-->
-										<!--this.set('hook', ajaxHook);-->
-										<!--showExp(jQuery('.checkcode-warp'), '正在发送验证码&hellip;', 'ui-form-item-loading');-->
-										<!--return;-->
-									<!--}-->
-									<!--ajaxHook.data.phone = jQuery('#J_Mobile').find('option:checked').val();-->
-									<!--ajaxHook.data.type = "phone";-->
-									<!--ajaxHook.data.area = jQuery('#J_Mobile').find('option:checked').attr("data");-->
-									<!--if (jQuery('#J_MobileTxt').length > 0 && jQuery('#J_MobileTxt').val() !== '') {-->
-										<!--ajaxHook.data.area = jQuery('#country').find('option:checked').val();-->
-										<!--ajaxHook.data.tag = jQuery('#country').find('option:checked').val();-->
-									<!--} else {-->
-										<!--ajaxHook.data.area = jQuery('#J_Mobile').find('option:checked').attr("data");-->
-										<!--ajaxHook.data.tag = jQuery('#J_Mobile').find('option:checked').attr("data");-->
-									<!--}-->
-									<!--jQuery('#areaCode').val(ajaxHook.data.area);-->
-									<!--this.set('hook', ajaxHook);-->
-									<!--showExp(jQuery('.checkcode-warp'), '正在发送验证码&hellip;', 'ui-form-item-loading');-->
-								<!--}).on('stop', function () {-->
-									<!--jQuery('#J_GetCode').html('重新获取验证码');-->
-
-									<!--if (action) {-->
-										<!--jQuery('#J_GetCode').hide();-->
-										<!--jQuery('#J_GetUpmsg').attr('href', action);-->
-										<!--jQuery('#J_GetUpmsg').show();-->
-										<!--jQuery('#J_GetUpmsg').parent(".ui-form-item").find(".ui-form-explain").hide();-->
-
-									<!--}-->
-								<!--});-->
-
-
-								<!--if (jQuery('#J_Mobile').length > 0) {-->
-									<!--var a = new Select({-->
-										<!--trigger: '#J_Mobile'-->
-									<!--}).render();-->
-
-
-									<!--a.on('change', function (target) {-->
-										<!--var code = target.attr('data-value');-->
-
-									<!--});-->
-
-								<!--}-->
-
-							<!--});-->
-						<!--});-->
-
-					<!--</script>-->
-
-
-					<div class="ui-form-item">
+					<div class="ui-form-item form_btn">
+						<div class="loading_btns"></div>
 						<input type="button" id="J_goPageBtn" value=" 确定" onclick="return check()" class="ui-button ui-button-lorange">
-						<a href="javascript:void(0)"
-						   target="_self" class="ui-form-other">其他验证方式</a>
+						<!--<a href="javascript:void(0)"-->
+						   <!--target="_self" class="ui-form-other">其他验证方式</a>-->
 					</div>
 				</form>
 
@@ -253,26 +109,36 @@ var htmlPart = {
 	var type = $.getUrlParam('type');
 	function check(){
 //		window.location.href = '${host.auth}/modify/'+type;
-
+		if($('#J_Phone_Checkcode').val() && $('#J_Phone_Checkcode').val().length >= 4){
+			mobileNumIsTrue()
+		}else{
+			$('#J_Phone_Checkcode').parents('.ui-form-item').addClass('ui-form-item-error');
+			$('#J_Phone_Checkcode').parents('.checkcode-warp').siblings('.ui-form-explain').show().children('span').html('验证码不符合要求')
+			return false;
+		}
 	};
-	function mobileNumIsTrue(mobile,validSms){ //验证手机验证码是否正确
+	function mobileNumIsTrue(){ //验证手机验证码是否正确
 		$('.loading_btns').show();
 		$.ajax({
-			url:'${host.auth}/sms/checkSms',
+			url:'${host.auth}/sms/check',
 			type:'post',
 			data:{
 				mobile:mobile,
-				validSms:validSms
+				validSms:$('#J_Phone_Checkcode').val()
 			},
 			success:function(data){
 				if(data.code == 1){
-
+					window.location.href = '${host.auth}/modify/'+type;
+					return true;
 				}else if(data.code == 0){
 					$('.loading_btns').hide();
-					$('#J_MobileSms').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_IMAGECHECKCODE_INVALID).siblings('.iconfont').html('󰅕');
+					$('#J_Phone_Checkcode').parents('.ui-form-item').addClass('ui-form-item-error');
+					$('#J_Phone_Checkcode').parents('.checkcode-warp').siblings('.ui-form-explain').show()
+					return false;
 				}else{
 					$('.loading_btns').hide();
 					$.alert(data.message);
+					return false;
 				}
 			}
 		});
@@ -289,7 +155,7 @@ var htmlPart = {
 	$('#J_GetCode').click(function(){
 		var that = $(this);
 		$.ajax({
-			url:'${host.auth}/sms/sendSms',
+			url:'${host.auth}/sms/send',
 			type:'post',
 			data:{
 				mobile:mobile
@@ -310,7 +176,7 @@ var htmlPart = {
 			that.removeAttr("disabled");
 			that.html("重新获取验证码");
 			that.removeClass('btn-disabled');
-			countdown = 60;
+			countdown = 120;
 			return;
 		} else {
 			that.attr("disabled", true);
