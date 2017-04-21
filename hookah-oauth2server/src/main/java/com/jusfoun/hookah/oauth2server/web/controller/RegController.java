@@ -56,7 +56,7 @@ public class RegController {
 
     @RequestMapping(value = "/reg",method = RequestMethod.POST)
     public ReturnData pReg(UserValidVo user, HttpServletRequest request, RedirectAttributes redirectAttributes, Model model) {
-        boolean isExists = true,valid=true;
+        boolean isExists = true;
         List<Condition> filters = new ArrayList();
         //1、校验图片验证码 ,=======>可以跳过这步，我觉得不校验问题也不大
         try {
@@ -117,28 +117,23 @@ public class RegController {
             }
             //其他校验规则
         } catch (Exception e) {
-            valid = false;
             logger.info(e.getMessage());
-            ReturnData.error(e.getMessage());
+            return ReturnData.error(e.getMessage());
         }
 
         Map<String,String> host = myProps.getHost();
         Map<String,String> site = myProps.getSite();
-        if(valid){
-            user.setAddTime(new Date());
-            user.setRegTime(new Date());
-            user.setIsEnable((byte)1);
-            user.setHeadImg(site.get("user-default-img"));
-            User regUser = userService.insert((User)user);
-            //redirectAttributes.addAttribute(regUser);
+        user.setAddTime(new Date());
+        user.setRegTime(new Date());
+        user.setIsEnable((byte)1);
+        user.setHeadImg(site.get("user-default-img"));
+        User regUser = userService.insert((User)user);
+        //redirectAttributes.addAttribute(regUser);
 
-            //TODO...登录日志
-            logger.info("用户[" + user.getUserName() + "]注册成功(这里可以进行一些注册通过后的一些系统参数初始化操作)");
+        //TODO...登录日志
+        logger.info("用户[" + user.getUserName() + "]注册成功(这里可以进行一些注册通过后的一些系统参数初始化操作)");
 //            return "redirect:"+host.get("website")+"/login";
-            return ReturnData.success("注册成功");
-        }else {
-            return ReturnData.error();
-        }
+        return ReturnData.success("注册成功");
     }
 
     /**
