@@ -19,7 +19,7 @@ $(function(){
                 "background-color":"blue",
                 "cursor": "pointer"
             });
-            $("#next").attr("href","./user_auth_init_step2");
+            $("#next").attr("href","./company_auth_init_step2");
         }else{
             judge();
         }
