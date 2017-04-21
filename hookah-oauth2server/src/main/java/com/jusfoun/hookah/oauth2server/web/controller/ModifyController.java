@@ -13,10 +13,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class ModifyController {
-    @RequestMapping(value = "/modify/password", method = RequestMethod.GET)
-    public String password(Model model) {
-        model.addAttribute("title","修改密码");
-        return "modify/password";
+    @RequestMapping(value = "/modify/loginPassword", method = RequestMethod.GET)
+    public String loginPassword(Model model) {
+        model.addAttribute("title","修改登录密码");
+        return "modify/loginPassword";
+    }
+    @RequestMapping(value = "/modify/payPassword", method = RequestMethod.GET)
+    public String payPassword(Model model) {
+        model.addAttribute("title","修改支付密码");
+        return "modify/payPassword";
+    }
+    @RequestMapping(value = "/modify/setPayPassword", method = RequestMethod.GET)
+    public String setPayPassword(Model model) {
+        model.addAttribute("title","设置支付密码");
+        return "modify/setPayPassword";
     }
 
     @RequestMapping(value = "/modify/success", method = RequestMethod.GET)
