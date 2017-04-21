@@ -113,6 +113,7 @@
         /druid* = anon
         /druid/** = anon
         /login = anon
+        /sms/** = anon
         /reg = anon
         /reg/** = anon
         /captcha* = anon
