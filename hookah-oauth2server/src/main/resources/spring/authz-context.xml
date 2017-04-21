@@ -52,5 +52,33 @@
     </bean>
 
     <!--more bean configuration in here-->
+    <!-- redis 集群连接方案 -->
+    <bean name="genericObjectPoolConfig" class="org.apache.commons.pool2.impl.GenericObjectPoolConfig">
+        <property name="maxWaitMillis" value="-1"/>
+        <property name="maxTotal" value="8"/>
+        <property name="minIdle" value="0"/>
+        <property name="maxIdle" value="8"/>
+    </bean>
+    <bean id="jedisCluster" class="com.jusfoun.hookah.core.common.redis.JedisClusterFactory">
+        <property name="connectionTimeout" value="3000"/>
+        <property name="soTimeout" value="3000"/>
+        <property name="maxRedirections" value="5"/>
+        <property name="genericObjectPoolConfig" ref="genericObjectPoolConfig"/>
+        <property name="jedisClusterNodes">
+            <set>
+                <value>192.168.15.90:7000</value>
+                <value>192.168.15.90:7001</value>
+                <value>192.168.15.90:7002</value>
+            </set>
+        </property>
+    </bean>
+    <!-- 真正的redis操作类，具体连接方式由jedisClient的ref属性决定
+           可选项为jedisClusterClient、jedisClient
+       -->
+    <bean id="jedisClusterClient" class="com.jusfoun.hookah.core.common.redis.JedisClusterClient"/>
+
+    <bean name="redisOperate" class="com.jusfoun.hookah.core.common.redis.RedisOperate">
+        <property name="jedisClient" ref="jedisClusterClient"/>
+    </bean>
 
 </beans>
