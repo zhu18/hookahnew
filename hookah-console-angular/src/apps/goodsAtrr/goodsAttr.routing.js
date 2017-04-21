@@ -1,57 +1,35 @@
 import GoodsAttrController from "./GoodsAttrController";
-goodsRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
-export default function goodsRouting($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/sys/dict/search');
-  $stateProvider
-    .state('sys', {
-      template: '<div ui-view></div>',
-      showSubMenu: true
-    })
-    .state('sys.dict', {
-      template: '<div ui-view></div>',
-      showSubMenu: true
-    })
-    .state('sys.region', {
-      template: '<div ui-view></div>',
-      showSubMenu: true
-    })
-    .state('sys.industry', {
-      template: '<div ui-view></div>',
-      showSubMenu: true
-    })
-    .state('sys.dict.search', {
-      url: '/sys/dict/search',
-      template: require('./dict_list.html'),
-      controller: SysDictController,
-    })
-    .state('sys.region.search', {
-      url: '/sys/region/search',
-      template: require('./region_list.html'),
-      controller: RegionController,
-    })
-    .state('sys.industry.search', {
-      url: '/sys/industry/search',
-      template: require('./industry_list.html'),
-      controller: IndustryController,
-    })
-    .state('sys.dict.add', {
-      url: '/sys/dict/add',
-      template: require('./dict_add.html'),
-      controller: SysDictController,
-    })
-    .state('sys.dict.edit', {
-      url: '/sys/dict/edit',
-      template: require('./dict_add.html'),
-      controller: SysDictController,
-    })
-    .state('sys.dict.add_child', {
-      url: '/sys/dict/add_child',
-      template: require('./dict_add_child.html'),
-      controller: SysDictController,
-    })
-    .state('sys.dict.edit_child', {
-      url: '/sys/dict/edit_child',
-      template: require('./dict_add_child.html'),
-      controller: SysDictController,
-    })
+goodsAttrRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
+export default function goodsAttrRouting($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.otherwise('/goodsAttr/search');
+    $stateProvider
+        .state('goodsAttr', {
+            template: '<div ui-view></div>',
+            showSubMenu: true
+        })
+        .state('goodsAttr.search',{
+            url: '/goodsAttr/search',
+            template: require('./list.html'),
+            controller: GoodsAttrController,
+        })
+        .state('goodsAttr.add', {
+            url: '/goodsAttr/add',
+            template: require('./add.html'),
+            controller: GoodsAttrController,
+        })
+        .state('goodsAttr.edit', {
+            url: '/goodsAttr/edit',
+            template: require('./add.html'),
+            controller: GoodsAttrController,
+        })
+        .state('goodsAttr.add_child', {
+            url: '/goodsAttr/add_child',
+            template: require('./add_child.html'),
+            controller: GoodsAttrController,
+        })
+        .state('goodsAttr.edit_child', {
+            url: '/goodsAttr/edit_child',
+            template: require('./add_child.html'),
+            controller: GoodsAttrController,
+        })
 };

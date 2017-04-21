@@ -1,5 +1,5 @@
 import "../../common/common";
-import sysRouting from "./sys.routing";
+import goodsAttrRouting from "./goodsAttr.routing";
 import "treeGridCss";
 const MODULE_NAME = 'Hookah';
 let app = angular.module(MODULE_NAME, [
@@ -8,11 +8,11 @@ let app = angular.module(MODULE_NAME, [
   'ui.bootstrap',
   'treeGrid'
 ]);
-app.config(sysRouting);
+app.config(goodsAttrRouting);
 
 app.run(function ($rootScope, $state) {
   $rootScope.tree_data = [];
-  $rootScope.currentProductId = 'sys';
+  $rootScope.currentProductId = 'goodsAttr';
   $rootScope.config = {
     "navScene": 'main',
     "isSidebarFold": false,
@@ -35,25 +35,16 @@ app.run(function ($rootScope, $state) {
       "folded": false
     }
   };
-  $rootScope.config.title = '系统设置';
+  $rootScope.config.title = '属性管理';
   $rootScope.config.mainNav = [
-    // {
-    //   "title": "商品查询",
-    //   "url": "items.search"
-    // },
     {
-      "title": "字典管理",
-      "url": "sys.dict.search"
+      "title": "属性管理",
+      "url": "goodsAttr.search"
     },
     {
-      "title": "地域管理",
-      "url": "sys.region.search"
-    },
-    {
-      "title": "行业管理",
-      "url": "sys.industry.search"
+      "title":"添加属性",
+      "url":"add.goodsAttr"
     }
-
   ];
 
 });
