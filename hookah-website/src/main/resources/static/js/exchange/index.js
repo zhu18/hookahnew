@@ -72,7 +72,11 @@ $(function () {
                 'width':liWidth
             });
         }
-        $(window).resize(function(){
+
+        var resizeTimer;
+        function resizeFunction() {
+            console.log(screeW);
+            console.log(screen.width());
             cab=screeW-screen.width();
             screeW=screen.width();
             if( screen.width() >=1180 && screen.width()<=1440) {
@@ -86,21 +90,23 @@ $(function () {
                 $(".screen ul li").css({
                     'width':liWidth
                 });
-                console.log(liWidth);
-
             }
             ul.css({
                 'width':newLis*liWidth
             });
-            console.log(newLis * liWidth);
+            console.log(cab);
             if(parseInt(ul.css('left'))>=0){
             }else {
-                console.log(cab);
                 ul.css({
                     'left':parseInt(ul.css('left'))+cab
                 });
             }
+        };
+        $(window).resize(function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(resizeFunction, 50);
         });
+        resizeFunction();
         ul.css({
             'width':newLis*liWidth
         });
