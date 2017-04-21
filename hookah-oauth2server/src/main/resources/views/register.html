@@ -422,7 +422,7 @@ var htmlPart = {
 	}
 	function getMobileVerify(that){ //发送手机号验证码
 		$.ajax({
-			url:'${host.auth}/reg/sendSms',
+			url:'${host.auth}/sms/send',
 			type:'post',
 			data:{
 				mobile:$('#J_Mobile').val()
@@ -443,7 +443,7 @@ var htmlPart = {
 			that.removeAttr("disabled");
 			that.html("获取验证码");
 			that.removeClass('mobile-btn-disabled');
-			countdown = 60;
+			countdown = 120;
 			return;
 		} else {
 			that.attr("disabled", true);
@@ -678,7 +678,7 @@ var htmlPart = {
 	function mobileNumIsTrue(mobile,validSms){ //验证手机验证码是否正确
 		$('.loading_btns').show();
 		$.ajax({
-			url:'${host.auth}/reg/checkSms',
+			url:'${host.auth}/sms/check',
 			type:'post',
 			data:{
 				mobile:mobile,
