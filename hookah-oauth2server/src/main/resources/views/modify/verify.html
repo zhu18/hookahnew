@@ -60,7 +60,7 @@ var htmlPart = {
 						<div class="ui-form-text"> *******3261</div>
 						<input type="hidden" name="_fm.v._0.a" value="86" id="areaCode">
 						<div class="ui-form-text">
-							<a href="//service.taobao.com/support/main/complain_user.htm?spm=0.0.0.0.o7sDVI"
+							<a href="javascript:void(0)"
 							   class="user-phone-switch" target="_blank" id="J_Phone_Switch">[手机不可用？点此修改]</a>
 						</div>
 					</div>
@@ -235,8 +235,8 @@ var htmlPart = {
 
 
 					<div class="ui-form-item">
-						<input type="submit" value=" 确定" class="ui-button ui-button-lorange">
-						<a href="https://passport.alibaba.com/iv/verify_modes.htm?htoken=gyLNtRokTMmG8hIgOeSzYjNoFPme1NW7fH3DMkk73ww&amp;app_name="
+						<input type="button" id="J_goPageBtn" value=" 确定" onclick="return check()" class="ui-button ui-button-lorange">
+						<a href="javascript:void(0)"
 						   target="_self" class="ui-form-other">其他验证方式</a>
 					</div>
 
@@ -249,6 +249,15 @@ var htmlPart = {
 	</div>
 </div>
 <script>
+	$.getUrlParam = function (key) {
+		var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+		var result = window.location.search.substr(1).match(reg);
+		return result ? decodeURIComponent(result[2]) : null;
+	};
+	var type = $.getUrlParam('type');
+	function check(){
+		window.location.href = '${host.auth}/modify/'+type;
+	};
 </script>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
