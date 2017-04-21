@@ -105,6 +105,7 @@ var htmlPart = {
 						</div>
 					</div>
 					<div class="form-item form-item-short">
+						<div class="loading_btns"></div>
 						<button type="submit" class="btn btn-large tsl" data-phase-id="r_p_next" id="J_BtnInfoForm">确认
 						</button>
 						<div class="msg msg-hide" data-show="0" id="J_MsgInfoForm" data-display="block"><i
@@ -656,6 +657,7 @@ var htmlPart = {
 		})
 	});
 	function mobileAvailable(mobile){//验证手机号是否可用
+
 		$.ajax({
 			url:'${host.auth}/reg/checkMobile',
 			type:'post',
@@ -674,6 +676,7 @@ var htmlPart = {
 		});
 	}
 	function mobileNumIsTrue(mobile,validSms){ //验证手机验证码是否正确
+		$('.loading_btns').show();
 		$.ajax({
 			url:'${host.auth}/reg/checkSms',
 			type:'post',
@@ -690,12 +693,15 @@ var htmlPart = {
 								window.location.href = '${host.auth}/login';
 							}, 2000);
 						} else {
+							$('.loading_btns').hide();
 							$.alert(data.message);
 						}
 					});
 				}else if(data.code == 0){
+					$('.loading_btns').hide();
 					$('#J_MobileSms').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_IMAGECHECKCODE_INVALID).siblings('.iconfont').html('󰅕');
 				}else{
+					$('.loading_btns').hide();
 					$.alert(data.message);
 				}
 			}
