@@ -3,13 +3,10 @@
     <div class="console-title console-title-border clearfix">
       <div class="pull-left"><h5>管理货架商品-{{shelf.shelvesName}}</h5></div>
       <div class="pull-right">
-        <!--<button class="btn btn-default" data-ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span> 返回-->
-        <!--</button>-->
       </div>
     </div>
   </div>
   <div class="col-sm-12">
-    <!--<form class="form-horizontal" role="form" id="shelfForm" name="shelf">-->
       <form class="form-inline">
         <div class="form-group text-center col-sm-5">
           <label>货架中商品</label>
@@ -25,16 +22,9 @@
             <tr data-ng-if="!loadingState" data-ng-repeat="gid in shelfGids" class="">
 
               <td>
-                <span class="column-text" ng-bind="gid.goodsName"></span>
+                <span class="column-text" ng-bind="gid.goodsName | limitTo:10"></span>
               </td>
-
-              <!--<tr data-ng-repeat="item in pagination.store">-->
-                <!--<td data-ng-if="gid == item.goodsId">-->
-                  <!--<span class="column-text" ng-bind="item.goodsName"></span>-->
-                <!--</td>-->
-              <!--</tr>-->
               <td class="text-center">
-                <!--<input type="hidden" name="goodsId" value="{{item.goodsId}}" />-->
                 <a href="javascript:;" ng-click="delGoods(shelf.shelvesId, gid)">移除商品</a>
               </td>
             </tr>
@@ -69,8 +59,7 @@
             <tbody>
             <tr data-ng-if="!loadingState" data-ng-repeat="item in allGoods" class="">
               <td>
-                <!--<input type="text" value="{{item.goodsId}}" />-->
-                <span class="column-text" ng-bind="item.goodsName"></span>
+                <span class="column-text" ng-bind="item.goodsName | limitTo:10"></span>
               </td>
               <td class="text-center">
                 <a href="javascript:;" ng-click="addGoods(shelf.shelvesId, item)">添加商品</a>

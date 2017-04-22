@@ -41,6 +41,10 @@ app.run(function ($rootScope, $state) {
     {
       "title":"商品分类",
       "url":"items.category"
+    },
+    {
+      "title":"商品审核",
+      "url":"items.check"
     }
   ];
 

@@ -27,12 +27,16 @@ import java.util.List;
  */
 @Service
 public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implements GoodsService {
+
     @Resource
     private GoodsMapper goodsMapper;
+
     @Resource
     private MongoTemplate mongoTemplate;
+
     @Resource
     MgGoodsService mgGoodsService;
+
     @Resource
     MqSenderService mqSenderService;
 
