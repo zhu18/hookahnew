@@ -236,11 +236,14 @@ a:hover, a:visited {
 }
 .checkcode-warp .getcheckcode {
 	position: absolute;
-	right: 10px;
-	top: 9px;
+	right: 0px;
+	top: 0px;
 	background: #fff;
-	border: 0;
 	cursor: pointer;
+	width: 95px;
+	height: 36px;
+	border: 1px solid #ddd;
+	border-left: none;
 }
 .checkcode-warp .getcheckcode.btn-disabled{
 	color: #ccc;
@@ -295,6 +298,9 @@ a:hover, a:visited {
 }
 .ui-form-item-error .ui-form-explain, .ui-form-item-error .ui-form-explain .iconfont {
 	color: #FF5243;
+}
+.ui-form-item-success .ui-form-explain, .ui-form-item-success .ui-form-explain .iconfont{
+	color: #b5de70;
 }
 .ui-step .ui-step-done .ui-step-line {
 	background: #f40;

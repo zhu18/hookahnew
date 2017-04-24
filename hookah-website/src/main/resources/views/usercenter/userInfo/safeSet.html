@@ -25,7 +25,7 @@ var htmlPart = {
 					<div class="login-account">
 						<p>登录账号：<span class="user-account">${userCur.userName}</span>
 							<%if(userCur.userType ==1){%>
-							<span class="isAuth">您还未进行实名认证,<a href="/auth/index">去认证</a></span>
+							<span class="isAuth">您还未进行实名认证,<a href="/auth/index" class="color-blue">去认证</a></span>
 							<%}else if(userCur.userType ==2){%>
 							<span class="isAuth">(您已通过实名认证)</span>
 							<%}else if(userCur.userType ==3){%>
@@ -63,7 +63,7 @@ var htmlPart = {
 					<p class="grid-left pwd">支付密码</p>
 					<div class="grid-left description">
 						<p>
-							安全性高的密码可以使账户更安全，建议您定期更换密码，使用一个包含字母，符号，或者数字至少两项，且长度超过6位的密码
+							安全性高的密码可以使账户更安全，建议您定期更换密码，使用6位数字的密码
 						</p>
 					</div>
 					<div class="grid-left set-btn">
