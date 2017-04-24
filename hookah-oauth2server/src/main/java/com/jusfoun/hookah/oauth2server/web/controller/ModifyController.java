@@ -49,7 +49,7 @@ public class ModifyController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/payPassword", method = RequestMethod.POST)
+    @RequestMapping(value = "/upPayPassword", method = RequestMethod.POST)
     public ReturnData payPassword(String userId,String payPassword, HttpServletRequest request) {
         ReturnData returnData = new ReturnData();
         User user = new User();
