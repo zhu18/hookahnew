@@ -10,6 +10,7 @@ public class HookahConstants {
     public static final int PAGE_NUM = 1;
     /** 每页记录数 */
     public static final int PAGE_SIZE = 10;
+    public static final int PAGE_SIZE_20 = 20;
 
     /** 短信缓存前缀  */
     public static final String REDIS_SMS_CACHE_PREFIX = "smscache";

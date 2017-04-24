@@ -418,6 +418,12 @@ ul li {
 .viewDetails .viewContent .rightContent .state-rtop {
     height: 70px;
 }
+.viewDetails .viewContent .rightContent .process .line span{
+    width: 124px;
+    height: 12px;
+    display: inline-block;
+    background: url(/static/images/proces-icons.png) no-repeat 0 -34px;
+}
 .viewDetails .viewContent .rightContent .process div ,.viewDetails .viewContent .rightContent .process-text div{
     display: inline-block;
 }

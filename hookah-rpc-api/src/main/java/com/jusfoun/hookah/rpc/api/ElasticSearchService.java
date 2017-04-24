@@ -33,4 +33,6 @@ public interface ElasticSearchService {
     void deleteById(String indexName, String type, String goodsId) throws Exception;
 
     void upsertById(String indexName, String type, String goodsId, Map<String, Object> map) throws Exception;
+
+    List searchCategory(String keyword) throws Exception;
 }
