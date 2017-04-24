@@ -163,6 +163,18 @@ export default angular.module('Common', [
       }
     }
   })
+  .filter('isAttr',function () {
+      return function (input) {
+          switch (input){
+              case 0:
+                return '叶子节点';
+                break;
+              case 1:
+                return '非叶子节点';
+                break;
+          }
+      }
+  })
   .controller("MainController", MainController)
   .run(function ($rootScope) {
     // console.log("common init..");
