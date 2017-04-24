@@ -19,7 +19,7 @@ ul li {
     zoom: 1;
 }
 
-/*全部订单*/
+/*orderManagement*/
 .orderManagement {
     background: #fff;
     width: 978px;
@@ -357,6 +357,188 @@ ul li {
     padding: 15px 0px;
 }
 
-.evaluation .level table tbody tr td a:hover, .evaluation .level table tbody tr td a p:hover {
-    color: #237DE7;
+.evaluation .level table tbody tr td a:hover,.evaluation .level table tbody tr td a p:hover {
+    color:#237DE7;
+}
+
+/*viewDetails*/
+.viewDetails , .sunAlone {
+    margin-top: 10px;
+    width: 978px;
+    background-color: #fff;
+    padding: 0px 15px 0px 15px;
+    border: 1px solid #E9E9E9;
+    margin-left: 10px;
+}
+
+.viewDetails .view ,.sunAlone .sun{
+    height: 30px;
+    padding-top: 10px;
+    border-bottom: 1px solid #EDEDED;
+}
+.viewDetails .view .details , .sunAlone .sun .details{
+    font:15px/20px "microsoft yahei";
+    padding-left:10px;
+    border-left:2px solid #237DE7;
+}
+.viewDetails .viewContent .leftContent,.sunAlone .sunContent .lcontent{
+    width: 265px;
+    border-right:1px solid #f1f1f1;
+}
+.viewDetails .viewContent .leftContent .state-top {
+    color:#999;
+}
+.viewDetails .viewContent .leftContent .state-txt {
+    font: 400  16px/34px  "Microsoft YaHei";
+    color:#71b247;
+}
+.viewDetails .viewContent .leftContent .state-btn {
+    margin:20px 0 30px;
+    min-height:107px;
+}
+.viewDetails .viewContent .leftContent .state-btn .fapiao {
+    background: #eee;
+    border: 1px solid #ccc;
+    padding:4px 8px;
+}
+.viewDetails .viewContent .leftContent .state-btn .fapiao:hover{
+    border: 1px solid #237DE7;
+    background: #fff;
+}
+
+.viewDetails .viewContent .leftContent .state-bottom img{
+    width: 17px;
+    height: 17px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.viewDetails .viewContent .rightContent, .sunAlone .sunContent .rcontent {
+    width: 692px;
+}
+.viewDetails .viewContent .rightContent .state-rtop {
+    height: 70px;
+}
+.viewDetails .viewContent .rightContent .process div ,.viewDetails .viewContent .rightContent .process-text div{
+    display: inline-block;
+}
+.viewDetails .viewContent .rightContent .proce {
+    width: 40px;
+    line-height: 45px;
+    font-size: 25px;
+    color:#ccc;
+}
+.viewDetails .viewContent .rightContent .proce span {
+    padding:10px 10px 0 10px;
+}
+.viewDetails .viewContent .rightContent .process-text {
+    height: 68px;
+    line-height: 68px;
+}
+.order ul li {
+    height: 18px;
+    line-height: 18px;
+}
+.viewDetails .viewContent .rightContent .process-text .order {
+    margin-left:-25px;
+}
+.viewDetails .viewContent .rightContent .process-text .pay{
+    width: 295px;
+}
+
+.viewDetails  .goods-list {
+    margin: 0  -15px;
+}
+.viewDetails  .goods-list thead  tr{
+    height: 35px;
+    background: #eee;
+}
+.viewDetails  .goods-list tbody .p-img {
+    width: 500px;
+    height: 60px;
+    padding:10px;
+}
+.number, .price, .num, .operate {
+    width: 127px;
+    text-align: center;
+}
+.goods-list .p-img img{
+    width: 60px;
+    height: 60px;
+    border: 1px solid #000;
+    vertical-align: middle;
+}
+.goods-list .p-img a:nth-child(2){
+    line-height: 60px;
+    display: inline-block;
+}
+.goods div {
+    display: inline-block;
+}
+.operate .buy{
+    background: #eee;
+    width: 60px;
+    height: 20px;
+    padding:5px 10px;
+    border: 1px solid #ccc;
+}
+.operate .buy:hover{
+    background: #fff;
+    border: 1px solid #237DE7;
+}
+.goods-list .goods-info{
+    border-top:1px solid #eee;
+    height: 40px;
+    line-height: 40px;
+    display: flex;
+}
+.payway, .paytime, .goodsprice, .handle {
+    flex: 1;
+}
+
+
+/*sunAlone*/
+.sunAlone .sunContent .lcontent {
+    /*width: 260px;*/
+}
+.sunAlone .sunContent .pic img {
+    width: 60px;
+    height: 60px;
+    border: 1px solid #000;
+}
+.sunAlone .sunContent .rcontent .satisfaction span {
+    display: inline-block;
+    position: relative;
+    width: 70px;
+}
+.sunAlone .sunContent .rcontent .satisfaction .comment {
+    position: absolute;
+    top:-18px;
+    font-size: 17px;
+}
+.sunAlone .sunContent .rcontent .satisfaction .comment li {
+    float: left;
+}
+.rcontent .suneval textarea {
+    resize: none;
+}
+.sunAlone .sure {
+
+}
+.sunAlone .sure span{
+    width: 120px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 15px;
+    display: inline-block;
+}
+.sunAlone .sure span:hover {
+    cursor: pointer;
+}
+.sunAlone .sunContent .evaluation {
+    color:#eb9c03;
+}
+.sunAlone .sunContent .evaluation img {
+    width: 17px;
+    height: 17px;
+    vertical-align: middle;
 }

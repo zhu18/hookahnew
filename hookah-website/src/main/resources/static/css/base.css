@@ -18,14 +18,15 @@
 
 .header-centerbar .grid-row {
   height: 80px;
-  padding-top: 28px;
 }
 
 .header-centerbar .logo {
+  width:377px;
+  margin-top: 21px;
 }
 .header-centerbar .logo a{
   display: inline-block;
-  width:377px;
+  width:220px;
 }
 .header-centerbar .logo a img{
   width:100%;
@@ -33,6 +34,7 @@
 .header-centerbar .search {
   margin-left: 76px;
   position: relative;
+  margin-top: 35px;
 }
 
 .header-centerbar .search .fa {
@@ -113,6 +115,7 @@
 .header-centerbar .shopping-cart {
   width: 141px;
   position: relative;
+  margin-top: 35px;
 }
 
 .header-centerbar .shopping-cart-top {

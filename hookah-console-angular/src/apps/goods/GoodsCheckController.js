@@ -16,7 +16,7 @@ class GoodsCheckController {
                  goodsName: $scope.searchName,
                  goodsSn: $scope.searchSn,
                  keywords: $scope.searchKw,
-                 shopName: $scope.searchKShop
+                 shopName: $scope.searchShop
         }
       });
       promise.then(function (res, status, config, headers) {
@@ -32,7 +32,6 @@ class GoodsCheckController {
 
     $scope.LookGoods = function($event,item){
         console.log(item.goodsName);
-        // $rootScope.editData = item;
         var promise = $http({
             method: 'GET',
             url: $rootScope.site.apiServer + "/api/goods/getGoodsInfo",
@@ -62,9 +61,11 @@ class GoodsCheckController {
         });
     }
 
+      if ($state.$current.name == "items.check") {
+          $scope.search();
+      }
 
 
-    $scope.search();
   }
 }
 
