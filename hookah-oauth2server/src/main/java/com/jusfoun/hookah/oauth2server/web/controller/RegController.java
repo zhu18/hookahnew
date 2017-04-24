@@ -2,14 +2,11 @@ package com.jusfoun.hookah.oauth2server.web.controller;
 
 import com.google.code.kaptcha.Constants;
 import com.jusfoun.hookah.core.common.redis.RedisOperate;
-import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.vo.UserValidVo;
 import com.jusfoun.hookah.core.exception.*;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ReturnData;
-import com.jusfoun.hookah.core.utils.SMSUtil;
-import com.jusfoun.hookah.core.utils.StrUtil;
 import com.jusfoun.hookah.oauth2server.config.MyProps;
 import com.jusfoun.hookah.rpc.api.MgSmsValidateService;
 import com.jusfoun.hookah.rpc.api.UserService;
@@ -142,32 +139,6 @@ public class RegController {
         return ReturnData.success("注册成功");
     }
 
-    /**
-     * 发送注册短信
-     *
-     * @param mobile
-     * @return
-     */
-    @RequestMapping(value = "/reg/sendSms", method = RequestMethod.POST)
-    @ResponseBody
-    public ReturnData sendSms(String mobile, HttpServletRequest request) {
-        String code = StrUtil.random(4);
-        StringBuffer content = new StringBuffer();
-        content.append("验证码为：").append(code).append(",有效时间").append(HookahConstants.SMS_DURATION_MINITE).append("分钟。");
-
-        logger.info("发送短信，接收方：{}，内容为:{},验证码为:{}",mobile,content,code);
-        try {
-            SMSUtil.sendSMS(mobile, content.toString());
-
-            //缓存短信
-            redisOperate.set(mobile, code, HookahConstants.SMS_DURATION_MINITE * 60);
-            logger.info(redisOperate.get(mobile));
-            return ReturnData.success("短信验证码已经发送");
-        }catch (Exception e){
-            logger.error("发送短信出错");
-            return ReturnData.error("发送短信出错");
-        }
-    }
 
     /**
      * 校验邮箱
@@ -219,29 +190,6 @@ public class RegController {
         boolean isExists = userService.exists(filters);
         if (isExists) {
             return ReturnData.fail("该用户名已经被注册");
-        }
-        return ReturnData.success();
-    }
-
-
-    /**
-     * 校验手机验证码
-     *
-     * @param validSms
-     * @return
-     */
-    @RequestMapping(value = "/reg/checkSms", method = RequestMethod.POST)
-    @ResponseBody
-    public ReturnData checkValidSms(String mobile, String validSms, HttpServletRequest request) {
-        logger.info("mobile--validSms: {},{}", mobile, validSms);
-        String cacheSms = redisOperate.get(mobile);  //从 redis 获取缓存
-
-        if (cacheSms == null) { //验证码已过期
-            return ReturnData.error("短信验证码验证未通过,短信验证码已过期");
-        } else {
-            if (!cacheSms.equals(validSms)) {
-                return ReturnData.fail("短信验证码验证未通过,短信验证码错误");
-            }
         }
         return ReturnData.success();
     }
