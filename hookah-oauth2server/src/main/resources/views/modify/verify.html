@@ -24,7 +24,7 @@ var htmlPart = {
 					<div class="ui-step-icon">
 						<i class="iconfont">y</i>
 						<i class="ui-step-number">2</i>
-						<span class="ui-step-text">修改密码</span>
+						<span class="ui-step-text" id="ui-step-text">修改密码</span>
 					</div>
 				</li>
 
@@ -72,7 +72,7 @@ var htmlPart = {
 						<div class="checkcode-warp">
 							<input name="captcha" id="J_Phone_Checkcode" class="ui-input ui-input-checkcode-new"
 								   type="text" placeholder="请输入验证码" >
-							<button id="J_GetCode" class="getcheckcode ft-orange" type="button">获取短信校验码
+							<button id="J_GetCode" class="getcheckcode" type="button">获取短信校验码
 							</button>
 							<!--<a class="getcheckcode fn-hide" id="J_GetUpmsg">获取其他验证方式</a>-->
 						</div>
@@ -107,6 +107,17 @@ var htmlPart = {
 		return result ? decodeURIComponent(result[2]) : null;
 	};
 	var type = $.getUrlParam('type');
+	if(type == 'mobile'){
+		$('#ui-step-text').html('修改手机号');
+	}else if(type == 'loginPassword'){
+		$('#ui-step-text').html('修改登录密码');
+	}else if(type == 'setPayPassword'){
+		$('#ui-step-text').html('设置支付密码');
+	}else if(type == 'payPassword'){
+		$('#ui-step-text').html('修改支付密码');
+	}else if(type == 'mail'){
+		$('#ui-step-text').html('修改邮箱');
+	}
 	function check(){
 //		window.location.href = '${host.auth}/modify/'+type;
 		if($('#J_Phone_Checkcode').val() && $('#J_Phone_Checkcode').val().length >= 4){
@@ -129,7 +140,7 @@ var htmlPart = {
 			success:function(data){
 				if(data.code == 1){
 					window.location.href = '${host.auth}/modify/'+type;
-					return true;
+//					return true;
 				}else if(data.code == 0){
 					$('.loading_btns').hide();
 					$('#J_Phone_Checkcode').parents('.ui-form-item').addClass('ui-form-item-error');

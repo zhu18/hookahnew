@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.jusfoun.hookah.console.server.config.Constants;
 import com.jusfoun.hookah.console.server.config.ESTemplate;
 import com.jusfoun.hookah.console.server.config.ESTransportClient;
+import com.jusfoun.hookah.core.dao.CategoryMapper;
 import com.jusfoun.hookah.core.utils.AnnotationUtil;
 import com.jusfoun.hookah.console.server.util.DictionaryUtil;
 import com.jusfoun.hookah.core.common.Pagination;
@@ -51,6 +52,8 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     MgGoodsService mgGoodsService;
     @Autowired
     GoodsAttrTypeService goodsAttrTypeService;
+    @Autowired
+    CategoryMapper categoryMapper;
 
     // 创建索引
     @Override
@@ -97,6 +100,8 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
                 case "goods" :
                     maps = this.goodsBulkInsert();
                     break;
+                case "category":
+                    maps = this.categoryBulkInsert();
             }
             esTemplate.bulkProcessorIndex(esTransportClient.getObject(), index, type,
                     keyField, 5, 10000, 60, 1, maps);
@@ -155,6 +160,29 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         return maps;
     }
 
+    /**
+     * 获取分类商品list
+     * @return
+     * @throws Exception
+     */
+    private List<Map<String, Object>> categoryBulkInsert() throws Exception {
+        List<Map<String, Object>> maps = new ArrayList<>();
+        List<EsCategory> list = categoryMapper.getNeedEsCat();
+        if (list != null && list.size() > 0) {
+            for(EsCategory category : list) {
+                if(StringUtils.isNotBlank(category.getFullIds())) {
+                    StringBuffer stringBuffer = new StringBuffer();
+                    for (String id : category.getFullIds().split(" ")) {
+                        stringBuffer.append(DictionaryUtil.getCategoryById(id) != null
+                                ? DictionaryUtil.getCategoryById(id).getCatName() : "未知").append(">");
+                    }
+                    category.setFullName(stringBuffer.substring(0, stringBuffer.length() - 1));
+                }
+                maps.add(AnnotationUtil.convert2Map(category));
+            }
+        }
+        return maps;
+    }
 
     @Override
     public void deleteIndex(String indexName) throws Exception{
@@ -341,5 +369,17 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     public void upsertById(String indexName, String type, String goodsId, Map<String, Object> map) throws Exception {
         esTemplate.upsertById(esTransportClient.getObject(), indexName,
                 type, goodsId, map);
+    }
+
+    @Override
+    public List searchCategory(String keyword) throws Exception {
+        Pagination pagination = new Pagination();
+        pagination.setPageSize(HookahConstants.PAGE_SIZE_20);
+        pagination.setCurrentPage(HookahConstants.PAGE_NUM);
+        Map<String, Object> map = new HashedMap();
+        map.put("fullName", keyword);
+        esTemplate.search(esTransportClient.getObject(), Constants.GOODS_CATEGORY_INDEX,
+                Constants.GOODS_CATEGORY_TYPE, map, pagination, null, null, "fullName");
+        return pagination.getList();
     }
 }

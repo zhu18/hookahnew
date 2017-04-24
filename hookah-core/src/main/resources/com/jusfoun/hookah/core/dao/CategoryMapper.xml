@@ -6,4 +6,32 @@
   <select id="findMaxByParentId" resultType="java.lang.String" parameterType="java.lang.String">
       SELECT MAX(cat_id) FROM  category WHERE  parent_id = #{parentId}
   </select>
+
+    <resultMap id="EsResultMap" type="com.jusfoun.hookah.core.domain.es.EsCategory">
+        <id column="cat_id" jdbcType="VARCHAR" property="catId" />
+        <result column="cat_name" jdbcType="VARCHAR" property="catName" />
+        <result column="domain_id" jdbcType="VARCHAR" property="domainId" />
+        <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+        <result column="level" jdbcType="TINYINT" property="level" />
+        <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+        <result column="add_user" jdbcType="VARCHAR" property="addUser" />
+        <result column="full_ids" jdbcType="VARCHAR" property="fullIds" />
+    </resultMap>
+    <select id="getNeedEsCat" resultMap="EsResultMap">
+        SELECT
+            cat_id,
+            cat_name,
+            domain_id,
+            parent_id,
+            LEVEL,
+            last_update_time,
+            add_user,
+            getCategoryParentList (cat_id) full_ids
+        FROM
+            category
+        WHERE
+            is_show = 1
+        and cat_sign = 1
+        and level = 3
+    </select>
 </mapper>

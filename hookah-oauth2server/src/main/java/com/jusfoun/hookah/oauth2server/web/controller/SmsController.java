@@ -46,7 +46,7 @@ public class SmsController {
             SMSUtil.sendSMS(mobile, content.toString());
 
             //缓存短信
-            redisOperate.set(mobile, code, HookahConstants.SMS_DURATION_MINITE * 60);
+            redisOperate.set(HookahConstants.REDIS_SMS_CACHE_PREFIX+":"+mobile, code, HookahConstants.SMS_DURATION_MINITE * 60);
             logger.info(redisOperate.get(mobile));
             return ReturnData.success("短信验证码已经发送");
         }catch (Exception e){
@@ -66,7 +66,7 @@ public class SmsController {
     @ResponseBody
     public ReturnData checkValidSms(String mobile, String validSms, HttpServletRequest request) {
         logger.info("mobile--validSms: {},{}", mobile, validSms);
-        String cacheSms = redisOperate.get(mobile);  //从 redis 获取缓存
+        String cacheSms = redisOperate.get(HookahConstants.REDIS_SMS_CACHE_PREFIX+":"+mobile);  //从 redis 获取缓存
 
         if (cacheSms == null) { //验证码已过期
             return ReturnData.error("短信验证码验证未通过,短信验证码已过期");

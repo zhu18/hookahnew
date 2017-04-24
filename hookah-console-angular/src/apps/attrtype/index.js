@@ -1,5 +1,5 @@
-import "../../common/common";
-import goodsAttrRouting from "./goodsAttr.routing";
+import '../../common/common';
+import attrtypeRouting from './attrtype.routing';
 import "treeGridCss";
 const MODULE_NAME = 'Hookah';
 let app = angular.module(MODULE_NAME, [
@@ -8,11 +8,11 @@ let app = angular.module(MODULE_NAME, [
   'ui.bootstrap',
   'treeGrid'
 ]);
-app.config(goodsAttrRouting);
+app.config(attrtypeRouting);
 
 app.run(function ($rootScope, $state) {
+  $rootScope.currentProductId = 'attrtype';
   $rootScope.tree_data = [];
-  $rootScope.currentProductId = 'goodsAttr';
   $rootScope.config = {
     "navScene": 'main',
     "isSidebarFold": false,
@@ -36,14 +36,14 @@ app.run(function ($rootScope, $state) {
     }
   };
   $rootScope.config.title = '属性管理';
-  $rootScope.config.mainNav = [
+  $rootScope.config.mainNav =[
     {
-      "title": "属性管理",
-      "url": "goodsAttr.search"
+      "title":"属性查询",
+      "url":"attrtype.search"
     },
     {
       "title":"添加属性",
-      "url":"add.goodsAttr"
+      "url":"attrtype.add"
     }
   ];
 

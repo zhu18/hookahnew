@@ -658,7 +658,6 @@ public class ESTemplate {
     public Pagination search(TransportClient client, String indexName, String type, Map<String,Object> filterMap,
                              Pagination pagination, String orderField, String order, String ... highLightFields){
         SearchRequestBuilder requestBuilder = client.prepareSearch(indexName);
-
         HighlightBuilder highlightBuilder = new HighlightBuilder().field("*").requireFieldMatch(false);
         highlightBuilder.preTags("<span style=\"color:red\">");
         highlightBuilder.postTags("</span>");
@@ -710,7 +709,10 @@ public class ESTemplate {
 //                    queryString = QueryBuilders.queryStringQuery(String.valueOf(entry.getValue()));
 //                    ((QueryStringQueryBuilder)queryString).field(String.valueOf(entry.getKey()));
 //                    }
-                    queryString = QueryBuilders.matchPhraseQuery(String.valueOf(entry.getKey()), entry.getValue());
+//                    queryString = QueryBuilders.matchPhraseQuery(String.valueOf(entry.getKey()), entry.getValue());
+
+                    queryString = QueryBuilders.simpleQueryStringQuery(String.valueOf(entry.getValue()))
+                            .field(String.valueOf(entry.getKey()));
                     boolQueryBuilder.must(queryString);
                 }
             }

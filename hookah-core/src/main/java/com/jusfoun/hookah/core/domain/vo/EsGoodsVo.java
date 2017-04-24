@@ -12,8 +12,10 @@ public class EsGoodsVo implements Serializable {
     private EsGoods esGoods;
     private Integer PageNumber = HookahConstants.PAGE_NUM;
     private Integer PageSize = HookahConstants.PAGE_SIZE;
-    private String orderFiled = HookahConstants.GOODS_ORDER_FIELD;
-    private String order = HookahConstants.GOODS_ORDER_SORT;
+    private String orderFiled;
+    private String order;
+//    private String orderFiled = HookahConstants.GOODS_ORDER_FIELD;
+//    private String order = HookahConstants.GOODS_ORDER_SORT;
 
     public EsGoods getEsGoods() {
         return esGoods;

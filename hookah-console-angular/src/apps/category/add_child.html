@@ -1,14 +1,23 @@
 <div class="row">
   <div class="col-sm-12">
     <div class="console-title console-title-border clearfix">
-      <div class="pull-left"><h5 ng-bind="title">新增字典</h5></div>
+      <div class="pull-left"><h5 ng-bind="title">新增字典子项</h5></div>
       <div class="pull-right">
-        <button class="btn btn-default" ui-sref="sys.dict.search"><span class="glyphicon glyphicon-refresh"></span> 返回</button>
+        <button class="btn btn-default" ui-sref="sys.dict.search"><span class="glyphicon glyphicon-refresh"></span> 返回
+        </button>
       </div>
     </div>
   </div>
   <div class="col-sm-12">
     <form class="form-horizontal" role="form" id="dictForm" name="dict">
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="parentName">父字典</label>
+        <div class="col-sm-4">
+          <input type="hidden" id="parentId" name="parentId"  class="form-control" value="{{parentDict.dictId}}"/>
+          <input type="text" disabled="disabled" id="parentName"  class="form-control" value="{{parentDict.name}}"/>
+        </div>
+      </div>
       <input type="hidden" id="dictId" name="dictId" class="form-control" value="{{editData.dictId}}"/>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="name">名称</label>

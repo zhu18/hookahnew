@@ -67,9 +67,15 @@ var htmlPart = {
 						</p>
 					</div>
 					<div class="grid-left set-btn">
+						<%if(userCur.paymentPasswordStatus == 0){%>
 						<p class="noset grid-left"><span class="fa fa-warning"></span>未设置</p>
 						<span class="margin-left-5 margin-right-5 grid-left">|</span>
 						<p class="modify-btn grid-left"><a href="${host.auth}/verify?type=setPayPassword" class="color-blue">设置</a></p>
+						<%}else if(userCur.paymentPasswordStatus == 1){%>
+						<p class="isset grid-left"><span class="fa fa-check-circle-o"></span>已设置</p>
+						<span class="margin-left-5 margin-right-5 grid-left">|</span>
+						<p class="modify-btn grid-left"><a href="${host.auth}/verify?type=payPassword" class="color-blue">修改</a></p>
+						<%}%>
 					</div>
 				</div>
 				<div class="login-info-box clearfix">

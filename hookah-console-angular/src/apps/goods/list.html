@@ -36,11 +36,11 @@
               <!--<th class="state-column"></th>-->
               <th>编号</th>
               <th>名称</th>
-              <th class="">所属者</th>
-              <th >所属店铺</th>
-              <th width="135">创建时间</th>
+              <th>所属者</th>
+              <th>所属店铺</th>
+              <th>创建时间</th>
               <th width="70">上下架</th>
-              <th width="130" class="text-right">操作</th>
+              <th width="200" class="text-center">操作</th>
             </tr>
             </thead>
             <tbody>
@@ -61,11 +61,12 @@
               <td>
                 <a ng-class="{'title-unread':item.Status*1===0,'title-read':item.Status*1!==0}" href="javascript:;"
                    class="">
-                  <span class="column-text" style="width: 100px;white-space:nowrap;" ng-bind="item.goodsName | limitTo:10"></span>
+                  <span class="column-text" ng-bind="item.goodsName | limitTo:10"></span>
                 </a>
               </td>
               <td>
-                <span class="column-text" style="width: 100px;white-space:nowrap;" ng-bind="item.userName"></span>
+                <!--<span class="column-text" style="width: 100px;white-space:nowrap;" ng-bind="item.userName"></span>-->
+                <span class="column-text" ng-bind="item.userName"></span>
               </td>
               <td>
                 <span class="column-text" ng-bind="item.shopName"></span>
@@ -76,14 +77,18 @@
               <td>
                 <span class="column-text" ng-bind="item.openStatus | yesNo"></span>
               </td>
-              <td class="text-right">
+              <td class="text-right" data-ng-if="item.isDelete == 1">
                 <a href="javascript:;" ng-click="editProduct($event,item)">修改</a>
                 <span class="text-explode">|</span>
-                <i class="link-space"></i>
-                <a href="javascript:;" target="_blank">删除</a>
-                <span class="text-explode">|</span>
-                <i class="link-space"></i>
-                <a href="javascript:;" target="_blank">关闭</a>
+                <a href="javascript:;" ng-click="delGoods($event, item, 1)">删除</a>
+                <span data-ng-if="item.isOnsale == 1">
+                  <span class="text-explode">|</span>
+                  <a href="javascript:;" ng-click="delGoods($event, item, 2)">下架</a>
+                </span>
+                <span data-ng-if="item.isOnsale == 2 || item.isOnsale == 0">
+                  <span class="text-explode">|</span>
+                  <a href="javascript:;" ng-click="delGoods($event, item, 3)">上架</a>
+                </span>
               </td>
             </tr>
             </tbody>

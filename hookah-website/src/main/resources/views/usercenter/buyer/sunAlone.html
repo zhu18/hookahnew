@@ -10,10 +10,55 @@ var htmlPart = {
 <div class="grid-0 backgorund-gray ">
     <div class="grid-row clearfix">
         <%include("/usercenter/user-center-menu.html"){} %>
-        sun-alone
+        <div class="sunAlone grid-left margin-bottom-30">
+            <div class="sun">
+                <h3 class="details">评价订单</h3>
+            </div>
+            <div class="sunContent clearfix">
+                <div class="lcontent grid-left padding-top-20 text-align-center">
+                    <div class="order margin-bottom-20">订单号: <span>123456789</span></div>
+                    <div class="pic margin-bottom-20">
+                        <a href="">
+                            <img src="" alt="">
+                        </a>
+                    </div>
+                    <div class="goodsName margin-bottom-20">
+                        <a href="">测试商品数据,测试商品标题</a>
+                    </div>
+                    <div class=" margin-bottom-20 ">¥409.00</div>
+                </div>
+                <div class="rcontent grid-left padding-top-20 padding-left-20">
+                    <div class="evaluation margin-bottom-20">
+                        <img src="/static/images/warn.png" alt="" class="margin-right-10">请至少填写一件商品的评价
+                    </div>
+                    <div class="satisfaction margin-bottom-20">商品满意度
+                        <span class="padding-left-20">
+                            <ul class="comment">
+                                <li>☆</li>
+                                <li>☆</li>
+                                <li>☆</li>
+                                <li>☆</li>
+                                <li>☆</li>
+                            </ul>
+                        </span>
+                        <span class="fen">0分</span>
+                    </div>
+                    <div class="suneval" >
+                            <span class="eve">
+                                <span class="padding-right-10">评价晒单</span>
+                            </span>
+                        <textarea name="" id="" cols="90" rows="5" class="margin-left-30 padding-left-5 padding-top-5" placeholder="商品是否给力,快分享你的购买心得吧～～"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="sure text-align-center">
+                <span class="margin-top-20 text-align-center btn-full-orange margin-bottom-20">提交</span>
+            </div>
+        </div>
     </div>
 </div>
 </div>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
+<script src="/static/js/usercenter/mybuyer/sunAlone.js"></script>

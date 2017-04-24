@@ -131,16 +131,16 @@ public class GoodsApi extends BaseController{
             filters.add(Condition.eq("checkStatus", 0));
             filters.add(Condition.eq("isOnsale", 0));
             if(StringUtils.isNotBlank(goodsName)){
-                filters.add(Condition.like("goodsName", "%" + goodsName + "%"));
+                filters.add(Condition.eq("goodsName", goodsName.trim()));
             }
             if(StringUtils.isNotBlank(goodsSn)){
-                filters.add(Condition.like("goodsSn", "%" + goodsSn + "%"));
+                filters.add(Condition.eq("goodsSn", goodsSn.trim()));
             }
             if(StringUtils.isNotBlank(keywords)){
-                filters.add(Condition.like("keywords", "%" + keywords + "%"));
+                filters.add(Condition.eq("keywords", keywords.trim()));
             }
             if(StringUtils.isNotBlank(shopName)){
-                filters.add(Condition.like("shopName", shopName));
+                filters.add(Condition.eq("shopName", shopName.trim()));
             }
 
             //参数校验
@@ -172,8 +172,12 @@ public class GoodsApi extends BaseController{
 
             Goods goods = goodsService.selectById(goodsId);
             MgGoods mgGoods = mgGoodsService.selectById(goodsId);
-            BeanUtils.copyProperties(goods, goodsVo);
-            BeanUtils.copyProperties(mgGoods, goodsVo);
+            if(goods != null){
+                BeanUtils.copyProperties(goods, goodsVo);
+            }
+            if(mgGoods != null){
+                BeanUtils.copyProperties(mgGoods, goodsVo);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -193,6 +197,36 @@ public class GoodsApi extends BaseController{
         try {
             goodsCheck.setCheckUser(getCurrentUser().getUserName());
             goodsCheckService.insertRecord(goodsCheck);
+        } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
+
+    @RequestMapping(value = "/delGoodsById", method = RequestMethod.POST)
+    public ReturnData delGoods(String goodsId, String flag) {
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            if(StringUtils.isNotBlank(flag)){
+
+                Goods goods = new Goods();
+                goods.setGoodsId(goodsId);
+                if("1".equals(flag)){  //删除
+                    goods.setIsDelete(Byte.parseByte("0"));
+                    goods.setIsOnsale(Byte.parseByte("0"));// 0 下架；1 上架；2 管理员强制下架
+                }else if("2".equals(flag)){ // 下架
+                    goods.setIsOnsale(Byte.parseByte("2"));
+                }else if("3".equals(flag)){ // 上架
+                    goods.setIsOnsale(Byte.parseByte("1"));
+                }
+                goodsService.updateByIdSelective(goods);
+            }else{
+
+            }
+
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/search")
-public class GoodsSearchController {
+public class ElasticSearchController {
     @Autowired
     ElasticSearchService elasticSearchService;
 
@@ -75,6 +75,25 @@ public class GoodsSearchController {
         returnData.setCode(ExceptionConst.Success);
         try {
             returnData.setData(elasticSearchService.getTypes(esGoods));
+        } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
+
+    /**
+     * 按分类fullName进行查询
+     * @param keyword
+     * @return
+     */
+    @RequestMapping("/v1/category")
+    public ReturnData searchCategory(String keyword) {
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            returnData.setData(elasticSearchService.searchCategory(keyword));
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());
