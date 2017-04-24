@@ -131,16 +131,16 @@ public class GoodsApi extends BaseController{
             filters.add(Condition.eq("checkStatus", 0));
             filters.add(Condition.eq("isOnsale", 0));
             if(StringUtils.isNotBlank(goodsName)){
-                filters.add(Condition.like("goodsName", "%" + goodsName + "%"));
+                filters.add(Condition.eq("goodsName", goodsName));
             }
             if(StringUtils.isNotBlank(goodsSn)){
-                filters.add(Condition.like("goodsSn", "%" + goodsSn + "%"));
+                filters.add(Condition.eq("goodsSn", goodsSn));
             }
             if(StringUtils.isNotBlank(keywords)){
-                filters.add(Condition.like("keywords", "%" + keywords + "%"));
+                filters.add(Condition.eq("keywords", keywords));
             }
             if(StringUtils.isNotBlank(shopName)){
-                filters.add(Condition.like("shopName", shopName));
+                filters.add(Condition.eq("shopName", shopName));
             }
 
             //参数校验
