@@ -45,28 +45,26 @@ public class ModifyController {
 
     /**
      *   修改支付密码
-     * @param request
      * @return
      */
-    @ResponseBody
     @RequestMapping(value = "/payPassword", method = RequestMethod.POST)
-    public ReturnData payPassword(String userId,String payPassword, HttpServletRequest request) {
-        ReturnData returnData = new ReturnData();
+    public String payPassword(User userForm,Model model) {
         User user = new User();
-        if(StringUtils.isNotBlank(userId)){
-            user.setUserId(userId);
-            if(StringUtils.isNotBlank(payPassword)){
-                String othpassword = new Md5Hash(payPassword).toString();
+        if(StringUtils.isNotBlank(userForm.getUserId())){
+            user.setUserId(userForm.getUserId());
+            if(StringUtils.isNotBlank(userForm.getPaymentPassword())){
+                String othpassword = new Md5Hash(userForm.getPaymentPassword()).toString();
                 user.setPaymentPassword(othpassword);
                 userService.updateByIdSelective(user);
-                returnData.setMessage("设置成功！");
-
+                return "redirect:/modify/success?type=payPassword";
+            }else{
+                model.addAttribute("error","支付密码为空");
+                return "modify/payPassword";
             }
         }else {
-            returnData.setCode(ExceptionConst.Failed);
-            returnData.setMessage("用户ID不能为空");
+            model.addAttribute("error","用户信息为空");
+            return "modify/payPassword";
         }
-        return  returnData;
     }
 
 
@@ -79,10 +77,29 @@ public class ModifyController {
 
     /**
      *   设置支付密码
-     * @param request
+
      * @return
      */
-    @ResponseBody
+    @RequestMapping(value = "/setPayPassword", method = RequestMethod.POST)
+    public String setPayPassword(User userForm,Model model) {
+        User user = new User();
+        if(StringUtils.isNotBlank(userForm.getUserId())){
+            user.setUserId(userForm.getUserId());
+            if(StringUtils.isNotBlank(userForm.getPaymentPassword())){
+                String othpassword = new Md5Hash(userForm.getPaymentPassword()).toString();
+                user.setPaymentPassword(othpassword);
+                userService.updateByIdSelective(user);
+                return "redirect:/modify/success?type=setPayPassword";
+            }else{
+                model.addAttribute("error","支付密码为空");
+                return "modify/setPayPassword";
+            }
+        }else {
+            model.addAttribute("error","用户信息为空");
+            return "modify/setPayPassword";
+        }
+    }
+/*    @ResponseBody
     @RequestMapping(value = "/setPayPassword", method = RequestMethod.POST)
     public ReturnData setPayPassword(String userId,String payPassword, HttpServletRequest request) {
         ReturnData returnData = new ReturnData();
@@ -101,7 +118,7 @@ public class ModifyController {
             returnData.setMessage("用户ID不能为空");
         }
         return  returnData;
-    }
+    }*/
 
 
 
@@ -129,7 +146,7 @@ public class ModifyController {
         return "modify/mobile";
     }
 
-    @RequestMapping(value = "/modify/mobile", method = RequestMethod.POST)
+    @RequestMapping(value = "/mobile", method = RequestMethod.POST)
     public String pMobile(User userForm,Model model) {
         Session session = SecurityUtils.getSubject().getSession();
         HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");

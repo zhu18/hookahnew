@@ -115,6 +115,7 @@
         /login = anon
         /reg = anon
         /reg/** = anon
+        /sms/** = anon
         /captcha* = anon
         /unauthorized = anon
         # OAuth anon
