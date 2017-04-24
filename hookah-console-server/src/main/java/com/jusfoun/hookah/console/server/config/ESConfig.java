@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.console.server.config;
 
-import com.jusfoun.hookah.core.constants.HookahConstants.Analyzer;
+import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.domain.es.EsCategory;
 import com.jusfoun.hookah.core.domain.es.EsGoods;
 import com.jusfoun.hookah.rpc.api.ElasticSearchService;
 import org.slf4j.Logger;
@@ -30,10 +31,16 @@ public class ESConfig implements CommandLineRunner {
         logger.info("===========初始化ES-begin=============");
         //如果索引不存在创建索引并导入数据
         try {
-            String goodsKeyField = elasticSearchService.initEs(EsGoods.class, Analyzer.LC_INDEX.val,
+            /** 初始化goods索引*/
+            String goodsKeyField = elasticSearchService.initEs(EsGoods.class, HookahConstants.Analyzer.LC_INDEX.val,
                     Constants.GOODS_INDEX, Constants.GOODS_TYPE, Constants.GOODS_SHARDS, Constants.GOODS_REPLICAS);
             //如果能获取到主键字段说明是新创建的type，导入数据
             elasticSearchService.bulkInsert(goodsKeyField, Constants.GOODS_INDEX, Constants.GOODS_TYPE);
+            /** 初始化category索引*/
+            String catKeyField = elasticSearchService.initEs(EsCategory.class, HookahConstants.Analyzer.LC_INDEX.val,
+                    Constants.GOODS_CATEGORY_INDEX, Constants.GOODS_CATEGORY_TYPE, Constants.GOODS_CATEGORY_SHARDS,
+                    Constants.GOODS_CATEGORY_REPLICAS);
+            elasticSearchService.bulkInsert(catKeyField, Constants.GOODS_CATEGORY_INDEX, Constants.GOODS_CATEGORY_TYPE);
         } catch (Exception e) {
             logger.error("初始化ES-error:" + e.getMessage());
             e.printStackTrace();

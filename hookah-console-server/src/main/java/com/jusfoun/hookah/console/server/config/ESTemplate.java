@@ -658,7 +658,6 @@ public class ESTemplate {
     public Pagination search(TransportClient client, String indexName, String type, Map<String,Object> filterMap,
                              Pagination pagination, String orderField, String order, String ... highLightFields){
         SearchRequestBuilder requestBuilder = client.prepareSearch(indexName);
-
         HighlightBuilder highlightBuilder = new HighlightBuilder().field("*").requireFieldMatch(false);
         highlightBuilder.preTags("<span style=\"color:red\">");
         highlightBuilder.postTags("</span>");
