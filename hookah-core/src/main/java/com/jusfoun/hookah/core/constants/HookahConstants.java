@@ -12,11 +12,7 @@ public class HookahConstants {
     public static final int PAGE_SIZE = 10;
 
     /** 短信过期时间，单位随 分 */
-    public static final Integer SMS_DURATION_MINITE = 10;
-    public static final String SMS_SESSION_KEY = "SMS_SESSION_KEY";
-
-    /** 短信过期时间，单位 分 */
-    public static final Integer CAPTCHA_DURATION_MINITE = 30;
+    public static final Integer SMS_DURATION_MINITE = 2;
 
     /** es操作(增删改查)默认字段 */
     // 聚合字段

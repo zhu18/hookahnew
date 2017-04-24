@@ -1,4 +1,5 @@
 import GoodsController from './GoodsController';
+import GoodsCheckController from './GoodsCheckController';
 import pagination from 'angular-ui-bootstrap/src/pagination';
 goodsRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function goodsRouting($stateProvider, $urlRouterProvider) {
@@ -18,9 +19,20 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
       template: require('./list.html'),
       controller: GoodsController,
     })
+    .state('items.check', {
+        url: '/items/check',
+        template: require('./checkList.html'),
+        controller: GoodsCheckController,
+    })
+    .state('items.goodsDetail', {
+        url: '/items/goodsDetail',
+        template: require('./goodsDetail.html'),
+        controller: GoodsCheckController,
+    })
     .state('items.detail', {
       url: '/innerMsg/read/{categoryId:[0-9]{1,4}}',
       templateUrl: '/msc/list',
       controller: GoodsController,
     })
+
 };

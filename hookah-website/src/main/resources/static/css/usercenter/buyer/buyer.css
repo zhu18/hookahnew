@@ -356,6 +356,7 @@ ul li {
     text-align: center;
     padding: 15px 0px;
 }
+
 .evaluation  .level table tbody tr td a:hover,.evaluation  .level table tbody tr td a p:hover {
     color:#237DE7;
 }
@@ -511,3 +512,5 @@ ul li {
 .rcontent .suneval textarea {
     resize: none;
 }
+
+

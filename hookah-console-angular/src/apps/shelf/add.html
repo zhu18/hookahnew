@@ -9,40 +9,54 @@
     </div>
   </div>
   <div class="col-sm-12">
-    <form class="form-horizontal" role="form" id="shelfForm" name="shelf">
+    <form class="form-horizontal" role="form" id="shelfForm" name="shelfForm" novalidate>
       <fieldset>
         <h5 style="padding: 0px 20px;">基本信息</h5>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="shelvesName">货架名称</label>
           <div class="col-sm-4">
-            <input type="text" id="shelvesName" name="shelvesName" class="form-control" />
+            <input type="text" id="shelvesName" name="shelvesName" class="form-control" data-ng-model="shelvesName" ng-maxlength="10" placeholder="必填项/长度为10" required/>
           </div>
+          <!--<div>-->
+            <!--<span style="color:red" ng-show="shelfForm.shelvesName.$error.required">必填项</span>-->
+            <!--<span style="color:red" ng-show="shelfForm.shelvesName.$length > 10">必填项2</span>-->
+          <!--</div>-->
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="shelvesType">副标题</label>
           <div class="col-sm-4">
-            <input type="text" id="shelvesType" name="shelvesType" class="form-control" />
+            <input type="text" id="shelvesType" name="shelvesType" class="form-control" data-ng-model="shelvesType" required placeholder=""/>
+          </div>
+          <div>
+            <span style="color:red" ng-show="shelfForm.shelvesType.$error.required">必填项</span>
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="shelvesTag">货架标签</label>
           <div class="col-sm-4">
-            <input type="text" id="shelvesTag" name="shelvesTag" class="form-control"/>
+            <input type="text" id="shelvesTag" name="shelvesTag" class="form-control" data-ng-model="shelvesTag" required />
           </div>
-          <div class="col-sm-4">
-            多个标签使用逗号间隔
+          <div>
+            <span style="color:red" ng-show="shelfForm.shelvesTag.$error.required">必填项 / 多个标签使用逗号间隔</span>
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="goodsNumber">商品数量</label>
           <div class="col-sm-4">
-            <input type="text" id="goodsNumber" name="goodsNumber" ng-maxlength="2" class="form-control"/>
+            <input type="number" id="goodsNumber" name="goodsNumber" ng-maxlength="2" class="form-control" data-ng-model="goodsNumber" required />
+          </div>
+          <div>
+            <span style="color:red" ng-show="shelfForm.goodsNumber.$error.required">必填项</span>
+
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="shelvesDesc">货架描述</label>
           <div class="col-sm-4">
-            <input type="text" id="shelvesDesc" name="shelvesDesc" class="form-control" />
+            <input type="text" id="shelvesDesc" name="shelvesDesc" class="form-control" data-ng-model="shelvesDesc" required />
+          </div>
+          <div>
+            <span style="color:red" ng-show="shelfForm.shelvesDesc.$error.required">必填项</span>
           </div>
         </div>
         <div class="form-group">

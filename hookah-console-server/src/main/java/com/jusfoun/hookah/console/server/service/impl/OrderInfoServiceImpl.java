@@ -155,33 +155,6 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     }
 
     @Override
-    public Pagination<OrderInfoVo> findByPage(String userId,Integer pageNum, Integer pageSize, Integer payStatus, Integer commentFlag, Date startDate, Date endDate, String domainName) throws  HookahException{
-        List<Condition> filters = new ArrayList<>();
-        if (startDate != null) {
-            filters.add(Condition.ge("addTime", startDate));
-        }
-        if (endDate != null) {
-            filters.add(Condition.le("addTime", endDate));
-        }
-        if (payStatus != null) {
-            filters.add(Condition.eq("payStatus", payStatus));
-        }
-        if (commentFlag != null) {
-            filters.add(Condition.eq("commentFlag", commentFlag));
-        }
-        if (domainName != null) {
-            filters.add(Condition.like("domainName", "%" + domainName + "%"));
-        }
-        filters.add(Condition.eq("userId", userId));
-        filters.add(Condition.eq("isDeleted", 0));
-
-        List<OrderBy> orderBys = new ArrayList<>();
-        orderBys.add(OrderBy.desc("addTime"));
-        Pagination<OrderInfoVo> pOrders = this.getDetailListInPage(pageNum, pageSize, filters, orderBys);
-        return pOrders;
-    }
-
-    @Override
     public void deleteByLogic(String id) {
         OrderInfo order = new OrderInfo();
         order.setOrderId(id);
@@ -229,7 +202,6 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                 OrderInfoVo orderInfoVo = new OrderInfoVo();
                 BeanUtils.copyProperties(orderInfo,orderInfoVo);
                 orderInfoVo.setMgOrderGoodsList(ordergoodsList);
-                orderinfoMapper.insert(orderInfo);
                 mgOrderInfoService.insert(orderInfoVo);
             }
             if(goodsAmount.compareTo(0L)==0){
@@ -316,7 +288,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     public Pagination<OrderInfoVo> getDetailListInPage(Integer pageNum, Integer pageSize, List<Condition> filters,
                                            List<OrderBy> orderBys) {
         // TODO Auto-generated method stub
-        PageHelper.startPage(pageNum, pageSize, getOrderBy(orderBys));
+        PageHelper.startPage(pageNum, pageSize);
         Page<OrderInfo> list =  (Page<OrderInfo>) super.selectList(filters,orderBys);
         Page<OrderInfoVo> page = new Page<OrderInfoVo>(pageNum,pageSize);
         for(OrderInfo order:list){

@@ -128,3 +128,6 @@
     width: 200px;
     line-height: 38px;
 }
+.order-info .order-info-down table .tab-submit .pay-btn{
+    cursor: pointer;
+}

@@ -105,6 +105,7 @@ var htmlPart = {
 						</div>
 					</div>
 					<div class="form-item form-item-short">
+						<div class="loading_btns"></div>
 						<button type="submit" class="btn btn-large tsl" data-phase-id="r_p_next" id="J_BtnInfoForm">确认
 						</button>
 						<div class="msg msg-hide" data-show="0" id="J_MsgInfoForm" data-display="block"><i
@@ -610,9 +611,7 @@ var htmlPart = {
 		ERROR_DUP_DEFAULT_NICK_NAME: '该会员名已被使用，请刷新页面或者设置新会员名',
 		ERROR_ACTIVATION_UNSUPPORT_USER_ALIPAY: '您的账号无法进行业务激活'
 	};
-	function toLogin() {
-		window.href = '${host.auth}/login';
-	}
+
 	$(document).ready(function () {
 
 		$('#J_BtnInfoForm').on("click", function (e) {
@@ -658,6 +657,7 @@ var htmlPart = {
 		})
 	});
 	function mobileAvailable(mobile){//验证手机号是否可用
+
 		$.ajax({
 			url:'${host.auth}/reg/checkMobile',
 			type:'post',
@@ -676,6 +676,7 @@ var htmlPart = {
 		});
 	}
 	function mobileNumIsTrue(mobile,validSms){ //验证手机验证码是否正确
+		$('.loading_btns').show();
 		$.ajax({
 			url:'${host.auth}/sms/check',
 			type:'post',
@@ -688,14 +689,19 @@ var htmlPart = {
 					$.post("${host.auth}/reg", $("#J_InfoForm").serialize(), function (data) {
 						if (data.code == 1) {
 							$.alert("注册成功，马上跳转登录页面");
-//							setTimeout("toLogin()", 2000);
+							setTimeout(function() {
+								window.location.href = '${host.auth}/login';
+							}, 2000);
 						} else {
+							$('.loading_btns').hide();
 							$.alert(data.message);
 						}
 					});
 				}else if(data.code == 0){
+					$('.loading_btns').hide();
 					$('#J_MobileSms').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_IMAGECHECKCODE_INVALID).siblings('.iconfont').html('󰅕');
 				}else{
+					$('.loading_btns').hide();
 					$.alert(data.message);
 				}
 			}

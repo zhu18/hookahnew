@@ -1,0 +1,148 @@
+<div class="row" xmlns="http://www.w3.org/1999/html">
+  <div class="col-sm-12">
+    <div class="console-title console-title-border clearfix">
+      <div class="pull-left"><h5>商品详情-审核</h5></div>
+      <div class="pull-right">
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12">
+    <form class="form-horizontal" role="form" id="goodsCheckForm" name="shelf">
+      <fieldset>
+        <h5 style="padding: 0px 20px;">基本信息</h5>
+        <div class="form-group">
+          <input type="hidden" id="goodsId" name="goodsId" value="{{editData.goodsId}}" />
+          <label class="col-sm-2 control-label">商品名称</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" value="{{editData.goodsName}}" disabled="disabled" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">商品简介</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" value="{{editData.goodsrief}}" disabled="disabled" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">商品类型</label>
+          <div class="col-sm-4">
+            <label class="radio-inline">
+              <input type="radio" ng-checked="editData.goodsType == 0"/>常规商品
+            </label>
+            <label class="radio-inline">
+              <input type="radio" ng-checked="editData.goodsType == 1"/>api
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">所属区域</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" value="{{editData.goodsArea}}" disabled="disabled" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">商品图片</label>
+          <div class="col-sm-4">
+            <img ng-src="editData.goodsImg">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">规格及价格</label>
+          <div class="col-sm-4">
+            <img ng-src="editData.goodsImg">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">商品描述</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" value="{{editData.goodsDesc}}" disabled="disabled" />
+          </div>
+        </div>
+        <div data-ng-if="editData.goodsType == 1">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">接口地址</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" value="{{editData.shelvesName}}" disabled="disabled" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">请求方式</label>
+            <div class="col-sm-4">
+              <div class="col-sm-4">
+                <label class="radio-inline">
+              <span data-ng-if="editData.goodsType == 0">
+                <input type="radio" />get
+              </span>
+                </label>
+                <label class="radio-inline">
+              <span data-ng-if="editData.goodsType == 1">
+                <input type="radio" />post
+              </span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">请求示例</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" value="{{editData.shelvesName}}" disabled="disabled" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">接口描述</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" value="{{editData.shelvesName}}" disabled="disabled" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">请求参数</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" value="{{editData.api}}" disabled="disabled" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">返回示例</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" value="{{editData.shelvesName}}" disabled="disabled" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">返回参数</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" value="{{editData.shelvesName}}" disabled="disabled" />
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">审核状态</label>
+        <div class="col-sm-4">
+          <label class="radio-inline">
+            <input type="radio" id="checkStatus_1" name="checkStatus" value="1" checked/>通过
+          </label>
+          <label class="radio-inline">
+            <input type="radio" id="checkStatus_2" name="checkStatus" value="2" />不通过
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="checkContent">审核意见</label>
+        <div class="col-sm-4">
+          <label>
+            <textarea id="checkContent" name="checkContent" style="margin: 0px; width: 359px; height: 84px;"></textarea>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-4">
+          <button class="btn btn-primary" data-ng-click="submitCheck()">
+            <span class="glyphicon glyphicon-refresh"></span> 提交审核
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -108,6 +108,9 @@ ul li {
 .orderManagement .order table th{
     padding:5px;
 }
+.orderManagement .order table th:nth-last-child(1){
+    border-right:1px solid #E1E1E1;
+}
 .orderManagement .order table tr{
 }
 .orderManagement .order table td{

@@ -12,6 +12,7 @@ import com.jusfoun.hookah.rpc.api.GoodsCheckService;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.MqSenderService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -32,10 +33,8 @@ public class GoodsCheckServiceImpl extends GenericServiceImpl<GoodsCheck, String
     @Resource
     GoodsService goodsService;
 
-    @Resource
-    MqSenderService mqSenderService;
-
     @Override
+    @Transactional
     public void insertRecord(GoodsCheck goodsCheck) throws HookahException {
         if (goodsCheck == null)
             throw new HookahException("空数据！");
@@ -56,7 +55,6 @@ public class GoodsCheckServiceImpl extends GenericServiceImpl<GoodsCheck, String
             goods.setCheckStatus(Byte.parseByte(HookahConstants.CheckStatus.audit_success.getCode()));
             goods.setIsOnsale(Byte.parseByte(HookahConstants.CheckStatus.audit_success.getCode()));
             goodsService.updateByIdSelective(goods);
-            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_GOODS_ID,goodsCheck.getGoodsId());
         }else if(goodsCheck.getCheckStatus() == 2){
             goods.setCheckStatus(Byte.parseByte(HookahConstants.CheckStatus.audit_fail.getCode()));
             goodsService.updateByIdSelective(goods);

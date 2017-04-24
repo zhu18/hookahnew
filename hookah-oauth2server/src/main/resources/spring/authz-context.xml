@@ -80,4 +80,5 @@
     <bean name="redisOperate" class="com.jusfoun.hookah.core.common.redis.RedisOperate">
         <property name="jedisClient" ref="jedisClusterClient"/>
     </bean>
+
 </beans>

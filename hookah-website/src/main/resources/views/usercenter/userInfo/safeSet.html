@@ -4,98 +4,112 @@ var head = {
 <link rel="stylesheet" href="/static/css/usercenter/user-center-menu.css">
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/safeSet.css">
 <%};%>
-
 <%
 var htmlPart = {
 %>
 <div class="grid-0 backgorund-gray">
-  <div class="grid-row clearfix">
-    <%include("/usercenter/user-center-menu.html"){} %>
-    <div class="grid-left safe-set-box ">
-      <div class="header">
-        <h4 class="safe-set-title">安全设置</h4>
-      </div>
-      <div class="user-info">
-        <div class="login-info clearfix">
-          <div class="user-header grid-left">
-            <div class="img-box">
-              <img src="/static/images/user-safe-head.png" alt="">
-            </div>
-            <!--<a href="javascript:void(0);"><p id="modify-head">修改头像</p></a>-->
-          </div>
-          <div class="login-account">
-            <p>登录账号：<span class="user-account">${userCur.userName}</span>
-              <%if(userCur.userType ==1){%>
-              <span class="isAuth">您还未进行实名认证,<a href="/auth/index">去认证</a></span>
-              <%}else if(userCur.userType ==2){%>
-              <span class="isAuth">(您已通过实名认证)</span>
-              <%}else if(userCur.userType ==3){%>
-              <span class="isAuth">(正在审核您的个人资料)</span>
-              <%}else if(userCur.userType ==4){%>
-              <span class="isAuth">(您已通过企业认证)</span>
-              <%}else if(userCur.userType ==5){%>
-              <span class="isAuth">(正在审核您的企业资料)</span>
-              <%}%>
-
-            </p>
-            <p class="register-time">注册时间：<span>${userCur.regTime, "yyyy-MM-dd hh:mm:ss"}</span></p>
-          </div>
-        </div>
-      </div>
-      <div class="bottom">
-        <div class="safe-degree clearfix">
-          <div class="grid-left">您当前账号的安全程度</div>
-          <div class="grid-left safe-bar"></div>
-          <p class="grid-left">安全级别 <span class="degree">中</span> 继续努力</p>
-        </div>
-        <div class="login-info-box clearfix">
-          <p class="grid-left pwd">登录密码</p>
-          <div class="grid-left description">
-            <p>
-              安全性高的密码可以使账户更安全，建议您定期更换密码，使用一个包含字母，符号，或者数字至少两项，且长度超过6位的密码
-            </p>
-          </div>
-          <div class="grid-left set-btn">
-            <p class="isset grid-left"><span class="fa fa-check-circle-o"></span>已设置 &nbsp;&nbsp;|</p>
-            <p class="modify-btn grid-left"><span>&nbsp;&nbsp;修改</span></p>
-          </div>
-        </div>
-        <div class="login-info-box clearfix">
-          <p class="grid-left pho">手机绑定</p>
-          <div class="grid-left description">
-            <p>
-              您已绑定了手机${userCur.mobile} [您的手机号可以直接用于登录、找回密码等]
-            </p>
-          </div>
-          <div class="grid-left set-btn">
-            <p class="isset grid-left"><span class="fa fa-check-circle-o"></span>已设置 &nbsp;&nbsp;</p>
-            <p class="modify-btn grid-left"><span>&nbsp;&nbsp;修改</span></p>
-          </div>
-        </div>
-        <div class="login-info-box clearfix">
-          <p class="grid-left pho">邮箱绑定</p>
-          <div class="grid-left description">
-            <p>
-              您已绑定了手机${userCur.mobile} [您的手机号可以直接用于登录、找回密码等]
-            </p>
-          </div>
-          <div class="grid-left set-btn">
-            <p class="noset grid-left"><span class="fa fa-warning"></span>未设置 &nbsp;&nbsp; |</p>
-            <p class="modify-btn grid-left"><span>&nbsp;&nbsp;修改</span></p>
-          </div>
-        </div>
-        <div class="login-info-box clearfix" id="safeNotice">
-          <p class="grid-left pho">安全提示</p>
-          <div class="grid-left description">
-            <ol>
-              <li>①注意防范进入钓鱼网站，不要轻信各种即时通讯工具发送的商品和支付链接，谨防网购诈骗。</li>
-              <li>②建议您安装杀毒软件，并定期更新操作系统。</li>
-            </ol>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+	<div class="grid-row clearfix">
+		<%include("/usercenter/user-center-menu.html"){} %>
+		<div class="grid-left safe-set-box ">
+			<div class="header">
+				<h4 class="safe-set-title">安全设置</h4>
+			</div>
+			<div class="user-info">
+				<div class="login-info clearfix">
+					<div class="user-header grid-left">
+						<div class="img-box">
+							<img src="/static/images/user-safe-head.png" alt="">
+						</div>
+						<!--<a href="javascript:void(0);"><p id="modify-head">修改头像</p></a>-->
+					</div>
+					<div class="login-account">
+						<p>登录账号：<span class="user-account">${userCur.userName}</span>
+							<%if(userCur.userType ==1){%>
+							<span class="isAuth">您还未进行实名认证,<a href="/auth/index">去认证</a></span>
+							<%}else if(userCur.userType ==2){%>
+							<span class="isAuth">(您已通过实名认证)</span>
+							<%}else if(userCur.userType ==3){%>
+							<span class="isAuth">(正在审核您的个人资料)</span>
+							<%}else if(userCur.userType ==4){%>
+							<span class="isAuth">(您已通过企业认证)</span>
+							<%}else if(userCur.userType ==5){%>
+							<span class="isAuth">(正在审核您的企业资料)</span>
+							<%}%>
+						</p>
+						<p class="register-time">注册时间：<span>${userCur.regTime, "yyyy-MM-dd hh:mm:ss"}</span></p>
+					</div>
+				</div>
+			</div>
+			<div class="bottom">
+				<div class="safe-degree clearfix">
+					<div class="grid-left">您当前账号的安全程度</div>
+					<div class="grid-left safe-bar"></div>
+					<p class="grid-left">安全级别 <span class="degree">中</span> 继续努力</p>
+				</div>
+				<div class="login-info-box clearfix">
+					<p class="grid-left pwd">登录密码</p>
+					<div class="grid-left description">
+						<p>
+							安全性高的密码可以使账户更安全，建议您定期更换密码，使用一个包含字母，符号，或者数字至少两项，且长度超过6位的密码
+						</p>
+					</div>
+					<div class="grid-left set-btn">
+						<p class="isset grid-left"><span class="fa fa-check-circle-o"></span>已设置</p>
+						<span class="margin-left-5 margin-right-5 grid-left">|</span>
+						<p class="modify-btn grid-left"><a href="${host.auth}/verify?type=loginPassword" class="color-blue">修改</a></p>
+					</div>
+				</div>
+				<div class="login-info-box clearfix">
+					<p class="grid-left pwd">支付密码</p>
+					<div class="grid-left description">
+						<p>
+							安全性高的密码可以使账户更安全，建议您定期更换密码，使用一个包含字母，符号，或者数字至少两项，且长度超过6位的密码
+						</p>
+					</div>
+					<div class="grid-left set-btn">
+						<p class="noset grid-left"><span class="fa fa-warning"></span>未设置</p>
+						<span class="margin-left-5 margin-right-5 grid-left">|</span>
+						<p class="modify-btn grid-left"><a href="${host.auth}/verify?type=setPayPassword" class="color-blue">设置</a></p>
+					</div>
+				</div>
+				<div class="login-info-box clearfix">
+					<p class="grid-left pho">手机绑定</p>
+					<div class="grid-left description">
+						<p>
+							您已绑定了手机${userCur.mobile} [您的手机号可以直接用于登录、找回密码等]
+						</p>
+					</div>
+					<div class="grid-left set-btn">
+						<p class="isset grid-left"><span class="fa fa-check-circle-o"></span>已设置</p>
+						<span class="margin-left-5 margin-right-5 grid-left">|</span>
+						<p class="modify-btn grid-left"><a href="${host.auth}/verify?type=mobile" class="color-blue">修改</a></p>
+					</div>
+				</div>
+				<div class="login-info-box clearfix">
+					<p class="grid-left pho">邮箱绑定</p>
+					<div class="grid-left description">
+						<p>
+							您已绑定了手机${userCur.mobile} [您的手机号可以直接用于登录、找回密码等]
+						</p>
+					</div>
+					<div class="grid-left set-btn">
+						<p class="noset grid-left"><span class="fa fa-warning"></span>未设置</p>
+						<span class="margin-left-5 margin-right-5 grid-left">|</span>
+						<p class="modify-btn grid-left"><a href="${host.auth}/verify?type=mail" class="color-blue">设置</a></p>
+					</div>
+				</div>
+				<div class="login-info-box clearfix" id="safeNotice">
+					<p class="grid-left pho">安全提示</p>
+					<div class="grid-left description">
+						<ol>
+							<li>①注意防范进入钓鱼网站，不要轻信各种即时通讯工具发送的商品和支付链接，谨防网购诈骗。</li>
+							<li>②建议您安装杀毒软件，并定期更新操作系统。</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 </div>
 <%};

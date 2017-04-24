@@ -18,7 +18,7 @@ function loadPageData(data){ //渲染页面数据
 			html += '<p class="goods-name" title="'+list[i].goodsName+'">'+list[i].goodsName+'</p>';
 			html += '<p class="goods-brief" title="'+list[i].goodsBrief+'">'+list[i].goodsBrief+'</p>';
 			html += '</a>';
-			html += '<div class="item-down">';
+			html += '<div class="item-down clearfix">';
 			html += '<span class="grid-left goods-price">￥<span>'+Number(list[i].shopPrice)/100+'</span>/'+(list[i].shopNumber == 1 ? '':list[i].shopNumber)+shopFormat+'</span>';
 			html += '<a class="grid-right btn btn-full-red padding-5 font-size-12 margin-top-10" href="javascript:void(0)">加入购物车</a>';
 			html += '</div>';
