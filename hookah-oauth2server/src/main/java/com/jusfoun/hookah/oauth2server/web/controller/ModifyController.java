@@ -1,8 +1,6 @@
 package com.jusfoun.hookah.oauth2server.web.controller;
 
 import com.jusfoun.hookah.core.domain.User;
-import com.jusfoun.hookah.core.utils.ExceptionConst;
-import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -12,15 +10,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
-import java.util.Map;
 
 
 /**
