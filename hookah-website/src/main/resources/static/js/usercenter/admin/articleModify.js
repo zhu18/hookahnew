@@ -6,9 +6,7 @@ $.getUrlParam = function (key) {
     var result = window.location.search.substr(1).match(reg);
     return result ? decodeURIComponent(result[2]) : null;
 };
-
 var id = $.getUrlParam('id');//文章的id
-
 function createEditor() {
     //富文本
     var editor = new wangEditor('content');
@@ -25,6 +23,7 @@ function createEditor() {
     });
     editor.create();
 }
+
 if (id) {
     $.ajax({
         type: "get",
@@ -41,7 +40,6 @@ if (id) {
         }
     })
 }
-
 var imgSrc = '';
 //上传图片
 
@@ -58,7 +56,6 @@ $('#filename').fileupload({
         } else {
             $.alert(data.result.message);
         }
-
     },
     progressall: function (e, data) {
 
@@ -152,3 +149,4 @@ $('#preview-div').hover(function () {
         $('#replace-btn').toggle();
     }
 });
+
