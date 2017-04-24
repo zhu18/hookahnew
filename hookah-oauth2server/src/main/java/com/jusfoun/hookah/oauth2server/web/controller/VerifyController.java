@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -45,6 +46,7 @@ public class VerifyController {
      * @return
      */
     @RequestMapping(value = "/verify/verifyPayPassword", method = RequestMethod.POST)
+    @ResponseBody
     public ReturnData verifyPayPassword(User userForm,Model model) {
         ReturnData returnData = new ReturnData();
         Session session = SecurityUtils.getSubject().getSession();
