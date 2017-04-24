@@ -131,16 +131,16 @@ public class GoodsApi extends BaseController{
             filters.add(Condition.eq("checkStatus", 0));
             filters.add(Condition.eq("isOnsale", 0));
             if(StringUtils.isNotBlank(goodsName)){
-                filters.add(Condition.eq("goodsName", goodsName));
+                filters.add(Condition.eq("goodsName", goodsName.trim()));
             }
             if(StringUtils.isNotBlank(goodsSn)){
-                filters.add(Condition.eq("goodsSn", goodsSn));
+                filters.add(Condition.eq("goodsSn", goodsSn.trim()));
             }
             if(StringUtils.isNotBlank(keywords)){
-                filters.add(Condition.eq("keywords", keywords));
+                filters.add(Condition.eq("keywords", keywords.trim()));
             }
             if(StringUtils.isNotBlank(shopName)){
-                filters.add(Condition.eq("shopName", shopName));
+                filters.add(Condition.eq("shopName", shopName.trim()));
             }
 
             //参数校验
@@ -172,8 +172,12 @@ public class GoodsApi extends BaseController{
 
             Goods goods = goodsService.selectById(goodsId);
             MgGoods mgGoods = mgGoodsService.selectById(goodsId);
-            BeanUtils.copyProperties(goods, goodsVo);
-            BeanUtils.copyProperties(mgGoods, goodsVo);
+            if(goods != null){
+                BeanUtils.copyProperties(goods, goodsVo);
+            }
+            if(mgGoods != null){
+                BeanUtils.copyProperties(mgGoods, goodsVo);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

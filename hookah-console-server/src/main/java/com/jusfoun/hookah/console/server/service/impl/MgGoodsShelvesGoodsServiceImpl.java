@@ -2,6 +2,7 @@ package com.jusfoun.hookah.console.server.service.impl;
 
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.domain.Goods;
+import com.jusfoun.hookah.core.domain.GoodsShelves;
 import com.jusfoun.hookah.core.domain.mongo.MgShelvesGoods;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -10,6 +11,7 @@ import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.GoodsService;
+import com.jusfoun.hookah.rpc.api.GoodsShelvesService;
 import com.jusfoun.hookah.rpc.api.MgGoodsShelvesGoodsService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -36,6 +38,12 @@ public class MgGoodsShelvesGoodsServiceImpl extends GenericMongoServiceImpl<MgSh
 
     @Resource
     GoodsService goodsService;
+
+    @Resource
+    GoodsShelvesService goodsShelvesService;
+
+    @Resource
+    MgGoodsShelvesGoodsService mgGoodsShelvesGoodsService;
 
 
     @Override
@@ -162,15 +170,28 @@ public class MgGoodsShelvesGoodsServiceImpl extends GenericMongoServiceImpl<MgSh
 
     @Override
     public Pagination<Goods> getData(int pageNumberNew, int pageSizeNew, String shelvesGoodsId) {
-        Pagination<Goods> page = null;
+        Pagination<Goods> page = new Pagination<>(pageNumberNew, pageSizeNew);
         MgShelvesGoods mgShelvesGoods = super.selectById(shelvesGoodsId);
-        List<String> gidList = mgShelvesGoods.getGoodsIdList();
-        if(gidList != null){
-            List<Condition> filters = new ArrayList();
-            List<OrderBy> orderBys = new ArrayList();
-            filters.add(Condition.in("goodsId", gidList.toArray()));
-            orderBys.add(OrderBy.desc("lastUpdateTime"));
-            page = goodsService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
+        if(mgShelvesGoods == null){
+
+            // 新建mg货架数据
+            GoodsShelves goodsShelves = goodsShelvesService.selectById(shelvesGoodsId);
+
+            MgShelvesGoods mgShelvesGoodsx = new MgShelvesGoods();
+            mgShelvesGoodsx.setShelvesGoodsId(goodsShelves.getShelvesId());
+            mgShelvesGoodsx.setShelvesGoodsName(goodsShelves.getShelvesName());
+            mgGoodsShelvesGoodsService.insert(mgShelvesGoodsx);
+
+        }else{
+
+            List<String> gidList = mgShelvesGoods.getGoodsIdList();
+            if(gidList != null){
+                List<Condition> filters = new ArrayList();
+                List<OrderBy> orderBys = new ArrayList();
+                filters.add(Condition.in("goodsId", gidList.toArray()));
+                orderBys.add(OrderBy.desc("lastUpdateTime"));
+                page = goodsService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
+            }
         }
         return page;
     }
