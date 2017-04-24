@@ -83,6 +83,7 @@ public class ModifyController {
             if(StringUtils.isNotBlank(userForm.getPaymentPassword())){
                 String othpassword = new Md5Hash(userForm.getPaymentPassword()).toString();
                 user.setPaymentPassword(othpassword);
+                user.setPaymentPasswordStatus(1);
                 userService.updateById(user);
                 return "redirect:/modify/success?type=setPayPassword";
             }else{
