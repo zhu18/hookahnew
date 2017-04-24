@@ -19,7 +19,7 @@ ul li {
     zoom: 1;
 }
 
-/*全部订单*/
+/*orderManagement*/
 .orderManagement {
     background: #fff;
     width: 978px;
@@ -361,7 +361,7 @@ ul li {
 }
 
 /*viewDetails*/
-.viewDetails {
+.viewDetails , .sunAlone {
     margin-top: 10px;
     width: 978px;
     background-color: #fff;
@@ -370,17 +370,17 @@ ul li {
     margin-left: 10px;
 }
 
-.viewDetails .view {
+.viewDetails .view ,.sunAlone .sun{
     height: 30px;
     padding-top: 10px;
     border-bottom: 1px solid #EDEDED;
 }
-.viewDetails .view .details {
+.viewDetails .view .details , .sunAlone .sun .details{
     font:15px/20px "microsoft yahei";
     padding-left:10px;
     border-left:2px solid #237DE7;
 }
-.viewDetails .viewContent .leftContent {
+.viewDetails .viewContent .leftContent,.sunAlone .sunContent .lcontent{
     width: 265px;
     border-right:1px solid #f1f1f1;
 }
@@ -403,7 +403,7 @@ ul li {
     border: 1px solid #237DE7;
     background: #fff;
 }
-.viewDetails .viewContent .rightContent {
+.viewDetails .viewContent .rightContent, .sunAlone .sunContent .rcontent {
     width: 692px;
 }
 .viewDetails .viewContent .rightContent .state-rtop {
@@ -412,11 +412,6 @@ ul li {
 .viewDetails .viewContent .rightContent .process div ,.viewDetails .viewContent .rightContent .process-text div{
     display: inline-block;
 }
-.viewDetails .viewContent .rightContent .process .line{
-    /*width: 124px;*/
-    /*height: 3px;*/
-}
-
 .viewDetails .viewContent .rightContent .proce {
     width: 40px;
     line-height: 45px;
@@ -440,10 +435,7 @@ ul li {
 .viewDetails .viewContent .rightContent .process-text .pay{
     width: 295px;
 }
- .pay, .over {
-    /*line-height: 67px;*/
-    /*margin-top:-20px;*/
-}
+
 .viewDetails  .goods-list {
     margin: 0  -15px;
 }
@@ -464,10 +456,11 @@ ul li {
     width: 60px;
     height: 60px;
     border: 1px solid #000;
+    vertical-align: middle;
 }
 .goods-list .p-img a:nth-child(2){
-    height: 60px;
     line-height: 60px;
+    display: inline-block;
 }
 .goods div {
     display: inline-block;
@@ -494,3 +487,27 @@ ul li {
 }
 
 
+/*sunAlone*/
+.sunAlone .sunContent .lcontent {
+    /*width: 260px;*/
+}
+.sunAlone .sunContent .pic img {
+    width: 60px;
+    height: 60px;
+    border: 1px solid #000;
+}
+.sunAlone .sunContent .rcontent .satisfaction span {
+    display: inline-block;
+    position: relative;
+    width: 50px;
+}
+.sunAlone .sunContent .rcontent .satisfaction .comment {
+    position: absolute;
+    top:-13px;
+}
+.sunAlone .sunContent .rcontent .satisfaction .comment li {
+    float: left;
+}
+.rcontent .suneval textarea {
+    resize: none;
+}
