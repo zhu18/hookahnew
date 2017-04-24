@@ -20,7 +20,14 @@ public class Pagination<T> implements Serializable{
 	private int pageSize;
 	
 	private int currentPage;
-	
+
+	public Pagination(){}
+
+	public Pagination(int currentPage, int pageSize) {
+		this.pageSize = pageSize;
+		this.currentPage = currentPage;
+	}
+
 	public List<T> getList() {
 		return list;
 	}

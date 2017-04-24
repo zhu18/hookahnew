@@ -68,18 +68,12 @@
           <div class="form-group">
             <label class="col-sm-2 control-label">请求方式</label>
             <div class="col-sm-4">
-              <div class="col-sm-4">
-                <label class="radio-inline">
-              <span data-ng-if="editData.goodsType == 0">
-                <input type="radio" />get
-              </span>
-                </label>
-                <label class="radio-inline">
-              <span data-ng-if="editData.goodsType == 1">
-                <input type="radio" />post
-              </span>
-                </label>
-              </div>
+              <label class="radio-inline">
+                <input type="radio" ng-checked="editData.goodsType == 0"/>GET
+              </label>
+              <label class="radio-inline">
+                <input type="radio" ng-checked="editData.goodsType == 1"/>POST
+              </label>
             </div>
           </div>
           <div class="form-group">

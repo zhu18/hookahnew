@@ -2,9 +2,6 @@ class ManageGoodsController {
   constructor($scope, $rootScope, $stateParams, $http, $state, $uibModal, usSpinnerService, growl) {
 
 
-      // $rootScope.allGoodsPages.currentPage;
-      // $rootScope.shelfPages.currentPage;
-
     $scope.pageChanged = function () {
           // $scope.searchAllGoods();
         var promise = $http({
