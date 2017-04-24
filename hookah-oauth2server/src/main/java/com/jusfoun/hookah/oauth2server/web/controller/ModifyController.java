@@ -70,8 +70,13 @@ public class ModifyController {
 
      * @return
      */
+    @RequestMapping(value = "/setPayPassword", method = RequestMethod.GET)
+    public String setPayPassword(Model model) {
+        model.addAttribute("title", "设置支付密码");
+        return "modify/setPayPassword";
+    }
     @RequestMapping(value = "/setPayPassword", method = RequestMethod.POST)
-    public String setPayPassword(User userForm,Model model) {
+    public String pSetPayPassword(User userForm,Model model) {
         Session session = SecurityUtils.getSubject().getSession();
         HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
         User user = userService.selectById(userMap.get("userId"));

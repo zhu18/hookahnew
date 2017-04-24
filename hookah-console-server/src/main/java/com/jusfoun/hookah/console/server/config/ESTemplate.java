@@ -710,7 +710,10 @@ public class ESTemplate {
 //                    queryString = QueryBuilders.queryStringQuery(String.valueOf(entry.getValue()));
 //                    ((QueryStringQueryBuilder)queryString).field(String.valueOf(entry.getKey()));
 //                    }
-                    queryString = QueryBuilders.matchPhraseQuery(String.valueOf(entry.getKey()), entry.getValue());
+//                    queryString = QueryBuilders.matchPhraseQuery(String.valueOf(entry.getKey()), entry.getValue());
+
+                    queryString = QueryBuilders.simpleQueryStringQuery(String.valueOf(entry.getValue()))
+                            .field(String.valueOf(entry.getKey()));
                     boolQueryBuilder.must(queryString);
                 }
             }

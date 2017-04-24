@@ -140,7 +140,7 @@ var htmlPart = {
 			success:function(data){
 				if(data.code == 1){
 					window.location.href = '${host.auth}/modify/'+type;
-					return true;
+//					return true;
 				}else if(data.code == 0){
 					$('.loading_btns').hide();
 					$('#J_Phone_Checkcode').parents('.ui-form-item').addClass('ui-form-item-error');
