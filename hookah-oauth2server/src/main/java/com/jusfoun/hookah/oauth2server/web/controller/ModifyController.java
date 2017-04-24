@@ -1,17 +1,26 @@
 package com.jusfoun.hookah.oauth2server.web.controller;
 
 import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.utils.ExceptionConst;
+import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.session.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -20,30 +29,84 @@ import java.util.HashMap;
  * @desc
  */
 @Controller
+@RequestMapping("/modify")
 public class ModifyController {
+
+    private static final Logger logger = LoggerFactory.getLogger(ModifyController.class);
 
     @Resource
     UserService userService;
 
-    @RequestMapping(value = "/modify/loginPassword", method = RequestMethod.GET)
+    @RequestMapping(value = "/loginPassword", method = RequestMethod.GET)
     public String loginPassword(Model model) {
         model.addAttribute("title", "修改登录密码");
         return "modify/loginPassword";
     }
 
-    @RequestMapping(value = "/modify/payPassword", method = RequestMethod.GET)
-    public String payPassword(Model model) {
-        model.addAttribute("title", "修改支付密码");
-        return "modify/payPassword";
+    /**
+     *   修改支付密码
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/payPassword", method = RequestMethod.POST)
+    public ReturnData payPassword(String userId,String payPassword, HttpServletRequest request) {
+        ReturnData returnData = new ReturnData();
+        User user = new User();
+        if(StringUtils.isNotBlank(userId)){
+            user.setUserId(userId);
+            if(StringUtils.isNotBlank(payPassword)){
+                String othpassword = new Md5Hash(payPassword).toString();
+                user.setPaymentPassword(othpassword);
+                userService.updateByIdSelective(user);
+                returnData.setMessage("设置成功！");
+
+            }
+        }else {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage("用户ID不能为空");
+        }
+        return  returnData;
     }
 
-    @RequestMapping(value = "/modify/setPayPassword", method = RequestMethod.GET)
+
+
+  /*  @RequestMapping(value = "/modify/setPayPassword", method = RequestMethod.GET)
     public String setPayPassword(Model model) {
         model.addAttribute("title", "设置支付密码");
         return "modify/setPayPassword";
+    }*/
+
+    /**
+     *   设置支付密码
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/setPayPassword", method = RequestMethod.POST)
+    public ReturnData setPayPassword(String userId,String payPassword, HttpServletRequest request) {
+        ReturnData returnData = new ReturnData();
+        User user = new User();
+        if(StringUtils.isNotBlank(userId)){
+            user.setUserId(userId);
+            if(StringUtils.isNotBlank(payPassword)){
+                String othpassword = new Md5Hash(payPassword).toString();
+                user.setPaymentPassword(othpassword);
+                userService.updateByIdSelective(user);
+                returnData.setMessage("设置成功！");
+
+            }
+        }else {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage("用户ID不能为空");
+        }
+        return  returnData;
     }
 
-    @RequestMapping(value = "/modify/success", method = RequestMethod.GET)
+
+
+
+    @RequestMapping(value = "/success", method = RequestMethod.GET)
     public String success(String type,Model model) {
         model.addAttribute("title", "成功");
         if(type.equals("mobile")){
@@ -60,7 +123,7 @@ public class ModifyController {
         return "modify/success";
     }
 
-    @RequestMapping(value = "/modify/mobile", method = RequestMethod.GET)
+    @RequestMapping(value = "/mobile", method = RequestMethod.GET)
     public String mobile(Model model) {
         model.addAttribute("title", "修改手机号");
         return "modify/mobile";
@@ -85,7 +148,7 @@ public class ModifyController {
         return "modify/mobile";
     }
 
-    @RequestMapping(value = "/modify/mail", method = RequestMethod.GET)
+    @RequestMapping(value = "/mail", method = RequestMethod.GET)
     public String mail(Model model) {
         model.addAttribute("title", "修改邮箱");
         return "modify/mail";
