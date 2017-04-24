@@ -205,5 +205,35 @@ public class GoodsApi extends BaseController{
         return returnData;
     }
 
+    @RequestMapping(value = "/delGoodsById", method = RequestMethod.POST)
+    public ReturnData delGoods(String goodsId, String flag) {
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            if(StringUtils.isNotBlank(flag)){
+
+                Goods goods = new Goods();
+                goods.setGoodsId(goodsId);
+                if("1".equals(flag)){  //删除
+                    goods.setIsDelete(Byte.parseByte("0"));
+                    goods.setIsOnsale(Byte.parseByte("0"));// 0 下架；1 上架；2 管理员强制下架
+                }else if("2".equals(flag)){ // 下架
+                    goods.setIsOnsale(Byte.parseByte("2"));
+                }else if("3".equals(flag)){ // 上架
+                    goods.setIsOnsale(Byte.parseByte("1"));
+                }
+                goodsService.updateByIdSelective(goods);
+            }else{
+
+            }
+
+        } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
+
 
 }
