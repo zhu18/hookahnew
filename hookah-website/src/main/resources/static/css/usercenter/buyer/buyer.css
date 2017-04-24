@@ -389,7 +389,8 @@ ul li {
     color:#999;
 }
 .viewDetails .viewContent .leftContent .state-txt {
-    font:400 18px/34px "Microsoft YaHei";
+    font: 400  16px/34px  "Microsoft YaHei";
+    color:#71b247;
 }
 .viewDetails .viewContent .leftContent .state-btn {
     margin:20px 0 30px;
@@ -403,6 +404,13 @@ ul li {
 .viewDetails .viewContent .leftContent .state-btn .fapiao:hover{
     border: 1px solid #237DE7;
     background: #fff;
+}
+
+.viewDetails .viewContent .leftContent .state-bottom img{
+    width: 17px;
+    height: 17px;
+    display: inline-block;
+    vertical-align: middle;
 }
 .viewDetails .viewContent .rightContent, .sunAlone .sunContent .rcontent {
     width: 692px;
@@ -500,11 +508,12 @@ ul li {
 .sunAlone .sunContent .rcontent .satisfaction span {
     display: inline-block;
     position: relative;
-    width: 50px;
+    width: 70px;
 }
 .sunAlone .sunContent .rcontent .satisfaction .comment {
     position: absolute;
-    top:-13px;
+    top:-18px;
+    font-size: 17px;
 }
 .sunAlone .sunContent .rcontent .satisfaction .comment li {
     float: left;
@@ -524,6 +533,9 @@ ul li {
 }
 .sunAlone .sure span:hover {
     cursor: pointer;
+}
+.sunAlone .sunContent .evaluation {
+    color:#eb9c03;
 }
 .sunAlone .sunContent .evaluation img {
     width: 17px;
