@@ -1,11 +1,16 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
 import com.jusfoun.hookah.core.dao.GoodsAttrTypeMapper;
+import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.GoodsAttrType;
 import com.jusfoun.hookah.core.domain.vo.GoodsAttrTypeVo;
+import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
+import com.jusfoun.hookah.core.utils.ExceptionConst;
+import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.GoodsAttrTypeService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -26,9 +31,13 @@ public class GoodsAttrTypeServiceImpl extends GenericServiceImpl<GoodsAttrType, 
     //顶级父类Id
     private final static String TOP_PARENT_ID = "0";
 
-    //商品属性状态
+    //商品属性状态(状态: 0 无效；1 有效')
     private final static  Byte  ATTR_TYPE_INVALID = 0;
     private final static  Byte  ATTR_TYPE_VALID = 1;
+
+    //是否叶子节点
+    private final static Byte IS_ATTR_LEAF = 0;
+    private final static Byte IS_ATTR_NO_LEAF = 1;
 
     @Resource
     public void setDao(GoodsAttrTypeMapper goodsAttrTypeMapper) {
@@ -54,6 +63,42 @@ public class GoodsAttrTypeServiceImpl extends GenericServiceImpl<GoodsAttrType, 
         }
 
         return goodsAttrTypeVos;
+    }
+
+    @Override
+    public ReturnData addAttr(GoodsAttrType goodsAttrType) {
+        ReturnData<GoodsAttrType> returnData = new ReturnData<GoodsAttrType>();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            String parentId = goodsAttrType.getParentId();
+            if(StringUtils.isBlank(parentId)){
+                returnData.setCode(ExceptionConst.AssertFailed);
+                returnData.setMessage(ExceptionConst.get(ExceptionConst.AssertFailed));
+                return returnData;
+            }
+            if("0".equals(parentId)){
+                goodsAttrType.setLevel((byte)1);
+            }else{
+                //获取父类的层级
+                GoodsAttrType parentCat = super.selectById(parentId);
+                goodsAttrType.setLevel((byte)(1 + parentCat.getLevel()));
+            }
+            GoodsAttrType parentAttr = new GoodsAttrType();
+            parentAttr.setTypeId(parentId);
+            parentAttr.setIsAttr(IS_ATTR_NO_LEAF);
+            super.updateByIdSelective(parentAttr);
+
+            goodsAttrType.setIsAttr((byte)0);
+            goodsAttrType = super.insert(goodsAttrType);
+            if(goodsAttrType == null) {
+                throw new HookahException("操作失败");
+            }
+        }catch (Exception e) {
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
     }
 
     //查询子类属性集合
