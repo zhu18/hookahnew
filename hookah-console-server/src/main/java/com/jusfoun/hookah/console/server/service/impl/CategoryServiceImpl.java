@@ -99,7 +99,12 @@ public class CategoryServiceImpl extends GenericServiceImpl<Category, String> im
             }
             //获取当前父节点下的属性的最大Id值
             String maxId = categoryMapper.findMaxByParentId(parentId);
-            category.setCatId(String.valueOf(Integer.parseInt(maxId) + 1));
+            if(maxId != null){
+                category.setCatId(String.valueOf(Integer.parseInt(maxId) + 1));
+            }else{
+               //没有查到子节点
+                category.setCatId(parentId + "101");
+            }
             category = super.insert(category);
             if(category == null) {
                 throw new HookahException("操作失败");

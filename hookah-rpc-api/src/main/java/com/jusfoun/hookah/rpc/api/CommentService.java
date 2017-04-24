@@ -23,7 +23,7 @@ public interface CommentService extends GenericService<Comment,String>{
      * @param GoodsId
      * @return
      */
-    ReturnData findByGoodsId(String GoodsId);
+    ReturnData findByGoodsId(String pageNumber,String pageSize,String GoodsId);
 
     /**
      * 查询条件下的所有评论
