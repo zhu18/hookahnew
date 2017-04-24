@@ -23,7 +23,6 @@ import java.util.HashMap;
  * @desc
  */
 @Controller
-@RequestMapping("/verify")
 public class VerifyController {
 
     @Resource
@@ -45,7 +44,7 @@ public class VerifyController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/verifyPayPassword", method = RequestMethod.POST)
+    @RequestMapping(value = "/verify/verifyPayPassword", method = RequestMethod.POST)
     public ReturnData verifyPayPassword(User userForm,Model model) {
         ReturnData returnData = new ReturnData();
         Session session = SecurityUtils.getSubject().getSession();
