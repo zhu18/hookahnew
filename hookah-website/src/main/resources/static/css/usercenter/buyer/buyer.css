@@ -357,7 +357,7 @@ ul li {
     padding: 15px 0px;
 }
 
-.evaluation  .level table tbody tr td a:hover,.evaluation  .level table tbody tr td a p:hover {
+.evaluation .level table tbody tr td a:hover,.evaluation .level table tbody tr td a p:hover {
     color:#237DE7;
 }
 
@@ -512,5 +512,21 @@ ul li {
 .rcontent .suneval textarea {
     resize: none;
 }
+.sunAlone .sure {
 
-
+}
+.sunAlone .sure span{
+    width: 120px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 15px;
+    display: inline-block;
+}
+.sunAlone .sure span:hover {
+    cursor: pointer;
+}
+.sunAlone .sunContent .evaluation img {
+    width: 17px;
+    height: 17px;
+    vertical-align: middle;
+}
