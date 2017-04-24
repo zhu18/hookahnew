@@ -12,6 +12,8 @@ public class HookahConstants {
     public static final int PAGE_SIZE = 10;
     public static final int PAGE_SIZE_20 = 20;
 
+    /** 短信缓存前缀  */
+    public static final String REDIS_SMS_CACHE_PREFIX = "smscache";
     /** 短信过期时间，单位随 分 */
     public static final Integer SMS_DURATION_MINITE = 2;
 

@@ -2,6 +2,7 @@ package com.jusfoun.hookah.oauth2server.web.controller;
 
 import com.google.code.kaptcha.Constants;
 import com.jusfoun.hookah.core.common.redis.RedisOperate;
+import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.vo.UserValidVo;
 import com.jusfoun.hookah.core.exception.*;
@@ -73,7 +74,7 @@ public class RegController {
             //2、校验短信验证码
             //获取库里缓存的验证码
 
-            String cacheSms = redisOperate.get(user.getMobile());  //从 redis 获取缓存
+            String cacheSms = redisOperate.get(HookahConstants.REDIS_SMS_CACHE_PREFIX+":"+user.getMobile());  //从 redis 获取缓存
             if (cacheSms == null) { //验证码已过期
                 throw new UserRegExpiredSmsException("短信验证码验证未通过,短信验证码已过期");
             } else {

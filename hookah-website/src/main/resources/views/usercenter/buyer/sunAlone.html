@@ -25,7 +25,7 @@ var htmlPart = {
                     <div class="goodsName margin-bottom-20">
                         <a href="">测试商品数据,测试商品标题</a>
                     </div>
-                    <div class=" margin-bottom-20 ">¥239.00</div>
+                    <div class=" margin-bottom-20 ">¥409.00</div>
                 </div>
                 <div class="rcontent grid-left padding-top-20 padding-left-20">
                     <div class="evaluation margin-bottom-20">
@@ -41,13 +41,13 @@ var htmlPart = {
                                 <li>☆</li>
                             </ul>
                         </span>
-                        <span >0分</span>
+                        <span class="fen">0分</span>
                     </div>
                     <div class="suneval" >
                             <span class="eve">
                                 <span class="padding-right-10">评价晒单</span>
                             </span>
-                        <textarea name="" id="" cols="90" rows="5" class="margin-left-30"></textarea>
+                        <textarea name="" id="" cols="90" rows="5" class="margin-left-30 padding-left-5 padding-top-5" placeholder="商品是否给力,快分享你的购买心得吧～～"></textarea>
                     </div>
                 </div>
             </div>
@@ -61,3 +61,4 @@ var htmlPart = {
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
+<script src="/static/js/usercenter/mybuyer/sunAlone.js"></script>
