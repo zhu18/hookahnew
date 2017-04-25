@@ -24,6 +24,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 
@@ -228,7 +230,7 @@ public class OrderInfoController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/order/createOrder", method = RequestMethod.POST)
-    public String createOrder(OrderInfo orderinfo, String[] cartIdArray,String goodsId, Integer formatId,Long goodsNumber,RedirectAttributes redirectAttributes) {
+    public String createOrder(OrderInfo orderinfo, String[] cartIdArray,String goodsId, Integer formatId,Long goodsNumber,HttpServletRequest request) {
         try {
             init(orderinfo);
             if(cartIdArray[0].equals("-1")){
@@ -236,9 +238,11 @@ public class OrderInfoController extends BaseController {
             }else{
                 orderinfo = orderInfoService.insert(orderinfo, cartIdArray);
             }
+            List<Payment> paymentList = initPaymentList();
+            HttpSession session = request.getSession();
 
-            redirectAttributes.addAttribute("payments",initPaymentList());
-            redirectAttributes.addAttribute("orderInfo",orderinfo);
+            session.setAttribute("payments",paymentList);
+            session.setAttribute("orderInfo",orderinfo);
             logger.info("订单信息:{}", JsonUtils.toJson(orderinfo));
             logger.info("支付列表:{}", JsonUtils.toJson(initPaymentList()));
             return   "redirect:/pay/cash";
