@@ -7,7 +7,7 @@
     </div>
   </div>
   <div class="col-sm-12">
-    <form class="form-horizontal" role="form" id="goodsCheckForm" name="shelf">
+    <form class="form-horizontal" role="form" id="updateGoodsForm" name="updateGoodsForm">
       <fieldset>
         <h5 style="padding: 0px 20px;">基本信息</h5>
         <div class="form-group">
@@ -20,7 +20,9 @@
         <div class="form-group">
           <label class="col-sm-2 control-label">商品简介</label>
           <div class="col-sm-5">
-            <textarea style="margin: 0px; width: 452px; height: 84px;" name="goodsBrief">{{editData.goodsBrief}}</textarea>
+            <textarea style="margin: 0px; width: 452px; height: 84px;" name="goodsBrief">
+              {{editData.goodsBrief}}
+            </textarea>
           </div>
         </div>
         <div class="form-group">
