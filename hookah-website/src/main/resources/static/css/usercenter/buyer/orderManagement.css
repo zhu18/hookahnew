@@ -1,20 +1,7 @@
 /**
  * Created by ki on 2017/4/8.
  */
-ul li {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-}
-.clearfix:after {
-    visibility: hidden;
-    clear: both;
-    display: block;
-    content: ".";
-    height: 0;
-    font-size: 0;
-    zoom: 1;
-}
+
 /*全部订单*/
 .orderManagement {
     background: #fff;

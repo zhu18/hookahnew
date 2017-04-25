@@ -155,7 +155,8 @@ function getSearchSug(sugText) {
 function showSugBox(data) {
 	var html = '';
 	data.forEach(function (list) {
-		html += '<li><a target="_blank" href="'+host.website+'/exchange/search?names=' + list + '">' + list + '</a></li>';
+        console.log(list);
+        html += '<li><a target="_blank" href="'+host.website+'/exchange/search?names=' + list + '">' + list + '</a></li>';
 	});
 	$('.search-sug').show().children('ul').html(html);
 }

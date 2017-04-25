@@ -1,15 +1,7 @@
 /**
  * Created by ki on 2017/4/7.
  */
-.clearfix:after {
-    visibility: hidden;
-    clear: both;
-    display: block;
-    content: ".";
-    height: 0;
-    font-size: 0;
-    zoom: 1;
-}
+
 .evaluation {
     width:970px;
     background: #fff;
