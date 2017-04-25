@@ -52,9 +52,11 @@ $(document).ready(function () {
 		});
 	});
 	$('#J_searchBtn').click(function(){
-		$("#J_searchInput").blur();
-		window.open(host.website+'/exchange/search?names=' + $("#J_searchInput").val());
-		return;
+		if($("#J_searchInput").val().length > 0){
+			$("#J_searchInput").blur();
+			window.open(host.website+'/exchange/search?names=' + $("#J_searchInput").val());
+			return;
+		}
 	});
 	var ds = -1;
 	$(document).keydown(function (event) {
