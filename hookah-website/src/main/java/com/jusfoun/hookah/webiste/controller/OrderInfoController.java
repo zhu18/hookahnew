@@ -244,7 +244,10 @@ public class OrderInfoController extends BaseController {
             HttpSession session = request.getSession();
             List<Map> paymentList = initPaymentList(session);
 
-
+            //余额
+            Map userMap = (Map)session.getAttribute("user");
+            User user = userService.selectById((String)userMap.get("userId"));
+            session.setAttribute("moneyBalance",user.getMoneyBalance());
             session.setAttribute("payments",paymentList);
             session.setAttribute("orderInfo",orderinfo);
             logger.info("订单信息:{}", JsonUtils.toJson(orderinfo));
