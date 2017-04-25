@@ -51,12 +51,10 @@
     display: block;
     padding: 0 10px;
 }
-.search-list li.current {
+.search-list li.current,.search-list li a:hover {
     background: #e4e4e4;
 }
-.search-list li a:hover {
-    background: #e4e4e4;
-}
+
 /*.category-label select{*/
     /*width: 312px;*/
     /*height:28px;*/

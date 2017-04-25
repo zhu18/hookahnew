@@ -1,13 +1,5 @@
 
-.clearfix:after {
-    visibility: hidden;
-    clear: both;
-    display: block;
-    content: ".";
-    height: 0;
-    font-size: 0;
-    zoom: 1;
-}
+
 .bot button{
     width: 80px;
     border:1px solid #eee;

@@ -30,15 +30,21 @@ public class PayController {
     public String createOrder() {
         return "pay/createOrder";
     }
+    
+    @RequestMapping(value = "/success", method = RequestMethod.GET)
+    public String success() {
+        return "pay/success";
+    }
 
     @RequestMapping(value = "/cash", method = RequestMethod.GET)
     public String cash(HttpServletRequest request, Model model){
         HttpSession session = request.getSession();
-
+        model.addAttribute("moneyBalance", session.getAttribute("moneyBalance"));
         model.addAttribute("payments", session.getAttribute("payments"));
         model.addAttribute("orderInfo",session.getAttribute("orderInfo"));
         session.removeAttribute("payments");
         session.removeAttribute("orderInfo");
+        session.removeAttribute("moneyBalance");
         return "pay/cash";
     }
 
