@@ -49,6 +49,8 @@ var htmlPart = {
                 <form name="expressFastPayFrom" id="lightPayForm" action="" method="post" autocomplete="off">
                     <div id="J-rcChannels">
                         <div>
+                            <input type="hidden" value="${orderInfo.goodsAmount}" id="goodsAmount">
+                            <input type="hidden" value="${moneyBalance}" id="moneyBalance">
                             <ul id="J_MarketinglList"></ul>
                             <ul class="saved-card-list">
                                 <%for(item in payments){%>
@@ -68,9 +70,9 @@ var htmlPart = {
                                             <span></span>
                                         </span>
                                             <%if(itemLP.index == 1){%>
-                                            <input checked="checked" class="channel-input" value="${item.payCode}" id="balance-0" name="apiCode" type="radio">
+                                            <input checked="checked" class="channel-input" value="${item.payCode}" name="apiCode" type="radio">
                                             <%}else{%>
-                                            <input class="channel-input" id="balance-0" value="${item.payCode}" name="apiCode" type="radio">
+                                            <input class="channel-input" value="${item.payCode}" name="apiCode" type="radio">
                                             <%}%>
                                         </label>
                                     </div>
@@ -139,24 +141,22 @@ var htmlPart = {
                             </ul>
 
                             <div class="manage-list fn-clear">
-                                <a class="manage-item manage-wechat fn-left" href="javascript:void(0)"><span>微信 </span></a>
-                                <a class="manage-item manage-alipay fn-left" href="javascript:void(0)"><span>支付宝 </span></a>
+                                <!--<a class="manage-item manage-wechat fn-left" href="javascript:void(0)"><span>微信 </span></a>-->
+                                <!--<a class="manage-item manage-alipay fn-left" href="javascript:void(0)"><span>支付宝 </span></a>-->
                                 <a class="manage-item manage-more fn-left" href="javascript:void(0)"><span>其他网银付款方式 </span></a>
                                 <a class="J_XBox manage-item manage-item-xbox fn-left" href="javascript:void(0)">添加快捷/网银付款</a>
                             </div>
                         </div>
                     </div>
-                    <%if(moneyBalance < orderInfo.goodsAmount){%>
-                    <div id="J-security" class="">
+                    <div id="J-balanceNt" class="">
                         您的余额不足以支付次订单，请选用其他方式支付，或者去充值。
                     </div>
-                    <%}else{%>
                     <div id="J-security" class="">
                         <div class="ui-securitycore J-securitycoreMain">
                             <div class="edit-section">
                                 <div class="ui-form-item">
                                     <label class="ui-label">
-                                        支付宝支付密码：
+                                        余额支付密码：
                                     </label>
                                     <span class="alieditContainer" id="payPassword_container">
                                     <input type="password" id="payPassword_rsainput" class="ui-input i-text sixDigitPassword" value="" maxlength="6" minlength="6">
@@ -188,7 +188,6 @@ var htmlPart = {
                             <span class="ui-fm-status fn-hide" data-reactid=".1.1"> 正在提交中... </span>
                         </div>
                     </div>
-                    <%}%>
                 </form>
             </div>
         </div>

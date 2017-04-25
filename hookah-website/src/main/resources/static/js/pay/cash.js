@@ -47,3 +47,39 @@ function setPayPwdCon(){
 		}
 	})
 }
+var goodsAmount = $('#goodsAmount').val();
+var moneyBalance = $('#moneyBalance').val();
+getCheckVal();
+function getCheckVal(){
+	$("[name=apiCode]:radio").each(function () {
+		if (this.checked) {
+			if(this.value == 1){
+				if(moneyBalance < goodsAmount){
+					$('#J-security').hide();
+					$('#J-rcSubmit').hide();
+				}else{
+					$('#J-balanceNt').hide();
+				}
+			}else{
+				$('#J-security').hide();
+				$('#J-balanceNt').hide();
+			}
+		}
+	});
+}
+$("[name=apiCode]:radio").click(function () {
+	console.log(this.value);
+	if(this.value == 1){
+		if(moneyBalance < goodsAmount){
+			$('#J-security').hide();
+			$('#J-rcSubmit').hide();
+		}else{
+			$('#J-balanceNt').hide();
+			$('#J-security').show();
+			$('#J-rcSubmit').show();
+		}
+	}else{
+		$('#J-security').hide();
+		$('#J-balanceNt').hide();
+	}
+});
