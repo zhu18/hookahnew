@@ -51,13 +51,13 @@ var htmlPart = {
                         <div>
                             <ul id="J_MarketinglList"></ul>
                             <ul class="saved-card-list">
-                                <%for(item in orderInfo.payments){%>
+                                <%for(item in payments){%>
                                 <li class="channel-balance row-container fn-clear row-container-focus">
                                     <div class="row-basic fn-clear">
                                         <label class="channel-label"><span class="channel-tit channel-icon icon banklogo-BALANCE_s"></span>
                                             <span class="fn-mr-20">
                                             <span class="channel-name">${item.payName}</span>
-                                            <span>${trunc(item.payDetail)} 元</span>
+                                            <span>${item.payDetail}</span>
                                         </span>
                                             <span class="pay-amount">
                                             <span class="amount">
@@ -142,6 +142,11 @@ var htmlPart = {
                             </div>
                         </div>
                     </div>
+                    <%if(moneyBalance < orderInfo.goodsAmount){%>
+                    <div id="J-security" class="">
+                        您的余额不足以支付次订单，请选用其他方式支付，或者去充值。
+                    </div>
+                    <%}else{%>
                     <div id="J-security" class="">
                         <div class="ui-securitycore J-securitycoreMain">
                             <div class="edit-section">
@@ -172,12 +177,14 @@ var htmlPart = {
                             </div>
                         </div>
                     </div>
+
                     <div id="J-rcSubmit">
                         <div class="ui-fm-item ui-fm-action j-submit" data-reactid=".1">
                             <input class="pay-btn ui-button-lblue" id="J_authSubmit" type="submit" value="确认付款">
                             <span class="ui-fm-status fn-hide" data-reactid=".1.1"> 正在提交中... </span>
                         </div>
                     </div>
+                    <%}%>
                 </form>
             </div>
         </div>
