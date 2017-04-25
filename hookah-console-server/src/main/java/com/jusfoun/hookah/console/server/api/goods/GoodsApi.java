@@ -4,7 +4,6 @@ import com.jusfoun.hookah.console.server.controller.BaseController;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.Goods;
-import com.jusfoun.hookah.core.domain.GoodsCheck;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgShelvesGoods;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
@@ -183,26 +182,6 @@ public class GoodsApi extends BaseController{
             e.printStackTrace();
         }
         return ReturnData.success(goodsVo);
-    }
-
-    /**
-     * 商品审核
-     * @param goodsCheck
-     * @return
-     */
-    @RequestMapping(value = "/goodsCheck", method = RequestMethod.POST)
-    public ReturnData goodsCheck(GoodsCheck goodsCheck) {
-        ReturnData returnData = new ReturnData<>();
-        returnData.setCode(ExceptionConst.Success);
-        try {
-            goodsCheck.setCheckUser(getCurrentUser().getUserName());
-            goodsCheckService.insertRecord(goodsCheck);
-        } catch (Exception e) {
-            returnData.setCode(ExceptionConst.Failed);
-            returnData.setMessage(e.toString());
-            e.printStackTrace();
-        }
-        return returnData;
     }
 
     @RequestMapping(value = "/delGoodsById", method = RequestMethod.POST)

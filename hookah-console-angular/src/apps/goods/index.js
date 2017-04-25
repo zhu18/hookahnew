@@ -38,13 +38,17 @@ app.run(function ($rootScope, $state) {
       "title":"商品查询",
       "url":"items.search"
     },
-    {
-      "title":"商品分类",
-      "url":"items.category"
-    },
+    // {
+      //   "title":"商品分类",
+      //   "url":"items.category"
+      // },
     {
       "title":"商品审核",
       "url":"items.check"
+    },
+    {
+      "title":"审核结果",
+      "url":"items.checkStatus"
     }
   ];
 

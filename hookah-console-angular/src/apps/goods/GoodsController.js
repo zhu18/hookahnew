@@ -40,6 +40,25 @@ class GoodsController {
     };
 
 
+    $scope.goCheck = function (event, item) {
+      console.log("去审核……");
+      // $state.go('items.check');
+        var promise = $http({
+            method: 'GET',
+            url: $rootScope.site.apiServer + "/api/goods/getGoodsInfo",
+            params: {goodsId: item.goodsId}
+        });
+        promise.then(function (res, status, config, headers) {
+            console.log(res.data)
+            if(res.data.code == "1"){
+                $rootScope.editData = res.data.data;
+                $rootScope.editData.apiInfo.respSample = JSON.stringify(JSON.parse($rootScope.editData.apiInfo.respSample), null, "\t");
+                $state.go('items.goodsDetail', {data: $rootScope.editData});
+            }
+        });
+    };
+
+
     $scope.save = function () {
       var promise = $http({
         method: 'POST',
