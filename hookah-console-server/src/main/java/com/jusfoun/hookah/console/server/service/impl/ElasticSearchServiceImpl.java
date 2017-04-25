@@ -123,7 +123,8 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
                 // 如果有地区给省市县赋值
                 if(goods.getGoodsArea() != null && !"".equals(goods.getGoodsArea())) {
                     String[] region = goods.getGoodsAreas().split(" ");
-                    goods.setAreaCountry(region[1]);
+                    if(region.length >= 2)
+                        goods.setAreaCountry(region[1]);
                     if(region.length >= 3)
                         goods.setAreaProvince(region[2]);
                     if(region.length == 4)
