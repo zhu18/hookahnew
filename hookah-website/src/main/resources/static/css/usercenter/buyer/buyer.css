@@ -379,19 +379,18 @@
     font: 400  16px/34px  "Microsoft YaHei";
     color:#71b247;
 }
-/*.viewDetails .viewContent .leftContent .state-btn {*/
-    /*margin:20px 0 30px;*/
-    /*min-height:107px;*/
-/*}*/
-/*.viewDetails .viewContent .leftContent .state-btn .fapiao {*/
-    /*background: #eee;*/
-    /*border: 1px solid #ccc;*/
-    /*padding:4px 8px;*/
-/*}*/
-/*.viewDetails .viewContent .leftContent .state-btn .fapiao:hover{*/
-    /*border: 1px solid #237DE7;*/
-    /*background: #fff;*/
-/*}*/
+.viewDetails .viewContent .leftContent .state-btn {
+    display: none;
+}
+.viewDetails .viewContent .leftContent .state-btn .fapiao {
+    background: #eee;
+    border: 1px solid #ccc;
+    padding:4px 12px;
+}
+.viewDetails .viewContent .leftContent .state-btn .fapiao:hover{
+    border: 1px solid #237DE7;
+    background: #fff;
+}
 
 .viewDetails .viewContent .leftContent .state-bottom img{
     width: 17px;
