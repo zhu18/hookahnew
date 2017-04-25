@@ -1,7 +1,6 @@
 <%
 var head = {
 %>
-<link rel="stylesheet" href="/static/css/usercenter/user-center-menu.css">
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/userInfo.css">
 <%};%>
 
@@ -20,7 +19,9 @@ var htmlPart = {
       <div class="user-balance grid-left">
         <div class="balance-info grid-left">
           <p class="account-balance">账户余额</p>
-          <div class="balance-box clearfix"><p class="grid-left money-count"><span class="fa fa-cny"></span>199.00.00
+          <% var a = userCur.moneyBalance;
+             var b = userCur.moneyBalance/100;%>
+          <div class="balance-box clearfix"><p class="grid-left money-count"><span class="fa fa-cny"></span>${isNotEmpty(userCur.moneyBalance) ? (userCur.moneyBalance / 100) : '0.00'}
           </p>
             <button class=" grid-left recharge">充值</button>
             <!--<a class="grid-left " href="javascript:void(0);">索要发票</a>-->

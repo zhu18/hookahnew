@@ -78,7 +78,7 @@
                 <span class="column-text" ng-bind="item.openStatus | yesNo"></span>
               </td>
               <td class="text-right" data-ng-if="item.isDelete == 1">
-                <a href="javascript:;" ng-click="editProduct($event,item)">修改</a>
+                <a href="javascript:;" ng-click="updateGoods($event,item)">修改</a>
                 <span class="text-explode">|</span>
                 <a href="javascript:;" ng-click="delGoods($event, item, 1)">删除</a>
                 <span data-ng-if="item.isOnsale == 1">

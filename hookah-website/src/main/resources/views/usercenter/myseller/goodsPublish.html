@@ -1,7 +1,6 @@
 <%
 var head = {
 %>
-<link rel="stylesheet" href="/static/css/usercenter/user-center-menu.css">
 <link rel="stylesheet" href="/static/css/usercenter/myseller/goodsPublish.css">
 <%};%>
 
@@ -14,17 +13,20 @@ var htmlPart = {
         <div class="usercenter-right-box grid-right">
             <div class="category-search category-label">
                 <label>类目搜索：</label>
-                <input type="text">
-                <button class="btn btn-full-orange">搜索</button>
+                <input type="text" id="input-search">
+                <button class="btn btn-full-orange" id="btn-search">搜索</button>
             </div>
-            <div class="lastused-category category-label">
-                <label>最近使用的类目：</label>
-                <select>
-                    <option value="">请选择</option>
-                    <option value="">分类1</option>
-                    <option value="">分类2</option>
-                </select>
+            <div class="search-list">
+                <ul></ul>
             </div>
+            <!--<div class="lastused-category category-label">-->
+                <!--<label>最近使用的类目：</label>-->
+                <!--<select>-->
+                    <!--<option value="">请选择</option>-->
+                    <!--<option value="">分类1</option>-->
+                    <!--<option value="">分类2</option>-->
+                <!--</select>-->
+            <!--</div>-->
             <div class="select-category-box">
 
             </div>

@@ -145,15 +145,16 @@ function onfocusFn(that) {
 $('#J-goodsName').blur(function () {
 	if ($(this).val() && $(this).val().length <= 30) {
 		$(this).parents('.text-box').siblings('.errors').hide();
-	} else {
-		$(this).focus();
 	}
 });
 $('#J-goodsBrief').blur(function () {
 	if ($(this).val() && $(this).val().length <= 200) {
 		$(this).parent().siblings('.errors').hide();
-	} else {
-		$(this).focus();
+	}
+});
+$('#J-goodsBrief').on('input onporpertychange',function () {
+	if ($(this).val() && $(this).val().length <= 200) {
+		$(this).parent().siblings('.errors').hide();
 	}
 });
 $('.pusGoods-btn').click(function () {
@@ -217,6 +218,7 @@ $('.pusGoods-btn').click(function () {
 			data.apiInfo.respParamList.push(listData);
 		});
 		data.apiInfo.respSample = $('.api-info-box').find('textarea[name="respSample"]').val();
+		data.goodsArea = $('select[name="city"]').val();
 	}
 
 	if (!!!data.goodsName) {
@@ -226,7 +228,6 @@ $('.pusGoods-btn').click(function () {
 	} else if (!!!data.goodsImg) {
 		alert("请上传图片");
 	} else {
-		alert(JSON.stringify(data));
 		Loading.start();
 		$.ajax({
 			type: 'POST',
@@ -236,7 +237,7 @@ $('.pusGoods-btn').click(function () {
 			contentType: 'application/json',
 			success: function (data) {
 				if (data.code == "1") {
-					Loading.stop()
+					Loading.stop();
 					$('.pusGoods-btn').addClass('trues');
 					$.confirm('<h3>发布成功</h3><p>继续发布商品吗?</p>', null, function (type) {
 						if (type == 'yes') {

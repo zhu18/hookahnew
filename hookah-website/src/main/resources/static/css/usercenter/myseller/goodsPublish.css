@@ -1,12 +1,4 @@
-.clearfix:after {
-    visibility: hidden;
-    clear: both;
-    display: block;
-    content: ".";
-    height: 0;
-    font-size: 0;
-    zoom: 1;
-}
+
 .category-label{
     height:50px;
     padding-left:130px;
@@ -25,7 +17,7 @@
 .category-label input{
     width: 300px;
     height: 30px;
-    border: 1px solid #666;
+    border: 1px solid #eb9c03;
     padding: 0 5px;
 }
 .category-label button{
@@ -38,12 +30,39 @@
     text-align: center;
     cursor: pointer;
 }
-.category-label select{
-    width: 312px;
-    height:28px;
-    line-height:18px;
-    padding:2px 0
+.usercenter-right-box {
+    position: relative;
 }
+.search-list {
+    display: none;
+    position: absolute;
+    top: 52px;
+    left: 350px;
+    width: 310px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-top:none;
+    z-index: 1000;
+}
+.search-list li{
+    line-height: 30px;
+}
+.search-list li a {
+    display: block;
+    padding: 0 10px;
+}
+.search-list li.current {
+    background: #e4e4e4;
+}
+.search-list li a:hover {
+    background: #e4e4e4;
+}
+/*.category-label select{*/
+    /*width: 312px;*/
+    /*height:28px;*/
+    /*line-height:18px;*/
+    /*padding:2px 0*/
+/*}*/
 .select-category-box{
     padding:10px;
     background: #f5f6fa;

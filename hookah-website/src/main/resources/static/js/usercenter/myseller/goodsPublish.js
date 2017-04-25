@@ -74,3 +74,115 @@ function loadData(url,pid){
         }
     });
 };
+
+// 类目搜索
+$("#input-search").on("input propertychange", function () {
+    if ($(this).val() == "") {
+        $('.search-list').hide();
+    } else {
+        getSearchList($(this).val())
+    }
+});
+$("#input-search").on("input focus", function () {
+    if ($(this).val()) {
+        if ($('.search-list li').length <= 0){
+            getSearchList($(this).val())
+        }else{
+            $('.search-list').show();
+        }
+    }
+    $(this).keydown(function (event) {
+        if (event.keyCode == 40) {
+            $(this).blur();
+            $('.search-list').show().addClass('keyActive');
+        } else if (event.keyCode == 13) {
+            $("#input-search").blur();
+            window.open(host.website+'/exchange/search?names=' + $(this).val());
+            return;
+        }
+    });
+});
+$('#btn-search').click(function(){
+    if($("#input-search").val().length > 0){
+        $("#input-search").blur();
+        window.open(host.website+'/exchange/search?names=' + $("#input-search").val());
+        return;
+    }
+});
+var ds = -1;
+$(document).keydown(function (event) {
+    if ($('.search-list').hasClass('keyActive')) {
+        if($('.search-list li').length <= 0){
+            $('.search-list').hide();
+        }
+        if(!$("#input-search").val()){
+            $("#input-search").focus();
+            return;
+        }
+        var itemLen = $('.search-list li').length - 1;
+        if (event.keyCode == 40) {
+            event.preventDefault();
+            ds +=1;
+            if(ds > itemLen){
+                ds = itemLen;
+            }
+            $('.search-list li').eq(ds).addClass('current').siblings().removeClass('current')
+        } else if (event.keyCode == 38) {
+            ds -=1;
+            if(ds <= -1){
+                ds = -1;
+                $('.search-list li').removeClass('current');
+                $("#input-search").focus();
+                return;
+            }
+            $('.search-list li').eq(ds).addClass('current').siblings().removeClass('current')
+        } else if (event.keyCode == 13) {
+            $('.search-list li').each(function(){
+                if($(this).hasClass('current')){
+                    $("#input-search").blur();
+                    window.open($(this).children('a').attr('href'));
+                    return;
+                }
+            })
+        }else{
+            event.initEvent("keydown", true, true);
+        }
+    }
+});
+$("#input-search").on("input blur", function () {
+    if (!$('.search-list').hasClass('active')) {
+        $('.search-list').hide();
+    }
+});
+$('.search-list').on('click', function () {
+    $("#input-search").focus();
+});
+$('.search-list').hover(function () {
+    $(this).toggleClass('active');
+});
+function getSearchList(text){
+    $.ajax({
+        type:'get',
+        url:'/search/v1/category',
+        data:{
+            keyword:text
+        },
+        success:function(data){
+            if(data.code == 1){
+                showBox(data.data);
+            }else{
+                console.log(data.message);
+            }
+        }
+    })
+}
+
+function showBox(data) {
+    var html = '';
+    data.forEach(function (list) {
+        console.log(list);
+        html += '<li><a target="_blank" href="'+host.website+'/exchange/search?names=' + list.catName + '">' + list.catName + '</a></li>';
+    });
+    $('.search-list').show().children('ul').html(html);
+}
+// 类目搜索结束
