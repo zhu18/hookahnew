@@ -87,21 +87,22 @@
 }
 /* clear float
 =================================================================== */
-.clearfix::after {
-    content: ".";
+.clearfix:after {
+    visibility: hidden;
     clear: both;
     display: block;
-    overflow: hidden;
-    font-size: 0;
+    content: ".";
     height: 0;
-}
-
-  .clearfix {
+    font-size: 0;
     zoom: 1;
 }
-/* Border
+/* ul li
 =================================================================== */
-
+ul li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
 
 
 /* Margin

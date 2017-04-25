@@ -1,5 +1,5 @@
 class GoodsController {
-  constructor($scope, $rootScope, $http, $uibModal, usSpinnerService, growl) {
+  constructor($scope, $rootScope, $state, $http, $uibModal, usSpinnerService, growl) {
     console.log($rootScope.config);
 
     $scope.search = function () {
@@ -10,9 +10,7 @@ class GoodsController {
       });
       promise.then(function (res, status, config, headers) {
         $rootScope.loadingState = false;
-        // $scope.sysAccount = res.data.data;
         console.log($rootScope.pagination);
-        // $rootScope.pagination.store =
         growl.addSuccessMessage("数据加载完毕。。。");
       });
     };
@@ -35,8 +33,10 @@ class GoodsController {
     };
 
 
-    $scope.edit = function (event, item) {
-      console.log(item);
+    $scope.updateGoods = function (event, item) {
+      console.log("去修改……");
+      $rootScope.editData = item;
+      $state.go('items.update', {data: item});
     };
 
 

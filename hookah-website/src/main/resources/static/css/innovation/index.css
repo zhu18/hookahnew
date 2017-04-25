@@ -1,18 +1,3 @@
-ul li {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-}
-
-.clearfix:after {
-    visibility: hidden;
-    clear: both;
-    display: block;
-    content: ".";
-    height: 0;
-    font-size: 0;
-    zoom: 1;
-}
 
 .box {
     background: #F8F8F8;

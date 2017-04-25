@@ -5,10 +5,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author bingbing wu
@@ -29,7 +32,13 @@ public class PayController {
     }
 
     @RequestMapping(value = "/cash", method = RequestMethod.GET)
-    public String cash(){
+    public String cash(HttpServletRequest request, Model model){
+        HttpSession session = request.getSession();
+
+        model.addAttribute("payments", session.getAttribute("payments"));
+        model.addAttribute("orderInfo",session.getAttribute("orderInfo"));
+        session.removeAttribute("payments");
+        session.removeAttribute("orderInfo");
         return "pay/cash";
     }
 

@@ -3,23 +3,6 @@
  */
 
 /*orderManagement*/
-ul li {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-}
-
-.clearfix:after {
-    visibility: hidden;
-    clear: both;
-    display: block;
-    content: ".";
-    height: 0;
-    font-size: 0;
-    zoom: 1;
-}
-
-/*orderManagement*/
 .orderManagement {
     background: #fff;
     width: 978px;
@@ -381,7 +364,11 @@ ul li {
     padding-left:10px;
     border-left:2px solid #237DE7;
 }
-.viewDetails .viewContent .leftContent,.sunAlone .sunContent .lcontent{
+/*.viewDetails .viewContent .leftContent,.sunAlone .sunContent .lcontent{*/
+.viewDetails .viewContent .leftContent {
+    width: 265px;
+}
+.sunAlone .sunContent .lcontent{
     width: 265px;
     border-right:1px solid #f1f1f1;
 }
@@ -393,13 +380,12 @@ ul li {
     color:#71b247;
 }
 .viewDetails .viewContent .leftContent .state-btn {
-    margin:20px 0 30px;
-    min-height:107px;
+    display: none;
 }
 .viewDetails .viewContent .leftContent .state-btn .fapiao {
     background: #eee;
     border: 1px solid #ccc;
-    padding:4px 8px;
+    padding:4px 12px;
 }
 .viewDetails .viewContent .leftContent .state-btn .fapiao:hover{
     border: 1px solid #237DE7;
@@ -412,11 +398,14 @@ ul li {
     display: inline-block;
     vertical-align: middle;
 }
+.viewDetails .viewContent .rightContent {
+    border-left: 1px solid #f1f1f1;
+}
 .viewDetails .viewContent .rightContent, .sunAlone .sunContent .rcontent {
     width: 692px;
 }
 .viewDetails .viewContent .rightContent .state-rtop {
-    height: 70px;
+    height: 50px;
 }
 .viewDetails .viewContent .rightContent .process .line span{
     width: 124px;
@@ -462,7 +451,7 @@ ul li {
     background: #eee;
 }
 .viewDetails  .goods-list tbody .p-img {
-    width: 500px;
+    width: 350px;
     height: 60px;
     padding:10px;
 }
@@ -473,7 +462,6 @@ ul li {
 .goods-list .p-img img{
     width: 60px;
     height: 60px;
-    border: 1px solid #000;
     vertical-align: middle;
 }
 .goods-list .p-img a:nth-child(2){
@@ -496,14 +484,15 @@ ul li {
 }
 .goods-list .goods-info{
     border-top:1px solid #eee;
-    height: 40px;
-    line-height: 40px;
-    display: flex;
+    /*height: 40px;*/
+    /*line-height: 40px;*/
+    /*display: flex;*/
 }
-.payway, .paytime, .goodsprice, .handle {
-    flex: 1;
+.goods-list .goods-info ul li{
+    height: 35px;
+    line-height: 35px;
+    text-align: left;
 }
-
 
 /*sunAlone*/
 .sunAlone .sunContent .lcontent {
@@ -512,7 +501,6 @@ ul li {
 .sunAlone .sunContent .pic img {
     width: 60px;
     height: 60px;
-    border: 1px solid #000;
 }
 .sunAlone .sunContent .rcontent .satisfaction span {
     display: inline-block;
