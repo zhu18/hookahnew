@@ -29,7 +29,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/goods/back")
-public class GoodsBackController {
+public class GoodsBackController extends BaseController {
 
     @Resource
     GoodsService goodsService;
@@ -43,6 +43,8 @@ public class GoodsBackController {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
+            String userId = this.getCurrentUser().getUserId();
+            obj.setAddUser(userId);
             goodsService.addGoods(obj);
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
@@ -64,6 +66,8 @@ public class GoodsBackController {
             List<OrderBy> orderBys = new ArrayList();
             orderBys.add(OrderBy.desc("lastUpdateTime"));
             filters.add(Condition.eq("isDelete", 1));
+
+            String userId = this.getCurrentUser().getUserId();
             //参数校验
             int pageNumberNew = HookahConstants.PAGE_NUM;
             if (StringUtils.isNotBlank(pageNumber)) {
@@ -79,6 +83,7 @@ public class GoodsBackController {
             if (checkStatus != null) {
                 filters.add(Condition.like("checkStatus", checkStatus));
             }
+            filters.add(Condition.eq("addUser", userId));
             page = goodsService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
             returnData.setData(page);
         } catch (Exception e) {
