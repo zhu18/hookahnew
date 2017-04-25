@@ -23,7 +23,7 @@ ul {
 }
 
 #header .header-layout .logo {
-  background: url("../img/logo2.png") no-repeat;
+  /*background: url("../img/logo.png") no-repeat;*/
   background-size: 100%;
   float: left;
   display: inline-block;
@@ -35,9 +35,12 @@ ul {
   float: left;
   display: inline-block;
   height: 40px;
-  width: 140px;
+  width: 114px;
   overflow: hidden;
-  text-indent: -999em
+  /*text-indent: -999em*/
+}
+#header .header-layout .logo a img{
+  width:100%;
 }
 
 #header .header-layout .intl-logo {
