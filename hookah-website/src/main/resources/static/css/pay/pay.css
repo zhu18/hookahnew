@@ -23,6 +23,7 @@
     margin:10px 100px 0;
     font-size: 14px;
     border-bottom: 3px solid #b3b3b3;
+    padding-bottom: 30px;
 }
 .order-wrapper .header{
     height: 31px;
@@ -279,9 +280,9 @@ div.sixDigitPassword span {
     height: 32px;
     border: 0;
     background: none;
-    font-size: 28px;
-    letter-spacing: 2px;
-    text-indent: 2px;
+    font-size: 18px;
+    letter-spacing: 12px;
+    text-indent: 8px;
 }
 .ui-securitycore .ui-form-item .ui-form-explain {
      margin-top: 8px;
