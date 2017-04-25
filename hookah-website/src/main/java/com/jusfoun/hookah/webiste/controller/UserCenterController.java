@@ -2,13 +2,18 @@ package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.UserDetail;
+import com.jusfoun.hookah.core.domain.vo.SysNewsVo;
+import com.jusfoun.hookah.core.utils.ExceptionConst;
+import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -104,5 +109,26 @@ public class UserCenterController {
         return "/usercenter/userInfo/createOrder";
     }
 
-
+    /**
+     * 根据用户ID获得用户支付密码状态
+     * @param userId
+     * @return 支付密码状态  0 未设置 ,1 已设置
+     */
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/payPassSta", method = RequestMethod.GET)
+    public ReturnData  payPassSta() {
+        ReturnData returnData = new ReturnData();
+        try {
+            Session session = SecurityUtils.getSubject().getSession();
+            HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
+            User user = userService.selectById(userMap.get("userId"));
+            returnData.setData(user.getPaymentPasswordStatus());
+        } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
 }

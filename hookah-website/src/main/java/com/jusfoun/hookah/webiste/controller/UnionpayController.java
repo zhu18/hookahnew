@@ -30,7 +30,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-
+/**
+ * 银联支付
+ */
 @RestController
 @RequestMapping("/pay/unionpay")
 public class UnionpayController extends BaseController{
