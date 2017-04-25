@@ -62,7 +62,6 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         mgGoods.setGoodsId(obj.getGoodsId());
         mgGoods.setApiInfo(obj.getApiInfo());
         mongoTemplate.insert(mgGoods);
-        mqSenderService.sendDirect(RabbitmqQueue.CONTRACT_GOODSCHECK, obj.getGoodsId());
     }
 
     @Override
@@ -81,7 +80,6 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             mgGoods.setGoodsId(obj.getGoodsId());
             mongoTemplate.save(mgGoods);
         }
-        mqSenderService.sendDirect(RabbitmqQueue.CONTRACT_GOODSCHECK, obj.getGoodsId());
     }
 
     /**
@@ -139,15 +137,14 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
     public int onsale(String goodsId, String dateTime) {
         Goods goods = new Goods();
         goods.setGoodsId(goodsId);
+        goods.setIsOnsale(HookahConstants.GOODS_STATUS_ONSALE);
         if(StringUtils.isNotBlank(dateTime)) {
             goods.setOnsaleStartDate(DateUtils.getDate(dateTime));
         }
         int i = super.updateByIdSelective(goods);
         if (i > 0) {
-            mqSenderService.sendDirect(RabbitmqQueue.CONTRACT_GOODSCHECK, goodsId);
+            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_GOODS_ID, goodsId);
         }
         return i;
     }
-
-
 }
