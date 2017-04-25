@@ -19,12 +19,12 @@ var htmlPart = {
                 <div class="leftContent grid-left padding-top-20 text-align-center">
                     <div class="state-top margin-bottom-30 ">订单号：1234567789</div>
                     <h3 class="state-txt margin-bottom-30">完成</h3>
-                    <div class="state-btn">
-                        <a href="" class="fapiao">查看发票详情</a>
-                    </div>
-                    <div class="state-bottom margin-bottom-30">
-                        <a href="" ><span class="iconfont icon-dayin margin-right-5"></span>打印订单</a>
-                    </div>
+                    <!--<div class="state-btn">-->
+                        <!--<a href="" class="fapiao">查看发票详情</a>-->
+                    <!--</div>-->
+                    <!--<div class="state-bottom margin-bottom-30">-->
+                        <!--<a href="" ><span class="iconfont icon-dayin margin-right-5"></span>打印订单</a>-->
+                    <!--</div>-->
                 </div>
                 <div class="rightContent grid-left padding-top-20 padding-left-20">
                     <div class="state-rtop">
@@ -76,13 +76,14 @@ var htmlPart = {
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td class="goods">
+                        <tr class="padding-bottom-10">
+                            <td class="goods text-align-center margin-top-10">
                                 <div class="p-img">
                                     <a href=""><img src="" alt=""></a>
+                                </div>
+                                <div class="desc margin-top-10 marign-bottom-10">
                                     <a href="">金士顿(Kingston)低电压版 DDR3 1600 8GB 笔记本内存</a>
                                 </div>
-
                             </td>
                             <td class="number" >1066754</td>
                             <td class="price">¥409.00</td>
@@ -93,10 +94,12 @@ var htmlPart = {
                     </table>
                 </div>
                 <div class="goods-info clearfix text-align-center">
-                    <div class="payway grid-left ">付款方式:<span>在线支付</span></div>
-                    <div class="paytime grid-left ">付款时间: <span>2016-03-28&nbsp;&nbsp;21:52:59</span></div>
-                    <div class="goodsprice grid-left ">商品总额: <span>¥409.00</span></div>
-                    <div class="handle grid-left " >应付总额: <span>¥409.00</span></div>
+                    <ul class="grid-right margin-right-20">
+                        <li>付款方式:<span>在线支付</span></li>
+                        <li>付款时间: <span>2016-03-28&nbsp;&nbsp;</span></li>
+                        <li>商品总额: <span>¥409.00</span></li>
+                        <li>应付总额: <span>¥409.00</span></li>
+                    </ul>
                 </div>
             </div>
         </div>
