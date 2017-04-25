@@ -1,7 +1,7 @@
 <div class="row" xmlns="http://www.w3.org/1999/html">
   <div class="col-sm-12">
     <div class="console-title console-title-border clearfix">
-      <div class="pull-left"><h5>商品详情-审核</h5></div>
+      <div class="pull-left"><h5>商品详情</h5></div>
       <div class="pull-right">
       </div>
     </div>
@@ -14,24 +14,23 @@
           <input type="hidden" id="goodsId" name="goodsId" value="{{editData.goodsId}}" />
           <label class="col-sm-2 control-label">商品名称</label>
           <div class="col-sm-5">
-            <input type="text" class="form-control" value="{{editData.goodsName}}" readonly="true" />
+            <input type="text" class="form-control" name="goodsName" value="{{editData.goodsName}}" />
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label">商品简介</label>
           <div class="col-sm-5">
-            <!--<input type="text" class="form-control" value="{{editData.goodsBrief}}" readonly="true" />-->
-            <textarea style="margin: 0px; width: 452px; height: 84px;" readonly="true">{{editData.goodsBrief}}</textarea>
+            <textarea style="margin: 0px; width: 452px; height: 84px;" name="goodsBrief">{{editData.goodsBrief}}</textarea>
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label">商品类型</label>
           <div class="col-sm-5">
             <label class="radio-inline">
-              <input type="radio" ng-checked="editData.goodsType == 0"/>常规商品
+              <input type="radio" name="goodsBrief" ng-checked="editData.goodsType == 0"/>常规商品
             </label>
             <label class="radio-inline">
-              <input type="radio" ng-checked="editData.goodsType == 1"/>api
+              <input type="radio" name="goodsBrief" ng-checked="editData.goodsType == 1"/>api
             </label>
           </div>
         </div>
@@ -60,7 +59,7 @@
               </tr>
               </thead>
               <tbody>
-              <tr data-ng-repeat="req in editData.formatList" class="">
+              <tr data-ng-repeat="req in editData.formatList">
                 <td>
                   <span class="" ng-bind="req.formatName"></span>
                 </td>
@@ -84,39 +83,37 @@
           <label class="col-sm-2 control-label">商品描述</label>
           <div class="col-sm-5">
             <!--<input type="text" class="form-control" value="{{editData.goodsDesc}}" readonly="true" />-->
-            <textarea style="margin: 0px; width: 452px; height: 120px;" readonly="true">
-              {{editData.goodsDesc}}
-            </textarea>
+            <textarea style="margin: 0px; width: 452px; height: 84px;" name="goodsDesc">{{editData.goodsDesc}}</textarea>
           </div>
         </div>
         <div data-ng-if="editData.goodsType == 1">
           <div class="form-group">
             <label class="col-sm-2 control-label">接口地址</label>
             <div class="col-sm-5">
-              <input type="text" class="form-control" value="{{editData.apiInfo.apiUrl}}" readonly="true" />
+              <input type="text" class="form-control" name="apiInfo.apiUrl" value="{{editData.apiInfo.apiUrl}}" />
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label">请求方式</label>
             <div class="col-sm-5">
               <label class="radio-inline">
-                <input type="radio" ng-checked="editData.apiInfo.apiMethod == 'GET'"/>GET
+                <input type="radio" name="apiInfo.apiMethod" ng-checked="editData.apiInfo.apiMethod == 'GET'"/>GET
               </label>
               <label class="radio-inline">
-                <input type="radio" ng-checked="editData.apiInfo.apiMethod == 'POST'"/>POST
+                <input type="radio" name="apiInfo.apiMethod" ng-checked="editData.apiInfo.apiMethod == 'POST'"/>POST
               </label>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label">请求示例</label>
             <div class="col-sm-5">
-              <input type="text" class="form-control" value="{{editData.apiInfo.reqSample}}" readonly="true" />
+              <input type="text" class="form-control" name="apiInfo.reqSample" value="{{editData.apiInfo.reqSample}}" />
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label">接口描述</label>
             <div class="col-sm-5">
-              <input type="text" class="form-control" value="{{editData.apiInfo.apiDesc}}" readonly="true" />
+              <input type="text" class="form-control" name="apiInfo.apiDesc" value="{{editData.apiInfo.apiDesc}}" />
             </div>
           </div>
           <div class="form-group">
@@ -162,9 +159,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label">返回示例</label>
             <div class="col-sm-5">
-              <textarea style="margin: 0px; width: 452px; height: 150px;" readonly="true">
-                {{editData.apiInfo.respSample}}
-              </textarea>
+              <textarea style="margin: 0px; width: 452px; height: 84px;" name="apiInfo.respSample">{{editData.apiInfo.respSample}}</textarea>
             </div>
           </div>
           <div class="form-group">
@@ -194,29 +189,9 @@
       </fieldset>
 
       <div class="form-group">
-        <label class="col-sm-2 control-label">审核状态</label>
-        <div class="col-sm-5">
-          <label class="radio-inline">
-            <input type="radio" id="checkStatus_1" name="checkStatus" value="1" checked/>通过
-          </label>
-          <label class="radio-inline">
-            <input type="radio" id="checkStatus_2" name="checkStatus" value="2" />不通过
-          </label>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label" for="checkContent">审核意见</label>
-        <div class="col-sm-5">
-          <label>
-            <textarea id="checkContent" name="checkContent" style="margin: 0px; width: 452px; height: 84px;"></textarea>
-          </label>
-        </div>
-      </div>
-
-      <div class="form-group">
         <div class="col-sm-2"></div>
         <div class="col-sm-5">
-          <button class="btn btn-primary" data-ng-click="submitCheck()">
+          <button class="btn btn-primary">
             <span class="glyphicon glyphicon-refresh"></span> 提交审核
           </button>
         </div>
