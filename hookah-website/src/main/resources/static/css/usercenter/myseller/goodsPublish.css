@@ -44,6 +44,9 @@
     border-top:none;
     z-index: 1000;
 }
+.search-list.keyActive{
+    display: block;
+}
 .search-list li{
     line-height: 30px;
 }
