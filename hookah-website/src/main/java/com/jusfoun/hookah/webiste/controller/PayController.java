@@ -30,6 +30,11 @@ public class PayController {
     public String createOrder() {
         return "pay/createOrder";
     }
+    
+    @RequestMapping(value = "/success", method = RequestMethod.GET)
+    public String success() {
+        return "pay/success";
+    }
 
     @RequestMapping(value = "/cash", method = RequestMethod.GET)
     public String cash(HttpServletRequest request, Model model){
