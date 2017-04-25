@@ -8,5 +8,8 @@ import com.jusfoun.hookah.core.generic.GenericService;
  * Created by admin on 2017/4/7/0007.
  */
 public interface GoodsCheckService extends GenericService<GoodsCheck, String> {
+
     void insertRecord(GoodsCheck goodsCheck) throws HookahException;
+
+    GoodsCheck selectOneByGoodsId(String goodsId);
 }
