@@ -1,8 +1,7 @@
 <%
 var head = {
 %>
-<link rel="stylesheet" href="/static/css/usercenter/user-center-menu.css">
-<link rel="stylesheet" href="/static/css/usercenter/pay/pay.css">
+<link rel="stylesheet" href="/static/css/pay/pay.css">
 <%};%>
 
 <%
@@ -14,10 +13,10 @@ var htmlPart = {
             <div class="order-wrapper">
                 <!--<div class="order-title">充值</div>-->
                 <div class="header">
-                    <h4 class="order-title">充值</h4>
+                    <h4 class="order-title">请支付</h4>
                 </div>
-                <div class="order-seller">&nbsp;&nbsp; 收款方&nbsp;:<span> 山东省大数据交易中心</span></div>
-                <div class="order-amount"><span>${orderInfo.goodsAmount}</span>元</div>
+                <!--<div class="order-seller">&nbsp;&nbsp; 收款方&nbsp;:<span> 山东省大数据交易中心</span></div>-->
+                <div class="order-amount"><span>${trunc(orderInfo.goodsAmount/100, 2)}</span>元</div>
                 <a class="order-ext-trigger" href="javascript:void(0)">
                     订单详情
                 </a>
@@ -52,17 +51,18 @@ var htmlPart = {
                         <div>
                             <ul id="J_MarketinglList"></ul>
                             <ul class="saved-card-list">
+                                <%for(item in orderInfo.payments){%>
                                 <li class="channel-balance row-container fn-clear row-container-focus">
                                     <div class="row-basic fn-clear">
                                         <label class="channel-label"><span class="channel-tit channel-icon icon banklogo-BALANCE_s"></span>
                                             <span class="fn-mr-20">
-                                            <span class="channel-name">账户余额</span>
-                                            <span>7123123.71 元</span>
+                                            <span class="channel-name">${item.payName}</span>
+                                            <span>${trunc(item.payDetail)} 元</span>
                                         </span>
                                             <span class="pay-amount">
                                             <span class="amount">
                                                 <span>支付</span>
-                                                <span class="amount-font-R16">3000.00</span>
+                                                <span class="amount-font-R16">${trunc(orderInfo.goodsAmount/100, 2)}</span>
                                                 <span> 元</span>
                                             </span>
                                             <span></span>
@@ -72,65 +72,66 @@ var htmlPart = {
                                     </div>
                                     <div class="row-extra fn-hide"></div>
                                 </li>
-                                <li class="channel-bank row-container fn-clear">
-                                    <div class="row-basic fn-clear">
-                                        <label class="channel-label">
-                                        <span class="pay-amount">
-                                            <span class="amount fn-hide">
-                                                <span>支付</span>
-                                                <span class="amount-font-R16">1.00</span>
-                                                <span> 元</span>
-                                            </span>
-                                            <span></span>
-                                        </span>
-                                            <span class="channel-tit channel-icon icon banklogo-BOC_s"></span>
-                                            <span class="channel-name" title="中国银行">中国银行</span>
-                                            <span class="card-number">**1233</span>
-                                            <span class="card-type">储蓄卡 | 快捷</span>
-                                            <span class="card-info"></span>
-                                            <input class="channel-input" id="boc907-1" name="apiCode" type="radio">
-                                        </label>
-                                    </div>
-                                    <div class="row-extra fn-hide"></div>
-                                </li>
-                                <li class="channel-bank row-container fn-clear">
-                                    <div class="row-basic fn-clear">
-                                        <label class="channel-label">
-                                        <span class="pay-amount">
-                                            <span class="amount fn-hide">
-                                                <span>支付</span>
-                                                <span class="amount-font-R16">1.00</span>
-                                                <span> 元</span>
-                                            </span>
-                                            <span></span>
-                                        </span>
-                                            <span class="channel-tit channel-icon icon banklogo-ICBC_s"></span>
-                                            <span class="channel-name" title="中国工商银行">中国工商银行</span>
-                                            <span class="card-number">**2344</span>
-                                            <span class="card-type">储蓄卡 | 快捷</span>
-                                            <span class="card-info"></span>
-                                            <input class="channel-input" id="icbc906-2" name="apiCode" type="radio">
-                                        </label>
-                                    </div>
-                                    <div class="row-extra fn-hide"></div>
-                                </li>
-                                <li class="channel-moneyfund row-container fn-clear row-container-disabled">
-                                    <div class="row-basic fn-clear">
-                                        <label class="channel-label">
-                                            <span class="channel-tit channel-icon icon icon-gray banklogo-CMB_s"></span>
-                                            <span class="channel-name">招商信用卡</span>
-                                            <span class="pay-amount">
-                                            <span class="amount fn-hide">
-                                                <span>支付</span>
-                                                <span class="amount-font-R16">1.00</span>
-                                                <span> 元</span>
-                                            </span>
-                                            <span>该付款方式不支持当前交易</span>
-                                        </span>
-                                            <input class="channel-input" disabled="" id="moneyfund-5" name="apiCode" type="radio"></div>
-                                    </label>
-                                    <div class="row-extra fn-hide"></div>
-                                </li>
+                                <%}%>
+                                <!--<li class="channel-bank row-container fn-clear">-->
+                                    <!--<div class="row-basic fn-clear">-->
+                                        <!--<label class="channel-label">-->
+                                        <!--<span class="pay-amount">-->
+                                            <!--<span class="amount fn-hide">-->
+                                                <!--<span>支付</span>-->
+                                                <!--<span class="amount-font-R16">1.00</span>-->
+                                                <!--<span> 元</span>-->
+                                            <!--</span>-->
+                                            <!--<span></span>-->
+                                        <!--</span>-->
+                                            <!--<span class="channel-tit channel-icon icon banklogo-BOC_s"></span>-->
+                                            <!--<span class="channel-name" title="中国银行">中国银行</span>-->
+                                            <!--<span class="card-number">**1233</span>-->
+                                            <!--<span class="card-type">储蓄卡 | 快捷</span>-->
+                                            <!--<span class="card-info"></span>-->
+                                            <!--<input class="channel-input" id="boc907-1" name="apiCode" type="radio">-->
+                                        <!--</label>-->
+                                    <!--</div>-->
+                                    <!--<div class="row-extra fn-hide"></div>-->
+                                <!--</li>-->
+                                <!--<li class="channel-bank row-container fn-clear">-->
+                                    <!--<div class="row-basic fn-clear">-->
+                                        <!--<label class="channel-label">-->
+                                        <!--<span class="pay-amount">-->
+                                            <!--<span class="amount fn-hide">-->
+                                                <!--<span>支付</span>-->
+                                                <!--<span class="amount-font-R16">1.00</span>-->
+                                                <!--<span> 元</span>-->
+                                            <!--</span>-->
+                                            <!--<span></span>-->
+                                        <!--</span>-->
+                                            <!--<span class="channel-tit channel-icon icon banklogo-ICBC_s"></span>-->
+                                            <!--<span class="channel-name" title="中国工商银行">中国工商银行</span>-->
+                                            <!--<span class="card-number">**2344</span>-->
+                                            <!--<span class="card-type">储蓄卡 | 快捷</span>-->
+                                            <!--<span class="card-info"></span>-->
+                                            <!--<input class="channel-input" id="icbc906-2" name="apiCode" type="radio">-->
+                                        <!--</label>-->
+                                    <!--</div>-->
+                                    <!--<div class="row-extra fn-hide"></div>-->
+                                <!--</li>-->
+                                <!--<li class="channel-moneyfund row-container fn-clear row-container-disabled">-->
+                                    <!--<div class="row-basic fn-clear">-->
+                                        <!--<label class="channel-label">-->
+                                            <!--<span class="channel-tit channel-icon icon icon-gray banklogo-CMB_s"></span>-->
+                                            <!--<span class="channel-name">招商信用卡</span>-->
+                                            <!--<span class="pay-amount">-->
+                                            <!--<span class="amount fn-hide">-->
+                                                <!--<span>支付</span>-->
+                                                <!--<span class="amount-font-R16">1.00</span>-->
+                                                <!--<span> 元</span>-->
+                                            <!--</span>-->
+                                            <!--<span>该付款方式不支持当前交易</span>-->
+                                        <!--</span>-->
+                                            <!--<input class="channel-input" disabled="" id="moneyfund-5" name="apiCode" type="radio"></div>-->
+                                    <!--</label>-->
+                                    <!--<div class="row-extra fn-hide"></div>-->
+                                <!--</li>-->
                             </ul>
 
                             <div class="manage-list fn-clear">
@@ -186,22 +187,6 @@ var htmlPart = {
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
-<script type="text/javascript">
-    $('.order-ext-trigger').click(function(){
-        $('.order-details').slideToggle();
-    })
-    $('.manage-more').click(function(){
-        $(this).hide();
-        $('.saved-card-list .channel-balance').siblings().show();
-    })
-    $('.saved-card-list>.row-container').click(function(){
-        var that = $(this);
-        if(that.hasClass('row-container-disabled')){
-            return;
-        }else{
-            that.addClass('row-container-focus').siblings().removeClass('row-container-focus');
-        }
-    })
-</script>
+<script type="text/javascript" src="/static/js/pay/cash.js"></script>
 
 
