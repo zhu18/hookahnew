@@ -3,7 +3,7 @@ package com.jusfoun.hookah.webiste.controller;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.OrderInfo;
-import com.jusfoun.hookah.core.domain.Payment;
+import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
 import com.jusfoun.hookah.core.domain.vo.CartVo;
@@ -17,12 +17,12 @@ import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.CartService;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.OrderInfoService;
+import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -40,6 +40,9 @@ import java.util.*;
 public class OrderInfoController extends BaseController {
     @Autowired
     private OrderInfoService orderInfoService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private CartService cartService;
@@ -226,7 +229,7 @@ public class OrderInfoController extends BaseController {
      * @param goodsId
      * @param formatId
      * @param goodsNumber
-     * @param redirectAttributes
+     * @param request
      * @return
      */
     @RequestMapping(value = "/order/createOrder", method = RequestMethod.POST)
@@ -238,13 +241,14 @@ public class OrderInfoController extends BaseController {
             }else{
                 orderinfo = orderInfoService.insert(orderinfo, cartIdArray);
             }
-            List<Payment> paymentList = initPaymentList();
             HttpSession session = request.getSession();
+            List<Map> paymentList = initPaymentList(session);
+
 
             session.setAttribute("payments",paymentList);
             session.setAttribute("orderInfo",orderinfo);
             logger.info("订单信息:{}", JsonUtils.toJson(orderinfo));
-            logger.info("支付列表:{}", JsonUtils.toJson(initPaymentList()));
+            logger.info("支付列表:{}", JsonUtils.toJson(paymentList));
             return   "redirect:/pay/cash";
         } catch (Exception e) {
             logger.error("插入错误", e);
@@ -252,14 +256,16 @@ public class OrderInfoController extends BaseController {
         }
     }
 
-    private List<Payment> initPaymentList(){
-        String[] codes = {"1","2","3"};
-        String[] payNames = {"支付宝","钱包","银联"};
-        List<Payment> list = new ArrayList<>(3);
+    private List<Map> initPaymentList(HttpSession session){
+        Map userMap = (Map)session.getAttribute("user");
+        User user = userService.selectById((String)userMap.get("userId"));
+        String[][] payments = {{"支付宝",user.getMobile()},{"钱包",user.getMoneyBalance().toString()},{"银联","6*** ***6  3*** 9**1"}};
+        List<Map> list = new ArrayList<>(3);
         for(int i=0;i<3;i++){
-            Payment pay = new Payment();
-            pay.setPayCode(codes[i]);
-            pay.setPayName(payNames[i]);
+            Map pay = new HashMap();
+            pay.put("payCode",i+1);
+            pay.put("payName",payments[i][0]);
+            pay.put("payDetail",payments[i][1]);
             list.add(pay);
         }
         return list;
@@ -275,12 +281,12 @@ public class OrderInfoController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/order/directOrder", method = RequestMethod.POST)
-    public String directCreate(OrderInfo orderinfo, String goodsId, Integer formatId,Long goodsNumber,Model model) {
+    public String directCreate(OrderInfo orderinfo, String goodsId, Integer formatId,Long goodsNumber,Model model,HttpServletRequest request) {
         try {
             init(orderinfo);
             orderinfo = orderInfoService.insert(orderinfo, goodsId, formatId,goodsNumber);
             model.addAttribute("orderInfo",orderinfo);
-            model.addAttribute("payments",initPaymentList());
+            model.addAttribute("payments",initPaymentList(request.getSession()));
             return  "pay/cash";
         } catch (Exception e) {
             logger.error("插入错误", e);
