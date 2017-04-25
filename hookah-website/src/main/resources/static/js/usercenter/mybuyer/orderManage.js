@@ -11,9 +11,9 @@ function loadPageData(data){
             html += '<td>'+format(list[i].addTime)+'</td>';
             html += '<td>已付款</td>';
             html += '<td class="text-align-center">';
-            html += '<a href="" class="display-block">查看详情</a>';
+            html += '<a href="/usercenter/viewDetails" class="display-block">查看详情</a>';
             if(list[i].commentFlag==0){
-                html += '<a href="" class="display-block">未评价</a>';
+                html += '<a href="/usercenter/sunAlone" class="display-block">评价晒单</a>';
             }else if(list[i].commentFlag==1){
                 html += '<a href="" class="display-block">已评价</a>';
             }
