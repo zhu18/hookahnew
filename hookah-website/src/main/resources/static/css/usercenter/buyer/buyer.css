@@ -423,7 +423,7 @@ ul li {
     width: 692px;
 }
 .viewDetails .viewContent .rightContent .state-rtop {
-    height: 60px;
+    height: 50px;
 }
 .viewDetails .viewContent .rightContent .process .line span{
     width: 124px;
@@ -480,7 +480,6 @@ ul li {
 .goods-list .p-img img{
     width: 60px;
     height: 60px;
-    border: 1px solid #000;
     vertical-align: middle;
 }
 .goods-list .p-img a:nth-child(2){
@@ -520,7 +519,6 @@ ul li {
 .sunAlone .sunContent .pic img {
     width: 60px;
     height: 60px;
-    border: 1px solid #000;
 }
 .sunAlone .sunContent .rcontent .satisfaction span {
     display: inline-block;
