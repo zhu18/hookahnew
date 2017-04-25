@@ -2,7 +2,6 @@ package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.UserDetail;
-import com.jusfoun.hookah.core.domain.vo.SysNewsVo;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.*;
@@ -50,7 +49,12 @@ public class UserCenterController {
 
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public String userInfo() {
+    public String userInfo(Model model) {
+        Session session = SecurityUtils.getSubject().getSession();
+        HashMap<String, String> o = (HashMap<String, String>) session.getAttribute("user");
+        String userId = o.get("userId");
+        User user = userService.selectById(userId);
+        model.addAttribute("userCur",user);
         return "usercenter/userInfo/userInfo";
     }
 
@@ -111,7 +115,7 @@ public class UserCenterController {
 
     /**
      * 根据用户ID获得用户支付密码状态
-     * @param userId
+     * @param
      * @return 支付密码状态  0 未设置 ,1 已设置
      */
     @CrossOrigin
