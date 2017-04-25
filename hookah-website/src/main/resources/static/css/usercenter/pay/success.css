@@ -1,0 +1,38 @@
+a{
+    transition:none;
+}
+.pay-success{
+    display: inline-block;
+    width: 100%;
+    background-color: #ffffff;
+}
+.pay-success .pay-success-box{
+    margin: 20px;
+    background-color: #F5F5F5;
+    padding: 20px;
+}
+.pay-success-box .success-money{
+    height: 32px;
+    padding-left: 125px;
+    line-height: 28px;
+    font-weight: 700;
+    font-size: 18px;
+    background: url(//gtd.alicdn.com/tps/i4/T1CRqLXdhfXXXXXXXX-32-140.png) no-repeat 87px 0;
+}
+.pay-success-box .success-money .money{
+    font-style: normal;
+    font-weight: 400;
+    margin: 0 5px;
+    font-family: tahoma;
+}
+.pay-success-box .bought-baby-list{
+    height: 32px;
+    color: #3366CC;
+    padding-left: 140px;
+
+}
+.pay-success-box .bought-baby-list:hover{
+    text-decoration: underline;
+    color:#e34f4f ;
+
+}
