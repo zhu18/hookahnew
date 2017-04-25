@@ -52,7 +52,7 @@ var htmlPart = {
                             <ul id="J_MarketinglList"></ul>
                             <ul class="saved-card-list">
                                 <%for(item in payments){%>
-                                <li class="channel-balance row-container fn-clear row-container-focus">
+                                <li class="${itemLP.index == 1 ? 'channel-balance' : 'channel-bank'} row-container fn-clear ${itemLP.index == 1 ? 'row-container-focus' : ''}">
                                     <div class="row-basic fn-clear">
                                         <label class="channel-label"><span class="channel-tit channel-icon icon banklogo-BALANCE_s"></span>
                                             <span class="fn-mr-20">
@@ -67,7 +67,11 @@ var htmlPart = {
                                             </span>
                                             <span></span>
                                         </span>
-                                            <input checked="" class="channel-input" id="balance-0" name="apiCode" type="radio">
+                                            <%if(itemLP.index == 1){%>
+                                            <input checked="checked" class="channel-input" value="${item.payCode}" id="balance-0" name="apiCode" type="radio">
+                                            <%}else{%>
+                                            <input class="channel-input" id="balance-0" value="${item.payCode}" name="apiCode" type="radio">
+                                            <%}%>
                                         </label>
                                     </div>
                                     <div class="row-extra fn-hide"></div>
