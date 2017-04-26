@@ -6,13 +6,6 @@ body{
 	-ms-user-select:none;
 	user-select:none;
 }
-
-.color-gray-blue{
-	color: #6194B9;
-}
-.color-dark-orange {
-	color: #DC7754;
-}
 /*线 --#DCDDDD*/
 /*交易中心-start*/
 .exchange-index {
@@ -96,7 +89,7 @@ body{
 	height: 66px;
 	width: 250px;
 	font-size: 20px;
-	box-shadow: inset 0px -5px 0 #6194B9;
+	box-shadow: inset 0px -5px 0 #3E557B;
 }
 .exchange-recommend-resource .recommend-resource-top .recommend-resource-top-left .d {
 	display: inline-block;
@@ -232,7 +225,7 @@ body{
 	height: 66px;
 	width: 250px;
 	font-size: 20px;
-	box-shadow: inset 0px -5px 0 #DC7754;
+	box-shadow: inset 0px -5px 0 #e34f4f;
 }
 .exchange-hot-resource .hot-resource-top .hot-resource-top-left .d {
 	display: inline-block;
@@ -353,7 +346,7 @@ body{
 	width: 20%;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-table table tr .td-three span {
-	color: #F20A0A;
+	color: #E34F4F;
 	font-size: 14px;
 	vertical-align: middle;
 }
@@ -393,7 +386,7 @@ body{
 	height: 16px;
 	width: 2px;
 	margin-right: 5px;
-	background-color: #D95353;
+	background-color: #E34F4F;
 	vertical-align: middle;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-rank .h-title span {
@@ -518,7 +511,7 @@ body{
 	height: 66px;
 	width: 250px;
 	font-size: 20px;
-	box-shadow: inset 0px -5px 0 #6194B9;
+	box-shadow: inset 0px -5px 0 #3E557B;
 }
 .exchange-industry-resource .industry-resource-top .industry-resource-top-left .d {
 	display: inline-block;
@@ -930,12 +923,12 @@ body{
 }
 .exchange-index .exchange-category-down .category-right .common-problems i {
 	display: inline-block;
-	width: 4px;
+	width: 2px;
 	margin-bottom: 1px;
-	height: 14px;
+	height: 15px;
 	margin-right: 5px;
 	vertical-align: middle;
-	background-color: blue;
+	background-color: #3E557B;
 }
 .exchange-index .exchange-category-down .category-right .common-problems span:last-child {
 	margin-left: 65px;
