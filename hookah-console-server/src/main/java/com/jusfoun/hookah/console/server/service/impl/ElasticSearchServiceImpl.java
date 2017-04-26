@@ -4,11 +4,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.jusfoun.hookah.console.server.config.Constants;
 import com.jusfoun.hookah.console.server.config.ESTemplate;
 import com.jusfoun.hookah.console.server.config.ESTransportClient;
-import com.jusfoun.hookah.core.dao.CategoryMapper;
-import com.jusfoun.hookah.core.utils.AnnotationUtil;
 import com.jusfoun.hookah.console.server.util.DictionaryUtil;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.dao.CategoryMapper;
 import com.jusfoun.hookah.core.dao.GoodsMapper;
 import com.jusfoun.hookah.core.domain.Category;
 import com.jusfoun.hookah.core.domain.GoodsAttrType;
@@ -20,6 +19,7 @@ import com.jusfoun.hookah.core.domain.vo.EsGoodsVo;
 import com.jusfoun.hookah.core.domain.vo.EsTreeVo;
 import com.jusfoun.hookah.core.domain.vo.EsTypesVo;
 import com.jusfoun.hookah.core.exception.HookahException;
+import com.jusfoun.hookah.core.utils.AnnotationUtil;
 import com.jusfoun.hookah.rpc.api.CategoryService;
 import com.jusfoun.hookah.rpc.api.ElasticSearchService;
 import com.jusfoun.hookah.rpc.api.GoodsAttrTypeService;
@@ -120,45 +120,50 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         List<EsGoods> list = goodsMapper.getNeedEsGoods();
         if (list != null && list.size() > 0) {
             for(EsGoods goods : list) {
-                // 如果有地区给省市县赋值
-                if(goods.getGoodsArea() != null && !"".equals(goods.getGoodsArea())) {
-                    String[] region = goods.getGoodsAreas().split(" ");
-                    if(region.length >= 2)
-                        goods.setAreaCountry(region[1]);
-                    if(region.length >= 3)
-                        goods.setAreaProvince(region[2]);
-                    if(region.length == 4)
-                        goods.setAreaCity(region[3]);
-                }
-                //查询mongo中的数据
-                MgGoods mgGoods = mgGoodsService.selectById(goods.getGoodsId());
-                goods.setSuggest(goods.getGoodsName());
-                //获取商品属性
-                if(mgGoods != null) {
-                    List<MgCategoryAttrType.AttrTypeBean> list1 = mgGoods.getAttrTypeList();
-                    StringBuffer attrType = new StringBuffer();
-                    StringBuffer attr = new StringBuffer();
-                    for(MgCategoryAttrType.AttrTypeBean bean : list1) {
-                        attrType.append(bean.getTypeId()).append(" ");
-
-                        if(bean.getAttrList() != null) {
-                            for (MgCategoryAttrType.AttrTypeBean.AttrBean attrBean : bean.getAttrList()) {
-                                attr.append(attrBean.getAttrId()).append(" ");
-                            }
-                        }else {
-                            attrType = new StringBuffer();
-                        }
-                    }
-                    if(!"".equals(attrType.toString()) && !"".equals(attr.toString())) {
-                        goods.setAttrTypeId(attrType.toString().split(" "));
-                        goods.setAttrId(attr.toString().split(" "));
-                        goods.setAttrIds(attrType.toString() + attr.toString());
-                    }
-                }
-                maps.add(AnnotationUtil.convert2Map(goods));
+                maps.add(completionEsGoods(goods));
             }
         }
         return maps;
+    }
+
+    @Override
+    public Map<String, Object> completionEsGoods(EsGoods goods) throws IllegalAccessException {
+        // 如果有地区给省市县赋值
+        if(goods.getGoodsArea() != null && !"".equals(goods.getGoodsArea())) {
+            String[] region = goods.getGoodsAreas().split(" ");
+            if(region.length >= 2)
+                goods.setAreaCountry(region[1]);
+            if(region.length >= 3)
+                goods.setAreaProvince(region[2]);
+            if(region.length == 4)
+                goods.setAreaCity(region[3]);
+        }
+        //查询mongo中的数据
+        MgGoods mgGoods = mgGoodsService.selectById(goods.getGoodsId());
+        goods.setSuggest(goods.getGoodsName());
+        //获取商品属性
+        if(mgGoods != null) {
+            List<MgCategoryAttrType.AttrTypeBean> list1 = mgGoods.getAttrTypeList();
+            StringBuffer attrType = new StringBuffer();
+            StringBuffer attr = new StringBuffer();
+            for(MgCategoryAttrType.AttrTypeBean bean : list1) {
+                attrType.append(bean.getTypeId()).append(" ");
+
+                if(bean.getAttrList() != null) {
+                    for (MgCategoryAttrType.AttrTypeBean.AttrBean attrBean : bean.getAttrList()) {
+                        attr.append(attrBean.getAttrId()).append(" ");
+                    }
+                }else {
+                    attrType = new StringBuffer();
+                }
+            }
+            if(!"".equals(attrType.toString()) && !"".equals(attr.toString())) {
+                goods.setAttrTypeId(attrType.toString().split(" "));
+                goods.setAttrId(attr.toString().split(" "));
+                goods.setAttrIds(attrType.toString() + attr.toString());
+            }
+        }
+        return AnnotationUtil.convert2Map(goods);
     }
 
     /**

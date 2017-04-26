@@ -4,8 +4,6 @@ var datas = null ;
 var nextAll = '';
 var isTrue = false;
 
-//
-
 loadData(url,pid);
 //点击加载。。。
 function clickLoadData(url,pid,that){
@@ -34,8 +32,6 @@ function showBtn(isTrue){
         $('#pusblishBtn').css({'cursor':'pointer'}).addClass('btn-full-orange').removeAttr('disabled');
     }
 }
-
-
 //加载。。。
 function loadData(url,pid){
     $.ajax({

@@ -13,4 +13,6 @@ public interface GoodsMapper extends GenericDao<Goods> {
     // 更新商品下架状态和下架时间
     @Update("update goods set is_onsale = 0, onsale_end_date = SYSDATE() where goods_id = #{id}")
     int updateOffSale(String id);
+
+    EsGoods getNeedEsGoodsById(String id);
 }
