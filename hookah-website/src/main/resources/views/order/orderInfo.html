@@ -36,7 +36,7 @@ var htmlPart = {
 								<th>订购规格</th>
 								<th>单价(元)</th>
 								<th>订购数量</th>
-								<th>优惠(元)</th>
+								<!--<th>优惠(元)</th>-->
 								<th>总价(元)</th>
 							</tr>
 							<%for(list in cartOrder){%>
@@ -52,7 +52,7 @@ var htmlPart = {
 								</td>
 								<td>${trunc(list.goodsPrice / 100, 2)}</td>
 								<td>${list.goodsNumber}</td>
-								<td>${list.goodsName}</td>
+								<!--<td>${list.goodsName}</td>-->
 								<td>${trunc((list.goodsPrice * list.goodsNumber) / 100, 2)}</td>
 							</tr>
 							<%}%>

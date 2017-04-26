@@ -144,7 +144,7 @@
   font-size: 12px;
   line-height: 12px;
   color: #fff;
-  background-color: #c81623;
+  background-color: #E34F4F;
   border-radius: 7px 7px 7px 0;
   min-width: 12px;
   text-align: center;
@@ -263,8 +263,9 @@
 }
 
 .header-centerbar .shopping-cart-down .shopping-cart-down-pay a {
-  padding: 3px;
+  padding: 3px 5px;
   font-size: 12px;
+  border-radius: 3px;
   line-height: 22px;
   margin-top: 3px;
 }
