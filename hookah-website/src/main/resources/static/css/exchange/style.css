@@ -6,6 +6,14 @@ body{
 	-ms-user-select:none;
 	user-select:none;
 }
+
+.color-gray-blue{
+	color: #6194B9;
+}
+.color-dark-orange {
+	color: #DC7754;
+}
+/*线 --#DCDDDD*/
 /*交易中心-start*/
 .exchange-index {
 	font-size: 14px;
@@ -88,7 +96,7 @@ body{
 	height: 66px;
 	width: 250px;
 	font-size: 20px;
-	box-shadow: inset 0px -3px 0 blue;
+	box-shadow: inset 0px -5px 0 #6194B9;
 }
 .exchange-recommend-resource .recommend-resource-top .recommend-resource-top-left .d {
 	display: inline-block;
@@ -111,7 +119,7 @@ body{
 }
 /*推荐的内容*/
 .exchange-recommend-resource .recommend-resource-down {
-	border-top: 1px solid #333333;
+	border-top: 1px solid #DCDDDD;
 	padding-top: 10px;
 }
 .exchange-recommend-resource .recommend-resource-down ul li {
@@ -212,10 +220,10 @@ body{
 	height: 86px;
 	background-color: #00081F;
 }
-/*热门模块*/
+/*------------------------------------hot-modular--------------------------*/
 .exchange-index .exchange-hot-resource {
 }
-/*热门标签*/
+/*hot-modular-top-----start*/
 .exchange-hot-resource .hot-resource-top {
 	height: 66px;
 }
@@ -223,7 +231,7 @@ body{
 	height: 66px;
 	width: 250px;
 	font-size: 20px;
-	box-shadow: inset 0px -3px 0 blue;
+	box-shadow: inset 0px -5px 0 #DC7754;
 }
 .exchange-hot-resource .hot-resource-top .hot-resource-top-left .d {
 	display: inline-block;
@@ -244,15 +252,18 @@ body{
 	padding-top: 34px;
 	font-size: 14px;
 }
-/*热门内容*/
+/*hot-modular-top-----end*/
+/*hot-modular-down-----start*/
 .exchange-hot-resource .hot-resource-down {
-    border-top: 1px solid #333333;
+    border-top: 1px solid #DCDDDD;
     padding-top: 10px;
 }
+/*hot-modular-down-left*/
 .exchange-hot-resource .hot-resource-down .hot-down-left {
 	float: left;
 	width: 192px;
 	height: 374px;
+	overflow: hidden;
 	background-color: #FDE9EB;
 	display: inline-block;
 }
@@ -286,6 +297,14 @@ body{
 	display: inline-block;
 	margin-top: 20px;
 	color: #A61615;
+}
+.exchange-hot-resource .hot-resource-down .hot-down-left .bg-img{
+	font-size: 250px;
+	line-height: 0;
+	display: inline-block;
+	margin-top: 177px;
+	margin-left: 20px;
+	color: #FCDADE;
 }
 /*表格*/
 .exchange-hot-resource .hot-resource-down .hot-down-table {
@@ -486,6 +505,7 @@ body{
 /*.exchange-hot-resource .hot-resource-down .hot-down-rank > ul li:last-child div {*/
 	/*border: none;*/
 /*}*/
+/*hot-modular-down-----start*/
 /*行业模块*/
 .exchange-index .exchange-industry-resource {
     margin-bottom: 30px;
@@ -497,7 +517,7 @@ body{
 	height: 66px;
 	width: 250px;
 	font-size: 20px;
-	box-shadow: inset 0px -3px 0 blue;
+	box-shadow: inset 0px -5px 0 #6194B9;
 }
 .exchange-industry-resource .industry-resource-top .industry-resource-top-left .d {
 	display: inline-block;
@@ -506,6 +526,7 @@ body{
 }
 .exchange-industry-resource .industry-resource-top .industry-resource-top-left i:nth-child(1) {
 	font-size: 25px;
+	font-weight: bold;
 }
 .exchange-industry-resource .industry-resource-top .industry-resource-top-left span:last-child {
 	font-size: 16px;
@@ -794,6 +815,7 @@ body{
 	float: left;
 	width: 185px;
 	height: 316px;
+	overflow: hidden;
 	margin: 16px 0px 16px 16px;
 	display: inline-block;
 	background-color: #C7E5FD;
@@ -828,6 +850,14 @@ body{
 	display: inline-block;
 	margin-top: 20px;
 	color: #3B7AB0;
+}
+.exchange-index .exchange-category-down .category-left .resource-two .bg-img {
+	font-size: 200px;
+	line-height: 0;
+	display: inline-block;
+	margin-top: 107px;
+	margin-left: 36px;
+	color: #B1D5F1;
 }
 /*---------------------*/
 .exchange-index .exchange-category-down .category-left .category-item .list-box {
