@@ -4,12 +4,13 @@ import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.mongo.MgCategoryAttrType;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by wangjl on 2017-3-17.
  */
-public class GoodsVo extends Goods {
+public class GoodsVo extends Goods implements Serializable {
     private List<MgCategoryAttrType.AttrTypeBean> attrTypeList;
     private List<MgGoods.FormatBean> formatList;
     private List<MgGoods.ImgBean> imgList;
