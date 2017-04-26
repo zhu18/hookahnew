@@ -15,7 +15,7 @@ import java.util.List;
 public class MgCategoryAttrType extends GenericModel {
     @Id
     private String catId; //商品分类id
-    private List<AttrTypeBean> attrTypelist; //商品
+    private List<AttrTypeBean> attrTypeList; //商品
     private String addTime;
     private String lastUpdateTime;
     private String userId;
@@ -114,12 +114,12 @@ public class MgCategoryAttrType extends GenericModel {
         return lastUpdateTime;
     }
 
-    public List<AttrTypeBean> getAttrTypelist() {
-        return attrTypelist;
+    public List<AttrTypeBean> getAttrTypeList() {
+        return attrTypeList;
     }
 
-    public void setAttrTypelist(List<AttrTypeBean> attrTypelist) {
-        this.attrTypelist = attrTypelist;
+    public void setAttrTypeList(List<AttrTypeBean> attrTypeList) {
+        this.attrTypeList = attrTypeList;
     }
 
     public void setAddTime(String addTime) {

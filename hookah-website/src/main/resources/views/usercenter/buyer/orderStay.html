@@ -14,7 +14,6 @@ var head = {
     dataParm.payStatus = 0;//0:未付款，1：已付款
     dataParm.startDate = null;
     dataParm.endDate = null;
-//    dataParm.commentFlag = null;
 </script>
 <%};%>
 
@@ -67,7 +66,7 @@ var htmlPart = {
                             <th class="text-align-center">操作</th>
                         </tr>
                         </thead>
-                        <!--<tbody>-->
+                        <tbody>
                         <!--<tr class="content border-bottom">-->
                             <!--<td class="text-align-center">-->
                                 <!--2017022813474081863964-->
@@ -87,11 +86,11 @@ var htmlPart = {
                                 <!--<a href="" class="display-block">删除</a>-->
                             <!--</td>-->
                         <!--</tr>-->
-                        <!--</tbody>-->
-                    </table>
+                        </tbody>
                     </table>
                 </div>
-                <%include("/layout/pageaction.html"){} %>
+                <!--由于原分页的逻辑中通过data.data.totalPage是取不到数据的，所以更改为pageaction1.html-->
+                <%include("/layout/pageaction1.html"){} %>
             </div>
         </div>
     </div>

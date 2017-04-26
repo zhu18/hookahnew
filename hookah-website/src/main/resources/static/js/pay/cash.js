@@ -1,10 +1,16 @@
+var oldPwd = false;
 $('.order-ext-trigger').click(function () {
 	$('.order-details').slideToggle();
-})
+});
 $('.manage-more').click(function () {
-	// $(this).hide();
-	$('.saved-card-list .channel-balance').siblings().slideToggle();
-})
+	if($(this).hasClass('manage-colse')){
+		$('.saved-card-list .channel-balance').siblings().slideUp();
+		$(this).removeClass('manage-colse').html('显示其他支付方式');
+	}else{
+		$('.saved-card-list .channel-balance').siblings().slideDown();
+		$(this).addClass('manage-colse').html('隐藏其他支付方式');
+	}
+});
 $('.saved-card-list>.row-container').click(function () {
 	var that = $(this);
 	if (that.hasClass('row-container-disabled')) {
@@ -96,9 +102,8 @@ function check() {
 	$("[name=apiCode]:radio").each(function () {
 		if (this.checked) {
 			if (this.value == 1) {
-				if ($('#payPassword_rsainput').val() && $('#payPassword_rsainput').val().length == 6) {
-					$.alert('支付成功了,密码为----：'+$('#payPassword_rsainput').val() );
-					return false;
+				if ($('#paymentPassword').val() && $('#paymentPassword').val().length == 6) {
+					testPayPassword($('#paymentPassword').val());
 				} else {
 					$('.ui-form-error').show();
 				}
@@ -109,13 +114,34 @@ function check() {
 		}
 	});
 }
-$('#payPassword_rsainput').on('focus', function () {
+function testPayPassword(pwd){
+	$.ajax({
+		url:host.website+'/verify/verifyPayPassword',
+		data:{
+			paymentPassword:pwd
+		},
+		type:'get',
+		success:function (data) {
+			if(data.code == 1){
+				$('#form_paypsw').submit();
+				return true;
+			}else if(data.code == 0){
+				$('.ui-form-error').show();
+				return false;
+			}else{
+				$.alert(data.message);
+				return false;
+			}
+		}
+	});
+}
+$('#paymentPassword').on('focus', function () {
 	$('.ui-form-error').hide();
 });
-var _formPay = $('#form_paypsw');
+var _formPay = $('#form_paypsw'); //支付密码输入框单个输入效果
 _formPay.validate({
 	rules: {
-		'payPassword_rsainput': {
+		'paymentPassword': {
 			'minlength': 6,
 			'maxlength': 6,
 			required: true,
@@ -125,7 +151,7 @@ _formPay.validate({
 		}
 	},
 	messages: {
-		'payPassword_rsainput': {
+		'paymentPassword': {
 			'required': '<i class="icon icon-attention icon-lg"></i>&nbsp;请填写支付密码',
 			'maxlength': '<i class="icon icon-attention icon-lg"></i>&nbsp;密码最多为{0}个字符',
 			'minlength': '<i class="icon icon-attention icon-lg"></i>&nbsp;密码最少为{0}个字符',
@@ -149,7 +175,7 @@ var payPassword = $("#payPassword_container"),
 	password = '',
 	_cardwrap = $('#cardwrap');
 //点击隐藏的input密码框,在6个显示的密码框的第一个框显示光标
-payPassword.on('focus', "input[name='payPassword_rsainput']", function () {
+payPassword.on('focus', "input[name='paymentPassword']", function () {
 	var _this = payPassword.find('i');
 	if (payPassword.attr('data-busy') === '0') {
 		//在第一个密码框中添加光标样式
@@ -159,17 +185,17 @@ payPassword.on('focus', "input[name='payPassword_rsainput']", function () {
 	}
 });
 //change时去除输入框的高亮，用户再次输入密码时需再次点击
-payPassword.on('change', "input[name='payPassword_rsainput']", function () {
+payPassword.on('change', "input[name='paymentPassword']", function () {
 	_cardwrap.css('visibility', 'hidden');
 	_this.eq(k).removeClass("active");
 	payPassword.attr('data-busy', '0');
-}).on('blur', "input[name='payPassword_rsainput']", function () {
+}).on('blur', "input[name='paymentPassword']", function () {
 	_cardwrap.css('visibility', 'hidden');
 	_this.eq(k).removeClass("active");
 	payPassword.attr('data-busy', '0');
 });
 //使用keyup事件，绑定键盘上的数字按键和backspace按键
-payPassword.on('keyup', "input[name='payPassword_rsainput']", function (e) {
+payPassword.on('keyup', "input[name='paymentPassword']", function (e) {
 	var e = (e) ? e : window.event;
 	//键盘上的数字键按下才可以输入
 	if (e.keyCode == 8 || (e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) {

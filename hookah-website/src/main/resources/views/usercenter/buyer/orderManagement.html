@@ -21,7 +21,7 @@ var head = {
 <%
 var htmlPart = {
 %>
-<div class="grid-0 backgorund-gray ">
+<div class="grid-0 backgorund-gray">
     <div class="grid-row clearfix">
         <%include("/usercenter/user-center-menu.html"){} %>
         <div class="orderManagement margin-left-10 margin-top-10 grid-right padding-bottom-20">
@@ -29,7 +29,7 @@ var htmlPart = {
                 <ul class="grid-left all">
                     <li class="padding-left-30 active"><a href="javascript:void(0)">已付款 <span class="padding-right-40" id="payCount"></span></a>
                     </li>
-                    <li class="padding-left-60 "><a href="/usercenter/buyer/orderStay">待付款<span
+                    <li class="padding-left-30 "><a href="/usercenter/buyer/orderStay">待付款<span
                             class="padding-left-5 padding-right-60" id="noPayCount"></span></a></li>
                 </ul>
                 <!--<div class="search grid-right">-->
@@ -65,7 +65,7 @@ var htmlPart = {
                             <th class="text-align-center">操作</th>
                         </tr>
                         </thead>
-                        <!--<tbody>-->
+                        <tbody>
                         <!--<tr class="content border-bottom">-->
                             <!--<td class="text-align-center">-->
                                 <!--2017022813474081863964-->
@@ -104,10 +104,11 @@ var htmlPart = {
                                 <!--<a href="" class="display-block">删除</a>-->
                             <!--</td>-->
                         <!--</tr>-->
-                        <!--</tbody>-->
+                        </tbody>
                     </table>
                 </div>
-                <%include("/layout/pageaction.html"){} %>
+                <!--由于原分页的逻辑中通过data.data.totalPage是取不到数据的，所以更改为pageaction1.html-->
+                <%include("/layout/pageaction1.html"){} %>
             </div>
         </div>
     </div>
