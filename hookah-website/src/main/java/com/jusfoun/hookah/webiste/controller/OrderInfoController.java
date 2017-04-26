@@ -149,17 +149,21 @@ public class OrderInfoController extends BaseController {
 
             List<Condition> filters = new ArrayList<>();
             if (StringUtils.isNotBlank(startDate)) {
-                filters.add(Condition.ge("addTime", DateUtils.getDate(startDate)));
+                filters.add(Condition.ge("addTime", DateUtils.getDate(startDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
             }
             if (StringUtils.isNotBlank(endDate)) {
-                filters.add(Condition.le("addTime", DateUtils.getDate(endDate)));
+                filters.add(Condition.le("addTime", DateUtils.getDate(endDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
             }
             if (commentFlag != null) {
                 filters.add(Condition.eq("commentFlag", commentFlag));
             }
             Condition condition = null;
             if (payStatus != null) {
-                condition = Condition.eq("payStatus", payStatus);
+                if(payStatus==1) {
+                    condition = Condition.eq("payStatus", 2);
+                }else{
+                    condition = Condition.ne("payStatus", 2);
+                }
                 filters.add(condition);
             }
             if (domainName != null) {
@@ -175,12 +179,12 @@ public class OrderInfoController extends BaseController {
             map.put("orders",pOrders);
             filters.remove(condition); //移除支付状态条件
             //查询数量
-            filters.add(Condition.eq("payStatus", 1));
+            filters.add(Condition.eq("payStatus", 2));
             Long paid = orderInfoService.count(filters);  //已支付数量
             map.put("paidCount",paid);
 
             filters.remove(filters.size()-1);
-            filters.add(Condition.eq("payStatus", 0));
+            filters.add(Condition.ne("payStatus", 2));
             Long unpaid = orderInfoService.count(filters); //未支付数量
             map.put("unpaidCount",unpaid);
 
