@@ -8,7 +8,7 @@ $(function(){
         if(!$("#check").is(":checked")){
             $(".agreement-btn a").attr('href','javascript:;')
             $('.gray-btn2').css({
-                "background-color":"gray",
+                "background-color":"#efefef",
                 "cursor": "not-allowed"
             })
         }
@@ -16,7 +16,7 @@ $(function(){
     $("#check").click(function(){
         if($("#check").is(":checked")){
             $(".gray-btn2").css({
-                "background-color":"blue",
+                "background-color":"#0781e8",
                 "cursor": "pointer"
             });
             $("#next").attr("href","./company_auth_init_step2");
