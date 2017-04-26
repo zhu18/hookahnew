@@ -1547,6 +1547,7 @@ dl {
 	text-align: left;
 }
 .goods-table .table-content .table-item table td, th {
+	padding: 0 5px;
 }
 .goods-table .table-content .table-item:last-child ol .comment-title {
 	background-color: #F1F1F1;
