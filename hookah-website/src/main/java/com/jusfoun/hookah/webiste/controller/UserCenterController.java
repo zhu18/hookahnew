@@ -4,8 +4,10 @@ import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.UserDetail;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.*;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.session.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -135,4 +137,35 @@ public class UserCenterController {
         }
         return returnData;
     }
+
+
+    /**
+     * 验证支付密码
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/verifyPayPassword", method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnData verifyPayPassword(String paymentPassword,Model model) {
+        ReturnData returnData = new ReturnData();
+        Session session = SecurityUtils.getSubject().getSession();
+        HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
+        User user = userService.selectById(userMap.get("userId"));
+        if(StringUtils.isNotBlank(paymentPassword)){
+            String newPassword = new Md5Hash(paymentPassword).toString();
+
+            String oldPayPassword =  user.getPaymentPassword();
+            if(oldPayPassword.equals(newPassword)){
+                returnData.setMessage("支付密码正确！");
+            }else{
+                returnData.setCode(ExceptionConst.Failed);
+                returnData.setMessage("支付密码错误！");
+            }
+        }else{
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage("支付密码错误！");
+        }
+        return  returnData;
+    }
+
 }
