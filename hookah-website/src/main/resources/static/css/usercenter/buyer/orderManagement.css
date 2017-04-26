@@ -76,6 +76,9 @@
     border:none;
     font:14px/30px "microsoft yahei";
     color: #fff;
+    background-color: #ffa800;
+}
+.searchQuery .search:hover{
     background-color: #eb9c03;
 }
 #noPaySearch{

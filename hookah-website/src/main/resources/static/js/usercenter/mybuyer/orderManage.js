@@ -7,7 +7,7 @@ function loadPageData(data){
         for(var i=0; i<list.length; i++){
             html += '<tr class="content border-bottom">';
             html += '<td class="text-align-center">'+list[i].orderSn+'</td>';
-            html += '<td class="text-align-right">￥&nbsp;'+list[i].orderAmount+'</td>';//订单总金额
+            html += '<td class="text-align-right">￥&nbsp;'+list[i].orderAmount/100+'</td>';//订单总金额
             html += '<td>'+format(list[i].addTime)+'</td>';
             html += '<td>已付款</td>';
             html += '<td class="text-align-center">';
@@ -39,11 +39,11 @@ function loadPageData(data){
 }
 $.jeDate("#startDate", {
     format: "YYYY-MM-DD hh:mm:ss",
-    isTime: true,
+    // isTime: true,
 });
 $.jeDate("#endDate", {
     format: "YYYY-MM-DD hh:mm:ss",
-    isTime: true,
+    // isTime: true,
 });
 //点击查询按钮
 $(".searchQuery .search").on("click",function(){

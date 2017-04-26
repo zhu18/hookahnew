@@ -10,7 +10,7 @@ function loadPageData(data){
         for(var i=0; i<list.length; i++){
             html+= '<tr class="content border-bottom">';
             html+= '<td class="text-align-center">'+list[i].orderSn+'</td>';
-            html+= '<td class="text-align-right">￥&nbsp;'+list[i].orderAmount+'</td>';
+            html+= '<td class="text-align-right">￥&nbsp;'+list[i].orderAmount/100+'</td>';
             html+= '<td>'+format(list[i].addTime)+'</td>';
             html+= '<td>未付款</td>';
             html+= '<td class="text-align-center">';
