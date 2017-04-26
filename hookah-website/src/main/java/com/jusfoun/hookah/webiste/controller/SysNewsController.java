@@ -4,6 +4,7 @@ package com.jusfoun.hookah.webiste.controller;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.domain.Category;
 import com.jusfoun.hookah.core.domain.SysNews;
+import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.vo.SysNewsVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
@@ -12,6 +13,8 @@ import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.CategoryService;
 import com.jusfoun.hookah.rpc.api.SysNewsService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -238,10 +241,12 @@ public class SysNewsController {
     public ReturnData insert(SysNews model) {
         ReturnData returnData = new ReturnData();
         try {
+            Session session = SecurityUtils.getSubject().getSession();
+            HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
             SysNews snews = new SysNews();
             snews = model;
             snews.setSytTime(new Date());
-            snews.setSysUser("857a17ef0f9d11e796c56a3b07101c5a");
+            snews.setSysUser(userMap.get("userId"));
             sysNewsService.insert(snews);
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);

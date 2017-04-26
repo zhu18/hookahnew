@@ -78,17 +78,20 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 
 	/**
 	 *
-	 * @param orderId
+	 * @param orderSn
 	 * @param userId
 	 * @return
 	 * @throws Exception
 	 */
 	@Override
-	public void doPayMoney(String orderId, String userId) throws Exception{
+	public void doPayMoney(String orderSn, String userId) throws Exception{
+
+		List<Condition> filters = new ArrayList();
+		filters.add(Condition.eq("orderSn", orderSn));
+		OrderInfo orderinfo  = orderService.selectOne(filters);
     	//修改订单支付状态
-		OrderInfo orderinfo = orderService.selectById(orderId);
 		orderinfo.setPayStatus(2);
-		orderService.updateByIdSelective(orderinfo);
+		orderService.updateById(orderinfo);
         Long orderAmount = orderinfo.getOrderAmount();
         //减去余额
 		User user =  userService.selectById(userId);
