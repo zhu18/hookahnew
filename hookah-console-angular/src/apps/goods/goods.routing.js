@@ -29,6 +29,11 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
         template: require('./checkList.html'),
         controller: GoodsCheckController,
     })
+    .state('items.checkStatus', {
+        url: '/items/checkStatus',
+        template: require('./checkStatus.html'),
+        controller: GoodsCheckController,
+    })
     .state('items.goodsDetail', {
         url: '/items/goodsDetail',
         template: require('./goodsDetail.html'),

@@ -38,8 +38,9 @@
               <th>名称</th>
               <th>所属者</th>
               <th>所属店铺</th>
+              <th>审核状态</th>
+              <th>上架状态</th>
               <th>创建时间</th>
-              <th width="70">上下架</th>
               <th width="200" class="text-center">操作</th>
             </tr>
             </thead>
@@ -72,14 +73,24 @@
                 <span class="column-text" ng-bind="item.shopName"></span>
               </td>
               <td>
-                <span class="" ng-bind="item.addTime"></span>
+                <span class="column-text" ng-show="item.checkStatus == 0">审核中</span>
+                <span class="column-text" ng-show="item.checkStatus == 1">通过</span>
+                <span class="column-text" ng-show="item.checkStatus == 2">不通过</span>
               </td>
               <td>
-                <span class="column-text" ng-bind="item.openStatus | yesNo"></span>
+                <span class="column-text" ng-show="item.isOnsale == 0">下架状态</span>
+                <span class="column-text" ng-show="item.isOnsale == 1">上架状态</span>
+                <span class="column-text" ng-show="item.isOnsale == 2">强制下架状态</span>
               </td>
-              <td class="text-right" data-ng-if="item.isDelete == 1">
-                <a href="javascript:;" ng-click="updateGoods($event,item)">修改</a>
-                <span class="text-explode">|</span>
+              <td>
+                <span class="" ng-bind="item.addTime"></span>
+              </td>
+              <td class="text-center" data-ng-if="item.isDelete == 1">
+                <!--<a href="javascript:;" ng-click="updateGoods($event,item)">修改</a>-->
+                <span data-ng-if="item.checkStatus == 0">
+                  <a href="javascript:;" ng-click="goCheck($event,item)">去审核</a>
+                  <span class="text-explode">|</span>
+                </span>
                 <a href="javascript:;" ng-click="delGoods($event, item, 1)">删除</a>
                 <span data-ng-if="item.isOnsale == 1">
                   <span class="text-explode">|</span>

@@ -25,8 +25,32 @@ class GoodsCheckController {
       });
     };
 
+    $scope.searchCheckRs = function () {
+
+      var promise = $http({
+        method: 'GET',
+        url: $rootScope.site.apiServer + "/api/goodsCheck/all",
+        params: {currentPage: $rootScope.pagination.currentPage,
+                 pageSize: $rootScope.pagination.pageSize,
+                 goodsName: $scope.searchName,
+                 goodsSn: $scope.searchSn
+        }
+      });
+      promise.then(function (res, status, config, headers) {
+        $rootScope.loadingState = false;
+        growl.addSuccessMessage("审核结果加载完毕。。。");
+      });
+    };
+
     $scope.pageChanged = function () {
-      $scope.search();
+
+        if ($state.$current.name == "items.check") {
+            $scope.search();
+        }
+
+        if ($state.$current.name == "items.checkStatus") {
+            $scope.searchCheckRs();
+        }
       console.log('Page changed to: ' + $rootScope.pagination.currentPage);
     };
 
@@ -41,6 +65,7 @@ class GoodsCheckController {
             console.log(res.data)
             if(res.data.code == "1"){
                 $rootScope.editData = res.data.data;
+                $rootScope.editData.apiInfo.respSample = JSON.stringify(JSON.parse($rootScope.editData.apiInfo.respSample), null, "\t");
                 $state.go('items.goodsDetail', {data: $rootScope.editData});
             }
         });
@@ -50,7 +75,7 @@ class GoodsCheckController {
     $scope.submitCheck = function(){
         var promise = $http({
             method: 'POST',
-            url: $rootScope.site.apiServer + "/api/goods/goodsCheck",
+            url: $rootScope.site.apiServer + "/api/goodsCheck/add",
             data: $("#goodsCheckForm").serialize()
         });
         promise.then(function (res, status, config, headers) {
@@ -61,9 +86,13 @@ class GoodsCheckController {
         });
     }
 
-      if ($state.$current.name == "items.check") {
-          $scope.search();
-      }
+  if ($state.$current.name == "items.check") {
+      $scope.search();
+  }
+
+  if ($state.$current.name == "items.checkStatus") {
+      $scope.searchCheckRs();
+  }
 
 
   }
