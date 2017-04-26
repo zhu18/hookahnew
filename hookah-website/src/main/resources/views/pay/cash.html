@@ -2,6 +2,7 @@
 var head = {
 %>
 <link rel="stylesheet" href="/static/css/pay/pay.css">
+<script type="text/javascript" src="/static/js/plugins/validate/jquery-validate.js"></script>
 <%};%>
 <%
 var htmlPart = {
@@ -45,7 +46,7 @@ var htmlPart = {
 				</div>
 			</div>
 			<div class="main-container">
-				<form name="expressFastPayFrom" id="lightPayForm" action="" method="post" autocomplete="off">
+				<form name="payPassword" id="form_paypsw" action="" method="post" autocomplete="off">
 					<div id="J-rcChannels">
 						<div>
 							<input type="hidden" value="${orderInfo.goodsAmount}" id="goodsAmount">

@@ -166,7 +166,7 @@ $('.pusGoods-btn').click(function () {
 		var attrTypeList = {};
 		attrTypeList.typeId = $(this).attr('typeid');
 		attrTypeList.typeName = $(this).attr('name');
-		attrTypeList.attrlist = $(this).val();
+		attrTypeList.attrList = $(this).val();
 		data.attrTypeList.push(attrTypeList);
 	});
 	data.goodsImg = imgSrc;
