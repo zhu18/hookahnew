@@ -16,13 +16,24 @@ var htmlPart = {
 			<div class="ui-tipbox-content">
 				<h3 class="ui-tipbox-title"> ${message} </h3>
 				<p class="ui-tipbox-explain"></p>
-				<p class="ui-tipbox-explain">
+				<p class="ui-tipbox-explain goWhere">
 					<a href="${host.auth}/login"> 重新登录 </a>
 				</p>
 			</div>
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	$.getUrlParam = function (key) {
+		var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+		var result = window.location.search.substr(1).match(reg);
+		return result ? decodeURIComponent(result[2]) : null;
+	};
+	var type = $.getUrlParam('type');
+	if(type == 'setPayPassword' || type == 'payPassword'){
+		$('.goWhere').hide();
+	}
+</script>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>

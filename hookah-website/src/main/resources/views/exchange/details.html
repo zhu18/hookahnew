@@ -55,7 +55,7 @@ var htmlPart = {
 						<div class="money-standard">
 							<span>规格：</span>
 							<%for(item in goodsDetails.formatList){%>
-							<a href="javascript:;" onclick="editPrice(this, ${item.price}, ${item.formatId})" class="margin-right-5 " formatid="${item.formatId}" price="${item.price}">${item.number}${decode(item.format,0,"次",1,"天",2,"年","未知")}  </a>
+							<a href="javascript:;" onclick="editPrice(this, ${item.price}, ${item.formatId})" class="margin-right-5 ${itemLP.first ? 'active':''}" formatid="${item.formatId}" price="${item.price}">${item.number}${decode(item.format,0,"次",1,"天",2,"年","未知")}  </a>
 							<%}%>
 						</div>
 						<%}%>
@@ -150,7 +150,7 @@ var htmlPart = {
 						</table>
 					</div>
 					<!--返回参数-->
-					<div class="table-item">
+					<div class="table-item margin-bottom-10" >
 						<table>
 							<caption><h3>返回参数</h3></caption>
 							<tr>
@@ -167,40 +167,41 @@ var htmlPart = {
 					</div>
 					<%}%>
 					<div class="table-item">
-						<h1 class="font-size-14 margin-bottom-10">最新评论</h1>
+						<!--<h1 class="font-size-14 margin-bottom-10">最新评论</h1>-->
 						<ol>
-							<li>
-								<div class="comment-title margin-bottom-10">
-									<span class="name padding-left-10">wu******dy</span>
-									<span class="date padding-left-20">2017年03月13日 17:12:28</span>
-									<a href="javascript:void(0)" class="padding-left-20">回复</a>
-								</div>
-								<div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>
-							</li>
-							<li>
-								<div class="comment-title margin-bottom-10">
-									<span class="name padding-left-10">wu******dy</span>
-									<span class="date padding-left-20">2017年03月13日 17:12:28</span>
-									<a href="javascript:void(0)" class="padding-left-20">回复</a>
-								</div>
-								<div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>
-							</li>
-							<li>
-								<div class="comment-title margin-bottom-10">
-									<span class="name padding-left-10">wu******dy</span>
-									<span class="date padding-left-20">2017年03月13日 17:12:28</span>
-									<a href="javascript:void(0)" class="padding-left-20">回复</a>
-								</div>
-								<div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>
-							</li>
-							<li>
-								<div class="comment-title margin-bottom-10">
-									<span class="name padding-left-10">wu******dy</span>
-									<span class="date padding-left-20">2017年03月13日 17:12:28</span>
-									<a href="javascript:void(0)" class="padding-left-20">回复</a>
-								</div>
-								<div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>
-							</li>
+							<!--<li>-->
+								<!--<div class="comment-title margin-bottom-10">-->
+									<!--<span class="name padding-left-10">wu******dy</span>-->
+									<!--<span class="date padding-left-20">2017年03月13日 17:12:28</span>-->
+									<!--<a href="javascript:void(0)" class="padding-left-20">回复</a>-->
+								<!--</div>-->
+								<!--<div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>-->
+							<!--</li>-->
+							<!--<li>-->
+								<!--<div class="comment-title margin-bottom-10">-->
+									<!--<span class="name padding-left-10">wu******dy</span>-->
+									<!--<span class="date padding-left-20">2017年03月13日 17:12:28</span>-->
+									<!--<a href="javascript:void(0)" class="padding-left-20">回复</a>-->
+								<!--</div>-->
+								<!--<div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>-->
+							<!--</li>-->
+							<!--<li>-->
+								<!--<div class="comment-title margin-bottom-10">-->
+									<!--<span class="name padding-left-10">wu******dy</span>-->
+									<!--<span class="date padding-left-20">2017年03月13日 17:12:28</span>-->
+									<!--<a href="javascript:void(0)" class="padding-left-20">回复</a>-->
+								<!--</div>-->
+								<!--<div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>-->
+							<!--</li>-->
+							<!--<li>-->
+								<!--<div class="comment-title margin-bottom-10">-->
+									<!--<span class="name padding-left-10">wu******dy</span>-->
+									<!--<span class="date padding-left-20">2017年03月13日 17:12:28</span>-->
+									<!--<a href="javascript:void(0)" class="padding-left-20">回复</a>-->
+								<!--</div>-->
+								<!--<div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>-->
+							<!--</li>-->
+							<p style="text-align: center;min-height:100px; font-size: 18px;">暂无评论</p>
 						</ol>
 					</div>
 				</div>
