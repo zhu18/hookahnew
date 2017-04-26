@@ -46,17 +46,17 @@
 /*搜索条件样式开始*/
 .searchQuery{
     width: 936px;
-    height: 80px;
+    height: 50px;
     padding-left:20px;
     padding-right:20px;
 }
 
 .searchQuery .date{
-    width: 100%;
+    width: 55%;
     margin-bottom:28px;
 }
 .searchQuery .start-date,.searchQuery .end-date{
-    margin-right:150px;
+    margin-right:50px;
 }
 .searchQuery #startDate,.searchQuery #endDate{
     height: 25px;
@@ -67,8 +67,9 @@
     border:1px solid #ccc;
 }
 .searchQuery .comment-status{
-    margin-right:240px;
+    float: left;
 }
+
 .searchQuery .search{
     width: 100px;
     height: 30px;

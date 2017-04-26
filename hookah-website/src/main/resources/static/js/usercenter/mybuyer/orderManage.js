@@ -6,7 +6,7 @@ function loadPageData(data){
         var html = '';
         for(var i=0; i<list.length; i++){
             html += '<tr class="content border-bottom">';
-            html += '<td class="text-align-center">'+list[i].orderId+'</td>';
+            html += '<td class="text-align-center">'+list[i].orderSn+'</td>';
             html += '<td class="text-align-right">￥&nbsp;'+list[i].orderAmount+'</td>';//订单总金额
             html += '<td>'+format(list[i].addTime)+'</td>';
             html += '<td>已付款</td>';

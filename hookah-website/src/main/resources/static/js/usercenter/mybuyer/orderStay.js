@@ -9,13 +9,8 @@ function loadPageData(data){
         var html = '';
         for(var i=0; i<list.length; i++){
             html+= '<tr class="content border-bottom">';
-            html+= '<td class="text-align-center">'+list[i].orderId+'</td>';
-            html+= '<td class="text-align-center">';
-            html+= '<a href="" class="display-block">'+list[i].goodsName+'</a>';
-            html+= '</td>';
-            html+= '<td class="text-align-center">'+list[i].goodsNumber+'</td>';
-            html+= '<td class="text-align-center">次</td>';
-            html+= '<td class="text-align-right">￥&nbsp;‘+list[i].goodsPrice+‘</td>';
+            html+= '<td class="text-align-center">'+list[i].orderSn+'</td>';
+            html+= '<td class="text-align-right">￥&nbsp;'+list[i].orderAmount+'</td>';
             html+= '<td>'+format(list[i].addTime)+'</td>';
             html+= '<td>未付款</td>';
             html+= '<td class="text-align-center">';
@@ -44,12 +39,10 @@ function loadPageData(data){
 $.jeDate("#startDate", {
     format: "YYYY-MM-DD hh:mm:ss",
     isTime: true,
-    minDate: $.nowDate(0)
 });
 $.jeDate("#endDate", {
     format: "YYYY-MM-DD hh:mm:ss",
     isTime: true,
-    minDate: $.nowDate(0)
 });
 //点击查询按钮
 $(".searchQuery .search").on("click",function(){

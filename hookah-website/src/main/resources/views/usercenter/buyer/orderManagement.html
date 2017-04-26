@@ -7,21 +7,21 @@ var head = {
 <script src="/static/js/plugins/jedate/jquery.jedate.min.js"></script>
 <script type="text/javascript">
     	var pagePath = '/order/pageData';
-    	var pageType = 'post';
+    	var pageType = 'get';
     	var dataParm = {};
     	dataParm.pageNumber = 1;
-    	dataParm.pageSize = 10;
+    	dataParm.pageSize = 20;
     	dataParm.payStatus = 1;//0:未付款，1：已付款
         dataParm.startDate = null;
         dataParm.endDate = null;
-        dataParm.commentFlag = null;
+        dataParm.commentFlag = 0;
 </script>
 <%};%>
 
 <%
 var htmlPart = {
 %>
-<div class="grid-0 backgorund-gray ">
+<div class="grid-0 backgorund-gray">
     <div class="grid-row clearfix">
         <%include("/usercenter/user-center-menu.html"){} %>
         <div class="orderManagement margin-left-10 margin-top-10 grid-right padding-bottom-20">
@@ -38,14 +38,16 @@ var htmlPart = {
                 <!--</div>-->
             </div>
             <div class="searchQuery padding-top-10">
-                <div class="date">
+                <div class="date grid-left">
                     <label for="startDate" class="start-date grid-left">开始时间：<input id="startDate" type="text" placeholder="请选择开始时间" readonly=""></label>
-                    <label for="endDate" class="end-date grid-left">结束时间：<input id="endDate" type="text" placeholder="请选择结束时间" readonly=""></label><br>
+                    <label for="endDate" class="end-date grid-left">结束时间：<input id="endDate" type="text" placeholder="请选择结束时间" readonly=""></label>
                 </div>
-                <label class="comment-status">评论状态：
-                    <input type="radio" name="comment" value="0" checked>未评论
-                    <input type="radio" name="comment" value="1">已评论
-                </label>
+                <div class="grid-left">
+                    <label class="comment-status">评论状态：
+                        <input type="radio" name="comment" value="0" checked>未评论
+                        <input type="radio" name="comment" value="1">已评论
+                    </label>
+                </div>
                 <button class="search grid-right">查询</button>
             </div>
             <div class="list">
@@ -64,44 +66,44 @@ var htmlPart = {
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="content border-bottom">
-                            <td class="text-align-center">
-                                2017022813474081863964
-                            </td>
+                        <!--<tr class="content border-bottom">-->
                             <!--<td class="text-align-center">-->
-                                <!--&lt;!&ndash;<img src="/static/images/xm.png" alt="">&ndash;&gt;-->
-                                <!--<a href="" class="display-block">银行卡实名认证接口（需个人授权）</a>-->
+                                <!--2017022813474081863964-->
                             <!--</td>-->
-                            <!--<td class="text-align-center">1</td>-->
-                            <!--<td class="text-align-center">次</td>-->
-                            <td class="text-align-right">￥&nbsp;200.00</td>
-                            <td>2017-02-28&nbsp;&nbsp;19:20:20</td>
-                            <td>已付款</td>
-                            <td class="text-align-center">
-                                <a href="/usercenter/viewDetails" class="display-block">查看详情</a>
-                                <a href="/usercenter/sunAlone" class="display-block">评价晒单</a>
-                                <a href="" class="display-block">删除</a>
-                            </td>
-                        </tr>
-                        <tr class="content border-bottom">
-                            <td class="text-align-center">
-                                2017022813474081863964
-                            </td>
+                            <!--&lt;!&ndash;<td class="text-align-center">&ndash;&gt;-->
+                                <!--&lt;!&ndash;&lt;!&ndash;<img src="/static/images/xm.png" alt="">&ndash;&gt;&ndash;&gt;-->
+                                <!--&lt;!&ndash;<a href="" class="display-block">银行卡实名认证接口（需个人授权）</a>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</td>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<td class="text-align-center">1</td>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<td class="text-align-center">次</td>&ndash;&gt;-->
+                            <!--<td class="text-align-right">￥&nbsp;200.00</td>-->
+                            <!--<td>2017-02-28&nbsp;&nbsp;19:20:20</td>-->
+                            <!--<td>已付款</td>-->
                             <!--<td class="text-align-center">-->
-                                <!--&lt;!&ndash;<img src="/static/images/xm.png" alt="">&ndash;&gt;-->
-                                <!--<a href="" class="display-block">银行卡实名认证接口（需个人授权）</a>-->
+                                <!--<a href="/usercenter/viewDetails" class="display-block">查看详情</a>-->
+                                <!--<a href="/usercenter/sunAlone" class="display-block">评价晒单</a>-->
+                                <!--<a href="" class="display-block">删除</a>-->
                             <!--</td>-->
-                            <!--<td class="text-align-center">1</td>-->
-                            <!--<td class="text-align-center">次</td>-->
-                            <td class="text-align-right">￥&nbsp;200.00</td>
-                            <td>2017-02-28&nbsp;&nbsp;19:20:20</td>
-                            <td>已付款</td>
-                            <td class="text-align-center">
-                                <a href="" class="display-block">查看详情</a>
-                                <a href="" class="display-block">评价晒单</a>
-                                <a href="" class="display-block">删除</a>
-                            </td>
-                        </tr>
+                        <!--</tr>-->
+                        <!--<tr class="content border-bottom">-->
+                            <!--<td class="text-align-center">-->
+                                <!--2017022813474081863964-->
+                            <!--</td>-->
+                            <!--&lt;!&ndash;<td class="text-align-center">&ndash;&gt;-->
+                                <!--&lt;!&ndash;&lt;!&ndash;<img src="/static/images/xm.png" alt="">&ndash;&gt;&ndash;&gt;-->
+                                <!--&lt;!&ndash;<a href="" class="display-block">银行卡实名认证接口（需个人授权）</a>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</td>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<td class="text-align-center">1</td>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<td class="text-align-center">次</td>&ndash;&gt;-->
+                            <!--<td class="text-align-right">￥&nbsp;200.00</td>-->
+                            <!--<td>2017-02-28&nbsp;&nbsp;19:20:20</td>-->
+                            <!--<td>已付款</td>-->
+                            <!--<td class="text-align-center">-->
+                                <!--<a href="" class="display-block">查看详情</a>-->
+                                <!--<a href="" class="display-block">评价晒单</a>-->
+                                <!--<a href="" class="display-block">删除</a>-->
+                            <!--</td>-->
+                        <!--</tr>-->
                         </tbody>
                     </table>
                 </div>

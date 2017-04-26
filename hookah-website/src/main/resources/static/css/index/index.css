@@ -817,12 +817,11 @@ lesshat-selector {
 }
 .module-wrap .index-top-banner > div:nth-child(1) {
     background:url("/static/images/banner/one-line.png") no-repeat -70px 280px, linear-gradient(to right, #102841 0%,#000000 60%,#000000 100%);
-    /*background: -moz-linear-gradient(right, #102841 0%, #000000 100%, #000000 100%);*/
-    /*background: -webkit-gradient(linear,0% 0%,100% 0%,from(#102841),to(#000000));*/
-    /*background: -webkit-linear-gradient(right, #102841 0%,#000000 100%);*/
-    /*background: -o-linear-gradient(right, #102841 0%,#000000 100%);*/
-    /*background: -ms-linear-gradient(right, #102841 0%,#000000 100%);*/
-    /*background: linear-gradient(to right, #102841 0%,#000000 60%,#000000 100%);*/
+    /*background:url("/static/images/banner/one-line.png") no-repeat -70px 280px,-moz-linear-gradient(right, #102841 0%,#000000 100%);*/
+    /*background:url("/static/images/banner/one-line.png") no-repeat -70px 280px,-webkit-gradient(linear,0% 0%,100% 0%,from(#102841),to(#000000));*/
+    /*background:url("/static/images/banner/one-line.png") no-repeat -70px 280px,-webkit-linear-gradient(right, #102841 0%,#000000 100%);*/
+    /*background:url("/static/images/banner/one-line.png") no-repeat -70px 280px,-o-linear-gradient(right, #102841 0%,#000000 100%);*/
+    /*background:url("/static/images/banner/one-line.png") no-repeat -70px 280px,-ms-linear-gradient(right, #102841 0%,#000000 100%);*/
 }
 .module-wrap .index-top-banner > div:nth-child(1) .layer img {
     /*width: 400px;*/
@@ -838,12 +837,21 @@ lesshat-selector {
     line-height: 50px;
 }
 .module-wrap .index-top-banner > div:nth-child(1) .left-header .layer-btn{
-   background:linear-gradient(to right, #E54B40 0%,#FF6E43 100%) ;
+    background: -moz-linear-gradient(right, #E54B40 0%, #FF6E43 100%, #FF6E43 100%);
+    background: -webkit-gradient(linear,0% 0%,100% 0%,from(#E54B40),to(#FF6E43));
+    background: -webkit-linear-gradient(right, #E54B40 0%,#FF6E43 100%);
+    background: -o-linear-gradient(right, #E54B40 0%,#FF6E43 100%);
+    background: -ms-linear-gradient(right, #E54B40 0%,#FF6E43 100%);
+    background: linear-gradient(to right, #E54B40 0%,#FF6E43 100%);
     border: none;
 }
 .module-wrap .index-top-banner > div:nth-child(2) {
     background:url("/static/images/banner/two-background.jpg") no-repeat 950px 340px, linear-gradient(to bottom, #213972 0%,#212A59 100%);
-
+    /*background:url("/static/images/banner/two-background.jpg") no-repeat 950px 340px,-moz-linear-gradient(bottom, #213972 0%,#212A59 100%);*/
+    /*background:url("/static/images/banner/two-background.jpg") no-repeat 950px 340px,-webkit-gradient(linear,0% 0%,100% 0%,from(#213972),to(#212A59));*/
+    /*background:url("/static/images/banner/two-background.jpg") no-repeat 950px 340px,-webkit-linear-gradient(bottom, #213972 0%,#212A59 100%);*/
+    /*background:url("/static/images/banner/two-background.jpg") no-repeat 950px 340px,-o-linear-gradient(bottom, #213972 0%,#212A59 100%);*/
+    /*background:url("/static/images/banner/two-background.jpg") no-repeat 950px 340px,-ms-linear-gradient(bottom, #213972 0%,#212A59 100%);*/
 }
 .module-wrap .index-top-banner > div:nth-child(2) .layer img {
     /*width: 400px;*/

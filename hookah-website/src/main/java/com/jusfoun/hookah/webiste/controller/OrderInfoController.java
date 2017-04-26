@@ -11,6 +11,7 @@ import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
+import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.OrderHelper;
 import com.jusfoun.hookah.core.utils.ReturnData;
@@ -136,9 +137,9 @@ public class OrderInfoController extends BaseController {
      * @param domainName  店铺名 模糊查询
      * @return
      */
-    @RequestMapping(value = "/order/pageData", method = RequestMethod.POST)
+    @RequestMapping(value = "/order/pageData", method = RequestMethod.GET)
     @ResponseBody
-    public ReturnData findByPage(Integer pageNumber, Integer pageSize, Integer payStatus, Integer commentFlag, Date startDate, Date endDate, String domainName, Model model) {
+    public ReturnData findByPage(Integer pageNumber, Integer pageSize, Integer payStatus, Integer commentFlag, String startDate, String endDate, String domainName) {
         Map map = new HashMap<>(3);
         try {
             String userId = this.getCurrentUser().getUserId();
@@ -147,17 +148,19 @@ public class OrderInfoController extends BaseController {
             if (pageSize==null) pageSize = Integer.parseInt(PAGE_SIZE);
 
             List<Condition> filters = new ArrayList<>();
-            if (startDate != null) {
-                filters.add(Condition.ge("addTime", startDate));
+            if (StringUtils.isNotBlank(startDate)) {
+                filters.add(Condition.ge("addTime", DateUtils.getDate(startDate)));
             }
-            if (endDate != null) {
-                filters.add(Condition.le("addTime", endDate));
+            if (StringUtils.isNotBlank(endDate)) {
+                filters.add(Condition.le("addTime", DateUtils.getDate(endDate)));
             }
             if (commentFlag != null) {
                 filters.add(Condition.eq("commentFlag", commentFlag));
             }
+            Condition condition = null;
             if (payStatus != null) {
-                filters.add(Condition.eq("payStatus", payStatus));
+                condition = Condition.eq("payStatus", payStatus);
+                filters.add(condition);
             }
             if (domainName != null) {
                 filters.add(Condition.like("domainName", "%" + domainName + "%"));
@@ -170,11 +173,13 @@ public class OrderInfoController extends BaseController {
             orderBys.add(OrderBy.desc("addTime"));
             Pagination<OrderInfoVo> pOrders = orderInfoService.getDetailListInPage(pageNumber, pageSize, filters, orderBys);
             map.put("orders",pOrders);
-
+            filters.remove(condition); //移除支付状态条件
             //查询数量
             filters.add(Condition.eq("payStatus", 1));
             Long paid = orderInfoService.count(filters);  //已支付数量
             map.put("paidCount",paid);
+
+            filters.remove(filters.size()-1);
             filters.add(Condition.eq("payStatus", 0));
             Long unpaid = orderInfoService.count(filters); //未支付数量
             map.put("unpaidCount",unpaid);

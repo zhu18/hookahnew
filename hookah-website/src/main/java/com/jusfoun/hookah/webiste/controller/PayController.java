@@ -1,17 +1,33 @@
 package com.jusfoun.hookah.webiste.controller;
 
+import com.github.miemiedev.mybatis.paginator.domain.Order;
+import com.jusfoun.hookah.core.domain.OrderInfo;
+import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.generic.Condition;
+import com.jusfoun.hookah.core.utils.ExceptionConst;
+import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.rpc.api.OrderInfoService;
 import com.jusfoun.hookah.rpc.api.PayCoreService;
+import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.crypto.hash.Md5Hash;
+import org.apache.shiro.session.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author bingbing wu
@@ -21,10 +37,16 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/pay")
 public class PayController {
+    protected final static Logger logger = LoggerFactory.getLogger(PayController.class);
 
     @Resource
     private PayCoreService payCoreService;
 
+    @Resource
+    private OrderInfoService orderService;
+
+    @Resource
+    UserService userService;
 
     @RequestMapping(value = "/createOrder", method = RequestMethod.GET)
     public String createOrder() {
@@ -35,6 +57,48 @@ public class PayController {
     public String success() {
         return "pay/success";
     }
+
+    /**
+     * 订单支付
+     * @param paramMap
+     * @param model
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/payment", method = RequestMethod.POST)
+    public String  payPassSta(@RequestBody Map<String,String> paramMap , Model model) {
+        long orderAmount = 0 ; //支付金额
+        try {
+                Session session = SecurityUtils.getSubject().getSession();
+                HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
+                User user = userService.selectById(userMap.get("userId"));
+                String newPassword = new Md5Hash(paramMap.get("paymentPassword")).toString();
+                String oldPayPassword =  user.getPaymentPassword();
+            // 验证支付密码
+            if(oldPayPassword.equals(newPassword)){
+
+                String orderSn = paramMap.get("orderSn");
+                //支付操作
+                payCoreService.doPayMoney(orderSn,user.getUserId());
+                //根据订单编号获得支付金额
+                List<Condition> filters = new ArrayList();
+                filters.add(Condition.eq("orderSn", orderSn));
+                OrderInfo orderinfo  = orderService.selectOne(filters);
+                orderAmount= orderinfo.getOrderAmount();
+            }else{
+                model.addAttribute("message", "支付密码错误!");
+                return "pay/fail";
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("message", "支付失败!");
+            return "pay/fail";
+        }
+        model.addAttribute("money",orderAmount);
+        return "pay/success";
+    }
+
 
     @RequestMapping(value = "/cash", method = RequestMethod.GET)
     public String cash(HttpServletRequest request, Model model){
