@@ -5,7 +5,7 @@
     <ul class="menu-list">
         <% for(menuList in categoryInfo){%>
         <li class="menu-item">
-            <i class=" iconfont icon-shujuyuan margin-right-5" aria-hidden="true"></i>
+            <i class=" iconfont icon-shujuyuan margin-right-5 iconfont-${menuListLP.index}" aria-hidden="true"></i>
             <!--<a href="/exchange/list?catId=${menuList.catId}" class="Bh">${menuList.catName}</a>-->
             <span>${menuList.catName}</span>
             <i class="fa fa-angle-right grid-right" style="line-height: 42px;" aria-hidden="true"></i>

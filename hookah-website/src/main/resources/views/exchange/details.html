@@ -94,8 +94,10 @@ var htmlPart = {
 				<div class="table-title">
 					<ul>
 						<li class="grid-left active">详情介绍</li>
+						<%if(isNotEmpty(goodsDetails.apiInfo)){%>
 						<li class="grid-left">API详情</li>
 						<li class="grid-left">返回参数</li>
+						<%}%>
 						<li class="grid-left">评价</li>
 					</ul>
 				</div>
@@ -103,6 +105,7 @@ var htmlPart = {
 					<div class="table-item active detail" id="J_goodsDesc">
 						${goodsDetails.goodsDesc}
 					</div>
+					<%if(isNotEmpty(goodsDetails.apiInfo)){%>
 					<div class="table-item">
 						<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
 						<table class="tab-one">
@@ -162,6 +165,7 @@ var htmlPart = {
 							<%}%>
 						</table>
 					</div>
+					<%}%>
 					<div class="table-item">
 						<h1 class="font-size-14 margin-bottom-10">最新评论</h1>
 						<ol>
