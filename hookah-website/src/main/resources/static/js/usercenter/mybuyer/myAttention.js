@@ -18,7 +18,7 @@ function loadPageData(data){
 			html += '</span>';
 			html += '<a class="grid-right" href="javascript:addCart(\''+list[i].goodsId+'\','+list[i].shopFormat+','+list[i].shopNumber+');">加入购物车</a>';
 			html += '</div>';
-			html += '<div class="cancel" onclick="cancelAttention('+list[i].goodsId+')">取消关注</div>';
+			html += '<div class="cancel" onclick="cancelAttention(\''+list[i].goodsId+'\')">取消关注</div>';
 			html += '</li>';
         }
         $('.order-list ul').html(html);
@@ -58,6 +58,7 @@ function addCart(goodsId,formatId,goodsNumber) {
     });
 }
 function cancelAttention(id){
+    console.log("id:"+id);
     $.ajax({
         url:'/goodsFavorite/del',
         type:'get',
