@@ -116,14 +116,15 @@ function check() {
 }
 function testPayPassword(pwd){
 	$.ajax({
-		url:host.auth+'/verify/verifyPayPassword',
+		url:host.website+'/verify/verifyPayPassword',
 		data:{
 			paymentPassword:pwd
 		},
-		type:'post',
+		type:'get',
 		success:function (data) {
 			if(data.code == 1){
 				$('#form_paypsw').submit();
+				return true;
 			}else if(data.code == 0){
 				$('.ui-form-error').show();
 				return false;

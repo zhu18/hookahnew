@@ -166,7 +166,14 @@ $('.pusGoods-btn').click(function () {
 		var attrTypeList = {};
 		attrTypeList.typeId = $(this).attr('typeid');
 		attrTypeList.typeName = $(this).attr('name');
-		attrTypeList.attrList = $(this).val();
+		var attrAs = $(this).val();
+		var attrBs = [];
+		for(var i=0;i<attrAs.length;i++){
+			var json = {};
+			json['attrId']=attrAs[i];
+			attrBs.push(json)
+		}
+		attrTypeList.attrList =attrBs;
 		data.attrTypeList.push(attrTypeList);
 	});
 	data.goodsImg = imgSrc;
