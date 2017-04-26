@@ -896,6 +896,14 @@ body{
 	width: 68px;
 	height: 68px;
 }
+.exchange-index .exchange-category-down .category-left .category-item .list-box ul li .money-symbol {
+	font-style: normal;
+	font-weight: bold;
+}
+.exchange-index .exchange-category-down .category-left .category-item .list-box ul li .star-box .star-item {
+	font-size: 14px;
+
+}
 .exchange-index .exchange-category-down .category-left .category-box .active {
 	display: inline-block;
 	width: 194px;
