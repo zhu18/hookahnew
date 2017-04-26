@@ -1566,7 +1566,6 @@ dl {
 	border: 1px solid #EFEFEF;
 	padding: 10px;
 	width: 200px;
-	height: 302px;
 	background-color: white;
 }
 .goodsDetails .goods-right .recommend-one .recommend-title {
@@ -1574,7 +1573,7 @@ dl {
 	border-bottom: 1px solid #EFEFEF;
 }
 .goodsDetails .goods-right .recommend-one ul li {
-	padding: 10px;
+	padding: 5px 0;
 }
 .goodsDetails .goods-right .recommend-one ul li img {
 	width: 47px;
@@ -1583,7 +1582,17 @@ dl {
 .goodsDetails .goods-right .recommend-one ul li .img-info {
 	margin-top: 4px;
 	float: right;
-	width: 120px;
+	width: 143px;
+}
+.goodsDetails .goods-right .recommend-one ul li .img-info .title{
+	width:143px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-weight: 800;
+}
+.goodsDetails .goods-right .recommend-one ul li a:hover .title{
+	text-decoration: underline;
 }
 .goodsDetails .goods-right .recommend-two {
 	border: 1px solid #EFEFEF;
