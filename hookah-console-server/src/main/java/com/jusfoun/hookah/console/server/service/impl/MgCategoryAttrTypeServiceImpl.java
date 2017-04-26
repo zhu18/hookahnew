@@ -20,9 +20,9 @@ public class MgCategoryAttrTypeServiceImpl extends GenericMongoServiceImpl<MgCat
     public MgCategoryAttrType findGoodsAttr(String catId) {
         MgCategoryAttrType type = mongoTemplate.findById(catId, MgCategoryAttrType.class);
         if(type != null) {
-            List<MgCategoryAttrType.AttrTypeBean> attrTypelist = type.getAttrTypelist();
-            if(attrTypelist != null && attrTypelist.size() > 0) {
-                for(MgCategoryAttrType.AttrTypeBean typeBean : attrTypelist) {
+            List<MgCategoryAttrType.AttrTypeBean> attrTypeList = type.getAttrTypeList();
+            if(attrTypeList != null && attrTypeList.size() > 0) {
+                for(MgCategoryAttrType.AttrTypeBean typeBean : attrTypeList) {
                     typeBean.setTypeName(DictionaryUtil.getAttrById(typeBean.getTypeId()) == null ?
                             "" : DictionaryUtil.getAttrById(typeBean.getTypeId()).getTypeName());
                     List<MgCategoryAttrType.AttrTypeBean.AttrBean> list = typeBean.getAttrList();
