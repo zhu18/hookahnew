@@ -31,7 +31,6 @@ $(function () {
         var arr = $("#arr");
         var arrRight = $("#arrow-right");
         var arrLeft = $("#arrow-left");
-
         box.on('mouseover',function () {
             arr.css({
                 'display':'block'
@@ -133,7 +132,7 @@ $(function () {
         function playLeft() {
             if(flag==1)return;
             if(parseInt(ul.css('left'))>=0){
-                pic=Math.ceil(len/5)-2;
+                pic=Math.floor(len/5)-1;
                 ul.css({'left':'0px'});
                 // 点击左键
                 i=1;
@@ -145,13 +144,13 @@ $(function () {
                 return;
             }
             if(k==1){
-                pic=Math.ceil(len/5)-2;
+                pic=Math.floor(len/5)-1;
                 k=0;
                 i=1;
                 animate(ul,parseInt(ul.css('left'))+screen.width());
                 return;
             }
-            if(pic<=(Math.ceil(len/5)-2) && pic>0){
+            if(pic<=(Math.floor(len/5)-1) && pic>0){
                 pic--;
                 animate(ul,parseInt(ul.css('left'))+screen.width());
             }else if(lis.length<5 && i<=lis.length && i!=0){
@@ -174,13 +173,13 @@ $(function () {
                 i=0;
                 pic=0;
             }
-            if(pic<Math.ceil(len/5)-2){
+            if(pic<Math.floor(len/5)-1){
                 animate(ul,parseInt(ul.css('left'))-screen.width());
                 pic++;
             }else if(lis.length<5 && i<lis.length && i==0){
                 i++;
                 animate(ul,parseInt(ul.css('left'))-liWidth*lis.length);
-            }else if(i!=0){
+            }else{
                 animate(ul,parseInt(ul.css('left'))-screen.width());
                 // 是否进入最后一张
                 k=1;
