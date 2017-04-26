@@ -89,7 +89,8 @@ var htmlPart = {
                         </tbody>
                     </table>
                 </div>
-                <%include("/layout/pageaction.html"){} %>
+                <!--由于原分页的逻辑中通过data.data.totalPage是取不到数据的，所以更改为pageaction1.html-->
+                <%include("/layout/pageaction1.html"){} %>
             </div>
         </div>
     </div>
