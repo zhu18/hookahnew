@@ -1,17 +1,29 @@
 package com.jusfoun.hookah.webiste.controller;
 
+import com.github.miemiedev.mybatis.paginator.domain.Order;
+import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.utils.ExceptionConst;
+import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.rpc.api.OrderInfoService;
 import com.jusfoun.hookah.rpc.api.PayCoreService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 
 /**
  * @author bingbing wu
@@ -21,10 +33,13 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/pay")
 public class PayController {
+    protected final static Logger logger = LoggerFactory.getLogger(PayController.class);
 
     @Resource
     private PayCoreService payCoreService;
 
+    @Resource
+    private OrderInfoService orderService;
 
     @RequestMapping(value = "/createOrder", method = RequestMethod.GET)
     public String createOrder() {
@@ -35,6 +50,24 @@ public class PayController {
     public String success() {
         return "pay/success";
     }
+
+
+
+    @RequestMapping(value = "/payment", method = RequestMethod.GET)
+    public String  payPassSta(String orderId,Model model) {
+        try {
+            Session session = SecurityUtils.getSubject().getSession();
+            HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
+            payCoreService.doPayMoney(orderId,userMap.get("userId"));
+            orderService.selectById(orderId).getOrderAmount();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("money",orderService.selectById(orderId).getOrderAmount());
+        return "pay/success";
+    }
+
+
 
     @RequestMapping(value = "/cash", method = RequestMethod.GET)
     public String cash(HttpServletRequest request, Model model){

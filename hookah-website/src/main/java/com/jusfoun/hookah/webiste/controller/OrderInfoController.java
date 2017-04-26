@@ -11,6 +11,7 @@ import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
+import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.OrderHelper;
 import com.jusfoun.hookah.core.utils.ReturnData;
@@ -136,9 +137,9 @@ public class OrderInfoController extends BaseController {
      * @param domainName  店铺名 模糊查询
      * @return
      */
-    @RequestMapping(value = "/order/pageData", method = RequestMethod.POST)
+    @RequestMapping(value = "/order/pageData", method = RequestMethod.GET)
     @ResponseBody
-    public ReturnData findByPage(Integer pageNumber, Integer pageSize, Integer payStatus, Integer commentFlag, Date startDate, Date endDate, String domainName, Model model) {
+    public ReturnData findByPage(Integer pageNumber, Integer pageSize, Integer payStatus, Integer commentFlag, String startDate, String endDate, String domainName) {
         Map map = new HashMap<>(3);
         try {
             String userId = this.getCurrentUser().getUserId();
@@ -147,11 +148,11 @@ public class OrderInfoController extends BaseController {
             if (pageSize==null) pageSize = Integer.parseInt(PAGE_SIZE);
 
             List<Condition> filters = new ArrayList<>();
-            if (startDate != null) {
-                filters.add(Condition.ge("addTime", startDate));
+            if (StringUtils.isNotBlank(startDate)) {
+                filters.add(Condition.ge("addTime", DateUtils.getDate(startDate)));
             }
-            if (endDate != null) {
-                filters.add(Condition.le("addTime", endDate));
+            if (StringUtils.isNotBlank(endDate)) {
+                filters.add(Condition.le("addTime", DateUtils.getDate(endDate)));
             }
             if (commentFlag != null) {
                 filters.add(Condition.eq("commentFlag", commentFlag));
