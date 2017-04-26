@@ -20,6 +20,8 @@ public interface ElasticSearchService {
 
     void bulkInsert(String keyField, String index, String type) throws Exception;
 
+    Map<String, Object> completionEsGoods(EsGoods goods) throws IllegalAccessException;
+
     void deleteIndex(String indexName) throws Exception;
 
     Pagination search(EsGoodsVo vo) throws Exception;

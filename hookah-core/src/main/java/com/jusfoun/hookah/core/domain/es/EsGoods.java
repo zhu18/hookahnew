@@ -8,6 +8,7 @@ import com.jusfoun.hookah.core.constants.HookahConstants.Type;
 import org.springframework.data.annotation.Id;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -34,12 +35,15 @@ public class EsGoods implements Serializable {
     @EsField(analyzeOpt= AnalyzeOpt.ANALYZED, analyzer= Analyzer.WHITESPACE,
             termVector= TermVector.OFFSETS, isStore = true, searchAnalyzer = Analyzer.WHITESPACE)
     private String catIds;
+    @Transient
     @EsField(fielddata = true)
     private String[] attrId;
+    @Transient
     @EsField(analyzeOpt= AnalyzeOpt.ANALYZED, analyzer= Analyzer.WHITESPACE,
             termVector= TermVector.OFFSETS, isStore = true, searchAnalyzer = Analyzer.WHITESPACE)
     private String attrIds;
     @EsField(fielddata = true)
+    @Transient
     private String[] attrTypeId;
     @EsField
     private String goodsArea;
@@ -49,6 +53,7 @@ public class EsGoods implements Serializable {
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @EsField(type = Type.DATE)
     private Date addTime;
+    @Transient
     @EsField(type = Type.COMPLETION, analyzer= Analyzer.LC_INDEX, searchAnalyzer = Analyzer.LC_SEARCH)
     private String suggest;
     @EsField(type = Type.KEYWORD)
@@ -62,11 +67,15 @@ public class EsGoods implements Serializable {
     private Date lastUpdateTime;
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @EsField(type = Type.KEYWORD)
+    @Transient
     private Date lastUpdateTimeKey;
     @EsField(fielddata = true)
+    @Transient
     private String areaCountry;
     @EsField(fielddata = true)
+    @Transient
     private String areaProvince;
+    @Transient
     @EsField(fielddata = true)
     private String areaCity;
 
