@@ -209,36 +209,19 @@ var htmlPart = {
 		</div>
 		<div class="grid-right goods-right margin-top-20">
 			<div class="recommend-one">
-				<div class="recommend-title font-weight-bold">数据推荐</div>
-				<ul>
+				<div class="recommend-title font-weight-bold">${reCommData.shelvesName}</div>
+				<ul class="padding-top-5">
+					<%for(item in reCommData.goods){%>
 					<li>
-						<img src="/static/images/a1.png" alt="">
-						<div class="img-info">
-							<p>失信被执行人查询</p>
-							<p class="color-orange">￥100/次</p>
-						</div>
+						<a class="display-block" target="_blank" href="${host.website}/exchange/details?id=${item.goodsId}">
+							<img src="${item.goodsImg}" alt="">
+							<div class="img-info">
+								<p class="title">${item.goodsName}</p>
+								<p class="color-orange">￥${trunc(item.shopPrice / 100 , 2)}/${item.shopNumber == 1 ? '' : item.shopNumber}${decode(item.shopFormat,0,'天',1,'月',2,'年','未知')}</p>
+							</div>
+						</a>
 					</li>
-					<li>
-						<img src="/static/images/a1.png" alt="">
-						<div class="img-info">
-							<p>失信被执行人查询</p>
-							<p class="color-orange">￥100/次</p>
-						</div>
-					</li>
-					<li>
-						<img src="/static/images/a1.png" alt="">
-						<div class="img-info">
-							<p>失信被执行人查询</p>
-							<p class="color-orange">￥100/次</p>
-						</div>
-					</li>
-					<li>
-						<img src="/static/images/a1.png" alt="">
-						<div class="img-info">
-							<p>失信被执行人查询</p>
-							<p class="color-orange">￥100/次</p>
-						</div>
-					</li>
+					<%}%>
 				</ul>
 			</div>
 			<!--<div class="recommend-two margin-top-20">-->

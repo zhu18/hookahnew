@@ -61,7 +61,11 @@ var htmlPart = {
 											<span class="channel-tit channel-icon icon banklogo-BALANCE_s"></span>
 											<span class="fn-mr-20">
                                             	<span class="channel-name">${item.payName}</span>
+												<%if(itemLP.index == 1){%>
+												<span>${moneyBalance / 100}</span>
+												<%}else{%>
                                             	<span>${item.payDetail}</span>
+												<%}%>
                                         	</span>
 											<span class="pay-amount">
 												<span class="amount">
