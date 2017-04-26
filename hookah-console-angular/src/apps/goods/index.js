@@ -48,7 +48,7 @@ app.run(function ($rootScope, $state) {
     },
     {
       "title":"审核结果",
-      "url":"items.checkStatus"
+      "url":"items.checkedList"
     }
   ];
 

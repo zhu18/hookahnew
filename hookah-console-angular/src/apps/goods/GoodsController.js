@@ -52,7 +52,9 @@ class GoodsController {
             console.log(res.data)
             if(res.data.code == "1"){
                 $rootScope.editData = res.data.data;
-                $rootScope.editData.apiInfo.respSample = JSON.stringify(JSON.parse($rootScope.editData.apiInfo.respSample), null, "\t");
+                if($rootScope.editData.apiInfo != null){
+                    $rootScope.editData.apiInfo.respSample = JSON.stringify(JSON.parse($rootScope.editData.apiInfo.respSample), null, "\t");
+                }
                 $state.go('items.goodsDetail', {data: $rootScope.editData});
             }
         });
