@@ -13,6 +13,14 @@ $('.saved-card-list>.row-container').click(function(){
 		that.addClass('row-container-focus').siblings().removeClass('row-container-focus');
 	}
 });
+var testData = {
+	pay: {
+		password: /^[0-9]{6}$/
+	},
+	payPassword: function (val) {
+		return this.pay.password.test(val)
+	}
+};
 getPayPwdStatus();
 function getPayPwdStatus(){
 	$.ajax({
@@ -20,17 +28,19 @@ function getPayPwdStatus(){
 		type:'get',
 		success:function(data){
 			if(data.code == 1){
-				console.log(1231231231231)
-			}else if(data.code == 0){
-				$.confirm('你还没有设置支付密码<br/>现在去设置？',null,function(type){
-					if(type == 'yes'){
-						this.hide();
-						setPayPwdCon();
-						window.location.href=host.auth+'/verify?type=setPayPassword';
-					}else{
-						this.hide();
-					}
-				})
+				if(data.data == 0){
+					$.confirm('你还没有设置支付密码<br/>现在去设置？',null,function(type){
+						if(type == 'yes'){
+							this.hide();
+							window.open(host.auth+'/verify?type=setPayPassword');
+							setPayPwdCon();
+						}else{
+							this.hide();
+						}
+					})
+				}else{
+
+				}
 			}else{
 				$.alert(data.message)
 			}
@@ -43,7 +53,7 @@ function setPayPwdCon(){
 			this.hide();
 			getPayPwdStatus()
 		}else{
-
+			this.hide();
 		}
 	})
 }
@@ -64,15 +74,16 @@ function getCheckVal(){
 				$('#J-security').hide();
 				$('#J-balanceNt').hide();
 			}
+			showPayAmount(this)
 		}
 	});
 }
 $("[name=apiCode]:radio").click(function () {
-	console.log(this.value);
 	if(this.value == 1){
 		if(moneyBalance < goodsAmount){
 			$('#J-security').hide();
 			$('#J-rcSubmit').hide();
+			$('#J-balanceNt').show();
 		}else{
 			$('#J-balanceNt').hide();
 			$('#J-security').show();
@@ -81,5 +92,34 @@ $("[name=apiCode]:radio").click(function () {
 	}else{
 		$('#J-security').hide();
 		$('#J-balanceNt').hide();
+		$('#J-rcSubmit').show();
 	}
+	showPayAmount(this)
 });
+function showPayAmount(that){
+	$('.pay-amount').hide();
+	$(that).siblings('.pay-amount').show();
+}
+function check(){
+	$("[name=apiCode]:radio").each(function () {
+		if (this.checked) {
+			if(this.value == 1){
+				if($('#payPassword_rsainput').val()){
+					if(testData.payPassword($('#payPassword_rsainput').val()))
+					$.alert('支付成功了');
+					return false;
+				}else{
+					$('.ui-form-explain').hide();
+					$('.ui-form-error').show();
+				}
+			}else{
+				$.alert('暂不支持该支付方式');
+				return false;
+			}
+		}
+	});
+}
+$('#payPassword_rsainput').on('focus',function () {
+	$('.ui-form-explain').show();
+	$('.ui-form-error').hide();
+})

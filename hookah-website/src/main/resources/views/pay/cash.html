@@ -3,195 +3,184 @@ var head = {
 %>
 <link rel="stylesheet" href="/static/css/pay/pay.css">
 <%};%>
-
 <%
 var htmlPart = {
 %>
 <div class="grid-0 backgorund-gray box">
-    <div class="grid-row ">
-        <div class="pay-wrapper">
-            <div class="order-wrapper">
-                <!--<div class="order-title">充值</div>-->
-                <div class="header">
-                    <h4 class="order-title">请支付</h4>
-                </div>
-                <!--<div class="order-seller">&nbsp;&nbsp; 收款方&nbsp;:<span> 山东省大数据交易中心</span></div>-->
-                <div class="order-amount"><span>${trunc(orderInfo.goodsAmount/100, 2)}</span>元</div>
-                <a class="order-ext-trigger" href="javascript:void(0)">
-                    订单详情
-                </a>
-                <div class="order-details">
-                    <table class="od-tb">
-                        <tbody>
-                        <tr>
-                            <td class="sub-th" align="right">交易号：</td>
-                            <td>${orderInfo.orderSn}</td>
-                        </tr>
-                        <tr>
-                            <td class="sub-th" align="right">交易金额：</td>
-                            <td>${orderInfo.goodsAmount}元</td>
-                        </tr>
-                        <tr>
-                            <td class="sub-th" align="right">购买时间：</td>
-                            <td>${orderInfo.addTime,'yyyy-MM-dd hh:mm:ss'}</td>
-                        </tr>
-                        <tr>
-                            <td class="sub-th" align="right">交易类型：</td>
-                            <td class="type">
-                                <a title="即时到账交易"></a>&nbsp;<span>即时到账交易</span>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="main-container">
-                <form name="expressFastPayFrom" id="lightPayForm" action="" method="post" autocomplete="off">
-                    <div id="J-rcChannels">
-                        <div>
-                            <input type="hidden" value="${orderInfo.goodsAmount}" id="goodsAmount">
-                            <input type="hidden" value="${moneyBalance}" id="moneyBalance">
-                            <ul id="J_MarketinglList"></ul>
-                            <ul class="saved-card-list">
-                                <%for(item in payments){%>
-                                <li class="${itemLP.index == 1 ? 'channel-balance' : 'channel-bank'} row-container fn-clear ${itemLP.index == 1 ? 'row-container-focus' : ''}">
-                                    <div class="row-basic fn-clear">
-                                        <label class="channel-label"><span class="channel-tit channel-icon icon banklogo-BALANCE_s"></span>
-                                            <span class="fn-mr-20">
-                                            <span class="channel-name">${item.payName}</span>
-                                            <span>${item.payDetail}</span>
-                                        </span>
-                                            <span class="pay-amount">
-                                            <span class="amount">
-                                                <span>支付</span>
-                                                <span class="amount-font-R16">${trunc(orderInfo.goodsAmount/100, 2)}</span>
-                                                <span> 元</span>
-                                            </span>
-                                            <span></span>
-                                        </span>
-                                            <%if(itemLP.index == 1){%>
-                                            <input checked="checked" class="channel-input" value="${item.payCode}" name="apiCode" type="radio">
-                                            <%}else{%>
-                                            <input class="channel-input" value="${item.payCode}" name="apiCode" type="radio">
-                                            <%}%>
-                                        </label>
-                                    </div>
-                                    <div class="row-extra fn-hide"></div>
-                                </li>
-                                <%}%>
-                                <!--<li class="channel-bank row-container fn-clear">-->
-                                    <!--<div class="row-basic fn-clear">-->
-                                        <!--<label class="channel-label">-->
-                                        <!--<span class="pay-amount">-->
-                                            <!--<span class="amount fn-hide">-->
-                                                <!--<span>支付</span>-->
-                                                <!--<span class="amount-font-R16">1.00</span>-->
-                                                <!--<span> 元</span>-->
-                                            <!--</span>-->
-                                            <!--<span></span>-->
-                                        <!--</span>-->
-                                            <!--<span class="channel-tit channel-icon icon banklogo-BOC_s"></span>-->
-                                            <!--<span class="channel-name" title="中国银行">中国银行</span>-->
-                                            <!--<span class="card-number">**1233</span>-->
-                                            <!--<span class="card-type">储蓄卡 | 快捷</span>-->
-                                            <!--<span class="card-info"></span>-->
-                                            <!--<input class="channel-input" id="boc907-1" name="apiCode" type="radio">-->
-                                        <!--</label>-->
-                                    <!--</div>-->
-                                    <!--<div class="row-extra fn-hide"></div>-->
-                                <!--</li>-->
-                                <!--<li class="channel-bank row-container fn-clear">-->
-                                    <!--<div class="row-basic fn-clear">-->
-                                        <!--<label class="channel-label">-->
-                                        <!--<span class="pay-amount">-->
-                                            <!--<span class="amount fn-hide">-->
-                                                <!--<span>支付</span>-->
-                                                <!--<span class="amount-font-R16">1.00</span>-->
-                                                <!--<span> 元</span>-->
-                                            <!--</span>-->
-                                            <!--<span></span>-->
-                                        <!--</span>-->
-                                            <!--<span class="channel-tit channel-icon icon banklogo-ICBC_s"></span>-->
-                                            <!--<span class="channel-name" title="中国工商银行">中国工商银行</span>-->
-                                            <!--<span class="card-number">**2344</span>-->
-                                            <!--<span class="card-type">储蓄卡 | 快捷</span>-->
-                                            <!--<span class="card-info"></span>-->
-                                            <!--<input class="channel-input" id="icbc906-2" name="apiCode" type="radio">-->
-                                        <!--</label>-->
-                                    <!--</div>-->
-                                    <!--<div class="row-extra fn-hide"></div>-->
-                                <!--</li>-->
-                                <!--<li class="channel-moneyfund row-container fn-clear row-container-disabled">-->
-                                    <!--<div class="row-basic fn-clear">-->
-                                        <!--<label class="channel-label">-->
-                                            <!--<span class="channel-tit channel-icon icon icon-gray banklogo-CMB_s"></span>-->
-                                            <!--<span class="channel-name">招商信用卡</span>-->
-                                            <!--<span class="pay-amount">-->
-                                            <!--<span class="amount fn-hide">-->
-                                                <!--<span>支付</span>-->
-                                                <!--<span class="amount-font-R16">1.00</span>-->
-                                                <!--<span> 元</span>-->
-                                            <!--</span>-->
-                                            <!--<span>该付款方式不支持当前交易</span>-->
-                                        <!--</span>-->
-                                            <!--<input class="channel-input" disabled="" id="moneyfund-5" name="apiCode" type="radio"></div>-->
-                                    <!--</label>-->
-                                    <!--<div class="row-extra fn-hide"></div>-->
-                                <!--</li>-->
-                            </ul>
-
-                            <div class="manage-list fn-clear">
-                                <!--<a class="manage-item manage-wechat fn-left" href="javascript:void(0)"><span>微信 </span></a>-->
-                                <!--<a class="manage-item manage-alipay fn-left" href="javascript:void(0)"><span>支付宝 </span></a>-->
-                                <a class="manage-item manage-more fn-left" href="javascript:void(0)"><span>其他网银付款方式 </span></a>
-                                <a class="J_XBox manage-item manage-item-xbox fn-left" href="javascript:void(0)">添加快捷/网银付款</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="J-balanceNt" class="">
-                        您的余额不足以支付次订单，请选用其他方式支付，或者去充值。
-                    </div>
-                    <div id="J-security" class="">
-                        <div class="ui-securitycore J-securitycoreMain">
-                            <div class="edit-section">
-                                <div class="ui-form-item">
-                                    <label class="ui-label">
-                                        余额支付密码：
-                                    </label>
-                                    <span class="alieditContainer" id="payPassword_container">
-                                    <input type="password" id="payPassword_rsainput" class="ui-input i-text sixDigitPassword" value="" maxlength="6" minlength="6">
-                                    <div class="sixDigitPassword" style="width: 180px;">
-                                        <i class=""style="width: 29px; border-color: transparent;"><b style="visibility: hidden;"></b></i>
-                                        <i style="width: 29px;"><b style="visibility: hidden;"></b></i>
-                                        <i style="width: 29px;"><b style="visibility: hidden;"></b></i>
-                                        <i style="width: 29px;"><b style="visibility: hidden;"></b></i>
-                                        <i style="width: 29px;"><b style="visibility: hidden;"></b></i>
-                                        <i style="width: 29px;"><b style="visibility: hidden;"></b></i>
-                                    </div>
-                                </span>
-                                    <span class="ui-form-other edit-link">
-                                    <a target="_blank" href="javascript:void(0)" seed="sc_edit_forgetPwd">忘记密码？</a>
-                                </span>
-                                    <div class="ui-form-explain">
-                                        <p id="J_edit_prompt_default" class="">
-                                            请输入6位数字支付密码
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="J-rcSubmit">
-                        <div class="ui-fm-item ui-fm-action j-submit" data-reactid=".1">
-                            <input class="pay-btn ui-button-lblue" id="J_authSubmit" type="submit" value="确认付款">
-                            <span class="ui-fm-status fn-hide" data-reactid=".1.1"> 正在提交中... </span>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+	<div class="grid-row ">
+		<div class="pay-wrapper">
+			<div class="order-wrapper">
+				<!--<div class="order-title">充值</div>-->
+				<div class="header">
+					<h4 class="order-title">请支付</h4>
+				</div>
+				<!--<div class="order-seller">&nbsp;&nbsp; 收款方&nbsp;:<span> 山东省大数据交易中心</span></div>-->
+				<div class="order-amount"><span>${trunc(orderInfo.goodsAmount/100, 2)}</span>元</div>
+				<a class="order-ext-trigger" href="javascript:void(0)">
+					订单详情
+				</a>
+				<div class="order-details">
+					<table class="od-tb">
+						<tbody>
+						<tr>
+							<td class="sub-th" align="right">交易号：</td>
+							<td>${orderInfo.orderSn}</td>
+						</tr>
+						<tr>
+							<td class="sub-th" align="right">交易金额：</td>
+							<td>${orderInfo.goodsAmount}元</td>
+						</tr>
+						<tr>
+							<td class="sub-th" align="right">购买时间：</td>
+							<td>${orderInfo.addTime,'yyyy-MM-dd hh:mm:ss'}</td>
+						</tr>
+						<tr>
+							<td class="sub-th" align="right">交易类型：</td>
+							<td class="type">
+								<a title="即时到账交易"></a>&nbsp;<span>即时到账交易</span>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="main-container">
+				<form name="expressFastPayFrom" id="lightPayForm" action="" method="post" autocomplete="off">
+					<div id="J-rcChannels">
+						<div>
+							<input type="hidden" value="${orderInfo.goodsAmount}" id="goodsAmount">
+							<input type="hidden" value="${moneyBalance}" id="moneyBalance">
+							<input type="hidden" name="orderSn" value="${orderInfo.orderSn}" id="J_orderSn">
+							<ul id="J_MarketinglList"></ul>
+							<ul class="saved-card-list">
+								<%for(item in payments){%>
+								<li class="${itemLP.index == 1 ? 'channel-balance' : 'channel-bank'} row-container fn-clear ${itemLP.index == 1 ? 'row-container-focus' : ''}">
+									<div class="row-basic fn-clear">
+										<label class="channel-label">
+											<span class="channel-tit channel-icon icon banklogo-BALANCE_s"></span>
+											<span class="fn-mr-20">
+                                            	<span class="channel-name">${item.payName}</span>
+                                            	<span>${item.payDetail}</span>
+                                        	</span>
+											<span class="pay-amount">
+												<span class="amount">
+													<span>支付</span>
+													<span class="amount-font-R16">${trunc(orderInfo.goodsAmount/100, 2)}</span>
+													<span> 元</span>
+												</span>
+                                            	<span></span>
+                                        	</span>
+											<%if(itemLP.index == 1){%>
+											<input checked="checked" class="channel-input" value="${item.payCode}" name="apiCode" type="radio">
+											<%}else{%>
+											<input class="channel-input" value="${item.payCode}" name="apiCode" type="radio">
+											<%}%>
+										</label>
+									</div>
+									<div class="row-extra fn-hide"></div>
+								</li>
+								<%}%>
+								<!--<li class="channel-bank row-container fn-clear">-->
+								<!--<div class="row-basic fn-clear">-->
+								<!--<label class="channel-label">-->
+								<!--<span class="pay-amount">-->
+								<!--<span class="amount fn-hide">-->
+								<!--<span>支付</span>-->
+								<!--<span class="amount-font-R16">1.00</span>-->
+								<!--<span> 元</span>-->
+								<!--</span>-->
+								<!--<span></span>-->
+								<!--</span>-->
+								<!--<span class="channel-tit channel-icon icon banklogo-BOC_s"></span>-->
+								<!--<span class="channel-name" title="中国银行">中国银行</span>-->
+								<!--<span class="card-number">**1233</span>-->
+								<!--<span class="card-type">储蓄卡 | 快捷</span>-->
+								<!--<span class="card-info"></span>-->
+								<!--<input class="channel-input" id="boc907-1" name="apiCode" type="radio">-->
+								<!--</label>-->
+								<!--</div>-->
+								<!--<div class="row-extra fn-hide"></div>-->
+								<!--</li>-->
+								<!--<li class="channel-bank row-container fn-clear">-->
+								<!--<div class="row-basic fn-clear">-->
+								<!--<label class="channel-label">-->
+								<!--<span class="pay-amount">-->
+								<!--<span class="amount fn-hide">-->
+								<!--<span>支付</span>-->
+								<!--<span class="amount-font-R16">1.00</span>-->
+								<!--<span> 元</span>-->
+								<!--</span>-->
+								<!--<span></span>-->
+								<!--</span>-->
+								<!--<span class="channel-tit channel-icon icon banklogo-ICBC_s"></span>-->
+								<!--<span class="channel-name" title="中国工商银行">中国工商银行</span>-->
+								<!--<span class="card-number">**2344</span>-->
+								<!--<span class="card-type">储蓄卡 | 快捷</span>-->
+								<!--<span class="card-info"></span>-->
+								<!--<input class="channel-input" id="icbc906-2" name="apiCode" type="radio">-->
+								<!--</label>-->
+								<!--</div>-->
+								<!--<div class="row-extra fn-hide"></div>-->
+								<!--</li>-->
+								<!--<li class="channel-moneyfund row-container fn-clear row-container-disabled">-->
+								<!--<div class="row-basic fn-clear">-->
+								<!--<label class="channel-label">-->
+								<!--<span class="channel-tit channel-icon icon icon-gray banklogo-CMB_s"></span>-->
+								<!--<span class="channel-name">招商信用卡</span>-->
+								<!--<span class="pay-amount">-->
+								<!--<span class="amount fn-hide">-->
+								<!--<span>支付</span>-->
+								<!--<span class="amount-font-R16">1.00</span>-->
+								<!--<span> 元</span>-->
+								<!--</span>-->
+								<!--<span>该付款方式不支持当前交易</span>-->
+								<!--</span>-->
+								<!--<input class="channel-input" disabled="" id="moneyfund-5" name="apiCode" type="radio"></div>-->
+								<!--</label>-->
+								<!--<div class="row-extra fn-hide"></div>-->
+								<!--</li>-->
+							</ul>
+							<div class="manage-list fn-clear">
+								<!--<a class="manage-item manage-wechat fn-left" href="javascript:void(0)"><span>微信 </span></a>-->
+								<!--<a class="manage-item manage-alipay fn-left" href="javascript:void(0)"><span>支付宝 </span></a>-->
+								<a class="manage-item manage-more fn-left" href="javascript:void(0)"><span>其他网银付款方式 </span></a>
+								<a class="J_XBox manage-item manage-item-xbox fn-left" href="javascript:void(0)">添加快捷/网银付款</a>
+							</div>
+						</div>
+					</div>
+					<div id="J-balanceNt" class="color-red">
+						您的余额不足以支付次订单，请<a href="javascript:void(0)" class="color-blue">充值</a>，或者选用<a href="javascript:void(0)" class="color-blue">其他方式</a>支付。
+					</div>
+					<div id="J-security" class="">
+						<div id="payPassword_container" class="alieditContainer clearfix" data-busy="0">
+							<label class="i-block">支付密码：</label>
+							<div class="i-block" data-error="i_error">
+								<div class="i-block six-password">
+									<input class="i-text sixDigitPassword" id="payPassword_rsainput" type="password" autocomplete="off" required="required" value="" name="payPassword_rsainput" data-role="sixDigitPassword" tabindex="" maxlength="6" minlength="6" aria-required="true">
+									<div tabindex="0" class="sixDigitPassword-box" style="width: 180px;">
+										<i style="width: 29px; border-color: transparent;" class=""><b style="visibility: hidden;"></b></i>
+										<i style="width: 29px;"><b style="visibility: hidden;"></b></i>
+										<i style="width: 29px;"><b style="visibility: hidden;"></b></i>
+										<i style="width: 29px;"><b style="visibility: hidden;"></b></i>
+										<i style="width: 29px;"><b style="visibility: hidden;"></b></i>
+										<i style="width: 29px;"><b style="visibility: hidden;"></b></i>
+										<span style="width: 29px; left: 0px; visibility: hidden;" id="cardwrap" data-role="cardwrap"></span>
+									</div>
+								</div>
+								<span>请输入6位支付密码( 数字！)</span>
+							</div>
+						</div>
+					</div>
+					<div id="J-rcSubmit">
+						<div class="ui-fm-item ui-fm-action j-submit" data-reactid=".1">
+							<input class="pay-btn ui-button-lblue" id="J_authSubmit" type="button" onclick="return check()" value="确认付款">
+							<span class="ui-fm-status fn-hide" data-reactid=".1.1"> 正在提交中... </span>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
 </div>
 <%};
