@@ -29,12 +29,12 @@
           <div us-spinner ng-show="showSpinner" spinner-start-active="true" spinner-key="showSpinner"></div>
           <table class="table table-hover" style="margin-bottom: 57px;">
             <thead>
-              <tr>
+              <tr >
                 <th>商品编号</th>
                 <th>商品名称</th>
                 <th>审核结果</th>
-                <th width="135">审核时间</th>
-                <th width="130" class="text-center">操作</th>
+                <th>审核时间</th>
+                <th>操作</th>
               </tr>
             </thead>
             <tbody>
@@ -53,8 +53,8 @@
               <td>
                 <span class="column-text" style="width: 100px;white-space:nowrap;" ng-bind="item.checkTime"></span>
               </td>
-              <td class="text-right">
-                <a href="javascript:;" ng-click="LookGoods($event,item)">重新审核</a>
+              <td>
+                <a href="javascript:;" ng-click="LookDetail($event, item)">审核详情</a>
               </td>
             </tr>
             </tbody>

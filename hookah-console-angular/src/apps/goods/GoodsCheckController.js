@@ -65,11 +65,19 @@ class GoodsCheckController {
             console.log(res.data)
             if(res.data.code == "1"){
                 $rootScope.editData = res.data.data;
-                $rootScope.editData.apiInfo.respSample = JSON.stringify(JSON.parse($rootScope.editData.apiInfo.respSample), null, "\t");
+                if($rootScope.editData.apiInfo != null){
+                    $rootScope.editData.apiInfo.respSample = JSON.stringify(JSON.parse($rootScope.editData.apiInfo.respSample), null, "\t");
+                }
                 $state.go('items.goodsDetail', {data: $rootScope.editData});
             }
         });
+    }
 
+    $scope.LookDetail = function($event,item){
+        console.log("去审核详情……");
+        console.log(item);
+        $rootScope.editData = item;
+        $state.go('items.checkDetail', {data: $rootScope.editData});
     }
 
     $scope.submitCheck = function(){
@@ -90,7 +98,7 @@ class GoodsCheckController {
       $scope.search();
   }
 
-  if ($state.$current.name == "items.checkStatus") {
+  if ($state.$current.name == "items.checkedList") {
       $scope.searchCheckRs();
   }
 
