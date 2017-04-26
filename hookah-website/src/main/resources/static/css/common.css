@@ -67,20 +67,16 @@
 .backgorund-red{
     background-color:#E34F4F;
 }
+.backgorund-blue{
+    background-color:#078cfc;
+}
 .backgorund-gray-blue{
     background-color:#3E557B;
 }
-.backgorund-yellow{
+.backgorund-orange{
     background-color:#FFA800;
 }
 
-
-.backgorund-icon-orange{
-    background-color: #FB7F33;
-}
-.backgorund-icon-blue{
-    background-color: #4BB5F9;
-}
 /* Text-align
 =================================================================== */
 .text-align-left{

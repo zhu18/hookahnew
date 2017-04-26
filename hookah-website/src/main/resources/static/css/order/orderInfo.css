@@ -23,11 +23,11 @@
 }
 .order-info .order-info-top ul .active{
     display: block;
-    border-top: 3px solid #e34f4f ;
+    border-top: 3px solid #E34F4F;
 }
 .order-info .order-info-top ul .active:after{
     display: block;
-    background-color: #e34f4f;
+    background-color:#E34F4F;
 }
 .order-info .order-info-top ul li:after{
     content: attr(data-tip);
@@ -130,4 +130,6 @@
 }
 .order-info .order-info-down table .tab-submit .pay-btn{
     cursor: pointer;
+    border-radius: 3px;
+    font-size: 16px;
 }

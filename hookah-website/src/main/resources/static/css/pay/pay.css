@@ -47,7 +47,7 @@
     text-align: right;
 }
 .pay-wrapper .order-wrapper .order-amount span {
-    color: #ff8208;
+    color: #ffa800;
     font-weight: 700;
     font-size: 22px;
     margin-right: 3px;
@@ -223,11 +223,11 @@
 #J-rcSubmit .pay-btn{
     min-width: 100px;
     height: 36px;
-    background: #00c1de;
     color: #fff;
     font-size: 16px;
     margin-top:20px;
     border:none;
+    border-radius: 3px;
     cursor: pointer;
 }
 .saved-card-list li{

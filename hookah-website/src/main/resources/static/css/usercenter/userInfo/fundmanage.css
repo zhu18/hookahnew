@@ -150,16 +150,14 @@
     height:36px;
     line-height: 36px;
     text-align: center;
-    background:#00c1de;
     color:#fff;
     font-size: 16px;
     margin-right:20px;
+    border-radius: 3px;
     text-decoration: none;
     display: inline-block;
 }
-.fundmanage-box .fundmanage-bd .user-balance .operation a.btn-2{
-    background:#f9cf02;
-}
+
 /******fund-manage end*******/
 /******safe-set start*******/
 .user-center .user-center-bd .user-center-box .safeset-box.user-info li a{
