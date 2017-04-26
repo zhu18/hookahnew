@@ -48,20 +48,21 @@ $(document).ready(function () {
 				$('.search-sug').show();
 			}
 		}
-		$(this).keydown(function (event) {
-			if (event.keyCode == 40) {
-				$(this).blur();
-				$('.search-sug').show().addClass('keyActive');
-			} else if (event.keyCode == 13) {
-				$("#J_searchInput").blur();
-				if(window.location.pathname == '/exchange/search'){
-					window.location.href = host.website+'/exchange/search?names=' + $(this).val();
-				}else{
-					window.open(host.website+'/exchange/search?names=' + $(this).val());
-				}
-				return;
+
+	});
+	$("#J_searchInput").keydown(function (event) {
+		if (event.keyCode == 40) {
+			$(this).blur();
+			$('.search-sug').show().addClass('keyActive');
+		}
+		if (event.keyCode == 13) {
+			// $("#J_searchInput").blur();
+			if(window.location.pathname == '/exchange/search'){
+				window.location.href = host.website+'/exchange/search?names=' + $(this).val();
+			}else{
+				window.open(host.website+'/exchange/search?names=' + $(this).val());
 			}
-		});
+		}
 	});
 	$('#J_searchBtn').click(function(){
 		if($("#J_searchInput").val().length > 0){
