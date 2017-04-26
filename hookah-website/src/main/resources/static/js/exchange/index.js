@@ -46,7 +46,9 @@ $(function () {
         // 计算出多出来的li的个数
         var len1=len-parseInt((len)/5)*5;
         // 把多出来的li从总的li中截取出来
-        var lis=ulLis.slice(-len1);
+        var lis=''
+        lis=len1==0?lis=0:ulLis.slice(-len1);
+        var lisLg=lis==0?0:lis.length;
         // 截取首页的li
         var top5 = $(".screen ul li").slice(0,5);
         // 把首页的li追加到li后面
@@ -74,8 +76,6 @@ $(function () {
 
         var resizeTimer;
         function resizeFunction() {
-            console.log(screeW);
-            console.log(screen.width());
             cab=screeW-screen.width();
             screeW=screen.width();
             if( screen.width() >=1180 && screen.width()<=1440) {
@@ -83,7 +83,6 @@ $(function () {
                 $(".screen ul li").css({
                     'width':liWidth
                 });
-                console.log(liWidth);
             }else {
                 liWidth=1180/5;
                 $(".screen ul li").css({
@@ -93,27 +92,19 @@ $(function () {
             ul.css({
                 'width':newLis*liWidth
             });
-            console.log(cab);
             if(parseInt(ul.css('left'))>=0){
             }else {
-                console.log(pic);
-                console.log(i);
-                console.log(k);
-                // ul.css({
-                //     'left':parseInt(ul.css('left'))+cab
-                // });
                 if(pic>0 && i==0 && k==0){
                     ul.css({
                         'left':parseInt(ul.css('left'))+cab*pic
                     });
-                }else  if(i>0 && k==0){
-                    console.log((cab / 5) * lis.length);
+                }else if(i>0 && k==0){
                     ul.css({
-                        'left':parseInt(ul.css('left'))+cab*pic+(cab/5)*lis.length
+                        'left':parseInt(ul.css('left'))+cab*pic+(cab/5)*lisLg
                     });
                 }else if(k>0){
                     ul.css({
-                        'left':parseInt(ul.css('left'))+cab*pic+cab*k+(cab/5)*lis.length
+                        'left':parseInt(ul.css('left'))+cab*pic+cab*k+(cab/5)*lisLg
                     });
                 }
             }
@@ -155,7 +146,7 @@ $(function () {
                 animate(ul,parseInt(ul.css('left'))+screen.width());
             }else if(lis.length<5 && i<=lis.length && i!=0){
                 i--;
-                animate(ul,parseInt(ul.css('left'))+liWidth*lis.length);
+                animate(ul,parseInt(ul.css('left'))+liWidth*lisLg);
             }
 
         }
@@ -178,7 +169,7 @@ $(function () {
                 pic++;
             }else if(lis.length<5 && i<lis.length && i==0){
                 i++;
-                animate(ul,parseInt(ul.css('left'))-liWidth*lis.length);
+                animate(ul,parseInt(ul.css('left'))-liWidth*lisLg);
             }else{
                 animate(ul,parseInt(ul.css('left'))-screen.width());
                 // 是否进入最后一张
