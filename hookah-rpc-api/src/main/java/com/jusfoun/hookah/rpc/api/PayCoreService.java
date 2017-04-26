@@ -17,6 +17,15 @@ import java.util.Map;
  */
 public interface PayCoreService extends GenericService<PayCore,String> {
 
+	/**
+	 *  订单余额支付
+	 * @param orderId
+	 * @param userId
+	 * @return
+	 * @throws Exception
+	 */
+	public void doPayMoney(String orderId, String userId) throws Exception;
+
 	/**根据订单Id查询支付信息
 	 * @param orderId
 	 * @return

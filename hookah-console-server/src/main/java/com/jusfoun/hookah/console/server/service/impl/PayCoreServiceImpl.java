@@ -15,7 +15,9 @@ import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.dao.AccNoTokenMapper;
 import com.jusfoun.hookah.core.dao.PayCoreMapper;
 import com.jusfoun.hookah.core.domain.AccNoToken;
+import com.jusfoun.hookah.core.domain.OrderInfo;
 import com.jusfoun.hookah.core.domain.PayCore;
+import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.vo.PayCoreVo;
 import com.jusfoun.hookah.core.domain.vo.PayVo;
 import com.jusfoun.hookah.core.domain.vo.RechargeVo;
@@ -24,6 +26,7 @@ import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.HttpClientUtil;
 import com.jusfoun.hookah.rpc.api.OrderInfoService;
 import com.jusfoun.hookah.rpc.api.PayCoreService;
+import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.bag.SynchronizedSortedBag;
 import org.apache.commons.lang3.StringUtils;
@@ -66,10 +69,34 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 	private AccNoTokenMapper accNoTokenMapper;
 
 	@Resource
+	UserService userService;
+
+	@Resource
 	public void setDao(PayCoreMapper mapper) {
 		super.setDao(mapper);
 	}
 
+	/**
+	 *
+	 * @param orderId
+	 * @param userId
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public void doPayMoney(String orderId, String userId) throws Exception{
+    	//修改订单支付状态
+		OrderInfo orderinfo = orderService.selectById(orderId);
+		orderinfo.setPayStatus(2);
+		orderService.updateByIdSelective(orderinfo);
+        Long orderAmount = orderinfo.getOrderAmount();
+        //减去余额
+		User user =  userService.selectById(userId);
+		Long oldMoneyBalance =  user.getMoneyBalance();
+		Long newMoneyBalance = oldMoneyBalance - orderAmount;
+		user.setMoneyBalance(newMoneyBalance);
+		userService.updateByIdSelective(user);
+	}
 
 	@Override
 	public PayCore findPayCoreByOrderId(String orderId) {
