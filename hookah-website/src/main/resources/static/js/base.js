@@ -25,6 +25,14 @@ $(document).ready(function () {
 	$(".shopping-cart").mouseleave(function () {
 		$(this).removeClass('hover')
 	});
+
+    // if($(".shopping-cart .shopping-cart-down").height()>130){
+     //    $(".shopping-cart .shopping-cart-down").css({
+     //    	'overflow-y':'scroll'
+	// 	})
+	// }
+
+
 	$("#J_searchInput").on("input propertychange", function () {
 		if ($(this).val() == "") {
 			$('.search-sug').hide();

@@ -31,7 +31,7 @@
             goods_img,
             cat_id,
             getCategoryParentList(cat_id) cat_ids,
-            goods_area goodsArea,
+            goods_area goods_area,
             getRegionParentList(goods_area) goods_areas,
             add_time,
             last_update_time
@@ -39,5 +39,29 @@
             goods
         where is_delete = 1
         and is_onsale = 1
+    </select>
+
+    <select id="getNeedEsGoodsById" resultType="com.jusfoun.hookah.core.domain.es.EsGoods" parameterType="java.lang.String">
+        SELECT
+        goods_id,
+        goods_name,
+        shop_price,
+        shop_number,
+        shop_format,
+        goods_brief,
+        goods_desc,
+        keywords,
+        goods_img,
+        cat_id,
+        getCategoryParentList(cat_id) cat_ids,
+        goods_area goods_area,
+        getRegionParentList(goods_area) goods_areas,
+        add_time,
+        last_update_time
+        from
+        goods
+        where is_delete = 1
+        and is_onsale = 1
+        and goods_id = #{id}
     </select>
 </mapper>
