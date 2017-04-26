@@ -46,7 +46,7 @@ var htmlPart = {
 				</div>
 			</div>
 			<div class="main-container">
-				<form name="payPassword" id="form_paypsw" action="" method="post" autocomplete="off">
+				<form name="payPassword" id="form_paypsw" action="${host.website}/pay/payment" method="post">
 					<div id="J-rcChannels">
 						<div>
 							<input type="hidden" value="${orderInfo.goodsAmount}" id="goodsAmount">
@@ -144,8 +144,8 @@ var htmlPart = {
 							<div class="manage-list fn-clear">
 								<!--<a class="manage-item manage-wechat fn-left" href="javascript:void(0)"><span>微信 </span></a>-->
 								<!--<a class="manage-item manage-alipay fn-left" href="javascript:void(0)"><span>支付宝 </span></a>-->
-								<a class="manage-item manage-more fn-left" href="javascript:void(0)"><span>其他网银付款方式 </span></a>
-								<a class="J_XBox manage-item manage-item-xbox fn-left" href="javascript:void(0)">添加快捷/网银付款</a>
+								<a class="manage-item manage-more fn-left" href="javascript:void(0)"><span>显示其他支付方式 </span></a>
+								<!--<a class="J_XBox manage-item manage-item-xbox fn-left" href="javascript:void(0)">添加快捷/网银付款</a>-->
 							</div>
 						</div>
 					</div>
@@ -157,7 +157,7 @@ var htmlPart = {
 							<label class="i-block">支付密码：</label>
 							<div class="i-block" data-error="i_error">
 								<div class="i-block six-password">
-									<input class="i-text sixDigitPassword" id="payPassword_rsainput" type="password" autocomplete="off" required="required" value="" name="payPassword_rsainput" data-role="sixDigitPassword" tabindex="" maxlength="6" minlength="6" aria-required="true">
+									<input class="i-text sixDigitPassword" id="paymentPassword" type="password" autocomplete="off" required="required" value="" name="paymentPassword" data-role="sixDigitPassword" tabindex="" maxlength="6" minlength="6" aria-required="true">
 									<div tabindex="0" class="sixDigitPassword-box" style="width: 180px;">
 										<i style="width: 29px; border-color: transparent;" class=""><b style="visibility: hidden;"></b></i>
 										<i style="width: 29px;"><b style="visibility: hidden;"></b></i>

@@ -5,6 +5,7 @@ a{
     display: inline-block;
     width: 100%;
     background-color: #ffffff;
+    min-height: 500px;
 }
 .pay-success .pay-success-box{
     margin: 20px;
