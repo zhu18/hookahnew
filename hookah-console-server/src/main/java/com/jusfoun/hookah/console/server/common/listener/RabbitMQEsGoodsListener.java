@@ -31,6 +31,7 @@ public class RabbitMQEsGoodsListener {
      */
     @RabbitListener(queues = RabbitmqQueue.CONTRACE_GOODS_ID)
     public void operaEs(String goodsId) {
+        logger.info(goodsId + ":开始执行ES添加/删除流程");
         try {
             Goods goods = goodsMapper.selectByPrimaryKey(goodsId);
             if(goods != null) {
@@ -49,7 +50,7 @@ public class RabbitMQEsGoodsListener {
                         elasticSearchService.upsertById(Constants.GOODS_INDEX,
                                 Constants.GOODS_TYPE, goodsId, map);
                     }else {
-                        logger.warn(goodsId + ":esGoods赋值为null");
+                        logger.warn(goodsId + ":esGoods查询为null");
                     }
                 }
             }else {
@@ -58,7 +59,7 @@ public class RabbitMQEsGoodsListener {
                         "goods", goodsId);
             }
         }catch (Exception e) {
-            logger.error(goodsId + "执行错误！" + e);
+            logger.error(goodsId + "执行ES添加/删除流程错误！" + e);
             e.printStackTrace();
         }
     }
