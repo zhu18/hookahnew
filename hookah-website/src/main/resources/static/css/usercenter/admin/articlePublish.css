@@ -65,7 +65,7 @@ table .select-box select{
     line-height: 40px;
     text-decoration: none;
     border: 0;
-    background: #00c1de;
+    border-radius: 3px;
     color: #fff;
     font-size: 16px;
     cursor: pointer;
@@ -157,7 +157,7 @@ table .select-box select{
     height: 30px;
     line-height: 30px;
     border: 0;
-    background: #00c1de;
+    border-radius: 3px;
     color: #fff;
     font-size: 16px;
     cursor: pointer;

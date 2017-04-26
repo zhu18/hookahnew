@@ -532,3 +532,18 @@ ul li {
     font-size: 16px;
     line-height: 50px;
 }
+
+.line-blue{
+    background-color: #247DE8;
+}
+.line-blue-active{
+    background-color: #E1EFFF;
+}
+/*---a标签---*/
+.a-blue{
+    color: #078cfc;
+}
+.a-blue:hover{
+    color: #0781e8;
+    text-decoration: underline;
+}

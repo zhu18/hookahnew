@@ -17,14 +17,14 @@ small {
 ul, ol {
 	list-style: none;
 }
-a {
+a{
 	text-decoration: none;
 	color: #666;
 	-webkit-transition:color .3s linear;
 	transition:color .3s linear
 }
 a:hover {
-	color: #078cfc;
+	/*color: #078cfc;*/
 	text-decoration: none;
 	outline: none;
 }
