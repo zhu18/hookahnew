@@ -54,8 +54,8 @@ $(document).ready(function () {
 	function renderselect(data) {
 		if (data) {
 			var html = '';
-			var typeList = data.attrTypelist;
-			for (var i = 0; i < data.attrTypelist.length; i++) {
+			var typeList = data.attrTypeList;
+			for (var i = 0; i < data.attrTypeList.length; i++) {
 				html += '<tr>';
 				html += '<td>' + typeList[i].typeName + '：</td>';
 				html += ' <td>';
