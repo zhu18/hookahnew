@@ -160,28 +160,29 @@ $('.search-list').on('click', function () {
 $('.search-list').hover(function () {
     $(this).toggleClass('active');
 });
-function getSearchList(text){
-    $.ajax({
-        type:'get',
-        url:'/search/v1/category',
-        data:{
-            keyword:text
-        },
-        success:function(data){
-            if(data.code == 1){
-                showBox(data.data);
-            }else{
-                console.log(data.message);
-            }
-        }
-    })
-}
+
+// function getSearchList(text){
+//     $.ajax({
+//         type:'get',
+//         url:'/search/v1/category',
+//         data:{
+//             keyword:text
+//         },
+//         success:function(data){
+//             if(data.code == 1){
+//                 showBox(data.data);
+//             }else{
+//                 console.log(data.message);
+//             }
+//         }
+//     })
+// }
 
 function showBox(data) {
     var html = '';
     data.forEach(function (list) {
         console.log(list);
-        html += '<li><a target="_blank" href="'+host.website+'/exchange/search?names=' + list.catName + '">' + list.catName + '</a></li>';
+        html += '<li><a target="_blank" href="'+host.website+'/exchange/search?names=' + list.fullName + '">' + list.fullName + '</a></li>';
     });
     $('.search-list').show().children('ul').html(html);
 }
