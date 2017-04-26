@@ -1,3 +1,4 @@
+var oldPwd = false;
 $('.order-ext-trigger').click(function () {
 	$('.order-details').slideToggle();
 });
@@ -102,8 +103,7 @@ function check() {
 		if (this.checked) {
 			if (this.value == 1) {
 				if ($('#paymentPassword').val() && $('#paymentPassword').val().length == 6) {
-					$('#paymentPassword').val($('#paymentPassword').val());
-					return $('#form_paypsw').submit();
+					testPayPassword($('#paymentPassword').val());
 				} else {
 					$('.ui-form-error').show();
 				}
@@ -114,10 +114,30 @@ function check() {
 		}
 	});
 }
+function testPayPassword(pwd){
+	$.ajax({
+		url:host.auth+'/verify/verifyPayPassword',
+		data:{
+			paymentPassword:pwd
+		},
+		type:'post',
+		success:function (data) {
+			if(data.code == 1){
+				$('#form_paypsw').submit();
+			}else if(data.code == 0){
+				$('.ui-form-error').show();
+				return false;
+			}else{
+				$.alert(data.message);
+				return false;
+			}
+		}
+	});
+}
 $('#paymentPassword').on('focus', function () {
 	$('.ui-form-error').hide();
 });
-var _formPay = $('#form_paypsw');
+var _formPay = $('#form_paypsw'); //支付密码输入框单个输入效果
 _formPay.validate({
 	rules: {
 		'paymentPassword': {
