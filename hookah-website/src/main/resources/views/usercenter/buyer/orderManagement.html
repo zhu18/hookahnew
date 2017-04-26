@@ -38,14 +38,16 @@ var htmlPart = {
                 <!--</div>-->
             </div>
             <div class="searchQuery padding-top-10">
-                <div class="date">
+                <div class="date grid-left">
                     <label for="startDate" class="start-date grid-left">开始时间：<input id="startDate" type="text" placeholder="请选择开始时间" readonly=""></label>
-                    <label for="endDate" class="end-date grid-left">结束时间：<input id="endDate" type="text" placeholder="请选择结束时间" readonly=""></label><br>
+                    <label for="endDate" class="end-date grid-left">结束时间：<input id="endDate" type="text" placeholder="请选择结束时间" readonly=""></label>
                 </div>
-                <label class="comment-status">评论状态：
-                    <input type="radio" name="comment" value="0" checked>未评论
-                    <input type="radio" name="comment" value="1">已评论
-                </label>
+                <div class="grid-left">
+                    <label class="comment-status">评论状态：
+                        <input type="radio" name="comment" value="0" checked>未评论
+                        <input type="radio" name="comment" value="1">已评论
+                    </label>
+                </div>
                 <button class="search grid-right">查询</button>
             </div>
             <div class="list">
