@@ -58,26 +58,57 @@ public class PayController {
         return "pay/success";
     }
 
-    /**
+  /*  *//**
      * 订单支付
      * @param paramMap
      * @param model
      * @return
-     */
+     *//*
     @ResponseBody
     @RequestMapping(value = "/payment", method = RequestMethod.POST)
-    public String  payPassSta(@RequestBody Map<String,String> paramMap , Model model) {
+    public String payPassSta(@RequestBody Map<String,String> paramMap, Model model, HttpServletRequest request) {
+
+        long orderAmount = 0 ; //支付金额
+    try {
+            Session session = SecurityUtils.getSubject().getSession();
+            HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
+            User user = userService.selectById(userMap.get("userId"));
+            String newPassword = new Md5Hash(paramMap.get("paymentPassword")).toString();
+            String oldPayPassword =  user.getPaymentPassword();
+        // 验证支付密码
+        if(oldPayPassword.equals(newPassword)){
+
+            String orderSn = paramMap.get("orderSn");
+            //支付操作
+            payCoreService.doPayMoney(orderSn,user.getUserId());
+            //根据订单编号获得支付金额
+            List<Condition> filters = new ArrayList();
+            filters.add(Condition.eq("orderSn", orderSn));
+            OrderInfo orderinfo  = orderService.selectOne(filters);
+            orderAmount= orderinfo.getOrderAmount();
+        }else{
+            model.addAttribute("message", "支付密码错误!");
+            return "pay/fail";
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        model.addAttribute("message", "支付失败!");
+        return "pay/fail";
+    }
+    model.addAttribute("money",orderAmount);
+    return "pay/success";
+}*/
+
+
+    @RequestMapping(value = "/payment", method = RequestMethod.GET)
+    public String payPassSta(String orderSn,Model model) {
+
         long orderAmount = 0 ; //支付金额
         try {
-                Session session = SecurityUtils.getSubject().getSession();
-                HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
-                User user = userService.selectById(userMap.get("userId"));
-                String newPassword = new Md5Hash(paramMap.get("paymentPassword")).toString();
-                String oldPayPassword =  user.getPaymentPassword();
-            // 验证支付密码
-            if(oldPayPassword.equals(newPassword)){
-
-                String orderSn = paramMap.get("orderSn");
+            Session session = SecurityUtils.getSubject().getSession();
+            HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
+            User user = userService.selectById(userMap.get("userId"));
                 //支付操作
                 payCoreService.doPayMoney(orderSn,user.getUserId());
                 //根据订单编号获得支付金额
@@ -85,10 +116,6 @@ public class PayController {
                 filters.add(Condition.eq("orderSn", orderSn));
                 OrderInfo orderinfo  = orderService.selectOne(filters);
                 orderAmount= orderinfo.getOrderAmount();
-            }else{
-                model.addAttribute("message", "支付密码错误!");
-                return "pay/fail";
-            }
 
         } catch (Exception e) {
             e.printStackTrace();
