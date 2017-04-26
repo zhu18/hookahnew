@@ -13,14 +13,6 @@ $('.saved-card-list>.row-container').click(function () {
 		that.addClass('row-container-focus').siblings().removeClass('row-container-focus');
 	}
 });
-var testData = {
-	pay: {
-		password: /^[0-9]{6}$/
-	},
-	payPassword: function (val) {
-		return this.pay.password.test(val)
-	}
-};
 getPayPwdStatus();
 function getPayPwdStatus() {
 	$.ajax({
@@ -104,12 +96,10 @@ function check() {
 	$("[name=apiCode]:radio").each(function () {
 		if (this.checked) {
 			if (this.value == 1) {
-				if ($('#payPassword_rsainput').val()) {
-					if (testData.payPassword($('#payPassword_rsainput').val()))
-						$.alert('支付成功了');
+				if ($('#payPassword_rsainput').val() && $('#payPassword_rsainput').val().length == 6) {
+					$.alert('支付成功了,密码为----：'+$('#payPassword_rsainput').val() );
 					return false;
 				} else {
-					$('.ui-form-explain').hide();
 					$('.ui-form-error').show();
 				}
 			} else {
@@ -119,10 +109,9 @@ function check() {
 		}
 	});
 }
-// $('#payPassword_rsainput').on('focus', function () {
-// 	$('.ui-form-explain').show();
-// 	$('.ui-form-error').hide();
-// });
+$('#payPassword_rsainput').on('focus', function () {
+	$('.ui-form-error').hide();
+});
 var _formPay = $('#form_paypsw');
 _formPay.validate({
 	rules: {
@@ -185,7 +174,7 @@ payPassword.on('keyup', "input[name='payPassword_rsainput']", function (e) {
 	//键盘上的数字键按下才可以输入
 	if (e.keyCode == 8 || (e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) {
 		k = this.value.length;//输入框里面的密码长度
-		l = _this.size();//6
+		l = _this.length;//6
 		for (; l--;) {
 			//输入到第几个密码框，第几个密码框就显示高亮和光标（在输入框内有2个数字密码，第三个密码框要显示高亮和光标，之前的显示黑点后面的显示空白，输入和删除都一样）
 			if (l === k) {

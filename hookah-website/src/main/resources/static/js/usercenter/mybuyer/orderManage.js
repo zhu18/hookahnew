@@ -40,12 +40,10 @@ function loadPageData(data){
 $.jeDate("#startDate", {
     format: "YYYY-MM-DD hh:mm:ss",
     isTime: true,
-    minDate: $.nowDate(0)
 });
 $.jeDate("#endDate", {
     format: "YYYY-MM-DD hh:mm:ss",
     isTime: true,
-    minDate: $.nowDate(0)
 });
 //点击查询按钮
 $(".searchQuery .search").on("click",function(){

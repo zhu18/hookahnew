@@ -193,6 +193,13 @@ $('.pusGoods-btn').click(function () {
 	if (data.isOnsale == 1) {
 		data.onsaleStartDate = $('#indate').val();
 	}
+	if($('select[name="city"]').val() > 0){
+		data.goodsArea = $('select[name="city"]').val();
+	}else if($('select[name="province"]').val() > 0){
+		data.goodsArea = $('select[name="province"]').val();
+	}else if($('select[name="country"]').val() > 0){
+		data.goodsArea = $('select[name="country"]').val();
+	}
 	if (data.goodsType == 1) {
 		data.apiInfo = {};
 		data.apiInfo.apiUrl = $('.api-info-box').find('input[name="apiUrl"]').val();
@@ -218,7 +225,6 @@ $('.pusGoods-btn').click(function () {
 			data.apiInfo.respParamList.push(listData);
 		});
 		data.apiInfo.respSample = $('.api-info-box').find('textarea[name="respSample"]').val();
-		data.goodsArea = $('select[name="city"]').val();
 	}
 
 	if (!!!data.goodsName) {
