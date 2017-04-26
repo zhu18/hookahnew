@@ -157,8 +157,10 @@ public class OrderInfoController extends BaseController {
             if (commentFlag != null) {
                 filters.add(Condition.eq("commentFlag", commentFlag));
             }
+            Condition condition = null;
             if (payStatus != null) {
-                filters.add(Condition.eq("payStatus", payStatus));
+                condition = Condition.eq("payStatus", payStatus);
+                filters.add(condition);
             }
             if (domainName != null) {
                 filters.add(Condition.like("domainName", "%" + domainName + "%"));
@@ -171,11 +173,13 @@ public class OrderInfoController extends BaseController {
             orderBys.add(OrderBy.desc("addTime"));
             Pagination<OrderInfoVo> pOrders = orderInfoService.getDetailListInPage(pageNumber, pageSize, filters, orderBys);
             map.put("orders",pOrders);
-
+            filters.remove(condition); //移除支付状态条件
             //查询数量
             filters.add(Condition.eq("payStatus", 1));
             Long paid = orderInfoService.count(filters);  //已支付数量
             map.put("paidCount",paid);
+
+            filters.remove(filters.size()-1);
             filters.add(Condition.eq("payStatus", 0));
             Long unpaid = orderInfoService.count(filters); //未支付数量
             map.put("unpaidCount",unpaid);
