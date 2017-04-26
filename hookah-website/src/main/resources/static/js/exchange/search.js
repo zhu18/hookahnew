@@ -14,7 +14,7 @@ function loadPageData(data){ //渲染页面数据
             html += '<li>';
             html += '<a class="item-top" href="/exchange/details?id='+list[i].goodsId+'">';
             html += '<p class="goods-img"><img src="'+list[i].goodsImg+'" alt=""/></p>';
-            html += '<p class="goods-name" title="'+list[i].goodsName+'">'+list[i].goodsName+'</p>';
+            html += '<p class="goods-name">'+list[i].goodsName+'</p>';
             html += '<p class="goods-brief" title="'+list[i].goodsBrief+'">'+list[i].goodsBrief+'</p>';
             html += '</a>';
             html += '<div class="item-down clearfix">';

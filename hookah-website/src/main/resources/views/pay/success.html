@@ -10,8 +10,8 @@ var htmlPart = {
     <div class="grid-row ">
         <div class="pay-success margin-top-10 margin-bottom-30">
              <div class="pay-success-box">
-                 <p class="success-money"><span></span><span>您已经成功付款<em class="money color-red">231</em>元</span></p>
-                 <a class="bought-baby-list" href="">已买到宝贝列表</a>
+                 <p class="success-money"><span></span><span>您已经成功付款<em class="money color-red">${trunc(money / 100 , 2)}</em>元</span></p>
+                 <a class="bought-baby-list" href="${host.website}/usercenter/buyer/orderManagement">已买到宝贝列表</a>
              </div>
         </div>
     </div>
