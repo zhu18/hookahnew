@@ -116,7 +116,7 @@ function check() {
 }
 function testPayPassword(pwd){
 	$.ajax({
-		url:host.website+'/verify/verifyPayPassword',
+		url:host.website+'/usercenter/verifyPayPassword',
 		data:{
 			paymentPassword:pwd
 		},
