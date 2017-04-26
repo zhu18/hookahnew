@@ -195,6 +195,7 @@ body{
 }
 .exchange-recommend-resource .recommend-resource-down ul li .li-item-down .down-box-tow .money .money-i-item {
 	font-size: 14px;
+	font-style: normal;
 	color: #e34f4f;
 }
 .exchange-recommend-resource .recommend-resource-down ul li .li-item-down .down-box-tow .detail {
@@ -302,7 +303,7 @@ body{
 	font-size: 250px;
 	line-height: 0;
 	display: inline-block;
-	margin-top: 177px;
+	margin-top: 225px;
 	margin-left: 20px;
 	color: #FCDADE;
 }

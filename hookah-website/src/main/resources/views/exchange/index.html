@@ -112,17 +112,17 @@ var htmlPart = {
 								<div class="grade">
 									<span class="grade-grade">评分:</span>
 									<span class="grade-star">
-                                          <i class="fa fa-star star-i-item" aria-hidden="true"></i>
-                                          <i class="fa fa-star star-i-item" aria-hidden="true"></i>
-                                          <i class="fa fa-star star-i-item" aria-hidden="true"></i>
-                                          <i class="fa fa-star star-i-item" aria-hidden="true"></i>
-                                          <i class="fa fa-star star-i-item" aria-hidden="true"></i>
+                                          <i class="iconfont icon-shoucang star-i-item"></i>
+                                          <i class="iconfont icon-shoucang star-i-item"></i>
+                                          <i class="iconfont icon-shoucang star-i-item"></i>
+                                          <i class="iconfont icon-shoucang star-i-item"></i>
+                                          <i class="iconfont icon-shoucang star-i-item"></i>
                                       </span>
 								</div>
-								<span class="collect"><i class="fa fa-heart collect-item" aria-hidden="true"></i>收藏</span>
+								<span class="collect"><i class="iconfont icon-jushoucanggift collect-item"></i>收藏</span>
 							</div>
 							<div class="down-box-tow">
-								<span class="money"><i class="fa fa-jpy money-i-item" aria-hidden="true"></i>${trunc(item[i].shopPrice / 100,2)}</span>
+								<span class="money"><i class="money-i-item" >￥</i>${trunc(item[i].shopPrice / 100,2)}</span>
 								<a class="detail" href="${host.website}/exchange/details?id=${item[i].goodsId}">查看详情</a>
 							</div>
 						</div>
@@ -511,14 +511,14 @@ var htmlPart = {
 								<img src="${tools_item[i].goodsImg}" alt="">
 								<p class="title">${tools_item[i].goodsName}</p>
 								<p>
-									<i class="fa fa-star color-orange" aria-hidden="true"></i>
-									<i class="fa fa-star color-orange" aria-hidden="true"></i>
-									<i class="fa fa-star color-orange" aria-hidden="true"></i>
-									<i class="fa fa-star color-orange" aria-hidden="true"></i>
-									<i class="fa fa-star color-orange" aria-hidden="true"></i>
+									<i class="iconfont icon-shoucang color-orange"></i>
+									<i class="iconfont icon-shoucang color-orange"></i>
+									<i class="iconfont icon-shoucang color-orange"></i>
+									<i class="iconfont icon-shoucang color-orange"></i>
+									<i class="iconfont icon-shoucang color-orange"></i>
 								</p>
 								<p>
-									<i class="fa fa-jpy color-red" aria-hidden="true"></i>
+									<i class="iconfont icon-jiage-copy"></i>
 									<span class="color-red">${trunc(tools_item[i].shopPrice / 100,2)}</span>
 								</p>
 							</a>
