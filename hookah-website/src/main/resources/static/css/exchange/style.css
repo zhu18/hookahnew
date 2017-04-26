@@ -1176,6 +1176,7 @@ dl {
 .search .search-order .order-list ul li .item-top .goods-img img {
 	width: 70px;
 	margin-top: 18px;
+	max-height: 70px;
 }
 .search .search-order .order-list ul li .item-top .goods-name {
 	font-size: 14px;
