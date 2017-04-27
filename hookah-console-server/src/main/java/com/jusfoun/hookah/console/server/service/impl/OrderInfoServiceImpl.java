@@ -204,9 +204,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                 orderInfoVo.setMgOrderGoodsList(ordergoodsList);
                 mgOrderInfoService.insert(orderInfoVo);
             }
-            if(goodsAmount.compareTo(0L)==0){
-                updatePayStatus(orderInfo.getOrderSn(),2);
-            }
+//            if(goodsAmount.compareTo(0L)==0){
+//                updatePayStatus(orderInfo.getOrderSn(),2);
+//            }
 
             //逻辑删除已经提交的购物车商品
             cartService.deleteBatchByLogic(cartIdArray);
