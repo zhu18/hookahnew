@@ -97,6 +97,10 @@
     border-style:none;
     margin-right:18px;
 }
+.recharge:hover {
+    cursor: pointer;
+    background-color: #eb9c03;
+}
 .balance-box  a{
     color: #FF9B34;
     font-size:14px;
