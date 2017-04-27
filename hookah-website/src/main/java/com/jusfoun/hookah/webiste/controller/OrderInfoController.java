@@ -196,13 +196,14 @@ public class OrderInfoController extends BaseController {
         }
     }
 
-    @RequestMapping(value = "/order/{orderId}", method = RequestMethod.GET)
-    public String getOrderDetail(@PathVariable String orderId,Model model){
+    @RequestMapping(value = "/order/viewDetails", method = RequestMethod.GET)
+    public String getOrderDetail(@RequestParam String orderId,@RequestParam Integer num,Model model){
         try{
             OrderInfoVo vo = orderInfoService.findDetailById(orderId);
             model.addAttribute("order",vo);
+            model.addAttribute("num",num);
             logger.info(JsonUtils.toJson(vo));
-            return "/usercenter/buyer/orderDetails";//不知道哪个页面
+            return "/usercenter/buyer/viewDetails";
         }catch (Exception e){
             logger.info(e.getMessage());
             return "/error/500";
