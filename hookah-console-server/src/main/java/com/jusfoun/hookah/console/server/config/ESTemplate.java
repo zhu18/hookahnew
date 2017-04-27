@@ -5,6 +5,7 @@ import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.es.EsAgg;
 import com.jusfoun.hookah.core.domain.es.EsAggResult;
+import com.jusfoun.hookah.core.domain.es.EsRange;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.ElasticsearchException;
@@ -656,13 +657,18 @@ public class ESTemplate {
      * @return
      */
     public Pagination search(TransportClient client, String indexName, String type, Map<String,Object> filterMap,
-                             Pagination pagination, String orderField, String order, String ... highLightFields){
+                             Pagination pagination, String orderField, String order, String ... highLightFields) {
+        return search(client, indexName, type, filterMap, pagination, orderField, order, null, highLightFields);
+    }
+
+    public Pagination search(TransportClient client, String indexName, String type, Map<String,Object> filterMap,
+                             Pagination pagination, String orderField, String order, EsRange range, String ... highLightFields){
         SearchRequestBuilder requestBuilder = client.prepareSearch(indexName);
         HighlightBuilder highlightBuilder = new HighlightBuilder().field("*").requireFieldMatch(false);
         highlightBuilder.preTags("<span style=\"color:red\">");
         highlightBuilder.postTags("</span>");
         requestBuilder.highlighter(highlightBuilder);
-        requestBuilder.setTypes(type).setQuery(getBoolQueryBuilder(filterMap));
+        requestBuilder.setTypes(type).setQuery(range == null ? getBoolQueryBuilder(filterMap) : getBoolQueryBuilder(filterMap, range));
         if(StringUtils.isNotBlank(orderField)) {
             requestBuilder.addSort(orderField, StringUtils.isNotBlank(order) &&
                     order.equals(SortOrder.DESC.toString()) ? SortOrder.DESC : SortOrder.ASC);
@@ -696,32 +702,48 @@ public class ESTemplate {
     }
 
     public BoolQueryBuilder getBoolQueryBuilder(Map<String,Object> filterMap) {
+        return getBoolQueryBuilder(filterMap, null);
+    }
+
+    public BoolQueryBuilder getBoolQueryBuilder(Map<String,Object> filterMap, EsRange range) {
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
         QueryBuilder queryString = null;
-//        QueryStringQueryBuilder
-        MatchAllQueryBuilder matchAll = null;
-        if(filterMap != null && !filterMap.isEmpty()){
+        if(filterMap != null && !filterMap.isEmpty() && filterMap.size() > 0){
             for(Map.Entry entry : filterMap.entrySet()){
                 if(entry.getValue() != null) {
-//                    if(entry.getKey().equals("goodsNameAll")) {
-//                        queryString = QueryBuilders.multiMatchQuery(entry.getValue(), "goodsName", "goodsNameAll");
-//                    }else {
-//                    queryString = QueryBuilders.queryStringQuery(String.valueOf(entry.getValue()));
-//                    ((QueryStringQueryBuilder)queryString).field(String.valueOf(entry.getKey()));
-//                    }
-//                    queryString = QueryBuilders.matchPhraseQuery(String.valueOf(entry.getKey()), entry.getValue());
-
                     queryString = QueryBuilders.simpleQueryStringQuery(String.valueOf(entry.getValue()))
                             .field(String.valueOf(entry.getKey()));
                     boolQueryBuilder.must(queryString);
                 }
             }
-        }else{//检索全部
-            matchAll = QueryBuilders.matchAllQuery();
+
+            if(range != null) {
+                if(range.getPriceFrom() != null && range.getPriceTo() != null) {
+                    queryString = QueryBuilders.rangeQuery("shopPrice").from(range.getPriceFrom()).to(range.getPriceTo());
+                }else if(range.getPriceFrom() != null && range.getPriceTo() == null) {
+                    queryString = QueryBuilders.rangeQuery("shopPrice").from(range.getPriceFrom());
+                }else if(range.getPriceFrom() == null && range.getPriceTo() != null) {
+                    queryString = QueryBuilders.rangeQuery("shopPrice").to(range.getPriceTo());
+                }
+                boolQueryBuilder.must(queryString);
+            }
+        }else if((filterMap == null || filterMap.size() == 0) && range != null) {
+            if(range.getPriceFrom() != null && range.getPriceTo() != null) {
+                queryString = QueryBuilders.rangeQuery("shopPrice").from(range.getPriceFrom()).to(range.getPriceTo());
+            }else if(range.getPriceFrom() != null && range.getPriceTo() == null) {
+                queryString = QueryBuilders.rangeQuery("shopPrice").from(range.getPriceFrom());
+            }else if(range.getPriceFrom() == null && range.getPriceTo() != null) {
+                queryString = QueryBuilders.rangeQuery("shopPrice").to(range.getPriceTo());
+            }
+            boolQueryBuilder.must(queryString);
+        }else {//检索全部
+            MatchAllQueryBuilder matchAll = QueryBuilders.matchAllQuery();
             boolQueryBuilder.must(matchAll);
         }
+
         return boolQueryBuilder;
     }
+
 
     /**
      * suggest
@@ -763,11 +785,16 @@ public class ESTemplate {
 
     public Map<String, List<EsAggResult>> getCounts(TransportClient client, String indexName, String type,
                                                     Map<String,Object> filterMap, List<EsAgg> listCnt) {
+        return getCounts(client, indexName, type, filterMap, listCnt, null);
+    }
+
+    public Map<String, List<EsAggResult>> getCounts(TransportClient client, String indexName, String type,
+                                                    Map<String,Object> filterMap, List<EsAgg> listCnt, EsRange range) {
         Map<String, List<EsAggResult>> map = new HashedMap();
         SearchRequestBuilder requestBuilder = client.prepareSearch()
                 .setIndices(indexName).setTypes(type);
         if(filterMap != null) {
-            requestBuilder.setQuery(getBoolQueryBuilder(filterMap));
+            requestBuilder.setQuery(range == null ? getBoolQueryBuilder(filterMap) : getBoolQueryBuilder(filterMap, range));
         }
         if (listCnt != null && listCnt.size() > 0) {
             for (EsAgg obj : listCnt) {
