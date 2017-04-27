@@ -388,14 +388,14 @@
     display: none;
 }
 .viewDetails .viewContent .leftContent .state-btn .pay {
-    background: #eee;
-    border: 1px solid #ccc;
     padding:4px 13px;
+    border: 1px solid #E4393C;
+    background: #fff;
+    color:#E4393C;
 }
 .viewDetails .viewContent .leftContent .state-btn .pay:hover{
-    border: 1px solid #237DE7;
-    background: #fff;
-    color:#237DE7;
+    background: #eee;
+    border: 1px solid #ccc;
 }
 
 .viewDetails .viewContent .leftContent .state-bottom img{
