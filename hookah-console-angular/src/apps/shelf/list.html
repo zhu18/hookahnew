@@ -52,7 +52,9 @@
               <!--<span class="state-unread " ng-if="item.Status*1===0">●</span>-->
               <!--</td>-->
               <td>
-                <span class="column-text" ng-bind="item.shelvesName"></span>
+                <a href="javascript:;" ng-click="manageGoods($event,item)">
+                  <span class="column-text" ng-bind="item.shelvesName"></span>
+                </a>
               </td>
               <td>
                 <span class="column-text" ng-bind="item.shelvesType"></span>

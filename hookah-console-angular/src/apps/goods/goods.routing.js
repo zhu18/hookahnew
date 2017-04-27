@@ -19,6 +19,11 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
       template: require('./update.html'),
       controller: GoodsController,
     })
+    .state('items.lookDetail', {
+      url: '/items/lookDetail',
+      template: require('./lookDetail.html'),
+      controller: GoodsController,
+    })
     .state('items.category', {
       url: '/items/category',
       template: require('./list.html'),
