@@ -157,3 +157,8 @@ var htmlPart = {
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
+<script>
+  $(".recharge").click(function(){
+      window.location.href = '/usercenter/recharge';
+  })
+</script>

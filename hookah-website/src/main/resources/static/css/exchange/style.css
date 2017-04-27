@@ -1568,7 +1568,8 @@ dl {
 	border-bottom: 1px solid #EFEFEF;
 }
 .goodsDetails .goods-right .recommend-one ul li {
-	padding: 5px 0;
+	padding: 15px 0;
+	border-bottom:1px solid #EFEFEF;
 }
 .goodsDetails .goods-right .recommend-one ul li img {
 	width: 47px;
