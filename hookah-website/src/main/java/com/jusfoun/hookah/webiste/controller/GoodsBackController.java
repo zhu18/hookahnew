@@ -45,6 +45,7 @@ public class GoodsBackController extends BaseController {
         try {
             String userId = this.getCurrentUser().getUserId();
             obj.setAddUser(userId);
+            obj.setIsOnsale(HookahConstants.GOODS_STATUS_ONSALE);
             goodsService.addGoods(obj);
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
