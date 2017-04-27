@@ -82,7 +82,9 @@ function deleteRadio(orderId) {
     $.ajax({
         url: '/order/delete',
         type: 'get',
-        orderId: orderId,
+        data:{
+            orderId:orderId
+        },
         success: function (data) {
             if (data.code == 1) {
                 location.reload(true);
