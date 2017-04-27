@@ -409,9 +409,9 @@ public class OrderInfoController extends BaseController {
      * @param
      * @return
      */
-    @RequestMapping(value="/delete",method=RequestMethod.POST)
+    @RequestMapping(value="/delete",method=RequestMethod.GET)
     @ResponseBody
-    public ReturnData delete(String orderId){
+    public ReturnData delete(@RequestParam String orderId){
         try{
             orderInfoService.deleteByLogic(orderId);
             return ReturnData.success();
