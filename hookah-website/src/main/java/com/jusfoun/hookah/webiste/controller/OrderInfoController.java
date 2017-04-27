@@ -196,13 +196,14 @@ public class OrderInfoController extends BaseController {
         }
     }
 
-    @RequestMapping(value = "/order/{orderId}", method = RequestMethod.GET)
-    public String getOrderDetail(@PathVariable String orderId,Model model){
+    @RequestMapping(value = "/order/viewDetails", method = RequestMethod.GET)
+    public String getOrderDetail(@RequestParam String orderId,@RequestParam Integer num,Model model){
         try{
             OrderInfoVo vo = orderInfoService.findDetailById(orderId);
             model.addAttribute("order",vo);
+            model.addAttribute("num",num);
             logger.info(JsonUtils.toJson(vo));
-            return "/usercenter/buyer/orderDetails";//不知道哪个页面
+            return "/usercenter/buyer/viewDetails";
         }catch (Exception e){
             logger.info(e.getMessage());
             return "/error/500";
@@ -392,7 +393,7 @@ public class OrderInfoController extends BaseController {
      * @param
      * @return
      */
-	@RequestMapping(value="/deleteBatch",method=RequestMethod.POST)
+	@RequestMapping(value="/order/deleteBatch",method=RequestMethod.POST)
     @ResponseBody
 	public ReturnData delete(@RequestBody  String[] orderIds){
 		try{
@@ -409,7 +410,7 @@ public class OrderInfoController extends BaseController {
      * @param
      * @return
      */
-    @RequestMapping(value="/delete",method=RequestMethod.GET)
+    @RequestMapping(value="/order/delete",method=RequestMethod.GET)
     @ResponseBody
     public ReturnData delete(@RequestParam String orderId){
         try{
