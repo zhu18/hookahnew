@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -67,7 +68,12 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
     @Override
     @Transactional
     public void updateGoods(GoodsVo obj) throws HookahException {
-        obj.setLastUpdateTime(DateUtils.now());
+        Date date = DateUtils.now();
+        obj.setLastUpdateTime(date);
+        obj.setIsOnsale(HookahConstants.GOODS_STATUS_ONSALE);
+        obj.setOnsaleStartDate(date);
+        obj.setOnsaleEndDate(null);
+        obj.setCheckStatus(HookahConstants.GOODS_CHECK_STATUS_WAIT);
         int i = super.updateByIdSelective(obj);
         if(i < 1) {
             throw new HookahException("更新失败！");
