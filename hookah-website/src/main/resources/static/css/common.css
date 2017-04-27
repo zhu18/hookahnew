@@ -41,16 +41,19 @@
 .color-gray-6{
     color:#666 ;
 }
+/*以下为本站的三大主色调*/
 .color-orange{
     color: #ffa800;
 }
 .color-blue{
     color: #078cfc;
 }
+.color-gray-blue{
+    color: #3E557B;
+}
 .color-red{
     color: #e34f4f;
 }
-
 
 /* Background
 =================================================================== */
@@ -58,14 +61,22 @@
     background-color:#f5f5f5 ;
 }
 .backgorund-white{
-    background-color: white;
+    background-color:#ffffff;
 }
-.backgorund-icon-orange{
-    background-color: #FB7F33;
+/*以下为本站的三大主色调*/
+.backgorund-red{
+    background-color:#E34F4F;
 }
-.backgorund-icon-blue{
-    background-color: #4BB5F9;
+.backgorund-blue{
+    background-color:#078cfc;
 }
+.backgorund-gray-blue{
+    background-color:#3E557B;
+}
+.backgorund-orange{
+    background-color:#FFA800;
+}
+
 /* Text-align
 =================================================================== */
 .text-align-left{
@@ -520,4 +531,19 @@ ul li {
     text-align: center;
     font-size: 16px;
     line-height: 50px;
+}
+
+.line-blue{
+    background-color: #247DE8;
+}
+.line-blue-active{
+    background-color: #E1EFFF;
+}
+/*---a标签---*/
+.a-blue{
+    color: #078cfc;
+}
+.a-blue:hover{
+    color: #0781e8;
+    text-decoration: underline;
 }

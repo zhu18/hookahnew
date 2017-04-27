@@ -48,21 +48,30 @@ $(document).ready(function () {
 				$('.search-sug').show();
 			}
 		}
-		$(this).keydown(function (event) {
-			if (event.keyCode == 40) {
-				$(this).blur();
-				$('.search-sug').show().addClass('keyActive');
-			} else if (event.keyCode == 13) {
-				$("#J_searchInput").blur();
+
+	});
+	$("#J_searchInput").keydown(function (event) {
+		if (event.keyCode == 40) {
+			$(this).blur();
+			$('.search-sug').show().addClass('keyActive');
+		}
+		if (event.keyCode == 13) {
+			// $("#J_searchInput").blur();
+			if(window.location.pathname == '/exchange/search'){
+				window.location.href = host.website+'/exchange/search?names=' + $(this).val();
+			}else{
 				window.open(host.website+'/exchange/search?names=' + $(this).val());
-				return;
 			}
-		});
+		}
 	});
 	$('#J_searchBtn').click(function(){
 		if($("#J_searchInput").val().length > 0){
 			$("#J_searchInput").blur();
-			window.open(host.website+'/exchange/search?names=' + $("#J_searchInput").val());
+			if(window.location.pathname == '/exchange/search'){
+				window.location.href = host.website+'/exchange/search?names=' + $("#J_searchInput").val();
+			}else{
+				window.open(host.website+'/exchange/search?names=' + $("#J_searchInput").val());
+			}
 			return;
 		}
 	});
@@ -163,7 +172,6 @@ function getSearchSug(sugText) {
 function showSugBox(data) {
 	var html = '';
 	data.forEach(function (list) {
-        console.log(list);
         html += '<li><a target="_blank" href="'+host.website+'/exchange/search?names=' + list + '">' + list + '</a></li>';
 	});
 	$('.search-sug').show().children('ul').html(html);

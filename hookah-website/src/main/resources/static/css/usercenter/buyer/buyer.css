@@ -67,7 +67,10 @@
     padding: 5px;
     text-align: center;
 }
-
+.orderManagement .order table th.money {
+    padding: 5px;
+    text-align: right;
+}
 .orderManagement .order table tr {
 }
 
@@ -75,7 +78,10 @@
     padding: 5px;
     text-align: center;
 }
-
+.orderManagement .order table td.moneyTotal {
+    padding: 5px;
+    text-align: right;
+}
 .orderManagement .order table tbody {
     border: 1px solid #d5d5d5;
 }
@@ -267,7 +273,6 @@
 .order-manage .order-box .order-items.cart-list-bottom .buy-btn {
     width: 80px;
     height: 41px;
-    background-color: #00C1DE;
     text-align: center;
     color: #fff;
     line-height: 40px;

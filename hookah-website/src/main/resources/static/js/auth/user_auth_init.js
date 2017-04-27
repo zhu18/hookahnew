@@ -1,5 +1,5 @@
 /**
- * Created by wcq on 2017/4/11.
+ * Created by ki on 2017/4/15.
  */
 //认证协议页面：点击下一步，跳转到company_auth_init_step2页面
 
@@ -9,7 +9,7 @@ $(function(){
         if(!$("#check").is(":checked")){
             $(".agreement-btn a").attr('href','javascript:;')
             $('.gray-btn2').css({
-                "background-color":"gray",
+                "background-color":"#efefef",
                 "cursor": "not-allowed"
             })
         }
@@ -17,7 +17,7 @@ $(function(){
     $("#check").click(function(){
         if($("#check").is(":checked")){
             $(".gray-btn2").css({
-                "background-color":"blue",
+                "background-color":"#0781e8",
                 "cursor": "pointer"
             });
             $("#next").attr("href","./user_auth_init_step2");

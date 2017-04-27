@@ -2,6 +2,7 @@ package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
+import com.jusfoun.hookah.core.domain.vo.GoodsShelvesVo;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.rpc.api.CategoryService;
 import com.jusfoun.hookah.rpc.api.GoodsService;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author huang lei
@@ -67,6 +70,10 @@ public class ExchangeController {
             }
         }
         model.addAttribute("goodsDetails", goodsVo);
+
+        //推荐商品
+        Map<String,GoodsShelvesVo> goodsMap = goodsShelvesService.getShevlesGoodsVoList(new HashMap<String,Object>());
+        model.addAttribute("reCommData", goodsMap.get("recomm_data"));
         return "exchange/details";
     }
 
