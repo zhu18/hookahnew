@@ -474,6 +474,9 @@
     line-height: 60px;
     display: inline-block;
 }
+.goods-list .goods{
+    width: 500px;
+}
 .goods div {
     display: inline-block;
 }

@@ -51,8 +51,8 @@ var htmlPart = {
                         <div class="order">
                             <ul>
                                 <li>提交订单</li>
-                                <li>2017-04-21</li>
-                                <li>13:55:56</li>
+                                <li>${order.confirmTime,dateFormat="yyyy-MM-dd"}</li>
+                                <li>${order.confirmTime,dateFormat="hh:MM:ss"}</li>
                             </ul>
                         </div>
                         <div class="pay">付款成功</div>
@@ -76,29 +76,31 @@ var htmlPart = {
                         </tr>
                         </thead>
                         <tbody>
+                        <% for(list in order.mgOrderGoodsList){ %>
                         <tr class="padding-bottom-10">
                             <td class="goods text-align-center margin-top-10">
                                 <div class="p-img">
-                                    <a href=""><img src="/static/images/timg.jpeg" alt=""></a>
+                                    <a href="/exchange/details?id=${order.orderId}"><img src="/static/images/timg.jpeg" alt=""></a>
                                 </div>
                                 <div class="desc margin-top-10 marign-bottom-10">
-                                    <a href="">金士顿(Kingston)低电压版 DDR3 1600 8GB 笔记本内存</a>
+                                    <a href="/exchange/details?id=${order.orderId}">${list.goodsName}</a>
                                 </div>
                             </td>
-                            <td class="number" >1066754</td>
-                            <td class="price">¥409.00</td>
-                            <td class="num">1</td>
+                            <td class="number" >${list.goodsSn}</td>
+                            <td class="price">¥${list.goodsPrice}</td>
+                            <td class="num">${list.goodsNumber}</td>
                             <td class="operate"><a href="" class="buy">立即购买</a></td>
                         </tr>
+                        <%}%>
                         </tbody>
                     </table>
                 </div>
                 <div class="goods-info clearfix text-align-center margin-top-15">
                     <ul class="grid-right margin-right-20">
-                        <li>付款方式:<span>在线支付</span></li>
-                        <li>付款时间: <span>2016-03-28&nbsp;&nbsp;</span></li>
-                        <li>商品总额: <span>¥409.00</span></li>
-                        <li>应付总额: <span>¥409.00</span></li>
+                        <li>付款方式:<span>${order.payName}</span></li>
+                        <li>付款时间：<span>${order.payTime,dateFormat="yyyy-MM-dd"}&nbsp;&nbsp;</span></li>
+                        <li>商品总额: <span>¥${order.goodsAmount}</span></li>
+                        <li>应付总额: <span>¥${order.orderAmount}</span></li>
                     </ul>
                 </div>
             </div>

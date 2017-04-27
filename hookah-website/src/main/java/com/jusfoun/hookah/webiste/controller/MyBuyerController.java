@@ -48,8 +48,8 @@ public class MyBuyerController {
         return "usercenter/buyer/myAttention";
     }
 
-    @RequestMapping(value = "/viewDetails", method = RequestMethod.GET)
-    public String viewDetails() {  return "usercenter/buyer/viewDetails"; }
+//    @RequestMapping(value = "/viewDetails", method = RequestMethod.GET)
+//    public String viewDetails() {  return "usercenter/buyer/viewDetails"; }
 
     @RequestMapping(value = "/sunAlone", method = RequestMethod.GET)
     public String sunAlone() {  return "usercenter/buyer/sunAlone"; }

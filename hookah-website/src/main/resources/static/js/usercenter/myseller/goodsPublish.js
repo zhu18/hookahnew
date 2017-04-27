@@ -4,6 +4,8 @@ var datas = null ;
 var nextAll = '';
 var isTrue = false;
 
+var id="";
+
 loadData(url,pid);
 //点击加载。。。
 function clickLoadData(url,pid,that){
@@ -34,6 +36,7 @@ function showBtn(isTrue){
 }
 //加载。。。
 function loadData(url,pid){
+    id=pid;
     $.ajax({
         type: "get",
         url: url,
@@ -71,7 +74,6 @@ function loadData(url,pid){
 list();
 function list(){
     $(".search-list ul").on('click','li',function(){
-        console.log("text:"+$(this).text());
         $(this).children('label').addClass('current').end().siblings().children('label').removeClass('current');
         $(this).addClass("current").siblings().removeClass("current");
         $('.clearfix-content').html($(this).text());
@@ -92,7 +94,7 @@ $('#btn-search').click(function(){
 function pusblishBtn(){
     $('#pusblishBtn').click(function(){
         var category = $('.clearfix-content').text();
-        window.location.href = "/usercenter/goodsEdit?catId="+pid+"&category="+category;
+        window.location.href = "/usercenter/goodsEdit?catId="+id+"&category="+category;
     });
 }
 
@@ -120,10 +122,10 @@ function showBox(data) {
     $('.search-list').show().children('ul').html(html);
 }
 
-$("#input-search").addEventListener('change',function(){
-    if($.trim(("#input-search").val())==""){
-        $(".search-list").hide();
-        $(".select-category-box").show();
-    }
-})
+// $("#input-search").addEventListener('change',function(){
+//     if($.trim($("#input-search").val())==""){
+//         $(".search-list").hide();
+//         $(".select-category-box").show();
+//     }
+// })
 // 类目搜索结束
