@@ -222,6 +222,15 @@ public class Goods extends GenericModel {
 
     private String shopName;
 
+    private String offReason; // 强制下架理由
+
+    public String getOffReason() {
+        return offReason;
+    }
+
+    public void setOffReason(String offReason) {
+        this.offReason = offReason;
+    }
 
     public String getShopName() {
         return shopName;
