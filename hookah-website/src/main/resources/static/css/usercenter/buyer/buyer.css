@@ -387,14 +387,15 @@
 .viewDetails .viewContent .leftContent .state-btn {
     display: none;
 }
-.viewDetails .viewContent .leftContent .state-btn .fapiao {
+.viewDetails .viewContent .leftContent .state-btn .pay {
     background: #eee;
     border: 1px solid #ccc;
-    padding:4px 12px;
+    padding:4px 13px;
 }
-.viewDetails .viewContent .leftContent .state-btn .fapiao:hover{
+.viewDetails .viewContent .leftContent .state-btn .pay:hover{
     border: 1px solid #237DE7;
     background: #fff;
+    color:#237DE7;
 }
 
 .viewDetails .viewContent .leftContent .state-bottom img{

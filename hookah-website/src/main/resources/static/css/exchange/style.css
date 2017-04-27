@@ -195,10 +195,8 @@ body{
 	float: right;
 	width: 107px;
 	height: 32px;
-	border: 1px solid #e34f4f;
 	text-align: center;
 	line-height: 32px;
-	color: #e34f4f;
 }
 /*.exchange-recommend-resource .recommend-resource-down ul li:nth-child(4n) {*/
 	/*margin-right: 0px;*/
@@ -561,13 +559,12 @@ body{
     top: 0;
     width: 55px;
     left: 0;
-    line-height: 393.458px;
+    line-height: 360px;
     text-align: center;
     z-index: 1000;
     color: white;
     font-size: 60px;
     background: #161A1D;
-    height: 393.458px;
     cursor: pointer;
 	/* older safari/Chrome browsers */
 	-webkit-opacity: 0.4;
@@ -591,12 +588,11 @@ body{
     width: 55px;
     color: white;
     right: 0;
-    line-height: 393.458px;
+    line-height: 360px;
     text-align: center;
     z-index: 1000;
     font-size: 60px;
     background: #161A1D;
-    height: 393.458px;
     cursor: pointer;
 	/* older safari/Chrome browsers */
 	-webkit-opacity: 0.4;
@@ -624,18 +620,18 @@ body{
     float: left;
     position: relative;
     width: 269.8px;
-    height: 393.458px;
+    height: 360px;
     background-color: white;
 }
 .exchange-industry-resource .industry-resource-down ul .slide-item a{
     display: inline-block;
     width: 100%;
-    height: 450px;
+    height: 360px;
 }
 .exchange-industry-resource .industry-resource-down ul .slide-item img{
     float: left;
     width: 100%;
-    height: 393.458px;
+    height: 360px;
 }
 .exchange-industry-resource .industry-resource-down ul .slide-item .bg{
     position: absolute;
@@ -736,7 +732,6 @@ body{
     height: 36px;
     line-height: 36px;
     font-size: 14px;
-    color: #fff;
     text-decoration: none;
     margin-top: 40px;
 }
@@ -769,7 +764,7 @@ body{
 }
 .exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-content .bg-btn {
 	transition: transform 0.3s linear 0s;
-	transform: translateY(-30px);
+	transform: translateY(-35px);
 	animation: show 0.5s ease-in-out 0s 1 alternate forwards;
 	-moz-animation: show 0.5s ease-in-out 0s 1 alternate forwards; /* Firefox */
 	-webkit-animation: show 0.5s ease-in-out 0s 1 alternate forwards; /* Safari and Chrome */

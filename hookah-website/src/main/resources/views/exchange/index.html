@@ -71,7 +71,7 @@ var htmlPart = {
 					</div>
 				</div>
 				<div class="recommend-resource-top-right grid-right">
-					<a href="${host.website}/exchange/shelves?id=${recomm_data.shelvesId}">更多>></a>
+					<a href="${host.website}/exchange/shelves?id=${recomm_data.shelvesId}" class="a-hover-blue">更多>></a>
 				</div>
 			</div>
 			<div class="recommend-resource-down clearfix">
@@ -123,7 +123,7 @@ var htmlPart = {
 							</div>
 							<div class="down-box-tow">
 								<span class="money"><i class="money-i-item" >￥</i>${trunc(item[i].shopPrice / 100,2)}</span>
-								<a class="detail" href="${host.website}/exchange/details?id=${item[i].goodsId}">查看详情</a>
+								<a class="detail btn-hover-red" href="${host.website}/exchange/details?id=${item[i].goodsId}" >查看详情</a>
 							</div>
 						</div>
 						<div class="li-hover">
@@ -152,7 +152,7 @@ var htmlPart = {
 				</div>
 			</div>
 			<div class="hot-resource-top-right grid-right">
-				<a href="${host.website}/exchange/shelves?id=${hot_res_data.shelvesId}">更多>></a>
+				<a href="${host.website}/exchange/shelves?id=${hot_res_data.shelvesId}" class="a-hover-blue">更多>></a>
 			</div>
 		</div>
 		<div class="hot-resource-down clearfix">
@@ -190,7 +190,7 @@ var htmlPart = {
 						<td class="td-two">${res_item[i].goodsName}</td>
 						<td class="td-three"><span class="td-three-money">${trunc(res_item[i].shopPrice / 100,2)}</span></td><!--<span>元/次</span>-->
 						<td class="td-four">
-							<a href="${host.website}/exchange/details?id=${res_item[i].goodsId}">查看详情</a>
+							<a href="${host.website}/exchange/details?id=${res_item[i].goodsId}" class="a-hover-blue">查看详情</a>
 							<!--<span>免</span>-->
 							<!--<span>企</span>-->
 						</td>
@@ -241,7 +241,7 @@ var htmlPart = {
 				</div>
 			</div>
 			<div class="industry-resource-top-right grid-right">
-				<a href="${host.website}/exchange/shelves?id=${ind_res_data.shelvesId}" class="a-blue">更多>></a>
+				<a href="${host.website}/exchange/shelves?id=${ind_res_data.shelvesId}" class="a-hover-blue">更多>></a>
 			</div>
 		</div>
 		<div class="industry-resource-down ">
@@ -267,7 +267,7 @@ var htmlPart = {
 										<p class="bg-boundary"><i></i></p>
 										<h3 class="bg-title">${item.goodsName}</h3>
 										<p class="bg-info">${item.goodsBrief}</p>
-										<div class="bg-btn">
+										<div class="bg-btn btn-hover-white">
 											查看详情
 										</div>
 									</div>
@@ -349,7 +349,7 @@ var htmlPart = {
 					<div class="label-box">
 						<!--<span>资源汇总</span>-->
 						<!--<span>资源汇总</span>-->
-						<a class="more" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.model_data.shelvesId}" class="a-blue">更多>></a>
+						<a class="more" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.model_data.shelvesId}" class="a-hover-blue">更多>></a>
 					</div>
 					<span class="iconfont icon-productfeatures bg-img"></span>
 				</div>
@@ -395,7 +395,7 @@ var htmlPart = {
 					<div class="label-box">
 						<!--<span>资源汇总</span>-->
 						<!--<span>资源汇总</span>-->
-						<a class="more" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.scene_data.shelvesId}" class="a-blue">更多>></a>
+						<a class="more" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.scene_data.shelvesId}" class="a-hover-blue">更多>></a>
 
 					</div>
 					<span class="iconfont icon-productfeatures bg-img"></span>
@@ -442,7 +442,7 @@ var htmlPart = {
 					<div class="label-box">
 						<!--<span>资源汇总</span>-->
 						<!--<span>资源汇总</span>-->
-						<a class="more" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.plat_data.shelvesId}" class="a-blue">更多>></a>
+						<a class="more" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.plat_data.shelvesId}" class="a-hover-blue">更多>></a>
 					</div>
 					<span class="iconfont icon-productfeatures bg-img"></span>
 
@@ -489,7 +489,7 @@ var htmlPart = {
 					<div class="label-box">
 						<!--<span>资源汇总</span>-->
 						<!--<span>资源汇总</span>-->
-						<a class="more" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.tools_data.shelvesId}" class="a-blue">更多>></a>
+						<a class="more" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.tools_data.shelvesId}" class="a-hover-blue">更多>></a>
 					</div>
 					<span class="iconfont icon-productfeatures bg-img"></span>
 
@@ -530,18 +530,18 @@ var htmlPart = {
 		</div>
 		<div class="category-right grid-right">
 			<div class="common-problems">
-				<i></i><span>常见问题</span><span class="a-blue">更多>></span>
+				<i></i><span>常见问题</span><span class="a-hover-blue">更多>></span>
 			</div>
 			<ul class="common-problems-list">
-				<li><span>1</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
-				<li><span>2</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
-				<li><span>3</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
-				<li><span>4</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
-				<li><span>5</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
-				<li><span>6</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
-				<li><span>7</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
-				<li><span>8</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
-				<li><span>9</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
+				<li class="a-hover-blue"><span>1</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
+				<li class="a-hover-blue"><span>2</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
+				<li class="a-hover-blue"><span>3</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
+				<li class="a-hover-blue"><span>4</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
+				<li class="a-hover-blue"><span>5</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
+				<li class="a-hover-blue"><span>6</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
+				<li class="a-hover-blue"><span>7</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
+				<li class="a-hover-blue"><span>8</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
+				<li class="a-hover-blue"><span>9</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>
 			</ul>
 		</div>
 	</div>

@@ -18,9 +18,9 @@ var htmlPart = {
             <div class="viewContent clearfix">
                 <div class="leftContent grid-left padding-top-20 text-align-center">
                     <div class="state-top margin-bottom-30 ">订单号：1234567789</div>
-                    <h3 class="state-txt margin-bottom-30">完成</h3>
+                    <h3 class="state-txt margin-bottom-10">完成</h3>
                     <div class="state-btn">
-                        <a href="" class="fapiao">付款</a>
+                        <a href="" class="pay">付款</a>
                     </div>
                     <!--<div class="state-bottom margin-bottom-30">-->
                         <!--<a href="" ><span class="iconfont icon-dayin margin-right-5"></span>打印订单</a>-->
@@ -41,7 +41,7 @@ var htmlPart = {
                             <span class="iconfont icon-fukuan"></span>
                         </div>
                         <div class="line">
-                            <span></span>
+                            <span class="gray"></span>
                         </div>
                         <div class="proce">
                             <span class="iconfont icon-wancheng text-align-center"></span>
@@ -109,3 +109,4 @@ var htmlPart = {
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
+<script src="/static/js/usercenter/mybuyer/viewDetails.js"></script>
