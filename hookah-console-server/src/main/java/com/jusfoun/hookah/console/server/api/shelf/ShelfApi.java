@@ -46,6 +46,7 @@ public class ShelfApi extends BaseController {
             List<Condition> filters = new ArrayList();
             List<OrderBy> orderBys = new ArrayList();
             orderBys.add(OrderBy.desc("lastUpdateTime"));
+            filters.add(Condition.ne("shelvesStatus", 3)); // 查询没有被删除的  状态不等于3
             //参数校验
             int pageNumberNew = HookahConstants.PAGE_NUM;
 
@@ -103,14 +104,22 @@ public class ShelfApi extends BaseController {
 
     @RequestMapping(value = "/updateStatus", method = RequestMethod.POST)
     public ReturnData updateStatus(String shelvesId, String shelvesStatus) {
-        GoodsShelves goodsShelves = new GoodsShelves();
-        goodsShelves.setShelvesId(shelvesId);
-        if("0".equals(shelvesStatus)){
-            goodsShelves.setShelvesStatus(Byte.parseByte("1"));
-        }else if("1".equals(shelvesStatus)){
-            goodsShelves.setShelvesStatus(Byte.parseByte("0"));
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+
+            GoodsShelves goodsShelves = new GoodsShelves();
+            goodsShelves.setShelvesId(shelvesId);
+            goodsShelves.setShelvesStatus(Byte.parseByte(shelvesStatus));
+            goodsShelvesService.updateByIdSelective(goodsShelves);
+
+            // 删除货架时，删除mg中的货架数据  暂时不删除
+
+        } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
         }
-        int result = goodsShelvesService.updateByIdSelective(goodsShelves);
-        return ReturnData.success(result);
+        return returnData;
     }
 }

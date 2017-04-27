@@ -15,6 +15,7 @@ public class GoodsVo extends Goods implements Serializable {
     private List<MgGoods.FormatBean> formatList;
     private List<MgGoods.ImgBean> imgList;
     private MgGoods.ApiInfoBean apiInfo;
+    private boolean orNotFavorite;
 
     public List<MgCategoryAttrType.AttrTypeBean> getAttrTypeList() {
         return attrTypeList;
@@ -46,5 +47,13 @@ public class GoodsVo extends Goods implements Serializable {
 
     public void setApiInfo(MgGoods.ApiInfoBean apiInfo) {
         this.apiInfo = apiInfo;
+    }
+
+    public boolean isOrNotFavorite() {
+        return orNotFavorite;
+    }
+
+    public void setOrNotFavorite(boolean orNotFavorite) {
+        this.orNotFavorite = orNotFavorite;
     }
 }

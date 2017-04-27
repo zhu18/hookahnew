@@ -38,7 +38,8 @@
               </tr>
             </thead>
             <tbody>
-            <tr data-ng-if="!loadingState" data-ng-repeat="item in pagination.store" class="">
+            <tr data-ng-if="!loadingState" data-ng-repeat="item in pagination.store" data-ng-click="showCurrentGoods(item)"
+                class="">
               <td>
                 <span text-length="50" ng-bind="item.goodsSn"></span>
               </td>
@@ -54,7 +55,15 @@
                 <span class="column-text" style="width: 100px;white-space:nowrap;" ng-bind="item.checkTime"></span>
               </td>
               <td>
+
                 <a href="javascript:;" ng-click="LookDetail($event, item)">审核详情</a>
+                <!--<span ng-show="item.goodsId == selectId">-->
+                    <!--<a href="javascript:;" style="color:red" ng-click="LookDetail($event, item)">审核详情</a>-->
+                <!--</span>-->
+                <!--<span  ng-show="item.goodsId == selectId">-->
+                  <!--<span class="text-explode">|</span>-->
+                  <!--<a href="javascript:;" ng-click="checkRecord(item)">审核记录</a>-->
+                <!--</span>-->
               </td>
             </tr>
             </tbody>

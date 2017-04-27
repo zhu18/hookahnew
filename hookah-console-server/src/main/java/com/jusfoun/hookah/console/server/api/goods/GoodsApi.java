@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.console.server.api.goods;
 
 import com.jusfoun.hookah.console.server.controller.BaseController;
+import com.jusfoun.hookah.console.server.util.DictionaryUtil;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.Goods;
@@ -84,9 +85,8 @@ public class GoodsApi extends BaseController{
             orderBys.add(OrderBy.desc("lastUpdateTime"));
 
             MgShelvesGoods mgShelvesGoods = mgGoodsShelvesGoodsService.selectById(shelvesGoodsId);
-            List<String> gidList = mgShelvesGoods.getGoodsIdList();
-            if(gidList != null){
-                filters.add(Condition.notIn("goodsId", gidList.toArray()));
+            if(mgShelvesGoods.getGoodsIdList() != null && mgShelvesGoods.getGoodsIdList().size() > 0){
+                filters.add(Condition.notIn("goodsId", mgShelvesGoods.getGoodsIdList().toArray()));
             }
 
             //只查询商品状态为未删除的商品
@@ -172,6 +172,9 @@ public class GoodsApi extends BaseController{
             Goods goods = goodsService.selectById(goodsId);
             MgGoods mgGoods = mgGoodsService.selectById(goodsId);
             if(goods != null){
+                if(goods.getGoodsArea() != null && !"全部".equals(goods.getGoodsArea())){
+                    goods.setGoodsArea(DictionaryUtil.getRegionById(goods.getGoodsArea()).getMergerName());
+                }
                 BeanUtils.copyProperties(goods, goodsVo);
             }
             if(mgGoods != null){

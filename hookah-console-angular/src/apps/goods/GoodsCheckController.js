@@ -42,6 +42,24 @@ class GoodsCheckController {
       });
     };
 
+    $scope.checkRecord = function (item) {
+
+      var promise = $http({
+        method: 'GET',
+        url: $rootScope.site.apiServer + "/api/goodsCheck/all",
+        params: {currentPage: $rootScope.pagination.currentPage,
+                 pageSize: $rootScope.pagination.pageSize,
+                 goodsName: $scope.searchName,
+                 goodsSn: $scope.searchSn,
+                 goodsId: item.goodsId
+        }
+      });
+      promise.then(function (res, status, config, headers) {
+        $rootScope.loadingState = false;
+        growl.addSuccessMessage("审核结果加载完毕。。。");
+      });
+    };
+
     $scope.pageChanged = function () {
 
         if ($state.$current.name == "items.check") {
@@ -80,6 +98,10 @@ class GoodsCheckController {
         $state.go('items.checkDetail', {data: $rootScope.editData});
     }
 
+    $scope.showCurrentGoods = function(item){
+        $rootScope.selectId = item.goodsId;
+    }
+
     $scope.submitCheck = function(){
         var promise = $http({
             method: 'POST',
@@ -93,6 +115,29 @@ class GoodsCheckController {
             }
         });
     }
+
+
+      $scope.aginCheck = function (item) {
+          console.log("重新审核……");
+          // $state.go('items.check');
+          var promise = $http({
+              method: 'GET',
+              url: $rootScope.site.apiServer + "/api/goods/getGoodsInfo",
+              params: {goodsId: item.goodsId}
+          });
+          promise.then(function (res, status, config, headers) {
+              console.log(res.data)
+              if(res.data.code == "1"){
+                  $rootScope.editData = res.data.data;
+                  if($rootScope.editData.apiInfo != null){
+                      $rootScope.editData.apiInfo.respSample = JSON.stringify(JSON.parse($rootScope.editData.apiInfo.respSample), null, "\t");
+                  }
+                  $state.go('items.goodsDetail', {data: $rootScope.editData});
+              }
+          });
+      };
+
+
 
   if ($state.$current.name == "items.check") {
       $scope.search();

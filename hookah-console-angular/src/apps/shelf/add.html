@@ -3,6 +3,8 @@
     <div class="console-title console-title-border clearfix">
       <div class="pull-left"><h5>新增货架</h5></div>
       <div class="pull-right">
+        <!--<button class="btn btn-default" data-ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span> 返回-->
+        <!--</button>-->
       </div>
     </div>
   </div>
@@ -13,52 +15,48 @@
         <div class="form-group">
           <label class="col-sm-2 control-label" for="shelvesName">货架名称</label>
           <div class="col-sm-4">
-            <input type="text" id="shelvesName"
-               name="shelvesName" class="form-control" ng-maxlength="10" placeholder="货架名称长度最大10" required/>
-          </div>
-          <div>
-            <span style="color:red"
-              ng-show="shelfForm.shelvesType.$error.required && shelfForm.shelvesType.$dirty && shelfForm.shelvesType.$valid">必填项</span>
+            <input type="text" id="shelvesName" name="shelvesName"
+                   class="form-control" data-ng-model="shelvesName" ng-maxlength="10" placeholder="必填项 / 最长为10" required />
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="shelvesType">副标题</label>
           <div class="col-sm-4">
-            <input type="text" id="shelvesType" name="shelvesType" class="form-control" placeholder="" required/>
+            <input type="text" id="shelvesType" name="shelvesType"
+                   class="form-control" data-ng-model="shelvesType" ng-maxlength="10" placeholder="必填项 / 最长为10" required />
           </div>
-          <div>
-            <span style="color:red" ng-show="shelfForm.shelvesType.$error.required">必填项</span>
-          </div>
+          <!--<div>-->
+            <!--<span style="color:red" ng-show="shelfForm.shelvesType.$error.required">必填项</span>-->
+          <!--</div>-->
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="shelvesTag">货架标签</label>
           <div class="col-sm-4">
-            <input type="text" id="shelvesTag" name="shelvesTag" class="form-control" required />
+            <input type="text" id="shelvesTag" name="shelvesTag"
+                   class="form-control" data-ng-model="shelvesTag" placeholder="多个标签使用逗号间隔" />
           </div>
-          <div>
-            <span style="color:red" ng-show="shelfForm.shelvesTag.$error.required">多个标签使用逗号间隔</span>
-          </div>
+          <!--<div>-->
+            <!--<span style="color:red" ng-show="shelfForm.shelvesTag.$error.required">必填项 / 多个标签使用逗号间隔</span>-->
+          <!--</div>-->
         </div>
+        <!--<div class="form-group">-->
+          <!--<label class="col-sm-2 control-label" for="goodsNumber">商品数量</label>-->
+          <!--<div class="col-sm-4">-->
+            <!--<input type="number" id="goodsNumber" name="goodsNumber" ng-maxlength="2" class="form-control" data-ng-model="goodsNumber" required />-->
+          <!--</div>-->
+          <!--<div>-->
+            <!--<span style="color:red" ng-show="shelfForm.goodsNumber.$error.required">必填项</span>-->
+          <!--</div>-->
+        <!--</div>-->
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="goodsNumber">商品数量</label>
+          <label class="col-sm-2 control-label">货架描述</label>
           <div class="col-sm-4">
-            <input type="number" id="goodsNumber" name="goodsNumber" ng-maxlength="2" class="form-control" required />
-          </div>
-          <div>
-            <span style="color:red" ng-show="shelfForm.goodsNumber.$error.required">多个标签使用逗号间隔</span>
+            <!--<input type="text" id="shelvesDesc" name="shelvesDesc" class="form-control" data-ng-model="shelvesDesc" />-->
+            <textarea name="shelvesDesc" style="margin: 0px; width: 360px; height: 80px;" placeholder="使用一段文字描述您的货架"></textarea>
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="shelvesDesc">货架描述</label>
-          <div class="col-sm-4">
-            <input type="text" id="shelvesDesc" name="shelvesDesc" class="form-control" required />
-          </div>
-          <div>
-            <span style="color:red" ng-show="shelfForm.shelvesDesc.$error.required">必填项</span>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="shelvesDesc">是否为系统货架</label>
+          <label class="col-sm-2 control-label">是否为系统货架</label>
           <div class="col-sm-4">
             <label class="radio-inline">
               <input type="radio" id="isSysShelves_1" name="isSysShelves" value="1" checked/>是
@@ -72,9 +70,8 @@
       <div class="form-group">
         <div class="col-sm-2"></div>
         <div class="col-sm-4">
-          <button class="btn btn-primary" data-ng-click="add()">
-            <span class="glyphicon glyphicon-refresh"></span> 新增
-          </button>
+          <input class="btn btn-primary btn-lg" ng-disabled="shelfForm.$invalid"
+                 type="button" value="新增" data-ng-click="add()" />
         </div>
       </div>
     </form>

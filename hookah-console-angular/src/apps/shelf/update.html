@@ -7,48 +7,50 @@
     </div>
   </div>
   <div class="col-sm-12">
-    <form class="form-horizontal" role="form" id="shelfForm" name="shelf">
+    <form class="form-horizontal" role="form" id="shelfForm" name="shelfForm" novalidate>
       <fieldset>
         <h5 style="padding: 0px 20px;">基本信息</h5>
         <div class="form-group">
-          <input type="hidden" id="shelvesId" name="shelvesId" class="form-control" value="{{editData.shelvesId}}" />
+          <input type="hidden" name="editData.shelvesId" value="{{editData.shelvesId}}" />
           <label class="col-sm-2 control-label" for="shelvesName">货架名称</label>
           <div class="col-sm-4">
-            <input type="text" id="shelvesName" name="shelvesName" class="form-control" value="{{editData.shelvesName}}" />
+            <input type="text" id="shelvesName" name="shelvesName" class="form-control" ng-maxlength="10"
+                   value="{{editData.shelvesName}}" data-ng-model="editData.shelvesName" placeholder="必填项 / 最长为10" required />
+          </div>
+          <div class="col-sm-4">
+            <span style="color:red" ng-show="shelfForm.shelvesName.$dirty && shelfForm.shelvesName.$invalid">必填项 / 最长为10</span>
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="shelvesTypeId">副标题</label>
+          <label class="col-sm-2 control-label" for="shelvesType">副标题</label>
           <div class="col-sm-4">
-            <input type="text" id="shelvesTypeId" name="shelvesTypeId" class="form-control" value="{{editData.shelvesTypeId}}" />
+            <input type="text" id="shelvesType" name="shelvesType" class="form-control" ng-maxlength="10"
+                   value="{{editData.shelvesType}}" data-ng-model="editData.shelvesType" placeholder="必填项 / 最长为10" required />
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="shelvesTag">货架标签</label>
           <div class="col-sm-4">
-            <input type="text" id="shelvesTag" name="shelvesTag" class="form-control" value="{{editData.shelvesTag}}" />
+            <input type="text" id="shelvesTag" name="shelvesTag" class="form-control"
+                   value="{{editData.shelvesTag}}" data-ng-model="editData.shelvesTag" placeholder="多个标签使用逗号间隔" />
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="goodsNumber">商品数量</label>
+          <label class="col-sm-2 control-label">货架描述</label>
           <div class="col-sm-4">
-            <input type="number" id="goodsNumber" name="goodsNumber" ng-maxlength="2" class="form-control" value="{{editData.goodsNumber}}" />
+            <textarea name="shelvesDesc" style="margin: 0px; width: 352px; height: 80px;" data-ng-model="editData.shelvesDesc" placeholder="使用一段文字描述您的货架">
+              {{editData.shelvesDesc}}
+            </textarea>
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="shelvesDesc">货架描述</label>
-          <div class="col-sm-4">
-            <input type="text" id="shelvesDesc" name="shelvesDesc" class="form-control" value="{{editData.shelvesDesc}}" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="shelvesDesc">是否为系统货架</label>
+          <label class="col-sm-2 control-label">是否为系统货架</label>
           <div class="col-sm-4">
             <label class="radio-inline">
-              <input type="radio" id="isSysShelves_1" name="isSysShelves" value="1" checked/>是
+              <input type="radio" name="isSysShelves" data-ng-model="editData.isSysShelves" ng-checked="editData.isSysShelves == 1" value="1" />是
             </label>
             <label class="radio-inline">
-              <input type="radio" id="isSysShelves_0" name="isSysShelves" value="0" />否
+              <input type="radio" name="isSysShelves" data-ng-model="editData.isSysShelves" ng-checked="editData.isSysShelves == 0" value="0" />否
             </label>
           </div>
         </div>
@@ -56,9 +58,8 @@
       <div class="form-group">
         <div class="col-sm-2"></div>
         <div class="col-sm-4">
-          <button class="btn btn-primary" data-ng-click="update()">
-            <span class="glyphicon glyphicon-refresh"></span> 修改
-          </button>
+          <input class="btn btn-primary btn-lg" ng-disabled="shelfForm.$pristine || shelfForm.$invalid"
+                 type="button" value="修改" data-ng-click="update()" />
         </div>
       </div>
     </form>

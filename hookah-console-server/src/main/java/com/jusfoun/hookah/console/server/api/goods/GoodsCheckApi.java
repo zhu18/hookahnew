@@ -51,15 +51,19 @@ public class GoodsCheckApi extends BaseController{
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ReturnData getListInPage(String currentPage, String pageSize,
-                                    String goodsName, String goodsSn) {
+                                    String goodsName, String goodsSn,
+                                    String goodsId) {
         Pagination<GoodsCheck> page = new Pagination<>();
         try {
             List<Condition> filters = new ArrayList();
             if(StringUtils.isNotBlank(goodsName)){
-                filters.add(Condition.like("goodsName", goodsName));
+                filters.add(Condition.eq("goodsName", goodsName));
+            }
+            if(StringUtils.isNotBlank(goodsId)){
+                filters.add(Condition.eq("goodsId", goodsId));
             }
             if(StringUtils.isNotBlank(goodsSn)){
-                filters.add(Condition.like("goodsSn", goodsSn));
+                filters.add(Condition.eq("goodsSn", goodsSn));
             }
             List<OrderBy> orderBys = new ArrayList();
             orderBys.add(OrderBy.desc("checkTime"));

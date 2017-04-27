@@ -183,12 +183,10 @@ public class MgGoodsShelvesGoodsServiceImpl extends GenericMongoServiceImpl<MgSh
             mgGoodsShelvesGoodsService.insert(mgShelvesGoodsx);
 
         }else{
-
-            List<String> gidList = mgShelvesGoods.getGoodsIdList();
-            if(gidList != null){
+            if(mgShelvesGoods.getGoodsIdList() != null && mgShelvesGoods.getGoodsIdList().size() > 0){
                 List<Condition> filters = new ArrayList();
                 List<OrderBy> orderBys = new ArrayList();
-                filters.add(Condition.in("goodsId", gidList.toArray()));
+                filters.add(Condition.in("goodsId", mgShelvesGoods.getGoodsIdList().toArray()));
                 orderBys.add(OrderBy.desc("lastUpdateTime"));
                 page = goodsService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
             }
@@ -213,10 +211,15 @@ public class MgGoodsShelvesGoodsServiceImpl extends GenericMongoServiceImpl<MgSh
                     }
                 }
 
-                Query query=new Query(Criteria.where("shelvesGoodsId").is(mgShelvesGoods.getShelvesGoodsId()));
+                Query query = new Query(Criteria.where("shelvesGoodsId").is(mgShelvesGoods.getShelvesGoodsId()));
                 Update update = new Update();
                 update.set("goodsIdList", gidList);
                 mongoTemplate.updateFirst(query, update, mgShelvesGoods.getClass());
+
+                GoodsShelves goodsShelves = new GoodsShelves();
+                goodsShelves.setShelvesId(shelvesGoodsId);
+                goodsShelves.setGoodsNumber(gidList.size());
+                goodsShelvesService.updateByIdSelective(goodsShelves);
             }
 
         }catch (Exception e){
@@ -244,10 +247,17 @@ public class MgGoodsShelvesGoodsServiceImpl extends GenericMongoServiceImpl<MgSh
                 gidList = mgShelvesGoods.getGoodsIdList();
             }
             gidList.add(goodsId);
-            Query query=new Query(Criteria.where("shelvesGoodsId").is(mgShelvesGoods.getShelvesGoodsId()));
+            Query query = new Query(Criteria.where("shelvesGoodsId").is(mgShelvesGoods.getShelvesGoodsId()));
             Update update = new Update();
             update.set("goodsIdList", gidList);
             mongoTemplate.updateFirst(query, update, mgShelvesGoods.getClass());
+
+
+            GoodsShelves goodsShelves = new GoodsShelves();
+            goodsShelves.setShelvesId(shelvesId);
+            goodsShelves.setGoodsNumber(gidList.size());
+            goodsShelvesService.updateByIdSelective(goodsShelves);
+
         }catch (Exception e){
             returnData.setCode(ExceptionConst.Error);
             returnData.setMessage(e.toString());

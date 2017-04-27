@@ -52,12 +52,12 @@ class ShelfController {
 
     $scope.search();
 
-    $scope.updateStatus = function (event, item) {
+    $scope.updateStatus = function (item, flag) {
           console.log(item.shelvesId, item.shelvesStatus);
           var promise = $http({
               method: 'POST',
               url: $rootScope.site.apiServer + "/api/shelf/updateStatus",
-              params: {shelvesId: item.shelvesId, shelvesStatus: item.shelvesStatus}
+              params: {shelvesId: item.shelvesId, shelvesStatus: flag}
           });
           promise.then(function (res, status, config, headers) {
               if(res.data.code == 1){
@@ -73,6 +73,7 @@ class ShelfController {
     };
 
     $scope.updateShelf = function (event, item) {
+        console.log(item);
         $rootScope.editData = item;
         $state.go('shelf.update', {data: item});
     };

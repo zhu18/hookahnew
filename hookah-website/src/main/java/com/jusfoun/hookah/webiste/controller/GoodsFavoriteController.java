@@ -121,4 +121,33 @@ public class GoodsFavoriteController extends BaseController {
         return returnData;
     }
 
+    @RequestMapping("check")
+    @ResponseBody
+    public ReturnData checkFavorite(String goodsId) {
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        if (StringUtils.isBlank(goodsId)) {
+            returnData.setCode(ExceptionConst.AssertFailed);
+            returnData.setMessage(ExceptionConst.get(ExceptionConst.AssertFailed));
+            return returnData;
+        }
+        try {
+
+            List<Condition> filters = new ArrayList();
+            filters.add(Condition.eq("goodsId", goodsId));
+            filters.add(Condition.eq("userId", getCurrentUser().getUserId()));
+            GoodsFavorite goodsFavorite = goodsFavoriteService.selectOne(filters);
+            if(goodsFavorite != null){
+                returnData.setData(true);
+            }else{
+                returnData.setData(false);
+            }
+        } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
+
 }

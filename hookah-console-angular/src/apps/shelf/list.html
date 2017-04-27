@@ -39,7 +39,7 @@
               <th>商品数量</th>
               <th>货架状态</th>
               <th>创建时间</th>
-              <th width="180" class="text-center">操作</th>
+              <th width="200" class="text-center">操作</th>
             </tr>
             </thead>
             <tbody>
@@ -83,18 +83,21 @@
                 <span ng-if="item.shelvesStatus == 0">
                   <span class="text-explode">|</span>
                   <i class="link-space"></i>
-                  <a href="javascript:;" ng-click="updateStatus($event,item)">启用</a>
+                  <a href="javascript:;" ng-click="updateStatus(item, 1)">启用</a>
                 </span>
                 <span ng-if="item.shelvesStatus == 1">
                   <span class="text-explode">|</span>
                   <i class="link-space"></i>
-                  <a href="javascript:;" ng-click="updateStatus($event,item)">停用</a>
+                  <a href="javascript:;" ng-click="updateStatus(item, 0)">停用</a>
                 </span>
                 <span ng-if="item.shelvesStatus == 2">
                   <span class="text-explode">|</span>
                   <i class="link-space"></i>
                   <a href="javascript:;">审核中</a>
                 </span>
+                <span class="text-explode">|</span>
+                <i class="link-space"></i>
+                <a href="javascript:;" ng-click="updateStatus(item, 3)">删除</a>
               </td>
             </tr>
             </tbody>
