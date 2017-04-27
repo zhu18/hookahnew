@@ -1,13 +1,13 @@
 package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.domain.Goods;
+import com.jusfoun.hookah.core.domain.GoodsFavorite;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.vo.GoodsShelvesVo;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
-import com.jusfoun.hookah.rpc.api.CategoryService;
-import com.jusfoun.hookah.rpc.api.GoodsService;
-import com.jusfoun.hookah.rpc.api.GoodsShelvesService;
-import com.jusfoun.hookah.rpc.api.MgGoodsService;
+import com.jusfoun.hookah.core.exception.HookahException;
+import com.jusfoun.hookah.core.generic.Condition;
+import com.jusfoun.hookah.rpc.api.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/exchange")
-public class ExchangeController {
+public class ExchangeController extends BaseController{
     @Resource
     CategoryService categoryService;
     @Resource
@@ -36,6 +37,9 @@ public class ExchangeController {
     MgGoodsService mgGoodsService;
     @Resource
     GoodsShelvesService goodsShelvesService;
+
+    @Resource
+    GoodsFavoriteService goodsFavoriteService;
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(Model model) {
@@ -57,7 +61,7 @@ public class ExchangeController {
      * @return
      */
     @RequestMapping(value = "/details", method = RequestMethod.GET)
-    public String details(@RequestParam(required = true) String id, Model model) {
+    public String details(@RequestParam(required = true) String id, Model model) throws HookahException {
         GoodsVo goodsVo = new GoodsVo();
         BeanUtils.copyProperties(goodsService.selectById(id), goodsVo);
         if (goodsVo != null) {
@@ -69,6 +73,17 @@ public class ExchangeController {
                 goodsVo.setApiInfo(mgGoods.getApiInfo());
             }
         }
+
+        List<Condition> filters = new ArrayList();
+        filters.add(Condition.eq("goodsId", id));
+        filters.add(Condition.eq("userId", getCurrentUser().getUserId()));
+        GoodsFavorite goodsFavorite = goodsFavoriteService.selectOne(filters);
+        if(goodsFavorite != null){
+            goodsVo.setOrNotFavorite(true);
+        }else{
+            goodsVo.setOrNotFavorite(false);
+        }
+
         model.addAttribute("goodsDetails", goodsVo);
 
         //推荐商品
