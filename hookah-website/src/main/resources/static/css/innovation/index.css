@@ -19,6 +19,9 @@
     color: #247DE8;
     border-left: 2px solid #247DE8;
 }
+ .leftSide .top ul .active a {
+    color: #247DE8;
+}
 
  .leftSide .top ul li {
     line-height: 46px;

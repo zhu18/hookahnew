@@ -19,24 +19,13 @@ $(document).ready(function () {
 		}
 	});
 
-	$(".shopping-cart").mouseenter(function () {
-		$(this).addClass('hover')
-	});
-	$(".shopping-cart").mouseleave(function () {
-		$(this).removeClass('hover')
-	});
 
-    // if($(".shopping-cart .shopping-cart-down").height()>130){
-     //    $(".shopping-cart .shopping-cart-down").css({
-     //    	'overflow-y':'scroll'
-	// 	})
-	// }
 
 
 	$("#J_searchInput").on("input propertychange", function () {
-		if ($(this).val() == "") {
+        if ($(this).val() == "") {
 			$('.search-sug').hide();
-		} else {
+        } else {
 			getSearchSug($(this).val())
 		}
 	});
@@ -137,8 +126,23 @@ $(document).ready(function () {
 	})
     // 兼容性placeholder
     compatibilityPL();
+    shoppingCart();
 
 });
+function shoppingCart() {
+    $(".shopping-cart").mouseenter(function () {
+        $(this).addClass('hover')
+    });
+    $(".shopping-cart").mouseleave(function () {
+        $(this).removeClass('hover')
+    });
+
+    // if($(".shopping-cart .shopping-cart-down").height()>130){
+    //    $(".shopping-cart .shopping-cart-down").css({
+    //    	'overflow-y':'scroll'
+    // 	})
+    // }
+}
 function compatibilityPL() {
     if ((navigator.appName == "Microsoft Internet Explorer") && (document.documentMode < 10 || document.documentMode == undefined)) {
         var $placeholder = $("input[placeholder]");
@@ -164,7 +168,7 @@ function getSearchSug(sugText) {
 			if (data.code == 1) {
 				showSugBox(data.data);
 			} else {
-				console.log(data.message);
+                console.log(data.message);
 			}
 		}
 	})

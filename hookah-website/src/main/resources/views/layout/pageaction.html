@@ -22,7 +22,7 @@
       data: dataParm,
       success: function (data) {
         if (data.code == "1") {
-          successFn(data, pageNumber)
+          successFn(data, pageNumber);
           Loading.stop();
         } else {
           Loading.stop();
