@@ -7,32 +7,32 @@
     </div>
   </div>
   <div class="col-sm-12">
-    <form class="form-horizontal" role="form" id="updateGoodsForm" name="updateGoodsForm">
+    <form class="form-horizontal" role="form" id="goodsCheckForm" name="shelf">
       <fieldset>
         <h5 style="padding: 0px 20px;">基本信息</h5>
         <div class="form-group">
           <input type="hidden" id="goodsId" name="goodsId" value="{{editData.goodsId}}" />
+          <input type="hidden" id="goodsSn" name="goodsSn" value="{{editData.goodsSn}}" />
           <label class="col-sm-2 control-label">商品名称</label>
           <div class="col-sm-5">
-            <input type="text" class="form-control" name="goodsName" value="{{editData.goodsName}}" />
+            <input type="text" class="form-control" name="goodsName" value="{{editData.goodsName}}" readonly="true" />
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label">商品简介</label>
           <div class="col-sm-5">
-            <textarea style="margin: 0px; width: 452px; height: 84px;" name="goodsBrief">
-              {{editData.goodsBrief}}
-            </textarea>
+            <!--<input type="text" class="form-control" value="{{editData.goodsBrief}}" readonly="true" />-->
+            <textarea style="margin: 0px; width: 452px; height: 84px;" readonly="true">{{editData.goodsBrief}}</textarea>
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label">商品类型</label>
           <div class="col-sm-5">
             <label class="radio-inline">
-              <input type="radio" name="goodsBrief" ng-checked="editData.goodsType == 0"/>常规商品
+              <input type="radio" ng-checked="editData.goodsType == 0"/>常规商品
             </label>
             <label class="radio-inline">
-              <input type="radio" name="goodsBrief" ng-checked="editData.goodsType == 1"/>api
+              <input type="radio" ng-checked="editData.goodsType == 1"/>api
             </label>
           </div>
         </div>
@@ -61,7 +61,7 @@
               </tr>
               </thead>
               <tbody>
-              <tr data-ng-repeat="req in editData.formatList">
+              <tr data-ng-repeat="req in editData.formatList" class="">
                 <td>
                   <span class="" ng-bind="req.formatName"></span>
                 </td>
@@ -85,37 +85,39 @@
           <label class="col-sm-2 control-label">商品描述</label>
           <div class="col-sm-5">
             <!--<input type="text" class="form-control" value="{{editData.goodsDesc}}" readonly="true" />-->
-            <textarea style="margin: 0px; width: 452px; height: 84px;" name="goodsDesc">{{editData.goodsDesc}}</textarea>
+            <textarea style="margin: 0px; width: 452px; height: 120px;" readonly="true">
+              {{editData.goodsDesc}}
+            </textarea>
           </div>
         </div>
         <div data-ng-if="editData.goodsType == 1">
           <div class="form-group">
             <label class="col-sm-2 control-label">接口地址</label>
             <div class="col-sm-5">
-              <input type="text" class="form-control" name="apiInfo.apiUrl" value="{{editData.apiInfo.apiUrl}}" />
+              <input type="text" class="form-control" value="{{editData.apiInfo.apiUrl}}" readonly="true" />
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label">请求方式</label>
             <div class="col-sm-5">
               <label class="radio-inline">
-                <input type="radio" name="apiInfo.apiMethod" ng-checked="editData.apiInfo.apiMethod == 'GET'"/>GET
+                <input type="radio" ng-checked="editData.apiInfo.apiMethod == 'GET' || editData.apiInfo.apiMethod == 'get'"/>GET
               </label>
               <label class="radio-inline">
-                <input type="radio" name="apiInfo.apiMethod" ng-checked="editData.apiInfo.apiMethod == 'POST'"/>POST
+                <input type="radio" ng-checked="editData.apiInfo.apiMethod == 'POST' || editData.apiInfo.apiMethod == 'post'"/>POST
               </label>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label">请求示例</label>
             <div class="col-sm-5">
-              <input type="text" class="form-control" name="apiInfo.reqSample" value="{{editData.apiInfo.reqSample}}" />
+              <input type="text" class="form-control" value="{{editData.apiInfo.reqSample}}" readonly="true" />
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label">接口描述</label>
             <div class="col-sm-5">
-              <input type="text" class="form-control" name="apiInfo.apiDesc" value="{{editData.apiInfo.apiDesc}}" />
+              <input type="text" class="form-control" value="{{editData.apiInfo.apiDesc}}" readonly="true" />
             </div>
           </div>
           <div class="form-group">
@@ -184,20 +186,13 @@
           <div class="form-group">
             <label class="col-sm-2 control-label">返回示例</label>
             <div class="col-sm-5">
-              <textarea style="margin: 0px; width: 452px; height: 84px;" name="apiInfo.respSample">{{editData.apiInfo.respSample}}</textarea>
+              <textarea style="margin: 0px; width: 452px; height: 150px;" readonly="true">
+                {{editData.apiInfo.respSample}}
+              </textarea>
             </div>
           </div>
         </div>
       </fieldset>
-
-      <div class="form-group">
-        <div class="col-sm-2"></div>
-        <div class="col-sm-5">
-          <button class="btn btn-primary">
-            <span class="glyphicon glyphicon-refresh"></span> 提交审核
-          </button>
-        </div>
-      </div>
     </form>
   </div>
 </div>

@@ -7,6 +7,7 @@ import com.jusfoun.hookah.core.domain.vo.GoodsShelvesVo;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
+import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
@@ -74,14 +75,22 @@ public class ExchangeController extends BaseController{
             }
         }
 
-        List<Condition> filters = new ArrayList();
-        filters.add(Condition.eq("goodsId", id));
-        filters.add(Condition.eq("userId", getCurrentUser().getUserId()));
-        GoodsFavorite goodsFavorite = goodsFavoriteService.selectOne(filters);
-        if(goodsFavorite != null){
-            goodsVo.setOrNotFavorite(true);
-        }else{
-            goodsVo.setOrNotFavorite(false);
+        try {
+            if(StringUtils.isNotBlank(getCurrentUser().getUserId())){
+                List<Condition> filters = new ArrayList();
+                filters.add(Condition.eq("goodsId", id));
+                filters.add(Condition.eq("userId", getCurrentUser().getUserId()));
+                GoodsFavorite goodsFavorite = goodsFavoriteService.selectOne(filters);
+                if(goodsFavorite != null){
+                    goodsVo.setOrNotFavorite(true);
+                }else{
+                    goodsVo.setOrNotFavorite(false);
+                }
+            }
+        } catch (HookahException e) {
+            if(!"没有登录用户信息".equals(e.getMessage())){
+                throw new HookahException("获取用户信息出错！",e);
+            }
         }
 
         model.addAttribute("goodsDetails", goodsVo);
