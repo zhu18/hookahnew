@@ -209,8 +209,13 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         if(vo.getEsGoods() != null) {
             map = AnnotationUtil.convert2Map(vo.getEsGoods());
         }
-        esTemplate.search(esTransportClient.getObject(), Constants.GOODS_INDEX,
-                Constants.GOODS_TYPE, map, pagination, orderField, order, "goodsName");
+        if(vo.getRange() == null) {
+            esTemplate.search(esTransportClient.getObject(), Constants.GOODS_INDEX,
+                    Constants.GOODS_TYPE, map, pagination, orderField, order, "goodsName");
+        }else {
+            esTemplate.search(esTransportClient.getObject(), Constants.GOODS_INDEX,
+                    Constants.GOODS_TYPE, map, pagination, orderField, order, vo.getRange(), "goodsName");
+        }
         return pagination;
     }
 

@@ -93,7 +93,7 @@ body{
 }
 .exchange-recommend-resource .recommend-resource-top .recommend-resource-top-left .d {
 	display: inline-block;
-	padding-top: 27px;
+	padding-top: 24px;
 	padding-left: 10px;
 }
 .exchange-recommend-resource .recommend-resource-top .recommend-resource-top-left i:nth-child(1) {
@@ -227,7 +227,7 @@ body{
 }
 .exchange-hot-resource .hot-resource-top .hot-resource-top-left .d {
 	display: inline-block;
-	padding-top: 27px;
+	padding-top: 24px;
 	padding-left: 10px;
 }
 .exchange-hot-resource .hot-resource-top .hot-resource-top-left i:nth-child(1) {
@@ -513,7 +513,7 @@ body{
 }
 .exchange-industry-resource .industry-resource-top .industry-resource-top-left .d {
 	display: inline-block;
-	padding-top: 27px;
+	padding-top: 24px;
 	padding-left: 10px;
 }
 .exchange-industry-resource .industry-resource-top .industry-resource-top-left i:nth-child(1) {
@@ -1208,6 +1208,7 @@ dl {
 }
 .search .search-order .order-list ul li .item-down .goods-cart  {
 	border-radius: 3px;
+	margin-top: 13px;
 }
 .search .search-order .order-list .info {
 	font-size: 20px;

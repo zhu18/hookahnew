@@ -2,6 +2,7 @@ package com.jusfoun.hookah.core.domain.vo;
 
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.es.EsGoods;
+import com.jusfoun.hookah.core.domain.es.EsRange;
 
 import java.io.Serializable;
 
@@ -14,6 +15,7 @@ public class EsGoodsVo implements Serializable {
     private Integer PageSize = HookahConstants.PAGE_SIZE;
     private String orderFiled;
     private String order;
+    EsRange range;
 //    private String orderFiled = HookahConstants.GOODS_ORDER_FIELD;
 //    private String order = HookahConstants.GOODS_ORDER_SORT;
 
@@ -56,5 +58,13 @@ public class EsGoodsVo implements Serializable {
 
     public void setOrder(String order) {
         this.order = order;
+    }
+
+    public EsRange getRange() {
+        return range;
+    }
+
+    public void setRange(EsRange range) {
+        this.range = range;
     }
 }
