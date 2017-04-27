@@ -11,13 +11,13 @@ function loadPageData(data){
             html += '<td>'+format(list[i].addTime)+'</td>';
             html += '<td>已付款</td>';
             html += '<td class="text-align-center">';
-            html += '<a href="/usercenter/viewDetails?num=1" class="display-block">查看详情</a>';
+            html += '<a href="/usercenter/viewDetails?num=1?orderId='+list[i].orderSn+'" class="display-block">查看详情</a>';
             if(list[i].commentFlag==0){
                 html += '<a href="/usercenter/sunAlone" class="display-block">评价晒单</a>';
             }else if(list[i].commentFlag==1){
                 html += '<a href="" class="display-block">已评价</a>';
             }
-            html += '<a href="" class="display-block">删除</a>';
+            html += '<a href="javascript:deleteRadio(\''+list[i].orderId+'\');" class="display-block deleteRadio">删除</a>';
             html += '</td>';
             html += '</tr>';
         }
@@ -74,5 +74,29 @@ $(".searchQuery .search").on("click",function(){
     }
     goPage(1);
 });
+
+
+
+// 删除订单
+function deleteRadio(orderId) {
+    $.ajax({
+        url: '/order/delete',
+        type: 'get',
+        data:{
+            orderId:orderId
+        },
+        success: function (data) {
+            if (data.code == 1) {
+                location.reload(true);
+            } else {
+                console.log("删除失败！");
+            }
+        }
+    })
+}
+
+
+
+
 
 

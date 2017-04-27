@@ -75,12 +75,12 @@ function list(){
         $(this).children('label').addClass('current').end().siblings().children('label').removeClass('current');
         $(this).addClass("current").siblings().removeClass("current");
         $('.clearfix-content').html($(this).text());
-        showBtn(false);
+        showBtn(0);
         pusblishBtn();
     });
 }
 $('#btn-search').click(function(){
-    showBtn(true);
+    showBtn(1);
     $(".clearfix-content").html("");
     if($("#input-search").val().length > 0){
         getSearchList($("#input-search").val());
@@ -119,4 +119,11 @@ function showBox(data) {
     });
     $('.search-list').show().children('ul').html(html);
 }
+
+$("#input-search").addEventListener('change',function(){
+    if($.trim(("#input-search").val())==""){
+        $(".search-list").hide();
+        $(".select-category-box").show();
+    }
+})
 // 类目搜索结束
