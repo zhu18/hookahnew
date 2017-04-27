@@ -39,6 +39,7 @@
             goods
         where is_delete = 1
         and is_onsale = 1
+        and check_status = 1
     </select>
 
     <select id="getNeedEsGoodsById" resultType="com.jusfoun.hookah.core.domain.es.EsGoods" parameterType="java.lang.String">
@@ -62,6 +63,7 @@
         goods
         where is_delete = 1
         and is_onsale = 1
+        and check_status = 1
         and goods_id = #{id}
     </select>
 </mapper>

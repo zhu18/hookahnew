@@ -390,6 +390,24 @@ ul li {
     color:#fff;
     border:1px solid #fff;
 }
+.btn-hover-white{
+    color:#fff;
+    border:1px solid #fff;
+}
+.btn-hover-white:hover{
+    color:#078cfc;
+    background-color: #fff;
+    border:1px solid #fff;
+}
+.btn-hover-red{
+    color:#e34f4f;
+    border:1px solid #e34f4f;
+}
+.btn-hover-red:hover{
+    color:#fff;
+    background-color: #e34f4f;
+    border:1px solid #fff;
+}
 .btn-full-orange{
     background: #ffa800;
     color:#fff;
@@ -540,10 +558,10 @@ ul li {
     background-color: #E1EFFF;
 }
 /*---a标签---*/
-.a-blue{
-    color: #078cfc;
+.a-hover-blue{
+    color: #666;
 }
-.a-blue:hover{
+.a-hover-blue:hover{
     color: #0781e8;
     text-decoration: underline;
 }

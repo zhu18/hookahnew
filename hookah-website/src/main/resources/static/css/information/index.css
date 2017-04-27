@@ -17,6 +17,9 @@
     color: #247DE8;
     border-left: 2px solid #247DE8;
 }
+.information .content .leftSide .top ul .active a{
+    color: #247DE8;
+}
 .information .content .leftSide .top ul li {
     line-height: 46px;
     border-bottom:1px solid #E9E9E9;
