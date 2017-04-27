@@ -393,7 +393,7 @@ public class OrderInfoController extends BaseController {
      * @param
      * @return
      */
-	@RequestMapping(value="/deleteBatch",method=RequestMethod.POST)
+	@RequestMapping(value="/order/deleteBatch",method=RequestMethod.POST)
     @ResponseBody
 	public ReturnData delete(@RequestBody  String[] orderIds){
 		try{
@@ -410,7 +410,7 @@ public class OrderInfoController extends BaseController {
      * @param
      * @return
      */
-    @RequestMapping(value="/delete",method=RequestMethod.GET)
+    @RequestMapping(value="/order/delete",method=RequestMethod.GET)
     @ResponseBody
     public ReturnData delete(@RequestParam String orderId){
         try{
