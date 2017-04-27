@@ -197,11 +197,8 @@ public class GenericServiceImpl<Model extends GenericModel, ID extends Serializa
     public long count(List<Condition> filters) {
         // TO DO
         logger.info(String.format("class %s:method %s", this.getClass().getName(), "count(List<Condition> filters)"));
-        List<Model> list = dao.selectByExample(convertFilter2Example(filters));
-        if (list == null || list.isEmpty()) {
-            return 0;
-        }
-        return list.size();
+        long count = dao.selectCountByExample(convertFilter2Example(filters));
+        return count;
     }
 
     /**
@@ -214,11 +211,9 @@ public class GenericServiceImpl<Model extends GenericModel, ID extends Serializa
     @Override
     public boolean exists(ID id) {
         logger.info(String.format("class %s:method %s", this.getClass().getName(), "exists(ID id)"));
-        Model model = dao.selectByPrimaryKey(id);
-        if (!Objects.isNull(model)) {
-            return true;
-        }
-        return false;
+        boolean isExist = dao.existsWithPrimaryKey(id);
+
+        return isExist;
     }
 
     /**

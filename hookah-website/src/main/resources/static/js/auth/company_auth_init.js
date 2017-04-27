@@ -11,6 +11,11 @@ $(function(){
                 "background-color":"#efefef",
                 "cursor": "not-allowed"
             })
+        }else{
+            $('.gray-btn2').css({
+                "background-color":"#0781e8",
+                "cursor": "pointer"
+            })
         }
     }
     $("#check").click(function(){

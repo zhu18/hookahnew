@@ -87,7 +87,7 @@
 .trading-sidebar .contact ul .three p {
     position: absolute;
     top: 8px;
-    left: 56px;
+    left: 55px;
 }
 
 .trading-sidebar .contact ul .three p span {
@@ -197,6 +197,7 @@
     line-height: 30px;
     padding-top: 15px;
     text-indent: 28px;
+    margin-bottom: 15px;
 }
 
 .box  .cont .picBot {
