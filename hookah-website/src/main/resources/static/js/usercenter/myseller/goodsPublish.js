@@ -122,8 +122,8 @@ function showBox(data) {
     $('.search-list').show().children('ul').html(html);
 }
 
-// $("#input-search").addEventListener('change',function(){
-//     if($.trim($("#input-search").val())==""){
+// $("#input-search").bind('input propertychange',function(){
+//     if($.trim($("#input-search").val())===""){
 //         $(".search-list").hide();
 //         $(".select-category-box").show();
 //     }
