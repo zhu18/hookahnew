@@ -287,60 +287,32 @@ var htmlPart = {
 		<div class="category-left grid-left">
 			<div class="category-box">
 				<ul>
-					<li class="grid-left active">${goodsShelvesVoInfo.data_sur_data.shelvesName}</li>
-					<li class="grid-left">${goodsShelvesVoInfo.model_data.shelvesName}</li>
+					<!--<li class="grid-left ">${goodsShelvesVoInfo.data_sur_data.shelvesName}</li>-->
+					<li class="grid-left active">${goodsShelvesVoInfo.model_data.shelvesName}</li>
 					<li class="grid-left">${goodsShelvesVoInfo.scene_data.shelvesName}</li>
 					<li class="grid-left">${goodsShelvesVoInfo.plat_data.shelvesName}</li>
 					<li class="grid-left">${goodsShelvesVoInfo.tools_data.shelvesName}</li>
 				</ul>
 			</div>
+			<!--<div class="category-item ">-->
+				<!--<div class="grid-left resource-two">-->
+					<!--<div class="headline-box">-->
+						<!--<p class="main-headline">${goodsShelvesVoInfo.data_sur_data.shelvesName}</p>-->
+						<!--<p class="sub-headline">${goodsShelvesVoInfo.data_sur_data.shelvesDesc}</p>-->
+					<!--</div>-->
+					<!--<div class="label-box">-->
+						<!--&lt;!&ndash;<span>资源汇总</span>&ndash;&gt;-->
+						<!--&lt;!&ndash;<span>资源汇总</span>&ndash;&gt;-->
+						<!--<a class="more a-hover-blue" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.data_sur_data.shelvesId}" target="_blank" >更多>></a>-->
+					<!--</div>-->
+					<!--<span class="iconfont icon-productfeatures bg-img"></span>-->
+				<!--</div>-->
+				<!--<div class="grid-right list-box">-->
+					<!--<ul>-->
+					<!--</ul>-->
+				<!--</div>-->
+			<!--</div>-->
 			<div class="category-item item-active">
-				<div class="grid-left resource-two">
-					<div class="headline-box">
-						<p class="main-headline">${goodsShelvesVoInfo.data_sur_data.shelvesName}</p>
-						<p class="sub-headline">${goodsShelvesVoInfo.data_sur_data.shelvesDesc}</p>
-					</div>
-					<div class="label-box">
-						<!--<span>资源汇总</span>-->
-						<!--<span>资源汇总</span>-->
-						<a class="more a-hover-blue" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.data_sur_data.shelvesId}" target="_blank" >更多>></a>
-					</div>
-					<span class="iconfont icon-productfeatures bg-img"></span>
-				</div>
-				<div class="grid-right list-box">
-					<ul>
-						<%
-						var sur_item = goodsShelvesVoInfo.data_sur_data.goods;
-						var index3 =0;
-						if(sur_item.~size >8){
-						index3 =8;
-						}else{
-						index3 = sur_item.~size;
-						}
-						for(var i=0;i< index3;i++){
-						%>
-						<li>
-							<a href="${host.website}/exchange/details?id=${sur_item[i].goodsId}" target="_blank" >
-								<img src="${sur_item[i].goodsImg}" alt="">
-								<p class="title">${sur_item[i].goodsName}</p>
-								<p class="star-box">
-									<i class="iconfont icon-shoucang color-orange star-item"></i>
-									<i class="iconfont icon-shoucang color-orange star-item"></i>
-									<i class="iconfont icon-shoucang color-orange star-item"></i>
-									<i class="iconfont icon-shoucang color-orange star-item"></i>
-									<i class="iconfont icon-shoucang color-orange star-item"></i>
-								</p>
-								<p>
-									<i class="money-symbol color-red">￥</i>
-									<span class="color-red">${trunc(sur_item[i].shopPrice / 100,2)}</span>
-								</p>
-							</a>
-						</li>
-						<%}%>
-					</ul>
-				</div>
-			</div>
-			<div class="category-item">
 				<div class="grid-left resource-two">
 					<div class="headline-box">
 						<p class="main-headline">${goodsShelvesVoInfo.model_data.shelvesName}</p>

@@ -794,7 +794,7 @@ body{
 	border: 1px solid #efefef;
 }
 .exchange-index .exchange-category-down .category-left .category-box ul li {
-	width: 240px;
+	width: 25%;
 	height: 37px;
 	text-align: center;
 	line-height: 37px;
@@ -899,7 +899,7 @@ body{
 }
 .exchange-index .exchange-category-down .category-left .category-box .active {
 	display: inline-block;
-	width: 240px;
+	width: 25%;
 	height: 37px;
 	background-color: white;
 }
