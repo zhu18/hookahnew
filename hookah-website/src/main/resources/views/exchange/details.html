@@ -12,7 +12,7 @@ var htmlPart = {
 	<div class="grid-row" style="position: relative">
 		<%include("/layout/menu.html"){} %>
 		<div class="grid-left goods-left bdg-row margin-top-20">
-			<div class="goods-details">
+			<div class="goods-details clearfix">
 				<div class="goods-details-img grid-left bdg-row">
 					<div class="img-box">
 						<img src="${goodsDetails.goodsImg}" alt="" id="J_goodsImg">
@@ -71,7 +71,7 @@ var htmlPart = {
 						</div>
 
 					</div>
-					<div class="detail-count margin-bottom-20 padding-left-10 margin-top-10">
+					<div class="detail-count padding-left-10 margin-top-10">
 						<form action="${host.website}/order/directInfo" name="goodsDetail" id="J_goodsDetail" method="post">
 							<span class="font-size-14">数量：</span>
 							<div class="purchase-quantity vertical-align-middle">
