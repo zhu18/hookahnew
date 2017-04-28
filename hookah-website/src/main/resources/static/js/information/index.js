@@ -15,7 +15,8 @@ function loadPageData(data) { //渲染页面数据
 			html += '<p class="padding-right-50 margin-bottom-10">2017大数据标准化论坛喜讯，贵阳大数据交易所荣获“全国信标委大数据标准工作组2016年优秀单位”。此荣誉既肯定了交易所以往业绩，又鼓励了交易所未来发展。按照国务院、工信部、贵阳市等的统筹规划，贵阳大数据交易所将积极参建我国大数据交易标准。</p>';
 			html += '</a>';
 			html += '<div class="auth">';
-			html += '<img src="' + list[i].headImg + '" alt="">&nbsp;&nbsp;&nbsp;<span style="color:#B2B2B2;" class="padding-right-20">'+'管理员'+ '</span>';
+			// html += '<img src="' + list[i].headImg + '" alt="">&nbsp;&nbsp;&nbsp;<span style="color:#B2B2B2;" class="padding-right-20">'+'管理员'+ '</span>';
+			html += '<span ><svg class="icon" style="color:#F07D17;width: 1.0068359375em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1031 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15339"><path d="M18.2784 61.97248 432.4096 61.97248 432.4096 156.78464 386.37056 156.78464 570.40896 583.04512 754.58048 156.78464 662.49216 156.78464 662.49216 62.09536 1030.70208 62.09536 1030.70208 156.78464 892.70272 156.78464 524.48768 962.02752 432.4096 962.02752 110.3616 156.78464 18.2784 156.78464 18.2784 61.97248Z" p-id="15340"></path></svg></span>&nbsp;&nbsp;<span style="color:#B2B2B2;" class="padding-right-20">'+'管理员'+ '</span>';
 			html += '<span class="padding-right-10"><svg class="icon" style="color:#D6D6D6;width: 1.4em; height: 1.4em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="14461"><path d="M512 64C264.96 64 64 264.96 64 512s200.96 448 448 448 448-200.96 448-448S759.04 64 512 64z m159.264 512H480.16c-17.664 0-32.16-14.464-32.16-32.16V289.088c0-17.664 14.336-32 32-32s32 14.336 32 32V512h159.264c17.696 0 32 14.336 32 32 0 17.696-14.336 32-32 32z" p-id="14462"></path></svg></span>';
 			html += '<span style="color:#B2B2B2;">' + format(list[i].sytTime) + '</span>';
 			html += '</div>';
