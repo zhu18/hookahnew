@@ -23,19 +23,6 @@ function loadPageData(data) { //渲染页面数据
 			html += '<div class="line"></div>';
 			html += '</div>';
 		}
-		function add(m) {
-			return m < 10 ? '0' + m : m
-		};
-		function format(time) {
-			var date = new Date(time);
-			var year = date.getFullYear();
-			var month = date.getMonth() + 1;
-			var date1 = date.getDate();
-			var hours = date.getHours();
-			var minutes = date.getMinutes();
-			var seconds = date.getSeconds();
-			return year + '-' + add(month) + '-' + add(date1) + ' ' + add(hours) + ':' + add(minutes) + ':' + add(seconds);
-		};
 		function judge(user) {
 			if (user == "" || user == null) {
 				return "-";
