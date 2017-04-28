@@ -13,14 +13,29 @@ export default function categoryRouting($stateProvider, $urlRouterProvider) {
       template: require('./list.html'),
       controller: CategoryController,
     })
-    .state('add.category', {
-      url: '/add/category',
+    .state('category.add', {
+      url: '/category/add',
       template: require('./add.html'),
       controller: CategoryController,
     })
-    .state('del.category', {
+    .state('category.del', {
       url: '/innerMsg/read/{categoryId:[0-9]{1,4}}',
       templateUrl: '/msc/list',
       controller: CategoryController,
+    })
+    .state('category.edit', {
+        url: '/category/edit',
+        template: require('./edit.html'),
+        controller: CategoryController,
+    })
+    .state('category.add_child', {
+        url: '/category/add_child',
+        template: require('./add_child.html'),
+        controller: CategoryController,
+    })
+    .state('category.edit_child', {
+        url: '/category/edit_child',
+        template: require('./add_child.html'),
+        controller: CategoryController,
     })
 };
