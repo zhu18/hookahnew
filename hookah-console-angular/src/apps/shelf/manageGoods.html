@@ -56,10 +56,11 @@
         </tr>
         </thead>
         <tbody>
-          <form>
+          <form id="selectAllGids">
+            <input type="hidden" name="shelvesId" value="{{shelf.shelvesId}}" />
             <tr data-ng-if="!loadingState" data-ng-repeat="item in allGoods" class="">
               <td>
-                <input type="text" name="selectAllGids" data-ng-model="item.goodsId" />
+                <input type="hidden" name="goodsId" value="{{item.goodsId}}" />
                 <span class="column-text" ng-bind="item.goodsName | limitTo:10"></span>
               </td>
               <td class="text-center">
@@ -68,11 +69,11 @@
             </tr>
           </form>
         </tbody>
-        <tfoot ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">
+        <tfoot ng-if="!showNoneDataInfoTip && showPageHelpInfo">
         <tr>
           <td colspan="9">
             <div class="pull-right page-box">
-              <a class="btn btn-primary btn-xs text-right" data-ng-click="batchData(shelf.shelvesId)">添加本页至货架</a>
+              <!--<a class="btn btn-primary btn-xs text-right" data-ng-click="batchData(shelf.shelvesId)">添加本页至货架</a>-->
             </div>
             <div class="pull-right page-box">
               <div class="pagination-info">共有{{allGoodsPages.totalItems}}条，每页显示：{{allGoodsPages.pageSize}}条</div>
