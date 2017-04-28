@@ -40,6 +40,7 @@ legend {
 fieldset, img {
 	border: 0;
 }
+
 button, input, select, textarea {
 	font-size: 100%;
 	outline: none;
@@ -50,4 +51,8 @@ table {
 }
 p {
 	color: #666;
+}
+.QRcode-box img{
+	width: 124px;
+	height: 124px;
 }
