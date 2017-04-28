@@ -807,7 +807,7 @@ body{
 /*-------------------------*/
 .exchange-index .exchange-category-down .category-left .resource-two {
 	float: left;
-	width: 210px;
+	width: 269px;
 	height: 316px;
 	overflow: hidden;
 	margin: 16px 10px 16px 16px;
@@ -855,13 +855,13 @@ body{
 }
 /*---------------------*/
 .exchange-index .exchange-category-down .category-left .category-item .list-box {
-	width: 964px;
+	width: 903px;
 	margin-top: 16px;
 }
 .exchange-index .exchange-category-down .category-left .category-item .list-box ul li {
 	float: left;
 	text-align: center;
-	width: 240px;
+	width: 300px;
 	height: 160px;
 	border-bottom: 1px solid #ECECEC;
 	border-right: 1px solid #ECECEC;
@@ -875,12 +875,12 @@ body{
 	text-overflow: ellipsis;
 	padding:0 5px;
 }
-.exchange-index .exchange-category-down .category-left .category-item .list-box ul li:nth-child(n+5) {
+.exchange-index .exchange-category-down .category-left .category-item .list-box ul li:nth-child(n+4) {
 	border-bottom: none;
 }
-.exchange-index .exchange-category-down .category-left .category-item .list-box ul li:first-child+li+li+li {
-	border-right: none;
-}
+/*.exchange-index .exchange-category-down .category-left .category-item .list-box ul li:first-child+li+li+li {*/
+	/*border-bottom: none;*/
+/*}*/
 .exchange-index .exchange-category-down .category-left .category-item .list-box ul li:first-child+li+li+li+li+li+li+li {
 	border-right: none;
 }
