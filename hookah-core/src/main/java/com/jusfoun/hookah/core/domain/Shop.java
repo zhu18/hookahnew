@@ -31,7 +31,7 @@ public class Shop extends GenericModel {
 
     private String orgId;
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8",pattern="yyyy-MM-dd HH:mm:ss")
     private Date addTime;
 
     private Integer version;

@@ -32,7 +32,7 @@ public class Dict extends GenericModel {
 
     private String property;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addTime;
 
     @Transient

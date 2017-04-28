@@ -55,7 +55,7 @@ public class GoodsCheck extends GenericModel {
      * @mbggenerated
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date checkTime;
 
     /**
