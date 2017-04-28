@@ -116,21 +116,21 @@ class ManageGoodsController {
     }
 
     // 添加本页商品
-    $scope.batchData = function (shelveId) {
-        console.log(shelveId);
-        console.log($("#selectAllGids").serialize());
-        // var promise = $http({
-        //     method: 'GET',
-        //     url: $rootScope.site.apiServer + "/api/mgGoodssg/batchAddGidByMGid",
-        //     data: $("#selectAllGids").serialize()
-        // });
-        // promise.then(function (res, status, config, headers) {
-        //     if(res.data.code == "1"){
-        //         $scope.search();
-        //         $scope.searchAllGoods();
-        //         growl.addSuccessMessage("数据重新加载完毕。。。");
-        //     }
-        // });
+    $scope.batchData = function () {
+        // console.log(shelveId);
+        console.log($("#batchFrom").serialize());
+        var promise = $http({
+            method: 'POST',
+            url: $rootScope.site.apiServer + "/api/mgGoodssg/batchAddGidByMGid",
+            data: $("#batchFrom").serialize()
+        });
+        promise.then(function (res, status, config, headers) {
+            if(res.data.code == "1"){
+                $scope.search();
+                $scope.searchAllGoods();
+                growl.addSuccessMessage("数据重新加载完毕。。。");
+            }
+        });
     }
 
     $scope.searchAllGoods();

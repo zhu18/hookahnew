@@ -31,7 +31,7 @@
             <tr>
               <th>编号</th>
               <th>名称</th>
-              <th>所属店铺</th>
+              <th>类型</th>
               <th>审核状态</th>
               <th>上架状态</th>
               <th>创建时间</th>
@@ -52,7 +52,8 @@
                 </a>
               </td>
               <td>
-                <span class="column-text" ng-bind="item.shopName"></span>
+                <span class="column-text" ng-show="item.goodsType == 0">常规商品</span>
+                <span class="column-text" ng-show="item.goodsType == 1">API</span>
               </td>
               <td>
                 <span class="column-text" ng-show="item.checkStatus == 0">审核中</span>
