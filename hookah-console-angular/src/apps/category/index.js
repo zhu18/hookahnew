@@ -42,7 +42,7 @@ app.run(function ($rootScope, $state) {
     },
     {
       "title":"添加分类",
-      "url":"add.category"
+      "url":"category.add"
     }
   ];
 
