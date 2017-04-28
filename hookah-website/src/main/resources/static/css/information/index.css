@@ -160,6 +160,10 @@
 .box .detail .bot .leftContent .content p {
     line-height: 20px;
 }
+.box .detail .bot .leftContent .content p img {
+    max-width: 800px;
+    max-height: 600px;
+}
 /*右侧*/
 .box .detail .bot .rightSide {
     float: left;
