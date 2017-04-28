@@ -6,7 +6,7 @@ import com.jusfoun.hookah.core.domain.SysNews;
  * 文章发布者信息
  */
 public class SysNewsVo extends SysNews {
-    private String userName;
+    private String creatName;
 
     private String headImg;
 
@@ -18,11 +18,11 @@ public class SysNewsVo extends SysNews {
         this.headImg = headImg;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getCreatName() {
+        return creatName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setCreatName(String creatName) {
+        this.creatName = creatName;
     }
 }
