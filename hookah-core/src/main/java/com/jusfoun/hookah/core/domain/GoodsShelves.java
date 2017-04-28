@@ -91,7 +91,7 @@ public class GoodsShelves extends GenericModel {
      *
      * @mbggenerated
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date startTime;
 
     /**
@@ -100,7 +100,7 @@ public class GoodsShelves extends GenericModel {
      *
      * @mbggenerated
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addTime;
 
     /**
@@ -109,7 +109,7 @@ public class GoodsShelves extends GenericModel {
      *
      * @mbggenerated
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastUpdateTime;
 
     /**

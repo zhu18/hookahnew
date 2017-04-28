@@ -74,6 +74,7 @@ public class CartController extends BaseController {
             filters.add(Condition.eq("userId", userId));
             filters.add(Condition.eq("goodsId", cart.getGoodsId()));
             filters.add(Condition.eq("formatId", cart.getFormatId()));
+            filters.add(Condition.eq("isDeleted", 0));
             Cart existCart  = cartService.selectOne(filters);
             if(existCart!=null){
                 MgGoods.FormatBean format= goodsService.getFormat(cart.getGoodsId(),cart.getFormatId());

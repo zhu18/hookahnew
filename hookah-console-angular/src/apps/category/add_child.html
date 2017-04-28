@@ -1,44 +1,61 @@
 <div class="row">
   <div class="col-sm-12">
     <div class="console-title console-title-border clearfix">
-      <div class="pull-left"><h5 ng-bind="title">新增字典子项</h5></div>
+      <div class="pull-left"><h5 ng-bind="title">新增分类子项</h5></div>
       <div class="pull-right">
-        <button class="btn btn-default" ui-sref="sys.dict.search"><span class="glyphicon glyphicon-refresh"></span> 返回
+        <button class="btn btn-default" ui-sref="category.search"><span class="glyphicon glyphicon-refresh"></span> 返回
         </button>
       </div>
     </div>
   </div>
   <div class="col-sm-12">
-    <form class="form-horizontal" role="form" id="dictForm" name="dict">
+    <form class="form-horizontal" role="form" id="categoryForm" name="category">
 
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="parentName">父字典</label>
+        <label class="col-sm-2 control-label" for="parentName">父分类</label>
         <div class="col-sm-4">
-          <input type="hidden" id="parentId" name="parentId"  class="form-control" value="{{parentDict.dictId}}"/>
-          <input type="text" disabled="disabled" id="parentName"  class="form-control" value="{{parentDict.name}}"/>
+          <input type="hidden" id="parentId" name="parentId"  class="form-control" value="{{parentCategory.catId}}"/>
+          <input type="text" disabled="disabled" id="parentName"  class="form-control" value="{{parentCategory.catName}}"/>
         </div>
       </div>
-      <input type="hidden" id="dictId" name="dictId" class="form-control" value="{{editData.dictId}}"/>
+
+      <!--<input type="hidden" id="catId" name="catId" class="form-control" value="{{parentCategory.catId}}"/>-->
+
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="name">名称</label>
+        <label class="col-sm-2 control-label" for="catName">分类名称</label>
         <div class="col-sm-4">
-          <input type="text" id="name" name="name" class="form-control" value="{{editData.name}}"/>
+          <input type="text" id="catName" name="catName" class="form-control"/>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="property">属性</label>
+        <label class="col-sm-2 control-label" for="domainId">商店店铺编码</label>
         <div class="col-sm-4">
-          <input type="text" id="property" name="property" class="form-control" value="{{editData.property}}"/>
+          <input type="text" id="domainId" name="domainId" class="form-control"/>
         </div>
         <div class="col-sm-4">
 
         </div>
       </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="catDesc">分类描述</label>
+        <div class="col-sm-4">
+          <input type="text" id="catDesc" name="catDesc" class="form-control"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="catSign">是否管理员新建</label>
+        <div class="col-sm-4">
+          <label class="radio-inline"><input type="radio"  name="catSign" id="catSign"  value="0"/>否</label>
+          <label class="radio-inline"> <input type="radio"  name="catSign" id="catSign_1"  value="1"/>是</label>
+        </div>
+      </div>
+
       <div class="form-group">
         <div class="col-sm-2"></div>
         <div class="col-sm-4">
           <button class="btn btn-primary" data-ng-click="save()">
-            <span class="glyphicon glyphicon-refresh"></span> 保存
+            <span class="glyphicon glyphicon-refresh"></span> 新增
           </button>
         </div>
       </div>

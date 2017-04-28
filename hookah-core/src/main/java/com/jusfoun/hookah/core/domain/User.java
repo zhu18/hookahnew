@@ -67,7 +67,7 @@ public class User extends GenericModel {
      *
      * @mbggenerated
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date regTime;
 
     /**
@@ -92,7 +92,7 @@ public class User extends GenericModel {
      *
      * @mbggenerated
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastLoginTime;
 
     /**
@@ -101,7 +101,7 @@ public class User extends GenericModel {
      *
      * @mbggenerated
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addTime;
 
     /**

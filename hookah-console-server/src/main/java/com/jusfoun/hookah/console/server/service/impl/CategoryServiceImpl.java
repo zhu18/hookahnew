@@ -11,6 +11,8 @@ import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StrUtil;
 import com.jusfoun.hookah.rpc.api.CategoryService;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -28,7 +30,6 @@ public class CategoryServiceImpl extends GenericServiceImpl<Category, String> im
 
     @Resource
     private CategoryMapper categoryMapper;
-
 
     @Resource
     public void setDao(CategoryMapper categoryMapper) {
@@ -112,6 +113,50 @@ public class CategoryServiceImpl extends GenericServiceImpl<Category, String> im
         }catch (Exception e) {
             returnData.setCode(ExceptionConst.Error);
             returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
+
+    @Override
+    public ReturnData editCat(Category category) {
+        ReturnData<Category> returnData = new ReturnData<Category>();
+        returnData.setCode(ExceptionConst.Success);
+
+        try {
+            String cateId = category.getCatId();
+            if(StringUtils.isBlank(cateId)){
+                returnData.setCode(ExceptionConst.AssertFailed);
+                returnData.setMessage(ExceptionConst.get(ExceptionConst.AssertFailed));
+                return returnData;
+            }
+
+            super.updateByIdSelective(category);
+        }catch (Exception e) {
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setMessage(e.toString());
+            logger.error(e.getMessage());
+            e.printStackTrace();
+        }
+
+        return returnData;
+    }
+
+    @Override
+    public ReturnData deleteById(String cateId) {
+        ReturnData returnData = new ReturnData();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            if(StringUtils.isBlank(cateId)){
+                returnData.setCode(ExceptionConst.AssertFailed);
+                returnData.setMessage(ExceptionConst.get(ExceptionConst.AssertFailed));
+                return returnData;
+            }
+           int number = super.delete(cateId);
+        }catch (Exception e) {
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setMessage(e.toString());
+            logger.error(e.getMessage());
             e.printStackTrace();
         }
         return returnData;

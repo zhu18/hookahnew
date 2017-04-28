@@ -23,7 +23,7 @@ public class Advert extends GenericModel {
 
     private String href;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addTime;
 
     private String creatorId;

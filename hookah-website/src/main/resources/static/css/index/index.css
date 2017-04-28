@@ -1133,6 +1133,7 @@ text-decoration: none;
 
 .index-information .central-box .center-right li a img{
     width:110px;
+    height: 83px;
 }
 .index-information .central-box .center-right li a .infos{
     width:340px;
@@ -1170,19 +1171,42 @@ text-decoration: none;
 .co-organization ul li{
     margin:20px 48px 0 0;
     width:160px;
-    height:40px;
+    height:37px;
     overflow: hidden;
 }
 .co-organization ul li a{
     display: block;
     width:100%;
     height:100%;
+    background-position:0 0
 }
-.co-organization ul li a img{
-    width:100%
-}
+/*.co-organization ul li a img{*/
+    /*width:100%*/
+/*}*/
 .co-organization ul li:nth-child(6n){
     margin-right: 0;
+}
+.co-organization ul li .logo1{
+    background: url("/static/images/index/logo1.jpg") no-repeat;
+}
+.co-organization ul li .logo2{
+    background: url("/static/images/index/logo2.jpg") no-repeat;
+}
+
+.co-organization ul li .logo3{
+    background: url("/static/images/index/logo3.jpg") no-repeat;
+}
+
+.co-organization ul li .logo4{
+    background: url("/static/images/index/logo4.jpg") no-repeat;
+}
+
+.co-organization ul li .logo5{
+    background: url("/static/images/index/logo5.jpg") no-repeat;
+}
+
+.co-organization ul li .logo6{
+    background: url("/static/images/index/logo6.jpg") no-repeat;
 }
 
 

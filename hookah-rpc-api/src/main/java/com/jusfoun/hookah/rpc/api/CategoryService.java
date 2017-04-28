@@ -15,4 +15,8 @@ public interface CategoryService extends GenericService<Category,String> {
     public List<CategoryVo> getCatTree();
 
     public ReturnData addCat(Category category);
+
+    public ReturnData editCat(Category category);
+
+    public ReturnData deleteById(String catId);
 }

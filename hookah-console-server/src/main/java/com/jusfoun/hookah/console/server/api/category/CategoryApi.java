@@ -7,6 +7,7 @@ import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,25 +29,9 @@ public class CategoryApi {
      */
     @RequestMapping("add")
     public ReturnData addCategory(Category category) {
-//        ReturnData<List<Category>> returnData = new ReturnData<>();
-//        returnData.setCode(ExceptionConst.Success);
-//        try {
-//            category.setCatId("101");
-//            category = categoryService.insert(category);
-//            if(category == null) {
-//                throw new HookahException("操作失败");
-//            }
-//        }catch (Exception e) {
-//            returnData.setCode(ExceptionConst.Error);
-//            returnData.setMessage(e.toString());
-//            e.printStackTrace();
-//        }
-//        return returnData;
         return categoryService.addCat(category);
     }
     //TODO delete
-    //TODO update
-    //TODO select
 
     @RequestMapping("allTree")
     public ReturnData selectTree(){
@@ -64,5 +49,21 @@ public class CategoryApi {
             e.printStackTrace();
         }
         return returnData;
+    }
+
+    /**
+     * 修改分类
+     * @param category
+     * @return
+     */
+    @RequestMapping("edit")
+    public ReturnData editCategory(Category category) {
+        return categoryService.editCat(category);
+    }
+
+
+    @RequestMapping("delete/{cateId}")
+    public ReturnData deleteCategory(@PathVariable String cateId) {
+        return categoryService.deleteById(cateId);
     }
 }
