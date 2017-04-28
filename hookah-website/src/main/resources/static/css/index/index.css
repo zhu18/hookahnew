@@ -568,7 +568,7 @@ lesshat-selector {
     -o-transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
     transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
 }
-.module-wrap .left-header .layer-btn:hover {
+.module-wrap .left-header .a:hover {
     background-color:#fff ;
     color: #078cfc;
 }
