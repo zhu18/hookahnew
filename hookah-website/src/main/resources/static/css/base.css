@@ -333,7 +333,9 @@
   top: 2px;
   font-size: 20px;
 }
-
+.footer-bar dl dt a {
+  color: #fff;
+}
 .footer-bar dl dd {
   padding-left: 30px;
   font-size: 14px;
