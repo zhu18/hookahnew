@@ -58,11 +58,15 @@ class GoodsController {
             console.log(res.data)
             if(res.data.code == "1"){
                 $rootScope.editData = res.data.data;
-                if($rootScope.editData.apiInfo != null){
-                    $rootScope.editData.apiInfo.respSample = JSON.stringify(JSON.parse($rootScope.editData.apiInfo.respSample), null, "\t");
-                }
                 $rootScope.operatorFlag = n;
-                $state.go('items.goodsDetail', {data: $rootScope.editData});
+                try{
+                    if($rootScope.editData.apiInfo != null){
+                        $rootScope.editData.apiInfo.respSample = JSON.stringify(JSON.parse($rootScope.editData.apiInfo.respSample), null, "\t");
+                    }
+                    $state.go('items.goodsDetail', {data: $rootScope.editData});
+                }catch (e) {
+                    $state.go('items.goodsDetail', {data: $rootScope.editData});
+                }
             }
         });
     };
@@ -78,10 +82,16 @@ class GoodsController {
             console.log(res.data)
             if(res.data.code == "1"){
                 $rootScope.editData = res.data.data;
-                if($rootScope.editData.apiInfo != null){
-                    $rootScope.editData.apiInfo.respSample = JSON.stringify(JSON.parse($rootScope.editData.apiInfo.respSample), null, "\t");
+                try{
+                    if($rootScope.editData.apiInfo != null){
+                        $rootScope.editData.apiInfo.respSample = JSON.stringify(JSON.parse($rootScope.editData.apiInfo.respSample), null, "\t");
+                    }
+                    $state.go('items.lookDetail', {data: $rootScope.editData});
+                }catch (e) {
+                    $state.go('items.lookDetail', {data: $rootScope.editData});
                 }
-                $state.go('items.lookDetail', {data: $rootScope.editData});
+
+                // console.log($.format($rootScope.editData.apiInfo.respSample,{method: 'json',step: '    ',preserveComments: false }));
             }
         });
     };

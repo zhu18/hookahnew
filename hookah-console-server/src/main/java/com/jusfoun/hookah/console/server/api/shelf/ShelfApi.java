@@ -13,6 +13,7 @@ import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.GoodsShelvesService;
 import com.jusfoun.hookah.rpc.api.MgGoodsShelvesGoodsService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,7 +47,6 @@ public class ShelfApi extends BaseController {
             List<Condition> filters = new ArrayList();
             List<OrderBy> orderBys = new ArrayList();
             orderBys.add(OrderBy.desc("lastUpdateTime"));
-            filters.add(Condition.ne("shelvesStatus", 3));
             //参数校验
             int pageNumberNew = HookahConstants.PAGE_NUM;
 
@@ -88,6 +88,7 @@ public class ShelfApi extends BaseController {
         return returnData;
     }
 
+    @Transactional
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ReturnData updateShelf(GoodsShelves goodsShelves) {
         ReturnData returnData = new ReturnData<>();
@@ -102,19 +103,6 @@ public class ShelfApi extends BaseController {
         return returnData;
     }
 
-//    @RequestMapping(value = "/updateStatus", method = RequestMethod.POST)
-//    public ReturnData updateStatus(String shelvesId, String shelvesStatus) {
-//        GoodsShelves goodsShelves = new GoodsShelves();
-//        goodsShelves.setShelvesId(shelvesId);
-//        if("0".equals(shelvesStatus)){
-//            goodsShelves.setShelvesStatus(Byte.parseByte("1"));
-//        }else if("1".equals(shelvesStatus)){
-//            goodsShelves.setShelvesStatus(Byte.parseByte("0"));
-//        }
-//        int result = goodsShelvesService.updateByIdSelective(goodsShelves);
-//        return ReturnData.success(result);
-//    }
-
     @RequestMapping(value = "/updateStatus", method = RequestMethod.POST)
     public ReturnData updateStatus(String shelvesId, String shelvesStatus) {
         ReturnData returnData = new ReturnData<>();
@@ -126,7 +114,7 @@ public class ShelfApi extends BaseController {
             goodsShelves.setShelvesStatus(Byte.parseByte(shelvesStatus));
             goodsShelvesService.updateByIdSelective(goodsShelves);
 
-            // 删除货架是
+            //
 
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
