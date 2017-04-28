@@ -131,4 +131,27 @@ public class HookahConstants {
         }
     }
 
+    /**
+     * 上架状态
+     * 0    下架
+     * 1    上架
+     * 2    强制下架
+     */
+    public enum SaleStatus {
+
+        sale("1"),
+        off("0"),
+        forceOff("2");
+
+        public String code;
+
+        SaleStatus(String code) {
+            this.code = code;
+        }
+
+        public String getCode() {
+            return code;
+        }
+    }
+
 }

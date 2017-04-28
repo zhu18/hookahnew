@@ -115,6 +115,27 @@ class ManageGoodsController {
         });
     }
 
+    // 添加商品
+    $scope.batchData = function (shelveId) {
+        console.log(shelveId);
+        console.log($rootScope.selectAllGids);
+        console.log($scope.item);
+
+
+        // var promise = $http({
+        //     method: 'GET',
+        //     url: $rootScope.site.apiServer + "/api/mgGoodssg/addGidByMGid",
+        //     params: {shelvesId:shelveId, goodsId:item.goodsId}
+        // });
+        // promise.then(function (res, status, config, headers) {
+        //     if(res.data.code == "1"){
+        //         $scope.search();
+        //         $scope.searchAllGoods();
+        //         growl.addSuccessMessage("数据重新加载完毕。。。");
+        //     }
+        // });
+    }
+
     $scope.searchAllGoods();
 
     $scope.search();

@@ -40,9 +40,15 @@ class GoodsController {
     };
 
 
-    $scope.goCheck = function (event, item) {
+      /**
+       * 1 审核  2强制下架
+       * @param item
+       * @param n
+       */
+    $scope.goCheck = function (item, n) {
       console.log("去审核……");
-      // $state.go('items.check');
+      console.log(n);
+
         var promise = $http({
             method: 'GET',
             url: $rootScope.site.apiServer + "/api/goods/getGoodsInfo",
@@ -55,6 +61,7 @@ class GoodsController {
                 if($rootScope.editData.apiInfo != null){
                     $rootScope.editData.apiInfo.respSample = JSON.stringify(JSON.parse($rootScope.editData.apiInfo.respSample), null, "\t");
                 }
+                $rootScope.operatorFlag = n;
                 $state.go('items.goodsDetail', {data: $rootScope.editData});
             }
         });

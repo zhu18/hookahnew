@@ -29,14 +29,8 @@
           <table class="table table-hover" style="margin-bottom: 57px;">
             <thead>
             <tr>
-              <!--<th width="10">-->
-                <!--<input type="checkbox" data-ng-model="tableState.selectAll"-->
-                       <!--ng-change="changeSelectionAll()" class=" ">-->
-              <!--</th>-->
-              <!--<th class="state-column"></th>-->
               <th>编号</th>
               <th>名称</th>
-              <th>所属者</th>
               <th>所属店铺</th>
               <th>审核状态</th>
               <th>上架状态</th>
@@ -46,13 +40,6 @@
             </thead>
             <tbody>
             <tr data-ng-if="!loadingState" data-ng-repeat="item in pagination.store" class="">
-              <!--<td width="10">-->
-                <!--<input type="checkbox" data-ng-model="item.selected" ng-change="changeSelection({data: item})"-->
-                       <!--class=" ">-->
-              <!--</td>-->
-              <!--<td class="state-column">-->
-                <!--<span class="state-unread " ng-if="item.Status*1===0">●</span>-->
-              <!--</td>-->
               <td>
                 <a ng-class="{'title-unread':item.Status*1===0,'title-read':item.Status*1!==0}" href="javascript:;"
                    class=" title-unread">
@@ -65,10 +52,6 @@
                 </a>
               </td>
               <td>
-                <!--<span class="column-text" style="width: 100px;white-space:nowrap;" ng-bind="item.userName"></span>-->
-                <span class="column-text" ng-bind="item.userName"></span>
-              </td>
-              <td>
                 <span class="column-text" ng-bind="item.shopName"></span>
               </td>
               <td>
@@ -78,22 +61,30 @@
               </td>
               <td>
                 <span class="column-text" ng-show="item.isOnsale == 0">下架状态</span>
-                <span class="column-text" ng-show="item.isOnsale == 1">上架状态</span>
+                <span class="column-text" ng-show="item.checkStatus == 0">上架中</span>
                 <span class="column-text" ng-show="item.isOnsale == 2">强制下架状态</span>
               </td>
               <td>
-                <span class="" ng-bind="item.addTime"></span>
+                <span class="column-text" ng-bind="item.addTime"></span>
               </td>
               <td class="text-center" data-ng-if="item.isDelete == 1">
                 <!--<a href="javascript:;" ng-click="updateGoods($event,item)">修改</a>-->
                 <span data-ng-if="item.checkStatus == 0">
-                  <a href="javascript:;" ng-click="goCheck($event,item)">去审核</a>
-                  <span class="text-explode">|</span>
+                  <a href="javascript:;" ng-click="goCheck(item, 1)">去审核</a>
                 </span>
-                <a href="javascript:;" ng-click="delGoods($event, item, 1)">删除</a>
-                <span data-ng-if="item.isOnsale == 1">
-                  <span class="text-explode">|</span>
-                  <a href="javascript:;" ng-click="delGoods($event, item, 2)">下架</a>
+                <!--<a href="javascript:;" ng-click="delGoods($event, item, 1)">删除</a>-->
+                <!--<span class="text-explode">|</span>-->
+                <span data-ng-if="item.isOnsale == '1' && item.checkStatus == '1'">
+                  <!--<a href="javascript:;" ng-click="delGoods($event, item, 2)">强制下架</a>-->
+                  <a href="javascript:;" ng-click="goCheck(item, 2)">强制下架</a>
+                </span>
+
+                <span data-ng-if="item.isOnsale == 2">
+                  <!--<a href="javascript:;" ng-click="delGoods($event, item, 2)">强制下架</a>-->
+                  <a href="javascript:;">已强制下架</a>
+                </span>
+                <span data-ng-if="item.isOnsale == 0">
+                  <a href="javascript:;">已下架</a>
                 </span>
                 <!--<span data-ng-if="item.isOnsale == 2 || item.isOnsale == 0">-->
                   <!--<span class="text-explode">|</span>-->
@@ -104,26 +95,7 @@
             </tbody>
             <tfoot ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">
             <tr>
-              <!--<td width="10" style="width: 29px;">-->
-                <!--<input type="checkbox" data-ng-model="tableState.selectAll" ng-change="changeSelectionAll()"-->
-                       <!--class="">-->
-              <!--</td>-->
               <td colspan="9">
-                <div class="pull-left">
-                  <div toolbar="" biz-type="innerMsgToolbar" raw-data="selectedItems" class="">
-                    <a href="javascript:;" class="btn btn-default " biz-type="innerMsg" action="markRead"
-                       item-field="rawData" key-field="msgId" data-ng-disabled="!rawData || rawData.length==0"
-                       disabled="disabled">
-                      <span class=""> 修改 </span>
-                    </a>
-                    <span class="margin-right "></span>
-                    <a href="javascript:;" class="btn btn-default " biz-type="innerMsg" action="delete"
-                       item-field="rawData" key-field="msgId" data-ng-disabled="!rawData || rawData.length==0"
-                       disabled="disabled">
-                      <span class=""> 删除 </span>
-                    </a>
-                  </div>
-                </div>
                 <div class="pull-right page-box">
                   <div class="pagination-info">共有{{pagination.totalItems}}条，每页显示：{{pagination.pageSize}}条</div>
                   <ul uib-pagination ng-change="pageChanged()" total-items="pagination.totalItems"
@@ -131,7 +103,6 @@
                       max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"
                       force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"
                       last-text="末页">
-
                   </ul>
                 </div>
               </td>
