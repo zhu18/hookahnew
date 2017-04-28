@@ -48,46 +48,46 @@
 
     <div class="form-group text-center col-sm-5">
       <label>待添加商品</label>
-      <table class="table table-hover" style="margin-bottom: 57px;">
-        <thead>
-        <tr>
-          <th width="120" class="text-center">商品名称</th>
-          <th width="180" class="text-center">操作</th>
-        </tr>
-        </thead>
-        <tbody>
-          <form id="selectAllGids">
-            <input type="hidden" name="shelvesId" value="{{shelf.shelvesId}}" />
-            <tr data-ng-if="!loadingState" data-ng-repeat="item in allGoods" class="">
-              <td>
-                <input type="hidden" name="goodsId" value="{{item.goodsId}}" />
-                <span class="column-text" ng-bind="item.goodsName | limitTo:10"></span>
-              </td>
-              <td class="text-center">
-                <a href="javascript:;" ng-click="addGoods(shelf.shelvesId, item)">添加商品</a>
-              </td>
-            </tr>
-          </form>
-        </tbody>
-        <tfoot ng-if="!showNoneDataInfoTip && showPageHelpInfo">
-        <tr>
-          <td colspan="9">
-            <div class="pull-right page-box">
-              <!--<a class="btn btn-primary btn-xs text-right" data-ng-click="batchData(shelf.shelvesId)">添加本页至货架</a>-->
-            </div>
-            <div class="pull-right page-box">
-              <div class="pagination-info">共有{{allGoodsPages.totalItems}}条，每页显示：{{allGoodsPages.pageSize}}条</div>
-              <ul uib-pagination ng-change="pageChanged()" total-items="allGoodsPages.totalItems"
-                  ng-model="allGoodsPages.currentPage" items-per-page="allGoodsPages.pageSize"
-                  max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"
-                  force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"
-                  last-text="末页">
-              </ul>
-            </div>
-          </td>
-        </tr>
-        </tfoot>
-      </table>
+      <form id="batchFrom">
+        <table class="table table-hover" style="margin-bottom: 57px;">
+          <thead>
+          <tr>
+            <th width="120" class="text-center">商品名称</th>
+            <th width="180" class="text-center">操作</th>
+          </tr>
+          </thead>
+          <tbody>
+              <input type="hidden" name="shelvesId" value="{{shelf.shelvesId}}" />
+              <tr data-ng-if="!loadingState" data-ng-repeat="item in allGoods" class="">
+                <td>
+                  <input type="hidden" name="goodsId" value="{{item.goodsId}}" />
+                  <span class="column-text" ng-bind="item.goodsName | limitTo:10"></span>
+                </td>
+                <td class="text-center">
+                  <a href="javascript:;" ng-click="addGoods(shelf.shelvesId, item)">添加商品</a>
+                </td>
+              </tr>
+          </tbody>
+          <tfoot ng-if="!showNoneDataInfoTip && showPageHelpInfo">
+          <tr>
+            <td colspan="9">
+              <div class="pull-right page-box">
+                <a class="btn btn-primary btn-xs text-right" data-ng-click="batchData()">添加本页至货架</a>
+              </div>
+              <div class="pull-right page-box">
+                <div class="pagination-info">共有{{allGoodsPages.totalItems}}条，每页显示：{{allGoodsPages.pageSize}}条</div>
+                <ul uib-pagination ng-change="pageChanged()" total-items="allGoodsPages.totalItems"
+                    ng-model="allGoodsPages.currentPage" items-per-page="allGoodsPages.pageSize"
+                    max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"
+                    force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"
+                    last-text="末页">
+                </ul>
+              </div>
+            </td>
+          </tr>
+          </tfoot>
+        </table>
+      </form>
     </div>
   </div>
 </div>
