@@ -1450,9 +1450,10 @@ dl {
 	position: absolute;
 	top: 0;
 	left: 25px;
-	width: 32px;
-	height: 21px;
+	width: 35px;
+	height: 24px;
 	text-align: center;
+	border: none;
 }
 .goods-left .goods-details .goods-details-right .detail-count a {
 	text-align: center;
