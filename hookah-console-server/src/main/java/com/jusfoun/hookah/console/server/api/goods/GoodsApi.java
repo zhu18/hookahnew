@@ -86,8 +86,11 @@ public class GoodsApi extends BaseController{
             orderBys.add(OrderBy.desc("lastUpdateTime"));
 
             MgShelvesGoods mgShelvesGoods = mgGoodsShelvesGoodsService.selectById(shelvesGoodsId);
-            if(mgShelvesGoods.getGoodsIdList() != null && mgShelvesGoods.getGoodsIdList().size() > 0){
-                filters.add(Condition.notIn("goodsId", mgShelvesGoods.getGoodsIdList().toArray()));
+
+            if(mgShelvesGoods != null){
+                if(mgShelvesGoods.getGoodsIdList() != null && mgShelvesGoods.getGoodsIdList().size() > 0){
+                    filters.add(Condition.notIn("goodsId", mgShelvesGoods.getGoodsIdList().toArray()));
+                }
             }
 
             //只查询商品状态为未删除的商品
