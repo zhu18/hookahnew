@@ -389,12 +389,8 @@
 .viewDetails .viewContent .leftContent .state-btn .pay {
     padding:4px 13px;
     border: 1px solid #E4393C;
-    background: #fff;
-    color:#E4393C;
-}
-.viewDetails .viewContent .leftContent .state-btn .pay:hover{
-    background: #eee;
-    border: 1px solid #ccc;
+    /*background: #fff;*/
+    /*color:#E4393C;*/
 }
 
 /*.viewDetails .viewContent .leftContent .state-bottom img{*/
@@ -482,15 +478,10 @@
     width: 500px;
 }
 .operate .buy{
-    background: #eee;
     width: 60px;
     height: 20px;
     padding:5px 10px;
-    border: 1px solid #ccc;
-}
-.operate .buy:hover{
-    background: #fff;
-    border: 1px solid #237DE7;
+    /*border: 1px solid #ccc;*/
 }
 .goods-list .goods-info{
     border-top:1px solid #eee;
