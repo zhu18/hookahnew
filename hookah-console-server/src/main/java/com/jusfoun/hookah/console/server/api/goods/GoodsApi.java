@@ -217,5 +217,33 @@ public class GoodsApi extends BaseController{
         return returnData;
     }
 
+    /**
+     * 强制下架
+     * @param goodsId           商品id
+     * @param offReason         下架理由
+     * @return
+     */
+    @RequestMapping(value = "/forceOff", method = RequestMethod.POST)
+    public ReturnData forceOff(String goodsId, String offReason) {
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            Goods goods = new Goods();
+            goods.setGoodsId(goodsId);
+            goods.setOffReason(offReason);
+            goods.setIsOnsale(Byte.parseByte(HookahConstants.SaleStatus.forceOff.getCode()));
+            goods.setCheckStatus(Byte.parseByte(HookahConstants.CheckStatus.audit_fail.getCode()));
+
+            //消息 es
+
+            goodsService.updateByIdSelective(goods);
+        } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
+
 
 }

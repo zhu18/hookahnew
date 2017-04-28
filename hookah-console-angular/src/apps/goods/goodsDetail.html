@@ -7,12 +7,10 @@
     </div>
   </div>
   <div class="col-sm-12">
-    <form class="form-horizontal" role="form" id="goodsCheckForm" name="shelf">
+    <form class="form-horizontal" role="form">
       <fieldset>
         <h5 style="padding: 0px 20px;">基本信息</h5>
         <div class="form-group">
-          <input type="hidden" id="goodsId" name="goodsId" value="{{editData.goodsId}}" />
-          <input type="hidden" id="goodsSn" name="goodsSn" value="{{editData.goodsSn}}" />
           <label class="col-sm-2 control-label">商品名称</label>
           <div class="col-sm-5">
             <input type="text" class="form-control" name="goodsName" value="{{editData.goodsName}}" readonly="true" />
@@ -45,7 +43,10 @@
         <div class="form-group">
           <label class="col-sm-2 control-label">商品图片</label>
           <div class="col-sm-5">
-            <img ng-src="{{editData.goodsImg}}">
+            <a href="{{editData.goodsImg}}" target="_blank">
+              <img ng-src="{{editData.goodsImg}}" style="max-width: 450px; max-height: 600px">
+            </a>
+            <!--<img ng-src="{{editData.goodsImg}}" style="max-width: 300px; max-height: 500px">-->
           </div>
         </div>
         <div class="form-group">
@@ -165,20 +166,20 @@
             <div class="col-sm-5">
               <table class="table table-hover">
                 <thead>
-                  <tr>
-                    <th>参数名称</th>
-                    <th>参数说明</th>
-                  </tr>
+                <tr>
+                  <th>参数名称</th>
+                  <th>参数说明</th>
+                </tr>
                 </thead>
                 <tbody>
-                  <tr data-ng-repeat="req in editData.apiInfo.respParamList" class="">
-                    <td>
-                      <span class="" ng-bind="req.fieldName"></span>
-                    </td>
-                    <td>
-                      <span class="column-text" ng-bind="req.describle"></span>
-                    </td>
-                  </tr>
+                <tr data-ng-repeat="req in editData.apiInfo.respParamList" class="">
+                  <td>
+                    <span class="" ng-bind="req.fieldName"></span>
+                  </td>
+                  <td>
+                    <span class="column-text" ng-bind="req.describle"></span>
+                  </td>
+                </tr>
                 </tbody>
               </table>
             </div>
@@ -193,7 +194,12 @@
           </div>
         </div>
       </fieldset>
+    </form>
 
+    <form class="form-horizontal" role="form" id="goodsCheckForm" name="shelf" ng-show="operatorFlag == 1">
+      <input type="hidden" id="goodsId" name="goodsId" value="{{editData.goodsId}}" />
+      <input type="hidden" id="goodsSn" name="goodsSn" value="{{editData.goodsSn}}" />
+      <input type="hidden" id="goodsName" name="goodsName" value="{{editData.goodsName}}" />
       <div class="form-group">
         <label class="col-sm-2 control-label">审核状态</label>
         <div class="col-sm-5">
@@ -213,12 +219,31 @@
           </label>
         </div>
       </div>
-
       <div class="form-group">
         <div class="col-sm-2"></div>
         <div class="col-sm-5">
           <button class="btn btn-primary" data-ng-click="submitCheck()">
             <span class="glyphicon glyphicon-refresh"></span> 提交审核
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <form class="form-horizontal" role="form" id="forceOffForm" name="forceOffForm" ng-show="operatorFlag == 2">
+      <input type="hidden" name="goodsId" value="{{editData.goodsId}}" />
+      <div class="form-group">
+        <label class="col-sm-2 control-label">强制下架理由</label>
+        <div class="col-sm-5">
+          <label>
+            <textarea name="offReason" style="margin: 0px; width: 452px; height: 84px;"></textarea>
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-5">
+          <button class="btn btn-primary" data-ng-click="forceOff()">
+            <span class="glyphicon glyphicon-refresh"></span> 强制下架
           </button>
         </div>
       </div>

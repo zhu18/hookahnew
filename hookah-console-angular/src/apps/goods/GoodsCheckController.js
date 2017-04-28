@@ -72,7 +72,7 @@ class GoodsCheckController {
       console.log('Page changed to: ' + $rootScope.pagination.currentPage);
     };
 
-    $scope.LookGoods = function($event,item){
+    $scope.LookGoods = function(item, n){
         console.log(item.goodsName);
         var promise = $http({
             method: 'GET',
@@ -86,6 +86,7 @@ class GoodsCheckController {
                 if($rootScope.editData.apiInfo != null){
                     $rootScope.editData.apiInfo.respSample = JSON.stringify(JSON.parse($rootScope.editData.apiInfo.respSample), null, "\t");
                 }
+                $rootScope.operatorFlag = n;
                 $state.go('items.goodsDetail', {data: $rootScope.editData});
             }
         });
@@ -116,6 +117,20 @@ class GoodsCheckController {
         });
     }
 
+    $scope.forceOff = function(){
+        var promise = $http({
+            method: 'POST',
+            url: $rootScope.site.apiServer + "/api/goods/forceOff",
+            data: $("#forceOffForm").serialize()
+        });
+        promise.then(function (res, status, config, headers) {
+            console.log(res.data)
+            if(res.data.code == "1"){
+                $state.go('items.search');
+            }
+        });
+    }
+
 
       $scope.aginCheck = function (item) {
           console.log("重新审核……");
@@ -139,13 +154,13 @@ class GoodsCheckController {
 
 
 
-  if ($state.$current.name == "items.check") {
-      $scope.search();
-  }
+      if ($state.$current.name == "items.check") {
+          $scope.search();
+      }
 
-  if ($state.$current.name == "items.checkedList") {
-      $scope.searchCheckRs();
-  }
+      if ($state.$current.name == "items.checkedList") {
+          $scope.searchCheckRs();
+      }
 
 
   }

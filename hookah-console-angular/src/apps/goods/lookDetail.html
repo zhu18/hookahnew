@@ -45,7 +45,9 @@
         <div class="form-group">
           <label class="col-sm-2 control-label">商品图片</label>
           <div class="col-sm-5">
-            <img ng-src="{{editData.goodsImg}}">
+            <a href="{{editData.goodsImg}}" target="_blank">
+              <img ng-src="{{editData.goodsImg}}" style="max-width: 450px; max-height: 600px">
+            </a>
           </div>
         </div>
         <div class="form-group">
