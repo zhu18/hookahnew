@@ -369,9 +369,8 @@
     padding-left:10px;
     border-left:2px solid #237DE7;
 }
-/*.viewDetails .viewContent .leftContent,.sunAlone .sunContent .lcontent{*/
 .viewDetails .viewContent .leftContent {
-    width: 265px;
+    width: 285px;
 }
 .sunAlone .sunContent .lcontent{
     width: 265px;
@@ -398,17 +397,17 @@
     border: 1px solid #ccc;
 }
 
-.viewDetails .viewContent .leftContent .state-bottom img{
-    width: 17px;
-    height: 17px;
-    display: inline-block;
-    vertical-align: middle;
-}
+/*.viewDetails .viewContent .leftContent .state-bottom img{*/
+    /*width: 17px;*/
+    /*height: 17px;*/
+    /*display: inline-block;*/
+    /*vertical-align: middle;*/
+/*}*/
 .viewDetails .viewContent .rightContent {
     border-left: 1px solid #f1f1f1;
 }
 .viewDetails .viewContent .rightContent, .sunAlone .sunContent .rcontent {
-    width: 692px;
+    width: 672px;
 }
 .viewDetails .viewContent .rightContent .state-rtop {
     height: 50px;
@@ -460,6 +459,12 @@
     width: 350px;
     height: 60px;
     padding:10px;
+    padding-left:72px;
+}
+.viewDetails  .goods-list tbody .p-img a{
+    display: inline-block;
+    width: 60px;
+    height: 60px;
 }
 .number, .price, .num, .operate {
     width: 127px;
@@ -468,7 +473,6 @@
 .goods-list .p-img img{
     width: 60px;
     height: 60px;
-    vertical-align: middle;
 }
 .goods-list .p-img a:nth-child(2){
     line-height: 60px;
@@ -476,9 +480,6 @@
 }
 .goods-list .goods{
     width: 500px;
-}
-.goods div {
-    display: inline-block;
 }
 .operate .buy{
     background: #eee;
@@ -493,9 +494,6 @@
 }
 .goods-list .goods-info{
     border-top:1px solid #eee;
-    /*height: 40px;*/
-    /*line-height: 40px;*/
-    /*display: flex;*/
 }
 .goods-list .goods-info ul li{
     height: 35px;
@@ -504,9 +502,6 @@
 }
 
 /*sunAlone*/
-.sunAlone .sunContent .lcontent {
-    /*width: 260px;*/
-}
 .sunAlone .sunContent .pic img {
     width: 60px;
     height: 60px;
@@ -531,9 +526,6 @@
 }
 .rcontent .suneval textarea {
     resize: none;
-}
-.sunAlone .sure {
-
 }
 .sunAlone .sure span{
     width: 120px;
