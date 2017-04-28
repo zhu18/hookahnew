@@ -31,4 +31,6 @@ public interface MgGoodsShelvesGoodsService extends GenericService<MgShelvesGood
     ReturnData delSMongoGoodsById(String shelvesGoodsId, String goodsId) throws HookahException;
 
     ReturnData addGidByMGid(String shelvesId, String goodsId);
+
+    ReturnData batchAddGidByMGid(String shelvesId, String[] goodsId);
 }

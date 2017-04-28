@@ -235,14 +235,17 @@
         <label class="col-sm-2 control-label">强制下架理由</label>
         <div class="col-sm-5">
           <label>
-            <textarea name="offReason" style="margin: 0px; width: 452px; height: 84px;"></textarea>
+            <textarea name="offReason"
+                      data-ng-model="offReason"
+                      style="margin: 0px; width: 452px; height: 84px;" required>
+            </textarea>
           </label>
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-2"></div>
         <div class="col-sm-5">
-          <button class="btn btn-primary" data-ng-click="forceOff()">
+          <button class="btn btn-primary" data-ng-click="forceOff()" ng-disabled="forceOffForm.$invalid">
             <span class="glyphicon glyphicon-refresh"></span> 强制下架
           </button>
         </div>

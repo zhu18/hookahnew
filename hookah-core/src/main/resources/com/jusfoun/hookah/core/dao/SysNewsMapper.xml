@@ -11,7 +11,7 @@
     <select id="selectByGroup" resultMap="ListMap">
         SELECT news.* ,
         us.`head_img` AS headImg ,
-        us.`user_name` AS userName
+        us.`user_name` AS creatName
         FROM sys_news  AS news , user  AS us
         <where> news.`sys_user` = us.`user_id`
             <if test="group !=null and group !=''">

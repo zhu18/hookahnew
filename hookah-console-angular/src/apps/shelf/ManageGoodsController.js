@@ -115,17 +115,14 @@ class ManageGoodsController {
         });
     }
 
-    // 添加商品
+    // 添加本页商品
     $scope.batchData = function (shelveId) {
         console.log(shelveId);
-        console.log($rootScope.selectAllGids);
-        console.log($scope.item);
-
-
+        console.log($("#selectAllGids").serialize());
         // var promise = $http({
         //     method: 'GET',
-        //     url: $rootScope.site.apiServer + "/api/mgGoodssg/addGidByMGid",
-        //     params: {shelvesId:shelveId, goodsId:item.goodsId}
+        //     url: $rootScope.site.apiServer + "/api/mgGoodssg/batchAddGidByMGid",
+        //     data: $("#selectAllGids").serialize()
         // });
         // promise.then(function (res, status, config, headers) {
         //     if(res.data.code == "1"){

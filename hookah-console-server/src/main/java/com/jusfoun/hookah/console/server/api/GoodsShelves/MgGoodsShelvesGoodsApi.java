@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Created by ctp on 2017/4/5.
  * 货架下的商品管理
@@ -82,6 +84,13 @@ public class MgGoodsShelvesGoodsApi {
             e.printStackTrace();
         }
         return ReturnData.success(page);
+    }
+
+    @RequestMapping("/batchAddGidByMGid")
+    @ResponseBody
+    public ReturnData batchAddGidByMGid(HttpServletRequest request){
+        return mgGoodsShelvesGoodsService.batchAddGidByMGid(
+                request.getParameter("shelvesId"), request.getParameterValues("goodsId"));
     }
 
     @RequestMapping("/addGidByMGid")

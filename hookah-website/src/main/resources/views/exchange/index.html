@@ -71,7 +71,7 @@ var htmlPart = {
 					</div>
 				</div>
 				<div class="recommend-resource-top-right grid-right">
-					<a href="${host.website}/exchange/shelves?id=${recomm_data.shelvesId}" class="a-hover-blue">更多>></a>
+					<a href="${host.website}/exchange/shelves?id=${recomm_data.shelvesId}" target="_blank" class="a-hover-blue">更多>></a>
 				</div>
 			</div>
 			<div class="recommend-resource-down clearfix">
@@ -123,7 +123,7 @@ var htmlPart = {
 							</div>
 							<div class="down-box-tow">
 								<span class="money"><i class="money-i-item" >￥</i>${trunc(item[i].shopPrice / 100,2)}</span>
-								<a class="detail btn-hover-red" href="${host.website}/exchange/details?id=${item[i].goodsId}" >查看详情</a>
+								<a class="detail btn-hover-red" href="${host.website}/exchange/details?id=${item[i].goodsId}" target="_blank" >查看详情</a>
 							</div>
 						</div>
 						<div class="li-hover">
@@ -152,7 +152,7 @@ var htmlPart = {
 				</div>
 			</div>
 			<div class="hot-resource-top-right grid-right">
-				<a href="${host.website}/exchange/shelves?id=${hot_res_data.shelvesId}" class="a-hover-blue">更多>></a>
+				<a href="${host.website}/exchange/shelves?id=${hot_res_data.shelvesId}" class="a-hover-blue" target="_blank" >更多>></a>
 			</div>
 		</div>
 		<div class="hot-resource-down clearfix">
@@ -192,7 +192,7 @@ var htmlPart = {
 						<td class="td-two">${res_item[i].goodsName}</td>
 						<td class="td-three"><span class="td-three-money">${trunc(res_item[i].shopPrice / 100,2)}</span></td><!--<span>元/次</span>-->
 						<td class="td-four">
-							<a href="${host.website}/exchange/details?id=${res_item[i].goodsId}" class="a-hover-blue">查看详情</a>
+							<a href="${host.website}/exchange/details?id=${res_item[i].goodsId}" class="a-hover-blue" target="_blank" >查看详情</a>
 							<!--<span>免</span>-->
 							<!--<span>企</span>-->
 						</td>
@@ -216,9 +216,9 @@ var htmlPart = {
 					<li class="${decode(i,0,'active','')}">
 						<img src="${hot_sellItem[i].goodsImg}" class="grid-left" alt="">
 						<div class="infoBox grid-right">
-							<a href="${host.website}/exchange/details?id=${hot_sellItem[i].goodsId}"><p class="title">
+							<a href="${host.website}/exchange/details?id=${hot_sellItem[i].goodsId}" target="_blank" ><p class="title">
 								${hot_sellItem[i].goodsName}</p></a>
-							<a href="${host.website}/exchange/details?id=${hot_sellItem[i].goodsId}"><p class="p-none ">
+							<a href="${host.website}/exchange/details?id=${hot_sellItem[i].goodsId}" target="_blank" ><p class="p-none ">
 								￥${trunc(hot_sellItem[i].shopPrice / 100,2)}</p></a>
 						</div>
 					</li>
@@ -243,7 +243,7 @@ var htmlPart = {
 				</div>
 			</div>
 			<div class="industry-resource-top-right grid-right">
-				<a href="${host.website}/exchange/shelves?id=${ind_res_data.shelvesId}" class="a-hover-blue">更多>></a>
+				<a href="${host.website}/exchange/shelves?id=${ind_res_data.shelvesId}" class="a-hover-blue" target="_blank" >更多>></a>
 			</div>
 		</div>
 		<div class="industry-resource-down ">
@@ -258,7 +258,7 @@ var htmlPart = {
 						for(item in ind_res_data.goods){
 						%>
 						<li class="slide-item">
-							<a href="${host.website}/exchange/details?id=${item.goodsId}">
+							<a href="${host.website}/exchange/details?id=${item.goodsId}" target="_blank" >
 								<img src="https://img.alicdn.com/tps/TB16hkwLXXXXXX6XXXXXXXXXXXX-576-840.jpg" alt="">
 								<div class="bg">
 									<div class="bg-bg"></div>
@@ -289,60 +289,32 @@ var htmlPart = {
 		<div class="category-left grid-left">
 			<div class="category-box">
 				<ul>
-					<li class="grid-left active">${goodsShelvesVoInfo.data_sur_data.shelvesName}</li>
-					<li class="grid-left">${goodsShelvesVoInfo.model_data.shelvesName}</li>
+					<!--<li class="grid-left ">${goodsShelvesVoInfo.data_sur_data.shelvesName}</li>-->
+					<li class="grid-left active">${goodsShelvesVoInfo.model_data.shelvesName}</li>
 					<li class="grid-left">${goodsShelvesVoInfo.scene_data.shelvesName}</li>
 					<li class="grid-left">${goodsShelvesVoInfo.plat_data.shelvesName}</li>
 					<li class="grid-left">${goodsShelvesVoInfo.tools_data.shelvesName}</li>
 				</ul>
 			</div>
+			<!--<div class="category-item ">-->
+				<!--<div class="grid-left resource-two">-->
+					<!--<div class="headline-box">-->
+						<!--<p class="main-headline">${goodsShelvesVoInfo.data_sur_data.shelvesName}</p>-->
+						<!--<p class="sub-headline">${goodsShelvesVoInfo.data_sur_data.shelvesDesc}</p>-->
+					<!--</div>-->
+					<!--<div class="label-box">-->
+						<!--&lt;!&ndash;<span>资源汇总</span>&ndash;&gt;-->
+						<!--&lt;!&ndash;<span>资源汇总</span>&ndash;&gt;-->
+						<!--<a class="more a-hover-blue" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.data_sur_data.shelvesId}" target="_blank" >更多>></a>-->
+					<!--</div>-->
+					<!--<span class="iconfont icon-productfeatures bg-img"></span>-->
+				<!--</div>-->
+				<!--<div class="grid-right list-box">-->
+					<!--<ul>-->
+					<!--</ul>-->
+				<!--</div>-->
+			<!--</div>-->
 			<div class="category-item item-active">
-				<div class="grid-left resource-two">
-					<div class="headline-box">
-						<p class="main-headline">${goodsShelvesVoInfo.data_sur_data.shelvesName}</p>
-						<p class="sub-headline">${goodsShelvesVoInfo.data_sur_data.shelvesDesc}</p>
-					</div>
-					<div class="label-box">
-						<!--<span>资源汇总</span>-->
-						<!--<span>资源汇总</span>-->
-						<a class="more a-hover-blue" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.data_sur_data.shelvesId}">更多>></a>
-					</div>
-					<span class="iconfont icon-productfeatures bg-img"></span>
-				</div>
-				<div class="grid-right list-box">
-					<ul>
-						<%
-						var sur_item = goodsShelvesVoInfo.data_sur_data.goods;
-						var index3 =0;
-						if(sur_item.~size >8){
-						index3 =8;
-						}else{
-						index3 = sur_item.~size;
-						}
-						for(var i=0;i< index3;i++){
-						%>
-						<li>
-							<a href="${host.website}/exchange/details?id=${sur_item[i].goodsId}">
-								<img src="${sur_item[i].goodsImg}" alt="">
-								<p class="title">${sur_item[i].goodsName}</p>
-								<p class="star-box">
-									<i class="iconfont icon-shoucang color-orange star-item"></i>
-									<i class="iconfont icon-shoucang color-orange star-item"></i>
-									<i class="iconfont icon-shoucang color-orange star-item"></i>
-									<i class="iconfont icon-shoucang color-orange star-item"></i>
-									<i class="iconfont icon-shoucang color-orange star-item"></i>
-								</p>
-								<p>
-									<i class="money-symbol color-red">￥</i>
-									<span class="color-red">${trunc(sur_item[i].shopPrice / 100,2)}</span>
-								</p>
-							</a>
-						</li>
-						<%}%>
-					</ul>
-				</div>
-			</div>
-			<div class="category-item">
 				<div class="grid-left resource-two">
 					<div class="headline-box">
 						<p class="main-headline">${goodsShelvesVoInfo.model_data.shelvesName}</p>
@@ -351,7 +323,7 @@ var htmlPart = {
 					<div class="label-box">
 						<!--<span>资源汇总</span>-->
 						<!--<span>资源汇总</span>-->
-						<a class="more a-hover-blue" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.model_data.shelvesId}" class="a-hover-blue">更多>></a>
+						<a class="more a-hover-blue" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.model_data.shelvesId}" class="a-hover-blue" target="_blank" >更多>></a>
 					</div>
 					<span class="iconfont icon-productfeatures bg-img"></span>
 				</div>
@@ -360,15 +332,15 @@ var htmlPart = {
 						<%
 						var model_item = goodsShelvesVoInfo.model_data.goods;
 						var index4 =0;
-						if(model_item.~size >8){
-						index4 =8;
+						if(model_item.~size >6){
+						index4 =6;
 						}else{
 						index4 = model_item.~size;
 						}
 						for(var i=0;i< index4 ;i++){
 						%>
 						<li>
-							<a href="${host.website}/exchange/details?id=${model_item[i].goodsId}">
+							<a href="${host.website}/exchange/details?id=${model_item[i].goodsId}" target="_blank" >
 								<img src="${model_item[i].goodsImg}" alt="">
 								<p class="title">${model_item[i].goodsName}</p>
 								<p class="star-box">
@@ -397,7 +369,7 @@ var htmlPart = {
 					<div class="label-box">
 						<!--<span>资源汇总</span>-->
 						<!--<span>资源汇总</span>-->
-						<a class="more a-hover-blue" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.scene_data.shelvesId}" class="a-hover-blue">更多>></a>
+						<a class="more a-hover-blue" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.scene_data.shelvesId}" class="a-hover-blue" target="_blank" >更多>></a>
 
 					</div>
 					<span class="iconfont icon-productfeatures bg-img"></span>
@@ -407,15 +379,15 @@ var htmlPart = {
 						<%
 						var scene_item = goodsShelvesVoInfo.scene_data.goods;
 						var index5 =0;
-						if(scene_item.~size >8){
-							index5 =8;
+						if(scene_item.~size >6){
+							index5 =6;
 						}else{
 							index5 = scene_item.~size;
 						}
 						for(var i=0;i < index5;i++){
 						%>
 						<li>
-							<a href="${host.website}/exchange/details?id=${scene_item[i].goodsId}">
+							<a href="${host.website}/exchange/details?id=${scene_item[i].goodsId}" target="_blank" >
 								<img src="${scene_item[i].goodsImg}" alt="">
 								<p class="title">${scene_item[i].goodsName}</p>
 								<p class="star-box">
@@ -444,7 +416,7 @@ var htmlPart = {
 					<div class="label-box">
 						<!--<span>资源汇总</span>-->
 						<!--<span>资源汇总</span>-->
-						<a class="more a-hover-blue" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.plat_data.shelvesId}" class="a-hover-blue">更多>></a>
+						<a class="more a-hover-blue" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.plat_data.shelvesId}" class="a-hover-blue" target="_blank" >更多>></a>
 					</div>
 					<span class="iconfont icon-productfeatures bg-img"></span>
 
@@ -454,15 +426,15 @@ var htmlPart = {
 						<%
 						var plat_item = goodsShelvesVoInfo.plat_data.goods;
 						var index6 =0;
-						if(plat_item.~size >8){
-						index6 =8;
+						if(plat_item.~size >6){
+						index6 =6;
 						}else{
 						index6 = plat_item.~size;
 						}
 						for(var i=0;i< index6 ;i++){
 						%>
 						<li>
-							<a href="${host.website}/exchange/details?id=${plat_item[i].goodsId}">
+							<a href="${host.website}/exchange/details?id=${plat_item[i].goodsId}" target="_blank" >
 								<img src="${plat_item[i].goodsImg}" alt="">
 								<p class="title">${plat_item[i].goodsName}</p>
 								<p class="star-box">
@@ -491,7 +463,7 @@ var htmlPart = {
 					<div class="label-box">
 						<!--<span>资源汇总</span>-->
 						<!--<span>资源汇总</span>-->
-						<a class="more a-hover-blue" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.tools_data.shelvesId}" class="a-hover-blue">更多>></a>
+						<a class="more a-hover-blue" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.tools_data.shelvesId}" class="a-hover-blue" target="_blank" >更多>></a>
 					</div>
 					<span class="iconfont icon-productfeatures bg-img"></span>
 
@@ -501,15 +473,15 @@ var htmlPart = {
 						<%
 						var tools_item = goodsShelvesVoInfo.tools_data.goods;
 						var index7 =0;
-						if(tools_item.~size >8){
-						index7 =8;
+						if(tools_item.~size >6){
+						index7 =6;
 						}else{
 						index7 = tools_item.~size;
 						}
 						for(var i=0;i< index7 ;i++){
 						%>
 						<li>
-							<a href="${host.website}/exchange/details?id=${tools_item[i].goodsId}">
+							<a href="${host.website}/exchange/details?id=${tools_item[i].goodsId}" target="_blank" >
 								<img src="${tools_item[i].goodsImg}" alt="">
 								<p class="title">${tools_item[i].goodsName}</p>
 								<p class="star-box">

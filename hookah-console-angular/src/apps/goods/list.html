@@ -61,31 +61,25 @@
               </td>
               <td>
                 <span class="column-text" ng-show="item.isOnsale == 0">下架状态</span>
-                <span class="column-text" ng-show="item.checkStatus == 0">上架中</span>
+                <span class="column-text" ng-show="item.isOnsale == 1">上架状态</span>
                 <span class="column-text" ng-show="item.isOnsale == 2">强制下架状态</span>
               </td>
               <td>
                 <span class="column-text" ng-bind="item.addTime"></span>
               </td>
               <td class="text-center" data-ng-if="item.isDelete == 1">
-                <!--<a href="javascript:;" ng-click="updateGoods($event,item)">修改</a>-->
                 <span data-ng-if="item.checkStatus == 0">
                   <a href="javascript:;" ng-click="goCheck(item, 1)">去审核</a>
                 </span>
-                <!--<a href="javascript:;" ng-click="delGoods($event, item, 1)">删除</a>-->
-                <!--<span class="text-explode">|</span>-->
                 <span data-ng-if="item.isOnsale == '1' && item.checkStatus == '1'">
-                  <!--<a href="javascript:;" ng-click="delGoods($event, item, 2)">强制下架</a>-->
                   <a href="javascript:;" ng-click="goCheck(item, 2)">强制下架</a>
                 </span>
-
-                <span data-ng-if="item.isOnsale == 2">
-                  <!--<a href="javascript:;" ng-click="delGoods($event, item, 2)">强制下架</a>-->
-                  <a href="javascript:;">已强制下架</a>
-                </span>
-                <span data-ng-if="item.isOnsale == 0">
-                  <a href="javascript:;">已下架</a>
-                </span>
+                <!--<span data-ng-if="item.checkStatus ！= 0 && item.isOnsale == 2">-->
+                  <!--<a href="javascript:;">已强制下架</a>-->
+                <!--</span>-->
+                <!--<span data-ng-if="item.isOnsale == 0">-->
+                  <!--<a href="javascript:;">已下架</a>-->
+                <!--</span>-->
                 <!--<span data-ng-if="item.isOnsale == 2 || item.isOnsale == 0">-->
                   <!--<span class="text-explode">|</span>-->
                   <!--<a href="javascript:;" ng-click="delGoods($event, item, 3)">上架</a>-->

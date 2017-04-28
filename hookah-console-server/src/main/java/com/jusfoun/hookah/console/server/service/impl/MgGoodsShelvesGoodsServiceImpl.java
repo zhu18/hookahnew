@@ -23,6 +23,7 @@ import org.springframework.data.mongodb.core.query.Update;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -247,6 +248,42 @@ public class MgGoodsShelvesGoodsServiceImpl extends GenericMongoServiceImpl<MgSh
                 gidList = mgShelvesGoods.getGoodsIdList();
             }
             gidList.add(goodsId);
+            Query query = new Query(Criteria.where("shelvesGoodsId").is(mgShelvesGoods.getShelvesGoodsId()));
+            Update update = new Update();
+            update.set("goodsIdList", gidList);
+            mongoTemplate.updateFirst(query, update, mgShelvesGoods.getClass());
+
+
+            GoodsShelves goodsShelves = new GoodsShelves();
+            goodsShelves.setShelvesId(shelvesId);
+            goodsShelves.setGoodsNumber(gidList.size());
+            goodsShelvesService.updateByIdSelective(goodsShelves);
+
+        }catch (Exception e){
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setMessage(e.toString());
+            logger.error(e.getMessage());
+        }
+        return returnData;
+    }
+
+    @Override
+    public ReturnData batchAddGidByMGid(String shelvesId, String[] goodsId) {
+        ReturnData<MgShelvesGoods> returnData = new ReturnData<MgShelvesGoods>();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            MgShelvesGoods mgShelvesGoods = super.selectById(shelvesId);
+            if(mgShelvesGoods == null)
+                throw new HookahException("空数据！");
+
+            List<String> gidList = null;
+
+            if(mgShelvesGoods.getGoodsIdList() == null){
+                gidList = new ArrayList<>();
+            }else{
+                gidList = mgShelvesGoods.getGoodsIdList();
+            }
+            gidList.addAll(Arrays.asList(goodsId));
             Query query = new Query(Criteria.where("shelvesGoodsId").is(mgShelvesGoods.getShelvesGoodsId()));
             Update update = new Update();
             update.set("goodsIdList", gidList);
