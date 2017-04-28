@@ -714,6 +714,11 @@ body{
 	overflow: hidden;
 	height: 73px;
 	text-align: center;
+	text-overflow: ellipsis;
+	-o-text-overflow:ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
 }
 .exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-btn {
 	/* older safari/Chrome browsers */
@@ -1389,7 +1394,8 @@ dl {
 	text-overflow: ellipsis;
 	-o-text-overflow:ellipsis;
 	display: -webkit-box;
-	-webkit-line-clamp: 3;
+	-webkit-line-clamp: 2;
+	height: 44px;
 	-webkit-box-orient: vertical;
 }
 .goods-left .goods-details .goods-details-right .detail-money {
@@ -1450,9 +1456,10 @@ dl {
 	position: absolute;
 	top: 0;
 	left: 25px;
-	width: 32px;
-	height: 21px;
+	width: 35px;
+	height: 24px;
 	text-align: center;
+	border: none;
 }
 .goods-left .goods-details .goods-details-right .detail-count a {
 	text-align: center;
