@@ -40,6 +40,10 @@ legend {
 fieldset, img {
 	border: 0;
 }
+img{
+	width: 800px;
+	/*height: 400px;*/
+}
 
 button, input, select, textarea {
 	font-size: 100%;

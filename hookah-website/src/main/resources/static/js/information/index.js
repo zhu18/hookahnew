@@ -5,13 +5,13 @@ function loadPageData(data) { //渲染页面数据
 		var list = data.data.list;
 		for (var i = 0; i < list.length; i++) {
 			html += '<div class="public padding-left-10 padding-top-30 padding-bottom-30 ">';
-			html += '<a href="/information/details?newsId=' + list[i].newsId + '">';
+			html += '<a href="/information/details?newsId=' + list[i].newsId + '" target="_blank">';
 			html += '<img src="' + list[i].pictureUrl + '" alt="" class="margin-right-20 news-img">';
 			html += '</a>';
-			html += '<a href="/information/details?newsId=' + list[i].newsId + '">';
+			html += '<a href="/information/details?newsId=' + list[i].newsId + '" target="_blank">';
 			html += '<p class="margin-bottom-10 padding-right-50">' + list[i].newsTitle + '</p>';
 			html += '</a>';
-			html += '<a href="/information/details?newsId=' + list[i].newsId + '">';
+			html += '<a href="/information/details?newsId=' + list[i].newsId + '" target="_blank">';
 			html += '<p class="padding-right-50 margin-bottom-10">2017大数据标准化论坛喜讯，贵阳大数据交易所荣获“全国信标委大数据标准工作组2016年优秀单位”。此荣誉既肯定了交易所以往业绩，又鼓励了交易所未来发展。按照国务院、工信部、贵阳市等的统筹规划，贵阳大数据交易所将积极参建我国大数据交易标准。</p>';
 			html += '</a>';
 			html += '<div class="auth">';
@@ -57,4 +57,3 @@ function renderChange(that, num) {
 	dataParm.newsSonGroup = num;
 	goPage("1");
 }
-
