@@ -4,6 +4,7 @@ import com.jusfoun.hookah.console.server.controller.BaseController;
 import com.jusfoun.hookah.console.server.util.DictionaryUtil;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgShelvesGoods;
@@ -12,10 +13,7 @@ import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
-import com.jusfoun.hookah.rpc.api.GoodsCheckService;
-import com.jusfoun.hookah.rpc.api.GoodsService;
-import com.jusfoun.hookah.rpc.api.MgGoodsService;
-import com.jusfoun.hookah.rpc.api.MgGoodsShelvesGoodsService;
+import com.jusfoun.hookah.rpc.api.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,6 +45,9 @@ public class GoodsApi extends BaseController{
 
     @Resource
     MgGoodsShelvesGoodsService mgGoodsShelvesGoodsService;
+
+    @Resource
+    MqSenderService mqSenderService;
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ReturnData getListInPage(String currentPage, String pageSize, HttpServletRequest request) {
@@ -234,9 +235,12 @@ public class GoodsApi extends BaseController{
             goods.setIsOnsale(Byte.parseByte(HookahConstants.SaleStatus.forceOff.getCode()));
             goods.setCheckStatus(Byte.parseByte(HookahConstants.CheckStatus.audit_fail.getCode()));
 
-            //消息 es
+            int n = goodsService.updateByIdSelective(goods);
 
-            goodsService.updateByIdSelective(goods);
+            //消息 es
+            if(n > 0) {
+                mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_GOODS_ID, goodsId);
+            }
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());

@@ -168,4 +168,9 @@ public class UserCenterController {
         return  returnData;
     }
 
+    @RequestMapping(value = "/question", method = RequestMethod.GET)
+    public String question() {
+        return "/usercenter/question";
+    }
+
 }

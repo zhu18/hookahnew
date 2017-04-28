@@ -1,12 +1,22 @@
 package com.jusfoun.hookah.webiste.controller;
 
+import com.jusfoun.hookah.core.domain.Organization;
+import com.jusfoun.hookah.core.domain.UserDetail;
+import com.jusfoun.hookah.core.utils.ExceptionConst;
+import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.rpc.api.OrganizationService;
+import com.jusfoun.hookah.rpc.api.UserDetailService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
 
 /**
  * All rights Reserved, Designed By
@@ -23,7 +33,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author: huanglei
  */
 @Controller
-public class AuthController {
+public class AuthController extends BaseController{
+
+    private static Logger logger = LoggerFactory.getLogger(AuthController.class);
+
+    @Resource
+    UserDetailService userDetailService;
+
+    @Resource
+    OrganizationService organizationService;
+
+    //认证状态(0.未认证 1.认证中 2.已认证 3.认证失败)
+    public static final Byte AUTH_STATUS_SUCCESS = 2;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model) {
@@ -104,4 +125,39 @@ public class AuthController {
     public String companyAuth4(Model model) throws Exception {
         return "/auth/company_auth_init_step4";
     }
+
+    @RequestMapping(value = "/auth/personAuth", method = RequestMethod.GET)
+    public ReturnData personAuth(Model model, UserDetail userDetail)  {
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            String userId = this.getCurrentUser().getUserId();
+            userDetail.setUserId(userId);
+            userDetail.setIsAuth(AUTH_STATUS_SUCCESS);
+            userDetailService.updateByIdSelective(userDetail);
+        } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
+
+    @RequestMapping(value = "/auth/orgAuth", method = RequestMethod.GET)
+    public ReturnData orgAuth(Model model, Organization organization)  {
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            String userId = this.getCurrentUser().getUserId();
+//            organization.setUserId(userId);
+            organization.setIsAuth(AUTH_STATUS_SUCCESS);
+            organizationService.updateByIdSelective(organization);
+        } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
+
 }
