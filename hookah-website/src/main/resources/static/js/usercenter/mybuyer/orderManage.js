@@ -13,7 +13,7 @@ function loadPageData(data){
             html += '<td class="text-align-center">';
             html += '<a target="_blank" href="/order/viewDetails?orderId='+list[i].orderId+'&num=1" class="display-block">查看详情</a>';
             if(list[i].commentFlag==0){
-                html += '<a href="/usercenter/sunAlone" class="display-block">评价晒单</a>';
+                html += '<a target="_blank" href="/order/sunAlone?orderId='+list[i].orderId+'" class="display-block">评价晒单</a>';
             }else if(list[i].commentFlag==1){
                 html += '<a href="" class="display-block">已评价</a>';
             }
