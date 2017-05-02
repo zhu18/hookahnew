@@ -14,6 +14,9 @@ $(function(){
         $('.rightContent .icon-dingdan').css('color','#e34f4f');
         $('.rightContent .line span').css('background-position','0 -74px');
         $('.rightContent .line .gray').css('background-position','0 -17px');
+        $('.viewDetails .goods-list .goods-table thead tr th:nth-child(5)').css('display','none');
+        $('.viewDetails .goods-list .goods-table tbody tr td:nth-child(5)').css('display','none');
+        $('.viewDetails tbody tr td').not('.goods').addClass('public');
     }
 })
 

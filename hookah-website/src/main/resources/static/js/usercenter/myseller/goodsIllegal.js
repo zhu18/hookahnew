@@ -14,14 +14,15 @@ function loadPageData(data){
             html += '<td class="text-right">'+list[i].shopNumber+'</td>';
             html += '<td class="text-center">'+format(list[i].addTime)+'</td>';
             if(list[i].checkStatus == 0){
-                html += '<td class="text-center">审核中</td>';
-            }else if(list[i].checkStatus == 1){
-                html += '<td class="text-center">通过</td>';
-            }else if(list[i].checkStatus == 2){
-                html += '<td class="text-center">不通过</td>';
-            }
-            html += '<td>';
-            html += '<a href="javascript:offSale(\''+list[i].goodsId+'\');">下架</a>';
+				html += '<td class="text-center">审核中</td>';
+			}else if(list[i].checkStatus == 1){
+				html += '<td class="text-center">通过</td>';
+			}else if(list[i].checkStatus == 2){
+				html += '<td class="text-center">不通过</td>';
+			}
+			html += '<td class="text-center">'+list[i].offReason+'</td>';
+			html += '<td>';
+			html += '<a href="javascript:deleteGoods(\'' + list[i].goodsId + '\');">删除</a>';
             html += '</td>';
             html += '</tr>';
         }
@@ -30,29 +31,29 @@ function loadPageData(data){
 		$('.trade-box').html('<div class="noData">暂无数据</div>');
 	}
 }
-function offSale(id){
-	$.confirm('你确定要下架此商品吗? ',null,function(type){
-	    if(type == 'yes'){
-	        this.hide();
+function deleteGoods(id) {
+	$.confirm('你确定要删除这条消息吗? ',null,function(type){
+		if(type == 'yes'){
+			this.hide();
 			$.ajax({
-				url:host.website+'/goods/back/status/offSale',
-				type:'post',
-				data:{
-					goodsId:id
+				url: host.website + '/goods/back/status/del',
+				type: 'post',
+				data: {
+					goodsId: id
 				},
-				success:function(data){
-					if(data.code == 1){
-						$.alert('操作成功',true,function(){
+				success: function (data) {
+					if (data.code == 1) {
+						$.alert('删除成功',true,function(){
 							location.reload();
-                        });
-					}else{
+						});
+					} else {
 						$.alert(data.message)
 					}
 				}
 			})
-        }else{
-	        this.hide()
-        }
-    })
+		}else{
+			this.hide();
+		}
+	});
 
 }
