@@ -203,10 +203,14 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         }
         // 查询条件一，未到预约上架时间且已经审核通过商品
         List<Condition> filters1 = filters;
+        // 查询条件一，未到预约上架时间且已经审核通过商品
         filters1.add(Condition.gt("onsaleStartDate", DateUtils.now()));
         filters1.add(Condition.eq("checkStatus", HookahConstants.GOODS_CHECK_STATUS_YES));
         List<Goods> list1 = this.selectList(filters1, orderBys);
         // 查询条件二，审核中的商品
+        // 删除filters1 的条件
+        filters1.remove(filters.get(filters.size() - 1));
+        filters1.remove(filters.get(filters.size() - 1));
         List<Condition> filters2 = filters;
         filters2.add(Condition.eq("checkStatus", HookahConstants.GOODS_CHECK_STATUS_WAIT));
         List<Goods> list2 = this.selectList(filters2, orderBys);
