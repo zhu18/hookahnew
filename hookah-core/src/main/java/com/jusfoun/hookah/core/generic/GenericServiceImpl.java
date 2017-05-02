@@ -399,10 +399,14 @@ public class GenericServiceImpl<Model extends GenericModel, ID extends Serializa
                 case LessThan:
                 case GreaterThanOrEqualTo:
                 case LessThanOrEqualTo:
-                case Like:
-                case NotLike:
                     method =  clazz.getDeclaredMethod(filter.toString(),String.class,Object.class);
                     method.invoke(c,filter.getProperty(),filter.getValue());
+                    execute = true;
+                    break;
+                case NotLike:
+                case Like:
+                    method =  clazz.getDeclaredMethod(filter.toString(),String.class,String.class);
+                    method.invoke(c,filter.getProperty(), "%" + filter.getValue() + "%");
                     execute = true;
                     break;
                 case In:
