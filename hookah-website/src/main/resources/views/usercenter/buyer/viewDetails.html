@@ -48,8 +48,8 @@ var htmlPart = {
                         <div class="order">
                             <ul>
                                 <li>提交订单</li>
-                                <li>${order.confirmTime,dateFormat="yyyy-MM-dd"}</li>
-                                <li>${order.confirmTime,dateFormat="hh:MM:ss"}</li>
+                                <li>${order.addTime,dateFormat="yyyy-MM-dd"}</li>
+                                <li>${order.addTime,dateFormat="hh:mm:ss"}</li>
                             </ul>
                         </div>
                         <div class="pay">付款成功</div>
@@ -88,7 +88,7 @@ var htmlPart = {
                             <td class="number" >${list.goodsSn}</td>
                             <td class="price">¥${list.goodsPrice}</td>
                             <td class="num">${list.goodsNumber}</td>
-                            <td class="operate"><a href="" class="buy btn-full-blue">立即购买</a></td>
+                            <td class="operate"><a href="javascript:addCart('+${list.goodsId}+',${list.formatId},${list.goodsNumber})" class="buy btn-full-blue">再次购买</a></td>
                         </tr>
                         <%}%>
                         </tbody>
