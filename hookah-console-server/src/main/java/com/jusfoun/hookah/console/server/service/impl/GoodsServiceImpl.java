@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
+import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.dao.GoodsMapper;
@@ -7,7 +8,9 @@ import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.exception.HookahException;
+import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
+import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.MgGoodsService;
@@ -18,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -146,6 +150,8 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         goods.setIsOnsale(HookahConstants.GOODS_STATUS_ONSALE);
         if(StringUtils.isNotBlank(dateTime)) {
             goods.setOnsaleStartDate(DateUtils.getDate(dateTime));
+        }else {
+            goods.setOnsaleStartDate(DateUtils.now());
         }
         int i = super.updateByIdSelective(goods);
         if (i > 0) {
@@ -153,4 +159,95 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         }
         return i;
     }
+
+    // 出售中的商品
+    @Override
+    public Pagination saleList(String pageNum, String pageSize, String goodsName, String userId) {
+        List<Condition> filters = new ArrayList();
+        List<OrderBy> orderBys = new ArrayList();
+        orderBys.add(OrderBy.desc("lastUpdateTime"));
+        filters.add(Condition.eq("isDelete", HookahConstants.GOODS_STATUS_UNDELETE));
+        filters.add(Condition.eq("isOnsale", HookahConstants.GOODS_STATUS_ONSALE));
+        filters.add(Condition.le("onsaleStartDate", DateUtils.now()));
+        filters.add(Condition.eq("checkStatus", HookahConstants.GOODS_CHECK_STATUS_YES));
+        filters.add(Condition.eq("addUser", userId));
+        if (StringUtils.isNotBlank(goodsName)) {
+            filters.add(Condition.like("goodsName", goodsName.trim()));
+        }
+        Pagination pagination = this.getListInPage(Integer.parseInt(pageNum), Integer.parseInt(pageSize), filters, orderBys);
+        return pagination;
+    }
+
+    // 待出售商品列表
+    @Override
+    public List waitList(String goodsName, String userId, Integer checkStatus, Integer isBook) {
+        List<Condition> filters = new ArrayList();
+        List<OrderBy> orderBys = new ArrayList();
+        orderBys.add(OrderBy.desc("lastUpdateTime"));
+        filters.add(Condition.eq("isDelete", HookahConstants.GOODS_STATUS_UNDELETE));
+        filters.add(Condition.eq("isOnsale", HookahConstants.GOODS_STATUS_ONSALE));
+        filters.add(Condition.eq("addUser", userId));
+        if (StringUtils.isNotBlank(goodsName)) {
+            filters.add(Condition.like("goodsName", goodsName.trim()));
+        }
+        if (checkStatus != null) {
+            filters.add(Condition.eq("checkStatus", checkStatus));
+        }
+        if(isBook != null) {
+            // 查询预约商品
+            if(isBook == 1) {
+                filters.add(Condition.gt("onsaleStartDate", DateUtils.now()));
+            }else {// 查询立即上架商品
+                filters.add(Condition.le("onsaleStartDate", DateUtils.now()));
+            }
+        }
+        // 查询条件一，未到预约上架时间且已经审核通过商品
+        List<Condition> filters1 = filters;
+        filters1.add(Condition.gt("onsaleStartDate", DateUtils.now()));
+        filters1.add(Condition.eq("checkStatus", HookahConstants.GOODS_CHECK_STATUS_YES));
+        List<Goods> list1 = this.selectList(filters1, orderBys);
+        // 查询条件二，审核中的商品
+        List<Condition> filters2 = filters;
+        filters2.add(Condition.eq("checkStatus", HookahConstants.GOODS_CHECK_STATUS_WAIT));
+        List<Goods> list2 = this.selectList(filters2, orderBys);
+        // 合并商品
+        if(list2 != null && list2.size() > 0) {
+            list1.addAll(list2);
+        }
+        return list1;
+    }
+
+    // 已下架商品列表
+    @Override
+    public Pagination offsaleList(String pageNum, String pageSize, String goodsName, String userId) {
+        List<Condition> filters = new ArrayList();
+        List<OrderBy> orderBys = new ArrayList();
+        orderBys.add(OrderBy.desc("lastUpdateTime"));
+        filters.add(Condition.eq("isDelete", HookahConstants.GOODS_STATUS_UNDELETE));
+        filters.add(Condition.eq("isOnsale", HookahConstants.GOODS_STATUS_OFFSALE));
+        filters.add(Condition.eq("addUser", userId));
+        if (StringUtils.isNotBlank(goodsName)) {
+            filters.add(Condition.like("goodsName", goodsName.trim()));
+        }
+        Pagination<Goods> pagination = this.getListInPage(Integer.parseInt(pageNum), Integer.parseInt(pageSize), filters, orderBys);
+        return pagination;
+    }
+
+    // 违规商品列表
+    @Override
+    public Pagination illegalList(String pageNum, String pageSize, String goodsName, String userId) {
+        List<Condition> filters = new ArrayList();
+        List<OrderBy> orderBys = new ArrayList();
+        orderBys.add(OrderBy.desc("lastUpdateTime"));
+        filters.add(Condition.eq("isDelete", HookahConstants.GOODS_STATUS_UNDELETE));
+        filters.add(Condition.eq("isOnsale", HookahConstants.GOODS_STATUS_FORCE_OFFSALE));
+        filters.add(Condition.eq("addUser", userId));
+        if (StringUtils.isNotBlank(goodsName)) {
+            filters.add(Condition.like("goodsName", goodsName.trim()));
+        }
+        Pagination<Goods> pagination = this.getListInPage(Integer.parseInt(pageNum), Integer.parseInt(pageSize), filters, orderBys);
+        return pagination;
+    }
+
+
 }

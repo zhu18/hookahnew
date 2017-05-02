@@ -8,7 +8,6 @@ import com.jusfoun.hookah.core.domain.GoodsCheck;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
-import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.rpc.api.GoodsCheckService;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.MqSenderService;
@@ -53,11 +52,6 @@ public class GoodsCheckServiceImpl extends GenericServiceImpl<GoodsCheck, String
         Goods goods = new Goods();
         goods.setGoodsId(goodsCheck.getGoodsId());
         if(goodsCheck.getCheckStatus() == 1){
-            goods = goodsService.selectById(goodsCheck.getGoodsId());
-            // 如果上架时间为空，说明为立即上架商品，上架时间更新为当前时间（如果时间不为空，说明为预约上架时间，不做操作）
-            if(goods.getOnsaleStartDate() == null) {
-                goods.setOnsaleStartDate(DateUtils.now());
-            }
             goods.setCheckStatus(Byte.parseByte(HookahConstants.CheckStatus.audit_success.getCode()));
             goodsService.updateByIdSelective(goods);
             mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_GOODS_ID, goodsCheck.getGoodsId());
