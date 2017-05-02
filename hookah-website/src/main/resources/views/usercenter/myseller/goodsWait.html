@@ -3,11 +3,12 @@ var head = {
 %>
 <link rel="stylesheet" href="/static/css/usercenter/myseller/goodsManage.css">
 <script type="text/javascript">
-    var pagePath = host.website+'/goods/back/sale/list';
+    var pagePath = host.website+'/goods/back/wait/list';
     var pageType = 'get';
     var dataParm = {};
     dataParm.pageNumber = 1;
-    dataParm.pageSize = 10;
+    dataParm.pageSize = 20;
+
 </script>
 <%};%>
 
@@ -20,9 +21,9 @@ var htmlPart = {
         <div class="usercenter-right-box grid-right margin-top-10">
             <div class="wrapper-tab clearfix">
                 <ul class="wrapper-tab-box">
-                    <li class="active"><a href="/usercenter/goodsManage">已上架</a></li>
+                    <li class=""><a href="/usercenter/goodsManage">已上架</a></li>
                     <li class=""><a href="/usercenter/goodsOffSale">已下架</a></li>
-                    <li class=""><a href="/usercenter/goodsWait">待上架</a></li>
+                    <li class="active"><a href="javascript:void(0)">待上架</a></li>
                     <li class=""><a href="/usercenter/goodsIllegal">违规商品</a></li>
                     <li class="grid-right"><a href="/usercenter/goodsPublish" class="grid-right btn btn-full-orange padding-left-10 padding-right-10">发布商品</a></li>
                 </ul>
@@ -67,4 +68,4 @@ var htmlPart = {
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
-<script type="text/javascript" src="/static/js/usercenter/myseller/goodsManage.js"></script>
+<script type="text/javascript" src="/static/js/usercenter/myseller/goodsWait.js"></script>

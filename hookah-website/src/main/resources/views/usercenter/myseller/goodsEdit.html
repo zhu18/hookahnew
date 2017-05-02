@@ -30,8 +30,8 @@ var htmlPart = {
                             <tr>
                                 <td class="bar">商品名称：</td>
                                 <td>
-                                    <div class="text-box"><input name="goodsName" id="J-goodsName" onfocus="onfocusFn(this)" type="text" maxlength="30">
-                                        <span class="input-count"><strong>0</strong>/30</span>
+                                    <div class="text-box"><input name="goodsName" id="J-goodsName" type="text">
+                                        <span class="input-count"><strong id="showcontent">0</strong>/30</span>
                                     </div>
                                     <div class="errors">
                                         <span class="errorinfo">请填写商品名称，不能超过30个字!</span>
@@ -42,8 +42,8 @@ var htmlPart = {
                                 <td class="bar">商品简介：</td>
                                 <td>
                                     <div class="textarea-box">
-                                        <textarea type="text" name="goodsBrief" id="J-goodsBrief" onfocus="onfocusFn(this)" maxlength="200"></textarea>
-                                        <span class="input-count"><strong>0</strong>/200</span>
+                                        <textarea type="text" name="goodsBrief" id="J-goodsBrief"></textarea>
+                                        <span class="input-count"><strong id="showcontent2">0</strong>/200</span>
                                     </div>
                                     <div class="errors">
                                         <span class="errorinfo">请填写商品简介，不能超过200个字!</span>

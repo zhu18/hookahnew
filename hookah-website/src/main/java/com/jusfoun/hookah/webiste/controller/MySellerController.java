@@ -126,6 +126,20 @@ public class MySellerController {
         return "usercenter/myseller/customega";
     }
 
+    @RequestMapping(value = "/goodsOffSale", method = RequestMethod.GET)
+    public String goodsOffSale(){
+        return "usercenter/myseller/goodsOffSale";
+    }
+
+    @RequestMapping(value = "/goodsWait", method = RequestMethod.GET)
+    public String goodsWait(){
+        return "usercenter/myseller/goodsWait";
+    }
+
+    @RequestMapping(value = "/goodsIllegal", method = RequestMethod.GET)
+    public String goodsIllegal(){
+        return "usercenter/myseller/goodsIllegal";
+    }
 
 
 
