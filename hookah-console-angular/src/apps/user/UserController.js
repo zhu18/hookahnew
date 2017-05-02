@@ -4,7 +4,12 @@ class UserController {
     $scope.search = function () {
       var promise = $http({
         method: 'GET',
-        url: $rootScope.site.apiServer + "/api/user/all"
+        url: $rootScope.site.apiServer + "/api/user/all",
+        params: {
+            userName: $scope.userName,
+            mobile: $scope.mobile,
+            email: $scope.email
+        }
       });
       promise.then(function (res, status, config, headers) {
         $rootScope.loadingState = false;

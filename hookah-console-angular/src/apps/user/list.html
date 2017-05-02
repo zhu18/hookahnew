@@ -18,8 +18,16 @@
         <div class="searchSection">
           <form class="form-inline">
             <div class="form-group">
-              <label class="control-label" for="form-field-1">用户名</label>
-              <input id="form-field-1" name="code" ng-model="searchForm.code" type="text" class="form-control">
+              <label class="control-label">用户名</label>
+              <input ng-model="userName" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+              <label class="control-label">电话</label>
+              <input ng-model="mobile" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+              <label class="control-label">邮箱</label>
+              <input ng-model="email" type="text" class="form-control">
               <button type="submit" class="btn btn-primary" data-ng-click="search()">搜索</button>
             </div>
           </form>

@@ -41,7 +41,7 @@ public class OrderApi extends BaseController{
 //            filters.add(Condition.eq("isDelete", 1));
 
             if(StringUtils.isNotBlank(orderSn)){
-                filters.add(Condition.eq("orderSn", orderSn));
+                filters.add(Condition.like("orderSn", orderSn));
             }
             //参数校验
             int pageNumberNew = HookahConstants.PAGE_NUM;

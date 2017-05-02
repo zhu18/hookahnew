@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,12 +40,20 @@ public class ShelfApi extends BaseController {
     MgGoodsShelvesGoodsService mgGoodsShelvesGoodsService;
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public ReturnData getListInPage(String currentPage, String pageSize, HttpServletRequest request) {
+    public ReturnData getListInPage(String currentPage,
+                                    String pageSize,
+                                    String shelfName) {
         Pagination<GoodsShelves> page = new Pagination<>();
         try {
             List<Condition> filters = new ArrayList();
             List<OrderBy> orderBys = new ArrayList();
             orderBys.add(OrderBy.desc("lastUpdateTime"));
+
+            if(StringUtils.isNotBlank(shelfName)){
+                filters.add(Condition.like("shelvesName", shelfName.trim()));
+            }
+
+
             //参数校验
             int pageNumberNew = HookahConstants.PAGE_NUM;
 
