@@ -6,7 +6,10 @@ class ShelfController {
         var promise = $http({
             method: 'GET',
             url: $rootScope.site.apiServer + "/api/shelf/all",
-            params: {currentPage: $rootScope.pagination.currentPage, pageSize: $rootScope.pagination.pageSize}
+            params: {currentPage: $rootScope.pagination.currentPage,
+                        pageSize: $rootScope.pagination.pageSize,
+                        shelfName: $scope.shelfName
+            }
         });
         promise.then(function (res, status, config, headers) {
             $rootScope.loadingState = false;

@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +49,9 @@ public class GoodsApi extends BaseController{
     MqSenderService mqSenderService;
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public ReturnData getListInPage(String currentPage, String pageSize, HttpServletRequest request) {
+    public ReturnData getListInPage(String currentPage, String pageSize,
+                                    String goodsName, String goodsSn,
+                                    String keywords, String shopName) {
         Pagination<Goods> page = new Pagination<>();
         try {
             List<Condition> filters = new ArrayList();
@@ -58,6 +59,20 @@ public class GoodsApi extends BaseController{
             orderBys.add(OrderBy.desc("lastUpdateTime"));
             //只查询商品状态为未删除的商品
             filters.add(Condition.eq("isDelete", 1));
+
+            if(StringUtils.isNotBlank(goodsName)){
+                filters.add(Condition.like("goodsName", goodsName.trim()));
+            }
+            if(StringUtils.isNotBlank(goodsSn)){
+                filters.add(Condition.like("goodsSn", goodsSn.trim()));
+            }
+            if(StringUtils.isNotBlank(keywords)){
+                filters.add(Condition.like("keywords", keywords.trim()));
+            }
+            if(StringUtils.isNotBlank(shopName)){
+                filters.add(Condition.like("shopName", shopName.trim()));
+            }
+
             //参数校验
             int pageNumberNew = HookahConstants.PAGE_NUM;
 
@@ -134,16 +149,16 @@ public class GoodsApi extends BaseController{
             filters.add(Condition.eq("checkStatus", 0));
             filters.add(Condition.eq("isOnsale", 0));
             if(StringUtils.isNotBlank(goodsName)){
-                filters.add(Condition.eq("goodsName", goodsName.trim()));
+                filters.add(Condition.like("goodsName", goodsName.trim()));
             }
             if(StringUtils.isNotBlank(goodsSn)){
-                filters.add(Condition.eq("goodsSn", goodsSn.trim()));
+                filters.add(Condition.like("goodsSn", goodsSn.trim()));
             }
             if(StringUtils.isNotBlank(keywords)){
-                filters.add(Condition.eq("keywords", keywords.trim()));
+                filters.add(Condition.like("keywords", keywords.trim()));
             }
             if(StringUtils.isNotBlank(shopName)){
-                filters.add(Condition.eq("shopName", shopName.trim()));
+                filters.add(Condition.like("shopName", shopName.trim()));
             }
 
             //参数校验
