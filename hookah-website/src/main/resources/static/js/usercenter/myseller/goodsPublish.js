@@ -122,10 +122,10 @@ function showBox(data) {
     $('.search-list').show().children('ul').html(html);
 }
 
-// $("#input-search").bind('input propertychange',function(){
-//     if($.trim($("#input-search").val())===""){
-//         $(".search-list").hide();
-//         $(".select-category-box").show();
-//     }
-// })
+$("#input-search").bind('input propertychange',function(){
+    if($.trim($("#input-search").val())===""){
+        $(".search-list").hide();
+        $(".select-category-box").show();
+    }
+})
 // 类目搜索结束

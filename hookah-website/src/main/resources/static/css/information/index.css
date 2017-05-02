@@ -159,6 +159,12 @@
 }
 .box .detail .bot .leftContent .content p {
     line-height: 20px;
+    font-size: 14px;
+    padding-bottom: 10px;
+}
+.box .detail .bot .leftContent .content p img {
+    max-width: 800px;
+    max-height: 600px;
 }
 /*右侧*/
 .box .detail .bot .rightSide {
