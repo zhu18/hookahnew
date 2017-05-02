@@ -73,11 +73,11 @@ $(document).ready(function () {
 			$('.attribute-container').remove();
 		}
 	}
-})
+});
 
 function tableDelete(that) {
 	$(that).parents('.parent-tr').remove();
-};
+}
 var itemNum = 0;
 function tablePlus(that) {
 	if ($(that).hasClass('itemNum')) {
@@ -139,23 +139,63 @@ $('#preview-div').hover(function () {
 		$('#replace-btn').toggle();
 	}
 });
-function onfocusFn(that) {
-	$(that).parent().siblings('.errors').show();
-};
 $('#J-goodsName').blur(function () {
-	if ($(this).val() && $(this).val().length <= 30) {
-		$(this).parents('.text-box').siblings('.errors').hide();
+	count(this)
+});
+var countnums=(function(){
+	var trim=function(strings){
+		return (strings||"").replace(/^(\s|\u00A0)+|(\s|\u00A0)+$/g,"");//+表示匹配一次或多次，|表示或者，\s和\u00A0匹配空白字符，/^以……开头，$以……结尾，/g全局匹配,/i忽略大小写
 	}
+	return function(_str){
+		_str=trim(_str);   //去除字符串的左右两边空格
+		var strlength=_str.length;
+		if(!strlength){   //如果字符串长度为零，返回零
+			return 0;
+		}
+		var chinese=_str.match(/[\u4e00-\u9fa5]/g); //匹配中文，match返回包含中文的数组
+		return strlength+(chinese?chinese.length:0); //计算字符个数
+	}
+})();
+function count(tThis){
+	var charnum=countnums(tThis.value)
+	var showid=$("#showcontent");
+	if(charnum > 30){
+		showid.addClass('color-red')
+		showid.html(charnum - 30);
+		$(tThis).parent().siblings('.errors').show();
+	}else{
+		showid.removeClass('color-red')
+		showid.html(charnum);
+		$(tThis).parent().siblings('.errors').hide();
+	}
+}
+$('#J-goodsName').on('input onporpertychange',function () {
+	count(this)
+});
+$('#J-goodsName').on('focus',function () {
+	count(this)
 });
 $('#J-goodsBrief').blur(function () {
-	if ($(this).val() && $(this).val().length <= 200) {
-		$(this).parent().siblings('.errors').hide();
-	}
+	count2(this)
 });
-$('#J-goodsBrief').on('input onporpertychange',function () {
-	if ($(this).val() && $(this).val().length <= 200) {
-		$(this).parent().siblings('.errors').hide();
+function count2(tThis){
+	var charnum=countnums(tThis.value)
+	var showid=$("#showcontent2");
+	if(charnum > 200){
+		showid.addClass('color-red')
+		showid.html(charnum - 200);
+		$(tThis).parent().siblings('.errors').show();
+	}else{
+		showid.removeClass('color-red')
+		showid.html(charnum);
+		$(tThis).parent().siblings('.errors').hide();
 	}
+}
+$('#J-goodsBrief').on('input onporpertychange',function () {
+	count2(this)
+});
+$('#J-goodsBrief').on('focus',function () {
+	count2(this)
 });
 $('.pusGoods-btn').click(function () {
 	var data = {};

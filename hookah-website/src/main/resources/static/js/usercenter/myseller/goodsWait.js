@@ -21,38 +21,12 @@ function loadPageData(data){
                 html += '<td class="text-center">不通过</td>';
             }
             html += '<td>';
-            html += '<a href="javascript:offSale(\''+list[i].goodsId+'\');">下架</a>';
+            html += '<a href="javascript:void(0)">下架</a>';
             html += '</td>';
             html += '</tr>';
         }
         $('.trade-box tbody').html(html);
     }else{
 		$('.trade-box').html('<div class="noData">暂无数据</div>');
-	}
-}
-function offSale(id){
-	$.confirm('你确定要下架此商品吗? ',null,function(type){
-	    if(type == 'yes'){
-	        this.hide();
-			$.ajax({
-				url:host.website+'/goods/back/status/offSale',
-				type:'post',
-				data:{
-					goodsId:id
-				},
-				success:function(data){
-					if(data.code == 1){
-						$.alert('操作成功',true,function(){
-							location.reload();
-                        });
-					}else{
-						$.alert(data.message)
-					}
-				}
-			})
-        }else{
-	        this.hide()
-        }
-    })
-
+    }
 }
