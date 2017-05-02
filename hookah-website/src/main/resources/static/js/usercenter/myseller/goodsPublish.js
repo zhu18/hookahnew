@@ -126,6 +126,9 @@ $("#input-search").bind('input propertychange',function(){
     if($.trim($("#input-search").val())===""){
         $(".search-list").hide();
         $(".select-category-box").show();
+        $(".clearfix-content").html("");
+        showBtn(1);
+        $(".select-category-item dd").removeClass("active");
     }
 })
 // 类目搜索结束
