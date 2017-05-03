@@ -101,6 +101,30 @@ public class MySellerController {
         return "usercenter/myseller/goodsEdit";
     }
 
+    @RequestMapping(value = "/goodsModify", method = RequestMethod.GET)
+    public String goodsModify(String id, Model model) {
+        if (StringUtils.isNotBlank(id)) {
+            // 查询商品信息
+            List<Condition> filters = new ArrayList<>();
+            filters.add(Condition.eq("goodsId", id));
+            filters.add(Condition.eq("domainId", "123"));
+            filters.add(Condition.eq("isOnsale", "1"));
+            Goods goods = goodsService.selectOne(filters);
+            if (goods != null && StringUtils.isNotBlank(goods.getGoodsId())) {
+                GoodsVo goodsVo = new GoodsVo();
+                BeanUtils.copyProperties(goods, goodsVo);
+                MgGoods mgGoods = mgGoodsService.selectById(id);
+                if (mgGoods != null) {
+                    goodsVo.setFormatList(mgGoods.getFormatList());
+                    goodsVo.setImgList(mgGoods.getImgList());
+                    goodsVo.setAttrTypeList(mgGoods.getAttrTypeList());
+                    model.addAttribute("goodsInfo", goodsVo);
+                }
+            }
+        }
+        return "usercenter/myseller/goodsModify";
+    }
+
     @RequestMapping(value = "/trade", method = RequestMethod.GET)
     public String trade(){
         return "usercenter/myseller/trade";

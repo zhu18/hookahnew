@@ -22,7 +22,7 @@ function loadPageData(data) {
 			}
 			html += '<td>';
 			html += '<a href="javascript:onsale(\'' + list[i].goodsId + '\');">上架</a>';
-			html += '<a href="javascript:void(0)">修改</a>';
+			html += '<a href="'+host.website+'/usercenter/goodsModify?id='+list[i].goodsId+'">修改</a>';
 			html += '<a href="javascript:deleteGoods(\'' + list[i].goodsId + '\');">删除</a>';
 			html += '</td>';
 			html += '</tr>';
