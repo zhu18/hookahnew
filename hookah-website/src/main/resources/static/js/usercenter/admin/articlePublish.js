@@ -170,3 +170,16 @@ $('#preview-div').hover(function(){
         $('#replace-btn').toggle();
     }
 })
+
+
+$("#newsTitle").bind("input propertychange",function(){
+    // console.log("length:"+$.trim($("#newsTitle").val().length));
+    var len = $.trim($("#newsTitle").val().length);
+    $(".input-count strong").text(len);
+    if(len>60){
+        var value =$("#newsTitle").val();
+        console.log("value:"+value);
+        $("#newsTitle").val(value.substring(0,60));
+        $(".input-count strong").text(60);
+    }
+})
