@@ -199,7 +199,8 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         vo.setUserId(userId);
         if(checkStatus != null)
             vo.setCheckStatus(Byte.valueOf(checkStatus + ""));
-        vo.setIsBook(isBook);
+        if(isBook != null)
+            vo.setIsBook(Byte.valueOf(isBook + ""));
         pagination.setList(goodsMapper.waitList(vo));
         pagination.setTotalItems(goodsMapper.waitListCnt(vo));
         pagination.setList(this.copyGoodsData(pagination.getList()));

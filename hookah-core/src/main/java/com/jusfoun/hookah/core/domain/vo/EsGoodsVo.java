@@ -16,8 +16,6 @@ public class EsGoodsVo implements Serializable {
     private String orderFiled;
     private String order;
     EsRange range;
-//    private String orderFiled = HookahConstants.GOODS_ORDER_FIELD;
-//    private String order = HookahConstants.GOODS_ORDER_SORT;
 
     public EsGoods getEsGoods() {
         return esGoods;

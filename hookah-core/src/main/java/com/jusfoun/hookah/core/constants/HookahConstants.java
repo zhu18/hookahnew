@@ -49,6 +49,9 @@ public class HookahConstants {
     public static final Byte GOODS_CHECK_STATUS_YES = 1;
     public static final Byte GOODS_CHECK_STATUS_NOT = 2;
 
+    /** 此字段用于比较当前时间与onsaleStartDate关系，选出非预约上架的商品 */
+    public static final String ONSALE_START_DATE_FILEDNAME = "onsaleStartDate";
+
 
     public enum AnalyzeOpt {
         ANALYZED("analyzed"),

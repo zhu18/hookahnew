@@ -6,6 +6,7 @@ import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.es.EsAgg;
 import com.jusfoun.hookah.core.domain.es.EsAggResult;
 import com.jusfoun.hookah.core.domain.es.EsRange;
+import com.jusfoun.hookah.core.utils.DateUtils;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.ElasticsearchException;
@@ -711,8 +712,14 @@ public class ESTemplate {
         if(filterMap != null && !filterMap.isEmpty() && filterMap.size() > 0){
             for(Map.Entry entry : filterMap.entrySet()){
                 if(entry.getValue() != null) {
-                    queryString = QueryBuilders.simpleQueryStringQuery(String.valueOf(entry.getValue()))
-                            .field(String.valueOf(entry.getKey()));
+                    //过滤没到上架时间的预约商品
+                    if(HookahConstants.ONSALE_START_DATE_FILEDNAME.equals(entry.getValue())) {
+                        queryString = QueryBuilders.rangeQuery(HookahConstants.ONSALE_START_DATE_FILEDNAME)
+                                .lte(DateUtils.now().getTime());
+                    }else {
+                        queryString = QueryBuilders.simpleQueryStringQuery(String.valueOf(entry.getValue()))
+                                .field(String.valueOf(entry.getKey()));
+                    }
                     boolQueryBuilder.must(queryString);
                 }
             }
