@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.console.server.api.goodsAttr;
 
+import com.jusfoun.hookah.console.server.controller.BaseController;
 import com.jusfoun.hookah.core.domain.Category;
 import com.jusfoun.hookah.core.domain.GoodsAttrType;
 import com.jusfoun.hookah.core.domain.vo.GoodsAttrTypeVo;
@@ -7,7 +8,9 @@ import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.GoodsAttrTypeService;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -19,7 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/attrType")
-public class GoodsAttrTypeApi {
+public class GoodsAttrTypeApi extends BaseController{
 
     @Resource
     GoodsAttrTypeService goodsAttrTypeService;
@@ -50,20 +53,9 @@ public class GoodsAttrTypeApi {
      * @return
      */
     @RequestMapping("add")
-    public ReturnData addAttrType(GoodsAttrType obj) {
-        ReturnData<List<Category>> returnData = new ReturnData<>();
-        returnData.setCode(ExceptionConst.Success);
-        try {
-            obj = goodsAttrTypeService.insert(obj);
-            if(obj == null) {
-                throw new HookahException("操作失败");
-            }
-        }catch (Exception e) {
-            returnData.setCode(ExceptionConst.Error);
-            returnData.setMessage(e.toString());
-            e.printStackTrace();
-        }
-        return returnData;
+    public ReturnData addAttrType(GoodsAttrType obj) throws HookahException {
+        obj.setUserId(getCurrentUser().getUserId());
+        return goodsAttrTypeService.addAttr(obj);
     }
 
     /**
@@ -90,5 +82,16 @@ public class GoodsAttrTypeApi {
             e.printStackTrace();
         }
         return returnData;
+    }
+
+    @RequestMapping(value = "edit" , method = RequestMethod.POST)
+    public ReturnData editCategory(GoodsAttrType attrType) {
+        return goodsAttrTypeService.editAttrType(attrType);
+    }
+
+
+    @RequestMapping(value = "/delete/", method = RequestMethod.POST)
+    public ReturnData deleteCategory(String typeId,String parentId) {
+        return goodsAttrTypeService.deleteById(typeId,parentId);
     }
 }

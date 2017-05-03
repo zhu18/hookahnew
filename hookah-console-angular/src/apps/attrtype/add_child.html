@@ -9,26 +9,26 @@
     </div>
   </div>
   <div class="col-sm-12">
-    <form class="form-horizontal" role="form" id="dictForm" name="dict">
+    <form class="form-horizontal" role="form" id="attrTypeForm" name="attrType">
 
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="parentName">父字典</label>
+        <label class="col-sm-2 control-label" for="parentName">父属性名</label>
         <div class="col-sm-4">
-          <input type="hidden" id="parentId" name="parentId"  class="form-control" value="{{parentDict.dictId}}"/>
-          <input type="text" disabled="disabled" id="parentName"  class="form-control" value="{{parentDict.name}}"/>
+          <input type="hidden" id="parentId" name="parentId"  class="form-control" value="{{parentAttrType.typeId}}"/>
+          <input type="text" disabled="disabled" id="parentName"  class="form-control" value="{{parentAttrType.typeName}}"/>
         </div>
       </div>
-      <input type="hidden" id="dictId" name="dictId" class="form-control" value="{{editData.dictId}}"/>
+      <input type="hidden" id="typeId" name="typeId" class="form-control" value="{{editData.typeId}}"/>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="name">名称</label>
+        <label class="col-sm-2 control-label" for="typeName">属性名称</label>
         <div class="col-sm-4">
-          <input type="text" id="name" name="name" class="form-control" value="{{editData.name}}"/>
+          <input type="text" id="typeName" name="typeName" class="form-control" value="{{editData.typeName}}"/>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="property">属性</label>
+        <label class="col-sm-2 control-label" for="domainId">商家编码</label>
         <div class="col-sm-4">
-          <input type="text" id="property" name="property" class="form-control" value="{{editData.property}}"/>
+          <input type="text" id="domainId" name="domainId" class="form-control" value="{{editData.domainId}}"/>
         </div>
         <div class="col-sm-4">
 

@@ -19,7 +19,7 @@ export default function attrtypeRouting($stateProvider, $urlRouterProvider) {
     })
     .state('attrtype.edit', {
         url: '/attrtype/edit',
-        template: require('./add.html'),
+        template: require('./edit.html'),
         controller: AttrTypeController,
     })
     .state('attrtype.add_child', {

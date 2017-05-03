@@ -10,7 +10,6 @@
   <div class="col-sm-12">
     <form class="form-horizontal" role="form" id="attrTypeForm" name="attrType">
       <input type="hidden" id="typeId" name="typeId" class="form-control" value="{{editData.typeId}}"/>
-      <input type="hidden" id="parentId" name="parentId" class="form-control" value="0"/>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="typeName">名称</label>
         <div class="col-sm-4">
@@ -20,7 +19,19 @@
       <div class="form-group">
         <label class="col-sm-2 control-label" for="domainId">商家编码</label>
         <div class="col-sm-4">
-          <input type="text" id="domainId" name="domainId" class="form-control" value="{{editData.property}}"/>
+          <input type="text" id="domainId" name="domainId" class="form-control" value="{{editData.domainId}}"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="domainId">状态</label>
+        <div class="col-sm-4">
+          <label class="radio-inline">
+              <input type="radio" id="typeStatus" name="typeStatus"  ng-checked="editData.typeStatus == 0" value="0"/> 关闭
+          </label>
+          <label class="radio-inline">
+            <input type="radio" id="typeStatus1" name="typeStatus"  ng-checked="editData.typeStatus == 1" value="1"/> 开启
+          </label>
+
         </div>
       </div>
       <div class="form-group">

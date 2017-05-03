@@ -16,16 +16,16 @@
     <div class="row margin-top">
       <div class="col-sm-12">
         <div class="searchSection">
-          <button class="btn btn-default" ng-click="dict_tree.expand_all()"><span class="glyphicon glyphicon-refresh"></span> 展开全部
+          <button class="btn btn-default" ng-click="type_tree.expand_all()"><span class="glyphicon glyphicon-refresh"></span> 展开全部
           </button>
-          <button class="btn btn-default" data-ng-click="dict_tree.collapse_all()"><span class="glyphicon glyphicon-refresh"></span> 折叠全部
+          <button class="btn btn-default" data-ng-click="type_tree.collapse_all()"><span class="glyphicon glyphicon-refresh"></span> 折叠全部
           </button>
-          <button class="btn btn-primary" ui-sref="sys.dict.add"  data-ng-click="add()"><span class="glyphicon glyphicon-refresh"></span> 新建一级属性
+          <button class="btn btn-primary" ui-sref="attrtype.add"  data-ng-click="add()"><span class="glyphicon glyphicon-refresh"></span> 新建一级属性
           </button>
         </div>
         <div class="gridSection">
           <div us-spinner ng-show="showSpinner" spinner-start-active="true" spinner-key="showSpinner"></div>
-          <tree-grid tree-data="tree_data" tree-control="dict_tree" col-defs="col_defs" expand-on="expanding_property" icon-leaf="glyphicon" on-select="treehandler(branch)"></tree-grid>
+          <tree-grid tree-data="tree_data" tree-control="type_tree" col-defs="col_defs" expand-on="expanding_property" icon-leaf="glyphicon" on-select="treehandler(branch)"></tree-grid>
         </div>
         <div class="simple-grid-none-data-wrap">
           <div class="simple-grid-none-data text-center " ng-if="showNoneDataInfoTip && !loadingState">
