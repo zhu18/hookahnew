@@ -8,7 +8,7 @@ function loadPageData(data){ //渲染页面数据
             html += '<td>'+list[i].newsTitle+'</td>';
             html += '<td class="imgs"><div><img src="'+list[i].pictureUrl+'"></div></td>';
             html += '<td>'+format(list[i].sytTime)+'</td>';
-            html += '<td>'+judge(list[i].sysUser)+'</td>';
+            html += '<td>'+judge(list[i].creatName)+'</td>';
             html += '<td>';
             html += '<a href="javascript:deleteData(\''+list[i].newsId+'\');">删除</a>';
             html += '<a href="/admin/articleModify?id='+list[i].newsId+'">修改</a>';
@@ -123,6 +123,7 @@ function deleteData(id) {
     $.confirm('你确定要删除这条消息吗? ',null,function(type){
         if(type == 'yes'){
             deleteLoad(id);
+            // window.location.reload();
             this.hide();
         }else{
             this.hide();
