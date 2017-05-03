@@ -65,14 +65,17 @@ class GoodsController {
             if(res.data.code == "1"){
                 $rootScope.editData = res.data.data;
                 $rootScope.operatorFlag = n;
-                try{
-                    if($rootScope.editData.apiInfo != null){
-                        $rootScope.editData.apiInfo.respSample = JSON.stringify(JSON.parse($rootScope.editData.apiInfo.respSample), null, "\t");
-                    }
+
+                // 格式化json字符串  暂时取消
+
+                // try{
+                //     if($rootScope.editData.apiInfo != null){
+                //         $rootScope.editData.apiInfo.respSample = JSON.stringify(JSON.parse($rootScope.editData.apiInfo.respSample), null, "\t");
+                //     }
+                //     $state.go('items.goodsDetail', {data: $rootScope.editData});
+                // }catch (e) {
                     $state.go('items.goodsDetail', {data: $rootScope.editData});
-                }catch (e) {
-                    $state.go('items.goodsDetail', {data: $rootScope.editData});
-                }
+                // }
             }
         });
     };
@@ -88,14 +91,14 @@ class GoodsController {
             console.log(res.data)
             if(res.data.code == "1"){
                 $rootScope.editData = res.data.data;
-                try{
-                    if($rootScope.editData.apiInfo != null){
-                        $rootScope.editData.apiInfo.respSample = JSON.stringify(JSON.parse($rootScope.editData.apiInfo.respSample), null, "\t");
-                    }
+                // try{
+                //     if($rootScope.editData.apiInfo != null){
+                //         $rootScope.editData.apiInfo.respSample = JSON.stringify(JSON.parse($rootScope.editData.apiInfo.respSample), null, "\t");
+                //     }
+                //     $state.go('items.lookDetail', {data: $rootScope.editData});
+                // }catch (e) {
                     $state.go('items.lookDetail', {data: $rootScope.editData});
-                }catch (e) {
-                    $state.go('items.lookDetail', {data: $rootScope.editData});
-                }
+                // }
 
                 // console.log($.format($rootScope.editData.apiInfo.respSample,{method: 'json',step: '    ',preserveComments: false }));
             }
