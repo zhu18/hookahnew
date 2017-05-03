@@ -86,12 +86,18 @@ public class GoodsBackController extends BaseController {
     // 待上架商品列表
     @RequestMapping(value = "/wait/list", method = RequestMethod.GET)
     @ResponseBody
-    public ReturnData waitList(String goodsName, Integer checkStatus, Integer isBook) {
+    public ReturnData waitList(String pageNum, String pageSize, String goodsName, Integer checkStatus, Integer isBook) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
-            String userId = this.getCurrentUser().getUserId();
-            returnData.setData(goodsService.waitList(goodsName, userId, checkStatus, isBook));
+            String userId = "018eacfa264211e796c56a3b07101c5a";//this.getCurrentUser().getUserId();
+            if(StringUtils.isBlank(pageNum)) {
+                pageNum = this.PAGE_NUM;
+            }
+            if(StringUtils.isBlank(pageSize)) {
+                pageSize = this.PAGE_SIZE;
+            }
+            returnData.setData(goodsService.waitList(pageNum, pageSize, goodsName, userId, checkStatus, isBook));
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());

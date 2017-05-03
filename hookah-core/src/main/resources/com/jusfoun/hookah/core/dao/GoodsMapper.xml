@@ -18,6 +18,40 @@
         <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
         <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
     </resultMap>
+    <resultMap id="BaseResultMap" type="com.jusfoun.hookah.core.domain.Goods" >
+        <id column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+        <result column="goods_sn" property="goodsSn" jdbcType="VARCHAR" />
+        <result column="domain_id" property="domainId" jdbcType="VARCHAR" />
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+        <result column="goods_brief" property="goodsBrief" jdbcType="VARCHAR" />
+        <result column="goods_desc" property="goodsDesc" jdbcType="VARCHAR" />
+        <result column="keywords" property="keywords" jdbcType="VARCHAR" />
+        <result column="goods_img" property="goodsImg" jdbcType="VARCHAR" />
+        <result column="is_delete" property="isDelete" jdbcType="TINYINT" />
+        <result column="goods_type" property="goodsType" jdbcType="TINYINT" />
+        <result column="goods_number" property="goodsNumber" jdbcType="INTEGER" />
+        <result column="warn_number" property="warnNumber" jdbcType="INTEGER" />
+        <result column="industry" property="industry" jdbcType="VARCHAR" />
+        <result column="goods_area" property="goodsArea" jdbcType="VARCHAR" />
+        <result column="onsale_start_date" property="onsaleStartDate" jdbcType="TIMESTAMP" />
+        <result column="onsale_end_date" property="onsaleEndDate" jdbcType="TIMESTAMP" />
+        <result column="cat_id" property="catId" jdbcType="VARCHAR" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+        <result column="is_real" property="isReal" jdbcType="INTEGER" />
+        <result column="shop_price" property="shopPrice" jdbcType="BIGINT" />
+        <result column="shop_number" property="shopNumber" jdbcType="INTEGER" />
+        <result column="shop_format" property="shopFormat" jdbcType="TINYINT" />
+        <result column="seller_note" property="sellerNote" jdbcType="VARCHAR" />
+        <result column="add_user" property="addUser" jdbcType="VARCHAR" />
+        <result column="check_status" property="checkStatus" jdbcType="TINYINT" />
+        <result column="is_onsale" property="isOnsale" jdbcType="TINYINT" />
+        <result column="is_update" property="isUpdate" jdbcType="TINYINT" />
+        <result column="version" property="version" jdbcType="INTEGER" />
+        <result column="shop_id" property="shopId" jdbcType="VARCHAR" />
+        <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
+        <result column="off_reason" property="offReason" jdbcType="VARCHAR" />
+    </resultMap>
     <select id="getNeedEsGoods" resultMap="EsResultMap">
         SELECT
             goods_id,
@@ -65,5 +99,70 @@
         and is_onsale = 1
         and check_status = 1
         and goods_id = #{id}
+    </select>
+
+    <sql id="waitSelect">
+        WHERE
+            is_delete = 1
+            AND is_onsale = 1
+            AND add_user = #{userId}
+            <if test="isBook==1">
+                AND onsale_start_date > SYSDATE()
+            </if>
+            <if test="isBook==0">
+                AND onsale_start_date &lt;= SYSDATE()
+            </if>
+            <if test="goodsName!=null">
+                AND goods_name like '%'||#{goodsName}||'%'
+            </if>
+            <if test="checkStatus!=null">
+                AND check_status = #{checkStatus}
+            </if>
+            AND ((onsale_start_date > SYSDATE() and check_status = 1) OR check_status in(0, 2))
+        ORDER BY
+            last_update_time DESC
+    </sql>
+    <select id="waitList" resultMap="BaseResultMap" parameterType="com.jusfoun.hookah.core.domain.Goods">
+        SELECT
+        goods_id,
+        goods_sn,
+        domain_id,
+        goods_name,
+        goods_brief,
+        goods_desc,
+        keywords,
+        goods_img,
+        is_delete,
+        goods_type,
+        goods_number,
+        warn_number,
+        goods_area,
+        onsale_start_date,
+        onsale_end_date,
+        cat_id,
+        add_time,
+        last_update_time,
+        is_real,
+        shop_price,
+        shop_number,
+        shop_format,
+        seller_note,
+        add_user,
+        shop_id,
+        shop_name,
+        off_reason,
+        check_status,
+        is_onsale,
+        is_update,
+        version
+        FROM
+        goods
+        <include refid="waitSelect"></include>
+    </select>
+    <select id="waitListCnt" resultType="java.lang.Integer" parameterType="com.jusfoun.hookah.core.domain.vo.GoodsVo">
+        SELECT COUNT(*)
+        FROM
+        goods
+        <include refid="waitSelect"></include>
     </select>
 </mapper>

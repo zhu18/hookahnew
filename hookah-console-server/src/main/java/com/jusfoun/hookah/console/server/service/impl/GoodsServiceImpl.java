@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
+import com.jusfoun.hookah.console.server.util.DictionaryUtil;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
@@ -16,6 +17,7 @@ import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.MgGoodsService;
 import com.jusfoun.hookah.rpc.api.MqSenderService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -75,7 +77,9 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         Date date = DateUtils.now();
         obj.setLastUpdateTime(date);
         obj.setIsOnsale(HookahConstants.GOODS_STATUS_ONSALE);
-        obj.setOnsaleStartDate(date);
+        if(obj.getOnsaleStartDate() != null) {
+            obj.setOnsaleStartDate(date);
+        }
         obj.setOnsaleEndDate(null);
         obj.setCheckStatus(HookahConstants.GOODS_CHECK_STATUS_WAIT);
         int i = super.updateByIdSelective(obj);
@@ -115,7 +119,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
     }
 
     /**
-     * 商品下架/删除/上架
+     * 商品下架/删除
      * @param goodsId
      * @return
      */
@@ -143,6 +147,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         return i;
     }
 
+    // 商品上架
     @Override
     public int onsale(String goodsId, String dateTime) {
         Goods goods = new Goods();
@@ -175,50 +180,26 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             filters.add(Condition.like("goodsName", goodsName.trim()));
         }
         Pagination pagination = this.getListInPage(Integer.parseInt(pageNum), Integer.parseInt(pageSize), filters, orderBys);
+        pagination.setList(this.copyGoodsData(pagination.getList()));
         return pagination;
     }
 
     // 待出售商品列表
     @Override
-    public List waitList(String goodsName, String userId, Integer checkStatus, Integer isBook) {
-        List<Condition> filters = new ArrayList();
-        List<OrderBy> orderBys = new ArrayList();
-        orderBys.add(OrderBy.desc("lastUpdateTime"));
-        filters.add(Condition.eq("isDelete", HookahConstants.GOODS_STATUS_UNDELETE));
-        filters.add(Condition.eq("isOnsale", HookahConstants.GOODS_STATUS_ONSALE));
-        filters.add(Condition.eq("addUser", userId));
-        if (StringUtils.isNotBlank(goodsName)) {
-            filters.add(Condition.like("goodsName", goodsName.trim()));
-        }
-        if (checkStatus != null) {
-            filters.add(Condition.eq("checkStatus", checkStatus));
-        }
-        if(isBook != null) {
-            // 查询预约商品
-            if(isBook == 1) {
-                filters.add(Condition.gt("onsaleStartDate", DateUtils.now()));
-            }else {// 查询立即上架商品
-                filters.add(Condition.le("onsaleStartDate", DateUtils.now()));
-            }
-        }
-        // 查询条件一，未到预约上架时间且已经审核通过商品
-        List<Condition> filters1 = filters;
-        // 查询条件一，未到预约上架时间且已经审核通过商品
-        filters1.add(Condition.gt("onsaleStartDate", DateUtils.now()));
-        filters1.add(Condition.eq("checkStatus", HookahConstants.GOODS_CHECK_STATUS_YES));
-        List<Goods> list1 = this.selectList(filters1, orderBys);
-        // 查询条件二，审核中的商品
-        // 删除filters1 的条件
-        filters1.remove(filters.get(filters.size() - 1));
-        filters1.remove(filters.get(filters.size() - 1));
-        List<Condition> filters2 = filters;
-        filters2.add(Condition.eq("checkStatus", HookahConstants.GOODS_CHECK_STATUS_WAIT));
-        List<Goods> list2 = this.selectList(filters2, orderBys);
-        // 合并商品
-        if(list2 != null && list2.size() > 0) {
-            list1.addAll(list2);
-        }
-        return list1;
+    public Pagination waitList(String pageNum, String pageSize, String goodsName, String userId, Integer checkStatus, Integer isBook) {
+        Pagination pagination = new Pagination();
+        pagination.setCurrentPage(Integer.parseInt(pageNum));
+        pagination.setPageSize(Integer.parseInt(pageSize));
+
+        GoodsVo vo = new GoodsVo();
+        vo.setUserId(userId);
+        if(checkStatus != null)
+            vo.setCheckStatus(Byte.valueOf(checkStatus + ""));
+        vo.setIsBook(isBook);
+        pagination.setList(goodsMapper.waitList(vo));
+        pagination.setTotalItems(goodsMapper.waitListCnt(vo));
+        pagination.setList(this.copyGoodsData(pagination.getList()));
+        return pagination;
     }
 
     // 已下架商品列表
@@ -233,7 +214,8 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         if (StringUtils.isNotBlank(goodsName)) {
             filters.add(Condition.like("goodsName", goodsName.trim()));
         }
-        Pagination<Goods> pagination = this.getListInPage(Integer.parseInt(pageNum), Integer.parseInt(pageSize), filters, orderBys);
+        Pagination pagination = this.getListInPage(Integer.parseInt(pageNum), Integer.parseInt(pageSize), filters, orderBys);
+        pagination.setList(this.copyGoodsData(pagination.getList()));
         return pagination;
     }
 
@@ -249,9 +231,19 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         if (StringUtils.isNotBlank(goodsName)) {
             filters.add(Condition.like("goodsName", goodsName.trim()));
         }
-        Pagination<Goods> pagination = this.getListInPage(Integer.parseInt(pageNum), Integer.parseInt(pageSize), filters, orderBys);
+        Pagination pagination = this.getListInPage(Integer.parseInt(pageNum), Integer.parseInt(pageSize), filters, orderBys);
+        pagination.setList(this.copyGoodsData(pagination.getList()));
         return pagination;
     }
 
-
+    private List<GoodsVo> copyGoodsData(List<Goods> list) {
+        List<GoodsVo> list1 = new ArrayList<>();
+        for(Goods goods : list) {
+            GoodsVo goodsVo = new GoodsVo();
+            BeanUtils.copyProperties(goods, goodsVo);
+            goodsVo.setCatName(DictionaryUtil.getCategoryById(goods.getCatId()) == null ? "" : DictionaryUtil.getCategoryById(goods.getCatId()).getCatName());
+            list1.add(goodsVo);
+        }
+        return list1;
+    }
 }
