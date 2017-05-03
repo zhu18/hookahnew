@@ -17,6 +17,7 @@
         <result column="goods_areas" jdbcType="VARCHAR" property="goodsAreas" />
         <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
         <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+        <result column="onsale_start_date" jdbcType="TIMESTAMP" property="onsaleStartDate" />
     </resultMap>
     <resultMap id="BaseResultMap" type="com.jusfoun.hookah.core.domain.Goods" >
         <id column="goods_id" property="goodsId" jdbcType="VARCHAR" />
@@ -46,7 +47,7 @@
         <result column="add_user" property="addUser" jdbcType="VARCHAR" />
         <result column="check_status" property="checkStatus" jdbcType="TINYINT" />
         <result column="is_onsale" property="isOnsale" jdbcType="TINYINT" />
-        <result column="is_update" property="isUpdate" jdbcType="TINYINT" />
+        <result column="is_book" property="isBook" jdbcType="TINYINT" />
         <result column="version" property="version" jdbcType="INTEGER" />
         <result column="shop_id" property="shopId" jdbcType="VARCHAR" />
         <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
@@ -68,7 +69,8 @@
             goods_area goods_area,
             getRegionParentList(goods_area) goods_areas,
             add_time,
-            last_update_time
+            last_update_time,
+            onsale_start_date
         from
             goods
         where is_delete = 1
