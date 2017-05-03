@@ -31,6 +31,7 @@ if (id) {
         data: {id: id},
         success: function (data) {
             $("#newsGroup").val(data.data.newsGroup);//文章的一级分类
+            $("#newsSonGroup").val(data.data.newsSonGroup);
             $("#newsTitle").val(data.data.newsTitle);//文章的标题
             $("input[name='isHot'][value=" + data.data.isHot + "]").attr("checked", true);
             $("#preview-img").attr('src', data.data.pictureUrl);
@@ -114,6 +115,7 @@ function published() {
             success: function (msg) {
                 if (msg.code == 1) {
                     $.alert('提交成功');
+                    window.location.href="/admin/articleManage";
                 } else {
                     $.alert(msg.message);
                 }

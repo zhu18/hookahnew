@@ -134,7 +134,8 @@ function published(){
             data: data,
             success: function(msg){
                 if(msg.code == 1){
-                    $.alert('提交成功')
+                    $.alert('提交成功');
+                    window.location.href="/admin/articleManage";
                 }else{
                     $.alert(msg.message)
                 }
