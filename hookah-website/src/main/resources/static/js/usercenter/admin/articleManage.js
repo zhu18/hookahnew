@@ -27,16 +27,24 @@ function loadPageData(data){ //渲染页面数据
 function changes(that){ //筛选状态改变
     var thisVal = $(that).val();
     $('.select-hide').hide();
-    if(thisVal == 'information'){
+    if(thisVal == 'information' || that == 'information'){
         $('#newsSonGroup').show();
         $('.select-line').show();
-        dataParm.newsGroup = thisVal;
+        if(thisVal){
+            dataParm.newsGroup = thisVal;
+        }else{
+            dataParm.newsGroup = that;
+        }
         dataParm.newsSonGroup = $("#newsSonGroup").val();
         goPage("1");
     }else{
         $('#newsSonGroup').hide();
         $('.select-line').hide();
-        dataParm.newsGroup = thisVal;
+        if(thisVal){
+            dataParm.newsGroup = thisVal;
+        }else{
+            dataParm.newsGroup = that;
+        }
         dataParm.newsSonGroup = "";
         goPage("1");
     }
@@ -123,7 +131,6 @@ function deleteData(id) {
     $.confirm('你确定要删除这条消息吗? ',null,function(type){
         if(type == 'yes'){
             deleteLoad(id);
-            // window.location.reload();
             this.hide();
         }else{
             this.hide();
@@ -141,10 +148,9 @@ function deleteLoad(id){
         contentType: 'application/json',
         success:function(data){
             if(data.code == "1") {
-                $.alert('删除成功', true, function () {
-                    data.newsGroup = $("#newsGroup").val();
-                    loadData(data);
-                });
+                $.alert('删除成功', true, function () {});
+                data.newsGroup = $("#newsGroup").val();
+                changes(data.newsGroup);
             }
         },
         error:function(e){

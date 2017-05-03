@@ -267,10 +267,14 @@ public class SysNewsController {
     public ReturnData update(SysNews model) {
         ReturnData returnData = new ReturnData();
         try {
+
+            Session session = SecurityUtils.getSubject().getSession();
+            HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
             SysNews snews = new SysNews();
             snews = model;
             snews.setSytTime(new Date());
             snews.setUpdateTime(new Date());
+            snews.setSysUser(userMap.get("userId"));
             sysNewsService.updateById(snews);
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
