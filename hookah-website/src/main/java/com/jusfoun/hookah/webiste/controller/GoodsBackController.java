@@ -90,7 +90,7 @@ public class GoodsBackController extends BaseController {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
-            String userId = "018eacfa264211e796c56a3b07101c5a";//this.getCurrentUser().getUserId();
+            String userId = this.getCurrentUser().getUserId();
             if(StringUtils.isBlank(pageNum)) {
                 pageNum = this.PAGE_NUM;
             }

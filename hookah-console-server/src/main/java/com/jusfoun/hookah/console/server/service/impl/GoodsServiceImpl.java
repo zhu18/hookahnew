@@ -13,6 +13,7 @@ import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.DateUtils;
+import com.jusfoun.hookah.rpc.api.GoodsCheckService;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.MgGoodsService;
 import com.jusfoun.hookah.rpc.api.MqSenderService;
@@ -46,6 +47,9 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
 
     @Resource
     MqSenderService mqSenderService;
+
+    @Resource
+    GoodsCheckService goodsCheckService;
 
     @Resource
     public void setDao(GoodsMapper goodsMapper) {
@@ -242,6 +246,8 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             GoodsVo goodsVo = new GoodsVo();
             BeanUtils.copyProperties(goods, goodsVo);
             goodsVo.setCatName(DictionaryUtil.getCategoryById(goods.getCatId()) == null ? "" : DictionaryUtil.getCategoryById(goods.getCatId()).getCatName());
+            goodsVo.setCheckReason(goodsCheckService.selectOneByGoodsId(goods.getGoodsId()) == null
+                    ? "" : goodsCheckService.selectOneByGoodsId(goods.getGoodsId()).getCheckContent());
             list1.add(goodsVo);
         }
         return list1;

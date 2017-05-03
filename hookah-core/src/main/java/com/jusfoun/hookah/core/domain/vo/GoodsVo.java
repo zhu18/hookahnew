@@ -19,6 +19,7 @@ public class GoodsVo extends Goods implements Serializable {
     private Integer isBook;
     private String userId;
     private String catName;
+    private String checkReason;
 
     public List<MgCategoryAttrType.AttrTypeBean> getAttrTypeList() {
         return attrTypeList;
@@ -82,5 +83,13 @@ public class GoodsVo extends Goods implements Serializable {
 
     public void setCatName(String catName) {
         this.catName = catName;
+    }
+
+    public String getCheckReason() {
+        return checkReason;
+    }
+
+    public void setCheckReason(String checkReason) {
+        this.checkReason = checkReason;
     }
 }
