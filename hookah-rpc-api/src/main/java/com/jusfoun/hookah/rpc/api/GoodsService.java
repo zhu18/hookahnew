@@ -7,8 +7,6 @@ import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.GenericService;
 
-import java.util.List;
-
 /**
  * @author huang lei
  * @date 2017/2/28 下午3:06
@@ -26,7 +24,7 @@ public interface GoodsService extends GenericService<Goods,String> {
 
     Pagination saleList(String pageNum, String pageSize, String goodsName, String userId);
 
-    List waitList(String goodsName, String userId, Integer checkStatus, Integer isBook);
+    Pagination waitList(String pageNum, String pageSize, String goodsName, String userId, Integer checkStatus, Integer isBook);
 
     Pagination offsaleList(String pageNum, String pageSize, String goodsName, String userId);
 

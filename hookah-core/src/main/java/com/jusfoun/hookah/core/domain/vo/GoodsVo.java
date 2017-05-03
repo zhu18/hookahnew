@@ -16,6 +16,10 @@ public class GoodsVo extends Goods implements Serializable {
     private List<MgGoods.ImgBean> imgList;
     private MgGoods.ApiInfoBean apiInfo;
     private boolean orNotFavorite;
+    private Integer isBook;
+    private String userId;
+    private String catName;
+    private String checkReason;
 
     public List<MgCategoryAttrType.AttrTypeBean> getAttrTypeList() {
         return attrTypeList;
@@ -55,5 +59,37 @@ public class GoodsVo extends Goods implements Serializable {
 
     public void setOrNotFavorite(boolean orNotFavorite) {
         this.orNotFavorite = orNotFavorite;
+    }
+
+    public Integer getIsBook() {
+        return isBook;
+    }
+
+    public void setIsBook(Integer isBook) {
+        this.isBook = isBook;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getCatName() {
+        return catName;
+    }
+
+    public void setCatName(String catName) {
+        this.catName = catName;
+    }
+
+    public String getCheckReason() {
+        return checkReason;
+    }
+
+    public void setCheckReason(String checkReason) {
+        this.checkReason = checkReason;
     }
 }
