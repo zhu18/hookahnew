@@ -715,7 +715,7 @@ public class ESTemplate {
                     //过滤没到上架时间的预约商品
                     if(HookahConstants.ONSALE_START_DATE_FILEDNAME.equals(entry.getValue())) {
                         queryString = QueryBuilders.rangeQuery(HookahConstants.ONSALE_START_DATE_FILEDNAME)
-                                .lte(DateUtils.now());
+                                .lte(DateUtils.now().getTime());
                     }else {
                         queryString = QueryBuilders.simpleQueryStringQuery(String.valueOf(entry.getValue()))
                                 .field(String.valueOf(entry.getKey()));
