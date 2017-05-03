@@ -1,5 +1,5 @@
 function loadPageData(data){
-    if(data.data.list){
+    if(data.data.list.length > 0){
         var list = data.data.list;
         var html = '';
         for(var i=0; i<list.length; i++){
@@ -58,17 +58,17 @@ function change(){
 	var isBook = $('#J_isBook').val();
 
 	if(goodsName){
-		dataParm.goodsName = goodsName
+		dataParm.goodsName = goodsName;
 	}else{
 		delete dataParm.goodsName;
 	}
-	if(checkStatus){
-		dataParm.checkStatus = checkStatus
+	if(checkStatus != -1){
+		dataParm.checkStatus = checkStatus;
 	}else{
 		delete dataParm.checkStatus;
 	}
-	if(isBook){
-		dataParm.isBook = isBook
+	if(isBook != -1){
+		dataParm.isBook = isBook;
 	}else{
 		delete dataParm.isBook;
 	}
