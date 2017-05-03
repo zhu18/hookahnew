@@ -20,6 +20,8 @@ $(function(){
 })
 
 function check(orderId,goodsId,commentContent,commentLevel){
+    goodsId=$("#goodsId").val();
+    console.log("goodsId:"+goodsId);
     $.ajax({
         type: "post",
         url: '/comment/add',
