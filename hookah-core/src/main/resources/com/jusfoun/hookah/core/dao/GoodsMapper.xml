@@ -155,7 +155,7 @@
         off_reason,
         check_status,
         is_onsale,
-        is_update,
+        is_book,
         version
         FROM
         goods
