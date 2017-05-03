@@ -16,7 +16,6 @@ public class GoodsVo extends Goods implements Serializable {
     private List<MgGoods.ImgBean> imgList;
     private MgGoods.ApiInfoBean apiInfo;
     private boolean orNotFavorite;
-    private Integer isBook;
     private String userId;
     private String catName;
     private String checkReason;
@@ -59,14 +58,6 @@ public class GoodsVo extends Goods implements Serializable {
 
     public void setOrNotFavorite(boolean orNotFavorite) {
         this.orNotFavorite = orNotFavorite;
-    }
-
-    public Integer getIsBook() {
-        return isBook;
-    }
-
-    public void setIsBook(Integer isBook) {
-        this.isBook = isBook;
     }
 
     public String getUserId() {
