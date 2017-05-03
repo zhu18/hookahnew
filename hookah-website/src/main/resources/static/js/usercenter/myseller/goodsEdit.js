@@ -236,8 +236,8 @@ $('.pusGoods-btn').click(function () {
 	data.goodsType = $('input[name="goodsTypes"]:checked').val();
 	data.goodsDesc = $('#textarea1').val();
 	data.catId = catId; //此ID为url上的id
-	data.isOnsale = $('input[name="isOnsale"]:checked').val();
-	if (data.isOnsale == 1) {
+	data.isBook = $('input[name="isBook"]:checked').val();
+	if (data.isBook == 1) {
 		data.onsaleStartDate = $('#indate').val();
 	}
 	if($('select[name="city"]').val() > 0){
