@@ -34,6 +34,7 @@ if (id) {
             $("#newsTitle").val(data.data.newsTitle);//文章的标题
             $("input[name='isHot'][value=" + data.data.isHot + "]").attr("checked", true);
             $("#preview-img").attr('src', data.data.pictureUrl);
+            $(".pulish-btn button").addClass("btn-full-blue");
             $("#content").html(data.data.content);
             createEditor();
             getImg = data.data.pictureUrl;
