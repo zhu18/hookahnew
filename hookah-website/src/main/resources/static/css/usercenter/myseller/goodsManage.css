@@ -48,6 +48,7 @@
 }
 .trade-box table td a img{
     width:70px;
+    height:70px;
 }
 .trade-box table td a p{
 
@@ -124,5 +125,13 @@ cursor: pointer;
 }
 .searchQuery .searchInput .cleanBtn:hover{
     color:#333;
+}
+.searchQuery .spanTitle{
+    font-weight: 800;
+}
+.searchQuery select{
+    min-width: 60px;
+    height:30px;
+    birder:1px solid #ccc;
 }
 /*搜索条件样式结束*/

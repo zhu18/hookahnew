@@ -53,12 +53,25 @@ $('.cleanBtn').click(function(){
 	goPage(1);
 });
 function change(){
-	var vals = $('#J_goodsNameSearch').val();
-	if (vals) {
-		dataParm.goodsName = vals;
-		goPage(1);
-	} else {
-		$('#J_goodsNameSearch').siblings('.tips').show();
+	var goodsName = $('#J_goodsNameSearch').val();
+	var checkStatus = $('#J_checkStatus').val();
+	var isBook = $('#J_isBook').val();
+
+	if(goodsName){
+		dataParm.goodsName = goodsName
+	}else{
+		delete dataParm.goodsName;
 	}
+	if(checkStatus){
+		dataParm.checkStatus = checkStatus
+	}else{
+		delete dataParm.checkStatus;
+	}
+	if(isBook){
+		dataParm.isBook = isBook
+	}else{
+		delete dataParm.isBook;
+	}
+	goPage(1);
 	return false;
 }
