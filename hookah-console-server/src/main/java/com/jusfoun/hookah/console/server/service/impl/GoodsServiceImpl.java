@@ -253,4 +253,28 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         }
         return list1;
     }
+
+    /**
+     * 查询商品详情
+     * @return
+     */
+    @Override
+    public GoodsVo findGoodsById(String goodsId) throws HookahException {
+        Goods goods = super.selectById(goodsId);
+        if (goods == null || goods.getGoodsId() == null) {
+            throw new HookahException("未查询到商品信息！");
+        }
+        GoodsVo goodsVo = new GoodsVo();
+        BeanUtils.copyProperties(goods, goodsVo);
+        MgGoods mgGoods = mgGoodsService.selectById(goodsId);
+        if (mgGoods != null) {
+            goodsVo.setFormatList(mgGoods.getFormatList());
+            goodsVo.setImgList(mgGoods.getImgList());
+            goodsVo.setAttrTypeList(mgGoods.getAttrTypeList());
+            goodsVo.setApiInfo(mgGoods.getApiInfo());
+        }
+        goodsVo.setCatName(DictionaryUtil.getCategoryById(goodsVo.getCatId()) == null
+                ? "" : DictionaryUtil.getCategoryById(goodsVo.getCatId()).getCatName());
+        return goodsVo;
+    }
 }
