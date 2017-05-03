@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.core.domain.es;
 
 import com.jusfoun.hookah.core.annotation.EsField;
+import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.constants.HookahConstants.AnalyzeOpt;
 import com.jusfoun.hookah.core.constants.HookahConstants.Analyzer;
 import com.jusfoun.hookah.core.constants.HookahConstants.TermVector;
@@ -78,6 +79,11 @@ public class EsGoods implements Serializable {
     @Transient
     @EsField(fielddata = true)
     private String areaCity;
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @EsField(type = Type.KEYWORD)
+    private Date onsaleStartDate;
+    @Transient
+    private String onsaleStartDateField = HookahConstants.ONSALE_START_DATE_FILEDNAME;
 
     public String getGoodsId() {
         return goodsId;
@@ -261,5 +267,21 @@ public class EsGoods implements Serializable {
 
     public void setAreaCity(String areaCity) {
         this.areaCity = areaCity;
+    }
+
+    public Date getOnsaleStartDate() {
+        return onsaleStartDate;
+    }
+
+    public void setOnsaleStartDate(Date onsaleStartDate) {
+        this.onsaleStartDate = onsaleStartDate;
+    }
+
+    public String getOnsaleStartDateField() {
+        return onsaleStartDateField;
+    }
+
+    public void setOnsaleStartDateField(String onsaleStartDateField) {
+        this.onsaleStartDateField = onsaleStartDateField;
     }
 }
