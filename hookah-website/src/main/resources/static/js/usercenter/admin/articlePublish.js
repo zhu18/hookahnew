@@ -112,7 +112,8 @@ function published(){
         }
     }
     if(data.newsTitle == "" || data.newsTitle == null){
-        $('#newsTitle').focus();
+        $.alert("请输入文章标题",true,function(){});
+            // $('#newsTitle').focus();
         return;
     }else if(data.content == "") {
         $.alert('请输入文章内容！',true,function(){ })
