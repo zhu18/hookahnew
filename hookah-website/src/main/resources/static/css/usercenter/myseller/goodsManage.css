@@ -76,3 +76,53 @@
 .wrapper-tab .trade-box{
 
 }
+/*搜索条件样式开始*/
+.searchQuery{
+    height: 50px;
+}
+
+.searchQuery .date{
+    width: 55%;
+    margin-bottom:28px;
+}
+.searchQuery .start-date,.searchQuery .end-date{
+    margin-right:50px;
+}
+.searchQuery #startDate,.searchQuery #endDate{
+    height: 25px;
+    padding-left:5px;
+    border:1px solid #ccc;
+}
+.searchQuery #startDate:focus,.searchQuery #endDate:focus{
+    border:1px solid #ccc;
+}
+.searchQuery .search{
+cursor: pointer;
+}
+#noPaySearch{
+    height: 40px;
+}
+.searchQuery .searchInput{
+    position: relative;
+}
+.searchQuery .searchInput input{
+    width:220px;
+    height:28px;
+    padding:0 5px;
+    border:1px solid #ccc;
+}
+.searchQuery .searchInput .cleanBtn{
+    position: absolute;
+    margin: 4px 0 0 -21px;
+    display: block;
+    padding: 3px;
+    color: #ccc;
+    cursor: pointer;
+    font-size: 16px;
+    left: 290px;
+    top: 0px;
+}
+.searchQuery .searchInput .cleanBtn:hover{
+    color:#333;
+}
+/*搜索条件样式结束*/

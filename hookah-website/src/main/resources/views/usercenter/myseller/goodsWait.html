@@ -28,6 +28,23 @@ var htmlPart = {
                     <li class="grid-right"><a href="/usercenter/goodsPublish" class="grid-right btn btn-full-orange padding-left-10 padding-right-10">发布商品</a></li>
                 </ul>
             </div>
+            <div class="searchQuery padding-top-10">
+                <form onsubmit="return change();">
+                    <div class="grid-left searchInput">
+                        <label>商品名称：</label><input type="text" id="J_goodsNameSearch" placeholder="请输入商品名称"><span class="cleanBtn fa fa-times-circle-o" style="display: none"></span>
+                        <span class="tips color-red" style="display: none">请输入查询条件</span>
+                    </div>
+                    <div class="grid-left margin-left-30 padding-top-5">
+                        审核状态：<label class="margin-right-10"><input type="radio" class="margin-right-5" name="qwe" checked>通过</label>
+                        <label class="margin-right-10"><input type="radio" class="margin-right-5" name="qwe">不通过</label>
+                        <label><input type="radio" class="margin-right-5" name="qwe">通过</label>
+                    </div>
+
+                    <button id="J_searchBtns" type="submit" class="search grid-right btn btn-full-red padding-left-10 padding-right-10 padding-top-5 padding-bottom-5">
+                        查询
+                    </button>
+                </form>
+            </div>
             <div class="trade-box">
                 <table>
                     <thead>

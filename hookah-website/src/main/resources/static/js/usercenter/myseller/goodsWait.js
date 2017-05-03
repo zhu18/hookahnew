@@ -6,12 +6,12 @@ function loadPageData(data){
             html += '<tr>';
             html += '<td class="text-center">';
             html += '<a href="javascript:void(0)">';
-            html += '<img src="http://'+list[i].goodsImg+'" alt="">';
+            html += '<img src="'+list[i].goodsImg+'" alt="">';
             html += '<p>'+list[i].goodsName+'</p>';
             html += '</a>';
             html += '</td>';
             html += '<td>'+list[i].catId+'</td>';
-            html += '<td class="text-right">'+list[i].shopNumber+'</td>';
+            html += '<td class="text-right">'+ (list[i].shopPrice / 100).toFixed(2) +'</td>';
             html += '<td class="text-center">'+format(list[i].addTime)+'</td>';
             if(list[i].checkStatus == 0){
                 html += '<td class="text-center">审核中</td>';
@@ -27,6 +27,38 @@ function loadPageData(data){
         }
         $('.trade-box tbody').html(html);
     }else{
-		$('.trade-box').html('<div class="noData">暂无数据</div>');
+		$('.trade-box tbody').html('<tr><td colspan="10"><div class="noData">暂无数据</div></td></tr>');
     }
+}
+$('#J_goodsNameSearch').on('focus',function () {
+	$(this).siblings('.tips').hide();
+})
+$('#J_goodsNameSearch').on('blur',function () {
+	if($(this).val()){
+		$(this).siblings('.tips').hide();
+	}else{
+		$(this).siblings('.tips').show();
+	}
+})
+$('#J_goodsNameSearch').hover(function () {
+	if($(this).val()){
+		$('.cleanBtn').show();
+	}else{
+		$('.cleanBtn').hide();
+	}
+});
+$('.cleanBtn').click(function(){
+	$('#J_goodsNameSearch').val('');
+	delete dataParm.goodsName;
+	goPage(1);
+});
+function change(){
+	var vals = $('#J_goodsNameSearch').val();
+	if (vals) {
+		dataParm.goodsName = vals;
+		goPage(1);
+	} else {
+		$('#J_goodsNameSearch').siblings('.tips').show();
+	}
+	return false;
 }

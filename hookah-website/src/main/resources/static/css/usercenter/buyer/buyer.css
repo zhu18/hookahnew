@@ -491,7 +491,9 @@
     line-height: 35px;
     text-align: left;
 }
-
+.viewDetails .goods-list .goods-table tbody tr .public{
+    width: 170px;
+}
 /*sunAlone*/
 .sunAlone .sunContent .pic img {
     width: 60px;
