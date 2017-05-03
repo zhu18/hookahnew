@@ -191,12 +191,12 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
     // 待出售商品列表
     @Override
     public Pagination waitList(String pageNum, String pageSize, String goodsName, String userId, Integer checkStatus, Integer isBook) {
-        Pagination pagination = new Pagination();
-        pagination.setCurrentPage(Integer.parseInt(pageNum));
-        pagination.setPageSize(Integer.parseInt(pageSize));
+        Pagination pagination = new Pagination(Integer.parseInt(pageNum), Integer.parseInt(pageSize));
 
         GoodsVo vo = new GoodsVo();
         vo.setUserId(userId);
+        vo.setRowStart((Integer.parseInt(pageNum) - 1) * Integer.parseInt(pageSize));
+        vo.setRowEnd(Integer.parseInt(pageNum) * Integer.parseInt(pageSize));
         if(checkStatus != null)
             vo.setCheckStatus(Byte.valueOf(checkStatus + ""));
         if(isBook != null)

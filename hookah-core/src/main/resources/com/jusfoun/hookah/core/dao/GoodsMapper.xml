@@ -160,6 +160,7 @@
         FROM
         goods
         <include refid="waitSelect"></include>
+        limit ${rowStart},${rowEnd}
     </select>
     <select id="waitListCnt" resultType="java.lang.Integer" parameterType="com.jusfoun.hookah.core.domain.vo.GoodsVo">
         SELECT COUNT(*)
