@@ -6,7 +6,13 @@ class GoodsController {
       var promise = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/goods/all",
-        params: {currentPage: $rootScope.pagination.currentPage, pageSize: $rootScope.pagination.pageSize}
+        params: {currentPage: $rootScope.pagination.currentPage,
+                    pageSize: $rootScope.pagination.pageSize,
+                    goodsName: $scope.searchName,
+                    goodsSn: $scope.searchSn,
+                    keywords: $scope.searchKw,
+                    shopName: $scope.searchShop
+        }
       });
       promise.then(function (res, status, config, headers) {
         $rootScope.loadingState = false;
