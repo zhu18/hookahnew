@@ -239,10 +239,11 @@ function sort() {//四类排序
     var m=flog();
     $("#shopPrice").parent().prevAll().on('click',function () {
         $(this).find('a').addClass('active').parent().siblings().find('a').removeClass('active');
+        $(this).find('a').find('span').css({'display':'block'}).parent().parent().siblings().find('.arrow-box').css({'display':'none'})
         if($(this).find('a').attr('type')==='onSaleDate'){
             dataParm.orderField='onsaleStartDate';
             if(s==null){
-                s=flog();
+               s=flog();
 			}
             s();
             d=null;

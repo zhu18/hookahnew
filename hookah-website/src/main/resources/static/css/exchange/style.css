@@ -1113,6 +1113,18 @@ dl {
 	padding-right: 5px;
 	background-color: transparent;
 }
+.search .search-order .order li .arrow-box {
+	display: inline-block;
+	position: relative;
+	margin-left: 3px;
+	display: none;
+}
+.search .search-order .order li .arrow-box .arrow{
+	display: inline-block;
+	height: 12px;
+	transform: rotateZ(180deg);
+	transform-origin: bottom;
+}
 .search .search-order .order li:first-child+li+li+li+li .priceBox {
 	display: inline-block;
 }
