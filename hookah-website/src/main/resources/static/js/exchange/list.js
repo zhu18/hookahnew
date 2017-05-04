@@ -217,7 +217,6 @@ function price() {//价格排序 输入值*100处理
 
 }
 function sort() {//四类排序
-	// var flog=1;
     function flog() {//记录双击
         var flog=1;
         return function () {
