@@ -64,12 +64,9 @@ public class EsGoods implements Serializable {
     @EsField(type = Type.BYTE)
     private Byte shopFormat;
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    @EsField(type = Type.KEYWORD, copyTo = "lastUpdateTimeKey")
+    @EsField(type = Type.KEYWORD)
     private Date lastUpdateTime;
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    @EsField(type = Type.KEYWORD)
-    @Transient
-    private Date lastUpdateTimeKey;
     @EsField(fielddata = true)
     @Transient
     private String areaCountry;
@@ -80,8 +77,11 @@ public class EsGoods implements Serializable {
     @EsField(fielddata = true)
     private String areaCity;
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    @EsField(type = Type.KEYWORD)
+    @EsField(type = Type.KEYWORD, copyTo = "onsaleStartDate2")
     private Date onsaleStartDate;
+    @EsField(type = Type.DATE)
+    @Transient
+    private Date onsaleStartDate2;
     @Transient
     private String onsaleStartDateField = HookahConstants.ONSALE_START_DATE_FILEDNAME;
 
@@ -213,14 +213,6 @@ public class EsGoods implements Serializable {
         this.lastUpdateTime = lastUpdateTime;
     }
 
-    public Date getLastUpdateTimeKey() {
-        return lastUpdateTimeKey;
-    }
-
-    public void setLastUpdateTimeKey(Date lastUpdateTimeKey) {
-        this.lastUpdateTimeKey = lastUpdateTimeKey;
-    }
-
     public String[] getAttrTypeId() {
         return attrTypeId;
     }
@@ -283,5 +275,13 @@ public class EsGoods implements Serializable {
 
     public void setOnsaleStartDateField(String onsaleStartDateField) {
         this.onsaleStartDateField = onsaleStartDateField;
+    }
+
+    public Date getOnsaleStartDate2() {
+        return onsaleStartDate2;
+    }
+
+    public void setOnsaleStartDate2(Date onsaleStartDate2) {
+        this.onsaleStartDate2 = onsaleStartDate2;
     }
 }

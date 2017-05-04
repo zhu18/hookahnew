@@ -3,21 +3,23 @@ package com.jusfoun.hookah.console.server.service.impl;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.CommentMapper;
 import com.jusfoun.hookah.core.domain.Comment;
+import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
+import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.CommentService;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.omg.CORBA.PUBLIC_MEMBER;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 
 /**
  * Created by ctp on 2017/4/24.
@@ -70,6 +72,13 @@ public class CommentServiceImpl extends GenericServiceImpl<Comment,String> imple
     public ReturnData findByGoodsId(String pageNumber,String pageSize,String goodsId) {
         ReturnData returnData = new ReturnData();
         returnData.setCode(ExceptionConst.Success);
+
+        if(StringUtils.isBlank(goodsId)){
+            returnData.setCode(ExceptionConst.AssertFailed);
+            returnData.setMessage(ExceptionConst.get(ExceptionConst.AssertFailed));
+            return returnData;
+        }
+
         List<Condition> filters = new ArrayList<Condition>();
         filters.add(Condition.eq("status",STATUS_INVAL));
         filters.add(Condition.eq("goodsId",goodsId));
@@ -96,4 +105,73 @@ public class CommentServiceImpl extends GenericServiceImpl<Comment,String> imple
     public ReturnData findByCondition(Map<String, Object> params) {
         return null;
     }
+
+    @Override
+    public ReturnData countGoodsGradesByGoodsId(String goodsId) {
+        ReturnData returnData = new ReturnData();
+        returnData.setCode(ExceptionConst.Success);
+
+        if(StringUtils.isBlank(goodsId)){
+            returnData.setCode(ExceptionConst.AssertFailed);
+            returnData.setMessage(ExceptionConst.get(ExceptionConst.AssertFailed));
+            return returnData;
+        }
+
+        try {
+            List<Condition> filters = new ArrayList<Condition>();
+            filters.add(Condition.eq("goodsId",goodsId));
+            filters.add(Condition.eq("status",STATUS_INVAL));
+
+            List<Comment> comments = super.selectList(filters);
+            Double aveGrades = 5d;
+            if(null != comments && comments.size() > 0){
+                //计算平均值
+                aveGrades = commentMapper.selectGoodsAvgByGoodsId(goodsId);
+            }
+            returnData.setData(aveGrades);
+        }catch (Exception e) {
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+
+
+        return returnData;
+    }
+
+    @Override
+    public ReturnData batchAddComment(List<Comment> comments,User currUser) {
+        ReturnData returnData = new ReturnData();
+        returnData.setCode(ExceptionConst.Success);
+
+        if(comments != null && comments.size() > 0){
+            try {
+                for (Comment comment : comments){
+                    if(StringUtils.isBlank(comment.getOrderId())){
+                        returnData.setCode(ExceptionConst.AssertFailed);
+                        returnData.setMessage(ExceptionConst.get(ExceptionConst.AssertFailed));
+                        return returnData;
+                    }
+                    comment.setCommentTime(new Date());
+                    comment.setAddTime(new Date());
+                    comment.setUserId(currUser.getUserId());
+                    comment = super.insert(comment);
+                }
+//                Integer count = super.insertBatch(comments);
+                returnData.setData(comments);
+            }catch (Exception e) {
+                returnData.setCode(ExceptionConst.Error);
+                returnData.setMessage(e.toString());
+                e.printStackTrace();
+            }
+
+        }else{
+            returnData.setCode(ExceptionConst.AssertFailed);
+            returnData.setMessage(ExceptionConst.get(ExceptionConst.AssertFailed));
+        }
+
+        return returnData;
+    }
+
+
 }

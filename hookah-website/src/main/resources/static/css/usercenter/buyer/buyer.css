@@ -432,18 +432,25 @@
 .viewDetails .viewContent .rightContent .process-text {
     height: 68px;
     line-height: 68px;
+    position: relative;
 }
 .order ul li {
     height: 18px;
     line-height: 18px;
 }
 .viewDetails .viewContent .rightContent .process-text .order {
-    margin-left:-25px;
+    margin-left:-345px;
 }
 .viewDetails .viewContent .rightContent .process-text .pay{
-    width: 295px;
+    width: 282px;
 }
-
+.viewDetails .viewContent .rightContent .process-text .pay,.viewDetails .viewContent .rightContent .process-text .over {
+    position: absolute;
+    top:-10px;
+}
+.viewDetails .viewContent .rightContent .process-text .over {
+    margin-left:302px;
+}
 .viewDetails  .goods-list {
     margin: 0  -15px;
 }
@@ -502,20 +509,22 @@
 .sunAlone .sunContent .rcontent .satisfaction span {
     display: inline-block;
     position: relative;
-    width: 70px;
+    width: 96px;
+}
+.satisfaction ,.suneval {
+    position: relative;
+}
+.satisfaction .goods,.suneval .alone{
+    position: absolute;
+}
+.satisfaction .goods {
+    top:-8px;
+}
+.suneval .alone {
+    top:35px;
 }
 .sunAlone .sunContent .rcontent .evaluation .iconfont {
     font-size: 14px;
-}
-.sunAlone .sunContent .rcontent .satisfaction .comment {
-    position: absolute;
-    top:-18px;
-    font-size: 17px;
-    color:#ffa800;
-    cursor: pointer;
-}
-.sunAlone .sunContent .rcontent .satisfaction .comment li {
-    float: left;
 }
 .rcontent .suneval textarea {
     resize: none;

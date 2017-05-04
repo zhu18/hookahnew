@@ -19,9 +19,6 @@ $(document).ready(function () {
 		}
 	});
 
-
-
-
 	$("#J_searchInput").on("input propertychange", function () {
         if ($(this).val() == "") {
 			$('.search-sug').hide();
@@ -37,7 +34,6 @@ $(document).ready(function () {
 				$('.search-sug').show();
 			}
 		}
-
 	});
 	$("#J_searchInput").keydown(function (event) {
 		if (event.keyCode == 40) {
@@ -136,12 +132,12 @@ function shoppingCart() {
     $(".shopping-cart").mouseleave(function () {
         $(this).removeClass('hover')
     });
-
-    // if($(".shopping-cart .shopping-cart-down").height()>130){
-    //    $(".shopping-cart .shopping-cart-down").css({
-    //    	'overflow-y':'scroll'
-    // 	})
-    // }
+    if($(".shopping-cart .shopping-cart-down").height()>430){
+       $(".shopping-cart .shopping-cart-down").css({
+       	'overflow-y':'scroll',
+       	'height':'430px'
+    	})
+    }
 }
 function compatibilityPL() {
     if ((navigator.appName == "Microsoft Internet Explorer") && (document.documentMode < 10 || document.documentMode == undefined)) {

@@ -3,6 +3,7 @@ var head = {
 %>
 <link rel="stylesheet" href="/static/css/usercenter/buyer/buyer.css">
 <link rel="stylesheet" href="/static/css/usercenter/buyer/font/iconfont.css">
+<script type="text/javascript" src="/static/vendor/jquery.raty.js"></script>
 <%};%>
 
 <%
@@ -33,30 +34,25 @@ var htmlPart = {
                         <div class="evaluation margin-bottom-20">
                             <span class="iconfont icon-jingshi "><span class="margin-left-5">请至少填写一件商品的评价</span></span>
                         </div>
-                        <div class="satisfaction margin-bottom-20">商品满意度
-                            <span class="padding-left-20">
-                                <ul class="comment">
-                                    <li>☆</li>
-                                    <li>☆</li>
-                                    <li>☆</li>
-                                    <li>☆</li>
-                                    <li>☆</li>
-                                </ul>
+                        <div class="satisfaction margin-bottom-20">
+                            <span class="goods">商品满意度</span>
+                            <span class="demo">
+                                <div id="function-demo" class="target-demo"></div>
+                                <div id="function-hint" class="hint"></div>
                             </span>
-                            <span class="fen">0分</span>
                         </div>
-                        <div class="suneval" >
+                        <div class="suneval clearfix" >
                                 <span class="eve">
-                                    <span class="padding-right-10">评价晒单</span>
+                                    <span class="padding-right-10 alone">评价晒单</span>
                                 </span>
-                            <textarea name="" id="area" cols="90" rows="5" class="margin-left-30 padding-left-5 padding-top-5" placeholder="商品是否给力,快分享你的购买心得吧～～"></textarea>
+                            <textarea name="" id="area" cols="90" rows="5" class="padding-left-5 padding-top-5 grid-right margin-right-10" placeholder="商品是否给力,快分享你的购买心得吧～～"></textarea>
                         </div>
                     </div>
                 </div>
-            <input type="hidden" value="${list.goodsId}" id="goodsId">
+            <input type="hidden" value="${list.goodsId}" name="goodsId">
                 <% } %>
                 <div class="sure text-align-center">
-                    <span class="margin-top-20 text-align-center btn-full-orange margin-bottom-20" onclick="check(${order.orderId},0,$(textarea).val(),$('.fen').text().substring(0,1))">提交</span>
+                    <span class="margin-top-20 text-align-center btn-full-orange margin-bottom-20" onclick="check('${order.orderId}')">提交</span>
                 </div>
         </div>
     </div>

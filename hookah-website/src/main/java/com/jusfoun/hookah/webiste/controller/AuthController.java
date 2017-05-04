@@ -126,7 +126,8 @@ public class AuthController extends BaseController{
         return "/auth/company_auth_init_step4";
     }
 
-    @RequestMapping(value = "/auth/personAuth", method = RequestMethod.GET)
+    @RequestMapping(value = "/auth/personAuth", method = RequestMethod.POST)
+    @ResponseBody
     public ReturnData personAuth(Model model, UserDetail userDetail)  {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
@@ -134,7 +135,14 @@ public class AuthController extends BaseController{
             String userId = this.getCurrentUser().getUserId();
             userDetail.setUserId(userId);
             userDetail.setIsAuth(AUTH_STATUS_SUCCESS);
-            userDetailService.updateByIdSelective(userDetail);
+
+            UserDetail userDetail1 = userDetailService.selectById(userId);
+            if (userDetail1 != null){
+                int count = userDetailService.updateByIdSelective(userDetail);
+            }else {
+                userDetailService.insert(userDetail);
+            }
+
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());
@@ -143,7 +151,8 @@ public class AuthController extends BaseController{
         return returnData;
     }
 
-    @RequestMapping(value = "/auth/orgAuth", method = RequestMethod.GET)
+    @RequestMapping(value = "/auth/orgAuth", method = RequestMethod.POST)
+    @ResponseBody
     public ReturnData orgAuth(Model model, Organization organization)  {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);

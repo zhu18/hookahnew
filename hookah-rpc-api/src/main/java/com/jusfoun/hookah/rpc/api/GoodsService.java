@@ -7,6 +7,8 @@ import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.GenericService;
 
+import java.util.Map;
+
 /**
  * @author huang lei
  * @date 2017/2/28 下午3:06
@@ -31,4 +33,8 @@ public interface GoodsService extends GenericService<Goods,String> {
     Pagination illegalList(String pageNum, String pageSize, String goodsName, String userId);
 
     GoodsVo findGoodsById(String goodsId) throws HookahException;
+
+    int updateByGidForFollowNum(Map<String, Object> map);
+
+    GoodsVo findGoodsByIdWebsite(String goodsId) throws HookahException;
 }

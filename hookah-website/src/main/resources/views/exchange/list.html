@@ -19,7 +19,9 @@ var head = {
     dataParm.pageNumber = 1;
     dataParm.pageSize = 20;
     dataParm.esGoods ={};
+    dataParm.range ={};
     dataParm.esGoods.catIds = catId;
+
 </script>
 <%};%>
 
@@ -41,10 +43,10 @@ var htmlPart = {
                 <div class="search-order">
                     <div class="order" >
                         <ul>
-                            <li><a id="sort" href="javascript:;" class="active" type="">综合排序</a></li>
-                            <li><a id="onSaleDate" href="javascript:;" type="onSaleDate">上架时间</a></li>
-                            <li><a id="orders" href="javascript:;" type="orders">下载量</a></li>
-                            <li><a id="commentRank" href="javascript:;" type="commentRank">评分</a></li>
+                            <li><a id="sort" href="javascript:;" class="active" type="">综合排序<span class="arrow-box"><i class="iconfont arrow">&#xe65e;</i></span></a></li>
+                            <li><a id="onSaleDate" href="javascript:;" type="onSaleDate">上架时间 <span class="arrow-box"><i class="iconfont arrow">&#xe65e;</i></span></a></li>
+                            <li><a id="orders" href="javascript:;" type="orders">下载量<span class="arrow-box"><i class="iconfont arrow">&#xe65e;</i></span></a></li>
+                            <li><a id="commentRank" href="javascript:;" type="commentRank">评分<span class="arrow-box"><i class="iconfont arrow">&#xe65e;</i></span></a></li>
                             <li>
                                 <a id="shopPrice" href="javascript:;" type="shopPrice">价格:</a>
                                 <div class="priceBox">

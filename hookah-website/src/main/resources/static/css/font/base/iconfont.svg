@@ -2,7 +2,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
 <svg xmlns="http://www.w3.org/2000/svg">
 <metadata>
-Created by FontForge 20120731 at Wed Apr 26 16:31:42 2017
+Created by FontForge 20120731 at Thu May  4 15:43:09 2017
  By admin
 </metadata>
 <defs>
@@ -73,5 +73,8 @@ q19 -5 44 -1.5t42 13.5q4 2 16 9q21 12 44 27q72 47 133 100q98 86 148.5 173t49 181
 d="M794 351l-508 -462q-12 -13 -30 -13t-30.5 12.5t-12.5 30t13 30.5l477 435l-477 434q-13 13 -13 30.5t12.5 30t30.5 12.5t30 -13l508 -462q13 -13 12 -32q1 -20 -12 -33z" />
     <glyph glyph-name="jiage-copy" unicode="&#xe613;" 
 d="M761 721h-93l-105 -193q-42 -79 -52 -105h-2q-27 63 -156 298h-99l184 -316h-151v-69h177v-97h-177v-70h177v-140h87v140h171v70h-171v97h171v69h-146z" />
+    <glyph glyph-name="liulan-copy" unicode="&#xe611;" horiz-adv-x="1027" 
+d="M514 656q-160 0 -296 -78.5t-216 -211.5q80 -133 216 -211t296 -78t296 78.5t216 210.5q-80 133 -216 211.5t-296 78.5zM516 166q-83 0 -141.5 58.5t-58.5 141.5q0 82 59 141t141 59t141 -59t59 -141q0 -83 -58.5 -141.5t-141.5 -58.5zM516 233q56 0 95 39t39 94
+q0 56 -39 95t-95 39t-95 -39t-39 -95q1 -56 40 -94.5t94 -38.5z" />
   </font>
 </defs></svg>

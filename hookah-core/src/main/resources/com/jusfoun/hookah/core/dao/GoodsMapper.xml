@@ -52,6 +52,7 @@
         <result column="shop_id" property="shopId" jdbcType="VARCHAR" />
         <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
         <result column="off_reason" property="offReason" jdbcType="VARCHAR" />
+        <result column="upload_url" jdbcType="VARCHAR" property="uploadUrl" />
     </resultMap>
     <select id="getNeedEsGoods" resultMap="EsResultMap">
         SELECT
@@ -156,7 +157,8 @@
         check_status,
         is_onsale,
         is_book,
-        version
+        version,
+        upload_url
         FROM
         goods
         <include refid="waitSelect"></include>
@@ -168,4 +170,16 @@
         goods
         <include refid="waitSelect"></include>
     </select>
+
+    <update id="updateByGidForFollowNum" parameterType="java.util.HashMap">
+        update goods set
+            <if test="type == 'plus'">
+                follow_num = follow_num + #{changeNum}
+            </if>
+            <if test="type == 'sub'">
+                follow_num = if(follow_num - #{changeNum} &lt; 0, 0, follow_num - #{changeNum})
+            </if>
+        where goods_id = #{goodsId}
+    </update>
+
 </mapper>

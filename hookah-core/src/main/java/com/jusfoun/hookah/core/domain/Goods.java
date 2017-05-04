@@ -224,6 +224,18 @@ public class Goods extends GenericModel {
 
     private String offReason; // 强制下架理由
 
+    private Integer followNum; // 关注度
+
+    private String uploadUrl;
+
+    public Integer getFollowNum() {
+        return followNum;
+    }
+
+    public void setFollowNum(Integer followNum) {
+        this.followNum = followNum;
+    }
+
     public String getOffReason() {
         return offReason;
     }
@@ -867,5 +879,13 @@ public class Goods extends GenericModel {
      */
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    public String getUploadUrl() {
+        return uploadUrl;
+    }
+
+    public void setUploadUrl(String uploadUrl) {
+        this.uploadUrl = uploadUrl;
     }
 }

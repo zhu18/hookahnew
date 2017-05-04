@@ -23,11 +23,8 @@
           <label class="col-sm-2 control-label" for="shelvesType">副标题</label>
           <div class="col-sm-4">
             <input type="text" id="shelvesType" name="shelvesType"
-                   class="form-control" data-ng-model="shelvesType" ng-maxlength="10" placeholder="必填项 / 最长为10" required />
+                   class="form-control" data-ng-model="shelvesType" ng-maxlength="10" ng-pattern="/[a-zA-Z]/" placeholder="必填项 / 字母 / 唯一标识 / 最长为10" required />
           </div>
-          <!--<div>-->
-            <!--<span style="color:red" ng-show="shelfForm.shelvesType.$error.required">必填项</span>-->
-          <!--</div>-->
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="shelvesTag">货架标签</label>
@@ -35,23 +32,10 @@
             <input type="text" id="shelvesTag" name="shelvesTag"
                    class="form-control" data-ng-model="shelvesTag" placeholder="多个标签使用逗号间隔" />
           </div>
-          <!--<div>-->
-            <!--<span style="color:red" ng-show="shelfForm.shelvesTag.$error.required">必填项 / 多个标签使用逗号间隔</span>-->
-          <!--</div>-->
         </div>
-        <!--<div class="form-group">-->
-          <!--<label class="col-sm-2 control-label" for="goodsNumber">商品数量</label>-->
-          <!--<div class="col-sm-4">-->
-            <!--<input type="number" id="goodsNumber" name="goodsNumber" ng-maxlength="2" class="form-control" data-ng-model="goodsNumber" required />-->
-          <!--</div>-->
-          <!--<div>-->
-            <!--<span style="color:red" ng-show="shelfForm.goodsNumber.$error.required">必填项</span>-->
-          <!--</div>-->
-        <!--</div>-->
         <div class="form-group">
           <label class="col-sm-2 control-label">货架描述</label>
           <div class="col-sm-4">
-            <!--<input type="text" id="shelvesDesc" name="shelvesDesc" class="form-control" data-ng-model="shelvesDesc" />-->
             <textarea name="shelvesDesc" style="margin: 0px; width: 360px; height: 80px;" placeholder="使用一段文字描述您的货架"></textarea>
           </div>
         </div>
