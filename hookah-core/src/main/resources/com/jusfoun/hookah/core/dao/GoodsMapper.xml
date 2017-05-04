@@ -168,4 +168,16 @@
         goods
         <include refid="waitSelect"></include>
     </select>
+
+    <update id="updateByGidForFollowNum" parameterType="java.util.HashMap">
+        update goods set
+            <if test="type == 'plus'">
+                followNum = followNum + #{changeNum}
+            </if>
+            <if test="type == 'sub'">
+                followNum = followNum - #{changeNum}
+            </if>
+        where goodsId = #{goodsId}
+    </update>
+
 </mapper>

@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by dengxu on 2017/4/8/0008.
@@ -33,6 +35,11 @@ public class GoodsFavoriteController extends BaseController {
     @Resource
     GoodsService goodsService;
 
+    /**
+     * 添加关注
+     * @param goodsFavorite
+     * @return
+     */
     @RequestMapping("add")
     @ResponseBody
     public ReturnData addFavorite(GoodsFavorite goodsFavorite) {
@@ -47,6 +54,13 @@ public class GoodsFavoriteController extends BaseController {
         try {
             goodsFavorite.setUserId(getCurrentUser().getUserId());
             goodsFavoriteService.insert(goodsFavorite);
+
+            Map<String, Object> map = new HashMap<>();
+            map.put("type", "plus");
+            map.put("goodsId", goodsFavorite.getGoodsId());
+            map.put("changeNum", 1);
+            goodsService.updateByGidForFollowNum(map);
+
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());
@@ -55,6 +69,11 @@ public class GoodsFavoriteController extends BaseController {
         return returnData;
     }
 
+    /**
+     * 取消关注
+     * @param id
+     * @return
+     */
     @RequestMapping("del")
     @ResponseBody
     public ReturnData delFavorite(String id) {
@@ -69,7 +88,15 @@ public class GoodsFavoriteController extends BaseController {
             GoodsFavorite goodsFavorite = new GoodsFavorite();
             goodsFavorite.setGoodsId(id);// 商品id
             goodsFavorite.setUserId(getCurrentUser().getUserId());
-            goodsFavoriteService.delete(goodsFavorite);
+            goodsFavorite.setIsDelete(Byte.parseByte("0"));
+            goodsFavoriteService.updateByIdSelective(goodsFavorite);
+
+            Map<String, Object> map = new HashMap<>();
+            map.put("type", "sub");
+            map.put("goodsId", goodsFavorite.getGoodsId());
+            map.put("changeNum", 1);
+            goodsService.updateByGidForFollowNum(map);
+
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());
