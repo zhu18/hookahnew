@@ -272,6 +272,8 @@ $('.pusGoods-btn').click(function () {
 			data.apiInfo.respParamList.push(listData);
 		});
 		data.apiInfo.respSample = $('.api-info-box').find('textarea[name="respSample"]').val();
+	}else{
+		data.uploadUrl = $('#J_fileUploadSS').val();
 	}
 
 	if (!!!data.goodsName) {
@@ -388,15 +390,17 @@ $('#fileupload').fileupload({
 	progressall: function (e, data) {
 
 	}
-})
+});
+var filenames = '';
 $('#fileupload2').fileupload({
 	url: fileUploadUrl,
 	dataType: 'json',
 	done: function (e, data) {
 		if(data.result.code == 1){
 			var obj = data.result.data[0];
-			// $("#preview-img").attr("src", obj.absPath);
-			$(this).val(obj.absPath);
+			filenames = data.files[0].name;
+			$("#J_fileUploadSS").val(obj.absPath);
+			$('.fileUploads span').html(filenames);
 		}else{
 			$.alert(data.result.message)
 		}
@@ -405,7 +409,7 @@ $('#fileupload2').fileupload({
 	progressall: function (e, data) {
 
 	}
-})
+});
 
 
 

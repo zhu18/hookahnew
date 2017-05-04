@@ -213,11 +213,23 @@ var htmlPart = {
                             <tr class="file-info-box">
                                 <td class="bar">文件上传：</td>
                                 <td>
-                                    <div>
-                                        <input id="fileupload2" type="file" name="filename2" multiple="" class="preview-btn">
+                                    <div class="fileUploads">
+                                        <input type="hidden" id="J_fileUploadSS">
+                                        <button>选择文件</button><span>未选择任何文件</span>
+                                        <input id="fileupload2" type="file" name="filename" multiple="" class="preview-btn">
                                     </div>
                                 </td>
                             </tr>
+                            <!--<tr class="file-info-box">-->
+                                <!--<td class="bar">文件上传：</td>-->
+                                <!--<td>-->
+                                    <!--<div>-->
+                                        <!--<a href="javascript:;" class="file gradient">选择文件-->
+                                            <!--　　<input type="file" >-->
+                                        <!--</a>-->
+                                    <!--</div>-->
+                                <!--</td>-->
+                            <!--</tr>-->
                             </tbody>
                         </table>
                     </div>
