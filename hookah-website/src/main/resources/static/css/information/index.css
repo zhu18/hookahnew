@@ -120,6 +120,13 @@
     font-size: 14px;
     font-weight: bold;
 }
+.public-box .public a:nth-child(3) {
+    display: block;
+    width: 700px;
+    height: 28px;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
 .auth img {
     width: 25px;
 }
