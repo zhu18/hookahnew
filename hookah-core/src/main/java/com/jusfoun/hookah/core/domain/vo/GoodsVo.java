@@ -24,6 +24,7 @@ public class GoodsVo extends Goods implements Serializable {
     private String areaCountry;
     private String areaProvince;
     private String areaCity;
+    private String catFullName;
 
     public List<MgCategoryAttrType.AttrTypeBean> getAttrTypeList() {
         return attrTypeList;
@@ -127,5 +128,13 @@ public class GoodsVo extends Goods implements Serializable {
 
     public void setAreaCity(String areaCity) {
         this.areaCity = areaCity;
+    }
+
+    public String getCatFullName() {
+        return catFullName;
+    }
+
+    public void setCatFullName(String catFullName) {
+        this.catFullName = catFullName;
     }
 }
