@@ -52,8 +52,25 @@ public class GoodsFavoriteController extends BaseController {
             return returnData;
         }
         try {
-            goodsFavorite.setUserId(getCurrentUser().getUserId());
-            goodsFavoriteService.insert(goodsFavorite);
+
+            List<Condition> filters = new ArrayList<>();
+            filters.add(Condition.eq("goodsId", goodsFavorite.getGoodsId()));
+            filters.add(Condition.eq("userId", getCurrentUser().getUserId()));
+            List<GoodsFavorite> selectList = goodsFavoriteService.selectList(filters);
+            if(selectList != null && selectList.size() > 0){
+                GoodsFavorite gf = selectList.get(0);
+                if("1".equals(gf.getIsDelete().toString())){
+                    return returnData;
+                }else if("0".equals(gf.getIsDelete().toString())){
+                    gf.setIsDelete(Byte.parseByte("1"));
+                    goodsFavoriteService.updateByIdSelective(gf);
+                }
+            }else{
+
+                goodsFavorite.setUserId(getCurrentUser().getUserId());
+                goodsFavoriteService.insert(goodsFavorite);
+            }
+
 
             Map<String, Object> map = new HashMap<>();
             map.put("type", "plus");
@@ -85,17 +102,22 @@ public class GoodsFavoriteController extends BaseController {
             return returnData;
         }
         try {
-            GoodsFavorite goodsFavorite = new GoodsFavorite();
-            goodsFavorite.setGoodsId(id);// 商品id
-            goodsFavorite.setUserId(getCurrentUser().getUserId());
-            goodsFavorite.setIsDelete(Byte.parseByte("0"));
-            goodsFavoriteService.updateByIdSelective(goodsFavorite);
 
-            Map<String, Object> map = new HashMap<>();
-            map.put("type", "sub");
-            map.put("goodsId", goodsFavorite.getGoodsId());
-            map.put("changeNum", 1);
-            goodsService.updateByGidForFollowNum(map);
+            List<Condition> filters = new ArrayList<>();
+            filters.add(Condition.eq("goodsId", id));
+            filters.add(Condition.eq("userId", getCurrentUser().getUserId()));
+            List<GoodsFavorite> selectList = goodsFavoriteService.selectList(filters);
+            if(selectList != null && selectList.size() > 0){
+                GoodsFavorite gf = selectList.get(0);
+                gf.setIsDelete(Byte.parseByte("0"));
+                goodsFavoriteService.updateByIdSelective(gf);
+
+                Map<String, Object> map = new HashMap<>();
+                map.put("type", "sub");
+                map.put("goodsId", gf.getGoodsId());
+                map.put("changeNum", 1);
+                goodsService.updateByGidForFollowNum(map);
+            }
 
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);

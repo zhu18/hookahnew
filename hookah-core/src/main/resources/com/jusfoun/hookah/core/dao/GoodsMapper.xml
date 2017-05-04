@@ -175,7 +175,7 @@
                 follow_num = follow_num + #{changeNum}
             </if>
             <if test="type == 'sub'">
-                follow_num = follow_num - #{changeNum}
+                follow_num = if(follow_num - #{changeNum} &lt; 0, 0, follow_num - #{changeNum})
             </if>
         where goods_id = #{goodsId}
     </update>

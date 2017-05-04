@@ -6,8 +6,6 @@ $(".button").on("click",userAuth);
 $("#userCode").on("blur",checkIDCard);
 $("#submit1").on("change", upPhoto);
 $("#submit2").on("change", upPhoto);
-
-
 });
 var idcardcheck=false;
 function userAuth(){
@@ -24,10 +22,10 @@ function userAuth(){
             data : {
                 "realName":$("#userName").val(),
                 "cardNum":$("#userCode").val(),
-                "identityCardFrontPath":'',
-                "identityCardReversePath":''
+                "identityCardFrontPath":"",
+                "identityCardReversePath":""
             },
-            type:'post',
+            type:"get",
             success : function(data) {
                 if (data.retCode == 1) {
                     window.location.href = './user_auth_init_step3.html';
@@ -58,7 +56,7 @@ function upPhoto() {
     console.log($(this));
     $(this).parent().ajaxSubmit({
         type : "POST",
-        url : "/data/account/upPhoto",
+        url : "http://static.hookah.app/upload/fileUpload",
         dataType : "json",
         success : function(data) {
             if (data.retCode == 1) {
