@@ -172,12 +172,12 @@
     <update id="updateByGidForFollowNum" parameterType="java.util.HashMap">
         update goods set
             <if test="type == 'plus'">
-                followNum = followNum + #{changeNum}
+                follow_num = follow_num + #{changeNum}
             </if>
             <if test="type == 'sub'">
-                followNum = followNum - #{changeNum}
+                follow_num = follow_num - #{changeNum}
             </if>
-        where goodsId = #{goodsId}
+        where goods_id = #{goodsId}
     </update>
 
 </mapper>
