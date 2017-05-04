@@ -32,4 +32,11 @@ public interface CommentService extends GenericService<Comment,String>{
      */
     ReturnData findByCondition(Map<String,Object> params);
 
+    /**
+     * 计算商品平均分数
+     * @param GoodsId
+     * @return
+     */
+    ReturnData countGoodsGradesByGoodsId(String GoodsId);
+
 }
