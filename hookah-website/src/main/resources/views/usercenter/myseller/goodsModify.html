@@ -10,6 +10,8 @@ var head = {
 <script src="/static/js/plugins/wangEditor/wangEditor.min.js"></script>
 <script src="/static/js/plugins/widget/jquery.ui.widget.js"></script>
 <script src="/static/js/plugins/fileupload/jquery.fileupload.js"></script>
+<script src="/static/js/plugins/validate/jquery-validate.js"></script>
+<script src="/static/js/plugins/validate/messages_zh.js"></script>
 <%};%>
 
 <%
@@ -19,405 +21,365 @@ var htmlPart = {
     <div class="grid-row clearfix">
         <%include("/usercenter/user-center-menu.html"){} %>
         <div class="grid-right margin-top-10">
-            <div class="usercenter-right-box">
-
-                <div class="goodsEdit-box">
-                    <h1>当前类目：<span class="category-title-box"></span></h1>
-                    <h1>商品基本信息：</h1>
-                    <div class="struct">
-                        <table>
-                            <tbody>
-                            <tr>
-                                <td class="bar">商品名称：</td>
-                                <td>
-                                    <div class="text-box"><input name="goodsName" id="J-goodsName" type="text">
-                                        <span class="input-count"><strong id="showcontent">0</strong>/30</span>
-                                    </div>
-                                    <div class="errors">
-                                        <span class="errorinfo">请填写商品名称，不能超过30个字!</span>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="bar">商品简介：</td>
-                                <td>
-                                    <div class="textarea-box">
-                                        <textarea type="text" name="goodsBrief" id="J-goodsBrief"></textarea>
-                                        <span class="input-count"><strong id="showcontent2">0</strong>/200</span>
-                                    </div>
-                                    <div class="errors">
-                                        <span class="errorinfo">请填写商品简介，不能超过200个字!</span>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="attribute-container">
-                                <td class="bar">商品属性：</td>
-                                <td>
-                                    <div class="block info" style="margin: 0px 0px 3px;">
-                                        商品属性支持默认。
-                                    </div>
-                                    <div class="attribute-box">
-                                        <table>
-
-                                        </table>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="bar">商品类型：</td>
-                                <td>
-                                    <div class="radio-box">
-                                        <label>
-                                            <input type="radio" name="goodsTypes" onchange="goodsTypes(this)" value="0">常规商品
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="goodsTypes" onchange="goodsTypes(this)" value="1">api
-                                        </label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="region-box">
-                                <td class="bar">所属区域：</td>
-                                <td>
-                                    <div class="select-box">
-                                        <select name="country" id="country">
-                                            <option value="100000">中国</option>
-                                        </select>
-                                        <select name="province" id="province" onchange="loadRegion('city', this)">
-                                            <option value="-1">全部</option>
-                                        </select>
-                                        <!--<select name="city" id="city" onchange="loadRegion('county', this)"><option value="-1">全部</option></select>-->
-                                        <select name="city" id="city"><option value="-1">全部</option></select>
-                                        <!--<select name="county" id="county"><option value="-1">全部</option></select>-->
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="bar">商品图片：</td>
-                                <td>
-                                    <div class="block info" style="margin: 0px 0px 3px;">
-                                        商品图片大小不能超过3MB。
-                                    </div>
-                                    <div class="multimage-wrap">
-                                        <ul class="image-list">
-                                            <li>
-                                                <div class="preview" id="preview-div">
-                                                    <a title="上传图片" class="upload-tip "><span class="fa fa-plus"></span></a>
-                                                    <img class="preview-img" id="preview-img">
-                                                    <input id="fileupload" type="file" name="filename" multiple="" class="preview-btn">
-                                                    <a href="javascript:void(0)" class="replace-btn"
-                                                       id="replace-btn">替换图片</a>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <!---------------------------------------------------------------->
-                            <!--<tr>-->
-                            <!--<td class="bar">单价及库存：</td>-->
-                            <!--<td>-->
-                            <!--<div class="table-box">-->
-                            <!--<table class="price-table">-->
-                            <!--<thead>-->
-                            <!--<tr>-->
-                            <!--<th>单价（元）</th>-->
-                            <!--<th>总库存（件）</th>-->
-                            <!--<th>商家编码</th>-->
-                            <!--<th>商品条形码</th>-->
-                            <!--</tr>-->
-                            <!--</thead>-->
-                            <!--<tbody>-->
-                            <!--<tr>-->
-                            <!--<td>-->
-                            <!--<div class="texbox">-->
-                            <!--<div class="inputbox"><input type="text"></div>-->
-                            <!--</div>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                            <!--<div class="texbox">-->
-                            <!--<div class="inputbox"><input type="text"></div>-->
-                            <!--</div>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                            <!--<div class="texbox" id="outerId">-->
-                            <!--<div class="inputbox"><input type="text"></div>-->
-                            <!--</div>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                            <!--<div class="texbox" id="barcode">-->
-                            <!--<div class="inputbox"><input type="text"></div>-->
-                            <!--</div>-->
-                            <!--</td>-->
-                            <!--</tr>-->
-                            <!--</tbody>-->
-                            <!--</table>-->
-                            <!--</div>-->
-                            <!--</td>-->
-                            <!--</tr>-->
-                            <tr>
-                                <td class="bar">规格及价格：</td>
-                                <td>
-                                    <div class="block info" style="margin: 0px 0px 3px;">
-                                        第一行为默认数据。
-                                    </div>
-                                    <div class="table-box">
-                                        <table class="price-table table-plus" d-type="priceHtml">
-                                            <thead>
-                                            <tr>
-                                                <th>名称</th>
-                                                <th>规格</th>
-                                                <th>类型</th>
-                                                <th>价格（元）</th>
-                                                <th>操作</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr class="parent-tr">
-                                                <td class="name-input">
-                                                    <div class="inputbox"><input type="text" datatype="name" placeholder="请输入名称"></div>
-                                                </td>
-                                                <td class="number-input">
-                                                    <div class="inputbox"><input type="number" datatype="number" placeholder="请输入规格"></div>
-                                                </td>
-                                                <td>
-                                                    <div class="selectbox">
-                                                        <select name="format">
-                                                            <option value="0">次</option>
-                                                            <option value="1">天</option>
-                                                            <option value="2">年</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                                <td class="price-input">
-                                                    <div class="inputbox"><input class="price-input" datatype="price" type="number" placeholder="请输入价格"></div>
-                                                </td>
-                                                <td>
-                                                    <span class="table-plus-btn" onclick="tablePlus(this)">+</span>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="bar">商品描述：</td>
-                                <td>
-                                    <div class="wangEditor-wrapper">
-                                        <textarea id="textarea1" style="height: 500px; display: none;"></textarea>
-                                    </div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <h1 class="api-info-box">API信息：</h1>
-                    <div class="struct api-info-box">
-                        <table>
-                            <tbody>
-                            <tr>
-                                <td class="bar">接口地址：</td>
-                                <td>
-                                    <div class="text-box">
-                                        <input type="text" name="apiUrl">
-                                        <span class="input-count"></span>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="bar">上架时间：</td>
-                                <td>
-                                    <div class="radio-box">
-                                        <label>
-                                            <input type="radio" name="apiMethod" value="GET" checked="">GET
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="apiMethod" value="POST">POST
-                                        </label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="bar">请求示例：</td>
-                                <td>
-                                    <div class="text-box">
-                                        <input type="text" name="reqSample">
-                                        <span class="input-count"></span>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="bar">接口描述：</td>
-                                <td>
-                                    <div class="textarea-box">
-                                        <textarea type="text" name="apiDesc"></textarea>
-                                        <span class="input-count"></span>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="bar">请求参数：</td>
-                                <td>
-                                    <div class="table-box">
-                                        <table class="price-table table-plus" d-type="requestHtml">
-                                            <thead>
-                                            <tr>
-                                                <th>名称</th>
-                                                <th>类型</th>
-                                                <th>默认值</th>
-                                                <th>必填</th>
-                                                <th>示例</th>
-                                                <th>描述</th>
-                                                <th>操作</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr class="parent-tr">
-                                                <td class="name-input">
-                                                    <div class="inputbox"><input type="text" name="fieldName" placeholder="请输入名称"></div>
-                                                </td>
-                                                <td class="type-input">
-                                                    <div class="selectbox">
-                                                        <select name="fieldType">
-                                                            <option value="String">String</option>
-                                                            <option value="int">int</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                                <td class="type-input">
-                                                    <div class="inputbox"><input type="text" name="fieldDefault"
-                                                                                 placeholder="请输入默认值"></div>
-                                                </td>
-                                                <td>
-                                                    <div class="radio-box">
-                                                        <label>
-                                                            <input type="radio" name="isMust0" checked="" value="0">否
-                                                        </label>
-                                                        <label>
-                                                            <input type="radio" name="isMust0" value="1">是
-                                                        </label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="inputbox"><input type="text" name="fieldSample" placeholder="请输入示例"></div>
-                                                </td>
-                                                <td>
-                                                    <div class="inputbox"><textarea name="describle" placeholder="请输入描述"></textarea></div>
-                                                </td>
-                                                <td>
-                                                    <span class="table-plus-btn itemNum" onclick="tablePlus(this)">+</span>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="bar">返回示例：</td>
-                                <td>
-                                    <div class="textarea-box">
-                                        <textarea type="text" name="respSample"></textarea>
-                                        <span class="input-count"></span>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="bar">返回参数：</td>
-                                <td>
-                                    <div class="table-box">
-                                        <table class="price-table table-plus" d-type="returnHtml">
-                                            <thead>
-                                            <tr>
-                                                <th>错误码</th>
-                                                <th>说明</th>
-                                                <th>操作</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr class="parent-tr">
-                                                <td class="errorNum-input">
-                                                    <div class="inputbox"><input type="text" name="fieldName" placeholder="请输入错误码"></div>
-                                                </td>
-                                                <td>
-                                                    <div class="inputbox"><textarea name="describle"
-                                                                                    placeholder="请输入说明"></textarea></div>
-                                                </td>
-                                                <td>
-                                                    <span class="table-plus-btn" onclick="tablePlus(this)">+</span>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <h1>售后保障信息：</h1>
-                    <div class="struct">
-                        <table>
-                            <tbody>
-                            <tr>
-                                <td class="bar">售后服务：</td>
-                                <td>
-                                    <div class="checkbox-box">
-                                        <label><input type="checkbox" checked="">提供发票</label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="bar"></td>
-                                <td>
-                                    <div class="checkbox-box">
-                                        <label><input type="checkbox">保修服务</label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="bar"></td>
-                                <td>
-                                    <div class="checkbox-box">
-                                        <label><input type="checkbox">退换货承诺：凡通过正常流程购买本平台商品，若存在质量问题或与描述不符，本店将主动提供退换货服务</label>
-                                    </div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <h1>商品其他信息：</h1>
-                    <div class="struct">
-                        <table>
-                            <tbody>
+            <form action="" id="goodsModifyForm">
+                <div class="usercenter-right-box">
+                    <div class="goodsEdit-box">
+                        <h1>当前类目：<span class="category-title-box"></span></h1>
+                        <h1>商品基本信息：</h1>
+                        <div class="struct">
+                            <table>
+                                <tbody>
                                 <tr>
-                                    <td class="bar">库存计数：</td>
+                                    <td class="bar">商品名称：<span class="required">*</span></td>
                                     <td>
-                                        <div class="radio-box">
-                                            <label><input type="radio" name="121">买家拍下减库存</label>
-                                            <label><input type="radio" name="121" checked="">买家付款减库存</label>
+                                        <div class="text-box"><input name="goodsName" id="J-goodsName" type="text" required>
+                                            <span class="input-count"><strong id="showcontent">0</strong>/60</span>
+                                        </div>
+                                        <div class="errors">
+                                            <span class="errorinfo">请填写商品名称，不能超过60个字符（30个汉字）!</span>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="bar">上架时间：</td>
+                                    <td class="bar">商品简介：<span class="required">*</span></td>
                                     <td>
-                                        <div class="radio-box">
-                                            <label><input type="radio" name="isBook" value="0" checked="" onchange="isOnsaleFun(this)">立刻上架</label>
-                                            <label><input type="radio" name="isBook" value="1" onchange="isOnsaleFun(this)">定时上架</label>
-                                            <label class="isOnsale-box">请选择上架时间：<input id="indate" type="text" placeholder="请选择" readonly=""></label>
+                                        <div class="textarea-box">
+                                            <textarea type="text" name="goodsBrief" id="J-goodsBrief" required></textarea>
+                                            <span class="input-count"><strong id="showcontent2">0</strong>/400</span>
+                                        </div>
+                                        <div class="errors">
+                                            <span class="errorinfo">请填写商品简介，不能超过400个字符（200个汉字）!</span>
                                         </div>
                                     </td>
                                 </tr>
-                            </tbody>
-                        </table>
+                                <tr class="attribute-container">
+                                    <td class="bar">商品属性：</td>
+                                    <td>
+                                        <div class="block info" style="margin: 0px 0px 3px;">
+                                            商品属性支持默认。
+                                        </div>
+                                        <div class="attribute-box">
+                                            <table>
+
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar">商品类型：<span class="required">*</span></td>
+                                    <td>
+                                        <div class="radio-box">
+                                            <label>
+                                                <input type="radio" name="goodsTypes" onchange="goodsTypes2(this)" value="0">常规商品
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="goodsTypes" onchange="goodsTypes2(this)" value="1">api
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="region-box">
+                                    <td class="bar">所属区域：</td>
+                                    <td>
+                                        <div class="select-box">
+                                            <select name="country" id="country">
+                                                <option value="100000">中国</option>
+                                            </select>
+                                            <select name="province" id="province" onchange="loadRegion('city', this)">
+                                                <option value="-1">全部</option>
+                                            </select>
+                                            <!--<select name="city" id="city" onchange="loadRegion('county', this)"><option value="-1">全部</option></select>-->
+                                            <select name="city" id="city"><option value="-1">全部</option></select>
+                                            <!--<select name="county" id="county"><option value="-1">全部</option></select>-->
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar">商品图片：<span class="required">*</span></td>
+                                    <td>
+                                        <div class="block info" style="margin: 0px 0px 3px;">
+                                            商品图片大小不能超过3MB。
+                                        </div>
+                                        <div class="multimage-wrap">
+                                            <ul class="image-list">
+                                                <li>
+                                                    <input type="hidden" name="goodsImg">
+                                                    <div class="preview" id="preview-div">
+                                                        <a title="上传图片" class="upload-tip "><span class="fa fa-plus"></span></a>
+                                                        <img class="preview-img" id="preview-img">
+                                                        <input id="fileupload" type="file" name="filename" multiple="" class="preview-btn">
+                                                        <a href="javascript:void(0)" class="replace-btn"
+                                                           id="replace-btn">替换图片</a>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar">规格及价格：<span class="required">*</span></td>
+                                    <td>
+                                        <div class="block info" style="margin: 0px 0px 3px;">
+                                            第一行为默认数据。
+                                        </div>
+                                        <div class="table-box">
+                                            <table class="price-table table-plus" d-type="priceHtml">
+                                                <thead>
+                                                <tr>
+                                                    <th>名称</th>
+                                                    <th>规格</th>
+                                                    <th>类型</th>
+                                                    <th>价格（元）</th>
+                                                    <th>操作</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr class="parent-tr">
+                                                    <td class="name-input">
+                                                        <div class="inputbox"><input type="text" datatype="name" placeholder="请输入名称"></div>
+                                                    </td>
+                                                    <td class="number-input">
+                                                        <div class="inputbox"><input type="number" datatype="number" placeholder="请输入规格"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="selectbox">
+                                                            <select name="format">
+                                                                <option value="0">次</option>
+                                                                <option value="1">天</option>
+                                                                <option value="2">年</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td class="price-input">
+                                                        <div class="inputbox"><input class="price-input" datatype="price" type="number" placeholder="请输入价格"></div>
+                                                    </td>
+                                                    <td>
+                                                        <span class="table-plus-btn" onclick="tablePlus(this)">+</span>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar">商品描述：<span class="required">*</span></td>
+                                    <td>
+                                        <div class="wangEditor-wrapper">
+                                            <textarea id="textarea1" style="height: 500px; display: none;"></textarea>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <h1 class="api-info-box">API信息：</h1>
+                        <div class="struct api-info-box">
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td class="bar">接口地址：<span class="required">*</span></td>
+                                    <td>
+                                        <div class="text-box">
+                                            <input type="text" name="apiUrl">
+                                            <span class="input-count"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar">请求方式：<span class="required">*</span></td>
+                                    <td>
+                                        <div class="radio-box">
+                                            <label>
+                                                <input type="radio" name="apiMethod" value="GET" checked="">GET
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="apiMethod" value="POST">POST
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar">请求示例：</td>
+                                    <td>
+                                        <div class="text-box">
+                                            <input type="text" name="reqSample">
+                                            <span class="input-count"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar">接口描述：</td>
+                                    <td>
+                                        <div class="textarea-box">
+                                            <textarea type="text" name="apiDesc"></textarea>
+                                            <span class="input-count"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar">请求参数：<span class="required">*</span></td>
+                                    <td>
+                                        <div class="table-box">
+                                            <table class="price-table table-plus" d-type="requestHtml">
+                                                <thead>
+                                                <tr>
+                                                    <th>名称</th>
+                                                    <th>类型</th>
+                                                    <th>默认值</th>
+                                                    <th>必填</th>
+                                                    <th>示例</th>
+                                                    <th>描述</th>
+                                                    <th>操作</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr class="parent-tr">
+                                                    <td class="name-input">
+                                                        <div class="inputbox"><input type="text" name="fieldName" placeholder="请输入名称"></div>
+                                                    </td>
+                                                    <td class="type-input">
+                                                        <div class="selectbox">
+                                                            <select name="fieldType">
+                                                                <option value="String">String</option>
+                                                                <option value="int">int</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td class="type-input">
+                                                        <div class="inputbox"><input type="text" name="fieldDefault"
+                                                                                     placeholder="请输入默认值"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="radio-box">
+                                                            <label>
+                                                                <input type="radio" name="isMust0" checked="" value="0">否
+                                                            </label>
+                                                            <label>
+                                                                <input type="radio" name="isMust0" value="1">是
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="inputbox"><input type="text" name="fieldSample" placeholder="请输入示例"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="inputbox"><textarea name="describle" placeholder="请输入描述"></textarea></div>
+                                                    </td>
+                                                    <td>
+                                                        <span class="table-plus-btn itemNum" onclick="tablePlus(this)">+</span>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar">返回示例：</td>
+                                    <td>
+                                        <div class="textarea-box">
+                                            <textarea type="text" name="respSample"></textarea>
+                                            <span class="input-count"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar">返回参数：<span class="required">*</span></td>
+                                    <td>
+                                        <div class="table-box">
+                                            <table class="price-table table-plus" d-type="returnHtml">
+                                                <thead>
+                                                <tr>
+                                                    <th>错误码</th>
+                                                    <th>说明</th>
+                                                    <th>操作</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr class="parent-tr">
+                                                    <td class="errorNum-input">
+                                                        <div class="inputbox"><input type="text" name="fieldName" placeholder="请输入错误码"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="inputbox"><textarea name="describle"
+                                                                                        placeholder="请输入说明"></textarea></div>
+                                                    </td>
+                                                    <td>
+                                                        <span class="table-plus-btn" onclick="tablePlus(this)">+</span>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <h1>售后保障信息：</h1>
+                        <div class="struct">
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td class="bar">售后服务：</td>
+                                    <td>
+                                        <div class="checkbox-box">
+                                            <label><input type="checkbox" checked="">提供发票</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar"></td>
+                                    <td>
+                                        <div class="checkbox-box">
+                                            <label><input type="checkbox">保修服务</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar"></td>
+                                    <td>
+                                        <div class="checkbox-box">
+                                            <label><input type="checkbox">退换货承诺：凡通过正常流程购买本平台商品，若存在质量问题或与描述不符，本店将主动提供退换货服务</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <h1>商品其他信息：</h1>
+                        <div class="struct">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td class="bar">库存计数：</td>
+                                        <td>
+                                            <div class="radio-box">
+                                                <label><input type="radio" name="121">买家拍下减库存</label>
+                                                <label><input type="radio" name="121" checked="">买家付款减库存</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bar">上架时间：<span class="required">*</span></td>
+                                        <td>
+                                            <div class="radio-box">
+                                                <label><input type="radio" name="isBook" value="0" checked="" onchange="isOnsaleFun(this)">立刻上架</label>
+                                                <label><input type="radio" name="isBook" value="1" onchange="isOnsaleFun(this)">定时上架</label>
+                                                <label class="isOnsale-box">请选择上架时间：<input id="indate" type="text" placeholder="请选择" readonly=""></label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="pulish-btn">
-                <button class="pusGoods-btn btn btn-full-orange">发布商品</button>
-            </div>
+                <div class="pulish-btn">
+                    <button class="pusGoods-btn btn btn-full-orange" type="submit">发布商品</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
