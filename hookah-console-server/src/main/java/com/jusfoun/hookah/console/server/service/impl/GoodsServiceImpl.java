@@ -28,6 +28,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author huang lei
@@ -311,5 +312,10 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         goodsVo.setCatName(DictionaryUtil.getCategoryById(goodsVo.getCatId()) == null
                 ? "" : DictionaryUtil.getCategoryById(goodsVo.getCatId()).getCatName());
         return goodsVo;
+    }
+
+    @Override
+    public int updateByGidForFollowNum(Map<String, Object> map) {
+        return goodsMapper.updateByGidForFollowNum(map);
     }
 }

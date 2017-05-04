@@ -58,7 +58,6 @@ function loadPageData(data){ //渲染页面数据
 
 		}
 		function renderSelector2(datas,name,fnName){
-
 			datas.forEach(function(item){
 				html += '<li class="parLi">';
 				html += '<span>'+item.nodeName+'：</span>';
@@ -109,7 +108,7 @@ function loadPageData(data){ //渲染页面数据
 	});
 }
 function selectCategory(that,id,fnName,name){
-	if($('#J_crimbsNav').attr(fnName) == name){
+    if($('#J_crimbsNav').attr(fnName) == name){
 		return;
 	}else{
 		var parName = $(that).parents('ul').siblings('span').text();
@@ -148,19 +147,9 @@ function removeTag(that){
 	getDataForin();
 }
 function getDataForin(){
-    dataParm={
-        esGoods:{
-            catIds:'',
-            attrIds:'',
-            goodsAreas:""
-        },
-        range:{
-            priceFrom:''
-        }
-    };
-    // dataParm.esGoods.catIds = '';
-    // dataParm.esGoods.attrIds = '';
-    // dataParm.esGoods.goodsAreas = '';
+    dataParm.esGoods.catIds = '';
+    dataParm.esGoods.attrIds = '';
+    dataParm.esGoods.goodsAreas = '';
 	if($('#J_crimbsNav').attr('category')){
 		dataParm.esGoods.catIds = $('#J_crimbsNav').attr('categoryid');
 	}else{
@@ -171,7 +160,6 @@ function getDataForin(){
 			dataParm.esGoods.attrIds += $('#J_crimbsNav').attr('attrtypeid'+i)+' ';
 		}
 	}
-	console.log(dataParm.esGoods.attrIds)
 	if($('#J_crimbsNav').attr('country')){
 		dataParm.esGoods.goodsAreas = $('#J_crimbsNav').attr('countryid');
 	}
@@ -195,13 +183,10 @@ if(prId){//渲染分类
 }else{
 	$('#J_searchCategory').addClass('margin-top-20')
 }
+// 价格搜索
 function price() {//价格排序 输入值*100处理
-    dataParm={
-        range:{
-            priceFrom:'',
-            priceTo:''
-		}
-    };
+    dataParm.range.priceFrom='';
+    dataParm.range.priceTo='';
 	$('.ensure').on('click',function () {
         dataParm.range.priceFrom=$('#priceFrom').val()*100;
         dataParm.range.priceTo= $('#priceTo').val()*100;
@@ -216,6 +201,7 @@ function price() {//价格排序 输入值*100处理
     });
 
 }
+//四大排序
 function sort() {//四类排序
     function flog() {//记录双击
         var flog=1;

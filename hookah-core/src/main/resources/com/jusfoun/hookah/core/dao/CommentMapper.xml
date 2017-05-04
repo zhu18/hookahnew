@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jusfoun.hookah.core.dao.CommentMapper" >
+  <resultMap id="BaseResultMap" type="com.jusfoun.hookah.core.domain.Comment" >
+    <id column="comm_id" property="commId" jdbcType="VARCHAR" />
+    <result column="comment_level" property="commentLevel" jdbcType="INTEGER" />
+    <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="goods_comment_grade" property="goodsCommentGrade" jdbcType="BIGINT" />
+    <result column="comment_time" property="commentTime" jdbcType="TIMESTAMP" />
+    <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="praise" property="praise" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.jusfoun.hookah.core.domain.Comment" extends="BaseResultMap" >
+    <result column="comment_content" property="commentContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    comm_id, comment_level, goods_id, user_id, order_id, goods_comment_grade, comment_time,
+    add_time, update_time, praise
+  </sql>
+  <sql id="Blob_Column_List" >
+    comment_content
+  </sql>
+
+  <select id="selectGoodsAvgByGoodsId" resultType="java.lang.Double">
+      SELECT ROUND(AVG(c.goods_comment_grade), 1) FROM `comment` c WHERE goods_id = #{goodsId} AND status = 1
+  </select>
+
+</mapper>

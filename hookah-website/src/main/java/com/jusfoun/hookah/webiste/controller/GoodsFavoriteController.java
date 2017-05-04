@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by dengxu on 2017/4/8/0008.
@@ -33,6 +35,11 @@ public class GoodsFavoriteController extends BaseController {
     @Resource
     GoodsService goodsService;
 
+    /**
+     * 添加关注
+     * @param goodsFavorite
+     * @return
+     */
     @RequestMapping("add")
     @ResponseBody
     public ReturnData addFavorite(GoodsFavorite goodsFavorite) {
@@ -45,8 +52,32 @@ public class GoodsFavoriteController extends BaseController {
             return returnData;
         }
         try {
-            goodsFavorite.setUserId(getCurrentUser().getUserId());
-            goodsFavoriteService.insert(goodsFavorite);
+
+            List<Condition> filters = new ArrayList<>();
+            filters.add(Condition.eq("goodsId", goodsFavorite.getGoodsId()));
+            filters.add(Condition.eq("userId", getCurrentUser().getUserId()));
+            List<GoodsFavorite> selectList = goodsFavoriteService.selectList(filters);
+            if(selectList != null && selectList.size() > 0){
+                GoodsFavorite gf = selectList.get(0);
+                if("1".equals(gf.getIsDelete().toString())){
+                    return returnData;
+                }else if("0".equals(gf.getIsDelete().toString())){
+                    gf.setIsDelete(Byte.parseByte("1"));
+                    goodsFavoriteService.updateByIdSelective(gf);
+                }
+            }else{
+
+                goodsFavorite.setUserId(getCurrentUser().getUserId());
+                goodsFavoriteService.insert(goodsFavorite);
+            }
+
+
+            Map<String, Object> map = new HashMap<>();
+            map.put("type", "plus");
+            map.put("goodsId", goodsFavorite.getGoodsId());
+            map.put("changeNum", 1);
+            goodsService.updateByGidForFollowNum(map);
+
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());
@@ -55,6 +86,11 @@ public class GoodsFavoriteController extends BaseController {
         return returnData;
     }
 
+    /**
+     * 取消关注
+     * @param id
+     * @return
+     */
     @RequestMapping("del")
     @ResponseBody
     public ReturnData delFavorite(String id) {
@@ -66,10 +102,23 @@ public class GoodsFavoriteController extends BaseController {
             return returnData;
         }
         try {
-            GoodsFavorite goodsFavorite = new GoodsFavorite();
-            goodsFavorite.setGoodsId(id);// 商品id
-            goodsFavorite.setUserId(getCurrentUser().getUserId());
-            goodsFavoriteService.delete(goodsFavorite);
+
+            List<Condition> filters = new ArrayList<>();
+            filters.add(Condition.eq("goodsId", id));
+            filters.add(Condition.eq("userId", getCurrentUser().getUserId()));
+            List<GoodsFavorite> selectList = goodsFavoriteService.selectList(filters);
+            if(selectList != null && selectList.size() > 0){
+                GoodsFavorite gf = selectList.get(0);
+                gf.setIsDelete(Byte.parseByte("0"));
+                goodsFavoriteService.updateByIdSelective(gf);
+
+                Map<String, Object> map = new HashMap<>();
+                map.put("type", "sub");
+                map.put("goodsId", gf.getGoodsId());
+                map.put("changeNum", 1);
+                goodsService.updateByGidForFollowNum(map);
+            }
+
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());

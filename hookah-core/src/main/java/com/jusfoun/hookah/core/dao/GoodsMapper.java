@@ -7,6 +7,7 @@ import com.jusfoun.hookah.core.generic.GenericDao;
 import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
+import java.util.Map;
 
 public interface GoodsMapper extends GenericDao<Goods> {
     List<EsGoods> getNeedEsGoods();
@@ -20,4 +21,6 @@ public interface GoodsMapper extends GenericDao<Goods> {
     List<Goods> waitList(GoodsVo vo);
 
     Integer waitListCnt(GoodsVo vo);
+
+    int updateByGidForFollowNum(Map<String, Object> map);
 }
