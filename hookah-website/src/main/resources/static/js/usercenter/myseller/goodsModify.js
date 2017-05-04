@@ -20,6 +20,7 @@ function getGoodsDetails(){
 	})
 }
 function renderData(data){//渲染页面
+	$('.category-title-box').html(data.catFullName);
 	$('#J-goodsName').val(data.goodsName);//商品名称
 	$('#J-goodsBrief').val(data.goodsBrief);//简介
 	$('input[name="goodsTypes"]').each(function(){
