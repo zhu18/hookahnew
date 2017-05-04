@@ -34,21 +34,38 @@ app.run(function ($rootScope, $state) {
   };
   $rootScope.config.title = '商品管理';
   $rootScope.config.mainNav =[
+
+  {
+      "title": "商品管理",
+      "showChild": true,
+      "childs": [
+          {
+              "title":"商品查询",
+              "url":"items.search"
+          },
+          {
+              "title":"商品审核",
+              "url":"items.check"
+          },
+          {
+              "title":"审核结果",
+              "url":"items.checkedList"
+          }
+      ]
+  },
     {
-      "title":"商品查询",
-      "url":"items.search"
-    },
-    // {
-      //   "title":"商品分类",
-      //   "url":"items.category"
-      // },
-    {
-      "title":"商品审核",
-      "url":"items.check"
-    },
-    {
-      "title":"审核结果",
-      "url":"items.checkedList"
+        "title": "货架管理",
+        "showChild": false,
+        "childs": [
+            {
+                "title": "货架查询",
+                "url": "shelf.search"
+            },
+            {
+                "title": "新增货架",
+                "url": "shelf.add"
+            }
+        ]
     }
   ];
 

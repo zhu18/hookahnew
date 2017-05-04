@@ -2,14 +2,12 @@ package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.GoodsFavorite;
-import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.vo.GoodsShelvesVo;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.*;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,19 +60,10 @@ public class ExchangeController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/details", method = RequestMethod.GET)
-    public String details(@RequestParam(required = true) String id, Model model) throws HookahException {
-        GoodsVo goodsVo = new GoodsVo();
-        BeanUtils.copyProperties(goodsService.selectById(id), goodsVo);
-        if (goodsVo != null) {
-            MgGoods mgGoods = mgGoodsService.selectById(id);
-            if (mgGoods != null) {
-                goodsVo.setFormatList(mgGoods.getFormatList());
-                goodsVo.setImgList(mgGoods.getImgList());
-                goodsVo.setAttrTypeList(mgGoods.getAttrTypeList());
-                goodsVo.setApiInfo(mgGoods.getApiInfo());
-            }
-        }
-
+    public String details(@RequestParam String id, Model model) throws HookahException {
+        // 查询商品详情
+        GoodsVo goodsVo = goodsService.findGoodsById(id);
+        // 获取永和关注信息
         try {
             if(StringUtils.isNotBlank(getCurrentUser().getUserId())){
                 List<Condition> filters = new ArrayList();
@@ -92,9 +81,7 @@ public class ExchangeController extends BaseController{
                 throw new HookahException("获取用户信息出错！",e);
             }
         }
-
         model.addAttribute("goodsDetails", goodsVo);
-
         //推荐商品
         Map<String,GoodsShelvesVo> goodsMap = goodsShelvesService.getShevlesGoodsVoList(new HashMap<String,Object>());
         model.addAttribute("reCommData", goodsMap.get("recomm_data"));

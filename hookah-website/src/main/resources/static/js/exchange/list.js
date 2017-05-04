@@ -148,9 +148,19 @@ function removeTag(that){
 	getDataForin();
 }
 function getDataForin(){
-	dataParm.esGoods.catIds = '';
-	dataParm.esGoods.attrIds = '';
-	dataParm.esGoods.goodsAreas = '';
+    dataParm={
+        esGoods:{
+            catIds:'',
+            attrIds:'',
+            goodsAreas:""
+        },
+        range:{
+            priceFrom:''
+        }
+    };
+    // dataParm.esGoods.catIds = '';
+    // dataParm.esGoods.attrIds = '';
+    // dataParm.esGoods.goodsAreas = '';
 	if($('#J_crimbsNav').attr('category')){
 		dataParm.esGoods.catIds = $('#J_crimbsNav').attr('categoryid');
 	}else{
@@ -185,7 +195,90 @@ if(prId){//渲染分类
 }else{
 	$('#J_searchCategory').addClass('margin-top-20')
 }
+function price() {//价格排序 输入值*100处理
+    dataParm={
+        range:{
+            priceFrom:'',
+            priceTo:''
+		}
+    };
+	$('.ensure').on('click',function () {
+        dataParm.range.priceFrom=$('#priceFrom').val()*100;
+        dataParm.range.priceTo= $('#priceTo').val()*100;
+        goPage(1);
+    });
+	$('.empty').on('click',function () {
+        $('#priceFrom').val('');
+        $('#priceTo').val('');
+        dataParm.range.priceFrom="";
+        dataParm.range.priceTo= "";
+        goPage(1);
+    });
 
+}
+function sort() {//四类排序
+	// var flog=1;
+    function flog() {//记录双击
+        var flog=1;
+        return function () {
+            if(flog==1){
+                dataParm.order='asc';
+                flog=0;
+                console.log(7);
+            }else {
+                dataParm.order='desc';
+                flog=1;
+                console.log(8);
+            }
+        }
 
+    }
+    var s=flog();
+    var d=flog();
+    var g=flog();
+    var m=flog();
+    $("#shopPrice").parent().prevAll().on('click',function () {
+        $(this).find('a').addClass('active').parent().siblings().find('a').removeClass('active');
+        if($(this).find('a').attr('type')==='onSaleDate'){
+            dataParm.orderField='onsaleStartDate';
+            if(s==null){
+                s=flog();
+			}
+            s();
+            d=null;
+            g=null;
+            m=null;
+        }else if ($(this).find('a').attr('type')==='orders'){
+            dataParm.orderField='orders';
+            if(d==null){
+                d=flog();
+            }
+            d();
+            s=null;
+            g=null;
+            m=null;
+        }else if($(this).find('a').attr('type')==='commentRank'){
+            dataParm.orderField='commentRank';
+            if(g==null){
+                g=flog();
+            }
+            g();
+            s=null;
+            d=null;
+            m=null;
+        }else {
+            dataParm.orderField='';
+            if(m==null){
+                m=flog();
+            }
+            m();
+            s=null;
+            d=null;
+            g=null;
+		}
+        goPage(1);
+    })
+}
 
-
+sort();
+price();

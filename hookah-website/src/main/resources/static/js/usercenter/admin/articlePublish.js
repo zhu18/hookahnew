@@ -112,7 +112,8 @@ function published(){
         }
     }
     if(data.newsTitle == "" || data.newsTitle == null){
-        $('#newsTitle').focus();
+        $.alert("请输入文章标题",true,function(){});
+            // $('#newsTitle').focus();
         return;
     }else if(data.content == "") {
         $.alert('请输入文章内容！',true,function(){ })
@@ -134,7 +135,8 @@ function published(){
             data: data,
             success: function(msg){
                 if(msg.code == 1){
-                    $.alert('提交成功')
+                    $.alert('提交成功');
+                    window.location.href="/admin/articleManage";
                 }else{
                     $.alert(msg.message)
                 }
@@ -168,5 +170,18 @@ $('#preview-content').click(function(){
 $('#preview-div').hover(function(){
     if($('#preview-img').attr('src')){
         $('#replace-btn').toggle();
+    }
+})
+
+
+$("#newsTitle").bind("input propertychange",function(){
+    // console.log("length:"+$.trim($("#newsTitle").val().length));
+    var len = $.trim($("#newsTitle").val().length);
+    $(".input-count strong").text(len);
+    if(len>60){
+        var value =$("#newsTitle").val();
+        console.log("value:"+value);
+        $("#newsTitle").val(value.substring(0,60));
+        $(".input-count strong").text(60);
     }
 })

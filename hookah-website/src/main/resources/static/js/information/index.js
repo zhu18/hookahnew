@@ -12,7 +12,7 @@ function loadPageData(data) { //渲染页面数据
 			html += '<p class="margin-bottom-10 padding-right-50">' + list[i].newsTitle + '</p>';
 			html += '</a>';
 			html += '<a href="/information/details?newsId=' + list[i].newsId + '" target="_blank">';
-			html += '<p class="padding-right-50 margin-bottom-10">2017大数据标准化论坛喜讯，贵阳大数据交易所荣获“全国信标委大数据标准工作组2016年优秀单位”。此荣誉既肯定了交易所以往业绩，又鼓励了交易所未来发展。按照国务院、工信部、贵阳市等的统筹规划，贵阳大数据交易所将积极参建我国大数据交易标准。</p>';
+			html += '<p class="padding-right-50 margin-bottom-10" >'+interception(list[i].content)+'</p>';
 			html += '</a>';
 			html += '<div class="auth">';
 			// html += '<img src="' + list[i].headImg + '" alt="">&nbsp;&nbsp;&nbsp;<span style="color:#B2B2B2;" class="padding-right-20">'+'管理员'+ '</span>';
@@ -37,6 +37,15 @@ function loadPageData(data) { //渲染页面数据
 	}
 }
 
+function interception(text){
+    // console.log("text:"+text);
+	$(text).each(function(){
+        if(text.length>=32){
+            $(this).html($(this).text().slice(0,32)+'...');
+        }
+	})
+}
+
 function renderChange(that, num) {
 	$(that).addClass('active').siblings().removeClass('active');
 	var textT = $(that).children().children('.page-title').html();
@@ -44,3 +53,5 @@ function renderChange(that, num) {
 	dataParm.newsSonGroup = num;
 	goPage("1");
 }
+
+

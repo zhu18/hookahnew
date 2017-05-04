@@ -1,6 +1,6 @@
 class CategoryController {
     constructor($scope, $rootScope, $http, $state, $stateParams, $uibModal, usSpinnerService, growl) {
-        console.log("1111111111111111111:" + $stateParams.data);
+        console.log("参数获取:" + $stateParams.data);
         if ($state.$current.name == "category.edit") {
             $scope.title = "分类修改";
             console.log($rootScope.editData);
@@ -47,7 +47,7 @@ class CategoryController {
                         $scope.addChild(data);
                     },
                     manageAttrType:function (data) {
-                        $scope.addChild(data);
+                        $state.go("category.manageAttrType",{cateId:data.catId,cateName:data.cateName});
                     }
                 }
             }
@@ -73,6 +73,7 @@ class CategoryController {
         $scope.add = function () {
             // $scope.title = "新增分类";
             // $state.go("category.add");
+            //新增一级分类
             var promise = $http({
                 method: 'POST',
                 url: $rootScope.site.apiServer + "/api/category/add",

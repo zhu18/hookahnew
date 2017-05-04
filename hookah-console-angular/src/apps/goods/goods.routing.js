@@ -1,11 +1,17 @@
 import GoodsController from './GoodsController';
 import GoodsCheckController from './GoodsCheckController';
+import ShelfController from '../shelf/ShelfController';
+import ManageGoodsController from '../shelf/ManageGoodsController';
 import pagination from 'angular-ui-bootstrap/src/pagination';
 goodsRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function goodsRouting($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/items/search');
   $stateProvider
     .state('items', {
+      template: '<div ui-view></div>',
+      showSubMenu: true
+    })
+    .state('shelf', {
       template: '<div ui-view></div>',
       showSubMenu: true
     })
@@ -22,11 +28,6 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
     .state('items.lookDetail', {
       url: '/items/lookDetail',
       template: require('./lookDetail.html'),
-      controller: GoodsController,
-    })
-    .state('items.category', {
-      url: '/items/category',
-      template: require('./list.html'),
       controller: GoodsController,
     })
     .state('items.check', {
@@ -49,10 +50,26 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
         template: require('./goodsDetail.html'),
         controller: GoodsCheckController,
     })
-    .state('items.detail', {
-      url: '/innerMsg/read/{categoryId:[0-9]{1,4}}',
-      templateUrl: '/msc/list',
-      controller: GoodsController,
+    .state('shelf.search', {
+      url: '/shelf/search',
+      template: require('../shelf/list.html'),
+      controller: ShelfController,
+    })
+    .state('shelf.add', {
+      url: '/shelf/add',
+      template: require('../shelf/add.html'),
+      controller: ShelfController,
+    })
+    .state('shelf.update', {
+      url: '/shelf/update',
+      template: require('../shelf/update.html'),
+      controller: ShelfController,
+    })
+    .state('shelf.manageGoods', {
+      params:{'data':null},
+      url: '/shelf/manageGoods',
+      template: require('../shelf/manageGoods.html'),
+      controller: ManageGoodsController,
     })
 
 };

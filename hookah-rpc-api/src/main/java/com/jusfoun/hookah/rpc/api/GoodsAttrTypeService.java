@@ -17,7 +17,15 @@ public interface GoodsAttrTypeService extends GenericService<GoodsAttrType, Stri
      */
     List<GoodsAttrTypeVo> findTree();
 
-
+    /**
+     * 添加属性
+     * @param goodsAttrType
+     * @return
+     */
     ReturnData addAttr(GoodsAttrType goodsAttrType);
+
+    public ReturnData editAttrType(GoodsAttrType attrType);
+
+    public ReturnData deleteById(String typeId,String parentId);
 
 }

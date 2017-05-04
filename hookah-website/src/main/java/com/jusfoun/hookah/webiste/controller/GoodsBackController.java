@@ -3,7 +3,6 @@ package com.jusfoun.hookah.webiste.controller;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.Goods;
-import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -13,7 +12,6 @@ import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.MgGoodsService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -211,21 +209,7 @@ public class GoodsBackController extends BaseController {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
-            Goods goods = goodsService.selectById(id);
-            if (goods == null || goods.getGoodsId() == null) {
-                returnData.setCode(ExceptionConst.empty);
-            } else {
-                GoodsVo goodsVo = new GoodsVo();
-                BeanUtils.copyProperties(goods, goodsVo);
-                MgGoods mgGoods = mgGoodsService.selectById(id);
-                if (mgGoods != null) {
-                    goodsVo.setFormatList(mgGoods.getFormatList());
-                    goodsVo.setImgList(mgGoods.getImgList());
-                    goodsVo.setAttrTypeList(mgGoods.getAttrTypeList());
-                    goodsVo.setApiInfo(mgGoods.getApiInfo());
-                }
-                returnData.setData(goodsVo);
-            }
+            returnData.setData(goodsService.findGoodsById(id));
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());

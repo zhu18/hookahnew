@@ -56,7 +56,7 @@ public class GoodsAttrTypeServiceImpl extends GenericServiceImpl<GoodsAttrType, 
         List<GoodsAttrTypeVo> goodsAttrTypeVos = new ArrayList<GoodsAttrTypeVo>();
 
         //查询一级分类的属性
-        List<GoodsAttrType> goodsAttrTypes = findByPerentId(TOP_PARENT_ID);
+        List<GoodsAttrType> goodsAttrTypes = findByPerentId(TOP_PARENT_ID,null);
 
         for(GoodsAttrType goodsAttrType:goodsAttrTypes){
             goodsAttrTypeVos.add(getChildTree(goodsAttrType));
@@ -82,11 +82,22 @@ public class GoodsAttrTypeServiceImpl extends GenericServiceImpl<GoodsAttrType, 
                 //获取父类的层级
                 GoodsAttrType parentCat = super.selectById(parentId);
                 goodsAttrType.setLevel((byte)(1 + parentCat.getLevel()));
+
+                //修改父类是否子节点为否
+                GoodsAttrType parentAttr = new GoodsAttrType();
+                parentAttr.setTypeId(parentId);
+                parentAttr.setIsAttr(IS_ATTR_NO_LEAF);
+                super.updateByIdSelective(parentAttr);
             }
-            GoodsAttrType parentAttr = new GoodsAttrType();
-            parentAttr.setTypeId(parentId);
-            parentAttr.setIsAttr(IS_ATTR_NO_LEAF);
-            super.updateByIdSelective(parentAttr);
+
+            //获取当前父节点下的属性的最大Id值
+            String maxId = goodsAttrTypeMapper.findMaxByParentId(parentId);
+            if(maxId != null){
+                goodsAttrType.setTypeId(String.valueOf(Integer.parseInt(maxId) + 1));
+            }else{
+                //没有查到子节点
+                goodsAttrType.setTypeId(parentId + "101");
+            }
 
             goodsAttrType.setIsAttr((byte)0);
             goodsAttrType = super.insert(goodsAttrType);
@@ -101,10 +112,67 @@ public class GoodsAttrTypeServiceImpl extends GenericServiceImpl<GoodsAttrType, 
         return returnData;
     }
 
+    @Override
+    public ReturnData editAttrType(GoodsAttrType attrType) {
+        ReturnData<GoodsAttrType> returnData = new ReturnData<GoodsAttrType>();
+        returnData.setCode(ExceptionConst.Success);
+
+        try {
+            String typeId = attrType.getTypeId();
+            if(StringUtils.isBlank(typeId)){
+                returnData.setCode(ExceptionConst.AssertFailed);
+                returnData.setMessage(ExceptionConst.get(ExceptionConst.AssertFailed));
+                return returnData;
+            }
+
+            super.updateByIdSelective(attrType);
+        }catch (Exception e) {
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setMessage(e.toString());
+            logger.error(e.getMessage());
+            e.printStackTrace();
+        }
+
+        return returnData;
+    }
+
+    @Override
+    public ReturnData deleteById(String typeId,String parentId) {
+        ReturnData returnData = new ReturnData();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            if(StringUtils.isBlank(typeId)){
+                returnData.setCode(ExceptionConst.AssertFailed);
+                returnData.setMessage(ExceptionConst.get(ExceptionConst.AssertFailed));
+                return returnData;
+            }
+
+            int number = super.delete(typeId);
+
+            //修改父节点的是否节点(is_attr)值
+            List<GoodsAttrType> goodsAttrTypes = findByPerentId(parentId,null);
+            if(goodsAttrTypes == null || goodsAttrTypes.size() == 0){
+                //修改父类是否子节点为否
+                GoodsAttrType parentAttr = new GoodsAttrType();
+                parentAttr.setTypeId(parentId);
+                parentAttr.setIsAttr(IS_ATTR_LEAF);
+                super.updateByIdSelective(parentAttr);
+            }
+        }catch (Exception e) {
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setMessage(e.toString());
+            logger.error(e.getMessage());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
+
     //查询子类属性集合
-    private List<GoodsAttrType> findByPerentId(String parentId){
+    private List<GoodsAttrType> findByPerentId(String parentId,Byte typeStatus){
         List<Condition> filters = new ArrayList<Condition>();
-        filters.add(Condition.eq("typeStatus",ATTR_TYPE_VALID));
+        if(null != typeStatus){
+            filters.add(Condition.eq("typeStatus",typeStatus));
+        }
         filters.add(Condition.eq("parentId",parentId));
         return super.selectList(filters);
     }
@@ -115,7 +183,7 @@ public class GoodsAttrTypeServiceImpl extends GenericServiceImpl<GoodsAttrType, 
         GoodsAttrTypeVo vo = new GoodsAttrTypeVo();
         BeanUtils.copyProperties(goodsAttrType, vo);
 
-        List<GoodsAttrType> childGoodsAttrs =  findByPerentId(goodsAttrType.getTypeId());
+        List<GoodsAttrType> childGoodsAttrs =  findByPerentId(goodsAttrType.getTypeId(),null);
 
         if(Objects.nonNull(childGoodsAttrs) && childGoodsAttrs.size() > 0){
 //            vo.setChildren(childGoodsAttrs);//添加子节点信息
