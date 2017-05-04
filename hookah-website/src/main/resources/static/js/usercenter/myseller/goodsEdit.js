@@ -389,6 +389,23 @@ $('#fileupload').fileupload({
 
 	}
 })
+$('#fileupload2').fileupload({
+	url: fileUploadUrl,
+	dataType: 'json',
+	done: function (e, data) {
+		if(data.result.code == 1){
+			var obj = data.result.data[0];
+			// $("#preview-img").attr("src", obj.absPath);
+			$(this).val(obj.absPath);
+		}else{
+			$.alert(data.result.message)
+		}
+
+	},
+	progressall: function (e, data) {
+
+	}
+})
 
 
 
