@@ -7,4 +7,6 @@ import com.jusfoun.hookah.core.generic.GenericService;
  * Created by wangjl on 2017-3-20.
  */
 public interface MgGoodsService extends GenericService<MgGoods,String> {
+    // 更新关注次数
+    void updateClickRate(String goodsId);
 }

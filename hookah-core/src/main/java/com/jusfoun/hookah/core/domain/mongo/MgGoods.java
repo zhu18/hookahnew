@@ -27,6 +27,7 @@ public class MgGoods extends GenericModel {
     private List<FormatBean> formatList;
     private List<ImgBean> imgList;
     private ApiInfoBean apiInfo;
+    private Long clickRate;
 
     public List<MgCategoryAttrType.AttrTypeBean> getAttrTypeList() {
         return attrTypeList;
@@ -34,6 +35,14 @@ public class MgGoods extends GenericModel {
 
     public void setAttrTypeList(List<MgCategoryAttrType.AttrTypeBean> attrTypeList) {
         this.attrTypeList = attrTypeList;
+    }
+
+    public Long getClickRate() {
+        return clickRate;
+    }
+
+    public void setClickRate(Long clickRate) {
+        this.clickRate = clickRate;
     }
 
     public String getGoodsId() {

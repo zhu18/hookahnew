@@ -6,6 +6,7 @@ import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.dao.GoodsMapper;
 import com.jusfoun.hookah.core.domain.Goods;
+import com.jusfoun.hookah.core.domain.es.EsGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.exception.HookahException;
@@ -260,6 +261,40 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
      */
     @Override
     public GoodsVo findGoodsById(String goodsId) throws HookahException {
+        Goods goods = super.selectById(goodsId);
+        if (goods == null || goods.getGoodsId() == null) {
+            throw new HookahException("未查询到商品信息！");
+        }
+        GoodsVo goodsVo = new GoodsVo();
+        BeanUtils.copyProperties(goods, goodsVo);
+        // 查询所有区域信息
+        EsGoods esGoods = goodsMapper.getNeedEsGoodsById(goodsId);
+        if(esGoods != null && esGoods.getGoodsAreas() != null) {
+            String[] region = esGoods.getGoodsAreas().split(" ");
+            if(region.length >= 2)
+                goodsVo.setAreaCountry(region[1]);
+            if(region.length >= 3)
+                goodsVo.setAreaProvince(region[2]);
+            if(region.length == 4)
+                goodsVo.setAreaCity(region[3]);
+        }
+        MgGoods mgGoods = mgGoodsService.selectById(goodsId);
+        if (mgGoods != null) {
+            goodsVo.setFormatList(mgGoods.getFormatList());
+            goodsVo.setImgList(mgGoods.getImgList());
+            goodsVo.setAttrTypeList(mgGoods.getAttrTypeList());
+            goodsVo.setApiInfo(mgGoods.getApiInfo());
+        }
+        goodsVo.setCatName(DictionaryUtil.getCategoryById(goodsVo.getCatId()) == null
+                ? "" : DictionaryUtil.getCategoryById(goodsVo.getCatId()).getCatName());
+        return goodsVo;
+    }
+    /**
+     * (前台专用)查询商品详情
+     * @return
+     */
+    @Override
+    public GoodsVo findGoodsByIdWebsite(String goodsId) throws HookahException {
         Goods goods = super.selectById(goodsId);
         if (goods == null || goods.getGoodsId() == null) {
             throw new HookahException("未查询到商品信息！");

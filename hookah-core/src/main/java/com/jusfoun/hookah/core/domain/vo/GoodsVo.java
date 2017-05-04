@@ -21,7 +21,9 @@ public class GoodsVo extends Goods implements Serializable {
     private String checkReason;
     private Integer rowStart;
     private Integer rowEnd;
-
+    private String areaCountry;
+    private String areaProvince;
+    private String areaCity;
 
     public List<MgCategoryAttrType.AttrTypeBean> getAttrTypeList() {
         return attrTypeList;
@@ -101,5 +103,29 @@ public class GoodsVo extends Goods implements Serializable {
 
     public void setRowEnd(Integer rowEnd) {
         this.rowEnd = rowEnd;
+    }
+
+    public String getAreaCountry() {
+        return areaCountry;
+    }
+
+    public void setAreaCountry(String areaCountry) {
+        this.areaCountry = areaCountry;
+    }
+
+    public String getAreaProvince() {
+        return areaProvince;
+    }
+
+    public void setAreaProvince(String areaProvince) {
+        this.areaProvince = areaProvince;
+    }
+
+    public String getAreaCity() {
+        return areaCity;
+    }
+
+    public void setAreaCity(String areaCity) {
+        this.areaCity = areaCity;
     }
 }

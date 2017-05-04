@@ -61,8 +61,9 @@ public class ExchangeController extends BaseController{
      */
     @RequestMapping(value = "/details", method = RequestMethod.GET)
     public String details(@RequestParam String id, Model model) throws HookahException {
+        mgGoodsService.updateClickRate(id);//增加商品点击量记录
         // 查询商品详情
-        GoodsVo goodsVo = goodsService.findGoodsById(id);
+        GoodsVo goodsVo = goodsService.findGoodsByIdWebsite(id);
         // 获取永和关注信息
         try {
             if(StringUtils.isNotBlank(getCurrentUser().getUserId())){
