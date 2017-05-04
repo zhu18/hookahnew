@@ -1,9 +1,11 @@
 package com.jusfoun.hookah.rpc.api;
 
 import com.jusfoun.hookah.core.domain.Comment;
+import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.generic.GenericService;
 import com.jusfoun.hookah.core.utils.ReturnData;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,10 +35,18 @@ public interface CommentService extends GenericService<Comment,String>{
     ReturnData findByCondition(Map<String,Object> params);
 
     /**
-     * 计算商品平均分数
+     * 计算
      * @param GoodsId
      * @return
      */
     ReturnData countGoodsGradesByGoodsId(String GoodsId);
+
+
+    /**
+     * 添加评论
+     * @param comments
+     * @return
+     */
+    ReturnData batchAddComment(List<Comment> comments, User currUser);
 
 }
