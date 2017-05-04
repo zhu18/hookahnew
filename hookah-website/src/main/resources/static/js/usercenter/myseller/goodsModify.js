@@ -255,8 +255,10 @@ function renderApiInfo(apiInfo){
 	var html = '';
 	var reqLen = apiInfo.reqParamList.length;
 	$.each(apiInfo.reqParamList,function (index,data) {
+		var r = index == 0 ? "required" : "false";
+
 		html +='<tr class="parent-tr">';
-		html +='<td class="name-input"><div class="inputbox "><input type="text" name="fieldName" placeholder="请输入名称" value="'+data.fieldName+'" required='+ index == '0' ? "required" : "false"+'></div></td>';
+		html +='<td class="name-input"><div class="inputbox "><input type="text" name="fieldName" placeholder="请输入名称" value="'+data.fieldName+'" required="required"></div></td>';
 		html +='<td class="type-input"><div class="selectbox"><select name="fieldType">';
 		if(data.fieldType == 'String'){
 			html +='<option value="String" selected="selected">String</option>';
@@ -269,7 +271,7 @@ function renderApiInfo(apiInfo){
 			html +='<option value="int">int</option>';
 		}
 		html +='</select></div></td>';
-		html +='<td class="type-input"><div class="inputbox"><input type="text" name="fieldDefault" placeholder="请输入默认值" value="'+data.fieldDefault+'"></div></td>';
+		html +='<td class="type-input"><div class="inputbox"><input type="text" name="fieldDefault" placeholder="请输入默认值" value="'+data.fieldDefault+'" required="required"></div></td>';
 		html +='<td>';
 		html +='<div class="radio-box">';
 		if(data.isMust == 0){
@@ -284,8 +286,8 @@ function renderApiInfo(apiInfo){
 		}
 		html +='</div>';
 		html +='</td>';
-		html +='<td><div class="inputbox"><input type="text" name="fieldSample" placeholder="请输入示例" value="'+data.fieldSample+'"></div></td>';
-		html +='<td><div class="inputbox"><textarea name="describle" placeholder="请输入描述">'+data.describle+'</textarea></div></td>';
+		html +='<td><div class="inputbox"><input type="text" name="fieldSample" placeholder="请输入示例" value="'+data.fieldSample+'" required="required"></div></td>';
+		html +='<td><div class="inputbox"><textarea name="describle" placeholder="请输入描述" required="required">'+data.describle+'</textarea></div></td>';
 		if(index === reqLen-1){
 			html +='<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
 		}else{
