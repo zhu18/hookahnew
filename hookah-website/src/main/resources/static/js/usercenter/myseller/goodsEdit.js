@@ -314,7 +314,9 @@ $('.pusGoods-btn').click(function () {
 function goodsTypes(that) {
 	if ($(that).val() == 0) {
 		$('.api-info-box').hide();
+		$('.file-info-box').show();
 	} else {
+		$('.file-info-box').hide();
 		$('.api-info-box').show();
 	}
 }
