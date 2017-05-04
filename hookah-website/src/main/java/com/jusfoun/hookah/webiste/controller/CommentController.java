@@ -8,6 +8,7 @@ import com.jusfoun.hookah.rpc.api.CommentService;
 import com.sun.org.apache.regexp.internal.RE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,8 +27,7 @@ public class CommentController extends  BaseController{
 
     @RequestMapping("/add")
     public ReturnData addComm(Comment comment) throws HookahException{
-        User user = super.getCurrentUser();
-        comment.setUserId(user==null?null:user.getUserId());
+        comment.setUserId(super.getCurrentUser() == null?null:super.getCurrentUser().getUserId());
         return commentService.addComment(comment);
     }
 
@@ -35,4 +35,11 @@ public class CommentController extends  BaseController{
     public ReturnData findByGoodsId(String pageNumber,String pageSize,String goodsId){
         return commentService.findByGoodsId(pageNumber,pageSize,goodsId);
     }
+
+    @RequestMapping("/countGoodsAvgGrades/{goodsId}")
+    public ReturnData countGoodsAvgGradesByGoodsId(@PathVariable String goodsId){
+        return commentService.countGoodsGradesByGoodsId(goodsId);
+    }
+
+
 }
