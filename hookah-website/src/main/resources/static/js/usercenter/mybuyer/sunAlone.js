@@ -2,20 +2,22 @@
  * Created by ki on 2017/4/24.
  */
 $(function(){
-    var wjx_s = "★";
-    var wjx_k = "☆";
-    $(".comment>li").mouseenter(function () {
-        $(this).text(wjx_s).prevAll().text(wjx_s);
-        $(this).nextAll().text(wjx_k);
-    });
-    $(".comment").mouseleave(function () {
-        $(".comment").children().text(wjx_k);
-        $("li.current").text(wjx_s).prevAll().text(wjx_s);
-        var num = $("li.current").text(wjx_s).index()+1;
-        $(".fen strong").text(num);
-    });
-    $("li").click(function () {
-        $(this).addClass("current").siblings().removeClass("current");
+    $.fn.raty.defaults.path = '/static/images';
+    $('#function-demo').raty({
+        number: 5, //多少个星星设置
+        targetType: 'hint', //类型选择，number是数字值，hint，是设置的数组值
+        path: '/static/images/',
+        hints: ['差', '一般', '好', '非常好', '全五星'],
+        size: 24,
+        starOff: 'starOff.png',
+        starOn: 'starOn.png',
+        target: '#function-hint',
+        cancel: false,
+        targetKeep: true,
+        targetText: '请选择评分',
+        // click: function(score, evt) {
+        //     console.log('ID: ' + $(this).attr('id') + "\nscore: " + score + "\nevent: " + evt.type);
+        // }
     });
 })
 var goodsId=[];
@@ -28,9 +30,9 @@ function check(orderId){
         url: '/comment/add',
         data:{
             orderId:orderId,
-            goodsId:goodsId,
+            goodsId:$('input[name="goodsId"]').val(),
             commentContent:$("#area").val(),
-            commentLevel:$(".fen strong").html()
+            commentLevel:$("input[name='score']").val()
         },
         success: function(msg) {
             if (msg.code == 1) {
