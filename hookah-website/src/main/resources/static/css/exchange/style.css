@@ -1117,7 +1117,7 @@ dl {
 	display: inline-block;
 	position: relative;
 	margin-left: 3px;
-	display: none;
+	/*display: none;*/
 }
 .search .search-order .order li .arrow-box .arrow{
 	display: inline-block;

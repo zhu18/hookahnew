@@ -70,6 +70,13 @@ public class CommentServiceImpl extends GenericServiceImpl<Comment,String> imple
     public ReturnData findByGoodsId(String pageNumber,String pageSize,String goodsId) {
         ReturnData returnData = new ReturnData();
         returnData.setCode(ExceptionConst.Success);
+
+        if(StringUtils.isBlank(goodsId)){
+            returnData.setCode(ExceptionConst.AssertFailed);
+            returnData.setMessage(ExceptionConst.get(ExceptionConst.AssertFailed));
+            return returnData;
+        }
+
         List<Condition> filters = new ArrayList<Condition>();
         filters.add(Condition.eq("status",STATUS_INVAL));
         filters.add(Condition.eq("goodsId",goodsId));
@@ -95,5 +102,38 @@ public class CommentServiceImpl extends GenericServiceImpl<Comment,String> imple
     @Override
     public ReturnData findByCondition(Map<String, Object> params) {
         return null;
+    }
+
+    @Override
+    public ReturnData countGoodsGradesByGoodsId(String goodsId) {
+        ReturnData returnData = new ReturnData();
+        returnData.setCode(ExceptionConst.Success);
+
+        if(StringUtils.isBlank(goodsId)){
+            returnData.setCode(ExceptionConst.AssertFailed);
+            returnData.setMessage(ExceptionConst.get(ExceptionConst.AssertFailed));
+            return returnData;
+        }
+
+        try {
+            List<Condition> filters = new ArrayList<Condition>();
+            filters.add(Condition.eq("goodsId",goodsId));
+            filters.add(Condition.eq("status",STATUS_INVAL));
+
+            List<Comment> comments = super.selectList(filters);
+            Double aveGrades = 5d;
+            if(null != comments && comments.size() > 0){
+                //计算平均值
+                aveGrades = commentMapper.selectGoodsAvgByGoodsId(goodsId);
+            }
+            returnData.setData(aveGrades);
+        }catch (Exception e) {
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+
+
+        return returnData;
     }
 }

@@ -3,6 +3,27 @@ var head = {
 %>
 <link rel="stylesheet" href="/static/css/usercenter/buyer/buyer.css">
 <link rel="stylesheet" href="/static/css/usercenter/buyer/font/iconfont.css">
+<script type="text/javascript" src="/static/vendor/jquery.raty.js"></script>
+<script type="text/javascript" src="/static/vendor/highlight.js"></script>
+<!--<script type="text/javascript" src="${host.static}/vendor/jquery.blockUI.js"></script>-->
+<script type="text/javascript" src="/static/vendor/tooltipster.bundle.js"></script>
+<style>
+    .help-body-box-detail-comment {
+        font-size: 14px;
+        padding: 20px 16px;
+        color: #666;
+        border: 1px solid #eaeaea;
+    }
+    .help-body-box-detail-comment .help-body-box-detail-raty {
+        display: inline-block;
+    }
+    .help-body-box-detail-comment .help-body-box-detail-raty img {
+        vertical-align: middle;
+    }
+    .help-body-box-detail-comment .help-body-box-detail-hint {
+        margin-top: 10px;
+    }
+</style>
 <%};%>
 
 <%
@@ -33,18 +54,56 @@ var htmlPart = {
                         <div class="evaluation margin-bottom-20">
                             <span class="iconfont icon-jingshi "><span class="margin-left-5">请至少填写一件商品的评价</span></span>
                         </div>
-                        <div class="satisfaction margin-bottom-20">商品满意度
-                            <span class="padding-left-20">
-                                <ul class="comment">
-                                    <li>☆</li>
-                                    <li>☆</li>
-                                    <li>☆</li>
-                                    <li>☆</li>
-                                    <li>☆</li>
-                                </ul>
-                            </span>
-                            <span class="fen"><strong>0</strong>分</span>
+                        <!--<div class="satisfaction margin-bottom-20">商品满意度-->
+                            <!--<span class="padding-left-20">-->
+                                <!--<ul class="comment">-->
+                                    <!--<li>☆</li>-->
+                                    <!--<li>☆</li>-->
+                                    <!--<li>☆</li>-->
+                                    <!--<li>☆</li>-->
+                                    <!--<li>☆</li>-->
+                                <!--</ul>-->
+                            <!--</span>-->
+                            <!--<span class="fen"><strong>0</strong>分</span>-->
+                        <!--</div>-->
+                        <div class="help-body-box-detail-comment">
+                            <div class="help-body-box-detail-raty" style="cursor: pointer;">
+                                
+                            </div>
+                            <p class="help-body-box-detail-hint"></p>
                         </div>
+                        <script>
+                          var t;
+                          $(".help-body-box-detail-raty").raty({
+                            starType: "img",
+                            hints: ["没用", "较差", "一般", "不错", "很好"],
+                            path: "${host.website}/static/images/",
+                            starOff: "starOff.png",
+                            starOn: "starOn.png",
+                            click: function (e, o) {
+                              var n = new Date;
+                              return t && n - t < 6e5 ? (HiChina.popup.alert({contTitle: "您的评价过于频繁，请稍后再试"}), !1) : ($(".help-body-box-detail-hint").text(""), void $.ajax({
+                                  method: "POST",
+                                  url: "/json/AddDocEvaluation.json",
+                                  dataType: "json",
+                                  data: {
+                                    score: e,
+                                    url: encodeURIComponent(location.href),
+                                    nodeId: window.HELP_NODE_ID,
+                                    t: (new Date).getTime(),
+                                    tb_token: $('input[name="_tb_token_"]').val()
+                                  }
+                                }).done(function (e) {
+                                  if (e) {
+                                    if (!e.success)return HiChina.popup.alert({contTitle: "提交失败"}), !1;
+                                    t = n, $(".help-body-box-detail-hint").text("感谢您的评分！若您有还有其他意见和建议，欢迎在评论区留言，我们会努力做得更好！")
+                                  }
+                                }).fail(function () {
+                                  return HiChina.popup.alert({contTitle: "提交失败"}), !1
+                                }))
+                            }
+                          }), $(".help-body-box-detail-raty img").tooltipster({theme: "tooltipster-shadow", delay: 100})
+                        </script>
                         <div class="suneval" >
                                 <span class="eve">
                                     <span class="padding-right-10">评价晒单</span>

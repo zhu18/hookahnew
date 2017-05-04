@@ -126,7 +126,7 @@ public class AuthController extends BaseController{
         return "/auth/company_auth_init_step4";
     }
 
-    @RequestMapping(value = "/auth/personAuth", method = RequestMethod.GET)
+    @RequestMapping(value = "/auth/personAuth", method = RequestMethod.POST)
     public ReturnData personAuth(Model model, UserDetail userDetail)  {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
@@ -143,7 +143,7 @@ public class AuthController extends BaseController{
         return returnData;
     }
 
-    @RequestMapping(value = "/auth/orgAuth", method = RequestMethod.GET)
+    @RequestMapping(value = "/auth/orgAuth", method = RequestMethod.POST)
     public ReturnData orgAuth(Model model, Organization organization)  {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);

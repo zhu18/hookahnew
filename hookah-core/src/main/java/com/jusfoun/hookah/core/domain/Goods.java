@@ -224,6 +224,16 @@ public class Goods extends GenericModel {
 
     private String offReason; // 强制下架理由
 
+    private Integer followNum; // 关注度
+
+    public Integer getFollowNum() {
+        return followNum;
+    }
+
+    public void setFollowNum(Integer followNum) {
+        this.followNum = followNum;
+    }
+
     public String getOffReason() {
         return offReason;
     }
