@@ -224,11 +224,15 @@ function sort() {//四类排序
             if(flog==1){
                 dataParm.order='asc';
                 flog=0;
-                console.log(7);
+                $(".arrow-box").css({
+                    'transform':'rotateZ(180deg)'
+				});
             }else {
                 dataParm.order='desc';
                 flog=1;
-                console.log(8);
+                $(".arrow-box").css({
+                    'transform':'rotateZ(0deg)'
+                });
             }
         }
 
@@ -239,7 +243,7 @@ function sort() {//四类排序
     var m=flog();
     $("#shopPrice").parent().prevAll().on('click',function () {
         $(this).find('a').addClass('active').parent().siblings().find('a').removeClass('active');
-        $(this).find('a').find('span').css({'display':'block'}).parent().parent().siblings().find('.arrow-box').css({'display':'none'})
+        $(this).find('a').find('.arrow-box').show().parent().parent().siblings().find('a').find('.arrow-box').hide()
         if($(this).find('a').attr('type')==='onSaleDate'){
             dataParm.orderField='onsaleStartDate';
             if(s==null){
@@ -279,6 +283,7 @@ function sort() {//四类排序
 		}
         goPage(1);
     })
+    $("#shopPrice").parent().prevAll().find('a').find('.arrow-box').hide()
 }
 
 sort();
