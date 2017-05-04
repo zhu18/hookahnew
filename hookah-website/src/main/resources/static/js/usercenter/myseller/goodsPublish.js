@@ -78,7 +78,7 @@ function list(){
         $(this).addClass("current").siblings().removeClass("current");
         $('.clearfix-content').html($(this).text());
         showBtn(0);
-        id =  $("input[type='hidden']").val();
+        id =  $(".search-list ul li.current").find($("input[type='hidden']")).val();
         pusblishBtn();
     });
 }
