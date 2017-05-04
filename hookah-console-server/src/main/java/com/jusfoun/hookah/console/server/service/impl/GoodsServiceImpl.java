@@ -270,15 +270,28 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         BeanUtils.copyProperties(goods, goodsVo);
         // 查询所有区域信息
         EsGoods esGoods = goodsMapper.getNeedEsGoodsById(goodsId);
-        if(esGoods != null && esGoods.getGoodsAreas() != null) {
-            String[] region = esGoods.getGoodsAreas().split(" ");
-            if(region.length >= 2)
-                goodsVo.setAreaCountry(region[1]);
-            if(region.length >= 3)
-                goodsVo.setAreaProvince(region[2]);
-            if(region.length == 4)
-                goodsVo.setAreaCity(region[3]);
+        if(esGoods != null) {
+            if(esGoods.getGoodsAreas() != null) {
+                String[] region = esGoods.getGoodsAreas().split(" ");
+                if(region.length >= 2)
+                    goodsVo.setAreaCountry(region[1]);
+                if(region.length >= 3)
+                    goodsVo.setAreaProvince(region[2]);
+                if(region.length == 4)
+                    goodsVo.setAreaCity(region[3]);
+            }
+            if(esGoods.getCatIds() != null) {
+                String[] catIds = esGoods.getCatIds().split(" ");
+                StringBuffer stringBuffer = new StringBuffer();
+                for(String item : catIds) {
+                    stringBuffer.append(DictionaryUtil.getCategoryById(item) == null
+                            ? "" : DictionaryUtil.getCategoryById(item).getCatName()).append("->");
+                }
+                goodsVo.setCatFullName(stringBuffer.substring(0, stringBuffer.length() - 2));
+            }
         }
+
+
         MgGoods mgGoods = mgGoodsService.selectById(goodsId);
         if (mgGoods != null) {
             goodsVo.setFormatList(mgGoods.getFormatList());
