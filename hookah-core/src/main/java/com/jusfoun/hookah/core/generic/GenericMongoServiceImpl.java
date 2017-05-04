@@ -327,6 +327,7 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
                 while(entityClass!=Object.class){
                     Field[] fields = entityClass.getDeclaredFields();
                     for(Field field:fields){
+                        field.setAccessible(true);
                         /*field.setAccessible(true);
                         if(field.get(model)!=null){
                             filters.add(Condition.eq(field.getName(),convertParamType((Class)field.getGenericType(),field.get(model))));
