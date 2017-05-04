@@ -502,20 +502,22 @@
 .sunAlone .sunContent .rcontent .satisfaction span {
     display: inline-block;
     position: relative;
-    width: 70px;
+    width: 96px;
+}
+.satisfaction ,.suneval {
+    position: relative;
+}
+.satisfaction .goods,.suneval .alone{
+    position: absolute;
+}
+.satisfaction .goods {
+    top:-8px;
+}
+.suneval .alone {
+    top:35px;
 }
 .sunAlone .sunContent .rcontent .evaluation .iconfont {
     font-size: 14px;
-}
-.sunAlone .sunContent .rcontent .satisfaction .comment {
-    position: absolute;
-    top:-18px;
-    font-size: 17px;
-    color:#ffa800;
-    cursor: pointer;
-}
-.sunAlone .sunContent .rcontent .satisfaction .comment li {
-    float: left;
 }
 .rcontent .suneval textarea {
     resize: none;
