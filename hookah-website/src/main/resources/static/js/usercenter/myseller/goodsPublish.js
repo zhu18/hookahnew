@@ -78,6 +78,7 @@ function list(){
         $(this).addClass("current").siblings().removeClass("current");
         $('.clearfix-content').html($(this).text());
         showBtn(0);
+        id =  $("input[type='hidden']").val();
         pusblishBtn();
     });
 }
@@ -120,7 +121,7 @@ function showBox(data) {
     }else{
         var html = '';
         data.forEach(function (list) {
-            html += '<li><label>' + list.fullName + '</label></li>';
+            html += '<li><label>' + list.fullName + '</label><input type="hidden" value="'+list.catId+'" ></li>';
         });
         $('.search-list').show().children('ul').html(html);
     }
