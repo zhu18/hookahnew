@@ -12,24 +12,25 @@ $(function(){
         $(".comment").children().text(wjx_k);
         $("li.current").text(wjx_s).prevAll().text(wjx_s);
         var num = $("li.current").text(wjx_s).index()+1;
-        $(".fen").text(num+"分");
+        $(".fen strong").text(num);
     });
     $("li").click(function () {
         $(this).addClass("current").siblings().removeClass("current");
     });
 })
-
-function check(orderId,goodsId,commentContent,commentLevel){
-    goodsId=$("#goodsId").val();
-    console.log("goodsId:"+goodsId);
+var goodsId=[];
+$('input[name="goodsId"]').each(function () {
+    goodsId.push($(this).val())
+})
+function check(orderId){
     $.ajax({
         type: "post",
         url: '/comment/add',
         data:{
             orderId:orderId,
             goodsId:goodsId,
-            commentContent:commentContent,
-            commentLevel:commentLevel
+            commentContent:$("#area").val(),
+            commentLevel:$(".fen strong").html()
         },
         success: function(msg) {
             if (msg.code == 1) {

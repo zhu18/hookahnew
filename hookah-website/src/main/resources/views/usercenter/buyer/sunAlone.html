@@ -43,7 +43,7 @@ var htmlPart = {
                                     <li>☆</li>
                                 </ul>
                             </span>
-                            <span class="fen">0分</span>
+                            <span class="fen"><strong>0</strong>分</span>
                         </div>
                         <div class="suneval" >
                                 <span class="eve">
@@ -53,10 +53,10 @@ var htmlPart = {
                         </div>
                     </div>
                 </div>
-            <input type="hidden" value="${list.goodsId}" id="goodsId">
+            <input type="hidden" value="${list.goodsId}" name="goodsId">
                 <% } %>
                 <div class="sure text-align-center">
-                    <span class="margin-top-20 text-align-center btn-full-orange margin-bottom-20" onclick="check(${order.orderId},0,$(textarea).val(),$('.fen').text().substring(0,1))">提交</span>
+                    <span class="margin-top-20 text-align-center btn-full-orange margin-bottom-20" onclick="check('${order.orderId}')">提交</span>
                 </div>
         </div>
     </div>

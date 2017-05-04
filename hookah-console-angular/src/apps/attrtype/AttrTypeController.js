@@ -1,5 +1,6 @@
 class AttrTypeController {
     constructor($scope, $rootScope, $http, $state, $stateParams, $uibModal, usSpinnerService, growl) {
+
         if ($state.$current.name == "attrtype.edit") {
             $scope.title = "属性修改";
             console.log($rootScope.editData);
@@ -9,7 +10,10 @@ class AttrTypeController {
             $scope.title = "新增属性子项";
         } else if ($state.$current.name == "attrtype.edit_child") {
             $scope.title = "修改属性子项";
+        } else if($state.$current.name == "attrtype.add"){
+            $scope.title = "新增属性";
         };
+
         $scope.expanding_property = {
             field: "typeName",
             displayName: "属性名"
@@ -18,9 +22,6 @@ class AttrTypeController {
             {
                 field: "domainId",
                 displayName: "编码"
-            },{
-                field: "catDesc",
-                displayName: "描述"
             }, {
                 field: "typeStatus",
                 displayName: "状态",
@@ -47,7 +48,7 @@ class AttrTypeController {
                 }
             }
         ];
-        $scope.dict_tree = {};
+        $scope.type_tree = {};
 
         $scope.treehandler = function (branch) {
             console.log(branch);
@@ -69,7 +70,8 @@ class AttrTypeController {
             $scope.title = "新增属性";
         };
         $scope.addChild = function (data) {
-            $rootScope.parentDict = data;
+            $rootScope.parentAttrType = data;
+            console.log(data);
             $state.go("attrtype.add_child");
         };
         $scope.edit = function (data) {
@@ -78,11 +80,12 @@ class AttrTypeController {
         };
         $scope.delete = function (data) {
             if (data.children.length == 0) {
-                var modalInstance = $rootScope.openConfirmDialogModal("确定要删除" + '<span style="font-weight: bold;color: #6b3100">' + data.name + '</span>' + "属性项吗？");
+                var modalInstance = $rootScope.openConfirmDialogModal("确定要删除" + '<span style="font-weight: bold;color: #6b3100">' + data.typeName + '</span>' + "属性项吗？");
                 modalInstance.result.then(function () {
                     var promise = $http({
                         method: 'POST',
-                        url: $rootScope.site.apiServer + "/api/sys/dict/delete/" + data.dictId
+                        url: $rootScope.site.apiServer + "/api/attrType/delete/",
+                        params: {typeId:data.typeId,parentId:data.parentId}
                     });
                     promise.then(function (res, status, config, headers) {
                         $rootScope.loadingState = false;
@@ -104,16 +107,17 @@ class AttrTypeController {
 
         };
         $scope.save = function () {
-            if ($("#dictId").val() != null && $("#dictId").val() != '') {
+            if ($("#typeId").val() != null && $("#typeId").val() != '') {
                 var promise = $http({
                     method: 'POST',
-                    url: $rootScope.site.apiServer + "/api/sys/dict/edit",
-                    data: $("#dictForm").serialize()
+                    url: $rootScope.site.apiServer + "/api/attrType/edit",
+                    data: $("#attrTypeForm").serialize()
                 });
                 promise.then(function (res, status, config, headers) {
                     $rootScope.loadingState = false;
                     if (res.data.code == 1) {
                         growl.addSuccessMessage("保存成功。。。");
+                        $state.go('attrtype.search');
                     } else {
                         growl.addErrorMessage("保存失败。。。");
                     }
@@ -123,14 +127,15 @@ class AttrTypeController {
                 //TODO...验证
                 var promise = $http({
                     method: 'POST',
-                    url: $rootScope.site.apiServer + "/api/sys/dict/save",
-                    data: $("#dictForm").serialize()
+                    url: $rootScope.site.apiServer + "/api/attrType/add",
+                    data: $("#attrTypeForm").serialize()
                 });
                 promise.then(function (res, status, config, headers) {
                     $rootScope.loadingState = false;
                     console.log(res.data);
                     if (res.data.code == 1) {
                         growl.addSuccessMessage("保存成功。。。");
+                        $state.go('attrtype.search');
                     } else {
                         growl.addErrorMessage("保存失败。。。");
                     }
@@ -142,8 +147,10 @@ class AttrTypeController {
             $scope.search();
         };
 
+        if ($state.$current.name == "attrtype.search") {
+            $scope.search();
+        }
 
-        $scope.search();
 
 
     }
