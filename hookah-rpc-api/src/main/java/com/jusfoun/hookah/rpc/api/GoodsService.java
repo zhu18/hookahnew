@@ -7,6 +7,8 @@ import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.GenericService;
 
+import java.util.Map;
+
 /**
  * @author huang lei
  * @date 2017/2/28 下午3:06
