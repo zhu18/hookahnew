@@ -1,4 +1,5 @@
 import CategoryController from './CategoryController';
+import ManageAttrTypeController from './ManageAttrTypeController';
 import pagination from 'angular-ui-bootstrap/src/pagination';
 categoryRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function categoryRouting($stateProvider, $urlRouterProvider) {
@@ -24,7 +25,7 @@ export default function categoryRouting($stateProvider, $urlRouterProvider) {
       controller: CategoryController,
     })
     .state('category.edit', {
-        url: '/category/edit',
+        url: '/category/edit/:data',
         template: require('./edit.html'),
         controller: CategoryController,
     })
@@ -38,4 +39,9 @@ export default function categoryRouting($stateProvider, $urlRouterProvider) {
         template: require('./add_child.html'),
         controller: CategoryController,
     })
+  .state('category.manageAttrType',  {
+      url: '/category/manageAttrType/:cateId:cateName',
+      template: require('./manageAttrType.html'),
+      controller: ManageAttrTypeController,
+  })
 };

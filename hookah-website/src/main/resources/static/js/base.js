@@ -235,3 +235,8 @@ function format(time) {
     var seconds = date.getSeconds();
     return year + '-' + add(month) + '-' + add(date1) + ' ' + add(hours) + ':' + add(minutes) + ':' + add(seconds);
 };
+$.getUrlParam = function (key) { //获取url参数值  使用方法var id = $.getUrlParam('id');
+	var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+	var result = window.location.search.substr(1).match(reg);
+	return result ? decodeURIComponent(result[2]) : null;
+};

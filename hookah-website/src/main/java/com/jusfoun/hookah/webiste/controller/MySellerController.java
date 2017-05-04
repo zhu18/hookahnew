@@ -3,8 +3,6 @@ package com.jusfoun.hookah.webiste.controller;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.Goods;
-import com.jusfoun.hookah.core.domain.mongo.MgGoods;
-import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.rpc.api.CategoryService;
@@ -12,7 +10,6 @@ import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.MgCategoryAttrTypeService;
 import com.jusfoun.hookah.rpc.api.MgGoodsService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -78,50 +75,12 @@ public class MySellerController {
     }
 
     @RequestMapping(value = "/goodsEdit", method = RequestMethod.GET)
-    public String publish(String id, Model model) {
-        if (StringUtils.isNotBlank(id)) {
-            // 查询商品信息
-            List<Condition> filters = new ArrayList<>();
-            filters.add(Condition.eq("goodsId", id));
-            filters.add(Condition.eq("domainId", "123"));
-            filters.add(Condition.eq("isOnsale", "1"));
-            Goods goods = goodsService.selectOne(filters);
-            if (goods != null && StringUtils.isNotBlank(goods.getGoodsId())) {
-                GoodsVo goodsVo = new GoodsVo();
-                BeanUtils.copyProperties(goods, goodsVo);
-                MgGoods mgGoods = mgGoodsService.selectById(id);
-                if (mgGoods != null) {
-                    goodsVo.setFormatList(mgGoods.getFormatList());
-                    goodsVo.setImgList(mgGoods.getImgList());
-                    goodsVo.setAttrTypeList(mgGoods.getAttrTypeList());
-                    model.addAttribute("goodsInfo", goodsVo);
-                }
-            }
-        }
+    public String publish() {
         return "usercenter/myseller/goodsEdit";
     }
 
     @RequestMapping(value = "/goodsModify", method = RequestMethod.GET)
-    public String goodsModify(String id, Model model) {
-        if (StringUtils.isNotBlank(id)) {
-            // 查询商品信息
-            List<Condition> filters = new ArrayList<>();
-            filters.add(Condition.eq("goodsId", id));
-            filters.add(Condition.eq("domainId", "123"));
-            filters.add(Condition.eq("isOnsale", "1"));
-            Goods goods = goodsService.selectOne(filters);
-            if (goods != null && StringUtils.isNotBlank(goods.getGoodsId())) {
-                GoodsVo goodsVo = new GoodsVo();
-                BeanUtils.copyProperties(goods, goodsVo);
-                MgGoods mgGoods = mgGoodsService.selectById(id);
-                if (mgGoods != null) {
-                    goodsVo.setFormatList(mgGoods.getFormatList());
-                    goodsVo.setImgList(mgGoods.getImgList());
-                    goodsVo.setAttrTypeList(mgGoods.getAttrTypeList());
-                    model.addAttribute("goodsInfo", goodsVo);
-                }
-            }
-        }
+    public String goodsModify(){
         return "usercenter/myseller/goodsModify";
     }
 

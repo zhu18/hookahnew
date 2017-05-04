@@ -2,6 +2,7 @@ package com.jusfoun.hookah.rpc.api;
 
 import com.jusfoun.hookah.core.domain.mongo.MgCategoryAttrType;
 import com.jusfoun.hookah.core.generic.GenericService;
+import com.jusfoun.hookah.core.utils.ReturnData;
 
 /**
  * @author huang lei
@@ -11,4 +12,8 @@ import com.jusfoun.hookah.core.generic.GenericService;
 public interface MgCategoryAttrTypeService extends GenericService<MgCategoryAttrType,String> {
 
     MgCategoryAttrType findGoodsAttr(String catId);
+
+    ReturnData findGoodsAttrByCatId(String catId);
+    
+
 }

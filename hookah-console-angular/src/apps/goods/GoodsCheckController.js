@@ -83,9 +83,9 @@ class GoodsCheckController {
             console.log(res.data)
             if(res.data.code == "1"){
                 $rootScope.editData = res.data.data;
-                if($rootScope.editData.apiInfo != null){
-                    $rootScope.editData.apiInfo.respSample = JSON.stringify(JSON.parse($rootScope.editData.apiInfo.respSample), null, "\t");
-                }
+                // if($rootScope.editData.apiInfo != null){
+                //     $rootScope.editData.apiInfo.respSample = JSON.stringify(JSON.parse($rootScope.editData.apiInfo.respSample), null, "\t");
+                // }
                 $rootScope.operatorFlag = n;
                 $state.go('items.goodsDetail', {data: $rootScope.editData});
             }
@@ -144,9 +144,9 @@ class GoodsCheckController {
               console.log(res.data)
               if(res.data.code == "1"){
                   $rootScope.editData = res.data.data;
-                  if($rootScope.editData.apiInfo != null){
-                      $rootScope.editData.apiInfo.respSample = JSON.stringify(JSON.parse($rootScope.editData.apiInfo.respSample), null, "\t");
-                  }
+                  // if($rootScope.editData.apiInfo != null){
+                  //     $rootScope.editData.apiInfo.respSample = JSON.stringify(JSON.parse($rootScope.editData.apiInfo.respSample), null, "\t");
+                  // }
                   $state.go('items.goodsDetail', {data: $rootScope.editData});
               }
           });
@@ -161,8 +161,6 @@ class GoodsCheckController {
       if ($state.$current.name == "items.checkedList") {
           $scope.searchCheckRs();
       }
-
-
   }
 }
 

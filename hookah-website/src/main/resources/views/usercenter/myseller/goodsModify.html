@@ -30,7 +30,7 @@ var htmlPart = {
                             <tr>
                                 <td class="bar">商品名称：</td>
                                 <td>
-                                    <div class="text-box"><input name="goodsName" id="J-goodsName" value="${goodsInfo.goodsName}" type="text">
+                                    <div class="text-box"><input name="goodsName" id="J-goodsName" type="text">
                                         <span class="input-count"><strong id="showcontent">0</strong>/30</span>
                                     </div>
                                     <div class="errors">
@@ -68,8 +68,7 @@ var htmlPart = {
                                 <td>
                                     <div class="radio-box">
                                         <label>
-                                            <input type="radio" name="goodsTypes" onchange="goodsTypes(this)" value="0"
-                                                   checked="">常规商品
+                                            <input type="radio" name="goodsTypes" onchange="goodsTypes(this)" value="0">常规商品
                                         </label>
                                         <label>
                                             <input type="radio" name="goodsTypes" onchange="goodsTypes(this)" value="1">api
