@@ -224,11 +224,17 @@ function sort() {//四类排序
             if(flog==1){
                 dataParm.order='asc';
                 flog=0;
+                $(".arrow-box").css({
+                    'transform':'rotateZ(180deg)'
+				})
                 console.log(7);
             }else {
                 dataParm.order='desc';
                 flog=1;
                 console.log(8);
+                $(".arrow-box").css({
+                    'transform':'rotateZ(0deg)'
+                })
             }
         }
 
