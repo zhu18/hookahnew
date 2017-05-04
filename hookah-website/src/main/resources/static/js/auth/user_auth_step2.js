@@ -22,12 +22,12 @@ function userAuth(){
             data : {
                 "realName":$("#userName").val(),
                 "cardNum":$("#userCode").val(),
-                "identityCardFrontPath":"",
-                "identityCardReversePath":""
+                "identityCardFrontPath":$("#zm").attr("src"),
+                "identityCardReversePath":$("#fm").attr("src")
             },
-            type:"get",
+            type:"post",
             success : function(data) {
-                if (data.retCode == 1) {
+                if (data.code == 1) {
                     window.location.href = './user_auth_init_step3.html';
                 } else {
                     alert(data.errMsg);
@@ -51,31 +51,33 @@ function checkIDCard(){
     idcardcheck=true;
 }
 var upinput;
+var img = '';
 function upPhoto() {
     upinput=$(this);
     console.log($(this));
     $(this).parent().ajaxSubmit({
-        type : "POST",
-        url : "http://static.hookah.app/upload/fileUpload",
-        dataType : "json",
-        success : function(data) {
-            if (data.retCode == 1) {
-                var img = data.data;
+        type : "post",
+        url: "http://static.hookah.app/upload/fileUpload",
+        // dataType: "json",
+        // contentType: "application/json;charset=UTF-8",
+        success: function (e, data) {
+            console.log(111);
+            if (data.code == 1) {
+                 img = data.data[0].absPath;
                 if ($(upinput).attr("id") == "submit1") {
-                    $("#zpath").val(data.data);
-                    //$("#zm").attr("src",img);
-                    //var fileObj=$("#zm");
-                    $("#zm").attr("src",window.URL.createObjectURL($(upinput).get(0).files[0]));
-
+                    $("#zm").attr("src", img);
+                    // var fileObj = $("#zm");
+                    $("#zm").attr("src", window.URL.createObjectURL($(upinput).get(0).files[0]));
                 } else {
-                    $("#fpath").val(data.data);
-                    //$("#fm").attr("src",img);
-                    $("#fm").attr("src",window.URL.createObjectURL($(upinput).get(0).files[0]));
+                    $("#fm").attr("src", img);
+                    $("#fm").attr("src", window.URL.createObjectURL($(upinput).get(0).files[0]));
                 }
-                // alert();
-            } else {
-                alert(data.errMsg);
+            }else{
+                $.alert(data.message);
             }
+        },
+        progressall: function (e, data) {
+
         }
     });
 }
