@@ -52,6 +52,7 @@
         <result column="shop_id" property="shopId" jdbcType="VARCHAR" />
         <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
         <result column="off_reason" property="offReason" jdbcType="VARCHAR" />
+        <result column="upload_url" jdbcType="VARCHAR" property="uploadUrl" />
     </resultMap>
     <select id="getNeedEsGoods" resultMap="EsResultMap">
         SELECT
@@ -156,7 +157,8 @@
         check_status,
         is_onsale,
         is_book,
-        version
+        version,
+        upload_url
         FROM
         goods
         <include refid="waitSelect"></include>

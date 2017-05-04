@@ -226,6 +226,8 @@ public class Goods extends GenericModel {
 
     private Integer followNum; // 关注度
 
+    private String uploadUrl;
+
     public Integer getFollowNum() {
         return followNum;
     }
@@ -877,5 +879,13 @@ public class Goods extends GenericModel {
      */
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    public String getUploadUrl() {
+        return uploadUrl;
+    }
+
+    public void setUploadUrl(String uploadUrl) {
+        this.uploadUrl = uploadUrl;
     }
 }
