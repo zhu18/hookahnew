@@ -18,9 +18,12 @@ public interface GoodsMapper extends GenericDao<Goods> {
 
     EsGoods getNeedEsGoodsById(String id);
 
+    EsGoods getNeedGoodsById(String id);
+
     List<Goods> waitList(GoodsVo vo);
 
     Integer waitListCnt(GoodsVo vo);
 
     int updateByGidForFollowNum(Map<String, Object> map);
+
 }

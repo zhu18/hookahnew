@@ -269,7 +269,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         GoodsVo goodsVo = new GoodsVo();
         BeanUtils.copyProperties(goods, goodsVo);
         // 查询所有区域信息
-        EsGoods esGoods = goodsMapper.getNeedEsGoodsById(goodsId);
+        EsGoods esGoods = goodsMapper.getNeedGoodsById(goodsId);
         if(esGoods != null) {
             if(esGoods.getGoodsAreas() != null) {
                 String[] region = esGoods.getGoodsAreas().split(" ");
