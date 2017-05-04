@@ -35,4 +35,6 @@ public interface GoodsService extends GenericService<Goods,String> {
     GoodsVo findGoodsById(String goodsId) throws HookahException;
 
     int updateByGidForFollowNum(Map<String, Object> map);
+
+    GoodsVo findGoodsByIdWebsite(String goodsId) throws HookahException;
 }

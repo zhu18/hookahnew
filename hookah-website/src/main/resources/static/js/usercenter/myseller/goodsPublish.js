@@ -78,6 +78,7 @@ function list(){
         $(this).addClass("current").siblings().removeClass("current");
         $('.clearfix-content').html($(this).text());
         showBtn(0);
+        id =  $("input[type='hidden']").val();
         pusblishBtn();
     });
 }
@@ -115,11 +116,15 @@ function getSearchList(text){
     })
 }
 function showBox(data) {
-    var html = '';
-    data.forEach(function (list) {
-        html += '<li><label>' + list.fullName + '</label></li>';
-    });
-    $('.search-list').show().children('ul').html(html);
+    if(data==""||data==null){
+        $('.search-list').show().children('ul').html("无相关搜索");
+    }else{
+        var html = '';
+        data.forEach(function (list) {
+            html += '<li><label>' + list.fullName + '</label><input type="hidden" value="'+list.catId+'" ></li>';
+        });
+        $('.search-list').show().children('ul').html(html);
+    }
 }
 
 $("#input-search").bind('input propertychange',function(){
@@ -130,5 +135,20 @@ $("#input-search").bind('input propertychange',function(){
         showBtn(1);
         $(".select-category-item dd").removeClass("active");
     }
+})
+
+$("#input-search").hover(function(){
+    if($(this).val()){
+        $(".clean").show();
+    }else{
+        $(".clean").hide();
+    }
+})
+$(".clean").click(function(){
+    $("#input-search").val("");
+    $(this).hide();
+    $(".search-list").hide();
+    $(".clearfix-content").html("");
+    $(".select-category-box").show();
 })
 // 类目搜索结束

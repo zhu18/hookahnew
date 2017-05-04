@@ -3,21 +3,23 @@ package com.jusfoun.hookah.console.server.service.impl;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.CommentMapper;
 import com.jusfoun.hookah.core.domain.Comment;
+import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
+import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.CommentService;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.omg.CORBA.PUBLIC_MEMBER;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 
 /**
  * Created by ctp on 2017/4/24.
@@ -136,4 +138,40 @@ public class CommentServiceImpl extends GenericServiceImpl<Comment,String> imple
 
         return returnData;
     }
+
+    @Override
+    public ReturnData batchAddComment(List<Comment> comments,User currUser) {
+        ReturnData returnData = new ReturnData();
+        returnData.setCode(ExceptionConst.Success);
+
+        if(comments != null && comments.size() > 0){
+            try {
+                for (Comment comment : comments){
+                    if(StringUtils.isBlank(comment.getOrderId())){
+                        returnData.setCode(ExceptionConst.AssertFailed);
+                        returnData.setMessage(ExceptionConst.get(ExceptionConst.AssertFailed));
+                        return returnData;
+                    }
+                    comment.setCommentTime(new Date());
+                    comment.setAddTime(new Date());
+                    comment.setUserId(currUser.getUserId());
+                    comment = super.insert(comment);
+                }
+//                Integer count = super.insertBatch(comments);
+                returnData.setData(comments);
+            }catch (Exception e) {
+                returnData.setCode(ExceptionConst.Error);
+                returnData.setMessage(e.toString());
+                e.printStackTrace();
+            }
+
+        }else{
+            returnData.setCode(ExceptionConst.AssertFailed);
+            returnData.setMessage(ExceptionConst.get(ExceptionConst.AssertFailed));
+        }
+
+        return returnData;
+    }
+
+
 }

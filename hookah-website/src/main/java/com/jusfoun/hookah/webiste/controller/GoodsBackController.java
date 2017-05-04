@@ -7,6 +7,7 @@ import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
+import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.GoodsService;
@@ -44,6 +45,9 @@ public class GoodsBackController extends BaseController {
             String userId = this.getCurrentUser().getUserId();
             obj.setAddUser(userId);
             obj.setIsOnsale(HookahConstants.GOODS_STATUS_ONSALE);
+            if(obj.getOnsaleStartDate() == null) {
+                obj.setOnsaleStartDate(DateUtils.now());
+            }
             goodsService.addGoods(obj);
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);

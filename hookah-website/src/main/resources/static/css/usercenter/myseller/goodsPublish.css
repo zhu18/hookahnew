@@ -5,6 +5,15 @@
     position: relative;
     margin-left: 200px;
 }
+.category-label .search {
+    position: relative;
+}
+.category-label .search .clean {
+    position: absolute;
+    top: -2px;
+    right: 57px;
+    cursor: pointer;
+}
 .category-label label{
     position: absolute;
     left:0;
@@ -29,6 +38,7 @@
     position: absolute;
     text-align: center;
     cursor: pointer;
+    top: -8px;
 }
 .search-list {
     display: none;
