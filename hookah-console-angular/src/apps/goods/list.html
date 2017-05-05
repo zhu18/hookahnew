@@ -81,7 +81,7 @@
                 <span class="column-text" ng-bind="item.addTime"></span>
               </td>
               <td class="text-center" data-ng-if="item.isDelete == 1">
-                <span data-ng-if="item.checkStatus == 0">
+                <span data-ng-if="item.isOnsale == '1' && item.checkStatus == '0'">
                   <a href="javascript:;" ng-click="goCheck(item, 1)">去审核</a>
                 </span>
                 <span data-ng-if="item.isOnsale == '1' && item.checkStatus == '1'">
