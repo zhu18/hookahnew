@@ -6,6 +6,7 @@ $(".button").on("click",userAuth);
 $("#userCode").on("blur",checkIDCard);
 $("#submit1").on("change", upPhoto);
 $("#submit2").on("change", upPhoto);
+
 });
 var idcardcheck=false;
 function userAuth(){
@@ -51,33 +52,37 @@ function checkIDCard(){
     idcardcheck=true;
 }
 var upinput;
-var img = '';
+var imgSrc = '';
+//选择文件之后执行上传
+var fileUploadUrl = host.static+'/upload/fileUpload';
 function upPhoto() {
     upinput=$(this);
     console.log($(this));
     $(this).parent().ajaxSubmit({
         type : "post",
-        url: "http://static.hookah.app/upload/fileUpload",
-        // dataType: "json",
-        // contentType: "application/json;charset=UTF-8",
+        url: fileUploadUrl,
+        dataType: "json",
+        // contentType: "mutiple;charset=UTF-8",
         success: function (e, data) {
             console.log(111);
             if (data.code == 1) {
-                 img = data.data[0].absPath;
+                 imgSrc = data.data[0].absPath;
                 if ($(upinput).attr("id") == "submit1") {
-                    $("#zm").attr("src", img);
+                    $("#zm").attr("src", imgSrc);
                     // var fileObj = $("#zm");
-                    $("#zm").attr("src", window.URL.createObjectURL($(upinput).get(0).files[0]));
-                } else {
-                    $("#fm").attr("src", img);
-                    $("#fm").attr("src", window.URL.createObjectURL($(upinput).get(0).files[0]));
+                    // $("#zm").attr("src", window.URL.createObjectURL($(upinput).get(0).files[0]));
+                // } else {
+                    $("#fm").attr("src", imgSrc);
+                    // $("#fm").attr("src", window.URL.createObjectURL($(upinput).get(0).files[0]));
                 }
             }else{
                 $.alert(data.message);
             }
-        },
-        progressall: function (e, data) {
-
         }
+        // progressall: function (e, data) {
+        //
+        // }
     });
 }
+
+
