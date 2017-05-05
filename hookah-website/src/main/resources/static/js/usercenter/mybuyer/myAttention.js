@@ -6,7 +6,7 @@ function loadPageData(data){
         var html = '';
         for(var i=0; i<list.length; i++){
             html += '<li>';
-			html += '<a class="item-top" href="/exchange/details?id='+list[i].goodsId+'">';
+			html += '<a target="_blank" class="item-top" href="/exchange/details?id='+list[i].goodsId+'">';
 			html += '<p class="goods-img">';
 			html += '<img src="'+list[i].goodsImg+'" alt="">';
 			html += '</p>';
