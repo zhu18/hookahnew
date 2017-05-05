@@ -167,6 +167,12 @@
     position: absolute;
     left:10px;
     top:0;
+    width:215px;
+    height: 135px;
+}
+.submit-file #zm{
+    width:215px;
+    height: 135px;
 }
 .submit-file  label.left-pic{
     position: absolute;
