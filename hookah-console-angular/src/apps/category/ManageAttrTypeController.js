@@ -9,10 +9,10 @@ class CategoryController {
             {
                 field: "aa",
                 displayName: "操作",
-                cellTemplate: '<a ng-click="cellTemplateScope.remove(row.branch)">移除属性</a> <span class="text-explode">|</span> <i class="link-space"></i> ' ,
+                cellTemplate: '<a ng-show="row.branch[\'isAttr\'] == 0" ng-click="cellTemplateScope.removeGoodsAttr(row.branch)">移除属性</a> <span class="text-explode">|</span> <i class="link-space"></i> ' ,
                 cellTemplateScope: {
-                    remove: function (data) {
-                        $scope.delete(data);
+                    removeGoodsAttr: function (data) {
+                        $scope.removeGoodsAttr(data);
                     }
                 }
             }
@@ -27,22 +27,22 @@ class CategoryController {
             {
                 field: "aa",
                 displayName: "操作",
-                cellTemplate: '<a ng-click="cellTemplateScope.add(row.branch)">添加属性</a> <span class="text-explode">|</span> <i class="link-space"></i> ' ,
+                cellTemplate: '<a ng-show="row.branch[\'level\'] != 1" ng-click="cellTemplateScope.addGoodsAttr(row.branch)">添加属性</a> <span class="text-explode">|</span> <i class="link-space"></i> ' ,
                 cellTemplateScope: {
-                    remove: function (data) {
-                        $scope.delete(data);
+                    addGoodsAttr: function (data) {
+                        $scope.addGoodsAttr(data);
                     }
                 }
             }
         ];
 
-        //分类内列表操作
-
-        $scope.cate_attr_tree = {};
 
         $scope.treehandler = function (branch) {
             console.log(branch);
         };
+
+        //分类内列表操作
+        $scope.cate_attr_tree = {};
 
         $scope.search = function () {
             $rootScope.cateName = $stateParams.cateName;
@@ -77,50 +77,45 @@ class CategoryController {
             });
         };
 
+        //添加属性
+        $scope.addGoodsAttr = function (data) {
+            var promise = $http({
+                method: 'POST',
+                url: $rootScope.site.apiServer + "/api/mgCateAttrType/addMgGoodsAttr",
+                params:{cateId:$stateParams.cateId,attrTypeId:data.typeId}
+            });
+            promise.then(function (res, status, config, headers) {
+                $rootScope.loadingState = false;
+                if (res.data.code == 1) {
+                    growl.addSuccessMessage("数据加载完毕。。。");
+                    $scope.search();
+                    $scope.searchNotContain();
+                } else {
+                    growl.addErrorMessage("。。。");
+                }
 
-        $scope.save = function () {
-            if ($("#catId").val() != null && $("#catId").val() != '') {
-                var promise = $http({
-                    method: 'POST',
-                    url: $rootScope.site.apiServer + "/api/category/edit",
-                    data: $("#categoryForm").serialize()
-                });
-                promise.then(function (res, status, config, headers) {
-                    $rootScope.loadingState = false;
-                    if (res.data.code == 1) {
-                        growl.addSuccessMessage("保存成功。。。");
-                        $state.go("category.search");
-                    } else {
-                        growl.addErrorMessage("保存失败。。。");
-                    }
-
-                });
-            }else {
-                var promise = $http({
-                    method: 'POST',
-                    url: $rootScope.site.apiServer + "/api/category/add",
-                    data: $("#categoryForm").serialize()
-                });
-                promise.then(function (res, status, config, headers) {
-                    $rootScope.loadingState = false;
-                    console.log(res.data);
-                    if (res.data.code == 1) {
-                        growl.addSuccessMessage("新增成功。。。");
-                        $state.go("category.search");
-                    } else {
-                        growl.addErrorMessage("新增失败。。。");
-                    }
-
-                });
-            }
+            });
         };
 
+        //移除属性
+        $scope.removeGoodsAttr = function (data) {
+            var promise = $http({
+                method: 'POST',
+                url: $rootScope.site.apiServer + "/api/mgCateAttrType/removeMgGoodsAttr",
+                params:{cateId:$stateParams.cateId,attrTypeId:data.typeId}
+            });
+            promise.then(function (res, status, config, headers) {
+                $rootScope.loadingState = false;
+                if (res.data.code == 1) {
+                    growl.addSuccessMessage("数据加载完毕。。。");
+                    $scope.search();
+                    $scope.searchNotContain();
+                } else {
+                    growl.addErrorMessage("。。。");
+                }
 
-
-        $scope.refresh = function () {
-            $scope.search();
+            });
         };
-
 
         $scope.search();
 

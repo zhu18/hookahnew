@@ -130,6 +130,27 @@ public class MgOrderGoods extends GenericModel {
     private Long formatNumber;
 
     private String goodsImg;
+
+    private Byte goodsType;
+
+    private String uploadUrl;
+
+    public Byte getGoodsType() {
+        return goodsType;
+    }
+
+    public void setGoodsType(Byte goodsType) {
+        this.goodsType = goodsType;
+    }
+
+    public String getUploadUrl() {
+        return uploadUrl;
+    }
+
+    public void setUploadUrl(String uploadUrl) {
+        this.uploadUrl = uploadUrl;
+    }
+
     /**
      * 
      * This method returns the value of the database column order_goods.rec_id

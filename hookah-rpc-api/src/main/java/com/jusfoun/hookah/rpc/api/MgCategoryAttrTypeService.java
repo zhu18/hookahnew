@@ -14,6 +14,9 @@ public interface MgCategoryAttrTypeService extends GenericService<MgCategoryAttr
     MgCategoryAttrType findGoodsAttr(String catId);
 
     ReturnData findGoodsAttrByCatId(String catId);
-    
+
+    ReturnData addMgGoodsAttr(String cateId,String attrTypeId);
+
+    ReturnData removeMgGoodsAttr(String cateId,String attrTypeId);
 
 }

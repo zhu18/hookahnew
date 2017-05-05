@@ -38,7 +38,7 @@ spring:
   mvc:
       static-path-pattern: /static/**
   rabbitmq:
-      addresses: 192.168.15.90:5672
+      addresses: 192.168.200.116:5672
       username: root
       password: password
       publisher-confirms: true
