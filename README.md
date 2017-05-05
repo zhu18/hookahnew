@@ -78,3 +78,47 @@
 * 项目结构搭建
 * 基础模块搭建
 * 服务治理基础框架搭建
+
+
+### 项目打包发布
+* 在hookah项目根目录下执行 ``` mvn clean ```
+* hookah-console-angular
+  * 模块根目录下执行 ```npm install```
+  * 修改webpack.config.js文件81行
+    * 替换 http://localhost:9500/ 为 http://admin.hookah.app/
+    * 注意尾部/符号
+  * 模块根目录执行``` ./node_modules/webpack/bin/webpack.js ```
+  * 模块根目录下会生成dist目录及打包好的程序
+* hookah-oauth2server打包
+  * 修改pom.xml文件，把下面所示的resource注释掉
+    ```
+    <!-- 打包时注释下面的resource -->
+        <resource>
+        <targetPath>${project.build.directory}/classes</targetPath>
+        <directory>src/main/resources</directory>
+        <filtering>false</filtering>
+        </resource>
+     ```
+  * 在模块根目录执行 ```mvn clean package```
+  * 会在target文件夹中生成打包好的hookah-oauth2server-0.0.1-package.tar.gz程序包
+* hookah-console-server打包过程同上
+* hookah-website打包过程同上
+* 把打好的包上传到192.168.15.90机器上的/www目录中，此目录中有之前上传的软件包可删除
+* hookah-console-angular/dist目录上传覆盖服务器上的/www/dist即可
+* 在服务器上执行```ps -ef | grep java```查看
+  ```aidl
+  root       3399      1  0 11:57 ?        00:00:47 java -jar hookah-static-server-0.0.1.jar
+  root      31514  31471  0 19:05 pts/0    00:00:00 grep --color=auto java
+  root      44704      1  0 May04 ?        00:04:23 java -jar hookah-oauth2server-0.0.1.jar
+  root      44798      1  0 May04 ?        00:15:07 java -jar hookah-console-server-0.0.1.jar
+  root      45060      1  0 May04 ?        00:10:00 java -jar hookah-website-0.0.1.jar
+  ```
+  * kill -9 oauth2server console-server website 3个jar的进程，注意static-server的进程不要杀掉
+* 依次解压 oauth2server console-server website 3个压缩包，例如下：
+  ```aidl
+    tar zxvf hookah-oauth2server-0.0.1.jar
+  ```
+  * 进入解压目录执行 ```nohup java -jar  *.jar &```
+
+* 查看3个jar进程都存在及发布部署完毕
+    
