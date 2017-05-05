@@ -62,9 +62,7 @@ class RegionController {
         growl.addSuccessMessage("数据加载完毕。。。");
       });
     };
-    $scope.add = function () {
-      $scope.title = "新增字典";
-    };
+
     $scope.addChild = function (data) {
       $rootScope.parentDict = data;
       $state.go("sys.dict.add_child");
