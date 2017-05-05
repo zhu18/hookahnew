@@ -17,7 +17,7 @@ function loadPageData(data){
             }else if(list[i].commentFlag==1){
                 html += '<a href="" class="display-block">已评价</a>';
             }
-            html += '<a href="javascript:deleteRadio(\''+list[i].orderId+'\');" class="display-block deleteRadio">删除</a>';
+            html += '<a href="javascript:confirmDelete(\''+list[i].orderId+'\');" class="display-block deleteRadio">删除</a>';
             html += '</td>';
             html += '</tr>';
         }
@@ -83,6 +83,14 @@ function deleteRadio(orderId) {
         }
     })
 }
+function confirmDelete(orderId){
+    if(confirm("确定要删除该订单吗？")){
+        deleteRadio(orderId);
+    }else{
+
+    }
+}
+
 
 
 
