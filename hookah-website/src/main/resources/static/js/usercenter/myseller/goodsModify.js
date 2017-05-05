@@ -482,6 +482,12 @@ $(document).ready(function(){
 			},
 			goodsImg:'图片必须上传',
 
+		},
+		showErrors:function(errorMap,errorList) {
+			if(errorList.length){
+				errorList[0].element.focus();
+			}
+			this.defaultShowErrors();
 		}
 	});
 });

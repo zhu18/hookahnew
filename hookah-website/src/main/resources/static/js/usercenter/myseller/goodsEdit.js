@@ -15,7 +15,8 @@ $(document).ready(function(){
 			goodsImg:'required',
 			priceBoxName:'required',
 			priceBoxNumber:'required',
-			priceBoxPrice:'required'
+			priceBoxPrice:'required',
+			qwerqwerqwer:'required'
 		},
 		messages: {
 			goodsName:  {
@@ -28,6 +29,12 @@ $(document).ready(function(){
 			},
 			goodsImg:'图片必须上传',
 
+		},
+		showErrors:function(errorMap,errorList) {
+			if(errorList.length){
+				errorList[0].element.focus();
+			}
+			this.defaultShowErrors();
 		}
 	});
 	$('.category-title-box').text(category);//渲染分类
@@ -39,6 +46,7 @@ $(document).ready(function(){
 		$('.file-info-box').hide();
 		$('.api-info-box').show();
 	}
+	getPriceBox();
 	loadRegion('province', regionParam); //加载地域
 	renderWangEdit(); // 渲染富文本
 });
@@ -98,9 +106,27 @@ $('#fileupload').fileupload({   //图片上传
 		if(data.result.code == 1){
 			var obj = data.result.data[0];
 			$("#preview-img").attr("src", obj.absPath);
+			$(input[name="qwerqwerqwer"]).val(obj.absPath)
 		}else{
 			$.alert(data.result.message)
 		}
+	},
+	progressall: function (e, data) {
+
+	}
+});
+$('#fileupload2').fileupload({
+	url: host.static+'/upload/fileUpload',
+	dataType: 'json',
+	done: function (e, data) {
+		if(data.result.code == 1){
+			var obj = data.result.data[0];
+			$("#J_fileUploadSS").val(obj.filePath);
+			$('.fileUploads span').html(data.files[0].name);
+		}else{
+			$.alert(data.result.message)
+		}
+
 	},
 	progressall: function (e, data) {
 
@@ -187,23 +213,21 @@ function tablePlus(that) {
 			$(that).parents('.table-plus tbody').append(priceHtml);
 			addItem(that)
 		} else {
-			$.alert('请输入规格和价格',true,function(){
-				
-			});
+			$.alert('请完善本条信息',true,function(){});
 		}
 	} else if ($(that).parents('.table-plus').attr('d-type') == 'requestHtml') {
 		if ($(that).parent().siblings('.name-input').find('input').val() && $(that).parent().siblings('.type-input').find('input').val()) {
 			$(that).parents('.table-plus tbody').append(requestHtml);
 			addItem(that)
 		} else {
-			alert('请输入相关内容');
+			$.alert('请完善本条信息',true,function(){});
 		}
 	} else if ($(that).parents('.table-plus').attr('d-type') == 'returnHtml') {
 		if ($(that).parent().siblings('.errorNum-input').find('input').val()) {
 			$(that).parents('.table-plus tbody').append(returnHtml);
 			addItem(that)
 		} else {
-			alert('请输入相关内容');
+			$.alert('请完善本条信息',true,function(){});
 		}
 	}
 	function addItem(that) {
