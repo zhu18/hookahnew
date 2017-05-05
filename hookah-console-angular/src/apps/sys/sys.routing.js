@@ -56,4 +56,9 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
       template: require('./dict_add_child.html'),
       controller: SysDictController,
     })
+    .state('sys.region.add', {
+        url: '/sys/region/add',
+        template: require('./region_add.html'),
+        controller: RegionController,
+    })
 };
