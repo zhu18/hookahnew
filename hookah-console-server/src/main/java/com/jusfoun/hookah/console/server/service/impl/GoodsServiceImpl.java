@@ -105,8 +105,12 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             MgGoods mgGoods = new MgGoods();
             mgGoods.setAttrTypeList(obj.getAttrTypeList());
             mgGoods.setFormatList(obj.getFormatList());
+            mgGoods.setApiInfo(obj.getApiInfo());
             mgGoods.setImgList(obj.getImgList());
             mgGoods.setGoodsId(obj.getGoodsId());
+            MgGoods mgGoods1 = mgGoodsService.selectById(obj.getGoodsId());
+            mgGoods.setClickRate(mgGoods1.getClickRate() == null ? (long)0 : mgGoods1.getClickRate());
+            mgGoodsService.delete(obj.getGoodsId());
             mongoTemplate.save(mgGoods);
         }
     }
@@ -303,13 +307,13 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             }
         }
 
-
         MgGoods mgGoods = mgGoodsService.selectById(goodsId);
         if (mgGoods != null) {
             goodsVo.setFormatList(mgGoods.getFormatList());
             goodsVo.setImgList(mgGoods.getImgList());
             goodsVo.setAttrTypeList(mgGoods.getAttrTypeList());
             goodsVo.setApiInfo(mgGoods.getApiInfo());
+            goodsVo.setClickRate(mgGoods.getClickRate());
         }
         goodsVo.setCatName(DictionaryUtil.getCategoryById(goodsVo.getCatId()) == null
                 ? "" : DictionaryUtil.getCategoryById(goodsVo.getCatId()).getCatName());
