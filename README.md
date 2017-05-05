@@ -88,6 +88,7 @@
     * 替换 http://localhost:9500/ 为 http://admin.hookah.app/
     * 注意尾部/符号
   * 模块根目录执行``` ./node_modules/webpack/bin/webpack.js ```
+     !!window下执行:```.\node_modules\.bin\webpack.cmd
   * 模块根目录下会生成dist目录及打包好的程序
 * hookah-oauth2server打包
   * 修改pom.xml文件，把下面所示的resource注释掉
