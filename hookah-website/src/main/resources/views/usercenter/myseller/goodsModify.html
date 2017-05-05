@@ -136,10 +136,10 @@ var htmlPart = {
                                                 <tbody>
                                                 <tr class="parent-tr">
                                                     <td class="name-input">
-                                                        <div class="inputbox"><input type="text" datatype="name" placeholder="请输入名称"></div>
+                                                        <div class="inputbox"><input type="text" datatype="name" placeholder="请输入名称" required="required"></div>
                                                     </td>
                                                     <td class="number-input">
-                                                        <div class="inputbox"><input type="number" datatype="number" placeholder="请输入规格"></div>
+                                                        <div class="inputbox"><input type="number" datatype="number" placeholder="请输入规格" required="required"></div>
                                                     </td>
                                                     <td>
                                                         <div class="selectbox">
@@ -151,7 +151,7 @@ var htmlPart = {
                                                         </div>
                                                     </td>
                                                     <td class="price-input">
-                                                        <div class="inputbox"><input class="price-input" datatype="price" type="number" placeholder="请输入价格"></div>
+                                                        <div class="inputbox"><input class="price-input" datatype="price" type="number" placeholder="请输入价格" required="required"></div>
                                                     </td>
                                                     <td>
                                                         <span class="table-plus-btn" onclick="tablePlus(this)">+</span>
@@ -191,7 +191,7 @@ var htmlPart = {
                                     <td class="bar">接口地址：<span class="required">*</span></td>
                                     <td>
                                         <div class="text-box">
-                                            <input type="text" name="apiUrl">
+                                            <input type="text" name="apiUrl" required="required">
                                             <span class="input-count"></span>
                                         </div>
                                     </td>
@@ -246,7 +246,7 @@ var htmlPart = {
                                                 <tbody>
                                                 <tr class="parent-tr">
                                                     <td class="name-input">
-                                                        <div class="inputbox"><input type="text" name="fieldName" placeholder="请输入名称"></div>
+                                                        <div class="inputbox"><input type="text" name="fieldName" placeholder="请输入名称" required="required"></div>
                                                     </td>
                                                     <td class="type-input">
                                                         <div class="selectbox">
@@ -257,8 +257,7 @@ var htmlPart = {
                                                         </div>
                                                     </td>
                                                     <td class="type-input">
-                                                        <div class="inputbox"><input type="text" name="fieldDefault"
-                                                                                     placeholder="请输入默认值"></div>
+                                                        <div class="inputbox"><input type="text" name="fieldDefault" placeholder="请输入默认值" required="required"></div>
                                                     </td>
                                                     <td>
                                                         <div class="radio-box">
@@ -271,10 +270,10 @@ var htmlPart = {
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <div class="inputbox"><input type="text" name="fieldSample" placeholder="请输入示例"></div>
+                                                        <div class="inputbox"><input type="text" name="fieldSample" placeholder="请输入示例" required="required"></div>
                                                     </td>
                                                     <td>
-                                                        <div class="inputbox"><textarea name="describle" placeholder="请输入描述"></textarea></div>
+                                                        <div class="inputbox"><textarea name="describle" placeholder="请输入描述" required="required"></textarea></div>
                                                     </td>
                                                     <td>
                                                         <span class="table-plus-btn itemNum" onclick="tablePlus(this)">+</span>
@@ -309,11 +308,10 @@ var htmlPart = {
                                                 <tbody>
                                                 <tr class="parent-tr">
                                                     <td class="errorNum-input">
-                                                        <div class="inputbox"><input type="text" name="fieldName" placeholder="请输入错误码"></div>
+                                                        <div class="inputbox"><input type="text" name="fieldNames" placeholder="请输入错误码" required="required"></div>
                                                     </td>
                                                     <td>
-                                                        <div class="inputbox"><textarea name="describle"
-                                                                                        placeholder="请输入说明"></textarea></div>
+                                                        <div class="inputbox"><textarea name="describles" placeholder="请输入说明" required="required"></textarea></div>
                                                     </td>
                                                     <td>
                                                         <span class="table-plus-btn" onclick="tablePlus(this)">+</span>

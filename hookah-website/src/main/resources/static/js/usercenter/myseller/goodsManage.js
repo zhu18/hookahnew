@@ -57,7 +57,7 @@ function offSale(id) {
 }
 $('#J_goodsNameSearch').on('focus',function () {
 	$(this).siblings('.tips').hide();
-})
+});
 $('#J_goodsNameSearch').on('blur',function () {
 	if($(this).val()){
 		$(this).siblings('.tips').hide();
