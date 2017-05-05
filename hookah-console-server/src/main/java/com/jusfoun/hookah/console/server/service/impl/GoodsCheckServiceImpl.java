@@ -54,7 +54,11 @@ public class GoodsCheckServiceImpl extends GenericServiceImpl<GoodsCheck, String
         if(goodsCheck.getCheckStatus() == 1){
             goods.setCheckStatus(Byte.parseByte(HookahConstants.CheckStatus.audit_success.getCode()));
             goodsService.updateByIdSelective(goods);
-            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_GOODS_ID, goodsCheck.getGoodsId());
+            try {
+                mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_GOODS_ID, goodsCheck.getGoodsId());
+            }catch (Exception e){
+                logger.error("审核处理消息队列发送失败：" + e.getMessage());
+            }
         }else if(goodsCheck.getCheckStatus() == 2){
             goods.setCheckStatus(Byte.parseByte(HookahConstants.CheckStatus.audit_fail.getCode()));
             goodsService.updateByIdSelective(goods);
