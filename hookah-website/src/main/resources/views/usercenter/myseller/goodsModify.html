@@ -30,7 +30,7 @@ var htmlPart = {
                             <table>
                                 <tbody>
                                 <tr>
-                                    <td class="bar">商品名称：<span class="required">*</span></td>
+                                    <td class="bar">商品名称：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="text-box"><input name="goodsName" id="J-goodsName" type="text" required>
                                             <span class="input-count"><strong id="showcontent">0</strong>/60</span>
@@ -41,7 +41,7 @@ var htmlPart = {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="bar">商品简介：<span class="required">*</span></td>
+                                    <td class="bar">商品简介：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="textarea-box">
                                             <textarea type="text" name="goodsBrief" id="J-goodsBrief" required></textarea>
@@ -66,7 +66,7 @@ var htmlPart = {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="bar">商品类型：<span class="required">*</span></td>
+                                    <td class="bar">商品类型：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="radio-box">
                                             <label>
@@ -95,7 +95,7 @@ var htmlPart = {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="bar">商品图片：<span class="required">*</span></td>
+                                    <td class="bar">商品图片：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="block info" style="margin: 0px 0px 3px;">
                                             商品图片大小不能超过3MB。
@@ -117,7 +117,7 @@ var htmlPart = {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="bar">规格及价格：<span class="required">*</span></td>
+                                    <td class="bar">规格及价格：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="block info" style="margin: 0px 0px 3px;">
                                             第一行为默认数据。
@@ -136,10 +136,10 @@ var htmlPart = {
                                                 <tbody>
                                                 <tr class="parent-tr">
                                                     <td class="name-input">
-                                                        <div class="inputbox"><input type="text" datatype="name" placeholder="请输入名称"></div>
+                                                        <div class="inputbox"><input type="text" datatype="name" placeholder="请输入名称" required="required"></div>
                                                     </td>
                                                     <td class="number-input">
-                                                        <div class="inputbox"><input type="number" datatype="number" placeholder="请输入规格"></div>
+                                                        <div class="inputbox"><input type="number" datatype="number" placeholder="请输入规格" required="required"></div>
                                                     </td>
                                                     <td>
                                                         <div class="selectbox">
@@ -151,7 +151,7 @@ var htmlPart = {
                                                         </div>
                                                     </td>
                                                     <td class="price-input">
-                                                        <div class="inputbox"><input class="price-input" datatype="price" type="number" placeholder="请输入价格"></div>
+                                                        <div class="inputbox"><input class="price-input" datatype="price" type="number" placeholder="请输入价格" required="required"></div>
                                                     </td>
                                                     <td>
                                                         <span class="table-plus-btn" onclick="tablePlus(this)">+</span>
@@ -163,7 +163,7 @@ var htmlPart = {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="bar">商品描述：<span class="required">*</span></td>
+                                    <td class="bar">商品描述：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="wangEditor-wrapper">
                                             <textarea id="textarea1" style="height: 500px; display: none;" required="required"></textarea>
@@ -171,10 +171,10 @@ var htmlPart = {
                                     </td>
                                 </tr>
                                 <tr class="file-info-box">
-                                    <td class="bar">文件上传：</td>
+                                    <td class="bar">文件上传：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="fileUploads">
-                                            <input type="hidden" id="J_fileUploadSS">
+                                            <input type="hidden" id="J_fileUploadSS" required="required">
                                             <button>选择文件</button><span id="J_fileUploadName">未选择任何文件</span>
                                             <input id="fileupload2" type="file" name="filename" multiple="" class="preview-btn">
                                         </div>
@@ -188,16 +188,16 @@ var htmlPart = {
                             <table>
                                 <tbody>
                                 <tr>
-                                    <td class="bar">接口地址：<span class="required">*</span></td>
+                                    <td class="bar">接口地址：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="text-box">
-                                            <input type="text" name="apiUrl">
+                                            <input type="text" name="apiUrl" required="required">
                                             <span class="input-count"></span>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="bar">请求方式：<span class="required">*</span></td>
+                                    <td class="bar">请求方式：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="radio-box">
                                             <label>
@@ -228,7 +228,7 @@ var htmlPart = {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="bar">请求参数：<span class="required">*</span></td>
+                                    <td class="bar">请求参数：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="table-box">
                                             <table class="price-table table-plus" d-type="requestHtml">
@@ -246,7 +246,7 @@ var htmlPart = {
                                                 <tbody>
                                                 <tr class="parent-tr">
                                                     <td class="name-input">
-                                                        <div class="inputbox"><input type="text" name="fieldName" placeholder="请输入名称"></div>
+                                                        <div class="inputbox"><input type="text" name="fieldName" placeholder="请输入名称" required="required"></div>
                                                     </td>
                                                     <td class="type-input">
                                                         <div class="selectbox">
@@ -257,8 +257,7 @@ var htmlPart = {
                                                         </div>
                                                     </td>
                                                     <td class="type-input">
-                                                        <div class="inputbox"><input type="text" name="fieldDefault"
-                                                                                     placeholder="请输入默认值"></div>
+                                                        <div class="inputbox"><input type="text" name="fieldDefault" placeholder="请输入默认值" required="required"></div>
                                                     </td>
                                                     <td>
                                                         <div class="radio-box">
@@ -271,10 +270,10 @@ var htmlPart = {
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <div class="inputbox"><input type="text" name="fieldSample" placeholder="请输入示例"></div>
+                                                        <div class="inputbox"><input type="text" name="fieldSample" placeholder="请输入示例" required="required"></div>
                                                     </td>
                                                     <td>
-                                                        <div class="inputbox"><textarea name="describle" placeholder="请输入描述"></textarea></div>
+                                                        <div class="inputbox"><textarea name="describle" placeholder="请输入描述" required="required"></textarea></div>
                                                     </td>
                                                     <td>
                                                         <span class="table-plus-btn itemNum" onclick="tablePlus(this)">+</span>
@@ -295,7 +294,7 @@ var htmlPart = {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="bar">返回参数：<span class="required">*</span></td>
+                                    <td class="bar">返回参数：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="table-box">
                                             <table class="price-table table-plus" d-type="returnHtml">
@@ -309,11 +308,10 @@ var htmlPart = {
                                                 <tbody>
                                                 <tr class="parent-tr">
                                                     <td class="errorNum-input">
-                                                        <div class="inputbox"><input type="text" name="fieldName" placeholder="请输入错误码"></div>
+                                                        <div class="inputbox"><input type="text" name="fieldNames" placeholder="请输入错误码" required="required"></div>
                                                     </td>
                                                     <td>
-                                                        <div class="inputbox"><textarea name="describle"
-                                                                                        placeholder="请输入说明"></textarea></div>
+                                                        <div class="inputbox"><textarea name="describles" placeholder="请输入说明" required="required"></textarea></div>
                                                     </td>
                                                     <td>
                                                         <span class="table-plus-btn" onclick="tablePlus(this)">+</span>
@@ -372,7 +370,7 @@ var htmlPart = {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="bar">上架时间：<span class="required">*</span></td>
+                                        <td class="bar">上架时间：<span class="requireds">*</span></td>
                                         <td>
                                             <div class="radio-box">
                                                 <label><input type="radio" name="isBook" value="0" checked="" onchange="isOnsaleFun(this)">立刻上架</label>

@@ -1,6 +1,7 @@
 var goodsId = $.getUrlParam('id');
 var attrIds = [];
 var regionParam = 100000;
+var catId = '';
 getGoodsDetails(); //根据id获取商品详情
 function getGoodsDetails(){
 	$.ajax({
@@ -20,6 +21,7 @@ function getGoodsDetails(){
 	})
 }
 function renderData(data){//渲染页面
+	catId = data.catId;
 	$('.category-title-box').html(data.catFullName);
 	$('#J-goodsName').val(data.goodsName);//商品名称
 	$('#J-goodsBrief').val(data.goodsBrief);//简介
@@ -37,7 +39,7 @@ function renderData(data){//渲染页面
 	});
 	$('#preview-img').attr('src',data.goodsImg);//图片
 	$('input[name="goodsImg"]').val(data.goodsImg);
-	if(data.formatList.length > 0){
+	if(data.formatList && data.formatList.length > 0){
 		renderFormatList(data.formatList);//渲染价格
 	}
 	if(data.goodsDesc){
@@ -190,7 +192,7 @@ function renderFormatList(formatList){
 		}
 
 		html += '</tr>';
-	})
+	});
 	$('table[d-type="priceHtml"] tbody').html(html);
 }
 function getAttrFn(catId){ //获取商品属性
@@ -288,7 +290,6 @@ $('#fileupload').fileupload({
 		}else{
 			$.alert(data.result.message)
 		}
-
 	},
 	progressall: function (e, data) {
 
@@ -298,11 +299,15 @@ function goodsTypes(goodsType,apiInfo,uploadUrl) {
 	if (goodsType == 0) {
 		$('.api-info-box').hide();
 		$('.file-info-box').show();
-		renderfileUploadInfo(uploadUrl);
+		if(uploadUrl){
+			renderfileUploadInfo(uploadUrl);
+		}
 	} else {
 		$('.file-info-box').hide();
 		$('.api-info-box').show();
-		renderApiInfo(apiInfo);
+		if(apiInfo){
+			renderApiInfo(apiInfo);
+		}
 	}
 }
 function goodsTypes2(that) {
@@ -330,8 +335,6 @@ function renderApiInfo(apiInfo){
 	var html = '';
 	var reqLen = apiInfo.reqParamList.length;
 	$.each(apiInfo.reqParamList,function (index,data) {
-		var r = index == 0 ? "required" : "false";
-
 		html +='<tr class="parent-tr">';
 		html +='<td class="name-input"><div class="inputbox "><input type="text" name="fieldName" placeholder="请输入名称" value="'+data.fieldName+'" required="required"></div></td>';
 		html +='<td class="type-input"><div class="selectbox"><select name="fieldType">';
@@ -368,7 +371,6 @@ function renderApiInfo(apiInfo){
 		}else{
 			html +='<td><span class="table-plus-btn" onclick="tableDelete(this)">-</span></td>';
 		}
-
 		html +='</tr>';
 	});
 	$('table[d-type="requestHtml"] tbody').html(html);
@@ -413,11 +415,10 @@ function tablePlus(that) {
 	requestHtml += '</tr>';
 	var returnHtml = '';//返回借口
 	returnHtml += '<tr class="parent-tr">';
-	returnHtml += '<td class="errorNum-input"><div class="inputbox"><input type="text" placeholder="请输入错误码" name="fieldName"></div></td>';
-	returnHtml += '<td><div class="inputbox"><textarea placeholder="请输入说明" name="describle"></textarea></div></td>';
+	returnHtml += '<td class="errorNum-input"><div class="inputbox"><input type="text" placeholder="请输入错误码" name="fieldNames"></div></td>';
+	returnHtml += '<td><div class="inputbox"><textarea placeholder="请输入说明" name="describles"></textarea></div></td>';
 	returnHtml += '<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
 	returnHtml += '</tr>';
-
 	if ($(that).parents('.table-plus').attr('d-type') == 'priceHtml') {
 		if ($(that).parent().siblings('.number-input').find('input').val() && $(that).parent().siblings('.price-input').find('input').val()) {
 			$(that).parents('.table-plus tbody').append(priceHtml);
@@ -454,9 +455,7 @@ function getPriceBox(){
 	priceBox.find('input[datatype="number"]').attr('name','priceBoxNumber');
 	priceBox.find('input[datatype="price"]').attr('name','priceBoxPrice');
 }
-
-function initialize() {
-	getPriceBox();
+$(document).ready(function(){
 	$("#goodsModifyForm").validate({
 		rules: {
 			goodsName:  {
@@ -474,17 +473,21 @@ function initialize() {
 		},
 		messages: {
 			goodsName:  {
-				required: '必填',
+				required: '商品名称不能为空',
 				isGoodsName:'长度为10-60个字符（每个汉字为2个字符）'
 			},
 			goodsBrief:  {
-				required: '必填',
+				required: '商品简介不能为空',
 				isGoodsBrief:'长度为30-400个字符（每个汉字为2个字符）'
 			},
 			goodsImg:'图片必须上传',
 
 		}
 	});
+});
+function initialize() {
+	getPriceBox();
+
 	$('.price-input').focus(function(){
 		$(this).css('color','#333');
 	});
@@ -502,22 +505,16 @@ function initialize() {
 			}
 		}
 	});
-};
+}
 function getLength(str){
 	return str.replace(/[\u0391-\uFFE5]/g,"aa").length;
 }
-
 $('#J-goodsName').on('input onporpertychange',function () {
 	$('#showcontent').html(getLength($(this).val()));
 });
 $('#J-goodsBrief').on('input onporpertychange',function () {
 	$('#showcontent2').html(getLength($(this).val()));
 });
-
-// function submitModify(){
-//
-// 	return false;
-// }
 $.validator.addMethod("isGoodsName", function(value, element) {
 	var len = value.replace(/[\u0391-\uFFE5]/g,"aa").length;
 	return this.optional(element) || (10 <= len && len <= 60);
@@ -526,20 +523,41 @@ $.validator.addMethod("isGoodsBrief", function(value, element) {
 	var len = value.replace(/[\u0391-\uFFE5]/g,"aa").length;
 	return this.optional(element) || (30 <= len && len <= 400);
 }, "长度为30-400个字符（每个汉字为2个字符）");
-// $.validator.setDefaults({
-// 	submitHandler: function() {
-// 		alert(submitGoodsPublish());
-// 		return false;
-// 	}
-// });
 $('#J_submitBtn').click(function(){
-	if($("#goodsModifyForm").validate()){
-		alert(submitGoodsPublish());
+	if($("#goodsModifyForm").valid()){
+		backAddFn(submitGoodsPublish())
 	}
 });
+function backAddFn(data){
+	Loading.start();
+	$.ajax({
+		type: 'POST',
+		url: '/goods/back/update',
+		data: JSON.stringify(data),
+		dataType: 'json',
+		contentType: 'application/json',
+		success: function (data) {
+			if (data.code == "1") {
+				Loading.stop();
+				$('.pusGoods-btn').addClass('trues');
+				$.confirm('<h3 style="font-weight: 800">提交成功</h3><p>继续发布商品吗?</p>', null, function (type) {
+					if (type == 'yes') {
+						window.location.href = "/usercenter/goodsPublish";
+					} else {
+						window.location.href = "/usercenter/goodsWait";
+					}
+				});
+			} else {
+				Loading.stop()
+				$.alert(data.message, true);
+			}
+		}
+	});
+}
 
 function submitGoodsPublish(){
 	var data = {};
+	data.goodsId = goodsId;
 	data.goodsName = $('input[name="goodsName"]').val();
 	data.goodsBrief = $('textarea[name="goodsBrief"]').val();
 	data.attrTypeList = [];
@@ -557,7 +575,7 @@ function submitGoodsPublish(){
 		attrTypeList.attrList =attrBs;
 		data.attrTypeList.push(attrTypeList);
 	});
-	data.goodsImg = imgSrc;
+	data.goodsImg = $('#preview-img').attr('src');
 	data.formatList = [];
 
 	$('table[d-type="priceHtml"] tbody tr').each(function () {
@@ -608,8 +626,8 @@ function submitGoodsPublish(){
 		data.apiInfo.respParamList = [];
 		$('table[d-type="returnHtml"] tbody tr').each(function () {
 			var listData = {};
-			listData.fieldName = $(this).find('input[name="fieldName"]').val();
-			listData.describle = $(this).find('textarea[name="describle"]').val();
+			listData.fieldName = $(this).find('input[name="fieldNames"]').val();
+			listData.describle = $(this).find('textarea[name="describles"]').val();
 			data.apiInfo.respParamList.push(listData);
 		});
 		data.apiInfo.respSample = $('.api-info-box').find('textarea[name="respSample"]').val();

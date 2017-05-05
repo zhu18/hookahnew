@@ -10,7 +10,7 @@ function loadPageData(data){
             html += '<p>'+list[i].goodsName+'</p>';
             html += '</a>';
             html += '</td>';
-            html += '<td>'+list[i].catId+'</td>';
+            html += '<td>'+list[i].catName+'</td>';
             html += '<td class="text-right">'+ (list[i].shopPrice / 100).toFixed(2) +'</td>';
             html += '<td class="text-center">'+format(list[i].addTime)+'</td>';
             if(list[i].checkStatus == 0){
@@ -20,8 +20,9 @@ function loadPageData(data){
             }else if(list[i].checkStatus == 2){
                 html += '<td class="text-center">不通过</td>';
             }
-            html += '<td>';
-            html += '<a href="javascript:void(0)">下架</a>';
+			html += '<td class="text-right">'+format(list[i].onsaleStartDate)+'</td>';
+			html += '<td>';
+			html += '<a href="javascript:offSale(\'' + list[i].goodsId + '\');">取消上架</a>';
             html += '</td>';
             html += '</tr>';
         }
@@ -29,6 +30,31 @@ function loadPageData(data){
     }else{
 		$('.trade-box tbody').html('<tr><td colspan="10"><div class="noData">暂无数据</div></td></tr>');
     }
+}
+function offSale(id) {
+	$.confirm('你确定取消此商品上架吗? ', null, function (type) {
+		if (type == 'yes') {
+			this.hide();
+			$.ajax({
+				url: host.website + '/goods/back/status/offSale',
+				type: 'post',
+				data: {
+					goodsId: id
+				},
+				success: function (data) {
+					if (data.code == 1) {
+						$.alert('操作成功', true, function () {
+							location.reload();
+						});
+					} else {
+						$.alert(data.message)
+					}
+				}
+			})
+		} else {
+			this.hide()
+		}
+	})
 }
 $('#J_goodsNameSearch').on('focus',function () {
 	$(this).siblings('.tips').hide();

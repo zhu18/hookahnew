@@ -102,7 +102,7 @@ h1{
     vertical-align: top;
     position: relative;
 }
-.struct tr td.bar .required{
+.struct tr td.bar .requireds{
     position: absolute;
     right: 0px;
     top:0;

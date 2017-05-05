@@ -98,7 +98,7 @@
     border:1px solid #ccc;
 }
 .searchQuery .search{
-cursor: pointer;
+    cursor: pointer;
 }
 #noPaySearch{
     height: 40px;
