@@ -61,9 +61,17 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
     @Override
     @Transactional
     public void addGoods(GoodsVo obj) throws HookahException {
+        Date date = DateUtils.now();
         if (obj == null)
             throw new HookahException("空数据！");
         // 将数据插入数据库
+        obj.setIsOnsale(HookahConstants.GOODS_STATUS_ONSALE);
+        obj.setCheckStatus(HookahConstants.GOODS_CHECK_STATUS_WAIT);
+        if(obj.getOnsaleStartDate() == null) {
+            obj.setOnsaleStartDate(date);
+        }
+        obj.setAddTime(date);
+        obj.setLastUpdateTime(date);
         obj = (GoodsVo)super.insert(obj);
         if(obj == null)
             throw new HookahException("操作失败");
@@ -84,7 +92,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         Date date = DateUtils.now();
         obj.setLastUpdateTime(date);
         obj.setIsOnsale(HookahConstants.GOODS_STATUS_ONSALE);
-        if(obj.getOnsaleStartDate() != null) {
+        if(obj.getOnsaleStartDate() == null) {
             obj.setOnsaleStartDate(date);
         }
         obj.setOnsaleEndDate(null);
