@@ -28,7 +28,7 @@ function renderData(data){//渲染页面
 			$(this).attr('checked','true')
 		}
 	});
-	goodsTypes(data.goodsType,data.apiInfo)
+	goodsTypes(data.goodsType,data.apiInfo,data.uploadUrl);
 	getAttrFn(data.catId); //获取属性
 	$.each(data.attrTypeList,function(index,items){
 		$.each(items.attrList,function(index,item){
@@ -51,6 +51,72 @@ function renderData(data){//渲染页面
 	renderIsBook(data.isBook, data.onsaleStartDate);
 	$('#showcontent').html(getLength($('#J-goodsName').val()));
 	$('#showcontent2').html(getLength($('#J-goodsBrief').val()));
+	if(data.areaCountry > 0){
+		loadCountry(data.areaCountry,data.areaProvince)
+	}
+	if(data.areaProvince > 0){
+		loadCity(data.areaProvince,data.areaCity)
+	}
+	initialize(); // 初始化数据
+}
+//加载地区
+function loadCountry(idCountry,idProvince) {
+	$.ajax({
+		type: "get",
+		url: host.website+'/region/getRegionCodeByPid',
+		data: {
+			parentId: idCountry
+		},
+		success: function (data) {
+			if (data.code == 1) {
+				if(data.data.length > 0){
+					renderOneRegion(idProvince,data.data)
+				}
+			} else {
+				$.alert(data.message)
+			}
+		}
+	});
+}
+function renderOneRegion(idProvince,data){
+	var html = '<option value="-1">全部</option>';
+	data.forEach(function(e){
+		if(e.id == idProvince){
+			html += '<option selected="selected" value="'+e.id+'">'+e.name+'</option>';
+		}else{
+			html += '<option value="'+e.id+'">'+e.name+'</option>';
+		}
+	});
+	$('#province').html(html);
+}
+function loadCity(idProvince,idCity) {
+	$.ajax({
+		type: "get",
+		url: host.website+'/region/getRegionCodeByPid',
+		data: {
+			parentId: idProvince
+		},
+		success: function (data) {
+			if (data.code == 1) {
+				if(data.data.length > 0){
+					renderTwoRegion(idCity,data.data)
+				}
+			} else {
+				$.alert(data.message)
+			}
+		}
+	});
+}
+function renderTwoRegion(idCity,data){
+	var html = '<option value="-1">全部</option>';
+	data.forEach(function(e){
+		if(e.id == idCity){
+			html += '<option selected="selected" value="'+e.id+'">'+e.name+'</option>';
+		}else{
+			html += '<option value="'+e.id+'">'+e.name+'</option>';
+		}
+	});
+	$('#city').html(html);
 }
 function renderIsBook(isBook, onsaleStartDate){
 	if(isBook == 1){
@@ -170,7 +236,7 @@ function renderselect(data) {
 		$('.attribute-container').remove();
 	}
 }
-loadRegion('province', regionParam);
+// loadRegion('province', regionParam);
 //加载地区
 function loadRegion(id,regionParam) {
 	var parentId = '';
@@ -228,10 +294,13 @@ $('#fileupload').fileupload({
 
 	}
 });
-function goodsTypes(goodsType,apiInfo) {
+function goodsTypes(goodsType,apiInfo,uploadUrl) {
 	if (goodsType == 0) {
 		$('.api-info-box').hide();
+		$('.file-info-box').show();
+		renderfileUploadInfo(uploadUrl);
 	} else {
+		$('.file-info-box').hide();
 		$('.api-info-box').show();
 		renderApiInfo(apiInfo);
 	}
@@ -239,9 +308,15 @@ function goodsTypes(goodsType,apiInfo) {
 function goodsTypes2(that) {
 	if ($(that).val() == 0) {
 		$('.api-info-box').hide();
+		$('.file-info-box').show();
 	} else {
+		$('.file-info-box').hide();
 		$('.api-info-box').show();
 	}
+}
+function renderfileUploadInfo(uploadUrl){
+	$('#J_fileUploadSS').val(uploadUrl);
+	$('#J_fileUploadName').html(uploadUrl);
 }
 function renderApiInfo(apiInfo){
 	$('input[name="apiUrl"]').val(apiInfo.apiUrl);
@@ -380,8 +455,8 @@ function getPriceBox(){
 	priceBox.find('input[datatype="price"]').attr('name','priceBoxPrice');
 }
 
-$().ready(function() {
-	getPriceBox()
+function initialize() {
+	getPriceBox();
 	$("#goodsModifyForm").validate({
 		rules: {
 			goodsName:  {
@@ -427,7 +502,7 @@ $().ready(function() {
 			}
 		}
 	});
-});
+};
 function getLength(str){
 	return str.replace(/[\u0391-\uFFE5]/g,"aa").length;
 }
@@ -451,9 +526,95 @@ $.validator.addMethod("isGoodsBrief", function(value, element) {
 	var len = value.replace(/[\u0391-\uFFE5]/g,"aa").length;
 	return this.optional(element) || (30 <= len && len <= 400);
 }, "长度为30-400个字符（每个汉字为2个字符）");
-$.validator.setDefaults({
-	submitHandler: function() {
-		alert("提交事件!");
-		return false;
+// $.validator.setDefaults({
+// 	submitHandler: function() {
+// 		alert(submitGoodsPublish());
+// 		return false;
+// 	}
+// });
+$('#J_submitBtn').click(function(){
+	if($("#goodsModifyForm").validate()){
+		alert(submitGoodsPublish());
 	}
 });
+
+function submitGoodsPublish(){
+	var data = {};
+	data.goodsName = $('input[name="goodsName"]').val();
+	data.goodsBrief = $('textarea[name="goodsBrief"]').val();
+	data.attrTypeList = [];
+	$('.chosen-select').each(function () {
+		var attrTypeList = {};
+		attrTypeList.typeId = $(this).attr('typeid');
+		attrTypeList.typeName = $(this).attr('name');
+		var attrAs = $(this).val();
+		var attrBs = [];
+		for(var i=0;i<attrAs.length;i++){
+			var json = {};
+			json['attrId']=attrAs[i];
+			attrBs.push(json)
+		}
+		attrTypeList.attrList =attrBs;
+		data.attrTypeList.push(attrTypeList);
+	});
+	data.goodsImg = imgSrc;
+	data.formatList = [];
+
+	$('table[d-type="priceHtml"] tbody tr').each(function () {
+		var listData = {};
+		listData.formatId = $(this).index();
+		listData.formatName = $(this).find('input[datatype="name"]').val();
+		listData.number = $(this).find('input[datatype="number"]').val();
+		listData.format = $(this).find('select[name="format"]').val();
+		listData.price = ($(this).find('input[datatype="price"]').val()) * 100;
+		data.formatList.push(listData);
+
+	});
+	// alert(JSON.stringify(data.formatList));
+	data.shopNumber = data.formatList[0].number;
+	data.shopFormat = data.formatList[0].format;
+	data.shopPrice = data.formatList[0].price;
+	data.goodsType = $('input[name="goodsTypes"]:checked').val();
+	data.goodsDesc = $('#textarea1').val();
+	data.catId = catId; //此ID为url上的id
+	data.isBook = $('input[name="isBook"]:checked').val();
+	if (data.isBook == 1) {
+		data.onsaleStartDate = $('#indate').val();
+	}
+	if($('select[name="city"]').val() > 0){
+		data.goodsArea = $('select[name="city"]').val();
+	}else if($('select[name="province"]').val() > 0){
+		data.goodsArea = $('select[name="province"]').val();
+	}else if($('select[name="country"]').val() > 0){
+		data.goodsArea = $('select[name="country"]').val();
+	}
+	if (data.goodsType == 1) {
+		data.apiInfo = {};
+		data.apiInfo.apiUrl = $('.api-info-box').find('input[name="apiUrl"]').val();
+		data.apiInfo.apiMethod = $('.api-info-box').find('input[name="apiMethod"]:checked').val();
+		data.apiInfo.reqSample = $('.api-info-box').find('input[name="reqSample"]').val();
+		data.apiInfo.apiDesc = $('.api-info-box').find('textarea[name="apiDesc"]').val();
+		data.apiInfo.reqParamList = [];
+		$('table[d-type="requestHtml"] tbody tr').each(function (i, item) {
+			var listData = {};
+			listData.fieldName = $(item).find('input[name="fieldName"]').val();
+			listData.fieldType = $(item).find('select[name="fieldType"]').val();
+			listData.isMust = $(item).find('input[name="isMust' + i + '"]:checked').val();
+			listData.fieldSample = $(item).find('input[name="fieldSample"]').val();
+			listData.fieldDefault = $(item).find('input[name="fieldDefault"]').val();
+			listData.describle = $(item).find('textarea[name="describle"]').val();
+			data.apiInfo.reqParamList.push(listData);
+		});
+		data.apiInfo.respParamList = [];
+		$('table[d-type="returnHtml"] tbody tr').each(function () {
+			var listData = {};
+			listData.fieldName = $(this).find('input[name="fieldName"]').val();
+			listData.describle = $(this).find('textarea[name="describle"]').val();
+			data.apiInfo.respParamList.push(listData);
+		});
+		data.apiInfo.respSample = $('.api-info-box').find('textarea[name="respSample"]').val();
+	}else{
+		data.uploadUrl = $('#J_fileUploadSS').val();
+	}
+	return data;
+}

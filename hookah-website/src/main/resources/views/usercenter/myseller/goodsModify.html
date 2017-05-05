@@ -166,7 +166,17 @@ var htmlPart = {
                                     <td class="bar">商品描述：<span class="required">*</span></td>
                                     <td>
                                         <div class="wangEditor-wrapper">
-                                            <textarea id="textarea1" style="height: 500px; display: none;"></textarea>
+                                            <textarea id="textarea1" style="height: 500px; display: none;" required="required"></textarea>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="file-info-box">
+                                    <td class="bar">文件上传：</td>
+                                    <td>
+                                        <div class="fileUploads">
+                                            <input type="hidden" id="J_fileUploadSS">
+                                            <button>选择文件</button><span id="J_fileUploadName">未选择任何文件</span>
+                                            <input id="fileupload2" type="file" name="filename" multiple="" class="preview-btn">
                                         </div>
                                     </td>
                                 </tr>
@@ -377,7 +387,7 @@ var htmlPart = {
                     </div>
                 </div>
                 <div class="pulish-btn">
-                    <button class="pusGoods-btn btn btn-full-orange" type="submit">发布商品</button>
+                    <button class="pusGoods-btn btn btn-full-orange" type="button" id="J_submitBtn">发布商品</button>
                 </div>
             </form>
         </div>
