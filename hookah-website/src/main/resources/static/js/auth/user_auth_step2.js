@@ -4,17 +4,18 @@
 $(function(){
 $(".button").on("click",userAuth);
 $("#userCode").on("blur",checkIDCard);
-$("#submit1").on("change", upPhoto);
-$("#submit2").on("change", upPhoto);
+$("#zform").on("click", upPhoto);
+$("#fform").on("click", upPhoto);
+
 });
 var idcardcheck=false;
 function userAuth(){
    if($("#userName").val()==''){
-       alert("请输入姓名");
+       swal("请输入您的姓名！");
        return;
    }
     if(!idcardcheck){
-        alert("请验证身份证号");
+        swal("请验证您的身份证号！");
         return;
     }
     $.ajax({
@@ -28,7 +29,7 @@ function userAuth(){
             type:"post",
             success : function(data) {
                 if (data.code == 1) {
-                    window.location.href = './user_auth_init_step3.html';
+                    window.location.href = './user_auth_init_step4.html';
                 } else {
                     alert(data.errMsg);
                 }
@@ -41,43 +42,34 @@ function userAuth(){
 function checkIDCard(){
     var idcard = $("#userCode").val();
     if(idcard==null||idcard==""){
-        alert("请输入身份证号");
+        swal("请输入身份证号！");
         return ;
     }
     if(idcard.length<18){
-        alert("请输入正确的身份证编号");
+        swal("请输入正确的身份证编码！");
         return ;
     }
     idcardcheck=true;
 }
 var upinput;
-var img = '';
-function upPhoto() {
-    upinput=$(this);
-    console.log($(this));
-    $(this).parent().ajaxSubmit({
-        type : "post",
-        url: "http://static.hookah.app/upload/fileUpload",
-        // dataType: "json",
-        // contentType: "application/json;charset=UTF-8",
-        success: function (e, data) {
-            console.log(111);
-            if (data.code == 1) {
-                 img = data.data[0].absPath;
-                if ($(upinput).attr("id") == "submit1") {
-                    $("#zm").attr("src", img);
-                    // var fileObj = $("#zm");
-                    $("#zm").attr("src", window.URL.createObjectURL($(upinput).get(0).files[0]));
-                } else {
-                    $("#fm").attr("src", img);
-                    $("#fm").attr("src", window.URL.createObjectURL($(upinput).get(0).files[0]));
-                }
-            }else{
-                $.alert(data.message);
+var imgSrc = '';
+var fileUploadUrl = host.static+'/upload/fileUpload';
+function upPhoto(){
+    $(this).find("input").fileupload({
+        url: fileUploadUrl,
+        dataType: 'json',
+        done: function (e, data) {
+            if (data.result.code == 1) {
+                var obj = data.result.data[0];
+                $(this).siblings("img").attr("src", obj.absPath);
+                imgSrc = obj.absPath;
+            } else {
+                $.alert(data.result.message)
             }
+
         },
         progressall: function (e, data) {
 
         }
-    });
+    })
 }

@@ -5,14 +5,11 @@ function loadPageData(data){
         var list = data.data.orders.list;
         var html = '';
         for(var i=0; i<list.length; i++){
-            var goodsType = list[i].goodsType == 0 ? '普通商品':'api商品';
             html += '<tr class="content border-bottom">';
             html += '<td class="text-align-center">'+list[i].orderSn+'</td>';
             html += '<td class="text-align-right moneyTotal">￥&nbsp;'+(list[i].orderAmount/100).toFixed(2)+'</td>';//订单总金额
             html += '<td>'+format(list[i].addTime)+'</td>';
             html += '<td>已付款</td>';
-            html += '<td>'+list[i].goodsType+'</td>';
-            html += '<td><a href="'+list[i].uploadUrl+'">下载数据</a></td>';
             html += '<td class="text-align-center">';
             html += '<a target="_blank" href="/order/viewDetails?orderId='+list[i].orderId+'&num=1" class="display-block">查看详情</a>';
             if(list[i].commentFlag==0){
@@ -20,7 +17,7 @@ function loadPageData(data){
             }else if(list[i].commentFlag==1){
                 html += '<a href="" class="display-block">已评价</a>';
             }
-            html += '<a href="javascript:deleteRadio(\''+list[i].orderId+'\');" class="display-block deleteRadio">删除</a>';
+            html += '<a href="javascript:confirmDelete(\''+list[i].orderId+'\');" class="display-block deleteRadio">删除</a>';
             html += '</td>';
             html += '</tr>';
         }
@@ -86,6 +83,14 @@ function deleteRadio(orderId) {
         }
     })
 }
+function confirmDelete(orderId){
+    if(confirm("确定要删除该订单吗？")){
+        deleteRadio(orderId);
+    }else{
+
+    }
+}
+
 
 
 

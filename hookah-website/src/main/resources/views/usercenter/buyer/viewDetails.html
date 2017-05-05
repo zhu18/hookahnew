@@ -66,9 +66,11 @@ var htmlPart = {
                         <thead>
                         <tr>
                             <th>商品</th>
-                            <th>商品编号</th>
+                            <!--<th>商品编号</th>-->
                             <th>价格</th>
                             <th>商品数量</th>
+                            <th>商品类型</th>
+                            <th>下载数据</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -85,9 +87,17 @@ var htmlPart = {
                                     <a href="/exchange/details?id=${list.goodsId}" target="_blank">${list.goodsName}</a>
                                 </div>
                             </td>
-                            <td class="number" >${list.goodsSn}</td>
-                            <td class="price">¥${list.goodsPrice}</td>
+                            <!--<td class="number" >${list.goodsSn}</td>-->
+                            <td class="price">¥${trunc(list.goodsPrice / 100 , 2)}</td>
                             <td class="num">${list.goodsNumber}</td>
+                            <td class="num">${decode(list.goodsType,0,'常规商品',1,'api商品','-')}</td>
+                            <td class="num">
+                            <%if(isNotEmpty(list.uploadUrl)){%>
+                                <a target="_blank" href="http://static.hookah.app/upload/download?filePath=${list.uploadUrl}">下载数据</a>
+                            <%}else{%>
+                                -
+                            <%}%>
+                            </td>
                             <td class="operate"><a href="javascript:addCart('+${list.goodsId}+',${list.formatId},${list.goodsNumber})" class="buy btn-full-blue">再次购买</a></td>
                         </tr>
                         <%}%>
@@ -98,8 +108,8 @@ var htmlPart = {
                     <ul class="grid-right margin-right-20">
                         <li>付款方式:<span>${order.payName}</span></li>
                         <li>付款时间：<span>${order.payTime,dateFormat="yyyy-MM-dd"}&nbsp;&nbsp;</span></li>
-                        <li>商品总额: <span>¥${order.goodsAmount}</span></li>
-                        <li>应付总额: <span>¥${order.orderAmount}</span></li>
+                        <li>商品总额: <span>¥${trunc(order.goodsAmount / 100 , 2)}</span></li>
+                        <li>应付总额: <span>¥${trunc(order.orderAmount / 100 , 2)}</span></li>
                     </ul>
                 </div>
             </div>

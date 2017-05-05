@@ -297,8 +297,17 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         for(OrderInfo order:list){
             OrderInfoVo orderInfoVo = new OrderInfoVo();
             this.copyProperties(order,orderInfoVo,null);
+
             OrderInfoVo mgOrder = mgOrderInfoService.selectById(orderInfoVo.getOrderId());
-            orderInfoVo.setMgOrderGoodsList(mgOrder.getMgOrderGoodsList());
+            List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
+            //未支付订单处理
+            if(order.getPayStatus()!=OrderInfo.PAYSTATUS_PAYED){
+                for(MgOrderGoods goods:goodsList){
+                    goods.setUploadUrl(null);
+                }
+            }
+
+            orderInfoVo.setMgOrderGoodsList(goodsList);
             page.add(orderInfoVo);
         }
 
@@ -346,7 +355,15 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         OrderInfoVo orderInfoVo = new OrderInfoVo();
         BeanUtils.copyProperties(order,orderInfoVo);
         OrderInfoVo mgOrder = mgOrderInfoService.selectById(orderInfoVo.getOrderId());
-        orderInfoVo.setMgOrderGoodsList(mgOrder.getMgOrderGoodsList());
+        List<MgOrderGoods> goodsList = mgOrder.getMgOrderGoodsList();
+        //未支付订单处理
+        if(order.getPayStatus()!=OrderInfo.PAYSTATUS_PAYED){
+            for(MgOrderGoods goods:goodsList){
+                goods.setUploadUrl(null);
+            }
+        }
+
+        orderInfoVo.setMgOrderGoodsList(goodsList);
 
         return orderInfoVo;
     }

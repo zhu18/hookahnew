@@ -138,7 +138,7 @@
                 AND onsale_start_date &lt;= SYSDATE()
             </if>
             <if test="goodsName!=null">
-                AND goods_name like '%'||#{goodsName}||'%'
+                AND goods_name like CONCAT('%', #{goodsName}, '%')
             </if>
             <if test="checkStatus!=null">
                 AND check_status = #{checkStatus}
