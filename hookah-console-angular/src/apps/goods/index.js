@@ -1,10 +1,12 @@
 import '../../common/common';
 import goodsRouting from './goods.routing';
+import "treeGridCss";
 const MODULE_NAME = 'Hookah';
 let app = angular.module(MODULE_NAME, [
   'Common',
   'ui.router',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'treeGrid'
 ]);
 app.config(goodsRouting);
 
@@ -67,6 +69,36 @@ app.run(function ($rootScope, $state) {
             }
         ]
     }
+    ,
+      {
+          "title": "分类管理",
+          "showChild": false,
+          "childs": [
+              {
+                  "title":"分类查询",
+                  "url":"category.search"
+              },
+              {
+                  "title":"添加分类",
+                  "url":"category.add"
+              }
+          ]
+      }
+      ,
+      {
+          "title": "属性管理",
+          "showChild": false,
+          "childs": [
+              {
+                  "title":"属性查询",
+                  "url":"attrtype.search"
+              },
+              {
+                  "title":"添加属性",
+                  "url":"attrtype.add"
+              }
+          ]
+      }
   ];
 
 });
