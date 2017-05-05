@@ -141,6 +141,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         og.setGoodsNumber(goodsNumber);
         og.setGoodsSn(goods.getGoodsSn());
 
+        og.setGoodsType(goods.getGoodsType());
+        og.setUploadUrl(goods.getUploadUrl());
+
         og.setGoodsPrice(format.getPrice());
 
         og.setGoodsFormat(format.getFormat());
