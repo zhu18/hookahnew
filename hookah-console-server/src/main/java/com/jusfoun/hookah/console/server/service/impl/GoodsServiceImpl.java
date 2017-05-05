@@ -322,6 +322,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             goodsVo.setImgList(mgGoods.getImgList());
             goodsVo.setAttrTypeList(mgGoods.getAttrTypeList());
             goodsVo.setApiInfo(mgGoods.getApiInfo());
+            goodsVo.setClickRate(mgGoods.getClickRate());
         }
         goodsVo.setCatName(DictionaryUtil.getCategoryById(goodsVo.getCatId()) == null
                 ? "" : DictionaryUtil.getCategoryById(goodsVo.getCatId()).getCatName());
