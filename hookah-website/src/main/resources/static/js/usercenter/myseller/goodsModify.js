@@ -455,8 +455,7 @@ function getPriceBox(){
 	priceBox.find('input[datatype="number"]').attr('name','priceBoxNumber');
 	priceBox.find('input[datatype="price"]').attr('name','priceBoxPrice');
 }
-function initialize() {
-	getPriceBox();
+$(document).ready(function(){
 	$("#goodsModifyForm").validate({
 		rules: {
 			goodsName:  {
@@ -474,17 +473,21 @@ function initialize() {
 		},
 		messages: {
 			goodsName:  {
-				required: '必填',
+				required: '商品名称不能为空',
 				isGoodsName:'长度为10-60个字符（每个汉字为2个字符）'
 			},
 			goodsBrief:  {
-				required: '必填',
+				required: '商品简介不能为空',
 				isGoodsBrief:'长度为30-400个字符（每个汉字为2个字符）'
 			},
 			goodsImg:'图片必须上传',
 
 		}
 	});
+});
+function initialize() {
+	getPriceBox();
+
 	$('.price-input').focus(function(){
 		$(this).css('color','#333');
 	});
