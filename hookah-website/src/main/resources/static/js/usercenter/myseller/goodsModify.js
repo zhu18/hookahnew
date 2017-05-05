@@ -529,7 +529,7 @@ function backAddFn(data){
 	Loading.start();
 	$.ajax({
 		type: 'POST',
-		url: '/goods/back/add',
+		url: '/goods/back/update',
 		data: JSON.stringify(data),
 		dataType: 'json',
 		contentType: 'application/json',

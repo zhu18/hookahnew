@@ -10,7 +10,7 @@ function loadPageData(data) {
 			html += '<p>' + list[i].goodsName + '</p>';
 			html += '</a>';
 			html += '</td>';
-			html += '<td>' + list[i].catId + '</td>';
+			html += '<td>' + list[i].catName + '</td>';
 			html += '<td class="text-right">' + (list[i].shopPrice / 100).toFixed(2) + '</td>';
 			html += '<td class="text-center">' + format(list[i].addTime) + '</td>';
 			html += '<td class="text-center">' + list[i].offReason + '</td>';
