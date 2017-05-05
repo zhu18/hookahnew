@@ -185,7 +185,6 @@ h1{
     background-color: #f6f6f6;
     height: 100px;
     width: 100px;
-    overflow: hidden;
     position: relative;
     display: table-cell;
     vertical-align: middle;
@@ -238,6 +237,14 @@ h1{
     text-align: center;
     line-height: 100px;
     z-index: 30;
+}
+.multimage-wrap .image-list li .preview .help-block{
+    position: absolute;
+    left: 100px;
+    top: 0;
+    width: 100%;
+    display: block;
+    cursor: default;
 }
 .radio-box .isOnsale-box{display: none;}
 .radio-box .isOnsale-box input {

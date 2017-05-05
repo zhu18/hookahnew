@@ -110,7 +110,7 @@ var htmlPart = {
                                                         <input id="fileupload" type="file" name="filename" multiple="" class="preview-btn">
                                                         <a href="javascript:void(0)" class="replace-btn"
                                                            id="replace-btn">替换图片</a>
-                                                        <input type="text" style="opacity: 0;width:20px;position: absolute;top: 100px;"  name="qwerqwerqwer" required="required">
+                                                        <input type="text" style="opacity: 0;width:20px;position: absolute"  name="goodsImges" required="required">
                                                     </div>
                                                 </li>
                                             </ul>
@@ -209,7 +209,7 @@ var htmlPart = {
                                     <td class="bar">商品描述：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="wangEditor-wrapper">
-                                            <textarea id="textarea1" style="height: 500px; display: none;" required="required"></textarea>
+                                            <textarea id="textarea1" style="height: 500px; display: none;" name="goodsDescBox" required="required"></textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -219,7 +219,8 @@ var htmlPart = {
                                         <div class="fileUploads">
                                             <input type="hidden" id="J_fileUploadSS" required="required" name="fileUploadSS">
                                             <button>选择文件</button><span>未选择任何文件</span>
-                                            <input id="fileupload2" type="file" name="filename2" multiple="" class="preview-btn">
+                                            <input id="fileupload2" type="file" name="filename" multiple="" class="preview-btn">
+                                            <input type="text" style="opacity: 0;width:20px;position: absolute"  name="goodsImges2" required="required">
                                         </div>
                                     </td>
                                 </tr>
@@ -301,7 +302,7 @@ var htmlPart = {
                                                     </td>
                                                     <td class="type-input">
                                                         <div class="inputbox"><input type="text" name="fieldDefault"
-                                                                                     placeholder="请输入默认值" required="required"></div>
+                                                                                     placeholder="请输入默认值"></div>
                                                     </td>
                                                     <td>
                                                         <div class="radio-box">
@@ -314,10 +315,10 @@ var htmlPart = {
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <div class="inputbox"><input type="text" name="fieldSample" placeholder="请输入示例" required="required"></div>
+                                                        <div class="inputbox"><input type="text" name="fieldSample" placeholder="请输入示例"></div>
                                                     </td>
                                                     <td>
-                                                        <div class="inputbox"><textarea name="describle" placeholder="请输入描述" required="required"></textarea></div>
+                                                        <div class="inputbox"><textarea name="describle" placeholder="请输入描述"></textarea></div>
                                                     </td>
                                                     <td>
                                                         <span class="table-plus-btn itemNum" onclick="tablePlus(this)">+</span>
@@ -352,10 +353,10 @@ var htmlPart = {
                                                 <tbody>
                                                 <tr class="parent-tr">
                                                     <td class="errorNum-input">
-                                                        <div class="inputbox"><input type="text" name="fieldName" placeholder="请输入错误码" required="required"></div>
+                                                        <div class="inputbox"><input type="text" name="fieldName2" placeholder="请输入错误码" required="required"></div>
                                                     </td>
                                                     <td>
-                                                        <div class="inputbox"><textarea name="describle"
+                                                        <div class="inputbox"><textarea name="describle2"
                                                                                         placeholder="请输入说明" required="required"></textarea></div>
                                                     </td>
                                                     <td>

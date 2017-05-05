@@ -16,7 +16,9 @@ $(document).ready(function(){
 			priceBoxName:'required',
 			priceBoxNumber:'required',
 			priceBoxPrice:'required',
-			qwerqwerqwer:'required'
+			goodsImges:'required',
+			goodsImges2:'required',
+			goodsDescBox:'required'
 		},
 		messages: {
 			goodsName:  {
@@ -27,7 +29,9 @@ $(document).ready(function(){
 				required: '商品简介不能为空',
 				isGoodsBrief:'长度为30-400个字符（每个汉字为2个字符）'
 			},
-			goodsImg:'图片必须上传',
+			goodsImges:'图片必须上传',
+			goodsImges2:'文件必须上传',
+			goodsDescBox:'商品描述不能为空'
 
 		},
 		showErrors:function(errorMap,errorList) {
@@ -106,7 +110,7 @@ $('#fileupload').fileupload({   //图片上传
 		if(data.result.code == 1){
 			var obj = data.result.data[0];
 			$("#preview-img").attr("src", obj.absPath);
-			$(input[name="qwerqwerqwer"]).val(obj.absPath)
+			$('input[name="goodsImges"]').val(obj.absPath);
 		}else{
 			$.alert(data.result.message)
 		}
@@ -123,6 +127,7 @@ $('#fileupload2').fileupload({
 			var obj = data.result.data[0];
 			$("#J_fileUploadSS").val(obj.filePath);
 			$('.fileUploads span').html(data.files[0].name);
+			$('input[name="goodsImges2"]').val(obj.absPath);
 		}else{
 			$.alert(data.result.message)
 		}
@@ -263,7 +268,117 @@ $.validator.addMethod("isGoodsBrief", function(value, element) {
 }, "长度为30-400个字符（每个汉字为2个字符）");
 $('#J_submitBtn').click(function(){
 	if($("#goodsModifyForm").valid()){
-		// backAddFn(submitGoodsPublish())
-		alert('12123')
+		if($('#textarea1').val()){
+			backAddFn(submitGoodsPublish())
+		}else{
+			$.alert('商品描述不能为空',true,function () {
+			})
+		}
 	}
 });
+function backAddFn(data){
+	Loading.start();
+	$.ajax({
+		type: 'POST',
+		url: '/goods/back/add',
+		data: JSON.stringify(data),
+		dataType: 'json',
+		contentType: 'application/json',
+		success: function (data) {
+			if (data.code == "1") {
+				Loading.stop();
+				$('.pusGoods-btn').addClass('trues');
+				$.confirm('<h3 style="font-weight: 800">提交成功</h3><p>继续发布商品吗?</p>', null, function (type) {
+					if (type == 'yes') {
+						window.location.href = "/usercenter/goodsPublish";
+					} else {
+						window.location.href = "/usercenter/goodsWait";
+					}
+				});
+			} else {
+				Loading.stop()
+				$.alert(data.message, true);
+			}
+		}
+	});
+}
+function submitGoodsPublish(){
+	var data = {};
+	data.goodsName = $('input[name="goodsName"]').val();
+	data.goodsBrief = $('textarea[name="goodsBrief"]').val();
+	data.attrTypeList = [];
+	$('.chosen-select').each(function () {
+		var attrTypeList = {};
+		attrTypeList.typeId = $(this).attr('typeid');
+		attrTypeList.typeName = $(this).attr('name');
+		var attrAs = $(this).val();
+		var attrBs = [];
+		for(var i=0;i<attrAs.length;i++){
+			var json = {};
+			json['attrId']=attrAs[i];
+			attrBs.push(json)
+		}
+		attrTypeList.attrList =attrBs;
+		data.attrTypeList.push(attrTypeList);
+	});
+	data.goodsImg = $('#preview-img').attr('src');
+	data.formatList = [];
+
+	$('table[d-type="priceHtml"] tbody tr').each(function () {
+		var listData = {};
+		listData.formatId = $(this).index();
+		listData.formatName = $(this).find('input[datatype="name"]').val();
+		listData.number = $(this).find('input[datatype="number"]').val();
+		listData.format = $(this).find('select[name="format"]').val();
+		listData.price = ($(this).find('input[datatype="price"]').val()) * 100;
+		data.formatList.push(listData);
+
+	});
+	// alert(JSON.stringify(data.formatList));
+	data.shopNumber = data.formatList[0].number;
+	data.shopFormat = data.formatList[0].format;
+	data.shopPrice = data.formatList[0].price;
+	data.goodsType = $('input[name="goodsTypes"]:checked').val();
+	data.goodsDesc = $('#textarea1').val();
+	data.catId = catId; //此ID为url上的id
+	data.isBook = $('input[name="isBook"]:checked').val();
+	if (data.isBook == 1) {
+		data.onsaleStartDate = $('#indate').val();
+	}
+	if($('select[name="city"]').val() > 0){
+		data.goodsArea = $('select[name="city"]').val();
+	}else if($('select[name="province"]').val() > 0){
+		data.goodsArea = $('select[name="province"]').val();
+	}else if($('select[name="country"]').val() > 0){
+		data.goodsArea = $('select[name="country"]').val();
+	}
+	if (data.goodsType == 1) {
+		data.apiInfo = {};
+		data.apiInfo.apiUrl = $('.api-info-box').find('input[name="apiUrl"]').val();
+		data.apiInfo.apiMethod = $('.api-info-box').find('input[name="apiMethod"]:checked').val();
+		data.apiInfo.reqSample = $('.api-info-box').find('input[name="reqSample"]').val();
+		data.apiInfo.apiDesc = $('.api-info-box').find('textarea[name="apiDesc"]').val();
+		data.apiInfo.reqParamList = [];
+		$('table[d-type="requestHtml"] tbody tr').each(function (i, item) {
+			var listData = {};
+			listData.fieldName = $(item).find('input[name="fieldName"]').val();
+			listData.fieldType = $(item).find('select[name="fieldType"]').val();
+			listData.isMust = $(item).find('input[name="isMust' + i + '"]:checked').val();
+			listData.fieldSample = $(item).find('input[name="fieldSample"]').val();
+			listData.fieldDefault = $(item).find('input[name="fieldDefault"]').val();
+			listData.describle = $(item).find('textarea[name="describle"]').val();
+			data.apiInfo.reqParamList.push(listData);
+		});
+		data.apiInfo.respParamList = [];
+		$('table[d-type="returnHtml"] tbody tr').each(function () {
+			var listData = {};
+			listData.fieldName = $(this).find('input[name="fieldNames"]').val();
+			listData.describle = $(this).find('textarea[name="describles"]').val();
+			data.apiInfo.respParamList.push(listData);
+		});
+		data.apiInfo.respSample = $('.api-info-box').find('textarea[name="respSample"]').val();
+	}else{
+		data.uploadUrl = $('#J_fileUploadSS').val();
+	}
+	return data;
+}
