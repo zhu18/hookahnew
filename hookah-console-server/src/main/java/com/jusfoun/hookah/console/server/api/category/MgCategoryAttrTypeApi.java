@@ -27,4 +27,13 @@ public class MgCategoryAttrTypeApi {
         return  mgCategoryAttrTypeService.findGoodsAttrByCatId(cateId);
     }
 
+    @RequestMapping(value="/addMgGoodsAttr")
+    public ReturnData addMgGoodsAttr(String cateId,String attrTypeId){
+        return  mgCategoryAttrTypeService.addMgGoodsAttr(cateId,attrTypeId);
+    }
+
+    @RequestMapping(value="/removeMgGoodsAttr")
+    public ReturnData removeMgGoodsAttr(String cateId,String attrTypeId){
+        return  mgCategoryAttrTypeService.removeMgGoodsAttr(cateId,attrTypeId);
+    }
 }

@@ -2,6 +2,9 @@ import GoodsController from './GoodsController';
 import GoodsCheckController from './GoodsCheckController';
 import ShelfController from '../shelf/ShelfController';
 import ManageGoodsController from '../shelf/ManageGoodsController';
+import CategoryController from '../category/CategoryController';
+import ManageAttrTypeController from '../category/ManageAttrTypeController';
+import AttrTypeController from '../attrtype/AttrTypeController';
 import pagination from 'angular-ui-bootstrap/src/pagination';
 goodsRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function goodsRouting($stateProvider, $urlRouterProvider) {
@@ -12,6 +15,14 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
       showSubMenu: true
     })
     .state('shelf', {
+      template: '<div ui-view></div>',
+      showSubMenu: true
+    })
+    .state('category', {
+      template: '<div ui-view></div>',
+      showSubMenu: true
+     })
+    .state('attrtype', {
       template: '<div ui-view></div>',
       showSubMenu: true
     })
@@ -71,5 +82,59 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
       template: require('../shelf/manageGoods.html'),
       controller: ManageGoodsController,
     })
-
+  .state('category.search', {
+      url: '/category/search',
+      template: require('../category/list.html'),
+      controller: CategoryController,
+  })
+  .state('category.add', {
+      url: '/category/add',
+      template: require('../category/add.html'),
+      controller: CategoryController,
+  })
+  .state('category.edit', {
+      url: '/category/edit/:data',
+      template: require('../category/edit.html'),
+      controller: CategoryController,
+  })
+  .state('category.add_child', {
+      url: '/category/add_child',
+      template: require('../category/add_child.html'),
+      controller: CategoryController,
+  })
+  .state('category.edit_child', {
+      url: '/category/edit_child',
+      template: require('../category/add_child.html'),
+      controller: CategoryController,
+  })
+  .state('category.manageAttrType',  {
+      url: '/category/manageAttrType/:cateId:cateName',
+      template: require('../category/manageAttrType.html'),
+      controller: ManageAttrTypeController,
+  })
+  .state('attrtype.search', {
+      url: '/attrtype/search',
+      template: require('../attrtype/list.html'),
+      controller: AttrTypeController,
+  })
+  .state('attrtype.add', {
+      url: '/attrtype/add',
+      template: require('../attrtype/add.html'),
+      controller: AttrTypeController,
+  })
+  .state('attrtype.edit', {
+      url: '/attrtype/edit',
+      template: require('../attrtype/edit.html'),
+      controller: AttrTypeController,
+  })
+  .state('attrtype.add_child', {
+      url: '/attrtype/add_child',
+      template: require('../attrtype/add_child.html'),
+      controller: AttrTypeController,
+  })
+  .state('attrtype.edit_child', {
+      url: '/attrtype/edit_child',
+      template: require('../attrtype/add_child.html'),
+      controller: AttrTypeController,
+  })
 };

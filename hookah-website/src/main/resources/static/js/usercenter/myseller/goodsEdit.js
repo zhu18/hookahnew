@@ -298,7 +298,7 @@ $('.pusGoods-btn').click(function () {
 						if (type == 'yes') {
 							window.location.href = "/usercenter/goodsPublish";
 						} else {
-							window.location.href = "/usercenter/goodsManage";
+							window.location.href = "/usercenter/goodsWait";
 						}
 					});
 				} else {
@@ -401,7 +401,7 @@ $('#fileupload2').fileupload({
 		if(data.result.code == 1){
 			var obj = data.result.data[0];
 			filenames = data.files[0].name;
-			$("#J_fileUploadSS").val(obj.absPath);
+			$("#J_fileUploadSS").val(obj.filePath);
 			$('.fileUploads span').html(filenames);
 		}else{
 			$.alert(data.result.message)

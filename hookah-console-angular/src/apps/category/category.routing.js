@@ -40,7 +40,7 @@ export default function categoryRouting($stateProvider, $urlRouterProvider) {
         controller: CategoryController,
     })
   .state('category.manageAttrType',  {
-      url: '/category/manageAttrType/:cateId:cateName',
+      url: '/category/manageAttrType/:data',
       template: require('./manageAttrType.html'),
       controller: ManageAttrTypeController,
   })
