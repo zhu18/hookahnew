@@ -142,6 +142,7 @@
         /mybuyer/** = oauth2Authc
         /cart* = oauth2Authc
         /cart/** = oauth2Authc
+        /goodsFavorite/** = oauth2Authc
         /order* = oauth2Authc
         /order/** = oauth2Authc
         /pay* = oauth2Authc

@@ -13,7 +13,7 @@ public class EsGoodsVo implements Serializable {
     private EsGoods esGoods;
     private Integer PageNumber = HookahConstants.PAGE_NUM;
     private Integer PageSize = HookahConstants.PAGE_SIZE;
-    private String orderFiled;
+    private String orderField;
     private String order;
     EsRange range;
 
@@ -42,12 +42,12 @@ public class EsGoodsVo implements Serializable {
         PageSize = pageSize;
     }
 
-    public String getOrderFiled() {
-        return orderFiled;
+    public String getOrderField() {
+        return orderField;
     }
 
-    public void setOrderFiled(String orderFiled) {
-        this.orderFiled = orderFiled;
+    public void setOrderField(String orderField) {
+        this.orderField = orderField;
     }
 
     public String getOrder() {

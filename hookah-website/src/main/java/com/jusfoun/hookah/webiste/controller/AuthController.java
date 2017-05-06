@@ -1,11 +1,15 @@
 package com.jusfoun.hookah.webiste.controller;
 
+import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.Organization;
+import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.UserDetail;
+import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.OrganizationService;
 import com.jusfoun.hookah.rpc.api.UserDetailService;
+import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
@@ -17,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * All rights Reserved, Designed By
@@ -43,8 +49,12 @@ public class AuthController extends BaseController{
     @Resource
     OrganizationService organizationService;
 
+    @Resource
+    UserService userService;
+
     //认证状态(0.未认证 1.认证中 2.已认证 3.认证失败)
     public static final Byte AUTH_STATUS_SUCCESS = 2;
+    public static final Byte AUTH_STATUS_CHECKING = 1;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model) {
@@ -76,7 +86,7 @@ public class AuthController extends BaseController{
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/auth/index", method = RequestMethod.GET)
+    @RequestMapping(value = "/auth/index")
     public String auth(Model model) throws Exception {
         return "/auth/auth_index";
     }
@@ -134,14 +144,22 @@ public class AuthController extends BaseController{
         try {
             String userId = this.getCurrentUser().getUserId();
             userDetail.setUserId(userId);
-            userDetail.setIsAuth(AUTH_STATUS_SUCCESS);
+            userDetail.setIsAuth(AUTH_STATUS_CHECKING);
+
 
             UserDetail userDetail1 = userDetailService.selectById(userId);
             if (userDetail1 != null){
                 int count = userDetailService.updateByIdSelective(userDetail);
             }else {
-                userDetailService.insert(userDetail);
+                userDetail = userDetailService.insert(userDetail);
+                returnData.setData(userDetail);
             }
+
+            User user = new User();
+            user.setUserId(userId);
+            //暂时直接通过审核  后期改成用户待审核状态
+            user.setUserType(HookahConstants.UserType.PERSON_CHECK_OK.getCode());
+            userService.updateByIdSelective(user);
 
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
@@ -158,9 +176,27 @@ public class AuthController extends BaseController{
         returnData.setCode(ExceptionConst.Success);
         try {
             String userId = this.getCurrentUser().getUserId();
-//            organization.setUserId(userId);
+            organization.setUserId(userId);
             organization.setIsAuth(AUTH_STATUS_SUCCESS);
-            organizationService.updateByIdSelective(organization);
+
+            List<Condition> fifters = new ArrayList<Condition>();
+            fifters.add(Condition.eq("userId",userId));
+            Organization organization1 = organizationService.selectOne(fifters);
+
+            if(null != organization1){
+                organization.setOrgId(organization1.getOrgId());
+                organizationService.updateByIdSelective(organization);
+            }else{
+                organization = organizationService.insert(organization);
+                returnData.setData(organization);
+            }
+
+            User user = new User();
+            user.setUserId(userId);
+            //暂时直接通过审核  后期改成用户待审核状态
+            user.setUserType(HookahConstants.UserType.ORGANIZATION_CHECK_OK.getCode());
+            userService.updateByIdSelective(user);
+
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());

@@ -349,7 +349,7 @@ function renderApiInfo(apiInfo){
 			html +='<option value="int">int</option>';
 		}
 		html +='</select></div></td>';
-		html +='<td class="type-input"><div class="inputbox"><input type="text" name="fieldDefault" placeholder="请输入默认值" value="'+data.fieldDefault+'" required="required"></div></td>';
+		html +='<td class="type-input"><div class="inputbox"><input type="text" name="fieldDefault" placeholder="请输入默认值" value="'+data.fieldDefault+'"></div></td>';
 		html +='<td>';
 		html +='<div class="radio-box">';
 		if(data.isMust == 0){
@@ -364,8 +364,8 @@ function renderApiInfo(apiInfo){
 		}
 		html +='</div>';
 		html +='</td>';
-		html +='<td><div class="inputbox"><input type="text" name="fieldSample" placeholder="请输入示例" value="'+data.fieldSample+'" required="required"></div></td>';
-		html +='<td><div class="inputbox"><textarea name="describle" placeholder="请输入描述" required="required">'+data.describle+'</textarea></div></td>';
+		html +='<td><div class="inputbox"><input type="text" name="fieldSample" placeholder="请输入示例" value="'+data.fieldSample+'"></div></td>';
+		html +='<td><div class="inputbox"><textarea name="describle" placeholder="请输入描述">'+data.describle+'</textarea></div></td>';
 		if(index === reqLen-1){
 			html +='<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
 		}else{
@@ -482,6 +482,12 @@ $(document).ready(function(){
 			},
 			goodsImg:'图片必须上传',
 
+		},
+		showErrors:function(errorMap,errorList) {
+			if(errorList.length){
+				errorList[0].element.focus();
+			}
+			this.defaultShowErrors();
 		}
 	});
 });
