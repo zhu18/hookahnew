@@ -199,7 +199,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     public Pagination search(EsGoodsVo vo) throws Exception {
         Integer pageSize = vo.getPageSize();
         Integer pageNum = vo.getPageNumber();
-        String orderField = vo.getOrderFiled();
+        String orderField = vo.getOrderField();
         String order = vo.getOrder();
 
         Pagination pagination = new Pagination();
@@ -217,7 +217,6 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
                     Constants.GOODS_TYPE, map, pagination, orderField, order, vo.getRange(), "goodsName");
         }
         pagination.getTotalPage();
-        System.out.println(pagination.getTotalPage());
         return pagination;
     }
 
