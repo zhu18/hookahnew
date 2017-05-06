@@ -40,7 +40,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/upload")
-public class UploadfileController extends BaseController {
+public class UploadfileController {
 	private static Logger logger = LoggerFactory.getLogger(UploadfileController.class);
 
     @RequestMapping("test")
