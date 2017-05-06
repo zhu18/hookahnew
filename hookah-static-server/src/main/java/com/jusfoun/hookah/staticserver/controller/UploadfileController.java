@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
@@ -39,7 +40,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/upload")
-public class UploadfileController {
+public class UploadfileController extends BaseController {
 	private static Logger logger = LoggerFactory.getLogger(UploadfileController.class);
 
     @RequestMapping("test")
@@ -50,9 +51,10 @@ public class UploadfileController {
 	@RequestMapping(value="fileUpload", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseBody
     public ReturnData fileUpload(HttpServletRequest request, @RequestParam("filename") MultipartFile[] myfiles) {
-		ReturnData returnData = new ReturnData();
+        ReturnData returnData = new ReturnData();
         returnData.setCode(ExceptionConst.Success);
         try {
+//            System.out.println("=========akkd======" + super.getCurrentUser().getUserId());
             returnData.setData(UploadUtil.uploadFile(request, myfiles));
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
@@ -122,4 +124,30 @@ public class UploadfileController {
         }
         return url;
     }
+
+    @RequestMapping(value="download")
+    public void download(HttpServletResponse response, String filePath) {
+        try {
+            UploadUtil.downLoad(filePath, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+//    @RequestMapping(value="fileUpload/zip", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+//    @ResponseBody
+//    public ReturnData fileUploadZip(HttpServletRequest request, @RequestParam("filename") MultipartFile[] myfiles) {
+//        ReturnData returnData = new ReturnData();
+//        returnData.setCode(ExceptionConst.Success);
+//        try {
+//            returnData.setData(UploadUtil.uploadFileZip(request, myfiles, "other/"));
+//        } catch (Exception e) {
+//            returnData.setCode(ExceptionConst.Failed);
+//            returnData.setMessage(e.toString());
+//            e.printStackTrace();
+//        }
+//        return returnData;
+//    }
+
+
 }
