@@ -3,6 +3,7 @@ package com.jusfoun.hookah.console.server.service.impl;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.CommentMapper;
 import com.jusfoun.hookah.core.domain.Comment;
+import com.jusfoun.hookah.core.domain.OrderInfo;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -12,6 +13,7 @@ import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.CommentService;
+import com.jusfoun.hookah.rpc.api.OrderInfoService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -29,10 +31,18 @@ public class CommentServiceImpl extends GenericServiceImpl<Comment,String> imple
     @Resource
     CommentMapper commentMapper;
 
+    @Resource
+    OrderInfoService orderInfoService;
+
+
     //状态(1:有效 0:无效)
     public static final Byte STATUS_INVAL = 1;
     public static final Byte STATUS_NO_INVAL = 0;
 
+
+    //是否评论(0.未评论 1.已评论)
+    public static final Integer COMMENT_STATUS_OK = 1;
+    public static final Integer COMMENT_STATUS_NO = 0;
 
     @Resource
     public void setDao(CommentMapper commentMapper) {
@@ -158,6 +168,13 @@ public class CommentServiceImpl extends GenericServiceImpl<Comment,String> imple
                     comment = super.insert(comment);
                 }
 //                Integer count = super.insertBatch(comments);
+
+                //修改订单评论状态
+                OrderInfo orderInfo = new OrderInfo();
+                orderInfo.setOrderId(comments.get(0).getOrderId());
+                orderInfo.setCommentFlag(COMMENT_STATUS_OK);
+                orderInfoService.updateByIdSelective(orderInfo);
+
                 returnData.setData(comments);
             }catch (Exception e) {
                 returnData.setCode(ExceptionConst.Error);

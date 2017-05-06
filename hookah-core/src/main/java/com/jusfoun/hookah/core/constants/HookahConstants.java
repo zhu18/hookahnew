@@ -157,4 +157,28 @@ public class HookahConstants {
         }
     }
 
+    /**
+     * 0系统,1未认证,2个人,3个人待审核,4企业,5企业待审核
+     */
+    public enum UserType {
+
+        SYSTEM(0),
+        NO_AUTH(1),
+        PERSON_CHECK_OK(2),
+        PERSON_CHECK_NO(3),
+        ORGANIZATION_CHECK_OK(4),
+        ORGANIZATION_CHECK_NO(5);
+
+
+        public Integer code;
+
+        UserType(Integer code) {
+            this.code = code;
+        }
+
+        public Integer getCode() {
+            return code;
+        }
+    }
+
 }
