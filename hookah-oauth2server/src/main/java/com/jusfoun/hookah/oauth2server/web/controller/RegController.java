@@ -67,7 +67,7 @@ public class RegController {
             HttpSession session = request.getSession();
             String value = (String) session.getAttribute(Constants.KAPTCHA_SESSION_KEY);
 
-            if (!value.equals(captcha)) {
+            if (!value.equalsIgnoreCase(captcha)) {
                 throw new UserRegInvalidCaptchaException("图片验证码验证未通过,验证码错误");
             }
             session.removeAttribute(Constants.KAPTCHA_SESSION_KEY);
@@ -78,7 +78,7 @@ public class RegController {
             if (cacheSms == null) { //验证码已过期
                 throw new UserRegExpiredSmsException("短信验证码验证未通过,短信验证码已过期");
             } else {
-                if (!cacheSms.equals(user.getValidSms())) {
+                if (!cacheSms.equalsIgnoreCase(user.getValidSms())) {
                     throw new UserRegInvalidSmsException("短信验证码验证未通过,短信验证码错误");
                 }
             }

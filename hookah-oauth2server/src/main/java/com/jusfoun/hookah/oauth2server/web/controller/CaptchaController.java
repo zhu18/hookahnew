@@ -62,7 +62,7 @@ public class CaptchaController {
         HttpSession session = request.getSession();
         String value = (String)session.getAttribute(Constants.KAPTCHA_SESSION_KEY);
 
-        if(!value.equals(text)){
+        if(!value.equalsIgnoreCase(text)){
             return ReturnData.success(0);
         }else{
             return ReturnData.success(1);

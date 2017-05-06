@@ -71,7 +71,7 @@ public class SmsController {
         if (cacheSms == null) { //验证码已过期
             return ReturnData.error("短信验证码验证未通过,短信验证码已过期");
         } else {
-            if (!cacheSms.equals(validSms)) {
+            if (!cacheSms.equalsIgnoreCase(validSms)) {
                 return ReturnData.fail("短信验证码验证未通过,短信验证码错误");
             }
         }
