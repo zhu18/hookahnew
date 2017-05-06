@@ -91,7 +91,8 @@ public class UploadUtil {
                 if (!pathFile.exists() && !pathFile.isDirectory()) {
                     pathFile.mkdirs();
                 }
-                FileIo.zipOneFile(tmpPath + File.separator + fileName, file.getOriginalFilename(), file.getInputStream());
+                //by sjs ，没有FileIo
+                //FileIo.zipOneFile(tmpPath + File.separator + fileName, file.getOriginalFilename(), file.getInputStream());
             }
             String filePath1 = midPath + datePath + "/" + File.separator + fileName;
             list.add(new UploadResult(fileName, filePath1, url + filePath1));
