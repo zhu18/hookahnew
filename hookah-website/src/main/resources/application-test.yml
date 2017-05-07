@@ -25,7 +25,7 @@ myconf:
     clientId: website
     clientSecret: Yqn2ht4DYkMHlDvTY7CV
     regUrl: http://auth.hookah.app/reg
-    loginUrl: http://auth.hookah.app/oauth/authorize?client_id=website&response_type=code&redirect_uri=http://www.hookah.app/login
+    loginUrl: http://auth.hookah.app/oauth/authorize?client_id=website&response_type=code&redirect_uri=
     logoutUrl: http://auth.hookah.app/logout?redirect_uri=http://www.hookah.app/login
     accessTokenUrl: http://auth.hookah.app/oauth/accessToken
     userInfoUrl: http://auth.hookah.app/userInfo

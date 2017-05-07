@@ -26,7 +26,7 @@ import java.util.Map;
  * 商品关注
  */
 @Controller
-@RequestMapping("goodsFavorite")
+@RequestMapping("/goodsFavorite")
 public class GoodsFavoriteController extends BaseController {
 
     @Resource
@@ -40,7 +40,7 @@ public class GoodsFavoriteController extends BaseController {
      * @param goodsFavorite
      * @return
      */
-    @RequestMapping("add")
+    @RequestMapping("/add")
     @ResponseBody
     public ReturnData addFavorite(GoodsFavorite goodsFavorite) {
         ReturnData returnData = new ReturnData<>();
@@ -91,7 +91,7 @@ public class GoodsFavoriteController extends BaseController {
      * @param id
      * @return
      */
-    @RequestMapping("del")
+    @RequestMapping("/del")
     @ResponseBody
     public ReturnData delFavorite(String id) {
         ReturnData returnData = new ReturnData<>();
@@ -127,7 +127,7 @@ public class GoodsFavoriteController extends BaseController {
         return returnData;
     }
 
-    @RequestMapping("list")
+    @RequestMapping("/list")
     @ResponseBody
     public ReturnData listFavorite(String pageNumber, String pageSize) {
 
@@ -170,7 +170,7 @@ public class GoodsFavoriteController extends BaseController {
         return returnData;
     }
 
-    @RequestMapping("check")
+    @RequestMapping("/check")
     @ResponseBody
     public ReturnData checkFavorite(String goodsId) {
         ReturnData returnData = new ReturnData<>();

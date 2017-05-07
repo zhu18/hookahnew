@@ -108,7 +108,7 @@ public class AuthorizeController {
                 }
                 builder.setParam("redirect_uri", req_redirectURI);
                 //构建响应
-                final OAuthResponse oAuthResponse = builder.location(req_redirectURI).buildQueryMessage();
+                final OAuthResponse oAuthResponse = builder.location(oauthClient.getRedirectUri()).buildQueryMessage();
 
                 //根据OAuthResponse返回ResponseEntity响应
                 HttpHeaders headers = new HttpHeaders();

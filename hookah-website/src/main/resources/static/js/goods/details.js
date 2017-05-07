@@ -148,7 +148,13 @@ function addCart(goodsId) {
             if (data.code == "1") {
 				window.location.href = "/exchange/addToCart?goodsId=" + goodsId + "&number=" + $('#J_buyNumber').val();
             } else {
+                console.log(data);
                 $.alert(data.message);
+            }
+        },
+        error:function(e){
+            if(e.status == 401){
+                window.location.href = host.loginUrl+window.location.href
             }
         }
     });

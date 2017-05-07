@@ -16,11 +16,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,8 +59,12 @@ public class AuthController extends BaseController{
     public static final Byte AUTH_STATUS_CHECKING = 1;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(Model model) {
-        return "redirect:/";
+    public String login(String redirect_uri, HttpServletRequest request) {
+        if (!StringUtils.isEmpty(redirect_uri)) {
+            return "redirect:" + redirect_uri;
+        } else {
+            return "redirect:/";
+        }
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
