@@ -26,7 +26,7 @@ var htmlPart = {
                 src="${goodsInfo.goodsImg}"></a></div>
               <div class="p-info grid-left">
                 <div class="p-name padding-top-10 padding-bottom-10">
-                  <a  class="goGoodsDetails">${goodsInfo.goodsName}</a>
+                  <a href="javascript:history.go(-1)" class="goGoodsDetails">${goodsInfo.goodsName}</a>
                 </div>
                 <div class="p-extra padding-top-10">
                                     <span class="txt" title="价格">价格：${trunc(goodsInfo.shopPrice / 100, 2)}&nbsp;&nbsp;&nbsp;&nbsp;
