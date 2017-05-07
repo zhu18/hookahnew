@@ -77,11 +77,9 @@ public class EsGoods implements Serializable {
     @EsField(fielddata = true)
     private String areaCity;
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    @EsField(type = Type.KEYWORD, copyTo = "onsaleStartDate2")
-    private Date onsaleStartDate;
+//    @EsField(type = Type.DATE, format = "yyyy-MM-dd HH:mm:ss.SSS")
     @EsField(type = Type.DATE)
-    @Transient
-    private Date onsaleStartDate2;
+    private Date onsaleStartDate;
     @Transient
     private String onsaleStartDateField = HookahConstants.ONSALE_START_DATE_FILEDNAME;
 
@@ -241,6 +239,14 @@ public class EsGoods implements Serializable {
         return areaCountry;
     }
 
+    public String getOnsaleStartDateField() {
+        return onsaleStartDateField;
+    }
+
+    public void setOnsaleStartDateField(String onsaleStartDateField) {
+        this.onsaleStartDateField = onsaleStartDateField;
+    }
+
     public void setAreaCountry(String areaCountry) {
         this.areaCountry = areaCountry;
     }
@@ -269,19 +275,12 @@ public class EsGoods implements Serializable {
         this.onsaleStartDate = onsaleStartDate;
     }
 
-    public String getOnsaleStartDateField() {
-        return onsaleStartDateField;
-    }
+//    public String getOnsaleStartDateField() {
+//        return onsaleStartDateField;
+//    }
+//
+//    public void setOnsaleStartDateField(String onsaleStartDateField) {
+//        this.onsaleStartDateField = onsaleStartDateField;
+//    }
 
-    public void setOnsaleStartDateField(String onsaleStartDateField) {
-        this.onsaleStartDateField = onsaleStartDateField;
-    }
-
-    public Date getOnsaleStartDate2() {
-        return onsaleStartDate2;
-    }
-
-    public void setOnsaleStartDate2(Date onsaleStartDate2) {
-        this.onsaleStartDate2 = onsaleStartDate2;
-    }
 }
