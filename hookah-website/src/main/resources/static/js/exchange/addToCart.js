@@ -5,5 +5,5 @@ $.getUrlParam = function (key) {
 };
 var goodsId = $.getUrlParam('goodsId');
 var number = $.getUrlParam('number');
-$('#goodsNum span').html(number)
-// $('.goGoodsDetails').attr('href','/exchange/details?id='+goodsId)
+$('#goodsNum span').html(number);
+$('.goGoodsDetails').attr('href','/exchange/details?id='+goodsId);
