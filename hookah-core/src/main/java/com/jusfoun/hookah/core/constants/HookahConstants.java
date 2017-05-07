@@ -51,6 +51,8 @@ public class HookahConstants {
 
     /** 此字段用于比较当前时间与onsaleStartDate关系，选出非预约上架的商品 */
     public static final String ONSALE_START_DATE_FILEDNAME = "onsaleStartDate";
+    /** 符号 */
+    public static final String SPACE_SIGN = "&nbsp;&nbsp;";
 
 
     public enum AnalyzeOpt {
@@ -153,6 +155,30 @@ public class HookahConstants {
         }
 
         public String getCode() {
+            return code;
+        }
+    }
+
+    /**
+     * 0系统,1未认证,2个人,3个人待审核,4企业,5企业待审核
+     */
+    public enum UserType {
+
+        SYSTEM(0),
+        NO_AUTH(1),
+        PERSON_CHECK_OK(2),
+        PERSON_CHECK_NO(3),
+        ORGANIZATION_CHECK_OK(4),
+        ORGANIZATION_CHECK_NO(5);
+
+
+        public Integer code;
+
+        UserType(Integer code) {
+            this.code = code;
+        }
+
+        public Integer getCode() {
             return code;
         }
     }

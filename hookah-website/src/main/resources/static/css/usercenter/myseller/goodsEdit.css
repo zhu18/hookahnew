@@ -14,6 +14,10 @@ h1{
     padding:3px 5px;
     line-height: 24px;
 }
+.help-block{
+    display: block;
+    color: #cc2629
+}
 .attribute-bd .search-select-box .search-txt{
     width: 560px;
     height: 30px;
@@ -96,6 +100,16 @@ h1{
     width: 108px;
     text-align: right;
     vertical-align: top;
+    position: relative;
+}
+.struct tr td.bar .requireds{
+    position: absolute;
+    right: 0px;
+    top:0;
+    display: block;
+    line-height: 41px;
+    font-size: 14px;
+    color: #cc2629;
 }
 .table-box{width:712px;}
 .table-box table{
@@ -114,6 +128,11 @@ h1{
     padding: 1px 0;
     text-align: center;
     white-space: nowrap;
+}
+.table-box table td .table-plus-btn{
+    display: inline-block;
+    width:20px;
+    cursor: pointer;
 }
 .inputbox input{
     border: 0;
@@ -166,7 +185,6 @@ h1{
     background-color: #f6f6f6;
     height: 100px;
     width: 100px;
-    overflow: hidden;
     position: relative;
     display: table-cell;
     vertical-align: middle;
@@ -219,6 +237,14 @@ h1{
     text-align: center;
     line-height: 100px;
     z-index: 30;
+}
+.multimage-wrap .image-list li .preview .help-block{
+    position: absolute;
+    left: 100px;
+    top: 0;
+    width: 100%;
+    display: block;
+    cursor: default;
 }
 .radio-box .isOnsale-box{display: none;}
 .radio-box .isOnsale-box input {

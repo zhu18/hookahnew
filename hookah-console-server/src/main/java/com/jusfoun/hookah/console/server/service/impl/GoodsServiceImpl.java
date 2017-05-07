@@ -61,9 +61,17 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
     @Override
     @Transactional
     public void addGoods(GoodsVo obj) throws HookahException {
+        Date date = DateUtils.now();
         if (obj == null)
             throw new HookahException("空数据！");
         // 将数据插入数据库
+        obj.setIsOnsale(HookahConstants.GOODS_STATUS_ONSALE);
+        obj.setCheckStatus(HookahConstants.GOODS_CHECK_STATUS_WAIT);
+        if(obj.getOnsaleStartDate() == null) {
+            obj.setOnsaleStartDate(date);
+        }
+        obj.setAddTime(date);
+        obj.setLastUpdateTime(date);
         obj = (GoodsVo)super.insert(obj);
         if(obj == null)
             throw new HookahException("操作失败");
@@ -84,7 +92,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         Date date = DateUtils.now();
         obj.setLastUpdateTime(date);
         obj.setIsOnsale(HookahConstants.GOODS_STATUS_ONSALE);
-        if(obj.getOnsaleStartDate() != null) {
+        if(obj.getOnsaleStartDate() == null) {
             obj.setOnsaleStartDate(date);
         }
         obj.setOnsaleEndDate(null);
@@ -97,8 +105,12 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             MgGoods mgGoods = new MgGoods();
             mgGoods.setAttrTypeList(obj.getAttrTypeList());
             mgGoods.setFormatList(obj.getFormatList());
+            mgGoods.setApiInfo(obj.getApiInfo());
             mgGoods.setImgList(obj.getImgList());
             mgGoods.setGoodsId(obj.getGoodsId());
+            MgGoods mgGoods1 = mgGoodsService.selectById(obj.getGoodsId());
+            mgGoods.setClickRate(mgGoods1.getClickRate() == null ? (long)0 : mgGoods1.getClickRate());
+            mgGoodsService.delete(obj.getGoodsId());
             mongoTemplate.save(mgGoods);
         }
     }
@@ -204,9 +216,12 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             vo.setCheckStatus(Byte.valueOf(checkStatus + ""));
         if(isBook != null)
             vo.setIsBook(Byte.valueOf(isBook + ""));
+        if(goodsName != null)
+            vo.setGoodsName(goodsName);
         pagination.setList(goodsMapper.waitList(vo));
         pagination.setTotalItems(goodsMapper.waitListCnt(vo));
         pagination.setList(this.copyGoodsData(pagination.getList()));
+        pagination.getTotalPage();
         return pagination;
     }
 
@@ -292,13 +307,13 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             }
         }
 
-
         MgGoods mgGoods = mgGoodsService.selectById(goodsId);
         if (mgGoods != null) {
             goodsVo.setFormatList(mgGoods.getFormatList());
             goodsVo.setImgList(mgGoods.getImgList());
             goodsVo.setAttrTypeList(mgGoods.getAttrTypeList());
             goodsVo.setApiInfo(mgGoods.getApiInfo());
+            goodsVo.setClickRate(mgGoods.getClickRate());
         }
         goodsVo.setCatName(DictionaryUtil.getCategoryById(goodsVo.getCatId()) == null
                 ? "" : DictionaryUtil.getCategoryById(goodsVo.getCatId()).getCatName());

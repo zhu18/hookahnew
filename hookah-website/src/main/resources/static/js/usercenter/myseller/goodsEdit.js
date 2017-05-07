@@ -1,15 +1,60 @@
-var imgSrc = "";
 var regionParam = 100000;
-$.getUrlParam = function (key) {
-	var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
-	var result = window.location.search.substr(1).match(reg);
-	return result ? decodeURIComponent(result[2]) : null;
-}
-
 var catId = $.getUrlParam('catId'),
-	category = $.getUrlParam('category'),
-	url = '/category/findAttr';
-$(document).ready(function () {
+	category = $.getUrlParam('category');
+$(document).ready(function(){
+	$("#goodsModifyForm").validate({
+		rules: {
+			goodsName:  {
+				required: true,
+				isGoodsName:true
+			},
+			goodsBrief:{
+				required: true,
+				isGoodsBrief:true
+			},
+			goodsImg:'required',
+			priceBoxName:'required',
+			priceBoxNumber:'required',
+			priceBoxPrice:'required',
+			goodsImges:'required',
+			goodsImges2:'required',
+			goodsDescBox:'required'
+		},
+		messages: {
+			goodsName:  {
+				required: '商品名称不能为空',
+				isGoodsName:'长度为10-60个字符（每个汉字为2个字符）'
+			},
+			goodsBrief:  {
+				required: '商品简介不能为空',
+				isGoodsBrief:'长度为30-400个字符（每个汉字为2个字符）'
+			},
+			goodsImges:'图片必须上传',
+			goodsImges2:'文件必须上传',
+			goodsDescBox:'商品描述不能为空'
+
+		},
+		showErrors:function(errorMap,errorList) {
+			if(errorList.length){
+				errorList[0].element.focus();
+			}
+			this.defaultShowErrors();
+		}
+	});
+	$('.category-title-box').text(category);//渲染分类
+	loadData(); //加载商品属性数据
+	if ($('input[name="goodsTypes"]').val() == 0) {
+		$('.api-info-box').hide();
+		$('.file-info-box').show();
+	} else {
+		$('.file-info-box').hide();
+		$('.api-info-box').show();
+	}
+	getPriceBox();
+	loadRegion('province', regionParam); //加载地域
+	renderWangEdit(); // 渲染富文本
+});
+function renderWangEdit(){
 	var editor = new wangEditor('textarea1');
 	editor.config.uploadImgUrl = host.static+'/upload/wangeditor';//上传图片（举例）
 	editor.config.uploadImgFileName = 'filename';
@@ -24,70 +69,131 @@ $(document).ready(function () {
 		return item;
 	});
 	editor.create(); //初始化富文本
-	$('.search-select-box').click(function () {
-		$(this).children('.search-option').show();
-	});
-	$('.search-option').mouseleave(function () {
-		$(this).hide();
-	})
-
-	$('.category-title-box').text(category);
-
-	loadData(url, catId); //加载商品属性数据
-	function loadData(url, catId) {
-		$.ajax({
-			type: "get",
-			url: url,
-			data: {
-				catId: catId.substring(0,3)
-			},
-			success: function (msg) {
-				if (msg.code == 1) {
-					renderselect(msg.data)//渲染商品属性
-				} else {
-					$.alert(msg.message)
-				}
-			}
-		});
+}
+//加载地区
+function loadRegion(id,regionParam) {
+	var parentId = '';
+	if(regionParam == 100000){
+		parentId = 100000;
+	}else{
+		parentId = $(regionParam).val();
 	}
-
-	function renderselect(data) {
-		if (data) {
-			var html = '';
-			var typeList = data.attrTypeList;
-			for (var i = 0; i < data.attrTypeList.length; i++) {
-				html += '<tr>';
-				html += '<td>' + typeList[i].typeName + '：</td>';
-				html += ' <td>';
-				html += '<select data-placeholder="请选择' + typeList[i].typeName + '" name="' + typeList[i].typeName + '" typeid="' + typeList[i].typeId + '" style="width:560px;" multiple class="chosen-select chosen-select-' + i + '" tabindex="8">';
-				for (var j = 0; j < typeList[i].attrList.length; j++) {
-					html += '<option value="' + typeList[i].attrList[j].attrId + '">' + typeList[i].attrList[j].attrName + '</option>';
+	$(regionParam).nextAll().html('<option value="-1"></option>')
+	$.ajax({
+		type: "get",
+		url: host.website+'/region/getRegionCodeByPid',
+		data: {
+			parentId: parentId
+		},
+		success: function (data) {
+			if (data.code == 1) {
+				if(data.data.length > 0){
+					renderRegion(id,data.data)
 				}
-				html += '</select>';
-				html += '</td>';
-				html += '</tr>';
+			} else {
+				$.alert(data.message)
 			}
-			$('.attribute-box table').append(html);
-			$('.chosen-select').chosen(); //初始化select 多选插件
-		} else {
-			$('.attribute-container').remove();
 		}
+	});
+}
+function renderRegion(id,data){
+	var html = '<option value="-1">全部</option>';
+	data.forEach(function(e){
+		html += '<option value="'+e.id+'">'+e.name+'</option>';
+	});
+	$('#'+id).html(html);
+}
+$('#fileupload').fileupload({   //图片上传
+	url: host.static+'/upload/fileUpload',
+	dataType: 'json',
+	done: function (e, data) {
+		if(data.result.code == 1){
+			var obj = data.result.data[0];
+			$("#preview-img").attr("src", obj.absPath);
+			$('input[name="goodsImges"]').val(obj.absPath);
+		}else{
+			$.alert(data.result.message)
+		}
+	},
+	progressall: function (e, data) {
+
 	}
 });
+$('#fileupload2').fileupload({
+	url: host.static+'/upload/fileUpload',
+	dataType: 'json',
+	done: function (e, data) {
+		if(data.result.code == 1){
+			var obj = data.result.data[0];
+			$("#J_fileUploadSS").val(obj.filePath);
+			$('.fileUploads span').html(data.files[0].name);
+			$('input[name="goodsImges2"]').val(obj.absPath);
+		}else{
+			$.alert(data.result.message)
+		}
 
-function tableDelete(that) {
-	$(that).parents('.parent-tr').remove();
+	},
+	progressall: function (e, data) {
+
+	}
+});
+function loadData() {
+	$.ajax({
+		type: "get",
+		url: host.website+'/category/findAttr',
+		data: {
+			catId: catId.substring(0,3)
+		},
+		success: function (msg) {
+			if (msg.code == 1) {
+				renderselect(msg.data)//渲染商品属性
+			} else {
+				$.alert(msg.message)
+			}
+		}
+	});
+}
+function renderselect(data) {
+	if (data) {
+		var html = '';
+		var typeList = data.attrTypeList;
+		for (var i = 0; i < data.attrTypeList.length; i++) {
+			html += '<tr>';
+			html += '<td>' + typeList[i].typeName + '：</td>';
+			html += ' <td>';
+			html += '<select data-placeholder="请选择' + typeList[i].typeName + '" name="' + typeList[i].typeName + '" typeid="' + typeList[i].typeId + '" style="width:560px;" multiple class="chosen-select chosen-select-' + i + '" tabindex="8">';
+			for (var j = 0; j < typeList[i].attrList.length; j++) {
+				html += '<option value="' + typeList[i].attrList[j].attrId + '">' + typeList[i].attrList[j].attrName + '</option>';
+			}
+			html += '</select>';
+			html += '</td>';
+			html += '</tr>';
+		}
+		$('.attribute-box table').append(html);
+		$('.chosen-select').chosen(); //初始化select 多选插件
+	} else {
+		$('.attribute-container').remove();
+	}
+}
+function goodsTypeChange(that) {
+	if ($(that).val() == 0) {
+		$('.api-info-box').hide();
+		$('.file-info-box').show();
+	} else {
+		$('.file-info-box').hide();
+		$('.api-info-box').show();
+	}
 }
 var itemNum = 0;
 function tablePlus(that) {
-	if ($(that).hasClass('itemNum')) {
-		itemNum += 1;
+	if($(that).parents('.price-table').attr('d-type') == 'requestHtml'){
+		itemNum = $(that).parents('tbody').children('.parent-tr').length;
 	}
 	var priceHtml = '';//规格与价格
 	priceHtml += '<tr class="parent-tr">';
 	priceHtml += '<td class="name-input"><div class="inputbox"><input type="text" datatype="name" placeholder="请输入名称"></div></td>';
 	priceHtml += '<td class="number-input"><div class="inputbox"><input type="number" datatype="number" placeholder="请输入规格"></div></td>';
-	priceHtml += '<td><div class="selectbox"><select name="format"><option value="0">次</option><option value="1">天</option><option value="2">年</option></select></div></td>';
+	priceHtml += '<td><div class="selectbox"><select name="format" ><option value="0">次</option><option value="1">天</option><option value="2">年</option></select></div></td>';
 	priceHtml += '<td class="price-input"><div class="inputbox"><input type="number" datatype="price" placeholder="请输入价格"></div></td>';
 	priceHtml += '<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
 	priceHtml += '</tr>';
@@ -103,101 +209,100 @@ function tablePlus(that) {
 	requestHtml += '</tr>';
 	var returnHtml = '';//返回借口
 	returnHtml += '<tr class="parent-tr">';
-	returnHtml += '<td class="errorNum-input"><div class="inputbox"><input type="text" placeholder="请输入错误码" name="fieldName"></div></td>';
-	returnHtml += '<td><div class="inputbox"><textarea placeholder="请输入说明" name="describle"></textarea></div></td>';
+	returnHtml += '<td class="errorNum-input"><div class="inputbox"><input type="text" placeholder="请输入错误码" name="fieldNames"></div></td>';
+	returnHtml += '<td><div class="inputbox"><textarea placeholder="请输入说明" name="describles"></textarea></div></td>';
 	returnHtml += '<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
 	returnHtml += '</tr>';
-
 	if ($(that).parents('.table-plus').attr('d-type') == 'priceHtml') {
 		if ($(that).parent().siblings('.number-input').find('input').val() && $(that).parent().siblings('.price-input').find('input').val()) {
 			$(that).parents('.table-plus tbody').append(priceHtml);
 			addItem(that)
 		} else {
-			alert('请输入规格和价格');
+			$.alert('请完善本条信息',true,function(){});
 		}
 	} else if ($(that).parents('.table-plus').attr('d-type') == 'requestHtml') {
 		if ($(that).parent().siblings('.name-input').find('input').val() && $(that).parent().siblings('.type-input').find('input').val()) {
 			$(that).parents('.table-plus tbody').append(requestHtml);
 			addItem(that)
 		} else {
-			alert('请输入相关内容');
+			$.alert('请完善本条信息',true,function(){});
 		}
 	} else if ($(that).parents('.table-plus').attr('d-type') == 'returnHtml') {
 		if ($(that).parent().siblings('.errorNum-input').find('input').val()) {
 			$(that).parents('.table-plus tbody').append(returnHtml);
 			addItem(that)
 		} else {
-			alert('请输入相关内容');
+			$.alert('请完善本条信息',true,function(){});
 		}
 	}
 	function addItem(that) {
-		$(that).addClass('table-delete-btn').removeClass('table-plus-btn').text('-').attr('onclick', 'tableDelete(this)');
+		$(that).text('-').attr('onclick', 'tableDelete(this)');
 	}
-};
-$('#preview-div').hover(function () {
-	if ($('#preview-img').attr('src')) {
-		$('#replace-btn').toggle();
-	}
-});
-$('#J-goodsName').blur(function () {
-	count(this)
-});
-var countnums=(function(){
-	var trim=function(strings){
-		return (strings||"").replace(/^(\s|\u00A0)+|(\s|\u00A0)+$/g,"");//+表示匹配一次或多次，|表示或者，\s和\u00A0匹配空白字符，/^以……开头，$以……结尾，/g全局匹配,/i忽略大小写
-	}
-	return function(_str){
-		_str=trim(_str);   //去除字符串的左右两边空格
-		var strlength=_str.length;
-		if(!strlength){   //如果字符串长度为零，返回零
-			return 0;
-		}
-		var chinese=_str.match(/[\u4e00-\u9fa5]/g); //匹配中文，match返回包含中文的数组
-		return strlength+(chinese?chinese.length:0); //计算字符个数
-	}
-})();
-function count(tThis){
-	var charnum=countnums(tThis.value)
-	var showid=$("#showcontent");
-	if(charnum > 30){
-		showid.addClass('color-red')
-		showid.html(charnum - 30);
-		$(tThis).parent().siblings('.errors').show();
-	}else{
-		showid.removeClass('color-red')
-		showid.html(charnum);
-		$(tThis).parent().siblings('.errors').hide();
-	}
+}
+function tableDelete(that) {
+	$(that).parents('.parent-tr').remove();
+	getPriceBox()
+}
+function getPriceBox(){
+	var priceBox = $('table[d-type="priceHtml"] tbody >:first');
+	priceBox.find('input[datatype="name"]').attr('name','priceBoxName');
+	priceBox.find('input[datatype="number"]').attr('name','priceBoxNumber');
+	priceBox.find('input[datatype="price"]').attr('name','priceBoxPrice');
+}
+function getLength(str){
+	return str.replace(/[\u0391-\uFFE5]/g,"aa").length;
 }
 $('#J-goodsName').on('input onporpertychange',function () {
-	count(this)
+	$('#showcontent').html(getLength($(this).val()));
 });
-$('#J-goodsName').on('focus',function () {
-	count(this)
-});
-$('#J-goodsBrief').blur(function () {
-	count2(this)
-});
-function count2(tThis){
-	var charnum=countnums(tThis.value)
-	var showid=$("#showcontent2");
-	if(charnum > 200){
-		showid.addClass('color-red')
-		showid.html(charnum - 200);
-		$(tThis).parent().siblings('.errors').show();
-	}else{
-		showid.removeClass('color-red')
-		showid.html(charnum);
-		$(tThis).parent().siblings('.errors').hide();
-	}
-}
 $('#J-goodsBrief').on('input onporpertychange',function () {
-	count2(this)
+	$('#showcontent2').html(getLength($(this).val()));
 });
-$('#J-goodsBrief').on('focus',function () {
-	count2(this)
+$.validator.addMethod("isGoodsName", function(value, element) {
+	var len = value.replace(/[\u0391-\uFFE5]/g,"aa").length;
+	return this.optional(element) || (10 <= len && len <= 60);
+}, "长度为10-60个字符（每个汉字为2个字符）");
+$.validator.addMethod("isGoodsBrief", function(value, element) {
+	var len = value.replace(/[\u0391-\uFFE5]/g,"aa").length;
+	return this.optional(element) || (30 <= len && len <= 400);
+}, "长度为30-400个字符（每个汉字为2个字符）");
+$('#J_submitBtn').click(function(){
+	if($("#goodsModifyForm").valid()){
+		if($('#textarea1').val()){
+			backAddFn(submitGoodsPublish())
+		}else{
+			$.alert('商品描述不能为空',true,function () {
+			})
+		}
+	}
 });
-$('.pusGoods-btn').click(function () {
+function backAddFn(data){
+	Loading.start();
+	$.ajax({
+		type: 'POST',
+		url: '/goods/back/add',
+		data: JSON.stringify(data),
+		dataType: 'json',
+		contentType: 'application/json',
+		success: function (data) {
+			if (data.code == "1") {
+				Loading.stop();
+				$('.pusGoods-btn').addClass('trues');
+				$.confirm('<h3 style="font-weight: 800">提交成功</h3><p>继续发布商品吗?</p>', null, function (type) {
+					if (type == 'yes') {
+						window.location.href = "/usercenter/goodsPublish";
+					} else {
+						window.location.href = "/usercenter/goodsWait";
+					}
+				});
+			} else {
+				Loading.stop()
+				$.alert(data.message, true);
+			}
+		}
+	});
+}
+function submitGoodsPublish(){
 	var data = {};
 	data.goodsName = $('input[name="goodsName"]').val();
 	data.goodsBrief = $('textarea[name="goodsBrief"]').val();
@@ -216,7 +321,7 @@ $('.pusGoods-btn').click(function () {
 		attrTypeList.attrList =attrBs;
 		data.attrTypeList.push(attrTypeList);
 	});
-	data.goodsImg = imgSrc;
+	data.goodsImg = $('#preview-img').attr('src');
 	data.formatList = [];
 
 	$('table[d-type="priceHtml"] tbody tr').each(function () {
@@ -267,152 +372,13 @@ $('.pusGoods-btn').click(function () {
 		data.apiInfo.respParamList = [];
 		$('table[d-type="returnHtml"] tbody tr').each(function () {
 			var listData = {};
-			listData.fieldName = $(this).find('input[name="fieldName"]').val();
-			listData.describle = $(this).find('textarea[name="describle"]').val();
+			listData.fieldName = $(this).find('input[name="fieldNames"]').val();
+			listData.describle = $(this).find('textarea[name="describles"]').val();
 			data.apiInfo.respParamList.push(listData);
 		});
 		data.apiInfo.respSample = $('.api-info-box').find('textarea[name="respSample"]').val();
 	}else{
 		data.uploadUrl = $('#J_fileUploadSS').val();
 	}
-
-	if (!!!data.goodsName) {
-		alert("请输入商品名称");
-	} else if (!!!data.goodsBrief) {
-		alert("请输入商品简介");
-	} else if (!!!data.goodsImg) {
-		alert("请上传图片");
-	} else {
-		Loading.start();
-		$.ajax({
-			type: 'POST',
-			url: '/goods/back/add',
-			data: JSON.stringify(data),
-			dataType: 'json',
-			contentType: 'application/json',
-			success: function (data) {
-				if (data.code == "1") {
-					Loading.stop();
-					$('.pusGoods-btn').addClass('trues');
-					$.confirm('<h3>发布成功</h3><p>继续发布商品吗?</p>', null, function (type) {
-						if (type == 'yes') {
-							window.location.href = "/usercenter/goodsPublish";
-						} else {
-							window.location.href = "/usercenter/goodsWait";
-						}
-					});
-				} else {
-					Loading.stop()
-					$.alert(data.message, true);
-				}
-			}
-		});
-	}
-
-});
-
-function goodsTypes(that) {
-	if ($(that).val() == 0) {
-		$('.api-info-box').hide();
-		$('.file-info-box').show();
-	} else {
-		$('.file-info-box').hide();
-		$('.api-info-box').show();
-	}
+	return data;
 }
-function isOnsaleFun(that) {
-	if ($(that).val() == 1) {
-		$('.isOnsale-box').show();
-	} else {
-		$('.isOnsale-box').hide();
-	}
-}
-$.jeDate("#indate", {
-	format: "YYYY-MM-DD hh:mm:ss",
-	isTime: true,
-	minDate: $.nowDate(0)
-});
-
-// window.onbeforeunload = function () {
-// 	if ($('.pusGoods-btn').hasClass('trues')) {
-// 		return;
-// 	} else {
-// 		return '确定要离开吗';
-// 	}
-// };
-loadRegion('province', regionParam);
- //加载地区
-function loadRegion(id,regionParam) {
-	var parentId = '';
-	if(regionParam == 100000){
-		parentId = 100000;
-	}else{
-		parentId = $(regionParam).val();
-	}
-	$(regionParam).nextAll().html('<option value="-1"></option>')
-	$.ajax({
-		type: "get",
-		url: host.website+'/region/getRegionCodeByPid',
-		data: {
-			parentId: parentId
-		},
-		success: function (data) {
-			if (data.code == 1) {
-				if(data.data.length > 0){
-					renderRegion(id,data.data)
-				}
-			} else {
-				$.alert(data.message)
-			}
-		}
-	});
-}
-function renderRegion(id,data){
-	var html = '<option value="-1">全部</option>';
-	data.forEach(function(e){
-		html += '<option value="'+e.id+'">'+e.name+'</option>';
-	});
-	$('#'+id).html(html);
-}
-
-var fileUploadUrl = host.static+'/upload/fileUpload';
-$('#fileupload').fileupload({
-	url: fileUploadUrl,
-	dataType: 'json',
-	done: function (e, data) {
-		if(data.result.code == 1){
-			var obj = data.result.data[0];
-			$("#preview-img").attr("src", obj.absPath);
-			imgSrc = obj.absPath;
-		}else{
-			$.alert(data.result.message)
-		}
-
-	},
-	progressall: function (e, data) {
-
-	}
-});
-var filenames = '';
-$('#fileupload2').fileupload({
-	url: fileUploadUrl,
-	dataType: 'json',
-	done: function (e, data) {
-		if(data.result.code == 1){
-			var obj = data.result.data[0];
-			filenames = data.files[0].name;
-			$("#J_fileUploadSS").val(obj.filePath);
-			$('.fileUploads span').html(filenames);
-		}else{
-			$.alert(data.result.message)
-		}
-
-	},
-	progressall: function (e, data) {
-
-	}
-});
-
-
-
-

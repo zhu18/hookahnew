@@ -29,9 +29,12 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.counting;
 
 /**
  * 订单基本信息
@@ -162,7 +165,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         OrderInfo order = new OrderInfo();
         order.setOrderId(id);
         order.setIsDeleted(new Byte("1"));
-        super.updateByIdSelective(order);
+        updateByIdSelective(order);
     }
 
     @Override
@@ -171,7 +174,43 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         order.setIsDeleted(new Byte("1"));
         List<Condition> filters = new ArrayList<>();
         filters.add(Condition.in("orderId", ids));
-        super.updateByConditionSelective(order,filters);
+        updateByConditionSelective(order,filters);
+    }
+
+    /**
+     * 输入参数 为支付时间 的范围
+     * 返回值  key为 goodsId， value为Long计数
+     * @param startDate
+     * @param endDate
+     * @return
+     * @throws HookahException
+     */
+    @Override
+    public Map<String,Long> getOrderStatisticWithBuydate(Date startDate,Date endDate) throws HookahException{
+        List<Condition> filters = new ArrayList<>(5); //预留几个空间
+        filters.add(Condition.ge("payTime",startDate));
+        filters.add(Condition.ge("payTime",endDate));
+        filters.add(Condition.eq("payStatus",2));
+        filters.add(Condition.eq("isDeleted",0));
+        List<OrderInfo> orders = selectList(filters);
+        filters.clear();
+        String[] orderIds = new String[orders.size()];
+        orders.forEach(item-> Arrays.fill(orderIds,item.getOrderId()));
+        filters.add(Condition.in("orderId",orderIds));
+        List<OrderInfoVo> vos = mgOrderInfoService.selectList(filters);
+        Map<String, Long> goodsCount = vos.stream()
+                .parallel()
+                //.filter(order->order.getIsDeleted()!=1)   //不能是已经删除的
+                .flatMap(new Function<OrderInfoVo, Stream<MgOrderGoods>>() {
+                    @Override
+                    public Stream<MgOrderGoods> apply(OrderInfoVo t) {
+                        return t.getMgOrderGoodsList().stream();
+                    }
+                })
+                .parallel()
+                .map(goods -> new AbstractMap.SimpleEntry<>(goods.getGoodsId(), 1))
+                .collect(Collectors.groupingBy(AbstractMap.SimpleEntry::getKey, counting()));
+        return goodsCount;
     }
 
     @Transactional(readOnly=false)

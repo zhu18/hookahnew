@@ -711,7 +711,7 @@ public class ESTemplate {
         if(filterMap != null && !filterMap.isEmpty() && filterMap.size() > 0){
             for(Map.Entry entry : filterMap.entrySet()){
                 if(entry.getValue() != null) {
-//                    //过滤没到上架时间的预约商品
+                    //过滤没到上架时间的预约商品
 //                    if(HookahConstants.ONSALE_START_DATE_FILEDNAME.equals(entry.getValue())) {
 //                        queryString = QueryBuilders.rangeQuery(HookahConstants.ONSALE_START_DATE_FILEDNAME)
 //                                .to(new Date());

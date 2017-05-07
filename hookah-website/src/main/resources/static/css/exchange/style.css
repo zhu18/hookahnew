@@ -179,6 +179,9 @@ body{
 	float: right;
 	color: #e34f4f;
 }
+.exchange-recommend-resource .recommend-resource-down ul li .li-item-down .down-box-one .collect:hover{
+	cursor: pointer;
+}
 .exchange-recommend-resource .recommend-resource-down ul li .li-item-down .down-box-tow {
 	padding-top: 10px;
 }

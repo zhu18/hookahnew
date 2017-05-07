@@ -53,7 +53,7 @@
     font-size: 14px;
     color: #5e5e5e;
 }
-.auth-info .typeBox  label{
+.auth-info .typeBox li>label{
     padding-left:210px;
 
 }
@@ -119,17 +119,16 @@
     margin-left: 90px;
     position: relative;
     padding-top: 10px;
-    padding-left:210px;
 }
 
 .auth-info .update label {
-    width: 212px;
-    height: 133px;
     display: inline-block;
     position: absolute;
     z-index: 1;
 }
-
+.auth-info .update label:hover {
+    cursor: pointer;
+}
 .auth-info .update img {
     width: 212px;
     height: 133px;
@@ -146,7 +145,7 @@
     font-size: 12px;
     top: 156px;
     left: 0px;
-    padding-left: 220px;
+    padding-left: 183px;
 }
 
 
