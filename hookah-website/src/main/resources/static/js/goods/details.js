@@ -165,15 +165,26 @@ function editPrice(that,price,formatId){
 }
 
 function check() {
-    $('#J_formatId').val($('#J_goodsPrice').attr('formatid'));
-    var goodsId = $('#J_goodsId').val();
-    var goodsNumber = $('#J_buyNumber').val();
-    var formatId = $('#J_formatId').val();
-	if (goodsId && goodsNumber && formatId) {
-		return true;
-	} else {
-		$.alert('');
-		return false;
-	}
+	$.ajax({
+		url: '/islogin',
+		type: 'post',
+		success: function (data) {
+			if(data){
+				$('#J_formatId').val($('#J_goodsPrice').attr('formatid'));
+				var goodsId = $('#J_goodsId').val();
+				var goodsNumber = $('#J_buyNumber').val();
+				var formatId = $('#J_formatId').val();
+				if (goodsId && goodsNumber && formatId) {
+					return true;
+				} else {
+					$.alert('');
+					return false;
+				}
+			}else{
+				window.location.href = host.loginUrl + window.location.href
+			}
+		}
+	});
+
 }
 

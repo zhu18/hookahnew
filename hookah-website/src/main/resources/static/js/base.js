@@ -204,25 +204,31 @@ Loading.stop = function () {
 //商品关注
 var Attention = {};
 Attention.add = function (goodsId) {
-  $.ajax({
-    url: '/goodsFavorite/add',
-    type: 'get',
-    data: {
-      goodsId: goodsId
-    },
-    success: function (data) {
-      if (data.code == "1") {
-        $.alert("您已关注该商品");
-        $('.attention .eval').html('已关注');
-      } else {
-      }
-    },
-    error: function (e) {
-      if (e.status == 401) {
-        window.location.href = host.loginUrl + window.location.href
-      }
-    }
-  })
+	$.ajax({
+		url: '/islogin',
+		type: 'post',
+		success: function (data) {
+			if(data){
+				$.ajax({
+				  url: '/goodsFavorite/add',
+				  type: 'get',
+				  data: {
+				    goodsId: goodsId
+				  },
+				  success: function (data) {
+				    if (data.code == "1") {
+				      $.alert("您已关注该商品");
+				      $('.attention .eval').html('已关注');
+				    } else {
+				    }
+				  }
+				})
+            }else{
+				window.location.href = host.loginUrl + window.location.href
+            }
+		}
+	});
+
 
 }
 
