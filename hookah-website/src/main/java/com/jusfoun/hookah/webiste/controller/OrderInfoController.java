@@ -11,10 +11,7 @@ import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
-import com.jusfoun.hookah.core.utils.DateUtils;
-import com.jusfoun.hookah.core.utils.JsonUtils;
-import com.jusfoun.hookah.core.utils.OrderHelper;
-import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.core.utils.*;
 import com.jusfoun.hookah.rpc.api.CartService;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.OrderInfoService;
@@ -118,6 +115,48 @@ public class OrderInfoController extends BaseController {
             return "/error/500";
         }
 
+    }
+
+
+    @RequestMapping(value = "/order/directInfo/ajx", method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnData orderInfo(String goodsId, Integer formatId,Long goodsNumber) {
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        List<CartVo> list = new ArrayList<>(1);
+        try {
+            Long goodsAmount = new Long(0);
+
+            //验证商品是否下架
+            Goods g = goodsService.selectById(goodsId);
+            if (g.getIsOnsale() == null || g.getIsOnsale() != 1) {
+                throw new HookahException("商品[" + g.getGoodsName() + "]未上架");
+            }
+            MgGoods.FormatBean format = goodsService.getFormat(goodsId,formatId);
+            goodsAmount += format.getPrice() * goodsNumber;  //商品单价 * 套餐内数量 * 购买套餐数量
+
+            CartVo vo = new CartVo();
+            vo.setRecId("-1");
+            vo.setGoodsId(goodsId);
+            vo.setGoodsNumber(goodsNumber);
+            vo.setGoodsName(g.getGoodsName());
+            vo.setGoodsFormat(formatId);
+            vo.setFormatNumber((long)format.getNumber());
+            vo.setGoodsPrice(format.getPrice());
+            vo.setFormat(format);
+            vo.setFormatId(formatId);
+            vo.setGoods(g);
+            list.add(vo);
+            //cartOrder
+            returnData.setData(list);
+            //orderAmount
+            returnData.setData2(goodsAmount);
+        }catch (Exception e){
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            logger.info(e.getMessage());
+        }
+        return returnData;
     }
 
     @RequestMapping(value = "/order/list", method = RequestMethod.GET)
