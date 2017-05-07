@@ -38,7 +38,7 @@
     position: absolute;
     text-align: center;
     cursor: pointer;
-    top: -8px;
+    top: -10px;
 }
 .search-list {
     display: none;
@@ -49,12 +49,17 @@
 
 .search-list li{
     /*line-height: 30px;*/
+    cursor: pointer;
+}
+.search-list li:hover{
+    background: #e4e4e4;
 }
 .search-list ul li label {
     display: inline-block;
     padding-left:10px;
     /*width:945px;*/
     line-height:30px;
+    cursor: pointer;
 }
 .search-list ul li.current {
     background: #e4e4e4;
@@ -83,6 +88,7 @@
     border: 1px solid #e5e5e5;
     width: 200px;
     position: relative;
+    margin-right: 10px;
 }
 .select-category-box .select-category-item .item-box{
     height:300px;
