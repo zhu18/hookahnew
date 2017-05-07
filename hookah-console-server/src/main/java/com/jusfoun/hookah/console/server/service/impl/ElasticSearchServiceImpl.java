@@ -180,9 +180,10 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
                     StringBuffer stringBuffer = new StringBuffer();
                     for (String id : category.getFullIds().split(" ")) {
                         stringBuffer.append(DictionaryUtil.getCategoryById(id) != null
-                                ? DictionaryUtil.getCategoryById(id).getCatName() : "未知").append(">");
+                                ? DictionaryUtil.getCategoryById(id).getCatName() : "未知")
+                                .append(HookahConstants.SPACE_SIGN).append(">").append(HookahConstants.SPACE_SIGN);
                     }
-                    category.setFullName(stringBuffer.substring(0, stringBuffer.length() - 1));
+                    category.setFullName(stringBuffer.substring(0, stringBuffer.length() - 1 - 2 * HookahConstants.SPACE_SIGN.length() ));
                 }
                 maps.add(AnnotationUtil.convert2Map(category));
             }
@@ -384,9 +385,9 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     }
 
     @Override
-    public List searchCategory(String keyword) throws Exception {
+    public List searchCategory(String keyword, Integer size) throws Exception {
         Pagination pagination = new Pagination();
-        pagination.setPageSize(HookahConstants.PAGE_SIZE_20);
+        pagination.setPageSize(size);
         pagination.setCurrentPage(HookahConstants.PAGE_NUM);
         Map<String, Object> map = new HashedMap();
         map.put("fullName", keyword);

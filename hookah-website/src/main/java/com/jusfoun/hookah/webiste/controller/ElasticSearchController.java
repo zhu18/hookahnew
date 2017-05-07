@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.webiste.controller;
 
+import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.es.EsGoods;
 import com.jusfoun.hookah.core.domain.vo.EsGoodsVo;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
@@ -89,11 +90,14 @@ public class ElasticSearchController {
      * @return
      */
     @RequestMapping("/v1/category")
-    public ReturnData searchCategory(String keyword) {
+    public ReturnData searchCategory(String keyword, Integer size) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
-            returnData.setData(elasticSearchService.searchCategory(keyword));
+            if(size == null) {
+                size = HookahConstants.PAGE_SIZE;
+            }
+            returnData.setData(elasticSearchService.searchCategory(keyword, size));
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());
