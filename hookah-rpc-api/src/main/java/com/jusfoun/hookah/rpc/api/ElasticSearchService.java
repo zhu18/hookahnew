@@ -36,5 +36,5 @@ public interface ElasticSearchService {
 
     void upsertById(String indexName, String type, String goodsId, Map<String, Object> map) throws Exception;
 
-    List searchCategory(String keyword) throws Exception;
+    List searchCategory(String keyword, Integer size) throws Exception;
 }

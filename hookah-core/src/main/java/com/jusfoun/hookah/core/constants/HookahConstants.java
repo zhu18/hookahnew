@@ -51,6 +51,8 @@ public class HookahConstants {
 
     /** 此字段用于比较当前时间与onsaleStartDate关系，选出非预约上架的商品 */
     public static final String ONSALE_START_DATE_FILEDNAME = "onsaleStartDate";
+    /** 符号 */
+    public static final String SPACE_SIGN = "&nbsp;&nbsp;";
 
 
     public enum AnalyzeOpt {
