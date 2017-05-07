@@ -16,10 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by dengxu on 2017/4/8/0008.
@@ -63,6 +60,7 @@ public class GoodsFavoriteController extends BaseController {
                     return returnData;
                 }else if("0".equals(gf.getIsDelete().toString())){
                     gf.setIsDelete(Byte.parseByte("1"));
+                    gf.setUpdateTime(new Date());
                     goodsFavoriteService.updateByIdSelective(gf);
                 }
             }else{
@@ -110,6 +108,7 @@ public class GoodsFavoriteController extends BaseController {
             if(selectList != null && selectList.size() > 0){
                 GoodsFavorite gf = selectList.get(0);
                 gf.setIsDelete(Byte.parseByte("0"));
+                gf.setUpdateTime(new Date());
                 goodsFavoriteService.updateByIdSelective(gf);
 
                 Map<String, Object> map = new HashMap<>();
