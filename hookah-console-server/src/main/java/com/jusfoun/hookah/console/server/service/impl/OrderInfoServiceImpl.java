@@ -329,6 +329,24 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             payVo.setPayId(Integer.parseInt(orderInfo.getPayId()));
             BigDecimal totalFee = new BigDecimal(orderInfo.getGoodsAmount());
             payVo.setTotalFee(totalFee);
+            try {
+                OrderInfoVo infoVo = this.findDetailById(orderId);
+                 List<MgOrderGoods> orderGoodsList = infoVo.getMgOrderGoodsList();
+                if(orderGoodsList!=null&&orderGoodsList.size()>0) {
+                    StringBuilder sb = new StringBuilder();
+                    for (int i = 0; i < orderGoodsList.size(); i++) {
+                        sb.append(orderGoodsList.get(i).getGoodsName());
+                        if (i < orderGoodsList.size() - 1) {
+                            sb.append(",");
+                        }
+                    }
+                    payVo.setOrderTitle(sb.toString());
+                }
+
+            }catch (Exception e){
+                 e.printStackTrace();
+            }
+            payVo.setOrderTitle("商品商品商品商品商品商品商品商品商品商品商品商品商品商品商品");
            /* MgOrderGoods t = new MgOrderGoods();
             t.setOrderId(orderId);
             List<MgOrderGoods> list = orderGoodsService.list(t );
