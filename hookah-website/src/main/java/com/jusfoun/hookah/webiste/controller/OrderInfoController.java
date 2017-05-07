@@ -81,44 +81,44 @@ public class OrderInfoController extends BaseController {
 
     }
 
+//    @RequestMapping(value = "/order/directInfo", method = RequestMethod.POST)
+//    public String orderInfo(String goodsId, Integer formatId,Long goodsNumber,Model model) {
+//        List<CartVo> list = new ArrayList<>(1);
+//        try {
+//            Long goodsAmount = new Long(0);
+//
+//            //验证商品是否下架
+//            Goods g = goodsService.selectById(goodsId);
+//            if (g.getIsOnsale() == null || g.getIsOnsale() != 1) {
+//                throw new HookahException("商品[" + g.getGoodsName() + "]未上架");
+//            }
+//            MgGoods.FormatBean format = goodsService.getFormat(goodsId,formatId);
+//            goodsAmount += format.getPrice() * goodsNumber;  //商品单价 * 套餐内数量 * 购买套餐数量
+//
+//            CartVo vo = new CartVo();
+//            vo.setRecId("-1");
+//            vo.setGoodsId(goodsId);
+//            vo.setGoodsNumber(goodsNumber);
+//            vo.setGoodsName(g.getGoodsName());
+//            vo.setGoodsFormat(formatId);
+//            vo.setFormatNumber((long)format.getNumber());
+//            vo.setGoodsPrice(format.getPrice());
+//            vo.setFormat(format);
+//            vo.setFormatId(formatId);
+//            vo.setGoods(g);
+//            list.add(vo);
+//            model.addAttribute("orderAmount",goodsAmount);
+//            model.addAttribute("cartOrder",list);
+//            return "/order/orderInfo";
+//        }catch (Exception e){
+//            logger.info(e.getMessage());
+//            return "/error/500";
+//        }
+//
+//    }
+
+
     @RequestMapping(value = "/order/directInfo", method = RequestMethod.POST)
-    public String orderInfo(String goodsId, Integer formatId,Long goodsNumber,Model model) {
-        List<CartVo> list = new ArrayList<>(1);
-        try {
-            Long goodsAmount = new Long(0);
-
-            //验证商品是否下架
-            Goods g = goodsService.selectById(goodsId);
-            if (g.getIsOnsale() == null || g.getIsOnsale() != 1) {
-                throw new HookahException("商品[" + g.getGoodsName() + "]未上架");
-            }
-            MgGoods.FormatBean format = goodsService.getFormat(goodsId,formatId);
-            goodsAmount += format.getPrice() * goodsNumber;  //商品单价 * 套餐内数量 * 购买套餐数量
-
-            CartVo vo = new CartVo();
-            vo.setRecId("-1");
-            vo.setGoodsId(goodsId);
-            vo.setGoodsNumber(goodsNumber);
-            vo.setGoodsName(g.getGoodsName());
-            vo.setGoodsFormat(formatId);
-            vo.setFormatNumber((long)format.getNumber());
-            vo.setGoodsPrice(format.getPrice());
-            vo.setFormat(format);
-            vo.setFormatId(formatId);
-            vo.setGoods(g);
-            list.add(vo);
-            model.addAttribute("orderAmount",goodsAmount);
-            model.addAttribute("cartOrder",list);
-            return "/order/orderInfo";
-        }catch (Exception e){
-            logger.info(e.getMessage());
-            return "/error/500";
-        }
-
-    }
-
-
-    @RequestMapping(value = "/order/directInfo/ajx", method = RequestMethod.POST)
     @ResponseBody
     public ReturnData orderInfo(String goodsId, Integer formatId,Long goodsNumber) {
         ReturnData returnData = new ReturnData<>();
