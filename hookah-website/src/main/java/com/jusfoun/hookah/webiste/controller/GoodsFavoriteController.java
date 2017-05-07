@@ -139,6 +139,16 @@ public class GoodsFavoriteController extends BaseController {
             filters.add(Condition.eq("userId", getCurrentUser().getUserId()));
             List<GoodsFavorite> list = goodsFavoriteService.selectList(filters);
             List<String> gfIdList = new ArrayList<>();
+
+            int pageNumberNew = HookahConstants.PAGE_NUM;
+            if (StringUtils.isNotBlank(pageNumber)) {
+                pageNumberNew = Integer.parseInt(pageNumber);
+            }
+            int pageSizeNew = HookahConstants.PAGE_SIZE;
+            if (StringUtils.isNotBlank(pageSize)) {
+                pageSizeNew = Integer.parseInt(pageSize);
+            }
+
             if(list.size() > 0){
 
                 for(GoodsFavorite gf : list){
@@ -146,19 +156,14 @@ public class GoodsFavoriteController extends BaseController {
                 }
                 List<OrderBy> orderBys = new ArrayList();
                 orderBys.add(OrderBy.desc("addTime"));
-                int pageNumberNew = HookahConstants.PAGE_NUM;
-                if (StringUtils.isNotBlank(pageNumber)) {
-                    pageNumberNew = Integer.parseInt(pageNumber);
-                }
-                int pageSizeNew = HookahConstants.PAGE_SIZE;
-                if (StringUtils.isNotBlank(pageSize)) {
-                    pageSizeNew = Integer.parseInt(pageSize);
-                }
-
                 List<Condition> filtersGoods = new ArrayList();
                 filtersGoods.add(Condition.in("goodsId", gfIdList.toArray()));
 
                 page = goodsService.getListInPage(pageNumberNew, pageSizeNew, filtersGoods, orderBys);
+                returnData.setData(page);
+            }else{
+                page = new Pagination<>(pageNumberNew, pageSizeNew);
+                page.setList(new ArrayList<>());
                 returnData.setData(page);
             }
         } catch (Exception e) {
