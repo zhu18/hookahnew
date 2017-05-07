@@ -11,6 +11,7 @@ import com.jusfoun.hookah.core.generic.OrderBy;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author huang lei
@@ -40,5 +41,7 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
     void deleteByLogic(String id);
 
     void deleteBatchByLogic(String[] ids);
+
+    public Map<String,Long> getOrderStatisticWithBuydate(Date startTime,Date endTime) throws HookahException;
 
 }

@@ -40,7 +40,7 @@ public class UserAuthInterceptor implements HandlerInterceptor {
                 user = userService.selectById(user.getUserId());
 
                 Integer userType = user.getUserType();
-                if(!HookahConstants.UserType.SYSTEM.equals(userType) && !HookahConstants.UserType.ORGANIZATION_CHECK_OK.equals(userType) && !HookahConstants.UserType.PERSON_CHECK_OK.equals(userType)){
+                if(!HookahConstants.UserType.SYSTEM.getCode().equals(userType) && !HookahConstants.UserType.ORGANIZATION_CHECK_OK.getCode().equals(userType) && !HookahConstants.UserType.PERSON_CHECK_OK.getCode().equals(userType)){
                     httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/auth/index");
                     return false;
                 }

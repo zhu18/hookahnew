@@ -38,6 +38,9 @@ public class ExchangeController extends BaseController{
     GoodsShelvesService goodsShelvesService;
 
     @Resource
+    CommentService commentService;
+
+    @Resource
     GoodsFavoriteService goodsFavoriteService;
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
@@ -82,6 +85,9 @@ public class ExchangeController extends BaseController{
                 throw new HookahException("获取用户信息出错！",e);
             }
         }
+
+        model.addAttribute("goodsGrades",commentService.countGoodsGradesByGoodsId(id).getData());
+
         model.addAttribute("goodsDetails", goodsVo);
         //推荐商品
         Map<String,GoodsShelvesVo> goodsMap = goodsShelvesService.getShevlesGoodsVoList(new HashMap<String,Object>());
