@@ -1,8 +1,12 @@
 package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.domain.PayCore;
+import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.rpc.api.PayCoreService;
+import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -33,6 +37,9 @@ public class PayCoreController {
 	@Resource
 	private PayCoreService payCoreService;
 
+	@Resource
+	UserService userService;
+
 	/**订单支付
 	 * @param
 	 * @return
@@ -43,11 +50,13 @@ public class PayCoreController {
 			   HttpSession session,
 			   HttpServletRequest request, HttpServletResponse response) throws Exception {
 		//TODO 锁
-		System.out.println(orderId + "xxx");
+
 		//处理请求
 		/*String reqHtml = payCoreService.doPay(orderId, getUserId(session));*/
-
-		String reqHtml = payCoreService.doPay(orderId,null);
+		Session sessionUs = SecurityUtils.getSubject().getSession();
+		HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
+		String reqHtml = payCoreService.doPay(orderId,userMap.get("userId"));
+		System.out.println(reqHtml + "xxx");
 		if(StringUtils.isEmpty(reqHtml)){
 			return "redirect:/404.html";
 		}else
