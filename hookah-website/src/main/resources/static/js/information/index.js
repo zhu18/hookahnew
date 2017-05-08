@@ -12,7 +12,7 @@ function loadPageData(data) { //渲染页面数据
 			html += '<p class="margin-bottom-10 padding-right-50">' + list[i].newsTitle + '</p>';
 			html += '</a>';
 			html += '<a href="/information/details?newsId=' + list[i].newsId + '" target="_blank">';
-			html += '<p class="padding-right-50 margin-bottom-10" >'+list[i].content+'</p>';
+			html += '<p class="padding-right-50 margin-bottom-10" >'+judg(list[i].contentValidity)+'</p>';
 			html += '</a>';
 			html += '<div class="auth">';
 			// html += '<img src="' + list[i].headImg + '" alt="">&nbsp;&nbsp;&nbsp;<span style="color:#B2B2B2;" class="padding-right-20">'+'管理员'+ '</span>';
@@ -37,13 +37,20 @@ function loadPageData(data) { //渲染页面数据
 	}
 }
 
-function interception(text){
-    // console.log("text:"+text);
-	$(text).each(function(){
-        if(text.length>=32){
-            $(this).html($(this).text().slice(0,32)+'...');
-        }
-	})
+// function interception(text){
+//     // console.log("text:"+text);
+// 	$(text).each(function(){
+//         if(text.length>=32){
+//             $(this).html($(this).text().slice(0,32)+'...');
+//         }
+// 	})
+// }
+function judg(text){
+	if(text==null){
+		return "暂无简介"
+	}else{
+		return text
+	}
 }
 
 function renderChange(that, num) {
