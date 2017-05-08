@@ -7,6 +7,7 @@ import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.GoodsShelves;
 import com.jusfoun.hookah.core.domain.mongo.MgShelvesGoods;
 import com.jusfoun.hookah.core.domain.vo.GoodsShelvesVo;
+import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.domain.vo.OptionalShelves;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
@@ -14,6 +15,7 @@ import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StrUtil;
+import com.jusfoun.hookah.rpc.api.CommentService;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.GoodsShelvesService;
 import com.jusfoun.hookah.rpc.api.MgGoodsShelvesGoodsService;
@@ -36,6 +38,9 @@ public class GoodsShelvesServiceImpl extends GenericServiceImpl<GoodsShelves, St
 
     @Resource
     private GoodsService goodsService;
+
+    @Resource
+    private CommentService commentService;
 
     @Resource
     public void setDao(GoodsShelvesMapper goodsShelvesMapper) {
@@ -71,7 +76,11 @@ public class GoodsShelvesServiceImpl extends GenericServiceImpl<GoodsShelves, St
                         List<Condition> goodsfilters = new ArrayList<Condition>();
                         goodsfilters.add(Condition.in("goodsId",sgIds.toArray()));
                         List<Goods> goodsList = goodsService.selectList(goodsfilters);
-                        goodsShelvesVo.setGoods(goodsList);
+
+                        //获取包含评价分的商品VO集合
+                        List<GoodsVo> goodsVoList = bulidGoodsVoList(goodsList);
+
+                        goodsShelvesVo.setGoods(goodsVoList);
                     }
                 }
                 //把货架标签按逗号拆分拼装
@@ -85,6 +94,7 @@ public class GoodsShelvesServiceImpl extends GenericServiceImpl<GoodsShelves, St
     }
 
 
+
     @Override
     public ReturnData<GoodsShelvesVo> findByShevlesGoodsVoId(String shevlesGoodsVoId) {
         ReturnData<GoodsShelvesVo> returnData = new ReturnData<GoodsShelvesVo>();
@@ -96,27 +106,8 @@ public class GoodsShelvesServiceImpl extends GenericServiceImpl<GoodsShelves, St
             return returnData;
         }
 
-        GoodsShelves goodsShelves = super.selectById(shevlesGoodsVoId);
-        if(Objects.nonNull(goodsShelves)){
-            //获取货架商品集合注入到GoodsShelvesVo
-            GoodsShelvesVo goodsShelvesVo = new GoodsShelvesVo();
-            BeanUtils.copyProperties(goodsShelves, goodsShelvesVo);
-
-            MgShelvesGoods mgShelvesGoods = mgGoodsShelvesGoodsService.selectById(shevlesGoodsVoId);
-            if(Objects.nonNull(mgShelvesGoods)){
-                List<String> sgIds = mgShelvesGoods.getGoodsIdList();
-                if(Objects.nonNull(sgIds) && sgIds.size() != 0 ){
-                    //商品Id集对应的商品集
-                    List<Condition> goodsfilters = new ArrayList<Condition>();
-                    goodsfilters.add(Condition.in("goodsId",sgIds.toArray()));
-                    List<Goods> goodsList = goodsService.selectList(goodsfilters);
-                    goodsShelvesVo.setGoods(goodsList);
-                }
-            }
-
-            //把货架标签按逗号拆分拼装
-            goodsShelvesVo.setShelvesTagList(str2StrArray(goodsShelves.getShelvesTag(),"[,，]+"));
-
+        GoodsShelvesVo goodsShelvesVo = buildGoodsShelveVo(shevlesGoodsVoId);
+        if (null != goodsShelvesVo){
             returnData.setData(goodsShelvesVo);
         }else{
             returnData.setMessage(ExceptionConst.get(ExceptionConst.InvalidParameters));
@@ -143,7 +134,6 @@ public class GoodsShelvesServiceImpl extends GenericServiceImpl<GoodsShelves, St
                 //查询mg里货架内的商品Id集合
                 List<String> sgIds = mgShelvesGoods.getGoodsIdList();
 
-                Pagination<Goods> page = new Pagination<>();
                 List<Condition> filters = new ArrayList();
                 filters.add(Condition.eq("isDelete", 1));
                 //从查询到的Id集合里查询商品
@@ -166,7 +156,8 @@ public class GoodsShelvesServiceImpl extends GenericServiceImpl<GoodsShelves, St
                 List<OrderBy> orderBys = new ArrayList();
                 orderBys.add(OrderBy.desc("lastUpdateTime"));
 
-                page = goodsService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
+                Pagination page = goodsService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
+                page.setList(this.bulidGoodsVoList(page.getList()));
                 returnData.setData(page);
             } catch (Exception e) {
                 returnData.setCode(ExceptionConst.Failed);
@@ -198,6 +189,67 @@ public class GoodsShelvesServiceImpl extends GenericServiceImpl<GoodsShelves, St
 
         return returnData;
     }
+
+
+    private List<GoodsVo> bulidGoodsVoList(List<Goods> goodsList) {
+        List<GoodsVo> goodsVoList = new ArrayList<GoodsVo>();
+        if(null != goodsList && goodsList.size() > 0){
+            for (Goods goods1 : goodsList) {
+                GoodsVo goodsVo = new GoodsVo();
+                BeanUtils.copyProperties(goods1, goodsVo);
+                //获取当前商品分数
+                Double goodsGrades = (Double) commentService.countGoodsGradesByGoodsId(goods1.getGoodsId()).getData();
+                goodsVo.setGoodsGrades(goodsGrades);
+                goodsVoList.add(goodsVo);
+            }
+        }
+
+        return goodsVoList;
+    }
+
+
+    //构建货架完成信息VO(货架信息,商品信息)
+    private GoodsShelvesVo buildGoodsShelveVo (String shevlesGoodsVoId){
+        GoodsShelves goodsShelves = super.selectById(shevlesGoodsVoId);
+        if(Objects.nonNull(goodsShelves)){
+            //获取货架商品集合注入到GoodsShelvesVo
+            GoodsShelvesVo goodsShelvesVo = new GoodsShelvesVo();
+            BeanUtils.copyProperties(goodsShelves, goodsShelvesVo);
+
+            MgShelvesGoods mgShelvesGoods = mgGoodsShelvesGoodsService.selectById(shevlesGoodsVoId);
+            if(Objects.nonNull(mgShelvesGoods)){
+                List<String> sgIds = mgShelvesGoods.getGoodsIdList();
+                if(Objects.nonNull(sgIds) && sgIds.size() != 0 ){
+                    //商品Id集对应的商品集
+                    List<Condition> goodsfilters = new ArrayList<Condition>();
+                    goodsfilters.add(Condition.in("goodsId",sgIds.toArray()));
+                    List<Goods> goodsList = goodsService.selectList(goodsfilters);
+
+                    List<GoodsVo> goodsVoList = new ArrayList<GoodsVo>();
+                    if(null != goodsList && goodsList.size() > 0){
+                        for (Goods goods1 : goodsList) {
+                            GoodsVo goodsVo = new GoodsVo();
+                            BeanUtils.copyProperties(goods1, goodsVo);
+                            //获取当前商品分数
+                            Double goodsGrades = (Double) commentService.countGoodsGradesByGoodsId(goods1.getGoodsId()).getData();
+                            goodsVo.setGoodsGrades(goodsGrades);
+                            goodsVoList.add(goodsVo);
+                        }
+                    }
+
+                    goodsShelvesVo.setGoods(goodsVoList);
+                }
+            }
+
+            //把货架标签按逗号拆分拼装
+            goodsShelvesVo.setShelvesTagList(str2StrArray(goodsShelves.getShelvesTag(),"[,，]+"));
+
+            return goodsShelvesVo;
+        }
+
+        return null;
+    }
+
 
     /**
      * @Title: str2StrArray
