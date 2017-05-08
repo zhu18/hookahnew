@@ -776,7 +776,13 @@ lesshat-selector {
     background: #373d41;
 }
 .module-wrap .index-top-banner > div:nth-child(1) {
-    background:url("/static/images/banner/banner2/banner2-one-bg.png") no-repeat 270px 4px #01060c;
+    background-color: #01060c;
+}
+.module-wrap .index-top-banner > div:nth-child(1)> .box{
+    position: relative;
+    height: 430px;
+    background:url("/static/images/banner/banner2/banner2-one-bg.png") no-repeat 210px 4px #01060c;
+
 }
 .module-wrap .index-top-banner > div:nth-child(1) .layer img {
     position: absolute;

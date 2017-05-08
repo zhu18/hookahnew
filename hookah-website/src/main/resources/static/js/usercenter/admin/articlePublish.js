@@ -89,6 +89,7 @@ function published(){
     var url = '';
     data.newsGroup = $('#newsGroup').val();
     data.newsTitle = $('#newsTitle').val();
+    data.newsInfo = $('#newsInfo').val();
     data.isHot = $("input[name='isHot']:checked").val();
     data.content = $('#content').val();
     data.newsSonGroup = $('#newsSonGroup').val();
@@ -175,13 +176,21 @@ $('#preview-div').hover(function(){
 
 
 $("#newsTitle").bind("input propertychange",function(){
-    // console.log("length:"+$.trim($("#newsTitle").val().length));
     var len = $.trim($("#newsTitle").val().length);
     $(".input-count strong").text(len);
     if(len>60){
         var value =$("#newsTitle").val();
-        console.log("value:"+value);
         $("#newsTitle").val(value.substring(0,60));
         $(".input-count strong").text(60);
     }
 })
+$("#newsInfo").bind("input propertychange",function(){
+    var len = $.trim($("#newsInfo").val().length);
+    $(".input-count .info").text(len);
+    if(len>60){
+        var value =$("#newsInfo").val();
+        $("#newsInfo").val(value.substring(0,60));
+        $(".input-count .info").text(60);
+    }
+})
+
