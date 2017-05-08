@@ -16,50 +16,156 @@
 .findPwd .find {
     font-size: 13px;
     font-weight: 600;
-    margin:30px 0px;
+    margin:40px 0px;
 }
-.self {
-    border-bottom: 1px dashed #ccc;
-    padding-bottom:20px;
+/*new*/
+@font-face {
+    font-family: rei;
+    src: url(/static/css/rei/rei.eot);
+    src: url(/static/css/rei/rei.eot?#iefix) format("embedded-opentype"), url(/static/css/rei/rei.woff) format("woff"), url(/static/css/rei/rei.ttf) format("truetype"), url(/static/css/rei/rei.svg#rei) format("svg");
+    font-weight: 400;
+    font-style: normal
 }
-.self dl{
-    width: 160px;
-    height: 30px;
+
+.ui-step {
+    padding: 0 40px;
+    margin: 0 auto;
+    font-size: 14px;
+    list-style: none;
+    zoom: 1;
     position: relative;
+    color: #b7b7b7;
+    overflow: hidden;
+}
+.maincenter .ui-step {
+    margin-bottom: 30px;
+}
+.ui-step li {
     float: left;
+    height: 54px;
+    margin: 0;
+    width: 50%;
+    position: relative;
 }
-.self dl dt {
-    border-top:5px solid #7abd54;
+.ui-step-3 li {
+    width: 33%;
 }
-.self dl dd {
-    width: 20px;
-    height: 20px;
-    color: #fff;
-    background: #7abd54;
-    border-radius: 50%;
-    text-align: center;
+.ui-step:after {
+    clear: both;
+    content: " ";
+    display: block;
+    font-size: 0;
+    height: 0;
+    visibility: hidden;
+}
+.ui-step .ui-step-active {
+    color: #f40;
+}
+.ui-step li.ui-step-end {
     position: absolute;
-    top:-8px;
-    left: 70px;
+    top: 0;
+    right: -110px;
+    width: 150px;
+    zoom: 1;
+    _clear: both;
 }
-.self dl .bgc {
-    background: #ccc;
+.ui-step li .ui-step-line {
+    height: 3px;
+    background: #b9b9b9;
+    display: block;
+    margin-top: 14px;
+    line-height: 1;
+    overflow: hidden;
 }
-.self dl .descr {
+.ui-step li .ui-step-icon {
+    height: 50px;
+    position: absolute;
+    top: 0;
+    width: 150px;
     text-align: center;
-    margin-top: 10px;
-    color:#7abd54;
+    left: -25px;
+    font-family: tahoma;
 }
-.self .normal {
-    border-color:#ccc;
-    color:#ccc;
+.iconfont {
+    font-family: rei;
+    font-style: normal;
+    cursor: default;
+    -webkit-font-smoothing: antialiased;
 }
-.self dl .other {
-    color:#ccc;
+.ui-step-icon .iconfont {
+    font-size: 30px;
+    margin: 0;
+    color: #b7b7b7;
+    color: rgba(0,0,0,.25);
+    line-height: 30px;
+    background: #fff;
+    padding: 0 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-shadow: 1px 1px 2px #fff, 0 0 0 #ccc, 1px 1px 2px #fff;
 }
+.ui-step .ui-step-active .iconfont {
+    color: #f40;
+}
+.ui-step-icon .ui-step-number {
+    line-height: 14px;
+    font-style: normal;
+    position: absolute;
+    top: 9px;
+    left: 0;
+    padding: 0 21px;
+    font-weight: 700;
+    color: #fff;
+}
+.ui-step .ui-step-active i.ui-step-number {
+    color: #FFF;
+}
+.ui-step-icon .ui-step-text {
+    height: 20px;
+    line-height: 20px;
+    position: relative;
+    text-shadow: 0 1px 0 #fff;
+    top: 34px;
+    left: -50px;
+}
+.ui-step li .ui-step-line {
+    height: 3px;
+    background: #b9b9b9;
+    display: block;
+    margin-top: 14px;
+    line-height: 1;
+    overflow: hidden;
+}
+.ui-step li.ui-step-end .ui-step-line {
+    display: none;
+}
+.ui-step li .ui-step-icon {
+    height: 50px;
+    position: absolute;
+    top: 0;
+    width: 150px;
+    text-align: center;
+    left: -25px;
+    font-family: tahoma;
+}
+.ui-step-end .ui-step-number {
+    background: transparent;
+    font-size: 12px;
+    font-style: normal;
+    left: 18px;
+    line-height: 12px;
+    padding: 0;
+    text-shadow: none;
+    top: 10px;
+}
+.ui-step-end .ui-step-number {
+    background: transparent;
+}
+
 .findPwd .info ,.findPwd .item{
-    padding-top: 30px;
-    margin-left:35%;
+    padding-top: 40px;
+    margin-left:20%;
     line-height: 30px;
 }
 .findPwd .info span{
@@ -73,14 +179,14 @@
     display: inline-block;
     width: 30px;
     height: 20px;
-    background: green;
+    background: gray;
 }
 .findPwd .sub {
     width: 55px;
     line-height: 20px;
     text-align: center;
     border: 1px solid #7abd54;
-    margin-left:50%;
-    margin-top: 20px;
-    margin-bottom:20px;
+    margin-left:35%;
+    margin-top: 30px;
+    margin-bottom:50px;
 }

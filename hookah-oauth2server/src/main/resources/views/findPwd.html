@@ -9,28 +9,40 @@ var htmlPart = {
 %>
 <div class="findPwd">
     <div class="find">找回密码</div>
-    <div class="self clearfix">
-        <dl>
-            <dt></dt>
-            <dd >1</dd>
-            <div class="descr">填写账户名</div>
-        </dl>
-        <dl>
-            <dt class="normal"></dt>
-            <dd class="bgc">2</dd>
-            <div class="descr other">验证身份</div>
-        </dl>
-        <dl>
-            <dt class="normal"></dt>
-            <dd class="bgc">3</dd>
-            <div class="descr other">设置新密码</div>
-        </dl>
-        <dl>
-            <dt class="normal"></dt>
-            <dd class="bgc">4</dd>
-            <div class="descr other">完成</div>
-        </dl>
-    </div>
+    <ol class="ui-step ui-step-3">
+        <li class="ui-step-start ui-step-done ui-step-active">
+            <div class="ui-step-line">-</div>
+            <div class="ui-step-icon">
+                <i class="iconfont">y</i>
+                <i class="ui-step-number">1</i>
+                <span class="ui-step-text"> 填写账户名 </span>
+            </div>
+        </li>
+        <li class="">
+            <div class="ui-step-line">-</div>
+            <div class="ui-step-icon">
+                <i class="iconfont">y</i>
+                <i class="ui-step-number">2</i>
+                <span class="ui-step-text">验证身份</span>
+            </div>
+        </li>
+        <li class="">
+            <div class="ui-step-line">-</div>
+            <div class="ui-step-icon">
+                <i class="iconfont">y</i>
+                <i class="ui-step-number">3</i>
+                <span class="ui-step-text">设置新密码</span>
+            </div>
+        </li>
+        <li class="ui-step-end">
+            <div class="ui-step-line">-</div>
+            <div class="ui-step-icon">
+                <i class="iconfont">y</i>
+                <i class="iconfont ui-step-number"></i>
+                <span class="ui-step-text"> 完成 </span>
+            </div>
+        </li>
+    </ol>
     <div class="info">
         <label >账户名:
             <input type="text" placeholder="用户名/邮箱/已验证手机">
