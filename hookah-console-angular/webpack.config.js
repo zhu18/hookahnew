@@ -254,7 +254,7 @@ module.exports = function makeWebpackConfig() {
       // Minify all javascript, switch loaders to minimizing mode
       new webpack.optimize.UglifyJsPlugin(),
 
-      // Copy assets from the public folder
+      // Copy assets from the public folderx
       // Reference: https://github.com/kevlened/copy-webpack-plugin
       new CopyWebpackPlugin([{
         from: __dirname + '/src/public'
@@ -271,7 +271,8 @@ module.exports = function makeWebpackConfig() {
     port: 9500,
     host: 'localhost',
     contentBase: './src/public',
-    stats: 'minimal'
+    stats: 'minimal',
+    disableHostCheck:true
   };
 
   return config;

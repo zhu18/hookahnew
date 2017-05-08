@@ -182,11 +182,16 @@
     background: gray;
 }
 .findPwd .sub {
-    width: 55px;
-    line-height: 20px;
+    width: 75px;
+    line-height: 25px;
+    color:#fff;
     text-align: center;
-    border: 1px solid #7abd54;
+    background: #00a2ca;
+    /*border: 1px solid #00a2ca;*/
     margin-left:35%;
     margin-top: 30px;
     margin-bottom:50px;
+}
+.findPwd .sub:hover{
+    cursor: pointer;
 }
