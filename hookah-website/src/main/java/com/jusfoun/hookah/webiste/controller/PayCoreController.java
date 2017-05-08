@@ -1,13 +1,21 @@
 package com.jusfoun.hookah.webiste.controller;
 
+import com.jusfoun.hookah.core.domain.OrderInfo;
 import com.jusfoun.hookah.core.domain.PayCore;
+import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.generic.Condition;
+import com.jusfoun.hookah.rpc.api.OrderInfoService;
 import com.jusfoun.hookah.rpc.api.PayCoreService;
+import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,9 +25,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 /**
  * z支付接口
@@ -33,6 +39,12 @@ public class PayCoreController {
 	@Resource
 	private PayCoreService payCoreService;
 
+	@Resource
+	UserService userService;
+
+	@Resource
+	private OrderInfoService orderService;
+
 	/**订单支付
 	 * @param
 	 * @return
@@ -43,11 +55,13 @@ public class PayCoreController {
 			   HttpSession session,
 			   HttpServletRequest request, HttpServletResponse response) throws Exception {
 		//TODO 锁
-		System.out.println(orderId + "xxx");
+
 		//处理请求
 		/*String reqHtml = payCoreService.doPay(orderId, getUserId(session));*/
-
-		String reqHtml = payCoreService.doPay(orderId,null);
+		Session sessionUs = SecurityUtils.getSubject().getSession();
+		HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
+		String reqHtml = payCoreService.doPay(orderId,userMap.get("userId"));
+		System.out.println(reqHtml + "xxx");
 		if(StringUtils.isEmpty(reqHtml)){
 			return "redirect:/404.html";
 		}else
@@ -85,7 +99,7 @@ public class PayCoreController {
 		return view;
 	}
 	
-	@RequestMapping(value="/alipay_rtn", method = RequestMethod.GET)
+	/*@RequestMapping(value="/alipay_rtn", method = RequestMethod.GET)
 	ModelAndView returnBack4Alipay(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		ModelAndView view = null;
 		//商户订单号
@@ -111,10 +125,57 @@ public class PayCoreController {
 			view = new ModelAndView("redirect:/pages/payError.html?orderSn="+orderSn);
 		}
 		return view;
+	}*/
+
+	@RequestMapping(value="/alipay_rtn", method = RequestMethod.GET)
+	String  returnBack4Alipay(HttpServletRequest request, HttpServletResponse response,Model model) throws Exception{
+		String  view = "pay/success";
+		//商户订单号
+		String orderSn = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
+		//支付宝交易号
+		String tradeNo = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"),"UTF-8");
+		//交易状态
+		String tradeStatus = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
+		if(payCoreService.verifyAlipay(getRequestParams(request))){
+			PayCore paied = payCoreService.findPayCoreByOrderSn(orderSn);
+			if(tradeStatus.equals("TRADE_FINISHED") || tradeStatus.equals("TRADE_SUCCESS")){
+				//交易成功
+				paied.setPayStatus(PayCore.PayStatus.success.getValue());
+				/*view = new ModelAndView("redirect:/pages/paySucess.html?orderSn="+orderSn);*/
+				view =  "pay/success";
+			}else{
+				//交易失败
+				/*view = new ModelAndView("redirect:/pages/payError.html?orderSn="+orderSn);*/
+				view = "pay/success";
+			}
+			paied.setTradeNo(tradeNo);
+			//更新订单状态
+			payCoreService.updatePayCore(paied);
+
+			long orderAmount = 0 ; //支付金额
+			try {
+				//支付操作
+				/*payCoreService.doPayMoney(orderSn,user.getUserId());*/
+				//根据订单编号获得支付金额
+				List<Condition> filters = new ArrayList();
+				filters.add(Condition.eq("orderSn", orderSn));
+				OrderInfo orderinfo  = orderService.selectOne(filters);
+				orderAmount= orderinfo.getOrderAmount();
+				model.addAttribute("money",paied.getAmount());
+			} catch (Exception e) {
+				e.printStackTrace();
+				return "pay/fail";
+			}
+		}else{
+			return "pay/success";
+		}
+
+		return "pay/success";
 	}
+
 	
 	@RequestMapping(value="/alipay_ntf", method = RequestMethod.POST)
-	String notifyBack4Alipay(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	String notifyBack4Alipay(HttpServletRequest request, HttpServletResponse response,Model model) throws Exception{
 		//商户订单号
 		String orderSn = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
 		//支付宝交易号

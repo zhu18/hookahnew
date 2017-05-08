@@ -110,6 +110,8 @@ public class GoodsApi extends BaseController{
 
             //只查询商品状态为未删除的商品
             filters.add(Condition.eq("isDelete", 1));
+            filters.add(Condition.eq("checkStatus", 1));
+            filters.add(Condition.eq("isOnsale", 1));
             //参数校验
             int pageNumberNew = HookahConstants.PAGE_NUM;
             if (StringUtils.isNotBlank(currentPage)) {

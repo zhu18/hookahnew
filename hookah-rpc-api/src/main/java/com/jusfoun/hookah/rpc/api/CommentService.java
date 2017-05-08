@@ -5,6 +5,7 @@ import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.generic.GenericService;
 import com.jusfoun.hookah.core.utils.ReturnData;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -48,5 +49,13 @@ public interface CommentService extends GenericService<Comment,String>{
      * @return
      */
     ReturnData batchAddComment(List<Comment> comments, User currUser);
+
+    /**
+     * 获取时间段内有评论更新的商品平均分
+     * @param startTima
+     * @param endTime
+     * @return
+     */
+    ReturnData findGoodsGradeByData(String startTima,String endTime);
 
 }

@@ -133,7 +133,9 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 
 	@Override
 	public PayCore findPayCoreByOrderSn(String orderSn) {
-		List<PayCore> pays = mapper.getPayCoreByOrderSn(orderSn);
+		List<Condition> filters = new ArrayList();
+		filters.add(Condition.eq("orderSn", orderSn));
+		List<PayCore> pays =this.selectList(filters);
 		return (pays == null || pays.size()==0) ? null : pays.get(0);
 	}
 
@@ -147,21 +149,26 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 				PayCore.PayStatus.success.getValue() == paied.getPayStatus().intValue())
 			return null;
 
-		PayVo payVo = new PayVo();
+		/*PayVo payVo = new PayVo();
 		payVo.setOrderSn("001");
 		payVo.setPayId(1);
 		payVo.setTotalFee(new BigDecimal("0.1"));
 		payVo.setUserId("62cb01c71c4711e796c56a3b07101c5a");
-		payVo.setOrderTitle("商品名称");
+		payVo.setOrderTitle("商品名称");*/
 
 
 
-		/*PayVo payVo = orderService.getPayParam(orderId);*/
+		PayVo payVo = orderService.getPayParam(orderId);
 		if (null == payVo || payVo.getPayId().intValue() == 0)
 			throw new RuntimeException("订单 [id : " + orderId + "] 信息有误");
 		if (payVo.getTotalFee().doubleValue() < 0)
 			throw new RuntimeException("订单金额不合法");
 		payVo.setUserId(userId);
+
+		BigDecimal b1 = payVo.getTotalFee();
+		BigDecimal b2 = new BigDecimal(100);
+		payVo.setTotalFee( b1.divide(b2,2,BigDecimal.ROUND_HALF_UP));
+		BigDecimal fee = payVo.getTotalFee();
 		String html = buildRequestParams(payVo);
 
 		System.out.print(html  +"            ------------------------------------------    ") ;
@@ -176,7 +183,7 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 		PayCore pay = new PayCore();
 		pay.setOrderId(orderId);
 		pay.setOrderSn(payVo.getOrderSn());
-		pay.setUserId("62cb01c71c4711e796c56a3b07101c5a");
+		pay.setUserId(payVo.getUserId());
 		System.out.print(payVo.getUserId() +"          ==============================");
 		pay.setAmount(payVo.getTotalFee());//金额
 		pay.setPayDate(new Date());

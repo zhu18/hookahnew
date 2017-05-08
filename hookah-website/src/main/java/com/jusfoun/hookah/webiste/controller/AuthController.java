@@ -16,13 +16,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * All rights Reserved, Designed By
@@ -39,7 +43,7 @@ import java.util.List;
  * @author: huanglei
  */
 @Controller
-public class AuthController extends BaseController{
+public class AuthController extends BaseController {
 
     private static Logger logger = LoggerFactory.getLogger(AuthController.class);
 
@@ -57,9 +61,31 @@ public class AuthController extends BaseController{
     public static final Byte AUTH_STATUS_CHECKING = 1;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(Model model) {
-        return "redirect:/";
+    public String login(String redirect_uri, HttpServletRequest request) {
+        if (!StringUtils.isEmpty(redirect_uri)) {
+            return "redirect:" + redirect_uri;
+        } else {
+            return "redirect:/";
+        }
     }
+
+    @RequestMapping(value = "/islogin", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean isLogin(Model model) {
+        Map userMap = null;
+        try {
+            userMap = (HashMap) SecurityUtils.getSubject().getSession().getAttribute("user");
+            if (userMap == null) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+
+    }
+
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
@@ -93,6 +119,7 @@ public class AuthController extends BaseController{
 
     /**
      * 个人认证
+     *
      * @param model
      * @return
      * @throws Exception
@@ -101,20 +128,25 @@ public class AuthController extends BaseController{
     public String userAuth(Model model) throws Exception {
         return "/auth/user_auth_init";
     }
+
     @RequestMapping(value = "/auth/user_auth_init_step2", method = RequestMethod.GET)
     public String userAuth2(Model model) throws Exception {
         return "/auth/user_auth_init_step2";
     }
+
     @RequestMapping(value = "/auth/user_auth_init_step3", method = RequestMethod.GET)
     public String userAuth3(Model model) throws Exception {
         return "/auth/user_auth_init_step3";
     }
+
     @RequestMapping(value = "/auth/user_auth_init_step4", method = RequestMethod.GET)
     public String userAuth4(Model model) throws Exception {
         return "/auth/user_auth_init_step4";
     }
+
     /**
      * 公司认证
+     *
      * @param model
      * @return
      * @throws Exception
@@ -123,14 +155,17 @@ public class AuthController extends BaseController{
     public String companyAuth(Model model) throws Exception {
         return "/auth/company_auth_init";
     }
+
     @RequestMapping(value = "/auth/company_auth_init_step2", method = RequestMethod.GET)
     public String companyAuth2(Model model) throws Exception {
         return "/auth/company_auth_init_step2";
     }
+
     @RequestMapping(value = "/auth/company_auth_init_step3", method = RequestMethod.GET)
     public String companyAuth3(Model model) throws Exception {
         return "/auth/company_auth_init_step3";
     }
+
     @RequestMapping(value = "/auth/company_auth_init_step4", method = RequestMethod.GET)
     public String companyAuth4(Model model) throws Exception {
         return "/auth/company_auth_init_step4";
@@ -138,7 +173,7 @@ public class AuthController extends BaseController{
 
     @RequestMapping(value = "/auth/personAuth", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnData personAuth(Model model, UserDetail userDetail)  {
+    public ReturnData personAuth(Model model, UserDetail userDetail) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
@@ -148,9 +183,9 @@ public class AuthController extends BaseController{
 
 
             UserDetail userDetail1 = userDetailService.selectById(userId);
-            if (userDetail1 != null){
+            if (userDetail1 != null) {
                 int count = userDetailService.updateByIdSelective(userDetail);
-            }else {
+            } else {
                 userDetail = userDetailService.insert(userDetail);
                 returnData.setData(userDetail);
             }
@@ -171,7 +206,7 @@ public class AuthController extends BaseController{
 
     @RequestMapping(value = "/auth/orgAuth", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnData orgAuth(Model model, Organization organization)  {
+    public ReturnData orgAuth(Model model, Organization organization) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
@@ -180,13 +215,13 @@ public class AuthController extends BaseController{
             organization.setIsAuth(AUTH_STATUS_SUCCESS);
 
             List<Condition> fifters = new ArrayList<Condition>();
-            fifters.add(Condition.eq("userId",userId));
+            fifters.add(Condition.eq("userId", userId));
             Organization organization1 = organizationService.selectOne(fifters);
 
-            if(null != organization1){
+            if (null != organization1) {
                 organization.setOrgId(organization1.getOrgId());
                 organizationService.updateByIdSelective(organization);
-            }else{
+            } else {
                 organization = organizationService.insert(organization);
                 returnData.setData(organization);
             }

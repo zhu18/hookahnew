@@ -1,0 +1,50 @@
+<%
+var head = {
+%>
+<link type="text/css" rel="stylesheet" href="/static/css/findPwd.css">
+
+<%};%>
+<%
+var htmlPart = {
+%>
+<div class="findPwd">
+    <div class="find">找回密码</div>
+    <div class="self clearfix">
+        <dl>
+            <dt></dt>
+            <dd >1</dd>
+            <div class="descr">填写账户名</div>
+        </dl>
+        <dl>
+            <dt class="normal"></dt>
+            <dd class="bgc">2</dd>
+            <div class="descr other">验证身份</div>
+        </dl>
+        <dl>
+            <dt class="normal"></dt>
+            <dd class="bgc">3</dd>
+            <div class="descr other">设置新密码</div>
+        </dl>
+        <dl>
+            <dt class="normal"></dt>
+            <dd class="bgc">4</dd>
+            <div class="descr other">完成</div>
+        </dl>
+    </div>
+    <div class="info">
+        <label >账户名:
+            <input type="text" placeholder="用户名/邮箱/已验证手机">
+        </label>
+        <span>请输入您的用户名/邮箱/已验证手机</span>
+    </div>
+    <div class="item">
+        <label>验证码:
+            <input type="text">
+            <span></span>看不清?<a href="">换一张</a>
+        </label>
+    </div>
+    <div class="sub">提交</div>
+</div>
+<%};
+include("layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>

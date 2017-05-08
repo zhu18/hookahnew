@@ -1,11 +1,11 @@
-*{padding:0;margin:0 auto;}  /* 针对IE8的标准 */
-/*ie8点击有虚线区域*/
-body{
-	-webkit-user-select:none;
-	-moz-user-select:none;
-	-ms-user-select:none;
-	user-select:none;
-}
+/**{padding:0;margin:0 auto;}  !* 针对IE8的标准 *!*/
+/*!*ie8点击有虚线区域*!*/
+/*body{*/
+	/*-webkit-user-select:none;*/
+	/*-moz-user-select:none;*/
+	/*-ms-user-select:none;*/
+	/*user-select:none;*/
+/*}*/
 /*线 --#DCDDDD*/
 /*交易中心-start*/
 .exchange-index {
@@ -1385,9 +1385,6 @@ dl {
 }
 .goods-left .goods-details .goods-details-img .collect-box {
 }
-.goods-left .goods-details .goods-details-img .collect-box .attention:hover {
-	cursor: pointer;
-}
 .goods-left .goods-details .goods-details-right {
 	width: 700px;
 }
@@ -1478,11 +1475,11 @@ dl {
 }
 .goods-left .goods-details .goods-details-right .detail-count a {
 	text-align: center;
-	line-height: 32px;
+	line-height: 28px;
 	display: inline-block;
 	width: 110px;
-	height: 32px;
-	font-size: 14px;
+	height: 28px;
+	font-size: 12px;
 }
 /*接口详情*/
 .goodsDetails .goods-left .goods-table {

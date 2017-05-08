@@ -24,8 +24,14 @@
     comment_content
   </sql>
 
+  <!-- 获取商品平均分 并取一位小数-->
   <select id="selectGoodsAvgByGoodsId" resultType="java.lang.Double">
       SELECT ROUND(AVG(c.goods_comment_grade), 1) FROM `comment` c WHERE goods_id = #{goodsId} AND status = 1
+  </select>
+
+  <!-- 获取时间段内有评论的商品ID集合 -->
+  <select id="selectGoodsIdsByData" resultType="java.lang.String">
+    SELECT DISTINCT goods_id FROM `comment` c WHERE add_time BETWEEN #{startTime} AND #{endTime} AND status = 1
   </select>
 
 </mapper>

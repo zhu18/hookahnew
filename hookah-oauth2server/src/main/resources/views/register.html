@@ -149,7 +149,7 @@ var htmlPart = {
 		<div class="msg msg-type-error msg-display-inline" id="J_MsgNick"
 			 style="position: absolute; left: 754px; top: 92px;"><i class="iconfont">󰅕</i>
 			<div class="msg-tit"></div>
-			<div class="msg-cnt" aria-live="assertive">5-25个字符，推荐使用中文，请勿包含姓名/身份证/银行卡等隐私信息，一旦设置成功无法修改</div>
+			<div class="msg-cnt" aria-live="assertive">5-25个字符，请勿包含姓名/身份证/银行卡等隐私信息，一旦设置成功无法修改</div>
 		</div>
 		<div class="pw-tip" id="J_PwdTip" style="position: absolute; left:754px; top:83px;">
 			<i class="pw-tip-arr"></i>
@@ -182,7 +182,7 @@ var htmlPart = {
 		$('h2.logo-title').html('注册');
 	}
 	$('#J_captcha').on('click', function () {
-		$(this).html('<img src="${host.auth}/captcha">');
+		$(this).html('<img src="http://auth.hookah.app/captcha?'+Math.random()+'">');
 	});
 	var testData = {
 		tipIcon: {
@@ -298,6 +298,13 @@ var htmlPart = {
 	};
 	$('#J_Password').bind('input propertychange', function () {
 		var val = $(this).val();
+		var endT = val.substr(val.length-1,1);
+		console.log(endT);
+		if(endT == ' '){
+			$.alert('不能有空格');
+			val = val.substring(0,val.length-1);
+			$(this).val(val);
+		}
 		var a = testData.number(val),
 			b = testData.upperLetter(val),
 			c = testData.lowerLetter(val),
@@ -488,7 +495,7 @@ var htmlPart = {
 		ERROR_REGISTER_EMAIL_SEND_TOO_FREQUENT: '邮件发送频率太快，请稍后重试',
 		ERROR_GENERAL_PHONE_EMPTY: '请输入你的电话/手机号码',
 		ERROR_GENERAL_PHONE_MALFORM: '电话/手机号码不正确，请重新输入',
-		ERROR_MALFORM_NICK_NAME: '5-25个字符，推荐使用中文，请勿包含姓名/身份证/银行卡等隐私信息，一旦设置成功无法修改',
+		ERROR_MALFORM_NICK_NAME: '5-25个字符，请勿包含姓名/身份证/银行卡等隐私信息，一旦设置成功无法修改',
 		ERROR_MISS_EMAIL: '缺少邮箱',
 		ERROR_MALFORM_NICK_NAME_TOO_SHORT: '会员名为5-25字符',
 		ERROR_MALFORM_NICK_NAME_TOO_LONG: '会员名为5-25字符',
@@ -707,7 +714,13 @@ var htmlPart = {
 			}
 		});
 	}
-
+$('#J_Agreement').change(function(){
+	if($(this).is(':checked')){
+		$('#J_BtnInfoForm').removeAttr('disabled').css({'background':'#008fb2','cursor':'pointer'});
+	}else{
+		$('#J_BtnInfoForm').attr('disabled','disabled').css({'background':'#ccc','cursor':'no-drop'});
+	}
+})
 </script>
 <%};
 include("layout/base.html",{headSection:head,htmlSection:htmlPart}){}
