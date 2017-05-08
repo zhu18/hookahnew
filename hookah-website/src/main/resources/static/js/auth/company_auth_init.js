@@ -30,9 +30,6 @@ $(function(){
         }
 
     })
-    // 点击立即认证按钮，进行认证操作
-    $("#verifyBtn").on("click",companyAuth());
-
 });
 
 

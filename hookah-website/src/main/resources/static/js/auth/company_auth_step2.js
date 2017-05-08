@@ -143,39 +143,39 @@ function upPhoto(){
     })
 }
 function companyAuth(){
-    // if($("#governmentName").val()==''){
-    //     swal("请输入政府全称！");
-    //     return;
-    // }
-    // if($("#creditCode").val()==''){
-    //     swal("请输入信用代码！");
-    //     return;
-    // }
-    // if($("#businessLicence").val()==''){
-    //     swal("请输入营业执照到期时间！");
-    //     return;
-    // }
-    // if($("#taxRegCertificate").val()==''){
-    //     swal("请输入税务登记证到期时间！");
-    //     return;
-    // }
-    // if( $("#companyLegal").val()==''){
-    //     swal("请输入公司的法人代表！");
-    //     return;
-    // }
-    //
-    // if( $("#mainBusiness").val()==""){
-    //     swal("请输入您企业的主营业务！");
-    //     return;
-    // }
-    // if( $("#address").val()==""){
-    //     swal("请输入企业的详细地址！");
-    //     return;
-    // }
-    // if($("#tel").val()==""){
-    //     swal("请输入联系电话！");
-    //     return;
-    // }
+    if($("#governmentName").val()==''){
+        swal("请输入政府全称！");
+        return;
+    }
+    if($("#creditCode").val()==''){
+        swal("请输入信用代码！");
+        return;
+    }
+    if($("#businessLicence").val()==''){
+        swal("请输入营业执照到期时间！");
+        return;
+    }
+    if($("#taxRegCertificate").val()==''){
+        swal("请输入税务登记证到期时间！");
+        return;
+    }
+    if( $("#companyLegal").val()==''){
+        swal("请输入公司的法人代表！");
+        return;
+    }
+
+    if( $("#mainBusiness").val()==""){
+        swal("请输入您企业的主营业务！");
+        return;
+    }
+    if( $("#address").val()==""){
+        swal("请输入企业的详细地址！");
+        return;
+    }
+    if($("#tel").val()==""){
+        swal("请输入联系电话！");
+        return;
+    }
     $.ajax({
         url : "/auth/orgAuth",
         data : {
@@ -187,8 +187,7 @@ function companyAuth(){
             "licensePath":$("#licensePath").attr("src"),//营业执照存放路径
             "certifictePath":$("#certifictePath").attr("src"),//企业代码存放路径
             "lawPersonName":$("#companyLegal").val(),//企业法人代表
-            // "region":$('select[name="province"]').val()+$('select[name="city"]').val(),//所在地
-            "region":"陕西省宝鸡市",
+            "region":$('select[name="province"] option:selected').text()+$('select[name="city"] option:selected').text(),//所在地
             "contactAddress":$("#address").val(),//详细地址
             "orgPhone":$("#tel").val(),//联系电话
             "industry":$("#mainBusiness").val(),//行业
