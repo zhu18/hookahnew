@@ -714,7 +714,8 @@ public class ESTemplate {
                     //过滤没到上架时间的预约商品
 //                    if(HookahConstants.ONSALE_START_DATE_FILEDNAME.equals(entry.getValue())) {
 //                        queryString = QueryBuilders.rangeQuery(HookahConstants.ONSALE_START_DATE_FILEDNAME)
-//                                .to(new Date());
+//                                .to(new Date().getTime());
+//                        System.out.println(new Date().getTime());
 //                    }else {
                         queryString = QueryBuilders.simpleQueryStringQuery(String.valueOf(entry.getValue()))
                                 .field(String.valueOf(entry.getKey()));
@@ -804,7 +805,8 @@ public class ESTemplate {
         }
         if (listCnt != null && listCnt.size() > 0) {
             for (EsAgg obj : listCnt) {
-                requestBuilder.addAggregation(AggregationBuilders.terms(obj.getAggName()).field(obj.getFieldName()));
+                requestBuilder.addAggregation(AggregationBuilders.terms(obj.getAggName())
+                        .field(obj.getFieldName()).size(HookahConstants.ES_SIZE_BIGGER));
             }
 
             SearchResponse sr = requestBuilder.execute().actionGet();

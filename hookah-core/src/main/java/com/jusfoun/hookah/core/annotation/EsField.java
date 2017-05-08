@@ -23,4 +23,5 @@ public @interface EsField {
     boolean isStore() default false;
     String[] copyTo() default {};
     boolean fielddata() default false;
+    String format() default "";
 }

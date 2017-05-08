@@ -1,0 +1,86 @@
+
+.clearfix:after {
+    visibility: hidden;
+    clear: both;
+    display: block;
+    content: ".";
+    height: 0;
+    font-size: 0;
+    zoom: 1;
+}
+
+.findPwd {
+    width: 650px;
+    margin:0 auto;
+}
+.findPwd .find {
+    font-size: 13px;
+    font-weight: 600;
+    margin:30px 0px;
+}
+.self {
+    border-bottom: 1px dashed #ccc;
+    padding-bottom:20px;
+}
+.self dl{
+    width: 160px;
+    height: 30px;
+    position: relative;
+    float: left;
+}
+.self dl dt {
+    border-top:5px solid #7abd54;
+}
+.self dl dd {
+    width: 20px;
+    height: 20px;
+    color: #fff;
+    background: #7abd54;
+    border-radius: 50%;
+    text-align: center;
+    position: absolute;
+    top:-8px;
+    left: 70px;
+}
+.self dl .bgc {
+    background: #ccc;
+}
+.self dl .descr {
+    text-align: center;
+    margin-top: 10px;
+    color:#7abd54;
+}
+.self .normal {
+    border-color:#ccc;
+    color:#ccc;
+}
+.self dl .other {
+    color:#ccc;
+}
+.findPwd .info ,.findPwd .item{
+    padding-top: 30px;
+    margin-left:35%;
+    line-height: 30px;
+}
+.findPwd .info span{
+    color:red;
+}
+.findPwd .info label input ,.findPwd .item label input{
+    width: 160px;
+    line-height: 25px;
+}
+.findPwd .item label span {
+    display: inline-block;
+    width: 30px;
+    height: 20px;
+    background: green;
+}
+.findPwd .sub {
+    width: 55px;
+    line-height: 20px;
+    text-align: center;
+    border: 1px solid #7abd54;
+    margin-left:50%;
+    margin-top: 20px;
+    margin-bottom:20px;
+}

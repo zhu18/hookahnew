@@ -1,6 +1,5 @@
 package com.jusfoun.hookah.core.domain.mongo;
 
-import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.generic.GenericModel;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -79,6 +78,7 @@ public class MgShelvesGoods extends GenericModel {
         private Long price;
         private String imageUrl;
         private String goodsUrl;
+        private String backgroundImgUrl;
 
 
         public Integer getNumber() {
@@ -127,6 +127,14 @@ public class MgShelvesGoods extends GenericModel {
 
         public void setGoodsUrl(String goodsUrl) {
             this.goodsUrl = goodsUrl;
+        }
+
+        public String getBackgroundImgUrl() {
+            return backgroundImgUrl;
+        }
+
+        public void setBackgroundImgUrl(String backgroundImgUrl) {
+            this.backgroundImgUrl = backgroundImgUrl;
         }
     }
 }
