@@ -202,7 +202,7 @@ public class RegController {
         List<Condition> filters = new ArrayList<>(2);
         switch (step) {
             case 1: //get or post
-                return "loginName";
+                return "findPwd";
             case 2: //post
                 try {
                     String captcha = userVo.getCaptcha();
@@ -224,7 +224,7 @@ public class RegController {
                     }
                 } catch (Exception e) {
                     model.addAttribute("message",e.getMessage());
-                    return "loginName";
+                    return "findPwd";
                 }
             case 3:  //post
                 //校验短信验证码
@@ -263,7 +263,7 @@ public class RegController {
 
                     filters.add(Condition.eq("mobile", userVo.getMobile()));
                     userService.updateByCondition(user, filters);
-                    return "complete";
+                    return "pwdSetted";
                 } catch (Exception e) {
                     logger.error(e.getMessage());
                     return "resetPwd";
