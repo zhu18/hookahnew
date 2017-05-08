@@ -44,15 +44,20 @@ public interface PayCoreService extends GenericService<PayCore,String> {
 	 */
 	public void updatePayCore(PayCore paied) throws Exception;
 
+	/**
+	 * 根据订单号获取订单信息
+	 * @param orderSn
+	 * @return
+	 */
 	public PayCore findPayCoreByOrderSn(String orderSn);
 
 	/**支付
-	 * @param orderId
+	 * @param orderSn
 	 * @param userId
 	 * @return
 	 * @throws Exception
 	 */
-	public String doPay(String orderId, String userId) throws Exception;
+	public String doPay(String orderSn, String userId) throws Exception;
 
 	public Pagination<PayCore> findPageByVo(PayCoreVo payCoreVo, int pageNo, int pageSize);
 

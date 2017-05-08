@@ -133,7 +133,9 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 
 	@Override
 	public PayCore findPayCoreByOrderSn(String orderSn) {
-		List<PayCore> pays = mapper.getPayCoreByOrderSn(orderSn);
+		List<Condition> filters = new ArrayList();
+		filters.add(Condition.eq("orderSn", orderSn));
+		List<PayCore> pays =this.selectList(filters);
 		return (pays == null || pays.size()==0) ? null : pays.get(0);
 	}
 
