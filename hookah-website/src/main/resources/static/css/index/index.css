@@ -820,12 +820,19 @@ lesshat-selector {
     background: #373d41;
 }
 .module-wrap .index-top-banner > div:nth-child(1) {
-    background:url("/static/images/banner/one-line.png") no-repeat -70px 280px, linear-gradient(to right, #102841 0%,#000000 60%,#000000 100%);
+    background:linear-gradient(to right, #102841 0%,#000000 60%,#000000 100%);
     /*background:url("/static/images/banner/one-line.png") no-repeat -70px 280px,-moz-linear-gradient(right, #102841 0%,#000000 100%);*/
     /*background:url("/static/images/banner/one-line.png") no-repeat -70px 280px,-webkit-gradient(linear,0% 0%,100% 0%,from(#102841),to(#000000));*/
     /*background:url("/static/images/banner/one-line.png") no-repeat -70px 280px,-webkit-linear-gradient(right, #102841 0%,#000000 100%);*/
     /*background:url("/static/images/banner/one-line.png") no-repeat -70px 280px,-o-linear-gradient(right, #102841 0%,#000000 100%);*/
     /*background:url("/static/images/banner/one-line.png") no-repeat -70px 280px,-ms-linear-gradient(right, #102841 0%,#000000 100%);*/
+}
+.module-wrap .index-top-banner > div:nth-child(1)>.box{
+    position: relative;
+    margin:0 auto;
+    height: 430px;
+    max-width: 1440px;
+    background:url("/static/images/banner/one-line.png") no-repeat -70px 280px;
 }
 .module-wrap .index-top-banner > div:nth-child(1) .layer img {
     /*width: 400px;*/
@@ -850,6 +857,11 @@ lesshat-selector {
     border: none;
 }
 .module-wrap .index-top-banner > div:nth-child(2) {
+    background:linear-gradient(to bottom, #213972 0%,#212A59 100%);
+
+}
+.module-wrap .index-top-banner > div:nth-child(2) .box {
+    position: relative;
     background:url("/static/images/banner/two-background.jpg") no-repeat 950px 340px, linear-gradient(to bottom, #213972 0%,#212A59 100%);
     /*background:url("/static/images/banner/two-background.jpg") no-repeat 950px 340px,-moz-linear-gradient(bottom, #213972 0%,#212A59 100%);*/
     /*background:url("/static/images/banner/two-background.jpg") no-repeat 950px 340px,-webkit-gradient(linear,0% 0%,100% 0%,from(#213972),to(#212A59));*/
@@ -871,6 +883,10 @@ lesshat-selector {
     line-height: 50px;
 }
 .module-wrap .index-top-banner > div:nth-child(3) {
+    background:linear-gradient(to bottom, #213A72 0%,#212A59 100%)
+
+}
+.module-wrap .index-top-banner > div:nth-child(3) .box{
     background:url("/static/images/banner/three-bg.png") no-repeat 0px 0px, linear-gradient(to bottom, #213A72 0%,#212A59 100%)
 
 }
