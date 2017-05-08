@@ -862,6 +862,9 @@ lesshat-selector {
 }
 .module-wrap .index-top-banner > div:nth-child(2) .box {
     position: relative;
+    margin:0 auto;
+    height: 430px;
+    max-width: 1440px;
     background:url("/static/images/banner/two-background.jpg") no-repeat 950px 340px, linear-gradient(to bottom, #213972 0%,#212A59 100%);
     /*background:url("/static/images/banner/two-background.jpg") no-repeat 950px 340px,-moz-linear-gradient(bottom, #213972 0%,#212A59 100%);*/
     /*background:url("/static/images/banner/two-background.jpg") no-repeat 950px 340px,-webkit-gradient(linear,0% 0%,100% 0%,from(#213972),to(#212A59));*/
@@ -887,6 +890,10 @@ lesshat-selector {
 
 }
 .module-wrap .index-top-banner > div:nth-child(3) .box{
+    position: relative;
+    margin:0 auto;
+    height: 430px;
+    max-width: 1440px;
     background:url("/static/images/banner/three-bg.png") no-repeat 0px 0px, linear-gradient(to bottom, #213A72 0%,#212A59 100%)
 
 }
