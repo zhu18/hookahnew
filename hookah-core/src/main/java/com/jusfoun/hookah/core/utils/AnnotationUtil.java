@@ -38,6 +38,9 @@ public class AnnotationUtil {
                     if(esField.copyTo() != null && esField.copyTo().length > 0) {
                         esGmFieldMapping.setCopy_to(esField.copyTo());
                     }
+                    if (StringUtils.isNotBlank(esField.format())) {
+                        esGmFieldMapping.setFormat(esField.format());
+                    }
                 }
                 properties.put(field.getName(), esGmFieldMapping);
             }

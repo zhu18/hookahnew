@@ -24,9 +24,14 @@ var htmlPart = {
 							<span>${goodsDetails.clickRate}</span>
 						</p>
 						<p class="display-inline-block margin-left-40">
-							<span class="attention" onclick="Attention.add('${goodsDetails.goodsId}')">
-								<i class="iconfont icon-jushoucanggift"></i>
+							<span class="attention">
+								<%if(goodsDetails.orNotFavorite){%>
+								<i class="iconfont icon-jushoucanggift color-red"></i>
+								<span class="eval">已关注:</span>
+								<%}else{%>
+								<i class="iconfont icon-jushoucanggift" style="cursor:pointer;" onclick="Attention.add('${goodsDetails.goodsId}')"></i>
 								<span class="eval">关注:</span>
+								<%}%>
 								<span>${goodsDetails.followNum}</span>
 							</span>
 						</p>
@@ -62,12 +67,19 @@ var htmlPart = {
 					</div>
 					<div class="detail-star margin-bottom-20 padding-left-10">
 						<span class="font-size-14">评分：</span>
+						<%
+							var goodsGradesC = goodsGrades + '';
+							var goodsGrade = strutil.subStringTo (goodsGradesC,0,1);
+						goodsGrade = parseInt(goodsGrade);
+						%>
+
 						<div class="display-inline-block">
+							<%for(var i = 0; i < goodsGrade; i++){%>
 							<i class="fa fa-star color-orange font-size-18" aria-hidden="true"></i>
-							<i class="fa fa-star color-orange font-size-18" aria-hidden="true"></i>
-							<i class="fa fa-star color-orange font-size-18" aria-hidden="true"></i>
-							<i class="fa fa-star color-orange font-size-18" aria-hidden="true"></i>
+							<%}%>
+							<%for(var i = 0; i < 5-goodsGrade; i++){%>
 							<i class="fa fa-star-o color-orange font-size-18" aria-hidden="true"></i>
+							<%}%>
 						</div>
 
 					</div>

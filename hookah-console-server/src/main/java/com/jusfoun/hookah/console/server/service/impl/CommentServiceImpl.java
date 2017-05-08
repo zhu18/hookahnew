@@ -15,12 +15,15 @@ import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.CommentService;
 import com.jusfoun.hookah.rpc.api.OrderInfoService;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.omg.CORBA.PUBLIC_MEMBER;
 
 import javax.annotation.Resource;
 import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -43,6 +46,8 @@ public class CommentServiceImpl extends GenericServiceImpl<Comment,String> imple
     //是否评论(0.未评论 1.已评论)
     public static final Integer COMMENT_STATUS_OK = 1;
     public static final Integer COMMENT_STATUS_NO = 0;
+
+    private static final Double default_goods_grades = 5d;
 
     @Resource
     public void setDao(CommentMapper commentMapper) {
@@ -133,7 +138,7 @@ public class CommentServiceImpl extends GenericServiceImpl<Comment,String> imple
             filters.add(Condition.eq("status",STATUS_INVAL));
 
             List<Comment> comments = super.selectList(filters);
-            Double aveGrades = 5d;
+            Double aveGrades = default_goods_grades;
             if(null != comments && comments.size() > 0){
                 //计算平均值
                 aveGrades = commentMapper.selectGoodsAvgByGoodsId(goodsId);
@@ -190,5 +195,49 @@ public class CommentServiceImpl extends GenericServiceImpl<Comment,String> imple
         return returnData;
     }
 
+    @Override
+    public ReturnData findGoodsGradeByData(String startTime, String endTime) {
+        ReturnData returnData = new ReturnData();
+        returnData.setCode(ExceptionConst.Success);
 
+        try{
+//            List<Condition> fifters = new ArrayList<Condition>();
+//            fifters.add(Condition.between("addTime",new Date[]{startTima,endTime}));
+
+            Date startTimeDate = parseDate(startTime,"yyyy-MM-dd hh:mm:ss");
+            Date endTimeDate = parseDate(endTime,"yyyy-MM-dd hh:mm:ss");
+
+            List<Map<String,Object>> goodsGradeMapList = new ArrayList<Map<String,Object>>();
+
+            List<String> goodsIds = commentMapper.selectGoodsIdsByData(startTimeDate,endTimeDate);
+            if(null != goodsIds && goodsIds.size() > 0){
+                for (String goodsId : goodsIds) {
+                    Map<String,Object> goodsGradeMap = new HashMap<String,Object>();
+                    Double aveGrades = default_goods_grades;
+                    //计算平均值
+                    aveGrades = commentMapper.selectGoodsAvgByGoodsId(goodsId);
+                    goodsGradeMap.put("goodsId",goodsId);
+                    goodsGradeMap.put("goodsGrades",aveGrades);
+                    goodsGradeMapList.add(goodsGradeMap);
+                }
+            }
+
+            returnData.setData(goodsGradeMapList);
+        }catch (Exception e) {
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+
+        return returnData;
+    }
+
+    //String 转 Date
+    private Date parseDate(String dateStr,String pattern) throws ParseException {
+        Date d = null;
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        d = sdf.parse(dateStr);
+        sdf = null; //help GC
+        return d;
+    }
 }

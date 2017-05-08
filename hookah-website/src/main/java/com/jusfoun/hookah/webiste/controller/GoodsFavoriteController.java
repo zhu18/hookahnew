@@ -16,10 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by dengxu on 2017/4/8/0008.
@@ -63,6 +60,7 @@ public class GoodsFavoriteController extends BaseController {
                     return returnData;
                 }else if("0".equals(gf.getIsDelete().toString())){
                     gf.setIsDelete(Byte.parseByte("1"));
+                    gf.setUpdateTime(new Date());
                     goodsFavoriteService.updateByIdSelective(gf);
                 }
             }else{
@@ -110,6 +108,7 @@ public class GoodsFavoriteController extends BaseController {
             if(selectList != null && selectList.size() > 0){
                 GoodsFavorite gf = selectList.get(0);
                 gf.setIsDelete(Byte.parseByte("0"));
+                gf.setUpdateTime(new Date());
                 goodsFavoriteService.updateByIdSelective(gf);
 
                 Map<String, Object> map = new HashMap<>();
@@ -140,6 +139,16 @@ public class GoodsFavoriteController extends BaseController {
             filters.add(Condition.eq("userId", getCurrentUser().getUserId()));
             List<GoodsFavorite> list = goodsFavoriteService.selectList(filters);
             List<String> gfIdList = new ArrayList<>();
+
+            int pageNumberNew = HookahConstants.PAGE_NUM;
+            if (StringUtils.isNotBlank(pageNumber)) {
+                pageNumberNew = Integer.parseInt(pageNumber);
+            }
+            int pageSizeNew = HookahConstants.PAGE_SIZE;
+            if (StringUtils.isNotBlank(pageSize)) {
+                pageSizeNew = Integer.parseInt(pageSize);
+            }
+
             if(list.size() > 0){
 
                 for(GoodsFavorite gf : list){
@@ -147,19 +156,14 @@ public class GoodsFavoriteController extends BaseController {
                 }
                 List<OrderBy> orderBys = new ArrayList();
                 orderBys.add(OrderBy.desc("addTime"));
-                int pageNumberNew = HookahConstants.PAGE_NUM;
-                if (StringUtils.isNotBlank(pageNumber)) {
-                    pageNumberNew = Integer.parseInt(pageNumber);
-                }
-                int pageSizeNew = HookahConstants.PAGE_SIZE;
-                if (StringUtils.isNotBlank(pageSize)) {
-                    pageSizeNew = Integer.parseInt(pageSize);
-                }
-
                 List<Condition> filtersGoods = new ArrayList();
                 filtersGoods.add(Condition.in("goodsId", gfIdList.toArray()));
 
                 page = goodsService.getListInPage(pageNumberNew, pageSizeNew, filtersGoods, orderBys);
+                returnData.setData(page);
+            }else{
+                page = new Pagination<>(pageNumberNew, pageSizeNew);
+                page.setList(new ArrayList<>());
                 returnData.setData(page);
             }
         } catch (Exception e) {
