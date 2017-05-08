@@ -180,11 +180,25 @@
     width: 160px;
     line-height: 25px;
 }
-.findPwd .item label span {
-    display: inline-block;
-    width: 30px;
-    height: 20px;
-    background: gray;
+/*.findPwd .item label span {*/
+    /*display: inline-block;*/
+    /*width: 30px;*/
+    /*height: 20px;*/
+    /*background: gray;*/
+/*}*/
+.findPwd .item .img{
+    width: 90px;
+    height: 28px;
+}
+.findPwd .item label{
+    position: relative;
+}
+.findPwd .item label img{
+    position: absolute;
+    top: -6px;
+}
+.findPwd .item label .change {
+    margin-left: 100px;
 }
 .findPwd .sub {
     width: 75px;
