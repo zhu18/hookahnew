@@ -59,6 +59,7 @@ function renderWangEdit(){
 	editor.config.uploadImgUrl = host.static+'/upload/wangeditor';//上传图片（举例）
 	editor.config.uploadImgFileName = 'filename';
 	editor.config.menuFixed = false;//关闭菜单栏fixed
+	// editor.config.pasteText = true;
 	editor.config.menus = $.map(wangEditor.config.menus, function (item, key) {
 		if (item === 'location') {
 			return null;
@@ -382,3 +383,15 @@ function submitGoodsPublish(){
 	}
 	return data;
 }
+function isOnsaleFun(that) {
+	if ($(that).val() == 1) {
+		$('.isOnsale-box').show();
+	} else {
+		$('.isOnsale-box').hide();
+	}
+}
+$.jeDate("#indate", {
+	format: "YYYY-MM-DD hh:mm:ss",
+	isTime: true,
+	minDate: $.nowDate(0)
+});
