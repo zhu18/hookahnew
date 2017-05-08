@@ -15,6 +15,13 @@ public class GoodsVo extends Goods implements Serializable {
     private List<MgGoods.FormatBean> formatList;
     private List<MgGoods.ImgBean> imgList;
     private MgGoods.ApiInfoBean apiInfo;
+
+    private MgGoods.DataModelBean dataModel;
+    private MgGoods.ApplicationSceneBean applicationScene;
+    private MgGoods.AloneSoftwareBean aloneSoftware;
+    private MgGoods.SaaSBean saaS;
+    private String otherDesc;
+
     private boolean orNotFavorite;
     private String userId;
     private String catName;
@@ -154,5 +161,45 @@ public class GoodsVo extends Goods implements Serializable {
 
     public void setGoodsGrades(Double goodsGrades) {
         this.goodsGrades = goodsGrades;
+    }
+
+    public MgGoods.DataModelBean getDataModel() {
+        return dataModel;
+    }
+
+    public void setDataModel(MgGoods.DataModelBean dataModel) {
+        this.dataModel = dataModel;
+    }
+
+    public MgGoods.ApplicationSceneBean getApplicationScene() {
+        return applicationScene;
+    }
+
+    public void setApplicationScene(MgGoods.ApplicationSceneBean applicationScene) {
+        this.applicationScene = applicationScene;
+    }
+
+    public MgGoods.AloneSoftwareBean getAloneSoftware() {
+        return aloneSoftware;
+    }
+
+    public void setAloneSoftware(MgGoods.AloneSoftwareBean aloneSoftware) {
+        this.aloneSoftware = aloneSoftware;
+    }
+
+    public MgGoods.SaaSBean getSaaS() {
+        return saaS;
+    }
+
+    public void setSaaS(MgGoods.SaaSBean saaS) {
+        this.saaS = saaS;
+    }
+
+    public String getOtherDesc() {
+        return otherDesc;
+    }
+
+    public void setOtherDesc(String otherDesc) {
+        this.otherDesc = otherDesc;
     }
 }
