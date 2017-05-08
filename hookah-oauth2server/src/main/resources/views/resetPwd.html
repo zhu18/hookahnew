@@ -1,10 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<%
+var head = {
+%>
+<link type="text/css" rel="stylesheet" href="/static/css/findPwd.css">
 
-</body>
-</html>
+<%};%>
+<%
+var htmlPart = {
+%>
+<div class="findPwd">
+    <div class="find">找回密码</div>
+    <ol class="ui-step ui-step-3">
+        <li class="ui-step-start ui-step-done ui-step-active">
+            <div class="ui-step-line ui-step-line-active">-</div>
+            <div class="ui-step-icon">
+                <i class="iconfont">y</i>
+                <i class="ui-step-number">1</i>
+                <span class="ui-step-text"> 填写账户名 </span>
+            </div>
+        </li>
+        <li class="ui-step-active">
+            <div class="ui-step-line ui-step-line-active">-</div>
+            <div class="ui-step-icon">
+                <i class="iconfont">y</i>
+                <i class="ui-step-number">2</i>
+                <span class="ui-step-text">验证身份</span>
+            </div>
+        </li>
+        <li class="ui-step-active">
+            <div class="ui-step-line">-</div>
+            <div class="ui-step-icon">
+                <i class="iconfont">y</i>
+                <i class="ui-step-number">3</i>
+                <span class="ui-step-text">设置新密码</span>
+            </div>
+        </li>
+        <li class="ui-step-end">
+            <div class="ui-step-line">-</div>
+            <div class="ui-step-icon">
+                <i class="iconfont">y</i>
+                <i class="iconfont ui-step-number"></i>
+                <span class="ui-step-text"> 完成 </span>
+            </div>
+        </li>
+    </ol>
+    <div class="info">
+        <label >请输入新密码:
+            <input type="text" placeholder="请输入新密码">
+        </label>
+    </div>
+    <div class="item">
+        <label>确 认 新 密 码:
+            <input type="text" placeholder="确认新密码">
+        </label>
+    </div>
+    <div class="sub">确认</div>
+
+</div>
+<%};
+include("layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
