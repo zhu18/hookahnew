@@ -96,12 +96,4 @@ public class LoginController {
         }
     }
 
-
-    @RequestMapping(value = "/findPwd", method = RequestMethod.GET)
-    public String findPwd(Model model) {
-        return "findPwd";
-    }
-
-
-
 }

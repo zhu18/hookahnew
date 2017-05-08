@@ -11,6 +11,7 @@ import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.oauth2server.config.MyProps;
 import com.jusfoun.hookah.rpc.api.MgSmsValidateService;
 import com.jusfoun.hookah.rpc.api.UserService;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -194,4 +195,82 @@ public class RegController {
         }
         return ReturnData.success();
     }
+
+    @RequestMapping(value = "/findPwd")
+    public String findPwd(Integer step, UserValidVo userVo,HttpServletRequest request, Model model) {
+        if (step == null) step = 1;
+        List<Condition> filters = new ArrayList<>(2);
+        switch (step) {
+            case 1: //get or post
+                return "findPwd";
+            case 2: //post
+                try {
+                    String captcha = userVo.getCaptcha();
+                    HttpSession session = request.getSession();
+                    String value = (String) session.getAttribute(Constants.KAPTCHA_SESSION_KEY);
+
+                    if (!value.equalsIgnoreCase(captcha)) {
+                        throw new UserRegInvalidCaptchaException("图片验证码验证未通过,验证码错误");
+                    }
+                    session.removeAttribute(Constants.KAPTCHA_SESSION_KEY);
+                    filters.add(Condition.eq("userName",userVo.getUserName()));
+                    User user = userService.selectOne(filters);
+                    if(user!=null){
+                        model.addAttribute("user",user);
+                        return "checkMobile";
+                    }
+                    else{
+                        throw new Exception("该用户不存在！");
+                    }
+                } catch (Exception e) {
+                    model.addAttribute("message",e.getMessage());
+                    return "findPwd";
+                }
+            case 3:  //post
+                //校验短信验证码
+                //获取库里缓存的验证码
+                try {
+                    String cacheSms = redisOperate.get(HookahConstants.REDIS_SMS_CACHE_PREFIX + ":" + userVo.getMobile());  //从 redis 获取缓存
+                    if (cacheSms == null) { //验证码已过期
+                        throw new UserRegExpiredSmsException("短信验证码验证未通过,短信验证码已过期");
+                    } else {
+                        if (!cacheSms.equalsIgnoreCase(userVo.getValidSms())) {
+                            throw new UserRegInvalidSmsException("短信验证码验证未通过,短信验证码错误");
+                        }
+                    }
+                    redisOperate.del(userVo.getMobile());  //删除缓存
+                    return "resetPwd";
+                } catch (Exception e) {
+                    model.addAttribute("message",e.getMessage());
+                    return "checkMobile";
+                }
+            case 4: //post
+                try {
+                    //校验密码一致
+                    String password = userVo.getPassword().trim();
+                    String passwordRepeat = userVo.getPasswordRepeat().trim();
+                    if (StringUtils.isBlank(password) || StringUtils.isBlank(passwordRepeat)) {
+                        throw new UserRegEmptyPwdException("密码或者确认密码不能为空");
+                    }
+                    if (!password.equals(passwordRepeat)) {
+                        throw new UserRegConfirmPwdException("密码与确认密码不一致");
+                    }
+                    if (password.length() < 6) {
+                        throw new UserRegSimplePwdException("密码过于简单");
+                    }
+                    User user = new User();
+                    BeanUtils.copyProperties(user, userVo);
+
+                    filters.add(Condition.eq("mobile", userVo.getMobile()));
+                    userService.updateByCondition(user, filters);
+                    return "pwdSetted";
+                } catch (Exception e) {
+                    logger.error(e.getMessage());
+                    return "resetPwd";
+                }
+            default:
+                return "findPwd";
+        }
+    }
+
 }

@@ -13,7 +13,7 @@ public class GoodsShelvesVo extends GoodsShelves {
 
     private String[] shelvesTagList;
 
-    private List<Goods> goods = new ArrayList();
+    private List<GoodsVo> goods = new ArrayList();
 
     public String[] getShelvesTagList() {
         return shelvesTagList;
@@ -23,11 +23,11 @@ public class GoodsShelvesVo extends GoodsShelves {
         this.shelvesTagList = shelvesTagList;
     }
 
-    public List<Goods> getGoods() {
+    public List<GoodsVo> getGoods() {
         return goods;
     }
 
-    public void setGoods(List<Goods> goods) {
+    public void setGoods(List<GoodsVo> goods) {
         this.goods = goods;
     }
 }
