@@ -1,0 +1,62 @@
+<%
+var head = {
+%>
+<link type="text/css" rel="stylesheet" href="/static/css/findPwd.css">
+
+<%};%>
+<%
+var htmlPart = {
+%>
+<div class="findPwd">
+    <div class="find">找回密码</div>
+    <ol class="ui-step ui-step-3">
+        <li class="ui-step-start ui-step-done ui-step-active">
+            <div class="ui-step-line">-</div>
+            <div class="ui-step-icon">
+                <i class="iconfont">y</i>
+                <i class="ui-step-number">1</i>
+                <span class="ui-step-text"> 填写账户名 </span>
+            </div>
+        </li>
+        <li class="ui-step-active">
+            <div class="ui-step-line">-</div>
+            <div class="ui-step-icon">
+                <i class="iconfont">y</i>
+                <i class="ui-step-number">2</i>
+                <span class="ui-step-text">验证身份</span>
+            </div>
+        </li>
+        <li class="">
+            <div class="ui-step-line">-</div>
+            <div class="ui-step-icon">
+                <i class="iconfont">y</i>
+                <i class="ui-step-number">3</i>
+                <span class="ui-step-text">设置新密码</span>
+            </div>
+        </li>
+        <li class="ui-step-end">
+            <div class="ui-step-line">-</div>
+            <div class="ui-step-icon">
+                <i class="iconfont">y</i>
+                <i class="iconfont ui-step-number"></i>
+                <span class="ui-step-text"> 完成 </span>
+            </div>
+        </li>
+    </ol>
+    <div class="info">
+        <label >账户名:
+            <input type="text" placeholder="用户名/邮箱/已验证手机">
+        </label>
+        <span>请输入您的用户名/邮箱/已验证手机</span>
+    </div>
+    <div class="item">
+        <label>验证码:
+            <input type="text">
+            <span></span>看不清?<a href="">换一张</a>
+        </label>
+    </div>
+    <div class="sub">提交</div>
+</div>
+<%};
+include("layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>

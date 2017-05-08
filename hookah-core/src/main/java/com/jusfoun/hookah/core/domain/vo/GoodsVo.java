@@ -26,6 +26,7 @@ public class GoodsVo extends Goods implements Serializable {
     private String areaCity;
     private String catFullName;
     private Long clickRate;
+    private Double goodsGrades;
 
     public List<MgCategoryAttrType.AttrTypeBean> getAttrTypeList() {
         return attrTypeList;
@@ -145,5 +146,13 @@ public class GoodsVo extends Goods implements Serializable {
 
     public void setClickRate(Long clickRate) {
         this.clickRate = clickRate;
+    }
+
+    public Double getGoodsGrades() {
+        return goodsGrades;
+    }
+
+    public void setGoodsGrades(Double goodsGrades) {
+        this.goodsGrades = goodsGrades;
     }
 }

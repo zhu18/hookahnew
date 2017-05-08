@@ -35,4 +35,8 @@ public class HelpController {
         model.addAttribute("result",result);
         return "/help/help_index";
     }
+    @RequestMapping(value = "/agreement", method = RequestMethod.GET)
+    public String agreement() {
+        return "/help/service_agreement";
+    }
 }
