@@ -2,6 +2,7 @@ package com.jusfoun.hookah.oauth2server.security;
 
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.generic.Condition;
+import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -80,13 +81,19 @@ public class UsernameAndPasswordShiroRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
 
         //UsernamePasswordToken对象用来存放提交的登录信息
-        UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
+        UsernameAndPasswordToken token = (UsernameAndPasswordToken) authenticationToken;
 
         LOG.info("验证当前Subject时获取到token为：" + ReflectionToStringBuilder.toString(token, ToStringStyle.MULTI_LINE_STYLE));
 
         //查出是否有此用户
         List<Condition> conditions = new ArrayList<>();
-        conditions.add(Condition.eq("userName", token.getUsername()));
+        if(StringUtils.isNotBlank(token.getUsername())){
+            conditions.add(Condition.eq("userName", token.getUsername()));
+        }else if(StringUtils.isNotBlank(token.getMobile())){
+            conditions.add(Condition.eq("mobile", token.getMobile()));
+        }else{
+            conditions.add(Condition.eq("email", token.getEmail()));
+        }
         User user = userService.selectOne(conditions);
 
         if (user != null) {

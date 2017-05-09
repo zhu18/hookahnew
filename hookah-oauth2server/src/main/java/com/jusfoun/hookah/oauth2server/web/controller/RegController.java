@@ -7,6 +7,7 @@ import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.vo.UserValidVo;
 import com.jusfoun.hookah.core.exception.*;
 import com.jusfoun.hookah.core.generic.Condition;
+import com.jusfoun.hookah.core.utils.FormatCheckUtil;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.oauth2server.config.MyProps;
 import com.jusfoun.hookah.rpc.api.MgSmsValidateService;
@@ -205,6 +206,7 @@ public class RegController {
                 return "findPwd";
             case 2: //post
                 try {
+                    //校验验证码
                     String captcha = userVo.getCaptcha();
                     HttpSession session = request.getSession();
                     String value = (String) session.getAttribute(Constants.KAPTCHA_SESSION_KEY);
@@ -213,7 +215,15 @@ public class RegController {
                         throw new UserRegInvalidCaptchaException("图片验证码验证未通过,验证码错误");
                     }
                     session.removeAttribute(Constants.KAPTCHA_SESSION_KEY);
-                    filters.add(Condition.eq("userName",userVo.getUserName()));
+                    //查询用户
+                    String username = userVo.getUserName();
+                    if(FormatCheckUtil.checkMobile(username)){
+                        filters.add(Condition.eq("mobile",username));
+                    }else if(FormatCheckUtil.checkEmail(username)){
+                        filters.add(Condition.eq("email",username));
+                    }else{
+                        filters.add(Condition.eq("userName",username));
+                    }
                     User user = userService.selectOne(filters);
                     if(user!=null){
                         model.addAttribute("user",user);
