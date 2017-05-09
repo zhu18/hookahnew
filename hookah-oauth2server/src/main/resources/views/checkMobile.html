@@ -65,3 +65,26 @@ var htmlPart = {
 <%};
 include("layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
+<script>
+    $(function(){
+        $('#J_GetCode').click(function(){
+            var that = $(this);
+            $.ajax({
+                url:'${host.auth}/sms/sendToUser',
+                type:'post',
+                data:{
+                   userId:${userId}
+                },
+                success:function(data){
+                    if(data.code == 1){
+                        $.alert(data.data);
+                        settime(that);
+                    }else{
+                        $.alert('获取验证码失败，请重新获取');
+                    }
+                }
+            });
+        })
+    })
+    ;
+</script>

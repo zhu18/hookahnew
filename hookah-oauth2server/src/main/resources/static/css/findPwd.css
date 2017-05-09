@@ -200,6 +200,11 @@
 .findPwd .item label .change {
     margin-left: 100px;
 }
+.findPwd .item label.img:hover{
+    text-decoration: underline;
+    color:#00a2ca;
+    cursor: pointer ;
+}
 .findPwd .sub {
     width: 75px;
     line-height: 25px;
