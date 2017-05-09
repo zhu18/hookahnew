@@ -490,11 +490,11 @@ function submitGoodsPublish(){
 		data.asAloneSoftware.otherDesc = $('textarea[name="otherDesc"]').val();
 	}else if(data.goodsType == 7){
 		data.asSaaS = {};
-		data.asSaaS.aSComplexity = $('input[name="aSComplexity"]').val();
-		data.asSaaS.aSVersionDesc = $('input[name="aSVersionDesc"]').val();
-		data.asSaaS.aSServiceLevel = $('input[name="aSServiceLevel"]').val();
-		data.asSaaS.aSAexp = $('input[name="aSAexp"]').val();
-		data.asSaaS.aSAintroduce = $('input[name="aSAintroduce"]').val();
+		data.asSaaS.sSComplexity = $('input[name="aSComplexity"]').val();
+		data.asSaaS.sSVersionDesc = $('input[name="aSVersionDesc"]').val();
+		data.asSaaS.sSServiceLevel = $('input[name="aSServiceLevel"]').val();
+		data.asSaaS.sSAexp = $('input[name="aSAexp"]').val();
+		data.asSaaS.sSAintroduce = $('input[name="aSAintroduce"]').val();
 		data.asSaaS.otherDesc = $('textarea[name="otherDesc"]').val();
 
 	}
