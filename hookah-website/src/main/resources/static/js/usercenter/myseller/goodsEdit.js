@@ -354,33 +354,70 @@ function submitGoodsPublish(){
 		data.goodsArea = $('select[name="country"]').val();
 	}
 	if (data.goodsType == 1) {
-		data.apiInfo = {};
-		data.apiInfo.apiUrl = $('.api-info-box').find('input[name="apiUrl"]').val();
-		data.apiInfo.apiMethod = $('.api-info-box').find('input[name="apiMethod"]:checked').val();
-		data.apiInfo.reqSample = $('.api-info-box').find('input[name="reqSample"]').val();
-		data.apiInfo.apiDesc = $('.api-info-box').find('textarea[name="apiDesc"]').val();
-		data.apiInfo.reqParamList = [];
-		$('table[d-type="requestHtml"] tbody tr').each(function (i, item) {
-			var listData = {};
-			listData.fieldName = $(item).find('input[name="fieldName"]').val();
-			listData.fieldType = $(item).find('select[name="fieldType"]').val();
-			listData.isMust = $(item).find('input[name="isMust' + i + '"]:checked').val();
-			listData.fieldSample = $(item).find('input[name="fieldSample"]').val();
-			listData.fieldDefault = $(item).find('input[name="fieldDefault"]').val();
-			listData.describle = $(item).find('textarea[name="describle"]').val();
-			data.apiInfo.reqParamList.push(listData);
-		});
-		data.apiInfo.respParamList = [];
-		$('table[d-type="returnHtml"] tbody tr').each(function () {
-			var listData = {};
-			listData.fieldName = $(this).find('input[name="fieldNames"]').val();
-			listData.describle = $(this).find('textarea[name="describles"]').val();
-			data.apiInfo.respParamList.push(listData);
-		});
-		data.apiInfo.respSample = $('.api-info-box').find('textarea[name="respSample"]').val();
+        data.apiInfo = {};
+        data.apiInfo.apiUrl = $('.api-info-box').find('input[name="apiUrl"]').val();
+        data.apiInfo.apiMethod = $('.api-info-box').find('input[name="apiMethod"]:checked').val();
+        data.apiInfo.reqSample = $('.api-info-box').find('input[name="reqSample"]').val();
+        data.apiInfo.apiDesc = $('.api-info-box').find('textarea[name="apiDesc"]').val();
+        data.apiInfo.reqParamList = [];
+        $('table[d-type="requestHtml"] tbody tr').each(function (i, item) {
+            var listData = {};
+            listData.fieldName = $(item).find('input[name="fieldName"]').val();
+            listData.fieldType = $(item).find('select[name="fieldType"]').val();
+            listData.isMust = $(item).find('input[name="isMust' + i + '"]:checked').val();
+            listData.fieldSample = $(item).find('input[name="fieldSample"]').val();
+            listData.fieldDefault = $(item).find('input[name="fieldDefault"]').val();
+            listData.describle = $(item).find('textarea[name="describle"]').val();
+            data.apiInfo.reqParamList.push(listData);
+        });
+        data.apiInfo.respParamList = [];
+        $('table[d-type="returnHtml"] tbody tr').each(function () {
+            var listData = {};
+            listData.fieldName = $(this).find('input[name="fieldNames"]').val();
+            listData.describle = $(this).find('textarea[name="describles"]').val();
+            data.apiInfo.respParamList.push(listData);
+        });
+        data.apiInfo.respSample = $('.api-info-box').find('textarea[name="respSample"]').val();
+
+    // }else if(){
+    }else if(data.goodsType == 200){// 数据模型
+		data.dataModel = {};
+        data.dataModel.complexity = $('.api-info-box').find('input[name="complexity"]').val();
+        data.dataModel.maturity = $('.api-info-box').find('input[name="maturity"]').val();
+        data.dataModel.aexp = $('.api-info-box').find('input[name="aexp"]').val();
+        data.dataModel.modelFile = $('.api-info-box').find('input[name="modelFile"]').val();
+        data.dataModel.configFile = $('.api-info-box').find('input[name="configFile"]').val();
+        data.dataModel.configParams = $('.api-info-box').find('input[name="configParams"]').val();
+    }else if(data.goodsType == 5){// 分析工具 SaaS
+        data.atSaaS = {};
+        data.atSaaS.aTIndustryField = $('.api-info-box').find('input[name="aTIndustryField"]').val();
+        data.atSaaS.aTVersionDesc = $('.api-info-box').find('input[name="aTVersionDesc"]').val();
+        data.atSaaS.aTToolsIntroduce = $('.api-info-box').find('input[name="atToolsIntroduce"]').val();
+    }else if(data.goodsType == 4){// 分析工具 独立软件
+        data.atAloneSoftware = {};
+        data.atAloneSoftware.aTAloneIndustryField = $('.api-info-box').find('input[name="aTAloneIndustryField"]').val();
+        data.atAloneSoftware.aTAloneVersionDesc = $('.api-info-box').find('input[name="aTAloneVersionDesc"]').val();
+        data.atAloneSoftware.aTAloneToolsIntroduce = $('.api-info-box').find('input[name="aTAloneToolsIntroduce"]').val();
+        data.atAloneSoftware.aTAloneCloudHardwareResource = $('.api-info-box').find('input[name="aTAloneCloudHardwareResource"]').val();
+    }else if(data.goodsType == 6){// 应用场景 独立软件
+        data.asAloneSoftware = {};
+        data.asAloneSoftware.aSComplexity = $('.api-info-box').find('input[name="aSComplexity"]').val();
+        data.asAloneSoftware.aSVersionDesc = $('.api-info-box').find('input[name="aSVersionDesc"]').val();
+        data.asAloneSoftware.aSServiceLevel = $('.api-info-box').find('input[name="aSServiceLevel"]').val();
+        data.asAloneSoftware.aSAexp = $('.api-info-box').find('input[name="aSAexp"]').val();
+        data.asAloneSoftware.aSAintroduce = $('.api-info-box').find('input[name="aSAintroduce"]').val();
+        data.asAloneSoftware.aSCloudHardwareResource = $('.api-info-box').find('input[name="aSCloudHardwareResource"]').val();
+    }else if(data.goodsType == 7){// 应用场景 SaaS
+        data.asSaaS = {};
+        data.asSaaS.sSComplexity = $('.api-info-box').find('input[name="sSComplexity"]').val();
+        data.asSaaS.sSVersionDesc = $('.api-info-box').find('input[name="sSVersionDesc"]').val();
+        data.asSaaS.sServiceLevel = $('.api-info-box').find('input[name="sServiceLevel"]').val();
+        data.asSaaS.sSAexp = $('.api-info-box').find('input[name="sSAexp"]').val();
+        data.asSaaS.sSAintroduce = $('.api-info-box').find('input[name="sSAintroduce"]').val();
 	}else{
 		data.uploadUrl = $('#J_fileUploadSS').val();
 	}
+    data.otherDesc = $('.api-info-box').find('input[name="otherDesc"]').val();
 	return data;
 }
 function isOnsaleFun(that) {

@@ -16,10 +16,11 @@ public class GoodsVo extends Goods implements Serializable {
     private List<MgGoods.ImgBean> imgList;
     private MgGoods.ApiInfoBean apiInfo;
 
-    private MgGoods.DataModelBean dataModel;
-    private MgGoods.ApplicationSceneBean applicationScene;
-    private MgGoods.AloneSoftwareBean aloneSoftware;
-    private MgGoods.SaaSBean saaS;
+    private MgGoods.DataModelBean dataModel;                //数据模型
+    private MgGoods.ASSaaSBean asSaaS;                      // 应用场景SaaS
+    private MgGoods.ASAloneSoftwareBean asAloneSoftware;    // 应用场景 独立软件
+    private MgGoods.ATSaaSBean atSaaS;                      // 分析工具 SaaS
+    private MgGoods.ATAloneSoftwareBean atAloneSoftware;    // 分析工具 独立软件
     private String otherDesc;
 
     private boolean orNotFavorite;
@@ -171,28 +172,36 @@ public class GoodsVo extends Goods implements Serializable {
         this.dataModel = dataModel;
     }
 
-    public MgGoods.ApplicationSceneBean getApplicationScene() {
-        return applicationScene;
+    public MgGoods.ASSaaSBean getAsSaaS() {
+        return asSaaS;
     }
 
-    public void setApplicationScene(MgGoods.ApplicationSceneBean applicationScene) {
-        this.applicationScene = applicationScene;
+    public void setAsSaaS(MgGoods.ASSaaSBean asSaaS) {
+        this.asSaaS = asSaaS;
     }
 
-    public MgGoods.AloneSoftwareBean getAloneSoftware() {
-        return aloneSoftware;
+    public MgGoods.ASAloneSoftwareBean getAsAloneSoftware() {
+        return asAloneSoftware;
     }
 
-    public void setAloneSoftware(MgGoods.AloneSoftwareBean aloneSoftware) {
-        this.aloneSoftware = aloneSoftware;
+    public void setAsAloneSoftware(MgGoods.ASAloneSoftwareBean asAloneSoftware) {
+        this.asAloneSoftware = asAloneSoftware;
     }
 
-    public MgGoods.SaaSBean getSaaS() {
-        return saaS;
+    public MgGoods.ATSaaSBean getAtSaaS() {
+        return atSaaS;
     }
 
-    public void setSaaS(MgGoods.SaaSBean saaS) {
-        this.saaS = saaS;
+    public void setAtSaaS(MgGoods.ATSaaSBean atSaaS) {
+        this.atSaaS = atSaaS;
+    }
+
+    public MgGoods.ATAloneSoftwareBean getAtAloneSoftware() {
+        return atAloneSoftware;
+    }
+
+    public void setAtAloneSoftware(MgGoods.ATAloneSoftwareBean atAloneSoftware) {
+        this.atAloneSoftware = atAloneSoftware;
     }
 
     public String getOtherDesc() {
