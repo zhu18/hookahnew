@@ -15,7 +15,10 @@ $(document).ready(function(){
 			goodsImg:'required',
 			priceBoxName:'required',
 			priceBoxNumber:'required',
-			priceBoxPrice:'required',
+			priceBoxPrice:{
+				required:true,
+				isPricceData:true
+			},
 			goodsImges:'required',
 			goodsImges2:'required',
 			goodsDescBox:'required'
@@ -53,6 +56,7 @@ $(document).ready(function(){
 	getPriceBox();
 	loadRegion('province', regionParam); //加载地域
 	renderWangEdit(); // 渲染富文本
+	floorPrice();
 });
 function renderWangEdit(){
 	var editor = new wangEditor('textarea1');
@@ -193,9 +197,9 @@ function tablePlus(that) {
 	var priceHtml = '';//规格与价格
 	priceHtml += '<tr class="parent-tr">';
 	priceHtml += '<td class="name-input"><div class="inputbox"><input type="text" datatype="name" placeholder="请输入名称"></div></td>';
-	priceHtml += '<td class="number-input"><div class="inputbox"><input type="number" datatype="number" placeholder="请输入规格"></div></td>';
+	priceHtml += '<td class="number-input"><div class="inputbox"><input type="number" datatype="number" digits="true" placeholder="请输入规格"></div></td>';
 	priceHtml += '<td><div class="selectbox"><select name="format" ><option value="0">次</option><option value="1">天</option><option value="2">年</option></select></div></td>';
-	priceHtml += '<td class="price-input"><div class="inputbox"><input type="number" datatype="price" placeholder="请输入价格"></div></td>';
+	priceHtml += '<td class="price-input"><div class="inputbox"><input type="text" class="price-inputs number" datatype="price" placeholder="请输入价格" isPricceData="true"></div></td>';
 	priceHtml += '<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
 	priceHtml += '</tr>';
 	var requestHtml = '';//请求接口
@@ -239,7 +243,9 @@ function tablePlus(that) {
 	function addItem(that) {
 		$(that).text('-').attr('onclick', 'tableDelete(this)');
 	}
+	floorPrice();
 }
+floorPrice();
 function tableDelete(that) {
 	$(that).parents('.parent-tr').remove();
 	getPriceBox()
@@ -267,6 +273,22 @@ $.validator.addMethod("isGoodsBrief", function(value, element) {
 	var len = value.replace(/[\u0391-\uFFE5]/g,"aa").length;
 	return this.optional(element) || (30 <= len && len <= 400);
 }, "长度为30-400个字符（每个汉字为2个字符）");
+$.validator.addMethod("isPricceData", function(value, element) {
+	var isPricce = false;
+	var dot = value.indexOf(".");
+	if(dot != -1){
+		var dotCnt = value.substring(dot+1,value.length);
+		if(dotCnt.length > 2){
+			isPricce = false;
+		}else{
+			isPricce = true;
+		}
+	}else{
+		isPricce = true;
+	}
+	var len = value.replace(/[\u0391-\uFFE5]/g,"aa").length;
+	return this.optional(element) || isPricce;
+}, "小数点不能超过2位");
 $('#J_submitBtn').click(function(){
 	if($("#goodsModifyForm").valid()){
 		if($('#textarea1').val()){
@@ -432,3 +454,12 @@ $.jeDate("#indate", {
 	isTime: true,
 	minDate: $.nowDate(0)
 });
+function floorPrice(){
+	$('.price-inputs').on('input onporpertychange',function () {
+		var that = $(this);
+		var num = that.val();
+		if(num == '.'){
+			that.val('0.');
+		}
+	});
+}
