@@ -76,7 +76,7 @@ public class RegController {
             //2、校验短信验证码
             //获取库里缓存的验证码
 
-            String cacheSms = redisOperate.get(HookahConstants.REDIS_SMS_CACHE_PREFIX+":"+user.getMobile());  //从 redis 获取缓存
+            String cacheSms = redisOperate.get(HookahConstants.REDIS_SMS_CACHE_PREFIX + ":" + user.getMobile());  //从 redis 获取缓存
             if (cacheSms == null) { //验证码已过期
                 throw new UserRegExpiredSmsException("短信验证码验证未通过,短信验证码已过期");
             } else {
@@ -197,14 +197,19 @@ public class RegController {
         return ReturnData.success();
     }
 
-    @RequestMapping(value = "/findPwd")
-    public String findPwd(Integer step, UserValidVo userVo,HttpServletRequest request, Model model) {
+    @RequestMapping(value = "/findPwd", method = RequestMethod.GET)
+    public String findPwd(Model model) {
+        return "findPwd";
+    }
+
+
+    @RequestMapping(value = "/findPwd", method = RequestMethod.POST)
+    @ResponseBody
+    public Object findPwd(Integer step, UserValidVo userVo, HttpServletRequest request) {
         if (step == null) step = 1;
         List<Condition> filters = new ArrayList<>(2);
         switch (step) {
-            case 1: //get or post
-                return "findPwd";
-            case 2: //post
+            case 1: //post
                 try {
                     //校验验证码
                     String captcha = userVo.getCaptcha();
@@ -217,26 +222,23 @@ public class RegController {
                     session.removeAttribute(Constants.KAPTCHA_SESSION_KEY);
                     //查询用户
                     String username = userVo.getUserName();
-                    if(FormatCheckUtil.checkMobile(username)){
-                        filters.add(Condition.eq("mobile",username));
-                    }else if(FormatCheckUtil.checkEmail(username)){
-                        filters.add(Condition.eq("email",username));
-                    }else{
-                        filters.add(Condition.eq("userName",username));
+                    if (FormatCheckUtil.checkMobile(username)) {
+                        filters.add(Condition.eq("mobile", username));
+                    } else if (FormatCheckUtil.checkEmail(username)) {
+                        filters.add(Condition.eq("email", username));
+                    } else {
+                        filters.add(Condition.eq("userName", username));
                     }
                     User user = userService.selectOne(filters);
-                    if(user!=null){
-                        model.addAttribute("user",user);
-                        return "checkMobile";
-                    }
-                    else{
-                        throw new Exception("该用户不存在！");
+                    if (user != null) {
+                        return ReturnData.success(user.getUserId());
+                    } else {
+                        return ReturnData.error("该用户不存在！");
                     }
                 } catch (Exception e) {
-                    model.addAttribute("message",e.getMessage());
-                    return "findPwd";
+                    return ReturnData.error(e.getMessage());
                 }
-            case 3:  //post
+            case 2:  //post
                 //校验短信验证码
                 //获取库里缓存的验证码
                 try {
@@ -249,12 +251,11 @@ public class RegController {
                         }
                     }
                     redisOperate.del(userVo.getMobile());  //删除缓存
-                    return "resetPwd";
+                    return ReturnData.success(userVo.getUserId());
                 } catch (Exception e) {
-                    model.addAttribute("message",e.getMessage());
-                    return "checkMobile";
+                    return ReturnData.error(e.getMessage());
                 }
-            case 4: //post
+            case 3: //post
                 try {
                     //校验密码一致
                     String password = userVo.getPassword().trim();
@@ -270,16 +271,14 @@ public class RegController {
                     }
                     User user = new User();
                     BeanUtils.copyProperties(user, userVo);
-
-                    filters.add(Condition.eq("mobile", userVo.getMobile()));
-                    userService.updateByCondition(user, filters);
-                    return "pwdSetted";
+                    userService.updateByIdSelective(user);
+                    return ReturnData.success();
                 } catch (Exception e) {
                     logger.error(e.getMessage());
-                    return "resetPwd";
+                    return ReturnData.fail(e.getMessage());
                 }
             default:
-                return "findPwd";
+                return ReturnData.error("wrong step");
         }
     }
 
