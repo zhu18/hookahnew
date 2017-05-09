@@ -410,7 +410,7 @@ function submitGoodsPublish(){
 	data.shopPrice = data.formatList[0].price;
 	if($('select[name="parentSelect"]').val() == '100'){//------------------------
 		data.goodsType = $('select[name="childrenSelect1"]').val();
-	}else if($('select[name="parentSelect"]').val() == '200'){
+	}else if($('select[name="parentSelect"]').val() == '2'){
 		data.goodsType = $('select[name="parentSelect"]').val()
 	}else if($('select[name="parentSelect"]').val() == '300'){
 		data.goodsType = $('select[name="childrenSelect2"]').val();
@@ -457,7 +457,7 @@ function submitGoodsPublish(){
 			data.apiInfo.respParamList.push(listData);
 		});
 		data.apiInfo.respSample = $('.api-info-box').find('textarea[name="respSample"]').val();
-	}else if(data.goodsType == 200){
+	}else if(data.goodsType == 2){
 		data.dataModel = {};
 		data.dataModel.complexity = $('input[name="complexity"]').val();
 		data.dataModel.maturity = $('input[name="maturity"]').val();
@@ -468,9 +468,9 @@ function submitGoodsPublish(){
 		data.dataModel.otherDesc = $('textarea[name="otherDesc"]').val();
 	}else if(data.goodsType == 4){
 		data.atAloneSoftware = {};
-		data.atAloneSoftware.aTIndustryField = $('input[name="aTIndustryField"]').val();
-		data.atAloneSoftware.aTVersionDesc = $('input[name="aTVersionDesc"]').val();
-		data.atAloneSoftware.aTToolsIntroduce = $('input[name="aTToolsIntroduce"]').val();
+		data.atAloneSoftware.aTAloneIndustryField = $('input[name="aTIndustryField"]').val();
+		data.atAloneSoftware.aTAloneVersionDesc = $('input[name="aTVersionDesc"]').val();
+		data.atAloneSoftware.aTAloneToolsIntroduce = $('input[name="aTToolsIntroduce"]').val();
 		data.atAloneSoftware.aTAloneCloudHardwareResource = $('input[name="aTAloneCloudHardwareResource"]').val();
 		data.atAloneSoftware.otherDesc = $('textarea[name="otherDesc"]').val();
 	}else if(data.goodsType == 5){
