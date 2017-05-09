@@ -179,6 +179,7 @@
 .findPwd .info label input ,.findPwd .item label input{
     width: 160px;
     line-height: 25px;
+    padding-left:5px;
 }
 /*.findPwd .item label span {*/
     /*display: inline-block;*/
@@ -204,6 +205,15 @@
     text-decoration: underline;
     color:#00a2ca;
     cursor: pointer ;
+}
+.findPwd .error {
+    margin-left: 27%;
+    padding-top: 5px;
+    color:#f40;
+}
+.findPwd .err2 {
+    margin-left: 8%;
+    color:#f40;
 }
 .findPwd .sub {
     width: 75px;
@@ -277,4 +287,7 @@
     height: 36px;
     border: 1px solid #ddd;
     border-left: none;
+}
+.ui-form-item-error .ui-form-explain {
+    color: #FF5243;
 }
