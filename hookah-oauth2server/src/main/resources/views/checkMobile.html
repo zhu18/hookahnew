@@ -90,8 +90,8 @@ include("layout/base.html",{headSection:head,htmlSection:htmlPart}){}
                 type: "post",
                 data: {
                     step: 2,
-                    mobile: '${mobile}',
-                    validSms: $("#J_Phone_Checkcode").val()
+                    validSms: $("#J_Phone_Checkcode").val(),
+                    userId:'${userId}'
                 },
                 success: function (data) {
                     if (data.code == 1) {

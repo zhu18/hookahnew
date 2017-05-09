@@ -45,12 +45,12 @@ var htmlPart = {
     </ol>
     <div class="info">
         <label >请输入新密码:
-            <input type="text" placeholder="请输入新密码" class="pwd1">
+            <input type="password" placeholder="请输入新密码" class="pwd1">
         </label>
     </div>
     <div class="item">
         <label>确 认 新 密 码:
-            <input type="text" placeholder="确认新密码" class="pwd2">
+            <input type="password" placeholder="确认新密码" class="pwd2">
         </label>
     </div>
     <div class="sub">确认</div>
@@ -68,12 +68,13 @@ include("layout/base.html",{headSection:head,htmlSection:htmlPart}){}
                 data:{
                     step:3,
                     password:$(".pwd1").val(),
-                    passwordRepeat:$(".pwd2").val()
+                    passwordRepeat:$(".pwd2").val(),
+                    userId:'${userId}'
                 },
                 success:function(data){
                     if(data.code==1){
                         $.alert("密码重置成功!")
-                        window.location.href="/findPwd?step=4&userId="+data.data;
+                        window.location.href="/findPwd?step=4";
                     }else{
                         console.log(data.message);
                     }
