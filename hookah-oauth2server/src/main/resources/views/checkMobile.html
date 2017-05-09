@@ -58,6 +58,7 @@ var htmlPart = {
             </button>
         </div>
         <div class="ui-form-explain" style="display: none"><i class="ui-tiptext-icon iconfont"></i><span>请输入验证码</span></div>
+        <div class="error1" style="display: none"><i class="ui-tiptext-icon iconfont"></i><span>短信验证码验证未通过,请输入验证码</span></div>
     </div>
     <div class="sub">提交</div>
 
@@ -118,7 +119,9 @@ include("layout/base.html",{headSection:head,htmlSection:htmlPart}){}
                 success: function (data) {
                     if (data.code == 1) {
                         window.location.href = "/findPwd?step=3&userId=" + data.data;
-                    } else {
+                    } else if(data.code == 9){
+                        $(".error1").show();
+                    }else{
                         console.log(data.message);
                     }
                 }
