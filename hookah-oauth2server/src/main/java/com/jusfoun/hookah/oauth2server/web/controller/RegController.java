@@ -201,7 +201,9 @@ public class RegController {
     public String findPwd(Integer step,String userId,Model model) {
         if(step==null) step =1;
         if(StringUtils.isNotBlank(userId)){
+            User user = userService.selectById(userId);
             model.addAttribute("userId",userId);
+            model.addAttribute("mobile",FormatCheckUtil.hideMobile(user.getMobile()));
         }
         switch (step){
             case 1:return "findpassword";

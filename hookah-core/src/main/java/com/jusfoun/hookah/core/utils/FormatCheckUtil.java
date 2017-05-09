@@ -204,6 +204,13 @@ public class FormatCheckUtil {
         String regex = "[1-9](\\d{1,2})?\\.(0|([1-9](\\d{1,2})?))\\.(0|([1-9](\\d{1,2})?))\\.(0|([1-9](\\d{1,2})?))";
         return Pattern.matches(regex, ipAddress);
     }
+    public static String hideMobile(String mobile){
+        return mobile.replaceAll("(\\d{3})\\d{4}(\\d{4})","$1****$2");
+    }
+
+    public static String hideIdNum(String idNum){
+        return idNum.replaceAll("(\\d{4})\\d{10}(\\w{4})","$1*****$2");
+    }
 
     public static boolean checkPattern(String input, String regex) {
         return Pattern.matches(regex, input);
