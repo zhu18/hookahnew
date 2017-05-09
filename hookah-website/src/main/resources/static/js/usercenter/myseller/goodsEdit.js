@@ -437,7 +437,7 @@ function submitGoodsPublish(){
 		data.apiInfo.apiUrl = $('.api-info-box').find('input[name="apiUrl"]').val();
 		data.apiInfo.apiMethod = $('.api-info-box').find('input[name="apiMethod"]:checked').val();
 		data.apiInfo.reqSample = $('.api-info-box').find('input[name="reqSample"]').val();
-		data.apiInfo.apiDesc = $('.api-info-box').find('textarea[name="apiDesc"]').val();
+		data.apiInfo.apiDesc = $('.api-info-box').find('#apiDesc').val();
 		data.apiInfo.reqParamList = [];
 		$('table[d-type="requestHtml"] tbody tr').each(function (i, item) {
 			var listData = {};
@@ -446,7 +446,7 @@ function submitGoodsPublish(){
 			listData.isMust = $(item).find('input[name="isMust' + i + '"]:checked').val();
 			listData.fieldSample = $(item).find('input[name="fieldSample"]').val();
 			listData.fieldDefault = $(item).find('input[name="fieldDefault"]').val();
-			listData.describle = $(item).find('textarea[name="describle"]').val();
+			listData.describle = $(item).find('#describle').val();
 			data.apiInfo.reqParamList.push(listData);
 		});
 		data.apiInfo.respParamList = [];
@@ -456,7 +456,8 @@ function submitGoodsPublish(){
 			listData.describle = $(this).find('textarea[name="describles"]').val();
 			data.apiInfo.respParamList.push(listData);
 		});
-		data.apiInfo.respSample = $('.api-info-box').find('textarea[name="respSample"]').val();
+		console.log(data.apiInfo.respParamList);//----------------------
+		data.apiInfo.respSample = $('#respSample').val();
 	}else if(data.goodsType == 2){
 		data.dataModel = {};
 		data.dataModel.complexity = $('input[name="complexity"]').val();
@@ -465,40 +466,42 @@ function submitGoodsPublish(){
 		data.dataModel.modelFile = $('input[name="modelFile"]').val();
 		data.dataModel.configFile = $('input[name="configFile"]').val();
 		data.dataModel.configParams = $('input[name="configParams"]').val();
-		data.dataModel.otherDesc = $('textarea[name="otherDesc"]').val();
+		data.dataModel.otherDesc = $('.dataModel-info-box .otherDesc').val();
 	}else if(data.goodsType == 4){
 		data.atAloneSoftware = {};
 		data.atAloneSoftware.aTAloneIndustryField = $('input[name="aTIndustryField"]').val();
 		data.atAloneSoftware.aTAloneVersionDesc = $('input[name="aTVersionDesc"]').val();
-		data.atAloneSoftware.aTAloneToolsIntroduce = $('input[name="aTToolsIntroduce"]').val();
-		data.atAloneSoftware.aTAloneCloudHardwareResource = $('input[name="aTAloneCloudHardwareResource"]').val();
-		data.atAloneSoftware.otherDesc = $('textarea[name="otherDesc"]').val();
+		data.atAloneSoftware.aTAloneToolsIntroduce = $('#aTToolsIntroduce').val();
+		data.atAloneSoftware.aTAloneCloudHardwareResource = $('#aTAloneCloudHardwareResource').val();
+		data.atAloneSoftware.otherDesc = $('.tool-info-box .otherDesc').val();
 	}else if(data.goodsType == 5){
 		data.atSaaS = {};
 		data.atSaaS.aTIndustryField = $('input[name="aTIndustryField"]').val();
 		data.atSaaS.aTVersionDesc = $('input[name="aTVersionDesc"]').val();
-		data.atSaaS.aTToolsIntroduce = $('input[name="aTToolsIntroduce"]').val();
-		data.atSaaS.otherDesc = $('textarea[name="otherDesc"]').val();
+		data.atSaaS.aTToolsIntroduce = $('#aTToolsIntroduce').val();
+		data.atSaaS.otherDesc = $('.tool-info-box .otherDesc').val();
 	}else if(data.goodsType == 6){
 		data.asAloneSoftware = {};
 		data.asAloneSoftware.aSComplexity = $('input[name="aSComplexity"]').val();
 		data.asAloneSoftware.aSVersionDesc = $('input[name="aSVersionDesc"]').val();
 		data.asAloneSoftware.aSServiceLevel = $('input[name="aSServiceLevel"]').val();
 		data.asAloneSoftware.aSAexp = $('input[name="aSAexp"]').val();
-		data.asAloneSoftware.aSAintroduce = $('input[name="aSAintroduce"]').val();
-		data.asAloneSoftware.aSCloudHardwareResource = $('textarea[name="aSCloudHardwareResource"]').val();
-		data.asAloneSoftware.otherDesc = $('textarea[name="otherDesc"]').val();
+		data.asAloneSoftware.aSAintroduce = $('#aSAintroduce').val();
+		data.asAloneSoftware.aSCloudHardwareResource = $('#aSCloudHardwareResource').val();
+		data.asAloneSoftware.otherDesc = $('.app-info-box .otherDesc').val();
 	}else if(data.goodsType == 7){
 		data.asSaaS = {};
 		data.asSaaS.sSComplexity = $('input[name="aSComplexity"]').val();
 		data.asSaaS.sSVersionDesc = $('input[name="aSVersionDesc"]').val();
 		data.asSaaS.sSServiceLevel = $('input[name="aSServiceLevel"]').val();
 		data.asSaaS.sSAexp = $('input[name="aSAexp"]').val();
-		data.asSaaS.sSAintroduce = $('input[name="aSAintroduce"]').val();
-		data.asSaaS.otherDesc = $('textarea[name="otherDesc"]').val();
+		data.asSaaS.sSAintroduce = $('#aSAintroduce').val();
+		data.asSaaS.otherDesc = $('.app-info-box .otherDesc').val();
 
 	}
+	// alert(JSON.stringify(data));
 	return data;
+
 }
 function isOnsaleFun(that) {
 	if ($(that).val() == 1) {

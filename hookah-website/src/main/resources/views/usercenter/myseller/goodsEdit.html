@@ -244,7 +244,7 @@ var htmlPart = {
                                     <td class="bar">接口描述：</td>
                                     <td>
                                         <div class="textarea-box">
-                                            <textarea type="text" name="apiDesc"></textarea>
+                                            <textarea type="text" id="apiDesc"></textarea>
                                             <span class="input-count"></span>
                                         </div>
                                     </td>
@@ -296,7 +296,7 @@ var htmlPart = {
                                                         <div class="inputbox"><input type="text" name="fieldSample" placeholder="请输入示例"></div>
                                                     </td>
                                                     <td>
-                                                        <div class="inputbox"><textarea name="describle" placeholder="请输入描述"></textarea></div>
+                                                        <div class="inputbox"><textarea id="describle" placeholder="请输入描述"></textarea></div>
                                                     </td>
                                                     <td>
                                                         <span class="table-plus-btn itemNum" onclick="tablePlus(this)">+</span>
@@ -311,7 +311,7 @@ var htmlPart = {
                                     <td class="bar">返回示例：</td>
                                     <td>
                                         <div class="textarea-box">
-                                            <textarea type="text" name="respSample"></textarea>
+                                            <textarea type="text" id="respSample"></textarea>
                                             <span class="input-count"></span>
                                         </div>
                                     </td>
@@ -331,11 +331,11 @@ var htmlPart = {
                                                 <tbody>
                                                 <tr class="parent-tr">
                                                     <td class="errorNum-input">
-                                                        <div class="inputbox"><input type="text" name="fieldName2" placeholder="请输入错误码" required="required"></div>
+                                                        <div class="inputbox"><input type="text" name="fieldNames" placeholder="请输入错误码" required="required"></div>
                                                     </td>
                                                     <td>
-                                                        <div class="inputbox"><textarea name="describle2"
-                                                                                        placeholder="请输入说明" required="required"></textarea></div>
+                                                        <div class="inputbox"><textarea id="describle2"
+                                                                                        placeholder="请输入说明" name="describles" required="required"></textarea></div>
                                                     </td>
                                                     <td>
                                                         <span class="table-plus-btn" onclick="tablePlus(this)">+</span>
@@ -437,7 +437,7 @@ var htmlPart = {
                                             <tr>
                                                 <td>
                                                     <div class="textarea-box">
-                                                        <textarea name="otherDesc" cols="30" rows="10"></textarea>
+                                                        <textarea class="otherDesc" cols="30" rows="10"></textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -499,7 +499,7 @@ var htmlPart = {
                                             <tr>
                                                 <td colspan="1000">
                                                     <div class="textarea-box">
-                                                        <textarea name="aSAintroduce"></textarea>
+                                                        <textarea id="aSAintroduce"></textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -518,7 +518,7 @@ var htmlPart = {
                                             <tr>
                                                 <td>
                                                     <div class="textarea-box">
-                                                        <textarea name="aSCloudHardwareResource"></textarea>
+                                                        <textarea id="aSCloudHardwareResource"></textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -537,7 +537,7 @@ var htmlPart = {
                                             <tr>
                                                 <td>
                                                     <div class="textarea-box">
-                                                        <textarea name="otherDesc"></textarea>
+                                                        <textarea class="otherDesc"></textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -581,7 +581,7 @@ var htmlPart = {
                                             <tr>
                                                 <td colspan="1000">
                                                     <div class="textarea-box">
-                                                        <textarea name="aTToolsIntroduce"></textarea>
+                                                        <textarea id="aTToolsIntroduce"></textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -600,7 +600,7 @@ var htmlPart = {
                                             <tr>
                                                 <td>
                                                     <div class="textarea-box">
-                                                        <textarea name="aTAloneCloudHardwareResource"></textarea>
+                                                        <textarea id="aTAloneCloudHardwareResource"></textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -619,7 +619,7 @@ var htmlPart = {
                                             <tr>
                                                 <td>
                                                     <div class="textarea-box">
-                                                        <textarea name="otherDesc"></textarea>
+                                                        <textarea class="otherDesc"></textarea>
                                                     </div>
                                                 </td>
                                             </tr>
