@@ -170,7 +170,6 @@ function check() {
 		type: 'post',
 		success: function (data) {
 			if(data){
-				$('#J_formatId').val($('#J_goodsPrice').attr('formatid'));
 				var goodsId = $('#J_goodsId').val();
 				var goodsNumber = $('#J_buyNumber').val();
 				var formatId = $('#J_formatId').val();
@@ -185,6 +184,6 @@ function check() {
 			}
 		}
 	});
-
+	// return false;
 }
 

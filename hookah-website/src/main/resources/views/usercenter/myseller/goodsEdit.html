@@ -68,14 +68,34 @@ var htmlPart = {
                                 <tr>
                                     <td class="bar">商品类型：<span class="requireds">*</span></td>
                                     <td>
-                                        <div class="radio-box">
-                                            <label>
-                                                <input type="radio" name="goodsTypes" onchange="goodsTypeChange(this)" value="0"
-                                                       checked="">常规商品
-                                            </label>
-                                            <label>
-                                                <input type="radio" name="goodsTypes" onchange="goodsTypeChange(this)" value="1">api
-                                            </label>
+                                        <!--<div class="radio-box">-->
+                                            <!--<label>-->
+                                                <!--<input type="radio" name="goodsTypes" onchange="goodsTypeChange(this)" value="0"-->
+                                                       <!--checked="">常规商品-->
+                                            <!--</label>-->
+                                            <!--<label>-->
+                                                <!--<input type="radio" name="goodsTypes" onchange="goodsTypeChange(this)" value="1">api-->
+                                            <!--</label>-->
+                                        <!--</div>-->
+                                        <div class="select-box">
+                                            <select name="parentSelect" class="parentSelect" onchange="selectGoodsType(this)" id="parentSelect">
+                                                <option value="100">数据源</option>
+                                                <option value="200">数据模型</option>
+                                                <option value="300">应用场景</option>
+                                                <option value="400">分析工具</option>
+                                            </select>
+                                            <select name="childrenSelect1" class="childrenSelect" onchange="childrenSelects(this)" id="childrenSelect1">
+                                                <option value="0">离线数据</option>
+                                                <option value="1">api</option>
+                                            </select>
+                                            <select name="childrenSelect2" class="childrenSelect" onchange="childrenSelects(this)" id="childrenSelect2">
+                                                <option value="6">独立软件</option>
+                                                <option value="7">Saas</option>
+                                            </select>
+                                            <select name="childrenSelect3" class="childrenSelect" onchange="childrenSelects(this)" id="childrenSelect3">
+                                                <option value="4">独立软件</option>
+                                                <option value="5">Saas</option>
+                                            </select>
                                         </div>
                                     </td>
                                 </tr>
@@ -117,48 +137,6 @@ var htmlPart = {
                                         </div>
                                     </td>
                                 </tr>
-                                <!---------------------------------------------------------------->
-                                <!--<tr>-->
-                                <!--<td class="bar">单价及库存：</td>-->
-                                <!--<td>-->
-                                <!--<div class="table-box">-->
-                                <!--<table class="price-table">-->
-                                <!--<thead>-->
-                                <!--<tr>-->
-                                <!--<th>单价（元）</th>-->
-                                <!--<th>总库存（件）</th>-->
-                                <!--<th>商家编码</th>-->
-                                <!--<th>商品条形码</th>-->
-                                <!--</tr>-->
-                                <!--</thead>-->
-                                <!--<tbody>-->
-                                <!--<tr>-->
-                                <!--<td>-->
-                                <!--<div class="texbox">-->
-                                <!--<div class="inputbox"><input type="text"></div>-->
-                                <!--</div>-->
-                                <!--</td>-->
-                                <!--<td>-->
-                                <!--<div class="texbox">-->
-                                <!--<div class="inputbox"><input type="text"></div>-->
-                                <!--</div>-->
-                                <!--</td>-->
-                                <!--<td>-->
-                                <!--<div class="texbox" id="outerId">-->
-                                <!--<div class="inputbox"><input type="text"></div>-->
-                                <!--</div>-->
-                                <!--</td>-->
-                                <!--<td>-->
-                                <!--<div class="texbox" id="barcode">-->
-                                <!--<div class="inputbox"><input type="text"></div>-->
-                                <!--</div>-->
-                                <!--</td>-->
-                                <!--</tr>-->
-                                <!--</tbody>-->
-                                <!--</table>-->
-                                <!--</div>-->
-                                <!--</td>-->
-                                <!--</tr>-->
                                 <tr>
                                     <td class="bar">规格及价格：<span class="requireds">*</span></td>
                                     <td>
@@ -227,8 +205,8 @@ var htmlPart = {
                                 </tbody>
                             </table>
                         </div>
-                        <h1 class="api-info-box">API信息：</h1>
-                        <div class="struct api-info-box">
+                        <div class="struct selects api-info-box">
+                            <h1 class="">API信息：</h1>
                             <table>
                                 <tbody>
                                 <tr>
@@ -366,6 +344,287 @@ var htmlPart = {
                                                 </tbody>
                                             </table>
                                         </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="struct selects dataModel-info-box">
+                            <h1 class="">数据模型：</h1>
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td class="bar"><h3>模型规则：</h3></td>
+                                    <td>
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td class="bar">复杂度：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="complexity" required="required">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">成熟度：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="maturity" required="required">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">应用经验：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="aexp" required="required">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar"><h3>使用规格：</h3></td>
+                                    <td>
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td class="bar">模型文件：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box dataModelfileUploads" >
+                                                        <input type="text" name="modelFile" required="required">
+                                                        <button>选择文件</button><span>未选择任何文件</span>
+                                                        <input id="fileupload3" type="file" name="filename" multiple="" class="preview-btn">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">配置文件：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="configFile" required="required">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">配置参数：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="configParams" required="required">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar"><h3>其他说明：</h3></td>
+                                    <td>
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td class="bar">其他说明</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="textarea-box">
+                                                        <textarea name="otherDesc" cols="30" rows="10"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="struct selects app-info-box">
+                            <h1 class="">应用场景：</h1>
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td class="bar"><h3>应用场景规则：</h3></td>
+                                    <td>
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td class="bar">应用复杂度：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="aSComplexity" required="required">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">版本说明：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="aSVersionDesc" required="required">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">服务等级：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="aSServiceLevel" required="required">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">应用经验：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="aSAexp" required="required">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">应用介绍</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="1000">
+                                                    <div class="textarea-box">
+                                                        <textarea name="aSAintroduce"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr class="app-saas-info">
+                                    <td class="bar"><h3>使用规格：</h3></td>
+                                    <td>
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td class="bar">云硬件资源</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="textarea-box">
+                                                        <textarea name="aSCloudHardwareResource"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar"><h3>其他说明：</h3></td>
+                                    <td>
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td class="bar">其他说明</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="textarea-box">
+                                                        <textarea name="otherDesc"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="struct selects tool-info-box">
+                            <h1 class="">分析工具：</h1>
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td class="bar"><h3>工具规格：</h3></td>
+                                    <td>
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td class="bar">行业领域：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="aTIndustryField" required="required">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">版本说明：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="aTVersionDesc" required="required">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">工具介绍</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="1000">
+                                                    <div class="textarea-box">
+                                                        <textarea name="aTToolsIntroduce"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr class="tool-saas-info">
+                                    <td class="bar"><h3>使用规格：</h3></td>
+                                    <td>
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td class="bar">云硬件资源</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="textarea-box">
+                                                        <textarea name="aTAloneCloudHardwareResource"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar"><h3>其他说明：</h3></td>
+                                    <td>
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td class="bar">其他说明</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="textarea-box">
+                                                        <textarea name="otherDesc"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
                                     </td>
                                 </tr>
                                 </tbody>

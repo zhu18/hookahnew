@@ -27,6 +27,11 @@ public class MgGoods extends GenericModel {
     private List<FormatBean> formatList;
     private List<ImgBean> imgList;
     private ApiInfoBean apiInfo;
+    private DataModelBean dataModel;
+    private ASSaaSBean asSaaS;
+    private ASAloneSoftwareBean asAloneSoftware;
+    private ATSaaSBean atSaaS;
+    private ATAloneSoftwareBean atAloneSoftware;
     private Long clickRate;
 
     public List<MgCategoryAttrType.AttrTypeBean> getAttrTypeList() {
@@ -71,6 +76,46 @@ public class MgGoods extends GenericModel {
 
     public ApiInfoBean getApiInfo() {
         return apiInfo;
+    }
+
+    public DataModelBean getDataModel() {
+        return dataModel;
+    }
+
+    public void setDataModel(DataModelBean dataModel) {
+        this.dataModel = dataModel;
+    }
+
+    public ASSaaSBean getAsSaaS() {
+        return asSaaS;
+    }
+
+    public void setAsSaaS(ASSaaSBean asSaaS) {
+        this.asSaaS = asSaaS;
+    }
+
+    public ASAloneSoftwareBean getAsAloneSoftware() {
+        return asAloneSoftware;
+    }
+
+    public void setAsAloneSoftware(ASAloneSoftwareBean asAloneSoftware) {
+        this.asAloneSoftware = asAloneSoftware;
+    }
+
+    public ATSaaSBean getAtSaaS() {
+        return atSaaS;
+    }
+
+    public void setAtSaaS(ATSaaSBean atSaaS) {
+        this.atSaaS = atSaaS;
+    }
+
+    public ATAloneSoftwareBean getAtAloneSoftware() {
+        return atAloneSoftware;
+    }
+
+    public void setAtAloneSoftware(ATAloneSoftwareBean atAloneSoftware) {
+        this.atAloneSoftware = atAloneSoftware;
     }
 
     public void setApiInfo(ApiInfoBean apiInfo) {
@@ -291,4 +336,289 @@ public class MgGoods extends GenericModel {
         }
     }
 
+    public static class DataModelBean implements Serializable {
+
+        // 数据模型
+        private String complexity;  // 复杂度
+        private String maturity;    // 成熟度
+        private String aexp;        // 应用经验
+        private String modelFile;   // 模型文件
+        private String configFile;  // 配置文件
+        private String configParams;    // 配置参数
+        private String otherDesc;
+
+        public String getComplexity() {
+            return complexity;
+        }
+
+        public void setComplexity(String complexity) {
+            this.complexity = complexity;
+        }
+
+        public String getMaturity() {
+            return maturity;
+        }
+
+        public void setMaturity(String maturity) {
+            this.maturity = maturity;
+        }
+
+        public String getAexp() {
+            return aexp;
+        }
+
+        public void setAexp(String aexp) {
+            this.aexp = aexp;
+        }
+
+        public String getModelFile() {
+            return modelFile;
+        }
+
+        public void setModelFile(String modelFile) {
+            this.modelFile = modelFile;
+        }
+
+        public String getConfigFile() {
+            return configFile;
+        }
+
+        public void setConfigFile(String configFile) {
+            this.configFile = configFile;
+        }
+
+        public String getConfigParams() {
+            return configParams;
+        }
+
+        public void setConfigParams(String configParams) {
+            this.configParams = configParams;
+        }
+
+        public String getOtherDesc() {
+            return otherDesc;
+        }
+
+        public void setOtherDesc(String otherDesc) {
+            this.otherDesc = otherDesc;
+        }
+    }
+
+    public static class ASSaaSBean implements Serializable {
+
+        // 应用场景  ApplicationScene SaaS
+        private String sSComplexity;  // 复杂度
+        private String sSVersionDesc;  // 版本说明
+        private String sServiceLevel;  // 服务等级
+        private String sSAexp;        // 应用经验
+        private String sSAintroduce;  // 应用介绍
+        private String otherDesc;
+
+        public String getsSComplexity() {
+            return sSComplexity;
+        }
+
+        public void setsSComplexity(String sSComplexity) {
+            this.sSComplexity = sSComplexity;
+        }
+
+        public String getsSVersionDesc() {
+            return sSVersionDesc;
+        }
+
+        public void setsSVersionDesc(String sSVersionDesc) {
+            this.sSVersionDesc = sSVersionDesc;
+        }
+
+        public String getsServiceLevel() {
+            return sServiceLevel;
+        }
+
+        public void setsServiceLevel(String sServiceLevel) {
+            this.sServiceLevel = sServiceLevel;
+        }
+
+        public String getsSAexp() {
+            return sSAexp;
+        }
+
+        public void setsSAexp(String sSAexp) {
+            this.sSAexp = sSAexp;
+        }
+
+        public String getsSAintroduce() {
+            return sSAintroduce;
+        }
+
+        public void setsSAintroduce(String sSAintroduce) {
+            this.sSAintroduce = sSAintroduce;
+        }
+
+        public String getOtherDesc() {
+            return otherDesc;
+        }
+
+        public void setOtherDesc(String otherDesc) {
+            this.otherDesc = otherDesc;
+        }
+    }
+
+    public static class ASAloneSoftwareBean implements Serializable {
+
+        // 应用场景  ApplicationScene  独立软件
+        private String aSComplexity;  // 复杂度
+        private String aSVersionDesc;  // 版本说明
+        private String aSServiceLevel;  // 服务等级
+        private String aSAexp;        // 应用经验
+        private String aSAintroduce;  // 应用介绍
+        private String aSCloudHardwareResource;  // 云硬件资源
+        private String otherDesc;
+
+        public String getaSComplexity() {
+            return aSComplexity;
+        }
+
+        public void setaSComplexity(String aSComplexity) {
+            this.aSComplexity = aSComplexity;
+        }
+
+        public String getaSVersionDesc() {
+            return aSVersionDesc;
+        }
+
+        public void setaSVersionDesc(String aSVersionDesc) {
+            this.aSVersionDesc = aSVersionDesc;
+        }
+
+        public String getaSServiceLevel() {
+            return aSServiceLevel;
+        }
+
+        public void setaSServiceLevel(String aSServiceLevel) {
+            this.aSServiceLevel = aSServiceLevel;
+        }
+
+        public String getaSAexp() {
+            return aSAexp;
+        }
+
+        public void setaSAexp(String aSAexp) {
+            this.aSAexp = aSAexp;
+        }
+
+        public String getaSAintroduce() {
+            return aSAintroduce;
+        }
+
+        public void setaSAintroduce(String aSAintroduce) {
+            this.aSAintroduce = aSAintroduce;
+        }
+
+        public String getaSCloudHardwareResource() {
+            return aSCloudHardwareResource;
+        }
+
+        public void setaSCloudHardwareResource(String aSCloudHardwareResource) {
+            this.aSCloudHardwareResource = aSCloudHardwareResource;
+        }
+
+        public String getOtherDesc() {
+            return otherDesc;
+        }
+
+        public void setOtherDesc(String otherDesc) {
+            this.otherDesc = otherDesc;
+        }
+    }
+
+    public static class ATSaaSBean implements Serializable {
+
+        // 分析工具 SaaS
+        private String aTIndustryField;       // 行业领域
+        private String aTVersionDesc;       // 版本说明
+        private String aTToolsIntroduce;       // 工具介绍
+        private String otherDesc;
+
+        public String getaTIndustryField() {
+            return aTIndustryField;
+        }
+
+        public void setaTIndustryField(String aTIndustryField) {
+            this.aTIndustryField = aTIndustryField;
+        }
+
+        public String getaTVersionDesc() {
+            return aTVersionDesc;
+        }
+
+        public void setaTVersionDesc(String aTVersionDesc) {
+            this.aTVersionDesc = aTVersionDesc;
+        }
+
+        public String getaTToolsIntroduce() {
+            return aTToolsIntroduce;
+        }
+
+        public void setaTToolsIntroduce(String aTToolsIntroduce) {
+            this.aTToolsIntroduce = aTToolsIntroduce;
+        }
+
+        public String getOtherDesc() {
+            return otherDesc;
+        }
+
+        public void setOtherDesc(String otherDesc) {
+            this.otherDesc = otherDesc;
+        }
+    }
+
+    public static class ATAloneSoftwareBean implements Serializable {
+
+        // 分析工具 独立软件  AnalysisToolAloneSoftware
+        private String aTAloneIndustryField;       // 行业领域
+        private String aTAloneVersionDesc;       // 版本说明
+        private String aTAloneToolsIntroduce;       // 工具介绍
+        private String aTAloneCloudHardwareResource;  // 云硬件资源
+        private String otherDesc;
+
+        public String getaTAloneIndustryField() {
+            return aTAloneIndustryField;
+        }
+
+        public void setaTAloneIndustryField(String aTAloneIndustryField) {
+            this.aTAloneIndustryField = aTAloneIndustryField;
+        }
+
+        public String getaTAloneVersionDesc() {
+            return aTAloneVersionDesc;
+        }
+
+        public void setaTAloneVersionDesc(String aTAloneVersionDesc) {
+            this.aTAloneVersionDesc = aTAloneVersionDesc;
+        }
+
+        public String getaTAloneToolsIntroduce() {
+            return aTAloneToolsIntroduce;
+        }
+
+        public void setaTAloneToolsIntroduce(String aTAloneToolsIntroduce) {
+            this.aTAloneToolsIntroduce = aTAloneToolsIntroduce;
+        }
+
+        public String getaTAloneCloudHardwareResource() {
+            return aTAloneCloudHardwareResource;
+        }
+
+        public void setaTAloneCloudHardwareResource(String aTAloneCloudHardwareResource) {
+            this.aTAloneCloudHardwareResource = aTAloneCloudHardwareResource;
+        }
+
+        public String getOtherDesc() {
+            return otherDesc;
+        }
+
+        public void setOtherDesc(String otherDesc) {
+            this.otherDesc = otherDesc;
+        }
+    }
 }
