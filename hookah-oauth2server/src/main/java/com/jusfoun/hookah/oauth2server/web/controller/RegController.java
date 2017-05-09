@@ -198,8 +198,20 @@ public class RegController {
     }
 
     @RequestMapping(value = "/findPwd", method = RequestMethod.GET)
-    public String findPwd(Model model) {
-        return "findPwd";
+    public String findPwd(Integer step,String userId,Model model) {
+        if(step==null) step =1;
+        if(StringUtils.isNotBlank(userId)){
+            User user = userService.selectById(userId);
+            model.addAttribute("userId",userId);
+            model.addAttribute("mobile",FormatCheckUtil.hideMobile(user.getMobile()));
+        }
+        switch (step){
+            case 1:return "findpassword";
+            case 2:return "checkMobile";
+            case 3:return "resetPwd";
+            case 4:return "complete";
+            default:return "findpassword";
+        }
     }
 
 
@@ -242,7 +254,8 @@ public class RegController {
                 //校验短信验证码
                 //获取库里缓存的验证码
                 try {
-                    String cacheSms = redisOperate.get(HookahConstants.REDIS_SMS_CACHE_PREFIX + ":" + userVo.getMobile());  //从 redis 获取缓存
+                    User user = userService.selectById(userVo.getUserId());
+                    String cacheSms = redisOperate.get(HookahConstants.REDIS_SMS_CACHE_PREFIX + ":" + user.getMobile());  //从 redis 获取缓存
                     if (cacheSms == null) { //验证码已过期
                         throw new UserRegExpiredSmsException("短信验证码验证未通过,短信验证码已过期");
                     } else {
@@ -250,7 +263,7 @@ public class RegController {
                             throw new UserRegInvalidSmsException("短信验证码验证未通过,短信验证码错误");
                         }
                     }
-                    redisOperate.del(userVo.getMobile());  //删除缓存
+                    redisOperate.del(user.getMobile());  //删除缓存
                     return ReturnData.success(userVo.getUserId());
                 } catch (Exception e) {
                     return ReturnData.error(e.getMessage());
