@@ -21,7 +21,6 @@ public class GoodsVo extends Goods implements Serializable {
     private MgGoods.ASAloneSoftwareBean asAloneSoftware;    // 应用场景 独立软件
     private MgGoods.ATSaaSBean atSaaS;                      // 分析工具 SaaS
     private MgGoods.ATAloneSoftwareBean atAloneSoftware;    // 分析工具 独立软件
-    private String otherDesc;
 
     private boolean orNotFavorite;
     private String userId;
@@ -204,11 +203,4 @@ public class GoodsVo extends Goods implements Serializable {
         this.atAloneSoftware = atAloneSoftware;
     }
 
-    public String getOtherDesc() {
-        return otherDesc;
-    }
-
-    public void setOtherDesc(String otherDesc) {
-        this.otherDesc = otherDesc;
-    }
 }

@@ -33,7 +33,6 @@ public class MgGoods extends GenericModel {
     private ATSaaSBean atSaaS;
     private ATAloneSoftwareBean atAloneSoftware;
     private Long clickRate;
-    private String otherDesc;
 
     public List<MgCategoryAttrType.AttrTypeBean> getAttrTypeList() {
         return attrTypeList;
@@ -117,14 +116,6 @@ public class MgGoods extends GenericModel {
 
     public void setAtAloneSoftware(ATAloneSoftwareBean atAloneSoftware) {
         this.atAloneSoftware = atAloneSoftware;
-    }
-
-    public String getOtherDesc() {
-        return otherDesc;
-    }
-
-    public void setOtherDesc(String otherDesc) {
-        this.otherDesc = otherDesc;
     }
 
     public void setApiInfo(ApiInfoBean apiInfo) {
@@ -354,6 +345,7 @@ public class MgGoods extends GenericModel {
         private String modelFile;   // 模型文件
         private String configFile;  // 配置文件
         private String configParams;    // 配置参数
+        private String otherDesc;
 
         public String getComplexity() {
             return complexity;
@@ -402,6 +394,14 @@ public class MgGoods extends GenericModel {
         public void setConfigParams(String configParams) {
             this.configParams = configParams;
         }
+
+        public String getOtherDesc() {
+            return otherDesc;
+        }
+
+        public void setOtherDesc(String otherDesc) {
+            this.otherDesc = otherDesc;
+        }
     }
 
     public static class ASSaaSBean implements Serializable {
@@ -412,6 +412,7 @@ public class MgGoods extends GenericModel {
         private String sServiceLevel;  // 服务等级
         private String sSAexp;        // 应用经验
         private String sSAintroduce;  // 应用介绍
+        private String otherDesc;
 
         public String getsSComplexity() {
             return sSComplexity;
@@ -452,6 +453,14 @@ public class MgGoods extends GenericModel {
         public void setsSAintroduce(String sSAintroduce) {
             this.sSAintroduce = sSAintroduce;
         }
+
+        public String getOtherDesc() {
+            return otherDesc;
+        }
+
+        public void setOtherDesc(String otherDesc) {
+            this.otherDesc = otherDesc;
+        }
     }
 
     public static class ASAloneSoftwareBean implements Serializable {
@@ -463,6 +472,7 @@ public class MgGoods extends GenericModel {
         private String aSAexp;        // 应用经验
         private String aSAintroduce;  // 应用介绍
         private String aSCloudHardwareResource;  // 云硬件资源
+        private String otherDesc;
 
         public String getaSComplexity() {
             return aSComplexity;
@@ -511,6 +521,14 @@ public class MgGoods extends GenericModel {
         public void setaSCloudHardwareResource(String aSCloudHardwareResource) {
             this.aSCloudHardwareResource = aSCloudHardwareResource;
         }
+
+        public String getOtherDesc() {
+            return otherDesc;
+        }
+
+        public void setOtherDesc(String otherDesc) {
+            this.otherDesc = otherDesc;
+        }
     }
 
     public static class ATSaaSBean implements Serializable {
@@ -519,6 +537,7 @@ public class MgGoods extends GenericModel {
         private String aTIndustryField;       // 行业领域
         private String aTVersionDesc;       // 版本说明
         private String aTToolsIntroduce;       // 工具介绍
+        private String otherDesc;
 
         public String getaTIndustryField() {
             return aTIndustryField;
@@ -543,6 +562,14 @@ public class MgGoods extends GenericModel {
         public void setaTToolsIntroduce(String aTToolsIntroduce) {
             this.aTToolsIntroduce = aTToolsIntroduce;
         }
+
+        public String getOtherDesc() {
+            return otherDesc;
+        }
+
+        public void setOtherDesc(String otherDesc) {
+            this.otherDesc = otherDesc;
+        }
     }
 
     public static class ATAloneSoftwareBean implements Serializable {
@@ -552,6 +579,7 @@ public class MgGoods extends GenericModel {
         private String aTAloneVersionDesc;       // 版本说明
         private String aTAloneToolsIntroduce;       // 工具介绍
         private String aTAloneCloudHardwareResource;  // 云硬件资源
+        private String otherDesc;
 
         public String getaTAloneIndustryField() {
             return aTAloneIndustryField;
@@ -583,6 +611,14 @@ public class MgGoods extends GenericModel {
 
         public void setaTAloneCloudHardwareResource(String aTAloneCloudHardwareResource) {
             this.aTAloneCloudHardwareResource = aTAloneCloudHardwareResource;
+        }
+
+        public String getOtherDesc() {
+            return otherDesc;
+        }
+
+        public void setOtherDesc(String otherDesc) {
+            this.otherDesc = otherDesc;
         }
     }
 }

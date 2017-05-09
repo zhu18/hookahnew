@@ -410,17 +410,20 @@ function submitGoodsPublish(){
         data.dataModel.modelFile = $('.api-info-box').find('input[name="modelFile"]').val();
         data.dataModel.configFile = $('.api-info-box').find('input[name="configFile"]').val();
         data.dataModel.configParams = $('.api-info-box').find('input[name="configParams"]').val();
+        data.dataModel.otherDesc = $('.api-info-box').find('input[name="otherDesc"]').val();
     }else if(data.goodsType == 5){// 分析工具 SaaS
         data.atSaaS = {};
         data.atSaaS.aTIndustryField = $('.api-info-box').find('input[name="aTIndustryField"]').val();
         data.atSaaS.aTVersionDesc = $('.api-info-box').find('input[name="aTVersionDesc"]').val();
         data.atSaaS.aTToolsIntroduce = $('.api-info-box').find('input[name="atToolsIntroduce"]').val();
+        data.atSaaS.otherDesc = $('.api-info-box').find('input[name="otherDesc"]').val();
     }else if(data.goodsType == 4){// 分析工具 独立软件
         data.atAloneSoftware = {};
         data.atAloneSoftware.aTAloneIndustryField = $('.api-info-box').find('input[name="aTAloneIndustryField"]').val();
         data.atAloneSoftware.aTAloneVersionDesc = $('.api-info-box').find('input[name="aTAloneVersionDesc"]').val();
         data.atAloneSoftware.aTAloneToolsIntroduce = $('.api-info-box').find('input[name="aTAloneToolsIntroduce"]').val();
         data.atAloneSoftware.aTAloneCloudHardwareResource = $('.api-info-box').find('input[name="aTAloneCloudHardwareResource"]').val();
+        data.atAloneSoftware.otherDesc = $('.api-info-box').find('input[name="otherDesc"]').val();
     }else if(data.goodsType == 6){// 应用场景 独立软件
         data.asAloneSoftware = {};
         data.asAloneSoftware.aSComplexity = $('.api-info-box').find('input[name="aSComplexity"]').val();
@@ -429,6 +432,7 @@ function submitGoodsPublish(){
         data.asAloneSoftware.aSAexp = $('.api-info-box').find('input[name="aSAexp"]').val();
         data.asAloneSoftware.aSAintroduce = $('.api-info-box').find('input[name="aSAintroduce"]').val();
         data.asAloneSoftware.aSCloudHardwareResource = $('.api-info-box').find('input[name="aSCloudHardwareResource"]').val();
+        data.asAloneSoftware.otherDesc = $('.api-info-box').find('input[name="otherDesc"]').val();
     }else if(data.goodsType == 7){// 应用场景 SaaS
         data.asSaaS = {};
         data.asSaaS.sSComplexity = $('.api-info-box').find('input[name="sSComplexity"]').val();
@@ -436,6 +440,7 @@ function submitGoodsPublish(){
         data.asSaaS.sServiceLevel = $('.api-info-box').find('input[name="sServiceLevel"]').val();
         data.asSaaS.sSAexp = $('.api-info-box').find('input[name="sSAexp"]').val();
         data.asSaaS.sSAintroduce = $('.api-info-box').find('input[name="sSAintroduce"]').val();
+        data.asSaaS.otherDesc = $('.api-info-box').find('input[name="otherDesc"]').val();
 	}else{
 		data.uploadUrl = $('#J_fileUploadSS').val();
 	}
