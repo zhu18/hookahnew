@@ -33,6 +33,7 @@ if (id) {
             $("#newsGroup").val(data.data.newsGroup);//文章的一级分类
             $("#newsSonGroup").val(data.data.newsSonGroup);
             $("#newsTitle").val(data.data.newsTitle);//文章的标题
+            $("#newsInfo").val(data.data.contentValidity);//文章的标题
             $("input[name='isHot'][value=" + data.data.isHot + "]").attr("checked", true);
             $("#preview-img").attr('src', data.data.pictureUrl);
             $(".pulish-btn button").addClass("btn-full-blue");
@@ -81,6 +82,7 @@ function published() {
     data.newsId = id;
     data.newsGroup = $('#newsGroup').val();
     data.newsTitle = $('#newsTitle').val();
+    data.contentValidity = $('#newsInfo').val();
     data.isHot = $("input[name='isHot']:checked").val();
     data.content = $('#content').val();
     data.newsSonGroup = $('#newsSonGroup').val();

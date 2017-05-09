@@ -2,8 +2,10 @@ package com.jusfoun.hookah.oauth2server.web.controller;
 
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.generic.Condition;
+import com.jusfoun.hookah.core.utils.FormatCheckUtil;
 import com.jusfoun.hookah.core.utils.NetUtils;
 import com.jusfoun.hookah.oauth2server.config.MyProps;
+import com.jusfoun.hookah.oauth2server.security.UsernameAndPasswordToken;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -50,7 +52,15 @@ public class LoginController {
     public String postLogin(User user, RedirectAttributes redirectAttributes, HttpServletRequest request, HttpServletResponse response) {
 
         String username = user.getUserName();
-        UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(), user.getPassword());
+        UsernameAndPasswordToken token = new UsernameAndPasswordToken();
+        if(FormatCheckUtil.checkMobile(username)){
+             token.setMobile(username);
+        }else if(FormatCheckUtil.checkEmail(username)){
+            token.setEmail(username);
+        }else{
+            token.setUsername(username);
+        }
+        token.setPassword(user.getPassword().toCharArray());
         Subject currentUser = SecurityUtils.getSubject();
 
         try {

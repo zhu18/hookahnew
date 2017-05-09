@@ -89,7 +89,7 @@ function published(){
     var url = '';
     data.newsGroup = $('#newsGroup').val();
     data.newsTitle = $('#newsTitle').val();
-    data.newsInfo = $('#newsInfo').val();
+    data.contentValidity = $('#newsInfo').val();
     data.isHot = $("input[name='isHot']:checked").val();
     data.content = $('#content').val();
     data.newsSonGroup = $('#newsSonGroup').val();
