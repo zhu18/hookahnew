@@ -44,8 +44,8 @@ var htmlPart = {
         </li>
     </ol>
     <div class="info">
-        <label >手机号码：
-            13488778132
+        <label >手机号码：${mobile}
+            <!--<span class="mobile"></span>-->
         </label>
         <!--<span>请输入您手机号码</span>-->
     </div>
@@ -67,24 +67,41 @@ include("layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
 <script>
     $(function(){
-        $('#J_GetCode').click(function(){
-            var that = $(this);
+        $('#J_GetCode').click(function () {
             $.ajax({
-                url:'${host.auth}/sms/sendToUser',
-                type:'post',
-                data:{
-                   userId:${userId}
+                url: '${host.auth}/sms/sendToUser',
+                type: 'post',
+                data: {
+                    userId: '${userId}'
                 },
-                success:function(data){
-                    if(data.code == 1){
+                success: function (data) {
+                    if (data.code == 1) {
                         $.alert(data.data);
-                        settime(that);
-                    }else{
+                    } else {
                         $.alert('获取验证码失败，请重新获取');
                     }
                 }
             });
         })
+
+        $(".sub").on("click", function () {
+            $.ajax({
+                url: "http://auth.hookah.app/findPwd",
+                type: "post",
+                data: {
+                    step: 2,
+                    mobile: '${mobile}',
+                    validSms: $("#J_Phone_Checkcode").val()
+                },
+                success: function (data) {
+                    if (data.code == 1) {
+                        window.location.href = "/findPwd?step=3&userId=" + data.data;
+                    } else {
+                        console.log(data.message);
+                    }
+                }
+            })
+        })
     })
-    ;
+
 </script>
