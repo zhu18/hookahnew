@@ -364,8 +364,10 @@ function backAddFn(data){
 				$.confirm('<h3 style="font-weight: 800">提交成功</h3><p>继续发布商品吗?</p>', null, function (type) {
 					if (type == 'yes') {
 						window.location.href = "/usercenter/goodsPublish";
-					} else {
+                        window.event.returnValue=false;
+                    } else {
 						window.location.href = "/usercenter/goodsWait";
+                        window.event.returnValue=false;
 					}
 				});
 			} else {
