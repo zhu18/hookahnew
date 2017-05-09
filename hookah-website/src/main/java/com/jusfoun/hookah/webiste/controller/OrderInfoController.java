@@ -89,7 +89,7 @@ public class OrderInfoController extends BaseController {
 
             //验证商品是否下架
             Goods g = goodsService.selectById(goodsId);
-            if (g.getIsOnsale() == null || g.getIsOnsale() != 1) {
+            if (g.getIsOnsale() == null || !g.getIsOnsale().equals((byte)1)) {
                 throw new HookahException("商品[" + g.getGoodsName() + "]未上架");
             }
             MgGoods.FormatBean format = goodsService.getFormat(goodsId,formatId);

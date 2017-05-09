@@ -74,6 +74,9 @@ public class GoodsShelvesServiceImpl extends GenericServiceImpl<GoodsShelves, St
                     if(Objects.nonNull(sgIds) && sgIds.size() != 0 ){
                         //商品Id集对应的商品集
                         List<Condition> goodsfilters = new ArrayList<Condition>();
+                        goodsfilters.add(Condition.eq("isDelete", 1));
+                        goodsfilters.add(Condition.eq("isOnsale", 1));
+                        goodsfilters.add(Condition.eq("checkStatus", 1));
                         goodsfilters.add(Condition.in("goodsId",sgIds.toArray()));
                         List<Goods> goodsList = goodsService.selectList(goodsfilters);
 
@@ -136,6 +139,8 @@ public class GoodsShelvesServiceImpl extends GenericServiceImpl<GoodsShelves, St
 
                 List<Condition> filters = new ArrayList();
                 filters.add(Condition.eq("isDelete", 1));
+                filters.add(Condition.eq("isOnsale", 1));
+                filters.add(Condition.eq("checkStatus", 1));
                 //从查询到的Id集合里查询商品
                 if(Objects.nonNull(sgIds) && sgIds.size() != 0 ){
                     filters.add(Condition.in("goodsId",sgIds.toArray()));
