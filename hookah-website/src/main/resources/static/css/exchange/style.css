@@ -1481,7 +1481,10 @@ dl {
 	height: 28px;
 	font-size: 12px;
 }
-/*接口详情*/
+.goods-left .goods-details .goods-details-right .download-count a{
+
+}
+	/*接口详情*/
 .goodsDetails .goods-left .goods-table {
 	background-color: white;
 	border: 1px solid #E9E9E9;

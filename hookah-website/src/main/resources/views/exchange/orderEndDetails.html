@@ -1,0 +1,267 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/index/index.css">
+<link rel="stylesheet" href="/static/css/common.css">
+<link rel="stylesheet" href="/static/css/exchange/style.css">
+<%};%>
+<%
+var htmlPart = {
+%>
+<div class="grid-0 goodsDetails bdg-row ">
+	<div class="grid-row" style="position: relative">
+		<%include("/layout/menu.html"){} %>
+		<div class="grid-left goods-left bdg-row margin-top-20">
+			<div class="goods-details clearfix">
+				<div class="goods-details-img grid-left bdg-row">
+					<div class="img-box">
+						<img src="${goodsDetails.goodsImg}" alt="" id="J_goodsImg">
+					</div>
+					<div class="collect-box margin-top-20">
+						<p class="display-inline-block">
+							<i class="iconfont icon-liulan-copy" aria-hidden="true"></i>
+							<span>浏览:</span>
+							<span>${goodsDetails.clickRate}</span>
+						</p>
+						<p class="display-inline-block margin-left-40">
+							<span class="attention">
+								<%if(goodsDetails.orNotFavorite){%>
+								<i class="iconfont icon-jushoucanggift color-red"></i>
+								<span class="eval">已关注:</span>
+								<%}else{%>
+								<i class="iconfont icon-jushoucanggift" style="cursor:pointer;" onclick="Attention.add('${goodsDetails.goodsId}')"></i>
+								<span class="eval">关注:</span>
+								<%}%>
+								<span>${goodsDetails.followNum}</span>
+							</span>
+						</p>
+					</div>
+				</div>
+				<!--详细信息-->
+				<div class="goods-details-right grid-left bdg-row">
+					<div class="detail-title margin-bottom-20">
+						<span class="font-weight-bold vertical-align-middle" id="J_goodsTitle">${goodsDetails.goodsName}</span>
+						<div class="display-inline-block">
+							<span class="icon backgorund-orange">免</span>
+							<span class="icon backgorund-blue">企</span>
+						</div>
+					</div>
+					<div class="detail-info margin-bottom-20">
+						<span class="font-size-14" id="J_goodsBrief">${goodsDetails.goodsBrief}</span>
+					</div>
+					<div class="detail-money margin-bottom-20" id="J_detail-money">
+						<div>
+							<span>价格：</span>
+							<i class="fa fa-jpy font-size-14 color-orange" aria-hidden="true"></i>
+							<span class="font-size-24 color-orange" formatid="${goodsDetails.formatList[0].formatId}" id="J_goodsPrice">${trunc(goodsDetails.shopPrice / 100)}</span>
+							<!--<span class="convert color-orange" id="J_goodsNumber">折合0.0001元/次</span>-->
+						</div>
+						<%if(goodsDetails.formatList.~size > 0){%>
+						<div class="money-standard">
+							<span>规格：</span>
+							<%for(item in goodsDetails.formatList){%>
+							<a href="javascript:;" onclick="editPrice(this, ${item.price}, ${item.formatId})" class="margin-right-5 ${itemLP.first ? 'active':''}" formatid="${item.formatId}" price="${item.price}">${item.number}${decode(item.format,0,"次",1,"天",2,"年","未知")}  </a>
+							<%}%>
+						</div>
+						<%}%>
+					</div>
+					<div class="detail-star margin-bottom-20 padding-left-10">
+						<span class="font-size-14">评分：</span>
+						<%
+							var goodsGradesC = goodsGrades + '';
+							var goodsGrade = strutil.subStringTo (goodsGradesC,0,1);
+						goodsGrade = parseInt(goodsGrade);
+						%>
+
+						<div class="display-inline-block">
+							<%for(var i = 0; i < goodsGrade; i++){%>
+							<i class="fa fa-star color-orange font-size-18" aria-hidden="true"></i>
+							<%}%>
+							<%for(var i = 0; i < 5-goodsGrade; i++){%>
+							<i class="fa fa-star-o color-orange font-size-18" aria-hidden="true"></i>
+							<%}%>
+						</div>
+
+					</div>
+					<!--<div class="detail-count padding-left-10 margin-top-10">-->
+						<!--<form action="${host.website}/order/directInfo" name="goodsDetail" id="J_goodsDetail" method="post">-->
+							<!--<span class="font-size-14">数量：</span>-->
+							<!--<div class="purchase-quantity vertical-align-middle">-->
+								<!--<a href="javascript:void(0)" class=" btn-a btn-sub">-</a>-->
+								<!--<input id="J_buyNumber" type="text" name="goodsNumber" value="1" autocomplete="off">-->
+								<!--<a href="javascript:void(0)" class="btn-a btn-plus">+</a>-->
+							<!--</div>-->
+							<!--<input type="hidden" name="goodsId" id="J_goodsId" value="${goodsDetails.goodsId}">-->
+							<!--<input type="hidden" name="formatId" id="J_formatId" value="${goodsDetails.formatList[0].formatId}">-->
+							<!--<button class="vertical-align-middle btn btn-full-orange margin-left-10 padding-5 padding-left-20 padding-right-20" onclick="return check()" style="cursor: pointer">-->
+								<!--立即购买-->
+							<!--</button>-->
+							<!--<a id="J_addCart" href="javascript:addCart('${goodsDetails.goodsId}');" class="vertical-align-middle btn btn-full-blue margin-left-10">加入购物车</a>-->
+						<!--</form>-->
+					<!--</div>-->
+					<div class="download-count padding-left-10 margin-top-10">
+						<a href="" class="btn-full-blue font-size-14 padding-10 padding-left-20 padding-right-20 margin-right-15">api下载</a>
+						<a href="" class="btn-full-blue font-size-14 padding-10 padding-left-20 padding-right-20 margin-right-15">api下载</a>
+					</div>
+				</div>
+			</div>
+			<!--table切换-->
+			<div class="goods-table margin-top-20 margin-bottom-10">
+				<div class="table-title">
+					<ul>
+						<li class="grid-left active">详情介绍</li>
+						<%if(isNotEmpty(goodsDetails.apiInfo)){%>
+						<li class="grid-left">API详情</li>
+						<li class="grid-left">返回参数</li>
+						<%}%>
+						<li class="grid-left">评价</li>
+					</ul>
+				</div>
+				<div class="table-content">
+					<div class="table-item active detail margin-bottom-10" id="J_goodsDesc">
+						${goodsDetails.goodsDesc}
+					</div>
+					<%if(isNotEmpty(goodsDetails.apiInfo)){%>
+					<div class="table-item">
+						<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
+						<table class="tab-one">
+							<caption><h3>标示信息</h3></caption>
+							<tr>
+								<td>接口地址：</td>
+								<td>${goodsDetails.apiInfo.apiUrl}</td>
+							</tr>
+							<tr>
+								<td>请求方式：</td>
+								<td>${goodsDetails.apiInfo.apiMethod}</td>
+							</tr>
+							<tr>
+								<td>请求示例：</td>
+								<td>${goodsDetails.apiInfo.reqSample}</td>
+							</tr>
+							<tr>
+								<td>接口描述：</td>
+								<td>${goodsDetails.apiInfo.apiDesc}</td>
+							</tr>
+						</table>
+						<table class="tab-two margin-top-20 margin-bottom-40">
+							<caption><h3>请求参数</h3></caption>
+							<tr>
+								<th>名称</th>
+								<th>类型</th>
+								<th>必填</th>
+								<th>示例值</th>
+								<th>默认值</th>
+								<th>描述</th>
+							</tr>
+							<%for(items in goodsDetails.apiInfo.reqParamList){%>
+							<tr>
+								<td>${items.fieldName}</td>
+								<td>${items.fieldType}</td>
+								<td>${decode(items.isMust,"0","否","1","是","未知")}</td>
+								<td>${items.fieldSample}</td>
+								<td>${items.fieldDefault}</td>
+								<td>${items.describle}</td>
+							</tr>
+							<%}%>
+						</table>
+					</div>
+					<!--返回参数-->
+					<div class="table-item margin-bottom-10" >
+						<table>
+							<caption><h3>返回参数</h3></caption>
+							<tr>
+								<th>错误码</th>
+								<th>说明</th>
+							</tr>
+							<%for(items in goodsDetails.apiInfo.respParamList){%>
+							<tr>
+								<td>${items.fieldName}</td>
+								<td>${items.describle}</td>
+							</tr>
+							<%}%>
+						</table>
+					</div>
+					<%}%>
+					<div class="table-item">
+						<!--<h1 class="font-size-14 margin-bottom-10">最新评论</h1>-->
+						<ol>
+							<!--<li>-->
+								<!--<div class="comment-title margin-bottom-10">-->
+									<!--<span class="name padding-left-10">wu******dy</span>-->
+									<!--<span class="date padding-left-20">2017年03月13日 17:12:28</span>-->
+									<!--<a href="javascript:void(0)" class="padding-left-20">回复</a>-->
+								<!--</div>-->
+								<!--<div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>-->
+							<!--</li>-->
+							<!--<li>-->
+								<!--<div class="comment-title margin-bottom-10">-->
+									<!--<span class="name padding-left-10">wu******dy</span>-->
+									<!--<span class="date padding-left-20">2017年03月13日 17:12:28</span>-->
+									<!--<a href="javascript:void(0)" class="padding-left-20">回复</a>-->
+								<!--</div>-->
+								<!--<div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>-->
+							<!--</li>-->
+							<!--<li>-->
+								<!--<div class="comment-title margin-bottom-10">-->
+									<!--<span class="name padding-left-10">wu******dy</span>-->
+									<!--<span class="date padding-left-20">2017年03月13日 17:12:28</span>-->
+									<!--<a href="javascript:void(0)" class="padding-left-20">回复</a>-->
+								<!--</div>-->
+								<!--<div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>-->
+							<!--</li>-->
+							<!--<li>-->
+								<!--<div class="comment-title margin-bottom-10">-->
+									<!--<span class="name padding-left-10">wu******dy</span>-->
+									<!--<span class="date padding-left-20">2017年03月13日 17:12:28</span>-->
+									<!--<a href="javascript:void(0)" class="padding-left-20">回复</a>-->
+								<!--</div>-->
+								<!--<div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>-->
+							<!--</li>-->
+							<p style="text-align: center;min-height:100px; font-size: 18px;">暂无评论</p>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="grid-right goods-right margin-top-20 margin-bottom-30">
+			<div class="recommend-one">
+				<div class="recommend-title font-weight-bold">${reCommData.shelvesName}</div>
+				<ul class="padding-top-5">
+					<%for(item in reCommData.goods){%>
+					<li>
+						<a class="display-block" target="_blank" href="${host.website}/exchange/details?id=${item.goodsId}">
+							<img src="${item.goodsImg}" alt="">
+							<div class="img-info">
+								<p class="title">${item.goodsName}</p>
+								<p class="color-orange">￥${trunc(item.shopPrice / 100 , 2)}/${item.shopNumber == 1 ? '' : item.shopNumber}${decode(item.shopFormat,0,'天',1,'月',2,'年','未知')}</p>
+							</div>
+						</a>
+					</li>
+					<%}%>
+				</ul>
+			</div>
+			<!--<div class="recommend-two margin-top-20">-->
+				<!--<div class="recommend-title font-weight-bold">活动推荐</div>-->
+				<!--<ul>-->
+					<!--<li>-->
+						<!--<img src="/static/images/a1.png" alt="">-->
+					<!--</li>-->
+					<!--<li>-->
+						<!--<img src="/static/images/a1.png" alt="">-->
+					<!--</li>-->
+					<!--<li>-->
+						<!--<img src="/static/images/a1.png" alt="">-->
+					<!--</li>-->
+					<!--<li>-->
+						<!--<img src="/static/images/a1.png" alt="">-->
+					<!--</li>-->
+				<!--</ul>-->
+			<!--</div>-->
+		</div>
+	</div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+<script src="/static/js/exchange/common.js"></script>
+<script src="/static/js/goods/details.js"></script>
