@@ -2,6 +2,8 @@ package com.jusfoun.hookah.oauth2server.web.controller;
 
 
 import com.jusfoun.hookah.core.domain.OauthClient;
+import com.jusfoun.hookah.core.utils.FormatCheckUtil;
+import com.jusfoun.hookah.oauth2server.security.UsernameAndPasswordToken;
 import com.jusfoun.hookah.rpc.api.oauth2.OAuthClientService;
 import com.jusfoun.hookah.rpc.api.oauth2.OAuthService;
 import com.jusfoun.hookah.oauth2server.config.Constants;
@@ -167,7 +169,15 @@ public class AuthorizeController {
             return false;
         }
 
-        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        UsernameAndPasswordToken token = new UsernameAndPasswordToken();
+        if(FormatCheckUtil.checkMobile(username)){
+            token.setMobile(username);
+        }else if(FormatCheckUtil.checkEmail(username)){
+            token.setEmail(username);
+        }else{
+            token.setUsername(username);
+        }
+        token.setPassword(password.toCharArray());
 
         try {
             subject.login(token);
