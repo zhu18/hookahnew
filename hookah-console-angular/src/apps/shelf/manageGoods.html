@@ -25,6 +25,10 @@
           </td>
           <td class="text-center">
             <a href="javascript:;" ng-click="delGoods(shelf.shelvesId, gid)">移除商品</a>
+            <span ng-show="shelf.isBackImg == '1'" >
+              <span class="text-explode">|</span>
+              <a href="javascript:;" ng-click="">背景图片</a>
+            </span>
           </td>
         </tr>
         </tbody>

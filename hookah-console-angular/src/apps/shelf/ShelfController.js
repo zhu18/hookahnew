@@ -75,7 +75,7 @@ class ShelfController {
     };
 
     $scope.manageGoods = function (event, item) {
-        console.log(item.shelvesId);
+        console.log(item);
         $state.go('shelf.manageGoods', {data: item});
         console.log("即将进货架管理……");
     };
