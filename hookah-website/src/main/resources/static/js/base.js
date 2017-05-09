@@ -236,7 +236,8 @@ function add(m) {
 	return m < 10 ? '0' + m : m
 };
 function format(time) {
-	var date = new Date(time);
+    var a = parseInt(time);
+    var date = new Date(a);
 	var year = date.getFullYear();
 	var month = date.getMonth() + 1;
 	var date1 = date.getDate();
