@@ -206,7 +206,7 @@
     color:#00a2ca;
     cursor: pointer ;
 }
-.findPwd .error {
+.findPwd .error ,.findPwd .error1{
     margin-left: 27%;
     padding-top: 5px;
     color:#f40;
@@ -214,6 +214,9 @@
 .findPwd .err2 {
     margin-left: 8%;
     color:#f40;
+}
+.findPwd .error1 {
+    margin-left: 0%;
 }
 .findPwd .sub {
     width: 75px;
@@ -290,4 +293,8 @@
 }
 .ui-form-item-error .ui-form-explain {
     color: #FF5243;
+}
+.checkcode-warp .getcheckcode.btn-disabled{
+    color: #ccc;
+    cursor: no-drop;
 }
