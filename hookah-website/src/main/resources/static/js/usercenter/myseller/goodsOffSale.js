@@ -21,7 +21,7 @@ function loadPageData(data) {
 				html += '<td class="text-center">不通过</td>';
 			}
 			html += '<td>';
-			html += '<a href="javascript:onsale(\'' + list[i].goodsId + '\');">上架</a>';
+			html += '<a href="javascript:selectTimes(\'' + list[i].goodsId + '\');">上架</a>';
 			html += '<a href="'+host.website+'/usercenter/goodsModify?id='+list[i].goodsId+'">修改</a>';
 			html += '<a href="javascript:deleteGoods(\'' + list[i].goodsId + '\');">删除</a>';
 			html += '</td>';
@@ -58,10 +58,65 @@ function deleteGoods(id) {
 	});
 
 }
-function onsale(id) {
-	$.confirm('你确定要上架此商品吗? ',null,function(type){
+var timesVal = 0;
+function selectTimes(id) {
+	var dateTime = null;
+	var html = '';
+	html+='<h3 class="font-size-18">请选择上架时间</h3>';
+	html+='<div>';
+	html+='<form id="selectTime">';
+	html+='<div class="margin-top-10 margin-bottom-10">';
+	html+='<label class="margin-right-20"><input type="radio" value="0" name="dateTime" checked class="margin-right-5" onchange="isOnsaleFun(this)">立即上架</label>';
+	html+='<label><input type="radio" value="1" name="dateTime" class="margin-right-5" onchange="isOnsaleFun(this)">预约上架</label>';
+	html+='</div>';
+	html+='<div>';
+	html+='<input type="text" id="indate" style="display: none; width: 160px;height: 30px;border: 1px solid #ccc;padding: 0 10px;" name="dateTimeVal" placeholder="请选择时间">';
+	html+='<p class="color-red" style="display: none" id="tip_i">请选择上架时间</p>';
+	html+='</div>';
+	html+='</form>';
+	html+='</div>';
+	$.confirm(html,[{yes:"确定"},{close:'取消'}],function(type){
 		if(type == 'yes'){
+			if(timesVal == 1){
+				if($('input[name="dateTimeVal"]').val()){
+					dateTime = $('input[name="dateTimeVal"]').val();
+					this.hide();
+					onsale(id,dateTime)
+				}else{
+					$('#tip_i').show();
+				}
+			}else{
+				dateTime = null;
+				this.hide();
+				onsale(id,dateTime)
+			}
+		}else{
 			this.hide();
+		}
+	});
+	$.jeDate("#indate", {
+		format: "YYYY-MM-DD hh:mm:ss",
+		isTime: true,
+		minDate: $.nowDate(0)
+	});
+	$('#indate').click(function(){
+		$('#tip_i').hide();
+	})
+}
+function isOnsaleFun(that) {
+	$('#tip_i').hide();
+	if ($(that).val() == 1) {
+		$('#indate').show();
+		timesVal = 1;
+	} else {
+		$('#indate').hide();
+		timesVal = 0;
+	}
+}
+function onsale(id,dateTime) {
+	// $.confirm('你确定要上架此商品吗? ',null,function(type){
+	// 	if(type == 'yes'){
+	// 		this.hide();
 			$.ajax({
 				url: host.website + '/goods/back/onsale',
 				type: 'post',
@@ -77,11 +132,11 @@ function onsale(id) {
 						$.alert(data.message)
 					}
 				}
-			})
-		}else{
-			this.hide();
-		}
-	});
+			});
+		// }else{
+		// 	this.hide();
+		// }
+	// });
 
 }
 $('#J_goodsNameSearch').on('focus',function () {

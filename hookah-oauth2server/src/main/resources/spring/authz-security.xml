@@ -115,6 +115,8 @@
         /login = anon
         /reg = anon
         /reg/** = anon
+        /findPwd = anon
+        /page/** = anon
         /sms/** = anon
         /captcha* = anon
         /unauthorized = anon

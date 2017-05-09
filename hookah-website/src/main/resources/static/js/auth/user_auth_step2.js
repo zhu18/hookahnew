@@ -51,7 +51,6 @@ function checkIDCard(){
     }
     idcardcheck=true;
 }
-var upinput;
 var imgSrc = '';
 var fileUploadUrl = host.static+'/upload/fileUpload';
 function upPhoto(){
