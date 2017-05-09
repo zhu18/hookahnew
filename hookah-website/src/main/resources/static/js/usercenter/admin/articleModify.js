@@ -1,11 +1,7 @@
 /**
  * Created by wcq on 2017/4/19.
  */
-$.getUrlParam = function (key) {
-    var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
-    var result = window.location.search.substr(1).match(reg);
-    return result ? decodeURIComponent(result[2]) : null;
-};
+var getImg = "";
 var id = $.getUrlParam('id');//文章的id
 function createEditor() {
     //富文本
@@ -38,6 +34,8 @@ if (id) {
             $("#preview-img").attr('src', data.data.pictureUrl);
             $(".pulish-btn button").addClass("btn-full-blue");
             $("#content").html(data.data.content);
+            $(".input-count strong").text($.trim($("#newsTitle").val().length));
+            $(".input-count .info").text($.trim($("#newsInfo").val().length));
             createEditor();
             getImg = data.data.pictureUrl;
         }
@@ -154,4 +152,23 @@ $('#preview-div').hover(function () {
         $('#replace-btn').toggle();
     }
 });
-
+$(function(){
+    $("#newsTitle").bind("input propertychange",function(){
+        var len = $.trim($("#newsTitle").val().length);
+        $(".input-count strong").text(len);
+        if(len>60){
+            var value =$("#newsTitle").val();
+            $("#newsTitle").val(value.substring(0,60));
+            $(".input-count strong").text(60);
+        }
+    })
+    $("#newsInfo").bind("input propertychange",function(){
+        var len = $.trim($("#newsInfo").val().length);
+        $(".input-count .info").text(len);
+        if(len>60){
+            var value =$("#newsInfo").val();
+            $("#newsInfo").val(value.substring(0,60));
+            $(".input-count .info").text(60);
+        }
+    })
+})
