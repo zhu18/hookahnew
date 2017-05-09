@@ -11,6 +11,8 @@ import com.jusfoun.hookah.rpc.api.AccNoTokenService;
 import com.jusfoun.hookah.rpc.api.OrderInfoService;
 import com.jusfoun.hookah.rpc.api.PayCoreService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -60,8 +62,12 @@ public class UnionpayController extends BaseController{
 			@RequestParam(required=true) String accNo,
 			HttpSession session,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		Session sessionUs = SecurityUtils.getSubject().getSession();
+		HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
+
 		//处理请求
-		String reqHtml = payCoreService.openUnionpay(orderId, accNo, "00003443e3ce74e3fbf2ca02b3baa64c");
+		String reqHtml = payCoreService.openUnionpay(orderId, accNo, userMap.get("userId"));
 		/*String reqHtml = payCoreService.openUnionpay("23", "6221558812340000", "00003443e3ce74e3fbf2ca02b3baa64c");*/
 		if(StringUtils.isEmpty(reqHtml)){
 			return "redirect:/404.html";
@@ -211,7 +217,9 @@ public class UnionpayController extends BaseController{
 
 		try {
 			/*String userId = getUserId(session);*/
-			String userId = "00003443e3ce74e3fbf2ca02b3baa64c";
+			Session sessionUs = SecurityUtils.getSubject().getSession();
+			HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
+			String userId = userMap.get("userId");
 			//验证登录密码
 			/*String postResult = HttpRequestUtil.sendPost("http://192.168.15.15:8080/user/checkUserPassword", "userid="+userId+"&password="+ StrUtil.encoderByMd5(password));
 			Result parseObject = JSONObject.parseObject(postResult, Result.class);
