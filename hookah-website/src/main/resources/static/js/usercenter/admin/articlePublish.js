@@ -1,9 +1,4 @@
 var getImg = "";
-$.getUrlParam = function (key) {
-    var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
-    var result = window.location.search.substr(1).match(reg);
-    return result ? decodeURIComponent(result[2]) : null;
-};
 var id = $.getUrlParam('id');
 function createEidtor(){
     //富文本

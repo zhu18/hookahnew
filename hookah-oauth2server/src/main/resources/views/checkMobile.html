@@ -58,6 +58,7 @@ var htmlPart = {
             </button>
         </div>
         <div class="ui-form-explain" style="display: none"><i class="ui-tiptext-icon iconfont"></i><span>请输入验证码</span></div>
+        <div class="error1" style="display: none"><i class="ui-tiptext-icon iconfont"></i><span>短信验证码验证未通过,请输入验证码</span></div>
     </div>
     <div class="sub">提交</div>
 
@@ -68,6 +69,7 @@ include("layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 <script>
     $(function(){
         $('#J_GetCode').click(function () {
+            var that = $(this);
             $.ajax({
                 url: '${host.auth}/sms/sendToUser',
                 type: 'post',
@@ -77,12 +79,33 @@ include("layout/base.html",{headSection:head,htmlSection:htmlPart}){}
                 success: function (data) {
                     if (data.code == 1) {
                         $.alert(data.data);
+                        settime(that);
                     } else {
                         $.alert('获取验证码失败，请重新获取');
                     }
                 }
             });
         })
+
+        var countdown = 120;
+        function settime(that) {
+            if (countdown == 0) {
+                that.removeAttr("disabled");
+                that.html("重新获取验证码");
+                that.removeClass('btn-disabled');
+                countdown = 120;
+                return;
+            } else {
+                that.attr("disabled", true);
+                that.html("重新获取(" + countdown + ")");
+                that.addClass('btn-disabled');
+                countdown--;
+            }
+            setTimeout(function () {
+                    settime(that)
+                }
+                , 1000)
+        }
 
         $(".sub").on("click", function () {
             $.ajax({
@@ -96,12 +119,24 @@ include("layout/base.html",{headSection:head,htmlSection:htmlPart}){}
                 success: function (data) {
                     if (data.code == 1) {
                         window.location.href = "/findPwd?step=3&userId=" + data.data;
-                    } else {
+                    } else if(data.code == 9){
+                        $(".error1").show();
+                    }else{
                         console.log(data.message);
                     }
                 }
             })
         })
+
+        $('#J_Phone_Checkcode').on('blur', function(){
+            if(!$(this).val()){
+                $(this).parents('.ui-form-item').addClass('ui-form-item-error');
+                $(this).parents('.checkcode-warp').siblings('.ui-form-explain').show()
+            }else{
+                $(this).parents('.ui-form-item').removeClass('ui-form-item-error');
+                $(this).parents('.checkcode-warp').siblings('.ui-form-explain').hide()
+            }
+        });
     })
 
 </script>

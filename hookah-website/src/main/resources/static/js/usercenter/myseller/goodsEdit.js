@@ -46,18 +46,77 @@ $(document).ready(function(){
 	});
 	$('.category-title-box').text(category);//渲染分类
 	loadData(); //加载商品属性数据
-	if ($('input[name="goodsTypes"]').val() == 0) {
-		$('.api-info-box').hide();
-		$('.file-info-box').show();
-	} else {
-		$('.file-info-box').hide();
-		$('.api-info-box').show();
-	}
+	// if ($('input[name="goodsTypes"]').val() == 0) {
+	// 	$('.api-info-box').hide();
+	// 	$('.file-info-box').show();
+	// } else {
+	// 	$('.file-info-box').hide();
+	// 	$('.api-info-box').show();
+	// }
 	getPriceBox();
 	loadRegion('province', regionParam); //加载地域
 	renderWangEdit(); // 渲染富文本
 	floorPrice();
+	var goodsTypeVal = $('#parentSelect').val();
+	selectGoodsTypes(goodsTypeVal);
 });
+function selectGoodsType(that){
+	$('.struct.selects').hide();
+	$('.childrenSelect').hide();
+	$('.file-info-box').hide();
+	var goodsTypeVal = $(that).val();
+	selectGoodsTypes(goodsTypeVal)
+}
+function childrenSelects(that){
+	$('.file-info-box').hide();
+	$('.struct.selects').hide();
+	var childVal = $(that).val();
+	if(childVal == 0){
+		$('.file-info-box').show();
+	}else if(childVal == 1){
+		$('.api-info-box').show();
+	}else if(childVal == 4){
+		$('.tool-info-box').show();
+		$('.tool-saas-info').show();
+	}else if(childVal == 5){
+		$('.tool-info-box').show();
+		$('.tool-saas-info').hide();
+	}else if(childVal == 6){
+		$('.app-info-box').show();
+		$('.app-saas-info').show();
+	}else if(childVal == 7){
+		$('.app-info-box').show();
+		$('.app-saas-info').hide();
+	}
+}
+function selectGoodsTypes(goodsTypeVal){
+	if(goodsTypeVal == 100){
+		$('#childrenSelect1').show();
+		if($('#childrenSelect1').val() == 0){
+			$('.file-info-box').show();
+		}else if($('#childrenSelect1').val() == 1){
+			$('.api-info-box').show();
+		}
+	}else if(goodsTypeVal == 300){
+		$('#childrenSelect2').show();
+		$('.app-info-box').show();
+		if($('#childrenSelect2').val() == 6){
+			$('.app-saas-info').show();
+		}else if($('#childrenSelect2').val() == 7){
+			$('.app-saas-info').hide();
+		}
+	}else if(goodsTypeVal == 400){
+		$('#childrenSelect3').show();
+		$('.tool-info-box').show();
+		if($('#childrenSelect3').val() == 4){
+			$('.tool-info-box').show();
+		}else if($('#childrenSelect3').val() == 5){
+			$('.tool-saas-info').hide();
+		}
+	}else{
+		$('.dataModel-info-box').show();
+	}
+}
 function renderWangEdit(){
 	var editor = new wangEditor('textarea1');
 	editor.config.uploadImgUrl = host.static+'/upload/wangeditor';//上传图片（举例）
@@ -178,15 +237,6 @@ function renderselect(data) {
 		$('.chosen-select').chosen(); //初始化select 多选插件
 	} else {
 		$('.attribute-container').remove();
-	}
-}
-function goodsTypeChange(that) {
-	if ($(that).val() == 0) {
-		$('.api-info-box').hide();
-		$('.file-info-box').show();
-	} else {
-		$('.file-info-box').hide();
-		$('.api-info-box').show();
 	}
 }
 var itemNum = 0;
@@ -314,8 +364,10 @@ function backAddFn(data){
 				$.confirm('<h3 style="font-weight: 800">提交成功</h3><p>继续发布商品吗?</p>', null, function (type) {
 					if (type == 'yes') {
 						window.location.href = "/usercenter/goodsPublish";
-					} else {
+                        window.event.returnValue=false;
+                    } else {
 						window.location.href = "/usercenter/goodsWait";
+                        window.event.returnValue=false;
 					}
 				});
 			} else {
@@ -346,7 +398,6 @@ function submitGoodsPublish(){
 	});
 	data.goodsImg = $('#preview-img').attr('src');
 	data.formatList = [];
-
 	$('table[d-type="priceHtml"] tbody tr').each(function () {
 		var listData = {};
 		listData.formatId = $(this).index();
@@ -355,13 +406,19 @@ function submitGoodsPublish(){
 		listData.format = $(this).find('select[name="format"]').val();
 		listData.price = ($(this).find('input[datatype="price"]').val()) * 100;
 		data.formatList.push(listData);
-
 	});
-	// alert(JSON.stringify(data.formatList));
 	data.shopNumber = data.formatList[0].number;
 	data.shopFormat = data.formatList[0].format;
 	data.shopPrice = data.formatList[0].price;
-	data.goodsType = $('input[name="goodsTypes"]:checked').val();
+	if($('select[name="parentSelect"]').val() == '100'){//------------------------
+		data.goodsType = $('select[name="childrenSelect1"]').val();
+	}else if($('select[name="parentSelect"]').val() == '200'){
+		data.goodsType = $('select[name="parentSelect"]').val()
+	}else if($('select[name="parentSelect"]').val() == '300'){
+		data.goodsType = $('select[name="childrenSelect2"]').val();
+	}else if($('select[name="parentSelect"]').val() == '400'){
+		data.goodsType = $('select[name="childrenSelect3"]').val();
+	}
 	data.goodsDesc = $('#textarea1').val();
 	data.catId = catId; //此ID为url上的id
 	data.isBook = $('input[name="isBook"]:checked').val();
@@ -375,76 +432,74 @@ function submitGoodsPublish(){
 	}else if($('select[name="country"]').val() > 0){
 		data.goodsArea = $('select[name="country"]').val();
 	}
-	if (data.goodsType == 1) {
-        data.apiInfo = {};
-        data.apiInfo.apiUrl = $('.api-info-box').find('input[name="apiUrl"]').val();
-        data.apiInfo.apiMethod = $('.api-info-box').find('input[name="apiMethod"]:checked').val();
-        data.apiInfo.reqSample = $('.api-info-box').find('input[name="reqSample"]').val();
-        data.apiInfo.apiDesc = $('.api-info-box').find('textarea[name="apiDesc"]').val();
-        data.apiInfo.reqParamList = [];
-        $('table[d-type="requestHtml"] tbody tr').each(function (i, item) {
-            var listData = {};
-            listData.fieldName = $(item).find('input[name="fieldName"]').val();
-            listData.fieldType = $(item).find('select[name="fieldType"]').val();
-            listData.isMust = $(item).find('input[name="isMust' + i + '"]:checked').val();
-            listData.fieldSample = $(item).find('input[name="fieldSample"]').val();
-            listData.fieldDefault = $(item).find('input[name="fieldDefault"]').val();
-            listData.describle = $(item).find('textarea[name="describle"]').val();
-            data.apiInfo.reqParamList.push(listData);
-        });
-        data.apiInfo.respParamList = [];
-        $('table[d-type="returnHtml"] tbody tr').each(function () {
-            var listData = {};
-            listData.fieldName = $(this).find('input[name="fieldNames"]').val();
-            listData.describle = $(this).find('textarea[name="describles"]').val();
-            data.apiInfo.respParamList.push(listData);
-        });
-        data.apiInfo.respSample = $('.api-info-box').find('textarea[name="respSample"]').val();
-
-    // }else if(){
-    }else if(data.goodsType == 200){// 数据模型
-		data.dataModel = {};
-        data.dataModel.complexity = $('.api-info-box').find('input[name="complexity"]').val();
-        data.dataModel.maturity = $('.api-info-box').find('input[name="maturity"]').val();
-        data.dataModel.aexp = $('.api-info-box').find('input[name="aexp"]').val();
-        data.dataModel.modelFile = $('.api-info-box').find('input[name="modelFile"]').val();
-        data.dataModel.configFile = $('.api-info-box').find('input[name="configFile"]').val();
-        data.dataModel.configParams = $('.api-info-box').find('input[name="configParams"]').val();
-        data.dataModel.otherDesc = $('.api-info-box').find('input[name="otherDesc"]').val();
-    }else if(data.goodsType == 5){// 分析工具 SaaS
-        data.atSaaS = {};
-        data.atSaaS.aTIndustryField = $('.api-info-box').find('input[name="aTIndustryField"]').val();
-        data.atSaaS.aTVersionDesc = $('.api-info-box').find('input[name="aTVersionDesc"]').val();
-        data.atSaaS.aTToolsIntroduce = $('.api-info-box').find('input[name="atToolsIntroduce"]').val();
-        data.atSaaS.otherDesc = $('.api-info-box').find('input[name="otherDesc"]').val();
-    }else if(data.goodsType == 4){// 分析工具 独立软件
-        data.atAloneSoftware = {};
-        data.atAloneSoftware.aTAloneIndustryField = $('.api-info-box').find('input[name="aTAloneIndustryField"]').val();
-        data.atAloneSoftware.aTAloneVersionDesc = $('.api-info-box').find('input[name="aTAloneVersionDesc"]').val();
-        data.atAloneSoftware.aTAloneToolsIntroduce = $('.api-info-box').find('input[name="aTAloneToolsIntroduce"]').val();
-        data.atAloneSoftware.aTAloneCloudHardwareResource = $('.api-info-box').find('input[name="aTAloneCloudHardwareResource"]').val();
-        data.atAloneSoftware.otherDesc = $('.api-info-box').find('input[name="otherDesc"]').val();
-    }else if(data.goodsType == 6){// 应用场景 独立软件
-        data.asAloneSoftware = {};
-        data.asAloneSoftware.aSComplexity = $('.api-info-box').find('input[name="aSComplexity"]').val();
-        data.asAloneSoftware.aSVersionDesc = $('.api-info-box').find('input[name="aSVersionDesc"]').val();
-        data.asAloneSoftware.aSServiceLevel = $('.api-info-box').find('input[name="aSServiceLevel"]').val();
-        data.asAloneSoftware.aSAexp = $('.api-info-box').find('input[name="aSAexp"]').val();
-        data.asAloneSoftware.aSAintroduce = $('.api-info-box').find('input[name="aSAintroduce"]').val();
-        data.asAloneSoftware.aSCloudHardwareResource = $('.api-info-box').find('input[name="aSCloudHardwareResource"]').val();
-        data.asAloneSoftware.otherDesc = $('.api-info-box').find('input[name="otherDesc"]').val();
-    }else if(data.goodsType == 7){// 应用场景 SaaS
-        data.asSaaS = {};
-        data.asSaaS.sSComplexity = $('.api-info-box').find('input[name="sSComplexity"]').val();
-        data.asSaaS.sSVersionDesc = $('.api-info-box').find('input[name="sSVersionDesc"]').val();
-        data.asSaaS.sServiceLevel = $('.api-info-box').find('input[name="sServiceLevel"]').val();
-        data.asSaaS.sSAexp = $('.api-info-box').find('input[name="sSAexp"]').val();
-        data.asSaaS.sSAintroduce = $('.api-info-box').find('input[name="sSAintroduce"]').val();
-        data.asSaaS.otherDesc = $('.api-info-box').find('input[name="otherDesc"]').val();
-	}else{
+	if(data.goodsType == 0){
 		data.uploadUrl = $('#J_fileUploadSS').val();
+	}else if (data.goodsType == 1) {//------------------------------
+		data.apiInfo = {};
+		data.apiInfo.apiUrl = $('.api-info-box').find('input[name="apiUrl"]').val();
+		data.apiInfo.apiMethod = $('.api-info-box').find('input[name="apiMethod"]:checked').val();
+		data.apiInfo.reqSample = $('.api-info-box').find('input[name="reqSample"]').val();
+		data.apiInfo.apiDesc = $('.api-info-box').find('textarea[name="apiDesc"]').val();
+		data.apiInfo.reqParamList = [];
+		$('table[d-type="requestHtml"] tbody tr').each(function (i, item) {
+			var listData = {};
+			listData.fieldName = $(item).find('input[name="fieldName"]').val();
+			listData.fieldType = $(item).find('select[name="fieldType"]').val();
+			listData.isMust = $(item).find('input[name="isMust' + i + '"]:checked').val();
+			listData.fieldSample = $(item).find('input[name="fieldSample"]').val();
+			listData.fieldDefault = $(item).find('input[name="fieldDefault"]').val();
+			listData.describle = $(item).find('textarea[name="describle"]').val();
+			data.apiInfo.reqParamList.push(listData);
+		});
+		data.apiInfo.respParamList = [];
+		$('table[d-type="returnHtml"] tbody tr').each(function () {
+			var listData = {};
+			listData.fieldName = $(this).find('input[name="fieldNames"]').val();
+			listData.describle = $(this).find('textarea[name="describles"]').val();
+			data.apiInfo.respParamList.push(listData);
+		});
+		data.apiInfo.respSample = $('.api-info-box').find('textarea[name="respSample"]').val();
+	}else if(data.goodsType == 200){
+		data.dataModel = {};
+		data.dataModel.complexity = $('input[name="complexity"]').val();
+		data.dataModel.maturity = $('input[name="maturity"]').val();
+		data.dataModel.aexp = $('input[name="aexp"]').val();
+		data.dataModel.modelFile = $('input[name="modelFile"]').val();
+		data.dataModel.configFile = $('input[name="configFile"]').val();
+		data.dataModel.configParams = $('input[name="configParams"]').val();
+		data.dataModel.otherDesc = $('textarea[name="otherDesc"]').val();
+	}else if(data.goodsType == 4){
+		data.atAloneSoftware = {};
+		data.atAloneSoftware.aTIndustryField = $('input[name="aTIndustryField"]').val();
+		data.atAloneSoftware.aTVersionDesc = $('input[name="aTVersionDesc"]').val();
+		data.atAloneSoftware.aTToolsIntroduce = $('input[name="aTToolsIntroduce"]').val();
+		data.atAloneSoftware.aTAloneCloudHardwareResource = $('input[name="aTAloneCloudHardwareResource"]').val();
+		data.atAloneSoftware.otherDesc = $('textarea[name="otherDesc"]').val();
+	}else if(data.goodsType == 5){
+		data.atSaaS = {};
+		data.atSaaS.aTIndustryField = $('input[name="aTIndustryField"]').val();
+		data.atSaaS.aTVersionDesc = $('input[name="aTVersionDesc"]').val();
+		data.atSaaS.aTToolsIntroduce = $('input[name="aTToolsIntroduce"]').val();
+		data.atSaaS.otherDesc = $('textarea[name="otherDesc"]').val();
+	}else if(data.goodsType == 6){
+		data.asAloneSoftware = {};
+		data.asAloneSoftware.aSComplexity = $('input[name="aSComplexity"]').val();
+		data.asAloneSoftware.aSVersionDesc = $('input[name="aSVersionDesc"]').val();
+		data.asAloneSoftware.aSServiceLevel = $('input[name="aSServiceLevel"]').val();
+		data.asAloneSoftware.aSAexp = $('input[name="aSAexp"]').val();
+		data.asAloneSoftware.aSAintroduce = $('input[name="aSAintroduce"]').val();
+		data.asAloneSoftware.aSCloudHardwareResource = $('textarea[name="aSCloudHardwareResource"]').val();
+		data.asAloneSoftware.otherDesc = $('textarea[name="otherDesc"]').val();
+	}else if(data.goodsType == 7){
+		data.asSaaS = {};
+		data.asSaaS.aSComplexity = $('input[name="aSComplexity"]').val();
+		data.asSaaS.aSVersionDesc = $('input[name="aSVersionDesc"]').val();
+		data.asSaaS.aSServiceLevel = $('input[name="aSServiceLevel"]').val();
+		data.asSaaS.aSAexp = $('input[name="aSAexp"]').val();
+		data.asSaaS.aSAintroduce = $('input[name="aSAintroduce"]').val();
+		data.asSaaS.otherDesc = $('textarea[name="otherDesc"]').val();
+
 	}
-    data.otherDesc = $('.api-info-box').find('input[name="otherDesc"]').val();
 	return data;
 }
 function isOnsaleFun(that) {
