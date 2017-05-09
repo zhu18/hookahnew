@@ -496,6 +496,7 @@ function submitGoodsPublish(){
 		data.asSaaS.aSAexp = $('input[name="aSAexp"]').val();
 		data.asSaaS.aSAintroduce = $('input[name="aSAintroduce"]').val();
 		data.asSaaS.otherDesc = $('textarea[name="otherDesc"]').val();
+
 	}
 	return data;
 }

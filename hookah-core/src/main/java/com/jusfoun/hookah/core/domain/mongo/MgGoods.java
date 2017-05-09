@@ -28,11 +28,11 @@ public class MgGoods extends GenericModel {
     private List<ImgBean> imgList;
     private ApiInfoBean apiInfo;
     private DataModelBean dataModel;
-    private ApplicationSceneBean applicationScene;
-    private AloneSoftwareBean aloneSoftware;
-    private SaaSBean saaS;
+    private ASSaaSBean asSaaS;
+    private ASAloneSoftwareBean asAloneSoftware;
+    private ATSaaSBean atSaaS;
+    private ATAloneSoftwareBean atAloneSoftware;
     private Long clickRate;
-    private String otherDesc;
 
     public List<MgCategoryAttrType.AttrTypeBean> getAttrTypeList() {
         return attrTypeList;
@@ -86,36 +86,36 @@ public class MgGoods extends GenericModel {
         this.dataModel = dataModel;
     }
 
-    public ApplicationSceneBean getApplicationScene() {
-        return applicationScene;
+    public ASSaaSBean getAsSaaS() {
+        return asSaaS;
     }
 
-    public void setApplicationScene(ApplicationSceneBean applicationScene) {
-        this.applicationScene = applicationScene;
+    public void setAsSaaS(ASSaaSBean asSaaS) {
+        this.asSaaS = asSaaS;
     }
 
-    public AloneSoftwareBean getAloneSoftware() {
-        return aloneSoftware;
+    public ASAloneSoftwareBean getAsAloneSoftware() {
+        return asAloneSoftware;
     }
 
-    public void setAloneSoftware(AloneSoftwareBean aloneSoftware) {
-        this.aloneSoftware = aloneSoftware;
+    public void setAsAloneSoftware(ASAloneSoftwareBean asAloneSoftware) {
+        this.asAloneSoftware = asAloneSoftware;
     }
 
-    public SaaSBean getSaaS() {
-        return saaS;
+    public ATSaaSBean getAtSaaS() {
+        return atSaaS;
     }
 
-    public void setSaaS(SaaSBean saaS) {
-        this.saaS = saaS;
+    public void setAtSaaS(ATSaaSBean atSaaS) {
+        this.atSaaS = atSaaS;
     }
 
-    public String getOtherDesc() {
-        return otherDesc;
+    public ATAloneSoftwareBean getAtAloneSoftware() {
+        return atAloneSoftware;
     }
 
-    public void setOtherDesc(String otherDesc) {
-        this.otherDesc = otherDesc;
+    public void setAtAloneSoftware(ATAloneSoftwareBean atAloneSoftware) {
+        this.atAloneSoftware = atAloneSoftware;
     }
 
     public void setApiInfo(ApiInfoBean apiInfo) {
@@ -345,6 +345,7 @@ public class MgGoods extends GenericModel {
         private String modelFile;   // 模型文件
         private String configFile;  // 配置文件
         private String configParams;    // 配置参数
+        private String otherDesc;
 
         public String getComplexity() {
             return complexity;
@@ -393,137 +394,231 @@ public class MgGoods extends GenericModel {
         public void setConfigParams(String configParams) {
             this.configParams = configParams;
         }
-    }
 
-    public static class ApplicationSceneBean implements Serializable {
-
-        // 应用场景
-        private String complexity;  // 复杂度
-        private String versionDesc;  // 版本说明
-        private String serviceLevel;  // 服务等级
-        private String aexp;        // 应用经验
-        private String aintroduce;  // 应用介绍
-        private String cloudHardwareResource;  // 云硬件资源
-
-        public String getComplexity() {
-            return complexity;
+        public String getOtherDesc() {
+            return otherDesc;
         }
 
-        public void setComplexity(String complexity) {
-            this.complexity = complexity;
-        }
-
-        public String getVersionDesc() {
-            return versionDesc;
-        }
-
-        public void setVersionDesc(String versionDesc) {
-            this.versionDesc = versionDesc;
-        }
-
-        public String getServiceLevel() {
-            return serviceLevel;
-        }
-
-        public void setServiceLevel(String serviceLevel) {
-            this.serviceLevel = serviceLevel;
-        }
-
-        public String getAexp() {
-            return aexp;
-        }
-
-        public void setAexp(String aexp) {
-            this.aexp = aexp;
-        }
-
-        public String getAintroduce() {
-            return aintroduce;
-        }
-
-        public void setAintroduce(String aintroduce) {
-            this.aintroduce = aintroduce;
-        }
-
-        public String getCloudHardwareResource() {
-            return cloudHardwareResource;
-        }
-
-        public void setCloudHardwareResource(String cloudHardwareResource) {
-            this.cloudHardwareResource = cloudHardwareResource;
+        public void setOtherDesc(String otherDesc) {
+            this.otherDesc = otherDesc;
         }
     }
 
-    public static class SaaSBean implements Serializable {
+    public static class ASSaaSBean implements Serializable {
 
-        // SaaS
-        private String industryField;       // 行业领域
-        private String versionDesc;       // 版本说明
-        private String toolsIntroduce;       // 工具介绍
+        // 应用场景  ApplicationScene SaaS
+        private String sSComplexity;  // 复杂度
+        private String sSVersionDesc;  // 版本说明
+        private String sServiceLevel;  // 服务等级
+        private String sSAexp;        // 应用经验
+        private String sSAintroduce;  // 应用介绍
+        private String otherDesc;
 
-        public String getIndustryField() {
-            return industryField;
+        public String getsSComplexity() {
+            return sSComplexity;
         }
 
-        public void setIndustryField(String industryField) {
-            this.industryField = industryField;
+        public void setsSComplexity(String sSComplexity) {
+            this.sSComplexity = sSComplexity;
         }
 
-        public String getVersionDesc() {
-            return versionDesc;
+        public String getsSVersionDesc() {
+            return sSVersionDesc;
         }
 
-        public void setVersionDesc(String versionDesc) {
-            this.versionDesc = versionDesc;
+        public void setsSVersionDesc(String sSVersionDesc) {
+            this.sSVersionDesc = sSVersionDesc;
         }
 
-        public String getToolsIntroduce() {
-            return toolsIntroduce;
+        public String getsServiceLevel() {
+            return sServiceLevel;
         }
 
-        public void setToolsIntroduce(String toolsIntroduce) {
-            this.toolsIntroduce = toolsIntroduce;
+        public void setsServiceLevel(String sServiceLevel) {
+            this.sServiceLevel = sServiceLevel;
+        }
+
+        public String getsSAexp() {
+            return sSAexp;
+        }
+
+        public void setsSAexp(String sSAexp) {
+            this.sSAexp = sSAexp;
+        }
+
+        public String getsSAintroduce() {
+            return sSAintroduce;
+        }
+
+        public void setsSAintroduce(String sSAintroduce) {
+            this.sSAintroduce = sSAintroduce;
+        }
+
+        public String getOtherDesc() {
+            return otherDesc;
+        }
+
+        public void setOtherDesc(String otherDesc) {
+            this.otherDesc = otherDesc;
         }
     }
 
-    public static class AloneSoftwareBean implements Serializable {
+    public static class ASAloneSoftwareBean implements Serializable {
 
-        // 独立软件
-        private String AloneIndustryField;       // 行业领域
-        private String AloneVersionDesc;       // 版本说明
-        private String AloneToolsIntroduce;       // 工具介绍
-        private String AloneCloudHardwareResource;  // 云硬件资源
+        // 应用场景  ApplicationScene  独立软件
+        private String aSComplexity;  // 复杂度
+        private String aSVersionDesc;  // 版本说明
+        private String aSServiceLevel;  // 服务等级
+        private String aSAexp;        // 应用经验
+        private String aSAintroduce;  // 应用介绍
+        private String aSCloudHardwareResource;  // 云硬件资源
+        private String otherDesc;
 
-        public String getAloneIndustryField() {
-            return AloneIndustryField;
+        public String getaSComplexity() {
+            return aSComplexity;
         }
 
-        public void setAloneIndustryField(String aloneIndustryField) {
-            AloneIndustryField = aloneIndustryField;
+        public void setaSComplexity(String aSComplexity) {
+            this.aSComplexity = aSComplexity;
         }
 
-        public String getAloneVersionDesc() {
-            return AloneVersionDesc;
+        public String getaSVersionDesc() {
+            return aSVersionDesc;
         }
 
-        public void setAloneVersionDesc(String aloneVersionDesc) {
-            AloneVersionDesc = aloneVersionDesc;
+        public void setaSVersionDesc(String aSVersionDesc) {
+            this.aSVersionDesc = aSVersionDesc;
         }
 
-        public String getAloneToolsIntroduce() {
-            return AloneToolsIntroduce;
+        public String getaSServiceLevel() {
+            return aSServiceLevel;
         }
 
-        public void setAloneToolsIntroduce(String aloneToolsIntroduce) {
-            AloneToolsIntroduce = aloneToolsIntroduce;
+        public void setaSServiceLevel(String aSServiceLevel) {
+            this.aSServiceLevel = aSServiceLevel;
         }
 
-        public String getAloneCloudHardwareResource() {
-            return AloneCloudHardwareResource;
+        public String getaSAexp() {
+            return aSAexp;
         }
 
-        public void setAloneCloudHardwareResource(String aloneCloudHardwareResource) {
-            AloneCloudHardwareResource = aloneCloudHardwareResource;
+        public void setaSAexp(String aSAexp) {
+            this.aSAexp = aSAexp;
+        }
+
+        public String getaSAintroduce() {
+            return aSAintroduce;
+        }
+
+        public void setaSAintroduce(String aSAintroduce) {
+            this.aSAintroduce = aSAintroduce;
+        }
+
+        public String getaSCloudHardwareResource() {
+            return aSCloudHardwareResource;
+        }
+
+        public void setaSCloudHardwareResource(String aSCloudHardwareResource) {
+            this.aSCloudHardwareResource = aSCloudHardwareResource;
+        }
+
+        public String getOtherDesc() {
+            return otherDesc;
+        }
+
+        public void setOtherDesc(String otherDesc) {
+            this.otherDesc = otherDesc;
+        }
+    }
+
+    public static class ATSaaSBean implements Serializable {
+
+        // 分析工具 SaaS
+        private String aTIndustryField;       // 行业领域
+        private String aTVersionDesc;       // 版本说明
+        private String aTToolsIntroduce;       // 工具介绍
+        private String otherDesc;
+
+        public String getaTIndustryField() {
+            return aTIndustryField;
+        }
+
+        public void setaTIndustryField(String aTIndustryField) {
+            this.aTIndustryField = aTIndustryField;
+        }
+
+        public String getaTVersionDesc() {
+            return aTVersionDesc;
+        }
+
+        public void setaTVersionDesc(String aTVersionDesc) {
+            this.aTVersionDesc = aTVersionDesc;
+        }
+
+        public String getaTToolsIntroduce() {
+            return aTToolsIntroduce;
+        }
+
+        public void setaTToolsIntroduce(String aTToolsIntroduce) {
+            this.aTToolsIntroduce = aTToolsIntroduce;
+        }
+
+        public String getOtherDesc() {
+            return otherDesc;
+        }
+
+        public void setOtherDesc(String otherDesc) {
+            this.otherDesc = otherDesc;
+        }
+    }
+
+    public static class ATAloneSoftwareBean implements Serializable {
+
+        // 分析工具 独立软件  AnalysisToolAloneSoftware
+        private String aTAloneIndustryField;       // 行业领域
+        private String aTAloneVersionDesc;       // 版本说明
+        private String aTAloneToolsIntroduce;       // 工具介绍
+        private String aTAloneCloudHardwareResource;  // 云硬件资源
+        private String otherDesc;
+
+        public String getaTAloneIndustryField() {
+            return aTAloneIndustryField;
+        }
+
+        public void setaTAloneIndustryField(String aTAloneIndustryField) {
+            this.aTAloneIndustryField = aTAloneIndustryField;
+        }
+
+        public String getaTAloneVersionDesc() {
+            return aTAloneVersionDesc;
+        }
+
+        public void setaTAloneVersionDesc(String aTAloneVersionDesc) {
+            this.aTAloneVersionDesc = aTAloneVersionDesc;
+        }
+
+        public String getaTAloneToolsIntroduce() {
+            return aTAloneToolsIntroduce;
+        }
+
+        public void setaTAloneToolsIntroduce(String aTAloneToolsIntroduce) {
+            this.aTAloneToolsIntroduce = aTAloneToolsIntroduce;
+        }
+
+        public String getaTAloneCloudHardwareResource() {
+            return aTAloneCloudHardwareResource;
+        }
+
+        public void setaTAloneCloudHardwareResource(String aTAloneCloudHardwareResource) {
+            this.aTAloneCloudHardwareResource = aTAloneCloudHardwareResource;
+        }
+
+        public String getOtherDesc() {
+            return otherDesc;
+        }
+
+        public void setOtherDesc(String otherDesc) {
+            this.otherDesc = otherDesc;
         }
     }
 }
