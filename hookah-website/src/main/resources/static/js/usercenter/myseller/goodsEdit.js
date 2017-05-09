@@ -457,7 +457,7 @@ function submitGoodsPublish(){
 			data.apiInfo.respParamList.push(listData);
 		});
 		data.apiInfo.respSample = $('.api-info-box').find('textarea[name="respSample"]').val();
-	}else if(data.goodsType == 200){
+	}else if(data.goodsType == 2){
 		data.dataModel = {};
 		data.dataModel.complexity = $('input[name="complexity"]').val();
 		data.dataModel.maturity = $('input[name="maturity"]').val();
