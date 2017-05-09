@@ -130,7 +130,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
 
         List<MgGoods.FormatBean> list = mgGoods.getFormatList();
         for(MgGoods.FormatBean format : list) {
-            if(format.getFormatId() == formatId) {
+            if(format.getFormatId().equals(formatId)) {
                 return format;
             }
         }
