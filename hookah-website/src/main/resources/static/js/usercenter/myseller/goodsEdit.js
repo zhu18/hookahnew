@@ -493,7 +493,7 @@ function submitGoodsPublish(){
 		data.asSaaS = {};
 		data.asSaaS.sSComplexity = $('input[name="aSComplexity"]').val();
 		data.asSaaS.sSVersionDesc = $('input[name="aSVersionDesc"]').val();
-		data.asSaaS.sSServiceLevel = $('input[name="aSServiceLevel"]').val();
+		data.asSaaS.sServiceLevel = $('input[name="aSServiceLevel"]').val();
 		data.asSaaS.sSAexp = $('input[name="aSAexp"]').val();
 		data.asSaaS.sSAintroduce = $('#aSAintroduce').val();
 		data.asSaaS.otherDesc = $('.app-info-box .otherDesc').val();
