@@ -385,7 +385,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             }catch (Exception e){
                  e.printStackTrace();
             }
-            payVo.setOrderTitle("商品商品商品商品商品商品商品商品商品商品商品商品商品商品商品");
+            payVo.setOrderTitle("数据交易");
            /* MgOrderGoods t = new MgOrderGoods();
             t.setOrderId(orderId);
             List<MgOrderGoods> list = orderGoodsService.list(t );

@@ -170,8 +170,6 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 		payVo.setTotalFee( b1.divide(b2,2,BigDecimal.ROUND_HALF_UP));
 		BigDecimal fee = payVo.getTotalFee();
 		String html = buildRequestParams(payVo);
-
-		System.out.print(html  +"            ------------------------------------------    ") ;
 		// 记账
 		if (StringUtils.isNotEmpty(html))
 			enterAccount(orderId, payVo);
