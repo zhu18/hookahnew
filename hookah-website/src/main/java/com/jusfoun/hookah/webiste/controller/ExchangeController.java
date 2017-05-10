@@ -94,6 +94,38 @@ public class ExchangeController extends BaseController{
         model.addAttribute("reCommData", goodsMap.get("recomm_data"));
         return "exchange/details";
     }
+    @RequestMapping(value = "/orderEndDetails", method = RequestMethod.GET)
+    public String orderEndDetails(@RequestParam String id, Model model) throws HookahException {
+        mgGoodsService.updateClickRate(id);//增加商品点击量记录
+        // 查询商品详情
+        GoodsVo goodsVo = goodsService.findGoodsByIdWebsite(id);
+        // 获取永和关注信息
+        try {
+            if(StringUtils.isNotBlank(getCurrentUser().getUserId())){
+                List<Condition> filters = new ArrayList();
+                filters.add(Condition.eq("goodsId", id));
+                filters.add(Condition.eq("userId", getCurrentUser().getUserId()));
+                GoodsFavorite goodsFavorite = goodsFavoriteService.selectOne(filters);
+                if(goodsFavorite != null){
+                    goodsVo.setOrNotFavorite(true);
+                }else{
+                    goodsVo.setOrNotFavorite(false);
+                }
+            }
+        } catch (HookahException e) {
+            if(!"没有登录用户信息".equals(e.getMessage())){
+                throw new HookahException("获取用户信息出错！",e);
+            }
+        }
+
+        model.addAttribute("goodsGrades",commentService.countGoodsGradesByGoodsId(id).getData());
+
+        model.addAttribute("goodsDetails", goodsVo);
+        //推荐商品
+        Map<String,GoodsShelvesVo> goodsMap = goodsShelvesService.getShevlesGoodsVoList(new HashMap<String,Object>());
+        model.addAttribute("reCommData", goodsMap.get("recomm_data"));
+        return "exchange/orderEndDetails";
+    }
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public String search(Model model) {
