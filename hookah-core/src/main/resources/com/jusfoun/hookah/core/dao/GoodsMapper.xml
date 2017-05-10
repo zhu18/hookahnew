@@ -53,6 +53,8 @@
         <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
         <result column="off_reason" property="offReason" jdbcType="VARCHAR" />
         <result column="upload_url" jdbcType="VARCHAR" property="uploadUrl" />
+        <result column="source_id" jdbcType="VARCHAR" property="sourceId" />
+        <result column="source_type" jdbcType="VARCHAR" property="sourceType" />
     </resultMap>
     <select id="getNeedEsGoods" resultMap="EsResultMap">
         SELECT
