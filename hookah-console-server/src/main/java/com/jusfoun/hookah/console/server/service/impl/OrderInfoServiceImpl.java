@@ -26,6 +26,7 @@ import com.jusfoun.hookah.rpc.api.MgOrderInfoService;
 import com.jusfoun.hookah.rpc.api.OrderInfoService;
 import org.apache.http.HttpException;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -56,6 +57,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
     @Resource
     MgOrderInfoService mgOrderInfoService;
+
+    @Resource
+    MongoTemplate mongoTemplate;
 
 
     @Resource
@@ -393,6 +397,33 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
         Pagination<OrderInfoVo> pagination = new Pagination<OrderInfoVo>();
         pagination.setTotalItems(list.getTotal());
+        pagination.setPageSize(pageSize);
+        pagination.setCurrentPage(pageNum);
+        pagination.setList(page);
+        logger.info(JsonUtils.toJson(pagination));
+        return pagination;
+    }
+
+    @Override
+    public Pagination<MgOrderGoods> getGoodsListInPage(Integer pageNum, Integer pageSize, List<Condition> filters, List<OrderBy> orderBys) {
+        PageHelper.startPage(pageNum, pageSize);
+        Page<MgOrderGoods> page = new Page<>(pageNum,pageSize);
+        Pagination<MgOrderGoods> pagination = new Pagination<MgOrderGoods>();
+
+        List<OrderInfoVo> orderList = mgOrderInfoService.selectList(filters,orderBys);
+        List<MgOrderGoods> goodsList = orderList.stream().parallel()
+                .flatMap(new Function<OrderInfoVo, Stream<MgOrderGoods>>() {
+                    @Override
+                    public Stream<MgOrderGoods> apply(OrderInfoVo t) {
+                        return t.getMgOrderGoodsList().stream();
+                    }
+                })
+                .collect(Collectors.toList());
+        pagination.setTotalItems(goodsList.size());
+        goodsList.stream().parallel()
+                .skip((pageNum-1)*pageSize)
+                .limit(pageSize)
+                .forEach(goods->page.add(goods));
         pagination.setPageSize(pageSize);
         pagination.setCurrentPage(pageNum);
         pagination.setList(page);
