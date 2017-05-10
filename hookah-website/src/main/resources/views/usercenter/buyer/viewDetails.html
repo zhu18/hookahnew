@@ -98,7 +98,10 @@ var htmlPart = {
                                 -
                             <%}%>
                             </td>
-                            <td class="operate"><a href="javascript:addCart('+${list.goodsId}+',${list.formatId},${list.goodsNumber})" class="buy btn-full-blue">再次购买</a></td>
+                            <td class="operate">
+                                <a href="javascript:addCart('+${list.goodsId}+',${list.formatId},${list.goodsNumber})" class="buy btn-full-blue display-inline-block">再次购买</a>
+                                <a target="_blank" href="${host.website}/exchange/orderEndDetails?id=${list.goodsId}" class="buy btn-full-red display-inline-block margin-top-10">数据详情</a>
+                            </td>
                         </tr>
                         <%}%>
                         </tbody>
