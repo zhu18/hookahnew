@@ -2,6 +2,13 @@
 var head = {
 %>
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/userInfo.css">
+<script type="text/javascript">
+    var pagePath = '/order/goodsList';
+    var pageType = 'get';
+    var dataParm = {};
+    dataParm.pageNumber = 1;
+    dataParm.pageSize = 6;
+</script>
 <%};%>
 
 <%
@@ -54,44 +61,19 @@ var htmlPart = {
           <p class="grid-right more"><a href="javascript:void(0)">查看更多 &gt;</a></p>
         </div>
         <div class="my-order-list clearfix">
-          <div class="order-info grid-left">
-            <div class="grid-left img-box"><img src="/static/images/list01.png" alt=""></div>
-            <div class=" grid-left detail-info">
-              <h4>银行卡类别查询</h4>
-              <p class="application-time">申请时间: <span class="app-time">2013-09-01</span></p>
-              <!--<p class="remain-count">剩余 <span class="many">100</span>次</p>-->
-              <a class="read" href="#">立即查看</a>
-            </div>
-          </div>
-          <div class="order-info grid-left">
-            <div class="grid-left img-box"><img src="/static/images/list01.png" alt=""></div>
-            <div class=" grid-left detail-info">
-              <h4>银行卡类别查询</h4>
-              <p class="application-time">申请时间: <span class="app-time">2013-09-01</span></p>
-              <!--<p class="remain-count">剩余 <span class="many">100</span>次</p>-->
-              <a class="read" href="#">立即查看</a>
-            </div>
-          </div>
-          <div class="order-info grid-left">
-            <div class="grid-left img-box"><img src="/static/images/list01.png" alt=""></div>
-            <div class=" grid-left detail-info">
-              <h4>银行卡类别查询</h4>
-              <p class="application-time">申请时间: <span class="app-time">2013-09-01</span></p>
-              <!--<p class="remain-count">剩余 <span class="many">100</span>次</p>-->
-              <a class="read" href="#">立即查看</a>
-            </div>
-          </div>
-          <div class="order-info grid-left">
-            <div class="grid-left img-box"><img src="/static/images/list01.png" alt=""></div>
-            <div class=" grid-left detail-info">
-              <h4>银行卡类别查询</h4>
-              <p class="application-time">申请时间: <span class="app-time">2013-09-01</span></p>
-              <!--<p class="remain-count">剩余 <span class="many">100</span>次</p>-->
-              <a class="read" href="#">立即查看</a>
-            </div>
-          </div>
+          <!--<div class="order-info grid-left">-->
+            <!--<div class="grid-left img-box"><img src="/static/images/list01.png" alt=""></div>-->
+            <!--<div class=" grid-left detail-info">-->
+              <!--<h4>银行卡类别查询</h4>-->
+              <!--<p class="application-time">申请时间: <span class="app-time">2013-09-01</span></p>-->
+              <!--&lt;!&ndash;<p class="remain-count">剩余 <span class="many">100</span>次</p>&ndash;&gt;-->
+              <!--<a class="read" href="#">立即查看</a>-->
+            <!--</div>-->
+          <!--</div>-->
         </div>
+        <%include("/layout/pageaction.html"){} %>
       </div>
+
     </div>
     <!--以下代码暂时不要-->
     <!--<div class="grid-right forum-hot">-->
@@ -161,4 +143,28 @@ include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
   $(".recharge").click(function(){
       window.location.href = '/usercenter/recharge';
   })
+  $(function(){
+      function loadPageData(data){
+          if(data.data.list.length > 0){
+              var list = data.data.list;
+              var html = '';
+              for(var i=0; i<list.length; i++){
+                  html += '<div class="order-info grid-left">';
+                  html += '<div class="grid-left img-box">';
+                  html += '<img src="'+list[i].goodsImg+'" alt="">';
+                  html += '</div>';
+                  html += '<div class=" grid-left detail-info">';
+                  html += '<h4>+list[i].goodsName+</h4>';
+                  html += '<p class="application-time">申请时间: <span class="app-time">2013-09-01</span></p>';
+                  html += '<a class="read" href="#">立即查看</a>';
+                  html += '</div>';
+                  html += '</div>';
+              }
+              $('.my-order-list').html(html);
+          }else{
+              $('.my-order-list').html('<tr class="noData"><td colspan="5">您暂时没有已付款的订单！</td></tr>');
+          }
+      }
+  })
+
 </script>
