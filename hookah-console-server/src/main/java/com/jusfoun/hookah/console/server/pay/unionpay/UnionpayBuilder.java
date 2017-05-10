@@ -64,7 +64,8 @@ public class UnionpayBuilder {
 		
 		contentData.put("orderId", payVo.getOrderSn());	//商户订单号，8-40位数字字母，不能含“-”或“_”，可以自行定制规则	
 		contentData.put("currencyCode", UnionpayConfig.currencyCode);	//交易币种（境内商户一般是156 人民币）
-		contentData.put("txnAmt", String.valueOf(payVo.getTotalFee().multiply(new BigDecimal(100)).longValue()));	//交易金额，单位分，不要带小数点
+		/*contentData.put("txnAmt", String.valueOf(payVo.getTotalFee().multiply(new BigDecimal(100)).longValue()));	*///交易金额，单位分，不要带小数点
+		contentData.put("txnAmt", String.valueOf(payVo.getTotalFee().longValue()));
 		contentData.put("accType", "01");	//账号类型
 		
 		String accNo1 = AcpService.encryptData(accNo, "UTF-8");	//这里测试的时候使用的是测试卡号，正式环境请使用真实卡号
