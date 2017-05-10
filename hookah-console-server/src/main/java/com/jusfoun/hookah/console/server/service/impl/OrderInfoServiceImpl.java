@@ -302,20 +302,25 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
      * 支付订单，修改支付状态为2（已支付），订单状态改为 5（完成）
      * 支付完成后，API类商品调用api平台接口，启用api调用跟踪
      * 支付完成后，api类商品保存api
-     * @param orderInfo
+     * @param orderSn
+     * @param  payStatus
      * @throws HookahException
      */
     @Transactional(readOnly=false)
     @Override
-    public void updatePayStatus(OrderInfo orderInfo) throws Exception {
-        logger.info("updatePayStatus status = {}",orderInfo.getPayStatus());
+    public void updatePayStatus(String orderSn, Integer payStatus) throws Exception {
+        logger.info("updatePayStatus status = {}",payStatus);
+        List<Condition> filters = new ArrayList<>();
+        filters.add(Condition.eq("orderSn",orderSn));
+        OrderInfo orderInfo =  super.selectOne(filters);
 
         orderInfo.setPayTime(new Date());
         orderInfo.setLastmodify(new Date());
+        orderInfo.setPayStatus(payStatus);
         super.updateByIdSelective(orderInfo);
 
         //支付成功后
-        if(OrderInfo.PAYSTATUS_PAYED == orderInfo.getPayStatus()){
+        if(OrderInfo.PAYSTATUS_PAYED == payStatus){
             managePaySuccess(orderInfo);
         }
         //        if(list!=null&&list.size()>0){

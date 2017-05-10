@@ -89,6 +89,7 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 		filters.add(Condition.eq("orderSn", orderSn));
 		OrderInfo orderinfo  = orderService.selectOne(filters);
     	//修改订单支付状态
+		orderinfo.setPayStatus(OrderInfo.PAYSTATUS_PAYED);
 		orderService.updatePayStatus(orderSn,OrderInfo.PAYSTATUS_PAYED);
         Long orderAmount = orderinfo.getOrderAmount();
         //减去余额
@@ -124,6 +125,7 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 	@Override
 	public void updatePayCore(PayCore pay) throws Exception {
 		//更新订单状态
+
 		orderService.updatePayStatus(pay.getOrderSn(), pay.getPayStatus());
 		//更新记账状态、交易号
 		mapper.updatePayStatusAndTradeNo(pay);
