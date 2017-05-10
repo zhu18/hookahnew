@@ -199,6 +199,9 @@ h1{
     cursor: pointer;
     height: 100px;
     width: 100px;
+    display:table;
+    line-height: 0px;
+    table-layout:fixed;
 }
 .multimage-wrap .image-list li .preview {
     list-style: none;

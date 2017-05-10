@@ -280,11 +280,11 @@
 }
 
 .header-bottom-bar li:hover {
-  background: #fff;
+  background: #00569e;
 }
-.header-bottom-bar ul li a:hover {
-  color: #333;
-}
+/*.header-bottom-bar ul li a:hover {*/
+  /*color: #333;*/
+/*}*/
 .header-bottom-bar ul li {
   width:16.61%;
 }
@@ -293,7 +293,7 @@
 /*}*/
 
 .header-bottom-bar li#exchange_menu.active {
-  background: #00569e;
+  background: #FFA800;
 }
 
 .header-bottom-bar li a {
