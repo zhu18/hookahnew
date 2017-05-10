@@ -28,7 +28,6 @@ import com.jusfoun.hookah.rpc.api.OrderInfoService;
 import com.jusfoun.hookah.rpc.api.PayCoreService;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.bag.SynchronizedSortedBag;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -90,8 +89,7 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 		filters.add(Condition.eq("orderSn", orderSn));
 		OrderInfo orderinfo  = orderService.selectOne(filters);
     	//修改订单支付状态
-		orderinfo.setPayStatus(2);
-		orderService.updateById(orderinfo);
+		orderService.updatePayStatus(orderSn,OrderInfo.PAYSTATUS_PAYED);
         Long orderAmount = orderinfo.getOrderAmount();
         //减去余额
 		User user =  userService.selectById(userId);

@@ -24,7 +24,7 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
 
     public OrderInfo insert(OrderInfo orderInfo, String goodsId, Integer formatId,Long goodsNumber) throws Exception;
 
-    public void updatePayStatus(String orderSn, Integer status) throws Exception;
+    public void updatePayStatus(OrderInfo orderInfo) throws Exception;
 
     public Pagination<OrderInfoVo> getDetailListInPage(Integer pageNum, Integer pageSize, List<Condition> filters,
                                                  List<OrderBy> orderBys);
@@ -43,5 +43,4 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
     void deleteBatchByLogic(String[] ids);
 
     public Map<String,Long> getOrderStatisticWithBuydate(Date startTime,Date endTime) throws HookahException;
-
 }

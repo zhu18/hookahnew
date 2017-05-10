@@ -16,6 +16,7 @@ public class OrderInfo extends GenericModel {
     public static final Integer ORDERSTATUS_CANCEL =2;
     public static final Integer ORDERSTATUS_INVALID =3;
     public static final Integer ORDERSTATUS_BACKGOODS =4;
+    public static final Integer ORDERSTATUS_COMPLETE =5;  //交易完成，备用
 
     public static final Integer PAYSTATUS_UNPAID =0;
     public static final Integer PAYSTATUS_PAYING =1;
