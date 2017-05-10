@@ -201,17 +201,4 @@ public class HttpClientUtil {
 
 		return resMap;
 	}
-
-	public static void main(String[] args) {
-		String url = "http://open.galaxybigdata.com/shop/insert/userapi";
-		Map<String,String> param = new HashMap<>();
-		param.put("username","tytyty");
-
-		try {
-			Map rs = HttpClientUtil.PostMethod(url,param);
-			System.out.println(JsonUtils.toJson(rs));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 }
