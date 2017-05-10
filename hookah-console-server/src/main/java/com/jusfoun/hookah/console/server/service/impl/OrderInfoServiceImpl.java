@@ -122,17 +122,19 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         return orderinfo;
     }
 
-    private MgOrderGoods getMgOrderGoodsByCart(CartVo cart) {
+    private MgOrderGoods getMgOrderGoodsByCart(CartVo cart,OrderInfo orderInfo) {
         MgOrderGoods og = new MgOrderGoods();
         BeanUtils.copyProperties(cart.getGoods(),og);
         og.setDiscountFee(0L);
         og.setIsReal(0);
         og.setMarketPrice(cart.getMarketPrice());
+        og.setOrderSn(orderInfo.getOrderSn());
+        og.setPayTime(orderInfo.getPayTime());
 //		og.setSendNumber(cart.getS);
         return og;
     }
 
-    private MgOrderGoods getMgOrderGoodsByGoodsFormat(GoodsVo goods, MgGoods.FormatBean format, Long goodsNumber) {
+    private MgOrderGoods getMgOrderGoodsByGoodsFormat(GoodsVo goods, MgGoods.FormatBean format, Long goodsNumber,OrderInfo orderInfo) {
         MgOrderGoods og = new MgOrderGoods();
         og.setDiscountFee(0L);
         BeanUtils.copyProperties(goods,og);
@@ -146,6 +148,8 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         og.setFormatNumber((long)format.getNumber());
         og.setIsGift(new Integer(0).shortValue());
         og.setIsReal(0);
+        og.setPayTime(orderInfo.getPayTime());
+        og.setOrderSn(orderInfo.getOrderSn());
         //og.setMarketPrice(goods.getShopPrice());
 //		og.setSendNumber(cart.getS);
         return og;
@@ -157,6 +161,8 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         order.setOrderId(id);
         order.setIsDeleted(new Byte("1"));
         updateByIdSelective(order);
+
+        mgOrderInfoService.delete(id);
     }
 
     @Override
@@ -226,7 +232,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
                 goodsAmount += cart.getFormat().getPrice()  * cart.getGoodsNumber();  //商品单价 * 套餐内数量 * 购买套餐数量
 
-                MgOrderGoods og = getMgOrderGoodsByCart(cart);
+                MgOrderGoods og = getMgOrderGoodsByCart(cart,orderInfo);
                 ordergoodsList.add(og);
             }
             orderInfo.setGoodsAmount(goodsAmount);
@@ -268,7 +274,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         if(goodsNumber!=null){
             goodsAmount += format.getPrice()  * goodsNumber;  //商品单价 * 套餐内数量 * 购买套餐数量
         }
-        MgOrderGoods og = getMgOrderGoodsByGoodsFormat(g,format,goodsNumber);
+        MgOrderGoods og = getMgOrderGoodsByGoodsFormat(g,format,goodsNumber,orderInfo);
         ordergoodsList.add(og);
         orderInfo.setGoodsAmount(goodsAmount);
         orderInfo.setOrderAmount(goodsAmount);
@@ -415,7 +421,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                 .flatMap(new Function<OrderInfoVo, Stream<MgOrderGoods>>() {
                     @Override
                     public Stream<MgOrderGoods> apply(OrderInfoVo t) {
-                        return t.getMgOrderGoodsList().stream();
+                        List<MgOrderGoods> list = t.getMgOrderGoodsList().stream().collect(Collectors.toList());
+                        list.forEach(goods->{goods.setPayTime(t.getPayTime());goods.setOrderSn(t.getOrderSn());goods.setOrderId(t.getOrderId());});
+                        return list.stream();
                     }
                 })
                 .collect(Collectors.toList());
@@ -423,7 +431,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         goodsList.stream().parallel()
                 .skip((pageNum-1)*pageSize)
                 .limit(pageSize)
-                .forEach(goods->page.add(goods));
+                .forEach(goods->{page.add(goods);});
         pagination.setPageSize(pageSize);
         pagination.setCurrentPage(pageNum);
         pagination.setList(page);
