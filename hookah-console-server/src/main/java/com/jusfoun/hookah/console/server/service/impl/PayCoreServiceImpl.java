@@ -337,13 +337,13 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 		//根据orderId查询order信息
 		//暂时屏蔽的一行
 
-		//PayVo payVo = orderService.getPayParam(orderId);
+		PayVo payVo = orderService.getPayParam(orderId);
 
-		PayVo payVo = new PayVo();
-		payVo.setOrderSn("001");
+	/*	PayVo payVo = new PayVo();
+		payVo.setOrderSn("2017042609512029576385");*/
 		payVo.setPayId(1);
-		payVo.setTotalFee(new BigDecimal("0.1"));
-		payVo.setUserId("62cb01c71c4711e796c56a3b07101c5a");
+		/*payVo.setTotalFee(new BigDecimal("0.1"));*/
+		/*payVo.setUserId("62cb01c71c4711e796c56a3b07101c5a");*/
 		payVo.setOrderTitle("商品名称");
 
 		if (null == payVo || payVo.getPayId().intValue() == 0)
@@ -362,6 +362,7 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 		}
 		//组装请求html
 		String html = UnionpayBuilder.buildOpenCard(payVo,accNo);
+		System.out.print(html);
 		// 记账
 		if (StringUtils.isNotEmpty(html)){
 			payVo.setUserId(userId);

@@ -377,14 +377,17 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
             OrderInfoVo mgOrder = mgOrderInfoService.selectById(orderInfoVo.getOrderId());
             List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
-            //未支付订单处理
-            if(order.getPayStatus()!=OrderInfo.PAYSTATUS_PAYED){
-                for(MgOrderGoods goods:goodsList){
-                    goods.setUploadUrl(null);
+            if(goodsList!=null){
+                //未支付订单处理
+                if(order.getPayStatus()!=OrderInfo.PAYSTATUS_PAYED){
+                    for(MgOrderGoods goods:goodsList){
+                        goods.setUploadUrl(null);
+                    }
                 }
+
+                orderInfoVo.setMgOrderGoodsList(goodsList);
             }
 
-            orderInfoVo.setMgOrderGoodsList(goodsList);
             page.add(orderInfoVo);
         }
 
