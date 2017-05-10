@@ -89,7 +89,7 @@
 	height: 66px;
 	width: 250px;
 	font-size: 20px;
-	box-shadow: inset 0px -5px 0 #3E557B;
+	box-shadow: inset 0px -5px 0 #0063b3;
 }
 .exchange-recommend-resource .recommend-resource-top .recommend-resource-top-left .d {
 	display: inline-block;
@@ -511,7 +511,7 @@
 	height: 66px;
 	width: 250px;
 	font-size: 20px;
-	box-shadow: inset 0px -5px 0 #3E557B;
+	box-shadow: inset 0px -5px 0 #0063b3;
 }
 .exchange-industry-resource .industry-resource-top .industry-resource-top-left .d {
 	display: inline-block;
@@ -904,7 +904,9 @@
 	width: 25%;
 	height: 33px;
 	background-color: white;
-	border-top:3px solid red;
+	border-top:3px solid #e34f4f;
+	color: #e34f4f;
+	font-weight:bold;
 }
 .exchange-index .exchange-category-down .category-item {
 	display: none;
