@@ -23,13 +23,6 @@ function loadPageData(data) { //渲染页面数据
 			html += '<div class="line"></div>';
 			html += '</div>';
 		}
-		function judge(user) {
-			if (user == "" || user == null) {
-				return "-";
-			}
-			return user;
-		}
-
 		$('.public-box').html(html);
 	}else{
 		html += '<div class="noData">暂无数据</div>';
@@ -37,14 +30,6 @@ function loadPageData(data) { //渲染页面数据
 	}
 }
 
-// function interception(text){
-//     // console.log("text:"+text);
-// 	$(text).each(function(){
-//         if(text.length>=32){
-//             $(this).html($(this).text().slice(0,32)+'...');
-//         }
-// 	})
-// }
 function judg(text){
 	if(text==null){
 		return "暂无简介"
