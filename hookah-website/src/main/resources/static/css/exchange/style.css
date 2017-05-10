@@ -902,8 +902,9 @@
 .exchange-index .exchange-category-down .category-left .category-box .active {
 	display: inline-block;
 	width: 25%;
-	height: 37px;
+	height: 33px;
 	background-color: white;
+	border-top:3px solid red;
 }
 .exchange-index .exchange-category-down .category-item {
 	display: none;
