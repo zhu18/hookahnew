@@ -1,6 +1,36 @@
 class MainController{
   constructor($scope, $rootScope, $uibModal, usSpinnerService) {
 
+    $rootScope.openComponentModal = function (message) {
+      var modalInstance = $uibModal.open({
+        animation: true,
+        template: require('../uploadModal.html'),
+        controller: function($scope, $sce, $uibModalInstance, message){
+          $scope.message = $sce.trustAsHtml(message);
+
+          $scope.ok = function () {
+            $uibModalInstance.close($scope.selected.item);
+          };
+
+          $scope.cancel = function () {
+            $uibModalInstance.dismiss('cancel');
+          };
+        },
+        // size: 'lg',
+        backdrop: 'static',
+        resolve: {
+          message: function () {
+            return message;
+          }
+        }
+      });
+      modalInstance.result.then(function () {
+        //
+      }, function () {
+        // $log.info('Modal dismissed at: ' + new Date());
+      });
+    };
+
     $rootScope.openErrorDialogModal = function (message) {
       var modalInstance = $uibModal.open({
         animation: true,

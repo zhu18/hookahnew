@@ -11,6 +11,8 @@
       <p ng-bind-html="message" class="">
       </p>
     </div>
+    <input type="file" ng-file-select="onFileSelect($files)">
+    <button ng-click="uploadImg(123477)">upload</button>
   </div>
   <div class="modal-footer">
     <button ng-click="cancel()" class="btn btn-primary" ng-class="">确定</button>
