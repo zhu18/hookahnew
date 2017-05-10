@@ -162,7 +162,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         order.setIsDeleted(new Byte("1"));
         updateByIdSelective(order);
 
-        mgOrderInfoService.delete(id);
+        mgOrderInfoService.updateByIdSelective((OrderInfoVo) order);
     }
 
     @Override
