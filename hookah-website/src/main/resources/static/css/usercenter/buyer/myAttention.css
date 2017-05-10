@@ -85,17 +85,14 @@
 }
 .order-list ul li .item-down .goods-price span {
     color: #fdb868;
-    font-size: 22px;
+    font-size: 18px;
 }
 .order-list ul li .cancel{
-    width: 70px;
+    height: 30px;
     line-height: 30px;
     text-align: center;
     background: #f9f9f9;
-    margin:0 auto;
-    /*解决火狐中文字居中兼容问题*/
-    padding-left:80px;
-    padding-right:80px;
+    display: block;
 }
 .order-list ul li .cancel:hover{
     cursor: pointer;
