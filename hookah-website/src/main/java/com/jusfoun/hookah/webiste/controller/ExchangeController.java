@@ -2,8 +2,10 @@ package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.GoodsFavorite;
+import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
 import com.jusfoun.hookah.core.domain.vo.GoodsShelvesVo;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
+import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.StringUtils;
@@ -42,6 +44,9 @@ public class ExchangeController extends BaseController{
 
     @Resource
     GoodsFavoriteService goodsFavoriteService;
+
+    @Resource
+    MgOrderInfoService mgOrderInfoService;
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(Model model) {
@@ -95,7 +100,7 @@ public class ExchangeController extends BaseController{
         return "exchange/details";
     }
     @RequestMapping(value = "/orderEndDetails", method = RequestMethod.GET)
-    public String orderEndDetails(@RequestParam String id, Model model) throws HookahException {
+    public String orderEndDetails(@RequestParam String orderSn,@RequestParam String id, Model model) throws HookahException {
         mgGoodsService.updateClickRate(id);//增加商品点击量记录
         // 查询商品详情
         GoodsVo goodsVo = goodsService.findGoodsByIdWebsite(id);
@@ -118,6 +123,14 @@ public class ExchangeController extends BaseController{
             }
         }
 
+        List<Condition> filters = new ArrayList<>(1);
+        filters.add(Condition.eq("orderSn",orderSn));
+        OrderInfoVo orderInfoVo = mgOrderInfoService.selectOne(filters);
+        MgOrderGoods orderGoods = orderInfoVo.getMgOrderGoodsList().stream()
+                                        .filter(g->g.getGoodsId().equals(id))
+                                        .findFirst().get();
+
+        model.addAttribute("orderGoods",orderGoods);
         model.addAttribute("goodsGrades",commentService.countGoodsGradesByGoodsId(id).getData());
 
         model.addAttribute("goodsDetails", goodsVo);

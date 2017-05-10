@@ -16,6 +16,7 @@ import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.generic.OrderBy;
+import com.jusfoun.hookah.core.utils.HttpClientUtil;
 import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.OrderHelper;
 import com.jusfoun.hookah.rpc.api.CartService;
@@ -213,6 +214,8 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         return goodsCount;
     }
 
+
+
     @Transactional(readOnly=false)
     @Override
     public OrderInfo insert(OrderInfo orderInfo,String[] cartIdArray) throws Exception {
@@ -288,28 +291,36 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
             mgOrderInfoService.insert(orderInfoVo);
         }
-        if(goodsAmount.compareTo(0L)==0){
-            updatePayStatus(orderInfo.getOrderSn(),2);
-        }
+//        if(goodsAmount.compareTo(0L)==0){
+//            updatePayStatus(orderInfo.getOrderSn(),2);
+//        }
 
         return orderInfo;
     }
 
+    /**
+     * 支付订单，修改支付状态为2（已支付），订单状态改为 5（完成）
+     * 支付完成后，API类商品调用api平台接口，启用api调用跟踪
+     * 支付完成后，api类商品保存api
+     * @param orderSn
+     * @param  payStatus
+     * @throws HookahException
+     */
     @Transactional(readOnly=false)
     @Override
-    public void updatePayStatus(String orderSn, Integer status) throws Exception {
-        logger.info("updatePayStatus status = {}",status);
+    public void updatePayStatus(String orderSn, Integer payStatus) throws Exception {
+        logger.info("updatePayStatus status = {}",payStatus);
         List<Condition> filters = new ArrayList<>();
         filters.add(Condition.eq("orderSn",orderSn));
         OrderInfo orderInfo =  super.selectOne(filters);
 
         orderInfo.setPayTime(new Date());
         orderInfo.setLastmodify(new Date());
-        orderInfo.setPayStatus(status);
+        orderInfo.setPayStatus(payStatus);
         super.updateByIdSelective(orderInfo);
 
         //支付成功后
-        if(2== status){
+        if(OrderInfo.PAYSTATUS_PAYED == payStatus){
             managePaySuccess(orderInfo);
         }
         //        if(list!=null&&list.size()>0){
@@ -320,8 +331,21 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
     }
 
+    /**
+     * 支付完成后，API类商品调用api平台接口，启用api调用跟踪
+     * 支付完成后，api类商品保存api
+     * @param orderInfo
+     * @throws HttpException
+     * @throws IOException
+     */
     private void managePaySuccess(OrderInfo orderInfo) throws HttpException, IOException {
         //支付成功,操作待补充
+        String url = "http://auth.hookah.app/reg/checkUsername";
+        Map<String,String> param = new HashMap<>();
+        param.put("username","tytyty");
+        Map rs = HttpClientUtil.PostMethod(url,param);
+        System.out.println(JsonUtils.toJson(rs));
+
     }
 
 
