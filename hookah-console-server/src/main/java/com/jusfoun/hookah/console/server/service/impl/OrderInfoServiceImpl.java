@@ -4,12 +4,12 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.dao.OrderInfoMapper;
-import com.jusfoun.hookah.core.domain.Cart;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.OrderInfo;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
 import com.jusfoun.hookah.core.domain.vo.CartVo;
+import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.domain.vo.PayVo;
 import com.jusfoun.hookah.core.exception.HookahException;
@@ -19,6 +19,7 @@ import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.HttpClientUtil;
 import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.OrderHelper;
+import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.CartService;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.MgOrderInfoService;
@@ -117,43 +118,28 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         return orderinfo;
     }
 
-    private MgOrderGoods getMgOrderGoodsByCart(Cart cart) {
+    private MgOrderGoods getMgOrderGoodsByCart(CartVo cart) {
         MgOrderGoods og = new MgOrderGoods();
+        BeanUtils.copyProperties(cart.getGoods(),og);
         og.setDiscountFee(0L);
-
-        og.setGoodsId(cart.getGoodsId());
-        og.setGoodsName(cart.getGoodsName());
-        og.setGoodsNumber(cart.getGoodsNumber());
-        og.setGoodsPrice(cart.getGoodsPrice());
-        og.setGoodsSn(cart.getGoodsSn());
-        og.setGoodsFormat(cart.getGoodsFormat());
-        og.setFormatNumber(cart.getFormatNumber());
-        og.setGoodsImg(cart.getGoodsImg());
-		og.setIsGift(cart.getIsGift());
         og.setIsReal(0);
         og.setMarketPrice(cart.getMarketPrice());
 //		og.setSendNumber(cart.getS);
         return og;
     }
 
-    private MgOrderGoods getMgOrderGoodsByGoodsFormat(Goods goods, MgGoods.FormatBean format,Long goodsNumber) {
+    private MgOrderGoods getMgOrderGoodsByGoodsFormat(GoodsVo goods, MgGoods.FormatBean format, Long goodsNumber) {
         MgOrderGoods og = new MgOrderGoods();
         og.setDiscountFee(0L);
+        BeanUtils.copyProperties(goods,og);
 
-        og.setGoodsId(goods.getGoodsId());
         og.setGoodsName(goods.getGoodsName());
         og.setGoodsNumber(goodsNumber);
-        og.setGoodsSn(goods.getGoodsSn());
-
-        og.setGoodsType(goods.getGoodsType());
-        og.setUploadUrl(goods.getUploadUrl());
 
         og.setGoodsPrice(format.getPrice());
-
         og.setGoodsFormat(format.getFormat());
         og.setFormatId(format.getFormatId());
         og.setFormatNumber((long)format.getNumber());
-        og.setGoodsImg(goods.getGoodsImg());
         og.setIsGift(new Integer(0).shortValue());
         og.setIsReal(0);
         //og.setMarketPrice(goods.getShopPrice());
@@ -270,7 +256,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         Long goodsAmount = new Long(0);
 
         //验证商品是否下架
-        Goods g = goodsService.selectById(goodsId);
+        GoodsVo g = goodsService.findGoodsById(goodsId);
         if(g.getIsOnsale()==null||g.getIsOnsale()!=1){
             throw new HookahException("商品["+g.getGoodsName()+"]未上架");
         }
@@ -312,7 +298,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         logger.info("updatePayStatus status = {}",payStatus);
         List<Condition> filters = new ArrayList<>();
         filters.add(Condition.eq("orderSn",orderSn));
-        OrderInfo orderInfo =  super.selectOne(filters);
+        OrderInfo orderInfo =  selectOne(filters);
 
         orderInfo.setPayTime(new Date());
         orderInfo.setLastmodify(new Date());
@@ -338,14 +324,37 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
      * @throws HttpException
      * @throws IOException
      */
-    private void managePaySuccess(OrderInfo orderInfo) throws HttpException, IOException {
-        //支付成功,操作待补充
-        String url = "http://auth.hookah.app/reg/checkUsername";
+    private void managePaySuccess(OrderInfo orderInfo) throws HttpException, IOException,HookahException {
+        OrderInfoVo orderInfoVo = findDetailById(orderInfo.getOrderId());
+        //支付成功,
+        //1、发送api平台
+        String url = "http://open.galaxybigdata.com/shop/insert/userapi";
         Map<String,String> param = new HashMap<>();
-        param.put("username","tytyty");
-        Map rs = HttpClientUtil.PostMethod(url,param);
-        System.out.println(JsonUtils.toJson(rs));
+        param.put("userId",orderInfoVo.getUserId());
 
+
+        //param.put("endTime",orderInfo.getUserId());
+
+        param.put("orderNo",orderInfo.getOrderSn());
+        orderInfoVo.getMgOrderGoodsList().stream()
+                .filter(g->{
+                    if(g.getGoodsType()==1 && !StringUtils.isNotBlank(g.getSourceId())){
+                        logger.info("指定商品id{} 的sourceId为空",g.getGoodsId());
+                    }
+                    return g.getGoodsType()==1 && StringUtils.isNotBlank(g.getSourceId());
+                })
+                .parallel()
+                .forEach(goods->{
+                    try {
+                        param.put("apiId",goods.getSourceId());
+                        param.put("goodsId",goods.getGoodsId());
+                        param.put("totalCount",new Long(goods.getGoodsNumber()*goods.getFormatNumber()).toString());
+                        Map rs = HttpClientUtil.PostMethod(url,param);
+                        logger.info("订单{}商品{}放api平台返回信息：{}", goods.getOrderId(),goods.getGoodsId(),JsonUtils.toJson(rs));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
     }
 
 

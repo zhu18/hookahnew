@@ -1,21 +1,20 @@
 package com.jusfoun.hookah.core.domain.vo;
 
 import com.jusfoun.hookah.core.domain.Cart;
-import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 
 public class CartVo extends Cart {
-    private Goods goods;
+    private GoodsVo goods;
 
     private MgGoods.FormatBean format;
 
     private Long priceChange;
 
-    public Goods getGoods() {
+    public GoodsVo getGoods() {
         return goods;
     }
 
-    public void setGoods(Goods goods) {
+    public void setGoods(GoodsVo goods) {
         this.goods = goods;
     }
 
