@@ -2,9 +2,9 @@ package com.jusfoun.hookah.console.server.service.impl;
 
 import com.jusfoun.hookah.core.dao.CartMapper;
 import com.jusfoun.hookah.core.domain.Cart;
-import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.vo.CartVo;
+import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.rpc.api.CartService;
@@ -71,12 +71,12 @@ public class CartServiceImpl extends GenericServiceImpl<Cart, String> implements
     public List<CartVo> selectDetailList(List<Condition> filters){
         List<Cart> carts = super.selectList(filters);
         List<CartVo> cartVos = new ArrayList<>(carts.size());
-        Goods goods = null;
+        GoodsVo goods = null;
         try{
             for(Cart cart:carts){
                 CartVo vo = new CartVo();
                 BeanUtils.copyProperties(cart,vo);
-                goods = goodsService.selectById(cart.getGoodsId());
+                goods = goodsService.findGoodsById(cart.getGoodsId());
                 MgGoods.FormatBean format = goodsService.getFormat(cart.getGoodsId(),cart.getFormatId());
                 vo.setGoods(goods);
                 vo.setFormat(format);

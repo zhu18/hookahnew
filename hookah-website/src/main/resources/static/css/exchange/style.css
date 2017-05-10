@@ -1379,8 +1379,10 @@ dl {
 	border: 1px solid #EFEFEF;
 }
 .goods-left .goods-details .goods-details-img .img-box img {
-	width: 200px;
-	height: 200px;
+	width: 170px;
+	height: 170px;
+	margin-top: 15px;
+	margin-left: 15px;
 }
 .goods-left .goods-details .goods-details-img .collect-box {
 }
