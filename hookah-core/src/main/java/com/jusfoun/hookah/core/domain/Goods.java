@@ -228,6 +228,10 @@ public class Goods extends GenericModel {
 
     private String uploadUrl;
 
+    private String sourceId;//api 资源id
+
+    private String sourceType;
+
     public Integer getFollowNum() {
         return followNum;
     }
@@ -887,5 +891,21 @@ public class Goods extends GenericModel {
 
     public void setUploadUrl(String uploadUrl) {
         this.uploadUrl = uploadUrl;
+    }
+
+    public String getSourceId() {
+        return sourceId;
+    }
+
+    public void setSourceId(String sourceId) {
+        this.sourceId = sourceId;
+    }
+
+    public String getSourceType() {
+        return sourceType;
+    }
+
+    public void setSourceType(String sourceType) {
+        this.sourceType = sourceType;
     }
 }
