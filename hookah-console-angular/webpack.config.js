@@ -227,6 +227,7 @@ module.exports = function makeWebpackConfig() {
           filename: name + '/index.html',
           template: './src/public/index.html',
           inject: 'body',
+          favicon: './src/style/images/favicon.ico',
           chunks: [nname, 'uibootstrap', 'vendor']
         })
       )
