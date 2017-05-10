@@ -5,7 +5,8 @@ const MODULE_NAME = 'Hookah';
 let app = angular.module(MODULE_NAME, [
   'ui.router',
   'Common',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'ngFileUpload'
 ]);
 app.config(shelfRouting);
 

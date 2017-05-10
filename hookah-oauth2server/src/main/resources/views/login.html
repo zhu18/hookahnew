@@ -10,10 +10,13 @@ var head = {
 	}
 	.content {
 		position: relative;
-		margin-top: 95px;
-		min-height: 485px;
+		/*margin-top: 95px;*/
+		min-height: 416px;
 		vertical-align: middle;
-		*padding-top: 100px
+		*padding-top: 100px;
+		background-color: #1A93B0;
+		/*background:linear-gradient(to right, #2096B2 0%, #2F9FBA 25%,#32A1BC 50%,#1F97B2 75%,#1A97B3 100%);;*/
+
 	}
 	.content #login-banner {
 		float: right;
@@ -43,13 +46,14 @@ var head = {
 		position: absolute;
 		border: 1px solid #D4D4D4;
 		padding-top: 20px;
-		right: 160px;
+		top: 25px;
+		right: 215px;
 		margin-bottom: 10px;
 		background-color: #fff;
 		min-width: 292px;
 		min-height: 320px;
 		*min-height: 340px;
-		background: rgba(255, 255, 255, 0.3);
+		/*background: rgba(255, 255, 255, 0.3);*/
 		z-index: 2
 	}
 	.content #login-module #alibaba-login-iframe {
@@ -85,8 +89,10 @@ var head = {
 <%
 var htmlPart = {
 %>
-<div class="content y-row">
-	<div style="margin-left: 100px;float: left;width:450px;height:350px; "></div>
+<div class="content">
+	<div style="margin-left: 240px;float: left;">
+		<img src="/static/img/login.png" alt="" >
+	</div>
 	<div class="login-module" id="login-module">
 		<div class="iframe-show iframe-loaded">
 			<form id="login-form" name="user" method="post" onsubmit="return check(this)"

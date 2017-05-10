@@ -28,7 +28,6 @@ import com.jusfoun.hookah.rpc.api.OrderInfoService;
 import com.jusfoun.hookah.rpc.api.PayCoreService;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.bag.SynchronizedSortedBag;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -90,8 +89,8 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 		filters.add(Condition.eq("orderSn", orderSn));
 		OrderInfo orderinfo  = orderService.selectOne(filters);
     	//修改订单支付状态
-		orderinfo.setPayStatus(2);
-		orderService.updateById(orderinfo);
+		orderinfo.setPayStatus(OrderInfo.PAYSTATUS_PAYED);
+		orderService.updatePayStatus(orderSn,OrderInfo.PAYSTATUS_PAYED);
         Long orderAmount = orderinfo.getOrderAmount();
         //减去余额
 		User user =  userService.selectById(userId);
@@ -126,6 +125,7 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 	@Override
 	public void updatePayCore(PayCore pay) throws Exception {
 		//更新订单状态
+
 		orderService.updatePayStatus(pay.getOrderSn(), pay.getPayStatus());
 		//更新记账状态、交易号
 		mapper.updatePayStatusAndTradeNo(pay);
@@ -337,13 +337,13 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 		//根据orderId查询order信息
 		//暂时屏蔽的一行
 
-		//PayVo payVo = orderService.getPayParam(orderId);
+		PayVo payVo = orderService.getPayParam(orderId);
 
-		PayVo payVo = new PayVo();
-		payVo.setOrderSn("001");
+	/*	PayVo payVo = new PayVo();
+		payVo.setOrderSn("2017042609512029576385");*/
 		payVo.setPayId(1);
-		payVo.setTotalFee(new BigDecimal("0.1"));
-		payVo.setUserId("62cb01c71c4711e796c56a3b07101c5a");
+		/*payVo.setTotalFee(new BigDecimal("0.1"));*/
+		/*payVo.setUserId("62cb01c71c4711e796c56a3b07101c5a");*/
 		payVo.setOrderTitle("商品名称");
 
 		if (null == payVo || payVo.getPayId().intValue() == 0)
@@ -362,6 +362,7 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 		}
 		//组装请求html
 		String html = UnionpayBuilder.buildOpenCard(payVo,accNo);
+		System.out.print(html);
 		// 记账
 		if (StringUtils.isNotEmpty(html)){
 			payVo.setUserId(userId);

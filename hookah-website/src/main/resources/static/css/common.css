@@ -49,10 +49,10 @@
     color: #078cfc;
 }
 .color-gray-blue{
-    color: #3E557B;
+    color: #0063b3;
 }
 .color-red{
-    color: #e34f4f;
+    color: #0667B3;
 }
 
 /* Background
@@ -427,15 +427,10 @@ ul li {
     background: #0781e8;
 }
 .btn-full-red{
-    background: #e34f4f;
+    background: #0063B1;
     color:#fff;
     border:none;
 }
-.btn-full-red:hover{
-    color:#fff;
-    background: #d64242;
-}
-
 .vertical-align-middle{
     vertical-align: middle !important;
 }
