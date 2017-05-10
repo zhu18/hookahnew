@@ -177,15 +177,13 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         Goods goods = new Goods();
         goods.setGoodsId(goodsId);
         goods.setIsOnsale(HookahConstants.GOODS_STATUS_ONSALE);
+        goods.setCheckStatus((byte)0);
         if(StringUtils.isNotBlank(dateTime)) {
             goods.setOnsaleStartDate(DateUtils.getDate(dateTime));
         }else {
             goods.setOnsaleStartDate(DateUtils.now());
         }
         int i = super.updateByIdSelective(goods);
-        if (i > 0) {
-            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_GOODS_ID, goodsId);
-        }
         return i;
     }
 
