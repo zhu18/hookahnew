@@ -7,6 +7,10 @@ h1{
     margin:10px 0;
     padding:5px;
 }
+.num {
+    height: 38px;
+    line-height: 38px;
+}
 .struct.selects{
     display: none;
 }
