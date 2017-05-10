@@ -11,7 +11,7 @@ function loadPageData(data){
             html+= '<tr class="content border-bottom">';
             html+= '<td class="text-align-center">'+list[i].orderSn+'</td>';
             html+= '<td class="text-align-right moneyTotal">￥&nbsp;'+(list[i].orderAmount/100).toFixed(2)+'</td>';
-            html+= '<td>'+format(list[i].addTime)+'</td>';
+            html+= '<td>'+list[i].addTime+'</td>';
             html+= '<td>未付款</td>';
             html+= '<td class="text-align-center">';
             html+= '<a href="" class="display-inline-block goPay btn btn-full-orange">去支付</a>';
