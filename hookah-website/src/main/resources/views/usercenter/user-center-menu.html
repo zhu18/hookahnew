@@ -33,7 +33,7 @@
     </ul>
     <ul>
         <li class="text-align-center"><span class="fa fa-caret-down"></span><span class="fa fa-caret-up" style="display: none;"></span>卖家中心 <span class=""></span></li>
-        <li class="text-align-center"><a href="/usercenter/goodsManage"><span class="fa fa-cart-plus"></span>商品管理</a></li>
+        <li class="text-align-center goods"><a href="/usercenter/goodsManage"><span class="fa fa-cart-plus"></span>商品管理</a></li>
         <li class="text-align-center"><a href="/usercenter/trade"><span class="fa fa-indent"></span>交易管理</a></li>
         <!--<li class="text-align-center"><a href="javascript:void(0);"><span class="fa fa-outdent"></span>店铺管理</a></li>-->
         <!--<li class="text-align-center"><a href="/usercenter/custom"><span class="fa fa-volume-control-phone"></span>客服管理</a></li>-->
@@ -55,5 +55,10 @@
             $('.u2 li:nth-child(2)').addClass('active').siblings().removeClass("active");
             $('.u2 li:nth-child(2)').children('a').css("color","#247DE8");
         }
+        if(url.indexOf("goods")>=0){
+            $(".goods").addClass('active').siblings().removeClass("active");
+            $(".goods").children('a').css("color","#247DE8");
+        }
     })
 </script>
+

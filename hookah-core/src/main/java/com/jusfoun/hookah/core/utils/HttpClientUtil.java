@@ -1,12 +1,5 @@
 package com.jusfoun.hookah.core.utils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
@@ -15,9 +8,16 @@ import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.*;
 import org.apache.http.client.params.ClientPNames;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class HttpClientUtil {
-	public Map<String, String> getUrl(String url, String username, String password) {
+	public static Map<String, String> getUrl(String url, String username, String password) {
 		MultiThreadedHttpConnectionManager connectionManager = new MultiThreadedHttpConnectionManager();
 		HttpClient client = new HttpClient(connectionManager);
 
@@ -111,7 +111,7 @@ public class HttpClientUtil {
 	 * @return
 	 * @return: Map<String,String>
 	 */
-	public Map<String, String> GetMethod(String url) {
+	public static Map<String, String> GetMethod(String url) {
 		MultiThreadedHttpConnectionManager connectionManager = new MultiThreadedHttpConnectionManager();
 		HttpClient client = new HttpClient(connectionManager);
 
@@ -150,13 +150,13 @@ public class HttpClientUtil {
      * @Title: PostMethod 
      * @Description: 普通的提交json的post请求
      * @param url  请求的url
-     * @param transJson   post提交的json 字符串
+     * @param data   post提交的json 字符串
      * @return
      * @throws HttpException
      * @throws IOException
      * @return: Map<String,String>
      */
-	public  Map<String, String> PostMethod(String url, Map<String,String> data) throws HttpException, IOException {
+	public static  Map<String, String> PostMethod(String url, Map<String,String> data) throws HttpException, IOException {
 		MultiThreadedHttpConnectionManager connectionManager = new MultiThreadedHttpConnectionManager();
 		HttpClient client = new HttpClient(connectionManager);
 		Map<String, String> resMap = new HashMap<String, String>();
@@ -200,5 +200,18 @@ public class HttpClientUtil {
 		}
 
 		return resMap;
+	}
+
+	public static void main(String[] args) {
+		String url = "http://open.galaxybigdata.com/shop/insert/userapi";
+		Map<String,String> param = new HashMap<>();
+		param.put("username","tytyty");
+
+		try {
+			Map rs = HttpClientUtil.PostMethod(url,param);
+			System.out.println(JsonUtils.toJson(rs));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
