@@ -324,37 +324,42 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
      * @throws HttpException
      * @throws IOException
      */
-    private void managePaySuccess(OrderInfo orderInfo) throws HttpException, IOException,HookahException {
-        OrderInfoVo orderInfoVo = findDetailById(orderInfo.getOrderId());
-        //支付成功,
-        //1、发送api平台
-        String url = "http://open.galaxybigdata.com/shop/insert/userapi";
-        Map<String,String> param = new HashMap<>();
-        param.put("userId",orderInfoVo.getUserId());
+    private void managePaySuccess(OrderInfo orderInfo)  {
+        try {
+            OrderInfoVo orderInfoVo = findDetailById(orderInfo.getOrderId());
+            //支付成功,
+            //1、发送api平台
+            String url = "http://open.galaxybigdata.com/shop/insert/userapi";
+            Map<String, String> param = new HashMap<>();
+            param.put("userId", orderInfoVo.getUserId());
 
 
-        //param.put("endTime",orderInfo.getUserId());
+            //param.put("endTime",orderInfo.getUserId());
 
-        param.put("orderNo",orderInfo.getOrderSn());
-        orderInfoVo.getMgOrderGoodsList().stream()
-                .filter(g->{
-                    if(g.getGoodsType()==1 && !StringUtils.isNotBlank(g.getSourceId())){
-                        logger.info("指定商品id{} 的sourceId为空",g.getGoodsId());
-                    }
-                    return g.getGoodsType()==1 && StringUtils.isNotBlank(g.getSourceId());
-                })
-                .parallel()
-                .forEach(goods->{
-                    try {
-                        param.put("apiId",goods.getSourceId());
-                        param.put("goodsId",goods.getGoodsId());
-                        param.put("totalCount",new Long(goods.getGoodsNumber()*goods.getFormatNumber()).toString());
-                        Map rs = HttpClientUtil.PostMethod(url,param);
-                        logger.info("订单{}商品{}放api平台返回信息：{}", goods.getOrderId(),goods.getGoodsId(),JsonUtils.toJson(rs));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
+            param.put("orderNo", orderInfo.getOrderSn());
+            orderInfoVo.getMgOrderGoodsList().stream()
+                    .filter(g -> {
+                        if (g.getGoodsType() == 1 && !StringUtils.isNotBlank(g.getSourceId())) {
+                            logger.info("指定商品id{} 的sourceId为空", g.getGoodsId());
+                        }
+                        return g.getGoodsType() == 1 && StringUtils.isNotBlank(g.getSourceId());
+                    })
+                    .parallel()
+                    .forEach(goods -> {
+                        try {
+                            param.put("apiId", goods.getSourceId());
+                            param.put("goodsId", goods.getGoodsId());
+                            param.put("totalCount", new Long(goods.getGoodsNumber() * goods.getFormatNumber()).toString());
+                            Map rs = HttpClientUtil.PostMethod(url, param);
+                            logger.info("订单{}商品{}放api平台返回信息：{}", goods.getOrderId(), goods.getGoodsId(), JsonUtils.toJson(rs));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.error("发送商品到api平台发生异常");
+        }
     }
 
 
