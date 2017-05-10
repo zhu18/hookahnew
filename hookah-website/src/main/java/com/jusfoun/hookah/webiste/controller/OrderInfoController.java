@@ -197,7 +197,7 @@ public class OrderInfoController extends BaseController {
         }
     }
 
-    @RequestMapping(value="order/goodsList",method = RequestMethod.POST)
+    @RequestMapping(value="order/goodsList",method = RequestMethod.GET)
     @ResponseBody
     public ReturnData getOrderGooodsList(Integer pageNumber, Integer pageSize, Integer payStatus, Integer commentFlag, String startDate, String endDate, String domainName){
         Map map = new HashMap<>(3);
