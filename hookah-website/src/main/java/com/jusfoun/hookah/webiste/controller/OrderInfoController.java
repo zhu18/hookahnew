@@ -7,11 +7,15 @@ import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
 import com.jusfoun.hookah.core.domain.vo.CartVo;
+import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
-import com.jusfoun.hookah.core.utils.*;
+import com.jusfoun.hookah.core.utils.DateUtils;
+import com.jusfoun.hookah.core.utils.JsonUtils;
+import com.jusfoun.hookah.core.utils.OrderHelper;
+import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.CartService;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.OrderInfoService;
@@ -88,7 +92,7 @@ public class OrderInfoController extends BaseController {
             Long goodsAmount = new Long(0);
 
             //验证商品是否下架
-            Goods g = goodsService.selectById(goodsId);
+            GoodsVo g = goodsService.findGoodsById(goodsId);
             if (g.getIsOnsale() == null || !g.getIsOnsale().equals((byte)1)) {
                 throw new HookahException("商品[" + g.getGoodsName() + "]未上架");
             }

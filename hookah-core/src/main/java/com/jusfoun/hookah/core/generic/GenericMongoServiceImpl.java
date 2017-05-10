@@ -154,7 +154,6 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
     public Model selectById(ID id) {
         Type type = getClass().getGenericSuperclass();
         Type trueType = ((ParameterizedType) type).getActualTypeArguments()[0];
-
         return (Model) mongoTemplate.findById(id,(Class) trueType);
     }
 

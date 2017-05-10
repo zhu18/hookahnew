@@ -91,16 +91,16 @@ var htmlPart = {
                             <td class="price">¥${trunc(list.goodsPrice / 100 , 2)}</td>
                             <td class="num">${list.goodsNumber}</td>
                             <td class="num">${decode(list.goodsType,0,'常规商品',1,'api商品','-')}</td>
-                            <td class="num">
-                            <%if(isNotEmpty(list.uploadUrl)){%>
-                                <a target="_blank" href="http://static.hookah.app/upload/download?filePath=${list.uploadUrl}">下载数据</a>
-                            <%}else{%>
-                                -
-                            <%}%>
-                            </td>
+                            <!--<td class="num">-->
+                            <!--<%if(isNotEmpty(list.uploadUrl)){%>-->
+                                <!--<a target="_blank" href="http://static.hookah.app/upload/download?filePath=${list.uploadUrl}">下载数据</a>-->
+                            <!--<%}else{%>-->
+                                <!-- - -->
+                            <!--<%}%>-->
+                            <!--</td>-->
                             <td class="operate">
-                                <a href="javascript:addCart('+${list.goodsId}+',${list.formatId},${list.goodsNumber})" class="buy btn-full-blue display-inline-block">再次购买</a>
-                                <a target="_blank" href="${host.website}/exchange/orderEndDetails?id=${list.goodsId}" class="buy btn-full-red display-inline-block margin-top-10">数据详情</a>
+                                <a href="${host.website}/exchange/details?id=${list.goodsId}" class="buy btn-full-blue display-inline-block">再次购买</a>
+                                <a target="_blank" href="${host.website}/exchange/orderEndDetails?id=${list.goodsId}&orderSn=${order.orderSn}" class="buy btn-full-red display-inline-block margin-top-10">数据详情</a>
                             </td>
                         </tr>
                         <%}%>
