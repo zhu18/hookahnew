@@ -69,20 +69,20 @@ var htmlPart = {
                                     <td class="bar">商品类型：<span class="requireds">*</span></td>
                                     <td>
                                         <!--<div class="radio-box">-->
-                                            <!--<label>-->
-                                                <!--<input type="radio" name="goodsTypes" onchange="goodsTypeChange(this)" value="0"-->
-                                                       <!--checked="">常规商品-->
-                                            <!--</label>-->
-                                            <!--<label>-->
-                                                <!--<input type="radio" name="goodsTypes" onchange="goodsTypeChange(this)" value="1">api-->
-                                            <!--</label>-->
+                                        <!--<label>-->
+                                        <!--<input type="radio" name="goodsTypes" onchange="goodsTypeChange(this)" value="0"-->
+                                        <!--checked="">常规商品-->
+                                        <!--</label>-->
+                                        <!--<label>-->
+                                        <!--<input type="radio" name="goodsTypes" onchange="goodsTypeChange(this)" value="1">api-->
+                                        <!--</label>-->
                                         <!--</div>-->
                                         <div class="select-box">
                                             <select name="parentSelect" class="parentSelect" onchange="selectGoodsType(this)" id="parentSelect">
                                                 <option value="100">数据源</option>
-                                                <!--<option value="200">数据模型</option>-->
-                                                <!--<option value="300">应用场景</option>-->
-                                                <!--<option value="400">分析工具</option>-->
+                                                <option value="2">数据模型</option>
+                                                <option value="300">应用场景</option>
+                                                <option value="400">分析工具</option>
                                             </select>
                                             <select name="childrenSelect1" class="childrenSelect" onchange="childrenSelects(this)" id="childrenSelect1">
                                                 <option value="0">离线数据</option>
@@ -244,7 +244,7 @@ var htmlPart = {
                                     <td class="bar">接口描述：</td>
                                     <td>
                                         <div class="textarea-box">
-                                            <textarea type="text" name="apiDesc"></textarea>
+                                            <textarea type="text" id="apiDesc"></textarea>
                                             <span class="input-count"></span>
                                         </div>
                                     </td>
@@ -296,7 +296,7 @@ var htmlPart = {
                                                         <div class="inputbox"><input type="text" name="fieldSample" placeholder="请输入示例"></div>
                                                     </td>
                                                     <td>
-                                                        <div class="inputbox"><textarea name="describle" placeholder="请输入描述"></textarea></div>
+                                                        <div class="inputbox"><textarea id="describle" placeholder="请输入描述"></textarea></div>
                                                     </td>
                                                     <td>
                                                         <span class="table-plus-btn itemNum" onclick="tablePlus(this)">+</span>
@@ -311,7 +311,7 @@ var htmlPart = {
                                     <td class="bar">返回示例：</td>
                                     <td>
                                         <div class="textarea-box">
-                                            <textarea type="text" name="respSample"></textarea>
+                                            <textarea type="text" id="respSample"></textarea>
                                             <span class="input-count"></span>
                                         </div>
                                     </td>
@@ -331,11 +331,11 @@ var htmlPart = {
                                                 <tbody>
                                                 <tr class="parent-tr">
                                                     <td class="errorNum-input">
-                                                        <div class="inputbox"><input type="text" name="fieldName2" placeholder="请输入错误码" required="required"></div>
+                                                        <div class="inputbox"><input type="text" name="fieldNames" placeholder="请输入错误码" required="required"></div>
                                                     </td>
                                                     <td>
-                                                        <div class="inputbox"><textarea name="describle2"
-                                                                                        placeholder="请输入说明" required="required"></textarea></div>
+                                                        <div class="inputbox"><textarea id="describle2"
+                                                                                        placeholder="请输入说明" name="describles" required="required"></textarea></div>
                                                     </td>
                                                     <td>
                                                         <span class="table-plus-btn" onclick="tablePlus(this)">+</span>
@@ -437,7 +437,7 @@ var htmlPart = {
                                             <tr>
                                                 <td>
                                                     <div class="textarea-box">
-                                                        <textarea name="otherDesc" cols="30" rows="10"></textarea>
+                                                        <textarea class="otherDesc" cols="30" rows="10"></textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -499,7 +499,7 @@ var htmlPart = {
                                             <tr>
                                                 <td colspan="1000">
                                                     <div class="textarea-box">
-                                                        <textarea name="aSAintroduce"></textarea>
+                                                        <textarea id="aSAintroduce"></textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -518,7 +518,7 @@ var htmlPart = {
                                             <tr>
                                                 <td>
                                                     <div class="textarea-box">
-                                                        <textarea name="aSCloudHardwareResource"></textarea>
+                                                        <textarea id="aSCloudHardwareResource"></textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -537,7 +537,7 @@ var htmlPart = {
                                             <tr>
                                                 <td>
                                                     <div class="textarea-box">
-                                                        <textarea name="otherDesc"></textarea>
+                                                        <textarea class="otherDesc"></textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -581,7 +581,7 @@ var htmlPart = {
                                             <tr>
                                                 <td colspan="1000">
                                                     <div class="textarea-box">
-                                                        <textarea name="aTToolsIntroduce"></textarea>
+                                                        <textarea id="aTToolsIntroduce"></textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -600,7 +600,7 @@ var htmlPart = {
                                             <tr>
                                                 <td>
                                                     <div class="textarea-box">
-                                                        <textarea name="aTAloneCloudHardwareResource"></textarea>
+                                                        <textarea id="aTAloneCloudHardwareResource"></textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -619,7 +619,7 @@ var htmlPart = {
                                             <tr>
                                                 <td>
                                                     <div class="textarea-box">
-                                                        <textarea name="otherDesc"></textarea>
+                                                        <textarea class="otherDesc"></textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -665,25 +665,25 @@ var htmlPart = {
                         <div class="struct">
                             <table>
                                 <tbody>
-                                    <tr>
-                                        <td class="bar">库存计数：</td>
-                                        <td>
-                                            <div class="radio-box">
-                                                <label><input type="radio" name="121">买家拍下减库存</label>
-                                                <label><input type="radio" name="121" checked="">买家付款减库存</label>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="bar">上架时间：</td>
-                                        <td>
-                                            <div class="radio-box">
-                                                <label><input type="radio" name="isBook" value="0" checked="" onchange="isOnsaleFun(this)">立刻上架</label>
-                                                <label><input type="radio" name="isBook" value="1" onchange="isOnsaleFun(this)">定时上架</label>
-                                                <label class="isOnsale-box">请选择上架时间：<input id="indate" type="text" placeholder="请选择" readonly=""></label>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td class="bar">库存计数：</td>
+                                    <td>
+                                        <div class="radio-box">
+                                            <label><input type="radio" name="121">买家拍下减库存</label>
+                                            <label><input type="radio" name="121" checked="">买家付款减库存</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar">上架时间：</td>
+                                    <td>
+                                        <div class="radio-box">
+                                            <label><input type="radio" name="isBook" value="0" checked="" onchange="isOnsaleFun(this)">立刻上架</label>
+                                            <label><input type="radio" name="isBook" value="1" onchange="isOnsaleFun(this)">定时上架</label>
+                                            <label class="isOnsale-box">请选择上架时间：<input id="indate" type="text" placeholder="请选择" readonly=""></label>
+                                        </div>
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
