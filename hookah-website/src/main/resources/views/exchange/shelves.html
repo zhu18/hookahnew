@@ -37,30 +37,8 @@ var htmlPart = {
 
                 </div>
                 <!--中间主体列表展示模块-->
-                <div class="search-order">
-                    <div class="order" >
-                        <ul>
-                            <li><a id="sort" href="javascript:;" class="active" type="">综合排序<span class="arrow-box"><i class="iconfont arrow">&#xe65e;</i></span></a></li>
-                            <li><a id="onSaleDate" href="javascript:;" type="onSaleDate">上架时间 <span class="arrow-box"><i class="iconfont arrow">&#xe65e;</i></span></a></li>
-                            <li><a id="orders" href="javascript:;" type="orders">下载量<span class="arrow-box"><i class="iconfont arrow">&#xe65e;</i></span></a></li>
-                            <li><a id="commentRank" href="javascript:;" type="commentRank">评分<span class="arrow-box"><i class="iconfont arrow">&#xe65e;</i></span></a></li>
-                            <li>
-                                <a id="shopPrice" href="javascript:;" type="shopPrice">价格:</a>
-                                <div class="priceBox">
-                                    <input type="text" id="priceFrom" onkeyup="this.value=this.value.replace(/[^\d.]/g,'') " onafterpaste="this.value=this.value.replace(/[^\d]/g,'') " class="startPrice" placeholder="￥  请输入" />
-                                    <em></em>
-                                    <input type="text" id="priceTo" onkeyup="this.value=this.value.replace(/[^\d.]/g,'') " onafterpaste="this.value=this.value.replace(/[^\d]/g,'') " class="endPrice" placeholder="￥  请输入" />
-                                    <span class="empty d" >清空</span>
-                                    <span class="ensure btn-full-blue">确定</span>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="order-list">
-                        <ul></ul>
-                    </div>
-                    <%include("/layout/pageaction.html"){} %>
-                </div>
+                <%include("/exchange/search-conditions.html"){} %>
+                <%include("/layout/pageaction.html"){} %>
             </div>
         </div>
     </div>
