@@ -455,6 +455,7 @@ function submitGoodsPublish(){
 		$('table[d-type="returnHtml"] tbody tr').each(function () {
 			var listData = {};
 			listData.fieldName = $(this).find('input[name="fieldNames"]').val();
+			listData.fieldType = $(this).find('select[name="fieldType"]').val();
 			listData.describle = $(this).find('textarea[name="describles"]').val();
 			data.apiInfo.respParamList.push(listData);
 		});
@@ -510,7 +511,7 @@ function isOnsaleFun(that) {
 	}
 }
 $.jeDate("#indate", {
-	format: "YYYY-MM-DD hh:mm:ss",
+	format: "YYYY-MM-DD HH:mm:ss",
 	isTime: true,
 	minDate: $.nowDate(0)
 });

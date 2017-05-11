@@ -324,6 +324,7 @@ var htmlPart = {
                                                 <thead>
                                                 <tr>
                                                     <th>错误码</th>
+                                                    <th>类型</th>
                                                     <th>说明</th>
                                                     <th>操作</th>
                                                 </tr>
@@ -331,10 +332,18 @@ var htmlPart = {
                                                 <tbody>
                                                 <tr class="parent-tr">
                                                     <td class="errorNum-input">
-                                                        <div class="inputbox"><input type="text" name="fieldName2" placeholder="请输入错误码" required="required"></div>
+                                                        <div class="inputbox"><input type="text" name="fieldName" placeholder="请输入错误码" required="required"></div>
+                                                    </td>
+                                                    <td class="errorNum-input">
+                                                        <div class="selectbox">
+                                                            <select name="fieldType">
+                                                                <option value="String">String</option>
+                                                                <option value="int">int</option>
+                                                            </select>
+                                                        </div>
                                                     </td>
                                                     <td>
-                                                        <div class="inputbox"><textarea name="describle2"
+                                                        <div class="inputbox"><textarea name="describle"
                                                                                         placeholder="请输入说明" required="required"></textarea></div>
                                                     </td>
                                                     <td>

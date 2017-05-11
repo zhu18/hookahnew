@@ -179,7 +179,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         goods.setIsOnsale(HookahConstants.GOODS_STATUS_ONSALE);
         goods.setCheckStatus((byte)0);
         if(StringUtils.isNotBlank(dateTime)) {
-            goods.setOnsaleStartDate(DateUtils.getDate(dateTime));
+            goods.setOnsaleStartDate(DateUtils.getDate(dateTime, DateUtils.DEFAULT_DATE_TIME_FORMAT));
         }else {
             goods.setOnsaleStartDate(DateUtils.now());
         }
@@ -340,6 +340,11 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             goodsVo.setImgList(mgGoods.getImgList());
             goodsVo.setAttrTypeList(mgGoods.getAttrTypeList());
             goodsVo.setApiInfo(mgGoods.getApiInfo());
+            goodsVo.setAsAloneSoftware(mgGoods.getAsAloneSoftware());
+            goodsVo.setAsSaaS(mgGoods.getAsSaaS());
+            goodsVo.setAtAloneSoftware(mgGoods.getAtAloneSoftware());
+            goodsVo.setAtSaaS(mgGoods.getAtSaaS());
+            goodsVo.setDataModel(mgGoods.getDataModel());
             goodsVo.setClickRate(mgGoods.getClickRate());
         }
         goodsVo.setCatName(DictionaryUtil.getCategoryById(goodsVo.getCatId()) == null

@@ -48,8 +48,7 @@ var htmlPart = {
                         <div class="order">
                             <ul>
                                 <li>提交订单</li>
-                                <li>${order.addTime,dateFormat="yyyy-MM-dd"}</li>
-                                <li>${order.addTime,dateFormat="hh:mm:ss"}</li>
+                                <li>${order.addTime,"YYYY-MM-dd HH:mm:ss"}</li>
                             </ul>
                         </div>
                         <div class="pay">付款成功</div>
@@ -110,7 +109,7 @@ var htmlPart = {
                 <div class="goods-info clearfix text-align-center margin-top-15">
                     <ul class="grid-right margin-right-20">
                         <li>付款方式:<span>${order.payName}</span></li>
-                        <li>付款时间：<span>${order.payTime,dateFormat="yyyy-MM-dd"}&nbsp;&nbsp;</span></li>
+                        <li>付款时间：<span>${order.payTime,"YYYY-MM-dd HH:mm:ss"}</span></li>
                         <li>商品总额: <span>¥${trunc(order.goodsAmount / 100 , 2)}</span></li>
                         <li>应付总额: <span>¥${trunc(order.orderAmount / 100 , 2)}</span></li>
                     </ul>
