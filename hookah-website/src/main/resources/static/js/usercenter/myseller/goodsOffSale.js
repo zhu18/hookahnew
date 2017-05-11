@@ -121,7 +121,8 @@ function onsale(id,dateTime) {
 				url: host.website + '/goods/back/onsale',
 				type: 'post',
 				data: {
-					goodsId: id
+					goodsId: id,
+					dateTime:dateTime
 				},
 				success: function (data) {
 					if (data.code == 1) {
