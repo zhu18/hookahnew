@@ -2,6 +2,7 @@ package com.jusfoun.hookah.rpc.api;
 
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.GoodsShelves;
+import com.jusfoun.hookah.core.domain.vo.GoodsCritVo;
 import com.jusfoun.hookah.core.domain.vo.GoodsShelvesVo;
 import com.jusfoun.hookah.core.domain.vo.OptionalShelves;
 import com.jusfoun.hookah.core.generic.GenericService;
@@ -45,9 +46,8 @@ public interface GoodsShelvesService extends GenericService<GoodsShelves,String>
     /**
      * 根据货架Id查询关联的所有商品
      * @param shevlesGoodsVoId
-     * @param pageNumber
-     * @param pageSize
+     * @param goodsCritVo
      * @return
      */
-    ReturnData findGoodsByShevlesId(String shevlesGoodsVoId, String pageNumber, String pageSize);
+    ReturnData findGoodsByShevlesId(String shevlesGoodsVoId, GoodsCritVo goodsCritVo);
 }

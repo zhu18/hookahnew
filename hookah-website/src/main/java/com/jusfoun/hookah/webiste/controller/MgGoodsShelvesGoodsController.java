@@ -1,6 +1,8 @@
 package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.domain.mongo.MgShelvesGoods;
+import com.jusfoun.hookah.core.domain.vo.EsGoodsVo;
+import com.jusfoun.hookah.core.domain.vo.GoodsCritVo;
 import com.jusfoun.hookah.core.domain.vo.GoodsShelvesVo;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.GoodsShelvesService;
@@ -9,6 +11,7 @@ import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -73,8 +76,8 @@ public class MgGoodsShelvesGoodsController {
 
     @RequestMapping("/findById")
     @ResponseBody
-    public  ReturnData findByShevlesGoodsVoId(String id,String pageNumber,String pageSize){
-        return  goodsShelvesService.findGoodsByShevlesId(id,pageNumber,pageSize);
+    public  ReturnData findByShevlesGoodsVoId(String id, @RequestBody(required = false) GoodsCritVo goodsCritVo ){
+        return  goodsShelvesService.findGoodsByShevlesId(id,goodsCritVo);
     }
 
     @RequestMapping("/shelveGoodsList")
