@@ -335,9 +335,13 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         orderInfo.setLastmodify(new Date());
         orderInfo.setPayStatus(payStatus);
         super.updateByIdSelective(orderInfo);
-        OrderInfoVo orderInfoVo = new OrderInfoVo();
-        BeanUtils.copyProperties(orderInfo,orderInfoVo);
-        mgOrderInfoService.updateByIdSelective(orderInfoVo);
+        OrderInfoVo orderInfoVo = mgOrderInfoService.selectById(orderInfo.getOrderId());
+        mgOrderInfoService.delete(orderInfo.getOrderId());
+
+        orderInfoVo.setPayTime(new Date());
+        orderInfoVo.setLastmodify(new Date());
+        orderInfoVo.setPayStatus(payStatus);
+        mgOrderInfoService.insert(orderInfoVo);
 
         //支付成功后
         if(OrderInfo.PAYSTATUS_PAYED == payStatus){
