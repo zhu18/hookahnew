@@ -21,14 +21,16 @@ public class MgGoodsServiceImpl extends GenericMongoServiceImpl<MgGoods, String>
     public void updateClickRate(String goodsId) {
         //查询mongo数据
         MgGoods mgGoods = super.selectById(goodsId);
-        //+1操作
-        if(mgGoods.getClickRate() == null) {
-            mgGoods.setClickRate((long)1);
-        }else {
-            mgGoods.setClickRate(mgGoods.getClickRate() + 1);
+        if(mgGoods != null) {
+            //+1操作
+            if(mgGoods.getClickRate() == null) {
+                mgGoods.setClickRate((long)1);
+            }else {
+                mgGoods.setClickRate(mgGoods.getClickRate() + 1);
+            }
+            mongoTemplate.updateFirst(new Query(Criteria.where("_id").is(goodsId)),
+                    new Update().set("clickRate", mgGoods.getClickRate()), MgGoods.class);
         }
-        mongoTemplate.updateFirst(new Query(Criteria.where("_id").is(goodsId)),
-                new Update().set("clickRate", mgGoods.getClickRate()), MgGoods.class);
     }
 
 }
