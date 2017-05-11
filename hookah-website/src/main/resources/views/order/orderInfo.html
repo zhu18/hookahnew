@@ -11,9 +11,9 @@ var htmlPart = {
 		<div class="order-info" style=" background-color: white;">
 			<div class="order-info-top">
 				<div class="order-logo display-inline-block grid-left">
-					<a class="display-inline-block" href="javascript:void(0)">
-						<img class="display-inline-block" src="/static/images/logo.png" alt="">
-					</a>
+					<!--<a class="display-inline-block" href="javascript:void(0)">-->
+						<!--<img class="display-inline-block" src="/static/images/logo1.png" alt="">-->
+					<!--</a>-->
 				</div>
 				<div class="order-progress-bar grid-right">
 					<ul class="margin-top-10">
@@ -48,7 +48,7 @@ var htmlPart = {
 								<td>${listLP.index}</td>
 								<td>${list.goodsName}</td>
 								<td>
-									<% if(list.formatNumber > 1){%>${list.formatNumber}<%}%>${decode(list.goodsFormat,0,"次",1,"月",2,"年")}
+									<% if(list.formatNumber > 1){%>${list.formatNumber}<%}%>${decode(list.goodsFormat,0,"次",1,"天",2,"年")}
 								</td>
 								<td>${trunc(list.goodsPrice / 100, 2)}</td>
 								<td>${list.goodsNumber}</td>

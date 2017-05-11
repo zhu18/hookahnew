@@ -19,8 +19,11 @@
     line-height: 50px;
     font-size: 15px;
     width: 130px;
+    text-align: center;
 }
-
+.orderManagement .title ul li a{
+    display: block;
+}
 .orderManagement .title ul li:hover {
     cursor: pointer;
 }
@@ -50,7 +53,50 @@
     right: 8px;
     color: #E5E5E5;
 }
+/*搜索条件样式开始*/
+.searchQuery{
+    width: 936px;
+    height: 50px;
+    padding-left:20px;
+    padding-right:20px;
+}
 
+.searchQuery .date{
+    width: 55%;
+    margin-bottom:28px;
+}
+.searchQuery .start-date{
+    width:250px;
+    margin-right:20px;
+}
+.searchQuery #startDate,.searchQuery #endDate{
+    width:150px;
+    height: 25px;
+    padding-left:5px;
+    border:1px solid #ccc;
+}
+.searchQuery #startDate:focus,.searchQuery #endDate:focus{
+    border:1px solid #ccc;
+}
+.searchQuery .comment-status{
+    float: left;
+}
+
+.searchQuery .search{
+    width: 100px;
+    height: 30px;
+    border:none;
+    font:14px/30px "microsoft yahei";
+    color: #fff;
+    background-color: #ffa800;
+}
+.searchQuery .search:hover{
+    background-color: #eb9c03;
+}
+#noPaySearch{
+    height: 40px;
+}
+/*搜索条件样式结束*/
 /*订单信息*/
 .orderManagement .order table {
     width: 100%;
@@ -71,9 +117,6 @@
     padding: 5px;
     text-align: right;
 }
-.orderManagement .order table tr {
-}
-
 .orderManagement .order table td {
     padding: 5px;
     text-align: center;
@@ -85,7 +128,6 @@
 .orderManagement .order table tbody {
     border: 1px solid #d5d5d5;
 }
-
 .orderManagement .order table tbody .goPay {
     width: 70px;
     line-height: 30px;
@@ -97,112 +139,88 @@
     background: #fff;
     padding: 0px 20px;
 }
-
 .user-center-box .cart {
     height: 30px;
     padding-top: 10px;
     border-bottom: 1px solid #EDEDED;
 }
-
 .user-center-box .cart .center-title {
     font: 14px/20px "microsoft yahei";
     padding-left: 10px;
     border-left: 2px solid #237DE7;
 }
-
 .order-manage .order-box .order-items thead .order-body {
     line-height: 30px;
 }
-
 .order-manage .order-box .order-items {
     border: 1px solid #ccc;
     width: 100%;
     margin-bottom: 20px;
 }
-
 .order-manage .order-box table tr {
     border-bottom: 1px solid #ccc;
 }
-
 .order-manage .order-box table.second tr {
     height: 110px;
 }
-
 .order-manage .order-box .order-items .order-body .img img {
     width: 80px;
 }
-
 .order-manage .order-box .order-items .order-body .order {
     position: relative;
 }
-
 .order-manage .order-box .order-items .order-body .order a {
     position: absolute;
     right: 105px;
 }
-
 .order-manage .order-box .order-items .order-body .order a:nth-child(1) {
     top: 6px;
 }
-
 .order-manage .order-box .order-items .order-body .order a:nth-child(2) {
     top: 23px;
     right: 116px;
 }
-
 .order-manage .order-box .order-items .order-body .order a:nth-child(3) {
     top: 38px;
 }
-
 .order-manage .order-box .order-items .order-body .order a:nth-child(4) {
     top: 55px;
     right: 116px;
 }
-
 .order-manage .order-box .order-items .order-body .order a:nth-child(5) {
     top: 73px;
 }
-
 .order-manage .order-box .order-items.cart-list-title, .cart-list-bottom {
     margin-top: 10px;
 }
-
 .order-manage .order-box .order-items.cart-list-title, .order-manage .order-box .order-items.cart-list-title tr {
     border: none;
 }
-
 .order-manage .cart-box .order-items .checkbox {
     width: 7%
 }
-
 .order-manage .cart-box .order-items .img {
     width: 15%
 }
-
 .order-manage .cart-box .order-items .name {
     width: 15%;
     word-break: break-word;
 }
-
 .order-manage .cart-box .order-items .price {
     width: 8%;
     text-align: right;
 }
-
 .order-manage .cart-box .order-items .number {
     width: 18%;
     text-align: center
 }
-
 .order-manage .cart-box .order-items .format {
     width: 10%;
     text-align: center
 }
-
 .order-manage .cart-box .order-items .number div {
     display: inline-block
 }
-
 .order-manage .cart-box .order-items .number .btn {
     width: 20px;
     height: 26px;
@@ -214,7 +232,6 @@
     line-height: 26px;
     cursor: pointer;
 }
-
 .order-manage .cart-box .order-items .number input {
     width: 46px;
     text-align: center;
@@ -222,54 +239,43 @@
     height: 26px;
     border: 1px solid #aaa;
 }
-
 .order-manage .cart-box .order-items .number .btn:hover {
     color: #f68300;
     border-color: #f68300;
 }
-
 .order-manage .cart-box .order-items .number .testcalss {
     cursor: default;
     color: #ccc;
 }
-
 .order-manage .cart-box .order-items .number .testcalss:hover {
     color: #ccc;
     border-color: #e5e5e5;
 }
-
 .order-manage .cart-box .order-items .money {
     width: 8%;
     text-align: right;
     position: relative;
 }
-
 .order-manage .cart-box .order-items .money span {
     position: absolute;
 }
-
 .order-manage .cart-box .order-items .operation {
     width: 26%;
     text-align: center
 }
-
 .order-manage .cart-box .order-items .operation a {
     display: block;
 }
-
 .order-manage .order-box .order-items.cart-list-bottom, .order-manage .order-box .order-items.cart-list-bottom tr {
     border: none;
 }
-
 .order-manage .order-box .order-items.cart-list-bottom {
     background: #e5e5e5;
     height: 40px;
 }
-
 .order-manage .order-box .order-items.cart-list-bottom .operation {
     padding: 0;
 }
-
 .order-manage .order-box .order-items.cart-list-bottom .buy-btn {
     width: 80px;
     height: 41px;
@@ -280,75 +286,60 @@
     border: none;
     float: right;
 }
-
 .noDataBox {
     line-height: 50px;
     text-align: center;
 }
-
 .noDataBox a {
     color: #247DE8;
 }
-
 /*evaluation*/
 .evaluation {
     width: 970px;
     background: #fff;
     padding: 0px 20px;
 }
-
 .evaluation .my {
     height: 30px;
     padding-top: 10px;
     border-bottom: 1px solid #EDEDED;
 }
-
 .evaluation .my .myeval {
     font: 15px/20px "microsoft yahei";
     padding-left: 10px;
     border-left: 2px solid #237DE7;
 }
-
 .evaluation .level table thead tr {
     width: 970px;
     height: 40px;
     background: #F1F1F1;
     font-size: 13px;
 }
-
 .evaluation .level table thead, .evaluation .level table tbody tr {
     border-bottom: 1px solid #EDEDED;
 }
-
 .evaluation .level table thead .one {
     width: 150px;
 }
-
 .evaluation .level table thead .two {
     width: 160px;
 }
-
 .evaluation .level table thead .three {
     width: 160px;
 }
-
 .evaluation .level table thead .four {
     width: 350px;
 }
-
 .evaluation .level table thead .five {
     width: 150px;
 }
-
 .evaluation .level table tbody tr td {
     text-align: center;
     padding: 15px 0px;
 }
-
 .evaluation .level table tbody tr td a:hover,.evaluation .level table tbody tr td a p:hover {
     color:#237DE7;
 }
-
 /*viewDetails*/
 .viewDetails , .sunAlone {
     margin-top: 10px;
@@ -358,7 +349,6 @@
     border: 1px solid #E9E9E9;
     margin-left: 10px;
 }
-
 .viewDetails .view ,.sunAlone .sun{
     height: 30px;
     padding-top: 10px;
@@ -389,16 +379,7 @@
 .viewDetails .viewContent .leftContent .state-btn .pay {
     padding:4px 13px;
     border: 1px solid #E4393C;
-    /*background: #fff;*/
-    /*color:#E4393C;*/
 }
-
-/*.viewDetails .viewContent .leftContent .state-bottom img{*/
-    /*width: 17px;*/
-    /*height: 17px;*/
-    /*display: inline-block;*/
-    /*vertical-align: middle;*/
-/*}*/
 .viewDetails .viewContent .rightContent {
     border-left: 1px solid #f1f1f1;
 }
@@ -488,7 +469,6 @@
     width: 60px;
     height: 20px;
     padding:5px 10px;
-    /*border: 1px solid #ccc;*/
 }
 .goods-list .goods-info{
     border-top:1px solid #eee;

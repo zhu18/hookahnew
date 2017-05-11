@@ -1,7 +1,6 @@
 <%
 var head = {
 %>
-<link rel="stylesheet" href="/static/css/usercenter/buyer/orderManagement.css">
 <link rel="stylesheet" href="/static/css/plugins/jedate/jedate.css">
 <link rel="stylesheet" href="/static/css/usercenter/buyer/buyer.css">
 <script src="/static/js/plugins/jedate/jquery.jedate.min.js"></script>
@@ -26,13 +25,15 @@ var htmlPart = {
         <div class="orderManagement margin-left-10 margin-top-10 grid-right padding-bottom-20 margin-bottom-30">
             <div class="title clearfix margin-bottom-15">
                 <ul class="grid-left all">
-                    <li class="padding-left-30">
+                    <li >
                         <a href="/usercenter/buyer/orderManagement">已付款
                             <span id="payCount"></span>
                         </a>
                     </li>
-                    <li class="padding-left-30 active">
-                        <a href="javascript:void(0)">待付款<span id="noPayCount"></span></a>
+                    <li class="active">
+                        <a href="javascript:void(0)">待付款
+                            <span id="noPayCount"></span>
+                        </a>
                     </li>
                 </ul>
                 <!--<div class="search grid-right">-->

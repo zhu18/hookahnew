@@ -59,8 +59,10 @@ public class CartInterceptor implements HandlerInterceptor {
                     filters.add(Condition.eq("isDeleted", (byte)0));
                     List<CartVo> cartVos = cartService.selectDetailList(filters);
 
+                    Long size = cartVos.stream().parallel().mapToLong(cart->cart.getGoodsNumber()).sum();
+
                     model.put("cartList", cartVos);
-                    model.put("cartSize", cartVos.size());
+                    model.put("cartSize", size);
                 }
             } catch (UnavailableSecurityManagerException e) {
                 //e.printStackTrace();
