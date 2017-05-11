@@ -1111,7 +1111,7 @@ dl {
 .search .search-order .order li:first-child+li+li+li a {
 	width: 45px;
 }
-.search .search-order .order li:first-child+li+li+li+li a {
+.search .search-order .order li:last-child a {
 	border: none;
 	text-align: right;
 	padding-right: 5px;
@@ -1129,17 +1129,17 @@ dl {
 	transform: rotateZ(180deg);
 	transform-origin: bottom;
 }
-.search .search-order .order li:first-child+li+li+li+li .priceBox {
+.search .search-order .order li:last-child .priceBox {
 	display: inline-block;
 }
-.search .search-order .order li:first-child+li+li+li+li .priceBox input {
+.search .search-order .order li:last-child .priceBox input {
 	height: 25px;
 	border: 1px solid #CCCCCC;
 	color: black;
 	width: 70px;
 	padding:0 5px;
 }
-.search .search-order .order li:first-child+li+li+li+li .priceBox span {
+.search .search-order .order li:last-child .priceBox span {
 	text-align: center;
 	color: white;
 	display: inline-block;
@@ -1148,10 +1148,10 @@ dl {
 	line-height: 25px;
 	margin-left: 5px;
 }
-.search .search-order .order li:first-child+li+li+li+li .priceBox .d {
+.search .search-order .order li:last-child .priceBox .d {
 	background-color: #D5D5D5;
 }
-.search .search-order .order li:first-child+li+li+li+li .priceBox em {
+.search .search-order .order li:last-child .priceBox em {
 	margin-bottom: 4px;
 	display: inline-block;
 	width: 10px;

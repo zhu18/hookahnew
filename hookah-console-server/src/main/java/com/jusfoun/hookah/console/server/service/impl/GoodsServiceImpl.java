@@ -179,7 +179,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         goods.setIsOnsale(HookahConstants.GOODS_STATUS_ONSALE);
         goods.setCheckStatus((byte)0);
         if(StringUtils.isNotBlank(dateTime)) {
-            goods.setOnsaleStartDate(DateUtils.getDate(dateTime));
+            goods.setOnsaleStartDate(DateUtils.getDate(dateTime, DateUtils.DEFAULT_DATE_TIME_FORMAT));
         }else {
             goods.setOnsaleStartDate(DateUtils.now());
         }
