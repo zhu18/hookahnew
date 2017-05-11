@@ -27,6 +27,8 @@ import com.jusfoun.hookah.rpc.api.OrderInfoService;
 import org.apache.http.HttpException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -216,6 +218,19 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         return goodsCount;
     }
 
+    @Override
+    public MgOrderGoods getGoodsUserBuyed(String userId, String goodsId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("userId").is(userId));
+        query.addCriteria(Criteria.where("payStatus").is(OrderInfo.PAYSTATUS_PAYED));
+        query.addCriteria(Criteria.where("isDeleted").is("1"));
+        query.addCriteria(Criteria.where("orderGoodsList.goodsId").is(goodsId));
+        OrderInfoVo orderInfoVo = mongoTemplate.findOne(query,OrderInfoVo.class);
+        if(orderInfoVo!=null){
+            return orderInfoVo.getMgOrderGoodsList().get(0);
+        }
+        return null;
+    }
 
 
     @Transactional(readOnly=false)
