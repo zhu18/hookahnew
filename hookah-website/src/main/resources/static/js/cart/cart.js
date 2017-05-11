@@ -81,7 +81,6 @@ function moneyFn(that, goodsNumber) { //点击加减按钮之后进行操作
 	var recId = $(that).parents('.number').attr('recId');
 	$(that).parents('.number').siblings('.money').html(money);
 	editAjax(recId, goodsNumber)
-	console.log(goodsNumber)
 }
 function editAjax(recId, goodsNumber) { //请求
 	$.ajax({
