@@ -7,11 +7,9 @@ import com.jusfoun.hookah.core.constants.HookahConstants.Analyzer;
 import com.jusfoun.hookah.core.constants.HookahConstants.TermVector;
 import com.jusfoun.hookah.core.constants.HookahConstants.Type;
 import org.springframework.data.annotation.Id;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Transient;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Created by wangjl on 2017-3-28.
@@ -51,9 +49,8 @@ public class EsGoods implements Serializable {
     @EsField(analyzeOpt= AnalyzeOpt.ANALYZED, analyzer= Analyzer.WHITESPACE,
             termVector= TermVector.OFFSETS, isStore = true, searchAnalyzer = Analyzer.WHITESPACE)
     private String goodsAreas;
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    @EsField(type = Type.DATE)
-    private Date addTime;
+    @EsField(type = Type.DATE, format = "yyyy-MM-dd HH:mm:ss")
+    private String addTime;
     @Transient
     @EsField(type = Type.COMPLETION, analyzer= Analyzer.LC_INDEX, searchAnalyzer = Analyzer.LC_SEARCH)
     private String suggest;
@@ -63,10 +60,8 @@ public class EsGoods implements Serializable {
     private Integer shopNumber;
     @EsField(type = Type.BYTE)
     private Byte shopFormat;
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @EsField(type = Type.KEYWORD)
-    private Date lastUpdateTime;
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private String lastUpdateTime;
     @EsField(fielddata = true)
     @Transient
     private String areaCountry;
@@ -76,10 +71,8 @@ public class EsGoods implements Serializable {
     @Transient
     @EsField(fielddata = true)
     private String areaCity;
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-//    @EsField(type = Type.DATE, format = "yyyy-MM-dd HH:mm:ss.SSS")
-    @EsField(type = Type.DATE)
-    private Date onsaleStartDate;
+    @EsField(type = Type.DATE, format = "yyyy-MM-dd HH:mm:ss")
+    private String onsaleStartDate;
     @Transient
     private String onsaleStartDateField = HookahConstants.ONSALE_START_DATE_FILEDNAME;
 
@@ -139,11 +132,11 @@ public class EsGoods implements Serializable {
         this.catId = catId;
     }
 
-    public Date getAddTime() {
+    public String getAddTime() {
         return addTime;
     }
 
-    public void setAddTime(Date addTime) {
+    public void setAddTime(String addTime) {
         this.addTime = addTime;
     }
 
@@ -203,14 +196,6 @@ public class EsGoods implements Serializable {
         this.shopFormat = shopFormat;
     }
 
-    public Date getLastUpdateTime() {
-        return lastUpdateTime;
-    }
-
-    public void setLastUpdateTime(Date lastUpdateTime) {
-        this.lastUpdateTime = lastUpdateTime;
-    }
-
     public String[] getAttrTypeId() {
         return attrTypeId;
     }
@@ -267,15 +252,23 @@ public class EsGoods implements Serializable {
         this.areaCity = areaCity;
     }
 
-    public Date getOnsaleStartDate() {
+    public String getOnsaleStartDate() {
         return onsaleStartDate;
     }
 
-    public void setOnsaleStartDate(Date onsaleStartDate) {
+    public void setOnsaleStartDate(String onsaleStartDate) {
         this.onsaleStartDate = onsaleStartDate;
     }
 
-//    public String getOnsaleStartDateField() {
+    public String getLastUpdateTime() {
+        return lastUpdateTime;
+    }
+
+    public void setLastUpdateTime(String lastUpdateTime) {
+        this.lastUpdateTime = lastUpdateTime;
+    }
+
+    //    public String getOnsaleStartDateField() {
 //        return onsaleStartDateField;
 //    }
 //
