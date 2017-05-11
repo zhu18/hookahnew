@@ -288,9 +288,9 @@
 .header-bottom-bar ul li {
   width:16.61%;
 }
-/*.header-bottom-bar li.active {*/
-  /*background: #00569e;*/
-/*}*/
+.header-bottom-bar li.active {
+  background: #00569e;
+}
 
 .header-bottom-bar li#exchange_menu.active {
   background: #FFA800;

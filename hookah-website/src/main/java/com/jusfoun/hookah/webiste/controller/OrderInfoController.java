@@ -104,7 +104,7 @@ public class OrderInfoController extends BaseController {
             vo.setGoodsId(goodsId);
             vo.setGoodsNumber(goodsNumber);
             vo.setGoodsName(g.getGoodsName());
-            vo.setGoodsFormat(formatId);
+            vo.setGoodsFormat(format.getFormat());
             vo.setFormatNumber((long)format.getNumber());
             vo.setGoodsPrice(format.getPrice());
             vo.setFormat(format);
