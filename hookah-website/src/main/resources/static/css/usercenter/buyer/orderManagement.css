@@ -17,6 +17,10 @@
     line-height: 50px;
     font-size: 15px;
     width: 120px;
+    text-align: center;
+}
+.orderManagement .title ul li a{
+    display: block;
 }
 .orderManagement .title ul li:hover{
     cursor: pointer;

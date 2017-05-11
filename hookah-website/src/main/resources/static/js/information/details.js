@@ -13,7 +13,7 @@ function renderDetails(){
             if(data.code == "1") {
                 $('#newsTitle').html(data.data.newsTitle);
                 $('#newsAdminName').html(data.data.userName);
-                $('#newsTime').html(format(data.data.sytTime));
+                $('#newsTime').html(data.data.sytTime);
                 $('#content').html(data.data.content);
                 $('#userImg').attr('src',data.data.headImg);
                 if(data.data.newsGroup=="information"){
