@@ -181,12 +181,11 @@
     line-height: 25px;
     padding-left:5px;
 }
-/*.findPwd .item label span {*/
-    /*display: inline-block;*/
-    /*width: 30px;*/
-    /*height: 20px;*/
-    /*background: gray;*/
-/*}*/
+.findPwd .item .secret{
+   display: none;
+    margin-left: 16%;
+    color:#f40;
+}
 .findPwd .item .img{
     width: 90px;
     height: 28px;
