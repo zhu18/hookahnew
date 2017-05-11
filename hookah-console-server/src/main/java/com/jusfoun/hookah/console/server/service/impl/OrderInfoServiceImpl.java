@@ -355,7 +355,6 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                         }
                         return g.getGoodsType() == 1 && StringUtils.isNotBlank(g.getSourceId());
                     })
-                    .parallel()
                     .forEach(goods -> {
                         try {
                             param.put("apiId", goods.getSourceId());

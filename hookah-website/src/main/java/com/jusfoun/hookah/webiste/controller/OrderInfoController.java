@@ -217,20 +217,13 @@ public class OrderInfoController extends BaseController {
             if (commentFlag != null) {
                 filters.add(Condition.eq("commentFlag", commentFlag));
             }
-            Condition condition = null;
-            if (payStatus != null) {
-                if(payStatus==1) {
-                    condition = Condition.eq("payStatus", 2);
-                }else{
-                    condition = Condition.ne("payStatus", 2);
-                }
-                filters.add(condition);
-            }
+
             if (domainName != null) {
                 filters.add(Condition.like("domainName", "%" + domainName + "%"));
             }
             filters.add(Condition.eq("userId", userId));
             filters.add(Condition.eq("isDeleted", 0));
+            filters.add(Condition.eq("payStatus", OrderInfo.PAYSTATUS_PAYED));
 
 
             List<OrderBy> orderBys = new ArrayList<>();
