@@ -18,6 +18,14 @@ function userAuth(){
         swal("请验证您的身份证号！");
         return;
     }
+    if($("#zm").attr("src")=="/static/images/auth/z.png" || $("#fm").attr("src")=="/static/images/auth/f.png" ){
+        swal("请上传您的证件号！");
+        return;
+    }
+    if(!$("#clickCheck").is(":checked")){
+        swal("请点击已阅读并同意！");
+        return;
+    }
     $.ajax({
             url : "/auth/personAuth",
             data : {
