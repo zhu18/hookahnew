@@ -28,7 +28,7 @@ function loadPageData(data){
     }
 }
 var start = {
-    format: "YYYY-MM-DD hh:mm:ss",
+    format: "YYYY-MM-DD HH:mm:ss",
     isTime: true,
     maxDate: $.nowDate(0),
     choosefun: function(elem,datas){
@@ -36,7 +36,7 @@ var start = {
     }
 };
 var end = {
-    format: "YYYY-MM-DD hh:mm:ss",
+    format: "YYYY-MM-DD HH:mm:ss",
     isTime: true,
     maxDate: $.nowDate(0),
     choosefun: function(elem,datas){
