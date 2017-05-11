@@ -7,7 +7,7 @@ function createEditor() {
     //富文本
     var editor = new wangEditor('content');
     //上传图片（举例）
-    editor.config.uploadImgUrl = '/upload/wangeditor';
+    editor.config.uploadImgUrl = host.static+'/upload/wangeditor';
     editor.config.uploadImgFileName = 'filename';
     //关闭菜单栏fixed
     editor.config.menuFixed = false;

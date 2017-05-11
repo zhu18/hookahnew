@@ -47,4 +47,6 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
     void deleteBatchByLogic(String[] ids);
 
     public Map<String,Long> getOrderStatisticWithBuydate(Date startTime,Date endTime) throws HookahException;
+
+    public MgOrderGoods getGoodsUserBuyed(String userId,String goodsId);
 }
