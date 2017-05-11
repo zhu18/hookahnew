@@ -10,12 +10,18 @@ $(document).ready(function () {
 	$('.header-bottom-bar ul li').each(function () {
 		var elementVal = $(this).children('a').attr('href');
 		if (pathname.indexOf(elementVal) >= 0) {
-			$(this).addClass('active').siblings()
+			$(this).addClass('active');
 		}
-		if (pathname == '/') {
+		if (pathname == '/' || pathname == '') {
 			$('#menu_index').addClass('active');
 		} else {
 			$('#menu_index').removeClass('active');
+		}
+		if(pathname.indexOf('/exchange/list') >= 0 || pathname.indexOf('/exchange/details') >= 0){
+			$('.header-bottom-bar ul li:nth-child(3)').addClass('active');
+		}
+		if(pathname.indexOf('/information/details') >= 0){
+			$('.header-bottom-bar ul li:nth-child(6)').addClass('active');
 		}
 	});
 

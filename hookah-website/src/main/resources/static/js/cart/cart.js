@@ -5,11 +5,14 @@ $(".checkall").click(function () {
 });
 function totalAmountFn() {
 	var totalAmount = 0.00;
+	var totalNum = 0;
 	$("[name=items]:checkbox:checked").each(function () {
 		var number = $(this).parent().siblings('.number').children('div').children('.numberInput').val();
 		totalAmount += Number($(this).attr('price')) * Number(number);
+		totalNum += Number(number);
 	});
-	$('#J_totalAmount').html((totalAmount / 100).toFixed(2))
+	$('#J_totalAmount').html((totalAmount / 100).toFixed(2));
+	$('#J_selectNum').html(totalNum);
 }
 $("[name=items]:checkbox").click(function () {
 	var flag = true;
@@ -101,24 +104,33 @@ function numFocusFn(that) {
 	if ($(that).val()) {
 		return inputVal = $(that).val();
 	}
+
 }
 $('.numberInput').blur(function () {
 	var goodsNumber = Number($(this).val());
+	var that = $(this);
+	var re = /^[0-9]*[1-9][0-9]*$/ ;
 	var recId = $(this).parents('.number').attr('recId');
 	var price = Number($(this).parents('.number').siblings('.price').html());
-	if ($(this).val()) {
-		if ($(this).val() % 1 == 0) {
-			if (inputVal != $(this).val()) {
-				editAjax(recId, goodsNumber)
-				$(this).parents('.number').siblings('.money').html(price * goodsNumber);
+	if(!re.test(goodsNumber)){
+		return $.alert('必须为正整数',true,function(){
+			that.val(1).focus();
+		});
+	}else{
+		if ($(this).val()) {
+			if ($(this).val() % 1 == 0) {
+				if (inputVal != $(this).val()) {
+					editAjax(recId, goodsNumber)
+					$(this).parents('.number').siblings('.money').html(price * goodsNumber);
+				} else {
+					console.log('数据一样的')
+				}
 			} else {
-				console.log('数据一样的')
+				alert('请输入整数')
 			}
 		} else {
-			alert('请输入整数')
+			alert('不能为空')
 		}
-	} else {
-		alert('不能为空')
 	}
 
 });
@@ -161,6 +173,7 @@ function check() {
 		return false;
 	}
 }
+
 
 
 
