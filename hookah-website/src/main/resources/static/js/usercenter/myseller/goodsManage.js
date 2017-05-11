@@ -5,7 +5,7 @@ function loadPageData(data) {
 		for (var i = 0; i < list.length; i++) {
 			html += '<tr>';
 			html += '<td class="text-center">';
-			html += '<a href="javascript:void(0)">';
+			html += '<a target="_blank" href="'+host.website+'/exchange/details?id='+list[i].goodsId+'">';
 			html += '<img src="' + list[i].goodsImg + '" alt="">';
 			html += '<p>' + list[i].goodsName + '</p>';
 			html += '</a>';
