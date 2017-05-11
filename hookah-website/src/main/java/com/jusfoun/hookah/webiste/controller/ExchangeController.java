@@ -72,6 +72,9 @@ public class ExchangeController extends BaseController{
         mgGoodsService.updateClickRate(id);//增加商品点击量记录
         // 查询商品详情
         GoodsVo goodsVo = goodsService.findGoodsByIdWebsite(id);
+        if(goodsVo.getClickRate() == null) {
+            goodsVo.setClickRate((long)0);
+        }
         // 获取永和关注信息
         try {
             if(StringUtils.isNotBlank(getCurrentUser().getUserId())){
