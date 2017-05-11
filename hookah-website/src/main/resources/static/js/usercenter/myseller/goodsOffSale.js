@@ -5,10 +5,10 @@ function loadPageData(data) {
 		for (var i = 0; i < list.length; i++) {
 			html += '<tr>';
 			html += '<td class="text-center">';
-			// html += '<a href="javascript:void(0)">';
+			html += '<a href="javascript:void(0)">';
 			html += '<img src="' + list[i].goodsImg + '" alt="">';
 			html += '<p>' + list[i].goodsName + '</p>';
-			// html += '</a>';
+			html += '</a>';
 			html += '</td>';
 			html += '<td>' + list[i].catName + '</td>';
 			html += '<td class="text-right">' + (list[i].shopPrice / 100).toFixed(2) + '</td>';
@@ -121,7 +121,8 @@ function onsale(id,dateTime) {
 				url: host.website + '/goods/back/onsale',
 				type: 'post',
 				data: {
-					goodsId: id
+					goodsId: id,
+					dateTime:dateTime
 				},
 				success: function (data) {
 					if (data.code == 1) {
