@@ -131,6 +131,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         og.setGoodsPrice(cart.getGoodsPrice());
         og.setOrderSn(orderInfo.getOrderSn());
         og.setPayTime(orderInfo.getPayTime());
+        og.setGoodsType(cart.getGoods().getGoodsType());
 //		og.setSendNumber(cart.getS);
         return og;
     }
@@ -142,7 +143,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
         og.setGoodsName(goods.getGoodsName());
         og.setGoodsNumber(goodsNumber);
-
+        og.setGoodsType(goods.getGoodsType());
         og.setGoodsPrice(format.getPrice());
         og.setGoodsFormat(format.getFormat());
         og.setFormatId(format.getFormatId());
@@ -162,8 +163,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         order.setOrderId(id);
         order.setIsDeleted(new Byte("1"));
         updateByIdSelective(order);
-
-        mgOrderInfoService.updateByIdSelective((OrderInfoVo) order);
+        OrderInfoVo orderInfoVo = new OrderInfoVo();
+        BeanUtils.copyProperties(order,orderInfoVo);
+        mgOrderInfoService.updateByIdSelective(orderInfoVo);
     }
 
     @Override
@@ -173,6 +175,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         List<Condition> filters = new ArrayList<>();
         filters.add(Condition.in("orderId", ids));
         updateByConditionSelective(order,filters);
+        OrderInfoVo orderInfoVo = new OrderInfoVo();
+        BeanUtils.copyProperties(order,orderInfoVo);
+        mgOrderInfoService.updateByCondition(orderInfoVo,filters);
     }
 
     /**
@@ -315,6 +320,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         orderInfo.setLastmodify(new Date());
         orderInfo.setPayStatus(payStatus);
         super.updateByIdSelective(orderInfo);
+        OrderInfoVo orderInfoVo = new OrderInfoVo();
+        BeanUtils.copyProperties(orderInfo,orderInfoVo);
+        mgOrderInfoService.updateByIdSelective(orderInfoVo);
 
         //支付成功后
         if(OrderInfo.PAYSTATUS_PAYED == payStatus){
