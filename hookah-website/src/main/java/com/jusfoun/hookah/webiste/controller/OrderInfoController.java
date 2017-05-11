@@ -197,6 +197,52 @@ public class OrderInfoController extends BaseController {
         }
     }
 
+    @RequestMapping(value="order/goodsList",method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnData getOrderGooodsList(Integer pageNumber, Integer pageSize, Integer payStatus, Integer commentFlag, String startDate, String endDate, String domainName){
+        Map map = new HashMap<>(3);
+        try {
+            String userId = this.getCurrentUser().getUserId();
+
+            if (pageNumber==null) pageNumber = Integer.parseInt(PAGE_NUM);
+            if (pageSize==null) pageSize = Integer.parseInt(PAGE_SIZE);
+
+            List<Condition> filters = new ArrayList<>();
+            if (StringUtils.isNotBlank(startDate)) {
+                filters.add(Condition.ge("addTime", DateUtils.getDate(startDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
+            }
+            if (StringUtils.isNotBlank(endDate)) {
+                filters.add(Condition.le("addTime", DateUtils.getDate(endDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
+            }
+            if (commentFlag != null) {
+                filters.add(Condition.eq("commentFlag", commentFlag));
+            }
+            Condition condition = null;
+            if (payStatus != null) {
+                if(payStatus==1) {
+                    condition = Condition.eq("payStatus", 2);
+                }else{
+                    condition = Condition.ne("payStatus", 2);
+                }
+                filters.add(condition);
+            }
+            if (domainName != null) {
+                filters.add(Condition.like("domainName", "%" + domainName + "%"));
+            }
+            filters.add(Condition.eq("userId", userId));
+            filters.add(Condition.eq("isDeleted", 0));
+
+
+            List<OrderBy> orderBys = new ArrayList<>();
+            orderBys.add(OrderBy.desc("addTime"));
+            Pagination<MgOrderGoods> goodsList = orderInfoService.getGoodsListInPage(pageNumber,pageSize,filters,orderBys);
+            return ReturnData.success(goodsList);
+        }catch (Exception e){
+            logger.error("分页查询已购商品错误", e);
+            return ReturnData.error("分页查询已购商品错误");
+        }
+    }
+
     @RequestMapping(value = "/order/viewDetails", method = RequestMethod.GET)
     public String getOrderDetail(@RequestParam String orderId,@RequestParam Integer num,Model model){
         try{

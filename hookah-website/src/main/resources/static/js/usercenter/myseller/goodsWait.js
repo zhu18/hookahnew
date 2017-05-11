@@ -12,7 +12,7 @@ function loadPageData(data){
             html += '</td>';
             html += '<td>'+list[i].catName+'</td>';
             html += '<td class="text-right">'+ (list[i].shopPrice / 100).toFixed(2) +'</td>';
-            html += '<td class="text-center">'+format(list[i].addTime)+'</td>';
+            html += '<td class="text-center">'+list[i].addTime+'</td>';
             if(list[i].checkStatus == 0){
                 html += '<td class="text-center">审核中</td>';
             }else if(list[i].checkStatus == 1){
@@ -20,7 +20,7 @@ function loadPageData(data){
             }else if(list[i].checkStatus == 2){
                 html += '<td class="text-center">不通过</td>';
             }
-			html += '<td class="text-right">'+format(list[i].onsaleStartDate)+'</td>';
+			html += '<td class="text-right">'+list[i].onsaleStartDate+'</td>';
 			html += '<td>';
 			html += '<a href="javascript:offSale(\'' + list[i].goodsId + '\');">取消上架</a>';
             html += '</td>';

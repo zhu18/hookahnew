@@ -2,6 +2,7 @@ package com.jusfoun.hookah.rpc.api;
 
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.domain.OrderInfo;
+import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.domain.vo.PayVo;
 import com.jusfoun.hookah.core.exception.HookahException;
@@ -28,6 +29,9 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
 
     public Pagination<OrderInfoVo> getDetailListInPage(Integer pageNum, Integer pageSize, List<Condition> filters,
                                                  List<OrderBy> orderBys);
+
+    public Pagination<MgOrderGoods> getGoodsListInPage(Integer pageNum, Integer pageSize, List<Condition> filters,
+                                                       List<OrderBy> orderBys);
 
     /**
      * 根据订单号查询支付信息

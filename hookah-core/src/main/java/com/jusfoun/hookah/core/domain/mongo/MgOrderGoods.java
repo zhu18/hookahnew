@@ -1,7 +1,10 @@
 package com.jusfoun.hookah.core.domain.mongo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jusfoun.hookah.core.generic.GenericModel;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.Date;
 import java.util.List;
 
 public class MgOrderGoods extends GenericModel {
@@ -168,6 +171,18 @@ public class MgOrderGoods extends GenericModel {
     private String catFullName;
     private Long clickRate;
     private Double goodsGrades;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date payTime;
+
+    public Date getPayTime() {
+        return payTime;
+    }
+
+    public void setPayTime(Date payTime) {
+        this.payTime = payTime;
+    }
 
     public String getOrderSn() {
         return orderSn;
