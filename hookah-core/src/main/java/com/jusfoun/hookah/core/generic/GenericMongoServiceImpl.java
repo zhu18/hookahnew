@@ -37,6 +37,7 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
 
     @Override
     public int insertBatch(List<Model> list) {
+        mongoTemplate.insertAll(list);
         return list.size();
     }
 
@@ -258,11 +259,17 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
                 case In:
                     criteria = Criteria.where(condition.getProperty()).in(condition.getValue());
                     break;
+                case IsNull:
+                    criteria = Criteria.where(condition.getProperty()).exists(false);
+                    break;
+                case IsNotNull:
+                    criteria = Criteria.where(condition.getProperty()).exists(true);
+                    break;
                 case NotIn:
                     criteria = Criteria.where(condition.getProperty()).nin(condition.getValue());
                     break;
                 default:
-                    logger.info("Condition:"+condition +" has not parsed!");
+                    logger.error("Condition:{} has not parsed!",condition);
                     criteria = Criteria.where(condition.getProperty()).is(condition.getValue());
             }
             query.addCriteria(criteria);
@@ -380,7 +387,7 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
                         }
                         field.setAccessible(true);
                         if(field.get(model)!=null){
-                            update.push(field.getName(),convertParamType((Class)field.getGenericType(),field.get(model)));
+                            update.set(field.getName(),convertParamType((Class)field.getGenericType(),field.get(model)));
                         }
                         field.setAccessible(false);
                     }
@@ -395,6 +402,9 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
             // TODO Auto-generated catch block
             throw new RuntimeException(e);
         } catch (IllegalArgumentException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException(e);
+        } catch (Exception e) {
             // TODO Auto-generated catch block
             throw new RuntimeException(e);
         }
