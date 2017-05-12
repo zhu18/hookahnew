@@ -44,6 +44,16 @@ public class HelpController extends BaseController{
         model.addAttribute("result",result);
         return "/help/help_index";
     }
+    @RequestMapping(value = "/privacy", method = RequestMethod.GET)
+    public String privacy() {
+        return "/help/privacyStatement";
+    }
+
+    @RequestMapping(value = "/question", method = RequestMethod.GET)
+    public String question() {
+        return "/help/question";
+    }
+
     @RequestMapping(value = "/agreement", method = RequestMethod.GET)
     public String agreement() {
         return "/help/service_agreement";

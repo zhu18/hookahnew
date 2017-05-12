@@ -795,6 +795,9 @@
 	background-color: white;
 	border: 1px solid #efefef;
 }
+.exchange-index .exchange-category-down .category-left .category-box{
+	overflow: hidden;
+}
 .exchange-index .exchange-category-down .category-left .category-box ul li {
 	width: 25%;
 	height: 37px;
