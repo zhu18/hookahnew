@@ -54,7 +54,7 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
         if(map==null){
             return -1;
         }
-        Query query = new Query(Criteria.where(map.get("id")).is(map.get("value")));
+        Query query = new Query(Criteria.where(map.get("_id")).is(map.get("value")));
         mongoTemplate.updateFirst(query,this.convertModel2Update(model),(Class)trueType);
         return 0;
     }
@@ -374,6 +374,10 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
                 while(entityClass!=Object.class){
                     Field[] fields = entityClass.getDeclaredFields();
                     for(Field field:fields){
+                        int modifier =  field.getModifiers();
+                        if(modifier>4){
+                            continue;
+                        }
                         field.setAccessible(true);
                         if(field.get(model)!=null){
                             update.push(field.getName(),convertParamType((Class)field.getGenericType(),field.get(model)));

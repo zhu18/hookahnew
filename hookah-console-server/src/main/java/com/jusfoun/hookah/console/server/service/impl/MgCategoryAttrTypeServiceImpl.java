@@ -130,7 +130,7 @@ public class MgCategoryAttrTypeServiceImpl extends GenericMongoServiceImpl<MgCat
                              *  解决方法:不显示一级属性的添加和删除可以
                              *   缺陷:只能单个操作
                              */
-
+                            //待开发 看业务需求  添加一级属性下的所有属性
                             if(attrTypeId.equals(attrTypeBean.getTypeId())){
 
                             }
