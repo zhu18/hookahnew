@@ -37,7 +37,8 @@ public class RabbitMQEsGoodsListener {
             if(goods != null) {
                 // 如果isDelete == 0 或者 is_onsale == 0 删除es中的商品
                 if(HookahConstants.GOODS_STATUS_DELETE.equals(goods.getIsDelete())
-                        || HookahConstants.GOODS_STATUS_OFFSALE.equals(goods.getIsOnsale())) {
+                        || HookahConstants.GOODS_STATUS_OFFSALE.equals(goods.getIsOnsale())
+                        || HookahConstants.GOODS_STATUS_FORCE_OFFSALE.equals(goods.getIsOnsale())) {
                     elasticSearchService.deleteById(Constants.GOODS_INDEX,
                             Constants.GOODS_TYPE, goodsId);
                 }else if(HookahConstants.GOODS_STATUS_UNDELETE.equals(goods.getIsDelete())
