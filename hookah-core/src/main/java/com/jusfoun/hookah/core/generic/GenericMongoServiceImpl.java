@@ -6,6 +6,7 @@ import com.jusfoun.hookah.core.common.Pagination;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -13,11 +14,21 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
 import javax.annotation.Resource;
+import java.beans.PropertyDescriptor;
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
 
 /**
  * @author:jsshao
@@ -55,7 +66,7 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
         if(map==null){
             return -1;
         }
-        Query query = new Query(Criteria.where(map.get("_id")).is(map.get("value")));
+        Query query = new Query(Criteria.where("_id").is(map.get("value")));
         mongoTemplate.updateFirst(query,this.convertModel2Update(model),(Class)trueType);
         return 0;
     }
@@ -365,7 +376,7 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
     }
 
     /**
-     * 根据Model 动态生成查询条件列表
+     * 根据Model 动态生成查询条件列表,暂时不支持内嵌对象的更新
      *
      * @param model
      * @return
@@ -378,21 +389,65 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
         Update update = new Update();
         try {
             if (Objects.nonNull(model)) {
-                while(entityClass!=Object.class){
-                    Field[] fields = entityClass.getDeclaredFields();
-                    for(Field field:fields){
-                        int modifier =  field.getModifiers();
-                        if(modifier>4){
-                            continue;
+                //实现1
+                PropertyDescriptor[] targetPds = BeanUtils.getPropertyDescriptors(entityClass);
+                for(PropertyDescriptor targetPd:targetPds){
+                    Method readMethod = targetPd.getReadMethod();
+                    int readModifier  = readMethod.getDeclaringClass().getModifiers();
+                    if(readModifier < Modifier.PROTECTED ){  //只有public private protected
+                        if (!Modifier.isPublic(readModifier)) {
+                            readMethod.setAccessible(true);
                         }
-                        field.setAccessible(true);
-                        if(field.get(model)!=null){
-                            update.set(field.getName(),convertParamType((Class)field.getGenericType(),field.get(model)));
+                        Object propertyValue = readMethod.invoke(model);
+                        if(propertyValue!=null){
+                            Class propertyType = targetPd.getPropertyType();
+                            if(BeanUtils.isSimpleValueType(propertyType)){ //简单类型
+                                update.set(targetPd.getName(),propertyValue);
+                            }else if(propertyType.isArray()){  //数组
+                                logger.debug("{}是数组类型{}！",targetPd.getName(),propertyType);
+                            }else if(Collection.class.isAssignableFrom(propertyType)){ //集合类
+                                logger.debug("{}是集合类型{}！",targetPd.getName(),propertyType);
+                            }else if(Map.class.isAssignableFrom(propertyType)){ //Map 类
+                                logger.debug("{}是Map类型{}！",targetPd.getName(),propertyType);
+                            }else{ //其他
+                                logger.debug("{}是其他类型{}！",targetPd.getName(),propertyType);
+                            }
                         }
-                        field.setAccessible(false);
+                        if (!Modifier.isPublic(readModifier)) {
+                            readMethod.setAccessible(false);
+                        }
                     }
-                    entityClass = entityClass.getSuperclass();
+
                 }
+
+                //实现2
+//                while(entityClass!=Object.class){
+//                    Field[] fields = entityClass.getDeclaredFields();
+//                    for(Field field:fields){
+//                        int modifier =  field.getModifiers();
+//                        if(modifier>4){
+//                            continue;
+//                        }
+//                        field.setAccessible(true);
+//                        if(field.get(model)!=null){
+//                            Class propertyType = (Class)field.getGenericType();
+//                            if(BeanUtils.isSimpleValueType(propertyType)){ //简单类型
+//                                update.set(field.getName(),field.get(model));
+//                            }else if(propertyType.isArray()){  //数组
+//                                logger.debug("{}是数组类型{}！",field.getName(),propertyType);
+//                            }else if(Collection.class.isAssignableFrom(propertyType)){ //集合类
+//                                logger.debug("{}是集合类型{}！",field.getName(),propertyType);
+//                            }else if(Map.class.isAssignableFrom(propertyType)){ //Map 类
+//                                logger.debug("{}是Map类型{}！",field.getName(),propertyType);
+//                            }else{ //其他
+//                                logger.debug("{}是其他类型{}！",field.getName(),propertyType);
+//                            }
+//                            update.set(field.getName(),convertParamType(propertyType,field.get(model)));
+//                        }
+//                        field.setAccessible(false);
+//                    }
+//                    entityClass = entityClass.getSuperclass();
+//                }
             }
             return update;
         } catch (SecurityException e) {
