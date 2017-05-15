@@ -2,6 +2,9 @@ var regionParam = 100000;
 var catId = $.getUrlParam('catId'),
 	category = $.getUrlParam('category');
 $(document).ready(function(){
+	if(!catId){
+		window.location.href = '/usercenter/goodsManage';
+	}
 	$("#goodsModifyForm").validate({
 		rules: {
 			goodsName:  {
@@ -524,3 +527,21 @@ function floorPrice(){
 		}
 	});
 }
+$('.fileUploadBtn').fileupload({
+	url: host.static+'/upload/fileUpload',
+	dataType: 'json',
+	done: function (e, data) {
+		if(data.result.code == 1){
+			var obj = data.result.data[0];
+			$(this).parent('.uploadFiles').siblings('.fileEndInput').val(obj.filePath);
+			$(this).siblings('span').html('替换文件');
+			$(this).parent('.uploadFiles').siblings('.fileEndInputs').val(data.files[0].name);
+		}else{
+			$.alert(data.result.message)
+		}
+
+	},
+	progressall: function (e, data) {
+
+	}
+});

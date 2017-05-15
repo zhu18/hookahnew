@@ -397,28 +397,45 @@ var htmlPart = {
                                             <tr>
                                                 <td class="bar">模型文件：<span class="requireds">*</span></td>
                                                 <td>
-                                                    <div class="text-box dataModelfileUploads" >
-                                                        <input type="text" name="modelFile" required="required">
-                                                        <button>选择文件</button><span>未选择任何文件</span>
-                                                        <input id="fileupload3" type="file" name="filename" multiple="" class="preview-btn">
+                                                    <div class="text-box dataModelfileUploads readonlyInput" >
+                                                        <input type="hidden" name="modelFile"  class="fileEndInput" required="required">
+                                                        <input type="text" class="grid-left fileEndInputs" name="modelFiles" required="required">
+                                                        <a href="javascript:void(0);" class="uploadFiles grid-left">
+                                                            <span>选择文件</span>
+                                                            <input type="file" name="filename" class="fileUploadBtn">
+                                                        </a>
+                                                        <div style="clear: both"></div>
+                                                        <div class="readonlyWrap"></div>
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="bar">配置文件：<span class="requireds">*</span></td>
                                                 <td>
-                                                    <div class="text-box">
-                                                        <input type="text" name="configFile" required="required">
-                                                        <span class="input-count"></span>
+                                                    <div class="text-box readonlyInput">
+                                                        <input type="hidden" name="configFile" class="fileEndInput" required="required">
+                                                        <input type="text" class="grid-left fileEndInputs" name="configFiles" required="required">
+                                                        <a href="javascript:void(0);" class="uploadFiles grid-left">
+                                                            <span>选择文件</span>
+                                                            <input type="file" name="filename" class="fileUploadBtn" >
+                                                        </a>
+                                                        <div style="clear: both"></div>
+                                                        <div class="readonlyWrap"></div>
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="bar">配置参数：<span class="requireds">*</span></td>
                                                 <td>
-                                                    <div class="text-box">
-                                                        <input type="text" name="configParams" required="required">
-                                                        <span class="input-count"></span>
+                                                    <div class="text-box readonlyInput">
+                                                        <input type="hidden" name="configParams" class="fileEndInput" required="required">
+                                                        <input type="text" class="grid-left fileEndInputs" name="configParam" required="required">
+                                                        <a href="javascript:void(0);" class="uploadFiles grid-left">
+                                                            <span>选择文件</span>
+                                                            <input type="file" name="filename" class="fileUploadBtn">
+                                                        </a>
+                                                        <div style="clear: both"></div>
+                                                        <div class="readonlyWrap"></div>
                                                     </div>
                                                 </td>
                                             </tr>
