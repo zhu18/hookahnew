@@ -67,7 +67,8 @@
         var m=flog();
         $("#shopPrice").parent().prevAll().on('click',function () {
             $(this).find('a').addClass('active').parent().siblings().find('a').removeClass('active');
-            $(this).find('a').find('.arrow-box').show().parent().parent().siblings().find('a').find('.arrow-box').hide()
+            $(this).find('a').find('.arrow-box').show();
+            $(this).siblings().find('a').find('.arrow-box').hide();
             if($(this).find('a').attr('type')==='onSaleDate'){
                 dataParm.orderField='onsaleStartDate';
                 if(s==null){
