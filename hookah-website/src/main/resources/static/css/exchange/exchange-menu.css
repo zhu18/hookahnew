@@ -13,7 +13,7 @@
 }
 .exchange-index-menu .menu-list {
     display: none;
-    background-color: #3E557B;
+    background-color: #0063b2;
 }
 .exchange-index-menu .menu-list li {
     padding: 0 10px;
@@ -22,6 +22,16 @@
     line-height: 42px;
     height: 41.95px;
     position: relative;
+}
+.exchange-index-menu .menu-list li .oneA{
+    color:#fff;
+    display: inline-block;
+}
+.exchange-index-menu .menu-list li:hover .oneA{
+    color:#7791bd;
+}
+.exchange-index-menu .menu-list li .oneA:hover{
+    color:#3E557B;
 }
 .exchange-index-menu .menu-list li > a.Bh {
     color: #0c182d;

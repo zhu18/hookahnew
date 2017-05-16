@@ -40,9 +40,9 @@ var htmlPart = {
 									<input type="checkbox" name="items" value="${list.recId}" recId="${list.recId}" price="${list.goodsPrice}" number="${list.goodsNumber}">
 								</td>
 								<td class="img">
-									<div><img src="${list.goodsImg}" alt=""></div>
+									<div><a target="_blank" href="${host.website}/exchange/details?id=${list.goodsId}"><img src="${list.goodsImg}" alt=""></a></div>
 								</td>
-								<td class="name">${list.goodsName}</td>
+								<td class="name"><a target="_blank" href="${host.website}/exchange/details?id=${list.goodsId}">${list.goodsName}</a></td>
 								<td class="price">${trunc(list.goodsPrice / 100, 2)}</td>
 								<td class="number" recId="${list.recId}">
 									<div>
@@ -57,7 +57,7 @@ var htmlPart = {
 								</td>
 								<td class="money">${trunc((list.goodsPrice * list.goodsNumber) / 100, 2)}</td>
 								<td class="operation">
-									<a href="${host.website}/exchange/details?id=${list.goodsId}">商品详情</a>
+									<a target="_blank" href="${host.website}/exchange/details?id=${list.goodsId}">商品详情</a>
 									<a href="javascript:void(0);" onclick="delThis('${list.recId}',this)">删除</a>
 								</td>
 							</tr>
@@ -76,7 +76,7 @@ var htmlPart = {
 								</td>
 								<td class="name"></td>
 								<td class="price"></td>
-								<td class="number">已选商品 <span>0</span>件</td>
+								<td class="number">已选商品 <span id="J_selectNum">0</span>件</td>
 								<td class="money">总金额：￥<span id="J_totalAmount">0.00</span></td>
 								<td class="operation">
 									<button class="buy-btn btn-full-blue" id="J_buyBtn" type="button"  onclick="return check()">结算</button>

@@ -63,7 +63,7 @@ public class GenericServiceImpl<Model extends GenericModel, ID extends Serializa
     @Override
     public Model selectOne(List<Condition> filters) {
         // TODO Auto-generated method stub
-        logger.info(String.format("class %s:method %s", this.getClass().getName(), "selectOne(List<Condition> filters)"));
+        logger.debug("class {}:method {}", this.getClass().getName(), "selectOne(List<Condition> filters)");
         List<Model> list = dao.selectByExample(convertFilter2Example(filters));
         if (list == null || list.isEmpty()) {
             return null;
@@ -122,7 +122,7 @@ public class GenericServiceImpl<Model extends GenericModel, ID extends Serializa
     @Transactional(readOnly = false)
     @Override
     public Model insert(Model model) {
-        logger.info(String.format("class %s:method %s", this.getClass().getName(), "insert(Model model)"));
+        logger.debug("class {}:method {}", this.getClass().getName(), "insert(Model model)");
         int result = dao.insertSelective(model);
         if(result==0){
             return null;
@@ -138,7 +138,7 @@ public class GenericServiceImpl<Model extends GenericModel, ID extends Serializa
     @Transactional(readOnly = false)
     @Override
     public int insertBatch(List<Model> list) {
-        logger.info(String.format("class %s:method %s", this.getClass().getName(), "insertBatch(List<Model> list)"));
+        logger.debug("class {}:method {}", this.getClass().getName(), "insertBatch(List<Model> list)");
         return dao.insertBatch(list);
     }
 
@@ -196,7 +196,7 @@ public class GenericServiceImpl<Model extends GenericModel, ID extends Serializa
     @Override
     public long count(List<Condition> filters) {
         // TO DO
-        logger.info(String.format("class %s:method %s", this.getClass().getName(), "count(List<Condition> filters)"));
+        logger.debug("class {}:method {}", this.getClass().getName(), "count(List<Condition> filters)");
         long count = dao.selectCountByExample(convertFilter2Example(filters));
         return count;
     }
@@ -210,7 +210,7 @@ public class GenericServiceImpl<Model extends GenericModel, ID extends Serializa
     @Transactional(readOnly = true)
     @Override
     public boolean exists(ID id) {
-        logger.info(String.format("class %s:method %s", this.getClass().getName(), "exists(ID id)"));
+        logger.debug("class {}:method {}", this.getClass().getName(), "exists(ID id)");
         boolean isExist = dao.existsWithPrimaryKey(id);
 
         return isExist;
@@ -225,7 +225,7 @@ public class GenericServiceImpl<Model extends GenericModel, ID extends Serializa
     @Transactional(readOnly = true)
     @Override
     public boolean exists(List<Condition> filters) {
-        logger.info(String.format("class %s:method %s", this.getClass().getName(), "exists(List<Condition> filters)"));
+        logger.debug("class {}:method {}", this.getClass().getName(), "exists(List<Condition> filters)");
         List<Model> list = dao.selectByExample(convertFilter2Example(filters));
         if (list != null && !list.isEmpty()) {
             return true;
@@ -434,9 +434,9 @@ public class GenericServiceImpl<Model extends GenericModel, ID extends Serializa
                     logger.info("unknown method:"+filter.toString());
             }
             if (execute) {
-                logger.info("success to add condition:" + clazz.getName() + "-" + filter);
+                logger.debug("success to add condition:{}-{}",clazz.getName(),filter);
             } else {
-                logger.error("fail to add condition:" + clazz.getName() + "-" + filter);
+                logger.error("fail to add condition:{}-{}" + clazz.getName() , filter);
             }
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             // TODO Auto-generated catch block

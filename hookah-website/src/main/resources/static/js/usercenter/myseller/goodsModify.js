@@ -239,13 +239,13 @@ function renderIsBook(isBook, onsaleStartDate){
 	if(isBook == 1){
 		$('#indate').val(onsaleStartDate);
 		$.jeDate("#indate", {
-			format: "YYYY-MM-DD hh:mm:ss",
+			format: "YYYY-MM-DD HH:mm:ss",
 			isTime: true,
 			minDate: $.nowDate(0)
 		});
 	}else{
 		$.jeDate("#indate", {
-			format: "YYYY-MM-DD hh:mm:ss",
+			format: "YYYY-MM-DD HH:mm:ss",
 			isTime: true,
 			minDate: $.nowDate(0)
 		});

@@ -12,7 +12,7 @@ function loadPageData(data) {
 			html += '</td>';
 			html += '<td>' + list[i].catName + '</td>';
 			html += '<td class="text-right">' + (list[i].shopPrice / 100).toFixed(2) + '</td>';
-			html += '<td class="text-center">' + format(list[i].addTime) + '</td>';
+			html += '<td class="text-center">' + list[i].addTime + '</td>';
 			if (list[i].checkStatus == 0) {
 				html += '<td class="text-center">审核中</td>';
 			} else if (list[i].checkStatus == 1) {
@@ -95,7 +95,7 @@ function selectTimes(id) {
 		}
 	});
 	$.jeDate("#indate", {
-		format: "YYYY-MM-DD hh:mm:ss",
+		format: "YYYY-MM-DD HH:mm:ss",
 		isTime: true,
 		minDate: $.nowDate(0)
 	});
@@ -121,7 +121,8 @@ function onsale(id,dateTime) {
 				url: host.website + '/goods/back/onsale',
 				type: 'post',
 				data: {
-					goodsId: id
+					goodsId: id,
+					dateTime:dateTime
 				},
 				success: function (data) {
 					if (data.code == 1) {

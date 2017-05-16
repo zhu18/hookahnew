@@ -186,4 +186,21 @@ function check() {
 	});
 	// return false;
 }
-
+function getDataPackage(goodsId){
+    $.ajax({
+        url: host.website+'/help/exportWords',
+        type:'get',
+		data:{
+			goodsId:goodsId
+        },
+        success:function(data){
+            if(data.code == 1){
+                // window.location.href = data.data;
+                window.location.href = host.website + data.data;
+            }else{
+                $.alert(data.message)
+                // $.alert('下载失败')
+            }
+        }
+    });
+}

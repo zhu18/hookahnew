@@ -20,7 +20,7 @@ function loadPageData(data){ //渲染页面数据
 			html += '</a>';
 			html += '<div class="item-down clearfix">';
 			html += '<span class="grid-left goods-price">￥<span>'+Number(list[i].shopPrice)/100+'</span>/'+(list[i].shopNumber == 1 ? '':list[i].shopNumber)+shopFormat+'</span>';
-			html += '<a class="grid-right goods-cart btn btn-full-red padding-5" href="/exchange/details?id='+list[i].goodsId+'">立即购买</a>';
+			html += '<a class="grid-right goods-cart btn btn-full-red padding-5" href="/exchange/details?id='+list[i].goodsId+'">查看详情</a>';
 			html += '</div>';
 			html += '</li>';
         }
@@ -183,93 +183,3 @@ if(prId){//渲染分类
 }else{
 	$('#J_searchCategory').addClass('margin-top-20')
 }
-// 价格搜索
-function price() {//价格排序 输入值*100处理
-    dataParm.range.priceFrom='';
-    dataParm.range.priceTo='';
-	$('.ensure').on('click',function () {
-        dataParm.range.priceFrom=$('#priceFrom').val()*100;
-        dataParm.range.priceTo= $('#priceTo').val()*100;
-        goPage(1);
-    });
-	$('.empty').on('click',function () {
-        $('#priceFrom').val('');
-        $('#priceTo').val('');
-        dataParm.range.priceFrom="";
-        dataParm.range.priceTo= "";
-        goPage(1);
-    });
-
-}
-//四大排序
-function sort() {//四类排序
-    function flog() {//记录双击
-        var flog=1;
-        return function () {
-            if(flog==1){
-                dataParm.order='asc';
-                flog=0;
-                $(".arrow-box").css({
-                    'transform':'rotateZ(180deg)'
-				});
-            }else {
-                dataParm.order='desc';
-                flog=1;
-                $(".arrow-box").css({
-                    'transform':'rotateZ(0deg)'
-                });
-            }
-        }
-
-    }
-    var s=flog();
-    var d=flog();
-    var g=flog();
-    var m=flog();
-    $("#shopPrice").parent().prevAll().on('click',function () {
-        $(this).find('a').addClass('active').parent().siblings().find('a').removeClass('active');
-        $(this).find('a').find('.arrow-box').show().parent().parent().siblings().find('a').find('.arrow-box').hide()
-        if($(this).find('a').attr('type')==='onSaleDate'){
-            dataParm.orderField='onsaleStartDate';
-            if(s==null){
-               s=flog();
-			}
-            s();
-            d=null;
-            g=null;
-            m=null;
-        }else if ($(this).find('a').attr('type')==='orders'){
-            dataParm.orderField='orders';
-            if(d==null){
-                d=flog();
-            }
-            d();
-            s=null;
-            g=null;
-            m=null;
-        }else if($(this).find('a').attr('type')==='commentRank'){
-            dataParm.orderField='commentRank';
-            if(g==null){
-                g=flog();
-            }
-            g();
-            s=null;
-            d=null;
-            m=null;
-        }else {
-            dataParm.orderField='';
-            if(m==null){
-                m=flog();
-            }
-            m();
-            s=null;
-            d=null;
-            g=null;
-		}
-        goPage(1);
-    })
-    $("#shopPrice").parent().prevAll().find('a').find('.arrow-box').hide()
-}
-
-sort();
-price();

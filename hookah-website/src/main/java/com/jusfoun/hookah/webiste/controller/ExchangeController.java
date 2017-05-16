@@ -68,36 +68,46 @@ public class ExchangeController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/details", method = RequestMethod.GET)
-    public String details(@RequestParam String id, Model model) throws HookahException {
-        mgGoodsService.updateClickRate(id);//增加商品点击量记录
-        // 查询商品详情
-        GoodsVo goodsVo = goodsService.findGoodsByIdWebsite(id);
-        // 获取永和关注信息
+    public String details(@RequestParam String id, Model model) {
         try {
-            if(StringUtils.isNotBlank(getCurrentUser().getUserId())){
-                List<Condition> filters = new ArrayList();
-                filters.add(Condition.eq("goodsId", id));
-                filters.add(Condition.eq("userId", getCurrentUser().getUserId()));
-                GoodsFavorite goodsFavorite = goodsFavoriteService.selectOne(filters);
-                if(goodsFavorite != null){
-                    goodsVo.setOrNotFavorite(true);
-                }else{
+            mgGoodsService.updateClickRate(id);//增加商品点击量记录
+            // 查询商品详情
+            GoodsVo goodsVo = goodsService.findGoodsByIdWebsite(id);
+            if(goodsVo.getClickRate() == null) {
+                goodsVo.setClickRate((long)0);
+            }
+            // 获取永和关注信息
+            try {
+                if(StringUtils.isNotBlank(getCurrentUser().getUserId())){
+                    List<Condition> filters = new ArrayList();
+                    filters.add(Condition.eq("goodsId", id));
+                    filters.add(Condition.eq("userId", getCurrentUser().getUserId()));
+                    GoodsFavorite goodsFavorite = goodsFavoriteService.selectOne(filters);
+                    if(goodsFavorite != null){
+                        goodsVo.setOrNotFavorite(true);
+                    }else{
+                        goodsVo.setOrNotFavorite(false);
+                    }
+                }
+            } catch (HookahException e) {
+                if("没有登录用户信息".equals(e.getMessage())){
                     goodsVo.setOrNotFavorite(false);
                 }
             }
-        } catch (HookahException e) {
-            if(!"没有登录用户信息".equals(e.getMessage())){
-                throw new HookahException("获取用户信息出错！",e);
-            }
+
+            model.addAttribute("goodsGrades",commentService.countGoodsGradesByGoodsId(id).getData());
+
+            model.addAttribute("goodsDetails", goodsVo);
+            //推荐商品
+            Map<String,GoodsShelvesVo> goodsMap = goodsShelvesService.getShevlesGoodsVoList(new HashMap<String,Object>());
+            model.addAttribute("reCommData", goodsMap.get("recomm_data"));
+
+            return "exchange/details";
+        }catch (Exception e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
+            return "/error/500";
         }
-
-        model.addAttribute("goodsGrades",commentService.countGoodsGradesByGoodsId(id).getData());
-
-        model.addAttribute("goodsDetails", goodsVo);
-        //推荐商品
-        Map<String,GoodsShelvesVo> goodsMap = goodsShelvesService.getShevlesGoodsVoList(new HashMap<String,Object>());
-        model.addAttribute("reCommData", goodsMap.get("recomm_data"));
-        return "exchange/details";
     }
     @RequestMapping(value = "/orderEndDetails", method = RequestMethod.GET)
     public String orderEndDetails(@RequestParam String orderSn,@RequestParam String id, Model model) throws HookahException {

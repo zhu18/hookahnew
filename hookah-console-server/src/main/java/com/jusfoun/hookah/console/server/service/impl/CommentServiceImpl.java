@@ -204,8 +204,8 @@ public class CommentServiceImpl extends GenericServiceImpl<Comment,String> imple
 //            List<Condition> fifters = new ArrayList<Condition>();
 //            fifters.add(Condition.between("addTime",new Date[]{startTima,endTime}));
 
-            Date startTimeDate = parseDate(startTime,"yyyy-MM-dd hh:mm:ss");
-            Date endTimeDate = parseDate(endTime,"yyyy-MM-dd hh:mm:ss");
+            Date startTimeDate = parseDate(startTime,"yyyy-MM-dd HH:mm:ss");
+            Date endTimeDate = parseDate(endTime,"yyyy-MM-dd HH:mm:ss");
 
             List<Map<String,Object>> goodsGradeMapList = new ArrayList<Map<String,Object>>();
 

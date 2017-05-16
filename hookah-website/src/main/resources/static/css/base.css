@@ -45,13 +45,13 @@
   height: 38px;
   line-height: 38px;
   font-size: 20px;
-  color: #e34f4f;
+  color: #0063B1;
 }
 
 .header-centerbar .search input {
   width: 440px;
   height: 36px;
-  border: 1px solid #e34f4f;
+  border: 1px solid #C7C7C7;
   background: #fff;
   padding-left: 32px;
   font-size: 13px;
@@ -144,7 +144,7 @@
   font-size: 12px;
   line-height: 12px;
   color: #fff;
-  background-color: #E34F4F;
+  background-color: #0667B3;
   border-radius: 7px 7px 7px 0;
   min-width: 12px;
   text-align: center;
@@ -152,7 +152,7 @@
 
 .header-centerbar .shopping-cart-down {
   position: absolute;
-  width: 310px;
+  width: 370px;
   display: none;
   background-color: white;
   border: 1px solid #DFDFDF;
@@ -272,7 +272,7 @@
 .header-bottom-bar {
   height: 46px;
   line-height: 46px;
-  background: #3e557b;
+  background: -webkit-linear-gradient(top,#0b7cc3,#0063b3);
 }
 
 .header-bottom-bar .grid-row {
@@ -280,17 +280,20 @@
 }
 
 .header-bottom-bar li:hover {
-  background: #2F3C4D;
+  background: #00569e;
 }
+/*.header-bottom-bar ul li a:hover {*/
+  /*color: #333;*/
+/*}*/
 .header-bottom-bar ul li {
   width:16.61%;
 }
 .header-bottom-bar li.active {
-  background: #2d3f5c;
+  background: #00569e;
 }
 
 .header-bottom-bar li#exchange_menu.active {
-  background: #ffa800;
+  background: #FFA800;
 }
 
 .header-bottom-bar li a {
@@ -303,7 +306,8 @@
 /************/
 .footer-bar {
   padding: 50px 0;
-  background: #494952;
+  background: #081739;
+  box-shadow: 0px -3px 10px -5px #081735;
   overflow: hidden;
   color: #fff;
 }

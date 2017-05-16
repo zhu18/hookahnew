@@ -97,7 +97,8 @@
         goods_area goods_area,
         getRegionParentList(goods_area) goods_areas,
         add_time,
-        last_update_time
+        last_update_time,
+        onsale_start_date
         from
         goods
         where is_delete = 1

@@ -7,7 +7,7 @@ function loadPageData(data){ //渲染页面数据
             html += '<td>'+(i+1)+'</td>';
             html += '<td>'+list[i].newsTitle+'</td>';
             html += '<td class="imgs"><div><img src="'+list[i].pictureUrl+'"></div></td>';
-            html += '<td>'+format(list[i].sytTime)+'</td>';
+            html += '<td>'+list[i].sytTime+'</td>';
             html += '<td>'+judge(list[i].creatName)+'</td>';
             html += '<td>';
             html += '<a href="javascript:deleteData(\''+list[i].newsId+'\');">删除</a>';

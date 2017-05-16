@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/static/css/usercenter/user-center-menu.css">
 <% if(shiro.hasRole("Admin")){%>
-<div class="grid-left left-bar margin-bottom-30 margin-top-10 status">
+<div class="grid-left left-bar margin-bottom-30 margin-top-10 status adminS">
     <!--<ul>-->
         <!--<li class="text-align-center active"><span class="fa fa-caret-down"></span><span class="fa fa-caret-up" style="display: none;"></span>用户中心 <span class="fa fa-"></span></li>-->
         <!--&lt;!&ndash;<li class="text-align-center"><a href="/usercenter/userProfile"><span class="fa fa-file-text"></span>个人资料</a></li>&ndash;&gt;-->
@@ -15,11 +15,11 @@
 </div>
 <%}else{%>
 <div class="grid-left left-bar margin-top-10 margin-bottom-30 status">
-    <ul>
+    <ul class="u1">
         <li class="text-align-center"><span class="fa fa-caret-down"></span><span class="fa fa-caret-up" style="display: none;"></span>用户中心 <span class="fa fa-"></span></li>
         <!--<li class="text-align-center"><a href="/usercenter/userProfile"><span class="fa fa-file-text"></span>个人资料</a></li>-->
         <li class="text-align-center"><a href="/usercenter/index"><span class="fa fa-file-text"></span>个人中心</a></li>
-        <li class="text-align-center"><a href="/usercenter/infoCenter"><span class="fa fa-id-card-o"></span>信息中心</a></li>
+        <!--<li class="text-align-center"><a href="/usercenter/infoCenter"><span class="fa fa-id-card-o"></span>信息中心</a></li>-->
         <li class="text-align-center"><a href="/usercenter/fundmanage"><span class="fa fa-life-buoy" aria-hidden="true"></span>资金管理</a></li>
         <li class="text-align-center"><a href="/usercenter/safeSet"><span class="fa fa-unlock-alt" aria-hidden="true"></span>安全设置</a></li>
     </ul>
@@ -31,7 +31,7 @@
         <!--<li class="text-align-center"><a href="/usercenter/buyer/evaluation"><span class="fa fa-building"></span>我的评价</a></li>-->
         <li class="text-align-center"><a href="/usercenter/myAttention"><span class="fa fa-star"></span>我的关注</a></li>
     </ul>
-    <ul>
+    <ul class="u3">
         <li class="text-align-center"><span class="fa fa-caret-down"></span><span class="fa fa-caret-up" style="display: none;"></span>卖家中心 <span class=""></span></li>
         <li class="text-align-center goods"><a href="/usercenter/goodsManage"><span class="fa fa-cart-plus"></span>商品管理</a></li>
         <li class="text-align-center"><a href="/usercenter/trade"><span class="fa fa-indent"></span>交易管理</a></li>
@@ -50,7 +50,13 @@
                 $(this).addClass('active').siblings().removeClass("active");
                 $(this).children('a').css("color","#247DE8");
             }
-        })
+        });
+        if(url == '/admin/articleManage' || url == '/admin/articlePublish'){
+            $('.adminS ul li:first-child').addClass('active').siblings().removeClass("active").children('a').css("color","#247DE8");
+        }else{
+			$('.adminS ul li:first-child').removeClass("active").siblings().addClass('active').children('a').css("color","#247DE8");
+        }
+
         if(url=="/usercenter/buyer/orderStay"||url=="/order/viewDetails" ||url=="/usercenter/sunAlone"){
             $('.u2 li:nth-child(2)').addClass('active').siblings().removeClass("active");
             $('.u2 li:nth-child(2)').children('a').css("color","#247DE8");
@@ -59,6 +65,11 @@
             $(".goods").addClass('active').siblings().removeClass("active");
             $(".goods").children('a').css("color","#247DE8");
         }
+        if(url.indexOf('/usercenter/recharge') >= 0 || url.indexOf('/usercenter/withdrawals') >= 0){
+			$('.u1 li:nth-child(4)').addClass('active').siblings().removeClass("active");
+			$('.u1 li:nth-child(4)').children('a').css("color","#247DE8");
+        }
+
     })
 </script>
 

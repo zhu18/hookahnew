@@ -5,7 +5,9 @@ import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.GoodsShelvesMapper;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.GoodsShelves;
+import com.jusfoun.hookah.core.domain.es.EsRange;
 import com.jusfoun.hookah.core.domain.mongo.MgShelvesGoods;
+import com.jusfoun.hookah.core.domain.vo.GoodsCritVo;
 import com.jusfoun.hookah.core.domain.vo.GoodsShelvesVo;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.domain.vo.OptionalShelves;
@@ -119,7 +121,7 @@ public class GoodsShelvesServiceImpl extends GenericServiceImpl<GoodsShelves, St
     }
 
     @Override
-    public ReturnData findGoodsByShevlesId(String shevlesId, String pageNumber, String pageSize) {
+    public ReturnData findGoodsByShevlesId(String shevlesId, GoodsCritVo goodsCritVo) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
 
@@ -148,20 +150,32 @@ public class GoodsShelvesServiceImpl extends GenericServiceImpl<GoodsShelves, St
                     return returnData;
                 }
 
-                //参数校验
-                int pageNumberNew = HookahConstants.PAGE_NUM;
-                if (StringUtils.isNotBlank(pageNumber)) {
-                    pageNumberNew = Integer.parseInt(pageNumber);
-                }
-                int pageSizeNew = HookahConstants.PAGE_SIZE;
-                if (StringUtils.isNotBlank(pageSize)) {
-                    pageSizeNew = Integer.parseInt(pageSize);
-                }
+                String orderField = goodsCritVo.getOrderField();
+                String order = goodsCritVo.getOrder();
 
                 List<OrderBy> orderBys = new ArrayList();
-                orderBys.add(OrderBy.desc("lastUpdateTime"));
+//                orderBys.add(OrderBy.desc("lastUpdateTime"));
 
-                Pagination page = goodsService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
+                if(StringUtils.isNoneBlank(orderField) && !"".equals(orderField)){
+                    if("asc".equalsIgnoreCase(order)){
+                        orderBys.add(OrderBy.asc(orderField));
+                    }else{
+                        orderBys.add(OrderBy.desc(orderField));
+                    }
+                }
+
+                EsRange esRange = goodsCritVo.getRange();
+                if(Objects.nonNull(esRange)){
+                    Long priceFrom = esRange.getPriceFrom();
+                    Long pricTo = esRange.getPriceTo();
+
+                    if(null != priceFrom && pricTo !=null && (!priceFrom.equals(0l) || !pricTo.equals(0l)) ){
+                        filters.add(Condition.between("shopPrice",new Long[]{priceFrom,pricTo}));
+                    }
+
+                }
+
+                Pagination page = goodsService.getListInPage(goodsCritVo.getPageNumber(), goodsCritVo.getPageSize(), filters, orderBys);
                 page.setList(this.bulidGoodsVoList(page.getList()));
                 returnData.setData(page);
             } catch (Exception e) {

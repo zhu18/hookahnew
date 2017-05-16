@@ -17,6 +17,7 @@ var head = {
 	dataParm.pageNumber = 1;
 	dataParm.pageSize = 20;
 	dataParm.id = id;
+    dataParm.range ={};
 </script>
 <%};%>
 
@@ -37,30 +38,8 @@ var htmlPart = {
 
                 </div>
                 <!--中间主体列表展示模块-->
-                <div class="search-order">
-                    <div class="order" >
-                        <ul>
-                            <li><a href="javascript:;" class="active" type="">综合排序</a></li>
-                            <li><a href="javascript:;" type="onSaleDate">上架时间</a></li>
-                            <li><a href="javascript:;" type="orders">下载量</a></li>
-                            <li><a href="javascript:;" type="commentRank">评分</a></li>
-                            <li>
-                                <a href="javascript:;" type="shopPrice">价格:</a>
-                                <div class="priceBox">
-                                    <input type="text" onkeyup="this.value=this.value.replace(/[^\d.]/g,'') " onafterpaste="this.value=this.value.replace(/[^\d]/g,'') " class="startPrice" placeholder="￥  请输入" />
-                                    <em></em>
-                                    <input type="text" onkeyup="this.value=this.value.replace(/[^\d.]/g,'') " onafterpaste="this.value=this.value.replace(/[^\d]/g,'') " class="endPrice" placeholder="￥  请输入" />
-                                    <span class="empty d" >清空</span>
-                                    <span class="ensure btn-full-red">确定</span>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="order-list">
-                        <ul></ul>
-                    </div>
-                    <%include("/layout/pageaction.html"){} %>
-                </div>
+                <%include("/exchange/search-conditions.html"){} %>
+                <%include("/layout/pageaction.html"){} %>
             </div>
         </div>
     </div>

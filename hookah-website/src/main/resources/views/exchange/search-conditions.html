@@ -1,0 +1,114 @@
+<div class="search-order">
+    <div class="order" >
+        <ul>
+            <li><a id="sort" href="javascript:;" class="active" type="">综合排序</a></li>
+            <li><a id="onSaleDate" href="javascript:;" type="onSaleDate">上架时间 <span class="arrow-box"><i class="iconfont arrow">&#xe65e;</i></span></a></li>
+            <!--<li><a id="orders" href="javascript:;" type="orders">下载量<span class="arrow-box"><i class="iconfont arrow">&#xe65e;</i></span></a></li>-->
+            <!--<li><a id="commentRank" href="javascript:;" type="commentRank">评分<span class="arrow-box"><i class="iconfont arrow">&#xe65e;</i></span></a></li>-->
+            <li>
+                <a id="shopPrice" href="javascript:;" type="shopPrice">价格:</a>
+                <div class="priceBox">
+                    <input type="text" id="priceFrom" onkeyup="this.value=this.value.replace(/[^\d.]/g,'') " onafterpaste="this.value=this.value.replace(/[^\d]/g,'') " class="startPrice" placeholder="￥  请输入" />
+                    <em></em>
+                    <input type="text" id="priceTo" onkeyup="this.value=this.value.replace(/[^\d.]/g,'') " onafterpaste="this.value=this.value.replace(/[^\d]/g,'') " class="endPrice" placeholder="￥  请输入" />
+                    <span class="empty d" >清空</span>
+                    <span class="ensure btn-full-blue">确定</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="order-list">
+        <ul></ul>
+    </div>
+</div>
+<script>
+    // 价格搜索
+    function price() {//价格排序 输入值*100处理
+        dataParm.range.priceFrom='';
+        dataParm.range.priceTo='';
+        $('.ensure').on('click',function () {
+            dataParm.range.priceFrom=$('#priceFrom').val()*100;
+            dataParm.range.priceTo= $('#priceTo').val()*100;
+            goPage(1);
+        });
+        $('.empty').on('click',function () {
+            $('#priceFrom').val('');
+            $('#priceTo').val('');
+            dataParm.range.priceFrom="";
+            dataParm.range.priceTo= "";
+            goPage(1);
+        });
+
+    }
+    //四大排序
+    function sort() {//四类排序
+        function flog() {//记录双击
+            var flog=1;
+            return function () {
+                if(flog==1){
+                    dataParm.order='asc';
+                    flog=0;
+                    $(".arrow-box").css({
+                        'transform':'rotateZ(180deg)'
+                    });
+                }else {
+                    dataParm.order='desc';
+                    flog=1;
+                    $(".arrow-box").css({
+                        'transform':'rotateZ(0deg)'
+                    });
+                }
+            }
+
+        }
+        var s=flog();
+        var d=flog();
+        var g=flog();
+        $("#shopPrice").parent().prevAll().on('click',function () {
+            $(this).find('a').addClass('active').parent().siblings().find('a').removeClass('active');
+            $(this).find('a').find('.arrow-box').show();
+            $(this).siblings().find('a').find('.arrow-box').hide();
+            if($(this).find('a').attr('type')==='onSaleDate'){
+                dataParm.orderField='onsaleStartDate';
+                if(s==null){
+                    s=flog();
+                }
+                s();
+                d=null;
+                g=null;
+                // m=null;
+            }else if ($(this).find('a').attr('type')==='orders'){
+                dataParm.orderField='orders';
+                if(d==null){
+                    d=flog();
+                }
+                d();
+                s=null;
+                g=null;
+                // m=null;
+            }else if($(this).find('a').attr('type')==='commentRank'){
+                dataParm.orderField='commentRank';
+                if(g==null){
+                    g=flog();
+                }
+                g();
+                s=null;
+                d=null;
+                // m=null;
+            }else {
+                dataParm.orderField='';
+                // if(m==null){
+                //     m=flog();
+                // }
+                // m();
+                s=null;
+                d=null;
+                g=null;
+            }
+            goPage(1);
+        })
+        $("#shopPrice").parent().prevAll().find('a').find('.arrow-box').hide()
+    }
+    sort();
+    price();
+</script>

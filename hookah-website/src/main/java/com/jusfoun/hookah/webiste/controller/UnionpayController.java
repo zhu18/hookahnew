@@ -67,8 +67,8 @@ public class UnionpayController extends BaseController{
 		HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
 
 		//处理请求
-		String reqHtml = payCoreService.openUnionpay(orderId, accNo, userMap.get("userId"));
-		/*String reqHtml = payCoreService.openUnionpay("23", "6221558812340000", "00003443e3ce74e3fbf2ca02b3baa64c");*/
+		/*String reqHtml = payCoreService.openUnionpay(orderId, accNo, userMap.get("userId"));*/
+		String reqHtml = payCoreService.openUnionpay("23", "6227 0000 1103", "00003443e3ce74e3fbf2ca02b3baa64c");
 		if(StringUtils.isEmpty(reqHtml)){
 			return "redirect:/404.html";
 		}else

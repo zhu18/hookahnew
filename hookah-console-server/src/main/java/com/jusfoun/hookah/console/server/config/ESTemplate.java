@@ -6,6 +6,7 @@ import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.es.EsAgg;
 import com.jusfoun.hookah.core.domain.es.EsAggResult;
 import com.jusfoun.hookah.core.domain.es.EsRange;
+import com.jusfoun.hookah.core.utils.DateUtils;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.ElasticsearchException;
@@ -708,18 +709,11 @@ public class ESTemplate {
     public BoolQueryBuilder getBoolQueryBuilder(Map<String,Object> filterMap, EsRange range) {
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
         QueryBuilder queryString = null;
-        if(filterMap != null && !filterMap.isEmpty() && filterMap.size() > 0){
+        if(filterMap != null && !filterMap.isEmpty() && filterMap.size() > 1){
             for(Map.Entry entry : filterMap.entrySet()){
-                if(entry.getValue() != null) {
-                    //过滤没到上架时间的预约商品
-//                    if(HookahConstants.ONSALE_START_DATE_FILEDNAME.equals(entry.getValue())) {
-//                        queryString = QueryBuilders.rangeQuery(HookahConstants.ONSALE_START_DATE_FILEDNAME)
-//                                .to(new Date().getTime());
-//                        System.out.println(new Date().getTime());
-//                    }else {
-                        queryString = QueryBuilders.simpleQueryStringQuery(String.valueOf(entry.getValue()))
-                                .field(String.valueOf(entry.getKey()));
-//                    }
+                if(entry.getValue() != null && !HookahConstants.ONSALE_START_DATE_FILEDNAME.equals(entry.getValue())) {
+                    queryString = QueryBuilders.simpleQueryStringQuery(String.valueOf(entry.getValue()))
+                            .field(String.valueOf(entry.getKey()));
                     boolQueryBuilder.must(queryString);
                 }
             }
@@ -746,6 +740,11 @@ public class ESTemplate {
         }else {//检索全部
             MatchAllQueryBuilder matchAll = QueryBuilders.matchAllQuery();
             boolQueryBuilder.must(matchAll);
+        }
+
+        if(filterMap.get(HookahConstants.ONSALE_START_DATE_FILED) != null) {
+            boolQueryBuilder.filter( QueryBuilders.rangeQuery(HookahConstants.ONSALE_START_DATE_FILEDNAME)
+                    .lte(DateUtils.toDateText(new Date(), DateUtils.DEFAULT_DATE_TIME_FORMAT)));
         }
 
         return boolQueryBuilder;

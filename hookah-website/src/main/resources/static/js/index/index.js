@@ -13,5 +13,15 @@ $(function () {
            })
        })
    })
-
+    sliceString(".infos-info",85);
 });
+function sliceString(className,number){
+    var goodsBrief = $(className);
+    var number=parseInt(number);
+    $(goodsBrief).each(function(){
+        var text = $(this).html();
+        if(text.length>=number){
+            $(this).html(text.slice(0,number)+'...');
+        }
+    });
+}

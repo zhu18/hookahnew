@@ -7,11 +7,15 @@ import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
 import com.jusfoun.hookah.core.domain.vo.CartVo;
+import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
-import com.jusfoun.hookah.core.utils.*;
+import com.jusfoun.hookah.core.utils.DateUtils;
+import com.jusfoun.hookah.core.utils.JsonUtils;
+import com.jusfoun.hookah.core.utils.OrderHelper;
+import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.CartService;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.OrderInfoService;
@@ -88,7 +92,7 @@ public class OrderInfoController extends BaseController {
             Long goodsAmount = new Long(0);
 
             //验证商品是否下架
-            Goods g = goodsService.selectById(goodsId);
+            GoodsVo g = goodsService.findGoodsById(goodsId);
             if (g.getIsOnsale() == null || !g.getIsOnsale().equals((byte)1)) {
                 throw new HookahException("商品[" + g.getGoodsName() + "]未上架");
             }
@@ -100,7 +104,7 @@ public class OrderInfoController extends BaseController {
             vo.setGoodsId(goodsId);
             vo.setGoodsNumber(goodsNumber);
             vo.setGoodsName(g.getGoodsName());
-            vo.setGoodsFormat(formatId);
+            vo.setGoodsFormat(format.getFormat());
             vo.setFormatNumber((long)format.getNumber());
             vo.setGoodsPrice(format.getPrice());
             vo.setFormat(format);
@@ -190,6 +194,45 @@ public class OrderInfoController extends BaseController {
         } catch (Exception e) {
             logger.error("分页查询订单错误", e);
             return ReturnData.error("分页查询错误");
+        }
+    }
+
+    @RequestMapping(value="order/goodsList",method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnData getOrderGooodsList(Integer pageNumber, Integer pageSize, Integer payStatus, Integer commentFlag, String startDate, String endDate, String domainName){
+        Map map = new HashMap<>(3);
+        try {
+            String userId = this.getCurrentUser().getUserId();
+
+            if (pageNumber==null) pageNumber = Integer.parseInt(PAGE_NUM);
+            if (pageSize==null) pageSize = Integer.parseInt(PAGE_SIZE);
+
+            List<Condition> filters = new ArrayList<>();
+            if (StringUtils.isNotBlank(startDate)) {
+                filters.add(Condition.ge("addTime", DateUtils.getDate(startDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
+            }
+            if (StringUtils.isNotBlank(endDate)) {
+                filters.add(Condition.le("addTime", DateUtils.getDate(endDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
+            }
+            if (commentFlag != null) {
+                filters.add(Condition.eq("commentFlag", commentFlag));
+            }
+
+            if (domainName != null) {
+                filters.add(Condition.like("domainName", "%" + domainName + "%"));
+            }
+            filters.add(Condition.eq("userId", userId));
+            filters.add(Condition.eq("isDeleted", 0));
+            filters.add(Condition.eq("payStatus", OrderInfo.PAYSTATUS_PAYED));
+
+
+            List<OrderBy> orderBys = new ArrayList<>();
+            orderBys.add(OrderBy.desc("addTime"));
+            Pagination<MgOrderGoods> goodsList = orderInfoService.getGoodsListInPage(pageNumber,pageSize,filters,orderBys);
+            return ReturnData.success(goodsList);
+        }catch (Exception e){
+            logger.error("分页查询已购商品错误", e);
+            return ReturnData.error("分页查询已购商品错误");
         }
     }
 

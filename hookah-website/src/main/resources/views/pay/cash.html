@@ -29,11 +29,11 @@ var htmlPart = {
 						</tr>
 						<tr>
 							<td class="sub-th" align="right">交易金额：</td>
-							<td>${orderInfo.goodsAmount}元</td>
+							<td>${trunc(orderInfo.goodsAmount/100, 2)}元</td>
 						</tr>
 						<tr>
 							<td class="sub-th" align="right">购买时间：</td>
-							<td>${orderInfo.addTime,'yyyy-MM-dd hh:mm:ss'}</td>
+							<td>${orderInfo.addTime,'yyyy-MM-dd HH:mm:ss'}</td>
 						</tr>
 						<tr>
 							<td class="sub-th" align="right">交易类型：</td>

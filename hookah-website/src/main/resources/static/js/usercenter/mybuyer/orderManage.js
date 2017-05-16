@@ -8,7 +8,7 @@ function loadPageData(data){
             html += '<tr class="content border-bottom">';
             html += '<td class="text-align-center">'+list[i].orderSn+'</td>';
             html += '<td class="text-align-right moneyTotal">￥&nbsp;'+(list[i].orderAmount/100).toFixed(2)+'</td>';//订单总金额
-            html += '<td>'+format(list[i].addTime)+'</td>';
+            html += '<td>'+list[i].addTime+'</td>';
             html += '<td>已付款</td>';
             html += '<td class="text-align-center">';
             html += '<a target="_blank" href="/order/viewDetails?orderId='+list[i].orderId+'&num=1" class="display-block">查看详情</a>';
@@ -28,7 +28,7 @@ function loadPageData(data){
     }
 }
 var start = {
-    format: "YYYY-MM-DD hh:mm:ss",
+    format: "YYYY-MM-DD HH:mm:ss",
     isTime: true,
     maxDate: $.nowDate(0),
     choosefun: function(elem,datas){
@@ -36,7 +36,7 @@ var start = {
     }
 };
 var end = {
-    format: "YYYY-MM-DD hh:mm:ss",
+    format: "YYYY-MM-DD HH:mm:ss",
     isTime: true,
     maxDate: $.nowDate(0),
     choosefun: function(elem,datas){

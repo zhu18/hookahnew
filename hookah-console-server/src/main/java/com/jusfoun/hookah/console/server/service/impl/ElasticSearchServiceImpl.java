@@ -20,6 +20,7 @@ import com.jusfoun.hookah.core.domain.vo.EsTreeVo;
 import com.jusfoun.hookah.core.domain.vo.EsTypesVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.utils.AnnotationUtil;
+import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.rpc.api.CategoryService;
 import com.jusfoun.hookah.rpc.api.ElasticSearchService;
 import com.jusfoun.hookah.rpc.api.GoodsAttrTypeService;
@@ -137,6 +138,14 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
                 goods.setAreaProvince(region[2]);
             if(region.length == 4)
                 goods.setAreaCity(region[3]);
+        }
+        if(goods.getAddTime() != null) {
+            goods.setAddTime(DateUtils.toDateText(DateUtils.getDate(goods.getAddTime(),
+                    DateUtils.DEFAULT_DATE_TIME_FORMAT), DateUtils.DEFAULT_DATE_TIME_FORMAT));
+        }
+        if(goods.getOnsaleStartDate() != null) {
+            goods.setOnsaleStartDate(DateUtils.toDateText(DateUtils.getDate(goods.getOnsaleStartDate(),
+                    DateUtils.DEFAULT_DATE_TIME_FORMAT), DateUtils.DEFAULT_DATE_TIME_FORMAT));
         }
         //查询mongo中的数据
         MgGoods mgGoods = mgGoodsService.selectById(goods.getGoodsId());

@@ -7,7 +7,7 @@
         <li class="menu-item">
             <i class=" iconfont margin-right-5 iconfont-${menuListLP.index}" aria-hidden="true"></i>
             <!--<a href="/exchange/list?catId=${menuList.catId}" class="Bh">${menuList.catName}</a>-->
-            <span>${menuList.catName}</span>
+            <a class="oneA" href="/exchange/list?catId=${menuList.catId}&prId=${menuList.catId}&prNm=${menuList.catName}">${menuList.catName}</a>
             <i class="fa fa-angle-right grid-right" style="line-height: 42px;" aria-hidden="true"></i>
             <% if(menuList.children.~size > 0){ %>
             <div class="menu-son-list">

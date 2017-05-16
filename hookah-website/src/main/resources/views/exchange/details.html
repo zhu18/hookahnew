@@ -60,7 +60,7 @@ var htmlPart = {
 						<div class="money-standard">
 							<span>规格：</span>
 							<%for(item in goodsDetails.formatList){%>
-							<a href="javascript:;" onclick="editPrice(this, ${item.price}, ${item.formatId})" class="margin-right-5 ${itemLP.first ? 'active':''}" formatid="${item.formatId}" price="${item.price}">${item.number}${decode(item.format,0,"次",1,"天",2,"年","未知")}  </a>
+							<a href="javascript:;" onclick="editPrice(this, ${item.price}, ${item.formatId})" class="margin-right-5 ${itemLP.first ? 'active':''}" formatid="${item.formatId}" price="${item.price}">${item.number}${decode(item.format,0,"次",1,"天",2,"年","未知")}</a>
 							<%}%>
 						</div>
 						<%}%>

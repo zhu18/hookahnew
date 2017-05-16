@@ -4,12 +4,12 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.dao.OrderInfoMapper;
-import com.jusfoun.hookah.core.domain.Cart;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.OrderInfo;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
 import com.jusfoun.hookah.core.domain.vo.CartVo;
+import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.domain.vo.PayVo;
 import com.jusfoun.hookah.core.exception.HookahException;
@@ -19,12 +19,16 @@ import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.HttpClientUtil;
 import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.OrderHelper;
+import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.CartService;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.MgOrderInfoService;
 import com.jusfoun.hookah.rpc.api.OrderInfoService;
 import org.apache.http.HttpException;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -55,6 +59,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
     @Resource
     MgOrderInfoService mgOrderInfoService;
+
+    @Resource
+    MongoTemplate mongoTemplate;
 
 
     @Resource
@@ -117,45 +124,42 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         return orderinfo;
     }
 
-    private MgOrderGoods getMgOrderGoodsByCart(Cart cart) {
+    private MgOrderGoods getMgOrderGoodsByCart(CartVo cart,OrderInfo orderInfo) {
         MgOrderGoods og = new MgOrderGoods();
+        BeanUtils.copyProperties(cart.getGoods(),og);
         og.setDiscountFee(0L);
-
-        og.setGoodsId(cart.getGoodsId());
-        og.setGoodsName(cart.getGoodsName());
-        og.setGoodsNumber(cart.getGoodsNumber());
-        og.setGoodsPrice(cart.getGoodsPrice());
-        og.setGoodsSn(cart.getGoodsSn());
-        og.setGoodsFormat(cart.getGoodsFormat());
-        og.setFormatNumber(cart.getFormatNumber());
-        og.setGoodsImg(cart.getGoodsImg());
-		og.setIsGift(cart.getIsGift());
         og.setIsReal(0);
         og.setMarketPrice(cart.getMarketPrice());
+        og.setGoodsPrice(cart.getGoodsPrice());
+        og.setOrderSn(orderInfo.getOrderSn());
+        og.setPayTime(orderInfo.getPayTime());
+        og.setGoodsFormat(cart.getGoodsFormat());
+        og.setFormatNumber(cart.getFormatNumber());
+        og.setFormatList(cart.getGoods().getFormatList());
+        og.setGoodsPrice(cart.getGoodsPrice());
+        og.setGoodsNumber(cart.getGoodsNumber());
+        og.setFormatId(cart.getFormatId());
+        og.setGoodsType(cart.getGoods().getGoodsType());
 //		og.setSendNumber(cart.getS);
         return og;
     }
 
-    private MgOrderGoods getMgOrderGoodsByGoodsFormat(Goods goods, MgGoods.FormatBean format,Long goodsNumber) {
+    private MgOrderGoods getMgOrderGoodsByGoodsFormat(GoodsVo goods, MgGoods.FormatBean format, Long goodsNumber,OrderInfo orderInfo) {
         MgOrderGoods og = new MgOrderGoods();
         og.setDiscountFee(0L);
+        BeanUtils.copyProperties(goods,og);
 
-        og.setGoodsId(goods.getGoodsId());
         og.setGoodsName(goods.getGoodsName());
         og.setGoodsNumber(goodsNumber);
-        og.setGoodsSn(goods.getGoodsSn());
-
         og.setGoodsType(goods.getGoodsType());
-        og.setUploadUrl(goods.getUploadUrl());
-
         og.setGoodsPrice(format.getPrice());
-
         og.setGoodsFormat(format.getFormat());
         og.setFormatId(format.getFormatId());
         og.setFormatNumber((long)format.getNumber());
-        og.setGoodsImg(goods.getGoodsImg());
         og.setIsGift(new Integer(0).shortValue());
         og.setIsReal(0);
+        og.setPayTime(orderInfo.getPayTime());
+        og.setOrderSn(orderInfo.getOrderSn());
         //og.setMarketPrice(goods.getShopPrice());
 //		og.setSendNumber(cart.getS);
         return og;
@@ -167,6 +171,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         order.setOrderId(id);
         order.setIsDeleted(new Byte("1"));
         updateByIdSelective(order);
+        OrderInfoVo orderInfoVo = new OrderInfoVo();
+        BeanUtils.copyProperties(order,orderInfoVo);
+        mgOrderInfoService.updateByIdSelective(orderInfoVo);
     }
 
     @Override
@@ -176,6 +183,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         List<Condition> filters = new ArrayList<>();
         filters.add(Condition.in("orderId", ids));
         updateByConditionSelective(order,filters);
+        OrderInfoVo orderInfoVo = new OrderInfoVo();
+        BeanUtils.copyProperties(order,orderInfoVo);
+        mgOrderInfoService.updateByCondition(orderInfoVo,filters);
     }
 
     /**
@@ -214,6 +224,19 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         return goodsCount;
     }
 
+    @Override
+    public MgOrderGoods getGoodsUserBuyed(String userId, String goodsId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("userId").is(userId));
+        query.addCriteria(Criteria.where("payStatus").is(OrderInfo.PAYSTATUS_PAYED));
+        query.addCriteria(Criteria.where("isDeleted").is("1"));
+        query.addCriteria(Criteria.where("orderGoodsList.goodsId").is(goodsId));
+        OrderInfoVo orderInfoVo = mongoTemplate.findOne(query,OrderInfoVo.class);
+        if(orderInfoVo!=null){
+            return orderInfoVo.getMgOrderGoodsList().get(0);
+        }
+        return null;
+    }
 
 
     @Transactional(readOnly=false)
@@ -236,7 +259,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
                 goodsAmount += cart.getFormat().getPrice()  * cart.getGoodsNumber();  //商品单价 * 套餐内数量 * 购买套餐数量
 
-                MgOrderGoods og = getMgOrderGoodsByCart(cart);
+                MgOrderGoods og = getMgOrderGoodsByCart(cart,orderInfo);
                 ordergoodsList.add(og);
             }
             orderInfo.setGoodsAmount(goodsAmount);
@@ -270,7 +293,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         Long goodsAmount = new Long(0);
 
         //验证商品是否下架
-        Goods g = goodsService.selectById(goodsId);
+        GoodsVo g = goodsService.findGoodsById(goodsId);
         if(g.getIsOnsale()==null||g.getIsOnsale()!=1){
             throw new HookahException("商品["+g.getGoodsName()+"]未上架");
         }
@@ -278,7 +301,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         if(goodsNumber!=null){
             goodsAmount += format.getPrice()  * goodsNumber;  //商品单价 * 套餐内数量 * 购买套餐数量
         }
-        MgOrderGoods og = getMgOrderGoodsByGoodsFormat(g,format,goodsNumber);
+        MgOrderGoods og = getMgOrderGoodsByGoodsFormat(g,format,goodsNumber,orderInfo);
         ordergoodsList.add(og);
         orderInfo.setGoodsAmount(goodsAmount);
         orderInfo.setOrderAmount(goodsAmount);
@@ -312,12 +335,19 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         logger.info("updatePayStatus status = {}",payStatus);
         List<Condition> filters = new ArrayList<>();
         filters.add(Condition.eq("orderSn",orderSn));
-        OrderInfo orderInfo =  super.selectOne(filters);
+        OrderInfo orderInfo =  selectOne(filters);
 
         orderInfo.setPayTime(new Date());
         orderInfo.setLastmodify(new Date());
         orderInfo.setPayStatus(payStatus);
         super.updateByIdSelective(orderInfo);
+        OrderInfoVo orderInfoVo = mgOrderInfoService.selectById(orderInfo.getOrderId());
+        mgOrderInfoService.delete(orderInfo.getOrderId());
+
+        orderInfoVo.setPayTime(new Date());
+        orderInfoVo.setLastmodify(new Date());
+        orderInfoVo.setPayStatus(payStatus);
+        mgOrderInfoService.insert(orderInfoVo);
 
         //支付成功后
         if(OrderInfo.PAYSTATUS_PAYED == payStatus){
@@ -338,14 +368,41 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
      * @throws HttpException
      * @throws IOException
      */
-    private void managePaySuccess(OrderInfo orderInfo) throws HttpException, IOException {
-        //支付成功,操作待补充
-        String url = "http://auth.hookah.app/reg/checkUsername";
-        Map<String,String> param = new HashMap<>();
-        param.put("username","tytyty");
-        Map rs = HttpClientUtil.PostMethod(url,param);
-        System.out.println(JsonUtils.toJson(rs));
+    private void managePaySuccess(OrderInfo orderInfo)  {
+        try {
+            OrderInfoVo orderInfoVo = findDetailById(orderInfo.getOrderId());
+            //支付成功,
+            //1、发送api平台
+            String url = "http://open.galaxybigdata.com/shop/insert/userapi";
+            Map<String, String> param = new HashMap<>();
+            param.put("userId", orderInfoVo.getUserId());
 
+
+            //param.put("endTime",orderInfo.getUserId());
+
+            param.put("orderNo", orderInfo.getOrderSn());
+            orderInfoVo.getMgOrderGoodsList().stream()
+                    .filter(g -> {
+                        if (g.getGoodsType() == 1 && !StringUtils.isNotBlank(g.getSourceId())) {
+                            logger.info("指定商品id{} 的sourceId为空", g.getGoodsId());
+                        }
+                        return g.getGoodsType() == 1 && StringUtils.isNotBlank(g.getSourceId());
+                    })
+                    .forEach(goods -> {
+                        try {
+                            param.put("apiId", goods.getSourceId());
+                            param.put("goodsId", goods.getGoodsId());
+                            param.put("totalCount", new Long(goods.getGoodsNumber() * goods.getFormatNumber()).toString());
+                            Map rs = HttpClientUtil.PostMethod(url, param);
+                            logger.info("订单{}商品{}放api平台返回信息：{}", goods.getOrderId(), goods.getGoodsId(), JsonUtils.toJson(rs));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.error("发送商品到api平台发生异常");
+        }
     }
 
 
@@ -363,19 +420,51 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
             OrderInfoVo mgOrder = mgOrderInfoService.selectById(orderInfoVo.getOrderId());
             List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
-            //未支付订单处理
-            if(order.getPayStatus()!=OrderInfo.PAYSTATUS_PAYED){
-                for(MgOrderGoods goods:goodsList){
-                    goods.setUploadUrl(null);
+            if(goodsList!=null){
+                //未支付订单处理
+                if(order.getPayStatus()!=OrderInfo.PAYSTATUS_PAYED){
+                    for(MgOrderGoods goods:goodsList){
+                        goods.setUploadUrl(null);
+                    }
                 }
+
+                orderInfoVo.setMgOrderGoodsList(goodsList);
             }
 
-            orderInfoVo.setMgOrderGoodsList(goodsList);
             page.add(orderInfoVo);
         }
 
         Pagination<OrderInfoVo> pagination = new Pagination<OrderInfoVo>();
         pagination.setTotalItems(list.getTotal());
+        pagination.setPageSize(pageSize);
+        pagination.setCurrentPage(pageNum);
+        pagination.setList(page);
+        logger.info(JsonUtils.toJson(pagination));
+        return pagination;
+    }
+
+    @Override
+    public Pagination<MgOrderGoods> getGoodsListInPage(Integer pageNum, Integer pageSize, List<Condition> filters, List<OrderBy> orderBys) {
+        PageHelper.startPage(pageNum, pageSize);
+        Page<MgOrderGoods> page = new Page<>(pageNum,pageSize);
+        Pagination<MgOrderGoods> pagination = new Pagination<MgOrderGoods>();
+
+        List<OrderInfoVo> orderList = mgOrderInfoService.selectList(filters,orderBys);
+        List<MgOrderGoods> goodsList = orderList.stream().parallel()
+                .flatMap(new Function<OrderInfoVo, Stream<MgOrderGoods>>() {
+                    @Override
+                    public Stream<MgOrderGoods> apply(OrderInfoVo t) {
+                        List<MgOrderGoods> list = t.getMgOrderGoodsList().stream().collect(Collectors.toList());
+                        list.forEach(goods->{goods.setPayTime(t.getPayTime());goods.setOrderSn(t.getOrderSn());goods.setOrderId(t.getOrderId());});
+                        return list.stream();
+                    }
+                })
+                .collect(Collectors.toList());
+        pagination.setTotalItems(goodsList.size());
+        goodsList.stream().parallel()
+                .skip((pageNum-1)*pageSize)
+                .limit(pageSize)
+                .forEach(goods->{page.add(goods);});
         pagination.setPageSize(pageSize);
         pagination.setCurrentPage(pageNum);
         pagination.setList(page);

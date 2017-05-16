@@ -14,6 +14,7 @@ import com.jusfoun.hookah.rpc.api.MgSmsValidateService;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -284,6 +285,7 @@ public class RegController {
                     }
                     User user = new User();
                     BeanUtils.copyProperties(user, userVo);
+                    user.setPassword(new Md5Hash(password).toString());
                     userService.updateByIdSelective(user);
                     return ReturnData.success();
                 } catch (Exception e) {
