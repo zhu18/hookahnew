@@ -1018,6 +1018,10 @@ margin-left:-100px;
     width: 280px;
     height: 230px;
     transition: 0.6s;
+    -webkit-perspective: 500;
+    -moz-perspective: 500;
+    -ms-perspective: 500;
+    perspective: 500;
     transform-style: preserve-3d;
 }
 /* 触发翻转 */

@@ -113,8 +113,13 @@ function address(){
 //验证联系电话是否为空
 function tel(){
     var tel = $("#tel").val();
+    var reg = /^1[3|4|5|7|8][0-9]{9}$/; //验证规则
+    var flag = reg.test(tel); //true
     if(!tel){
         swal("请输入联系电话");
+    }
+    if(!flag){
+        swal("请输入正确的联系电话");
     }
 }
 
