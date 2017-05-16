@@ -46,6 +46,7 @@
   </appender> -->
 
   <logger name="com.jusfoun.hookah.auth2server" level="DEBUG" />
+  <logger name="org.springframework.data.mongodb.core" level="DEBUG"/>
 
   <!-- 日志输出级别 -->
   <root level="INFO">
