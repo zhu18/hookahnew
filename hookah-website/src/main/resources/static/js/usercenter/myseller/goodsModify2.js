@@ -93,7 +93,6 @@ function renderData(data){//渲染页面
 	});
 	$('#preview-img').attr('src',data.goodsImg);//图片
 	$('input[name="goodsImg"]').val(data.goodsImg);
-	$('input[name="goodsImges"]').val(data.goodsImg);
 	if(data.formatList && data.formatList.length > 0){
 		renderFormatList(data.formatList);//渲染价格
 	}
@@ -106,8 +105,8 @@ function renderData(data){//渲染页面
 		}
 	});
 	renderIsBook(data.isBook, data.onsaleStartDate);
-	// $('#showcontent').html(getLength($('#J-goodsName').val()));
-	// $('#showcontent2').html(getLength($('#J-goodsBrief').val()));
+	$('#showcontent').html(getLength($('#J-goodsName').val()));
+	$('#showcontent2').html(getLength($('#J-goodsBrief').val()));
 	if(data.areaCountry > 0){
 		loadCountry(data.areaCountry,data.areaProvince)
 	}
@@ -240,13 +239,13 @@ function renderIsBook(isBook, onsaleStartDate){
 	if(isBook == 1){
 		$('#indate').val(onsaleStartDate);
 		$.jeDate("#indate", {
-			format: "YYYY-MM-DD hh:mm:ss",
+			format: "YYYY-MM-DD HH:mm:ss",
 			isTime: true,
 			minDate: $.nowDate(0)
 		});
 	}else{
 		$.jeDate("#indate", {
-			format: "YYYY-MM-DD hh:mm:ss",
+			format: "YYYY-MM-DD HH:mm:ss",
 			isTime: true,
 			minDate: $.nowDate(0)
 		});
@@ -554,6 +553,7 @@ function floorPrice(){
 	$('.price-inputs').on('input onporpertychange',function () {
 		var that = $(this);
 		var num = that.val();
+		console.log(num)
 		if(num == '.'){
 			that.val('0.');
 		}
@@ -594,8 +594,7 @@ $.validator.addMethod("isPricceData", function(value, element) {
 }, "小数点不能超过2位");
 $('#J_submitBtn').click(function(){
 	if($("#goodsModifyForm").valid()){
-		// backAddFn(submitGoodsPublish())
-		alert(JSON.stringify(submitGoodsPublish()))
+		backAddFn(submitGoodsPublish())
 	}
 });
 function backAddFn(data){

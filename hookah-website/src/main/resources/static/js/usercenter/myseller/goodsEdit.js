@@ -268,6 +268,7 @@ function tablePlus(that) {
 	var returnHtml = '';//返回借口
 	returnHtml += '<tr class="parent-tr">';
 	returnHtml += '<td class="errorNum-input"><div class="inputbox"><input type="text" placeholder="请输入错误码" name="fieldNames"></div></td>';
+	returnHtml += '<td class="type-input"><div class="selectbox"><select name="fieldType"><option value="String">String</option><option value="int">int</option></select></div></td>';
 	returnHtml += '<td><div class="inputbox"><textarea placeholder="请输入说明" name="describles"></textarea></div></td>';
 	returnHtml += '<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
 	returnHtml += '</tr>';
@@ -456,6 +457,7 @@ function submitGoodsPublish(){
 		$('table[d-type="returnHtml"] tbody tr').each(function () {
 			var listData = {};
 			listData.fieldName = $(this).find('input[name="fieldNames"]').val();
+			listData.fieldType = $(this).find('select[name="fieldType"]').val();
 			listData.describle = $(this).find('textarea[name="describles"]').val();
 			data.apiInfo.respParamList.push(listData);
 		});
