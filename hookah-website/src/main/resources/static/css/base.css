@@ -273,6 +273,8 @@
   height: 46px;
   line-height: 46px;
   background: -webkit-linear-gradient(top,#0b7cc3,#0063b3);
+  background: -ms-linear-gradient(top,#0b7cc3 0%,#0063b3 100%); /*IE*/
+  filter: progid:DXImageTransform.Microsoft.gradient(startcolorstr='#0b7cc3',endcolorstr='#0063b3',gradientType=1);
 }
 
 .header-bottom-bar .grid-row {
