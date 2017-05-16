@@ -146,7 +146,6 @@ function childrenSelects(that){
 	}
 }
 function selectGoodsTypes(goodsTypeVal){
-	console.log(goodsTypeVal);
 	$('.file-info-box').hide();
 	$('.struct.selects').hide();
 	$('.childrenSelect').hide();
@@ -465,8 +464,8 @@ function tablePlus(that) {
 	requestHtml += '</tr>';
 	var returnHtml = '';//返回借口
 	returnHtml += '<tr class="parent-tr">';
-	returnHtml += '<td class="errorNum-input"><div class="inputbox"><input type="text" placeholder="请输入错误码" name="fieldNames"></div></td>';
-	returnHtml += '<td><div class="inputbox"><textarea placeholder="请输入说明" name="describles"></textarea></div></td>';
+	returnHtml += '<td class="errorNum-input"><div class="inputbox"><input type="text" placeholder="请输入错误码" name="fieldName"></div></td>';
+	returnHtml += '<td><div class="inputbox"><textarea placeholder="请输入说明" name="describle"></textarea></div></td>';
 	returnHtml += '<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
 	returnHtml += '</tr>';
 	if ($(that).parents('.table-plus').attr('d-type') == 'priceHtml') {
@@ -594,8 +593,8 @@ $.validator.addMethod("isPricceData", function(value, element) {
 }, "小数点不能超过2位");
 $('#J_submitBtn').click(function(){
 	if($("#goodsModifyForm").valid()){
-		// backAddFn(submitGoodsPublish())
-		alert(JSON.stringify(submitGoodsPublish()))
+		backAddFn(submitGoodsPublish())
+		// alert(JSON.stringify(submitGoodsPublish()))
 	}
 });
 function backAddFn(data){
@@ -658,6 +657,7 @@ function backAddFn(data){
 
 function submitGoodsPublish(){
 	var data = {};
+	data.goodsId = goodsId;
 	data.goodsName = $('input[name="goodsName"]').val();
 	data.goodsBrief = $('textarea[name="goodsBrief"]').val();
 	data.attrTypeList = [];
@@ -727,15 +727,15 @@ function submitGoodsPublish(){
 			listData.isMust = $(item).find('input[name="isMust' + i + '"]:checked').val();
 			listData.fieldSample = $(item).find('input[name="fieldSample"]').val();
 			listData.fieldDefault = $(item).find('input[name="fieldDefault"]').val();
-			listData.describle = $(item).find('#describle').val();
+			listData.describle = $(item).find('textarea[name="describle"]').val();
 			data.apiInfo.reqParamList.push(listData);
 		});
 		data.apiInfo.respParamList = [];
 		$('table[d-type="returnHtml"] tbody tr').each(function () {
 			var listData = {};
-			listData.fieldName = $(this).find('input[name="fieldNames"]').val();
+			listData.fieldName = $(this).find('input[name="fieldName"]').val();
 			listData.fieldType = $(this).find('select[name="fieldType"]').val();
-			listData.describle = $(this).find('textarea[name="describles"]').val();
+			listData.describle = $(this).find('textarea[name="describle"]').val();
 			data.apiInfo.respParamList.push(listData);
 		});
 		console.log(data.apiInfo.respParamList);//----------------------
@@ -845,6 +845,25 @@ function renderApiInfo(apiInfo){ //渲染API ----- 1
 	$.each(apiInfo.respParamList, function (index,data) {
 		html2 += '<tr class="parent-tr">';
 		html2 += '<td class="errorNum-input"><div class="inputbox"><input type="text" name="fieldName" value="'+data.fieldName+'" placeholder="请输入错误码"></div></td>';
+		html2 +='<td class="type-input"><div class="selectbox"><select name="fieldType">';
+		if(data.fieldType){
+			if(data.fieldType == 'String'){
+				html2 +='<option value="String" selected="selected">String</option>';
+			}else{
+				html2 +='<option value="String">String</option>';
+			}
+			if(data.fieldType == 'int'){
+				html2 +='<option value="int" selected="selected">int</option>';
+			}else{
+				html2 +='<option value="int">int</option>';
+			}
+			console.log(111)
+		}else{
+			console.log(222)
+			html2 +='<option value="String">String</option>';
+			html2 +='<option value="int">int</option>';
+		}
+		html2 +='</select></div></td>';
 		html2 += '<td><div class="inputbox"><textarea name="describle" placeholder="请输入说明">'+data.describle+'</textarea></div></td>';
 		if(index === reqLen-1) {
 			html2 += '<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
