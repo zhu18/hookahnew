@@ -100,6 +100,7 @@ function pusblishBtn(){
 }
 
 function getSearchList(text){
+    console.log(text);
     $.ajax({
         type:'get',
         url:'/search/v1/category',
