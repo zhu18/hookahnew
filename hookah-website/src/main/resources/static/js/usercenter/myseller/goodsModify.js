@@ -22,15 +22,69 @@ function getGoodsDetails(){
 }
 function renderData(data){//渲染页面
 	catId = data.catId;
-	$('.category-title-box').html(data.catFullName);
+	$('.category-title-box').html(data.catFullName); //商品分类
 	$('#J-goodsName').val(data.goodsName);//商品名称
 	$('#J-goodsBrief').val(data.goodsBrief);//简介
-	$('input[name="goodsTypes"]').each(function(){
-		if($(this).val() == data.goodsType){
-			$(this).attr('checked','true')
+	$('select[name="parentSelect"] option').each(function(){
+		if(data.goodsType == 0 || data.goodsType == 1){
+			$('#childrenSelect1').show();
+			if($(this).attr('value') == 100){
+				$(this).attr('selected','true')
+			}
+			$('select[name="childrenSelect1"] option').each(function(){
+				if($(this).attr('value') == data.goodsType){
+					$(this).attr('selected','true')
+				}
+			})
+		}else if(data.goodsType == 2){
+			if($(this).attr('value') == 2){
+				$(this).attr('selected','true')
+			}
+		}else if(data.goodsType == 4 || data.goodsType == 5){
+			$('#childrenSelect3').show();
+			if($(this).attr('value') == 400){
+				$(this).attr('selected','true')
+			}
+			$('select[name="childrenSelect3"] option').each(function(){
+				if($(this).attr('value') == data.goodsType){
+					$(this).attr('selected','true')
+				}
+			})
+		}else if(data.goodsType == 6 || data.goodsType == 7){
+			$('#childrenSelect2').show();
+			if($(this).attr('value') == 300){
+				$(this).attr('selected','true')
+			}
+			$('select[name="childrenSelect2"] option').each(function(){
+				if($(this).attr('value') == data.goodsType){
+					$(this).attr('selected','true')
+				}
+			})
 		}
 	});
-	goodsTypes(data.goodsType,data.apiInfo,data.uploadUrl);
+	var goodsTypeVal = $('#parentSelect').val();
+	selectGoodsTypes(goodsTypeVal);
+	if(data.goodsType == 0){
+		$('#J_fileUploadSS').val(data.uploadUrl);
+		$('.fileUploads span').html(data.uploadUrl);
+		$('input[name="goodsImges2"]').val(data.uploadUrl);
+	}else if(data.goodsType == 1){
+		renderApiInfo(data.apiInfo);
+	}else if(data.goodsType == 2){
+		renderDataModel(data.dataModel);
+	}else if(data.goodsType == 4){
+		renderToolInfo(data.atAloneSoftware);
+	}else if(data.goodsType == 5){
+		renderToolSaasInfo(data.atSaaS);
+	}else if(data.goodsType == 6){
+		renderAppInfo(data.asAloneSoftware)
+	}else if(data.goodsType == 7){
+		renderAppSaasInfo(data.asSaaS)
+	}
+
+
+
+	// goodsTypes(data.goodsType,data.apiInfo,data.uploadUrl);
 	getAttrFn(data.catId); //获取属性
 	$.each(data.attrTypeList,function(index,items){
 		$.each(items.attrList,function(index,item){
@@ -60,6 +114,67 @@ function renderData(data){//渲染页面
 		loadCity(data.areaProvince,data.areaCity)
 	}
 	initialize(); // 初始化数据
+}
+function selectGoodsType(that){
+	$('.struct.selects').hide();
+	$('.childrenSelect').hide();
+	$('.file-info-box').hide();
+	var goodsTypeVal = $(that).val();
+	selectGoodsTypes(goodsTypeVal)
+}
+function childrenSelects(that){
+	$('.file-info-box').hide();
+	$('.struct.selects').hide();
+	var childVal = $(that).val();
+	if(childVal == 0){
+		$('.file-info-box').show();
+	}else if(childVal == 1){
+		$('.api-info-box').show();
+	}else if(childVal == 4){
+		$('.tool-info-box').show();
+		$('.tool-saas-info').show();
+	}else if(childVal == 5){
+		$('.tool-info-box').show();
+		$('.tool-saas-info').hide();
+	}else if(childVal == 6){
+		$('.app-info-box').show();
+		$('.app-saas-info').show();
+	}else if(childVal == 7){
+		$('.app-info-box').show();
+		$('.app-saas-info').hide();
+	}
+}
+function selectGoodsTypes(goodsTypeVal){
+	console.log(goodsTypeVal);
+	$('.file-info-box').hide();
+	$('.struct.selects').hide();
+	$('.childrenSelect').hide();
+	if(goodsTypeVal == 100){
+		$('#childrenSelect1').show();
+		if($('#childrenSelect1').val() == 0){
+			$('.file-info-box').show();
+		}else if($('#childrenSelect1').val() == 1){
+			$('.api-info-box').show();
+		}
+	}else if(goodsTypeVal == 300){
+		$('#childrenSelect2').show();
+		$('.app-info-box').show();
+		if($('#childrenSelect2').val() == 6){
+			$('.app-saas-info').show();
+		}else if($('#childrenSelect2').val() == 7){
+			$('.app-saas-info').hide();
+		}
+	}else if(goodsTypeVal == 400){
+		$('#childrenSelect3').show();
+		$('.tool-info-box').show();
+		if($('#childrenSelect3').val() == 4){
+			$('.tool-info-box').show();
+		}else if($('#childrenSelect3').val() == 5){
+			$('.tool-saas-info').hide();
+		}
+	}else{
+		$('.dataModel-info-box').show();
+	}
 }
 //加载地区
 function loadCountry(idCountry,idProvince) {
@@ -295,21 +410,21 @@ $('#fileupload').fileupload({
 
 	}
 });
-function goodsTypes(goodsType,apiInfo,uploadUrl) {
-	if (goodsType == 0) {
-		$('.api-info-box').hide();
-		$('.file-info-box').show();
-		if(uploadUrl){
-			renderfileUploadInfo(uploadUrl);
-		}
-	} else {
-		$('.file-info-box').hide();
-		$('.api-info-box').show();
-		if(apiInfo){
-			renderApiInfo(apiInfo);
-		}
-	}
-}
+// function goodsTypes(goodsType,apiInfo,uploadUrl) {
+// 	if (goodsType == 0) {
+// 		$('.api-info-box').hide();
+// 		$('.file-info-box').show();
+// 		if(uploadUrl){
+// 			renderfileUploadInfo(uploadUrl);
+// 		}
+// 	} else {
+// 		$('.file-info-box').hide();
+// 		$('.api-info-box').show();
+// 		if(apiInfo){
+// 			renderApiInfo(apiInfo);
+// 		}
+// 	}
+// }
 function goodsTypes2(that) {
 	if ($(that).val() == 0) {
 		$('.api-info-box').hide();
@@ -323,73 +438,7 @@ function renderfileUploadInfo(uploadUrl){
 	$('#J_fileUploadSS').val(uploadUrl);
 	$('#J_fileUploadName').html(uploadUrl);
 }
-function renderApiInfo(apiInfo){
-	$('input[name="apiUrl"]').val(apiInfo.apiUrl);
-	$('input[name="apiMethod"]').each(function(){
-		if($(this).val() == apiInfo.apiMethod){
-			$(this).attr('checked','true')
-		}
-	});
-	$('input[name="reqSample"]').val(apiInfo.reqSample);
-	$('textarea[name="apiDesc"]').val(apiInfo.apiDesc);
-	var html = '';
-	var reqLen = apiInfo.reqParamList.length;
-	$.each(apiInfo.reqParamList,function (index,data) {
-		html +='<tr class="parent-tr">';
-		html +='<td class="name-input"><div class="inputbox "><input type="text" name="fieldName" placeholder="请输入名称" value="'+data.fieldName+'" required="required"></div></td>';
-		html +='<td class="type-input"><div class="selectbox"><select name="fieldType">';
-		if(data.fieldType == 'String'){
-			html +='<option value="String" selected="selected">String</option>';
-		}else{
-			html +='<option value="String">String</option>';
-		}
-		if(data.fieldType == 'int'){
-			html +='<option value="int" selected="selected">int</option>';
-		}else{
-			html +='<option value="int">int</option>';
-		}
-		html +='</select></div></td>';
-		html +='<td class="type-input"><div class="inputbox"><input type="text" name="fieldDefault" placeholder="请输入默认值" value="'+data.fieldDefault+'"></div></td>';
-		html +='<td>';
-		html +='<div class="radio-box">';
-		if(data.isMust == 0){
-			html +='<label><input type="radio" name="isMust'+index+'" checked="checked" value="0">否</label>';
-		}else{
-			html +='<label><input type="radio" name="isMust'+index+'" value="0">否</label>';
-		}
-		if(data.isMust == 1){
-			html +='<label><input type="radio" name="isMust'+index+'" checked="checked" value="1">是</label>';
-		}else{
-			html +='<label><input type="radio" name="isMust'+index+'" value="1">是</label>';
-		}
-		html +='</div>';
-		html +='</td>';
-		html +='<td><div class="inputbox"><input type="text" name="fieldSample" placeholder="请输入示例" value="'+data.fieldSample+'"></div></td>';
-		html +='<td><div class="inputbox"><textarea name="describle" placeholder="请输入描述">'+data.describle+'</textarea></div></td>';
-		if(index === reqLen-1){
-			html +='<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
-		}else{
-			html +='<td><span class="table-plus-btn" onclick="tableDelete(this)">-</span></td>';
-		}
-		html +='</tr>';
-	});
-	$('table[d-type="requestHtml"] tbody').html(html);
-	$('textarea[name="respSample"]').val(apiInfo.respSample);
-	var html2 = '';
-	var resqLen = apiInfo.respParamList.length;
-	$.each(apiInfo.respParamList, function (index,data) {
-		html2 += '<tr class="parent-tr">';
-		html2 += '<td class="errorNum-input"><div class="inputbox"><input type="text" name="fieldName" value="'+data.fieldName+'" placeholder="请输入错误码"></div></td>';
-		html2 += '<td><div class="inputbox"><textarea name="describle" placeholder="请输入说明">'+data.describle+'</textarea></div></td>';
-		if(index === reqLen-1) {
-			html2 += '<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
-		}else{
-			html2 += '<td><span class="table-plus-btn" onclick="tableDelete(this)">-</span></td>';
-		}
-		html2 += '</tr>';
-	});
-	$('table[d-type="returnHtml"] tbody').html(html2);
-}
+
 var itemNum = 0;
 function tablePlus(that) {
 	if($(that).parents('.price-table').attr('d-type') == 'requestHtml'){
@@ -655,4 +704,147 @@ function submitGoodsPublish(){
 		data.uploadUrl = $('#J_fileUploadSS').val();
 	}
 	return data;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function renderApiInfo(apiInfo){ //渲染API ----- 1
+	$('.api-info-box input[name="apiUrl"]').val(apiInfo.apiUrl);
+	$('.api-info-box input[name="apiMethod"]').each(function(){
+		if($(this).val() == apiInfo.apiMethod){
+			$(this).attr('checked','checked');
+		}else{
+			$(this).removeAttr('checked');
+		}
+	});
+	$('.api-info-box input[name="reqSample"]').val(apiInfo.reqSample);
+	$('.api-info-box #apiDesc').val(apiInfo.apiDesc);
+	$('.api-info-box #respSample').val(apiInfo.respSample);
+	var html = '';
+	var reqLen = apiInfo.reqParamList.length;
+	$.each(apiInfo.reqParamList,function (index,data) {
+		html +='<tr class="parent-tr">';
+		html +='<td class="name-input"><div class="inputbox "><input type="text" name="fieldName" placeholder="请输入名称" value="'+data.fieldName+'" required="required"></div></td>';
+		html +='<td class="type-input"><div class="selectbox"><select name="fieldType">';
+		if(data.fieldType == 'String'){
+			html +='<option value="String" selected="selected">String</option>';
+		}else{
+			html +='<option value="String">String</option>';
+		}
+		if(data.fieldType == 'int'){
+			html +='<option value="int" selected="selected">int</option>';
+		}else{
+			html +='<option value="int">int</option>';
+		}
+		html +='</select></div></td>';
+		html +='<td class="type-input"><div class="inputbox"><input type="text" name="fieldDefault" placeholder="请输入默认值" value="'+data.fieldDefault+'"></div></td>';
+		html +='<td>';
+		html +='<div class="radio-box">';
+		if(data.isMust == 0){
+			html +='<label><input type="radio" name="isMust'+index+'" checked="checked" value="0">否</label>';
+		}else{
+			html +='<label><input type="radio" name="isMust'+index+'" value="0">否</label>';
+		}
+		if(data.isMust == 1){
+			html +='<label><input type="radio" name="isMust'+index+'" checked="checked" value="1">是</label>';
+		}else{
+			html +='<label><input type="radio" name="isMust'+index+'" value="1">是</label>';
+		}
+		html +='</div>';
+		html +='</td>';
+		html +='<td><div class="inputbox"><input type="text" name="fieldSample" placeholder="请输入示例" value="'+data.fieldSample+'"></div></td>';
+		html +='<td><div class="inputbox"><textarea name="describle" placeholder="请输入描述">'+data.describle+'</textarea></div></td>';
+		if(index === reqLen-1){
+			html +='<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
+		}else{
+			html +='<td><span class="table-plus-btn" onclick="tableDelete(this)">-</span></td>';
+		}
+		html +='</tr>';
+	});
+	$('table[d-type="requestHtml"] tbody').html(html);
+	var html2 = '';
+	var resqLen = apiInfo.respParamList.length;
+	$.each(apiInfo.respParamList, function (index,data) {
+		html2 += '<tr class="parent-tr">';
+		html2 += '<td class="errorNum-input"><div class="inputbox"><input type="text" name="fieldName" value="'+data.fieldName+'" placeholder="请输入错误码"></div></td>';
+		html2 += '<td><div class="inputbox"><textarea name="describle" placeholder="请输入说明">'+data.describle+'</textarea></div></td>';
+		if(index === reqLen-1) {
+			html2 += '<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
+		}else{
+			html2 += '<td><span class="table-plus-btn" onclick="tableDelete(this)">-</span></td>';
+		}
+		html2 += '</tr>';
+	});
+	$('table[d-type="returnHtml"] tbody').html(html2);
+}
+function renderDataModel(dataModel){ //渲染数据模型---2
+	$('.dataModel-info-box input[name="complexity"]').val(dataModel.complexity);
+	$('.dataModel-info-box input[name="maturity"]').val(dataModel.maturity);
+	$('.dataModel-info-box input[name="aexp"]').val(dataModel.aexp);
+	$('.dataModel-info-box input[name="modelFile"]').val(dataModel.modelFile);
+	$('.dataModel-info-box input[name="modelFiles"]').val(dataModel.modelFile);
+	$('.dataModel-info-box input[name="configFile"]').val(dataModel.configFile);
+	$('.dataModel-info-box input[name="configFiles"]').val(dataModel.configFile);
+	$('.dataModel-info-box input[name="configParams"]').val(dataModel.configParams);
+	$('.dataModel-info-box input[name="configParam"]').val(dataModel.configParams);
+	$('.dataModel-info-box .otherDesc').val(dataModel.otherDesc);
+}
+function renderToolInfo(atAloneSoftware){
+	$('.tool-info-box input[name="aTIndustryField"]').val(atAloneSoftware.aTAloneIndustryField);
+	$('.tool-info-box input[name="aTVersionDesc"]').val(atAloneSoftware.aTAloneVersionDesc);
+	$('.tool-info-box #aTToolsIntroduce').val(atAloneSoftware.aTAloneToolsIntroduce);
+	$('.tool-info-box #aTAloneCloudHardwareResource').val(atAloneSoftware.aTAloneCloudHardwareResource);
+	$('.tool-info-box .otherDesc').val(atAloneSoftware.otherDesc);
+}
+function renderToolSaasInfo(atSaaS){
+	$('.tool-info-box input[name="aTIndustryField"]').val(atSaaS.aTIndustryField);
+	$('.tool-info-box input[name="aTVersionDesc"]').val(atSaaS.aTVersionDesc);
+	$('.tool-info-box #aTToolsIntroduce').val(atSaaS.aTToolsIntroduce);
+	$('.tool-info-box .otherDesc').val(atSaaS.otherDesc);
+}
+function renderAppInfo(asAloneSoftware){
+	$('.app-info-box input[name="aSComplexity"]').val(asAloneSoftware.aSComplexity);
+	$('.app-info-box input[name="aSVersionDesc"]').val(asAloneSoftware.aSVersionDesc);
+	$('.app-info-box input[name="aSServiceLevel"]').val(asAloneSoftware.aSServiceLevel);
+	$('.app-info-box input[name="aSAexp"]').val(asAloneSoftware.aSAexp);
+	$('.app-info-box #aSCloudHardwareResource').val(asAloneSoftware.aSCloudHardwareResource);
+	$('.app-info-box #aSAintroduce').val(asAloneSoftware.aSAintroduce);
+	$('.app-info-box .otherDesc').val(asAloneSoftware.otherDesc);
+}
+function renderAppSaasInfo(asSaaS){
+	$('.app-info-box input[name="aSComplexity"]').val(asSaaS.sSComplexity);
+	$('.app-info-box input[name="aSVersionDesc"]').val(asSaaS.sSVersionDesc);
+	$('.app-info-box input[name="aSServiceLevel"]').val(asSaaS.sServiceLevel);
+	$('.app-info-box input[name="aSAexp"]').val(asSaaS.sSAexp);
+	$('.app-info-box #aSAintroduce').val(asSaaS.sSAintroduce);
+	$('.app-info-box .otherDesc').val(asSaaS.otherDesc);
 }

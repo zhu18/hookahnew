@@ -1,7 +1,7 @@
 <%
 var head = {
 %>
-<link rel="stylesheet" href="/static/css/usercenter/myseller/goodsModify.css">
+<link rel="stylesheet" href="/static/css/usercenter/myseller/goodsEdit.css">
 <link rel="stylesheet" href="/static/css/plugins/chosen/chosen.css">
 <link rel="stylesheet" href="/static/css/plugins/jedate/jedate.css">
 <link rel="stylesheet" href="/static/css/plugins/wangEditor/wangEditor.min.css">
@@ -32,11 +32,11 @@ var htmlPart = {
                                 <tr>
                                     <td class="bar">商品名称：<span class="requireds">*</span></td>
                                     <td>
-                                        <div class="text-box"><input name="goodsName" id="J-goodsName" type="text" required>
+                                        <div class="text-box"><input name="goodsName" id="J-goodsName" type="text" required="required">
                                             <span class="input-count"><strong id="showcontent">0</strong>/60</span>
                                         </div>
                                         <div class="errors">
-                                            <span class="errorinfo">请填写商品名称，不能超过60个字符（30个汉字）!</span>
+                                            <span class="errorinfo">请填写商品名称，不能超过60个字!</span>
                                         </div>
                                     </td>
                                 </tr>
@@ -44,11 +44,11 @@ var htmlPart = {
                                     <td class="bar">商品简介：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="textarea-box">
-                                            <textarea type="text" name="goodsBrief" id="J-goodsBrief" required></textarea>
+                                            <textarea type="text" name="goodsBrief" id="J-goodsBrief" required="required"></textarea>
                                             <span class="input-count"><strong id="showcontent2">0</strong>/400</span>
                                         </div>
                                         <div class="errors">
-                                            <span class="errorinfo">请填写商品简介，不能超过400个字符（200个汉字）!</span>
+                                            <span class="errorinfo">请填写商品简介，不能超过200个字!</span>
                                         </div>
                                     </td>
                                 </tr>
@@ -68,13 +68,34 @@ var htmlPart = {
                                 <tr>
                                     <td class="bar">商品类型：<span class="requireds">*</span></td>
                                     <td>
-                                        <div class="radio-box">
-                                            <label>
-                                                <input type="radio" name="goodsTypes" onchange="goodsTypes2(this)" value="0">常规商品
-                                            </label>
-                                            <label>
-                                                <input type="radio" name="goodsTypes" onchange="goodsTypes2(this)" value="1">api
-                                            </label>
+                                        <!--<div class="radio-box">-->
+                                        <!--<label>-->
+                                        <!--<input type="radio" name="goodsTypes" onchange="goodsTypeChange(this)" value="0"-->
+                                        <!--checked="">常规商品-->
+                                        <!--</label>-->
+                                        <!--<label>-->
+                                        <!--<input type="radio" name="goodsTypes" onchange="goodsTypeChange(this)" value="1">api-->
+                                        <!--</label>-->
+                                        <!--</div>-->
+                                        <div class="select-box">
+                                            <select name="parentSelect" class="parentSelect" onchange="selectGoodsType(this)" id="parentSelect">
+                                                <option value="100">数据源</option>
+                                                <option value="2">数据模型</option>
+                                                <option value="300">应用场景</option>
+                                                <option value="400">分析工具</option>
+                                            </select>
+                                            <select name="childrenSelect1" class="childrenSelect" onchange="childrenSelects(this)" id="childrenSelect1">
+                                                <option value="0">离线数据</option>
+                                                <option value="1">api</option>
+                                            </select>
+                                            <select name="childrenSelect2" class="childrenSelect" onchange="childrenSelects(this)" id="childrenSelect2">
+                                                <option value="6">独立软件</option>
+                                                <option value="7">Saas</option>
+                                            </select>
+                                            <select name="childrenSelect3" class="childrenSelect" onchange="childrenSelects(this)" id="childrenSelect3">
+                                                <option value="4">独立软件</option>
+                                                <option value="5">Saas</option>
+                                            </select>
                                         </div>
                                     </td>
                                 </tr>
@@ -103,13 +124,13 @@ var htmlPart = {
                                         <div class="multimage-wrap">
                                             <ul class="image-list">
                                                 <li>
-                                                    <input type="hidden" name="goodsImg">
                                                     <div class="preview" id="preview-div">
                                                         <a title="上传图片" class="upload-tip "><span class="fa fa-plus"></span></a>
                                                         <img class="preview-img" id="preview-img">
                                                         <input id="fileupload" type="file" name="filename" multiple="" class="preview-btn">
                                                         <a href="javascript:void(0)" class="replace-btn"
                                                            id="replace-btn">替换图片</a>
+                                                        <input type="text" style="opacity: 0;width:20px;position: absolute"  name="goodsImges" required="required">
                                                     </div>
                                                 </li>
                                             </ul>
@@ -139,7 +160,7 @@ var htmlPart = {
                                                         <div class="inputbox"><input type="text" datatype="name" placeholder="请输入名称" required="required"></div>
                                                     </td>
                                                     <td class="number-input">
-                                                        <div class="inputbox"><input type="number" datatype="number" placeholder="请输入规格" required="required"></div>
+                                                        <div class="inputbox"><input type="number" datatype="number" placeholder="请输入规格"  digits="true" required="required"></div>
                                                     </td>
                                                     <td>
                                                         <div class="selectbox">
@@ -151,7 +172,7 @@ var htmlPart = {
                                                         </div>
                                                     </td>
                                                     <td class="price-input">
-                                                        <div class="inputbox"><input class="price-inputs number" datatype="price" type="number" placeholder="请输入价格" required="required"></div>
+                                                        <div class="inputbox"><input class="price-inputs number" datatype="price" type="text" placeholder="请输入价格" required="required"></div>
                                                     </td>
                                                     <td>
                                                         <span class="table-plus-btn" onclick="tablePlus(this)">+</span>
@@ -166,7 +187,7 @@ var htmlPart = {
                                     <td class="bar">商品描述：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="wangEditor-wrapper">
-                                            <textarea id="textarea1" style="height: 500px; display: none;" required="required"></textarea>
+                                            <textarea id="textarea1" style="height: 500px; display: none;" name="goodsDescBox" required="required"></textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -174,17 +195,18 @@ var htmlPart = {
                                     <td class="bar">文件上传：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="fileUploads">
-                                            <input type="hidden" id="J_fileUploadSS" required="required">
-                                            <button>选择文件</button><span id="J_fileUploadName">未选择任何文件</span>
+                                            <input type="hidden" id="J_fileUploadSS" required="required" name="fileUploadSS">
+                                            <button>选择文件</button><span>未选择任何文件</span>
                                             <input id="fileupload2" type="file" name="filename" multiple="" class="preview-btn">
+                                            <input type="text" style="opacity: 0;width:20px;position: absolute"  name="goodsImges2" required="required">
                                         </div>
                                     </td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <h1 class="api-info-box">API信息：</h1>
-                        <div class="struct api-info-box">
+                        <div class="struct selects api-info-box">
+                            <h1 class="">API信息：</h1>
                             <table>
                                 <tbody>
                                 <tr>
@@ -222,7 +244,7 @@ var htmlPart = {
                                     <td class="bar">接口描述：</td>
                                     <td>
                                         <div class="textarea-box">
-                                            <textarea type="text" name="apiDesc"></textarea>
+                                            <textarea type="text" id="apiDesc"></textarea>
                                             <span class="input-count"></span>
                                         </div>
                                     </td>
@@ -257,7 +279,8 @@ var htmlPart = {
                                                         </div>
                                                     </td>
                                                     <td class="type-input">
-                                                        <div class="inputbox"><input type="text" name="fieldDefault" placeholder="请输入默认值" required="required"></div>
+                                                        <div class="inputbox"><input type="text" name="fieldDefault"
+                                                                                     placeholder="请输入默认值"></div>
                                                     </td>
                                                     <td>
                                                         <div class="radio-box">
@@ -270,10 +293,10 @@ var htmlPart = {
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <div class="inputbox"><input type="text" name="fieldSample" placeholder="请输入示例" required="required"></div>
+                                                        <div class="inputbox"><input type="text" name="fieldSample" placeholder="请输入示例"></div>
                                                     </td>
                                                     <td>
-                                                        <div class="inputbox"><textarea name="describle" placeholder="请输入描述" required="required"></textarea></div>
+                                                        <div class="inputbox"><textarea id="describle" placeholder="请输入描述"></textarea></div>
                                                     </td>
                                                     <td>
                                                         <span class="table-plus-btn itemNum" onclick="tablePlus(this)">+</span>
@@ -288,7 +311,7 @@ var htmlPart = {
                                     <td class="bar">返回示例：</td>
                                     <td>
                                         <div class="textarea-box">
-                                            <textarea type="text" name="respSample"></textarea>
+                                            <textarea type="text" id="respSample"></textarea>
                                             <span class="input-count"></span>
                                         </div>
                                     </td>
@@ -311,7 +334,8 @@ var htmlPart = {
                                                         <div class="inputbox"><input type="text" name="fieldNames" placeholder="请输入错误码" required="required"></div>
                                                     </td>
                                                     <td>
-                                                        <div class="inputbox"><textarea name="describles" placeholder="请输入说明" required="required"></textarea></div>
+                                                        <div class="inputbox"><textarea id="describle2"
+                                                                                        placeholder="请输入说明" name="describles" required="required"></textarea></div>
                                                     </td>
                                                     <td>
                                                         <span class="table-plus-btn" onclick="tablePlus(this)">+</span>
@@ -320,6 +344,304 @@ var htmlPart = {
                                                 </tbody>
                                             </table>
                                         </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="struct selects dataModel-info-box">
+                            <h1 class="">数据模型：</h1>
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td class="bar"><h3>模型规则：</h3></td>
+                                    <td>
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td class="bar">复杂度：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="complexity" required="required">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">成熟度：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="maturity" required="required">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">应用经验：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="aexp" required="required">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar"><h3>使用规格：</h3></td>
+                                    <td>
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td class="bar">模型文件：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box dataModelfileUploads readonlyInput" >
+                                                        <input type="hidden" name="modelFile"  class="fileEndInput" required="required">
+                                                        <input type="text" class="grid-left fileEndInputs" name="modelFiles" required="required">
+                                                        <a href="javascript:void(0);" class="uploadFiles grid-left">
+                                                            <span>选择文件</span>
+                                                            <input type="file" name="filename" class="fileUploadBtn">
+                                                        </a>
+                                                        <div style="clear: both"></div>
+                                                        <div class="readonlyWrap"></div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">配置文件：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box readonlyInput">
+                                                        <input type="hidden" name="configFile" class="fileEndInput" required="required">
+                                                        <input type="text" class="grid-left fileEndInputs" name="configFiles" required="required">
+                                                        <a href="javascript:void(0);" class="uploadFiles grid-left">
+                                                            <span>选择文件</span>
+                                                            <input type="file" name="filename" class="fileUploadBtn" >
+                                                        </a>
+                                                        <div style="clear: both"></div>
+                                                        <div class="readonlyWrap"></div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">配置参数：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box readonlyInput">
+                                                        <input type="hidden" name="configParams" class="fileEndInput" required="required">
+                                                        <input type="text" class="grid-left fileEndInputs" name="configParam" required="required">
+                                                        <a href="javascript:void(0);" class="uploadFiles grid-left">
+                                                            <span>选择文件</span>
+                                                            <input type="file" name="filename" class="fileUploadBtn">
+                                                        </a>
+                                                        <div style="clear: both"></div>
+                                                        <div class="readonlyWrap"></div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar"><h3>其他说明：</h3></td>
+                                    <td>
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td class="bar">其他说明</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="textarea-box">
+                                                        <textarea class="otherDesc" cols="30" rows="10"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="struct selects app-info-box">
+                            <h1 class="">应用场景：</h1>
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td class="bar"><h3>应用场景规则：</h3></td>
+                                    <td>
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td class="bar">应用复杂度：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="aSComplexity" required="required">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">版本说明：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="aSVersionDesc" required="required">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">服务等级：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="aSServiceLevel" required="required">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">应用经验：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="aSAexp" required="required">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">应用介绍</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="1000">
+                                                    <div class="textarea-box">
+                                                        <textarea id="aSAintroduce"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr class="app-saas-info">
+                                    <td class="bar"><h3>使用规格：</h3></td>
+                                    <td>
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td class="bar">云硬件资源</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="textarea-box">
+                                                        <textarea id="aSCloudHardwareResource"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar"><h3>其他说明：</h3></td>
+                                    <td>
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td class="bar">其他说明</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="textarea-box">
+                                                        <textarea class="otherDesc"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="struct selects tool-info-box">
+                            <h1 class="">分析工具：</h1>
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td class="bar"><h3>工具规格：</h3></td>
+                                    <td>
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td class="bar">行业领域：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="aTIndustryField" required="required">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">版本说明：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="aTVersionDesc" required="required">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">工具介绍</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="1000">
+                                                    <div class="textarea-box">
+                                                        <textarea id="aTToolsIntroduce"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr class="tool-saas-info">
+                                    <td class="bar"><h3>使用规格：</h3></td>
+                                    <td>
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td class="bar">云硬件资源</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="textarea-box">
+                                                        <textarea id="aTAloneCloudHardwareResource"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar"><h3>其他说明：</h3></td>
+                                    <td>
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td class="bar">其他说明</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="textarea-box">
+                                                        <textarea class="otherDesc"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -360,32 +682,32 @@ var htmlPart = {
                         <div class="struct">
                             <table>
                                 <tbody>
-                                    <tr>
-                                        <td class="bar">库存计数：</td>
-                                        <td>
-                                            <div class="radio-box">
-                                                <label><input type="radio" name="121">买家拍下减库存</label>
-                                                <label><input type="radio" name="121" checked="">买家付款减库存</label>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="bar">上架时间：<span class="requireds">*</span></td>
-                                        <td>
-                                            <div class="radio-box">
-                                                <label><input type="radio" name="isBook" value="0" checked="" onchange="isOnsaleFun(this)">立刻上架</label>
-                                                <label><input type="radio" name="isBook" value="1" onchange="isOnsaleFun(this)">定时上架</label>
-                                                <label class="isOnsale-box">请选择上架时间：<input id="indate" type="text" placeholder="请选择" readonly=""></label>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td class="bar">库存计数：</td>
+                                    <td>
+                                        <div class="radio-box">
+                                            <label><input type="radio" name="121">买家拍下减库存</label>
+                                            <label><input type="radio" name="121" checked="">买家付款减库存</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar">上架时间：</td>
+                                    <td>
+                                        <div class="radio-box">
+                                            <label><input type="radio" name="isBook" value="0" checked="" onchange="isOnsaleFun(this)">立刻上架</label>
+                                            <label><input type="radio" name="isBook" value="1" onchange="isOnsaleFun(this)">定时上架</label>
+                                            <label class="isOnsale-box">请选择上架时间：<input id="indate" type="text" placeholder="请选择" readonly=""></label>
+                                        </div>
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
                 <div class="pulish-btn">
-                    <button class="pusGoods-btn btn btn-full-orange" type="button" id="J_submitBtn">发布商品</button>
+                    <button class="pusGoods-btn btn btn-full-orange"  type="button" id="J_submitBtn">发布商品</button>
                 </div>
             </form>
         </div>
