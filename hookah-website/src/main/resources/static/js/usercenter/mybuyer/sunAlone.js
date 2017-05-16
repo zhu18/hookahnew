@@ -5,7 +5,7 @@ $(function(){
     $.fn.raty.defaults.path = '/static/images';
     var len=$('.sunContent').length;
     for (var i=1;i<=len;i++){
-        $('#function-demo-'+i+'').raty({
+        $('.item-'+i+' #function-demo').raty({
             number: 5, //多少个星星设置
             targetType: 'hint', //类型选择，number是数字值，hint，是设置的数组值
             path: '/static/images/',
@@ -13,7 +13,7 @@ $(function(){
             size: 24,
             starOff: 'starOff.png',
             starOn: 'starOn.png',
-            target: '#function-hint-'+i+'',
+            target: '.item-'+i+' #function-hint',
             cancel: false,
             targetKeep: true,
             targetText: '请选择评分'
@@ -22,24 +22,25 @@ $(function(){
             // }
         });
     }
-
-
-
 })
-var goodsId=[];
-$('input[name="goodsId"]').each(function () {
-    goodsId.push($(this).val())
-})
+
 function check(orderId){
+    var data=[];
+    var len=$('.sunContent').length;
+    for (var i=1;i<=len;i++){
+        data.push({
+            "orderId":orderId,
+            "goodsId":$('.item-' + i + ' .pic a').attr('name'),
+            "commentContent":$('.item-' + i + ' #area').val(),
+            "commentLevel":$('.item-' + i + ' #function-demo input').val()
+        })
+
+    }
     $.ajax({
         type: "post",
         url: '/comment/add',
-        data:{
-            orderId:orderId,
-            goodsId:$('input[name="goodsId"]').val(),
-            commentContent:$("#area").val(),
-            commentLevel:$("input[name='score']").val()
-        },
+        data:JSON.stringify(data),
+        contentType:'application/json ',
         success: function(msg) {
             if (msg.code == 1) {
                 $.alert('提交成功');
