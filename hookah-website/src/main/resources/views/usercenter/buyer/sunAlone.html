@@ -37,8 +37,8 @@ var htmlPart = {
                         <div class="satisfaction margin-bottom-20">
                             <span class="goods">商品满意度</span>
                             <span class="demo">
-                                <div id="function-demo" class="target-demo"></div>
-                                <div id="function-hint" class="hint"></div>
+                                <div id="function-demo-${listLP.index}" class="target-demo"></div>
+                                <div id="function-hint-${listLP.index}" class="hint"></div>
                             </span>
                         </div>
                         <div class="suneval clearfix" >
@@ -49,7 +49,7 @@ var htmlPart = {
                         </div>
                     </div>
                 </div>
-            <input type="hidden" value="${list.goodsId}" name="goodsId">
+                <input type="hidden" value="${list.goodsId}" name="goodsId">
                 <% } %>
                 <div class="sure text-align-center">
                     <span class="margin-top-20 text-align-center btn-full-orange margin-bottom-20" onclick="check('${order.orderId}')">提交</span>

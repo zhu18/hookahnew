@@ -3,22 +3,28 @@
  */
 $(function(){
     $.fn.raty.defaults.path = '/static/images';
-    $('#function-demo').raty({
-        number: 5, //多少个星星设置
-        targetType: 'hint', //类型选择，number是数字值，hint，是设置的数组值
-        path: '/static/images/',
-        hints: ['差', '一般', '好', '非常好', '全五星'],
-        size: 24,
-        starOff: 'starOff.png',
-        starOn: 'starOn.png',
-        target: '#function-hint',
-        cancel: false,
-        targetKeep: true,
-        targetText: '请选择评分',
-        // click: function(score, evt) {
-        //     console.log('ID: ' + $(this).attr('id') + "\nscore: " + score + "\nevent: " + evt.type);
-        // }
-    });
+    var len=$('.sunContent').length;
+    for (var i=1;i<=len;i++){
+        $('#function-demo-'+i+'').raty({
+            number: 5, //多少个星星设置
+            targetType: 'hint', //类型选择，number是数字值，hint，是设置的数组值
+            path: '/static/images/',
+            hints: ['差', '一般', '好', '非常好', '全五星'],
+            size: 24,
+            starOff: 'starOff.png',
+            starOn: 'starOn.png',
+            target: '#function-hint-'+i+'',
+            cancel: false,
+            targetKeep: true,
+            targetText: '请选择评分'
+            // click: function(score, evt) {
+            //     console.log('ID: ' + $(this).attr('id') + "\nscore: " + score + "\nevent: " + evt.type);
+            // }
+        });
+    }
+
+
+
 })
 var goodsId=[];
 $('input[name="goodsId"]').each(function () {
