@@ -709,7 +709,7 @@ public class ESTemplate {
     public BoolQueryBuilder getBoolQueryBuilder(Map<String,Object> filterMap, EsRange range) {
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
         QueryBuilder queryString = null;
-        if(filterMap != null && !filterMap.isEmpty() && filterMap.size() > 1){
+        if(filterMap != null && !filterMap.isEmpty() && filterMap.size() > 0){
             for(Map.Entry entry : filterMap.entrySet()){
                 if(entry.getValue() != null && !HookahConstants.ONSALE_START_DATE_FILEDNAME.equals(entry.getValue())) {
                     queryString = QueryBuilders.simpleQueryStringQuery(String.valueOf(entry.getValue()))
