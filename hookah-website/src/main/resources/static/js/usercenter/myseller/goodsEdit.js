@@ -509,7 +509,7 @@ function isOnsaleFun(that) {
 	}
 }
 $.jeDate("#indate", {
-	format: "YYYY-MM-DD HH:mm:ss",
+	format: "YYYY-MM-DD hh:mm:ss",
 	isTime: true,
 	minDate: $.nowDate(0)
 });
