@@ -51,7 +51,7 @@
                 $(this).children('a').css("color","#247DE8");
             }
         });
-        if(url == '/admin/articleManage' || url == '/admin/articlePublish'){
+        if(url == '/admin/articleManage' || url == '/admin/articlePublish' || url == '/admin/articleModify'){
             $('.adminS ul li:first-child').addClass('active').siblings().removeClass("active").children('a').css("color","#247DE8");
         }else{
 			$('.adminS ul li:first-child').removeClass("active").siblings().addClass('active').children('a').css("color","#247DE8");
