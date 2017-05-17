@@ -62,6 +62,14 @@ $(document).ready(function(){
 	floorPrice();
 	var goodsTypeVal = $('#parentSelect').val();
 	selectGoodsTypes(goodsTypeVal);
+	$('#preview-div').mouseover(function(){
+		if($('#preview-img').attr('src')){
+			$('#replace-btn').show()
+		}
+	});
+	$('#preview-div').mouseout(function(){
+		$('#replace-btn').hide()
+	});
 });
 function selectGoodsType(that){
 	$('.struct.selects').hide();
@@ -183,7 +191,14 @@ $('#fileupload').fileupload({   //图片上传
 		}
 	},
 	progressall: function (e, data) {
-
+		var progress = parseInt(data.loaded / data.total * 100, 10);
+		if(progress > 0 && progress < 100){
+			$('#bars').show()
+		}else{
+			$('#bars').hide()
+		}
+		$('#barSmail').css('width',progress + '%');
+		$('#barText').html(progress + '%');
 	}
 });
 $('#fileupload2').fileupload({
