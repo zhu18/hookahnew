@@ -4,6 +4,7 @@
 $(function(){
 $(".button").on("click",userAuth);
 $("#userCode").on("blur",checkIDCard);
+$("#userName").on("blur",checkName);
 $("#zform").on("click", upPhoto);
 $("#fform").on("click", upPhoto);
 
@@ -46,14 +47,28 @@ function userAuth(){
 
 
 }
+//验证姓名
+function checkName() {
+    var name = $("#userName").val();
+    var reg=/[\u4E00-\u9FA5]{2,10}(?:·[\u4E00-\u9FA5]{2,10})*/
+    if(name==null||name==""){
+        swal("请输入姓名！");
+        return ;
+    }
+    if(!reg.test(name)){
+        swal("请输入正确的姓名！");
+        return ;
+    }
+}
 //验证身份证号
 function checkIDCard(){
     var idcard = $("#userCode").val();
+    var reg=/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
     if(idcard==null||idcard==""){
         swal("请输入身份证号！");
         return ;
     }
-    if(idcard.length<18){
+    if(!reg.test(idcard)){
         swal("请输入正确的身份证编码！");
         return ;
     }
@@ -67,13 +82,13 @@ function upPhoto(){
         dataType: 'json',
         done: function (e, data) {
             if (data.result.code == 1) {
+                console.log(2);
                 var obj = data.result.data[0];
                 $(this).siblings("img").attr("src", obj.absPath);
                 imgSrc = obj.absPath;
             } else {
                 $.alert(data.result.message)
             }
-
         },
         progressall: function (e, data) {
 
