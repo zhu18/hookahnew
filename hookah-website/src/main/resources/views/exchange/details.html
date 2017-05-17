@@ -53,7 +53,7 @@ var htmlPart = {
 						<div>
 							<span>价格：</span>
 							<i class="fa fa-jpy font-size-14 color-orange" aria-hidden="true"></i>
-							<span class="font-size-24 color-orange" formatid="${goodsDetails.formatList[0].formatId}" id="J_goodsPrice">${trunc(goodsDetails.shopPrice / 100)}</span>
+							<span class="font-size-24 color-orange" id="J_goodsPrice">${goodsDetails.shopPrice / 100}</span>
 							<!--<span class="convert color-orange" id="J_goodsNumber">折合0.0001元/次</span>-->
 						</div>
 						<%if(goodsDetails.formatList.~size > 0){%>
@@ -68,8 +68,8 @@ var htmlPart = {
 					<div class="detail-star margin-bottom-20 padding-left-10">
 						<span class="font-size-14">评分：</span>
 						<%
-							var goodsGradesC = goodsGrades + '';
-							var goodsGrade = strutil.subStringTo (goodsGradesC,0,1);
+						var goodsGradesC = goodsGrades + '';
+						var goodsGrade = strutil.subStringTo (goodsGradesC,0,1);
 						goodsGrade = parseInt(goodsGrade);
 						%>
 
@@ -106,9 +106,18 @@ var htmlPart = {
 				<div class="table-title">
 					<ul>
 						<li class="grid-left active">详情介绍</li>
-						<%if(isNotEmpty(goodsDetails.apiInfo)){%>
+						<%if(goodsDetails.goodsType == 1){%>
 						<li class="grid-left">API详情</li>
 						<li class="grid-left">返回参数</li>
+						<%}%>
+						<%if(goodsDetails.goodsType == 2){%>
+						<li class="grid-left">数据模型</li>
+						<%}%>
+						<%if(goodsDetails.goodsType == 6 || goodsDetails.goodsType == 7){%>
+						<li class="grid-left">应用场景</li>
+						<%}%>
+						<%if(goodsDetails.goodsType == 4 || goodsDetails.goodsType == 5){%>
+						<li class="grid-left">分析工具</li>
 						<%}%>
 						<li class="grid-left">评价</li>
 					</ul>
@@ -117,14 +126,14 @@ var htmlPart = {
 					<div class="table-item active detail margin-bottom-10" id="J_goodsDesc">
 						${goodsDetails.goodsDesc}
 					</div>
-					<%if(isNotEmpty(goodsDetails.apiInfo)){%>
+					<%if(goodsDetails.goodsType == 1){%>
 					<div class="table-item">
 						<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
 						<table class="tab-one">
 							<caption><h3>标示信息</h3></caption>
 							<tr>
 								<td>接口地址：</td>
-								<td>${goodsDetails.apiInfo.apiUrl}</td>
+								<td>${nvl(goodsDetails.apiInfo.apiUrl,'无')}</td>
 							</tr>
 							<tr>
 								<td>请求方式：</td>
@@ -132,11 +141,11 @@ var htmlPart = {
 							</tr>
 							<tr>
 								<td>请求示例：</td>
-								<td>${goodsDetails.apiInfo.reqSample}</td>
+								<td>${nvl(goodsDetails.apiInfo.reqSample,'无')}</td>
 							</tr>
 							<tr>
 								<td>接口描述：</td>
-								<td>${goodsDetails.apiInfo.apiDesc}</td>
+								<td>${nvl(goodsDetails.apiInfo.apiDesc,'无')}</td>
 							</tr>
 						</table>
 						<table class="tab-two margin-top-20 margin-bottom-40">
@@ -151,12 +160,12 @@ var htmlPart = {
 							</tr>
 							<%for(items in goodsDetails.apiInfo.reqParamList){%>
 							<tr>
-								<td>${items.fieldName}</td>
-								<td>${items.fieldType}</td>
+								<td>${nvl(items.fieldName,'无')}</td>
+								<td>${nvl(items.fieldType,'无')}</td>
 								<td>${decode(items.isMust,"0","否","1","是","未知")}</td>
-								<td>${items.fieldSample}</td>
-								<td>${items.fieldDefault}</td>
-								<td>${items.describle}</td>
+								<td>${nvl(items.fieldSample,'无')}</td>
+								<td>${nvl(items.fieldDefault,'无')}</td>
+								<td>${nvl(items.describle,'无')}</td>
 							</tr>
 							<%}%>
 						</table>
@@ -178,40 +187,205 @@ var htmlPart = {
 						</table>
 					</div>
 					<%}%>
+					<%if(goodsDetails.goodsType == 2){%>
+					<div class="table-item">
+						<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
+						<table class="tab-one">
+							<caption><h3>模型规则</h3></caption>
+							<tr>
+								<td>复杂度：</td>
+								<td>${goodsDetails.dataModel.complexity}</td>
+							</tr>
+							<tr>
+								<td>成熟度：</td>
+								<td>${goodsDetails.dataModel.maturity}</td>
+							</tr>
+							<tr>
+								<td>应用经验：</td>
+								<td>${goodsDetails.dataModel.aexp}</td>
+							</tr>
+						</table>
+						<table class="tab-one margin-top-20  margin-bottom-20">
+							<caption><h3>其他说明</h3></caption>
+							<tr>
+								<td>其他说明：</td>
+								<td>${goodsDetails.dataModel.otherDesc}</td>
+							</tr>
+						</table>
+					</div>
+					<%}%>
+					<%if(goodsDetails.goodsType == 6){%>
+					<div class="table-item">
+						<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
+						<table class="tab-one">
+							<caption><h3>应用场景规则</h3></caption>
+							<tr>
+								<td>应用复杂度：</td>
+								<td>${goodsDetails.asAloneSoftware.aSComplexity}</td>
+							</tr>
+							<tr>
+								<td>版本说明：</td>
+								<td>${goodsDetails.asAloneSoftware.aSVersionDesc}</td>
+							</tr>
+							<tr>
+								<td>服务等级：</td>
+								<td>${goodsDetails.asAloneSoftware.aSServiceLevel}</td>
+							</tr>
+							<tr>
+								<td>应用经验：</td>
+								<td>${goodsDetails.asAloneSoftware.aSAexp}</td>
+							</tr>
+							<tr>
+								<td>应用介绍：</td>
+								<td>${goodsDetails.asAloneSoftware.aSAintroduce}</td>
+							</tr>
+						</table>
+						<table class="tab-one margin-top-20  margin-bottom-20">
+							<caption><h3>使用规格</h3></caption>
+							<tr>
+								<td>云硬件资源：</td>
+								<td>${goodsDetails.asAloneSoftware.aSCloudHardwareResource}</td>
+							</tr>
+						</table>
+						<table class="tab-one margin-top-20  margin-bottom-20">
+							<caption><h3>其他说明</h3></caption>
+							<tr>
+								<td>其他说明：</td>
+								<td>${goodsDetails.asAloneSoftware.otherDesc}</td>
+							</tr>
+						</table>
+					</div>
+					<%}%>
+					<%if(goodsDetails.goodsType == 7){%>
+					<div class="table-item">
+						<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
+						<table class="tab-one">
+							<caption><h3>应用场景规则</h3></caption>
+							<tr>
+								<td>应用复杂度：</td>
+								<td>${goodsDetails.asSaaS.sSComplexity}</td>
+							</tr>
+							<tr>
+								<td>版本说明：</td>
+								<td>${goodsDetails.asSaaS.sSVersionDesc}</td>
+							</tr>
+							<tr>
+								<td>服务等级：</td>
+								<td>${goodsDetails.asSaaS.sServiceLevel}</td>
+							</tr>
+							<tr>
+								<td>应用经验：</td>
+								<td>${goodsDetails.asSaaS.sSAexp}</td>
+							</tr>
+							<tr>
+								<td>应用介绍：</td>
+								<td>${goodsDetails.asSaaS.sSAintroduce}</td>
+							</tr>
+						</table>
+						<table class="tab-one margin-top-20  margin-bottom-20">
+							<caption><h3>其他说明</h3></caption>
+							<tr>
+								<td>其他说明：</td>
+								<td>${goodsDetails.asSaaS.otherDesc}</td>
+							</tr>
+						</table>
+					</div>
+					<%}%>
+					<%if(goodsDetails.goodsType == 4){%>
+					<div class="table-item">
+						<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
+						<table class="tab-one">
+							<caption><h3>工具规格</h3></caption>
+							<tr>
+								<td>行业领域：</td>
+								<td>${goodsDetails.atAloneSoftware.aTAloneIndustryField}</td>
+							</tr>
+							<tr>
+								<td>版本说明：</td>
+								<td>${goodsDetails.atAloneSoftware.aTAloneVersionDesc}</td>
+							</tr>
+							<tr>
+								<td>工具介绍：</td>
+								<td>${goodsDetails.atAloneSoftware.aTAloneToolsIntroduce}</td>
+							</tr>
+						</table>
+						<table class="tab-one margin-top-20  margin-bottom-20">
+							<caption><h3>使用规格</h3></caption>
+							<tr>
+								<td>云硬件资源：</td>
+								<td>${goodsDetails.atAloneSoftware.aTAloneCloudHardwareResource}</td>
+							</tr>
+						</table>
+						<table class="tab-one margin-top-20  margin-bottom-20">
+							<caption><h3>其他说明</h3></caption>
+							<tr>
+								<td>其他说明：</td>
+								<td>${goodsDetails.atAloneSoftware.otherDesc}</td>
+							</tr>
+						</table>
+					</div>
+					<%}%>
+					<%if(goodsDetails.goodsType ==5){%>
+					<div class="table-item">
+						<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
+						<table class="tab-one">
+							<caption><h3>工具规格</h3></caption>
+							<tr>
+								<td>行业领域：</td>
+								<td>${goodsDetails.atSaaS.aTIndustryField}</td>
+							</tr>
+							<tr>
+								<td>版本说明：</td>
+								<td>${goodsDetails.atSaaS.aTVersionDesc}</td>
+							</tr>
+							<tr>
+								<td>工具介绍：</td>
+								<td>${goodsDetails.atSaaS.aTToolsIntroduce}</td>
+							</tr>
+						</table>
+						<table class="tab-one margin-top-20  margin-bottom-20">
+							<caption><h3>其他说明</h3></caption>
+							<tr>
+								<td>其他说明：</td>
+								<td>${goodsDetails.atSaaS.otherDesc}</td>
+							</tr>
+						</table>
+					</div>
+					<%}%>
 					<div class="table-item">
 						<!--<h1 class="font-size-14 margin-bottom-10">最新评论</h1>-->
 						<ol>
 							<!--<li>-->
-								<!--<div class="comment-title margin-bottom-10">-->
-									<!--<span class="name padding-left-10">wu******dy</span>-->
-									<!--<span class="date padding-left-20">2017年03月13日 17:12:28</span>-->
-									<!--<a href="javascript:void(0)" class="padding-left-20">回复</a>-->
-								<!--</div>-->
-								<!--<div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>-->
+							<!--<div class="comment-title margin-bottom-10">-->
+							<!--<span class="name padding-left-10">wu******dy</span>-->
+							<!--<span class="date padding-left-20">2017年03月13日 17:12:28</span>-->
+							<!--<a href="javascript:void(0)" class="padding-left-20">回复</a>-->
+							<!--</div>-->
+							<!--<div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>-->
 							<!--</li>-->
 							<!--<li>-->
-								<!--<div class="comment-title margin-bottom-10">-->
-									<!--<span class="name padding-left-10">wu******dy</span>-->
-									<!--<span class="date padding-left-20">2017年03月13日 17:12:28</span>-->
-									<!--<a href="javascript:void(0)" class="padding-left-20">回复</a>-->
-								<!--</div>-->
-								<!--<div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>-->
+							<!--<div class="comment-title margin-bottom-10">-->
+							<!--<span class="name padding-left-10">wu******dy</span>-->
+							<!--<span class="date padding-left-20">2017年03月13日 17:12:28</span>-->
+							<!--<a href="javascript:void(0)" class="padding-left-20">回复</a>-->
+							<!--</div>-->
+							<!--<div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>-->
 							<!--</li>-->
 							<!--<li>-->
-								<!--<div class="comment-title margin-bottom-10">-->
-									<!--<span class="name padding-left-10">wu******dy</span>-->
-									<!--<span class="date padding-left-20">2017年03月13日 17:12:28</span>-->
-									<!--<a href="javascript:void(0)" class="padding-left-20">回复</a>-->
-								<!--</div>-->
-								<!--<div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>-->
+							<!--<div class="comment-title margin-bottom-10">-->
+							<!--<span class="name padding-left-10">wu******dy</span>-->
+							<!--<span class="date padding-left-20">2017年03月13日 17:12:28</span>-->
+							<!--<a href="javascript:void(0)" class="padding-left-20">回复</a>-->
+							<!--</div>-->
+							<!--<div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>-->
 							<!--</li>-->
 							<!--<li>-->
-								<!--<div class="comment-title margin-bottom-10">-->
-									<!--<span class="name padding-left-10">wu******dy</span>-->
-									<!--<span class="date padding-left-20">2017年03月13日 17:12:28</span>-->
-									<!--<a href="javascript:void(0)" class="padding-left-20">回复</a>-->
-								<!--</div>-->
-								<!--<div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>-->
+							<!--<div class="comment-title margin-bottom-10">-->
+							<!--<span class="name padding-left-10">wu******dy</span>-->
+							<!--<span class="date padding-left-20">2017年03月13日 17:12:28</span>-->
+							<!--<a href="javascript:void(0)" class="padding-left-20">回复</a>-->
+							<!--</div>-->
+							<!--<div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>-->
 							<!--</li>-->
 							<p style="text-align: center;min-height:100px; font-size: 18px;">暂无评论</p>
 						</ol>
@@ -237,21 +411,21 @@ var htmlPart = {
 				</ul>
 			</div>
 			<!--<div class="recommend-two margin-top-20">-->
-				<!--<div class="recommend-title font-weight-bold">活动推荐</div>-->
-				<!--<ul>-->
-					<!--<li>-->
-						<!--<img src="/static/images/a1.png" alt="">-->
-					<!--</li>-->
-					<!--<li>-->
-						<!--<img src="/static/images/a1.png" alt="">-->
-					<!--</li>-->
-					<!--<li>-->
-						<!--<img src="/static/images/a1.png" alt="">-->
-					<!--</li>-->
-					<!--<li>-->
-						<!--<img src="/static/images/a1.png" alt="">-->
-					<!--</li>-->
-				<!--</ul>-->
+			<!--<div class="recommend-title font-weight-bold">活动推荐</div>-->
+			<!--<ul>-->
+			<!--<li>-->
+			<!--<img src="/static/images/a1.png" alt="">-->
+			<!--</li>-->
+			<!--<li>-->
+			<!--<img src="/static/images/a1.png" alt="">-->
+			<!--</li>-->
+			<!--<li>-->
+			<!--<img src="/static/images/a1.png" alt="">-->
+			<!--</li>-->
+			<!--<li>-->
+			<!--<img src="/static/images/a1.png" alt="">-->
+			<!--</li>-->
+			<!--</ul>-->
 			<!--</div>-->
 		</div>
 	</div>

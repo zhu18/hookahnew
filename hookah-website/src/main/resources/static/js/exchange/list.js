@@ -83,15 +83,18 @@ function loadPageData(data){ //渲染页面数据
 						categoryCodePreChild = item.children;
 					}
 				});
-				html += '<li><ul>';
-				categoryCodePreChild.forEach(function(item){
-					if(item.nodeId == categoryCode){
-						html += '<li class="op_i current '+fnName+'" typeid="'+item.nodeId+'"><a href="javascript:;">'+item.nodeName+'</a></li>';
-					}else {
-						html += '<li class="op_i ' + fnName + '" typeid="' + item.nodeId + '"><a href="javascript:;" onclick="selectCategory(this,' + item.nodeId + ',\'' + fnName + '\',\'' + item.nodeName + '\')">' + item.nodeName + '</a></li>';
-					}
-				});
-				html += '</ul></li>';
+				if(categoryCodePreChild && categoryCodePreChild.length > 0){
+					html += '<li><ul>';
+					categoryCodePreChild.forEach(function(item){
+						if(item.nodeId == categoryCode){
+							html += '<li class="op_i current '+fnName+'" typeid="'+item.nodeId+'"><a href="javascript:;">'+item.nodeName+'</a></li>';
+						}else {
+							html += '<li class="op_i ' + fnName + '" typeid="' + item.nodeId + '"><a href="javascript:;" onclick="selectCategory(this,' + item.nodeId + ',\'' + fnName + '\',\'' + item.nodeName + '\')">' + item.nodeName + '</a></li>';
+						}
+					});
+					html += '</ul></li>';
+				}
+
 			}
 			html += '</ol>';
 			html += '</li>';
