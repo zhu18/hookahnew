@@ -55,20 +55,25 @@ function setPayPwdCon() {
 		}
 	})
 }
-var goodsAmount = $('#goodsAmount').val();
-var moneyBalance = $('#moneyBalance').val();
+var goodsAmount = parseInt($('#goodsAmount').val());
+var moneyBalance = parseInt($('#moneyBalance').val());
+console.log('商品价格goodsAmount------'+goodsAmount+'账户余额moneyBalance------'+moneyBalance);
 getCheckVal();
 function getCheckVal() {
-	$("[name=apiCode]:radio").each(function () {
+	$("input[name=apiCode]:radio").each(function () {
 		if (this.checked) {
 			if (this.value == 1) {
-				if (moneyBalance < goodsAmount) {
+				console.log('======1')
+				if (goodsAmount > moneyBalance) {
+					console.log('trueeeeeee')
 					$('#J-security').hide();
 					$('#J-rcSubmit').hide();
 				} else {
+					console.log('falseeeeee')
 					$('#J-balanceNt').hide();
 				}
 			} else {
+				console.log('!!!!====1')
 				$('#J-security').hide();
 				$('#J-balanceNt').hide();
 			}
@@ -78,7 +83,7 @@ function getCheckVal() {
 }
 $("[name=apiCode]:radio").click(function () {
 	if (this.value == 1) {
-		if (moneyBalance < goodsAmount) {
+		if (goodsAmount > moneyBalance ) {
 			$('#J-security').hide();
 			$('#J-rcSubmit').hide();
 			$('#J-balanceNt').show();
@@ -105,7 +110,7 @@ function check() {
 				if ($('#paymentPassword').val() && $('#paymentPassword').val().length == 6) {
 					testPayPassword($('#paymentPassword').val());
 				} else {
-					$('.ui-form-error').show();
+					$('.ui-form-error').show().children('p').html('支付密码不符合要求');
 				}
 			} else {
 				$.alert('暂不支持该支付方式');
@@ -126,7 +131,7 @@ function testPayPassword(pwd){
 				$('#form_paypsw').submit();
 				return true;
 			}else if(data.code == 0){
-				$('.ui-form-error').show();
+				$('.ui-form-error').show().children('p').html('支付密码不正确');
 				return false;
 			}else{
 				$.alert(data.message);
@@ -146,8 +151,8 @@ _formPay.validate({
 			'maxlength': 6,
 			required: true,
 			digits: true,
-			numPassword: true,
-			echoNum: true
+			// numPassword: true,
+			// echoNum: true
 		}
 	},
 	messages: {
