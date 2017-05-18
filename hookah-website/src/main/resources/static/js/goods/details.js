@@ -196,7 +196,7 @@ function getDataPackage(goodsId){
         success:function(data){
             if(data.code == 1){
                 // window.location.href = data.data;
-                window.location.href = host.website + data.data;
+                window.location.href = data.data;
             }else{
                 $.alert(data.message)
                 // $.alert('下载失败')

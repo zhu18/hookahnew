@@ -6,6 +6,7 @@ import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.HelpService;
 import com.jusfoun.hookah.rpc.api.MgOrderInfoService;
@@ -89,7 +90,16 @@ public class HelpController extends BaseController{
             if(goodsVo != null){
                 dataMap.put("goodsName", goodsVo.getGoodsName());
 
-                if(goodsVo.getGoodsType() == 1) { //api
+                if(goodsVo.getGoodsType() == 0) { // 普通文件
+
+                    if(!StringUtils.isNotBlank(goodsVo.getUploadUrl())){
+                        returnData.setMessage("文件下载地址有误，请联系管理员！^_^");
+                        returnData.setCode(ExceptionConst.Failed);
+                        return returnData;
+                    }
+                    returnData.setData("host.static" + goodsVo.getUploadUrl());
+                    return returnData;
+                }else if(goodsVo.getGoodsType() == 1) { //api
 
 //                private String apiUrl; //接口地址
 //                private String apiMethod;//请求方式：GET/POST
@@ -185,11 +195,16 @@ public class HelpController extends BaseController{
                     dataMap.put("sSAexp", goodsVo.getAsSaaS().getsSAexp());
                     dataMap.put("sSAintroduce", goodsVo.getAsSaaS().getsSAintroduce());
                     dataMap.put("otherDesc", goodsVo.getAsSaaS().getOtherDesc());
+                }else{
+                    returnData.setMessage("文件类型不存在，请联系管理员！^_^");
+                    returnData.setCode(ExceptionConst.Failed);
+                    return returnData;
                 }
 
-                FreemarkerWord fw = new FreemarkerWord();
+//                FreemarkerWord fw = new FreemarkerWord();
                 returnData = new FreemarkerWord().createDoc(dataMap, goodsVo);
             }else{
+                returnData.setMessage("商品信息有误，请联系管理员！^_^");
                 returnData.setCode(ExceptionConst.Failed);
             }
         }catch (Exception e){
