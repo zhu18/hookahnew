@@ -111,13 +111,26 @@ var htmlPart = {
 							<div class="down-box-one">
 								<div class="grade">
 									<span class="grade-grade">评分:</span>
+									<%
+									var goodsGradesC = item[i].goodsGrades + '';
+									var goodsGrade = strutil.subStringTo (goodsGradesC,0,1);
+									goodsGrade = parseInt(goodsGrade);
+									%>
 									<span class="grade-star">
-                                          <i class="iconfont icon-shoucang star-i-item"></i>
-                                          <i class="iconfont icon-shoucang star-i-item"></i>
-                                          <i class="iconfont icon-shoucang star-i-item"></i>
-                                          <i class="iconfont icon-shoucang star-i-item"></i>
-                                          <i class="iconfont icon-shoucang star-i-item"></i>
-                                      </span>
+										<%for(var j = 0; j < goodsGrade; j++){%>
+										<i class="fa fa-star color-orange font-size-14" aria-hidden="true"></i>
+										<%}%>
+										<%for(var j = 0; j < 5-goodsGrade; j++){%>
+										<i class="fa fa-star-o color-orange font-size-14" aria-hidden="true"></i>
+										<%}%>
+									</span>
+									<!--<span class="grade-star">-->
+                                          <!--<i class="iconfont icon-shoucang star-i-item"></i>-->
+                                          <!--<i class="iconfont icon-shoucang star-i-item"></i>-->
+                                          <!--<i class="iconfont icon-shoucang star-i-item"></i>-->
+                                          <!--<i class="iconfont icon-shoucang star-i-item"></i>-->
+                                          <!--<i class="iconfont icon-shoucang star-i-item"></i>-->
+                                      <!--</span>-->
 								</div>
 								<span class="collect" onclick="Attention.add('${item[i].goodsId}')"><i class="iconfont icon-jushoucanggift collect-item"></i>关注</span>
 							</div>
