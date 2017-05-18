@@ -133,7 +133,7 @@ var htmlPart = {
 							<caption><h3>标示信息</h3></caption>
 							<tr>
 								<td>接口地址：</td>
-								<td>${nvl(goodsDetails.apiInfo.apiUrl,'无')}</td>
+								<td>${goodsDetails.apiInfo.apiUrl}</td>
 							</tr>
 							<tr>
 								<td>请求方式：</td>
@@ -141,11 +141,11 @@ var htmlPart = {
 							</tr>
 							<tr>
 								<td>请求示例：</td>
-								<td>${nvl(goodsDetails.apiInfo.reqSample,'无')}</td>
+								<td>${goodsDetails.apiInfo.reqSample}</td>
 							</tr>
 							<tr>
 								<td>接口描述：</td>
-								<td>${nvl(goodsDetails.apiInfo.apiDesc,'无')}</td>
+								<td>${goodsDetails.apiInfo.apiDesc}</td>
 							</tr>
 						</table>
 						<table class="tab-two margin-top-20 margin-bottom-40">
@@ -160,12 +160,12 @@ var htmlPart = {
 							</tr>
 							<%for(items in goodsDetails.apiInfo.reqParamList){%>
 							<tr>
-								<td>${nvl(items.fieldName,'无')}</td>
-								<td>${nvl(items.fieldType,'无')}</td>
+								<td>${items.fieldName}</td>
+								<td>${items.fieldType}</td>
 								<td>${decode(items.isMust,"0","否","1","是","未知")}</td>
-								<td>${nvl(items.fieldSample,'无')}</td>
-								<td>${nvl(items.fieldDefault,'无')}</td>
-								<td>${nvl(items.describle,'无')}</td>
+								<td>${items.fieldSample}</td>
+								<td>${items.fieldDefault}</td>
+								<td>${items.describle}</td>
 							</tr>
 							<%}%>
 						</table>
