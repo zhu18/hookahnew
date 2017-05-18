@@ -97,7 +97,7 @@ public class HelpController extends BaseController{
                         returnData.setCode(ExceptionConst.Failed);
                         return returnData;
                     }
-                    returnData.setData("host.static" + goodsVo.getUploadUrl());
+                    returnData.setData("http://static.hookah.app/upload/download?filePath=" + goodsVo.getUploadUrl());
                     return returnData;
                 }else if(goodsVo.getGoodsType() == 1) { //api
 
