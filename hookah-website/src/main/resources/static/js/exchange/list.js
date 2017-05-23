@@ -160,7 +160,7 @@ function selectCategory(that,id,fnName,name){
 				$(this).remove();
 			}
 		});
-		$('#J_crimbsNav').attr(fnName,name).attr(fnName+'id',id);
+		$('#J_crimbsNav').attr(fnName,name).attr(fnName+'id',id).append('<span class="tags" '+fnName+'='+name+' '+fnName+'='+id+' type='+fnName+' endType="attrType">'+name+'<a href="JavaScript:;" onclick="removeTag(this)" class="fa fa-close"></a></span>');
 		// $(that).parent('.op_i').addClass('active').siblings().removeClass('active');
 	}
 	getDataForin();

@@ -366,7 +366,7 @@ h1{
     background: rgb(230, 230, 230);
     border-radius: 5px;
     overflow: hidden;
-    display: block;
+    display: none;
 }
 #barSmail{
     height: 100%;
