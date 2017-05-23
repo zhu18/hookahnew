@@ -206,9 +206,10 @@
     cursor: pointer ;
 }
 .findPwd .error ,.findPwd .error1{
-    margin-left: 27%;
+    /*margin-left: 27%;*/
     padding-top: 5px;
     color:#f40;
+    padding-left: 42px;
 }
 .findPwd .err2 {
     margin-left: 8%;
