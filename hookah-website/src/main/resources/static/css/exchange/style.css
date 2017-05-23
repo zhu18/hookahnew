@@ -1063,6 +1063,7 @@ dl {
 	border-bottom: none;
 	background-color: white;
 }
+
 .search .search-category .conditionCon li ul li.op_i.active a{
 	color: #ccc;
 	cursor: no-drop;
@@ -1076,6 +1077,16 @@ dl {
 .search .search-category .conditionCon li ul li a {
 	display: inline-block;
 	margin: 3px 10px;
+}
+/*.search .search-category .conditionCon li ol>li:nth-child(1){*/
+	/*border-bottom: 1px dashed #aba9a9;*/
+/*}*/
+.search .search-category .conditionCon li ol li:nth-child(2) ul li a {
+	/*font-style: italic;*/
+	color:#aba9a9;
+}
+.search .search-category .conditionCon li ol li ul li.current a{
+	color:#078cfc;
 }
 .search .search-order {
 	margin-top: 10px;
@@ -1560,7 +1571,7 @@ dl {
 }
 .goods-table .table-content .table-item .tab-one td:first-child {
 	padding-left: 20px;
-	width: 60px;
+	width: 90px;
 	text-align: right;
 }
 .goods-table .table-content .table-item table {

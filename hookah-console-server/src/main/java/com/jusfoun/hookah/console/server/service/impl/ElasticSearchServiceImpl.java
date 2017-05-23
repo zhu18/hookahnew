@@ -261,8 +261,9 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         List<EsTreeVo<Region>> areaProvinceList = new ArrayList<>();
         List<EsTreeVo<Region>> areaCityList = new ArrayList<>();
         //添加需要聚合的字段
-        if(goods != null && StringUtils.isNotBlank(goods.getCatIds()) && goods.getCatIds().length() != 9) {
+        if(goods != null && StringUtils.isNotBlank(goods.getCatIds())) {
             listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_CATEGORY, HookahConstants.GOODS_AGG_CATEGORY_FIELD));
+            goods.setCatIds(goods.getCatIds().substring(0, 3));
         }
         listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_ATTR, HookahConstants.GOODS_AGG_ATTR_FIELD));
         listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_ATTR_TYPE, HookahConstants.GOODS_AGG_ATTR_TYPE_FIELD));
@@ -312,14 +313,42 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
      */
     private void getCategoryTypes(Map.Entry<String, List<EsAggResult>> entry, List<EsTreeVo<Category>> categoryList) {
         List<EsAggResult> esAggResults = entry.getValue();
+        Map<String, EsAggResult> mapLevel2 = new HashMap<>();
+        Map<String, EsAggResult> mapLevel3 = new HashMap<>();
         for(EsAggResult result : esAggResults) {
-            Category category = DictionaryUtil.getCategoryById(result.getId());
-            if(category != null && category.getLevel() == 3) {
-                EsTreeVo<Category> categoryVo = new EsTreeVo(category.getCatId(), category.getCatName(),
-                        category.getLevel(), category.getParentId(), result.getCnt());
-                categoryList.add(categoryVo);
+            if(result.getId().length() == 6 && !mapLevel2.containsKey(result.getId())) {
+                mapLevel2.put(result.getId(), new EsAggResult(result.getId(), (long)0));
+            }else if(result.getId().length() == 9) {
+                mapLevel3.put(result.getId(), result);
+                EsTreeVo<Category> tempCategory = this.transCategory(result);
+                if(tempCategory != null && !mapLevel2.containsKey(tempCategory.getParentId())) {
+                    mapLevel2.put(tempCategory.getParentId(), new EsAggResult(tempCategory.getParentId(), (long)0));
+                }
             }
         }
+        if(mapLevel2 != null) {
+            for (Map.Entry<String, EsAggResult> entry1 : mapLevel2.entrySet()) {
+                EsTreeVo<Category> categoryEsTreeVo = transCategory(entry1.getValue());
+                List<EsTreeVo<Category>> childList = new ArrayList<>();
+                if(mapLevel3 != null) {
+                    for (Map.Entry<String, EsAggResult> entry2 : mapLevel3.entrySet()) {
+                        if(entry1.getKey().equals(entry2.getKey().substring(0, 6))) {
+                            childList.add(transCategory(entry2.getValue()));
+                        }
+                    }
+                }
+                if(childList != null && childList.size() > 0)
+                    categoryEsTreeVo.setChildren(childList);
+                categoryList.add(categoryEsTreeVo);
+            }
+        }
+    }
+
+    public EsTreeVo<Category> transCategory(EsAggResult result) {
+        Category category = DictionaryUtil.getCategoryById(result.getId());
+        EsTreeVo<Category> categoryVo = new EsTreeVo(category.getCatId(), category.getCatName(),
+                category.getLevel(), category.getParentId(), result.getCnt());
+        return categoryVo;
     }
 
     /**

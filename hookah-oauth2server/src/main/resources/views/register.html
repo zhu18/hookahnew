@@ -118,7 +118,7 @@ var htmlPart = {
 			<div class="msg-tit"></div>
 			<div class="msg-cnt" aria-live="assertive"></div>
 		</div>
-		<div class="msg msg-type-info" id="J_MsgCaptcha" style="position: absolute; left: 754px; top: 399px;"><i
+		<div class="msg msg-type-info" id="J_MsgCaptcha" style="position: absolute; left: 754px; top: 387px;"><i
 		class="iconfont">󰅂</i>
 			<div class="msg-tit"></div>
 			<div class="msg-cnt" aria-live="assertive"></div>
@@ -485,9 +485,9 @@ var htmlPart = {
 		ERROR_GENERAL_MOBILE_MALFORM: '手机号码格式不正确，请重新输入',
 		ERROR_REGISTER_MOBILE_IN_BLACK: '该手机号码注册账号过多，请更换手机号重试',
 		ERROR_REGISTER_MOBILE_UNAVAILABLE: '此手机号码绑定的帐户数已达上限，请更换',
-		ERROR_REGISTER_CHECKCODE_VERIFY_LIMIT: '校验码错误次数已经超过最大次数，请重新获取校验码',
-		ERROR_REGISTER_CHECKCODE_SEND_LIMIT: '此手机发送校验码已经达到上限，请在24小时后重试',
-		ERROR_REGISTER_CHECKCODE_SEND_TOO_FREQUENT: '手机校验码发送频率太快，请稍后重试',
+		ERROR_REGISTER_CHECKCODE_VERIFY_LIMIT: '验证码错误次数已经超过最大次数，请重新获取验证码',
+		ERROR_REGISTER_CHECKCODE_SEND_LIMIT: '此手机发送验证码已经达到上限，请在24小时后重试',
+		ERROR_REGISTER_CHECKCODE_SEND_TOO_FREQUENT: '手机验证码发送频率太快，请稍后重试',
 		ERROR_REGISTER_EMAIL_SEND_TOO_FREQUENT: '邮件发送频率太快，请稍后重试',
 		ERROR_GENERAL_PHONE_EMPTY: '请输入你的电话/手机号码',
 		ERROR_GENERAL_PHONE_MALFORM: '电话/手机号码不正确，请重新输入',
@@ -506,16 +506,16 @@ var htmlPart = {
 		ERROR_MALFORM_PASSWORD: '密码设置不符合要求',
 		ERROR_MALFORM_PASSWORD_TOO_SHORT: '密码设置不符合要求',
 		ERROR_MALFORM_PASSWORD_TOO_LONG: '密码设置不符合要求',
-		ERROR_REGISTER_CHECKCODE_NOT_MATCH: '校验码不正确，请重新输入',
+		ERROR_REGISTER_CHECKCODE_NOT_MATCH: '验证码不正确，请重新输入',
 		ERROR_REGISTER_UPSMS_CHECKCODE_NOT_MATCH: '验证失败，请重新发送短信',
 		ERROR_REGISTER_UPVOICE_CHECKCODE_NOT_MATCH: '验证失败，请重新拨打语音电话',
 		ERROR_REGISTER_UPSMS_CHECKCODE_GET_FAIL: '短信验证码获取失败',
 		ERROR_REGISTER_UPVOICE_CHECKCODE_GET_FAIL: '语音验证码获取失败',
-		ERROR_REGISTER_CHECKCODE_MALFORM: '校验码是6位数字，请重新输入',
+		ERROR_REGISTER_CHECKCODE_MALFORM: '验证码是6位数字，请重新输入',
 		ERROR_IMAGECHECKCODE_EMPTY: '请点击左边的输入框获取验证码',
 		ERROR_IMAGECHECKCODE_MALFORM: '验证码长度为4位',
 		ERROR_IMAGECHECKCODE_INVALID: '验证码不正确，请重新输入',
-		ERROR_GENERAL_IMAGECHECKCODE_NOT_NULL: '验证码不能为空',
+		ERROR_GENERAL_IMAGECHECKCODE_NOT_NULL: '手机验证码不能为空',
 		ERROR_GENERAL_IMAGECHECKCODE_NOT_MATCH: '验证码不正确，请重新输入',
 		ERROR_REGISTER_EMAIL_IN_BLACK: '此邮箱暂不支持作为登录名，请更换',
 		ERROR_GENERAL_EMAIL_EMPTY: '请输入你的电子邮箱',
@@ -539,10 +539,10 @@ var htmlPart = {
 		ERROR_THIRDPARTY_PARAM_EMPTY: '参数不能为空',
 		ERROR_THIRDPARTY_PARAM_MALFORM: '参数格式不正确',
 		ERROR_ACTIVATION_TAOBAO_USER_EXISTS: '您的账号已经开通淘宝业务',
-		TIP_REGISTER_CHECKCODE_SENT: '校验码已发送至你的手机，请查收',
+		TIP_REGISTER_CHECKCODE_SENT: '验证码已发送至你的手机，请查收',
 		TIP_REGISTER_VOICECHECKCODE_SENT: '电话正在拨出，请您留意接听',
 		TIP_REGISTER_VOICECHECKCODE_MSG: '如您无法收到短信验证码，请点击\'获取语音验证码\'。我们将给您拨打电话，请您留意接听',
-		TIP_REGISTER_MOBILECHECKCODE_MSG: '校验码已发送到你的手机，15分钟内输入有效，请勿泄漏',
+		TIP_REGISTER_MOBILECHECKCODE_MSG: '验证码已发送到你的手机，15分钟内输入有效，请勿泄漏',
 		ERROR_SMS_UPWARD_UNRECEIVED: '未收到验证码。<p>勿关闭窗口，验证成功后会自动跳转 </p>',
 		ERROR_SMS_UPWARD_ERROR_CODE: '验证失败，请重新发送。<p>勿关闭窗口，验证成功后会自动跳转 </p>',
 		ERROR_SMS_UPWARD_TIMEOUT: '验证码失效，请 <a id=\'J_reSendUpMsg\' class=\'resend-upmsg\' href=\'javascript:;\'>刷新验证码</a>，重新发送',
