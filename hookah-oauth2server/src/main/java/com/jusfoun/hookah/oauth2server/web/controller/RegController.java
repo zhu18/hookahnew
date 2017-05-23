@@ -73,7 +73,7 @@ public class RegController {
             if (!value.equalsIgnoreCase(captcha)) {
                 throw new UserRegInvalidCaptchaException("图片验证码验证未通过,验证码错误");
             }
-            session.removeAttribute(Constants.KAPTCHA_SESSION_KEY);
+            //session.removeAttribute(Constants.KAPTCHA_SESSION_KEY);
             //2、校验短信验证码
             //获取库里缓存的验证码
 
@@ -232,7 +232,7 @@ public class RegController {
                     if (!value.equalsIgnoreCase(captcha)) {
                         throw new UserRegInvalidCaptchaException("图片验证码验证未通过,验证码错误");
                     }
-                    session.removeAttribute(Constants.KAPTCHA_SESSION_KEY);
+                    //session.removeAttribute(Constants.KAPTCHA_SESSION_KEY);
                     //查询用户
                     String username = userVo.getUserName();
                     if (FormatCheckUtil.checkMobile(username)) {
