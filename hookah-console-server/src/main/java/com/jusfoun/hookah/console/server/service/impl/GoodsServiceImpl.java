@@ -328,6 +328,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         return goodsVo;
     }
     /**
+     * 作废
      * (前台专用)查询商品详情
      * @return
      */
