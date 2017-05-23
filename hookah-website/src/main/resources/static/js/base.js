@@ -242,8 +242,9 @@ function add(m) {
 	return m < 10 ? '0' + m : m
 };
 function format(time) {
-    var a = parseInt(time);
-    var date = new Date(a);
+    // var a = parseInt(time);
+    // var date = new Date(a);
+    var date = new Date(time);
 	var year = date.getFullYear();
 	var month = date.getMonth() + 1;
 	var date1 = date.getDate();
