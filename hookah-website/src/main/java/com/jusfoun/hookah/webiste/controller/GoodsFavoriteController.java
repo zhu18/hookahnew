@@ -4,13 +4,17 @@ import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.GoodsFavorite;
+import com.jusfoun.hookah.core.domain.mongo.MgGoods;
+import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.GoodsFavoriteService;
 import com.jusfoun.hookah.rpc.api.GoodsService;
+import com.jusfoun.hookah.rpc.api.MgGoodsService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,6 +35,9 @@ public class GoodsFavoriteController extends BaseController {
 
     @Resource
     GoodsService goodsService;
+
+    @Resource
+    MgGoodsService mgGoodsService;
 
     /**
      * 添加关注
@@ -133,7 +140,7 @@ public class GoodsFavoriteController extends BaseController {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
-            Pagination<Goods> page = new Pagination<>();
+            Pagination page = new Pagination<>();
             List<Condition> filters = new ArrayList();
             filters.add(Condition.eq("isDelete", 1));
             filters.add(Condition.eq("userId", getCurrentUser().getUserId()));
@@ -160,6 +167,7 @@ public class GoodsFavoriteController extends BaseController {
                 filtersGoods.add(Condition.in("goodsId", gfIdList.toArray()));
 
                 page = goodsService.getListInPage(pageNumberNew, pageSizeNew, filtersGoods, orderBys);
+                page.setList(this.copyGoodsData(page.getList()));
                 returnData.setData(page);
             }else{
                 page = new Pagination<>(pageNumberNew, pageSizeNew);
@@ -172,6 +180,26 @@ public class GoodsFavoriteController extends BaseController {
             e.printStackTrace();
         }
         return returnData;
+    }
+
+    private List<GoodsVo> copyGoodsData(List<Goods> list) {
+        List<GoodsVo> list1 = new ArrayList<>();
+        for(Goods goods : list) {
+            GoodsVo goodsVo = new GoodsVo();
+            BeanUtils.copyProperties(goods, goodsVo);
+
+            MgGoods mgGoods = mgGoodsService.selectById(goods.getGoodsId());
+            if (mgGoods != null) {
+                goodsVo.setFormatList(mgGoods.getFormatList());
+                goodsVo.setImgList(mgGoods.getImgList());
+                goodsVo.setAttrTypeList(mgGoods.getAttrTypeList());
+                goodsVo.setApiInfo(mgGoods.getApiInfo());
+                goodsVo.setClickRate(mgGoods.getClickRate());
+            }
+
+            list1.add(goodsVo);
+        }
+        return list1;
     }
 
     @RequestMapping("/check")
