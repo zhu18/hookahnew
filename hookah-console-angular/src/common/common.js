@@ -160,6 +160,13 @@ export default angular.module('Common', [
         case 5:
           return '企业待审核';
           break;
+        case 6:
+          return '个人审核未通过';
+          break;
+        case 7:
+          return '企业审核未通过';
+          break;
+
       }
     }
   })
