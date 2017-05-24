@@ -32,14 +32,14 @@ var htmlPart = {
                         <td>
                             <div class="select-box">
                                 <select name="newsGroup" id="newsGroup" onchange="changes(this)">
-                                    <option value="0">请选择分类</option>
+                                    <option value="">请选择分类</option>
                                     <option value="innovation">双创中心</option>
                                     <option value="exposition">博览会</option>
                                     <option value="information">资讯中心</option>
                                 </select>
-                                <span class="select-line select-hide">-</span>
-                                <select name="newsSonGroup" id="newsSonGroup" class="select-hide">
-                                    <option value="0">请选择分类</option>
+                                <span class="select-line select-hide" style="display: none">-</span>
+                                <select name="newsSonGroup" id="newsSonGroup" class="select-hide" style="display: none">
+                                    <option value="">请选择分类</option>
                                     <option value="1">中心动态</option>
                                     <option value="2">行业咨询</option>
                                     <option value="3">中心公告</option>
@@ -57,7 +57,7 @@ var htmlPart = {
                         <td>
                             <div class="text-box">
                                 <input id="newsTitle" name="newsTitle" type="text">
-                                <span class="input-count"><strong>0</strong>/60</span>
+                                <span class="input-count"><strong id="showcontent">0</strong>/60</span>
                             </div>
                             <div class="errors">
                                 <ul>
@@ -70,8 +70,8 @@ var htmlPart = {
                         <td class="bar">文章简介：</td>
                         <td>
                             <div class="text-box">
-                                <input class="newsInfo" id="newsInfo" name="newsTitle" type="text">
-                                <span class="input-count"><b class="info">0</b>/60</span>
+                                <textarea class="newsInfo" id="newsInfo" name="newsInfo" type="text"></textarea>
+                                <span class="input-count"><b class="info" id="showcontent2">0</b>/60</span>
                             </div>
                             <div class="errors">
                                 <ul>
@@ -107,6 +107,7 @@ var htmlPart = {
                                             <img class="preview-img" id="preview-img">
                                             <input type="file" id="filename" name="filename" class="preview-btn">
                                             <a href="javascript:void(0)" class="replace-btn" id="replace-btn">替换图片</a>
+                                            <input type="text" style="opacity: 0;width:20px;position: absolute" name="goodsImges">
                                         </div>
                                     </li>
                                 </ul>
@@ -124,7 +125,8 @@ var htmlPart = {
                     </tr>
                 </table>
                 <div class="pulish-btn">
-                    <button type="button" class="btn-full-blue" id="submit-article" value="立即发表" onclick="published()">立即发表</button>
+                    <button type="button" class="btn-full-blue" id="submit-article" value="立即发表">立即发表</button>
+                    <!--onclick="published()"-->
                 </div>
             </form>
         </div>

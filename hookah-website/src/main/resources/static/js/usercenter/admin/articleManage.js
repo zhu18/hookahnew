@@ -148,9 +148,12 @@ function deleteLoad(id){
         contentType: 'application/json',
         success:function(data){
             if(data.code == "1") {
-                $.alert('删除成功', true, function () {});
-                data.newsGroup = $("#newsGroup").val();
-                changes(data.newsGroup);
+				data.newsGroup = $("#newsGroup").val();
+				changes(data.newsGroup);
+                $.alert('删除成功', true, function () {
+					location.reload()
+				});
+
             }
         },
         error:function(e){
