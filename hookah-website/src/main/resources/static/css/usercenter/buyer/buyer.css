@@ -296,7 +296,7 @@
 /*evaluation*/
 .evaluation {
     width: 970px;
-    background: #fff;
+    /*background: #fff;*/
     padding: 0px 20px;
 }
 .evaluation .my {
@@ -526,4 +526,8 @@
     width: 17px;
     height: 17px;
     vertical-align: middle;
+}
+.help-block{
+    display: block;
+    color: #A61615;
 }

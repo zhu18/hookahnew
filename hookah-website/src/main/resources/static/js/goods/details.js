@@ -135,33 +135,44 @@ function renderDetails() {
 }
 // 加入购物车
 function addCart(goodsId) {
-    $.ajax({
-        url: '/cart/add',
-        type: 'post',
-        data: {
-            goodsId: goodsId,
-            formatId: $('#J_goodsPrice').attr('formatid'),
-            goodsNumber: $('#J_buyNumber').val()
-        },
-        success: function (data) {
-            // return JSON.stringify(data);
-            if (data.code == "1") {
-				window.location.href = "/exchange/addToCart?goodsId=" + goodsId + "&number=" + $('#J_buyNumber').val();
-            } else {
-                console.log(data);
-                $.alert(data.message);
-            }
-        },
-        error:function(e){
-            if(e.status == 401){
-                window.location.href = host.loginUrl+window.location.href
-            }
+    var formatname = null;
+    $('.money-standard a').each(function(){
+        if($(this).hasClass('active')){
+			formatname = $(this).html();
         }
     });
+    if(formatname){
+		$.ajax({
+			url: '/cart/add',
+			type: 'post',
+			data: {
+				goodsId: goodsId,
+				formatId: $('#J_goodsPrice').attr('formatid'),
+				goodsNumber: $('#J_buyNumber').val()
+			},
+			success: function (data) {
+				// return JSON.stringify(data);
+				if (data.code == "1") {
+					window.location.href = "/exchange/addToCart?goodsId=" + goodsId + "&number=" + $('#J_buyNumber').val() + '&fmt=' +formatname+'&gm='+$('#J_goodsPrice').html();
+				} else {
+					console.log(data);
+					$.alert(data.message);
+				}
+			},
+			error:function(e){
+				if(e.status == 401){
+					window.location.href = host.loginUrl+window.location.href
+				}
+			}
+		});
+    }else{
+        $.alert('数据有误');
+    }
 }
 function editPrice(that,price,formatId){
     $(that).addClass('active').siblings('a').removeClass('active');
     $('#J_goodsPrice').html(Number(price) / 100).attr('formatid',formatId);
+	$('#J_formatId').val(formatId);
 }
 
 function check() {

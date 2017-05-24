@@ -201,7 +201,7 @@ $('#fileupload').fileupload({   //图片上传
 		$('#barText').html(progress + '%');
 	}
 });
-$('#fileupload2').fileupload({
+$('#fileupload2').fileupload({ //文件上传
 	url: host.static+'/upload/fileUpload',
 	dataType: 'json',
 	done: function (e, data) {
