@@ -313,8 +313,33 @@ public class OrderInfoController extends BaseController {
             session.setAttribute("moneyBalance",user.getMoneyBalance());
             session.setAttribute("payments",paymentList);
             session.setAttribute("orderInfo",orderinfo);
-            logger.info("订单信息:{}", JsonUtils.toJson(orderinfo));
-            logger.info("支付列表:{}", JsonUtils.toJson(paymentList));
+            //logger.info("订单信息:{}", JsonUtils.toJson(orderinfo));
+            //logger.info("支付列表:{}", JsonUtils.toJson(paymentList));
+            return   "redirect:/pay/cash";
+        } catch (Exception e) {
+            logger.error("插入错误", e);
+            return "/error/500";
+        }
+    }
+
+    @RequestMapping(value = "/order/payOrder", method = RequestMethod.POST)
+    public String payOrder(String orderSn,HttpServletRequest request) {
+        try {
+            List<Condition> filters = new ArrayList<>();
+            filters.add(Condition.eq("orderSn",orderSn));
+            OrderInfo orderinfo = orderInfoService.selectOne(filters);
+
+            HttpSession session = request.getSession();
+            List<Map> paymentList = initPaymentList(session);
+
+            //余额
+            Map userMap = (Map)session.getAttribute("user");
+            User user = userService.selectById((String)userMap.get("userId"));
+            session.setAttribute("moneyBalance",user.getMoneyBalance());
+            session.setAttribute("payments",paymentList);
+            session.setAttribute("orderInfo",orderinfo);
+            //logger.info("订单信息:{}", JsonUtils.toJson(orderinfo));
+            //logger.info("支付列表:{}", JsonUtils.toJson(paymentList));
             return   "redirect:/pay/cash";
         } catch (Exception e) {
             logger.error("插入错误", e);
