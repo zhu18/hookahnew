@@ -322,7 +322,7 @@ public class OrderInfoController extends BaseController {
         }
     }
 
-    @RequestMapping(value = "/order/payOrder", method = RequestMethod.POST)
+    @RequestMapping(value = "/order/payOrder", method = RequestMethod.GET)
     public String payOrder(String orderSn,HttpServletRequest request) {
         try {
             List<Condition> filters = new ArrayList<>();
