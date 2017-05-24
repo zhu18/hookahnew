@@ -54,7 +54,6 @@ function checkFirst(orderId){
 				$(this).children().find('.function-hint').css('color','#333')
 			}
 		});
-
 		check(orderId);
         return false;
 	}

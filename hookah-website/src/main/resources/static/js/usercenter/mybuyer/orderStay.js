@@ -14,7 +14,7 @@ function loadPageData(data){
             html+= '<td>'+list[i].addTime+'</td>';
             html+= '<td>未付款</td>';
             html+= '<td class="text-align-center">';
-            html+= '<a href="" class="display-inline-block goPay btn btn-full-orange">去支付</a>';
+            html+= '<a href="'+host.website+'/order/payOrder?orderSn='+list[i].orderSn+'"  class="display-inline-block goPay btn btn-full-orange">去支付</a>';
             html+= '<a target="_blank" href="/order/viewDetails?orderId='+list[i].orderId+'&num=2" class="display-block padding-top-5">查看详情</a>';
             html+= '<a href="javascript:confirmDelete(\''+list[i].orderId+'\');" class="display-block">删除</a>';
             html+= '</td>';

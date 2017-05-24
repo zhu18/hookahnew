@@ -162,15 +162,13 @@ $('#preview-content').click(function(){
     $('#close').click(function(){
         $('#preview-wrap').remove();
     })
-})
+});
 //替换图片的隐显
 $('#preview-div').hover(function(){
     if($('#preview-img').attr('src')){
         $('#replace-btn').toggle();
     }
-})
-
-
+});
 $("#newsTitle").bind("input propertychange",function(){
     var len = $.trim($("#newsTitle").val().length);
     $(".input-count strong").text(len);
@@ -179,7 +177,7 @@ $("#newsTitle").bind("input propertychange",function(){
         $("#newsTitle").val(value.substring(0,60));
         $(".input-count strong").text(60);
     }
-})
+});
 $("#newsInfo").bind("input propertychange",function(){
     var len = $.trim($("#newsInfo").val().length);
     $(".input-count .info").text(len);
@@ -188,5 +186,34 @@ $("#newsInfo").bind("input propertychange",function(){
         $("#newsInfo").val(value.substring(0,60));
         $(".input-count .info").text(60);
     }
-})
+});
 
+$("#publishArticle").validate({
+	rules: {
+		aloneCon:  {
+			isAloneCon:true
+		}
+	},
+	messages: {
+		aloneCon:  {
+			isAloneCon:'长度为10-100个字符（每个汉字为2个字符）'
+		}
+
+	},
+	showErrors:function(errorMap,errorList) {
+		if(errorList.length){
+			errorList[0].element.focus();
+		}
+		this.defaultShowErrors();
+	}
+});
+$('#J_submitBtn').click(function(){
+	if($("#goodsModifyForm").valid()){
+		if($('#textarea1').val()){
+			backAddFn(submitGoodsPublish())
+		}else{
+			$.alert('商品描述不能为空',true,function () {
+			})
+		}
+	}
+});
