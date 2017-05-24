@@ -387,14 +387,16 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
 
         Class entityClass = (Class) trueType;
         Update update = new Update();
+        String idColumn = getIdFromModel(model).get("id");
         try {
             if (Objects.nonNull(model)) {
                 //实现1
                 PropertyDescriptor[] targetPds = BeanUtils.getPropertyDescriptors(entityClass);
                 for(PropertyDescriptor targetPd:targetPds){
+                    if(targetPd.getName().equals(idColumn)) continue; //不修改id
                     Method readMethod = targetPd.getReadMethod();
                     int readModifier  = readMethod.getDeclaringClass().getModifiers();
-                    if(readModifier < Modifier.PROTECTED ){  //只有public private protected
+                    if(!targetPd.getName().equals("class")){  //只有public private protected
                         if (!Modifier.isPublic(readModifier)) {
                             readMethod.setAccessible(true);
                         }
