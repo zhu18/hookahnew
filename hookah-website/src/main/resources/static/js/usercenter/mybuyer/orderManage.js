@@ -75,7 +75,7 @@ function deleteRadio(orderId) {
             orderId:orderId
         },
         success: function (data) {
-            if (data.code == 1) {
+            if (!(data.code == 0)) {
                 location.reload(true);
             } else {
                 console.log("删除失败！");

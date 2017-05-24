@@ -10,11 +10,21 @@ import java.io.Serializable;
  * goods商品查询条件
  */
 public class GoodsCritVo implements Serializable {
+    private String id;//货架id
+
     private Integer pageNumber = HookahConstants.PAGE_NUM;
     private Integer pageSize = HookahConstants.PAGE_SIZE;
     private String orderField;
     private String order;
     EsRange range;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public Integer getPageNumber() {
         return pageNumber;
