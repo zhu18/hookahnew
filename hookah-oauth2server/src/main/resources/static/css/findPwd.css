@@ -178,7 +178,7 @@
 }
 .findPwd .info label input ,.findPwd .item label input{
     width: 160px;
-    line-height: 25px;
+    height: 25px;
     padding-left:5px;
 }
 .findPwd .item .secret{
