@@ -328,6 +328,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         return goodsVo;
     }
     /**
+     * 作废
      * (前台专用)查询商品详情
      * @return
      */
@@ -339,6 +340,19 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         }
         GoodsVo goodsVo = new GoodsVo();
         BeanUtils.copyProperties(goods, goodsVo);
+
+        // 查询所有区域信息
+        EsGoods esGoods = goodsMapper.getNeedGoodsById(goodsId);
+        if(esGoods != null && esGoods.getCatIds() != null) {
+            String[] catIds = esGoods.getCatIds().split(" ");
+            StringBuffer stringBuffer = new StringBuffer();
+            for(String item : catIds) {
+                stringBuffer.append(DictionaryUtil.getCategoryById(item) == null
+                        ? "" : DictionaryUtil.getCategoryById(item).getCatName()).append("->");
+            }
+            goodsVo.setCatFullName(stringBuffer.substring(0, stringBuffer.length() - 2));
+        }
+
         MgGoods mgGoods = mgGoodsService.selectById(goodsId);
         if (mgGoods != null) {
             goodsVo.setFormatList(mgGoods.getFormatList());

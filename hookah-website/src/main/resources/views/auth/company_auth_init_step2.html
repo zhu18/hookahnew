@@ -2,6 +2,7 @@
 var head = {
 %>
 <link rel="stylesheet" href="/static/css/plugins/sweetalert/sweetalert.css">
+<link rel="stylesheet" href="/static/css/plugins/jedate/jedate.css">
 <link rel="stylesheet" href="/static/css/auth/user_auth_init.css">
 <link rel="stylesheet" href="/static/css/auth/company_auth_init.css">
 <%};%>
@@ -73,13 +74,13 @@ var htmlPart = {
                                         <option value="-1">全部</option>
                                     </select>
                                     <select id="city" name="city">
-                                    <option value="-1">全部</option>
-                                </select>
+                                        <option value="-1">全部</option>
+                                    </select>
                                 </div>
                             </label>
                             <label class="padding-left-210">详细地址：<input type="text" placeholder="请输入详细地址" id="address"/></label>
                             <label class="padding-left-210">联系电话：<input type="text" placeholder="请输入联系电话" id="tel"/></label>
-                            <label class="padding-left-210" for="clickCheck"><input type="checkbox" id="clickCheck" checked/>我已阅读并同意《<a href="./company_auth_init" class="agreement-book">用户注册协议</a>》</label>
+                            <!--<label class="padding-left-210" for="clickCheck"><input type="checkbox" id="clickCheck" checked/>我已阅读并同意《<a href="./company_auth_init" class="agreement-book">青岛交易所用户协议</a>》</label>-->
                             <div class="button">
                                 <button id="verifyBtn" class="btn-full-blue">立即认证</button>
                             </div>
@@ -99,4 +100,5 @@ include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 <script src="/static/js/plugins/sweetalert/sweetalert.min.js"></script>
 <script src="/static/js/plugins/widget/jquery.ui.widget.js"></script>
 <script src="/static/js/plugins/fileupload/jquery.fileupload.js"></script>
+<script src="/static/js/plugins/jedate/jquery.jedate.min.js"></script>
 <script type="text/javascript" src="/static/js/auth/company_auth_step2.js"></script>

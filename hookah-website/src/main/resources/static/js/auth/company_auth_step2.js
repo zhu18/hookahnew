@@ -26,7 +26,26 @@ $(function(){
     $("#businessImg").on("click", upPhoto);
     $("#taxRegImg").on("click", upPhoto);
     $("#verifyBtn").on("click",companyAuth);
+    // 以下是日期插件初始化
+    var start = {
+        // format: "YYYY-MM-DD HH:mm:ss",
+        isTime: true,
+        maxDate: $.nowDate(0),
+        choosefun: function(elem,datas){
+            end.minDate = datas; //开始日选好后，重置结束日的最小日期
+        }
+    };
+    var end = {
+        // format: "YYYY-MM-DD HH:mm:ss",
+        isTime: true,
+        maxDate: $.nowDate(0),
+        choosefun: function(elem,datas){
+            start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
+        }
 
+    };
+    $.jeDate("#businessLicence", start);
+    $.jeDate("#taxRegCertificate",end);
 });
 //地域加载
 function loadRegion(id,regionParam) {
@@ -113,8 +132,13 @@ function address(){
 //验证联系电话是否为空
 function tel(){
     var tel = $("#tel").val();
+    var reg = /^1[3|4|5|7|8][0-9]{9}$/; //验证规则
+    var flag = reg.test(tel); //true
     if(!tel){
         swal("请输入联系电话");
+    }
+    if(!flag){
+        swal("请输入正确的联系电话");
     }
 }
 
@@ -122,13 +146,12 @@ function tel(){
 var imgSrc = '';
 var fileUploadUrl = host.static+'/upload/fileUpload';
 function upPhoto(){
-    console.log(1);
-    console.log($(this));
     $(this).find("input").fileupload({
         url: fileUploadUrl,
         dataType: 'json',
         done: function (e, data) {
             if (data.result.code == 1) {
+                console.log(2);
                 var obj = data.result.data[0];
                 $(this).siblings("img").attr("src", obj.absPath);
                 imgSrc = obj.absPath;

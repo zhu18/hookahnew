@@ -21,7 +21,7 @@ function createEidtor(){
     editor.create();
 }
 if(id){
-    $(".user-center-box .center-title").text("编辑文章");
+    // $(".user-center-box .center-title").text("编辑文章");
     $.ajax({
         type:"get",
         url:"/sysNews/details",
@@ -84,10 +84,10 @@ function published(){
     var data = {};
     var url = '';
     data.newsGroup = $('#newsGroup').val();
-    data.newsTitle = $('#newsTitle').val();
-    data.contentValidity = $('#newsInfo').val();
+    data.newsTitle = $.trim($('#newsTitle').val());
+    data.contentValidity = $.trim($('#newsInfo').val());
     data.isHot = $("input[name='isHot']:checked").val();
-    data.content = $('#content').val();
+    data.content = $.trim($('#content').val());
     data.newsSonGroup = $('#newsSonGroup').val();
     if (id){
         data.pictureUrl = getImg;
@@ -112,7 +112,7 @@ function published(){
         $.alert("请输入文章标题",true,function(){});
             // $('#newsTitle').focus();
         return;
-    }else if(data.content == "") {
+    }else if(data.content == "" || data.newsTitle == null) {
         $.alert('请输入文章内容！',true,function(){ })
         return;
     }else if(data.pictureUrl == "") {

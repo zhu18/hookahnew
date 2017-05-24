@@ -54,7 +54,7 @@ public class EsGoods implements Serializable {
     @Transient
     @EsField(type = Type.COMPLETION, analyzer= Analyzer.LC_INDEX, searchAnalyzer = Analyzer.LC_SEARCH)
     private String suggest;
-    @EsField(type = Type.KEYWORD)
+    @EsField(type = Type.LONG)
     private Long shopPrice;
     @EsField(type = Type.INTEGER)
     private Integer shopNumber;

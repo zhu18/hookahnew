@@ -26,7 +26,7 @@ function loadPageData(data){
     }
 }
 var start = {
-    format: "YYYY-MM-DD HH:mm:ss",
+    format: "YYYY-MM-DD hh:mm:ss",
     isTime: true,
     maxDate: $.nowDate(0),
     choosefun: function(elem,datas){
@@ -34,7 +34,7 @@ var start = {
     }
 };
 var end = {
-    format: "YYYY-MM-DD HH:mm:ss",
+    format: "YYYY-MM-DD hh:mm:ss",
     isTime: true,
     maxDate: $.nowDate(0),
     choosefun: function(elem,datas){
@@ -69,7 +69,7 @@ $(".searchQuery .search").on("click",function(){
             orderId:orderId
         },
         success: function (data) {
-            if (data.code == 1) {
+            if (!(data.code == 0)) {
                 location.reload(true);
             } else {
                 console.log("删除失败！");

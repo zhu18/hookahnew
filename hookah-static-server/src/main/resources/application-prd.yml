@@ -16,3 +16,11 @@ spring:
       uri:  mongodb://192.168.15.90:27017/hookah
   mvc:
       static-path-pattern: /static/**
+  http:
+        multipart:
+            maxFileSize: 20Mb
+            maxRequestSize: 20Mb
+upload:
+  file-path: /webapp/static/
+  replace-path: /target
+  url: http://localhost:9600/

@@ -48,7 +48,12 @@
     line-height: 50px;
     border-bottom:1px solid #e0e0e0;
 }
-
+.rightCenter .list-innovation .data-item{
+    display: none;
+}
+.rightCenter .list-innovation .data-item.active{
+    display:block;
+}
 .rightCenter .title h3 {
     display: inline-block;
 }
@@ -73,9 +78,9 @@
     border-left:2px solid #237DE7;
 }
 .content p {
-    font: 14px/25px "microsoft yahei";
     color: #666;
-    margin-bottom: 25px;
+    margin-bottom: 14px;
+    line-height: 20px;
 }
 
 .content .title {
@@ -90,5 +95,21 @@
 
 .content .adress span {
     color: #333;
+}
+.list-innovation h3{
+    padding:20px;
+    font-size: 18px;
+    text-align: center;
+}
+.list-innovation h4{
+    font-size: 14px;
+    font-weight: 800;
+    margin-bottom: 14px;
+}
+.list-innovation p.img{
+    text-align: center;
+}
+.list-innovation p.img img{
+    width:80%;
 }
 
