@@ -19,7 +19,7 @@ var htmlPart = {
                     <div class="fundmanage-bd">
                         <div class="user-balance">
                             <div class="price-input"><label>请输入您要充值的金额：</label><input type="text">元</div>
-                            <div class="operation withdrawals-btn"><a href="/pay/cash" class="btn-full-blue">下一步</a></div>
+                            <div class="operation withdrawals-btn"><a href="javascript:void(0)" onclick="nullFn()" class="btn-full-blue">下一步</a></div>
                         </div>
                     </div>
                 </div>
@@ -28,6 +28,11 @@ var htmlPart = {
     </div>
 </div>
 </div>
+<script>
+    function nullFn(){
+    	$.alert('暂未开放，敬请期待');
+    }
+</script>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>

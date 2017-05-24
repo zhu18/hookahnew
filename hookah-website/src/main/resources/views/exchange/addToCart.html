@@ -30,8 +30,8 @@ var htmlPart = {
                   <a href="/exchange/details?id=${goodsInfo.goodsId}" class="goGoodsDetails">${goodsInfo.goodsName}</a>
                 </div>
                 <div class="p-extra padding-top-10">
-                                    <span class="txt" title="价格">价格：${trunc(goodsInfo.shopPrice / 100, 2)}&nbsp;&nbsp;&nbsp;&nbsp;
-                                        规格：${goodsInfo.shopNumber}${decode(goodsInfo.shopFormat,0,"次",1,"天",2,"年")}
+                                    <span class="txt" title="价格">价格：￥<span class="goodsPrice"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        规格：<span class="formats"></span>
                                     </span><span class="txt" id="goodsNum">&nbsp;&nbsp;&nbsp;&nbsp;数量：<span></span></span>
                 </div>
               </div>

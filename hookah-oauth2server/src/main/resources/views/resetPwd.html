@@ -79,7 +79,7 @@ include("layout/base.html",{headSection:head,htmlSection:htmlPart}){}
                                 $.alert("密码重置成功!")
                                 window.location.href="/findPwd?step=4";
                             }else{
-                                console.log(data.message);
+								$.alert(data.message);
                             }
                         }
                     })
