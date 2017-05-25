@@ -10,7 +10,6 @@ import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.GoodsService;
-import com.jusfoun.hookah.rpc.api.MgGoodsService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -31,9 +30,6 @@ public class GoodsBackController extends BaseController {
 
     @Resource
     GoodsService goodsService;
-    @Resource
-    MgGoodsService mgGoodsService;
-
 
     @RequestMapping("/add")
     @ResponseBody
@@ -43,7 +39,7 @@ public class GoodsBackController extends BaseController {
         try {
             String userId = this.getCurrentUser().getUserId();
             obj.setAddUser(userId);
-            goodsService.addGoods(obj);
+            goodsService.addGoods(obj, getCurrentUser());
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());

@@ -651,6 +651,20 @@ public class JedisClusterClient implements IJedisClient {
         return result;
     }
 
+    @Override
+    public String incr(String key) {
+        Long result = 0L;
+        try {
+            result = jedisCluster.incr(key);
+            logger.debug("existsObject {}", key);
+        } catch (Exception e) {
+            logger.warn("existsObject {}", key, e);
+        } finally {
+//			returnResource(jedis);
+        }
+        return String.valueOf(result);
+    }
+
 
     /**
      * 获取byte[]类型Key

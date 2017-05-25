@@ -788,6 +788,23 @@ public class JedisClient implements IJedisClient {
         return result;
     }
 
+    @Override
+    public String incr(String key) {
+
+        Long result = 0L;
+        Jedis jedis = null;
+        try {
+            jedis = getResource();
+            result = jedis.incr(key);
+            logger.debug("existsObject {}", key);
+        } catch (Exception e) {
+            logger.warn("existsObject {}", key, e);
+        } finally {
+            returnResource(jedis);
+        }
+        return String.valueOf(result);
+    }
+
     /**
      * 获取资源
      *
