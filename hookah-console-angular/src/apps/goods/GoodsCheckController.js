@@ -66,7 +66,7 @@ class GoodsCheckController {
             $scope.search();
         }
 
-        if ($state.$current.name == "items.checkStatus") {
+        if ($state.$current.name == "items.checkedList") {
             $scope.searchCheckRs();
         }
       console.log('Page changed to: ' + $rootScope.pagination.currentPage);
