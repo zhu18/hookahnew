@@ -173,9 +173,6 @@
     margin-left:20%;
     line-height: 30px;
 }
-.findPwd .info span{
-    color:red;
-}
 .findPwd .info label input ,.findPwd .item label input{
     width: 160px;
     height: 25px;
@@ -297,4 +294,151 @@
 .checkcode-warp .getcheckcode.btn-disabled{
     color: #ccc;
     cursor: no-drop;
+}
+.pw-tip {
+    position: absolute;
+    padding-left: 6px;
+    width: 300px;
+    display: none
+}
+.pw-tip-arr {
+    display: block;
+    width: 7px;
+    height: 9px;
+    background: url(../../static/img/arr-left.png) no-repeat 0 0;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-top: -5px
+}
+.pw-tip-bd {
+    padding: 20px;
+    background: #fff url(../../static/img/pw-tip-bd.png) 0 100% repeat-x;
+    border: 1px solid #c2c8c8
+}
+.pw-rule-item {
+    padding: 2px 0
+}
+.pw-rule-item .iconfont {
+    margin-right: 3px;
+    color: #b7b7b7;
+    font-size: 12px;
+    font-weight: 700;
+    vertical-align: middle
+}
+.pw-rule-item .pw-icon-ok {
+    color: #14c2b3
+}
+.pw-rule-item .pw-icon-error {
+    color: #ff460f
+}
+.pw-strength {
+    height: 18px;
+    line-height: 18px;
+    position: relative;
+    padding-bottom: 10px
+}
+.pw-strength-bar {
+    width: 95px;
+    position: absolute;
+    left: 60px;
+    top: 0
+}
+.pw-strength-bar span {
+    display: block;
+    width: 25px;
+    height: 10px;
+    float: left;
+    margin-left: 1px;
+    background-color: #dcdcdc;
+    position: relative;
+    top: 5px
+}
+.pw-strength-bar em {
+    display: block;
+    width: 15px;
+    height: 18px;
+    line-height: 18px;
+    float: left
+}
+.pw-strength-bar-1 .pw-strength-1 {
+    background-color: #ff460f
+}
+.pw-strength-bar-1 em {
+    color: #ff460f
+}
+.pw-strength-bar-2 .pw-strength-1, .pw-strength-bar-2 .pw-strength-2 {
+    background-color: #ff6a00
+}
+.pw-strength-bar-2 em {
+    color: #ff6a00
+}
+.pw-strength-bar-3 .pw-strength-1, .pw-strength-bar-3 .pw-strength-2, .pw-strength-bar-3 .pw-strength-3 {
+    background-color: #0a9e00
+}
+.pw-strength-bar-3 em {
+    color: #0a9e00
+}
+.pw-strength-bar-1 .pw-strength-2, .pw-strength-bar-1 .pw-strength-3, .pw-strength-bar-2 .pw-strength-3 {
+    background-color: #dcdcdc
+}
+@font-face {
+    font-family: regiconfont;
+    src: url(//at.alicdn.com/t/font_1408947319_9759417.eot);
+    src: url(//at.alicdn.com/t/font_1408947319_9759417.eot?#iefix) format('embedded-opentype'), url(//at.alicdn.com/t/font_1408947319_9759417.woff) format('woff'), url(//at.alicdn.com/t/font_1408947319_9759417.ttf) format('truetype'), url(//at.alicdn.com/t/font_1408947319_9759417.svg#iconfont) format('svg')
+}
+.page .iconfont, .msg .iconfont, .ks-dialog .iconfont, .pw-tip .iconfont, .gmsg .iconfont {
+    font-family: regiconfont !important;
+    font-size: 12px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: .2px;
+    -moz-osx-font-smoothing: grayscale
+}
+.msg {
+    display: none;
+    padding-left: 22px;
+    font-size: 12px;
+    line-height: 1.4;
+    color: #3e3e3e;
+    width: 290px;
+}
+.msg-type-ok i {
+    color: #6bc827
+}
+.msg-type-error {
+    color: #ff3f13;
+
+}
+
+.msg i {
+    display: inline;
+    float: left;
+    margin-left: -18px;
+    margin-top: -1px;
+    color: #00bfff;
+    font-size: 16px;
+    line-height: 18px;
+}
+.msg-type-error i, .msg-type-warn i {
+    color: #ff3f13
+}
+.msg-display-block {
+    display: block;
+    margin-top: 10px
+}
+.msg-display-inline {
+    zoom: 1;
+    *display: inline
+}
+.msg-hide {
+    display: none
+}
+.msg .msg-tit, .msg .msg-cnt {
+    display: inline;
+}
+.findPwd label .title{
+    width:92px;
+    text-align: right;
+    display: inline-block;
 }
