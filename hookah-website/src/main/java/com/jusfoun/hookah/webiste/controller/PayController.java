@@ -102,10 +102,10 @@ public class PayController {
 
 
     @RequestMapping(value = "/payment", method = RequestMethod.POST)
-    public String payPassSta(@RequestBody Map<String,String> paramMap, Model model, HttpServletRequest request) {
+    public String payPassSta(String orderSn, Model model, HttpServletRequest request) {
 
         long orderAmount = 0 ; //支付金额
-        String orderSn = paramMap.get("orderSn");
+      /*  String orderSn = paramMap.get("orderSn");*/
         try {
             Session session = SecurityUtils.getSubject().getSession();
             HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
