@@ -13,7 +13,7 @@ var head = {
     	dataParm.payStatus = 1;//0:未付款，1：已付款
         dataParm.startDate = null;
         dataParm.endDate = null;
-        dataParm.commentFlag = 0;
+        dataParm.commentFlag = null;
 </script>
 <%};%>
 
@@ -47,7 +47,8 @@ var htmlPart = {
                 <div class="grid-left">
                     <label class="comment-status">评论状态：
                         <span class="margin-right-5"></span>
-                        <input type="radio" name="comment" value="0" class="margin-right-10" checked>未评论
+                        <!--<input type="radio" name="comment" value="0" class="margin-right-10" checked>未评论-->
+                        <input type="radio" name="comment" value="0" class="margin-right-10" >未评论
                         <span class="margin-right-20"></span>
                         <input type="radio" name="comment" value="1" class="margin-right-10">已评论
                     </label>
