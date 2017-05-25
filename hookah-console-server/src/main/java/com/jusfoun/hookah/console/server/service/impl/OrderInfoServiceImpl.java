@@ -172,7 +172,8 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         order.setIsDeleted(new Byte("1"));
         updateByIdSelective(order);
         OrderInfoVo orderInfoVo = new OrderInfoVo();
-        BeanUtils.copyProperties(order,orderInfoVo);
+        orderInfoVo.setOrderId(id);
+        orderInfoVo.setIsDeleted((byte)1);
         mgOrderInfoService.updateByIdSelective(orderInfoVo);
     }
 
@@ -184,7 +185,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         filters.add(Condition.in("orderId", ids));
         updateByConditionSelective(order,filters);
         OrderInfoVo orderInfoVo = new OrderInfoVo();
-        BeanUtils.copyProperties(order,orderInfoVo);
+        orderInfoVo.setIsDeleted((byte)1);
         mgOrderInfoService.updateByCondition(orderInfoVo,filters);
     }
 
