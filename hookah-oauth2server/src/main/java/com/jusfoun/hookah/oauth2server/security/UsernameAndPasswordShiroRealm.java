@@ -101,9 +101,11 @@ public class UsernameAndPasswordShiroRealm extends AuthorizingRealm {
             AuthenticationInfo info = new SimpleAuthenticationInfo(user.getUserName(), user.getPassword(), getName());
             if(info !=null){
                 Session session = SecurityUtils.getSubject().getSession(true);
-                Map<String,String> userMap = new HashMap<String,String>();
+                Map<String, Object> userMap = new HashMap<>();
                 userMap.put("userId",user.getUserId());
                 userMap.put("userName",user.getUserName());
+                userMap.put("userType",user.getUserType());
+                userMap.put("orgId",user.getOrgId());
                 session.setAttribute("user",userMap);
             }
             return info;
