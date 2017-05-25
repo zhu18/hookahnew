@@ -52,10 +52,9 @@ function checkFirst(orderId){
 				return false;
 			}else{
 				$(this).children().find('.function-hint').css('color','#333')
+				check(orderId);
 			}
 		});
-		check(orderId);
-        return false;
 	}
 };
 function getLength(str){
