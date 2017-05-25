@@ -70,7 +70,9 @@ $(".searchQuery .search").on("click",function(){
         },
         success: function (data) {
             if (!(data.code == 0)) {
-                location.reload(true);
+				$.alert('删除成功', true, function () {
+					location.reload()
+				});
             } else {
                 console.log("删除失败！");
             }
@@ -79,9 +81,12 @@ $(".searchQuery .search").on("click",function(){
 }
 
 function confirmDelete(orderId){
-    if(confirm("确定要删除该订单吗？")){
-        deleteRadio(orderId);
-    }else{
-
-    }
+	$.confirm('确定要删除该订单吗？',null,function(type){
+		if(type == 'yes'){
+			deleteRadio(orderId);
+			this.hide();
+		}else{
+			this.hide();
+		}
+	});
 }

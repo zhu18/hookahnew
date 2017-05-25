@@ -45,6 +45,35 @@ var imgSrc = '';
 
 //选择文件之后执行上传
 var fileUploadUrl = host.static + '/upload/fileUpload';
+function ckFileSize() {
+	//把附件当做图片处理放在缓冲区预加载
+	var file = new Image();
+	//设置附件的url
+	file.dynsrc = document.getElementById("fudPolicy").value;
+	//获取上传的文件的大小
+	var filesize = file.fileSize / 1024;
+	if (filesize > 3072) {
+		alert("上传的文件不得大于M");
+		return false;
+	}
+	return true;
+}
+// $('#filename').change(function(){
+// 	var file = $(this).files;
+// 	var f = document.getElementById("filename").files;
+// 	// console.log(f[0].size);
+// 	// console.log(file[0].size);
+// 	var fileInput = $(this).files;
+// 	console.log(fileInput)
+// 	// var filesize = file.fileSize / 1024;
+// 	// if (filesize > 3072) {
+// 	// 	console.log(file.dynsrc)
+// 	// }else{
+// 	// 	console.log(file.dynsrc)
+// 	// }
+// 	// getFileSize(file.dynsrc)
+// })
+
 $('#filename').fileupload({
 	url: fileUploadUrl,
 	dataType: 'json',
@@ -197,15 +226,15 @@ $("#publishArticle").validate({
 	rules: {
 		newsGroup: 'required',
 		newsSonGroup: 'required',
-		newsTitle:{
+		newsTitle: {
 			required: true,
-			isNewsName:true
+			isNewsName: true
 		},
-		newsInfo:{
+		newsInfo: {
 			required: true,
-			isNewsBrief:true
+			isNewsBrief: true
 		},
-		goodsImges:{
+		goodsImges: {
 			required: true
 		}
 	},
@@ -216,13 +245,13 @@ $("#publishArticle").validate({
 		newsSonGroup: {
 			required: '请选择文章分类'
 		},
-		newsTitle:{
+		newsTitle: {
 			required: '请输入文章标题'
 		},
-		newsInfo:{
+		newsInfo: {
 			required: '请选择文章简介'
 		},
-		goodsImges:{
+		goodsImges: {
 			required: '文章图片必须上传'
 		}
 
@@ -234,29 +263,29 @@ $("#publishArticle").validate({
 		this.defaultShowErrors();
 	}
 });
-function getLength(str){
-	return str.replace(/[\u0391-\uFFE5]/g,"aa").length;
+function getLength(str) {
+	return str.replace(/[\u0391-\uFFE5]/g, "aa").length;
 }
-$('#newsTitle').on('input onporpertychange',function () {
+$('#newsTitle').on('input onporpertychange', function () {
 	$('#showcontent').html(getLength($(this).val()));
 });
-$('#newsInfo').on('input onporpertychange',function () {
+$('#newsInfo').on('input onporpertychange', function () {
 	$('#showcontent2').html(getLength($(this).val()));
 });
-$.validator.addMethod("isNewsName", function(value, element) {
-	var len = value.replace(/[\u0391-\uFFE5]/g,"aa").length;
+$.validator.addMethod("isNewsName", function (value, element) {
+	var len = value.replace(/[\u0391-\uFFE5]/g, "aa").length;
 	return this.optional(element) || (10 <= len && len <= 60);
 }, "长度为10-60个字符（每个汉字为2个字符）");
-$.validator.addMethod("isNewsBrief", function(value, element) {
-	var len = value.replace(/[\u0391-\uFFE5]/g,"aa").length;
+$.validator.addMethod("isNewsBrief", function (value, element) {
+	var len = value.replace(/[\u0391-\uFFE5]/g, "aa").length;
 	return this.optional(element) || (30 <= len && len <= 300);
 }, "长度为30-400个字符（每个汉字为2个字符）");
 $('#submit-article').click(function () {
 	if ($("#publishArticle").valid()) {
-		if($('#content').val()){
+		if ($('#content').val()) {
 			published()
-		}else{
-			$.alert('商品描述不能为空',true,function () {
+		} else {
+			$.alert('商品描述不能为空', true, function () {
 				$('#content').focus()
 			})
 

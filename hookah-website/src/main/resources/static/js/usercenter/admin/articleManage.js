@@ -128,7 +128,7 @@ function second(that){
 //            });
 //        }
 function deleteData(id) {
-    $.confirm('你确定要删除这条消息吗? ',null,function(type){
+    $.confirm('你确定要删除这条文章吗? ',null,function(type){
         if(type == 'yes'){
             deleteLoad(id);
             this.hide();
