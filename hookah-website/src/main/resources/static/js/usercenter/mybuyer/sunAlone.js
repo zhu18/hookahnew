@@ -42,7 +42,7 @@ $(function(){
 			this.defaultShowErrors();
 		}
 	});
-})
+});
 function checkFirst(orderId){
 	if($("#sunContentForm").valid()){
 	    $('.sunContent').each(function(){
@@ -51,12 +51,12 @@ function checkFirst(orderId){
 				$(this).children().find('.function-hint').css('color','#A61615');
 				return false;
 			}else{
-				$(this).children().find('.function-hint').css('color','#333')
+				$(this).children().find('.function-hint').css('color','#333');
 				check(orderId);
 			}
 		});
 	}
-};
+}
 function getLength(str){
 	return str.replace(/[\u0391-\uFFE5]/g,"aa").length;
 }
