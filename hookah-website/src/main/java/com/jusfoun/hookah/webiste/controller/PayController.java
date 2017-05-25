@@ -101,7 +101,7 @@ public class PayController {
 }*/
 
 
-    @RequestMapping(value = "/payment", method = RequestMethod.GET)
+    @RequestMapping(value = "/payment", method = RequestMethod.POST)
     public String payPassSta(@RequestBody Map<String,String> paramMap, Model model, HttpServletRequest request) {
 
         long orderAmount = 0 ; //支付金额
