@@ -6,6 +6,7 @@ import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.dao.OrderInfoMapper;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.OrderInfo;
+import com.jusfoun.hookah.core.domain.PayCore;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
 import com.jusfoun.hookah.core.domain.vo.CartVo;
@@ -24,6 +25,7 @@ import com.jusfoun.hookah.rpc.api.CartService;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.MgOrderInfoService;
 import com.jusfoun.hookah.rpc.api.OrderInfoService;
+import com.jusfoun.hookah.rpc.api.PayCoreService;
 import org.apache.http.HttpException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -63,6 +65,8 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     @Resource
     MongoTemplate mongoTemplate;
 
+    @Resource
+    PayCoreService payCoreService;
 
     @Resource
     public void setDao(OrderInfoMapper orderinfoMapper) {
@@ -76,9 +80,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         orderinfo.setShippingStatus(0);
         orderinfo.setShippingId("");
         orderinfo.setShippingName("");
-        orderinfo.setPayId("");
+        orderinfo.setPayId("0");
         orderinfo.setPayStatus(0);
-        orderinfo.setPayName("");
+        orderinfo.setPayName("账户余额");
         orderinfo.setHowOos("");
         orderinfo.setHowSurplus("");
         orderinfo.setPackName("");
@@ -338,10 +342,21 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         filters.add(Condition.eq("orderSn",orderSn));
         OrderInfo orderInfo =  selectOne(filters);
 
+        PayCore payCore = payCoreService.selectOne(filters);
+        String payName="账户余额";
+        String[] payments = {"账户余额","支付宝","银联"};
+        if(payCore!=null){
+            payName = Arrays.asList(payments).get(Integer.parseInt(payCore.getPayMode()));
+            orderInfo.setPayId(payCore.getPayMode());
+            orderInfo.setPayName(payName);
+        }
+
         orderInfo.setPayTime(new Date());
         orderInfo.setLastmodify(new Date());
         orderInfo.setPayStatus(payStatus);
-        super.updateByIdSelective(orderInfo);
+
+        updateByIdSelective(orderInfo);
+
         OrderInfoVo orderInfoVo = mgOrderInfoService.selectById(orderInfo.getOrderId());
         mgOrderInfoService.delete(orderInfo.getOrderId());
 
