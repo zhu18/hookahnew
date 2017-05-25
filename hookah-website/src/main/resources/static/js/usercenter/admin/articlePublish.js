@@ -45,38 +45,18 @@ var imgSrc = '';
 
 //选择文件之后执行上传
 var fileUploadUrl = host.static + '/upload/fileUpload';
-function ckFileSize() {
-	//把附件当做图片处理放在缓冲区预加载
-	var file = new Image();
-	//设置附件的url
-	file.dynsrc = document.getElementById("fudPolicy").value;
-	//获取上传的文件的大小
-	var filesize = file.fileSize / 1024;
-	if (filesize > 3072) {
-		alert("上传的文件不得大于M");
-		return false;
-	}
-	return true;
-}
-// $('#filename').change(function(){
-// 	var file = $(this).files;
-// 	var f = document.getElementById("filename").files;
-// 	// console.log(f[0].size);
-// 	// console.log(file[0].size);
-// 	var fileInput = $(this).files;
-// 	console.log(fileInput)
-// 	// var filesize = file.fileSize / 1024;
-// 	// if (filesize > 3072) {
-// 	// 	console.log(file.dynsrc)
-// 	// }else{
-// 	// 	console.log(file.dynsrc)
-// 	// }
-// 	// getFileSize(file.dynsrc)
-// })
-
 $('#filename').fileupload({
 	url: fileUploadUrl,
 	dataType: 'json',
+	add: function (e, data) {
+		var filesize = data.files[0].size;
+		if(Math.ceil(filesize / 1024) > 1024*5){
+			console.log('文件过大'+filesize);
+			$.alert('文件过大');
+			return;
+		}
+		data.submit();
+	},
 	done: function (e, data) {
 		if (data.result.code == 1) {
 			var obj = data.result.data[0];
