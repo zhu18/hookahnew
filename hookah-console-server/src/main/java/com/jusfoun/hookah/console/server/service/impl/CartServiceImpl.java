@@ -72,8 +72,8 @@ public class CartServiceImpl extends GenericServiceImpl<Cart, String> implements
         List<Cart> carts = super.selectList(filters);
         List<CartVo> cartVos = new ArrayList<>(carts.size());
         GoodsVo goods = null;
-        try{
-            for(Cart cart:carts){
+        for(Cart cart:carts){
+            try{
                 CartVo vo = new CartVo();
                 BeanUtils.copyProperties(cart,vo);
                 goods = goodsService.findGoodsById(cart.getGoodsId());
@@ -81,9 +81,9 @@ public class CartServiceImpl extends GenericServiceImpl<Cart, String> implements
                 vo.setGoods(goods);
                 vo.setFormat(format);
                 cartVos.add(vo);
+            }catch (Exception e){
+                e.printStackTrace();
             }
-        }catch (Exception e){
-            e.printStackTrace();
         }
 
         return cartVos;
