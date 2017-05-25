@@ -42,22 +42,28 @@ $(function(){
 			this.defaultShowErrors();
 		}
 	});
-})
+});
 function checkFirst(orderId){
 	if($("#sunContentForm").valid()){
+		var isTrues = false;
 	    $('.sunContent').each(function(){
 			var thisVal = $(this).children('.rcontent').find('input[name="score"]').val();
 			if(!thisVal){
 				$(this).children().find('.function-hint').css('color','#A61615');
-				return false;
+				isTrues = false;
 			}else{
-				$(this).children().find('.function-hint').css('color','#333')
+				$(this).children().find('.function-hint').css('color','#333');
+				isTrues = true;
 			}
 		});
-		check(orderId);
-        return false;
+	    if(isTrues){
+	    	console.log('true')
+			check(orderId);
+		}else{
+			console.log('false')
+		}
 	}
-};
+}
 function getLength(str){
 	return str.replace(/[\u0391-\uFFE5]/g,"aa").length;
 }
