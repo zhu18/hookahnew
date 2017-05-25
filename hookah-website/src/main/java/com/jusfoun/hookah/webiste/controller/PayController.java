@@ -58,13 +58,13 @@ public class PayController {
         return "pay/success";
     }
 
-  /*  *//**
+/**
      * 订单支付
      * @param paramMap
      * @param model
      * @return
-     *//*
-    @ResponseBody
+     */
+    /*@ResponseBody
     @RequestMapping(value = "/payment", method = RequestMethod.POST)
     public String payPassSta(@RequestBody Map<String,String> paramMap, Model model, HttpServletRequest request) {
 
@@ -102,6 +102,32 @@ public class PayController {
 
 
     @RequestMapping(value = "/payment", method = RequestMethod.GET)
+    public String payPassSta(@RequestBody Map<String,String> paramMap, Model model, HttpServletRequest request) {
+
+        long orderAmount = 0 ; //支付金额
+        String orderSn = paramMap.get("orderSn");
+        try {
+            Session session = SecurityUtils.getSubject().getSession();
+            HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
+            User user = userService.selectById(userMap.get("userId"));
+            //支付操作
+            payCoreService.doPayMoney(orderSn,user.getUserId());
+            //根据订单编号获得支付金额
+            List<Condition> filters = new ArrayList();
+            filters.add(Condition.eq("orderSn", orderSn));
+            OrderInfo orderinfo  = orderService.selectOne(filters);
+            orderAmount= orderinfo.getOrderAmount();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("message", "支付失败!");
+            return "pay/fail";
+        }
+        model.addAttribute("money",orderAmount);
+        return "pay/success";
+    }
+
+ /*   @RequestMapping(value = "/payment", method = RequestMethod.GET)
     public String payPassSta(String orderSn,Model model) {
 
         long orderAmount = 0 ; //支付金额
@@ -124,7 +150,7 @@ public class PayController {
         }
         model.addAttribute("money",orderAmount);
         return "pay/success";
-    }
+    }*/
 
 
     @RequestMapping(value = "/cash", method = RequestMethod.GET)
