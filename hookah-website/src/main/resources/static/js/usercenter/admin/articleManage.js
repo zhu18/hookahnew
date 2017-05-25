@@ -128,7 +128,7 @@ function second(that){
 //            });
 //        }
 function deleteData(id) {
-    $.confirm('你确定要删除这条消息吗? ',null,function(type){
+    $.confirm('你确定要删除这条文章吗? ',null,function(type){
         if(type == 'yes'){
             deleteLoad(id);
             this.hide();
@@ -148,9 +148,12 @@ function deleteLoad(id){
         contentType: 'application/json',
         success:function(data){
             if(data.code == "1") {
-                $.alert('删除成功', true, function () {});
-                data.newsGroup = $("#newsGroup").val();
-                changes(data.newsGroup);
+				data.newsGroup = $("#newsGroup").val();
+				changes(data.newsGroup);
+                $.alert('删除成功', true, function () {
+					location.reload()
+				});
+
             }
         },
         error:function(e){
