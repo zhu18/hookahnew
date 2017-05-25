@@ -196,7 +196,7 @@
       </fieldset>
     </form>
 
-    <form class="form-horizontal" role="form" id="goodsCheckForm" name="shelf" ng-show="operatorFlag == 1">
+    <form class="form-horizontal" role="form" id="goodsCheckForm" name="checkForm" ng-show="operatorFlag == 1">
       <input type="hidden" id="goodsId" name="goodsId" value="{{editData.goodsId}}" />
       <input type="hidden" id="goodsSn" name="goodsSn" value="{{editData.goodsSn}}" />
       <input type="hidden" id="goodsName" name="goodsName" value="{{editData.goodsName}}" />
@@ -212,17 +212,20 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="checkContent">审核意见</label>
+        <label class="col-sm-2 control-label">审核意见</label>
         <div class="col-sm-5">
           <label>
-            <textarea id="checkContent" name="checkContent" style="margin: 0px; width: 452px; height: 84px;"></textarea>
+            <textarea name="checkContent"
+                      data-ng-model="checkContent"
+                      style="margin: 0px; width: 452px; height: 84px;" required>
+            </textarea>
           </label>
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-2"></div>
         <div class="col-sm-5">
-          <button class="btn btn-primary" data-ng-click="submitCheck()">
+          <button class="btn btn-primary" data-ng-click="submitCheck()" ng-disabled="checkForm.$invalid">
             <span class="glyphicon glyphicon-refresh"></span> 提交审核
           </button>
         </div>
