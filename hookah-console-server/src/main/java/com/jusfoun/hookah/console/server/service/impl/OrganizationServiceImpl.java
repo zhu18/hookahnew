@@ -14,7 +14,7 @@ import javax.annotation.Resource;
  * @desc
  */
 @Service
-public class OrganizationServiceImpl extends GenericServiceImpl<Organization, Long> implements OrganizationService {
+public class OrganizationServiceImpl extends GenericServiceImpl<Organization, String> implements OrganizationService {
 
     @Resource
     private OrganizationMapper organizationMapper;

@@ -24,7 +24,7 @@ export default function userRouting($stateProvider, $urlRouterProvider) {
     })
     .state('user.verify.all', {
       url: '/user/verify/all',
-      template: require('./list.html'),
+      template: require('./checkList.html'),
       controller: UserVerifyController,
     })
     .state('user.verify.person', {
@@ -36,5 +36,10 @@ export default function userRouting($stateProvider, $urlRouterProvider) {
       url: '/user/verify/company',
       template: require('./list.html'),
       controller: UserVerifyController,
+    })
+    .state('user.verify.checkUserDetail', {
+        url: '/user/verify/checkUserDetail',
+        template: require('./checkUserDetail.html'),
+        controller: UserVerifyController,
     })
 };
