@@ -27,8 +27,16 @@
         dataParm.range.priceFrom='';
         dataParm.range.priceTo='';
         $('.ensure').on('click',function () {
-            dataParm.range.priceFrom=$('#priceFrom').val()*100;
-            dataParm.range.priceTo= $('#priceTo').val()*100;
+        	if($('#priceFrom').val()){
+				dataParm.range.priceFrom=$('#priceFrom').val()*100;
+            }else{
+        		delete dataParm.range.priceFrom;
+            }
+			if($('#priceTo').val()){
+				dataParm.range.priceTo=$('#priceTo').val()*100;
+			}else{
+				delete dataParm.range.priceTo;
+			}
             goPage(1);
         });
         $('.empty').on('click',function () {
