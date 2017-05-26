@@ -1,16 +1,17 @@
 import "../../common/common";
-import orderRouting from "./order.routing";
-
+import cooperationRouting from "./cooperation.routing";
 const MODULE_NAME = 'Hookah';
 let app = angular.module(MODULE_NAME, [
   'ui.router',
   'Common',
   'ui.bootstrap'
 ]);
-app.config(orderRouting);
-
+app.config(cooperationRouting);
+app.config(['$httpProvider', function ($httpProvider) {
+  $httpProvider.defaults.withCredentials = true;
+}]);
 app.run(function ($rootScope, $state) {
-  $rootScope.currentProductId = 'order';
+  $rootScope.currentProductId = 'cooperation';
   $rootScope.config = {
     "navScene": 'main',
     "isSidebarFold": false,
@@ -33,15 +34,15 @@ app.run(function ($rootScope, $state) {
       "folded": false
     }
   };
-  $rootScope.config.title = '订单管理';
+  $rootScope.config.title = '合作机构管理';
   $rootScope.config.mainNav = [
     {
-      "title": "订单查询",
-      "url": "order.search"
+      "title": "合作机构查询",
+      "url": "cooperation.search"
     },
     {
-      "title": "订单详情",
-      "url": "order.detail"
+      "title": "新增合作机构",
+      "url": "cooperation.add"
     }
   ];
 
