@@ -1,17 +1,17 @@
-import '../../common/common';
-import userRouting from './user.routing';
+import "../../common/common";
+import cooperationRouting from "./cooperation.routing";
 const MODULE_NAME = 'Hookah';
 let app = angular.module(MODULE_NAME, [
   'ui.router',
   'Common',
   'ui.bootstrap'
 ]);
-app.config(userRouting);
+app.config(cooperationRouting);
 app.config(['$httpProvider', function ($httpProvider) {
   $httpProvider.defaults.withCredentials = true;
 }]);
 app.run(function ($rootScope, $state) {
-  $rootScope.currentProductId = 'user';
+  $rootScope.currentProductId = 'cooperation';
   $rootScope.config = {
     "navScene": 'main',
     "isSidebarFold": false,
@@ -34,23 +34,15 @@ app.run(function ($rootScope, $state) {
       "folded": false
     }
   };
-  $rootScope.config.title = '用户管理';
-  $rootScope.config.mainNav =[
+  $rootScope.config.title = '合作机构管理';
+  $rootScope.config.mainNav = [
     {
-      "title":"用户查询",
-      "url":"user.search"
-    },
-    // {
-    //   "title":"新增用户",
-    //   "url":"user.add"
-    // },
-    {
-      "title":"待审核",
-      "url":"user.verify.all"
+      "title": "合作机构查询",
+      "url": "cooperation.search"
     },
     {
-        "title":"审核记录",
-        "url":"user.verify.resultAll"
+      "title": "新增合作机构",
+      "url": "cooperation.add"
     }
   ];
 

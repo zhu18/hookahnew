@@ -13,8 +13,8 @@ export default function shelfRouting($stateProvider, $urlRouterProvider) {
       controller: OrderController,
     })
     .state('order.detail', {
-      url: '/innerMsg/read/{categoryId:[0-9]{1,4}}',
-      templateUrl: '/msc/list',
+      url: '/order/detail',
+      templateUrl: require('./list.html'),
       controller: OrderController,
     })
 };

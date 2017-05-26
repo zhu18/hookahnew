@@ -58,6 +58,20 @@ app.run(function ($rootScope, $state) {
         }
       ]
     }
+    , {
+      "title": "合作机构管理",
+      "showChild": false,
+      "childs": [
+          {
+              "title": "合作机构查询",
+              "url": "cooperation.search"
+          }
+          , {
+              "title": "新增合作机构",
+              "url": "cooperation.add"
+          }
+      ]
+    }
   ];
 
 });
