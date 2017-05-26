@@ -28,21 +28,16 @@ $(function(){
     $("#verifyBtn").on("click",companyAuth);
     // 以下是日期插件初始化
     var start = {
-        // format: "YYYY-MM-DD HH:mm:ss",
-        isTime: true,
-        maxDate: $.nowDate(0),
-        choosefun: function(elem,datas){
-            end.minDate = datas; //开始日选好后，重置结束日的最小日期
-        }
+        format: "YYYY-MM-DD",
+        isinitVal:false,
+        isTime: false,
+        maxDate: "2099-12-31 23:59:59"
     };
     var end = {
-        // format: "YYYY-MM-DD HH:mm:ss",
-        isTime: true,
-        maxDate: $.nowDate(0),
-        choosefun: function(elem,datas){
-            start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
-        }
-
+        format: "YYYY-MM-DD",
+        isinitVal:false,
+        isTime: false,
+        maxDate: "2099-12-31 23:59:59"
     };
     $.jeDate("#businessLicence", start);
     $.jeDate("#taxRegCertificate",end);
