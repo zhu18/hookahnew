@@ -1,10 +1,16 @@
 class UserVerifyController {
   constructor($scope, $rootScope, $state, $http, $uibModal, usSpinnerService, growl) {
-    $scope.title = '用户审核';
     $scope.search = function () {
       var promise = $http({
         method: 'GET',
-        url: $rootScope.site.apiServer + "/api/user/verify/all"
+        url: $rootScope.site.apiServer + "/api/user/verify/all",
+        params: {
+          currentPage: $rootScope.pagination.currentPage,
+          pageSize: $rootScope.pagination.pageSize,
+          userName: $scope.userName,
+          mobile: $scope.mobile,
+          email: $scope.email
+        }
       });
       promise.then(function (res, status, config, headers) {
         $rootScope.loadingState = false;
@@ -21,6 +27,35 @@ class UserVerifyController {
         growl.addSuccessMessage("数据加载完毕。。。");
       });
     };
+
+
+    $scope.searchCheckResult = function () {
+        var promise = $http({
+            method: 'GET',
+            url: $rootScope.site.apiServer + "/api/userCheck/all",
+            params: {
+                currentPage: $rootScope.pagination.currentPage,
+                pageSize: $rootScope.pagination.pageSize,
+                userName: $scope.userName,
+                userType: $scope.userType
+            }
+        });
+        promise.then(function (res, status, config, headers) {
+            $rootScope.loadingState = false;
+            $rootScope.pagination.store = res.data.data.list;
+            $rootScope.pagination.currentPage = res.data.data.currentPage;
+            $rootScope.pagination.totalItems = res.data.data.totalItems;
+            if (res.data.data.totalItems == 0) {
+                $rootScope.showNoneDataInfoTip = true;
+                $rootScope.showPageHelpInfo = false;
+            } else {
+                $rootScope.showNoneDataInfoTip = false;
+                $rootScope.showPageHelpInfo = true;
+            }
+            growl.addSuccessMessage("数据加载完毕。。。");
+        });
+    }
+
     $scope.detail = function (event, item) {
 
         $rootScope.cuser = item;
@@ -73,7 +108,16 @@ class UserVerifyController {
 
     };
 
-    $scope.search();
+      if ($state.$current.name == "user.verify.all") {
+          $scope.title = '用户审核';
+          $scope.search();
+      }
+
+      if ($state.$current.name == "user.verify.resultAll") {
+          $scope.title = '审核记录';
+          $scope.searchCheckResult();
+      }
+
   }
 }
 

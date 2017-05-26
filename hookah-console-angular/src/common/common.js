@@ -182,6 +182,21 @@ export default angular.module('Common', [
           }
       }
   })
+  .filter('checkStatus',function(){
+      return function (input) {
+          switch (input) {
+              case 0:
+                  return '审核中';
+                  break;
+              case 1:
+                  return '通过';
+                  break;
+              case 2:
+                  return '未通过';
+                  break;
+          }
+      }
+  })
   .controller("MainController", MainController)
   .run(function ($rootScope) {
     // console.log("common init..");

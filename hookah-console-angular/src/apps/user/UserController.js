@@ -6,6 +6,8 @@ class UserController {
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/user/all",
         params: {
+            currentPage: $rootScope.pagination.currentPage,
+            pageSize: $rootScope.pagination.pageSize,
             userName: $scope.userName,
             mobile: $scope.mobile,
             email: $scope.email

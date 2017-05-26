@@ -11,6 +11,6 @@ public interface UserCheckService extends GenericService<UserCheck, String> {
 
     public ReturnData addUserCheck(UserCheck userCheck);
 
-    public ReturnData search(UserCheck userCheck);
+    public ReturnData search(UserCheck userCheck,Integer pageNumber,Integer pageSize);
 
 }

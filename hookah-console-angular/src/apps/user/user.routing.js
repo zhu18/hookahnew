@@ -42,4 +42,9 @@ export default function userRouting($stateProvider, $urlRouterProvider) {
         template: require('./checkUserDetail.html'),
         controller: UserVerifyController,
     })
+    .state('user.verify.resultAll', {
+        url: '/user/verify/resultAll',
+        template: require('./checkResultList.html'),
+        controller: UserVerifyController,
+    })
 };
