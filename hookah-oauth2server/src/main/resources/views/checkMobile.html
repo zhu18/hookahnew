@@ -109,7 +109,7 @@ include("layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 
         $(".sub").on("click", function () {
             $.ajax({
-                url: "http://auth.hookah.app/findPwd",
+                url: "${host.auth}/findPwd",
                 type: "post",
                 data: {
                     step: 2,

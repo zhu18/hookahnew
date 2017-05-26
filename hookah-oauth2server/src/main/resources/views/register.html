@@ -178,7 +178,7 @@ var htmlPart = {
 		$('h2.logo-title').html('注册');
 	}
 	$('#J_captcha').on('click', function () {
-		$(this).html('<img src="http://auth.hookah.app/captcha?'+Math.random()+'">');
+		$(this).html('<img src="${host.auth}/captcha?'+Math.random()+'">');
 	});
 	var testData = {
 		tipIcon: {

@@ -100,7 +100,7 @@ include("layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 		if($('.pwd2').val() === $(".pwd1").val()){
 			$(".secret").hide();
 			$.ajax({
-				url:"http://auth.hookah.app/findPwd",
+				url:"${host.auth}/findPwd",
 				type:"post",
 				data:{
 					step:3,
