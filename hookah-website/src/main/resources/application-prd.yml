@@ -4,7 +4,7 @@ server:
     protocal: http://
   session:
     cookie:
-      domain: hookah.app
+      domain: qddata.com.cn
       name: hookah_sid
 myconf:
   beetl:
@@ -15,21 +15,21 @@ myconf:
     cache: false
 
   host:
-    domain: hookah.app
-    website: ${server.http.protocal}www.hookah.app
-    static: ${server.http.protocal}static.hookah.app
-    auth: ${server.http.protocal}auth.hookah.app
-    console: ${server.http.protocal}console.hookah.app
-    admin: ${server.http.protocal}admin.hookah.app
+    domain: qddata.com.cn
+    website: ${server.http.protocal}www.qddata.com.cn
+    static: ${server.http.protocal}static.qddata.com.cn
+    auth: ${server.http.protocal}auth.qddata.com.cn
+    console: ${server.http.protocal}console.qddata.com.cn
+    admin: ${server.http.protocal}admin.qddata.com.cn
   oauth2:
     clientId: website
     clientSecret: Yqn2ht4DYkMHlDvTY7CV
-    regUrl: http://auth.hookah.app/reg
-    loginUrl: http://auth.hookah.app/oauth/authorize?client_id=website&response_type=code&redirect_uri=
-    logoutUrl: http://auth.hookah.app/logout?redirect_uri=http://www.hookah.app/login
-    accessTokenUrl: http://auth.hookah.app/oauth/accessToken
-    userInfoUrl: http://auth.hookah.app/userInfo
-    redirectUrl: http://auth.hookah.app/login
+    regUrl: http://auth.qddata.com.cn/reg
+    loginUrl: http://auth.qddata.com.cn/oauth/authorize?client_id=website&response_type=code&redirect_uri=
+    logoutUrl: http://auth.qddata.com.cn/logout?redirect_uri=http://www.qddata.com.cn/login
+    accessTokenUrl: http://auth.qddata.com.cn/oauth/accessToken
+    userInfoUrl: http://auth.qddata.com.cn/userInfo
+    redirectUrl: http://auth.qddata.com.cn/login
 debug: true
 spring:
   data:
