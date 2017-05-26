@@ -104,7 +104,7 @@
   <bean class="org.apache.shiro.spring.web.ShiroFilterFactoryBean" id="shiroFilter">
     <property name="securityManager" ref="securityManager"/>
     <property name="loginUrl" value="/login"/>
-    <property name="successUrl" value="http://www.hookah.app/login"/>
+    <property name="successUrl" value="http://www.qddata.com.cn/login"/>
     <property name="unauthorizedUrl" value="/unauthorized"/>
     <property name="filterChainDefinitions">
       <value>

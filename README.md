@@ -41,13 +41,13 @@
   ！！Windows操作系统下，将自己的nginx目录的权限设置为 Users用户组完全控制
   把doc/nginx目录下的servers拷贝到自己的nginx目录中
   在nginx.conf文件http配置部分最后加入```include servers/*;```
-  前台访问地址:www.hookah.app <br>
-  后台访问地址:console.hookah.app/home  待改 <br>
+  前台访问地址:www.qddata.com.cn <br>
+  后台访问地址:console.qddata.com.cn/home  待改 <br>
   添加以下代码到本机的hosts文件中
   ```$xslt
-  127.0.0.1 www.hookah.app hookah.app
-  127.0.0.1 console.hookah.app
-  127.0.0.1 auth.hookah.app
+  127.0.0.1 www.qddata.com.cn qddata.com.cn
+  127.0.0.1 console.qddata.com.cn
+  127.0.0.1 auth.qddata.com.cn
   127.0.0.1 admin.hokah.app
 ```
 
@@ -85,7 +85,7 @@
 * hookah-console-angular
   * 模块根目录下执行 ```npm install```
   * 修改webpack.config.js文件81行
-    * 替换 http://localhost:9500/ 为 http://admin.hookah.app/
+    * 替换 http://localhost:9500/ 为 http://admin.qddata.com.cn/
     * 注意尾部/符号
   * 模块根目录执行``` ./node_modules/webpack/bin/webpack.js ```
      !!window下执行:```.\node_modules\.bin\webpack.cmd
