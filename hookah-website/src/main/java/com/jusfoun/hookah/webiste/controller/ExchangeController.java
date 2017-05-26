@@ -73,6 +73,9 @@ public class ExchangeController extends BaseController{
             mgGoodsService.updateClickRate(id);//增加商品点击量记录
             // 查询商品详情
             GoodsVo goodsVo = goodsService.findGoodsById(id);
+            if(goodsVo == null) {
+                new HookahException("未找到商品！goodsVo == null");
+            }
             if(goodsVo.getClickRate() == null) {
                 goodsVo.setClickRate((long)0);
             }

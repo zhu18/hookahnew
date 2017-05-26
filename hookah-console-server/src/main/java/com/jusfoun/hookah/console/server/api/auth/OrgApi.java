@@ -24,6 +24,6 @@ public class OrgApi {
 
     @RequestMapping(value = "/owner",method = RequestMethod.GET)
     public ReturnData getOwner(){
-        return ReturnData.success(organizationService.selectById(new Long(0)));
+        return ReturnData.success(organizationService.selectById("0"));
     }
 }

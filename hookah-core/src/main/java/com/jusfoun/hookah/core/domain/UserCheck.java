@@ -1,6 +1,10 @@
 package com.jusfoun.hookah.core.domain;
 
 import com.jusfoun.hookah.core.generic.GenericModel;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
 
 public class UserCheck extends GenericModel {
@@ -10,6 +14,8 @@ public class UserCheck extends GenericModel {
      *
      * @mbggenerated
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     /**
