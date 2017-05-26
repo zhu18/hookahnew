@@ -21,6 +21,7 @@ var htmlPart = {
       <div class="user-name grid-left">
         <a href="javascript:void(0);"><img src="/static/images/user-head.png" alt=""></a>
         <p>Hi,<span id="userName">${user.userName}</span></p>
+        <p class="usertype">${decode(user.userType,0,'系统',1,'未认证',2,'个人',3,'个人待审核',4,'企业',5,'企业待审核',6,'个人审核失败',7,'企业审核失败')}</p>
         <!--<a id="enterForum" href="javascript:void(0);"><span class="fa fa-twitch"></span>进入论坛</a>-->
       </div>
       <div class="user-balance grid-left">

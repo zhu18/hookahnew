@@ -1,16 +1,16 @@
 var config = {
   user: "",
   site: {
-    adminServer: "http://admin.hookah.app",
-    apiServer: "http://console.hookah.app",
-    websiteServer: "http://www.hookah.app",
-    authServer: "http://auth.hookah.app",
-    staticServer: "http://static.hookah.app"
+    adminServer: "http://admin.qddata.com.cn",
+    apiServer: "http://console.qddata.com.cn",
+    websiteServer: "http://www.qddata.com.cn",
+    authServer: "http://auth.qddata.com.cn",
+    staticServer: "http://static.qddata.com.cn"
   },
   url: {
-    loginUrl: "http://auth.hookah.app/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://console.hookah.app/login&backurl=",
-    uploadUrl: "http://static.hookah.app/upload/fileUpload",
-    uploadEditor:"http://static.hookah.app/upload/wangeditor",
+    loginUrl: "http://auth.qddata.com.cn/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://console.qddata.com.cn/login&backurl=",
+    uploadUrl: "http://static.qddata.com.cn/upload/fileUpload",
+    uploadEditor:"http://static.qddata.com.cn/upload/wangeditor",
   }
 };
 angular.element(document).ready(function () {
@@ -55,7 +55,7 @@ export default angular.module('Common', [
   'angular-growl',
   'angularSpinner',
 ])
-  .constant('loginUrl', "http://auth.hookah.app/oauth/authorize?client_id=test&response_type=code&redirect_uri=")
+  .constant('loginUrl', "http://auth.qddata.com.cn/oauth/authorize?client_id=test&response_type=code&redirect_uri=")
   .config(['growlProvider', function (growlProvider) {
     /**
      * 配置消息提示
@@ -160,6 +160,13 @@ export default angular.module('Common', [
         case 5:
           return '企业待审核';
           break;
+        case 6:
+          return '个人审核未通过';
+          break;
+        case 7:
+          return '企业审核未通过';
+          break;
+
       }
     }
   })

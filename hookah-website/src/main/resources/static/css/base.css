@@ -359,6 +359,7 @@
 
 .userInfos {
   position: relative;
+  width:130px;
 }
 
 .userInfos .userInfos-box {
@@ -404,7 +405,7 @@
   top:-2px;
   left: 0px;
   height: 5px;
-  width: 115px;
+  width: 128px;
   background: #fff;
 }
 .userInfos .userInfos-box a {

@@ -6,6 +6,8 @@ var head = {
 <script src="/static/js/plugins/wangEditor/wangEditor.min.js"></script>
 <script src="/static/js/plugins/widget/jquery.ui.widget.js"></script>
 <script src="/static/js/plugins/fileupload/jquery.fileupload.js"></script>
+<script src="/static/js/plugins/validate/jquery-validate.js"></script>
+<script src="/static/js/plugins/validate/messages_zh.js"></script>
 <%};%>
 
 <%
@@ -27,8 +29,8 @@ var htmlPart = {
                                     <option value="exposition">博览会</option>
                                     <option value="information">资讯中心</option>
                                 </select>
-                                <span class="select-line select-hide">-</span>
-                                <select name="newsSonGroup" id="newsSonGroup" class="select-hide">
+                                <span class="select-line select-hide" style="display: none">-</span>
+                                <select name="newsSonGroup" id="newsSonGroup" style="display: none" class="select-hide">
                                     <option value="0">请选择分类</option>
                                     <option value="1">中心动态</option>
                                     <option value="2">行业咨询</option>
@@ -43,11 +45,11 @@ var htmlPart = {
                         </td>
                     </tr>
                     <tr>
-                        <td class="bar">文章标题：</td>
+                        <td class="bar"><em>*</em>文章标题：</td>
                         <td>
                             <div class="text-box">
                                 <input id="newsTitle" name="newsTitle" type="text">
-                                <span class="input-count"><strong>0</strong>/60</span>
+                                <span class="input-count"><strong id="showcontent">0</strong>/60</span>
                             </div>
                             <div class="errors">
                                 <ul>
@@ -57,11 +59,11 @@ var htmlPart = {
                         </td>
                     </tr>
                     <tr>
-                        <td class="bar">文章简介：</td>
+                        <td class="bar"><em>*</em>文章简介：</td>
                         <td>
                             <div class="text-box">
-                                <input class="newsInfo" id="newsInfo" name="newsTitle" type="text">
-                                <span class="input-count"><b class="info">0</b>/60</span>
+                                <textarea class="newsInfo" id="newsInfo" name="newsInfo" type="text"></textarea>
+                                <span class="input-count"><b class="info" id="showcontent2">0</b>/60</span>
                             </div>
                             <div class="errors">
                                 <ul>
@@ -71,7 +73,7 @@ var htmlPart = {
                         </td>
                     </tr>
                     <tr>
-                        <td class="bar">资讯热文：</td>
+                        <td class="bar"><em>*</em>资讯热文：</td>
                         <td>
                             <div class="radio-box">
                                 <label>
@@ -84,10 +86,10 @@ var htmlPart = {
                         </td>
                     </tr>
                     <tr>
-                        <td class="bar">图片：</td>
+                        <td class="bar"><em>*</em>图片：</td>
                         <td>
                             <div class="block info" style="margin: 0px 0px 3px;">
-                                图片大小不能超过3MB。
+                                图片大小不能超过5MB。
                             </div>
                             <div class="multimage-wrap">
                                 <ul class="image-list">
@@ -95,7 +97,7 @@ var htmlPart = {
                                         <div class="preview" id="preview-div">
                                             <a title="上传图片" class="upload-tip">+</a>
                                             <img class="preview-img" id="preview-img">
-                                            <input type="file" id="filename" name="filename" class="preview-btn">
+                                            <input type="file" id="filename" name="filename"  accept="image/gif,image/jpeg,image/jpg,image/png" class="preview-btn">
                                             <a href="javascript:void(0)" class="replace-btn" id="replace-btn">替换图片</a>
                                         </div>
                                     </li>
@@ -104,7 +106,7 @@ var htmlPart = {
                         </td>
                     </tr>
                     <tr>
-                        <td class="bar">文章内容：</td>
+                        <td class="bar"><em>*</em>文章内容：</td>
                         <td>
                             <div class="wangEditor-wrapper">
                                 <textarea name="content" id="content" style="height:500px;"></textarea>
@@ -114,7 +116,7 @@ var htmlPart = {
                     </tr>
                 </table>
                 <div class="pulish-btn">
-                    <button type="button" id="submit-article" value="立即发表" onclick="published()">立即发表</button>
+                    <button type="button" id="submit-article" value="立即发表">立即发表</button>
                 </div>
             </form>
         </div>

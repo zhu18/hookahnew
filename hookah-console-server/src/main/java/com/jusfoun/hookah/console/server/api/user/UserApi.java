@@ -2,11 +2,13 @@ package com.jusfoun.hookah.console.server.api.user;
 
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.domain.Organization;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.UserDetail;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.rpc.api.OrganizationService;
 import com.jusfoun.hookah.rpc.api.UserDetailService;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.commons.lang3.StringUtils;
@@ -35,6 +37,9 @@ public class UserApi {
 
     @Resource
     UserDetailService userDetailService;
+
+    @Resource
+    OrganizationService organizationService;
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ReturnData getAllUser(String currentPage, String pageSize, HttpServletRequest request,
@@ -81,6 +86,14 @@ public class UserApi {
         return ReturnData.success(userDetail);
     }
 
+
+    @RequestMapping(value = "/org/{id}", method = RequestMethod.GET)
+    public ReturnData getOrgById(@PathVariable String id) {
+        List<Condition> fifters = new ArrayList<Condition>();
+        fifters.add(Condition.eq("userId",id));
+        Organization organization = organizationService.selectOne(fifters);
+        return ReturnData.success(organization);
+    }
 
     @RequestMapping(value = "/verify/all", method = RequestMethod.GET)
     public ReturnData getAllVerifyUser(String currentPage, String pageSize, HttpServletRequest request, HttpServletResponse response) {

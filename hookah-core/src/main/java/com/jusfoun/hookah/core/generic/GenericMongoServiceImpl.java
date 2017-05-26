@@ -351,7 +351,7 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
                         }
                         field.setAccessible(false);*/
                         Id idAno = field.getAnnotation(Id.class);
-                        if(idAno!=null){
+                        if(idAno!=null &&  field.get(model)!=null){
                             map.put("id",field.getName());
                             map.put("value",(String)field.get(model));
                         }
@@ -360,6 +360,7 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
                 }
             }
             if(map.isEmpty()){
+                logger.info("没有主键字段或者主键字段值为NULL!");
                 return null;
             }
             return map;
@@ -387,14 +388,20 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
 
         Class entityClass = (Class) trueType;
         Update update = new Update();
+        Map map = getIdFromModel(model);
+
         try {
             if (Objects.nonNull(model)) {
                 //实现1
                 PropertyDescriptor[] targetPds = BeanUtils.getPropertyDescriptors(entityClass);
                 for(PropertyDescriptor targetPd:targetPds){
+                    if(map!=null){
+                        if(targetPd.getName().equals((String)map.get("id"))) continue; //不修改id
+                    }
+
                     Method readMethod = targetPd.getReadMethod();
                     int readModifier  = readMethod.getDeclaringClass().getModifiers();
-                    if(readModifier < Modifier.PROTECTED ){  //只有public private protected
+                    if(!targetPd.getName().equals("class")){  //只有public private protected
                         if (!Modifier.isPublic(readModifier)) {
                             readMethod.setAccessible(true);
                         }
@@ -419,35 +426,6 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
                     }
 
                 }
-
-                //实现2
-//                while(entityClass!=Object.class){
-//                    Field[] fields = entityClass.getDeclaredFields();
-//                    for(Field field:fields){
-//                        int modifier =  field.getModifiers();
-//                        if(modifier>4){
-//                            continue;
-//                        }
-//                        field.setAccessible(true);
-//                        if(field.get(model)!=null){
-//                            Class propertyType = (Class)field.getGenericType();
-//                            if(BeanUtils.isSimpleValueType(propertyType)){ //简单类型
-//                                update.set(field.getName(),field.get(model));
-//                            }else if(propertyType.isArray()){  //数组
-//                                logger.debug("{}是数组类型{}！",field.getName(),propertyType);
-//                            }else if(Collection.class.isAssignableFrom(propertyType)){ //集合类
-//                                logger.debug("{}是集合类型{}！",field.getName(),propertyType);
-//                            }else if(Map.class.isAssignableFrom(propertyType)){ //Map 类
-//                                logger.debug("{}是Map类型{}！",field.getName(),propertyType);
-//                            }else{ //其他
-//                                logger.debug("{}是其他类型{}！",field.getName(),propertyType);
-//                            }
-//                            update.set(field.getName(),convertParamType(propertyType,field.get(model)));
-//                        }
-//                        field.setAccessible(false);
-//                    }
-//                    entityClass = entityClass.getSuperclass();
-//                }
             }
             return update;
         } catch (SecurityException e) {

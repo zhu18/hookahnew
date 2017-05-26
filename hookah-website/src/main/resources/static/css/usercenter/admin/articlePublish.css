@@ -25,6 +25,15 @@ table .text-box input {
     padding: 2px 5px;
     font-size:14px;
 }
+table .text-box textarea {
+    width: 600px;
+    border: 1px solid #ccc;
+    height: 90px;
+    color: #333;
+    padding: 2px 5px;
+    font-size:14px;
+    resize: none;
+}
 
 table .input-count {
     margin-left: 10px;
@@ -96,7 +105,6 @@ table .select-box select{
     background-color: #f6f6f6;
     height: 100px;
     width: 100px;
-    overflow: hidden;
     position: relative;
     display: table-cell;
     vertical-align: middle;
@@ -204,4 +212,16 @@ table .select-box select{
 }
 .errors {
     display: none;
+}
+.help-block{
+    display: block;
+    color:#EA4A36;
+}
+.multimage-wrap .image-list li .preview .help-block {
+    position: absolute;
+    left: 100px;
+    top: 0;
+    width: 100%;
+    display: block;
+    cursor: default;
 }

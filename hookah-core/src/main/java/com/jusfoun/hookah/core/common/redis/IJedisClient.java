@@ -277,4 +277,11 @@ public interface IJedisClient {
      * @return
      */
     public boolean existsObject(String key);
+
+    /**
+     * 变量 每次递增1
+     * @param key
+     * @return
+     */
+    public String incr(String key);
 }

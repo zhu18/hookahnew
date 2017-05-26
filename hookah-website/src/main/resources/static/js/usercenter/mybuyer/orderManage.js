@@ -24,7 +24,7 @@ function loadPageData(data){
 
         $('.order tbody').html(html);
     }else{
-		$('.order tbody').html('<tr class="noData"><td colspan="5">您暂时没有已付款的订单！</td></tr>');
+		$('.order tbody').html('<tr class="noData"><td colspan="5">暂时无订单！</td></tr>');
     }
 }
 var start = {
@@ -53,14 +53,14 @@ $(".searchQuery .search").on("click",function(){
     dataParm.commentFlag = radioChecked.val();
     var startDate = $("#startDate").val();
     var endDate = $("#endDate").val();
-    dataParm.startDate = startDate?startDate:format(new Date());
-    dataParm.endDate = endDate?endDate:format(new Date());
-    if(!startDate){
-        $("#startDate").val(format(new Date()));
-    }
-    if(!endDate){
-        $("#endDate").val(format(new Date()));
-    }
+    dataParm.startDate = startDate ? startDate : null;
+    dataParm.endDate = endDate ? endDate : null;
+    // if(!startDate){
+    //     $("#startDate").val(format(new Date()));
+    // }
+    // if(!endDate){
+    //     $("#endDate").val(format(new Date()));
+    // }
     goPage(1);
 });
 
@@ -76,7 +76,9 @@ function deleteRadio(orderId) {
         },
         success: function (data) {
             if (!(data.code == 0)) {
-                location.reload(true);
+				$.alert('删除成功', true, function () {
+					location.reload()
+				});
             } else {
                 console.log("删除失败！");
             }
@@ -84,11 +86,14 @@ function deleteRadio(orderId) {
     })
 }
 function confirmDelete(orderId){
-    if(confirm("确定要删除该订单吗？")){
-        deleteRadio(orderId);
-    }else{
-
-    }
+	$.confirm('确定要删除该订单吗？',null,function(type){
+		if(type == 'yes'){
+			deleteRadio(orderId);
+			this.hide();
+		}else{
+			this.hide();
+		}
+	});
 }
 
 

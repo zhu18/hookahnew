@@ -1,5 +1,5 @@
 class UserVerifyController {
-  constructor($scope, $rootScope, $http, $uibModal, usSpinnerService, growl) {
+  constructor($scope, $rootScope, $state, $http, $uibModal, usSpinnerService, growl) {
     $scope.title = '用户审核';
     $scope.search = function () {
       var promise = $http({
@@ -8,7 +8,6 @@ class UserVerifyController {
       });
       promise.then(function (res, status, config, headers) {
         $rootScope.loadingState = false;
-        // $scope.sysAccount = res.data.data;
         $rootScope.pagination.store = res.data.data.list;
         $rootScope.pagination.currentPage = res.data.data.currentPage;
         $rootScope.pagination.totalItems = res.data.data.totalItems;
@@ -22,22 +21,54 @@ class UserVerifyController {
         growl.addSuccessMessage("数据加载完毕。。。");
       });
     };
-    $scope.add = function () {
-      console.log("add。。。。");
+    $scope.detail = function (event, item) {
+
+        $rootScope.cuser = item;
+
+        var userType = item.userType;
+
+        if(userType == '3'){
+          //个人用户认证
+            var promise = $http({
+                method: 'GET',
+                url: $rootScope.site.apiServer + "/api/user/"+item.userId
+            });
+            promise.then(function (res, status, config, headers) {
+                $rootScope.loadingState = false;
+                $rootScope.cuserd=res.data.data;
+                $state.go("user.verify.checkUserDetail");
+                growl.addSuccessMessage("数据加载完毕。。。");
+            });
+        }else if(userType == '5'){
+          //企业用户认证
+            var promise = $http({
+                method: 'GET',
+                url: $rootScope.site.apiServer + "/api/user/org/"+item.userId
+            });
+            promise.then(function (res, status, config, headers) {
+                $rootScope.loadingState = false;
+                $rootScope.cuserd=res.data.data;
+                $state.go("user.verify.checkUserDetail");
+                growl.addSuccessMessage("数据加载完毕。。。");
+            });
+        }else{
+            $rootScope.openErrorDialogModal("数据有误！");
+        }
+
+
     };
-    $scope.edit = function (event, item) {
-      console.log(item);
-    };
-    $scope.save = function () {
+
+    $scope.submitCheck = function () {
       var promise = $http({
         method: 'POST',
-        url: $rootScope.site.apiServer + "/api/account/save",
-        data: $("#userForm").serialize()
+        url: $rootScope.site.apiServer + "/api/userCheck/add",
+        data: $("#userCheckForm").serialize()
       });
       promise.then(function (res, status, config, headers) {
-        $rootScope.loadingState = false;
-
-        growl.addSuccessMessage("数据加载完毕。。。");
+          console.log(res.data);
+          if(res.data.code == "1"){
+              alert("提交成功");
+          }
       });
 
     };

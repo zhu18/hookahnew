@@ -1,11 +1,14 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
 import com.jusfoun.hookah.console.server.util.DictionaryUtil;
+import com.jusfoun.hookah.console.server.util.PropertiesManager;
 import com.jusfoun.hookah.core.common.Pagination;
+import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.dao.GoodsMapper;
 import com.jusfoun.hookah.core.domain.Goods;
+import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.es.EsGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
@@ -14,10 +17,7 @@ import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.DateUtils;
-import com.jusfoun.hookah.rpc.api.GoodsCheckService;
-import com.jusfoun.hookah.rpc.api.GoodsService;
-import com.jusfoun.hookah.rpc.api.MgGoodsService;
-import com.jusfoun.hookah.rpc.api.MqSenderService;
+import com.jusfoun.hookah.rpc.api.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -54,13 +54,19 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
     GoodsCheckService goodsCheckService;
 
     @Resource
+    CategoryService categoryService;
+
+    @Resource
+    RedisOperate redisOperate;
+
+    @Resource
     public void setDao(GoodsMapper goodsMapper) {
         super.setDao(goodsMapper);
     }
 
     @Override
     @Transactional
-    public void addGoods(GoodsVo obj) throws HookahException {
+    public void addGoods(GoodsVo obj, User currentUser) throws HookahException {
         Date date = DateUtils.now();
         if (obj == null)
             throw new HookahException("空数据！");
@@ -72,6 +78,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         }
         obj.setAddTime(date);
         obj.setLastUpdateTime(date);
+        obj.setGoodsSn(generateSn(obj, currentUser));
         obj = (GoodsVo)super.insert(obj);
         if(obj == null)
             throw new HookahException("操作失败");
@@ -89,6 +96,38 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         mgGoods.setDataModel(obj.getDataModel());
         mgGoods.setClickRate((long) 0);
         mongoTemplate.insert(mgGoods);
+    }
+
+    private String generateSn(GoodsVo obj, User currentUser) throws HookahException {
+
+        StringBuilder goodsSn = new StringBuilder();
+
+        // 前缀
+        if(currentUser.getUserType() != null &&
+                currentUser.getUserType() == HookahConstants.UserType.ORGANIZATION_CHECK_OK.getCode() &&
+                currentUser.getOrgId() != null &&
+                PropertiesManager.getInstance().getProperty("jusfounOrgId").equals(currentUser.getOrgId() + "")
+                ){
+            goodsSn.append(PropertiesManager.getInstance().getProperty("jusfounCode"));
+
+            // 分类
+            goodsSn.append(categoryService.selectById(obj.getCatId().substring(0, 3)).getCode());
+
+            // 编号
+            goodsSn.append(String.format("%06d", Integer.parseInt(redisOperate.incr(PropertiesManager.getInstance().getProperty("jusfounCode")))));
+
+        }else{
+            goodsSn.append(PropertiesManager.getInstance().getProperty("platformCode"));
+
+            // 分类
+            goodsSn.append(categoryService.selectById(obj.getCatId().substring(0, 3)).getCode());
+
+            // 编号
+            goodsSn.append(String.format("%06d", Integer.parseInt(redisOperate.incr(PropertiesManager.getInstance().getProperty("platformCode")))));
+
+        }
+
+        return goodsSn.toString();
     }
 
     @Override

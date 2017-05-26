@@ -181,6 +181,15 @@ function renderRegion(id,data){
 $('#fileupload').fileupload({   //图片上传
 	url: host.static+'/upload/fileUpload',
 	dataType: 'json',
+	add: function (e, data) {
+		var filesize = data.files[0].size;
+		if(Math.ceil(filesize / 1024) > 1024*5){
+			console.log('文件过大'+filesize);
+			$.alert('文件过大');
+			return;
+		}
+		data.submit();
+	},
 	done: function (e, data) {
 		if(data.result.code == 1){
 			var obj = data.result.data[0];
@@ -201,7 +210,7 @@ $('#fileupload').fileupload({   //图片上传
 		$('#barText').html(progress + '%');
 	}
 });
-$('#fileupload2').fileupload({
+$('#fileupload2').fileupload({ //文件上传
 	url: host.static+'/upload/fileUpload',
 	dataType: 'json',
 	done: function (e, data) {

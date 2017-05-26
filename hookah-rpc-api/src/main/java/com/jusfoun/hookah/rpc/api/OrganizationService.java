@@ -8,5 +8,5 @@ import com.jusfoun.hookah.core.generic.GenericService;
  * @date 2017/4/6 上午10:09
  * @desc
  */
-public interface OrganizationService extends GenericService<Organization,Long> {
+public interface OrganizationService extends GenericService<Organization,String> {
 }

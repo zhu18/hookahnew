@@ -162,7 +162,7 @@ public class HookahConstants {
     }
 
     /**
-     * 0系统,1未认证,2个人,3个人待审核,4企业,5企业待审核
+     * 0系统,1未认证,2个人,3个人待审核,4企业,5企业待审核,6个人审核失败,7企业审核失败
      */
     public enum UserType {
 
@@ -170,8 +170,10 @@ public class HookahConstants {
         NO_AUTH(1),
         PERSON_CHECK_OK(2),
         PERSON_CHECK_NO(3),
+        PERSON_CHECK_FAIL(6),
         ORGANIZATION_CHECK_OK(4),
-        ORGANIZATION_CHECK_NO(5);
+        ORGANIZATION_CHECK_NO(5),
+        ORGANIZATION_CHECK_FAIL(7);
 
 
         public Integer code;

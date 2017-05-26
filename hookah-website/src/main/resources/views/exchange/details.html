@@ -11,7 +11,8 @@ var htmlPart = {
 <div class="grid-0 goodsDetails bdg-row ">
 	<div class="grid-row" style="position: relative">
 		<%include("/layout/menu.html"){} %>
-		<div class="grid-left goods-left bdg-row margin-top-20">
+		<div class="crumbs-nav margin-top-20 padding-bottom-10" id="J_crimbsNav">分类：<span class="color-blue">${goodsDetails.catFullName}</span></div>
+		<div class="grid-left goods-left bdg-row">
 			<div class="goods-details clearfix">
 				<div class="goods-details-img grid-left bdg-row">
 					<div class="img-box">
@@ -32,7 +33,7 @@ var htmlPart = {
 								<i class="iconfont icon-jushoucanggift" style="cursor:pointer;" onclick="Attention.add('${goodsDetails.goodsId}')"></i>
 								<span class="eval">关注:</span>
 								<%}%>
-								<span>${goodsDetails.followNum}</span>
+								<span id="J_atonNum">${goodsDetails.followNum}</span>
 							</span>
 						</p>
 					</div>
@@ -53,7 +54,7 @@ var htmlPart = {
 						<div>
 							<span>价格：</span>
 							<i class="fa fa-jpy font-size-14 color-orange" aria-hidden="true"></i>
-							<span class="font-size-24 color-orange" id="J_goodsPrice">${goodsDetails.shopPrice / 100}</span>
+							<span class="font-size-24 color-orange" id="J_goodsPrice" formatid="<%for(item in goodsDetails.formatList){%><%if(itemLP.first){%>${item.formatId}<%}%><%}%>">${goodsDetails.shopPrice / 100}</span>
 							<!--<span class="convert color-orange" id="J_goodsNumber">折合0.0001元/次</span>-->
 						</div>
 						<%if(goodsDetails.formatList.~size > 0){%>
@@ -393,7 +394,7 @@ var htmlPart = {
 				</div>
 			</div>
 		</div>
-		<div class="grid-right goods-right margin-top-20 margin-bottom-30">
+		<div class="grid-right goods-right margin-bottom-30">
 			<div class="recommend-one">
 				<div class="recommend-title font-weight-bold">${reCommData.shelvesName}</div>
 				<ul class="padding-top-5">

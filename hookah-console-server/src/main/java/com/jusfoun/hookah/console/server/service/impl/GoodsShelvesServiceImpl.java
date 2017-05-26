@@ -121,9 +121,11 @@ public class GoodsShelvesServiceImpl extends GenericServiceImpl<GoodsShelves, St
     }
 
     @Override
-    public ReturnData findGoodsByShevlesId(String shevlesId, GoodsCritVo goodsCritVo) {
+    public ReturnData findGoodsByShevlesId(GoodsCritVo goodsCritVo) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
+
+        String shevlesId = goodsCritVo.getId();
 
         if(StringUtils.isBlank(shevlesId)){
             returnData.setCode(ExceptionConst.InvalidParameters);

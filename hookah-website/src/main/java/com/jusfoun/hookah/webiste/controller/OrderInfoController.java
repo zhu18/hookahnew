@@ -148,45 +148,81 @@ public class OrderInfoController extends BaseController {
             if (pageNumber==null) pageNumber = Integer.parseInt(PAGE_NUM);
             if (pageSize==null) pageSize = Integer.parseInt(PAGE_SIZE);
 
-            List<Condition> filters = new ArrayList<>();
+            List<Condition> paidFilters = new ArrayList<>();
+            List<Condition> unpaidFilters = new ArrayList<>();
+            List<Condition> listFilters = new ArrayList<>();
             if (StringUtils.isNotBlank(startDate)) {
-                filters.add(Condition.ge("addTime", DateUtils.getDate(startDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
+                if(payStatus==1){
+                    paidFilters.add(Condition.ge("addTime", DateUtils.getDate(startDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
+                }else{
+                    unpaidFilters.add(Condition.ge("addTime", DateUtils.getDate(startDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
+                }
+                listFilters.add(Condition.ge("addTime", DateUtils.getDate(startDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
             }
             if (StringUtils.isNotBlank(endDate)) {
-                filters.add(Condition.le("addTime", DateUtils.getDate(endDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
+                if(payStatus==1){
+                    paidFilters.add(Condition.le("addTime", DateUtils.getDate(endDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
+                }else{
+                    unpaidFilters.add(Condition.le("addTime", DateUtils.getDate(endDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
+                }
+                listFilters.add(Condition.le("addTime", DateUtils.getDate(endDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
             }
+
             if (commentFlag != null) {
-                filters.add(Condition.eq("commentFlag", commentFlag));
+                if(payStatus==1){
+                    paidFilters.add(Condition.eq("commentFlag", commentFlag));
+                }
+                listFilters.add(Condition.eq("commentFlag", commentFlag));
             }
-            Condition condition = null;
             if (payStatus != null) {
                 if(payStatus==1) {
-                    condition = Condition.eq("payStatus", 2);
+                    listFilters.add(Condition.eq("payStatus", 2));
                 }else{
-                    condition = Condition.ne("payStatus", 2);
+                    listFilters.add(Condition.ne("payStatus", 2));
                 }
-                filters.add(condition);
+                paidFilters.add(Condition.eq("payStatus", 2));
+                unpaidFilters.add(Condition.ne("payStatus", 2));
             }
+
             if (domainName != null) {
-                filters.add(Condition.like("domainName", "%" + domainName + "%"));
+                if (payStatus==1){
+                    paidFilters.add(Condition.like("domainName", "%" + domainName + "%"));
+                }else{
+                    unpaidFilters.add(Condition.like("domainName", "%" + domainName + "%"));
+                }
+                listFilters.add(Condition.like("domainName", "%" + domainName + "%"));
             }
-            filters.add(Condition.eq("userId", userId));
-            filters.add(Condition.eq("isDeleted", 0));
+            paidFilters.add(Condition.eq("userId", userId));
+            paidFilters.add(Condition.eq("isDeleted", 0));
+            unpaidFilters.add(Condition.eq("userId", userId));
+            unpaidFilters.add(Condition.eq("isDeleted", 0));
+            listFilters.add(Condition.eq("userId", userId));
+            listFilters.add(Condition.eq("isDeleted", 0));
 
             //查询列表
             List<OrderBy> orderBys = new ArrayList<>();
             orderBys.add(OrderBy.desc("addTime"));
-            Pagination<OrderInfoVo> pOrders = orderInfoService.getDetailListInPage(pageNumber, pageSize, filters, orderBys);
+            Pagination<OrderInfoVo> pOrders = orderInfoService.getDetailListInPage(pageNumber, pageSize, listFilters, orderBys);
             map.put("orders",pOrders);
-            filters.remove(condition); //移除支付状态条件
-            //查询数量
-            filters.add(Condition.eq("payStatus", 2));
-            Long paid = orderInfoService.count(filters);  //已支付数量
-            map.put("paidCount",paid);
+//            filters.remove(condition); //移除支付状态条件
+//            //查询数量
+//            filters.add(Condition.eq("payStatus", 2));
+            Long paid = 0L,unpaid=0L;
+            if(payStatus!=1){
+                paid = orderInfoService.count(paidFilters);  //已支付数量
+            }else{
+                paid = pOrders.getTotalItems();
+            }
 
-            filters.remove(filters.size()-1);
-            filters.add(Condition.ne("payStatus", 2));
-            Long unpaid = orderInfoService.count(filters); //未支付数量
+            map.put("paidCount",paid);
+//
+//            filters.remove(filters.size()-1);
+//            filters.add(Condition.ne("payStatus", 2));
+            if(payStatus==1){
+                unpaid = orderInfoService.count(unpaidFilters); //未支付数量
+            }else{
+                unpaid = pOrders.getTotalItems();
+            }
             map.put("unpaidCount",unpaid);
 
             logger.info(JsonUtils.toJson(map));
@@ -313,8 +349,33 @@ public class OrderInfoController extends BaseController {
             session.setAttribute("moneyBalance",user.getMoneyBalance());
             session.setAttribute("payments",paymentList);
             session.setAttribute("orderInfo",orderinfo);
-            logger.info("订单信息:{}", JsonUtils.toJson(orderinfo));
-            logger.info("支付列表:{}", JsonUtils.toJson(paymentList));
+            //logger.info("订单信息:{}", JsonUtils.toJson(orderinfo));
+            //logger.info("支付列表:{}", JsonUtils.toJson(paymentList));
+            return   "redirect:/pay/cash";
+        } catch (Exception e) {
+            logger.error("插入错误", e);
+            return "/error/500";
+        }
+    }
+
+    @RequestMapping(value = "/order/payOrder", method = RequestMethod.GET)
+    public String payOrder(String orderSn,HttpServletRequest request) {
+        try {
+            List<Condition> filters = new ArrayList<>();
+            filters.add(Condition.eq("orderSn",orderSn));
+            OrderInfo orderinfo = orderInfoService.selectOne(filters);
+
+            HttpSession session = request.getSession();
+            List<Map> paymentList = initPaymentList(session);
+
+            //余额
+            Map userMap = (Map)session.getAttribute("user");
+            User user = userService.selectById((String)userMap.get("userId"));
+            session.setAttribute("moneyBalance",user.getMoneyBalance());
+            session.setAttribute("payments",paymentList);
+            session.setAttribute("orderInfo",orderinfo);
+            //logger.info("订单信息:{}", JsonUtils.toJson(orderinfo));
+            //logger.info("支付列表:{}", JsonUtils.toJson(paymentList));
             return   "redirect:/pay/cash";
         } catch (Exception e) {
             logger.error("插入错误", e);

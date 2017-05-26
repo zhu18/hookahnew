@@ -45,9 +45,9 @@ public interface GoodsShelvesService extends GenericService<GoodsShelves,String>
 
     /**
      * 根据货架Id查询关联的所有商品
-     * @param shevlesGoodsVoId
+//     * @param shevlesGoodsVoId
      * @param goodsCritVo
      * @return
      */
-    ReturnData findGoodsByShevlesId(String shevlesGoodsVoId, GoodsCritVo goodsCritVo);
+    ReturnData findGoodsByShevlesId(GoodsCritVo goodsCritVo);
 }

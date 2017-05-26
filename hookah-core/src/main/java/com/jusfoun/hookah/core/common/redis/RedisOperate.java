@@ -11,6 +11,7 @@ import java.util.Set;
  * 具体连接方式由spring注入的客户端类型决定
  */
 public class RedisOperate implements IJedisClient {
+
     IJedisClient jedisClient;
 
     public IJedisClient getJedisClient() {
@@ -175,4 +176,11 @@ public class RedisOperate implements IJedisClient {
     public boolean existsObject(String key) {
         return jedisClient.existsObject(key);
     }
+
+    @Override
+    public String incr(String key) {
+        return jedisClient.incr(key);
+    }
+
+
 }
