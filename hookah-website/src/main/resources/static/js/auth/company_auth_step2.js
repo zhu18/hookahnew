@@ -65,8 +65,8 @@ $('.unloadBtn').fileupload({
             console.log(2);
             var obj = data.result.data[0];
             $(this).parent().siblings("img").attr("src", obj.absPath);
-            $(this).parent().siblings(".input_hide").attr("src", obj.absPath);
-            $(this).parent().siblings(".input__op").attr("src", obj.absPath);
+            $(this).parent().siblings(".input_hide").val(obj.filePath);
+            $(this).parent().siblings(".input_op").val(obj.filePath);
             $(this).parent().siblings(".upLoad_warp").html('点击替换');
         } else {
             $.alert(data.result.message)
@@ -76,28 +76,28 @@ $('.unloadBtn').fileupload({
     progressall: function (e, data) {
 
     }
-})
+});
 function companyAuth(){
     $.ajax({
         url : "/auth/orgAuth",
         data : {
-            "orgName":$("#governmentName").val(),//政府全称
-            "taxCode":$("#taxCode").val(),//税务登记编号
-            "licenseCode":$("#businessLicence").val(),//营业执照编号
-            "certificateCode":$("#creditCode").val(),//信用代码
-            "taxPath":$("#taxPath").attr("src"),//税务登记存放路径
-            "licensePath":$("#licensePath").attr("src"),//营业执照存放路径
-            "certifictePath":$("#certifictePath").attr("src"),//企业代码存放路径
-            "lawPersonName":$("#companyLegal").val(),//企业法人代表
+            "orgName":$("input[name='governmentName']").val(),//政府全称
+            "taxCode":$("input[name='taxRegCertificate']").val(),//税务登记编号
+            "licenseCode":$("input[name='businessLicence']").val(),//营业执照编号
+            "certificateCode":$("input[name='creditCode']").val(),//信用代码
+            "taxPath":$("input[name='taxPath']").val(),//税务登记存放路径
+            "licensePath":$("input[name='licensePath']").val(),//营业执照存放路径
+            "certifictePath":$("input[name='certifictePath']").val(),//企业代码存放路径
+            "lawPersonName":$("input[name='companyLegal']").val(),//企业法人代表
             "region":$('select[name="province"] option:selected').text()+$('select[name="city"] option:selected').text(),//所在地
-            "contactAddress":$("#address").val(),//详细地址
-            "orgPhone":$("#tel").val(),//联系电话
-            "industry":$("#mainBusiness").val(),//行业
+            "contactAddress":$("input[name='address']").val(),//详细地址
+            "orgPhone":$("input[name='tel']").val(),//联系电话
+            "industry":$("input[name='mainBusiness']").val(),//行业
         },
         type:"post",
         success : function(data) {
             if (data.code == 1) {
-                window.location.href = './company_auth_init_step4.html';
+                window.location.href = './company_auth_init_step3.html';
             } else {
                 alert(data.errMsg);
             }
@@ -166,6 +166,6 @@ $.validator.addMethod("isMobile", function(value, element) {
 }, "长度为10-60个字符（每个汉字为2个字符）");
 $('#verifyBtn').click(function(){
 	if($("#companyForm").valid()){
-        return false;
+		companyAuth();
 	}
 });
