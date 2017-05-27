@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="console-title console-title-border clearfix">
+      <div class="pull-left"><h5>添加轮播图</h5></div>
+      <!--<div class="pull-right">
+        <button class="btn btn-default" ui-sref="account.search" data-ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span> 返回</button>
+      </div>-->
+    </div>
+  </div>
+  <div class="col-sm-12">
+    <form class="form-horizontal" role="form" id="carouselForm" name="carouselForm" novalidate>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="url">url</label>
+        <div class="col-sm-4">
+          <input type="text" id="url" name="url" class="form-control" placeholder="必填项" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="href">href</label>
+        <div class="col-sm-4">
+          <input type="text" id="href" name="href" class="form-control" placeholder="必填项" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="creatorName">创建者</label>
+        <div class="col-sm-4">
+          <input type="text" id="creatorName" name="creatorName" class="form-control" placeholder="必填项" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="advertOrder">轮播顺序</label>
+        <div class="col-sm-4">
+          <input type="text" id="advertOrder" name="advertOrder" class="form-control" placeholder="必填项" required/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-4">
+          <!--<button class="btn btn-primary" data-ng-click="save()">
+            <span class="glyphicon glyphicon-refresh"></span> 保存
+          </button>-->
+          <input class="btn btn-primary btn-lg" ng-disabled="carouselForm.$invalid"
+                 type="button" value="保存" data-ng-click="add()" />
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
