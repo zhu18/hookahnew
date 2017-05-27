@@ -110,7 +110,7 @@ public class ModifyController {
 
             user.setPassword(new Md5Hash(newPwd).toString());
             userService.updateById(user);
-            return "redirect:/modify/success?type=logingPassword";
+            return "redirect:/modify/success?type=loginPassword";
         } catch (Exception e) {
             logger.info(e.getMessage());
             model.addAttribute("title", "密码修改错误");
