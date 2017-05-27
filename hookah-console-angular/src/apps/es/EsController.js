@@ -22,11 +22,12 @@ class EsController {
     };
 
 
-    $scope.delGoods = function (event, item, flag) {
+    $scope.del = function (id) {
+
         var promise = $http({
             method: 'POST',
-            url: $rootScope.site.apiServer + "/api/goods/delGoodsById",
-            params: {goodsId: item.goodsId, flag: flag
+            url: $rootScope.site.apiServer + "/api/es/del",
+            params: {index: id
             }
         });
         promise.then(function (res, status, config, headers) {
@@ -38,6 +39,39 @@ class EsController {
         });
     };
 
+      $scope.delGoods = function (goodsId,id,type) {
+
+          var promise = $http({
+              method: 'POST',
+              url: $rootScope.site.apiServer + "/api/es/delGoods",
+              params: {indexName: id,
+                        type:type,
+                        goodsId:goodsId
+              }
+          });
+          promise.then(function (res, status, config, headers) {
+              $rootScope.loadingState = false;
+              if(res.data.code == "1"){
+                  $scope.search();
+                  growl.addSuccessMessage("数据加载完毕。。。");
+              }
+          });
+      };
+
+      $scope.add = function () {
+          var promise = $http({
+              method: 'GET',
+              url: $rootScope.site.apiServer + "/api/es/add",
+              // data: $("#shelfForm").serialize()
+          });
+          promise.then(function (res, status, config, headers) {
+              console.log(res.data)
+              // if(res.data.code == "1"){
+              //     growl.addSuccessMessage("索引重建完毕。。。");
+              //     $state.go('elastic.search');
+              // }
+          });
+      };
 
     $scope.updateGoods = function (event, item) {
       console.log("去修改……");

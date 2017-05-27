@@ -99,25 +99,25 @@ public class EsApi {
         }
         return ReturnData.success(page);
     }
-    /**
-     * 商品添加
-     * @param obj
-     * @return
-     */
-    @RequestMapping("/add")
-    @ResponseBody
-    public ReturnData addGoodsBack(@Valid @RequestBody GoodsVo obj) {
-        ReturnData returnData = new ReturnData<>();
-        returnData.setCode(ExceptionConst.Success);
-        try {
-            goodsService.addGoods(obj);
-        } catch (Exception e) {
-            returnData.setCode(ExceptionConst.Failed);
-            returnData.setMessage(e.toString());
-            e.printStackTrace();
-        }
-        return returnData;
-    }
+//    /**
+//     * 商品添加
+//     * @param obj
+//     * @return
+//     */
+//    @RequestMapping("/add")
+//    @ResponseBody
+//    public ReturnData addGoodsBack(@Valid @RequestBody GoodsVo obj) {
+//        ReturnData returnData = new ReturnData<>();
+//        returnData.setCode(ExceptionConst.Success);
+//        try {
+////            goodsService.addGoods(obj);
+//        } catch (Exception e) {
+//            returnData.setCode(ExceptionConst.Failed);
+//            returnData.setMessage(e.toString());
+//            e.printStackTrace();
+//        }
+//        return returnData;
+//    }
 
     @RequestMapping("/v1/goods")
     public ReturnData searchByCondition(@RequestBody(required = false) EsGoodsVo vo) {
@@ -155,11 +155,24 @@ public class EsApi {
     }
 
     //删除索引
-    @RequestMapping("/del")
+    @RequestMapping(value  = "/del", method = RequestMethod.POST)
     public void delete(String index) {
         try {
             //"qingdao-goods-v1" "qingdao-category-v1"
             elasticSearchService.deleteIndex(index);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+//删除商品
+    @RequestMapping(value  = "/delGoods", method = RequestMethod.POST)
+    public void delete(String goodsId, String indexName, String type) {
+        try {
+            System.exit(0);
+            //"qingdao-goods-v1" "qingdao-category-v1"
+            elasticSearchService.deleteById(indexName, type, goodsId);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -180,7 +193,7 @@ public class EsApi {
         return returnData;
     }
 
-    @RequestMapping("init")
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
     public void init() {
         String goodsIndex = PropertiesManager.getInstance().getProperty("goods.index");
         String goodsType = PropertiesManager.getInstance().getProperty("goods.type");

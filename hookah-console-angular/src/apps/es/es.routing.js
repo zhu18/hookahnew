@@ -13,5 +13,15 @@ export default function esRouting($stateProvider, $urlRouterProvider) {
       template: require('./list.html'),
       controller: EsController,
     })
+      .state('elastic.add', {
+      url: '/elastic/add',
+      template: require('./add.html'),
+      controller: EsController,
+    })
+      .state('elastic.delGoods', {
+          url: '/elastic/delGoods',
+          template: require('./goodslist.html'),
+          controller: EsController,
+      })
 
 };

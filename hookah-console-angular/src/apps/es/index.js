@@ -43,7 +43,7 @@ app.run(function ($rootScope, $state) {
       "childs": [
           {
               "title":"索引删除",
-              "url":"elastic.del"
+              "url":"elastic.search"
           },
          {
               "title":"索引重建",
@@ -51,7 +51,7 @@ app.run(function ($rootScope, $state) {
           },
           {
               "title":"商品删除",
-              "url":"elastic.del"
+              "url":"elastic.delGoods"
           },
 
       ]
