@@ -1,6 +1,10 @@
 package com.jusfoun.hookah.oauth2server.web.controller;
 
 import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.exception.UserRegConfirmPwdException;
+import com.jusfoun.hookah.core.exception.UserRegEmptyPwdException;
+import com.jusfoun.hookah.core.exception.UserRegSimplePwdException;
+import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -12,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -60,6 +65,58 @@ public class ModifyController {
             model.addAttribute("error","支付密码为空");
             return "modify/payPassword";
         }
+    }
+
+
+    @RequestMapping(value = "/updateLoginPwd", method = RequestMethod.GET)
+    public String updateLoginPwd(Model model) {
+        model.addAttribute("title", "设置登录密码");
+        return "modify/updateLoginPwd";
+    }
+
+    /**
+     * 修改密码
+     * @param newPwd  新密碼
+     * * @param newPwdRepeat 新密码重复
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/updateLoginPwd", method = RequestMethod.POST)
+    @ResponseBody
+    public String updateLoginPwd(String  newPwd, String  newPwdRepeat, Model model) {
+        try {
+
+            Session session = SecurityUtils.getSubject().getSession();
+            HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
+            String userId = userMap.get("userId");
+            if (!StringUtils.isNotBlank(userId)) {
+                model.addAttribute("title", "请重新登录");
+                return "modify/updateLoginPwd";
+            }
+            User user =  userService.selectById(userId);
+
+            if (!StringUtils.isNotBlank(newPwd) || !StringUtils.isNotBlank(newPwdRepeat)) {
+                model.addAttribute("title", "新密码或者确认密码不能为空");
+                return "modify/updateLoginPwd";
+            }
+            if (!newPwd.equals(newPwdRepeat)) {
+                model.addAttribute("title", "密码与确认密码不一致");
+                return "modify/updateLoginPwd";
+            }
+            if (newPwd.length() < 6) {
+                model.addAttribute("title", "密码过于简单");
+                return "modify/updateLoginPwd";
+            }
+
+            user.setPassword(new Md5Hash(newPwd).toString());
+            userService.updateById(user);
+            return "redirect:/modify/success?type=logingPassword";
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+            model.addAttribute("title", "密码修改错误");
+            return "modify/updateLoginPwd";
+        }
+
     }
 
 
@@ -133,6 +190,8 @@ public class ModifyController {
             model.addAttribute("message", "支付密码修改成功，请牢记");
         }else if(type.equals("setPayPassword")){
             model.addAttribute("message", "支付密码设置成功，请牢记");
+        }else if(type.equals("updateLoginPwd")){
+            model.addAttribute("message", "登录密码设置成功，请牢记");
         }
         return "modify/success";
     }
