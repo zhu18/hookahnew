@@ -5,6 +5,7 @@ import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.UserCheckMapper;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.UserCheck;
+import com.jusfoun.hookah.core.domain.vo.UserCheckVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
@@ -109,6 +110,61 @@ public class UserCheckServiceImpl extends GenericServiceImpl<UserCheck, String> 
             page = getListInPage(pageNumber,pageSize,fifters,orderBys);
             returnData.setData(page);
         }catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
+
+    @Override
+    public ReturnData checkDetail(String userId) {
+        ReturnData<UserCheck> returnData = new ReturnData<UserCheck>();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            List<Condition> fifters = new ArrayList<Condition>();
+            fifters.add(Condition.eq("userId",userId));
+
+            List<OrderBy> orderBys = new ArrayList<OrderBy>();
+            orderBys.add(OrderBy.desc("checkTime"));
+
+            List<UserCheck> userChecks = selectList(fifters,orderBys);
+            if (userChecks == null || userChecks.isEmpty()) {
+                return returnData;
+            }
+            returnData.setData(userChecks.get(0));
+        }catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+
+        return returnData;
+    }
+
+    @Override
+    public ReturnData authDetail(User user) {
+        ReturnData returnData = new ReturnData<>();
+        try {
+            Integer userType = user.getUserType();
+            UserCheckVo.UserCheckResult userCheckResult = new UserCheckVo.UserCheckResult();
+            switch (userType) {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                    userCheckResult.setCode(String.valueOf(userType));
+                    break;
+                case 6:
+                case 7:
+                    userCheckResult.setCode(String.valueOf(userType));
+                    userCheckResult.setMessage(((UserCheck)checkDetail(user.getUserId()).getData()).getCheckContent());
+                    break;
+            }
+            returnData.setData(userCheckResult);
+        } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());
             e.printStackTrace();
