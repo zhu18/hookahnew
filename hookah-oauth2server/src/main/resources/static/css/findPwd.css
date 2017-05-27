@@ -12,6 +12,7 @@
 .findPwd {
     width: 650px;
     margin:0 auto;
+    position: relative;
 }
 .findPwd .find {
     font-size: 13px;

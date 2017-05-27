@@ -20,7 +20,8 @@ $(document).ready(function(){
 			priceBoxNumber:'required',
 			priceBoxPrice:{
 				required:true,
-				isPricceData:true
+				isPricceData:true,
+				isPricceB:true
 			},
 			goodsImges:'required',
 			goodsImges2:'required',
@@ -351,6 +352,15 @@ $.validator.addMethod("isGoodsBrief", function(value, element) {
 	var len = value.replace(/[\u0391-\uFFE5]/g,"aa").length;
 	return this.optional(element) || (30 <= len && len <= 400);
 }, "长度为30-400个字符（每个汉字为2个字符）");
+$.validator.addMethod("isPricceB", function(value, element) {
+	var isPricce = false;
+	if(value > 0){
+		isPricce = true;
+	}else{
+		isPricce = false;
+	}
+	return this.optional(element) || isPricce;
+}, "价格必须为正数");
 $.validator.addMethod("isPricceData", function(value, element) {
 	var isPricce = false;
 	var dot = value.indexOf(".");
@@ -542,7 +552,10 @@ function isOnsaleFun(that) {
 $.jeDate("#indate", {
 	format: "YYYY-MM-DD hh:mm:ss",
 	isTime: true,
-	minDate: $.nowDate(0)
+	minDate: $.nowDate(0),
+	choosefun: function(val) {
+		$('#indate_s').val(val)
+	}
 });
 function floorPrice(){
 	$('.price-inputs').on('input onporpertychange',function () {
