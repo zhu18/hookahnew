@@ -142,6 +142,7 @@ public class OAuth2Realm extends AuthorizingRealm {
             user.put("userId",jsonObject.getString("userId"));
             user.put("userName",jsonObject.getString("userName"));
             user.put("userType",jsonObject.getString("userType"));
+            user.put("headImg",jsonObject.getString("headImg"));
             Session s = SecurityUtils.getSubject().getSession();
             Serializable id = s.getId();
             s.setAttribute("user",user);
