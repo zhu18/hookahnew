@@ -200,7 +200,6 @@ public class RegController {
 
     /**
      * 修改密码
-     * @param oldPwd 旧密码
      * @param newPwd  新密碼
      * * @param newPwdRepeat 新密码重复
      * @param model
@@ -208,7 +207,7 @@ public class RegController {
      */
     @RequestMapping(value = "/reg/updatePwd", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnData updatePwd(String  oldPwd,String  newPwd, String  newPwdRepeat, Model model) {
+    public ReturnData updatePwd(String  newPwd, String  newPwdRepeat, Model model) {
         try {
 
             Session session = SecurityUtils.getSubject().getSession();
@@ -219,12 +218,7 @@ public class RegController {
             }
             User user =  userService.selectById(userId);
 
-            String othpassword = new Md5Hash(oldPwd).toString();
-            if(!othpassword.equals(user.getPassword())){ //校验密码是否正确
-                throw new UserRegEmptyPwdException("密码不正确");
-            }
-
-            if (StringUtils.isBlank(oldPwd) || StringUtils.isBlank(newPwdRepeat)) {
+            if (StringUtils.isBlank(newPwd) || StringUtils.isBlank(newPwdRepeat)) {
                 throw new UserRegEmptyPwdException("密码或者确认密码不能为空");
             }
             if (!newPwd.equals(newPwdRepeat)) {
