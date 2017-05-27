@@ -71,7 +71,7 @@ public class SysNewsController {
             returnData.setData(sysN);
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
-            returnData.setMessage(e.toString());
+            returnData.setMessage("数据错误！");
             e.printStackTrace();
         }
         return returnData;
@@ -92,7 +92,7 @@ public class SysNewsController {
             sysNewsService.delete(ids);
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
-            returnData.setMessage(e.toString());
+            returnData.setMessage("数据错误！");
             e.printStackTrace();
         }
         return returnData;
@@ -114,7 +114,7 @@ public class SysNewsController {
             sysNewsService.delete(id);
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
-            returnData.setMessage(e.toString());
+            returnData.setMessage("数据错误！");
             e.printStackTrace();
         }
         return returnData;
@@ -164,7 +164,7 @@ public class SysNewsController {
             returnData.setData(page);
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
-            returnData.setMessage(e.toString());
+            returnData.setMessage("数据错误！");
             e.printStackTrace();
         }
         return returnData;
@@ -212,7 +212,7 @@ public class SysNewsController {
             map.put("currentPage", pageNumber);//当前页*/
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
-            returnData.setMessage(e.toString());
+            returnData.setMessage("数据错误！");
             e.printStackTrace();
         }
        return returnData;
@@ -250,7 +250,7 @@ public class SysNewsController {
             sysNewsService.insert(snews);
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
-            returnData.setMessage(e.toString());
+            returnData.setMessage("发布错误！");
             e.printStackTrace();
         }
         return returnData;
@@ -278,7 +278,7 @@ public class SysNewsController {
             sysNewsService.updateById(snews);
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
-            returnData.setMessage(e.toString());
+            returnData.setMessage("发布错误！");
             e.printStackTrace();
         }
         return returnData;
