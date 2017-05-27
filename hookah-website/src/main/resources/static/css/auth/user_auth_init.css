@@ -292,7 +292,12 @@
 /*认证审核结束*/
 /*认证完成开始*/
 .auth-content .auth-finished .steps{
-    padding:40px 0 25px;
+    padding:25px 0 25px;
+    text-align: center;
+}
+.auth-content .auth-finished .steps strong{
+    font-size: 16px;
+    font-weight: normal;
 }
 .auth-finished .steps .img-show{
     width: 700px;
@@ -308,7 +313,7 @@
     height: 100px;
     border:1px solid #eee;
     text-align: center;
-    padding:100px 0;
+    padding:10px 0;
     font-size:20px;
     color: #666;
 }
