@@ -18,7 +18,7 @@
         <div class="userInfos-box">
           <div class="spacer"></div>
           <div class="userInfos-con">
-            <img src="/static/images/zheng.jpg" alt="">
+            <img src="${user.headImg}" alt="">
             <% if(shiro.hasRole("Admin")){%>
             <a href="/admin/articleManage" class="a-hover-blue">个人中心</a>
             <a href="${host.admin}/home" >后台管理</a>

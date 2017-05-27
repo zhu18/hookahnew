@@ -1,3 +1,9 @@
+window.onpageshow=function(e){
+	var a=e||window.event;
+	if(!a.persisted){
+		$('#J_cart')[0].reset();
+	}
+};
 $(".checkall").click(function () {
 	$("[name=items]:checkbox").prop("checked", this.checked);
 	$("[name=checkall]:checkbox").prop("checked", this.checked);
