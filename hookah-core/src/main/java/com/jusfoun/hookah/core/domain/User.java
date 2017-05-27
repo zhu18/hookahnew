@@ -112,7 +112,7 @@ public class User extends GenericModel {
      */
     private Integer version;
 
-    private Long orgId;
+    private String orgId;
 
     private String creatorId;
 
@@ -172,11 +172,11 @@ public class User extends GenericModel {
         this.creatorId = creatorId;
     }
 
-    public Long getOrgId() {
+    public String getOrgId() {
         return orgId;
     }
 
-    public void setOrgId(Long orgId) {
+    public void setOrgId(String orgId) {
         this.orgId = orgId;
     }
 
