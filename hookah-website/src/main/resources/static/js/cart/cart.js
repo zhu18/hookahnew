@@ -1,3 +1,9 @@
+window.onpageshow=function(e){
+	var a=e||window.event;
+	if(!a.persisted){
+		$('#J_cart')[0].reset();
+	}
+};
 $(".checkall").click(function () {
 	$("[name=items]:checkbox").prop("checked", this.checked);
 	$("[name=checkall]:checkbox").prop("checked", this.checked);
@@ -68,6 +74,12 @@ function reduceFn(that) { //点击按钮事件
 }
 function plusFn(that) { //点击加按钮事件
 	var goodsNumber = Number($(that).siblings('input').val());
+	if(goodsNumber>=999){
+        $.alert("数量只能为1-999之间");
+		$(that).siblings('input').val(1);
+		$(that).parents(".number").siblings(".money").html($(that).parents(".number").siblings(".price").html());
+		return;
+	}
 	goodsNumber += 1;
 	$(that).siblings('input').val(goodsNumber)
 	if (goodsNumber > 1) {

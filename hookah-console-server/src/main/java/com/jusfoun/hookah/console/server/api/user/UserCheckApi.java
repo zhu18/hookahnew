@@ -32,4 +32,9 @@ public class UserCheckApi extends BaseController{
         return userCheckService.addUserCheck(userCheck);
     }
 
+    @RequestMapping(value = "/all", method = {RequestMethod.POST,RequestMethod.GET})
+    public ReturnData search(UserCheck userCheck,Integer currentPage,Integer pageSize){
+        return userCheckService.search(userCheck,currentPage,pageSize);
+    }
+
 }

@@ -15,7 +15,7 @@ class HomeController {
         // var currUrl = window.location;
         // console.log(currUrl);
         // if (401 === XMLHttpRequest.status) {
-        //   window.location.href = "http://auth.hookah.app/oauth/authorize?client_id=admin&response_type=code&redirect_uri=" + currUrl;
+        //   window.location.href = "http://auth.qddata.com.cn/oauth/authorize?client_id=admin&response_type=code&redirect_uri=" + currUrl;
         // }
       }
     });

@@ -10,6 +10,7 @@ import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.HelpService;
 import com.jusfoun.hookah.rpc.api.MgOrderInfoService;
+import com.jusfoun.hookah.webiste.config.MyProps;
 import com.jusfoun.hookah.webiste.util.FreemarkerWord;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,6 +39,9 @@ public class HelpController extends BaseController{
 
     @Resource
     MgOrderInfoService mgOrderInfoService;
+
+    @Resource
+    MyProps myProps;
 
     @RequestMapping(value = "/{id}.html", method = RequestMethod.GET)
     public String index(@PathVariable("id") String id, Model model) {
@@ -97,7 +101,8 @@ public class HelpController extends BaseController{
                         returnData.setCode(ExceptionConst.Failed);
                         return returnData;
                     }
-                    returnData.setData("http://static.hookah.app/upload/download?filePath=" + goodsVo.getUploadUrl());
+
+                    returnData.setData(myProps.getHost().get("static") + "/upload/download?filePath=" + goodsVo.getUploadUrl());
                     return returnData;
                 }else if(goodsVo.getGoodsType() == 1) { //api
 

@@ -15,7 +15,7 @@ function loadPageData(data){
             if(list[i].commentFlag==0){
                 html += '<a target="_blank" href="/order/sunAlone?orderId='+list[i].orderId+'" class="display-block">评价晒单</a>';
             }else if(list[i].commentFlag==1){
-                html += '<a href="" class="display-block">已评价</a>';
+                html += '<span class="display-block">已评价</span>';
             }
             html += '<a href="javascript:confirmDelete(\''+list[i].orderId+'\');" class="display-block deleteRadio">删除</a>';
             html += '</td>';

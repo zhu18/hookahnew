@@ -1,104 +1,155 @@
 <%
 var head = {
 %>
-<link rel="stylesheet" href="/static/css/plugins/sweetalert/sweetalert.css">
 <link rel="stylesheet" href="/static/css/plugins/jedate/jedate.css">
 <link rel="stylesheet" href="/static/css/auth/user_auth_init.css">
 <link rel="stylesheet" href="/static/css/auth/company_auth_init.css">
+<script src="/static/js/plugins/widget/jquery.ui.widget.js"></script>
+<script src="/static/js/plugins/fileupload/jquery.fileupload.js"></script>
+<script src="/static/js/plugins/jedate/jquery.jedate.min.js"></script>
+<script src="/static/js/plugins/validate/jquery-validate.js"></script>
+<script src="/static/js/plugins/validate/messages_zh.js"></script>
 <%};%>
-
 <%
 var htmlPart = {
 %>
 <div class="grid-0  backgorund-gray">
-    <div class="grid-row padding-bottom-30 padding-top-10">
-
-        <div class="auth-box">
-            <div class="auth-title clearfix">
-                <h3 class="grid-left">企业认证</h3>
-                <!--<p class="grid-right"><a class="blue" href="javascript:void(0)">去用户中心</a></p>-->
-            </div>
-            <div class="auth-content">
-                <!--认证信息开始-->
-                <div class="auth-info">
-                    <div class="steps">
-                        <div class="img-show step2"></div>
-                        <ul class="txt clearfix">
-                            <li class="grid-left blue">阅读购买协议</li>
-                            <li class="grid-left">提交认证信息</li>
-                            <li class="grid-left">等待审核</li>
-                            <li class="grid-left last">完成</li>
-                        </ul>
-                    </div>
-                    <div id="authForm">
-                        <div class="auth-info">
-                            <h3>企业认证信息</h3>
-                            <ul class="typeBox">
-                                <li>
-                                    <label>政府全称：<input type="text" placeholder="请输入政府全称" id="governmentName"/></label>
-                                    <label>信用代码：<input type="text" placeholder="请输入信用代码" id="creditCode"/></label>
-                                    <div class="update" id="creditImg">
-                                        <label for="submit1">
-                                            <input type="file" name="filename" id="submit1" multiple="multiple"  accept="image/gif,image/jpeg,image/jpg,image/png"/>
-                                            <img src="/static/images/auth/bk.png" alt="" id="certifictePath"/>
-                                        </label>
-                                        <p>*上传加盖公章的扫描件</p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <label>营业执照：<input type="text" placeholder="请输入营业执照到期时间" id="businessLicence"/></label>
-                                    <div class="update" id="businessImg">
-                                        <label for="submit2">
-                                            <input type="file" name="filename" hidden="hidden" multiple="multiple" id="submit2"  accept="image/gif,image/jpeg,image/jpg,image/png"/>
-                                            <img src="/static/images/auth/bk.png" alt="" id="licensePath"/>
-                                        </label>
-                                        <p>*上传加盖公章的营业执照扫描件</p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <label>税务登记证：<input type="text" placeholder="请输入税务登记证到期时间" id="taxRegCertificate"/></label>
-                                    <div class="update" id="taxRegImg">
-                                        <label for="submit3">
-                                            <input type="file" name="filename" hidden="hidden" multiple="multiple" id="submit3"  accept="image/gif,image/jpeg,image/jpg,image/png"/>
-                                            <img src="/static/images/auth/bk.png" alt="" id="taxPath"/>
-                                        </label>
-                                        <p>*上传加盖公章的税务登记证扫描件</p>
-                                    </div>
-                                </li>
-                            </ul>
-                            <label class="padding-left-210">法人代表：<input type="text" placeholder="请输入公司的法人代表" id="companyLegal"/></label>
-                            <label class="padding-left-210">主营业务：<input type="text" placeholder="请输入主营业务" id="mainBusiness"/></label>
-                            <label class="padding-left-210">所在地：
-                                <div class="linkage">
-                                    <select id="province" name="province" onchange="loadRegion('city', this)">
-                                        <option value="-1">全部</option>
-                                    </select>
-                                    <select id="city" name="city">
-                                        <option value="-1">全部</option>
-                                    </select>
-                                </div>
-                            </label>
-                            <label class="padding-left-210">详细地址：<input type="text" placeholder="请输入详细地址" id="address"/></label>
-                            <label class="padding-left-210">联系电话：<input type="text" placeholder="请输入联系电话" id="tel"/></label>
-                            <!--<label class="padding-left-210" for="clickCheck"><input type="checkbox" id="clickCheck" checked/>我已阅读并同意《<a href="./company_auth_init" class="agreement-book">青岛交易所用户协议</a>》</label>-->
-                            <div class="button">
-                                <button id="verifyBtn" class="btn-full-blue">立即认证</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--认证信息结束-->
-            </div>
-        </div>
-
-
-    </div>
+	<div class="grid-row padding-bottom-30 padding-top-10">
+		<div class="auth-box">
+			<div class="auth-title clearfix">
+				<h3 class="grid-left">企业认证</h3>
+				<!--<p class="grid-right"><a class="blue" href="javascript:void(0)">去用户中心</a></p>-->
+			</div>
+			<div class="auth-content">
+				<!--认证信息开始-->
+				<div class="auth-info">
+					<div class="steps">
+						<div class="img-show step2"></div>
+						<ul class="txt clearfix">
+							<li class="grid-left blue">阅读购买协议</li>
+							<li class="grid-left">提交认证信息</li>
+							<li class="grid-left">等待审核</li>
+							<li class="grid-left last">完成</li>
+						</ul>
+					</div>
+					<div id="authForm">
+						<form id="companyForm" name="companyForm">
+							<div class="auth-info">
+								<h3>企业认证信息</h3>
+								<ul class="typeBox">
+									<li>
+										<label><span>单位名称：</span><span class="gs">*</span></label>
+										<div class="inputBoxs">
+											<input name="governmentName" placeholder="请输入单位全称" type="text"/>
+										</div>
+									</li>
+									<li>
+										<label><span>法人代表：</span><span class="gs">*</span></label>
+										<div class="inputBoxs"><input type="text" name="companyLegal" placeholder="请输入公司的法人代表"/></div>
+									</li>
+									<li>
+										<label><span>主营业务：</span><span class="gs">*</span></label>
+										<div class="inputBoxs"><input type="text" name="mainBusiness" placeholder="请输入主营业务"/></div>
+									</li>
+									<li>
+										<label><span>所在地：</span><span class="gs">*</span></label>
+										<div class="linkage">
+											<select id="province" name="province" onchange="loadRegion('city', this)">
+												<option value="">全部</option>
+											</select>
+											<select id="city" name="city">
+												<option value="">全部</option>
+											</select>
+										</div>
+									</li>
+									<li>
+										<label><span>详细地址：</span><span class="gs">*</span></label>
+										<div class="inputBoxs"><input type="text" name="address" placeholder="请输入详细地址"/></div>
+									</li>
+									<li>
+										<label><span>手机号：</span><span class="gs">*</span></label>
+										<div class="inputBoxs"><input type="text" name="tel" placeholder="请输入手机号"/></div>
+									</li>
+									<li>
+										<label><span>营业执照编号：</span><span class="gs">*</span></label>
+										<div class="inputBoxs"><input type="text" name="businessLicence" placeholder="请输入营业执照编号"/></div>
+									</li>
+									<li>
+										<label><span>上传营业执照：</span><span class="gs">*</span></label>
+										<span class="p_title">上传加盖公章的扫描件</span>
+									</li>
+									<li>
+										<div class="upLoad">
+											<label>
+												<input type="file" name="filename" multiple="multiple" class="unloadBtn" accept="image/gif,image/jpeg,image/jpg,image/png"/>
+											</label>
+											<input type="hidden" class="input_hide">
+											<input type="text" name="licensePath" class="input_op">
+											<img src="/static/images/auth/bk.jpg" alt="" id="certifictePath"/>
+											<span class="upLoad_warp">点击上传图片</span>
+										</div>
+									</li>
+									<li>
+										<label><span>税务登记证编号：</span><span class="gs">*</span></label>
+										<div class="inputBoxs"><input type="text" name="taxRegCertificate" placeholder="请输入税务登记编号"/></div>
+									</li>
+									<li><label><span>上传税务登记证：</span><span class="gs">*</span></label><span class="p_title">上传加盖公章的扫描件</span></li>
+									<li>
+										<div class="upLoad upLoad_dk">
+											<label>
+												<input type="file" name="filename" multiple="multiple" class="unloadBtn" accept="image/gif,image/jpeg,image/jpg,image/png"/>
+											</label>
+											<input type="hidden" class="input_hide">
+											<input type="text" name="taxPath" class="input_op">
+											<img src="/static/images/auth/sk.jpg" alt=""/>
+											<span class="upLoad_warp">点击上传图片</span>
+										</div>
+									</li>
+									<li>
+										<label><span>企业代码证编号：</span><span class="gs">*</span></label>
+										<div class="inputBoxs"><input type="text" name="creditCode" placeholder="请输入信用代码证编号"/></div>
+									</li>
+									<li><label><span>上传企业代码证：</span><span class="gs">*</span></label><span class="p_title">上传加盖公章的扫描件</span></li>
+									<li>
+										<div class="upLoad upLoad_dk">
+											<label>
+												<input type="file" name="filename" multiple="multiple" class="unloadBtn" accept="image/gif,image/jpeg,image/jpg,image/png"/>
+											</label>
+											<input type="hidden" class="input_hide">
+											<input type="text" name="certifictePath" class="input_op">
+											<img src="/static/images/auth/dk.jpg" alt=""/>
+											<span class="upLoad_warp">点击上传图片</span>
+										</div>
+									</li>
+								</ul>
+								<!--<label class="padding-left-210">法人代表：<input type="text" placeholder="请输入公司的法人代表" id="companyLegal"/></label>-->
+								<!--<label class="padding-left-210">主营业务：<input type="text" placeholder="请输入主营业务" id="mainBusiness"/></label>-->
+								<!--<label class="padding-left-210">所在地：-->
+								<!--<div class="linkage">-->
+								<!--<select id="province" name="province" onchange="loadRegion('city', this)">-->
+								<!--<option value="-1">全部</option>-->
+								<!--</select>-->
+								<!--<select id="city" name="city">-->
+								<!--<option value="-1">全部</option>-->
+								<!--</select>-->
+								<!--</div>-->
+								<!--</label>-->
+								<!--<label class="padding-left-210">详细地址：<input type="text" placeholder="请输入详细地址" id="address"/></label>-->
+								<!--<label class="padding-left-210">联系电话：<input type="text" placeholder="请输入联系电话" id="tel"/></label>-->
+								<!--<label class="padding-left-210" for="clickCheck"><input type="checkbox" id="clickCheck" checked/>我已阅读并同意《<a href="./company_auth_init" class="agreement-book">青岛交易所用户协议</a>》</label>-->
+								<div class="button">
+									<button id="verifyBtn" type="button" class="btn-full-blue">立即认证</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<!--认证信息结束-->
+			</div>
+		</div>
+	</div>
 </div>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
-<script src="/static/js/plugins/sweetalert/sweetalert.min.js"></script>
-<script src="/static/js/plugins/widget/jquery.ui.widget.js"></script>
-<script src="/static/js/plugins/fileupload/jquery.fileupload.js"></script>
-<script src="/static/js/plugins/jedate/jquery.jedate.min.js"></script>
 <script type="text/javascript" src="/static/js/auth/company_auth_step2.js"></script>

@@ -4,13 +4,17 @@ import com.jusfoun.hookah.console.server.controller.BaseController;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.OrderInfo;
+import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
+import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.OrderInfoService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -59,6 +63,28 @@ public class OrderApi extends BaseController{
             e.printStackTrace();
         }
         return ReturnData.success(page);
+    }
+
+    /**
+     * 查询订单详情
+     * @param orderId
+     * @param num
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/viewDetails", method = RequestMethod.GET)
+    public String getOrderDetail(@RequestParam String orderId, @RequestParam Integer num, Model model){
+        try{
+            String a = new String();
+            OrderInfoVo vo = orderInfoService.findDetailById(orderId);
+            model.addAttribute("order",vo);
+            model.addAttribute("num",num);
+            logger.info(JsonUtils.toJson(vo));
+            return "/usercenter/buyer/viewDetails";
+        }catch (Exception e){
+            logger.info(e.getMessage());
+            return "/error/500";
+        }
     }
 
 

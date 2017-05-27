@@ -26,12 +26,15 @@
         <div class="form-group">
           <label class="col-sm-2 control-label">商品类型</label>
           <div class="col-sm-5">
-            <label class="radio-inline">
-              <input type="radio" ng-checked="editData.goodsType == 0"/>常规商品
-            </label>
-            <label class="radio-inline">
-              <input type="radio" ng-checked="editData.goodsType == 1"/>api
-            </label>
+            <select disabled>
+              <option value="0" ng-selected="editData.goodsType == 0">常规商品</option>
+              <option value="1" ng-selected="editData.goodsType == 1">api</option>
+              <option value="2" ng-selected="editData.goodsType == 2">数据模型</option>
+              <option value="4" ng-selected="editData.goodsType == 4">分析工具--独立软件</option>
+              <option value="5" ng-selected="editData.goodsType == 5">分析工具--SaaS</option>
+              <option value="6" ng-selected="editData.goodsType == 6">应用场景--独立软件</option>
+              <option value="7" ng-selected="editData.goodsType == 7">应用场景--SaaS</option>
+            </select>
           </div>
         </div>
         <div class="form-group">
@@ -187,72 +190,176 @@
           <div class="form-group">
             <label class="col-sm-2 control-label">返回示例</label>
             <div class="col-sm-5">
-              <textarea style="margin: 0px; width: 452px; height: 150px;" readonly="true">
-                {{editData.apiInfo.respSample}}
+              <textarea style="margin: 0px; width: 452px; height: 150px;" readonly="true">{{editData.apiInfo.respSample}}</textarea>
+            </div>
+          </div>
+        </div>
+        <div data-ng-if="editData.goodsType == 2">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">模型规则</label></br>
+            <div class="col-sm-5">
+              复杂度：<input type="text" class="form-control" value="{{editData.dataModel.complexity}}" readonly="true" />
+              成熟度：<input type="text" class="form-control" value="{{editData.dataModel.maturity}}" readonly="true" />
+              应用经验：<input type="text" class="form-control" value="{{editData.dataModel.aexp}}" readonly="true" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">模型规格</label></br>
+            <div class="col-sm-5">
+              模型文件：<input type="text" class="form-control" value="{{editData.dataModel.modelFile}}" readonly="true" />
+              配置文件：<input type="text" class="form-control" value="{{editData.dataModel.configFile}}" readonly="true" />
+              配置参数：<input type="text" class="form-control" value="{{editData.dataModel.configParams}}" readonly="true" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">其他说明</label>
+            <div class="col-sm-5">
+              <textarea style="margin: 0px; width: 452px; height: 84px;" name="dataModel.otherDesc">
+                {{editData.dataModel.otherDesc}}
               </textarea>
+            </div>
+          </div>
+        </div>
+        <div data-ng-if="editData.goodsType == 4">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">工具规格</label>
+            <div class="col-sm-5">
+              行业领域：<input type="text" class="form-control" value="{{editData.atAloneSoftware.aTAloneIndustryField}}" readonly="true" />
+              版本说明：<input type="text" class="form-control" value="{{editData.atAloneSoftware.aTAloneVersionDesc}}" readonly="true" />
+              工具介绍：<input type="text" class="form-control" value="{{editData.atAloneSoftware.aTAloneToolsIntroduce}}" readonly="true" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">使用规格</label>
+            <div class="col-sm-5">
+              云硬件资源：<input type="text" class="form-control" value="{{editData.atAloneSoftware.aTAloneCloudHardwareResource}}" readonly="true" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">其他说明</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" value="{{editData.atAloneSoftware.otherDesc}}" readonly="true" />
+            </div>
+          </div>
+        </div>
+        <div data-ng-if="editData.goodsType == 5">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">工具规格</label>
+            <div class="col-sm-5">
+              行业领域：<input type="text" class="form-control" value="{{editData.atSaaS.aTIndustryField}}" readonly="true" />
+              版本说明：<input type="text" class="form-control" value="{{editData.atSaaS.aTVersionDesc}}" readonly="true" />
+              工具介绍：<input type="text" class="form-control" value="{{editData.atSaaS.aTToolsIntroduce}}" readonly="true" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">其他说明</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" value="{{editData.atSaaS.otherDesc}}" readonly="true" />
+            </div>
+          </div>
+        </div>
+        <div data-ng-if="editData.goodsType == 6">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">应用场景规则</label>
+            <div class="col-sm-5">
+              应用复杂度：<input type="text" class="form-control" value="{{editData.asAloneSoftware.aSComplexity}}" readonly="true" />
+              版本说明：<input type="text" class="form-control" value="{{editData.asAloneSoftware.aSVersionDesc}}" readonly="true" />
+              服务等级：<input type="text" class="form-control" value="{{editData.asAloneSoftware.aSServiceLevel}}" readonly="true" />
+              应用等级：<input type="text" class="form-control" value="{{editData.asAloneSoftware.aSAexp}}" readonly="true" />
+              工具介绍：<input type="text" class="form-control" value="{{editData.asAloneSoftware.aSAintroduce}}" readonly="true" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">使用规格</label>
+            <div class="col-sm-5">
+              云硬件资源：<input type="text" class="form-control" value="{{editData.asAloneSoftware.aSCloudHardwareResource}}" readonly="true" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">其他说明</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" value="{{editData.asAloneSoftware.otherDesc}}" readonly="true" />
+            </div>
+          </div>
+        </div>
+        <div data-ng-if="editData.goodsType == 7">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">应用场景规则</label>
+            <div class="col-sm-5">
+              应用复杂度：<input type="text" class="form-control" value="{{editData.asSaaS.sSComplexity}}" readonly="true" />
+              版本说明：<input type="text" class="form-control" value="{{editData.asSaaS.sSVersionDesc}}" readonly="true" />
+              服务等级：<input type="text" class="form-control" value="{{editData.asSaaS.sServiceLevel}}" readonly="true" />
+              应用等级：<input type="text" class="form-control" value="{{editData.asSaaS.sSAexp}}" readonly="true" />
+              工具介绍：<input type="text" class="form-control" value="{{editData.asSaaS.sSAintroduce}}" readonly="true" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">其他说明</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" value="{{editData.asSaaS.otherDesc}}" readonly="true" />
             </div>
           </div>
         </div>
       </fieldset>
     </form>
 
-    <form class="form-horizontal" role="form" id="goodsCheckForm" name="checkForm" ng-show="operatorFlag == 1">
-      <input type="hidden" id="goodsId" name="goodsId" value="{{editData.goodsId}}" />
-      <input type="hidden" id="goodsSn" name="goodsSn" value="{{editData.goodsSn}}" />
-      <input type="hidden" id="goodsName" name="goodsName" value="{{editData.goodsName}}" />
-      <div class="form-group">
-        <label class="col-sm-2 control-label">审核状态</label>
-        <div class="col-sm-5">
-          <label class="radio-inline">
-            <input type="radio" id="checkStatus_1" name="checkStatus" value="1" checked/>通过
-          </label>
-          <label class="radio-inline">
-            <input type="radio" id="checkStatus_2" name="checkStatus" value="2" />不通过
-          </label>
+    <div data-ng-if="editData.isOnsale != 2">
+      <form class="form-horizontal" role="form" id="goodsCheckForm" name="checkForm" ng-show="operatorFlag == 1">
+        <input type="hidden" id="goodsId" name="goodsId" value="{{editData.goodsId}}" />
+        <input type="hidden" id="goodsSn" name="goodsSn" value="{{editData.goodsSn}}" />
+        <input type="hidden" id="goodsName" name="goodsName" value="{{editData.goodsName}}" />
+        <div class="form-group">
+          <label class="col-sm-2 control-label">审核状态</label>
+          <div class="col-sm-5">
+            <label class="radio-inline">
+              <input type="radio" id="checkStatus_1" name="checkStatus" value="1" checked />通过
+            </label>
+            <label class="radio-inline">
+              <input type="radio" id="checkStatus_2" name="checkStatus" value="2" />不通过
+            </label>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label">审核意见</label>
-        <div class="col-sm-5">
-          <label>
-            <textarea name="checkContent"
-                      data-ng-model="checkContent"
-                      style="margin: 0px; width: 452px; height: 84px;" required>
-            </textarea>
-          </label>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">审核意见</label>
+          <div class="col-sm-5">
+            <label>
+            <textarea name="checkContent" id="checkContent"
+                      style="margin: 0px; width: 452px; height: 84px;"></textarea>
+            </label>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <div class="col-sm-2"></div>
-        <div class="col-sm-5">
-          <button class="btn btn-primary" data-ng-click="submitCheck()" ng-disabled="checkForm.$invalid">
-            <span class="glyphicon glyphicon-refresh"></span> 提交审核
-          </button>
+        <div class="form-group">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-5">
+            <button class="btn btn-primary" data-ng-click="submitCheck()" ng-disabled="checkForm.$invalid">
+              <span class="glyphicon glyphicon-refresh"></span> 提交审核
+            </button>
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
 
-    <form class="form-horizontal" role="form" id="forceOffForm" name="forceOffForm" ng-show="operatorFlag == 2">
-      <input type="hidden" name="goodsId" value="{{editData.goodsId}}" />
-      <div class="form-group">
-        <label class="col-sm-2 control-label">强制下架理由</label>
-        <div class="col-sm-5">
-          <label>
+      <form class="form-horizontal" role="form" id="forceOffForm" name="forceOffForm" ng-show="operatorFlag == 2">
+        <input type="hidden" name="goodsId" value="{{editData.goodsId}}" />
+        <div class="form-group">
+          <label class="col-sm-2 control-label">强制下架理由</label>
+          <div class="col-sm-5">
+            <label>
             <textarea name="offReason"
                       data-ng-model="offReason"
                       style="margin: 0px; width: 452px; height: 84px;" required>
             </textarea>
-          </label>
+            </label>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <div class="col-sm-2"></div>
-        <div class="col-sm-5">
-          <button class="btn btn-primary" data-ng-click="forceOff()" ng-disabled="forceOffForm.$invalid">
-            <span class="glyphicon glyphicon-refresh"></span> 强制下架
-          </button>
+        <div class="form-group">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-5">
+            <button class="btn btn-primary" data-ng-click="forceOff()" ng-disabled="forceOffForm.$invalid">
+              <span class="glyphicon glyphicon-refresh"></span> 强制下架
+            </button>
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 </div>

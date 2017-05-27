@@ -27,6 +27,12 @@
     width: 100px;
     margin-right:20px;
 }
+.user-header .img-box{
+    width: 100px;
+}
+.user-header .img-box img{
+    width:100%;
+}
 #modify-head{
     text-align: center;
     color: #3185E9;

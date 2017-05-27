@@ -19,7 +19,7 @@ var htmlPart = {
     <%include("/usercenter/user-center-menu.html"){} %>
     <div class="top grid-left">
       <div class="user-name grid-left">
-        <a href="javascript:void(0);"><img src="/static/images/user-head.png" alt=""></a>
+        <a href="javascript:void(0);"><img width="90" src="${user.headImg}" alt=""></a>
         <p>Hi,<span id="userName">${user.userName}</span></p>
         <p class="usertype">${decode(user.userType,0,'系统',1,'未认证',2,'个人',3,'个人待审核',4,'企业',5,'企业待审核',6,'个人审核失败',7,'企业审核失败')}</p>
         <!--<a id="enterForum" href="javascript:void(0);"><span class="fa fa-twitch"></span>进入论坛</a>-->
@@ -44,12 +44,12 @@ var htmlPart = {
       <div class="auth-introduce grid-left">
         <p>如果您想购买数据，可进行个人用户认证</p>
         <div class="margin-10">
-          <a href="/auth/user_auth_init" class="large-btn">我要成为个人用户</a>
+          <a href="/auth/user_auth_init" class="large-btn">个人会员认证</a>
           <!--<a href="javascript:void(0)" class="blue" hidden="hidden">如何认证?</a>-->
         </div>
         <p>如果您想购买企业专享数据，可进行企业用户认证</p>
         <div class="margin-10">
-          <a href="/auth/company_auth_init" class="large-btn">我要成为企业用户</a>
+          <a href="/auth/company_auth_init" class="large-btn">单位会员认证</a>
           <!--<a href="javascript:void(0)" class="blue" hidden="hidden">如何认证?</a>-->
         </div>
       </div>
