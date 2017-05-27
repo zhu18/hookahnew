@@ -61,6 +61,11 @@
               <td>
                 <span class="column-text" ng-show="item.goodsType == 0">常规商品</span>
                 <span class="column-text" ng-show="item.goodsType == 1">API</span>
+                <span class="column-text" ng-show="editData.goodsType == 2">数据模型</span>
+                <span class="column-text" ng-show="editData.goodsType == 4">分析工具--独立软件</span>
+                <span class="column-text" ng-show="editData.goodsType == 5">分析工具--SaaS</span>
+                <span class="column-text" ng-show="editData.goodsType == 6">应用场景--独立软件</span>
+                <span class="column-text" ng-show="editData.goodsType == 7">应用场景--SaaS</span>
               </td>
               <!--<td>-->
                 <!--<span class="column-text" style="width: 100px;white-space:nowrap;" ng-bind="item.userName"></span>-->
@@ -86,7 +91,6 @@
                       max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"
                       force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"
                       last-text="末页">
-
                   </ul>
                 </div>
               </td>
