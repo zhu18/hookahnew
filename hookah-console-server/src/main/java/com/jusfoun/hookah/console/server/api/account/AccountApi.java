@@ -2,7 +2,6 @@ package com.jusfoun.hookah.console.server.api.account;
 
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.generic.Condition;
-import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -41,7 +40,7 @@ public class AccountApi {
     public ReturnData saveSysAccount(User user,HttpServletRequest request, HttpServletResponse response) {
         HashMap<String,String> o = (HashMap<String,String>)SecurityUtils.getSubject().getPrincipal();
         String creatorId = o.get("userId");
-        user.setOrgId(new Long(0));
+        user.setOrgId("0");
         user.setCreatorId(creatorId);
         User savedUser=userService.insert(user);
         return ReturnData.success(savedUser);
