@@ -34,6 +34,7 @@ public class Advert extends GenericModel {
 
     private String advertGroup;
 
+    private String advertOrder;
 
     public String getAdvertId() {
         return advertId;
@@ -98,4 +99,8 @@ public class Advert extends GenericModel {
     public void setAdvertGroup(String advertGroup) {
         this.advertGroup = advertGroup;
     }
+
+    public String getAdvertOrder() { return advertOrder;}
+
+    public void setAdvertOrder(String advertOrder) {this.advertOrder = advertOrder;}
 }

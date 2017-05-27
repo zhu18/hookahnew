@@ -32,10 +32,15 @@ export default function advertRouting($stateProvider, $urlRouterProvider) {
       template: require('./carousel_list.html'),
       controller: AdvertCarouselController,
     })
+    .state('advert.carousel.edit', {
+       url: '/advert/carousel',
+       template: require('./carousel_edit.html'),
+       controller: AdvertCarouselController,
+    })
     .state('advert.carousel.add', {
-      url: '/advert/carousel',
-      template: require('./carousel_edit.html'),
-      controller: AdvertCarouselController,
+       url: '/advert/carousel',
+       template: require('./carousel_add.html'),
+       controller: AdvertCarouselController,
     })
     .state('cooperation.search', {
       url: '/cooperation/search',
