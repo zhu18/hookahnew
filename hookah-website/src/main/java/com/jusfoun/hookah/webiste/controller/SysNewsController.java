@@ -250,7 +250,7 @@ public class SysNewsController {
             sysNewsService.insert(snews);
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
-            returnData.setMessage(e.toString());
+            returnData.setMessage("发布错误！");
             e.printStackTrace();
         }
         return returnData;
