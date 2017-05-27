@@ -1,0 +1,45 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/auth/user_auth_init.css">
+<link rel="stylesheet" href="/static/css/auth/company_auth_init.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0  backgorund-gray">
+    <div class="grid-row padding-bottom-30 padding-top-10">
+        <div class="auth-box">
+            <div class="auth-title clearfix">
+                <h3 class="grid-left">企业认证</h3>
+                <!--<p class="grid-right"><a class="blue" href="javascript:void(0)">去用户中心</a></p>-->
+            </div>
+            <div class="auth-content">
+                <!--认证完成开始-->
+                <div class="auth-finished">
+                    <div class="steps">
+                        <div class="img-show step4"></div>
+                        <ul class="txt clearfix">
+                            <li class="grid-left blue">阅读购买协议</li>
+                            <li class="grid-left blue">提交认证信息</li>
+                            <li class="grid-left blue">等待审核</li>
+                            <li class="grid-left blue last">完成</li>
+                        </ul>
+                    </div>
+                    <div class="auth-finished-info">
+                        <strong><span class="fa fa-check-circle"></span>恭喜您已完成企业认证！</strong>
+                        <p class="enter-company-auth">如需购买个人专享数据，请完成 <a href="./user_auth_init" class="choose-auth-type">个人认证</a></p>
+                    </div>
+                </div>
+                <!--认证完成结束-->
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+<script type="text/javascript" src="/static/js/auth/company_auth_init.js"></script>

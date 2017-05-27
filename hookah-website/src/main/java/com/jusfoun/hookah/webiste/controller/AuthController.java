@@ -143,6 +143,10 @@ public class AuthController extends BaseController {
     public String userAuth4(Model model) throws Exception {
         return "/auth/user_auth_init_step4";
     }
+    @RequestMapping(value = "/auth/user_auth_init_step5", method = RequestMethod.GET)
+    public String userAuth5(Model model) throws Exception {
+        return "/auth/user_auth_init_step5";
+    }
 
     /**
      * 公司认证
@@ -169,6 +173,10 @@ public class AuthController extends BaseController {
     @RequestMapping(value = "/auth/company_auth_init_step4", method = RequestMethod.GET)
     public String companyAuth4(Model model) throws Exception {
         return "/auth/company_auth_init_step4";
+    }
+    @RequestMapping(value = "/auth/company_auth_init_step5", method = RequestMethod.GET)
+    public String companyAuth5(Model model) throws Exception {
+        return "/auth/company_auth_init_step5";
     }
 
     @RequestMapping(value = "/auth/personAuth", method = RequestMethod.POST)
