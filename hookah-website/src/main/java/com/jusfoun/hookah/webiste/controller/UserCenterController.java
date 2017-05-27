@@ -49,6 +49,9 @@ public class UserCenterController {
     @Resource
     UserDetailService userDetailService;
 
+    @Resource
+    UserCheckService userCheckService;
+
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String userInfo(Model model) {
@@ -57,6 +60,10 @@ public class UserCenterController {
         String userId = o.get("userId");
         User user = userService.selectById(userId);
         model.addAttribute("userCur",user);
+
+        //用户审核信息
+        model.addAttribute("userCheckResult",userCheckService.authDetail(user).getData());
+
         return "usercenter/userInfo/userInfo";
     }
 
