@@ -42,7 +42,7 @@ public class GoodsBackController extends BaseController {
             goodsService.addGoods(obj, getCurrentUser());
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
-            returnData.setMessage(e.toString());
+            returnData.setMessage(e.getMessage());
             e.printStackTrace();
         }
         return returnData;
