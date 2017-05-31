@@ -78,6 +78,7 @@ function plusFn(that) { //点击加按钮事件
         $.alert("数量只能为1-999之间");
 		$(that).siblings('input').val(1);
 		$(that).parents(".number").siblings(".money").html($(that).parents(".number").siblings(".price").html());
+        totalAmountFn();
 		return;
 	}
 	goodsNumber += 1;
