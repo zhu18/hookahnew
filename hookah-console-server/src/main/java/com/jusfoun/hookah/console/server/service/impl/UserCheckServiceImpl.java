@@ -1,18 +1,26 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
+import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.UserCheckMapper;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.UserCheck;
+import com.jusfoun.hookah.core.domain.vo.UserCheckVo;
 import com.jusfoun.hookah.core.exception.HookahException;
+import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
+import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.UserCheckService;
 import com.jusfoun.hookah.rpc.api.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by ctp on 2017/5/25.
@@ -73,7 +81,94 @@ public class UserCheckServiceImpl extends GenericServiceImpl<UserCheck, String> 
     }
 
     @Override
-    public ReturnData search(UserCheck userCheck) {
-        return null;
+    public ReturnData search(UserCheck userCheck,Integer pageNumber,Integer pageSize) {
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        Pagination page = new Pagination<>();
+        try {
+            //参数校验
+            if (Objects.isNull(pageNumber)) {
+                pageNumber = HookahConstants.PAGE_NUM;
+            }
+            if (Objects.isNull(pageSize)) {
+                pageSize = HookahConstants.PAGE_SIZE;
+            }
+
+            List<Condition> fifters = new ArrayList<Condition>();
+            if(Objects.nonNull(userCheck)){
+                if(Objects.nonNull(userCheck.getUserName())){
+                    fifters.add(Condition.like("userName",userCheck.getUserName()));
+                }
+                if(Objects.nonNull(userCheck.getUserType()) && !"-1".equals(userCheck.getUserType())){
+                    fifters.add(Condition.eq("userType",userCheck.getUserType()));
+                }
+            }
+
+            List<OrderBy> orderBys = new ArrayList<OrderBy>();
+            orderBys.add(OrderBy.desc("checkTime"));
+
+            page = getListInPage(pageNumber,pageSize,fifters,orderBys);
+            returnData.setData(page);
+        }catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
+
+    @Override
+    public ReturnData checkDetail(String userId) {
+        ReturnData<UserCheck> returnData = new ReturnData<UserCheck>();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            List<Condition> fifters = new ArrayList<Condition>();
+            fifters.add(Condition.eq("userId",userId));
+
+            List<OrderBy> orderBys = new ArrayList<OrderBy>();
+            orderBys.add(OrderBy.desc("checkTime"));
+
+            List<UserCheck> userChecks = selectList(fifters,orderBys);
+            if (userChecks == null || userChecks.isEmpty()) {
+                return returnData;
+            }
+            returnData.setData(userChecks.get(0));
+        }catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+
+        return returnData;
+    }
+
+    @Override
+    public ReturnData authDetail(User user) {
+        ReturnData returnData = new ReturnData<>();
+        try {
+            Integer userType = user.getUserType();
+            UserCheckVo.UserCheckResult userCheckResult = new UserCheckVo.UserCheckResult();
+            switch (userType) {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                    userCheckResult.setCode(String.valueOf(userType));
+                    break;
+                case 6:
+                case 7:
+                    userCheckResult.setCode(String.valueOf(userType));
+                    userCheckResult.setMessage(((UserCheck)checkDetail(user.getUserId()).getData()).getCheckContent());
+                    break;
+            }
+            returnData.setData(userCheckResult);
+        } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
     }
 }

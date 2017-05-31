@@ -47,6 +47,10 @@ app.run(function ($rootScope, $state) {
     {
       "title":"待审核",
       "url":"user.verify.all"
+    },
+    {
+        "title":"审核记录",
+        "url":"user.verify.resultAll"
     }
   ];
 

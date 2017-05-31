@@ -9,6 +9,7 @@
     <!-- 业务具体实现类 -->
     <bean id="userService" class="com.jusfoun.hookah.console.server.service.impl.UserServiceImpl"/>
     <bean id="userMongoService" class="com.jusfoun.hookah.console.server.service.impl.UserMongoServiceImpl"/>
+    <bean id="userCheckService" class="com.jusfoun.hookah.console.server.service.impl.UserCheckServiceImpl"/>
 
     <!-- 具体rpc服务配置，声明实现的接口类。-->
     <motan:service interface="com.jusfoun.hookah.rpc.api.UserService"
@@ -17,5 +18,9 @@
 
     <motan:service interface="com.jusfoun.hookah.rpc.api.UserMongoService"
                    ref="userMongoService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+
+    <motan:service interface="com.jusfoun.hookah.rpc.api.UserCheckService"
+                   ref="userCheckService" export="hookah:5001" basicService="serviceBasicConfig">
     </motan:service>
 </beans>

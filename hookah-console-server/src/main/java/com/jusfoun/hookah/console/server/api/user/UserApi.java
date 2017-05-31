@@ -96,7 +96,8 @@ public class UserApi {
     }
 
     @RequestMapping(value = "/verify/all", method = RequestMethod.GET)
-    public ReturnData getAllVerifyUser(String currentPage, String pageSize, HttpServletRequest request, HttpServletResponse response) {
+    public ReturnData getAllVerifyUser(String currentPage, String pageSize, HttpServletRequest request, HttpServletResponse response ,
+                                       String userName, String mobile, String email) {
         Pagination<User> page = new Pagination<>();
         try {
             List<Condition> filters = new ArrayList();
@@ -104,6 +105,17 @@ public class UserApi {
             orderBys.add(OrderBy.desc("addTime"));
             //只查询组织ID不为0的用户
             filters.add(Condition.in("userType", new Integer[]{3, 5}));
+
+            if(StringUtils.isNotBlank(userName)){
+                filters.add(Condition.like("userName", userName));
+            }
+            if(StringUtils.isNotBlank(mobile)){
+                filters.add(Condition.like("mobile", mobile));
+            }
+            if(StringUtils.isNotBlank(email)){
+                filters.add(Condition.like("email", email));
+            }
+
             //参数校验
             int pageNumberNew = HookahConstants.PAGE_NUM;
 

@@ -42,6 +42,16 @@
               <span class="nav-title">商品管理&nbsp;</span>
             </a>
           </li>
+
+          <!-- ES管理-->
+          <li class="nav-item" ng-class="{'active':currentProductId == 'es'}">
+            <!--点击后跳到对应的路由-->
+            <a href="/es/" class="sidebar-trans"
+               sidebar-tooltip="" tooltip-append-to-body="true" tooltip-placement="right" tooltip-animation="true">
+              <div class="nav-icon sidebar-trans"><span class="icon-dts"></span></div>
+              <span class="nav-title">ES管理&nbsp;</span>
+            </a>
+          </li>
           <!--&lt;!&ndash;商品分类管理&ndash;&gt;
           <li class="nav-item" ng-class="{'active':currentProductId == 'category'}">
             <a href="/category/" class="sidebar-trans"

@@ -3,6 +3,7 @@ package com.jusfoun.hookah.oauth2server.web.controller;
 import com.google.code.kaptcha.Constants;
 import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.domain.SysNews;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.vo.UserValidVo;
 import com.jusfoun.hookah.core.exception.*;
@@ -14,7 +15,9 @@ import com.jusfoun.hookah.rpc.api.MgSmsValidateService;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
+import org.apache.shiro.session.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +31,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author huang lei
@@ -197,6 +197,46 @@ public class RegController {
         }
         return ReturnData.success();
     }
+
+    /**
+     * 修改密码
+     * @param newPwd  新密碼
+     * * @param newPwdRepeat 新密码重复
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/reg/updatePwd", method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnData updatePwd(String  newPwd, String  newPwdRepeat, Model model) {
+        try {
+
+            Session session = SecurityUtils.getSubject().getSession();
+            HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
+            String userId = userMap.get("userId");
+            if (StringUtils.isBlank(userId)) {
+                throw new UserRegEmptyPwdException("请重新登录");
+            }
+            User user =  userService.selectById(userId);
+
+            if (StringUtils.isBlank(newPwd) || StringUtils.isBlank(newPwdRepeat)) {
+                throw new UserRegEmptyPwdException("密码或者确认密码不能为空");
+            }
+            if (!newPwd.equals(newPwdRepeat)) {
+                throw new UserRegConfirmPwdException("密码与确认密码不一致");
+            }
+            if (newPwd.length() < 6) {
+                throw new UserRegSimplePwdException("密码过于简单");
+            }
+
+            user.setPassword(new Md5Hash(newPwd).toString());
+            userService.updateById(user);
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+            return ReturnData.error("密码修改错误");
+        }
+        return ReturnData.success();
+    }
+
 
     @RequestMapping(value = "/findPwd", method = RequestMethod.GET)
     public String findPwd(Integer step,String userId,Model model) {

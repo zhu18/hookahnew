@@ -95,5 +95,5 @@ myconf:
     auth: ${server.http.protocal}auth.qddata.com.cn
     console: ${server.http.protocal}console.qddata.com.cn
   site:
-      user-default-img: /static/images/timg.jpeg
+      user-default-img: /static/images/user-safe-head.png
 debug: true

@@ -104,17 +104,35 @@ class GoodsCheckController {
     }
 
     $scope.submitCheck = function(){
-        var promise = $http({
-            method: 'POST',
-            url: $rootScope.site.apiServer + "/api/goodsCheck/add",
-            data: $("#goodsCheckForm").serialize()
-        });
-        promise.then(function (res, status, config, headers) {
-            console.log(res.data)
-            if(res.data.code == "1"){
-                $state.go('items.check');
+        if($('input[name="checkStatus"]:checked').val() == 2){
+            if($("#checkContent").val().trim() != ''){
+                var promise = $http({
+                    method: 'POST',
+                    url: $rootScope.site.apiServer + "/api/goodsCheck/add",
+                    data: $("#goodsCheckForm").serialize()
+                });
+                promise.then(function (res, status, config, headers) {
+                    console.log(res.data)
+                    if(res.data.code == "1"){
+                        $state.go('items.check');
+                    }
+                });
+            }else{
+                $rootScope.openErrorDialogModal('请填写审核意见^_^');
             }
-        });
+        }else{
+            var promise = $http({
+                method: 'POST',
+                url: $rootScope.site.apiServer + "/api/goodsCheck/add",
+                data: $("#goodsCheckForm").serialize()
+            });
+            promise.then(function (res, status, config, headers) {
+                console.log(res.data)
+                if(res.data.code == "1"){
+                    $state.go('items.check');
+                }
+            });
+        }
     }
 
     $scope.forceOff = function(){
@@ -147,12 +165,11 @@ class GoodsCheckController {
                   // if($rootScope.editData.apiInfo != null){
                   //     $rootScope.editData.apiInfo.respSample = JSON.stringify(JSON.parse($rootScope.editData.apiInfo.respSample), null, "\t");
                   // }
+                  $rootScope.operatorFlag = 1;
                   $state.go('items.goodsDetail', {data: $rootScope.editData});
               }
           });
       };
-
-
 
       if ($state.$current.name == "items.check") {
           $scope.search();

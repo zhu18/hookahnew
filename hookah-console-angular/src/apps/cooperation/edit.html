@@ -1,0 +1,71 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="console-title console-title-border clearfix">
+      <div class="pull-left"><h5>修改信息</h5></div>
+      <div class="pull-right">
+        <button class="btn btn-default" ui-sref="cooperation.search" data-ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span> 返回</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12">
+    <form class="form-horizontal" role="form" id="editForm">
+      <fieldset>
+        <h5 style="padding: 0px 20px;">详细信息</h5>
+        <div class="form-group">
+          <div class="col-sm-4">
+            <input disabled="disabled" type="hidden" type="text" id="cooperationId" name="cooperationId" class="form-control none-edit" value="{{cuserd.cooperationId}}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="cooName">机构名称:</label>
+          <div class="col-sm-4">
+            <input disabled="disabled" type="text" id="cooName" name="cooName" class="form-control none-edit" value="{{cuserd.cooName}}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="cooPhone">联系电话:</label>
+          <div class="col-sm-4">
+            <input type="text" id="cooPhone" name="cooPhone" class="form-control none-edit" value="{{cuserd.cooPhone}}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="cooAddress">联系地址:</label>
+          <div class="col-sm-4">
+            <input type="text" id="cooAddress" name="cooAddress" class="form-control none-edit" value="{{cuserd.cooAddress}}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="url">链接地址:</label>
+          <div class="col-sm-4">
+            <input type="text" id="url" name="url" class="form-control none-edit" value="{{cuserd.url}}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="pictureUrl">logo地址:</label>
+          <div class="col-sm-4">
+            <input type="text" id="pictureUrl" name="pictureUrl" class="form-control none-edit" value="{{cuserd.pictureUrl}}"/>
+          </div>
+        </div>
+        <!--<div class="form-group">-->
+          <!--<label class="col-sm-2 control-label" for="state">合作状态:</label>-->
+          <!--<div class="col-sm-4">-->
+            <!--<select class="form-control none-edit" id="state" name="state">-->
+              <!--<option value="">已合作</option>-->
+              <!--<option value="">未合作</option>-->
+            <!--</select>-->
+            <!--&lt;!&ndash;<input type="text" id="state" name="state" class="form-control none-edit" value="{{cuserd.state}}"/>&ndash;&gt;-->
+          <!--</div>-->
+        <!--</div>-->
+      </fieldset>
+
+      <div class="form-group">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-4">
+          <button class="btn btn-primary" data-ng-click="edit()">
+            <span class="glyphicon glyphicon-refresh"></span> 保存
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

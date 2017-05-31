@@ -103,10 +103,10 @@ public class SmsController {
         String cacheSms = redisOperate.get(HookahConstants.REDIS_SMS_CACHE_PREFIX+":"+mobile);  //从 redis 获取缓存
 
         if (cacheSms == null) { //验证码已过期
-            return ReturnData.error("短信验证码验证未通过,短信验证码已过期");
+            return ReturnData.error("短信验证码错误");
         } else {
             if (!cacheSms.equalsIgnoreCase(validSms)) {
-                return ReturnData.fail("短信验证码验证未通过,短信验证码错误");
+                return ReturnData.fail("短信验证码错误");
             }
         }
         return ReturnData.success();

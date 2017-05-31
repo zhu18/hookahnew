@@ -3,170 +3,233 @@ var head = {
 %>
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/userInfo.css">
 <script type="text/javascript">
-    var pagePath = '/order/goodsList';
-    var pageType = 'get';
-    var dataParm = {};
-    dataParm.pageNumber = 1;
-    dataParm.pageSize = 6;
+	var pagePath = '/order/goodsList';
+	var pageType = 'get';
+	var dataParm = {};
+	dataParm.pageNumber = 1;
+	dataParm.pageSize = 6;
 </script>
 <%};%>
-
 <%
 var htmlPart = {
 %>
 <div class="grid-0 backgorund-gray">
-  <div class="grid-row clearfix">
-    <%include("/usercenter/user-center-menu.html"){} %>
-    <div class="top grid-left">
-      <div class="user-name grid-left">
-        <a href="javascript:void(0);"><img src="/static/images/user-head.png" alt=""></a>
-        <p>Hi,<span id="userName">${user.userName}</span></p>
-        <p class="usertype">${decode(user.userType,0,'系统',1,'未认证',2,'个人',3,'个人待审核',4,'企业',5,'企业待审核',6,'个人审核失败',7,'企业审核失败')}</p>
-        <!--<a id="enterForum" href="javascript:void(0);"><span class="fa fa-twitch"></span>进入论坛</a>-->
-      </div>
-      <div class="user-balance grid-left">
-        <div class="balance-info grid-left">
-          <p class="account-balance">账户余额</p>
-          <% var a = userCur.moneyBalance;
-             var b = userCur.moneyBalance/100;%>
-          <div class="balance-box clearfix"><p class="grid-left money-count"><span class="fa fa-cny"></span>${isNotEmpty(userCur.moneyBalance) ? (userCur.moneyBalance / 100) : '0.00'}
-          </p>
-            <button class=" grid-left recharge">充值</button>
-            <!--<a class="grid-left " href="javascript:void(0);">索要发票</a>-->
-          </div>
-          <!--<p class="last-login-time">上次登陆时间 <span id="last-time">2017-01-03 18:00:00</span></p>-->
-        </div>
-        <div class="balance-img grid-left">
-          <div class="money-icon"></div>
-          <div class="bottom-img"></div>
-        </div>
-      </div>
-      <div class="auth-introduce grid-left">
-        <p>如果您想购买数据，可进行个人用户认证</p>
-        <div class="margin-10">
-          <a href="/auth/user_auth_init" class="large-btn">我要成为个人用户</a>
-          <!--<a href="javascript:void(0)" class="blue" hidden="hidden">如何认证?</a>-->
-        </div>
-        <p>如果您想购买企业专享数据，可进行企业用户认证</p>
-        <div class="margin-10">
-          <a href="/auth/company_auth_init" class="large-btn">我要成为企业用户</a>
-          <!--<a href="javascript:void(0)" class="blue" hidden="hidden">如何认证?</a>-->
-        </div>
-      </div>
-    </div>
-    <div class="grid-left center-content">
+	<div class="grid-row clearfix">
+		<%include("/usercenter/user-center-menu.html"){} %>
+		<div class="top grid-left">
+			<div class="user-name grid-left">
+				<a href="javascript:void(0);"><img width="90" src="${user.headImg}" alt=""></a>
+				<p>Hi,<span id="userName">${user.userName}</span></p>
+				<%if(userCur.userType == 0){%>
+				<p class="usertype">管理员</p>
+				<%}else if(userCur.userType == 1){%>
+				<p class="usertype color-orange">未认证</p>
+				<%}else if(userCur.userType == 2){%>
+				<p class="usertype color-green">个人会员</p>
+				<%}else if(userCur.userType == 3){%>
+				<p class="usertype color-orange">个人认证审核中</p>
+				<%}else if(userCur.userType == 4){%>
+				<p class="usertype color-green">单位会员</p>
+				<%}else if(userCur.userType == 5){%>
+				<p class="usertype color-orange">单位认证审核中</p>
+				<%}else if(userCur.userType == 6){%>
+				<p class="usertype color-red">个人认证审核失败</p>
+				<%}else if(userCur.userType == 7){%>
+				<p class="usertype color-red">单位认证审核失败</p>
+				<%}%>
 
-      <div class="bottom margin-bottom-30">
-        <div class="header clearfix">
-          <h4 class="grid-left my-order">我购买的数据</h4>
-          <!--<p class="grid-right more"><a href="javascript:void(0)">查看更多 &gt;</a></p>-->
-        </div>
-        <div class="my-order-list clearfix">
-          <!--<div class="order-info grid-left">-->
-            <!--<div class="grid-left img-box"><img src="/static/images/list01.png" alt=""></div>-->
-            <!--<div class=" grid-left detail-info">-->
-              <!--<h4>银行卡类别查询</h4>-->
-              <!--<p class="application-time">申请时间: <span class="app-time">2013-09-01</span></p>-->
-              <!--&lt;!&ndash;<p class="remain-count">剩余 <span class="many">100</span>次</p>&ndash;&gt;-->
-              <!--<a class="read" href="#">立即查看</a>-->
-            <!--</div>-->
-          <!--</div>-->
-        </div>
-        <script>
-          function loadPageData(data){
-            if(data.data.list.length > 0){
-              var list = data.data.list;
-              var html = '';
-              for(var i=0; i<list.length; i++){
-                html += '<div class="order-info grid-left">';
-                html += '<div class="grid-left img-box">';
-                html += '<img src="'+list[i].goodsImg+'" alt="" width="50px">';
-                html += '</div>';
-                html += '<div class=" grid-left detail-info">';
-                html += '<h4>'+list[i].goodsName+'</h4>';
-                html += '<p class="application-time">申请时间: <span class="app-time">'+list[i].payTime+'</span></p>';
-                html += '<a class="read" href="${host.website}/exchange/orderEndDetails?id='+list[i].goodsId+'&orderSn='+list[i].orderSn+'">立即查看</a>';
-                html += '</div>';
-                html += '</div>';
-              }
-              $('.my-order-list').html(html);
-            }else{
-              $('.my-order-list').html('<tr class="noData"><td colspan="5">您暂时没有已购买的数据！</td></tr>');
-            }
-          }
-        </script>
-        <%include("/layout/pageaction.html"){} %>
-      </div>
 
-    </div>
-    <!--以下代码暂时不要-->
-    <!--<div class="grid-right forum-hot">-->
-    <!--<div class="header">-->
-    <!--<h4>论坛热点</h4>-->
-    <!--</div>-->
-    <!--<ul class="hot-list">-->
-    <!--<li class="item"><span class="hot-icon">热点</span><a href="javascript:void(0)">从windows迁移到数据库</a></li>-->
-    <!--<li class="item"><span class="hot-icon">热点</span><a href="javascript:void(0)">从windows迁移到数据库</a></li>-->
-    <!--<li class="item"><span class="hot-icon">热点</span><a href="javascript:void(0)">从windows迁移到数据库</a></li>-->
-    <!--</ul>-->
-    <!--</div>-->
-    <!--以上代码暂时不要-->
-    <!--<div class="grid-right forum-hot notice">-->
-      <!--<div class="header">-->
-        <!--<h4>公告</h4>-->
-      <!--</div>-->
-      <!--<div class="bottom-content clearfix">-->
-        <!--<div class=" grid-left line-box">-->
-          <!--<div class="line active">-->
-            <!--<i class="round active"></i>-->
-          <!--</div>-->
-          <!--<div class="line active">-->
-            <!--<i class="round active"></i>-->
-          <!--</div>-->
-          <!--<div class="line active">-->
-            <!--<i class="round active"></i>-->
-          <!--</div>-->
-          <!--<div class="line">-->
-            <!--<i class="round"></i>-->
-          <!--</div>-->
-          <!--<div class="line">-->
-            <!--<i class="round"></i>-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<ul class="grid-left notice-list">-->
-          <!--<li class="notice-item">-->
-            <!--<p class="notice-time current">2017-02-10</p>-->
-            <!--<a href="#">2017交易中心新版上线</a>-->
-          <!--</li>-->
-          <!--<li class="notice-item">-->
-            <!--<p class="notice-time current">2017-02-10</p>-->
-            <!--<a href="#">2017交易中心新版上线</a>-->
-          <!--</li>-->
-          <!--<li class="notice-item">-->
-            <!--<p class="notice-time current">2017-02-10</p>-->
-            <!--<a href="#">2017交易中心新版上线</a>-->
-          <!--</li>-->
-          <!--<li class="notice-item">-->
-            <!--<p class="notice-time">2017-02-10</p>-->
-            <!--<a href="#">2017交易中心新版上线</a>-->
-          <!--</li>-->
-          <!--<li class="notice-item">-->
-            <!--<p class="notice-time">2017-02-10</p>-->
-            <!--<a href="#">2017交易中心新版上线</a>-->
-          <!--</li>-->
-        <!--</ul>-->
-      <!--</div>-->
+				<!--<a id="enterForum" href="javascript:void(0);"><span class="fa fa-twitch"></span>进入论坛</a>-->
+			</div>
+			<div class="user-balance grid-left">
+				<div class="balance-info grid-left">
+					<p class="account-balance">账户余额</p>
+					<% var a = userCur.moneyBalance;
+					var b = userCur.moneyBalance/100;%>
+					<div class="balance-box clearfix"><p class="grid-left money-count"><span class="fa fa-cny"></span>${isNotEmpty(userCur.moneyBalance)
+						? (userCur.moneyBalance / 100) : '0.00'}
+					</p>
+						<button class=" grid-left recharge">充值</button>
+						<!--<a class="grid-left " href="javascript:void(0);">索要发票</a>-->
+					</div>
+					<!--<p class="last-login-time">上次登陆时间 <span id="last-time">2017-01-03 18:00:00</span></p>-->
+				</div>
+				<div class="balance-img grid-left">
+					<div class="money-icon"></div>
+					<div class="bottom-img"></div>
+				</div>
+			</div>
+			<%if(userCur.userType == 0){%>
 
-    <!--</div>-->
-  </div>
+			<%}else if(userCur.userType == 1){%>
+			<div class="auth-introduce grid-left">
+				<p>如果您想购买数据，可进行个人用户认证</p>
+				<div class="margin-10">
+					<a href="/auth/user_auth_init" class="large-btn">个人会员认证</a>
+				</div>
+				<p>如果您想购买企业专享数据，可进行单位用户认证</p>
+				<div class="margin-10">
+					<a href="/auth/company_auth_init" class="large-btn">单位会员认证</a>
+				</div>
+			</div>
+			<%}else if(userCur.userType == 2){%>
+			<div class="auth-introduce grid-left">
+				<p>
+					<span class="font-size-18">您的个人会员认证审核<span class="color-green">已通过</span>！</span>
+				</p>
+			</div>
+			<%}else if(userCur.userType == 3){%>
+			<div class="auth-introduce grid-left">
+				<p>
+					<span class="font-size-18">您提交的个人会员认证还在<span class="color-orange">审核中</span>！</span>
+					<br>
+					<br>
+					<span class="font-size-14">我们会尽快审核，并将审核结果通过短信或邮件通知您，<br>请及时关注。</span>
+				</p>
+			</div>
+			<%}else if(userCur.userType == 4){%>
+			<div class="auth-introduce grid-left">
+				<p>
+					<span class="font-size-18">您的单位会员认证审核<span class="color-green">已通过</span>！</span>
+				</p>
+			</div>
+			<%}else if(userCur.userType == 5){%>
+			<div class="auth-introduce grid-left">
+				<p>
+					<span class="font-size-18">您提交的单位会员认证还在<span class="color-orange">审核中</span>！</span>
+					<br>
+					<br>
+					<span class="font-size-14">我们会尽快审核，并将审核结果通过短信或邮件通知您，<br>请及时关注。</span>
+				</p>
+			</div>
+			<%}else if(userCur.userType == 6){%>
+			<div class="auth-introduce grid-left">
+				<p>
+					<span class="font-size-18">您提交的个人会员认证审核<span class="color-red">未通过</span>！</span>
+					<br>
+					<br>
+					<a href="/auth/user_auth_init_step5" class="font-size-14 color-red" style="text-decoration: underline">查看原因 >></a>
+				</p>
+			</div>
+			<%}else if(userCur.userType == 7){%>
+			<div class="auth-introduce grid-left">
+				<p>
+					<span class="font-size-18">您提交的单位会员认证审核<span class="color-red">未通过</span>！</span>
+					<br>
+					<br>
+					<a href="/auth/company_auth_init_step5" class="font-size-14 color-red" style="height:18px; display: inline-block; border-bottom: 1px solid #E34F4F">查看原因 >></a>
+				</p>
+			</div>
+			<%}%>
+		</div>
+		<div class="grid-left center-content">
+			<div class="bottom margin-bottom-30">
+				<div class="header clearfix">
+					<h4 class="grid-left my-order">我购买的数据</h4>
+					<!--<p class="grid-right more"><a href="javascript:void(0)">查看更多 &gt;</a></p>-->
+				</div>
+				<div class="my-order-list clearfix">
+					<!--<div class="order-info grid-left">-->
+					<!--<div class="grid-left img-box"><img src="/static/images/list01.png" alt=""></div>-->
+					<!--<div class=" grid-left detail-info">-->
+					<!--<h4>银行卡类别查询</h4>-->
+					<!--<p class="application-time">申请时间: <span class="app-time">2013-09-01</span></p>-->
+					<!--&lt;!&ndash;<p class="remain-count">剩余 <span class="many">100</span>次</p>&ndash;&gt;-->
+					<!--<a class="read" href="#">立即查看</a>-->
+					<!--</div>-->
+					<!--</div>-->
+				</div>
+				<script>
+					function loadPageData(data) {
+						if (data.data.list.length > 0) {
+							var list = data.data.list;
+							var html = '';
+							for (var i = 0; i < list.length; i++) {
+								html += '<div class="order-info grid-left">';
+								html += '<div class="grid-left img-box">';
+								html += '<img src="' + list[i].goodsImg + '" alt="" width="50px">';
+								html += '</div>';
+								html += '<div class=" grid-left detail-info">';
+								html += '<h4>' + list[i].goodsName + '</h4>';
+								html += '<p class="application-time">申请时间: <span class="app-time">' + list[i].payTime + '</span></p>';
+								html += '<a class="read" href="${host.website}/exchange/orderEndDetails?id=' + list[i].goodsId + '&orderSn=' + list[i].orderSn + '">立即查看</a>';
+								html += '</div>';
+								html += '</div>';
+							}
+							$('.my-order-list').html(html);
+						} else {
+							$('.my-order-list').html('<tr class="noData"><td colspan="5">您暂时没有已购买的数据！</td></tr>');
+						}
+					}
+				</script>
+				<%include("/layout/pageaction.html"){} %>
+			</div>
+		</div>
+		<!--以下代码暂时不要-->
+		<!--<div class="grid-right forum-hot">-->
+		<!--<div class="header">-->
+		<!--<h4>论坛热点</h4>-->
+		<!--</div>-->
+		<!--<ul class="hot-list">-->
+		<!--<li class="item"><span class="hot-icon">热点</span><a href="javascript:void(0)">从windows迁移到数据库</a></li>-->
+		<!--<li class="item"><span class="hot-icon">热点</span><a href="javascript:void(0)">从windows迁移到数据库</a></li>-->
+		<!--<li class="item"><span class="hot-icon">热点</span><a href="javascript:void(0)">从windows迁移到数据库</a></li>-->
+		<!--</ul>-->
+		<!--</div>-->
+		<!--以上代码暂时不要-->
+		<!--<div class="grid-right forum-hot notice">-->
+		<!--<div class="header">-->
+		<!--<h4>公告</h4>-->
+		<!--</div>-->
+		<!--<div class="bottom-content clearfix">-->
+		<!--<div class=" grid-left line-box">-->
+		<!--<div class="line active">-->
+		<!--<i class="round active"></i>-->
+		<!--</div>-->
+		<!--<div class="line active">-->
+		<!--<i class="round active"></i>-->
+		<!--</div>-->
+		<!--<div class="line active">-->
+		<!--<i class="round active"></i>-->
+		<!--</div>-->
+		<!--<div class="line">-->
+		<!--<i class="round"></i>-->
+		<!--</div>-->
+		<!--<div class="line">-->
+		<!--<i class="round"></i>-->
+		<!--</div>-->
+		<!--</div>-->
+		<!--<ul class="grid-left notice-list">-->
+		<!--<li class="notice-item">-->
+		<!--<p class="notice-time current">2017-02-10</p>-->
+		<!--<a href="#">2017交易中心新版上线</a>-->
+		<!--</li>-->
+		<!--<li class="notice-item">-->
+		<!--<p class="notice-time current">2017-02-10</p>-->
+		<!--<a href="#">2017交易中心新版上线</a>-->
+		<!--</li>-->
+		<!--<li class="notice-item">-->
+		<!--<p class="notice-time current">2017-02-10</p>-->
+		<!--<a href="#">2017交易中心新版上线</a>-->
+		<!--</li>-->
+		<!--<li class="notice-item">-->
+		<!--<p class="notice-time">2017-02-10</p>-->
+		<!--<a href="#">2017交易中心新版上线</a>-->
+		<!--</li>-->
+		<!--<li class="notice-item">-->
+		<!--<p class="notice-time">2017-02-10</p>-->
+		<!--<a href="#">2017交易中心新版上线</a>-->
+		<!--</li>-->
+		<!--</ul>-->
+		<!--</div>-->
+		<!--</div>-->
+	</div>
 </div>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
 <script>
-  $(".recharge").click(function(){
-      window.location.href = '/usercenter/recharge';
-  });
-
-
+	$(".recharge").click(function () {
+		window.location.href = '/usercenter/recharge';
+	});
 </script>

@@ -27,10 +27,10 @@
           <label class="col-sm-2 control-label">审核状态</label>
           <div class="col-sm-5">
             <label class="radio-inline">
-              <input type="radio" id="checkStatus_1" name="checkStatus" ng-checked="editData.checkStatus == 1" />通过
+              <input type="radio" id="checkStatus_1" name="checkStatus" ng-checked="editData.checkStatus == 1" disabled />通过
             </label>
             <label class="radio-inline">
-              <input type="radio" id="checkStatus_2" name="checkStatus" ng-checked="editData.checkStatus == 2" />不通过
+              <input type="radio" id="checkStatus_2" name="checkStatus" ng-checked="editData.checkStatus == 2" disabled />不通过
             </label>
           </div>
         </div>
@@ -38,9 +38,7 @@
           <label class="col-sm-2 control-label" for="checkContent">审核意见</label>
           <div class="col-sm-5">
             <label>
-              <textarea id="checkContent" name="checkContent" style="margin: 0px; width: 452px; height: 84px;">
-                {{editData.checkContent}}
-              </textarea>
+              <textarea id="checkContent" name="checkContent" style="margin: 0px; width: 452px; height: 84px;" disabled >{{editData.checkContent}}</textarea>
             </label>
           </div>
         </div>

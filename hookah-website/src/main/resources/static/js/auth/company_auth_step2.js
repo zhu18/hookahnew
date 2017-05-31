@@ -5,42 +5,12 @@ $(function(){
     //地域加载
     var regionParam = 100000;
     loadRegion('province', regionParam); //加载地域
-    //验证政府全称是否填写
-    $("#governmentName").on("blur",governmentName);
-    //检查信用代码是否为空
-    $("#creditCode").on("blur",creditCode);
-    //验证营业执照到期时间是否为空
-    $("#businessLicence").on("blur",businessLicence);
-    //验证税务登记证到期时间是否为空
-    $("#taxRegCertificate").on("blur",taxRegCertificate);
-    //验证企业法人是否为空
-    $("#companyLegal").on("blur",companyLegal);
-    //验证主营业务是否为空
-    $("#mainBusiness").on("blur",mainBusiness);
-    //验证详细地址是否为空
-    $("#address").on("blur",address);
-    //验证联系电话是否为空
-    $("#tel").on("blur",tel);
-    //以下是上传图片
-    $("#creditImg").on("click", upPhoto);
-    $("#businessImg").on("click", upPhoto);
-    $("#taxRegImg").on("click", upPhoto);
-    $("#verifyBtn").on("click",companyAuth);
-    // 以下是日期插件初始化
-    var start = {
-        format: "YYYY-MM-DD",
-        isinitVal:false,
-        isTime: false,
-        maxDate: "2099-12-31 23:59:59"
-    };
-    var end = {
-        format: "YYYY-MM-DD",
-        isinitVal:false,
-        isTime: false,
-        maxDate: "2099-12-31 23:59:59"
-    };
-    $.jeDate("#businessLicence", start);
-    $.jeDate("#taxRegCertificate",end);
+});
+$('.upLoad').mouseover(function(){
+    $(this).children('.upLoad_warp').show();
+});
+$('.upLoad').mouseleave(function(){
+	$(this).children('.upLoad_warp').hide();
 });
 //地域加载
 function loadRegion(id,regionParam) {
@@ -69,151 +39,65 @@ function loadRegion(id,regionParam) {
     });
 }
 function renderRegion(id,data){
-    var html = '<option value="-1">全部</option>';
+    var html = '<option value="">全部</option>';
     data.forEach(function(e){
         html += '<option value="'+e.id+'">'+e.name+'</option>';
     });
     $('#'+id).html(html);
 }
-//检查政府全称是否填写
-function governmentName(){
-    var governmentName = $("#governmentName").val();
-    if(!governmentName){
-        swal("请输入政府全称");
-    }
-}
-//检查信用代码是否为空
-function creditCode(){
-    var creditCode = $("#creditCode").val();
-    if(!creditCode){
-        swal("请输入信用代码");
-    }
-}
-//验证营业执照到期时间是否为空
-function businessLicence(){
-    var businessLicence = $("#businessLicence").val();
-    if(!businessLicence){
-        swal("请输入营业执照到期时间");
-    }
-}
-//验证税务登记证到期时间是否为空
-function taxRegCertificate(){
-    var taxRegCertificate = $("#taxRegCertificate").val();
-    if(!taxRegCertificate){
-        swal("请输入税务登记证到期时间");
-    }
-}
-//验证企业法人是否为空
-function companyLegal(){
-    var companyLegal = $("#companyLegal").val();
-    if(!companyLegal){
-        swal("请输入公司的法人代表");
-    }
-}
-//验证主营业务是否为空
-function mainBusiness(){
-    var mainBusiness = $("#mainBusiness").val();
-    if(!mainBusiness){
-        swal("请输入您企业的主营业务");
-    }
-}
-//验证详细地址是否为空
-function address(){
-    var address = $("#address").val();
-    if(!address){
-        swal("请输入企业的详细地址");
-    }
-}
-//验证联系电话是否为空
-function tel(){
-    var tel = $("#tel").val();
-    var reg = /^1[3|4|5|7|8][0-9]{9}$/; //验证规则
-    var flag = reg.test(tel); //true
-    if(!tel){
-        swal("请输入联系电话");
-    }
-    if(!flag){
-        swal("请输入正确的联系电话");
-    }
-}
 
 //上传图片
-var imgSrc = '';
 var fileUploadUrl = host.static+'/upload/fileUpload';
-function upPhoto(){
-    $(this).find("input").fileupload({
-        url: fileUploadUrl,
-        dataType: 'json',
-        done: function (e, data) {
-            if (data.result.code == 1) {
-                console.log(2);
-                var obj = data.result.data[0];
-                $(this).siblings("img").attr("src", obj.absPath);
-                imgSrc = obj.absPath;
-            } else {
-                $.alert(data.result.message)
-            }
-
-        },
-        progressall: function (e, data) {
-
+$('.unloadBtn').fileupload({
+    url: fileUploadUrl,
+    dataType: 'json',
+    add: function (e, data) {
+        var filesize = data.files[0].size;
+        if(Math.ceil(filesize / 1024) > 1024*5){
+            console.log('文件过大'+filesize);
+            $.alert('文件过大');
+            return;
         }
-    })
-}
-function companyAuth(){
-    if($("#governmentName").val()==''){
-        swal("请输入政府全称！");
-        return;
-    }
-    if($("#creditCode").val()==''){
-        swal("请输入信用代码！");
-        return;
-    }
-    if($("#businessLicence").val()==''){
-        swal("请输入营业执照到期时间！");
-        return;
-    }
-    if($("#taxRegCertificate").val()==''){
-        swal("请输入税务登记证到期时间！");
-        return;
-    }
-    if( $("#companyLegal").val()==''){
-        swal("请输入公司的法人代表！");
-        return;
-    }
+        data.submit();
+    },
+    done: function (e, data) {
+        if (data.result.code == 1) {
+            console.log(2);
+            var obj = data.result.data[0];
+            $(this).parent().siblings("img").attr("src", obj.absPath);
+            $(this).parent().siblings(".input_hide").val(obj.filePath);
+            $(this).parent().siblings(".input_op").val(obj.filePath);
+            $(this).parent().siblings(".upLoad_warp").html('点击替换');
+        } else {
+            $.alert(data.result.message)
+        }
 
-    if( $("#mainBusiness").val()==""){
-        swal("请输入您企业的主营业务！");
-        return;
+    },
+    progressall: function (e, data) {
+
     }
-    if( $("#address").val()==""){
-        swal("请输入企业的详细地址！");
-        return;
-    }
-    if($("#tel").val()==""){
-        swal("请输入联系电话！");
-        return;
-    }
+});
+function companyAuth(){
     $.ajax({
         url : "/auth/orgAuth",
         data : {
-            "orgName":$("#governmentName").val(),//政府全称
-            "taxCode":$("#taxCode").val(),//税务登记编号
-            "licenseCode":$("#businessLicence").val(),//营业执照编号
-            "certificateCode":$("#creditCode").val(),//信用代码
-            "taxPath":$("#taxPath").attr("src"),//税务登记存放路径
-            "licensePath":$("#licensePath").attr("src"),//营业执照存放路径
-            "certifictePath":$("#certifictePath").attr("src"),//企业代码存放路径
-            "lawPersonName":$("#companyLegal").val(),//企业法人代表
+            "orgName":$("input[name='governmentName']").val(),//政府全称
+            "taxCode":$("input[name='taxRegCertificate']").val(),//税务登记编号
+            "licenseCode":$("input[name='businessLicence']").val(),//营业执照编号
+            "certificateCode":$("input[name='creditCode']").val(),//信用代码
+            "taxPath":$("input[name='taxPath']").val(),//税务登记存放路径
+            "licensePath":$("input[name='licensePath']").val(),//营业执照存放路径
+            "certifictePath":$("input[name='certifictePath']").val(),//企业代码存放路径
+            "lawPersonName":$("input[name='companyLegal']").val(),//企业法人代表
             "region":$('select[name="province"] option:selected').text()+$('select[name="city"] option:selected').text(),//所在地
-            "contactAddress":$("#address").val(),//详细地址
-            "orgPhone":$("#tel").val(),//联系电话
-            "industry":$("#mainBusiness").val(),//行业
+            "contactAddress":$("input[name='address']").val(),//详细地址
+            "orgPhone":$("input[name='tel']").val(),//联系电话
+            "industry":$("input[name='mainBusiness']").val(),//行业
         },
         type:"post",
         success : function(data) {
             if (data.code == 1) {
-                window.location.href = './company_auth_init_step4.html';
+                window.location.href = './company_auth_init_step3.html';
             } else {
                 alert(data.errMsg);
             }
@@ -221,3 +105,67 @@ function companyAuth(){
     });
 }
 
+
+
+
+
+
+
+
+
+
+
+$("#companyForm").validate({
+	rules: {
+		governmentName:'required',
+		creditCode:'required',
+		businessLicence:'required',
+		taxRegCertificate:'required',
+		companyLegal:'required',
+		mainBusiness:'required',
+		// province:'required',
+		city:'required',
+		address:'required',
+		licensePath:'required',
+		taxPath:'required',
+		certifictePath:'required',
+		tel:{
+		    required:true,
+			isMobile:true
+		}
+	},
+	messages: {
+		governmentName:'单位名称不能为空',
+		creditCode:'信用代码不能为空',
+		businessLicence:'营业执照不能为空',
+		taxRegCertificate:'不能为空',
+		companyLegal:'法人代表不能为空',
+		mainBusiness:'主营业务不能为空',
+		// province:'所在地区不能为空',
+		city:'所在地区不能为空',
+		address:'详细地址不能为空',
+		licensePath:'营业执照必须上传',
+		taxPath:'税务登记证必须上传',
+		certifictePath:'企业代码证必须上传',
+		tel:{
+			required:'手机号不能为空',
+			isMobile:'手机号格式不正确'
+		}
+	},
+	showErrors:function(errorMap,errorList) {
+		if(errorList.length){
+			errorList[0].element.focus();
+		}
+		this.defaultShowErrors();
+	}
+});
+$.validator.addMethod("isMobile", function(value, element) {
+    var reg = /^1[3|4|5|7|8][0-9]{9}$/;
+	var tel = value;
+	return this.optional(element) || (reg.test(tel));
+}, "长度为10-60个字符（每个汉字为2个字符）");
+$('#verifyBtn').click(function(){
+	if($("#companyForm").valid()){
+		companyAuth();
+	}
+});

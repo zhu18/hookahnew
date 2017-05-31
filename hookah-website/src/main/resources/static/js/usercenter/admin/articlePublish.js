@@ -265,7 +265,7 @@ $('#submit-article').click(function () {
 		if ($('#content').val()) {
 			published()
 		} else {
-			$.alert('商品描述不能为空', true, function () {
+			$.alert('文章描述不能为空', true, function () {
 				$('#content').focus()
 			})
 

@@ -3,14 +3,17 @@ package com.jusfoun.hookah.webiste.controller;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.Organization;
 import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.domain.UserCheck;
 import com.jusfoun.hookah.core.domain.UserDetail;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.OrganizationService;
+import com.jusfoun.hookah.rpc.api.UserCheckService;
 import com.jusfoun.hookah.rpc.api.UserDetailService;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,6 +58,10 @@ public class AuthController extends BaseController {
 
     @Resource
     UserService userService;
+
+
+    @Resource
+    UserCheckService userCheckService;
 
     //认证状态(0.未认证 1.认证中 2.已认证 3.认证失败)
     public static final Byte AUTH_STATUS_SUCCESS = 2;
@@ -143,6 +150,14 @@ public class AuthController extends BaseController {
     public String userAuth4(Model model) throws Exception {
         return "/auth/user_auth_init_step4";
     }
+    @RequestMapping(value = "/auth/user_auth_init_step5", method = RequestMethod.GET)
+    public String userAuth5(Model model) throws Exception {
+        User user = userService.selectById(this.getCurrentUser().getUserId());
+        if(null != user && user.getUserType().equals(HookahConstants.UserType.PERSON_CHECK_FAIL.getCode())){
+            model.addAttribute("message",((UserCheck)userCheckService.checkDetail(user.getUserId()).getData()).getCheckContent());
+        }
+        return "/auth/user_auth_init_step5";
+    }
 
     /**
      * 公司认证
@@ -170,6 +185,14 @@ public class AuthController extends BaseController {
     public String companyAuth4(Model model) throws Exception {
         return "/auth/company_auth_init_step4";
     }
+    @RequestMapping(value = "/auth/company_auth_init_step5", method = RequestMethod.GET)
+    public String companyAuth5(Model model) throws Exception {
+        User user = userService.selectById(this.getCurrentUser().getUserId());
+        if(null != user && user.getUserType().equals(HookahConstants.UserType.ORGANIZATION_CHECK_FAIL.getCode())){
+            model.addAttribute("message",((UserCheck)userCheckService.checkDetail(user.getUserId()).getData()).getCheckContent());
+        }
+        return "/auth/company_auth_init_step5";
+    }
 
     @RequestMapping(value = "/auth/personAuth", method = RequestMethod.POST)
     @ResponseBody
@@ -193,7 +216,7 @@ public class AuthController extends BaseController {
             User user = new User();
             user.setUserId(userId);
             //暂时直接通过审核  后期改成用户待审核状态
-            user.setUserType(HookahConstants.UserType.PERSON_CHECK_OK.getCode());
+            user.setUserType(HookahConstants.UserType.PERSON_CHECK_NO.getCode());
             userService.updateByIdSelective(user);
 
         } catch (Exception e) {
@@ -229,7 +252,7 @@ public class AuthController extends BaseController {
             User user = new User();
             user.setUserId(userId);
             //暂时直接通过审核  后期改成用户待审核状态
-            user.setUserType(HookahConstants.UserType.ORGANIZATION_CHECK_OK.getCode());
+            user.setUserType(HookahConstants.UserType.ORGANIZATION_CHECK_NO.getCode());
             userService.updateByIdSelective(user);
 
         } catch (Exception e) {

@@ -22,24 +22,24 @@ function loadPageData(data){
         }
         $('.order tbody').html(html);
     }else{
-        $('.order tbody').html('<tr class="noData"><td colspan="5">您暂时没有未付款订单！</td></tr>');
+        $('.order tbody').html('<tr class="noData"><td colspan="5">暂无订单！</td></tr>');
     }
 }
 var start = {
     format: "YYYY-MM-DD hh:mm:ss",
     isTime: true,
-    maxDate: $.nowDate(0),
-    choosefun: function(elem,datas){
-        end.minDate = datas; //开始日选好后，重置结束日的最小日期
-    }
+    maxDate: $.nowDate(0)
+    // choosefun: function(elem,datas){
+    //     end.minDate = datas; //开始日选好后，重置结束日的最小日期
+    // }
 };
 var end = {
     format: "YYYY-MM-DD hh:mm:ss",
     isTime: true,
-    maxDate: $.nowDate(0),
-    choosefun: function(elem,datas){
-        start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
-    }
+    maxDate: $.nowDate(0)
+    // choosefun: function(elem,datas){
+    //     start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
+    // }
 
 };
 $.jeDate("#startDate", start);
@@ -51,12 +51,12 @@ $(".searchQuery .search").on("click",function(){
     var endDate = $("#endDate").val();
     dataParm.startDate = startDate?startDate:format(new Date());
     dataParm.endDate = endDate?endDate:format(new Date());
-    if(!startDate){
-        $("#startDate").val(format(new Date()));
-    }
-    if(!endDate){
-        $("#endDate").val(format(new Date()));
-    }
+    // if(!startDate){
+    //     $("#startDate").val(format(new Date()));
+    // }
+    // if(!endDate){
+    //     $("#endDate").val(format(new Date()));
+    // }
     goPage(1);
 });
 

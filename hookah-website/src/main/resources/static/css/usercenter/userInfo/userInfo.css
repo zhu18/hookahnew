@@ -9,6 +9,7 @@
     border: 1px solid #ededed;
     margin-left: 10px;
     margin-top:10px;
+    background: #fff;
 }
 
 .top .user-name {
@@ -22,7 +23,7 @@
 }
 
 .top .user-name p {
-    margin-bottom: 10px;
+    margin-bottom: 3px;
 }
 
 #enterForum {
@@ -36,7 +37,7 @@
 .user-balance {
     height: 170px;
     background-color: #fff;
-    border-right:1px dashed #e0e0e0;
+    /*border-right:1px dashed #e0e0e0;*/
 }
 .balance-info{
     width:262px;
@@ -58,6 +59,7 @@
     padding-top:20px;
     padding-left:20px;
     padding-bottom:20px;
+    border-left:1px dashed #e0e0e0;
 }
 .auth-introduce .large-btn{
     position: relative;
