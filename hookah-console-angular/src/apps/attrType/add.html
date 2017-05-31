@@ -14,19 +14,21 @@
       <div class="form-group">
         <label class="col-sm-2 control-label" for="typeName">名称</label>
         <div class="col-sm-4">
-          <input type="text" id="typeName" name="typeName" class="form-control"/>
+          <input type="text" id="typeName" name="typeName" class="form-control"
+                 data-ng-model="typeName" ng-maxlength="10" placeholder="必填项 / 最长为10" required />
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="domainId">商家编码</label>
         <div class="col-sm-4">
-          <input type="text" id="domainId" name="domainId" class="form-control"/>
+          <input type="text" id="domainId" name="domainId" class="form-control"
+                 data-ng-model="domainId" placeholder="必填项" required />
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-2"></div>
         <div class="col-sm-4">
-          <button class="btn btn-primary" data-ng-click="save()">
+          <button class="btn btn-primary" data-ng-click="save()" ng-disabled="attrType.$invalid">
             <span class="glyphicon glyphicon-refresh"></span> 保存
           </button>
         </div>
