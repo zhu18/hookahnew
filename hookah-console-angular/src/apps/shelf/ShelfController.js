@@ -34,11 +34,6 @@ class ShelfController {
     };
 
     $scope.update = function () {
-
-        console.log("---start---");
-        console.log($("#shelfForm").serialize());
-        console.log("---end---");
-
         var promise = $http({
             method: 'POST',
             url: $rootScope.site.apiServer + "/api/shelf/update",

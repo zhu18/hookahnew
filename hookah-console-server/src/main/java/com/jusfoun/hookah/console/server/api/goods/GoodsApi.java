@@ -92,7 +92,7 @@ public class GoodsApi extends BaseController{
     }
 
     @RequestMapping(value = "/allNotInShelf", method = RequestMethod.GET)
-    public ReturnData getListInPage2(String currentPage, String pageSize, String shelvesGoodsId) {
+    public ReturnData getListInPage2(String currentPage, String pageSize, String shelvesGoodsId, String searchName) {
         Pagination<Goods> page = new Pagination<>();
         try {
 
@@ -120,6 +120,9 @@ public class GoodsApi extends BaseController{
             int pageSizeNew = HookahConstants.PAGE_SIZE;
             if (StringUtils.isNotBlank(pageSize)) {
                 pageSizeNew = Integer.parseInt(pageSize);
+            }
+            if (StringUtils.isNotBlank(searchName)) {
+                filters.add(Condition.like("goodsName", searchName));
             }
             page = goodsService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
 

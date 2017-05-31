@@ -53,10 +53,7 @@
             <tbody>
             <tr data-ng-if="!loadingState" data-ng-repeat="item in pagination.store" class="">
               <td>
-                <a ng-class="{'title-unread':item.Status*1===0,'title-read':item.Status*1!==0}" href="javascript:;"
-                   class=" title-unread">
                   <span text-length="50" ng-bind="item.goodsSn"></span>
-                </a>
               </td>
               <td>
                 <a href="javascript:;" ng-click="lookDetail(item)">
