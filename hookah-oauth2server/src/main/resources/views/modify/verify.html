@@ -104,7 +104,6 @@ var htmlPart = {
 	var mobile = ${userObj.mobile};
     var dh=(mobile+"").replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
 	$(".ui-form-text").html(dh);
-    console.log("dh:"+dh);
     $.getUrlParam = function (key) {
 		var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
 		var result = window.location.search.substr(1).match(reg);
