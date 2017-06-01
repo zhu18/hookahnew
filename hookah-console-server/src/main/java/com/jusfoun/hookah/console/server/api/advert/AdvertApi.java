@@ -38,7 +38,7 @@ public class AdvertApi {
             List<OrderBy> orderBys = new ArrayList();
             orderBys.add(OrderBy.desc("addTime"));
             //只查询广告类型为2的轮播
-            //filters.add(Condition.ne("advertType", 2));
+            filters.add(Condition.eq("advertType", "2"));
 
             if(StringUtils.isNotBlank(creatorName)){
                 filters.add(Condition.like("creatorName", creatorName.trim()));
@@ -62,7 +62,7 @@ public class AdvertApi {
     @RequestMapping("/add")
     public ReturnData addCarouselFigure(Advert advert) {
         try {
-            advert.setAdvertGroup("2");
+            advert.setAdvertType("2");
             advert = advertService.insert(advert);
             if(advert == null) {
                 return ReturnData.error("添加失败");
@@ -92,7 +92,7 @@ public class AdvertApi {
     @RequestMapping("/update")
     public ReturnData updateCarouselFigure(Advert advert){
         try {
-            advertService.updateByIdSelective(advert);
+            int i = advertService.updateByIdSelective(advert);
         } catch (Exception e) {
             return ReturnData.error("修改失败");
         }

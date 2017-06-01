@@ -106,4 +106,19 @@ public class HelpApi {
         return ReturnData.success();
     }
 
+    @RequestMapping(value = "/category/{id}", method = RequestMethod.GET)
+    public ReturnData getCategoryById(@PathVariable("id") String helpId) {
+        Help help = helpService.selectById(helpId);
+        return ReturnData.success(help);
+    }
+
+    @RequestMapping("/category/update")
+    public ReturnData updateCategory(Help help){
+        try {
+            helpService.updateByIdSelective(help);
+        } catch (Exception e) {
+            return ReturnData.error("修改失败");
+        }
+        return ReturnData.success("修改成功");
+    }
 }

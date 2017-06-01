@@ -60,7 +60,7 @@
               <td>
                 <a ng-class="{'title-unread':item.Status*1===0,'title-read':item.Status*1!==0}" href="javascript:;"
                    class="">
-                  <span class="column-text" style="width: 100px;white-space:nowrap;" ng-bind="item.helpTitle"></span>
+                  <span class="column-text" style="width: 100px;white-space:nowrap;" ng-bind="item.name"></span>
                 </a>
               </td>
               <!--<td>-->
@@ -73,7 +73,7 @@
                 <span class="" ng-bind="item.addTime"></span>
               </td>
               <td class="text-right">
-                <a href="javascript:;" ng-click="edit($event,item)">修改</a>
+                <a href="javascript:;" ui-sref="help.category.edit" ng-click="load($event,item)">修改</a>
                 <span class="text-explode">|</span>
                 <i class="link-space"></i>
                 <a href="javascript:;" target="_blank" ng-click="delete($event,item)">删除</a>
