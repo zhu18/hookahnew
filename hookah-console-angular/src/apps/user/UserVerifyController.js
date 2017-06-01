@@ -103,6 +103,7 @@ class UserVerifyController {
           console.log(res.data);
           if(res.data.code == "1"){
               alert("提交成功");
+              $state.go('user.verify.resultAll');
           }
       });
 
@@ -116,6 +117,8 @@ class UserVerifyController {
       if ($state.$current.name == "user.verify.resultAll") {
           $scope.title = '审核记录';
           $scope.searchCheckResult();
+          $scope.userTypes = [{id:-1,name:"全部"},{id:0,name:"个人"},{id:1,name:"企业"}];
+          $scope.userType = -1;
       }
 
   }

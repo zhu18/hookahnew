@@ -104,7 +104,7 @@ class AttrTypeController {
                     // $log.info('Modal dismissed at: ' + new Date());
                 });
             } else {
-                $rootScope.openErrorDialogModal('<span style="font-weight: bold;color: #6b3100">' + data.name + '</span>' + "属性项下有子项，请先删除所有子项");
+                $rootScope.openErrorDialogModal('<span style="font-weight: bold;color: #6b3100">' + data.typeName + '</span>' + "属性项下有子项，请先删除所有子项");
             }
 
         };

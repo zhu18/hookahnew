@@ -130,6 +130,7 @@ public class UserCheckServiceImpl extends GenericServiceImpl<UserCheck, String> 
 
             List<UserCheck> userChecks = selectList(fifters,orderBys);
             if (userChecks == null || userChecks.isEmpty()) {
+                returnData.setData(new UserCheck());
                 return returnData;
             }
             returnData.setData(userChecks.get(0));
