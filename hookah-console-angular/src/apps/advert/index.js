@@ -72,6 +72,20 @@ app.run(function ($rootScope, $state) {
           }
       ]
     }
+    ,{
+          "title": "公告管理",
+          "showChild": false,
+          "childs": [
+              {
+                  "title": "公告查询",
+                  "url": "sysnotice.search"
+              }
+              , {
+                  "title": "发布公告",
+                  "url": "sysnotice.add"
+              }
+          ]
+      }
   ];
 
 });
