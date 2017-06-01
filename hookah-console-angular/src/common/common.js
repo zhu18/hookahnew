@@ -224,7 +224,7 @@ function HttpInterceptor($q, $rootScope, $location, $window) {
       console.log('The request took ' + (time / 1000) + ' seconds.');
       // console.log(res);
       if (res.data.data != null) {
-        if (res.data.data !== undefined && res.data.data.totalItems) {
+        if (res.data.data !== undefined) {
           $rootScope.pagination.store = res.data.data.list;
           $rootScope.pagination.currentPage = res.data.data.currentPage;
           $rootScope.pagination.totalItems = res.data.data.totalItems;
