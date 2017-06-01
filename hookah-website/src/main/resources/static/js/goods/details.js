@@ -171,7 +171,7 @@ function addCart(goodsId) {
 }
 function editPrice(that,price,formatId){
     $(that).addClass('active').siblings('a').removeClass('active');
-    $('#J_goodsPrice').html(Number(price) / 100).attr('formatid',formatId);
+    $('#J_goodsPrice').html((Number(price) / 100).toFixed(1)).attr('formatid',formatId);
 	$('#J_formatId').val(formatId);
 }
 
