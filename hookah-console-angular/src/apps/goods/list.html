@@ -25,14 +25,14 @@
               <label class="control-label">商品编码</label>
               <input ng-model="searchSn" type="text" class="form-control">
             </div>
-            <div class="form-group">
+            <!--<div class="form-group">
               <label class="control-label">商品关键字</label>
               <input ng-model="searchKw" type="text" class="form-control">
             </div>
             <div class="form-group">
               <label class="control-label">商品店铺</label>
               <input ng-model="searchShop" type="text" class="form-control">
-            </div>
+            </div>-->
             <button type="submit" class="btn btn-primary" data-ng-click="search()">搜索</button>
           </form>
         </div>
@@ -65,14 +65,10 @@
                 <span class="column-text" ng-show="item.goodsType == 1">API</span>
               </td>
               <td>
-                <span class="column-text" ng-show="item.checkStatus == 0">审核中</span>
-                <span class="column-text" ng-show="item.checkStatus == 1">通过</span>
-                <span class="column-text" ng-show="item.checkStatus == 2">不通过</span>
+                <span class="column-text" ng-bind="item.checkStatus | checkStatus"></span>
               </td>
               <td>
-                <span class="column-text" ng-show="item.isOnsale == 0">下架状态</span>
-                <span class="column-text" ng-show="item.isOnsale == 1">上架状态</span>
-                <span class="column-text" ng-show="item.isOnsale == 2">强制下架状态</span>
+                <span class="column-text" ng-bind="item.isOnsale | isOnsale"></span>
               </td>
               <td>
                 <span class="column-text" ng-bind="item.addTime"></span>

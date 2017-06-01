@@ -74,9 +74,7 @@
                   <span class="column-text" ng-bind="req.number"></span>
                 </td>
                 <td>
-                  <span class="column-text" ng-show="req.format == 0">次</span>
-                  <span class="column-text" ng-show="req.format == 1">天</span>
-                  <span class="column-text" ng-show="req.format == 2">年</span>
+                  <span class="column-text" ng-bind="req.format | goodsFormat"></span>
                 </td>
                 <td>
                   <span class="column-text" ng-bind="req.price/100"></span>
@@ -90,8 +88,7 @@
           <label class="col-sm-2 control-label">商品描述</label>
           <div class="col-sm-5">
             <!--<input type="text" class="form-control" value="{{editData.goodsDesc}}" readonly="true" />-->
-            <textarea style="margin: 0px; width: 452px; height: 120px;" readonly="true">
-              {{editData.goodsDesc}}
+            <textarea style="margin: 0px; width: 452px; height: 120px;" readonly="true" ng-bind-html="editData.goodsDesc">
             </textarea>
           </div>
         </div>
@@ -151,8 +148,7 @@
                     <span class="column-text" ng-bind="req.fieldDefault"></span>
                   </td>
                   <td>
-                    <span class="column-text" ng-show="req.isMust == 0">否</span>
-                    <span class="column-text" ng-show="req.isMust == 1">是</span>
+                    <span class="column-text" ng-bind="req.isMust | isMust">否</span>
                   </td>
                   <td>
                     <span class="column-text" ng-bind="req.fieldSample"></span>

@@ -1,6 +1,25 @@
 class GoodsController {
-  constructor($scope, $rootScope, $state, $http, $uibModal, usSpinnerService, growl) {
+  constructor($scope, $rootScope, $state, $http, $sce, $uibModal, usSpinnerService, growl) {
     console.log($rootScope.config);
+
+      // if ($state.current.name == "items.lookDetail") {
+      //     var editor = new wangEditor('goodsDesc');
+      //     //上传图片（举例）
+      //     editor.config.uploadImgUrl = $rootScope.url.uploadEditor;
+      //     editor.config.uploadImgFileName = 'filename';
+      //     //关闭菜单栏fixed
+      //     editor.config.menuFixed = false;
+      //     editor.config.menus = $.map(wangEditor.config.menus, function (item, key) {
+      //         if (item === 'location') {
+      //             return null;
+      //         }
+      //         if (item === 'video') {
+      //             return null;
+      //         }
+      //         return item;
+      //     });
+      //     editor.create();
+      // }
 
     $scope.search = function () {
       var promise = $http({
@@ -97,6 +116,7 @@ class GoodsController {
                 //     }
                 //     $state.go('items.lookDetail', {data: $rootScope.editData});
                 // }catch (e) {
+                $rootScope.editData.goodsDesc = $sce.trustAsHtml($rootScope.editData.goodsDesc);
                     $state.go('items.lookDetail', {data: $rootScope.editData});
                 // }
 

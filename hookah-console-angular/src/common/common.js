@@ -139,6 +139,11 @@ export default angular.module('Common', [
       return input == 1 ? '启用' : '禁用';
     }
   })
+  .filter('isMust', function () {
+    return function (input) {
+      return input == 0 ? '否' : '是';
+    }
+  })
   .filter('UserType', function () {
     return function (input) {
       switch (input) {
@@ -170,6 +175,33 @@ export default angular.module('Common', [
       }
     }
   })
+  .filter('goodsType', function () {
+    return function (input) {
+      switch (input) {
+        case 0:
+          return '常规商品';
+          break;
+        case 1:
+          return 'API';
+          break;
+        case 2:
+          return '数据模型';
+          break;
+        case 4:
+          return '分析工具--独立软件';
+          break;
+        case 5:
+          return '分析工具--SaaS';
+          break;
+        case 6:
+          return '应用场景--独立软件';
+          break;
+        case 7:
+          return '应用场景--SaaS';
+          break;
+      }
+    }
+  })
   .filter('isAttr',function () {
       return function (input) {
           switch (input){
@@ -195,6 +227,56 @@ export default angular.module('Common', [
                   return '未通过';
                   break;
           }
+      }
+  })
+  .filter('shelvesStatus',function(){
+      return function (input) {
+          switch (input) {
+              case 0:
+                  return '停用';
+                  break;
+              case 1:
+                  return '启用';
+                  break;
+              case 2:
+                  return '审核中';
+                  break;
+          }
+      }
+  })
+  .filter('goodsFormat',function(){
+      return function (input) {
+          switch (input) {
+              case 0:
+                  return '次';
+                  break;
+              case 1:
+                  return '天';
+                  break;
+              case 2:
+                  return '年';
+                  break;
+          }
+      }
+  })
+  .filter('isOnsale',function(){
+      return function (input) {
+          switch (input) {
+              case 0:
+                  return '下架状态';
+                  break;
+              case 1:
+                  return '上架状态';
+                  break;
+              case 2:
+                  return '强制下架状态';
+                  break;
+          }
+      }
+  })
+  .filter('trustHtml', function($sce){
+      return function (input) {
+          return $sce.trustAsHtml(input);
       }
   })
   .controller("MainController", MainController)

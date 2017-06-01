@@ -12,20 +12,17 @@
         <h5 style="padding: 0px 20px;">基本信息</h5>
         <div class="form-group">
           <input type="hidden" name="shelvesId" value="{{editData.shelvesId}}" />
-          <label class="col-sm-2 control-label" for="shelvesName">货架名称</label>
+          <label class="col-sm-2 control-label" for="shelvesName">货架名称<span class="must">*</span></label>
           <div class="col-sm-4">
             <input type="text" id="shelvesName" name="shelvesName" class="form-control" ng-maxlength="10"
-                   value="{{editData.shelvesName}}" data-ng-model="editData.shelvesName" placeholder="必填项 / 最长为10" required />
-          </div>
-          <div class="col-sm-4">
-            <span style="color:red" ng-show="shelfForm.shelvesName.$dirty && shelfForm.shelvesName.$invalid">必填项 / 最长为10</span>
+                   value="{{editData.shelvesName}}" data-ng-model="editData.shelvesName" placeholder="长度为10" required />
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="shelvesType">副标题</label>
+          <label class="col-sm-2 control-label" for="shelvesType">副标题<span class="must">*</span></label>
           <div class="col-sm-4">
             <input type="text" id="shelvesType" name="shelvesType" class="form-control" ng-maxlength="10"
-                   value="{{editData.shelvesType}}" data-ng-model="editData.shelvesType" placeholder="必填项 / 最长为10" required />
+                   value="{{editData.shelvesType}}" data-ng-model="editData.shelvesType" placeholder="长度为10" required />
           </div>
         </div>
         <div class="form-group">

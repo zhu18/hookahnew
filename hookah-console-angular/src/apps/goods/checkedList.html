@@ -47,9 +47,7 @@
                 <span class="column-text" style="width: 100px;white-space:nowrap;" ng-bind="item.goodsName | limitTo:10"></span>
               </td>
               <td>
-                <span class="column-text" ng-show="item.checkStatus == 0">审核中</span>
-                <span class="column-text" ng-show="item.checkStatus == 1">通过</span>
-                <span class="column-text" ng-show="item.checkStatus == 2">不通过</span>
+                <span class="column-text" ng-bind="item.checkStatus | checkStatus"></span>
               </td>
               <td>
                 <span class="column-text" style="width: 100px;white-space:nowrap;" ng-bind="item.checkTime"></span>

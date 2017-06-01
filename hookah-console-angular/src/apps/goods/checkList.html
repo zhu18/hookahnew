@@ -22,14 +22,14 @@
               <label class="control-label">商品编码</label>
               <input ng-model="searchSn" type="text" class="form-control">
             </div>
-            <div class="form-group">
+            <!--<div class="form-group">
               <label class="control-label">商品关键字</label>
               <input ng-model="searchKw" type="text" class="form-control">
             </div>
             <div class="form-group">
               <label class="control-label">商品店铺</label>
               <input ng-model="searchShop" type="text" class="form-control">
-            </div>
+            </div>-->
             <button type="submit" class="btn btn-primary" data-ng-click="search()">搜索</button>
           </form>
         </div>
@@ -59,13 +59,7 @@
                   </a>
               </td>
               <td>
-                <span class="column-text" ng-show="item.goodsType == 0">常规商品</span>
-                <span class="column-text" ng-show="item.goodsType == 1">API</span>
-                <span class="column-text" ng-show="editData.goodsType == 2">数据模型</span>
-                <span class="column-text" ng-show="editData.goodsType == 4">分析工具--独立软件</span>
-                <span class="column-text" ng-show="editData.goodsType == 5">分析工具--SaaS</span>
-                <span class="column-text" ng-show="editData.goodsType == 6">应用场景--独立软件</span>
-                <span class="column-text" ng-show="editData.goodsType == 7">应用场景--SaaS</span>
+                <span class="column-text" ng-bind="item.goodsType | goodsType"></span>
               </td>
               <!--<td>-->
                 <!--<span class="column-text" style="width: 100px;white-space:nowrap;" ng-bind="item.userName"></span>-->

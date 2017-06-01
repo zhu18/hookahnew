@@ -63,16 +63,17 @@
                 <span class="column-text" ng-bind="item.goodsNumber"></span>
               </td>
               <td>
-                <span data-ng-if="item.shelvesStatus == 0">
-                  <span class="column-text">停用状态</span>
-                </span>
-                <span data-ng-if="item.shelvesStatus == 1">
-                  <span class="column-text">启用状态</span>
-                </span>
-                <span data-ng-if="item.shelvesStatus == 2">
-                  <!--<span class="column-text" ng-bind="item.shelvesStatus"></span>-->
-                  <span class="column-text">审核中</span>
-                </span>
+                <!--<span data-ng-if="item.shelvesStatus == 0">-->
+                  <!--<span class="column-text">停用状态</span>-->
+                <!--</span>-->
+                <!--<span data-ng-if="item.shelvesStatus == 1">-->
+                  <!--<span class="column-text">启用状态</span>-->
+                <!--</span>-->
+                <!--<span data-ng-if="item.shelvesStatus == 2">-->
+                  <!--&lt;!&ndash;<span class="column-text" ng-bind="item.shelvesStatus"></span>&ndash;&gt;-->
+                  <!--<span class="column-text">审核中</span>-->
+                <!--</span>-->
+                <span class="column-text" ng-bind="item.shelvesStatus | shelvesStatus"></span>
               </td>
               <td>
                 <span class="column-text" ng-bind="item.addTime"></span>

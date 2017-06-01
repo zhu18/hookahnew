@@ -13,17 +13,17 @@
       <fieldset>
         <h5 style="padding: 0px 20px;">基本信息</h5>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="shelvesName">货架名称</label>
+          <label class="col-sm-2 control-label" for="shelvesName">货架名称<span class="must">*</span></label>
           <div class="col-sm-4">
             <input type="text" id="shelvesName" name="shelvesName"
-                   class="form-control" data-ng-model="shelvesName" ng-maxlength="10" placeholder="必填项 / 最长为10" required />
+                   class="form-control" data-ng-model="shelvesName" ng-maxlength="10" placeholder="最长为10" required />
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="shelvesType">副标题</label>
+          <label class="col-sm-2 control-label" for="shelvesType">副标题<span class="must">*</span></label>
           <div class="col-sm-4">
             <input type="text" id="shelvesType" name="shelvesType"
-                   class="form-control" data-ng-model="shelvesType" ng-maxlength="10" ng-pattern="/[a-zA-Z]/" placeholder="必填项 / 字母 / 唯一标识 / 最长为10" required />
+                   class="form-control" data-ng-model="shelvesType" ng-maxlength="10" ng-pattern="/[a-zA-Z]/" placeholder="字母 / 唯一标识 / 最长为10" required />
           </div>
         </div>
         <div class="form-group">
