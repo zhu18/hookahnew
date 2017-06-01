@@ -1,5 +1,5 @@
 function loadPageData(data){ //渲染页面数据
-	if(data.data.list){
+	if(data.data.list.length>0){
         var list = data.data.list;
         var html = '';
         for(var i=0; i<list.length; i++){
@@ -24,6 +24,8 @@ function loadPageData(data){ //渲染页面数据
             html += '</li>';
         }
         $('.order-list ul').html(html);
+    }else {
+        $('.order-list ul').html('<div class="noData">暂无数据</div>');
     }
 }
 $('#J_searchInput').val(names);

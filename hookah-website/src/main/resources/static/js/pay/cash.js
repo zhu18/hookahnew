@@ -132,8 +132,8 @@ function testPayPassword(pwd){
 				return true;
 			}else if(data.code == 0){
 				$('.ui-form-error').show().children('p').html('支付密码不正确');
-                $('#paymentPassword').val()
-				return false;
+                console.log($('#paymentPassword').val(""));
+                return false;
 			}else{
 				$.alert(data.message);
 				return false;

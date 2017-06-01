@@ -584,3 +584,8 @@ ul li {
     color: #0781e8;
     text-decoration: underline;
 }
+
+.noData{
+    line-height: 300px;
+    height: 300px !important;
+}
