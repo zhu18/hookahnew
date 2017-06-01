@@ -188,11 +188,15 @@ function check() {
 }
 
 $(".order-body .number input").blur(function(){
-	var val=$(this).val();
-	if(val<1||val>999){
+    var val=Number($(this).val());
+    if(val<1||val>999){
 		$.alert("数量只能为1-999之间");
 		$(this).val(1);
-	}
+        $(this).parents(".number").siblings(".money").html($(this).parents(".number").siblings(".price").html());
+
+
+    }
+    moneyFn($(this), Number($(this).val()));
 })
 
 
