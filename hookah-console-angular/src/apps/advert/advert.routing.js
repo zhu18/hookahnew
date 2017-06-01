@@ -1,5 +1,6 @@
 import AdvertController from './AdvertController';
 import AdvertCarouselController from './AdvertCarouselController';
+import SysNoticController from '../sysnotic/SysNoticController';
 import CooperationController from '../cooperation/CooperationController';
 advertRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function advertRouting($stateProvider, $urlRouterProvider) {
@@ -13,6 +14,10 @@ export default function advertRouting($stateProvider, $urlRouterProvider) {
       template: '<div ui-view></div>',
       showSubMenu: true
     })
+      .state('sysnotice', {
+          template: '<div ui-view></div>',
+          showSubMenu: true
+      })
     .state('advert.search', {
       url: '/advert/search',
       template: require('./list.html'),
@@ -57,4 +62,19 @@ export default function advertRouting($stateProvider, $urlRouterProvider) {
         template: require('../cooperation/edit.html'),
         controller: CooperationController,
     })
+      .state('sysnotice.search', {
+          url: '/sysnotice/search',
+          template: require('../sysnotic/list.html'),
+          controller: SysNoticController,
+      })
+      .state('sysnotice.add', {
+          url: '/sysnotice/add',
+          template: require('../sysnotic/add.html'),
+          controller: SysNoticController,
+      })
+      .state('sysnotice.edit', {
+          url: '/sysnotice/edit',
+          template: require('../sysnotic/edit.html'),
+          controller: SysNoticController,
+      })
 };
