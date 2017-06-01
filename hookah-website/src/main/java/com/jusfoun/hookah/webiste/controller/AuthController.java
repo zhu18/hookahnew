@@ -215,7 +215,7 @@ public class AuthController extends BaseController {
 
             User user = new User();
             user.setUserId(userId);
-            //暂时直接通过审核  后期改成用户待审核状态
+            //用户待审核状态
             user.setUserType(HookahConstants.UserType.PERSON_CHECK_NO.getCode());
             userService.updateByIdSelective(user);
 
@@ -251,7 +251,7 @@ public class AuthController extends BaseController {
 
             User user = new User();
             user.setUserId(userId);
-            //暂时直接通过审核  后期改成用户待审核状态
+            //用户待审核状态
             user.setUserType(HookahConstants.UserType.ORGANIZATION_CHECK_NO.getCode());
             userService.updateByIdSelective(user);
 

@@ -21,8 +21,8 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="domainId">店铺编码</label>
                 <div class="col-sm-4">
-                    <input type="text" id="domainId" placeholder="必填项" data-ng-model="editData.domainId" required
-                           name="domainId" class="form-control" value="{{editData.domainId}}"/>
+                    <input type="text" id="domainId" placeholder="必填项 / 最长为32" data-ng-model="editData.domainId" required
+                           name="domainId" ng-maxlength="32" class="form-control" value="{{editData.domainId}}"/>
                 </div>
                 <div class="col-sm-4">
 
