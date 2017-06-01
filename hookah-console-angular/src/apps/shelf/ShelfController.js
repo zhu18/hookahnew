@@ -13,7 +13,6 @@ class ShelfController {
         });
         promise.then(function (res, status, config, headers) {
             $rootScope.loadingState = false;
-            $scope.sysAccount = res.data.data;
             growl.addSuccessMessage("数据加载完毕。。。");
         });
     };

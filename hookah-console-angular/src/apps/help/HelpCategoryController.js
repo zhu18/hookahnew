@@ -1,5 +1,5 @@
 class HelpCategoryController {
-  constructor($scope, $rootScope, $http, $uibModal, usSpinnerService, growl) {
+  constructor($scope, $rootScope, $http, $state, $uibModal, usSpinnerService, growl) {
     $scope.search = function () {
       var promise = $http({
         method: 'GET',
@@ -37,6 +37,36 @@ class HelpCategoryController {
       });
 
     };
+
+    $scope.load = function (event, item) {
+        var promise = $http({
+            method: 'GET',
+            url: $rootScope.site.apiServer + "/api/help/category/" + item.helpId
+        });
+        promise.then(function (res, status, config, headers) {
+            $rootScope.loadingState = false;
+            $rootScope.cuserd=res.data.data;
+            growl.addSuccessMessage("数据加载完毕。。。");
+        });
+    };
+    $scope.edit = function(){
+        var promise = $http({
+            method: 'POST',
+            url: $rootScope.site.apiServer + "/api/help/category/update",
+            params: {
+                helpId:$("#helpId").val(),
+                name: $("#name").val()
+            }
+        });
+        promise.then(function (res, status, config, headers) {
+            console.log(res.data)
+            if(res.data.code == "1"){
+                growl.addSuccessMessage("数据修改完毕。。。");
+                $state.go('help.category.search');
+            }
+        });
+    };
+
     $scope.pageChanged = function () {
       $scope.search();
       console.log('Page changed to: ' + $rootScope.pagination.currentPage);

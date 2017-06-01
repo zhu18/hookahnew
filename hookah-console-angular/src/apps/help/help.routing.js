@@ -39,7 +39,7 @@ export default function helpRouting($stateProvider, $urlRouterProvider) {
     })
     .state('help.category.edit', {
       url: '/help/category/edit',
-      template: require('./help_category_add.html'),
+      template: require('./help_category_edit.html'),
       controller: HelpCategoryController,
     })
 };

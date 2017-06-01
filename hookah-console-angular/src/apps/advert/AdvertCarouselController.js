@@ -67,11 +67,7 @@ class AccountCarouselController {
     };
 
 
-    $scope.edit = function(event,item){
-        console.log("---start---");
-        console.log($("#carouselForm").serialize());
-        console.log("---end---");
-
+    $scope.edit = function(){
         var promise = $http({
             method: 'POST',
             url: $rootScope.site.apiServer + "/api/advert/update",
