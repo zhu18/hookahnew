@@ -21,7 +21,7 @@
               <label class="control-label">机构名称</label>
               <input ng-model="cooName" type="text" class="form-control">
             </div>
-            <button type="submit" class="btn btn-primary" data-ng-click="search()">搜索</button>
+            <button type="submit" class="btn btn-primary" data-ng-click="search()" placeholder="请输入机构名称">搜索</button>
           </form>
         </div>
         <div class="gridSection">
@@ -34,24 +34,23 @@
               <th>联系地址</th>
               <th width="130" class="text-center">操作</th>
             </tr>
-
             </thead>
             <tbody>
-            <tr data-ng-if="!loadingState" data-ng-repeat="item in pagination.store" class="">
+            <tr data-ng-if="!loadingState" data-ng-repeat="cooperation in pagination.store" class="">
               <td>
-                <span text-length="50" ng-bind="item.cooName"></span>
+                <span text-length="50" ng-bind="cooperation.cooName"></span>
               </td>
               <td>
-                <span text-length="50" ng-bind="item.cooPhone"></span>
+                <span text-length="50" ng-bind="cooperation.cooPhone"></span>
               </td>
               <td>
-                <span text-length="50" ng-bind="item.cooAddress"></span>
+                <span text-length="50" ng-bind="cooperation.cooAddress"></span>
               </td>
-              <td class="text-right">
-                <a href="javascript:;" ui-sref="cooperation.edit" ng-click="load($event,item)">修改</a>
+              <td class="text-center">
+                <a href="javascript:;" ui-sref="cooperation.edit" ng-click="load($event,cooperation)">修改</a>
                 <span class="text-explode">|</span>
                 <i class="link-space"></i>
-                <a href="javascript:;" ng-click="delete($event,item)">删除</a>
+                <a href="javascript:;" ng-click="delete($event,cooperation)">删除</a>
               </td>
             </tr>
             </tbody>

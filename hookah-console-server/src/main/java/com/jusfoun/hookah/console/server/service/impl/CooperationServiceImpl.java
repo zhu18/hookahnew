@@ -42,6 +42,12 @@ public class CooperationServiceImpl  extends GenericServiceImpl<Cooperation, Str
         }else {
             throw new HookahException("合作机构名称不能为空");
         }
+        if (coo.getPictureUrl().isEmpty()){
+            throw new HookahException("logo地址不能为空");
+        }
+        if (coo.getUrl().isEmpty()){
+            throw new HookahException("机构链接地址不能为空");
+        }
         isExists = exists(filters);
         if(isExists){
             throw new HookahException("该合作机构已经添加");

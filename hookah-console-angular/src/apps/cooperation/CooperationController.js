@@ -1,5 +1,5 @@
 class CooperationController {
-    constructor($scope, $rootScope, $http, $uibModal, usSpinnerService, growl) {
+    constructor($scope, $rootScope, $http, $state, $uibModal, usSpinnerService, growl) {
         $scope.search = function () {
             var promise = $http({
                 method: 'GET',
@@ -14,10 +14,10 @@ class CooperationController {
                 growl.addSuccessMessage("数据加载完毕。。。");
             });
         };
-        $scope.load = function (event, item) {
+        $scope.load = function (event, cooperation) {
             var promise = $http({
                 method: 'GET',
-                url: $rootScope.site.apiServer + "/coo/" + item.cooperationId,
+                url: $rootScope.site.apiServer + "/coo/" + cooperation.cooperationId,
             });
             promise.then(function (res, status, config, headers) {
                 $rootScope.loadingState = false;
@@ -33,6 +33,12 @@ class CooperationController {
             });
             promise.then(function (res, status, config, headers) {
                 $rootScope.loadingState = false;
+                if (res.data.code == "1"){
+                    alert(res.data.data);
+                    $state.go('cooperation.search');
+                }else{
+                    alert(res.data.message);
+                }
                 growl.addSuccessMessage("数据加载完毕。。。");
             });
 
@@ -52,23 +58,26 @@ class CooperationController {
             });
             promise.then(function (res, status, config, headers) {
                 $rootScope.loadingState = false;
+                if (res.data.code = 1){
+                    alert(res.data.message);
+                }
                 alert(res.data.message);
                 growl.addSuccessMessage("数据加载完毕。。。");
             });
         };
-        $scope.delete = function (event, item) {
+        $scope.delete = function (event, cooperation) {
             var promise = $http({
                 method: 'POST',
                 url: $rootScope.site.apiServer + "/coo/delete",
                 params: {
-                    cooperationId: item.cooperationId,
-                    cooName: item.cooName
+                    cooperationId: cooperation.cooperationId,
+                    cooName: cooperation.cooName
                 }
             });
 
             promise.then(function (res, status, config, headers) {
                 $rootScope.loadingState = false;
-                alert(res.data.message);
+                alert(res.data.data);
                 $scope.search();
                 growl.addSuccessMessage("数据加载完毕。。。");
             });
