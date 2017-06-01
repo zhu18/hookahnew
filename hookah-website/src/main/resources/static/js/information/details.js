@@ -17,17 +17,17 @@ function renderDetails(){
                 $('#content').html(data.data.content);
                 $('#userImg').attr('src',data.data.headImg);
                 if(data.data.newsGroup=="information"){
-                    $(".detail .top .text1").text("资讯中心");
+                    $(".detail .top .text1").html("<a href='/information/index'>资讯中心</a>");
                 }
                 if(data.data.newsSonGroup =="1"){
                     num =1;
-                    $(".detail .top .text2").text("中心动态");
+                    $(".detail .top .text2").html("<a href='/information/index?newsSonGroup=1'>中心动态</a>");
                 }else if(data.data.newsSonGroup =="2"){
                     num =2;
-                    $(".detail .top .text2").text("行业资讯");
+                    $(".detail .top .text2").html("<a href='/information/index?newsSonGroup=2'>行业资讯</a>");
                 }else if(data.data.newsSonGroup =="3") {
                     num =3;
-                    $(".detail .top .text2").text("中心公告");
+                    $(".detail .top .text2").html("<a href='/information/index?newsSonGroup=3'>中心公告</a>");
                 }
                 isHot();
             }else{

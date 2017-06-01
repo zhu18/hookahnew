@@ -39,11 +39,21 @@ function judg(text){
 }
 
 function renderChange(that, num) {
-	$(that).addClass('active').siblings().removeClass('active');
+    console.log($(that));
+    $(that).addClass('active').siblings().removeClass('active');
 	var textT = $(that).children().children('.page-title').html();
 	$('#J_pageTitle').html(textT);
 	dataParm.newsSonGroup = num;
 	goPage("1");
 }
 
-
+if(dataParm.newsSonGroup){
+	var id=dataParm.newsSonGroup;
+	if(id=="1"){
+        $("#one").addClass('active').siblings().removeClass('active');
+	}else if(id=="2"){
+        $("#two").addClass('active').siblings().removeClass('active');
+	}else if(id=="3"){
+        $("#three").addClass('active').siblings().removeClass('active');
+	}
+}

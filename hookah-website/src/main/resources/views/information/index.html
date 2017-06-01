@@ -10,7 +10,8 @@ var head = {
     dataParm.pageNumber = 1;
     dataParm.pageSize = 20;
     dataParm.newsGroup = 'information';
-    dataParm.newsSonGroup = 1;
+    dataParm.newsSonGroup = $.getUrlParam("newsSonGroup") || 1;
+
 
 </script>
 <%};%>
@@ -26,19 +27,19 @@ var htmlPart = {
                 <!--中心动态-->
                 <div class="top margin-bottom-10">
                     <ul>
-                        <li class="active" onclick="renderChange(this,1)">
+                        <li onclick="renderChange(this,1)" id="one">
                             <a href="javascript:;">
                                 <i class="iconfont icon-iconquan04"></i>
                                 <span class="page-title">中心动态</span>
                             </a>
                         </li>
-                        <li onclick="renderChange(this,2)">
+                        <li onclick="renderChange(this,2)" id="two">
                             <a href="javascript:;">
                                 <i class="iconfont icon-iconfontcolor34"></i>
                                 <span class="page-title">行业资讯</span>
                             </a>
                         </li>
-                        <li onclick="renderChange(this,3)">
+                        <li onclick="renderChange(this,3)" id="three">
                             <a href="javascript:;">
                                 <i class="iconfont icon-zixun"></i>
                                 <span class="page-title">中心公告</span>
