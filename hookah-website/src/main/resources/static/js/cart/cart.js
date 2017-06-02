@@ -46,8 +46,9 @@ $("#delBtn").click(function () {
 				if (msg.code == 1) {
 					$.alert('删除成功')
 					$("[name=items]:checkbox:checked").each(function () {
-						$(this).parents('.order-body').remove()
+						$(this).parents('.order-body').remove();
 					});
+                    totalAmountFn();
 					if ($("[name=checkall]:checkbox").prop("checked")) {
 						$('.cart-box').html('<div class="noDataBox">购物车没有商品 >>><a href="/">去购物</a></div>');
 					}
@@ -161,7 +162,8 @@ function delThis(id,that) {
 		success: function (msg) {
 			if (msg.code == 1) {
 				$.alert('删除成功');
-				$(that).parents('.order-body').remove()
+				$(that).parents('.order-body').remove();
+                totalAmountFn();
 			} else {
 				$.alert(msg.message);
 			}

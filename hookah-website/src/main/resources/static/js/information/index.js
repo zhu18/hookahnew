@@ -55,5 +55,6 @@ if(dataParm.newsSonGroup){
         $("#two").addClass('active').siblings().removeClass('active');
 	}else if(id=="3"){
         $("#three").addClass('active').siblings().removeClass('active');
-	}
+	};
+    $("#J_pageTitle").html($("li.active .page-title").html());
 }
