@@ -218,6 +218,7 @@ Attention.add = function (goodsId) {
 				$.ajax({
 					url: '/goodsFavorite/add',
 					type: 'get',
+                    cache:false,
 					data: {
 						goodsId: goodsId
 					},
