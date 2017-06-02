@@ -12,9 +12,14 @@ export default function shelfRouting($stateProvider, $urlRouterProvider) {
       template: require('./list.html'),
       controller: OrderController,
     })
-    .state('order.detail', {
-      url: '/order/detail',
-      templateUrl: require('./list.html'),
+    .state('order.viewOrderDetails', {
+      url: '/order/viewOrderDetails',
+      template: require('./orderDetail.html'),
+      controller: OrderController,
+    })
+    .state('order.viewGoodDetail', {
+      url: '/order/viewGoodDetail',
+      template: require('./viewGoodDetail.html'),
       controller: OrderController,
     })
 };

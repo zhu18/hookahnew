@@ -15,8 +15,12 @@
         <div class="searchSection">
           <form class="form-inline">
             <div class="form-group">
-              <label class="control-label">订单编码</label>
-              <input ng-model="orderSn" type="text" class="form-control">
+              <label class="control-label">订单编号</label>
+              <input ng-model="orderSn" type="text" class="form-control" placeholder="请输入订单编号">
+              <label class="control-label">订单日期</label>
+              <input ng-model="addTime" type="text" class="form-control" placeholder="起始日期">
+              <label class="control-label">至</label>
+              <input ng-model="addTime" type="text" class="form-control" placeholder="结束日期">
             </div>
             <button type="submit" class="btn btn-primary" data-ng-click="search()">搜索</button>
           </form>
@@ -26,62 +30,72 @@
           <table class="table table-hover" style="margin-bottom: 57px;">
             <thead>
             <tr>
+              <th>序号</th>
               <th>订单编号</th>
-              <th>商品金额</th>
+              <th>买方</th>
               <th>订单金额</th>
-              <th>订单状态</th>
               <th>支付状态</th>
-              <th>发货状态</th>
-              <th>订单电话</th>
               <th width="135">订单时间</th>
-              <th width="130" class="text-center">操作</th>
+              <th  width="130" class="text-center">操作</th>
             </tr>
-
             </thead>
             <tbody>
             <tr data-ng-if="!loadingState" data-ng-repeat="item in pagination.store" class="">
+              <td>{{ $index + 1 }}</td>
               <td>
-                <span text-length="50" ng-bind="item.orderSn"></span>
+                <a  ui-sref="order.viewOrderDetails" ng-click="getDetails($event,item.orderId)" >
+                  <span text-length="50" ng-bind="item.orderSn"></span>
+                </a>
               </td>
               <td>
-                <span text-length="50" ng-bind="item.goodsAmount"></span>
+                <span text-length="50" ng-bind="item.consignee"></span>
               </td>
               <td>
-                <span text-length="50" ng-bind="item.orderAmount"></span>
+                <span text-length="50" ng-bind="item.orderAmount / 100"></span>
               </td>
+              <!--
               <td>
-                <!--<span text-length="50" ng-bind="item.orderStatus"></span>-->
-                <span text-length="50" ng-show="item.orderStatus == 0">未确认</span>
-                <span text-length="50" ng-show="item.orderStatus == 1">确认</span>
-                <span text-length="50" ng-show="item.orderStatus == 2">已取消</span>
-                <span text-length="50" ng-show="item.orderStatus == 3">无效</span>
-                <span text-length="50" ng-show="item.orderStatus == 4">退货</span>
-              </td>
+                  <span text-length="50" ng-bind="item.orderStatus"></span>
+                  <span text-length="50" ng-show="item.orderStatus == 0">未确认</span>
+                  <span text-length="50" ng-show="item.orderStatus == 1">确认</span>
+                  <span text-length="50" ng-show="item.orderStatus == 2">已取消</span>
+                  <span text-length="50" ng-show="item.orderStatus == 3">无效</span>
+                  <span text-length="50" ng-show="item.orderStatus == 4">退货</span>
+                </td>
+                -->
               <td>
                 <span text-length="50" ng-show="item.payStatus == 0">未付款</span>
                 <span text-length="50" ng-show="item.payStatus == 1">付款中</span>
                 <span text-length="50" ng-show="item.payStatus == 2">已付款</span>
               </td>
+              <!--
               <td>
                 <span text-length="50" ng-show="item.shippingStatus == 0">未发货</span>
                 <span text-length="50" ng-show="item.shippingStatus == 1">已发货</span>
                 <span text-length="50" ng-show="item.shippingStatus == 2">已收货</span>
                 <span text-length="50" ng-show="item.shippingStatus == 3">退货</span>
               </td>
+
               <td>
                 <span text-length="50" ng-bind="item.mobile"></span>
               </td>
+              -->
               <td>
-                <span text-length="50" ng-bind="item.addTime"></span>
+                <span text-length="40" ng-bind="item.addTime"></span>
               </td>
-              <td class="text-right">
-                <a href="javascript:;" ng-click="editProduct($event,item)">修改</a>
-                <span class="text-explode">|</span>
-                <i class="link-space"></i>
-                <a href="javascript:;" target="_blank">删除</a>
-                <span class="text-explode">|</span>
-                <i class="link-space"></i>
-                <a href="javascript:;" target="_blank">取消</a>
+              <td class="text-center">
+                <span ng-show="item.payStatus == 0">
+                  <a href="javascript:;" ng-click="editProduct($event,item)">修改</a>
+                  <span class="text-explode">|</span>
+                  <i class="link-space"></i>
+                  <a href="javascript:;" target="_blank">删除</a>
+                  <span class="text-explode">|</span>
+                  <i class="link-space"></i>
+                  <a href="javascript:;" target="_blank">取消</a>
+                </span>
+                <span ng-show="item.payStatus == 2">
+                  <a href="javascript:;" target="_blank">查看</a>
+                </span>
               </td>
             </tr>
             </tbody>

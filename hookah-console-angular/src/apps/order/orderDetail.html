@@ -1,15 +1,80 @@
-<style>
-  .control-label {
-    width: 80px;
-  }
-</style>
 <div class="row">
   <div class="col-sm-12">
-    <div class="console-title console-title-border clearfix">
-      <div class="pull-left"><h5>订单详情</h5></div>
-      <div class="pull-right">
+    <div class="grid-left viewDetails margin-bottom-30">
+      <div class="view">
+        <h3 class="details">订单详情</h3>
+      </div>
+      <div class="viewContent clearfix">
+        <div class="leftContent grid-left padding-top-20 text-align-center">
+          <div class="state-top margin-bottom-30 ">
+            订单号：<span>{{order.orderSn}}&nbsp;&nbsp;</span>
+            订单时间：<span>{{order.addTime}}&nbsp;&nbsp;</span>
+            买方：<span>{{user.userName}}&nbsp;&nbsp;</span>
+            买方手机：<span>{{user.mobile}}&nbsp;&nbsp;</span>
+          </div>
+        </div>
+        </div>
       </div>
     </div>
 
+  <div class="row margin-top">
+    <div class="col-sm-12">
+        <div us-spinner ng-show="showSpinner" spinner-start-active="true" spinner-key="showSpinner"></div>
+        <table class="table table-hover" style="margin-bottom: 57px;">
+          <thead>
+          <tr>
+            <th>数据商品</th>
+            <th>买方</th>
+            <th>价格</th>
+            <th>数量</th>
+            <th>小计</th>
+            <th>商品类型</th>
+            <th width="130" class="text-center">操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr class="padding-bottom-10" data-ng-if="!loadingState" data-ng-repeat="goods in order.mgOrderGoodsList" class="">
+            <td class="text-align-center margin-top-10">
+              <div class="p-img">
+                <a ng-click="getGoodDetail($event,goods.goodsId)">
+                  <img src="{{goods.goodsImg}}" alt="">
+                </a>
+              </div>
+              <div class="margin-top-10 marign-bottom-10" >
+                <a ng-click="getGoodDetail($event,goods.goodsId)">
+                <span ng-bind="goods.goodsName"></span>
+                </a>
+              </div>
+            </td>
+            <td>{{user.userName}}</td>
+            <td>¥{{goods.goodsPrice / 100}}</td>
+            <td ng-bind="goods.goodsNumber"></td>
+            <td>¥{{goods.goodsNumber * goods.goodsPrice / 100}}</td>
+            <td>
+              <span text-length="50" ng-show="goods.goodsType == 0">常规商品</span>
+              <span text-length="50" ng-show="goods.goodsType == 1">api商品</span>
+            </td>
+            <td class="operate text-center">
+              <!--<a href="${host.website}/exchange/details?id='goods.goodsId'" class="buy btn-full-blue display-inline-block">再次购买</a>-->
+              <a ng-click="getGoodDetail($event,goods.goodsId)" class="btn-full-red display-inline-block margin-top-10">数据详情</a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+    </div>
+  </div>
+  <div class="text-left margin-top-15">
+    <ul class="margin-right-20" style="list-style-type:none">
+      <li>订单合计：<span>¥{{order.orderAmount / 100}}</span></li>
+      <li>订单优惠：<span>¥{{order.goodsDiscountFee / 100}}</span></li>
+      <li>实际应付：<span>¥{{(order.orderAmount - order.discountFee)/ 100}}</span></li>
+      <li>付款方式：<span ng-bind="order.payName"></span></li>
+    </ul>
+  </div>
+  <div>
+    开具类型：<span>{{order.invMedia}}&nbsp;&nbsp;</span>
+    发票类型：<span>{{order.invType}}&nbsp;&nbsp;</span>
+    发票抬头：<span>{{order.invHead}}&nbsp;&nbsp;</span>
+    发票内容：<span>{{order.invContent}}&nbsp;&nbsp;</span>
   </div>
 </div>

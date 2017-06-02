@@ -37,16 +37,16 @@ public class CooperationServiceImpl  extends GenericServiceImpl<Cooperation, Str
         boolean isExists = true;
         List<Condition> filters = new ArrayList<>();
         filters.clear();
-        if (!coo.getCooName().isEmpty()){
+        if (StringUtils.isNoneBlank(coo.getCooName())){
             filters.add(Condition.eq("cooName", coo.getCooName()));
         }else {
             throw new HookahException("合作机构名称不能为空");
         }
-        if (coo.getPictureUrl().isEmpty()){
-            throw new HookahException("logo地址不能为空");
-        }
-        if (coo.getUrl().isEmpty()){
+        if (StringUtils.isBlank(coo.getUrl())){
             throw new HookahException("机构链接地址不能为空");
+        }
+        if (StringUtils.isBlank(coo.getPictureUrl())){
+            throw new HookahException("logo地址不能为空");
         }
         isExists = exists(filters);
         if(isExists){
@@ -69,6 +69,12 @@ public class CooperationServiceImpl  extends GenericServiceImpl<Cooperation, Str
             filters.add(Condition.eq("cooperationId", coo.getCooperationId()));
         }else {
             throw new HookahException("未选择修改机构，请重新操作");
+        }
+        if (StringUtils.isBlank(coo.getUrl())){
+            throw new HookahException("机构链接地址不能为空");
+        }
+        if (StringUtils.isBlank(coo.getPictureUrl())){
+            throw new HookahException("logo地址不能为空");
         }
         coo.setLastUpdateTime(date);
         cooperationMapper.updateByExampleSelective(coo,convertFilter2Example(filters));

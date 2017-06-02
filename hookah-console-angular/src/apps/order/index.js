@@ -39,10 +39,6 @@ app.run(function ($rootScope, $state) {
       "title": "订单查询",
       "url": "order.search"
     },
-    {
-      "title": "订单详情",
-      "url": "order.detail"
-    }
   ];
 
 });

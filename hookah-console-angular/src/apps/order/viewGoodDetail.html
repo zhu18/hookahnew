@@ -1,0 +1,309 @@
+<div class="row" xmlns="http://www.w3.org/1999/html">
+  <div class="col-sm-12">
+    <div class="console-title console-title-border clearfix">
+      <div class="pull-left"><h5>商品详情</h5></div>
+      <div class="pull-right">
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12">
+    <form class="form-horizontal" role="form" id="goodsCheckForm" name="shelf">
+      <fieldset>
+        <h5 style="padding: 0px 20px;">基本信息</h5>
+        <div class="form-group">
+          <input type="hidden" id="goodsId" name="goodsId" value="{{editData.goodsId}}" />
+          <input type="hidden" id="goodsSn" name="goodsSn" value="{{editData.goodsSn}}" />
+          <label class="col-sm-2 control-label">商品名称</label>
+          <div class="col-sm-5">
+            <input type="text" class="form-control" name="goodsName" value="{{editData.goodsName}}" readonly="true" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">商品简介</label>
+          <div class="col-sm-5">
+            <!--<input type="text" class="form-control" value="{{editData.goodsBrief}}" readonly="true" />-->
+            <textarea style="margin: 0px; width: 452px; height: 84px;" readonly="true">{{editData.goodsBrief}}</textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">商品类型</label>
+          <div class="col-sm-5">
+            <select disabled>
+              <option value="0" ng-selected="editData.goodsType == 0">常规商品</option>
+              <option value="1" ng-selected="editData.goodsType == 1">API</option>
+              <option value="2" ng-selected="editData.goodsType == 2">数据模型</option>
+              <option value="4" ng-selected="editData.goodsType == 4">分析工具--独立软件</option>
+              <option value="5" ng-selected="editData.goodsType == 5">分析工具--SaaS</option>
+              <option value="6" ng-selected="editData.goodsType == 6">应用场景--独立软件</option>
+              <option value="7" ng-selected="editData.goodsType == 7">应用场景--SaaS</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">所属区域</label>
+          <div class="col-sm-5">
+            <input type="text" class="form-control" value="{{editData.goodsArea}}" readonly="true" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">商品图片</label>
+          <div class="col-sm-5">
+            <a href="{{editData.goodsImg}}" target="_blank">
+              <img ng-src="{{editData.goodsImg}}" style="max-width: 450px; max-height: 600px">
+            </a>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">规格及价格</label>
+          <div class="col-sm-5">
+            <table class="table table-hover">
+              <thead>
+              <tr>
+                <th>名称</th>
+                <th>规格</th>
+                <th>类型</th>
+                <th>价格</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr data-ng-repeat="req in editData.formatList" class="">
+                <td>
+                  <span class="" ng-bind="req.formatName"></span>
+                </td>
+                <td>
+                  <span class="column-text" ng-bind="req.number"></span>
+                </td>
+                <td>
+                  <span class="column-text" ng-show="req.format == 0">次</span>
+                  <span class="column-text" ng-show="req.format == 1">天</span>
+                  <span class="column-text" ng-show="req.format == 2">年</span>
+                </td>
+                <td>
+                  <span class="column-text" ng-bind="req.price/100"></span>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">商品描述</label>
+          <div class="col-sm-5">
+            <!--<input type="text" class="form-control" value="{{editData.goodsDesc}}" readonly="true" />-->
+            <textarea style="margin: 0px; width: 452px; height: 120px;" readonly="true">
+              {{editData.goodsDesc}}
+            </textarea>
+          </div>
+        </div>
+        <div data-ng-if="editData.goodsType == 1">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">接口地址</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" value="{{editData.apiInfo.apiUrl}}" readonly="true" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">请求方式</label>
+            <div class="col-sm-5">
+              <label class="radio-inline">
+                <input type="radio" ng-checked="editData.apiInfo.apiMethod == 'GET' || editData.apiInfo.apiMethod == 'get'" disabled/>GET
+              </label>
+              <label class="radio-inline">
+                <input type="radio" ng-checked="editData.apiInfo.apiMethod == 'POST' || editData.apiInfo.apiMethod == 'post'" disabled/>POST
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">请求示例</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" value="{{editData.apiInfo.reqSample}}" readonly="true" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">接口描述</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" value="{{editData.apiInfo.apiDesc}}" readonly="true" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">请求参数</label>
+            <div class="col-sm-5">
+              <table class="table table-hover">
+                <thead>
+                <tr>
+                  <th>名称</th>
+                  <th>类型</th>
+                  <th>默认值</th>
+                  <th>必填</th>
+                  <th>示例</th>
+                  <th>描述</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-ng-repeat="req in editData.apiInfo.reqParamList" class="">
+                  <td>
+                    <span class="" ng-bind="req.fieldName"></span>
+                  </td>
+                  <td>
+                    <span class="column-text" ng-bind="req.fieldType"></span>
+                  </td>
+                  <td>
+                    <span class="column-text" ng-bind="req.fieldDefault"></span>
+                  </td>
+                  <td>
+                    <span class="column-text" ng-show="req.isMust == 0">否</span>
+                    <span class="column-text" ng-show="req.isMust == 1">是</span>
+                  </td>
+                  <td>
+                    <span class="column-text" ng-bind="req.fieldSample"></span>
+                  </td>
+                  <td>
+                    <span class="column-text" ng-bind="req.describle"></span>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">返回参数</label>
+            <div class="col-sm-5">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>参数名称</th>
+                    <th>参数说明</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr data-ng-repeat="req in editData.apiInfo.respParamList" class="">
+                    <td>
+                      <span class="" ng-bind="req.fieldName"></span>
+                    </td>
+                    <td>
+                      <span class="column-text" ng-bind="req.describle"></span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">返回示例</label>
+            <div class="col-sm-5">
+              <textarea style="margin: 0px; width: 452px; height: 150px;" readonly="true">
+                {{editData.apiInfo.respSample}}
+              </textarea>
+            </div>
+          </div>
+        </div>
+        <div data-ng-if="editData.goodsType == 2">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">模型规则</label></br>
+            <div class="col-sm-5">
+              复杂度：<input type="text" class="form-control" value="{{editData.dataModel.complexity}}" readonly="true" />
+              成熟度：<input type="text" class="form-control" value="{{editData.dataModel.maturity}}" readonly="true" />
+              应用经验：<input type="text" class="form-control" value="{{editData.dataModel.aexp}}" readonly="true" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">模型规格</label></br>
+            <div class="col-sm-5">
+              模型文件：<input type="text" class="form-control" value="{{editData.dataModel.modelFile}}" readonly="true" />
+              配置文件：<input type="text" class="form-control" value="{{editData.dataModel.configFile}}" readonly="true" />
+              配置参数：<input type="text" class="form-control" value="{{editData.dataModel.configParams}}" readonly="true" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">其他说明</label>
+            <div class="col-sm-5">
+              <textarea style="margin: 0px; width: 452px; height: 84px;" name="dataModel.otherDesc">
+                {{editData.dataModel.otherDesc}}
+              </textarea>
+            </div>
+          </div>
+        </div>
+        <div data-ng-if="editData.goodsType == 4">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">工具规格</label>
+            <div class="col-sm-5">
+              行业领域：<input type="text" class="form-control" value="{{editData.atAloneSoftware.aTAloneIndustryField}}" readonly="true" />
+              版本说明：<input type="text" class="form-control" value="{{editData.atAloneSoftware.aTAloneVersionDesc}}" readonly="true" />
+              工具介绍：<input type="text" class="form-control" value="{{editData.atAloneSoftware.aTAloneToolsIntroduce}}" readonly="true" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">使用规格</label>
+            <div class="col-sm-5">
+              云硬件资源：<input type="text" class="form-control" value="{{editData.atAloneSoftware.aTAloneCloudHardwareResource}}" readonly="true" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">其他说明</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" value="{{editData.atAloneSoftware.otherDesc}}" readonly="true" />
+            </div>
+          </div>
+        </div>
+        <div data-ng-if="editData.goodsType == 5">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">工具规格</label>
+            <div class="col-sm-5">
+              行业领域：<input type="text" class="form-control" value="{{editData.atSaaS.aTIndustryField}}" readonly="true" />
+              版本说明：<input type="text" class="form-control" value="{{editData.atSaaS.aTVersionDesc}}" readonly="true" />
+              工具介绍：<input type="text" class="form-control" value="{{editData.atSaaS.aTToolsIntroduce}}" readonly="true" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">其他说明</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" value="{{editData.atSaaS.otherDesc}}" readonly="true" />
+            </div>
+          </div>
+        </div>
+        <div data-ng-if="editData.goodsType == 6">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">应用场景规则</label>
+            <div class="col-sm-5">
+              应用复杂度：<input type="text" class="form-control" value="{{editData.asAloneSoftware.aSComplexity}}" readonly="true" />
+              版本说明：<input type="text" class="form-control" value="{{editData.asAloneSoftware.aSVersionDesc}}" readonly="true" />
+              服务等级：<input type="text" class="form-control" value="{{editData.asAloneSoftware.aSServiceLevel}}" readonly="true" />
+              应用等级：<input type="text" class="form-control" value="{{editData.asAloneSoftware.aSAexp}}" readonly="true" />
+              工具介绍：<input type="text" class="form-control" value="{{editData.asAloneSoftware.aSAintroduce}}" readonly="true" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">使用规格</label>
+            <div class="col-sm-5">
+              云硬件资源：<input type="text" class="form-control" value="{{editData.asAloneSoftware.aSCloudHardwareResource}}" readonly="true" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">其他说明</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" value="{{editData.asAloneSoftware.otherDesc}}" readonly="true" />
+            </div>
+          </div>
+        </div>
+        <div data-ng-if="editData.goodsType == 7">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">应用场景规则</label>
+            <div class="col-sm-5">
+              应用复杂度：<input type="text" class="form-control" value="{{editData.asSaaS.sSComplexity}}" readonly="true" />
+              版本说明：<input type="text" class="form-control" value="{{editData.asSaaS.sSVersionDesc}}" readonly="true" />
+              服务等级：<input type="text" class="form-control" value="{{editData.asSaaS.sServiceLevel}}" readonly="true" />
+              应用等级：<input type="text" class="form-control" value="{{editData.asSaaS.sSAexp}}" readonly="true" />
+              工具介绍：<input type="text" class="form-control" value="{{editData.asSaaS.sSAintroduce}}" readonly="true" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">其他说明</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" value="{{editData.asSaaS.otherDesc}}" readonly="true" />
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>

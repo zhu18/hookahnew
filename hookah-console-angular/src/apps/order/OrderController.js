@@ -1,5 +1,5 @@
 class ShelfController {
-  constructor($scope, $rootScope, $http, $uibModal, usSpinnerService, growl) {
+  constructor($scope, $rootScope, $state, $http, $uibModal, usSpinnerService, growl) {
 
 
     $scope.search = function () {
@@ -17,6 +17,35 @@ class ShelfController {
             growl.addSuccessMessage("订单数据加载完毕。。。");
         });
     };
+
+      $scope.getDetails = function (event, orderId) {
+          var promise = $http({
+              method: 'GET',
+              url: $rootScope.site.apiServer + "/api/order/viewDetails",
+              params: {
+                  orderId: orderId
+              }
+          });
+          promise.then(function (res, status, config, headers) {
+              $rootScope.order = res.data.data[0];
+              $rootScope.user = res.data.data[1];
+          });
+      };
+      $scope.getGoodDetail = function (event, goodsId) {
+          var promise = $http({
+              method: 'GET',
+              url: $rootScope.site.apiServer + "/api/goods/getGoodsInfo",
+              params: {
+                  goodsId: goodsId
+              }
+          });
+          promise.then(function (res, status, config, headers) {
+              if(res.data.code == "1") {
+                  $rootScope.editData = res.data.data;
+                  $state.go('order.viewGoodDetail', {data: $rootScope.editData});
+              }
+          });
+      };
 
       $scope.pageChanged = function () {
           $scope.search();

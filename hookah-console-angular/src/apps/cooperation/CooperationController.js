@@ -20,9 +20,7 @@ class CooperationController {
                 url: $rootScope.site.apiServer + "/coo/" + cooperation.cooperationId,
             });
             promise.then(function (res, status, config, headers) {
-                $rootScope.loadingState = false;
                 $rootScope.cuserd=res.data.data;
-                growl.addSuccessMessage("数据加载完毕。。。");
             });
         };
         $scope.add = function () {
@@ -32,14 +30,12 @@ class CooperationController {
                 data: $("#newCooperation").serialize()
             });
             promise.then(function (res, status, config, headers) {
-                $rootScope.loadingState = false;
                 if (res.data.code == "1"){
                     alert(res.data.data);
                     $state.go('cooperation.search');
                 }else{
                     alert(res.data.message);
                 }
-                growl.addSuccessMessage("数据加载完毕。。。");
             });
 
         };
@@ -57,12 +53,12 @@ class CooperationController {
                 }
             });
             promise.then(function (res, status, config, headers) {
-                $rootScope.loadingState = false;
-                if (res.data.code = 1){
+                if (res.data.code == "1"){
+                    alert(res.data.data);
+                    $state.go('cooperation.search');
+                }else {
                     alert(res.data.message);
                 }
-                alert(res.data.message);
-                growl.addSuccessMessage("数据加载完毕。。。");
             });
         };
         $scope.delete = function (event, cooperation) {
@@ -76,10 +72,8 @@ class CooperationController {
             });
 
             promise.then(function (res, status, config, headers) {
-                $rootScope.loadingState = false;
                 alert(res.data.data);
                 $scope.search();
-                growl.addSuccessMessage("数据加载完毕。。。");
             });
         };
         $scope.pageChanged = function () {
