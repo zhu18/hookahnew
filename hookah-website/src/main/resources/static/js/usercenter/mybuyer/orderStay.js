@@ -7,22 +7,46 @@ function loadPageData(data){
     if(data.data.orders.list.length > 0){
         var list = data.data.orders.list;
         var html = '';
-        for(var i=0; i<list.length; i++){
-            html+= '<tr class="content border-bottom">';
-            html+= '<td class="text-align-center">'+list[i].orderSn+'</td>';
-            html+= '<td class="text-align-right moneyTotal">￥&nbsp;'+(list[i].orderAmount/100).toFixed(2)+'</td>';
-            html+= '<td>'+list[i].addTime+'</td>';
-            html+= '<td>未付款</td>';
-            html+= '<td class="text-align-center">';
-            html+= '<a href="'+host.website+'/order/payOrder?orderSn='+list[i].orderSn+'"  class="display-inline-block goPay btn btn-full-orange">去支付</a>';
-            html+= '<a target="_blank" href="/order/viewDetails?orderId='+list[i].orderId+'&num=2" class="display-block padding-top-5">查看详情</a>';
-            html+= '<a href="javascript:confirmDelete(\''+list[i].orderId+'\');" class="display-block">删除</a>';
-            html+= '</td>';
-            html+= '</tr>';
+        for(var i=0; i<list.length; i++) {
+            html += '<table>';
+            html += '<thead>';
+            html += '<tr>';
+            html += '<th class="">' + list[i].addTime + '</th>';
+            html += '<th class="">' + '订单号:' + list[i].orderSn + '</th>';
+            html += '<th rowspan="4">九次方大数据交易集团</th>';
+            html += '<th colspan="3"><a target="_blank" href="/order/viewDetails?orderId=' + list[i].orderId + '&num=1" class="display-block ">订单详情</a></th>';
+            html += '</tr>';
+            html += '</thead>';
+            var goods = list[i].mgOrderGoodsList;
+            for (var ii = 0; ii < goods.length; ii++) {
+                html += '<tbody>';
+                html += '<tr class="content border-bottom">';
+                html += '<td class="text-align-center">';
+                html += '<div class="p-img">';
+                html += '<a href="/exchange/details?id=' + goods[ii].goodsId + '" target="_blank">';
+                html += '<img src="' + goods[ii].goodsImg + '" alt="">';
+                html += '</a>';
+                html += '</div>';
+                html += '<div class="desc margin-top-10 marign-bottom-10" >';
+                html += '<a href="/exchange/details?id=' + goods[ii].goodsId + '" target="_blank">' + goods[ii].goodsName + '</a>';
+                html += '</div>';
+                html += '</td>';
+                html += '<td class="" rowspan="'+goods.length+'">总额&nbsp;￥&nbsp;' + (list[i].orderAmount / 100).toFixed(2) + '<br/>' + list[i].payName + '</td>';//订单总金额
+                html += '<td>创建时间&nbsp;&nbsp;<br/>' + list[i].addTime + '</td>';
+                html += '<td>状态&nbsp;&nbsp;<br/>未付款</td>';
+                html += '<td class="text-align-center">';
+                html += '<a href="' + host.website + '/order/payOrder?orderSn=' + list[i].orderSn + '"  class="display-inline-block goPay btn btn-full-orange">去支付</a>';
+                html += '<a target="_blank" href="/order/viewDetails?orderId=' + list[i].orderId + '&num=2" class="display-block padding-top-5">查看详情</a>';
+                html += '<a href="javascript:confirmDelete(\'' + list[i].orderId + '\');" class="display-block">删除</a>';
+                html += '</td>';
+                html += '</tr>';
+                html += '</tbody>';
+            }
+            html += '</table>';
         }
-        $('.order tbody').html(html);
+        $('.order').html(html);
     }else{
-        $('.order tbody').html('<tr class="noData"><td colspan="5">暂无订单！</td></tr>');
+        $('.order').html('<tr class="noData"><td colspan="5">暂无订单！</td></tr>');
     }
 }
 var start = {
@@ -89,4 +113,23 @@ function confirmDelete(orderId){
 			this.hide();
 		}
 	});
+}
+
+function getDataPackage(goodsId){
+    $.ajax({
+        url: host.website+'/help/exportWords',
+        type:'get',
+        data:{
+            goodsId:goodsId
+        },
+        success:function(data){
+            if(data.code == 1){
+                // window.location.href = data.data;
+                window.location.href = data.data;
+            }else{
+                $.alert(data.message)
+                // $.alert('下载失败')
+            }
+        }
+    });
 }

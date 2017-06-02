@@ -10,7 +10,8 @@ function loadPageData(data){
             html += '<tr>';
             html += '<th class="">' + list[i].addTime + '</th>';
             html += '<th class="">' + '订单号:' + list[i].orderSn + '</th>';
-            html += '<th rowspan="4">九次方大数据交易集团</th>';
+            html += '<th>九次方大数据交易集团</th>';
+            html += '<th colspan="3"><a target="_blank" href="/order/viewDetails?orderId=' + list[i].orderId + '&num=1" class="display-block">订单详情</a></th>';
             html += '</tr>';
             html += '</thead>';
             var goods = list[i].mgOrderGoodsList;
@@ -28,16 +29,16 @@ function loadPageData(data){
                 html += '</div>'
                 html += '</td>'
                 html += '<td>' + goods[ii].goodsNumber +'<br/>'+ '规格:1000/年</td>';
-                html += '<td><a href="" ng-click="getDataPackage('+goods[ii].goodsId+')">下载</a><br/>'+ '规格:1000/年</td>';
-                html += '<td class="text-align-right moneyTotal" rowspan="'+goods.length+'">总额&nbsp;￥&nbsp;' + (list[i].orderAmount / 100).toFixed(2) + '<br/>' + list[i].payName + '</td>';//订单总金额
-                html += '<td rowspan="'+goods.length+'">已完成' + '<a target="_blank" href="/order/viewDetails?orderId=' + list[i].orderId + '&num=1" class="display-block">订单详情</a>' + '</td>';
+                html += '<td><a href="/exchange/orderEndDetails?id='+goods[ii].goodsId+'&orderSn='+list[i].orderSn+'">下载</a><br/>'+ '规格:1000/年</td>';
+                html += '<td class="" rowspan="'+goods.length+'">总额&nbsp;￥&nbsp;' + (list[i].orderAmount / 100).toFixed(2) + '<br/>' + list[i].payName + '</td>';//订单总金额
+                html += '<td rowspan="'+goods.length+'">已完成</td>';
                 html += '<td class="text-align-center" rowspan="'+goods.length+'">';
                 if (list[i].commentFlag == 0) {
                     html += '<a target="_blank" href="/order/sunAlone?orderId=' + list[i].orderId + '" class="display-block">评价晒单</a>';
                 } else if (list[i].commentFlag == 1) {
                     html += '<span class="display-block">已评价</span>';
                 }
-                html += '<a href="/exchange/details?id='+goods[ii].goodsId+'" class="btn-full-blue display-inline-block">再次购买</a>'
+                html += '<a href="/exchange/details?id='+goods[ii].goodsId+'" class="display-inline-block goPay btn btn-full-orange">再次购买</a>'
                 html += '</td>';
                 html += '</tr>';
                 html += '</tbody>';
@@ -133,6 +134,9 @@ function getDataPackage(goodsId){
                 $.alert(data.message)
                 // $.alert('下载失败')
             }
+        },
+        error:function(data){
+            $.alert(data.message);
         }
     });
 }
