@@ -56,6 +56,47 @@
         <result column="source_id" jdbcType="VARCHAR" property="sourceId" />
         <result column="source_type" jdbcType="VARCHAR" property="sourceType" />
     </resultMap>
+
+    <resultMap id="GCResult" type="com.jusfoun.hookah.core.domain.vo.GoodsCheckedVo" >
+        <id column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+        <result column="goods_sn" property="goodsSn" jdbcType="VARCHAR" />
+        <result column="domain_id" property="domainId" jdbcType="VARCHAR" />
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+        <result column="goods_brief" property="goodsBrief" jdbcType="VARCHAR" />
+        <result column="goods_desc" property="goodsDesc" jdbcType="VARCHAR" />
+        <result column="keywords" property="keywords" jdbcType="VARCHAR" />
+        <result column="goods_img" property="goodsImg" jdbcType="VARCHAR" />
+        <result column="is_delete" property="isDelete" jdbcType="TINYINT" />
+        <result column="goods_type" property="goodsType" jdbcType="TINYINT" />
+        <result column="goods_number" property="goodsNumber" jdbcType="INTEGER" />
+        <result column="warn_number" property="warnNumber" jdbcType="INTEGER" />
+        <result column="industry" property="industry" jdbcType="VARCHAR" />
+        <result column="goods_area" property="goodsArea" jdbcType="VARCHAR" />
+        <result column="onsale_start_date" property="onsaleStartDate" jdbcType="TIMESTAMP" />
+        <result column="onsale_end_date" property="onsaleEndDate" jdbcType="TIMESTAMP" />
+        <result column="cat_id" property="catId" jdbcType="VARCHAR" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+        <result column="is_real" property="isReal" jdbcType="INTEGER" />
+        <result column="shop_price" property="shopPrice" jdbcType="BIGINT" />
+        <result column="shop_number" property="shopNumber" jdbcType="INTEGER" />
+        <result column="shop_format" property="shopFormat" jdbcType="TINYINT" />
+        <result column="seller_note" property="sellerNote" jdbcType="VARCHAR" />
+        <result column="add_user" property="addUser" jdbcType="VARCHAR" />
+        <result column="check_status" property="checkStatus" jdbcType="TINYINT" />
+        <result column="is_onsale" property="isOnsale" jdbcType="TINYINT" />
+        <result column="is_book" property="isBook" jdbcType="TINYINT" />
+        <result column="version" property="version" jdbcType="INTEGER" />
+        <result column="shop_id" property="shopId" jdbcType="VARCHAR" />
+        <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
+        <result column="off_reason" property="offReason" jdbcType="VARCHAR" />
+        <result column="upload_url" jdbcType="VARCHAR" property="uploadUrl" />
+        <result column="source_id" jdbcType="VARCHAR" property="sourceId" />
+        <result column="source_type" jdbcType="VARCHAR" property="sourceType" />
+        <result column="check_time" jdbcType="TIMESTAMP" property="checkTime" />
+        <result column="check_user" jdbcType="VARCHAR" property="checkUser" />
+    </resultMap>
+
     <select id="getNeedEsGoods" resultMap="EsResultMap">
         SELECT
             goods_id,
@@ -206,5 +247,33 @@
             </if>
         where goods_id = #{goodsId}
     </update>
+
+    <select id="getListForChecked" resultMap="GCResult">
+        SELECT
+            goods.goods_id,
+            goods.goods_sn,
+            goods.goods_name,
+            goods.is_delete,
+            goods.goods_type,
+            goods.goods_area,
+            goods.cat_id,
+            goods.shop_name,
+            goods.check_status,
+            goods.is_onsale,
+            goodsCheck.check_user,
+            goodsCheck.check_time
+        FROM
+        goods_check goodsCheck
+        RIGHT JOIN goods goods ON goodsCheck.goods_id = goods.goods_id
+        WHERE
+        goods.check_status != 0
+        AND goods.is_delete = 1
+        <if test="goodsSn != '' and goodsSn != null">
+            AND goods.goods_sn like '%${goodsSn}%'
+        </if>
+        <if test="goodsName != '' and goodsName != null">
+            AND goods.goods_name like '%${goodsName}%'
+        </if>
+    </select>
 
 </mapper>

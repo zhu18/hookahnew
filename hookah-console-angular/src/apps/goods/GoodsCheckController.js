@@ -42,6 +42,23 @@ class GoodsCheckController {
       });
     };
 
+    $scope.checkedList = function () {
+
+      var promise = $http({
+        method: 'GET',
+        url: $rootScope.site.apiServer + "/api/goods/checkedList",
+        params: {currentPage: $rootScope.pagination.currentPage,
+                 pageSize: $rootScope.pagination.pageSize,
+                    goodsName: $scope.searchName,
+                    goodsSn: $scope.searchSn
+        }
+      });
+      promise.then(function (res, status, config, headers) {
+        $rootScope.loadingState = false;
+        growl.addSuccessMessage("审核结果加载完毕。。。");
+      });
+    };
+
     $scope.checkRecord = function (item) {
 
       var promise = $http({
@@ -58,18 +75,6 @@ class GoodsCheckController {
         $rootScope.loadingState = false;
         growl.addSuccessMessage("审核结果加载完毕。。。");
       });
-    };
-
-    $scope.pageChanged = function () {
-
-        if ($state.$current.name == "items.check") {
-            $scope.search();
-        }
-
-        if ($state.$current.name == "items.checkedList") {
-            $scope.searchCheckRs();
-        }
-      console.log('Page changed to: ' + $rootScope.pagination.currentPage);
     };
 
     $scope.LookGoods = function(item, n){
@@ -176,8 +181,22 @@ class GoodsCheckController {
       }
 
       if ($state.$current.name == "items.checkedList") {
-          $scope.searchCheckRs();
+          // $scope.searchCheckRs();
+          $scope.checkedList();
       }
+
+      $scope.pageChanged = function () {
+
+          if ($state.$current.name == "items.check") {
+              $scope.search();
+          }
+
+          if ($state.$current.name == "items.checkedList") {
+              // $scope.searchCheckRs();
+              $scope.checkedList();
+          }
+          console.log('Page changed to: ' + $rootScope.pagination.currentPage);
+      };
   }
 }
 

@@ -53,7 +53,8 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
     })
     .state('items.checkedList', {
         url: '/items/checkedList',
-        template: require('./checkedList.html'),
+        template: require('./goodsCheckedList.html'),
+        // template: require('./checkedList.html'),
         controller: GoodsCheckController,
     })
     .state('items.goodsDetail', {

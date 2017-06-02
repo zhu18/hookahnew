@@ -46,11 +46,11 @@ app.run(function ($rootScope, $state) {
               "url":"items.search"
           },
           {
-              "title":"商品审核",
+              "title":"待审核资源",
               "url":"items.check"
           },
           {
-              "title":"审核结果",
+              "title":"已审核资源",
               "url":"items.checkedList"
           }
       ]

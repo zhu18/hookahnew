@@ -2,8 +2,10 @@ package com.jusfoun.hookah.core.dao;
 
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.es.EsGoods;
+import com.jusfoun.hookah.core.domain.vo.GoodsCheckedVo;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.generic.GenericDao;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
@@ -26,4 +28,5 @@ public interface GoodsMapper extends GenericDao<Goods> {
 
     int updateByGidForFollowNum(Map<String, Object> map);
 
+    List<GoodsCheckedVo> getListForChecked(@Param("goodsName") String goodsName, @Param("goodsSn") String goodsSn);
 }

@@ -1,5 +1,7 @@
 package com.jusfoun.hookah.console.server.api.goods;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.jusfoun.hookah.console.server.controller.BaseController;
 import com.jusfoun.hookah.console.server.util.DictionaryUtil;
 import com.jusfoun.hookah.core.common.Pagination;
@@ -8,6 +10,7 @@ import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgShelvesGoods;
+import com.jusfoun.hookah.core.domain.vo.GoodsCheckedVo;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
@@ -177,6 +180,14 @@ public class GoodsApi extends BaseController{
             }
             page = goodsService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
 
+            List<Goods> list = page.getList();
+            if(list .size() > 0 && list != null){
+                list.stream().forEach(goods ->
+                        {
+                            goods.setGoodsArea(goods.getGoodsArea() == null ? "" : DictionaryUtil.getRegionById(goods.getGoodsArea()).getMergerName());
+                            goods.setCatId(goods.getCatId() == null ? "" : DictionaryUtil.getCategoryById(goods.getCatId().substring(0, 3)).getCatName());
+                        });
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -272,5 +283,49 @@ public class GoodsApi extends BaseController{
         return returnData;
     }
 
+    /**
+     * 获取已审核的数据
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping(value = "/checkedList")
+    public ReturnData checkedList(String currentPage, String pageSize, String goodsName, String goodsSn) {
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        Pagination<GoodsCheckedVo> pagination = new Pagination<>();
+        PageInfo<GoodsCheckedVo> page = new PageInfo<>();
+        try {
+
+            int pageNumberNew = HookahConstants.PAGE_NUM;
+            if (StringUtils.isNotBlank(currentPage)) {
+                pageNumberNew = Integer.parseInt(currentPage);
+            }
+            int pageSizeNew = HookahConstants.PAGE_SIZE;
+            if (StringUtils.isNotBlank(pageSize)) {
+                pageSizeNew = Integer.parseInt(pageSize);
+            }
+            PageHelper.startPage(pageNumberNew, pageSizeNew);//pageNum为第几页，pageSize为每页数量
+
+            List<GoodsCheckedVo> list = goodsService.getListForChecked(goodsName, goodsSn);
+            page = new PageInfo<GoodsCheckedVo>(list);
+            if(page.getList() != null && page.getList().size() > 0){
+                page.getList().stream().forEach(goodsCheckedVo ->
+                        {
+                            goodsCheckedVo.setGoodsArea(goodsCheckedVo.getGoodsArea() == null ? "" : DictionaryUtil.getRegionById(goodsCheckedVo.getGoodsArea()).getMergerName());
+                            goodsCheckedVo.setCatId(goodsCheckedVo.getCatId() == null ? "" : DictionaryUtil.getCategoryById(goodsCheckedVo.getCatId().substring(0, 3)).getCatName());
+                        }
+                );
+                pagination.setTotalItems(page.getTotal());
+                pagination.setPageSize(pageSizeNew);
+                pagination.setCurrentPage(pageNumberNew);
+                pagination.setList(page.getList());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ReturnData.success(pagination);
+    }
 
 }

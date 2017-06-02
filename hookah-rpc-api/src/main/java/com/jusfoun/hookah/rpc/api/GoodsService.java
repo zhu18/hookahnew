@@ -4,10 +4,12 @@ import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
+import com.jusfoun.hookah.core.domain.vo.GoodsCheckedVo;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.GenericService;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,4 +40,6 @@ public interface GoodsService extends GenericService<Goods,String> {
     int updateByGidForFollowNum(Map<String, Object> map);
 
     GoodsVo findGoodsByIdWebsite(String goodsId) throws HookahException;
+
+    List<GoodsCheckedVo> getListForChecked(String goodsName, String goodsSn);
 }

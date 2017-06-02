@@ -11,6 +11,7 @@ import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.es.EsGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
+import com.jusfoun.hookah.core.domain.vo.GoodsCheckedVo;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -413,5 +414,10 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
     @Override
     public int updateByGidForFollowNum(Map<String, Object> map) {
         return goodsMapper.updateByGidForFollowNum(map);
+    }
+
+    @Override
+    public List<GoodsCheckedVo> getListForChecked(String goodsName, String goodsSn) {
+        return goodsMapper.getListForChecked(goodsName, goodsSn);
     }
 }
