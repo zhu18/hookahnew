@@ -33,6 +33,8 @@ public class OrderApi extends BaseController{
 
     @Resource
     OrderInfoService orderInfoService;
+    @Resource
+    UserService userService;
 
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
