@@ -40,7 +40,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr data-ng-if="!loadingState" data-ng-repeat="item in pagination.store" class="">
+            <tr data-ng-if="!loadingState" data-ng-repeat="item in pagination.store" class="" ng-show="item.isDeleted == 0">
+
               <td>{{ $index + 1 }}</td>
               <td>
                 <a  ui-sref="order.viewOrderDetails" ng-click="getDetails($event,item.orderId)" >
@@ -48,38 +49,18 @@
                 </a>
               </td>
               <td>
-                <span text-length="50" ng-bind="item.consignee"></span>
+                <span text-length="50" ng-bind="item.userName"></span>
               </td>
               <td>
                 <span text-length="50" ng-bind="item.orderAmount / 100"></span>
               </td>
-              <!--
-              <td>
-                  <span text-length="50" ng-bind="item.orderStatus"></span>
-                  <span text-length="50" ng-show="item.orderStatus == 0">未确认</span>
-                  <span text-length="50" ng-show="item.orderStatus == 1">确认</span>
-                  <span text-length="50" ng-show="item.orderStatus == 2">已取消</span>
-                  <span text-length="50" ng-show="item.orderStatus == 3">无效</span>
-                  <span text-length="50" ng-show="item.orderStatus == 4">退货</span>
-                </td>
-                -->
+
               <td>
                 <span text-length="50" ng-show="item.payStatus == 0">未付款</span>
                 <span text-length="50" ng-show="item.payStatus == 1">付款中</span>
                 <span text-length="50" ng-show="item.payStatus == 2">已付款</span>
               </td>
-              <!--
-              <td>
-                <span text-length="50" ng-show="item.shippingStatus == 0">未发货</span>
-                <span text-length="50" ng-show="item.shippingStatus == 1">已发货</span>
-                <span text-length="50" ng-show="item.shippingStatus == 2">已收货</span>
-                <span text-length="50" ng-show="item.shippingStatus == 3">退货</span>
-              </td>
 
-              <td>
-                <span text-length="50" ng-bind="item.mobile"></span>
-              </td>
-              -->
               <td>
                 <span text-length="40" ng-bind="item.addTime"></span>
               </td>
@@ -91,12 +72,13 @@
                   <a href="javascript:;" target="_blank">删除</a>
                   <span class="text-explode">|</span>
                   <i class="link-space"></i>
-                  <a href="javascript:;" target="_blank">取消</a>
+                   <a  ui-sref="order.viewOrderDetails" ng-click="getDetails($event,item.orderId)" >查看</a>
                 </span>
                 <span ng-show="item.payStatus == 2">
-                  <a href="javascript:;" target="_blank">查看</a>
+                  <a  ui-sref="order.viewOrderDetails" ng-click="getDetails($event,item.orderId)">查看</a>
                 </span>
               </td>
+
             </tr>
             </tbody>
             <tfoot ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">
@@ -109,7 +91,6 @@
                       max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"
                       force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"
                       last-text="末页">
-
                   </ul>
                 </div>
               </td>

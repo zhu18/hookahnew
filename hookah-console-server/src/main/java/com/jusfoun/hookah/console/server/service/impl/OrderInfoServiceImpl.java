@@ -7,6 +7,7 @@ import com.jusfoun.hookah.core.dao.OrderInfoMapper;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.OrderInfo;
 import com.jusfoun.hookah.core.domain.PayCore;
+import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
 import com.jusfoun.hookah.core.domain.vo.CartVo;
@@ -21,11 +22,7 @@ import com.jusfoun.hookah.core.utils.HttpClientUtil;
 import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.OrderHelper;
 import com.jusfoun.hookah.core.utils.StringUtils;
-import com.jusfoun.hookah.rpc.api.CartService;
-import com.jusfoun.hookah.rpc.api.GoodsService;
-import com.jusfoun.hookah.rpc.api.MgOrderInfoService;
-import com.jusfoun.hookah.rpc.api.OrderInfoService;
-import com.jusfoun.hookah.rpc.api.PayCoreService;
+import com.jusfoun.hookah.rpc.api.*;
 import org.apache.http.HttpException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -67,6 +64,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
     @Resource
     PayCoreService payCoreService;
+
+    @Resource
+    UserService userService;
 
     @Resource
     public void setDao(OrderInfoMapper orderinfoMapper) {
@@ -554,4 +554,29 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         return orderInfoVo;
     }
 
+    @Override
+    public Pagination<OrderInfoVo> getUserListInPage(Integer pageNum, Integer pageSize, List<Condition> filters,
+                                                       List<OrderBy> orderBys) {
+        // TODO Auto-generated method stub
+        PageHelper.startPage(pageNum, pageSize);
+        Page<OrderInfo> list =  (Page<OrderInfo>) super.selectList(filters,orderBys);
+        Page<OrderInfoVo> page = new Page<OrderInfoVo>(pageNum,pageSize);
+        for(OrderInfo order:list){
+            OrderInfoVo orderInfoVo = new OrderInfoVo();
+            this.copyProperties(order,orderInfoVo,null);
+
+            OrderInfoVo mgOrder = mgOrderInfoService.selectById(orderInfoVo.getOrderId());
+            User user = userService.selectById(orderInfoVo.getUserId());
+            orderInfoVo.setUserName(user.getUserName());
+            page.add(orderInfoVo);
+        }
+
+        Pagination<OrderInfoVo> pagination = new Pagination<OrderInfoVo>();
+        pagination.setTotalItems(list.getTotal());
+        pagination.setPageSize(pageSize);
+        pagination.setCurrentPage(pageNum);
+        pagination.setList(page);
+        logger.info(JsonUtils.toJson(pagination));
+        return pagination;
+    }
 }

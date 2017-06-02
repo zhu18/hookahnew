@@ -21,7 +21,7 @@ function loadPageData(data){ //渲染页面数据
 			html += '</a>';
 			html += '<div class="item-down clearfix">';
 			html += '<span class="grid-left goods-price">￥<span>'+Number(list[i].shopPrice)/100+'</span>/'+(list[i].shopNumber == 1 ? '':list[i].shopNumber)+shopFormat+'</span>';
-			html += '<a class="grid-right goods-cart btn btn-full-red padding-5" href="/exchange/details?id='+list[i].goodsId+'">查看详情</a>';
+			html += '<a class="grid-right goods-cart btn btn-full-red padding-5" href="/exchange/details?id='+list[i].goodsId+'" target="_blank">查看详情</a>';
 			html += '</div>';
 			html += '</li>';
         }

@@ -3,7 +3,6 @@ package com.jusfoun.hookah.console.server.api.order;
 import com.jusfoun.hookah.console.server.controller.BaseController;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
-import com.jusfoun.hookah.core.domain.OrderInfo;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -39,7 +38,7 @@ public class OrderApi extends BaseController{
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ReturnData getListInPage(String currentPage, String pageSize, String orderSn) {
-        Pagination<OrderInfo> page = new Pagination<>();
+        Pagination<OrderInfoVo> page = new Pagination<>();
         try {
             List<Condition> filters = new ArrayList();
             List<OrderBy> orderBys = new ArrayList();
@@ -60,7 +59,7 @@ public class OrderApi extends BaseController{
             if (StringUtils.isNotBlank(pageSize)) {
                 pageSizeNew = Integer.parseInt(pageSize);
             }
-            page = orderInfoService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
+            page = orderInfoService.getUserListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
         } catch (Exception e) {
             e.printStackTrace();
         }
