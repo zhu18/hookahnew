@@ -4,14 +4,15 @@ import com.jusfoun.hookah.console.server.controller.BaseController;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.OrderInfo;
+import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.OrderInfoService;
+import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,7 +59,6 @@ public class OrderApi extends BaseController{
                 pageSizeNew = Integer.parseInt(pageSize);
             }
             page = orderInfoService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -68,23 +68,24 @@ public class OrderApi extends BaseController{
     /**
      * 查询订单详情
      * @param orderId
-     * @param num
-     * @param model
      * @return
      */
     @RequestMapping(value = "/viewDetails", method = RequestMethod.GET)
-    public String getOrderDetail(@RequestParam String orderId, @RequestParam Integer num, Model model){
+    public ReturnData getOrderDetail(@RequestParam String orderId){
+        OrderInfoVo vo = new OrderInfoVo();
+        List list = new ArrayList();
         try{
             String a = new String();
-            OrderInfoVo vo = orderInfoService.findDetailById(orderId);
-            model.addAttribute("order",vo);
-            model.addAttribute("num",num);
+            vo = orderInfoService.findDetailById(orderId);
+            User user = userService.selectById(vo.getUserId());
+            list.add(vo);
+            list.add(user);
             logger.info(JsonUtils.toJson(vo));
-            return "/usercenter/buyer/viewDetails";
         }catch (Exception e){
             logger.info(e.getMessage());
-            return "/error/500";
+            return ReturnData.error(e.getMessage());
         }
+        return ReturnData.success(list);
     }
 
 
