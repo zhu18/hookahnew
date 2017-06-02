@@ -48,7 +48,7 @@ class AccountCarouselController {
 
          promise.then(function (res, status, config, headers) {
              $rootScope.loadingState = false;
-             alert(res.data.message);
+             //alert(res.data.message);
              $scope.search();
              growl.addSuccessMessage("数据加载完毕。。。");
          });
@@ -65,7 +65,6 @@ class AccountCarouselController {
             growl.addSuccessMessage("数据加载完毕。。。");
         });
     };
-
 
     $scope.edit = function(){
         var promise = $http({
@@ -87,9 +86,6 @@ class AccountCarouselController {
                 $state.go('advert.carousel.search');
             }
         });
-    };
-
-    $scope.save = function(){
     };
 
     $scope.pageChanged = function () {
