@@ -234,26 +234,24 @@ public class AuthController extends BaseController {
         returnData.setCode(ExceptionConst.Success);
         try {
             String userId = this.getCurrentUser().getUserId();
-            organization.setUserId(userId);
-            organization.setIsAuth(AUTH_STATUS_SUCCESS);
+            User user = userService.selectById(userId);
+            String orgId = user.getOrgId();
 
-            List<Condition> fifters = new ArrayList<Condition>();
-            fifters.add(Condition.eq("userId", userId));
-            Organization organization1 = organizationService.selectOne(fifters);
-
-            if (null != organization1) {
-                organization.setOrgId(organization1.getOrgId());
+            User user1 = new User();
+            user1.setUserId(userId);
+            if(!StringUtils.isEmpty(orgId) && !"0".equals(orgId)){
+                //            organization.setUserId(userId);
+                organization.setIsAuth(AUTH_STATUS_SUCCESS);
+                organization.setOrgId(orgId);
                 organizationService.updateByIdSelective(organization);
-            } else {
+            }else {
                 organization = organizationService.insert(organization);
-                returnData.setData(organization);
+                user1.setOrgId(organization.getOrgId());
             }
 
-            User user = new User();
-            user.setUserId(userId);
             //用户待审核状态
-            user.setUserType(HookahConstants.UserType.ORGANIZATION_CHECK_NO.getCode());
-            userService.updateByIdSelective(user);
+            user1.setUserType(HookahConstants.UserType.ORGANIZATION_CHECK_NO.getCode());
+            userService.updateByIdSelective(user1);
 
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);

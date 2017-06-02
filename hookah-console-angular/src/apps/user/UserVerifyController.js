@@ -78,7 +78,7 @@ class UserVerifyController {
           //企业用户认证
             var promise = $http({
                 method: 'GET',
-                url: $rootScope.site.apiServer + "/api/user/org/"+item.userId
+                url: $rootScope.site.apiServer + "/api/user/org/"+item.orgId
             });
             promise.then(function (res, status, config, headers) {
                 $rootScope.loadingState = false;

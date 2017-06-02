@@ -89,9 +89,10 @@ public class UserApi {
 
     @RequestMapping(value = "/org/{id}", method = RequestMethod.GET)
     public ReturnData getOrgById(@PathVariable String id) {
-        List<Condition> fifters = new ArrayList<Condition>();
-        fifters.add(Condition.eq("userId",id));
-        Organization organization = organizationService.selectOne(fifters);
+//        List<Condition> fifters = new ArrayList<Condition>();
+//        fifters.add(Condition.eq("userId",id));
+//        Organization organization = organizationService.selectOne(fifters);
+        Organization organization = organizationService.selectById(id);
         return ReturnData.success(organization);
     }
 
