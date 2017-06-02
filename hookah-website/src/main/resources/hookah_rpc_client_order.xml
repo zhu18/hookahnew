@@ -24,4 +24,7 @@
     <motan:referer id="accNoTokenService"
                    interface="com.jusfoun.hookah.rpc.api.AccNoTokenService"
                    connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+    <motan:referer id="cooperationService"
+                   interface="com.jusfoun.hookah.rpc.api.CooperationService"
+                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
 </beans>

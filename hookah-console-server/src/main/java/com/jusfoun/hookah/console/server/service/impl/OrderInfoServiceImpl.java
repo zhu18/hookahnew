@@ -447,6 +447,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                 orderInfoVo.setMgOrderGoodsList(goodsList);
             }
 
+            orderInfoVo.setMgOrderGoodsList(mgOrder.getMgOrderGoodsList());
             page.add(orderInfoVo);
         }
 
