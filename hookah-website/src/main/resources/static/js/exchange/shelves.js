@@ -1,5 +1,4 @@
-$(function () {
-    function loadPageData(data){ //渲染页面数据
+function loadPageData(data){ //渲染页面数据
         // return alert(JSON.stringify(data))
         if(data.data.list.length > 0){
             var list = data.data.list;
@@ -31,5 +30,5 @@ $(function () {
         }
 
     }
-})
+
 
