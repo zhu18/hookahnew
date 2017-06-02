@@ -86,7 +86,7 @@ public class ExchangeController extends BaseController{
                     filters.add(Condition.eq("goodsId", id));
                     filters.add(Condition.eq("userId", getCurrentUser().getUserId()));
                     GoodsFavorite goodsFavorite = goodsFavoriteService.selectOne(filters);
-                    if(goodsFavorite != null){
+                    if(goodsFavorite != null && goodsFavorite.getIsDelete() == 1){
                         goodsVo.setOrNotFavorite(true);
                     }else{
                         goodsVo.setOrNotFavorite(false);
