@@ -58,10 +58,10 @@ function addCart(goodsId,formatId,goodsNumber) {
     });
 }
 function cancelAttention(id){
-    console.log("id:"+id);
     $.ajax({
         url:'/goodsFavorite/del',
         type:'get',
+        cache:false,
         data:{
             id:id
         },
