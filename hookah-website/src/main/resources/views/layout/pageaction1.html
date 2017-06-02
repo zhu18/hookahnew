@@ -19,6 +19,7 @@
     $.ajax({
       type: pageType,
       url: pagePath,
+        cache:false,
       data: dataParm,
       success: function (data) {
         if (data.code == "1") {
@@ -36,6 +37,7 @@
     $.ajax({
       type: pageType,
       url: pagePath,
+        cache:false,
       dataType: "json",
       contentType: 'application/json',
       data: JSON.stringify(dataParm),
