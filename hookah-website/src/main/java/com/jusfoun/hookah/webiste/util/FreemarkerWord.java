@@ -2,27 +2,22 @@ package com.jusfoun.hookah.webiste.util;
 
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.utils.ReturnData;
-import com.jusfoun.hookah.webiste.config.MyProps;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import org.springframework.util.ResourceUtils;
 
-import javax.annotation.Resource;
 import java.io.*;
 import java.util.Map;
 
 public class FreemarkerWord {
 
-    @Resource
-    MyProps myProps;
-
 	private Configuration configuration = null;
 
-	public FreemarkerWord() {  
-        configuration = new Configuration();  
-        configuration.setDefaultEncoding("utf-8");  
-    }  
-	
+	public FreemarkerWord() {
+        configuration = new Configuration();
+        configuration.setDefaultEncoding("utf-8");
+    }
+
 	public ReturnData createDoc(Map<String,Object> dataMap, GoodsVo goodsVo) throws Exception {
         ReturnData returnData = new ReturnData<>();
 	    configuration.setClassForTemplateLoading(this.getClass(), "/ftl/");
@@ -65,11 +60,11 @@ public class FreemarkerWord {
         String fileName = goodsVo.getGoodsName() + ".doc";
 
         File outFile = new File(docPath + fileName);
-        
+
         if(outFile.exists()){
         	outFile.delete();
         }
-        
+
         System.out.println();
         Writer out = null;
         FileOutputStream fos = null;
@@ -81,7 +76,7 @@ public class FreemarkerWord {
         out.flush();
         out.close();
         fos.close();
-        returnData.setData(myProps.getHost().get("website") + tempath + fileName);
+        returnData.setData("http://www.qddata.com.cn" + tempath + fileName);
 
 		return returnData;
     }  
