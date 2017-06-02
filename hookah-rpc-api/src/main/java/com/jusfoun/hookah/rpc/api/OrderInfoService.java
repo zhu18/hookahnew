@@ -33,6 +33,9 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
     public Pagination<MgOrderGoods> getGoodsListInPage(Integer pageNum, Integer pageSize, List<Condition> filters,
                                                        List<OrderBy> orderBys);
 
+    public Pagination<OrderInfoVo> getUserListInPage(Integer pageNum, Integer pageSize, List<Condition> filters,
+                                                       List<OrderBy> orderBys);
+
     /**
      * 根据订单号查询支付信息
      * @param orderId
