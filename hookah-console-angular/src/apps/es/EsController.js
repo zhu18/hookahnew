@@ -2,6 +2,9 @@ class EsController {
   constructor($scope, $rootScope, $state, $http, $uibModal, usSpinnerService, growl) {
     console.log($rootScope.config);
 
+
+      $scope.ess = [{no:'1',index:'qingdao-goods-v1',type:'goods'},{no:'2',index:'qingdao-category-v1',type:'category'} ];
+
     $scope.search = function () {
       var promise = $http({
         method: 'GET',
@@ -24,10 +27,11 @@ class EsController {
 
     $scope.del = function (id) {
 
+        console.log("id ："+id)
         var promise = $http({
             method: 'POST',
             url: $rootScope.site.apiServer + "/api/es/del",
-            params: {index: id
+            params: {index: id,
             }
         });
         promise.then(function (res, status, config, headers) {
@@ -41,6 +45,10 @@ class EsController {
 
       $scope.delGoods = function (goodsId,id,type) {
 
+          if(goodsId == null){
+              alert("请录入商品ID");
+              return;
+          }
           var promise = $http({
               method: 'POST',
               url: $rootScope.site.apiServer + "/api/es/delGoods",
@@ -58,11 +66,16 @@ class EsController {
           });
       };
 
-      $scope.add = function () {
+      $scope.add = function (val) {
+          if(val == null){
+              alert("请选择分类");
+             return;
+          }
           var promise = $http({
               method: 'GET',
               url: $rootScope.site.apiServer + "/api/es/add",
-              // data: $("#shelfForm").serialize()
+              params: {diff: val
+              }
           });
           promise.then(function (res, status, config, headers) {
               console.log(res.data)

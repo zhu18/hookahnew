@@ -31,6 +31,23 @@ function loadPageData(data){
                     }
 
                 html += '<tr class="content border-bottom">';
+<<<<<<< HEAD
+                html += '<td class="text-align-center">'
+                html += '<div class="p-img">'
+                html += '<a href="/exchange/details?id=' + goods[ii].goodsId + '" target="_blank">'
+                html += '<img style="width: 80px" src="' + goods[ii].goodsImg + '" alt="">'
+                html += '</a>'
+                html += '</div>'
+                html += '<div class="desc margin-top-10 marign-bottom-10" >'
+                html += '<a href="/exchange/details?id=' + goods[ii].goodsId + '" target="_blank">' + goods[ii].goodsName + '</a>'
+                html += '</div>'
+                html += '</td>'
+                html += '<td>' + goods[ii].goodsNumber +'<br/>'+ '规格:1000/年</td>';
+                html += '<td><a href="/exchange/orderEndDetails?id='+goods[ii].goodsId+'&orderSn='+list[i].orderSn+'">下载</a><br/>'+ '规格:1000/年</td>';
+                html += '<td class="" rowspan="'+goods.length+'">总额&nbsp;￥&nbsp;' + (list[i].orderAmount / 100).toFixed(2) + '<br/>' + list[i].payName + '</td>';//订单总金额
+                html += '<td rowspan="'+goods.length+'">已完成</td>';
+                html += '<td class="text-align-center" rowspan="'+goods.length+'">';
+=======
                 html += '<td class="text-align-center">';
                 html += '<div class="p-img">';
                 html += '<a href="/exchange/details?id=' + goods[ii].goodsId + '" target="_blank">';
@@ -45,6 +62,7 @@ function loadPageData(data){
                 html += '<td><a href="/exchange/orderEndDetails?id='+goods[ii].goodsId+'&orderSn='+list[i].orderSn+'">下载<br/><span class="fa fa-download font-size-18"></span></a></td>';
                 html += '<td class="">金额:￥&nbsp;' + ((goods[ii].goodsPrice / 100) * goods[ii].goodsNumber).toFixed(2) + '<br/><br/>' + list[i].payName + '</td>';//订单总金额
                 html += '<td class="text-align-center">';
+>>>>>>> 7a9be229435a3994a8dffcbb951a95ff86b5411a
                 if (list[i].commentFlag == 0) {
                     html += '<a target="_blank" href="/order/sunAlone?orderId=' + list[i].orderId + '" class="display-block">评价晒单</a>';
                 } else if (list[i].commentFlag == 1) {

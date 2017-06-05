@@ -194,11 +194,25 @@ public class EsApi {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public void init() {
-        String goodsIndex = PropertiesManager.getInstance().getProperty("goods.index");
-        String goodsType = PropertiesManager.getInstance().getProperty("goods.type");
-        Integer goodsShards = Integer.valueOf(PropertiesManager.getInstance().getProperty("goods.index.shards"));
-        Integer goodsReplicas = Integer.valueOf(PropertiesManager.getInstance().getProperty("goods.index.replicas"));
+    public void init(@RequestParam(value= "diff")  String diff) {
+
+        String goodsIndex = null;
+        String goodsType = null;
+        Integer goodsShards = null;
+        Integer goodsReplicas = null;
+        if("goods".equals(diff)){
+            goodsIndex = PropertiesManager.getInstance().getProperty("goods.index");
+            goodsType = PropertiesManager.getInstance().getProperty("goods.type");
+            goodsShards = Integer.valueOf(PropertiesManager.getInstance().getProperty("goods.index.shards"));
+            goodsReplicas = Integer.valueOf(PropertiesManager.getInstance().getProperty("goods.index.replicas"));
+
+        }else{
+
+            goodsIndex = PropertiesManager.getInstance().getProperty("category.index");
+            goodsType = PropertiesManager.getInstance().getProperty("category.type");
+            goodsShards = Integer.valueOf(PropertiesManager.getInstance().getProperty("category.index.shards"));
+            goodsReplicas = Integer.valueOf(PropertiesManager.getInstance().getProperty("category.index.replicas"));
+        }
         String goodsKeyField = null;
         try {
             goodsKeyField = elasticSearchService.initEs(EsGoods.class, HookahConstants.Analyzer.LC_INDEX.val,
@@ -242,67 +256,6 @@ public class EsApi {
             e.printStackTrace();
         }
         return null;
-    }
-
-    @RequestMapping("/suggest")
-    public Map<String, String> suggest(String prefix) {
-        Map<String, String> map = new HashedMap();
-
-        CompletionSuggestionBuilder suggestionBuilder = new CompletionSuggestionBuilder("suggest");
-        suggestionBuilder.text(prefix);
-        suggestionBuilder.size(10);
-        SuggestBuilder sb = new SuggestBuilder();
-        sb.addSuggestion("my-suggest-1", suggestionBuilder);
-        SearchResponse resp = null;
-        try {
-            resp = esTransportClient.getObject().prepareSearch().setIndices("qingdao-goods-v1").setTypes("goods")
-                    .setQuery(QueryBuilders.matchAllQuery()).suggest(sb).get();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        Suggest sugg = resp.getSuggest();
-        if(sugg != null) {
-            CompletionSuggestion suggestion = sugg.getSuggestion("my-suggest-1");
-            List<CompletionSuggestion.Entry> list = suggestion.getEntries();
-            for (int i = 0; i < list.size(); i++) {
-                List<?> options = list.get(i).getOptions();
-                for (int j = 0; j < options.size(); j++) {
-                    if (options.get(j) instanceof CompletionSuggestion.Entry.Option) {
-                        CompletionSuggestion.Entry.Option op = (CompletionSuggestion.Entry.Option) options.get(j);
-                        map.put(((CompletionSuggestion.Entry.Option) op).getHit().getId(), op.getText().toString());
-                    }
-                }
-            }
-        }
-        return map;
-    }
-
-    @RequestMapping("/agg")
-    public Object agg() {
-        try {
-
-            BoolQueryBuilder queryBuilders = QueryBuilders.boolQuery()
-                    .must(termQuery("catIds", "101"))
-                    .must(termQuery("goodsName", "企业"));
-            AggregationBuilders .count("catId");
-            SearchResponse sr = esTransportClient.getObject().prepareSearch()
-                    .setIndices("qingdao-goods-v1").setTypes("goods")
-                    .setQuery(queryBuilders)
-                    .addAggregation(AggregationBuilders.terms("catCnt").field("attrTypeId"))
-                    .execute().actionGet();
-            Map<String, Aggregation> aggMap = sr.getAggregations().asMap();
-            StringTerms gradeTerms = (StringTerms) aggMap.get("catCnt");
-            Iterator<Bucket> gradeBucketIt = gradeTerms.getBuckets().iterator();
-            while(gradeBucketIt.hasNext()) {
-                Bucket gradeBucket = gradeBucketIt.next();
-                System.out.println(gradeBucket.getKey() + "," + gradeBucket.getDocCount());
-            }
-
-            return "success";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "异常";
-        }
     }
 
     @RequestMapping(value = "/v1/goods/types", method = RequestMethod.POST)

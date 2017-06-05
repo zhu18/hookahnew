@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.webiste.controller;
 
+import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.GoodsFavorite;
 import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
@@ -70,15 +71,19 @@ public class ExchangeController extends BaseController{
     @RequestMapping(value = "/details", method = RequestMethod.GET)
     public String details(@RequestParam String id, Model model) {
         try {
-            mgGoodsService.updateClickRate(id);//增加商品点击量记录
             // 查询商品详情
             GoodsVo goodsVo = goodsService.findGoodsById(id);
             if(goodsVo == null) {
                 new HookahException("未找到商品！goodsVo == null");
             }
-            if(goodsVo.getClickRate() == null) {
-                goodsVo.setClickRate((long)0);
+            if(!HookahConstants.GOODS_STATUS_ONSALE.equals(goodsVo.getIsOnsale())) {
+                return "/error/noGoods";
             }
+
+            mgGoodsService.updateClickRate(id);//增加商品点击量记录
+
+            goodsVo.setClickRate(goodsVo.getClickRate() == null ? 0L + 1 : goodsVo.getClickRate() + 1);
+
             // 获取永和关注信息
             try {
                 if(StringUtils.isNotBlank(getCurrentUser().getUserId())){
