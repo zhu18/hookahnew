@@ -35,9 +35,13 @@ var htmlPart = {
 						<table class="order-items second">
 							<tbody>
 							<% for(list in cartList){ %>
-							<tr class="order-body">
+							<tr class="order-body ${decode(list.goods.isOnsale,0,'isOffLine','')}">
 								<td class="checkbox padding-left-10">
-									<input type="checkbox" name="items" value="${list.recId}" recId="${list.recId}" price="${list.goodsPrice}" number="${list.goodsNumber}">
+									<%if(list.goods.isOnsale == 1){%>
+									<input type="checkbox" name="items" value="${list.recId}" recId="${list.recId}" price="${list.goodsPrice}" number="${list.goodsNumber}"}>
+									<%}else{%>
+									<div>商品已下架</div>
+									<%}%>
 								</td>
 								<td class="img">
 									<div><a target="_blank" href="${host.website}/exchange/details?id=${list.goodsId}"><img src="${list.goodsImg}" alt=""></a></div>
@@ -45,17 +49,23 @@ var htmlPart = {
 								<td class="name"><a target="_blank" href="${host.website}/exchange/details?id=${list.goodsId}">${list.goodsName}</a></td>
 								<td class="price">${trunc(list.goodsPrice / 100, 2)}</td>
 								<td class="number" recId="${list.recId}">
+									<%if(list.goods.isOnsale == 1){%>
 									<div>
 										<span class="reduce-btn btn <% if(list.goodsNumber <= 1){ %>testcalss<% } %>" onclick="reduceFn(this)">-</span>
 										<input type="text" class="numberInput" value="${list.goodsNumber}"
 											   onkeydown="return kkdown(this,event)" onfocus="numFocusFn(this)">
 										<span class="plus-btn btn" onclick="plusFn(this)">+</span>
 									</div>
+									<%}else{%>
+									<div>
+										<input type="text" class="numberInput" value="${list.goodsNumber}" readonly="readonly">
+									</div>
+									<%}%>
 								</td>
 								<td class="format">
 									<% if(list.formatNumber > 1){%>${list.formatNumber}<%}%>${decode(list.goodsFormat,0,"次",1,"天",2,"年")}
 								</td>
-								<td class="money"> ${(list.goodsPrice * list.goodsNumber) / 100, numberFormat="#.00"}</td>
+								<td class="money"> ${(list.goodsPrice * list.goodsNumber) / 100, numberFormat="0.00"}</td>
 								<td class="operation">
 									<a target="_blank" href="${host.website}/exchange/details?id=${list.goodsId}">商品详情</a>
 									<a href="javascript:void(0);" onclick="delThis('${list.recId}',this)">删除</a>

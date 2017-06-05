@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.webiste.controller;
 
+import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.GoodsFavorite;
 import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
@@ -52,11 +53,13 @@ public class ExchangeController extends BaseController{
     public String index(Model model) {
         model.addAttribute("categoryInfo", categoryService.getCatTree());
         model.addAttribute("goodsShelvesVoInfo",goodsShelvesService.getShevlesGoodsVoList(new HashMap<String,Object>()));
+        model.addAttribute("title", "交易中心");
         return "exchange/index";
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(Model model) {
+        model.addAttribute("title", "商品列表");
         return "exchange/list";
     }
 
@@ -70,15 +73,20 @@ public class ExchangeController extends BaseController{
     @RequestMapping(value = "/details", method = RequestMethod.GET)
     public String details(@RequestParam String id, Model model) {
         try {
-            mgGoodsService.updateClickRate(id);//增加商品点击量记录
             // 查询商品详情
             GoodsVo goodsVo = goodsService.findGoodsById(id);
             if(goodsVo == null) {
                 new HookahException("未找到商品！goodsVo == null");
             }
-            if(goodsVo.getClickRate() == null) {
-                goodsVo.setClickRate((long)0);
+            if(!(HookahConstants.GOODS_STATUS_ONSALE.equals(goodsVo.getIsOnsale())
+                    && HookahConstants.GOODS_CHECK_STATUS_YES.equals(goodsVo.getCheckStatus())) ) {
+                return "/error/noGoods";
             }
+
+            mgGoodsService.updateClickRate(id);//增加商品点击量记录
+
+            goodsVo.setClickRate(goodsVo.getClickRate() == null ? 0L + 1 : goodsVo.getClickRate() + 1);
+
             // 获取永和关注信息
             try {
                 if(StringUtils.isNotBlank(getCurrentUser().getUserId())){
@@ -101,6 +109,7 @@ public class ExchangeController extends BaseController{
             model.addAttribute("goodsGrades",commentService.countGoodsGradesByGoodsId(id).getData());
 
             model.addAttribute("goodsDetails", goodsVo);
+            model.addAttribute("title", goodsVo.getGoodsName());
             //推荐商品
             Map<String,GoodsShelvesVo> goodsMap = goodsShelvesService.getShevlesGoodsVoList(new HashMap<String,Object>());
             model.addAttribute("reCommData", goodsMap.get("recomm_data"));

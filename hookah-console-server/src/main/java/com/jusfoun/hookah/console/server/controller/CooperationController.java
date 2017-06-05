@@ -72,6 +72,20 @@ public class CooperationController {
         return ReturnData.success("修改成功");
     }
 
+    @RequestMapping(value = "/updateState", method = RequestMethod.POST)
+    public ReturnData updateState(Cooperation coo){
+        try{
+            cooperationService.updateState(coo);
+        } catch (HookahException e){
+            logger.info(e.getMessage());
+            return ReturnData.error(e.getMessage());
+        } catch (Exception e){
+            logger.info(e.getMessage());
+            return ReturnData.error("修改状态失败");
+        }
+        return ReturnData.success("修改成功");
+    }
+
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public ReturnData search(String currentPage, String pageSize, Cooperation cooperation){
         Pagination<Cooperation> page = new Pagination<>();
@@ -80,7 +94,6 @@ public class CooperationController {
             List<OrderBy> orderBys = new ArrayList();
             orderBys.add(OrderBy.desc("lastUpdateTime"));
 
-            filters.add(Condition.eq("state", cooperation.COOPERATION_STATE_ON));
             if(StringUtils.isNotBlank(cooperation.getCooName())){
                 filters.add(Condition.like("cooName", cooperation.getCooName().trim()));
             }

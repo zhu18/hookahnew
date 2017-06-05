@@ -47,6 +47,7 @@ class SysNoticController {
             var promise = $http({
                 method: 'POST',
                 url: $rootScope.site.apiServer + "/sysnotice/upd",
+                data: $("#editForm").serialize(),
                 params: {
                     noticeId:$("#noticeId").val(),
                     status: $("#status").val(),
@@ -81,7 +82,7 @@ class SysNoticController {
 
             promise.then(function (res, status, config, headers) {
                 $rootScope.loadingState = false;
-                alert(res.data.message);
+               // alert(res.data.message);
                 $scope.search();
                 growl.addSuccessMessage("数据加载完毕。。。");
             });

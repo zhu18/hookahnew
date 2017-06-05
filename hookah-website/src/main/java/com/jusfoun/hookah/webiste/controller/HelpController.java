@@ -66,7 +66,9 @@ public class HelpController extends BaseController{
 
     @ResponseBody
     @RequestMapping(value = "exportWords", method = RequestMethod.GET)
-    public ReturnData exportWords(@RequestParam("goodsId") String goodsId) {
+    public ReturnData exportWords(@RequestParam("goodsId") String goodsId,
+                                  @RequestParam("orderNo") String orderNo,
+                                  @RequestParam("sourceId") String sourceId) {
 
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
@@ -109,16 +111,17 @@ public class HelpController extends BaseController{
 //                private List<FiledBean> respParamList;//返回参数
 //                private String respSample;//返回示例
 
-                    dataMap.put("apiUrl", goodsVo.getApiInfo().getApiUrl().replace("&", "&amp;"));
-                    dataMap.put("apiMethod",
-                            goodsVo.getApiInfo().getApiMethod());
-                    dataMap.put("reqSample", goodsVo.getApiInfo().getReqSample() == null ? goodsVo.getApiInfo().getReqSample() : goodsVo.getApiInfo().getReqSample().replace("&", "&amp;"));
-                    dataMap.put("apiDesc", goodsVo.getApiInfo().getApiDesc() == null ? goodsVo.getApiInfo().getApiDesc() : goodsVo.getApiInfo().getApiDesc().replace("&", "&amp;"));
-                    dataMap.put("reqParamList", goodsVo.getApiInfo().getReqParamList());
-                    dataMap.put("respParamList", goodsVo.getApiInfo().getRespParamList());
-                    dataMap.put("respSample", goodsVo.getApiInfo().getRespSample() == null ? goodsVo.getApiInfo().getRespSample() : goodsVo.getApiInfo().getRespSample().replace("&", "&amp;"));
+//                    dataMap.put("apiUrl", goodsVo.getApiInfo().getApiUrl().replace("&", "&amp;"));
+//                    dataMap.put("apiMethod", goodsVo.getApiInfo().getApiMethod());
+//                    dataMap.put("reqSample", goodsVo.getApiInfo().getReqSample() == null ? goodsVo.getApiInfo().getReqSample() : goodsVo.getApiInfo().getReqSample().replace("&", "&amp;"));
+//                    dataMap.put("apiDesc", goodsVo.getApiInfo().getApiDesc() == null ? goodsVo.getApiInfo().getApiDesc() : goodsVo.getApiInfo().getApiDesc().replace("&", "&amp;"));
+//                    dataMap.put("reqParamList", goodsVo.getApiInfo().getReqParamList());
+//                    dataMap.put("respParamList", goodsVo.getApiInfo().getRespParamList());
+//                    dataMap.put("respSample", goodsVo.getApiInfo().getRespSample() == null ? goodsVo.getApiInfo().getRespSample() : goodsVo.getApiInfo().getRespSample().replace("&", "&amp;"));
 
-
+                    returnData.setData("http://open.galaxybigdata.com/down/doc?apiId=" + sourceId + "&orderNo=" + orderNo);
+//                    returnData.setData("http://open.galaxybigdata.com/down/doc?apiId=2&orderNo=1");
+                    return returnData;
                 }else if(goodsVo.getGoodsType() == 2){ // 数据模型
 
 //                private String complexity;  // 复杂度

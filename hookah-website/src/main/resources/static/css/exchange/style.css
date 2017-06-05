@@ -1078,12 +1078,16 @@ dl {
 	display: inline-block;
 	margin: 3px 10px;
 }
+.search .search-category .conditionCon li ul li a:hover{color: #12a3fc;}
 /*.search .search-category .conditionCon li ol>li:nth-child(1){*/
 	/*border-bottom: 1px dashed #aba9a9;*/
 /*}*/
 .search .search-category .conditionCon li ol li:nth-child(2) ul li a {
 	/*font-style: italic;*/
 	color:#aba9a9;
+}
+.search .search-category .conditionCon li ol li:nth-child(2) ul li a:hover{
+	color: #12a3fc;
 }
 .search .search-category .conditionCon li ol li ul li.current a{
 	color:#078cfc;

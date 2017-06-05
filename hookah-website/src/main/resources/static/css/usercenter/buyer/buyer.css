@@ -100,6 +100,7 @@
 /*订单信息*/
 .orderManagement .order table {
     width: 100%;
+    margin-bottom: 10px;
 }
 
 .orderManagement .order table thead {
@@ -120,6 +121,16 @@
 .orderManagement .order table td {
     padding: 5px;
     text-align: center;
+}
+.orderManagement .order table td .p-img{
+    /*width: 100px;*/
+}
+.orderManagement .order table td .p-img a{
+    width: 80px;
+    display: inline-block;
+}
+.orderManagement .order table td .p-img a img{
+    width: 100%;
 }
 .orderManagement .order table td.moneyTotal {
     padding: 5px;
