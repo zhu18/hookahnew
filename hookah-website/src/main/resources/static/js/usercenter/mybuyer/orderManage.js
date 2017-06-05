@@ -21,7 +21,7 @@ function loadPageData(data){
                 html += '<td class="text-align-center">'
                 html += '<div class="p-img">'
                 html += '<a href="/exchange/details?id=' + goods[ii].goodsId + '" target="_blank">'
-                html += '<img src="' + goods[ii].goodsImg + '" alt="">'
+                html += '<img style="width: 80px" src="' + goods[ii].goodsImg + '" alt="">'
                 html += '</a>'
                 html += '</div>'
                 html += '<div class="desc margin-top-10 marign-bottom-10" >'
