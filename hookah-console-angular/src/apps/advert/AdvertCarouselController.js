@@ -10,7 +10,7 @@ class AccountCarouselController {
                 pageSize: $rootScope.pagination.pageSize,
                 advertOrder: $scope.advertOrder,
                 addTime: $scope.addTime,
-                url: $scope.url,
+                urls: $scope.url,
                 href: $scope.href,
                 creatorName: $scope.creatorName
             }
