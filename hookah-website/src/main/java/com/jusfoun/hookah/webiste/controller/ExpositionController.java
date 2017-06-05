@@ -37,4 +37,9 @@ public class ExpositionController {
     public String solveplan(){
         return "/exposition/solve_plan";
     }
+
+    @RequestMapping(value = "/exchange_rule", method = RequestMethod.GET)
+    public String rule(){
+        return "/exposition/exchange_rule";
+    }
 }
