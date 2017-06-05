@@ -15,6 +15,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Created by lt on 2017/5/8.
@@ -34,6 +35,8 @@ public class CooperationServiceImpl  extends GenericServiceImpl<Cooperation, Str
     @Transactional
     public void addCooperation(Cooperation coo) throws Exception{
         Date date = DateUtils.now();
+        Pattern pattern = Pattern
+                .compile("^([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~\\/])+$");
         boolean isExists = true;
         List<Condition> filters = new ArrayList<>();
         filters.clear();
@@ -44,9 +47,13 @@ public class CooperationServiceImpl  extends GenericServiceImpl<Cooperation, Str
         }
         if (StringUtils.isBlank(coo.getUrl())){
             throw new HookahException("机构链接地址不能为空");
+        }else if(!pattern.matcher(coo.getUrl()).matches()){
+            throw new HookahException("机构链接地址格式不正确");
         }
         if (StringUtils.isBlank(coo.getPictureUrl())){
             throw new HookahException("logo地址不能为空");
+        }else if(!pattern.matcher(coo.getUrl()).matches()){
+            throw new HookahException("logo地址格式不正确");
         }
         isExists = exists(filters);
         if(isExists){
@@ -65,6 +72,8 @@ public class CooperationServiceImpl  extends GenericServiceImpl<Cooperation, Str
     public void modify(Cooperation coo) throws Exception{
         Date date = DateUtils.now();
         List<Condition> filters = new ArrayList<>();
+        Pattern pattern = Pattern
+                .compile("^([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~\\/])+$");
         if (StringUtils.isNoneBlank(coo.getCooperationId())) {
             filters.add(Condition.eq("cooperationId", coo.getCooperationId()));
         }else {
@@ -72,9 +81,27 @@ public class CooperationServiceImpl  extends GenericServiceImpl<Cooperation, Str
         }
         if (StringUtils.isBlank(coo.getUrl())){
             throw new HookahException("机构链接地址不能为空");
+        }else if(!pattern.matcher(coo.getUrl()).matches()){
+            throw new HookahException("机构链接地址格式不正确");
         }
         if (StringUtils.isBlank(coo.getPictureUrl())){
             throw new HookahException("logo地址不能为空");
+        }else if(!pattern.matcher(coo.getUrl()).matches()){
+            throw new HookahException("logo地址格式不正确");
+        }
+        coo.setLastUpdateTime(date);
+        cooperationMapper.updateByExampleSelective(coo,convertFilter2Example(filters));
+    }
+
+    @Override
+    @Transactional
+    public void updateState(Cooperation coo) throws Exception{
+        Date date = DateUtils.now();
+        List<Condition> filters = new ArrayList<>();
+        if (StringUtils.isNoneBlank(coo.getCooperationId())) {
+            filters.add(Condition.eq("cooperationId", coo.getCooperationId()));
+        }else {
+            throw new HookahException("未选中修改机构，请重新操作");
         }
         coo.setLastUpdateTime(date);
         cooperationMapper.updateByExampleSelective(coo,convertFilter2Example(filters));
