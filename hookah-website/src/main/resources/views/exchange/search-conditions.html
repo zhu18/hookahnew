@@ -27,14 +27,18 @@
         dataParm.range.priceFrom='';
         dataParm.range.priceTo='';
         $('.ensure').on('click',function () {
-        	if($('#priceFrom').val()){
-				dataParm.range.priceFrom=$('#priceFrom').val()*100;
-            }else{
+            if($('#priceFrom').val()){
+                dataParm.range.priceFrom=$('#priceFrom').val()*100;
+            }else if($('#priceFrom').val()==""){
+                dataParm.range.priceFrom=0
+            } else{
         		delete dataParm.range.priceFrom;
             }
 			if($('#priceTo').val()){
 				dataParm.range.priceTo=$('#priceTo').val()*100;
-			}else{
+			}else if($('#priceTo').val()==""){
+                dataParm.range.priceTo=0
+            }else{
 				delete dataParm.range.priceTo;
 			}
             goPage(1);
