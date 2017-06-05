@@ -40,7 +40,7 @@ var htmlPart = {
 									<%if(list.goods.isOnsale == 1){%>
 									<input type="checkbox" name="items" value="${list.recId}" recId="${list.recId}" price="${list.goodsPrice}" number="${list.goodsNumber}"}>
 									<%}else{%>
-									<div>商品已下架</div>
+									<div class="color-orange">商品已下架</div>
 									<%}%>
 								</td>
 								<td class="img">
@@ -68,6 +68,7 @@ var htmlPart = {
 								<td class="money"> ${(list.goodsPrice * list.goodsNumber) / 100, numberFormat="0.00"}</td>
 								<td class="operation">
 									<a target="_blank" href="${host.website}/exchange/details?id=${list.goodsId}">商品详情</a>
+									<br>
 									<a href="javascript:void(0);" onclick="delThis('${list.recId}',this)">删除</a>
 								</td>
 							</tr>

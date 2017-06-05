@@ -250,6 +250,14 @@
     height: 26px;
     border: 1px solid #aaa;
 }
+
+
+
+
+
+
+
+
 .order-manage .cart-box .order-items .number .btn:hover {
     color: #f68300;
     border-color: #f68300;
@@ -275,7 +283,7 @@
     text-align: center
 }
 .order-manage .cart-box .order-items .operation a {
-    display: block;
+    /*display: block;*/
 }
 .order-manage .order-box .order-items.cart-list-bottom, .order-manage .order-box .order-items.cart-list-bottom tr {
     border: none;
@@ -542,3 +550,24 @@
     display: block;
     color: #A61615;
 }
+
+
+
+
+.order-manage .cart-box .order-items .isOffLine .name a{
+    color: #ccc;
+}
+.order-manage .cart-box .order-items .isOffLine .price {
+    color: #ccc;
+}
+.order-manage .cart-box .order-items .isOffLine .number input{
+    color: #ccc;
+    border:#ccc;
+}
+.order-manage .cart-box .order-items .isOffLine .format {
+    color: #ccc;
+}
+.order-manage .cart-box .order-items .isOffLine .money{
+    color: #ccc;
+}
+
