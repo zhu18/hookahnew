@@ -201,4 +201,38 @@ public class HttpClientUtil {
 
 		return resMap;
 	}
+
+	public static  Map<String, String> PostMethod(String url, String transJson) throws HttpException, IOException {
+		MultiThreadedHttpConnectionManager connectionManager = new MultiThreadedHttpConnectionManager();
+		HttpClient client = new HttpClient(connectionManager);
+		Map<String, String> resMap = new HashMap<String, String>();
+		PostMethod method = null;
+		try {
+
+			method = new PostMethod(url);
+			RequestEntity se = new StringRequestEntity(transJson, "application/json", "UTF-8");
+			method.setRequestEntity(se);
+			// 使用系统提供的默认的恢复策略
+			// System.out.println(transJson);
+			//method.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler());
+
+			// 设置超时的时间
+
+			//method.getParams().setParameter(HttpMethodParams.SO_TIMEOUT, timeout);
+			client.executeMethod(method);
+			resMap.put("result", method.getResponseBodyAsString());
+			resMap.put("resultCode", String.valueOf(method.getStatusCode()));
+		} catch (IllegalArgumentException e) {
+
+		} catch (java.io.UnsupportedEncodingException e) {
+
+			e.printStackTrace();
+		}finally {
+
+			method.releaseConnection();
+		}
+
+		return resMap;
+	}
+
 }
