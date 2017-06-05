@@ -15,7 +15,7 @@
           <label class="col-sm-2 control-label" for="noticeTitle">公告名称:</label>
           <div class="col-sm-4">
             <!--<input type="text" id="noticeTitle" name="noticeTitle" class="form-control none-edit" ng-model="noticeTitle" required placeholder="请输入公告名"/>-->
-            <textarea  id="noticeTitle" name="noticeTitle" style="margin: 0px; width: 360px; height: 80px;"  class="form-control none-edit" ng-model="noticeTitle" required placeholder="请输入公告名"></textarea>
+            <textarea  id="noticeTitle" name="noticeTitle" style="margin: 0px; width: 360px; height: 80px;"  class="form-control none-edit" ng-model="noticeTitle" required  ng-maxlength="15" placeholder="请输入公告名,不可超过15字"></textarea>
              <span style="color:red" ng-show="myForm.noticeTitle.$dirty && myForm.noticeTitle.$invalid">
               <p> <span ng-show="myForm.noticeTitle.$error.required">公告名是必须的。</span> </p>
              </span>

@@ -65,7 +65,7 @@
                 <span text-length="40" ng-bind="item.addTime"></span>
               </td>
               <td class="text-center">
-                <span ng-show="item.payStatus == 0">
+                <!--<span ng-show="item.payStatus == 0">
                   <a href="javascript:;" ng-click="editProduct($event,item)">修改</a>
                   <span class="text-explode">|</span>
                   <i class="link-space"></i>
@@ -75,8 +75,9 @@
                    <a  ui-sref="order.viewOrderDetails" ng-click="getDetails($event,item.orderId)" >查看</a>
                 </span>
                 <span ng-show="item.payStatus == 2">
-                  <a  ui-sref="order.viewOrderDetails" ng-click="getDetails($event,item.orderId)">查看</a>
                 </span>
+                -->
+                <a  ui-sref="order.viewOrderDetails" ng-click="getDetails($event,item.orderId)">查看</a>
               </td>
 
             </tr>
