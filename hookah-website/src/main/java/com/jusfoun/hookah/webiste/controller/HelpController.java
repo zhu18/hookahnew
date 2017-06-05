@@ -54,6 +54,25 @@ public class HelpController extends BaseController{
         return "/help/privacyStatement";
     }
 
+    @RequestMapping(value = "/buyers_guide", method = RequestMethod.GET)
+    public String buyers() {
+        return "/help/buyers_guide";
+    }
+    @RequestMapping(value = "/arrival_guide", method = RequestMethod.GET)
+    public String arrival () {
+        return "/help/arrival_guide";
+    }
+
+    @RequestMapping(value = "/resource_cooperation", method = RequestMethod.GET)
+    public String resource () {
+        return "/help/resource_cooperation";
+    }
+
+    @RequestMapping(value = "/brand_cooperation", method = RequestMethod.GET)
+    public String brand () {
+        return "/help/brand_cooperation";
+    }
+
     @RequestMapping(value = "/question", method = RequestMethod.GET)
     public String question() {
         return "/help/question";
