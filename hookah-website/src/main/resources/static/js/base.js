@@ -225,7 +225,7 @@ Attention.add = function (goodsId) {
 					success: function (data) {
 						if (data.code == "1") {
 							$('.attention .iconfont').css('color', '#e34f4f');
-							$('.attention .eval').html('已关注');
+							$('.attention .eval').html('已关注:');
 							var nums = parseInt($('#J_atonNum').html());
 							$('#J_atonNum').html(nums+1);
 							$.alert("关注成功");

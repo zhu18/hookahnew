@@ -202,7 +202,8 @@ function getDataPackage(goodsId){
         url: host.website+'/help/exportWords',
         type:'get',
 		data:{
-			goodsId:goodsId
+			goodsId : goodsId,
+			orderNo : $.getUrlParam('orderSn')
         },
         success:function(data){
             if(data.code == 1){
