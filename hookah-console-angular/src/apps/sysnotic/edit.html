@@ -8,7 +8,7 @@
     </div>
   </div>
   <div class="col-sm-12">
-    <form class="form-horizontal" role="form" id="editForm">
+    <form class="form-horizontal" role="form" id="editForm" name="editForm" novalidate>
       <fieldset>
         <h5 style="padding: 0px 20px;">详细信息</h5>
         <div class="form-group">
@@ -17,15 +17,23 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="noticeTitle">机构名称:</label>
+          <label class="col-sm-2 control-label" for="noticeTitle">公告名称<span class="must">*</span></label>
           <div class="col-sm-4">
-            <input  type="text" id="noticeTitle" name="noticeTitle" class="form-control none-edit" value="{{cuserd.noticeTitle}}"/>
+            <!--<input  type="text" id="noticeTitle" name="noticeTitle" class="form-control none-edit" value="{{cuserd.noticeTitle}}"/>-->
+            <textarea  id="noticeTitle" data-ng-model="cuserd.noticeTitle" name="noticeTitle" class="form-control none-edit"  style="margin: 0px; width: 352px; height: 80px;"  placeholder="请输入公告名称" required>
+            {{cuserd.noticeTitle}}
+            </textarea>
+            <span style="color:red" ng-show="editForm.noticeTitle.$dirty && editForm.noticeTitle.$invalid"></span>
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="noticeContent">公告内容:</label>
+          <label class="col-sm-2 control-label" for="noticeContent">公告内容<span class="must">*</span></label>
           <div class="col-sm-4">
-            <input type="text" id="noticeContent" name="noticeContent" class="form-control none-edit" value="{{cuserd.noticeContent}}"/>
+            <!--<input type="text" id="noticeContent" name="noticeContent" class="form-control none-edit" value="{{cuserd.noticeContent}}"/>-->
+            <textarea  id="noticeContent" data-ng-model="cuserd.noticeContent" name="noticeContent" class="form-control none-edit"  style="margin: 0px; width: 352px; height: 80px;"  placeholder="请输入公告内容" required>
+             {{cuserd.noticeContent}}
+            </textarea>
+            <span style="color:red" ng-show="editForm.noticeContent.$dirty && editForm.noticeContent.$invalid"></span>
           </div>
         </div>
         <div class="form-group">
@@ -48,11 +56,10 @@
         <!--</div>-->
   <!---->
       </fieldset>
-
       <div class="form-group">
         <div class="col-sm-2"></div>
         <div class="col-sm-4">
-          <button class="btn btn-primary" data-ng-click="edit()">
+          <button class="btn btn-primary" data-ng-click="edit()" ng-disabled="editForm.$pristine || editForm.$invalid">
             <span class="glyphicon glyphicon-refresh"></span> 保存
           </button>
         </div>
