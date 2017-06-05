@@ -197,12 +197,12 @@ function check() {
 	});
 	// return false;
 }
-function getDataPackage(goodsId){
+function getDataPackage(sourceId){
     $.ajax({
         url: host.website+'/help/exportWords',
         type:'get',
 		data:{
-			goodsId : goodsId,
+			goodsId : sourceId,
 			orderNo : $.getUrlParam('orderSn')
         },
         success:function(data){
