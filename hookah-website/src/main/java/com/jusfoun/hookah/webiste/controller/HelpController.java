@@ -66,7 +66,9 @@ public class HelpController extends BaseController{
 
     @ResponseBody
     @RequestMapping(value = "exportWords", method = RequestMethod.GET)
-    public ReturnData exportWords(@RequestParam("goodsId") String goodsId, @RequestParam("orderNo") String orderNo) {
+    public ReturnData exportWords(@RequestParam("goodsId") String goodsId,
+                                  @RequestParam("orderNo") String orderNo,
+                                  @RequestParam("sourceId") String sourceId) {
 
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
@@ -117,7 +119,7 @@ public class HelpController extends BaseController{
 //                    dataMap.put("respParamList", goodsVo.getApiInfo().getRespParamList());
 //                    dataMap.put("respSample", goodsVo.getApiInfo().getRespSample() == null ? goodsVo.getApiInfo().getRespSample() : goodsVo.getApiInfo().getRespSample().replace("&", "&amp;"));
 
-                    returnData.setData("http://open.galaxybigdata.com/down/doc?apiId=" + goodsId + "&orderNo=" + orderNo);
+                    returnData.setData("http://open.galaxybigdata.com/down/doc?apiId=" + sourceId + "&orderNo=" + orderNo);
 //                    returnData.setData("http://open.galaxybigdata.com/down/doc?apiId=2&orderNo=1");
                     return returnData;
                 }else if(goodsVo.getGoodsType() == 2){ // 数据模型
