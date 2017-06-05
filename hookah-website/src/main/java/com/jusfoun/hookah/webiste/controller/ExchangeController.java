@@ -53,11 +53,13 @@ public class ExchangeController extends BaseController{
     public String index(Model model) {
         model.addAttribute("categoryInfo", categoryService.getCatTree());
         model.addAttribute("goodsShelvesVoInfo",goodsShelvesService.getShevlesGoodsVoList(new HashMap<String,Object>()));
+        model.addAttribute("title", "交易中心");
         return "exchange/index";
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(Model model) {
+        model.addAttribute("title", "商品列表");
         return "exchange/list";
     }
 
@@ -76,7 +78,8 @@ public class ExchangeController extends BaseController{
             if(goodsVo == null) {
                 new HookahException("未找到商品！goodsVo == null");
             }
-            if(!HookahConstants.GOODS_STATUS_ONSALE.equals(goodsVo.getIsOnsale())) {
+            if(!(HookahConstants.GOODS_STATUS_ONSALE.equals(goodsVo.getIsOnsale())
+                    && HookahConstants.GOODS_CHECK_STATUS_YES.equals(goodsVo.getCheckStatus())) ) {
                 return "/error/noGoods";
             }
 
@@ -106,6 +109,7 @@ public class ExchangeController extends BaseController{
             model.addAttribute("goodsGrades",commentService.countGoodsGradesByGoodsId(id).getData());
 
             model.addAttribute("goodsDetails", goodsVo);
+            model.addAttribute("title", goodsVo.getGoodsName());
             //推荐商品
             Map<String,GoodsShelvesVo> goodsMap = goodsShelvesService.getShevlesGoodsVoList(new HashMap<String,Object>());
             model.addAttribute("reCommData", goodsMap.get("recomm_data"));
