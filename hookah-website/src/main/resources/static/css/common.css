@@ -89,13 +89,13 @@
 /* Text-align
 =================================================================== */
 .text-align-left{
-    text-align:left;
+    text-align:left !important;
 }
 .text-align-center{
-    text-align:center;
+    text-align:center !important;
 }
 .text-align-right{
-    text-align:right;
+    text-align:right !important;
 }
 /* Float
 =================================================================== */
