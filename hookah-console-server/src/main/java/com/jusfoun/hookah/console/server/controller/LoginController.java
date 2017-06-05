@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.console.server.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,11 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginController {
 
     @RequestMapping(value = "/login")
-    public String login(HttpServletRequest request, HttpServletResponse response) {
-        StringBuffer url = request.getRequestURL();
-        String redirectURI = request.getParameter("backurl");
-
-        return "redirect:" + redirectURI;
+    public String login(String redirect_uri,HttpServletRequest request, HttpServletResponse response) {
+        if (!StringUtils.isEmpty(redirect_uri)) {
+            return "redirect:" + redirect_uri;
+        } else {
+            return "redirect:/";
+        }
 
     }
 

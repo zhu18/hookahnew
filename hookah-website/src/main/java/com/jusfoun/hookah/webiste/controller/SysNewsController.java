@@ -63,7 +63,7 @@ public class SysNewsController {
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "details", method = RequestMethod.GET)
-    public ReturnData details(String id) {
+    public ReturnData details(String id,Model model) {
         ReturnData returnData = new ReturnData();
         SysNewsVo sysN = new SysNewsVo();
         try {
@@ -74,6 +74,7 @@ public class SysNewsController {
             returnData.setMessage("数据错误！");
             e.printStackTrace();
         }
+        model.addAttribute("title", sysN.getNewsTitle());
         return returnData;
     }
 
