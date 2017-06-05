@@ -390,13 +390,8 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             //支付成功,
             //1、发送api平台
             String url = "http://open.galaxybigdata.com/shop/insert/userapi";
-            Map<String, String> param = new HashMap<>();
-            param.put("userId", orderInfoVo.getUserId());
+            List<Map> list = new ArrayList();
 
-
-            //param.put("endTime",orderInfo.getUserId());
-
-            param.put("orderNo", orderInfo.getOrderSn());
             orderInfoVo.getMgOrderGoodsList().stream()
                     .filter(g -> {
                         if (g.getGoodsType() == 1 && !StringUtils.isNotBlank(g.getSourceId())) {
@@ -405,16 +400,20 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                         return g.getGoodsType() == 1 && StringUtils.isNotBlank(g.getSourceId());
                     })
                     .forEach(goods -> {
-                        try {
-                            param.put("apiId", goods.getSourceId());
-                            param.put("goodsId", goods.getGoodsId());
-                            param.put("totalCount", new Long(goods.getGoodsNumber() * goods.getFormatNumber()).toString());
-                            Map rs = HttpClientUtil.PostMethod(url, param);
-                            logger.info("订单{}商品{}放api平台返回信息：{}", goods.getOrderId(), goods.getGoodsId(), JsonUtils.toJson(rs));
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        Map<String, String> param = new HashMap<>();
+                        param.put("userId", orderInfoVo.getUserId());
+
+
+                        //param.put("endTime",orderInfo.getUserId());
+
+                        param.put("orderNo", orderInfo.getOrderSn());
+                        param.put("apiId", goods.getSourceId());
+                        param.put("goodsId", goods.getGoodsId());
+                        param.put("totalCount", new Long(goods.getGoodsNumber() * goods.getFormatNumber()).toString());
+                        list.add(param);
                     });
+            Map rs = HttpClientUtil.PostMethod(url, JsonUtils.toJson(list));
+            logger.info("订单{}商品放api平台返回信息：{}", orderInfo.getOrderId(),  JsonUtils.toJson(rs));
         }catch (Exception e){
             e.printStackTrace();
             logger.error("发送商品到api平台发生异常");
