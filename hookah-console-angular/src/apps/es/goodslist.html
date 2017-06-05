@@ -11,15 +11,29 @@
     <div class="row margin-top">
       <div class="col-sm-12">
 
+        <div class="searchSection">
+          <form class="form-inline">
+            <div class="form-group">
+              <label class="control-label">商品名称</label>
+              <input ng-model="searchName" type="text" class="form-control">
+            </div>
+            <!--<div class="form-group">-->
+              <!--<label class="control-label">商品编码</label>-->
+              <!--<input ng-model="searchSn" type="text" class="form-control">-->
+            <!--</div>-->
+
+            <button type="submit" class="btn btn-primary" data-ng-click="search()">搜索</button>
+          </form>
+        </div>
         <div class="gridSection">
           <div us-spinner ng-show="showSpinner" spinner-start-active="true" spinner-key="showSpinner"></div>
-          <table class="table table-hover" style="margin-bottom: 57px;">
+          <table class="table table-hover" style="margin-bottom: 0px;">
             <thead>
             <tr>
               <th>商品ID</th>
-              <th>索引名称</th>
-              <th>索引类型</th>
-              <th width="200" class="text-center">操作</th>
+              <th>商品名称</th>
+
+              <!--<th width="200" class="text-center">操作</th>-->
             </tr>
             </thead>
             <tbody>
@@ -27,18 +41,14 @@
               <td>
                 <span text-length="50" ng-bind="item.goodsId"></span>
               </td>
-              <td id="vdata">
-                qingdao-goods-v2
-              </td>
-
               <td>
-                goods
+                <span text-length="50" ng-bind="item.goodsName"></span>
               </td>
 
-              <td class="text-center">
-                  <a href="javascript:;" ng-click="delGoods(item.goodsId,'qingdao-goods-v2','goods')">删除</a>
+              <!--<td class="text-center">-->
+                  <!--<a href="javascript:;" ng-click="delGoods(item.goodsId,'qingdao-goods-v2','goods')">删除</a>-->
 
-              </td>
+              <!--</td>-->
             </tr>
             </tbody>
             <tfoot ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">
@@ -57,6 +67,16 @@
             </tr>
             </tfoot>
           </table>
+          <div class="searchSection">
+            <form class="form-inline">
+              <div class="form-group">
+                <label class="control-label">商品ID</label>
+                <input ng-model="index" type="text" class="form-control">
+              </div>
+              <button type="submit" class="btn btn-primary" data-ng-click="delGoods(index,'qingdao-goods-v1','goods')">删除</button>
+            </form>
+          </div>
+
         </div>
         <div class="simple-grid-none-data-wrap">
           <div class="simple-grid-none-data text-center " ng-if="showNoneDataInfoTip && !loadingState">
@@ -66,6 +86,7 @@
             </div>
           </div>
         </div>
+
       </div>
     </div>
   </div>

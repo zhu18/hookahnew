@@ -12,4 +12,6 @@ public interface CooperationService extends GenericService<Cooperation,String> {
     public void addCooperation(Cooperation cooperation) throws Exception;
 
     public void modify(Cooperation cooperation) throws Exception;
+
+    public void updateState(Cooperation cooperation) throws Exception;
 }

@@ -14,7 +14,8 @@
         <div class="form-group">
           <label class="col-sm-2 control-label" for="noticeTitle">公告名称:</label>
           <div class="col-sm-4">
-            <input type="text" id="noticeTitle" name="noticeTitle" class="form-control none-edit" ng-model="noticeTitle" required placeholder="请输入公告名"/>
+            <!--<input type="text" id="noticeTitle" name="noticeTitle" class="form-control none-edit" ng-model="noticeTitle" required placeholder="请输入公告名"/>-->
+            <textarea  id="noticeTitle" name="noticeTitle" style="margin: 0px; width: 360px; height: 80px;"  class="form-control none-edit" ng-model="noticeTitle" required placeholder="请输入公告名"></textarea>
              <span style="color:red" ng-show="myForm.noticeTitle.$dirty && myForm.noticeTitle.$invalid">
               <p> <span ng-show="myForm.noticeTitle.$error.required">公告名是必须的。</span> </p>
              </span>
@@ -23,7 +24,8 @@
         <div class="form-group">
           <label class="col-sm-2 control-label" for="noticeContent">公告内容:</label>
           <div class="col-sm-4">
-            <input type="text" id="noticeContent" name="noticeContent" class="form-control none-edit" ng-model="noticeContent" required placeholder="请输入公告内容"/>
+            <!--<input type="text" id="noticeContent" name="noticeContent" class="form-control none-edit" ng-model="noticeContent" required placeholder="请输入公告内容"/>-->
+            <textarea  id="noticeContent" name="noticeContent" style="margin: 0px; width: 360px; height: 80px;"  class="form-control none-edit" ng-model="noticeContent" required placeholder="请输入公告内容"></textarea>
             <span style="color:red" ng-show="myForm.noticeContent.$dirty && myForm.noticeContent.$invalid">
               <p> <span ng-show="myForm.noticeContent.$error.required">公告内容是必须的。</span> </p>
              </span>

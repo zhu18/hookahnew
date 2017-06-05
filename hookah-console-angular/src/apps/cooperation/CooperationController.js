@@ -61,6 +61,23 @@ class CooperationController {
                 }
             });
         };
+        $scope.updateStatus = function (cooperation, flag) {
+            var promise = $http({
+                method: 'POST',
+                url: $rootScope.site.apiServer + "/coo/updateState",
+                params: {
+                    cooperationId:cooperation.cooperationId,
+                    state:flag
+                }
+            });
+            promise.then(function (res, status, config, headers) {
+                if (res.data.code == "1"){
+                    $scope.search();
+                }else {
+                    alert(res.data.message);
+                }
+            });
+        };
         $scope.delete = function (event, cooperation) {
             var promise = $http({
                 method: 'POST',
