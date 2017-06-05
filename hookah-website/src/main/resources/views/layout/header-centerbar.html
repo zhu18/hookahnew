@@ -50,6 +50,9 @@
 								<div class="grid-right font-weight-bold content-down-money">
 									<div class=""><span class="color-red">￥${trunc(list.goodsPrice / 100,2)}</span>×${list.goodsNumber}</div>
 									<!--<a href="" class="grid-right font-weight-normal">删除</a>-->
+									<%if(list.goods.isOnsale == 0){%>
+									<span class="color-orange">此商品已下架</span>
+									<%}%>
 								</div>
 							</div>
 						</li>

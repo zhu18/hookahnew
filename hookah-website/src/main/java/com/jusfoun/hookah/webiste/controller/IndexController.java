@@ -45,6 +45,7 @@ public class IndexController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home(Model model) {
+        model.addAttribute("title", "青岛大数据交易中心");
         return "index";
     }
 
