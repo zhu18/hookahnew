@@ -4,7 +4,7 @@ import SysNoticController from '../sysnotic/SysNoticController';
 import CooperationController from '../cooperation/CooperationController';
 advertRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function advertRouting($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/advert/search');
+  $urlRouterProvider.otherwise('/advert/carousel');
   $stateProvider
     .state('advert', {
       template: '<div ui-view></div>',

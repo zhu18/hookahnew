@@ -32,7 +32,6 @@ function loadPageData(data){
 						mMat = '年';
 						break;
 				}
-
 				html += '<tr class="content border-bottom">';
 				html += '<td class="text-align-center" style="width: 280px;">';
 				html += '<div class="p-img">';
@@ -54,16 +53,14 @@ function loadPageData(data){
 					html += '<a href="javascript:confirmDelete(\'' + list[i].orderId + '\');" class="display-block margin-bottom-5">删除</a>';
 					html += '</td>';
 				}
-
 				html += '</tr>';
-
 			}
 			html += '</tbody>';
 			html += '</table>';
 		}
 		$('.order').append(html);
 	}else{
-		$('.order').html('<tr class="noData"><td colspan="5">暂时无订单！</td></tr>');
+		$('.order').html('<tr class="noData"><td colspan="5">暂时无订单!</td></tr>');
 	}
 }
 var start = {
@@ -81,7 +78,6 @@ var end = {
     // choosefun: function(elem,datas){
     //     start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
     // }
-
 };
 $.jeDate("#startDate", start);
 
@@ -120,7 +116,6 @@ $(".searchQuery .search").on("click",function(){
         }
     })
 }
-
 function confirmDelete(orderId){
 	$.confirm('确定要删除该订单吗？',null,function(type){
 		if(type == 'yes'){
@@ -131,7 +126,6 @@ function confirmDelete(orderId){
 		}
 	});
 }
-
 function getDataPackage(goodsId){
     $.ajax({
         url: host.website+'/help/exportWords',

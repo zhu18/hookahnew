@@ -51,7 +51,9 @@ class ShelfController {
           $scope.search();
           console.log('Page changed to: ' + $rootScope.pagination.currentPage);
       };
-
+      $scope.back = function () {
+          history.back();
+      };
       $scope.search();
 
   }
