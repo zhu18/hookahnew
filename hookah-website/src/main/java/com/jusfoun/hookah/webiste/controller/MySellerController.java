@@ -119,6 +119,11 @@ public class MySellerController {
         return "usercenter/myseller/goodsWait";
     }
 
+    @RequestMapping(value = "/goodsNoFailed", method = RequestMethod.GET)
+    public String goodsNoFailed(){
+        return "usercenter/myseller/goodsNoFailed";
+    }
+
     @RequestMapping(value = "/goodsIllegal", method = RequestMethod.GET)
     public String goodsIllegal(){
         return "usercenter/myseller/goodsIllegal";

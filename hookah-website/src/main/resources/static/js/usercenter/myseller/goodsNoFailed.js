@@ -22,10 +22,8 @@ function loadPageData(data){
             }
 			html += '<td class="text-right">'+list[i].onsaleStartDate+'</td>';
 			html += '<td>';
-			html += '<a style="padding: 0;margin:5px 0;" href="javascript:offSale(\'' + list[i].goodsId + '\');">取消上架</a>';
-			if(list[i].checkStatus == 2){
-				html += '<a style="padding: 0;margin:5px 0;" href="'+host.website+'/usercenter/goodsModify?id=' + list[i].goodsId + '">修改</a>';
-			}
+			// html += '<a style="padding: 0;margin:5px 0;" href="javascript:offSale(\'' + list[i].goodsId + '\');">取消上架</a>';
+			html += '<a style="padding: 0;margin:5px 0;" href="'+host.website+'/usercenter/goodsModify?id=' + list[i].goodsId + '">修改</a>';
             html += '</td>';
             html += '</tr>';
         }
@@ -90,16 +88,6 @@ function change(){
 		dataParm.goodsName = goodsName;
 	}else{
 		delete dataParm.goodsName;
-	}
-	if(checkStatus != -1){
-		dataParm.checkStatus = checkStatus;
-	}else{
-		delete dataParm.checkStatus;
-	}
-	if(isBook != -1){
-		dataParm.isBook = isBook;
-	}else{
-		delete dataParm.isBook;
 	}
 	goPage(1);
 	return false;

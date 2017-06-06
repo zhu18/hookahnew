@@ -1128,7 +1128,8 @@ margin-left:-100px;
     display: block;
 }
 .index-information .central-box .center-left img{
-    width:100%
+    width:100%;
+    height: 265px;
 }
 .index-information .central-box .center-left h3{
     font-size: 14px;
@@ -1183,6 +1184,13 @@ text-decoration: none;
 .index-information .central-box .center-right li a .infos{
     width:340px;
 }
+.index-information .central-box .center-right li a .infos .infos-info{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+
+}
 .index-information a p,.index-information a h3{
     -webkit-transition:all .3s linear;
     transition:all .3s linear;
@@ -1196,6 +1204,9 @@ text-decoration: none;
 .index-information .central-box .center-right li a .infos h3{
     font-size: 14px;
     margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .index-information .notice-box li{
