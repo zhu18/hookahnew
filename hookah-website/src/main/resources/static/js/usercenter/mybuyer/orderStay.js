@@ -99,12 +99,12 @@ $(".searchQuery .search").on("click",function(){
     var endDate = $("#endDate").val();
     dataParm.startDate = startDate?startDate:format(new Date());
     dataParm.endDate = endDate?endDate:format(new Date());
-    if(!startDate){
-        delete dataParm.startDate;
-    }
-    if(!endDate){
-		delete dataParm.endDate;
-    }
+    // if(!startDate){
+    //     delete dataParm.startDate;
+    // }
+    // if(!endDate){
+		// delete dataParm.endDate;
+    // }
     goPage(1);
 });
 
