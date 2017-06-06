@@ -60,9 +60,6 @@
                   <span class="column-text" style="width: 100px;white-space:nowrap;" ng-bind="item.goodsName | limitTo:10"></span>
                 </a>
               </td>
-              <!--<td>-->
-                <!--<span class="column-text" ng-bind="item.checkStatus | checkStatus"></span>-->
-              <!--</td>-->
               <td>
                 <span class="column-text" style="color: red" ng-show="item.checkStatus == 2">未通过</span>
                 <span class="column-text" style="color: green" ng-show="item.checkStatus == 1">已通过</span>
@@ -81,10 +78,10 @@
                 <span class="column-text" ng-bind="item.shopName"></span>
               </td>
               <td>
-                <span class="column-text" ng-bind="item.checkUser"></span>
+                <span class="column-text" style="width: 100px;white-space:nowrap;" ng-bind="item.checkTime | date:'yyyy-MM-dd hh:mm:ss'"></span>
               </td>
               <td>
-                <span class="column-text" style="width: 100px;white-space:nowrap;" ng-bind="item.checkTime"></span>
+                <span class="column-text" ng-bind="item.checkUser"></span>
               </td>
               <td class="text-center">
                 <span data-ng-if="item.isOnsale == '1' && item.checkStatus == '1'">
