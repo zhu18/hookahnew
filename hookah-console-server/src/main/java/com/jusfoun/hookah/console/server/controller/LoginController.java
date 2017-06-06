@@ -16,9 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginController {
 
     @RequestMapping(value = "/login")
-    public String login(String redirect_uri,HttpServletRequest request, HttpServletResponse response) {
-        if (!StringUtils.isEmpty(redirect_uri)) {
-            return "redirect:" + redirect_uri;
+    public String login(String backurl,HttpServletRequest request, HttpServletResponse response) {
+        if (!StringUtils.isEmpty(backurl)) {
+            return "redirect:" + backurl;
         } else {
             return "redirect:/";
         }
