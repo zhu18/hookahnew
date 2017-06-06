@@ -60,7 +60,11 @@ function loadPageData(data){
 		}
 		$('.order').append(html);
 	}else{
-		$('.order').html('<tr class="noData"><td colspan="5">暂时无订单!</td></tr>');
+		if(dataParm.startDate ==format(new Date())){
+            $('.order').html('<tr class="noData"><td colspan="5">请输入查询时间!</td></tr>');
+		}else{
+            $('.order').html('<tr class="noData"><td colspan="5">暂时无订单!</td></tr>');
+		}
 	}
 }
 var start = {
@@ -84,6 +88,7 @@ $.jeDate("#startDate", start);
 $.jeDate("#endDate",end);
 //点击查询按钮
 $(".searchQuery .search").on("click",function(){
+    $('.order .noData').css("display","none");
     var startDate = $("#startDate").val();
     var endDate = $("#endDate").val();
     dataParm.startDate = startDate?startDate:format(new Date());
