@@ -1,9 +1,10 @@
 var getImg = "";
 var id = $.getUrlParam('id');
 console.log("id:" + id);
+var editor=null;
 function createEidtor() {
 	//富文本
-	var editor = new wangEditor('content');
+	editor = new wangEditor('content');
 	//上传图片（举例）
 	editor.config.uploadImgUrl = host.static + '/upload/wangeditor';
 	editor.config.uploadImgFileName = 'filename';
@@ -97,7 +98,7 @@ function published() {
 	data.newsTitle = $.trim($('#newsTitle').val());
 	data.contentValidity = $.trim($('#newsInfo').val());
 	data.isHot = $("input[name='isHot']:checked").val();
-	data.content = $.trim($('#content').val());
+	data.content = $.trim($('#content').text()).length;
 	data.newsSonGroup = $('#newsSonGroup').val();
 	if (id) {
 		data.pictureUrl = getImg;
@@ -123,10 +124,13 @@ function published() {
 		});
 		// $('#newsTitle').focus();
 		return;
-	} else if (data.content == "" || data.newsTitle == null) {
+	} else if (data.content =0 || data.newsTitle == null ) {
 		$.alert('请输入文章内容！', true, function () {
-		})
-		return;
+            console.log(1);
+            console.log(data.content);
+        })
+        console.log(data.content);
+        return;
 	} else if (data.pictureUrl == "") {
 		$.alert('请上传图片！', true, function () {
 		})
@@ -146,7 +150,7 @@ function published() {
 			success: function (msg) {
 				if (msg.code == 1) {
 					$.alert('提交成功');
-					window.location.href = "/admin/articleManage";
+					// window.location.href = "/admin/articleManage";
 				} else {
 					$.alert(msg.message)
 				}
@@ -262,11 +266,11 @@ $.validator.addMethod("isNewsBrief", function (value, element) {
 }, "长度为30-400个字符（每个汉字为2个字符）");
 $('#submit-article').click(function () {
 	if ($("#publishArticle").valid()) {
-		if ($('#content').val()) {
+		if ($.trim(editor.$txt.text()).length>0) {
 			published()
 		} else {
 			$.alert('文章描述不能为空', true, function () {
-				$('#content').focus()
+                $('#content').focus()
 			})
 
 		}

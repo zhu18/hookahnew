@@ -135,7 +135,7 @@ var htmlPart = {
 								<!--<span class="collect" onclick="Attention.add('${item[i].goodsId}')"><i class="iconfont icon-jushoucanggift collect-item"></i>关注</span>-->
 							</div>
 							<div class="down-box-tow">
-								<span class="money"><i class="money-i-item" >￥</i>${trunc(item[i].shopPrice / 100,2)}</span>
+								<span class="money"><i class="money-i-item" >￥</i>${item[i].shopPrice / 100}</span>
 								<a class="detail btn-hover-red" href="${host.website}/exchange/details?id=${item[i].goodsId}" target="_blank" >查看详情</a>
 							</div>
 						</div>
@@ -204,7 +204,7 @@ var htmlPart = {
 					<tr>
 						<td class="td-one"><img src="${res_item[i].goodsImg}" alt=""></td>
 						<td class="td-two">${res_item[i].goodsName}</td>
-						<td class="td-three"><span class="td-three-money">${trunc(res_item[i].shopPrice / 100,2)}</span></td><!--<span>元/次</span>-->
+						<td class="td-three"><span class="td-three-money">${res_item[i].shopPrice / 100}</span></td><!--<span>元/次</span>-->
 						<td class="td-four">
 							<a href="${host.website}/exchange/details?id=${res_item[i].goodsId}" class="a-hover-blue" target="_blank" >查看详情</a>
 							<!--<span>免</span>-->
@@ -233,7 +233,7 @@ var htmlPart = {
 							<a href="${host.website}/exchange/details?id=${hot_sellItem[i].goodsId}" target="_blank" ><p class="title">
 								${hot_sellItem[i].goodsName}</p></a>
 							<a href="${host.website}/exchange/details?id=${hot_sellItem[i].goodsId}" target="_blank" ><p class="p-none ">
-								￥${trunc(hot_sellItem[i].shopPrice / 100,2)}</p></a>
+								￥${hot_sellItem[i].shopPrice / 100}</p></a>
 						</div>
 					</li>
 					<%}%>
@@ -369,7 +369,7 @@ var htmlPart = {
 								</p>
 								<p>
 									<i class="money-symbol color-red">￥</i>
-									<span class="color-red">${trunc(model_item[i].shopPrice / 100,2)}</span>
+									<span class="color-red">${model_item[i].shopPrice / 100}</span>
 								</p>
 							</a>
 						</li>
@@ -416,7 +416,7 @@ var htmlPart = {
 								</p>
 								<p>
 									<i class="money-symbol color-red">￥</i>
-									<span class="color-red">${trunc(scene_item[i].shopPrice / 100,2)}</span>
+									<span class="color-red">${scene_item[i].shopPrice / 100}</span>
 								</p>
 							</a>
 						</li>
@@ -463,7 +463,7 @@ var htmlPart = {
 								</p>
 								<p>
 									<i class="money-symbol color-red">￥</i>
-									<span class="color-red">${trunc(plat_item[i].shopPrice / 100,2)}</span>
+									<span class="color-red">${plat_item[i].shopPrice / 100}</span>
 								</p>
 							</a>
 						</li>
@@ -510,7 +510,7 @@ var htmlPart = {
 								</p>
 								<p>
 									<i class="money-symbol color-red">￥</i>
-									<span class="color-red">${trunc(tools_item[i].shopPrice / 100,2)}</span>
+									<span class="color-red">${tools_item[i].shopPrice / 100}</span>
 								</p>
 							</a>
 						</li>

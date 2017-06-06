@@ -142,8 +142,8 @@ class GoodsController {
     if ($state.$current.name == "items.searchByCon") {
           $scope.searchName = $rootScope.Name;
           $scope.searchSn = $rootScope.Sn;
-          $scope.searchCheckStatus = $rootScope.CheckStatus;
-          $scope.searchOnSaleStatus = $rootScope.OnSaleStatus;
+          $scope.searchCheckStatus = $rootScope.CheckStatus == undefined ? -1 : $rootScope.CheckStatus;
+          $scope.searchOnSaleStatus = $rootScope.OnSaleStatus == undefined ? -1 : $rootScope.OnSaleStatus;
     }
 
     $scope.returnPage = function(){
