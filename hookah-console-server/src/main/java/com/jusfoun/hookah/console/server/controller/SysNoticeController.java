@@ -3,9 +3,11 @@ package com.jusfoun.hookah.console.server.controller;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.Cooperation;
+import com.jusfoun.hookah.core.domain.GoodsShelves;
 import com.jusfoun.hookah.core.domain.SysNotice;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
+import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.SysNoticeService;
 import org.apache.commons.lang3.StringUtils;
@@ -59,15 +61,14 @@ public class SysNoticeController extends BaseController{
         }
         return ReturnData.success("删除成功");
     }
+
     @RequestMapping("upd")
     @Transactional
-
     public ReturnData updNoticeByConditionSelective(SysNotice sysNotice ){
         List<Condition> filters = new ArrayList();
         filters.add(Condition.eq(("noticeId"),sysNotice.getNoticeId()));
         try {
             sysNoticeService.updateByConditionSelective(sysNotice,filters);
-
         }catch (Exception e){
             return ReturnData.error("修改失败");
         }
@@ -102,5 +103,22 @@ public class SysNoticeController extends BaseController{
     public ReturnData getUserById(@PathVariable String id) {
         SysNotice sysnotice = sysNoticeService.selectById(id);
         return ReturnData.success(sysnotice);
+    }
+
+    @RequestMapping(value = "/updateStatus", method = RequestMethod.POST)
+    public ReturnData updateStatus(String noticeId, String status) {
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            SysNotice sysNotice = new SysNotice();
+            sysNotice.setNoticeId(noticeId);
+            sysNotice.setStatus(status);
+            sysNoticeService.updateByIdSelective(sysNotice);
+        } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
     }
 }

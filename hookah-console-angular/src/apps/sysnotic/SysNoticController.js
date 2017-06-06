@@ -47,28 +47,43 @@ class SysNoticController {
             var promise = $http({
                 method: 'POST',
                 url: $rootScope.site.apiServer + "/sysnotice/upd",
-                params: {
-                    noticeId:$("#noticeId").val(),
-                    status: $("#status").val(),
-                    noticeContent: $("#noticeContent").val(),
-                    url: $("#url").val(),
-                    pictureUrl: $("#pictureUrl").val(),
-                    noticeTitle: $("#noticeTitle").val(),
-                }
+                data: $("#editForm").serialize()
+                // params: {
+                //     noticeId:$("#noticeId").val(),
+                //     status: $("#status").val(),
+                //     noticeContent: $("#noticeContent").val(),
+                //     url: $("#url").val(),
+                //     pictureUrl: $("#pictureUrl").val(),
+                //     noticeTitle: $("#noticeTitle").val(),
+                // }
             });
+
+
             promise.then(function (res, status, config, headers) {
                 $rootScope.loadingState = false;
                 if (res.data.code == "1"){
                     alert(res.data.data);
                     $state.go('sysnotice.search');
-
-
                 }else{
                     alert(res.data.message);
                 }
                 growl.addSuccessMessage("数据加载完毕。。。");
             });
         };
+        $scope.updateStatus = function (item, flag) {
+            console.log(item.noticeId, item.status);
+            var promise = $http({
+                method: 'POST',
+                url: $rootScope.site.apiServer + "/sysnotice/updateStatus",
+                params: {noticeId: item.noticeId, status: flag}
+            });
+            promise.then(function (res, status, config, headers) {
+                if(res.data.code == 1){
+                    $scope.search();
+                }
+            });
+        };
+
         $scope.delete = function (event, item) {
             var promise = $http({
                 method: 'POST',
