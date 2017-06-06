@@ -2,9 +2,7 @@ package com.jusfoun.hookah.webiste.controller;
 
 
 import com.jusfoun.hookah.core.common.Pagination;
-import com.jusfoun.hookah.core.domain.Category;
 import com.jusfoun.hookah.core.domain.SysNews;
-import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.vo.SysNewsVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
@@ -30,7 +28,7 @@ import java.util.*;
  */
 @Controller
 @RequestMapping("/sysNews")
-public class SysNewsController extends BaseController{
+public class SysNewsController extends BaseController {
     protected final static Logger logger = LoggerFactory.getLogger(SysNewsController.class);
 
     @Resource
@@ -55,15 +53,15 @@ public class SysNewsController extends BaseController{
     }*/
 
     /**
-     * 根据信息ID获取详情信息
+     * 根据信息ID获取详情信息 ajax
      *
      * @param id
      * @return
      */
- /*   @CrossOrigin
+    @CrossOrigin
     @ResponseBody
-    @RequestMapping(value = "details", method = RequestMethod.GET)
-    public ReturnData details(String id,Model model) {
+    @RequestMapping(value = "detailsAjax", method = RequestMethod.GET)
+    public ReturnData detailsAjax(String id, Model model) {
         ReturnData returnData = new ReturnData();
         SysNewsVo sysN = new SysNewsVo();
         try {
@@ -78,9 +76,9 @@ public class SysNewsController extends BaseController{
         System.out.print(sysN.getNewsTitle() + "    66666666666666666666666666666666666ddddddddddddddddddddddddd");
         return returnData;
     }
-*/
+
     @RequestMapping(value = "/details", method = RequestMethod.GET)
-    public String details(String id,Model model) {
+    public String details(String id, Model model) {
         SysNewsVo sysN = new SysNewsVo();
         try {
             sysN = sysNewsService.selectNewsByID(id);
@@ -89,7 +87,7 @@ public class SysNewsController extends BaseController{
             e.printStackTrace();
         }
         model.addAttribute("title", sysN.getNewsTitle());
-        model.addAttribute("sysNews",sysN);
+        model.addAttribute("sysNews", sysN);
         return "information/details";
     }
 
@@ -216,7 +214,7 @@ public class SysNewsController extends BaseController{
             Map<String, Object> infos = sysNewsService.getNewsList(newsGroup, newsSonGroup, pageSizeNew);
             List<List<SysNewsVo>> data = (List<List<SysNewsVo>>) infos.get("dataList");
             page.setList(data.get((pageNumberNew - 1)));
-            page.setTotalItems( Long.valueOf(infos.get("totalItem").toString()));
+            page.setTotalItems(Long.valueOf(infos.get("totalItem").toString()));
             page.setCurrentPage(pageNumberNew);
             page.setPageSize(pageSizeNew);
             page.setTotalPage(Integer.parseInt(infos.get("totalCount").toString()));
@@ -232,7 +230,7 @@ public class SysNewsController extends BaseController{
             returnData.setMessage("数据错误！");
             e.printStackTrace();
         }
-       return returnData;
+        return returnData;
     }
 
 

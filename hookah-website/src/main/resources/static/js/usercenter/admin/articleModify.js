@@ -24,7 +24,7 @@ function createEditor() {
 if (id) {
     $.ajax({
         type: "get",
-        url: "/sysNews/details",
+        url: "/sysNews/detailsAjax",
         data: {id: id},
         success: function (data) {
             $("#newsGroup").val(data.data.newsGroup);//文章的一级分类
