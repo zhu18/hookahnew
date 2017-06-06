@@ -152,7 +152,7 @@ var htmlPart = {
 								html += '<div class=" grid-left detail-info">';
 								html += '<h4>' + list[i].goodsName + '</h4>';
 								html += '<p class="application-time">申请时间: <span class="app-time">' + list[i].payTime + '</span></p>';
-								html += '<a class="read" href="${host.website}/exchange/orderEndDetails?id=' + list[i].goodsId + '&orderSn=' + list[i].orderSn + '">立即查看</a>';
+								html += '<a class="read" href="${host.website}/exchange/orderEndDetails?id=' + list[i].goodsId + '&orderSn=' + list[i].orderSn + '&format='+list[i].goodsFormat+'">立即查看</a>';
 								html += '</div>';
 								html += '</div>';
 							}
