@@ -13,8 +13,9 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="praise" property="praise" jdbcType="BIGINT" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.jusfoun.hookah.core.domain.Comment" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.jusfoun.hookah.core.domain.vo.CommentVo" extends="BaseResultMap" >
     <result column="comment_content" property="commentContent" jdbcType="LONGVARCHAR" />
+    <result column="user_name" property="username" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     comm_id, comment_level, goods_id, user_id, order_id, goods_comment_grade, comment_time,
@@ -22,6 +23,9 @@
   </sql>
   <sql id="Blob_Column_List" >
     comment_content
+  </sql>
+  <sql id="Column_List_Vo">
+    username
   </sql>
 
   <!-- 获取商品平均分 并取一位小数-->
@@ -33,5 +37,27 @@
   <select id="selectGoodsIdsByData" resultType="java.lang.String">
     SELECT DISTINCT goods_id FROM `comment` c WHERE add_time BETWEEN #{startTime} AND #{endTime} AND status = 1
   </select>
+
+ <select id="getListForComment" resultMap="ResultMapWithBLOBs">
+    SELECT
+      c.comm_id,
+      c.comment_level,
+      c.goods_id,
+      c.user_id,
+      c.order_id,
+      c.goods_comment_grade,
+      c.comment_time,
+      c.add_time,
+      c.update_time,
+      c.praise,
+      u.user_name
+    FROM `comment` c
+    left JOIN `user` u on c.user_id = u.user_id
+    WHERE c.status = 1
+   <if test="goodsId != '' and goodsId != null">
+     AND c.goods_id = #{goodsId}
+   </if>
+   ORDER BY comment_time DESC
+ </select>
 
 </mapper>

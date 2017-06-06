@@ -12,6 +12,10 @@ import java.util.List;
  */
 public interface CategoryService extends GenericService<Category,String> {
 
+    /**
+     * 前台专用
+     * @return
+     */
     public List<CategoryVo> getCatTree();
 
     public ReturnData addCat(Category category);
@@ -19,4 +23,10 @@ public interface CategoryService extends GenericService<Category,String> {
     public ReturnData editCat(Category category);
 
     public ReturnData deleteById(String catId);
+
+    /**
+     * 管理员专用
+     * @return
+     */
+    public List<CategoryVo> getAdminCatTree();
 }
