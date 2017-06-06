@@ -10,7 +10,7 @@ function loadPageData(data){
             html += '<tr>';
             html += '<th class="" style="width: 280px;">' + '订单号:' + list[i].orderSn + '</th>';
             html += '<th class="text-align-left">创建时间:' + list[i].addTime + '</th>';
-            html += '<th colspan="2"></th>';
+            html += '<th></th>';
             html += '<th colspan="2">总额:￥' + (list[i].orderAmount / 100).toFixed(2) +'</th>';
             html += '</tr>';
             html += '</thead>';
@@ -42,20 +42,26 @@ function loadPageData(data){
                 html += '</td>';
                 html += '<td class="text-align-left">x' + goods[ii].goodsNumber +'<br/><br/>'+ '规格:'+ (goods[ii].goodsPrice / 100).toFixed(2) +'/'+ mMat +'</td>';
                 // html += '<td><a href="/exchange/orderEndDetails?id='+goods[ii].goodsId+'&orderSn='+list[i].orderSn+'">下载<br/><span class="fa fa-download font-size-18"></span></a></td>';
-                html += '<td><a href="javascript:void(0);" onclick="getDataPackage('+goods[ii].goodsId+','+goods[ii].sourceId+','+list[i].orderSn+')">下载<br/><span class="fa fa-download font-size-18"></span></a></td>';
+                html += '<td><a href="javascript:getDataPackageD(\''+goods[ii].goodsId+'\' , \''+goods[ii].sourceId+'\',\''+list[i].orderSn+'\');">下载<br/><span class="fa fa-download font-size-18"></span></a></td>';
                 html += '<td class="">金额:￥&nbsp;' + ((goods[ii].goodsPrice / 100) * goods[ii].goodsNumber).toFixed(2) + '<br/><br/>' + list[i].payName + '</td>';//订单总金额
-                html += '<td class="text-align-center">';
-                if (list[i].commentFlag == 0) {
-                    html += '<a target="_blank" href="/order/sunAlone?orderId=' + list[i].orderId + '" class="display-block">评价晒单</a>';
-                } else if (list[i].commentFlag == 1) {
-                    html += '<span class="display-block">已评价</span>';
-                }
-                html += '<br><a href="/exchange/details?id='+goods[ii].goodsId+'" class="display-inline-block goPay btn btn-full-orange">再次购买</a>';
-                html += '</td>';
+                // html += '<td class="text-align-center">';
+                // if (list[i].commentFlag == 0) {
+                //     html += '<a target="_blank" href="/order/sunAlone?orderId=' + list[i].orderId + '" class="display-block">评价晒单</a>';
+                // } else if (list[i].commentFlag == 1) {
+                //     html += '<span class="display-block">已评价</span>';
+                // }
+                // html += '<br><a href="/exchange/details?id='+goods[ii].goodsId+'" class="display-inline-block goPay btn btn-full-orange">再次购买</a>';
+                // html += '</td>';
                 if(ii == 0){
 					html += '<td rowspan="'+goods.length+'" class="border-left">';
-					html += '<span>已完成</span><br><br>';
-					html += '<a target="_blank" href="/order/viewDetails?orderId=' + list[i].orderId + '&num=1" class="display-block color-blue">订单详情</a>';
+					html += '<span>已完成</span>';
+					if (list[i].commentFlag == 0) {
+						html += '<a target="_blank" href="/order/sunAlone?orderId=' + list[i].orderId + '" class="display-block margin-top-5 margin-bottom-5">评价晒单</a>';
+					} else if (list[i].commentFlag == 1) {
+						html += '<span class="display-block margin-top-5 margin-bottom-5">已评价</span>';
+					}
+					html += '<a href="/exchange/details?id='+goods[ii].goodsId+'" class="display-inline-block goPay btn btn-full-orange margin-top-5 margin-bottom-5">再次购买</a>';
+					html += '<a target="_blank" href="/order/viewDetails?orderId=' + list[i].orderId + '&num=1" class="display-block color-blue margin-top-5 margin-bottom-5">订单详情</a>';
 					html += '</td>';
                 }
 
@@ -160,7 +166,8 @@ function getDataPackage(goodsId){
         }
     });
 }
-function getDataPackage(goodsId,sourceId,orderSn){
+function getDataPackageD(goodsId,sourceId,orderSn){
+	console.log(goodsId,sourceId,orderSn)
 	$.ajax({
 		url: host.website+'/help/exportWords',
 		type:'get',

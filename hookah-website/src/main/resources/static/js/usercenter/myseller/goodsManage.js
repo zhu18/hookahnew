@@ -13,13 +13,13 @@ function loadPageData(data) {
 			html += '<td>' + list[i].catName + '</td>';
 			html += '<td class="text-right">' + (list[i].shopPrice / 100).toFixed(2) + '</td>';
 			html += '<td class="text-center">' + list[i].addTime + '</td>';
-			if (list[i].checkStatus == 0) {
-				html += '<td class="text-center">审核中</td>';
-			} else if (list[i].checkStatus == 1) {
-				html += '<td class="text-center">通过</td>';
-			} else if (list[i].checkStatus == 2) {
-				html += '<td class="text-center">不通过</td>';
-			}
+			// if (list[i].checkStatus == 0) {
+			// 	html += '<td class="text-center">审核中</td>';
+			// } else if (list[i].checkStatus == 1) {
+			// 	html += '<td class="text-center">通过</td>';
+			// } else if (list[i].checkStatus == 2) {
+			// 	html += '<td class="text-center">不通过</td>';
+			// }
 			html += '<td>';
 			html += '<a href="javascript:offSale(\'' + list[i].goodsId + '\');">下架</a>';
 			html += '</td>';
