@@ -1,8 +1,10 @@
 package com.jusfoun.hookah.console.server.api.help;
 
+import com.jusfoun.hookah.console.server.controller.BaseController;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.Help;
+import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ReturnData;
@@ -29,7 +31,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/help")
-public class HelpApi {
+public class HelpApi extends BaseController {
 
     @Resource
     HelpService helpService;
@@ -41,11 +43,18 @@ public class HelpApi {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ReturnData add(Help help) {
-        Session session = SecurityUtils.getSubject().getSession();
-        HashMap<String, String> user = (HashMap<String, String>) session.getAttribute("user");
-        help.setCreatorId(user.get("userId"));
-        help.setCreatorName(user.get("userName"));
+    public ReturnData add(Help help) throws HookahException {
+        /*Session session = SecurityUtils.getSubject().getSession();
+        HashMap<String, String> user = (HashMap<String, String>) session.getAttribute("user");*/
+
+        List<Condition> filters = new ArrayList();
+        filters.add(Condition.eq("helpId", help.getHelpId()));
+        boolean exists = helpService.exists(filters);
+        if(exists==true){
+            return ReturnData.error("该分类ID以存在");
+        }
+        help.setCreatorId(getCurrentUser().getUserId());
+        help.setCreatorName(getCurrentUser().getUserName());
         help.setHelpUrl("/help/" + help.getHelpId() + ".html");
         help.setAddTime(new Date());
         Help result = helpService.insert(help);
@@ -63,11 +72,17 @@ public class HelpApi {
     }
 
     @RequestMapping(value = "/category/add", method = RequestMethod.POST)
-    public ReturnData addCategory(Help help) {
-        Session session = SecurityUtils.getSubject().getSession();
-        HashMap<String, String> curUser = (HashMap<String, String>) session.getAttribute("user");
-        help.setCreatorId(curUser.get("userId"));
-        help.setCreatorName(curUser.get("userName"));
+    public ReturnData addCategory(Help help) throws HookahException{
+        List<Condition> filters = new ArrayList();
+        filters.add(Condition.eq("helpId", help.getHelpId()));
+        boolean exists = helpService.exists(filters);
+        if(exists==true){
+            return ReturnData.error("该分类ID以存在");
+        }
+       /* Session session = SecurityUtils.getSubject().getSession();
+        HashMap<String, String> curUser = (HashMap<String, String>) session.getAttribute("user");*/
+        help.setCreatorId(getCurrentUser().getUserId());
+        help.setCreatorName(getCurrentUser().getUserName());
         help.setAddTime(new Date());
         help.setParentId("0");
         Help result = helpService.insert(help);

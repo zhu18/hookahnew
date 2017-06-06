@@ -52,8 +52,12 @@ class HelpController {
       });
       promise.then(function (res, status, config, headers) {
         $rootScope.loadingState = false;
-        growl.addSuccessMessage("保存成功。。。");
-        $state.go('help.search');
+        if(res.data.code == "1") {
+            growl.addSuccessMessage("保存成功。。。");
+            $state.go('help.search');
+        }else{
+           alert("该分类ID以存在");
+        }
       });
     };
     $scope.refresh = function () {
