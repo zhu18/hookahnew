@@ -12,7 +12,8 @@ class AccountCarouselController {
                 addTime: $scope.addTime,
                 url: $scope.url,
                 href: $scope.href,
-                creatorName: $scope.creatorName
+                creatorName: $scope.creatorName,
+                advertGroup: $scope.advertGroup
             }
         });
         promise.then(function (res, status, config, headers) {
@@ -74,8 +75,8 @@ class AccountCarouselController {
                 advertId:$("#advertId").val(),
                 url: $("#url").val(),
                 href: $("#href").val(),
-                creatorName: $("#creatorName").val(),
                 advertOrder: $("#advertOrder").val(),
+                advertGroup: $("#advertGroup").val()
             }
             /*data: $("#carouselForm").serialize()*/
         });

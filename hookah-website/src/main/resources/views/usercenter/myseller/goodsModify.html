@@ -52,19 +52,19 @@ var htmlPart = {
                                         </div>
                                     </td>
                                 </tr>
-                                <tr class="attribute-container">
-                                    <td class="bar">商品属性：</td>
-                                    <td>
-                                        <div class="block info" style="margin: 0px 0px 3px;">
-                                            商品属性支持默认。
-                                        </div>
-                                        <div class="attribute-box">
-                                            <table>
+                                <!--<tr class="attribute-container">-->
+                                    <!--<td class="bar">商品属性：</td>-->
+                                    <!--<td>-->
+                                        <!--<div class="block info" style="margin: 0px 0px 3px;">-->
+                                            <!--商品属性支持默认。-->
+                                        <!--</div>-->
+                                        <!--<div class="attribute-box">-->
+                                            <!--<table>-->
 
-                                            </table>
-                                        </div>
-                                    </td>
-                                </tr>
+                                            <!--</table>-->
+                                        <!--</div>-->
+                                    <!--</td>-->
+                                <!--</tr>-->
                                 <tr>
                                     <td class="bar">商品类型：<span class="requireds">*</span></td>
                                     <td>
@@ -78,21 +78,21 @@ var htmlPart = {
                                         <!--</label>-->
                                         <!--</div>-->
                                         <div class="select-box">
-                                            <select name="parentSelect" class="parentSelect" onchange="selectGoodsType(this)" id="parentSelect">
+                                            <select name="parentSelect" class="parentSelect" onchange="selectGoodsType(this)" id="parentSelect" disabled="disabled">
                                                 <option value="100">数据源</option>
                                                 <option value="2">数据模型</option>
                                                 <option value="300">应用场景</option>
                                                 <option value="400">分析工具</option>
                                             </select>
-                                            <select name="childrenSelect1" class="childrenSelect" onchange="childrenSelects(this)" id="childrenSelect1">
+                                            <select name="childrenSelect1" class="childrenSelect" onchange="childrenSelects(this)" id="childrenSelect1" disabled="disabled">
                                                 <option value="0">离线数据</option>
                                                 <option value="1">api</option>
                                             </select>
-                                            <select name="childrenSelect2" class="childrenSelect" onchange="childrenSelects(this)" id="childrenSelect2">
+                                            <select name="childrenSelect2" class="childrenSelect" onchange="childrenSelects(this)" id="childrenSelect2" disabled="disabled">
                                                 <option value="6">独立软件</option>
                                                 <option value="7">Saas</option>
                                             </select>
-                                            <select name="childrenSelect3" class="childrenSelect" onchange="childrenSelects(this)" id="childrenSelect3">
+                                            <select name="childrenSelect3" class="childrenSelect" onchange="childrenSelects(this)" id="childrenSelect3" disabled="disabled">
                                                 <option value="4">独立软件</option>
                                                 <option value="5">Saas</option>
                                             </select>
@@ -116,10 +116,10 @@ var htmlPart = {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="bar">商品图片：<span class="requireds">*</span></td>
+                                    <td class="bar">商品图标：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="block info" style="margin: 0px 0px 3px;">
-                                            商品图片大小不能超过5MB。
+                                            商品图标大小不能超过5MB。
                                         </div>
                                         <div class="multimage-wrap">
                                             <ul class="image-list">
@@ -691,15 +691,15 @@ var htmlPart = {
                         <div class="struct">
                             <table>
                                 <tbody>
-                                <tr>
-                                    <td class="bar">库存计数：</td>
-                                    <td>
-                                        <div class="radio-box">
-                                            <label><input type="radio" name="121">买家拍下减库存</label>
-                                            <label><input type="radio" name="121" checked="">买家付款减库存</label>
-                                        </div>
-                                    </td>
-                                </tr>
+                                <!--<tr>-->
+                                    <!--<td class="bar">库存计数：</td>-->
+                                    <!--<td>-->
+                                        <!--<div class="radio-box">-->
+                                            <!--<label><input type="radio" name="121">买家拍下减库存</label>-->
+                                            <!--<label><input type="radio" name="121" checked="">买家付款减库存</label>-->
+                                        <!--</div>-->
+                                    <!--</td>-->
+                                <!--</tr>-->
                                 <tr>
                                     <td class="bar">上架时间：</td>
                                     <td>

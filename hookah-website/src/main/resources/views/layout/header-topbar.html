@@ -57,8 +57,12 @@
 </div>
 <script type="text/javascript">
   $('.userInfos').mouseover(function () {
+  	var wh = $(this).width();
     $(this).css("background", "#fff").children('.userInfos-box').show();
     $(this).children('a');
+    $('.userInfos-box').css({'width':wh+100+'px'})
+    $('.userInfos-box .spacer').css({'width':wh+'px'})
+
   }).mouseout(function () {
     $(this).css("background", "none").children('a');
     $(this).children('.userInfos-box').hide();

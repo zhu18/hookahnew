@@ -217,3 +217,40 @@ function getDataPackage(goodsId,sourceId){
         }
     });
 }
+$(".evaluate").on("click",function () {
+    evaluate($.getUrlParam("id"));
+    console.log($.getUrlParam("id"));
+})
+function evaluate(goodsId){
+    $.ajax({
+        url:host.website+'/comment/serachByGoodsId',
+        type:'get',
+        data:{
+            goodsId:goodsId
+        },
+        success:function(data){
+            if(data.code==1){
+                if(data.data.list.length>0){
+                    var list =data.data.list;
+                    var html = '';
+                    for(var i=0;i<list.length;i++){
+                        html += '<li>';
+                        html += '<div class="comment-title margin-bottom-10">';
+                        html += '<span class="name padding-left-10">'+list[i].userId+'</span>';
+                        html += '<span class="date padding-left-20">'+list[i].addTime+'</span>';
+                        // html += '<a href="javascript:void(0)" class="padding-left-20">回复</a>';
+                        html += '</div>';
+                        html += '<div class="comment-content padding-left-20 margin-bottom-20">'+list[i].commentContent+'</div>';
+                        html += '</li>';
+                    }
+                    $(".evaluate h1").css('display','block');
+                    $('.evaluate ol').html(html);
+                }else{
+                    $(".evaluate ol").html('<p style="text-align: center;min-height:100px; font-size: 18px;">暂无评论</p>');
+                }
+            }else{
+                $.alert(data.message)
+            }
+        }
+    })
+}

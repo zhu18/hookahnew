@@ -38,11 +38,12 @@ function loadPageData(data){ //渲染页面数据
 		if(data.data2.goodsAttrTypeList.length > 0){
 			renderSelector2(data.data2.goodsAttrTypeList,'属性','attrtype');
 		}
-		if(data.data2.areaCountryList.length > 0){
-			renderSelector(data.data2.areaCountryList,'国家','country');
-		}
+		// if(data.data2.areaCountryList.length > 0){
+		// 	renderSelector(data.data2.areaCountryList,'国家','country');
+		// }
 		if(data.data2.areaProvinceList.length > 0){
 			renderSelector(data.data2.areaProvinceList,'省份','province');
+
 		}
 		if(data.data2.areaCityList.length > 0){
 			renderSelector(data.data2.areaCityList,'城市','city');
@@ -117,21 +118,32 @@ function loadPageData(data){ //渲染页面数据
 		var country = $('#J_crimbsNav').attr('country');
 		var province = $('#J_crimbsNav').attr('province');
 		var city = $('#J_crimbsNav').attr('city');
-		if(country && province && !city){
-			$('.country').remove();
+		// if(country && province && !city){
+		// 	$('.country').remove();
+		// 	$('.province').remove();
+		// }else if(country && !province){
+		// 	$('.country').remove();
+		// 	$('.city').remove();
+		// }else if(!country && province && !city){
+		// 	$('.country').remove();
+		// 	$('.province').remove();
+		// }else if(city){
+		// 	$('.country').remove();
+		// 	$('.province').remove();
+		// 	$('.city').remove();
+		// }else{
+		// 	$('.province').remove();
+		// 	$('.city').remove();
+		// }
+
+		if(province && !city){
 			$('.province').remove();
-		}else if(country && !province){
-			$('.country').remove();
+		}else if(!province){
 			$('.city').remove();
-		}else if(!country && province && !city){
-			$('.country').remove();
-			$('.province').remove();
 		}else if(city){
-			$('.country').remove();
 			$('.province').remove();
 			$('.city').remove();
 		}else{
-			$('.province').remove();
 			$('.city').remove();
 		}
 	}

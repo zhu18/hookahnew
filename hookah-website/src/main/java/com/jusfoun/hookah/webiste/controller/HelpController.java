@@ -114,7 +114,7 @@ public class HelpController extends BaseController{
                 if(goodsVo.getGoodsType() == 0) { // 普通文件
 
                     if(!StringUtils.isNotBlank(goodsVo.getUploadUrl())){
-                        returnData.setMessage("文件下载地址有误，请联系管理员！^_^");
+                        returnData.setMessage("文件下载地址不存在，请联系管理员！^_^");
                         returnData.setCode(ExceptionConst.Failed);
                         return returnData;
                     }

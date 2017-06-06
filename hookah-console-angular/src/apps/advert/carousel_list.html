@@ -17,8 +17,8 @@
         <div class="searchSection">
           <form class="form-inline">
             <div class="form-group">
-              <label class="control-label" for="form-field-1">创建者</label>
-              <input id="form-field-1" name="creatorName" ng-model="creatorName" type="text" class="form-control">
+              <label class="control-label" for="form-field-1">轮播分组</label>
+              <input id="form-field-1" name="advertGroup" ng-model="advertGroup" type="text" class="form-control">
               <button type="submit" class="btn btn-primary" data-ng-click="search()">搜索</button>
             </div>
           </form>
@@ -34,11 +34,11 @@
               <!--</th>-->
               <!--<th class="state-column"></th>-->
               <!--<th>Id</th>-->
-              <th witdth="200">url</th>
-              <th width="200">href</th>
-              <th width="200">创建时间</th>
-              <th width="200">创建者</th>
-              <th width="200">轮播顺序</th>
+              <th witdth="180">跳转地址</th>
+              <th width="180">图片路径</th>
+              <th width="180">创建时间</th>
+              <th width="180">轮播顺序</th>
+              <th width="180">轮播分组</th>
              <!-- <th width="40">禁用</th>-->
               <th width="200" class="text-right">操作</th>
             </tr>
@@ -75,11 +75,14 @@
               <td>
                 <span class="" ng-bind="item.addTime"></span>
               </td>
-              <td>
-                <span class="" ng-bind="item.creatorName"></span>
-              </td>
+              <!--<td>
+                <span class="" ng-bind="item.upload"></span>
+              </td>-->
               <td>
                 <span class="" ng-bind="item.advertOrder"></span>
+              </td>
+              <td>
+                <span class="" ng-bind="item.advertGroup"></span>
               </td>
               <!--<td>
                 <span class="column-text" ng-bind="item.isEnable | yesNo"></span>

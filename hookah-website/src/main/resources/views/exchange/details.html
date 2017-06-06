@@ -11,7 +11,37 @@ var htmlPart = {
 <div class="grid-0 goodsDetails bdg-row ">
 	<div class="grid-row" style="position: relative">
 		<%include("/layout/menu.html"){} %>
-		<div class="crumbs-nav padding-top-20 padding-bottom-10" id="J_crimbsNav">分类：<span class="color-blue">${goodsDetails.catFullName}</span></div>
+		<div class="crumbs-nav padding-top-20 padding-bottom-10" id="J_crimbsNav">
+			分类：
+			<%
+			var arrs = null;
+			var catId = goodsDetails.catId;
+			var iii = 1;
+			%>
+			<%
+			if(isNotEmpty(goodsDetails.catFullName)){
+			arrs = strutil.split(goodsDetails.catFullName,"->");
+			}
+			%>
+			<%for(as in arrs){%>
+				<a class="color-blue" href="/exchange/list?catId=${strutil.subStringTo(catId,0,iii * 3)}&prId=${strutil.subStringTo(catId,0,3)}&prNm=${arrs[0]}">${as}</a>
+				<%if(!asLP.last){%>
+					<span>&nbsp;>&nbsp;</span>
+				<%}%>
+			<%
+			iii++;
+			}
+			%>
+
+		</div>
+
+
+
+
+
+
+
+
 		<div class="grid-left goods-left bdg-row">
 			<div class="goods-details clearfix">
 				<div class="goods-details-img grid-left bdg-row">
@@ -119,7 +149,7 @@ var htmlPart = {
 						<%if(goodsDetails.goodsType == 4 || goodsDetails.goodsType == 5){%>
 						<li class="grid-left">分析工具</li>
 						<%}%>
-						<li class="grid-left">评价</li>
+						<li class="grid-left evaluate">评价</li>
 					</ul>
 				</div>
 				<div class="table-content">
@@ -352,42 +382,42 @@ var htmlPart = {
 						</table>
 					</div>
 					<%}%>
-					<div class="table-item">
-						<!--<h1 class="font-size-14 margin-bottom-10">最新评论</h1>-->
+					<div class="table-item evaluate">
+						<h1 class="font-size-14 margin-bottom-10" style="display: none">最新评论</h1>
 						<ol>
 							<!--<li>-->
-							<!--<div class="comment-title margin-bottom-10">-->
-							<!--<span class="name padding-left-10">wu******dy</span>-->
-							<!--<span class="date padding-left-20">2017年03月13日 17:12:28</span>-->
-							<!--<a href="javascript:void(0)" class="padding-left-20">回复</a>-->
-							<!--</div>-->
-							<!--<div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>-->
+								<!--<div class="comment-title margin-bottom-10">-->
+								<!--<span class="name padding-left-10">wu******dy</span>-->
+								<!--<span class="date padding-left-20">2017年03月13日 17:12:28</span>-->
+								<!--<a href="javascript:void(0)" class="padding-left-20">回复</a>-->
+								<!--</div>-->
+								<!--<div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>-->
 							<!--</li>-->
 							<!--<li>-->
-							<!--<div class="comment-title margin-bottom-10">-->
-							<!--<span class="name padding-left-10">wu******dy</span>-->
-							<!--<span class="date padding-left-20">2017年03月13日 17:12:28</span>-->
-							<!--<a href="javascript:void(0)" class="padding-left-20">回复</a>-->
-							<!--</div>-->
-							<!--<div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>-->
+								<!--<div class="comment-title margin-bottom-10">-->
+								<!--<span class="name padding-left-10">wu******dy</span>-->
+								<!--<span class="date padding-left-20">2017年03月13日 17:12:28</span>-->
+								<!--<a href="javascript:void(0)" class="padding-left-20">回复</a>-->
+								<!--</div>-->
+								<!--<div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>-->
 							<!--</li>-->
 							<!--<li>-->
-							<!--<div class="comment-title margin-bottom-10">-->
-							<!--<span class="name padding-left-10">wu******dy</span>-->
-							<!--<span class="date padding-left-20">2017年03月13日 17:12:28</span>-->
-							<!--<a href="javascript:void(0)" class="padding-left-20">回复</a>-->
-							<!--</div>-->
-							<!--<div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>-->
+								<!--<div class="comment-title margin-bottom-10">-->
+								<!--<span class="name padding-left-10">wu******dy</span>-->
+								<!--<span class="date padding-left-20">2017年03月13日 17:12:28</span>-->
+								<!--<a href="javascript:void(0)" class="padding-left-20">回复</a>-->
+								<!--</div>-->
+								<!--<div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>-->
 							<!--</li>-->
 							<!--<li>-->
-							<!--<div class="comment-title margin-bottom-10">-->
-							<!--<span class="name padding-left-10">wu******dy</span>-->
-							<!--<span class="date padding-left-20">2017年03月13日 17:12:28</span>-->
-							<!--<a href="javascript:void(0)" class="padding-left-20">回复</a>-->
-							<!--</div>-->
-							<!--<div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>-->
+								<!--<div class="comment-title margin-bottom-10">-->
+								<!--<span class="name padding-left-10">wu******dy</span>-->
+								<!--<span class="date padding-left-20">2017年03月13日 17:12:28</span>-->
+								<!--<a href="javascript:void(0)" class="padding-left-20">回复</a>-->
+								<!--</div>-->
+								<!--<div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>-->
 							<!--</li>-->
-							<p style="text-align: center;min-height:100px; font-size: 18px;">暂无评论</p>
+							<!--<p style="text-align: center;min-height:100px; font-size: 18px;">暂无评论</p>-->
 						</ol>
 					</div>
 				</div>
