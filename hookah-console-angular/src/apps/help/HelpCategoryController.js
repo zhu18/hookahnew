@@ -33,6 +33,7 @@ class HelpCategoryController {
         console.log(res);
         if(res.data.code == "1"){
           growl.addSuccessMessage("保存成功。。。");
+          $state.go('help.category.search');
         }
       });
 
