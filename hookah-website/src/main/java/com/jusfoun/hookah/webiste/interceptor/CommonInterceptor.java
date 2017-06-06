@@ -47,12 +47,6 @@ public class CommonInterceptor implements HandlerInterceptor {
                     User user = userService.selectById(userId);
                     Map<String, Object> model = modelAndView.getModel();
                     model.put("user", user);
-//                    if(httpServletRequest.getRequestURL().indexOf("/exchange/details") < 0) {
-//                        model.put("title","青岛大数据交易中心");
-//                    }
-                    if(model.get("title") ==null || !StringUtils.isNotBlank((String)model.get("title"))){
-                        model.put("title","青岛大数据交易中心");
-                    }
                 }
             }
         } catch (UnavailableSecurityManagerException e) {
