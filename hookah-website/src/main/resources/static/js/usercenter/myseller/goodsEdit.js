@@ -71,6 +71,22 @@ $(document).ready(function(){
 	$('#preview-div').mouseout(function(){
 		$('#replace-btn').hide()
 	});
+	$('.struct.selects').hide();
+	$('.childrenSelect').hide();
+	$('.file-info-box').hide();
+	if(catId.substring(0,3) == 101){
+		$('#parentSelect').val(100).attr('disabled','disabled');
+		selectGoodsTypes(100)
+	}else if(catId.substring(0,3) == 102){
+		$('#parentSelect').val(2).attr('disabled','disabled');
+		selectGoodsTypes(2)
+	}else if(catId.substring(0,3) == 104){
+		$('#parentSelect').val(300).attr('disabled','disabled');
+		selectGoodsTypes(300)
+	}else{
+		$('#parentSelect').val(400).attr('disabled','disabled');
+		selectGoodsTypes(400)
+	}
 });
 function selectGoodsType(that){
 	$('.struct.selects').hide();
