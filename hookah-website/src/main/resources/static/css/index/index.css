@@ -1136,7 +1136,7 @@ text-decoration: none;
     height:34px;
 }
 .index-information .box-title h3{
-    font-size: 16px;
+    font-size: 17px;
     height: 32px;
     padding: 0 10px;
     border-bottom: 3px solid #3e567c;
@@ -1214,7 +1214,7 @@ text-decoration: none;
     display: block;
     width:100%;
     height:100%;
-    background-position:0 0
+    background-position:0 -37px;
 }
 /*.co-organization ul li a img{*/
     /*width:100%*/
@@ -1223,26 +1223,26 @@ text-decoration: none;
     margin-right: 0;
 }
 .co-organization ul li .logo1{
-    background: url("/static/images/index/logo1.jpg") no-repeat;
+    background: url("/static/images/index/logo1.jpg") 0 -37px no-repeat;
 }
 .co-organization ul li .logo2{
-    background: url("/static/images/index/logo2.jpg") no-repeat;
+    background: url("/static/images/index/logo2.jpg") 0 -37px no-repeat;
 }
 
 .co-organization ul li .logo3{
-    background: url("/static/images/index/logo3.jpg") no-repeat;
+    background: url("/static/images/index/logo3.jpg") 0 -37px no-repeat;
 }
 
 .co-organization ul li .logo4{
-    background: url("/static/images/index/logo4.jpg") no-repeat;
+    background: url("/static/images/index/logo4.jpg") 0 -37px no-repeat;
 }
 
 .co-organization ul li .logo5{
-    background: url("/static/images/index/logo5.jpg") no-repeat;
+    background: url("/static/images/index/logo5.jpg") 0 -37px no-repeat;
 }
 
 .co-organization ul li .logo6{
-    background: url("/static/images/index/logo6.jpg") no-repeat;
+    background: url("/static/images/index/logo6.jpg") 0 -37px no-repeat;
 }
 
 

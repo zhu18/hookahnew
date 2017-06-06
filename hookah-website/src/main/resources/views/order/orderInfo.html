@@ -50,16 +50,16 @@ var htmlPart = {
 								<td>
 									${list.format.number}${decode(list.format.format,0,"次",1,"天",2,"年")}
 								</td>
-								<td>${trunc(list.goodsPrice / 100, 2)}</td>
+								<td>${list.goodsPrice / 100}</td>
 								<td>${list.goodsNumber}</td>
 								<!--<td>${list.goodsName}</td>-->
-								<td>${trunc((list.goodsPrice * list.goodsNumber) / 100, 2)}</td>
+								<td>${(list.goodsPrice * list.goodsNumber) / 100}</td>
 							</tr>
 							<%}%>
 							<tr class="tab-pay">
 								<td colspan="9">
 									<span>付款小计：</span>
-									<span class="color-orange">${trunc(orderAmount / 100, 2)}</span>
+									<span class="color-orange">${orderAmount / 100}</span>
 									<span>元</span>
 								</td>
 							</tr>
@@ -76,10 +76,10 @@ var htmlPart = {
 									<div>
 										<div class="pay-box display-inline-block">
 											<span>应付总额：</span>
-											<span class="color-orange font-size-20">${trunc(orderAmount / 100, 2)}</span>
+											<span class="color-orange font-size-20">${orderAmount / 100}</span>
 											<span>元</span>
 										</div>
-										<button type="submit" class="btn btn-full-red padding-10 pay-btn">同意协议并付款</button>
+										<button type="submit" class="btn btn-full-red padding-10 pay-btn">付款</button>
 									</div>
 								</td>
 							</tr>

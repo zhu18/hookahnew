@@ -1,0 +1,84 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/usercenter/question.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="backgorund-gray padding-bottom-30 padding-top-10">
+    <div class="grid-row backgorund-white  ">
+        <div class="question">
+            <br>
+            <h2 class="text-align-center padding-top-10">青岛大数据交易中心买家指南</h2>
+            <br>
+            <p>欢迎访问和使用青岛大数据交易中心线上平台！为了方便您的体验，我们在此对交易平台的常用操作进行介绍和说明：</p>
+            <h3 class="text-align-center padding-top-5">个人用户操作指南</h3>
+            <h4>第一步：帐号注册</h4>
+            <ol>
+                <li><p>1.登陆青岛大数据交易中心首页http:// www.qddata.com.cn，点击“免费注册”</p> <br>
+                    <img src="/static/images/help/img-1.png" alt="">
+                </li>
+                <li>
+                    <p>2.进入注册页面，填写信息、确认同意协议，提交注册</p>
+                    <img src="/static/images/help/img-2.png" alt="">
+                </li>
+            </ol>
+            <h4>第二步：用户认证</h4>
+            <ol>
+                <li> <p>1.用注册的帐号登陆交易中心，点击“个人中心”</p>
+                    <img src="/static/images/help/img-3.png" alt="">
+                </li>
+                <li> <p>2.进入“个人中心”界面，点击“我要成为个人用户”</p>
+                    <img src="/static/images/help/img-4.png" alt="">
+                </li>
+                <li> <p>3.填写认证</p>
+                     <p>进入个人用户认证界面，按页面要求填写、上传相关信息、资料，绑定银行卡信息，阅读、勾选确认同意用户协议，点击“提交认证”</p>
+                    <img src="/static/images/help/img-5.png" alt="">
+                </li>
+                <li> <p>4、审核认证</p>
+                    <p>青岛大数据交易中心会在收到用户提交的认证申请后2个工作日内进行审核，符合标准的，审核通过，用户即可在交易中心平台上操作购买业务；不符合要求的，退回申请，需用户修改后重新提交。</p>
+                </li>
+
+            </ol>
+            <h4>第三步：购买流程</h4>
+            <p>1.标准大数据产品：在线选购——下单——支付，完成交易。</p>
+            <p>2.非标准大数据产品/方案：在线产品不能满足需求时或者需要大规模购买时，可以致电青岛大数据交易中心服务热线0532-86617555提出采购需求，由交易中心业务部门对接服务。</p>
+            <h4>第四步：交付流程</h4>
+            <P>1.自助交付：买家直接下载或者按照交付指引进行调用、维护。</P>
+            <P>2.协助交付：买家不能自助交付的情况下，可以致电青岛大数据交易中心服务热线0532-86617555，由交易中心提供交付所需的指导及必要的技术支持，帮助买家完成交付。</P>
+            <h3 class="text-align-center padding-top-5">单位用户操作指南</h3>
+            <h4>第一步：注册帐号——同个人用户</h4>
+            <h4>第二步：用户认证</h4>
+            <ol>
+                <li>
+                    <p>1.用注册的帐号登陆交易中心，点击“个人中心”</p>
+                    <img src="/static/images/help/img-6.png" alt="">
+                </li>
+                <li>
+                    <p>2.进入“个人中心”界面，点击“我要成为单位用户”</p>
+                    <img src="/static/images/help/img-7.png" alt="">
+                </li>
+            </ol>
+            <p>3.填写认证</p>
+            <p>进入个人用户认证界面，按页面要求填写信息、上传资料，阅读、勾选确认同意用户协议，下载《单位买家协议》和《授权书》，提交认证申请</p>
+            <img src="/static/images/help/img-8.png" alt="">
+            <img src="/static/images/help/img-9.png" alt="">
+            <p>4.纸质资料</p>
+            <p>《单位买家协议》一式两份打印、盖章，快递到青岛大数据交易中心。</p>
+            <p>5.审核认证</p>
+            <p>青岛大数据交易中心会在收到单位用户提交的认证申请、纸质协议和授权书后2个工作日内进行审核，符合标准的，审核通过，用户即可在交易中心平台上操作购买业务；不符合要求的，退回申请，需用户修改后重新提交。</p>
+            <h4>第三步：购买流程</h4>
+            <p>1.标准大数据产品：在线选购——下单——对公支付，同个人买家流程。</p>
+            <p>2.非标准大数据产品/方案：同个人买家流程。</p>
+            <p>3.针对部分标的，需要签订线下购买协议。</p>
+            <h4>第四步：交付——同个人买家</h4>
+        </div>
+    </div>
+</div>
+
+
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
