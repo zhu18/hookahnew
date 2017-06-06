@@ -13,7 +13,7 @@ class IndustryController {
 
     $scope.expanding_property = {
         field: "industryName",
-        displayName: "地域名称"
+        displayName: "行业名称"
     };
 
     $scope.col_defs = [

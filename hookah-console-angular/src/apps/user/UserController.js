@@ -43,6 +43,9 @@ class UserController {
       });
 
     };
+      $scope.refresh = function(){
+          $scope.search();
+      }
     $scope.recharge = function () {
       var promise = $http({
         method: 'POST',
