@@ -30,8 +30,7 @@ public class AdvertApi {
     private AdvertService advertService;
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public ReturnData selectCarouselFigure(String currentPage, String pageSize,String advertOrder,String addTime,
-        String url,String href,String creatorName){
+    public ReturnData selectCarouselFigure(String currentPage, String pageSize,Advert advert){
         Pagination<Advert> page = new Pagination<>();
         try {
             List<Condition> filters = new ArrayList();
@@ -40,8 +39,8 @@ public class AdvertApi {
             //只查询广告类型为2的轮播
             filters.add(Condition.eq("advertType", "2"));
 
-            if(StringUtils.isNotBlank(creatorName)){
-                filters.add(Condition.like("creatorName", creatorName.trim()));
+            if(StringUtils.isNotBlank(advert.getAdvertGroup())){
+                filters.add(Condition.like("advertGroup", advert.getAdvertGroup().trim()));
             }
 
             int pageNumberNew = HookahConstants.PAGE_NUM;

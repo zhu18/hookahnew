@@ -16,7 +16,7 @@
 .question p {
     font-size: 14px;
     padding-bottom: 10px;
-    text-indent: 26px;
+    /*text-indent: 26px;*/
 }
 .question img{
     margin-left: 50px;

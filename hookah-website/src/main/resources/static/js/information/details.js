@@ -60,10 +60,10 @@ function isHot(){
                             // for(var j=0;j<2;j++){
                                 var content = list[i].contentValidity ? list[i].contentValidity : '暂无简介';
                                 html +='<div class="line"></div>';
-                                html +='<a href="javascript:;" class="one">';
+                                html +='<a href="/information/details?newsId='+list[i].newsId+'" class="one">';
                                 html +='<img src="'+list[i].pictureUrl+'" alt="" class="margin-bottom-10 margin-top-10">';
                                 html +='</a>';
-                                html +='<a href="javascript:;" >';
+                                html +='<a href="/information/details?newsId='+list[i].newsId+'" >';
                                 html +='<div class="description margin-bottom-10">';
                                 html +='<p class="first">'+content+'</p>';
                                 html +='</div>';
