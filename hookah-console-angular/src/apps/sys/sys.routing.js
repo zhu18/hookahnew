@@ -3,7 +3,7 @@ import RegionController from "./RegionController";
 import IndustryController from "./IndustryController";
 goodsRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function goodsRouting($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/sys/dict/search');
+  $urlRouterProvider.otherwise('/sys/region/search');
   $stateProvider
     .state('sys', {
       template: '<div ui-view></div>',
