@@ -4,7 +4,7 @@ class AccountController {
       var promise = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/account/sys_all",
-        params:{userName:$("#userName").val()}
+        params:{userName: $scope.userName}
       });
       promise.then(function (res, status, config, headers) {
         $rootScope.loadingState = false;
@@ -12,7 +12,7 @@ class AccountController {
         growl.addSuccessMessage("数据加载完毕。。。");
       });
     };
-
+    
       $scope.edit = function (event, item) {
           var promise = $http({
               method: 'POST',
