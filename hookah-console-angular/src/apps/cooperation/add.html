@@ -18,9 +18,9 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="cooPhone">联系电话<span class="must">*</span></label>
+          <label class="col-sm-2 control-label" for="cooPhone">联系电话</label>
           <div class="col-sm-4">
-            <input type="text" id="cooPhone" name="cooPhone" data-ng-model="cooPhone" ng-pattern="/^1[34578]\d{9}$/" ng-maxlength="11" class="form-control none-edit" ng-blur="checkPhoneNum()" required/>
+            <input type="text" id="cooPhone" name="cooPhone" class="form-control none-edit"/>
           </div>
         </div>
         <div class="form-group">
@@ -44,7 +44,7 @@
         <div class="form-group">
           <label class="col-sm-2 control-label" for="cooOrder">显示顺序<span class="must">*</span></label>
           <div class="col-sm-4">
-            <input type="text" id="cooOrder" name="cooOrder" data-ng-model="cooOrder" ng-pattern="/^[1-9]\d*$|^0$/" ng-maxlength="3" class="form-control" placeholder="数字/最长为3位" required/>
+            <input type="text" id="cooOrder" name="cooOrder" data-ng-model="cooOrder" ng-pattern="/[0-9]/" ng-maxlength="3" class="form-control" placeholder="数字/最长为3位" required/>
           </div>
         </div>
       </fieldset>

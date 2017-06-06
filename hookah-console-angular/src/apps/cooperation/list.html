@@ -32,8 +32,6 @@
               <th>机构名称</th>
               <th>联系电话</th>
               <th>联系地址</th>
-              <th>显示顺序</th>
-              <th>创建时间</th>
               <th width="130" class="text-center">操作</th>
             </tr>
             </thead>
@@ -47,12 +45,6 @@
               </td>
               <td>
                 <span text-length="50" ng-bind="cooperation.cooAddress | limitTo:10"></span>
-              </td>
-              <td>
-                <span text-length="50" ng-bind="cooperation.cooOrder"></span>
-              </td>
-              <td>
-                <span text-length="50" ng-bind="cooperation.createTime"></span>
               </td>
               <td class="text-center">
                 <a href="javascript:;" ui-sref="cooperation.edit" ng-click="load($event,cooperation)">修改</a>

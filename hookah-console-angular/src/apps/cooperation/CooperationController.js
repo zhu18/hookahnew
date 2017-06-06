@@ -104,17 +104,6 @@ class CooperationController {
                 alert("请输入显示顺序")
             }
         };
-        $scope.checkPhoneNum = function () {
-            var num = $("#cooPhone").val();
-            var reg = /^1[34578]\d{9}$/;
-            if (num){
-                if(!reg.test(num)){
-                    alert("您输入的号码不正确");
-                }
-            }else {
-                alert("请输入手机号")
-            }
-        };
         $scope.pageChanged = function () {
             $scope.search();
         };
