@@ -243,13 +243,11 @@ function evaluate(goodsId){
                         html += '<div class="comment-content padding-left-20 margin-bottom-20">'+list[i].commentContent+'</div>';
                         html += '</li>';
                     }
-                    $(".evaluate ol").before('<h1 class="font-size-14 margin-bottom-10">最新评论</h1>');
+                    $(".evaluate h1").css('display','block');
                     $('.evaluate ol').html(html);
                 }else{
                     $(".evaluate ol").html('<p style="text-align: center;min-height:100px; font-size: 18px;">暂无评论</p>');
                 }
-
-                console.log(data.data.list);
             }else{
                 $.alert(data.message)
             }
