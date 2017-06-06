@@ -41,10 +41,10 @@ app.run(function ($rootScope, $state) {
     //   "title": "商品查询",
     //   "url": "items.search"
     // },
-    {
-      "title": "字典管理",
-      "url": "sys.dict.search"
-    },
+    // {
+    //   "title": "字典管理",
+    //   "url": "sys.dict.search"
+    // },
     {
       "title": "地域管理",
       "url": "sys.region.search"
