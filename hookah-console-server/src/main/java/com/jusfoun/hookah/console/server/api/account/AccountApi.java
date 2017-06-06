@@ -86,8 +86,8 @@ public class AccountApi extends BaseController{
         }else {
             return ReturnData.error("充值失败请返回重新充值");
         }
-        if (nv.isWholeNumber(recharge)){
-            Long charge = Long.parseLong(recharge);
+        if (nv.isPositiveInteger(recharge)){
+            Long charge = Long.parseLong(recharge)*100;
             if (charge < 0){
                 return ReturnData.error("充值金额不能为负值");
             }else {
@@ -96,7 +96,7 @@ public class AccountApi extends BaseController{
                 return ReturnData.success("充值成功");
             }
         }else {
-            return ReturnData.error("只能充值正数金额和两位小数的金额");
+            return ReturnData.error("只能充值整数金额");
         }
     }
     @RequestMapping("delete")
