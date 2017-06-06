@@ -79,7 +79,7 @@ public class CooperationServiceImpl  extends GenericServiceImpl<Cooperation, Str
         List<Condition> filters = new ArrayList<>();
         Pattern pattern = Pattern
                 .compile("^([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~\\/])+$");
-        Pattern pattern1 = Pattern.compile("/^1[34578]\\d{9}$/");
+        Pattern pattern1 = Pattern.compile("^((17[0-9])(14[0-9])|(13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");
         if (StringUtils.isNoneBlank(coo.getCooperationId())) {
             filters.add(Condition.eq("cooperationId", coo.getCooperationId()));
         }else {

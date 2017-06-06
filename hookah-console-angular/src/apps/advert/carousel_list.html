@@ -67,10 +67,10 @@
                 </a>
               </td>-->
              <td>
-                <span class="column-text" ng-bind="item.url"></span>
+                <span class="column-text" ng-bind="item.url | limitTo:15"></span>
               </td>
               <td>
-                <span class="column-text" ng-bind="item.href"></span>
+                <span class="column-text" ng-bind="item.href | limitTo:15"></span>
               </td>
               <td>
                 <span class="" ng-bind="item.addTime"></span>

@@ -40,27 +40,30 @@ class CooperationController {
 
         };
         $scope.edit = function () {
-            var promise = $http({
-                method: 'POST',
-                url: $rootScope.site.apiServer + "/coo/modify",
-                params: {
-                    cooperationId:$("#cooperationId").val(),
-                    cooPhone: $("#cooPhone").val(),
-                    cooAddress: $("#cooAddress").val(),
-                    url: $("#url").val(),
-                    pictureUrl: $("#pictureUrl").val(),
-                    cooName: $("#cooName").val(),
-                    cooOrder: $("#orderBy").val()
-                }
-            });
-            promise.then(function (res, status, config, headers) {
-                if (res.data.code == "1"){
-                    alert(res.data.data);
-                    $state.go('cooperation.search');
-                }else {
-                    alert(res.data.message);
-                }
-            });
+            var f = $scope.checkNum();
+            if (f) {
+                var promise = $http({
+                    method: 'POST',
+                    url: $rootScope.site.apiServer + "/coo/modify",
+                    params: {
+                        cooperationId: $("#cooperationId").val(),
+                        cooPhone: $("#cooPhone").val(),
+                        cooAddress: $("#cooAddress").val(),
+                        url: $("#url").val(),
+                        pictureUrl: $("#pictureUrl").val(),
+                        cooName: $("#cooName").val(),
+                        cooOrder: $("#orderBy").val()
+                    }
+                });
+                promise.then(function (res, status, config, headers) {
+                    if (res.data.code == "1") {
+                        alert(res.data.data);
+                        $state.go('cooperation.search');
+                    } else {
+                        alert(res.data.message);
+                    }
+                });
+            }
         };
         $scope.updateStatus = function (cooperation, flag) {
             var promise = $http({
@@ -99,9 +102,18 @@ class CooperationController {
             if(num){
                 if (isNaN(num)){
                     alert("您输入的不是数字");
+                    return false;
+                }else{
+                    if (num.length > 3){
+                        alert("显示顺序大于3位请重新输入");
+                        return false;
+                    }else {
+                        return true;
+                    }
                 }
             }else {
-                alert("请输入显示顺序")
+                alert("请输入显示顺序");
+                return false;
             }
         };
         // $scope.checkPhoneNum = function () {
