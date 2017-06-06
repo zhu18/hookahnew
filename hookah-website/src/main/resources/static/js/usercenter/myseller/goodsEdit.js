@@ -145,8 +145,9 @@ function selectGoodsTypes(goodsTypeVal){
 		$('.dataModel-info-box').show();
 	}
 }
+var editor=null;
 function renderWangEdit(){
-	var editor = new wangEditor('textarea1');
+	editor = new wangEditor('textarea1');
 	editor.config.uploadImgUrl = host.static+'/upload/wangeditor';//上传图片（举例）
 	editor.config.uploadImgFileName = 'filename';
 	editor.config.menuFixed = false;//关闭菜单栏fixed
@@ -395,7 +396,7 @@ $.validator.addMethod("isPricceData", function(value, element) {
 }, "小数点不能超过2位");
 $('#J_submitBtn').click(function(){
 	if($("#goodsModifyForm").valid()){
-		if($('#textarea1').val()){
+		if($.trim(editor.$txt.text()).length>0){
 			backAddFn(submitGoodsPublish())
 		}else{
 			$.alert('商品描述不能为空',true,function () {

@@ -70,7 +70,13 @@ function loadPageData(data){
 		}
 		$('.order').html(html);
 	}else{
-		$('.order').html('<div class="font-size-18" style="width:978px;height: 30px;overflow:hidden; text-align:center;line-height: 30px;">暂时无订单！</div>');
+		if(dataParm.startDate ==format(new Date())){
+            // $('.order').html('<tr class="noData"><td colspan="5">请输入查询时间!</td></tr>');
+            $('.order').html('<div class="font-size-18" style="width:978px;height: 30px;overflow:hidden; text-align:center;line-height: 30px;">请输入查询时间!</div>');
+		}else{
+            // $('.order').html('<tr class="noData"><td colspan="5">暂时无订单!</td></tr>');
+            $('.order').html('<div class="font-size-18" style="width:978px;height: 30px;overflow:hidden; text-align:center;line-height: 30px;">暂时无订单!</div>');
+		}
 	}
 }
 var start = {
@@ -95,16 +101,17 @@ $.jeDate("#startDate", start);
 $.jeDate("#endDate",end);
 //点击查询按钮
 $(".searchQuery .search").on("click",function(){
+    $('.order div').css("display","none");
     var startDate = $("#startDate").val();
     var endDate = $("#endDate").val();
     dataParm.startDate = startDate?startDate:format(new Date());
     dataParm.endDate = endDate?endDate:format(new Date());
-    if(!startDate){
-        delete dataParm.startDate;
-    }
-    if(!endDate){
-		delete dataParm.endDate;
-    }
+    // if(!startDate){
+    //     delete dataParm.startDate;
+    // }
+    // if(!endDate){
+		// delete dataParm.endDate;
+    // }
     goPage(1);
 });
 
