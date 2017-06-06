@@ -9,8 +9,8 @@
           <div class="state-top margin-bottom-30 ">
             订单号：<span>{{order.orderSn}}&nbsp;&nbsp;</span>
             订单时间：<span>{{order.addTime}}&nbsp;&nbsp;</span>
-            买方：<span>{{user.userName}}&nbsp;&nbsp;</span>
-            买方手机：<span>{{user.mobile}}&nbsp;&nbsp;</span>
+            买方：<span>{{buyer.userName}}&nbsp;&nbsp;</span>
+            买方手机：<span>{{buyer.mobile}}&nbsp;&nbsp;</span>
           </div>
         </div>
         </div>
@@ -46,7 +46,7 @@
                 </a>
               </div>
             </td>
-            <td>{{user.userName}}</td>
+            <td>{{buyer.userName}}</td>
             <td>¥{{goods.goodsPrice / 100}}</td>
             <td ng-bind="goods.goodsNumber"></td>
             <td>¥{{goods.goodsNumber * goods.goodsPrice / 100}}</td>
