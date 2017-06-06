@@ -1,3 +1,6 @@
+<script src="angular.min.js"></script>
+<script src="ng-file-upload-shim.min.js"></script>
+<script src="ng-file-upload.min.js"></script>
 <div class="row" xmlns="http://www.w3.org/1999/html">
   <div class="col-sm-12">
     <div class="console-title console-title-border clearfix">
@@ -54,11 +57,27 @@
           <label class="col-sm-2 control-label">是否需要背景图片</label>
           <div class="col-sm-4">
             <label class="radio-inline">
-              <input type="radio" name="isBackImg" value="1" />是
+              <input type="radio" data-ng-click="backImgClick(this)" name="isBackImg" value="1" />是
             </label>
             <label class="radio-inline">
-              <input type="radio" name="isBackImg" value="0" checked/>否
+              <input type="radio" data-ng-click="backImgClick(this)" name="isBackImg" value="0" checked/>否
             </label>
+          </div>
+        </div>
+        <div class="form-group" id="imgPathDiv">
+          <label class="col-sm-2 control-label">背景图片路径</label>
+          <div class="col-sm-4">
+            <input type="text" name="backImgPath"  data-ng-model="backImg" style="width: 500px;" required disabled/>
+          </div>
+        </div>
+        <div class="form-group" id="imgUploadDiv">
+          <label class="col-sm-1 control-label" for="content">背景图片上传<span class="must">*</span></label>
+          <div class="col-sm-10">
+            <div style="width: 507px;">
+            <textarea id="content" class="form-control"
+                      style="height:500px;width: 907px;">
+            </textarea>
+            </div>
           </div>
         </div>
       </fieldset>
