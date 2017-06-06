@@ -75,14 +75,16 @@ public class HelpApi {
     }
 
     @RequestMapping(value = "/category/category", method = RequestMethod.GET)
-    public ReturnData category(String currentPage, String pageSize) {
+    public ReturnData category(String currentPage, String pageSize,String name) {
         Pagination<Help> page = new Pagination<>();
 
         List<Condition> filters = new ArrayList();
         filters.add(Condition.eq("parentId", "0"));
         List<OrderBy> orderBys = new ArrayList();
         orderBys.add(OrderBy.desc("addTime"));
-
+        if(StringUtils.isNotBlank(name)){
+            filters.add(Condition.like("name", name.trim()));
+        }
         int pageNumberNew = HookahConstants.PAGE_NUM;
         if (StringUtils.isNotBlank(currentPage)) {
             pageNumberNew = Integer.parseInt(currentPage);
