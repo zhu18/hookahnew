@@ -5,13 +5,13 @@ function loadPageData(data) { //渲染页面数据
 		var list = data.data.list;
 		for (var i = 0; i < list.length; i++) {
 			html += '<div class="public padding-left-10 padding-top-30 padding-bottom-30 ">';
-			html += '<a href="/information/details?newsId=' + list[i].newsId + '" target="_blank">';
+			html += '<a href="/sysNews/details?newsId=' + list[i].id + '" target="_blank">';
 			html += '<img src="' + list[i].pictureUrl + '" alt="" class="margin-right-20 news-img">';
 			html += '</a>';
-			html += '<a href="/information/details?newsId=' + list[i].newsId + '" target="_blank">';
+			html += '<a href="/sysNews/details?newsId=' + list[i].id + '" target="_blank">';
 			html += '<p class="margin-bottom-10 padding-right-50">' + list[i].newsTitle + '</p>';
 			html += '</a>';
-			html += '<a href="/information/details?newsId=' + list[i].newsId + '" target="_blank">';
+			html += '<a href="/sysNews/details?newsId=' + list[i].id + '" target="_blank">';
 			html += '<p class="padding-right-50 margin-bottom-10" >'+judg(list[i].contentValidity)+'</p>';
 			html += '</a>';
 			html += '<div class="auth">';
