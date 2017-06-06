@@ -10,7 +10,9 @@
       <div class="pull-right">
         <button class="btn btn-default" data-ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span> 刷新
         </button>
-        <a target="_blank" href="{{site.websiteServer}}/usercenter/goodsPublish" class="btn btn-primary">新增</a>
+        <!--<button class="btn btn-default" data-ng-click="returnPage()"><span class="glyphicon glyphicon-refresh"></span> 返回-->
+        <!--</button>-->
+        <!--<a target="_blank" href="{{site.websiteServer}}/usercenter/goodsPublish" class="btn btn-primary">新增</a>-->
       </div>
     </div>
     <div class="row margin-top">
@@ -24,6 +26,16 @@
             <div class="form-group">
               <label class="control-label">商品编码</label>
               <input ng-model="searchSn" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+              <label class="control-label">审核状态</label>
+              <select ng-model="searchCheckStatus"  ng-options="checkStatus.id as checkStatus.name for checkStatus in checkStatuss"  style="width: 155px;height: 32px">
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="control-label">上架状态</label>
+              <select ng-model="searchOnSaleStatus"  ng-options="onSaleStatus.id as onSaleStatus.name for onSaleStatus in onSaleStatuss"  style="width: 155px;height: 32px">
+              </select>
             </div>
             <!--<div class="form-group">
               <label class="control-label">商品关键字</label>
@@ -61,17 +73,21 @@
                 </a>
               </td>
               <td>
-                <span class="column-text" ng-show="item.goodsType == 0">常规商品</span>
-                <span class="column-text" ng-show="item.goodsType == 1">API</span>
+                <span class="column-text" ng-bind="item.goodsType | goodsType"></span>
               </td>
               <td>
-                <span class="column-text" ng-bind="item.checkStatus | checkStatus"></span>
+                <span class="column-text" style="color: red" ng-show="item.checkStatus == 2">未通过</span>
+                <span class="column-text" style="color: green" ng-show="item.checkStatus == 1">已通过</span>
+                <span class="column-text" ng-show="item.checkStatus == 0">待审核</span>
               </td>
               <td>
-                <span class="column-text" ng-bind="item.isOnsale | isOnsale"></span>
+                <span class="column-text" ng-show="(item.checkStatus == 0 || item.checkStatus == 2) && item.isOnsale == 1">待上架</span>
+                <span class="column-text" style="color: green" ng-show="item.checkStatus == 1 && item.isOnsale == 1">已上架</span>
+                <span class="column-text" style="color: DimGray " ng-show="item.isOnsale == 0">已下架</span>
+                <span class="column-text" style="color: red" ng-show="item.isOnsale == 2">强制下架</span>
               </td>
               <td>
-                <span class="column-text" ng-bind="item.addTime"></span>
+                <span class="column-text" ng-bind="item.lastUpdateTime"></span>
               </td>
               <td class="text-center" data-ng-if="item.isDelete == 1">
                 <span data-ng-if="item.isOnsale == '1' && item.checkStatus == '0'">

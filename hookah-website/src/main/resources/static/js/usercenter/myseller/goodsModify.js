@@ -20,11 +20,18 @@ function getGoodsDetails(){
 		}
 	})
 }
+var jmz = {};
+jmz.GetLength = function(str) {
+    return str.replace(/[\u0391-\uFFE5]/g,"aa").length;  //先把中文替换成两个字节的英文，在计算长度
+};
+
 function renderData(data){//渲染页面
 	catId = data.catId;
 	$('.category-title-box').html(data.catFullName); //商品分类
 	$('#J-goodsName').val(data.goodsName);//商品名称
 	$('#J-goodsBrief').val(data.goodsBrief);//简介
+    $('#showcontent').html(jmz.GetLength(data.goodsName));//商品名称长度
+    $('#showcontent2').html(jmz.GetLength(data.goodsBrief));//商品名称长度
 	$('select[name="parentSelect"] option').each(function(){
 		if(data.goodsType == 0 || data.goodsType == 1){
 			$('#childrenSelect1').show();

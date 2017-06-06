@@ -4,7 +4,7 @@ class HelpCategoryController {
       var promise = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/help/category/category",
-        params: {currentPage: $rootScope.pagination.currentPage, pageSize: $rootScope.pagination.pageSize}
+        params: {currentPage: $rootScope.pagination.currentPage, pageSize: $rootScope.pagination.pageSize,name:$scope.name}
       });
       promise.then(function (res, status, config, headers) {
         $rootScope.loadingState = false;
@@ -66,7 +66,9 @@ class HelpCategoryController {
             }
         });
     };
-
+    $scope.break = function () {
+        location.reload();
+    };
     $scope.pageChanged = function () {
       $scope.search();
       console.log('Page changed to: ' + $rootScope.pagination.currentPage);

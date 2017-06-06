@@ -1,5 +1,5 @@
 class GoodsController {
-  constructor($scope, $rootScope, $state, $http, $sce, $uibModal, usSpinnerService, growl) {
+  constructor($scope, $rootScope, $state, $stateParams, $http, $sce, $uibModal, usSpinnerService, growl) {
     console.log($rootScope.config);
 
       // if ($state.current.name == "items.lookDetail") {
@@ -22,6 +22,16 @@ class GoodsController {
       // }
 
     $scope.search = function () {
+
+        $rootScope.Name = $scope.searchName;
+        $rootScope.Sn = $scope.searchSn;
+        $rootScope.Kw = $scope.searchKw;
+        $rootScope.Shop = $scope.searchShop;
+        $rootScope.CheckStatus = $scope.searchCheckStatus;
+        $rootScope.OnSaleStatus = $scope.searchOnSaleStatus;
+
+        // alert("Name=" + $rootScope.Name + "--Sn=" + $rootScope.Sn + "--CheckStatus=" + $rootScope.CheckStatus + "--OnSaleStatus=" + $rootScope.OnSaleStatus);
+
       var promise = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/goods/all",
@@ -30,7 +40,9 @@ class GoodsController {
                     goodsName: $scope.searchName,
                     goodsSn: $scope.searchSn,
                     keywords: $scope.searchKw,
-                    shopName: $scope.searchShop
+                    shopName: $scope.searchShop,
+                    checkStatus: $scope.searchCheckStatus,
+                    onSaleStatus: $scope.searchOnSaleStatus
         }
       });
       promise.then(function (res, status, config, headers) {
@@ -39,7 +51,6 @@ class GoodsController {
         growl.addSuccessMessage("数据加载完毕。。。");
       });
     };
-
 
     $scope.delGoods = function (event, item, flag) {
         var promise = $http({
@@ -57,19 +68,17 @@ class GoodsController {
         });
     };
 
-
     $scope.updateGoods = function (event, item) {
       console.log("去修改……");
       $rootScope.editData = item;
       $state.go('items.update', {data: item});
     };
 
-
-      /**
-       * 1 审核  2强制下架
-       * @param item
-       * @param n
-       */
+  /**
+   * 1 审核  2强制下架
+   * @param item
+   * @param n
+   */
     $scope.goCheck = function (item, n) {
       console.log("去审核……");
       console.log(n);
@@ -84,17 +93,7 @@ class GoodsController {
             if(res.data.code == "1"){
                 $rootScope.editData = res.data.data;
                 $rootScope.operatorFlag = n;
-
-                // 格式化json字符串  暂时取消
-
-                // try{
-                //     if($rootScope.editData.apiInfo != null){
-                //         $rootScope.editData.apiInfo.respSample = JSON.stringify(JSON.parse($rootScope.editData.apiInfo.respSample), null, "\t");
-                //     }
-                //     $state.go('items.goodsDetail', {data: $rootScope.editData});
-                // }catch (e) {
-                    $state.go('items.goodsDetail', {data: $rootScope.editData});
-                // }
+                $state.go('items.goodsDetail', {data: $rootScope.editData});
             }
         });
     };
@@ -110,17 +109,8 @@ class GoodsController {
             console.log(res.data)
             if(res.data.code == "1"){
                 $rootScope.editData = res.data.data;
-                // try{
-                //     if($rootScope.editData.apiInfo != null){
-                //         $rootScope.editData.apiInfo.respSample = JSON.stringify(JSON.parse($rootScope.editData.apiInfo.respSample), null, "\t");
-                //     }
-                //     $state.go('items.lookDetail', {data: $rootScope.editData});
-                // }catch (e) {
                 $rootScope.editData.goodsDesc = $sce.trustAsHtml($rootScope.editData.goodsDesc);
-                    $state.go('items.lookDetail', {data: $rootScope.editData});
-                // }
-
-                // console.log($.format($rootScope.editData.apiInfo.respSample,{method: 'json',step: '    ',preserveComments: false }));
+                $state.go('items.lookDetail', {data: $rootScope.editData});
             }
         });
     };
@@ -130,8 +120,55 @@ class GoodsController {
       console.log('Page changed to: ' + $rootScope.pagination.currentPage);
     };
 
+    if ($state.$current.name == "items.search") {
+      $scope.search();
+    }
 
-    $scope.search();
+    $scope.refresh = function(){
+      $scope.search();
+    }
+
+      /**
+       * select 框 以及 option
+       * @type {[*]}
+       */
+    $scope.checkStatuss = [{id:-1, name:"全部"}, {id:0, name:"待审核"}, {id:1, name:"已通过"}, {id:2, name:"未通过"}];
+    $scope.searchCheckStatus = -1;
+
+    $scope.onSaleStatuss = [{id:-1, name:"全部"}, {id:0, name:"已上架"}, {id:1, name:"已下架"}, {id:2, name:"强制下架"}];
+    $scope.searchOnSaleStatus = -1;
+
+
+    if ($state.$current.name == "items.searchByCon") {
+          $scope.searchName = $rootScope.Name;
+          $scope.searchSn = $rootScope.Sn;
+          $scope.searchCheckStatus = $rootScope.CheckStatus == undefined ? -1 : $rootScope.CheckStatus;
+          $scope.searchOnSaleStatus = $rootScope.OnSaleStatus == undefined ? -1 : $rootScope.OnSaleStatus;
+    }
+
+    $scope.returnPage = function(){
+
+        $state.go('items.searchByCon');
+
+        var promise = $http({
+            method: 'GET',
+            url: $rootScope.site.apiServer + "/api/goods/all",
+            params: {currentPage: $rootScope.pagination.currentPage,
+                pageSize: $rootScope.pagination.pageSize,
+                goodsName: $rootScope.Name,
+                goodsSn: $rootScope.Sn,
+                // keywords: $scope.searchKw,
+                // shopName: $scope.searchShop,
+                checkStatus: $rootScope.CheckStatus,
+                onSaleStatus: $rootScope.OnSaleStatus
+            }
+        });
+        promise.then(function (res, status, config, headers) {
+            $rootScope.loadingState = false;
+            growl.addSuccessMessage("数据加载完毕。。。");
+        });
+    }
+
   }
 }
 

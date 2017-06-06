@@ -153,6 +153,11 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             mgGoods.setApiInfo(obj.getApiInfo());
             mgGoods.setImgList(obj.getImgList());
             mgGoods.setGoodsId(obj.getGoodsId());
+            mgGoods.setAsAloneSoftware(obj.getAsAloneSoftware());
+            mgGoods.setAsSaaS(obj.getAsSaaS());
+            mgGoods.setAtAloneSoftware(obj.getAtAloneSoftware());
+            mgGoods.setAtSaaS(obj.getAtSaaS());
+            mgGoods.setDataModel(obj.getDataModel());
             MgGoods mgGoods1 = mgGoodsService.selectById(obj.getGoodsId());
             mgGoods.setClickRate(mgGoods1.getClickRate() == null ? (long)0 : mgGoods1.getClickRate());
             mgGoodsService.delete(obj.getGoodsId());

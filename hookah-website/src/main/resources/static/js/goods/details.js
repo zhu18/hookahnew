@@ -246,7 +246,7 @@ function evaluate(goodsId){
                     for(var i=0;i<list.length;i++){
                         html += '<li>';
                         html += '<div class="comment-title margin-bottom-10">';
-                        html += '<span class="name padding-left-10">'+list[i].userId+'</span>';
+                        html += '<span class="name padding-left-10">'+list[i].username+'</span>';
                         html += '<span class="date padding-left-20">'+list[i].addTime+'</span>';
                         // html += '<a href="javascript:void(0)" class="padding-left-20">回复</a>';
                         html += '</div>';

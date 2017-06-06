@@ -52,12 +52,17 @@ public class CooperationServiceImpl  extends GenericServiceImpl<Cooperation, Str
         }
         if (StringUtils.isBlank(coo.getPictureUrl())){
             throw new HookahException("logo地址不能为空");
-        }else if(!pattern.matcher(coo.getUrl()).matches()){
+        }else if(!pattern.matcher(coo.getPictureUrl()).matches()){
             throw new HookahException("logo地址格式不正确");
         }
         isExists = exists(filters);
         if(isExists){
             throw new HookahException("该合作机构已经添加");
+        }
+        filters.clear();
+        filters.add(Condition.eq("cooOrder", coo.getCooOrder()));
+        if (exists(filters)){
+            throw new HookahException("显示顺序重复");
         }
         if (coo.getState() == null){
             coo.setState(coo.COOPERATION_STATE_ON);
@@ -86,7 +91,7 @@ public class CooperationServiceImpl  extends GenericServiceImpl<Cooperation, Str
         }
         if (StringUtils.isBlank(coo.getPictureUrl())){
             throw new HookahException("logo地址不能为空");
-        }else if(!pattern.matcher(coo.getUrl()).matches()){
+        }else if(!pattern.matcher(coo.getPictureUrl()).matches()){
             throw new HookahException("logo地址格式不正确");
         }
         coo.setLastUpdateTime(date);

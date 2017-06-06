@@ -28,7 +28,7 @@ class ShelfController {
           });
           promise.then(function (res, status, config, headers) {
               $rootScope.order = res.data.data[0];
-              $rootScope.user = res.data.data[1];
+              $rootScope.buyer = res.data.data[1];
           });
       };
       $scope.getGoodDetail = function (event, goodsId) {
@@ -51,7 +51,9 @@ class ShelfController {
           $scope.search();
           console.log('Page changed to: ' + $rootScope.pagination.currentPage);
       };
-
+      $scope.back = function () {
+          history.back();
+      };
       $scope.search();
 
   }
