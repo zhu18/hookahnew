@@ -438,7 +438,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             this.copyProperties(order,orderInfoVo,null);
 
             OrderInfoVo mgOrder = mgOrderInfoService.selectById(orderInfoVo.getOrderId());
-            List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
+            List<MgOrderGoods> goodsList = mgOrder.getMgOrderGoodsList();
             if(goodsList!=null){
                 //未支付订单处理
                 if(order.getPayStatus()!=OrderInfo.PAYSTATUS_PAYED){
@@ -453,10 +453,10 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                     }
                 }
 
-                orderInfoVo.setMgOrderGoodsList(goodsList);
+
             }
 
-            orderInfoVo.setMgOrderGoodsList(mgOrder.getMgOrderGoodsList());
+            orderInfoVo.setMgOrderGoodsList(goodsList);
             page.add(orderInfoVo);
         }
 

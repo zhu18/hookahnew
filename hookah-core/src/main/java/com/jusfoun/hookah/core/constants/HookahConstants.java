@@ -17,6 +17,30 @@ public class HookahConstants {
     /** 短信过期时间，单位随 分 */
     public static final Integer SMS_DURATION_MINITE = 2;
 
+    public static final Integer SMS_USER_REGISTER = 6524;  //注册
+    public static final Integer SMS_FIND_USER_PWD = 6525;   //找回登录密码
+    public static final Integer SMS_CHANGE_USER_PWD = 6527;   //修改登录密码
+    public static final Integer SMS_CHANGE_MOBILE = 6526;   //修改手机号
+    public static final Integer SMS_CHANGE_PAY_PWD = 6528;   //修改支付密码
+
+    public enum SmsType {
+        SMS_USER_REGISTER("6524"),  //注册
+        SMS_FIND_USER_PWD("6525"),   //找回登录密码
+        SMS_CHANGE_USER_PWD("6527"),   //修改登录密码
+        SMS_CHANGE_MOBILE("6526"),   //修改手机号
+        SMS_CHANGE_PAY_PWD("6528");   //修改支付密码
+
+        public String code;
+
+        SmsType(String  code) {
+            this.code = code;
+        }
+        @Override
+        public String toString(){
+            return this.code;
+        }
+    }
+
     /** es操作(增删改查)默认字段 */
     // 聚合字段
     public static final String GOODS_ORDER_FIELD = "lastUpdateTime";

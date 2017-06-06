@@ -47,7 +47,7 @@ var htmlPart = {
 									<div><a target="_blank" href="${host.website}/exchange/details?id=${list.goodsId}"><img src="${list.goodsImg}" alt=""></a></div>
 								</td>
 								<td class="name"><a target="_blank" href="${host.website}/exchange/details?id=${list.goodsId}">${list.goodsName}</a></td>
-								<td class="price">${trunc(list.goodsPrice / 100, 2)}</td>
+								<td class="price">${list.goodsPrice / 100}</td>
 								<td class="number" recId="${list.recId}">
 									<%if(list.goods.isOnsale == 1){%>
 									<div>

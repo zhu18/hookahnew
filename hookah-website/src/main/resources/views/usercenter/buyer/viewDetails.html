@@ -88,7 +88,7 @@ var htmlPart = {
                                 </div>
                             </td>
                             <!--<td class="number" >${list.goodsSn}</td>-->
-                            <td class="price">¥${trunc(list.goodsPrice / 100 , 2)}</td>
+                            <td class="price">¥${list.goodsPrice / 100}</td>
                             <td class="num">${list.goodsNumber}</td>
                             <td class="num">${decode(list.goodsType,0,'常规商品',1,'api商品','-')}</td>
                             <!--<td class="num">-->
@@ -100,7 +100,7 @@ var htmlPart = {
                             <!--</td>-->
                             <td class="operate">
                                 <a href="${host.website}/exchange/details?id=${list.goodsId}" class="buy btn-full-blue display-inline-block">再次购买</a>
-                                <a target="_blank" href="${host.website}/exchange/orderEndDetails?id=${list.goodsId}&orderSn=${order.orderSn}" class="buy btn-full-red display-inline-block margin-top-10">数据详情</a>
+                                <a target="_blank" href="${host.website}/exchange/orderEndDetails?id=${list.goodsId}&orderSn=${order.orderSn}&format=${list.goodsFormat}" class="buy btn-full-red display-inline-block margin-top-10">数据详情</a>
                             </td>
                         </tr>
                         <%}%>

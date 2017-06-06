@@ -32,6 +32,7 @@ function loadPageData(data){
 						mMat = '年';
 						break;
 				}
+
 				html += '<tr class="content border-bottom">';
 				html += '<td class="text-align-center" style="width: 280px;">';
 				html += '<div class="p-img">';
@@ -53,14 +54,16 @@ function loadPageData(data){
 					html += '<a href="javascript:confirmDelete(\'' + list[i].orderId + '\');" class="display-block margin-bottom-5">删除</a>';
 					html += '</td>';
 				}
+
 				html += '</tr>';
+
 			}
 			html += '</tbody>';
 			html += '</table>';
 		}
-		$('.order').append(html);
+		$('.order').html(html);
 	}else{
-		$('.order').html('<tr class="noData"><td colspan="5">暂时无订单!</td></tr>');
+		$('.order').html('<div class="font-size-18" style="width:978px;height: 30px;overflow:hidden; text-align:center;line-height: 30px;">暂时无订单！</div>');
 	}
 }
 var start = {
@@ -78,6 +81,7 @@ var end = {
     // choosefun: function(elem,datas){
     //     start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
     // }
+
 };
 $.jeDate("#startDate", start);
 
@@ -88,12 +92,12 @@ $(".searchQuery .search").on("click",function(){
     var endDate = $("#endDate").val();
     dataParm.startDate = startDate?startDate:format(new Date());
     dataParm.endDate = endDate?endDate:format(new Date());
-    // if(!startDate){
-    //     $("#startDate").val(format(new Date()));
-    // }
-    // if(!endDate){
-    //     $("#endDate").val(format(new Date()));
-    // }
+    if(!startDate){
+        delete dataParm.startDate;
+    }
+    if(!endDate){
+		delete dataParm.endDate;
+    }
     goPage(1);
 });
 
@@ -116,6 +120,7 @@ $(".searchQuery .search").on("click",function(){
         }
     })
 }
+
 function confirmDelete(orderId){
 	$.confirm('确定要删除该订单吗？',null,function(type){
 		if(type == 'yes'){
@@ -126,6 +131,7 @@ function confirmDelete(orderId){
 		}
 	});
 }
+
 function getDataPackage(goodsId){
     $.ajax({
         url: host.website+'/help/exportWords',

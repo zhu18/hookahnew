@@ -83,6 +83,16 @@ purchaseQuantity();
 //     return result ? decodeURIComponent(result[2]) : null;
 // };
 var id = $.getUrlParam('id');
+var format = $.getUrlParam('format');
+var txts = null;
+if(format == 0){
+	txts = '次';
+}else if(format == 1){
+	txts = '天';
+}else if(format == 2){
+	txts = '年';
+}
+$("#J_goodsFommt").html(txts);
 // renderDetails();
 function renderDetails() {
     $.ajax({
