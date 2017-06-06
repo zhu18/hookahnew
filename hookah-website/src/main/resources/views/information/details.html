@@ -9,7 +9,7 @@ var htmlPart = {
 %>
 <div class="box padding-bottom-50">
     <div class="detail grid-row">
-        <div class="top"><span class="text1"></span> > <span class="text2"></span> </div>
+        <div class="top"><span class="text1"><a href='/information/index'>资讯中心</a></span> > <span class="text2"></span></div>
         <div class="bot clearfix">
             <div class="leftContent margin-right-10 padding-right-70 padding-left-70 ">
                 <h3 class="padding-top-30 padding-bottom-20" id="newsTitle"> ${sysNews.newsTitle}</h3>
@@ -25,6 +25,8 @@ var htmlPart = {
                     <!--<span>收藏:3&nbsp;&nbsp;&nbsp;评论:8</span>-->
                 </div>
                 <div class="content" id="content">
+                    ${sysNews.content}
+                    <!--${sysNews.content}-->
                     <!--<img src="/static/images/paoxian.png" alt="" class="padding-bottom-30">-->
                     <!--<p class="padding-bottom-30"><strong>保险行业发展现状</strong></p>-->
                     <!--<p>随着科技的不断发展和进步，尤其是互联网的兴起，移动智能设备的广泛应用，保险企业传统的营销渠道和模式也被迫发生变化，传统的保险代理人模式逐渐失去特色。</p>-->

@@ -38,7 +38,7 @@ public class CategoryApi {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
-            List<CategoryVo> goodsAttrTypeVos = categoryService.getCatTree();
+            List<CategoryVo> goodsAttrTypeVos = categoryService.getAdminCatTree();
             if(goodsAttrTypeVos == null) {
                 throw new HookahException("操作失败");
             }
