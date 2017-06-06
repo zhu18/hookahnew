@@ -217,3 +217,34 @@ function getDataPackage(goodsId,sourceId){
         }
     });
 }
+$(".evaluate").on("click",function () {
+    evaluate($.getUrlParam("id"));
+    console.log($.getUrlParam("id"));
+})
+function evaluate(goodsId){
+    $.ajax({
+        url:host.website+'/comment/serachByGoodsId',
+        type:'get',
+        data:{
+            goodsId:goodsId
+        },
+        success:function(data){
+            if(data.code==1){
+                if(data.data.list.length>0){
+                    var list =data.data.list;
+                    var html = '';
+                    for(var i=0;i<list.length;i++){
+
+                    }
+                    $('.evaluate ol').html(html);
+                }else{
+                    $(".evaluate ol").html('<p style="text-align: center;min-height:100px; font-size: 18px;">暂无评论</p>');
+                }
+
+                console.log(data.data.list);
+            }else{
+                $.alert(data.message)
+            }
+        }
+    })
+}
