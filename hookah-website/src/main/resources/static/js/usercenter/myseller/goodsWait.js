@@ -18,7 +18,7 @@ function loadPageData(data){
             }else if(list[i].checkStatus == 1){
                 html += '<td class="text-center">通过</td>';
             }else if(list[i].checkStatus == 2){
-                html += '<td class="text-center"><span class="color-red">不通过</span><br>（'+list[i].checkReason+'）</td>';
+                html += '<td class="text-center" style="width: 160px;"><span class="color-red">不通过</span><br>（'+list[i].checkReason+'）</td>';
             }
 			html += '<td class="text-right">'+list[i].onsaleStartDate+'</td>';
 			html += '<td>';
