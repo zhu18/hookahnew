@@ -556,7 +556,9 @@
 	top: 20px;;
 	width: 25%;
 	height: 360px;
-	box-shadow: 0px 0px 1px #4e4b4b;
+	/*box-shadow: 0px 0px 1px #4e4b4b;*/
+	border: 1px solid #e2e2e2;
+	/*outline: 1px solid red;*/
 }
 .exchange-industry-resource .industry-resource-down ul .slide-item .slide-item-top{
 	height: 50%;
@@ -604,16 +606,17 @@
 .exchange-industry-resource .industry-resource-down ul .slide-item .slide-item-down div p{
 	padding: 5px 0;
 }
-
 .exchange-industry-resource .industry-resource-down ul .slide-item:hover{
-	/*-moz-transform:scale(1,1);*/
+	-moz-transform:scale(1.1,1.1);
 	-webkit-transform:scale(1.1,1.1);
 	z-index: 10000;
-	/*-o-transform:scale(2,2);*/
-	/*border: 1px solid #E2E2E2;*/
+	-o-transform:scale(1.1,1.1);
+	/*border: 1px solid #4e4b4b;*/
+	/*box-shadow: none;*/
 }
 .exchange-industry-resource .industry-resource-down ul .slide-item:hover .hover-bg{
 	background-color: #6886B4;
+	width: 100%;
 	opacity: 1;
 }
 /*第二版*/
