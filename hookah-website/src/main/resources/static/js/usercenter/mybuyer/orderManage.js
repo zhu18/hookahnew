@@ -41,7 +41,8 @@ function loadPageData(data){
                 html += '</div>';
                 html += '</td>';
                 html += '<td class="text-align-left">x' + goods[ii].goodsNumber +'<br/><br/>'+ '规格:'+ (goods[ii].goodsPrice / 100).toFixed(2) +'/'+ mMat +'</td>';
-                html += '<td><a href="/exchange/orderEndDetails?id='+goods[ii].goodsId+'&orderSn='+list[i].orderSn+'">下载<br/><span class="fa fa-download font-size-18"></span></a></td>';
+                // html += '<td><a href="/exchange/orderEndDetails?id='+goods[ii].goodsId+'&orderSn='+list[i].orderSn+'">下载<br/><span class="fa fa-download font-size-18"></span></a></td>';
+                html += '<td><a href="javascript:void(0);" onclick="getDataPackage('+goods[ii].goodsId+','+goods[ii].sourceId+','+list[i].orderSn+')">下载<br/><span class="fa fa-download font-size-18"></span></a></td>';
                 html += '<td class="">金额:￥&nbsp;' + ((goods[ii].goodsPrice / 100) * goods[ii].goodsNumber).toFixed(2) + '<br/><br/>' + list[i].payName + '</td>';//订单总金额
                 html += '<td class="text-align-center">';
                 if (list[i].commentFlag == 0) {
@@ -158,6 +159,26 @@ function getDataPackage(goodsId){
             $.alert(data.message);
         }
     });
+}
+function getDataPackage(goodsId,sourceId,orderSn){
+	$.ajax({
+		url: host.website+'/help/exportWords',
+		type:'get',
+		data:{
+			goodsId : goodsId,
+			sourceId : sourceId,
+			orderNo : orderSn
+		},
+		success:function(data){
+			if(data.code == 1){
+				// window.location.href = data.data;
+				window.location.href = data.data;
+			}else{
+				$.alert(data.message)
+				// $.alert('下载失败')
+			}
+		}
+	});
 }
 
 
