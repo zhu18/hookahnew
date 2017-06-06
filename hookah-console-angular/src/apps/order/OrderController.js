@@ -28,7 +28,7 @@ class ShelfController {
           });
           promise.then(function (res, status, config, headers) {
               $rootScope.order = res.data.data[0];
-              $rootScope.user = res.data.data[1];
+              $rootScope.buyer = res.data.data[1];
           });
       };
       $scope.getGoodDetail = function (event, goodsId) {

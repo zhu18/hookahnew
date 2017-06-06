@@ -9,7 +9,16 @@ var htmlPart = {
 %>
 <div class="box padding-bottom-50">
     <div class="detail grid-row">
-        <div class="top"><span class="text1"><a href='/information/index'>资讯中心</a></span> > <span class="text2"></span></div>
+        <div class="top"><span class="text1"><a href='/information/index'>资讯中心</a></span> >
+            <span class="text2">
+        <%if(sysNews.newsSonGroup == "1"){ %>
+        <a href='/information/index?newsSonGroup=1'>中心动态</a>
+        <% }else if(sysNews.newsSonGroup == "2"){ %>
+        <a href='/information/index?newsSonGroup=2'>行业资讯</a>
+        <% }else if(sysNews.newsSonGroup == "3"){ %>
+        <a href='/information/index?newsSonGroup=3'>中心公告</a>
+        <%}%>
+        </span></div>
         <div class="bot clearfix">
             <div class="leftContent margin-right-10 padding-right-70 padding-left-70 ">
                 <h3 class="padding-top-30 padding-bottom-20" id="newsTitle"> ${sysNews.newsTitle}</h3>
@@ -20,7 +29,7 @@ var htmlPart = {
                         <span >
                             <svg class="icon" style="color:#F07D17;width: 1.0068359375em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1031 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15339"><path d="M18.2784 61.97248 432.4096 61.97248 432.4096 156.78464 386.37056 156.78464 570.40896 583.04512 754.58048 156.78464 662.49216 156.78464 662.49216 62.09536 1030.70208 62.09536 1030.70208 156.78464 892.70272 156.78464 524.48768 962.02752 432.4096 962.02752 110.3616 156.78464 18.2784 156.78464 18.2784 61.97248Z" p-id="15340"></path></svg></span>
                         &nbsp;管理员&nbsp;
-                        <span id="newsTime" class="margin-right-10"></span>
+                        <span id="newsTime" class="margin-right-10">${sysNews.sytTime,dateFormat="yyyy-MM-dd HH:mm:ss"}</span>
                     </span>
                     <!--<span>收藏:3&nbsp;&nbsp;&nbsp;评论:8</span>-->
                 </div>
@@ -102,4 +111,51 @@ var htmlPart = {
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
-<script type="text/javascript" src="/static/js/information/details.js"></script>
+<script>
+    $(function(){
+        isHot();
+        function isHot(){
+            $.ajax({
+                url:'/sysNews/listByGroup',
+                type:'get',
+                data:{
+                    pageNumber:1,
+                    pageSize:2,
+                    newsGroup:"information",
+                    newsSonGroup:${sysNews.newsSonGroup}
+                },
+                success:function(data){
+                    if(data.code=="1"){
+                        var html="";
+                        if (data.data.list.length > 0){
+                            var list = data.data.list;
+                            for (var i = 0; i < list.length; i++){
+                                console.log("hot:"+list[i].isHot);
+                                var n;
+                                if(list[i].isHot=="1"){
+                                    n++;
+                                    // for(var j=0;j<2;j++){
+                                    var content = list[i].contentValidity ? list[i].contentValidity : '暂无简介';
+                                    html +='<div class="line"></div>';
+                                    html +='<a href="/information/details?newsId='+list[i].newsId+'" class="one">';
+                                    html +='<img src="'+list[i].pictureUrl+'" alt="" class="margin-bottom-10 margin-top-10">';
+                                    html +='</a>';
+                                    html +='<a href="/information/details?newsId='+list[i].newsId+'" >';
+                                    html +='<div class="description margin-bottom-10">';
+                                    html +='<p class="first">'+content+'</p>';
+                                    html +='</div>';
+                                    html +='</a>';
+                                    // }
+                                    $(".hotBox").html(html);
+                                }
+                                if(n>2){
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+            })
+        }
+    })
+</script>

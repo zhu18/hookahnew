@@ -8,9 +8,9 @@
     <div class="console-title console-title-border clearfix">
       <div class="pull-left"><h5>帮助分类查询</h5></div>
       <div class="pull-right">
-        <button class="btn btn-default" data-ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span> 刷新
+        <button class="btn btn-default" data-ng-click="break()"><span class="glyphicon glyphicon-refresh"></span> 刷新
         </button>
-        <a ui-sref="help.category.new" class="btn btn-primary">新增</a>
+        <a ui-sref="help.category.add" class="btn btn-primary">新增</a>
       </div>
     </div>
     <div class="row margin-top">
@@ -19,7 +19,7 @@
           <form class="form-inline">
             <div class="form-group">
               <label class="control-label" for="form-field-1">名称</label>
-              <input id="form-field-1" name="code" ng-model="searchForm.code" type="text" class="form-control">
+              <input id="form-field-1" name="name" ng-model="name" type="text" class="form-control">
               <button type="submit" class="btn btn-primary" data-ng-click="search()">搜索</button>
             </div>
           </form>

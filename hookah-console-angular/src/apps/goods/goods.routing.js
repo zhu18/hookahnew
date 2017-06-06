@@ -1,5 +1,6 @@
 import GoodsController from './GoodsController';
 import GoodsCheckController from './GoodsCheckController';
+import ReadyGoodsCheckController from './ReadyGoodsCheckController';
 import ShelfController from '../shelf/ShelfController';
 import ManageGoodsController from '../shelf/ManageGoodsController';
 import CategoryController from '../category/CategoryController';
@@ -31,6 +32,12 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
       template: require('./list.html'),
       controller: GoodsController,
     })
+    .state('items.searchByCon', {
+        // params:{'searchName':null, 'searchSn':null, 'searchCheckStatus':null, 'searchOnSaleStatus':null},
+      url: '/items/searchByCon',
+      template: require('./list.html'),
+      controller: GoodsController,
+    })
     .state('items.update', {
       url: '/items/update',
       template: require('./update.html'),
@@ -44,7 +51,12 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
     .state('items.check', {
         url: '/items/check',
         template: require('./checkList.html'),
-        controller: GoodsCheckController,
+        controller: ReadyGoodsCheckController,
+    })
+    .state('items.check2', {
+        url: '/items/check2',
+        template: require('./checkList.html'),
+        controller: ReadyGoodsCheckController,
     })
     .state('items.checkDetail', {
         url: '/items/checkDetail',
@@ -57,10 +69,20 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
         // template: require('./checkedList.html'),
         controller: GoodsCheckController,
     })
+    .state('items.checkedList2', {
+        url: '/items/checkedList2',
+        template: require('./goodsCheckedList.html'),
+        controller: GoodsCheckController,
+    })
     .state('items.goodsDetail', {
         url: '/items/goodsDetail',
         template: require('./goodsDetail.html'),
         controller: GoodsCheckController,
+    })
+    .state('items.checkGoodsDetail', {
+        url: '/items/checkGoodsDetail',
+        template: require('./goodsDetail.html'),
+        controller: ReadyGoodsCheckController,
     })
     .state('shelf.search', {
       url: '/shelf/search',

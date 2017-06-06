@@ -10,7 +10,12 @@ class IndustryController {
     } else if ($state.$current.name == "sys.dict.edit_child") {
       $scope.title = "修改字典子项";
     };
-    $scope.expanding_property = "industryName";
+
+    $scope.expanding_property = {
+        field: "industryName",
+        displayName: "地域名称"
+    };
+
     $scope.col_defs = [
         {
             field: "industryCode",

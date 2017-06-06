@@ -50,6 +50,7 @@
       c.add_time,
       c.update_time,
       c.praise,
+      c. comment_content,
       u.user_name
     FROM `comment` c
     left JOIN `user` u on c.user_id = u.user_id

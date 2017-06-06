@@ -1,29 +1,31 @@
 class GoodsCheckController {
   constructor($scope, $rootScope, $http, $state, $uibModal, usSpinnerService, growl) {
 
-    $scope.search = function () {
-
-      console.log($scope.searchName)
-      console.log($scope.searchSn)
-      console.log($scope.searchKw)
-      console.log($scope.searchKShop)
-
-      var promise = $http({
-        method: 'GET',
-        url: $rootScope.site.apiServer + "/api/goods/allNotCheck",
-        params: {currentPage: $rootScope.pagination.currentPage,
-                 pageSize: $rootScope.pagination.pageSize,
-                 goodsName: $scope.searchName,
-                 goodsSn: $scope.searchSn,
-                 keywords: $scope.searchKw,
-                 shopName: $scope.searchShop
-        }
-      });
-      promise.then(function (res, status, config, headers) {
-        $rootScope.loadingState = false;
-        growl.addSuccessMessage("数据加载完毕。。。");
-      });
-    };
+    // $scope.search = function () {
+    //
+    //     $rootScope.Name = $scope.searchName;
+    //     $rootScope.Sn = $scope.searchSn;
+    //     $rootScope.Kw = $scope.searchKw;
+    //     $rootScope.Shop = $scope.searchShop;
+    //     $rootScope.CheckStatus = $scope.searchCheckStatus;
+    //     $rootScope.OnSaleStatus = $scope.searchOnSaleStatus;
+    //
+    //   var promise = $http({
+    //     method: 'GET',
+    //     url: $rootScope.site.apiServer + "/api/goods/allNotCheck",
+    //     params: {currentPage: $rootScope.pagination.currentPage,
+    //              pageSize: $rootScope.pagination.pageSize,
+    //              goodsName: $scope.searchName,
+    //              goodsSn: $scope.searchSn,
+    //              keywords: $scope.searchKw,
+    //              shopName: $scope.searchShop
+    //     }
+    //   });
+    //   promise.then(function (res, status, config, headers) {
+    //     $rootScope.loadingState = false;
+    //     growl.addSuccessMessage("数据加载完毕。。。");
+    //   });
+    // };
 
     $scope.searchCheckRs = function () {
 
@@ -43,6 +45,14 @@ class GoodsCheckController {
     };
 
     $scope.checkedList = function () {
+
+        $rootScope.Name = $scope.searchName;
+        $rootScope.Sn = $scope.searchSn;
+        $rootScope.Kw = $scope.searchKw;
+        $rootScope.Shop = $scope.searchShop;
+        $rootScope.CheckStatus = $scope.searchCheckStatus;
+        $rootScope.OnSaleStatus = $scope.searchOnSaleStatus;
+
 
       var promise = $http({
         method: 'GET',
@@ -140,6 +150,30 @@ class GoodsCheckController {
         }
     }
 
+      /**
+       * 1 审核  2强制下架
+       * @param item
+       * @param n
+       */
+      $scope.goCheck = function (item, n) {
+          console.log("去审核……");
+          console.log(n);
+
+          var promise = $http({
+              method: 'GET',
+              url: $rootScope.site.apiServer + "/api/goods/getGoodsInfo",
+              params: {goodsId: item.goodsId}
+          });
+          promise.then(function (res, status, config, headers) {
+              console.log(res.data)
+              if(res.data.code == "1"){
+                  $rootScope.editData = res.data.data;
+                  $rootScope.operatorFlag = n;
+                  $state.go('items.goodsDetail', {data: $rootScope.editData});
+              }
+          });
+      };
+
     $scope.forceOff = function(){
         var promise = $http({
             method: 'POST',
@@ -149,7 +183,8 @@ class GoodsCheckController {
         promise.then(function (res, status, config, headers) {
             console.log(res.data)
             if(res.data.code == "1"){
-                $state.go('items.search');
+                // $state.go('items.checkedList');
+                history.back();
             }
         });
     }
@@ -167,9 +202,6 @@ class GoodsCheckController {
               console.log(res.data)
               if(res.data.code == "1"){
                   $rootScope.editData = res.data.data;
-                  // if($rootScope.editData.apiInfo != null){
-                  //     $rootScope.editData.apiInfo.respSample = JSON.stringify(JSON.parse($rootScope.editData.apiInfo.respSample), null, "\t");
-                  // }
                   $rootScope.operatorFlag = 1;
                   $state.go('items.goodsDetail', {data: $rootScope.editData});
               }
@@ -197,6 +229,34 @@ class GoodsCheckController {
           }
           console.log('Page changed to: ' + $rootScope.pagination.currentPage);
       };
+
+      if ($state.$current.name == "items.checkedList2") {
+          $scope.searchName = $rootScope.Name;
+          $scope.searchSn = $rootScope.Sn;
+      }
+
+      $scope.returnPage = function(){
+
+          $state.go('items.checkedList2');
+
+          var promise = $http({
+              method: 'GET',
+              url: $rootScope.site.apiServer + "/api/goods/checkedList",
+              params: {currentPage: $rootScope.pagination.currentPage,
+                  pageSize: $rootScope.pagination.pageSize,
+                  goodsName: $rootScope.Name,
+                  goodsSn: $rootScope.Sn,
+                  // keywords: $scope.searchKw,
+                  // shopName: $scope.searchShop,
+                  checkStatus: $rootScope.CheckStatus,
+                  onSaleStatus: $rootScope.OnSaleStatus
+              }
+          });
+          promise.then(function (res, status, config, headers) {
+              $rootScope.loadingState = false;
+              growl.addSuccessMessage("数据加载完毕。。。");
+          });
+      }
   }
 }
 
