@@ -51,7 +51,7 @@
     height:70px;
 }
 .trade-box table td a p{
-
+    word-break: break-all;
 }
 .wrapper-tab{
     margin-bottom: 10px;

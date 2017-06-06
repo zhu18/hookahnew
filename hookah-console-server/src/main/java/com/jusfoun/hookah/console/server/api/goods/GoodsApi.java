@@ -54,7 +54,9 @@ public class GoodsApi extends BaseController{
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ReturnData getListInPage(String currentPage, String pageSize,
                                     String goodsName, String goodsSn,
-                                    String keywords, String shopName) {
+                                    String keywords, String shopName,
+                                    Byte checkStatus, Byte onSaleStatus
+    ) {
         Pagination<Goods> page = new Pagination<>();
         try {
             List<Condition> filters = new ArrayList();
@@ -74,6 +76,12 @@ public class GoodsApi extends BaseController{
             }
             if(StringUtils.isNotBlank(shopName)){
                 filters.add(Condition.like("shopName", shopName.trim()));
+            }
+            if(checkStatus != null && checkStatus != -1){
+                filters.add(Condition.eq("checkStatus", checkStatus));
+            }
+            if(onSaleStatus != null && onSaleStatus != -1){
+                filters.add(Condition.eq("isOnsale", onSaleStatus));
             }
 
             //参数校验

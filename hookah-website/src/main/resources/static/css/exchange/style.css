@@ -536,36 +536,39 @@
 /*行业推荐下面*/
 .exchange-industry-resource .industry-resource-down {
 
+
 }
 .exchange-industry-resource .industry-resource-down .carousel-box{
+	width: 1100px;
+	margin: 0 auto;
     position: relative;
-    overflow: hidden;
-    min-width: 1180px;
-    max-width: 1440px;
-    height: 393.458px;
-    margin-left: auto;
-    margin-right: auto;
+    /*overflow: hidden;*/
+    /*min-width: 1180px;*/
+    /*max-width: 1440px;*/
+    height: 425px;
+    /*margin-left: auto;*/
+    /*margin-right: auto;*/
     zoom: 1;
 }
 .exchange-industry-resource .industry-resource-down .screen{
-    height: 393.458px;
+    height: 425px;
     overflow: hidden;
 }
 
 .exchange-industry-resource .industry-resource-down #arr{
-    display: none;
+
 }
 .exchange-industry-resource .industry-resource-down #arrow-left{
     position: absolute;
     display: inline-block;
-    top: 0;
-    width: 55px;
-    left: 0;
-    line-height: 360px;
+    top: 175px;
+    width: 35px;
+    left: -50px;
+    /*line-height: 360px;*/
     text-align: center;
     z-index: 1000;
     color: white;
-    font-size: 60px;
+    font-size: 45px;
     background: #161A1D;
     cursor: pointer;
 	/* older safari/Chrome browsers */
@@ -586,14 +589,14 @@
 .exchange-industry-resource .industry-resource-down #arrow-right{
     position: absolute;
     display: inline-block;
-    top: 0;
-    width: 55px;
+    top: 175px;
+    width: 35px;
     color: white;
-    right: 0;
-    line-height: 360px;
+    right: -50px;
+    /*line-height: 360px;*/
     text-align: center;
     z-index: 1000;
-    font-size: 60px;
+    font-size: 45px;
     background: #161A1D;
     cursor: pointer;
 	/* older safari/Chrome browsers */
@@ -612,179 +615,245 @@
 	filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=40);
 }
 .exchange-industry-resource .industry-resource-down ul{
-    position: absolute;
-    top:0;
-	left: 0;
-    height: 393.458px;
-    transform: translate(0px);
+    position: relative;
+	top: 20px;
+    height: 425px;
+    /*transform: translate(0px);*/
 }
 .exchange-industry-resource .industry-resource-down ul .slide-item{
-    float: left;
-    position: relative;
-    width: 269.8px;
-    height: 360px;
-    background-color: white;
+	float: left;
+	position: relative;
+	top: 20px;;
+	width: 273px;
+	height: 360px;
+	border: 1px solid #E2E2E2;
 }
-.exchange-industry-resource .industry-resource-down ul .slide-item a{
-    display: inline-block;
-    width: 100%;
-    height: 360px;
+.exchange-industry-resource .industry-resource-down ul .slide-item .slide-item-top{
+	height: 50%;
+	background-color: #00a2c9;
 }
-.exchange-industry-resource .industry-resource-down ul .slide-item img{
-    float: left;
-    width: 100%;
-    height: 360px;
+.exchange-industry-resource .industry-resource-down ul .slide-item .slide-item-top .img{
+	width: 100%;
+	height: 100%;
 }
-.exchange-industry-resource .industry-resource-down ul .slide-item .bg{
-    position: absolute;
-    top:0;
-    left: 0;
-    right: 0;
-    bottom:0 ;
+.exchange-industry-resource .industry-resource-down ul .slide-item .slide-item-top .bg{
+	position: absolute;
+	top: 0;
+	width: 100%;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 50%;
+	background: rgba(0,0,0,0.5);
 }
-.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-bg{
-    position: absolute;
-    top:0;
-    left: 0;
-    right: 0;
-    bottom:0 ;
-    background: #161A1D;
-	/* older safari/Chrome browsers */
-	-webkit-opacity: 0.6;
-	/* Netscape and Older than Firefox 0.9 */
-	-moz-opacity: 0.6;
-	/* Safari 1.x (pre WebKit!) 老式khtml内核的Safari浏览器*/
-	-khtml-opacity: 0.6;
-	/* IE9 + etc...modern browsers */
-	opacity: .6;
-	/* IE 4-9 */
-	filter:alpha(opacity=60);
-	/*This works in IE 8 & 9 too*/
-	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
-	/*IE4-IE9*/
-	filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
+.exchange-industry-resource .industry-resource-down ul .slide-item .slide-item-top a>img{
+	width: 60px;
+	height: 60px;
+	margin: 0 auto;
+	display: block;
+	padding-top: 30px;
 }
-.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content{
-    position: absolute;
-    top: 100px;
-    width: 100%;
-    text-align: center;
-}
-.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-content-img{
-    width: 100%;
-    height: 67px;
-}
-.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-content-img img{
-    position: absolute;
-    top:0;
-    left: 50%;
-    margin-left: -34px;
-    width: 68px;
-    height: 68px;
-}
-.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-boundary {
-	height: 50px;
-}
-.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-boundary i {
-	width: 20px;
-	height: 2px;
-	display: inline-block;
-	background-color: white;
-}
-.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-title {
-	font-size: 22px;
-	line-height: 24px;
-	height: 48px;
-	color: white;
-}
-.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-info {
-	/* older safari/Chrome browsers */
-	-webkit-opacity: 0;
-	/* Netscape and Older than Firefox 0.9 */
-	-moz-opacity: 0;
-	/* Safari 1.x (pre WebKit!) 老式khtml内核的Safari浏览器*/
-	-khtml-opacity: 0;
-	/* IE9 + etc...modern browsers */
-	opacity: 0;
-	/* IE 4-9 */
-	filter:alpha(opacity=0);
-	margin-top: 40px;
-	font-size: 14px;
-	line-height: 25px;
-	color: white;
-	padding: 0 10px;
-	overflow: hidden;
-	height: 73px;
+.exchange-industry-resource .industry-resource-down ul .slide-item .slide-item-top p{
 	text-align: center;
-	text-overflow: ellipsis;
-	-o-text-overflow:ellipsis;
-	display: -webkit-box;
-	-webkit-line-clamp: 3;
-	-webkit-box-orient: vertical;
+	color: #fff;
+	font-weight: 400;
+	font-size: 25px;
 }
-.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-btn {
-	/* older safari/Chrome browsers */
-	-webkit-opacity: 0;
-	/* Netscape and Older than Firefox 0.9 */
-	-moz-opacity: 0;
-	/* Safari 1.x (pre WebKit!) 老式khtml内核的Safari浏览器*/
-	-khtml-opacity: 0;
-	/* IE9 + etc...modern browsers */
-	opacity: 0;
-	/* IE 4-9 */
-	filter:alpha(opacity=0);
-    display: inline-block;
-    border: 1px solid #fff;
-    width: 120px;
-    height: 36px;
-    line-height: 36px;
-    font-size: 14px;
-    text-decoration: none;
-    margin-top: 40px;
+.exchange-industry-resource .industry-resource-down ul .slide-item .slide-item-down{
+	height: 50%;
+}
+.exchange-industry-resource .industry-resource-down ul .slide-item .slide-item-down div{
+	height:calc(50% - 20px);
+	background-color: #F3F3F3;
+	padding: 10px;
+	text-align: center;
+}
+.exchange-industry-resource .industry-resource-down ul .slide-item .slide-item-down .one-info{
+	height:calc(50% - 21px);
+	border-bottom: 1px solid #E2E2E2;
+}
+.exchange-industry-resource .industry-resource-down ul .slide-item .slide-item-down div p{
+	padding: 5px 0;
 }
 
-.exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-bg{
-    background-color: #00c2de;
+.exchange-industry-resource .industry-resource-down ul .slide-item:hover{
+	/*-moz-transform:scale(1,1);*/
+	-webkit-transform:scale(1.1,1.1);
+	z-index: 10000;
+	/*-o-transform:scale(2,2);*/
+	/*border: 1px solid #E2E2E2;*/
 }
+.exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg{
+	background-color: #6886B4;
+	opacity: 1;
+}
+/*.exchange-industry-resource .industry-resource-down ul .slide-item{*/
+    /*float: left;*/
+    /*position: relative;*/
+    /*width: 269.8px;*/
+    /*height: 360px;*/
+    /*background-color: white;*/
+/*}*/
+/*.exchange-industry-resource .industry-resource-down ul .slide-item a{*/
+    /*display: inline-block;*/
+    /*width: 100%;*/
+    /*height: 360px;*/
+/*}*/
+/*.exchange-industry-resource .industry-resource-down ul .slide-item img{*/
+    /*float: left;*/
+    /*width: 100%;*/
+    /*height: 360px;*/
+/*}*/
+/*.exchange-industry-resource .industry-resource-down ul .slide-item .bg{*/
+    /*position: absolute;*/
+    /*top:0;*/
+    /*left: 0;*/
+    /*right: 0;*/
+    /*bottom:0 ;*/
+/*}*/
+/*.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-bg{*/
+    /*position: absolute;*/
+    /*top:0;*/
+    /*left: 0;*/
+    /*right: 0;*/
+    /*bottom:0 ;*/
+    /*background: #161A1D;*/
+	/*!* older safari/Chrome browsers *!*/
+	/*-webkit-opacity: 0.6;*/
+	/*!* Netscape and Older than Firefox 0.9 *!*/
+	/*-moz-opacity: 0.6;*/
+	/*!* Safari 1.x (pre WebKit!) 老式khtml内核的Safari浏览器*!*/
+	/*-khtml-opacity: 0.6;*/
+	/*!* IE9 + etc...modern browsers *!*/
+	/*opacity: .6;*/
+	/*!* IE 4-9 *!*/
+	/*filter:alpha(opacity=60);*/
+	/*!*This works in IE 8 & 9 too*!*/
+	/*-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";*/
+	/*!*IE4-IE9*!*/
+	/*filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=60);*/
+/*}*/
+/*.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content{*/
+    /*position: absolute;*/
+    /*top: 100px;*/
+    /*width: 100%;*/
+    /*text-align: center;*/
+/*}*/
+/*.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-content-img{*/
+    /*width: 100%;*/
+    /*height: 67px;*/
+/*}*/
+/*.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-content-img img{*/
+    /*position: absolute;*/
+    /*top:0;*/
+    /*left: 50%;*/
+    /*margin-left: -34px;*/
+    /*width: 68px;*/
+    /*height: 68px;*/
+/*}*/
+/*.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-boundary {*/
+	/*height: 50px;*/
+/*}*/
+/*.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-boundary i {*/
+	/*width: 20px;*/
+	/*height: 2px;*/
+	/*display: inline-block;*/
+	/*background-color: white;*/
+/*}*/
+/*.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-title {*/
+	/*font-size: 22px;*/
+	/*line-height: 24px;*/
+	/*height: 48px;*/
+	/*color: white;*/
+/*}*/
+/*.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-info {*/
+	/*!* older safari/Chrome browsers *!*/
+	/*-webkit-opacity: 0;*/
+	/*!* Netscape and Older than Firefox 0.9 *!*/
+	/*-moz-opacity: 0;*/
+	/*!* Safari 1.x (pre WebKit!) 老式khtml内核的Safari浏览器*!*/
+	/*-khtml-opacity: 0;*/
+	/*!* IE9 + etc...modern browsers *!*/
+	/*opacity: 0;*/
+	/*!* IE 4-9 *!*/
+	/*filter:alpha(opacity=0);*/
+	/*margin-top: 40px;*/
+	/*font-size: 14px;*/
+	/*line-height: 25px;*/
+	/*color: white;*/
+	/*padding: 0 10px;*/
+	/*overflow: hidden;*/
+	/*height: 73px;*/
+	/*text-align: center;*/
+	/*text-overflow: ellipsis;*/
+	/*-o-text-overflow:ellipsis;*/
+	/*display: -webkit-box;*/
+	/*-webkit-line-clamp: 3;*/
+	/*-webkit-box-orient: vertical;*/
+/*}*/
+/*.exchange-industry-resource .industry-resource-down ul .slide-item .bg .bg-content .bg-btn {*/
+	/*!* older safari/Chrome browsers *!*/
+	/*-webkit-opacity: 0;*/
+	/*!* Netscape and Older than Firefox 0.9 *!*/
+	/*-moz-opacity: 0;*/
+	/*!* Safari 1.x (pre WebKit!) 老式khtml内核的Safari浏览器*!*/
+	/*-khtml-opacity: 0;*/
+	/*!* IE9 + etc...modern browsers *!*/
+	/*opacity: 0;*/
+	/*!* IE 4-9 *!*/
+	/*filter:alpha(opacity=0);*/
+    /*display: inline-block;*/
+    /*border: 1px solid #fff;*/
+    /*width: 120px;*/
+    /*height: 36px;*/
+    /*line-height: 36px;*/
+    /*font-size: 14px;*/
+    /*text-decoration: none;*/
+    /*margin-top: 40px;*/
+/*}*/
 
-.exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-content{
-    transition: transform 0.3s linear 0s;
-    transform: translateY(-50px);
-	/*margin-top: -50px;*/
-}
+/*.exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-bg{*/
+    /*background-color: #00c2de;*/
+/*}*/
 
-.exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-title{
-    margin-top: 15px;
-}
+/*.exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-content{*/
+    /*transition: transform 0.3s linear 0s;*/
+    /*transform: translateY(-50px);*/
+	/*!*margin-top: -50px;*!*/
+/*}*/
 
-.exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-boundary{
-    display: none;
-}
-/*最有一个大模块*/
-.exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-content .bg-info {
-	transition: transform 0.3s linear 0s;
-	transform: translateY(-20px);
-	animation: show 0.5s ease-in-out 0s 1 alternate forwards;
-	-moz-animation: show 0.5s ease-in-out 0s 1 alternate forwards; /* Firefox */
-	-webkit-animation: show 0.5s ease-in-out 0s 1 alternate forwards; /* Safari and Chrome */
-	-o-animation: show 0.5s ease-in-out 0s 1 alternate forwards; /* Opera */
-}
-.exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-content .bg-btn {
-	transition: transform 0.3s linear 0s;
-	transform: translateY(-35px);
-	animation: show 0.5s ease-in-out 0s 1 alternate forwards;
-	-moz-animation: show 0.5s ease-in-out 0s 1 alternate forwards; /* Firefox */
-	-webkit-animation: show 0.5s ease-in-out 0s 1 alternate forwards; /* Safari and Chrome */
-	-o-animation: show 0.5s ease-in-out 0s 1 alternate forwards; /* Opera */
-}
-@keyframes show {
-	from {
-		opacity: 0;
-	}
-	to {
-		opacity: 1;
-	}
-}
+/*.exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-title{*/
+    /*margin-top: 15px;*/
+/*}*/
+
+/*.exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-boundary{*/
+    /*display: none;*/
+/*}*/
+/*!*最有一个大模块*!*/
+/*.exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-content .bg-info {*/
+	/*transition: transform 0.3s linear 0s;*/
+	/*transform: translateY(-20px);*/
+	/*animation: show 0.5s ease-in-out 0s 1 alternate forwards;*/
+	/*-moz-animation: show 0.5s ease-in-out 0s 1 alternate forwards; !* Firefox *!*/
+	/*-webkit-animation: show 0.5s ease-in-out 0s 1 alternate forwards; !* Safari and Chrome *!*/
+	/*-o-animation: show 0.5s ease-in-out 0s 1 alternate forwards; !* Opera *!*/
+/*}*/
+/*.exchange-industry-resource .industry-resource-down ul .slide-item:hover .bg-content .bg-btn {*/
+	/*transition: transform 0.3s linear 0s;*/
+	/*transform: translateY(-35px);*/
+	/*animation: show 0.5s ease-in-out 0s 1 alternate forwards;*/
+	/*-moz-animation: show 0.5s ease-in-out 0s 1 alternate forwards; !* Firefox *!*/
+	/*-webkit-animation: show 0.5s ease-in-out 0s 1 alternate forwards; !* Safari and Chrome *!*/
+	/*-o-animation: show 0.5s ease-in-out 0s 1 alternate forwards; !* Opera *!*/
+/*}*/
+/*@keyframes show {*/
+	/*from {*/
+		/*opacity: 0;*/
+	/*}*/
+	/*to {*/
+		/*opacity: 1;*/
+	/*}*/
+/*}*/
 /*最后一个大模块*/
 .exchange-index .exchange-category-down {
 	height: 460px;
