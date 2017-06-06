@@ -1,6 +1,6 @@
 // details详情页
 var id = $.getUrlParam('newsId');
-renderDetails();
+// renderDetails();
 var num ='';
 function renderDetails(){
     $.ajax({
