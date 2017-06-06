@@ -1,10 +1,14 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.CommentMapper;
 import com.jusfoun.hookah.core.domain.Comment;
 import com.jusfoun.hookah.core.domain.OrderInfo;
 import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.domain.vo.CommentVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
@@ -94,12 +98,12 @@ public class CommentServiceImpl extends GenericServiceImpl<Comment,String> imple
             return returnData;
         }
 
-        List<Condition> filters = new ArrayList<Condition>();
-        filters.add(Condition.eq("status",STATUS_INVAL));
-        filters.add(Condition.eq("goodsId",goodsId));
-
-        List<OrderBy> orderBys = new ArrayList<OrderBy>();
-        orderBys.add(OrderBy.desc("commentTime"));
+//        List<Condition> filters = new ArrayList<Condition>();
+//        filters.add(Condition.eq("status",STATUS_INVAL));
+//        filters.add(Condition.eq("goodsId",goodsId));
+//
+//        List<OrderBy> orderBys = new ArrayList<OrderBy>();
+//        orderBys.add(OrderBy.desc("commentTime"));
 
         //参数校验
         int pageNumberNew = HookahConstants.PAGE_NUM;
@@ -111,9 +115,20 @@ public class CommentServiceImpl extends GenericServiceImpl<Comment,String> imple
             pageSizeNew = Integer.parseInt(pageSize);
         }
 
-        returnData.setData(super.getListInPage(pageNumberNew,pageSizeNew,filters,orderBys));
+        returnData.setData(this.getListInPage(pageNumberNew,pageSizeNew,goodsId));
 
         return returnData;
+    }
+
+    public Pagination<CommentVo> getListInPage(Integer pageNum, Integer pageSize,String goodsId) {
+        PageHelper.startPage(pageNum, pageSize);
+        Page<CommentVo> page = (Page<CommentVo>) commentMapper.getListForComment(goodsId);
+        Pagination<CommentVo> pagination = new Pagination<CommentVo>();
+        pagination.setTotalItems(page.getTotal());
+        pagination.setPageSize(pageSize);
+        pagination.setCurrentPage(pageNum);
+        pagination.setList(page);
+        return pagination;
     }
 
     @Override

@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 分类查询
@@ -51,27 +52,53 @@ public class CategoryServiceImpl extends GenericServiceImpl<Category, String> im
         List<Category> list = super.selectList(filters);
         if(list != null && list.size() > 0) {
             for(Category cat : list) {
-                vo.add(getChild(cat.getCatId()));
+                vo.add(getChild(cat.getCatId(),1));
             }
         }
         return vo;
     }
 
-    private CategoryVo getChild(String pid) {
+    @Override
+    public List<CategoryVo> getAdminCatTree() {
+        List<CategoryVo> vo = new ArrayList<>();
+        List<Condition> filters = new ArrayList<>();
+        filters.add(Condition.eq("parentId", "0"));
+        List<Category> list = super.selectList(filters);
+        if(list != null && list.size() > 0) {
+            for(Category cat : list) {
+                vo.add(getChild(cat.getCatId(),null));
+            }
+        }
+        return vo;
+    }
+
+
+
+    private CategoryVo getChild(String pid,Integer catSign) {
         List<Condition> filters1 = new ArrayList<>();
-        filters1.add(Condition.eq("catSign", 1));
+        if(Objects.nonNull(catSign)){
+            filters1.add(Condition.eq("catSign", catSign));
+        }
         filters1.add(Condition.eq("catId", pid));
         Category treeNode = super.selectOne(filters1);
         CategoryVo nodeVo = new CategoryVo();
         BeanUtils.copyProperties(treeNode, nodeVo);
 
         List<Condition> filters = new ArrayList<>();
-        filters.add(Condition.eq("catSign", 1));
+        if(Objects.nonNull(catSign)){
+            filters.add(Condition.eq("catSign", catSign));
+        }
         filters.add(Condition.eq("parentId", pid));
         List<Category> childList = super.selectList(filters);
         if(childList != null && childList.size() > 0) {
             for(Category cat : childList){
-                Category n = getChild(cat.getCatId()); //递归
+                Category n;
+                if(Objects.nonNull(catSign)){
+                    n = getChild(cat.getCatId(),null); //递归
+                }else{
+                    n = getChild(cat.getCatId(),catSign); //递归
+                }
+
                 CategoryVo nodeVo2 = new CategoryVo();
                 BeanUtils.copyProperties(n, nodeVo2);
                 nodeVo.getChildren().add(n);
