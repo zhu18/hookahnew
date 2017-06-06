@@ -17,5 +17,10 @@ export default function sysnoticRouting($stateProvider, $urlRouterProvider) {
       template: require('./add.html'),
       controller: SysNoticController,
     })
+      .state('sysnotice.upd', {
+          url: '/sysnotice/upd',
+          template: require('./edit.html'),
+          controller: SysNoticController,
+      })
 
 };

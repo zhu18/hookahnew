@@ -31,10 +31,21 @@
              </span>
           </div>
         </div>
+        <!--<div class="form-group">-->
+          <!--<label class="col-sm-2 control-label" for="status">公告状态:</label>-->
+          <!--<div class="col-sm-4">-->
+            <!--<input  type="text" id="status" name="status" class="form-control none-edit"/>-->
+          <!--</div>-->
+        <!--</div>-->
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="status">公告状态:</label>
+          <label class="col-sm-2 control-label">公告状态</label>
           <div class="col-sm-4">
-            <input  type="text" id="status" name="status" class="form-control none-edit"/>
+            <label class="radio-inline">
+              <input type="radio" id="status_1" name="status" value="1" checked/>启用
+            </label>
+            <label class="radio-inline">
+              <input type="radio" id="status_0" name="status" value="0" />未启用
+            </label>
           </div>
         </div>
         <!--<div class="form-group">-->
@@ -50,8 +61,6 @@
           <!--</div>-->
         <!--</div>-->
       </fieldset>
-
-
       <div class="form-group">
         <div class="col-sm-2"></div>
         <div class="col-sm-4">
