@@ -13,6 +13,7 @@ import com.jusfoun.hookah.core.domain.es.EsGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.vo.GoodsCheckedVo;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
+import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
@@ -158,7 +159,9 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             mgGoods.setAtAloneSoftware(obj.getAtAloneSoftware());
             mgGoods.setAtSaaS(obj.getAtSaaS());
             mgGoods.setDataModel(obj.getDataModel());
-            MgGoods mgGoods1 = mgGoodsService.selectById(obj.getGoodsId());
+            List<Condition> filters = new ArrayList<>();
+            filters.add(Condition.eq("goodsId", obj.getGoodsId()));
+            MgGoods mgGoods1 = mgGoodsService.selectOne(filters);
             mgGoods.setClickRate(mgGoods1.getClickRate() == null ? (long)0 : mgGoods1.getClickRate());
             mgGoodsService.delete(obj.getGoodsId());
             mongoTemplate.save(mgGoods);
