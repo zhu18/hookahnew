@@ -115,8 +115,11 @@ function renderData(data){//渲染页面
 	renderIsBook(data.isBook, data.onsaleStartDate);
 	// $('#showcontent').html(getLength($('#J-goodsName').val()));
 	// $('#showcontent2').html(getLength($('#J-goodsBrief').val()));
+	console.log(data.areaProvince);
 	if(data.areaCountry > 0){
 		loadCountry(data.areaCountry,data.areaProvince)
+	}else{
+		loadCountry(100000,data.areaProvince)
 	}
 	if(data.areaProvince > 0){
 		loadCity(data.areaProvince,data.areaCity)
@@ -369,13 +372,16 @@ function renderselect(data) {
 // loadRegion('province', regionParam);
 //加载地区
 function loadRegion(id,regionParam) {
+	if($(regionParam).val() < 0){
+		$('#city').html('<option value="-1">全部</option>')
+	}
 	var parentId = '';
 	if(regionParam == 100000){
 		parentId = 100000;
 	}else{
 		parentId = $(regionParam).val();
 	}
-	$(regionParam).nextAll().html('<option value="-1"></option>')
+	$(regionParam).nextAll().html('<option value="-1">全部</option>')
 	$.ajax({
 		type: "get",
 		url: host.website+'/region/getRegionCodeByPid',
@@ -948,3 +954,21 @@ function renderAppSaasInfo(asSaaS){
 	$('.app-info-box #aSAintroduce').val(asSaaS.sSAintroduce);
 	$('.app-info-box .otherDesc').val(asSaaS.otherDesc);
 }
+$('#fileupload2').fileupload({ //文件上传
+	url: host.static+'/upload/fileUpload',
+	dataType: 'json',
+	done: function (e, data) {
+		if(data.result.code == 1){
+			var obj = data.result.data[0];
+			$("#J_fileUploadSS").val(obj.filePath);
+			$('.fileUploads span').html(data.files[0].name);
+			$('input[name="goodsImges2"]').val(obj.absPath);
+		}else{
+			$.alert(data.result.message)
+		}
+
+	},
+	progressall: function (e, data) {
+
+	}
+});

@@ -104,8 +104,8 @@ $(".searchQuery .search").on("click",function(){
     $('.order div').css("display","none");
     var startDate = $("#startDate").val();
     var endDate = $("#endDate").val();
-    dataParm.startDate = startDate?startDate:format(new Date());
-    dataParm.endDate = endDate?endDate:format(new Date());
+    dataParm.startDate = startDate?startDate:null;
+    dataParm.endDate = endDate?endDate:null;
     // if(!startDate){
     //     delete dataParm.startDate;
     // }
