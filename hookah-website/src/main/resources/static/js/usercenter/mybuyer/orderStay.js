@@ -8,6 +8,7 @@ function loadPageData(data){
 		var list = data.data.orders.list;
 		var html = '';
 		for(var i=0; i<list.length; i++) {
+			var wacthNm = 0;
 			html += '<table>';
 			html += '<thead>';
 			html += '<tr>';
@@ -32,7 +33,9 @@ function loadPageData(data){
 						mMat = '年';
 						break;
 				}
-
+				if(goods[ii].isOnsale != 1){
+					wacthNm ++;
+				}
 				html += '<tr class="content border-bottom">';
 				html += '<td class="text-align-center" style="width: 280px;">';
 				html += '<div class="p-img">';
@@ -45,11 +48,15 @@ function loadPageData(data){
 				html += '</div>';
 				html += '</td>';
 				html += '<td class="text-align-left">x' + goods[ii].goodsNumber +'<br/><br/>'+ '规格:'+ (goods[ii].goodsPrice / 100).toFixed(2) +'/'+ mMat +'</td>';
-				html += '<td class="">金额:￥&nbsp;' + ((goods[ii].goodsPrice / 100) * goods[ii].goodsNumber).toFixed(2) + '<br/><br/>' + list[i].payName + '</td>';//订单总金额
+				html += '<td class="">金额:￥&nbsp;' + ((goods[ii].goodsPrice / 100) * goods[ii].goodsNumber).toFixed(2) + '<br/><br/>' + (wacthNm == 0 ? list[i].payName : '<span class="color-red">商品已下架</span>') + '</td>';//订单总金额
+
 				if(ii == 0){
 					html += '<td rowspan="'+goods.length+'" class="border-left">';
 					html += '<span class="margin-bottom-5">未付款</span><br>';
-					html += '<a href="' + host.website + '/order/payOrder?orderSn=' + list[i].orderSn + '"  class="display-inline-block goPay btn btn-full-orange margin-bottom-5 margin-top-5">去支付</a>';
+					if(wacthNm == 0){
+						// html += '<span class="margin-bottom-5 margin-top-5 color-red">此订单不能支付</span>'
+						html += '<a href="' + host.website + '/order/payOrder?orderSn=' + list[i].orderSn + '"  class="display-inline-block goPay btn btn-full-orange margin-bottom-5 margin-top-5">去支付</a>';
+					}
 					html += '<a target="_blank" href="/order/viewDetails?orderId=' + list[i].orderId + '&num=2" class="display-block color-blue margin-bottom-5">订单详情</a>';
 					html += '<a href="javascript:confirmDelete(\'' + list[i].orderId + '\');" class="display-block margin-bottom-5">删除</a>';
 					html += '</td>';
