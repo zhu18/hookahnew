@@ -30,7 +30,7 @@ import java.util.*;
  */
 @Controller
 @RequestMapping("/sysNews")
-public class SysNewsController {
+public class SysNewsController extends BaseController{
     protected final static Logger logger = LoggerFactory.getLogger(SysNewsController.class);
 
     @Resource
@@ -81,7 +81,6 @@ public class SysNewsController {
 */
     @RequestMapping(value = "/details", method = RequestMethod.GET)
     public String details(String id,Model model) {
-        model.addAttribute("title", "搜索结果");
         SysNewsVo sysN = new SysNewsVo();
         try {
             sysN = sysNewsService.selectNewsByID(id);

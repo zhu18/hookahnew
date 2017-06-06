@@ -145,6 +145,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         og.setFormatId(cart.getFormatId());
         og.setSourceId(cart.getGoods().getSourceId());
         og.setGoodsType(cart.getGoods().getGoodsType());
+        og.setIsOnsale(cart.getGoods().getIsOnsale());
 //		og.setSendNumber(cart.getS);
         return og;
     }
@@ -157,6 +158,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         og.setGoodsName(goods.getGoodsName());
         og.setGoodsNumber(goodsNumber);
         og.setGoodsType(goods.getGoodsType());
+        og.setIsOnsale(goods.getIsOnsale());
         og.setSourceId(goods.getSourceId());
         og.setGoodsPrice(format.getPrice());
         og.setGoodsFormat(format.getFormat());
@@ -442,6 +444,12 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                 if(order.getPayStatus()!=OrderInfo.PAYSTATUS_PAYED){
                     for(MgOrderGoods goods:goodsList){
                         goods.setUploadUrl(null);
+                        try {
+                            Goods curGoods = goodsService.findGoodsById(goods.getGoodsId());
+                            goods.setIsOnsale(curGoods.getIsOnsale());
+                        } catch (HookahException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
 
