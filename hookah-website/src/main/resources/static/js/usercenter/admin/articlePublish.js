@@ -125,7 +125,8 @@ function published() {
 		return;
 	} else if (data.content == "" || data.newsTitle == null) {
 		$.alert('请输入文章内容！', true, function () {
-		})
+            console.log(data.content);
+        })
 		return;
 	} else if (data.pictureUrl == "") {
 		$.alert('请上传图片！', true, function () {
@@ -146,7 +147,7 @@ function published() {
 			success: function (msg) {
 				if (msg.code == 1) {
 					$.alert('提交成功');
-					window.location.href = "/admin/articleManage";
+					// window.location.href = "/admin/articleManage";
 				} else {
 					$.alert(msg.message)
 				}
