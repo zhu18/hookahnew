@@ -53,13 +53,11 @@ public class ExchangeController extends BaseController{
     public String index(Model model) {
         model.addAttribute("categoryInfo", categoryService.getCatTree());
         model.addAttribute("goodsShelvesVoInfo",goodsShelvesService.getShevlesGoodsVoList(new HashMap<String,Object>()));
-        model.addAttribute("title", "青岛大数据交易中心");
         return "exchange/index";
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(Model model) {
-        model.addAttribute("title", "商品列表");
         return "exchange/list";
     }
 
@@ -113,6 +111,7 @@ public class ExchangeController extends BaseController{
             //推荐商品
             Map<String,GoodsShelvesVo> goodsMap = goodsShelvesService.getShevlesGoodsVoList(new HashMap<String,Object>());
             model.addAttribute("reCommData", goodsMap.get("recomm_data"));
+
             return "exchange/details";
         }catch (Exception e) {
             logger.error(e.getMessage());
@@ -176,7 +175,6 @@ public class ExchangeController extends BaseController{
 
     @RequestMapping(value = "/shelves", method = RequestMethod.GET)
     public String shelves(Model model) {
-        model.addAttribute("title", "青岛大数据交易中心");
         return "exchange/shelves";
     }
 }
