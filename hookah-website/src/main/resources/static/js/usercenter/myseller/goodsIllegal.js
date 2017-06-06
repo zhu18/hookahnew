@@ -13,7 +13,7 @@ function loadPageData(data) {
 			html += '<td>' + list[i].catName + '</td>';
 			html += '<td class="text-right">' + (list[i].shopPrice / 100).toFixed(2) + '</td>';
 			html += '<td class="text-center">' + list[i].addTime + '</td>';
-			html += '<td class="text-center">' + list[i].offReason + '</td>';
+			html += '<td class="text-center" style="width:180px; word-break: break-all">' + list[i].offReason + '</td>';
 			html += '<td>';
 			html += '<a href="javascript:deleteGoods(\'' + list[i].goodsId + '\');">删除</a>';
 			html += '</td>';
