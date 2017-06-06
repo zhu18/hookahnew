@@ -46,6 +46,12 @@
             <input type="text" id="pictureUrl" name="pictureUrl" class="form-control none-edit" value="{{cuserd.pictureUrl}}" placeholder="请以http://或https://为前缀"/>
           </div>
         </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="orderBy">显示顺序<span class="must">*</span></label>
+          <div class="col-sm-4">
+            <input type="text" id="orderBy" name="orderBy" class="form-control" value="{{cuserd.cooOrder}}" placeholder="数字/最长为3位" ng-blur="checkNum()"/>
+          </div>
+        </div>
         <!--<div class="form-group">-->
           <!--<label class="col-sm-2 control-label" for="state">合作状态:</label>-->
           <!--<div class="col-sm-4">-->

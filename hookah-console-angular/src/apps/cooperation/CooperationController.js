@@ -50,6 +50,7 @@ class CooperationController {
                     url: $("#url").val(),
                     pictureUrl: $("#pictureUrl").val(),
                     cooName: $("#cooName").val(),
+                    cooOrder: $("#orderBy").val()
                 }
             });
             promise.then(function (res, status, config, headers) {
@@ -92,6 +93,16 @@ class CooperationController {
                 alert(res.data.data);
                 $scope.search();
             });
+        };
+        $scope.checkNum = function () {
+            var num = $("#orderBy").val();
+            if(num){
+                if (isNaN(num)){
+                    alert("您输入的不是数字");
+                }
+            }else {
+                alert("请输入显示顺序")
+            }
         };
         $scope.pageChanged = function () {
             $scope.search();
