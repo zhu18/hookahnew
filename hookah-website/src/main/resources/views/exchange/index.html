@@ -245,13 +245,21 @@ var htmlPart = {
 
 	<!--更改的行业推荐-->
 	<!--行业资讯-->
+	<%
+	if(goodsShelvesVoInfo.ind_res_data != ''){
+	var ind_res_data = goodsShelvesVoInfo.ind_res_data;
+	var ind_res_data_1 = goodsShelvesVoInfo.ind_res_data_1;
+	var ind_res_data_2 = goodsShelvesVoInfo.ind_res_data_2;
+	var ind_res_data_3 = goodsShelvesVoInfo.ind_res_data_3;
+	var ind_res_data_4 = goodsShelvesVoInfo.ind_res_data_4;
+	%>
 	<div class="exchange-industry-resource grid-row">
 		<div class="industry-resource-top ">
 			<div class="industry-resource-top-left grid-left">
 				<div class="d">
 					<i class="iconfont icon-hangye color-gray-blue" aria-hidden="true"></i>
-					<span class="font-weight-bold">巷道好</span>
-					<span class="color-gray-6">你好啊啊</span>
+					<span class="font-weight-bold">${ind_res_data.shelvesName}</span>
+					<span class="color-gray-6">${ind_res_data.shelvesDesc}</span>
 				</div>
 			</div>
 			<div class="industry-resource-top-right grid-right">
@@ -286,54 +294,112 @@ var htmlPart = {
 								<!--</div>-->
 							<!--</div>-->
 						<!--</li>-->
-						<li class="slide-item">
-							<!--<div class="slide-item-top">-->
-								<!--<img src="https://img.alicdn.com/tps/TB16hkwLXXXXXX6XXXXXXXXXXXX-576-840.jpg" class="img" alt="">-->
-								<!--<a href="" class="bg">-->
-									<!--<p>金融行业</p>-->
-								<!--</a>-->
-							<!--</div>-->
-							<!--<div class="slide-item-down">-->
-								<!--<div class="one-info">-->
-									<!--<p>大法师打发斯蒂芬</p>-->
-									<!--<p class="color-red font-weight-bold">按需资费</p>-->
-								<!--</div>-->
-								<!--<div class="two-info">-->
-									<!--<p>胜多负少的发生的</p>-->
-									<!--<p class="color-red "><span>￥</span><span class="font-weight-bold font-size-18">100</span>/<span>2000次</span></p>-->
-								<!--</div>-->
-							<!--</div>-->
-						</li>
-						<!--最新的-->
 						<!--<li class="slide-item">-->
-							<!--<div class="slide-item-top">-->
-								<!--<img src="https://img.alicdn.com/tps/TB16hkwLXXXXXX6XXXXXXXXXXXX-576-840.jpg" alt="" class="bg">-->
-								<!--<a href="" class="hover-bg">-->
-									<!--<p>金融行业</p>-->
-								<!--</a>-->
-							<!--</div>-->
-							<!--<div class="slide-item-down">-->
-								<!--<div class="one-info">-->
-									<!--<p>大法师打发斯蒂芬</p>-->
-									<!--<p class="color-red font-weight-bold">按需资费</p>-->
-								<!--</div>-->
-								<!--<div class="two-info">-->
-									<!--<p>胜多负少的发生的</p>-->
-									<!--<p class="color-red ">-->
-										<!--<span>￥</span>-->
-										<!--<span class="font-weight-bold font-size-18">100</span>-->
-										<!--/<span>2000次</span>-->
-									<!--</p>-->
-								<!--</div>-->
-							<!--</div>-->
+							<!--&lt;!&ndash;<div class="slide-item-top">&ndash;&gt;-->
+								<!--&lt;!&ndash;<img src="https://img.alicdn.com/tps/TB16hkwLXXXXXX6XXXXXXXXXXXX-576-840.jpg" class="img" alt="">&ndash;&gt;-->
+								<!--&lt;!&ndash;<a href="" class="bg">&ndash;&gt;-->
+									<!--&lt;!&ndash;<p>金融行业</p>&ndash;&gt;-->
+								<!--&lt;!&ndash;</a>&ndash;&gt;-->
+							<!--&lt;!&ndash;</div>&ndash;&gt;-->
+							<!--&lt;!&ndash;<div class="slide-item-down">&ndash;&gt;-->
+								<!--&lt;!&ndash;<div class="one-info">&ndash;&gt;-->
+									<!--&lt;!&ndash;<p>大法师打发斯蒂芬</p>&ndash;&gt;-->
+									<!--&lt;!&ndash;<p class="color-red font-weight-bold">按需资费</p>&ndash;&gt;-->
+								<!--&lt;!&ndash;</div>&ndash;&gt;-->
+								<!--&lt;!&ndash;<div class="two-info">&ndash;&gt;-->
+									<!--&lt;!&ndash;<p>胜多负少的发生的</p>&ndash;&gt;-->
+									<!--&lt;!&ndash;<p class="color-red "><span>￥</span><span class="font-weight-bold font-size-18">100</span>/<span>2000次</span></p>&ndash;&gt;-->
+								<!--&lt;!&ndash;</div>&ndash;&gt;-->
+							<!--&lt;!&ndash;</div>&ndash;&gt;-->
 						<!--</li>-->
+						<!--最新的-->
+						<li class="slide-item">
+							<div class="slide-item-top">
+								<img src="${host.static}/${ind_res_data_1.backImgPath}" alt="" class="bg">
+								<a href="" class="hover-bg">
+									<p>${ind_res_data_1.shelvesName}</p>
+								</a>
+							</div>
+							<div class="slide-item-down">
+								<%
+								for(item in ind_res_data_1.goods){
+								%>
+								<div class="one-info">
+									<a href="${host.website}/exchange/details?id=${item.goodsId}" target="_blank">
+										<p>${item.goodsName}</p>
+										<p class="color-red font-weight-bold">${item.shopPrice}</p>
+									</a>
+								</div>
+								<%}%>
+							</div>
+						</li>
+						<li class="slide-item">
+							<div class="slide-item-top">
+								<img src="${host.static}/${ind_res_data_2.backImgPath}" alt="" class="bg">
+								<a href="" class="hover-bg">
+									<p>${ind_res_data_2.shelvesName}</p>
+								</a>
+							</div>
+							<div class="slide-item-down">
+								<%
+								for(item in ind_res_data_2.goods){
+								%>
+								<div class="one-info">
+									<a href="${host.website}/exchange/details?id=${item.goodsId}" target="_blank">
+										<p>${item.goodsName}</p>
+										<p class="color-red font-weight-bold">${item.shopPrice}</p>
+									</a>
+								</div>
+								<%}%>
+							</div>
+						</li>
+						<li class="slide-item">
+							<div class="slide-item-top">
+								<img src="${host.static}/${ind_res_data_3.backImgPath}" alt="" class="bg">
+								<a href="" class="hover-bg">
+									<p>${ind_res_data_3.shelvesName}</p>
+								</a>
+							</div>
+							<div class="slide-item-down">
+								<%
+								for(item in ind_res_data_3.goods){
+								%>
+								<div class="one-info">
+									<a href="${host.website}/exchange/details?id=${item.goodsId}" target="_blank">
+										<p>${item.goodsName}</p>
+										<p class="color-red font-weight-bold">${item.shopPrice}</p>
+									</a>
+								</div>
+								<%}%>
+							</div>
+						</li>
+						<li class="slide-item">
+							<div class="slide-item-top">
+								<img src="${host.static}/${ind_res_data_4.backImgPath}" alt="" class="bg">
+								<a href="" class="hover-bg">
+									<p>${ind_res_data_4.shelvesName}</p>
+								</a>
+							</div>
+							<div class="slide-item-down">
+								<%
+								for(item in ind_res_data_4.goods){
+								%>
+								<div class="one-info">
+									<a href="${host.website}/exchange/details?id=${item.goodsId}" target="_blank">
+										<p>${item.goodsName}</p>
+										<p class="color-red font-weight-bold">${item.shopPrice}</p>
+									</a>
+								</div>
+								<%}%>
+							</div>
+						</li>
 						<!--追加的-->
 					</ul>
 				</div>
 			</div>
 		</div>
 	</div>
-
+	<%}%>
 	<!--底部分类-->
 	<div class="exchange-category-down grid-row">
 		<div class="category-left grid-left">
