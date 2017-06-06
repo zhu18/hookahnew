@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.console.server.api.account;
 
+import com.jusfoun.hookah.console.server.util.NumberValidationUtils;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -49,18 +50,26 @@ public class AccountApi {
     }
 
     @RequestMapping(value = "/recharge", method = RequestMethod.POST)
-    public ReturnData recharge(User user) {
+    public ReturnData recharge(User user,String recharge) {
         List<Condition> filters = new ArrayList<>();
+        NumberValidationUtils nv = new NumberValidationUtils();
+
         if (StringUtils.isNoneBlank(user.getUserId())) {
             filters.add(Condition.eq("userId", user.getUserId()));
         }else {
             return ReturnData.error("充值失败请返回重新充值");
         }
-        Long newBalance = user.getMoneyBalance();
-        if (newBalance < 0){
-            return ReturnData.error("余额不能为负值");
+        if (nv.isWholeNumber(recharge)){
+            Long charge = Long.parseLong(recharge);
+            if (charge < 0){
+                return ReturnData.error("充值金额不能为负值");
+            }else {
+                user.setMoneyBalance(user.getMoneyBalance()+charge);
+                userService.updateByConditionSelective(user, filters);
+                return ReturnData.success("充值成功");
+            }
+        }else {
+            return ReturnData.error("不能充值负数和小数金额");
         }
-        userService.updateByConditionSelective(user, filters);
-        return ReturnData.success("充值成功");
     }
 }
