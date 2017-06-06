@@ -10,7 +10,12 @@ class SysController {
     } else if ($state.$current.name == "sys.dict.edit_child") {
       $scope.title = "修改字典子项";
     };
-    $scope.expanding_property = "name";
+
+    $scope.expanding_property = {
+        field: "name",
+        displayName: "字典名称"
+    };
+
     $scope.col_defs = [
       {
         field: "property",

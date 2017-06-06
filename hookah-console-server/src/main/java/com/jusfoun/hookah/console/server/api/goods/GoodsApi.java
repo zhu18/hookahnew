@@ -301,7 +301,7 @@ public class GoodsApi extends BaseController{
     public ReturnData checkedList(String currentPage, String pageSize, String goodsName, String goodsSn) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
-        Pagination<GoodsCheckedVo> pagination = new Pagination<>();
+        Pagination<GoodsCheckedVo> pagination = null;
         PageInfo<GoodsCheckedVo> page = new PageInfo<>();
         try {
 
@@ -313,6 +313,7 @@ public class GoodsApi extends BaseController{
             if (StringUtils.isNotBlank(pageSize)) {
                 pageSizeNew = Integer.parseInt(pageSize);
             }
+            pagination = new Pagination<>(pageNumberNew, pageSizeNew);
             PageHelper.startPage(pageNumberNew, pageSizeNew);//pageNum为第几页，pageSize为每页数量
 
             List<GoodsCheckedVo> list = goodsService.getListForChecked(goodsName, goodsSn);

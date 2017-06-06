@@ -1,16 +1,10 @@
 class RegionController {
   constructor($scope, $rootScope, $http, $state, $stateParams, $uibModal, usSpinnerService, growl) {
-    if ($state.$current.name == "sys.dict.edit") {
-      $scope.title = "字典修改";
-      console.log($rootScope.editData);
-    } else if ($state.$current.name == "sys.dict.add_child") {
-      $rootScope.editData ={};
-      console.log($rootScope.parentDict);
-      $scope.title = "新增字典子项";
-    } else if ($state.$current.name == "sys.dict.edit_child") {
-      $scope.title = "修改字典子项";
+
+    $scope.expanding_property = {
+        field: "name",
+        displayName: "地域名称"
     };
-    $scope.expanding_property = "name";
 
     $scope.col_defs = [
         {
