@@ -131,9 +131,13 @@ function testPayPassword(pwd){
 				$('#form_paypsw').submit();
 				return true;
 			}else if(data.code == 0){
-                console.log(2);
                 $('.ui-form-error').show().children('p').html('支付密码不正确');
-                $('.sixDigitPassword-box').find("b").html("")
+                $('#payPassword_container').attr('data-busy','0');
+                $('#paymentPassword').val('');//清空input值
+                $('.sixDigitPassword-box b').css('visibility','hidden');//样式消失
+                // $('.sixDigitPassword-box i').eq(0).addClass('active');
+                $('#cardwrap').css({'left':'0px'});
+                k=0;//让光标自动归位
                 return false;
 			}else{
 				$.alert(data.message);
@@ -184,7 +188,7 @@ var payPassword = $("#payPassword_container"),
 	_cardwrap = $('#cardwrap');
 //点击隐藏的input密码框,在6个显示的密码框的第一个框显示光标
 payPassword.on('focus', "input[name='paymentPassword']", function () {
-	var _this = payPassword.find('i');
+    var _this = payPassword.find('i');
 	if (payPassword.attr('data-busy') === '0') {
 		//在第一个密码框中添加光标样式
 		_this.eq(k).addClass("active");

@@ -2,6 +2,7 @@ package com.jusfoun.hookah.webiste.interceptor;
 
 import com.jusfoun.hookah.core.domain.Help;
 import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.HelpService;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -46,9 +47,6 @@ public class CommonInterceptor implements HandlerInterceptor {
                     User user = userService.selectById(userId);
                     Map<String, Object> model = modelAndView.getModel();
                     model.put("user", user);
-                    if(httpServletRequest.getRequestURL().indexOf("/exchange/details") < 0) {
-                        model.put("title","青岛大数据交易中心");
-                    }
                 }
             }
         } catch (UnavailableSecurityManagerException e) {
