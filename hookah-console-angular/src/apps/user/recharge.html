@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="console-title console-title-border clearfix">
+      <div class="pull-left"><h5>余额充值</h5></div>
+      <div class="pull-right">
+        <button class="btn btn-default" data-ng-click="back()"><span class="glyphicon glyphicon-refresh"></span> 返回
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12">
+    <form class="form-horizontal" role="form" id="rechargeForm" name="user">
+      <fieldset>
+        <div class="form-group">
+          <div class="col-sm-4">
+            <input disabled="disabled" type="hidden" type="text" id="userId" name="userId" class="form-control none-edit" value="{{cuser.userId}}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="userName">用户名</label>
+          <div class="col-sm-4">
+            <input disabled="disabled" type="text" id="userName" name="userName" class="form-control" value="{{cuser.userName}}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="moneyBalance">余额</label>
+          <div class="col-sm-4">
+            <input type="text" id="moneyBalance" name="moneyBalance" class="form-control" value="{{cuser.moneyBalance}}"/>
+          </div>
+        </div>
+      </fieldset>
+      <div class="form-group">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-4">
+          <button class="btn btn-primary" data-ng-click="recharge()">
+            <span class="glyphicon glyphicon-refresh"></span> 充值
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

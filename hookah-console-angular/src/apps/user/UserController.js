@@ -1,5 +1,5 @@
 class UserController {
-  constructor($scope, $rootScope, $http, $uibModal, usSpinnerService, growl) {
+  constructor($scope, $rootScope, $state, $http, $uibModal, usSpinnerService, growl) {
     $scope.title = '用户查询';
     $scope.search = function () {
       var promise = $http({
@@ -42,6 +42,27 @@ class UserController {
         growl.addSuccessMessage("数据加载完毕。。。");
       });
 
+    };
+    $scope.recharge = function () {
+      var promise = $http({
+        method: 'POST',
+        url: $rootScope.site.apiServer + "/api/account/recharge",
+          params: {
+              userId:$("#userId").val(),
+              moneyBalance:$("#moneyBalance").val()
+          }
+      });
+      promise.then(function (res, status, config, headers) {
+          if (res.data.code == "1"){
+              alert(res.data.data);
+              $state.go('user.search');
+          }else {
+              alert(res.data.message);
+          }
+      });
+    };
+    $scope.back = function () {
+      history.back();
     };
     $scope.pageChanged = function () {
       $scope.search();

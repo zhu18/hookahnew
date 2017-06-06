@@ -1,9 +1,11 @@
 package com.jusfoun.hookah.console.server.api.account;
 
 import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,5 +46,21 @@ public class AccountApi {
         user.setCreatorId(creatorId);
         User savedUser=userService.insert(user);
         return ReturnData.success(savedUser);
+    }
+
+    @RequestMapping(value = "/recharge", method = RequestMethod.POST)
+    public ReturnData recharge(User user) {
+        List<Condition> filters = new ArrayList<>();
+        if (StringUtils.isNoneBlank(user.getUserId())) {
+            filters.add(Condition.eq("userId", user.getUserId()));
+        }else {
+            return ReturnData.error("充值失败请返回重新充值");
+        }
+        Long newBalance = user.getMoneyBalance();
+        if (newBalance < 0){
+            return ReturnData.error("余额不能为负值");
+        }
+        userService.updateByConditionSelective(user, filters);
+        return ReturnData.success("充值成功");
     }
 }
