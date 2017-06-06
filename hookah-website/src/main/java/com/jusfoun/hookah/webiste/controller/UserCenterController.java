@@ -84,7 +84,12 @@ public class UserCenterController {
 //    }
 
     @RequestMapping(value = "/fundmanage", method = RequestMethod.GET)
-    public String fundmanage() {
+    public String fundmanage(Model model) {
+        Session session = SecurityUtils.getSubject().getSession();
+        HashMap<String, String> o = (HashMap<String, String>) session.getAttribute("user");
+        String userId = o.get("userId");
+        User user = userService.selectById(userId);
+        model.addAttribute("userCur",user);
         return "usercenter/userInfo/fundmanage";
     }
 
