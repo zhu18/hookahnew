@@ -62,7 +62,7 @@ public class CooperationServiceImpl  extends GenericServiceImpl<Cooperation, Str
         filters.clear();
         filters.add(Condition.eq("cooOrder", coo.getCooOrder()));
         if (exists(filters)){
-            throw new HookahException("显示顺序重复");
+            throw new HookahException("该显示顺序已经存在");
         }
         if (coo.getState() == null){
             coo.setState(coo.COOPERATION_STATE_ON);
@@ -79,10 +79,16 @@ public class CooperationServiceImpl  extends GenericServiceImpl<Cooperation, Str
         List<Condition> filters = new ArrayList<>();
         Pattern pattern = Pattern
                 .compile("^([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~\\/])+$");
+        Pattern pattern1 = Pattern.compile("/^1[34578]\\d{9}$/");
         if (StringUtils.isNoneBlank(coo.getCooperationId())) {
             filters.add(Condition.eq("cooperationId", coo.getCooperationId()));
         }else {
             throw new HookahException("未选择修改机构，请重新操作");
+        }
+        if (StringUtils.isBlank(coo.getCooPhone())){
+            throw new HookahException("手机号不能为空");
+        }else if(!pattern1.matcher(coo.getCooPhone()).matches()){
+            throw new HookahException("手机号格式不正确");
         }
         if (StringUtils.isBlank(coo.getUrl())){
             throw new HookahException("机构链接地址不能为空");
