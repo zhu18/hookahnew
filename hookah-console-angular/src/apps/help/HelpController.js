@@ -53,6 +53,7 @@ class HelpController {
       promise.then(function (res, status, config, headers) {
         $rootScope.loadingState = false;
         growl.addSuccessMessage("保存成功。。。");
+        $state.go('help.search');
       });
     };
     $scope.refresh = function () {
