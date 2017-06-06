@@ -131,8 +131,9 @@ function testPayPassword(pwd){
 				$('#form_paypsw').submit();
 				return true;
 			}else if(data.code == 0){
-				$('.ui-form-error').show().children('p').html('支付密码不正确');
-                $('#paymentPassword').val("")
+                console.log(2);
+                $('.ui-form-error').show().children('p').html('支付密码不正确');
+                $('.sixDigitPassword-box').find("b").html("")
                 return false;
 			}else{
 				$.alert(data.message);
@@ -167,7 +168,8 @@ _formPay.validate({
 		}
 	},
 	errorPlacement: function (error, element) {
-		element.closest('div[data-error="i_error"]').append(error);
+        console.log(1);
+        element.closest('div[data-error="i_error"]').append(error);
 	},
 	submitHandler: function (form) {
 		var _form = $(form);
