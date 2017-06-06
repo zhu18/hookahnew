@@ -60,7 +60,7 @@ public class SysNewsController {
      * @param id
      * @return
      */
-    @CrossOrigin
+ /*   @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "details", method = RequestMethod.GET)
     public ReturnData details(String id,Model model) {
@@ -75,8 +75,25 @@ public class SysNewsController {
             e.printStackTrace();
         }
         model.addAttribute("title", sysN.getNewsTitle());
+        System.out.print(sysN.getNewsTitle() + "    66666666666666666666666666666666666ddddddddddddddddddddddddd");
         return returnData;
     }
+*/
+    @RequestMapping(value = "/details", method = RequestMethod.GET)
+    public String details(String id,Model model) {
+        model.addAttribute("title", "搜索结果");
+        SysNewsVo sysN = new SysNewsVo();
+        try {
+            sysN = sysNewsService.selectNewsByID(id);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("title", sysN.getNewsTitle());
+        model.addAttribute("sysNews",sysN);
+        return "information/details";
+    }
+
 
     /**
      * 根据ID批量删除文章
