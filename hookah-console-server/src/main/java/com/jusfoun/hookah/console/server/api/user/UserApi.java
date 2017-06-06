@@ -62,6 +62,7 @@ public class UserApi {
                 filters.add(Condition.like("email", email));
             }
 
+
             //参数校验
             int pageNumberNew = HookahConstants.PAGE_NUM;
 
@@ -98,7 +99,7 @@ public class UserApi {
 
     @RequestMapping(value = "/verify/all", method = RequestMethod.GET)
     public ReturnData getAllVerifyUser(String currentPage, String pageSize, HttpServletRequest request, HttpServletResponse response ,
-                                       String userName, String mobile, String email) {
+                                       String userName, String mobile, String email,String userType) {
         Pagination<User> page = new Pagination<>();
         try {
             List<Condition> filters = new ArrayList();
@@ -116,6 +117,12 @@ public class UserApi {
             if(StringUtils.isNotBlank(email)){
                 filters.add(Condition.like("email", email));
             }
+
+            if(StringUtils.isNotBlank(userType) && !"-1".equals(userType)){
+                filters.add(Condition.like("userType", Byte.valueOf(userType)));
+            }
+
+
 
             //参数校验
             int pageNumberNew = HookahConstants.PAGE_NUM;

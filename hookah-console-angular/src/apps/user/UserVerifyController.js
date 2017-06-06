@@ -9,22 +9,26 @@ class UserVerifyController {
           pageSize: $rootScope.pagination.pageSize,
           userName: $scope.userName,
           mobile: $scope.mobile,
-          email: $scope.email
+          email: $scope.email,
+          userType: $scope.userType
         }
       });
       promise.then(function (res, status, config, headers) {
         $rootScope.loadingState = false;
-        $rootScope.pagination.store = res.data.data.list;
-        $rootScope.pagination.currentPage = res.data.data.currentPage;
-        $rootScope.pagination.totalItems = res.data.data.totalItems;
-        if (res.data.data.totalItems == 0) {
-          $rootScope.showNoneDataInfoTip = true;
-          $rootScope.showPageHelpInfo = false;
-        } else {
-          $rootScope.showNoneDataInfoTip = false;
-          $rootScope.showPageHelpInfo = true;
-        }
         growl.addSuccessMessage("数据加载完毕。。。");
+
+        // $rootScope.loadingState = false;
+        // $rootScope.pagination.store = res.data.data.list;
+        // $rootScope.pagination.currentPage = res.data.data.currentPage;
+        // $rootScope.pagination.totalItems = res.data.data.totalItems;
+        // if (res.data.data.totalItems == 0) {
+        //   $rootScope.showNoneDataInfoTip = true;
+        //   $rootScope.showPageHelpInfo = false;
+        // } else {
+        //   $rootScope.showNoneDataInfoTip = false;
+        //   $rootScope.showPageHelpInfo = true;
+        // }
+        // growl.addSuccessMessage("数据加载完毕。。。");
       });
     };
 
@@ -42,17 +46,20 @@ class UserVerifyController {
         });
         promise.then(function (res, status, config, headers) {
             $rootScope.loadingState = false;
-            $rootScope.pagination.store = res.data.data.list;
-            $rootScope.pagination.currentPage = res.data.data.currentPage;
-            $rootScope.pagination.totalItems = res.data.data.totalItems;
-            if (res.data.data.totalItems == 0) {
-                $rootScope.showNoneDataInfoTip = true;
-                $rootScope.showPageHelpInfo = false;
-            } else {
-                $rootScope.showNoneDataInfoTip = false;
-                $rootScope.showPageHelpInfo = true;
-            }
             growl.addSuccessMessage("数据加载完毕。。。");
+
+            // $rootScope.loadingState = false;
+            // $rootScope.pagination.store = res.data.data.list;
+            // $rootScope.pagination.currentPage = res.data.data.currentPage;
+            // $rootScope.pagination.totalItems = res.data.data.totalItems;
+            // if (res.data.data.totalItems == 0) {
+            //     $rootScope.showNoneDataInfoTip = true;
+            //     $rootScope.showPageHelpInfo = false;
+            // } else {
+            //     $rootScope.showNoneDataInfoTip = false;
+            //     $rootScope.showPageHelpInfo = true;
+            // }
+            // growl.addSuccessMessage("数据加载完毕。。。");
         });
     }
 
@@ -109,8 +116,20 @@ class UserVerifyController {
 
     };
 
+      $scope.pageChanged = function () {
+          if ($state.$current.name == "user.verify.all") {
+              $scope.search();
+          }
+
+          if ($state.$current.name == "user.verify.resultAll") {
+              $scope.searchCheckResult();
+          }
+      };
+
       if ($state.$current.name == "user.verify.all") {
           $scope.title = '用户审核';
+          $scope.userTypes = [{id:-1,name:"全部"},{id:3,name:"个人认证"},{id:5,name:"企业认证"}];
+          $scope.userType = -1;
           $scope.search();
       }
 
