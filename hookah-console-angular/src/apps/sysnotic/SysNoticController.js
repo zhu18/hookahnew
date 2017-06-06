@@ -47,7 +47,6 @@ class SysNoticController {
             var promise = $http({
                 method: 'POST',
                 url: $rootScope.site.apiServer + "/sysnotice/upd",
-                data: $("#editForm").serialize(),
                 params: {
                     noticeId:$("#noticeId").val(),
                     status: $("#status").val(),
