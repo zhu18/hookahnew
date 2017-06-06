@@ -316,7 +316,7 @@ var htmlPart = {
 						<li class="slide-item">
 							<div class="slide-item-top">
 								<img src="${host.static}/${ind_res_data_1.backImgPath}" alt="" class="bg">
-								<a href="" class="hover-bg">
+								<a href="javascript:void(0);" class="hover-bg">
 									<p>${ind_res_data_1.shelvesName}</p>
 								</a>
 							</div>
@@ -325,9 +325,11 @@ var htmlPart = {
 								for(item in ind_res_data_1.goods){
 								%>
 								<div class="one-info">
-									<a href="${host.website}/exchange/details?id=${item.goodsId}" target="_blank">
+									<a href="${host.website}/exchange/details?id=${item.goodsId}" target="_blank" class="color-red">
 										<p>${item.goodsName}</p>
-										<p class="color-red font-weight-bold">${item.shopPrice}</p>
+										<p class="color-red">
+											￥<span class="font-weight-bold font-size-18 color-red">${item.shopPrice/100}</span>
+										</p>
 									</a>
 								</div>
 								<%}%>
@@ -336,7 +338,7 @@ var htmlPart = {
 						<li class="slide-item">
 							<div class="slide-item-top">
 								<img src="${host.static}/${ind_res_data_2.backImgPath}" alt="" class="bg">
-								<a href="" class="hover-bg">
+								<a href="javascript:void(0);" class="hover-bg">
 									<p>${ind_res_data_2.shelvesName}</p>
 								</a>
 							</div>
@@ -345,9 +347,11 @@ var htmlPart = {
 								for(item in ind_res_data_2.goods){
 								%>
 								<div class="one-info">
-									<a href="${host.website}/exchange/details?id=${item.goodsId}" target="_blank">
+									<a href="${host.website}/exchange/details?id=${item.goodsId}" target="_blank" class="color-red">
 										<p>${item.goodsName}</p>
-										<p class="color-red font-weight-bold">${item.shopPrice}</p>
+										<p class="color-red">
+											￥<span class="font-weight-bold font-size-18 color-red">${item.shopPrice/100}</span>
+										</p>
 									</a>
 								</div>
 								<%}%>
@@ -356,7 +360,7 @@ var htmlPart = {
 						<li class="slide-item">
 							<div class="slide-item-top">
 								<img src="${host.static}/${ind_res_data_3.backImgPath}" alt="" class="bg">
-								<a href="" class="hover-bg">
+								<a href="javascript:void(0);" class="hover-bg">
 									<p>${ind_res_data_3.shelvesName}</p>
 								</a>
 							</div>
@@ -365,9 +369,11 @@ var htmlPart = {
 								for(item in ind_res_data_3.goods){
 								%>
 								<div class="one-info">
-									<a href="${host.website}/exchange/details?id=${item.goodsId}" target="_blank">
+									<a href="${host.website}/exchange/details?id=${item.goodsId}" target="_blank" class="color-red">
 										<p>${item.goodsName}</p>
-										<p class="color-red font-weight-bold">${item.shopPrice}</p>
+										<p class="color-red">
+											￥<span class="font-weight-bold font-size-18 color-red">${item.shopPrice/100}</span>
+										</p>
 									</a>
 								</div>
 								<%}%>
@@ -376,7 +382,7 @@ var htmlPart = {
 						<li class="slide-item">
 							<div class="slide-item-top">
 								<img src="${host.static}/${ind_res_data_4.backImgPath}" alt="" class="bg">
-								<a href="" class="hover-bg">
+								<a href="javascript:void(0);" class="hover-bg">
 									<p>${ind_res_data_4.shelvesName}</p>
 								</a>
 							</div>
@@ -385,9 +391,11 @@ var htmlPart = {
 								for(item in ind_res_data_4.goods){
 								%>
 								<div class="one-info">
-									<a href="${host.website}/exchange/details?id=${item.goodsId}" target="_blank">
+									<a href="${host.website}/exchange/details?id=${item.goodsId}" target="_blank" class="color-red">
 										<p>${item.goodsName}</p>
-										<p class="color-red font-weight-bold">${item.shopPrice}</p>
+										<p class="color-red">
+											￥<span class="font-weight-bold font-size-18 color-red">${item.shopPrice/100}</span>
+										</p>
 									</a>
 								</div>
 								<%}%>

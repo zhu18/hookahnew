@@ -63,3 +63,27 @@ function loadIndexData(){
 
     })
 }
+loadIndexData2()
+function loadIndexData2(){
+	$.ajax({
+		url:host.website+'/sysNews/listByGroup',
+		type:'get',
+		data:{
+			pageNumber:1,
+			pageSize:10,
+			newsGroup:'information',
+			newsSonGroup:3
+		},
+		success:function(data){
+			if(data.code == 1){
+				var list = data.data.list;
+				var html = '';
+				for(var i = 0 ; i < list.length ; i++){
+					html += '<li><span class="serial" style="display:inline-block;float:left;">'+(i+1)+'.</span><a style="width: 150px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;display:inline-block;float:left;" target="_blank" href="/sysNews/details?id='+list[i].newsId+'">'+list[i].newsTitle+'</a><span class="grid-right" style="width:72px;height:40px;overflow:hidden;">'+list[i].updateTime+'</span></li>';
+				}
+				$('#J_dataRR').html(html);
+			}
+		}
+
+	})
+}

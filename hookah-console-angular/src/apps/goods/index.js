@@ -84,21 +84,21 @@ app.run(function ($rootScope, $state) {
               }
           ]
       }
-      ,
-      {
-          "title": "属性管理",
-          "showChild": false,
-          "childs": [
-              {
-                  "title":"属性查询",
-                  "url":"attrtype.search"
-              },
-              {
-                  "title":"添加属性",
-                  "url":"attrtype.add"
-              }
-          ]
-      }
+      // ,
+      // {
+      //     "title": "属性管理",
+      //     "showChild": false,
+      //     "childs": [
+      //         {
+      //             "title":"属性查询",
+      //             "url":"attrtype.search"
+      //         },
+      //         {
+      //             "title":"添加属性",
+      //             "url":"attrtype.add"
+      //         }
+      //     ]
+      // }
   ];
 
 });

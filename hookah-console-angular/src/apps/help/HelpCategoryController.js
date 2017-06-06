@@ -34,6 +34,8 @@ class HelpCategoryController {
         if(res.data.code == "1"){
           growl.addSuccessMessage("保存成功。。。");
           $state.go('help.category.search');
+        }else{
+            alert("该分类ID以存在");
         }
       });
 

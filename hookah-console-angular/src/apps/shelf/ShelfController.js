@@ -91,7 +91,7 @@ class ShelfController {
         }
     }
 
-   if ($state.current.name == "shelf.add" || $state.current.name == "shelf.update") {
+   if ($state.current.name == "shelf.add") {
        var editor = new wangEditor('content');
        //上传图片（举例）
        editor.config.uploadImgUrl = $rootScope.url.uploadUrl;
@@ -124,6 +124,44 @@ class ShelfController {
        }
        editor.create();
     }
+
+      if ($state.current.name == "shelf.update") {
+          var editor = new wangEditor('content');
+          //上传图片（举例）
+          editor.config.uploadImgUrl = $rootScope.url.uploadUrl;
+          editor.config.uploadImgFileName = 'filename';
+          //关闭菜单栏fixed
+          editor.config.menuFixed = false;
+          editor.config.menus = $.map(wangEditor.config.menus, function (item, key) {
+              if (item !== 'img') {
+                  return null;
+              }
+              console.log("----out image path ---:" + item);
+              return item;
+          });
+          editor.config.uploadImgFns.onload = function (resultText, xhr) {
+              console.log("----out image path ---:" + resultText);
+              console.log("----out image path ---:" + JSON.parse(resultText).data[0].absPath);
+              // 上传图片时，已经将图片的名字存在 editor.uploadImgOriginalName
+              var originalName = editor.uploadImgOriginalName || '';
+              var filePath = JSON.parse(resultText).data[0].filePath;
+              console.log("----out image path ---:" + filePath);
+
+              $scope.editData.backImgPath = filePath;
+              $scope.$apply();
+
+              // 如果 resultText 是图片的url地址，可以这样插入图片：
+              editor.command(null, 'insertHtml', '<img src="' + JSON.parse(resultText).data[0].absPath + '" alt="' + originalName + '" style="max-width:100%;"/>');
+          }
+          editor.create();
+
+          if($state.current.name == "shelf.update"){
+              var html = '<p>';
+              html += '<img src="' + $rootScope.site.staticServer + '/' +$rootScope.editData.backImgPath + '" style="max-width:100%;">';
+              html += '</p>';
+              $(".wangEditor-txt").append(html);
+          }
+      }
 
   }
 }
