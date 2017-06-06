@@ -44,7 +44,7 @@ app.run(function ($rootScope, $state) {
     //   "title": "新增广告",
     //   "url": "advert.add"
     // }
-    , {
+    {
       "title": "轮播管理",
       "showChild": true,
       "childs": [
