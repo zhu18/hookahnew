@@ -52,8 +52,12 @@ class HelpController {
       });
       promise.then(function (res, status, config, headers) {
         $rootScope.loadingState = false;
-        growl.addSuccessMessage("保存成功。。。");
-        $state.go('help.search');
+        if(res.data.code == "1") {
+            growl.addSuccessMessage("保存成功。。。");
+            $state.go('help.search');
+        }else{
+           alert("该分类ID以存在");
+        }
       });
     };
     $scope.refresh = function () {
@@ -97,7 +101,7 @@ class HelpController {
         , {
           field: "aa",
           displayName: "操作",
-          cellTemplate: ' <a href="javascript:;" ng-click="cellTemplateScope.delete(row.branch)" target="_blank">删除</a> <span class="text-explode">|</span> <i class="link-space"></i> <a href="javascript:;" ng-click="cellTemplateScope.addChild(row.branch)" target="_blank">增加子项</a>',
+          cellTemplate: ' <a href="javascript:;" ng-click="cellTemplateScope.delete(row.branch)" target="_blank">删除</a> <span class="text-explode">|</span> <i class="link-space"></i> <a href="javascript:;" ng-click="cellTemplateScope.addChild(row.branch)">增加子项</a>',
           cellTemplateScope: {
             edit: function (data) {
               $scope.edit(data);
