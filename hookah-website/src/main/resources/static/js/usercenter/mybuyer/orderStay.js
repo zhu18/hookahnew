@@ -61,9 +61,9 @@ function loadPageData(data){
 			html += '</tbody>';
 			html += '</table>';
 		}
-		$('.order').append(html);
+		$('.order').html(html);
 	}else{
-		$('.order').html('<tr class="noData"><td colspan="5">暂时无订单！</td></tr>');
+		$('.order').html('<div class="font-size-18" style="width:978px;height: 30px;overflow:hidden; text-align:center;line-height: 30px;">暂时无订单！</div>');
 	}
 }
 var start = {
@@ -92,12 +92,12 @@ $(".searchQuery .search").on("click",function(){
     var endDate = $("#endDate").val();
     dataParm.startDate = startDate?startDate:format(new Date());
     dataParm.endDate = endDate?endDate:format(new Date());
-    // if(!startDate){
-    //     $("#startDate").val(format(new Date()));
-    // }
-    // if(!endDate){
-    //     $("#endDate").val(format(new Date()));
-    // }
+    if(!startDate){
+        delete dataParm.startDate;
+    }
+    if(!endDate){
+		delete dataParm.endDate;
+    }
     goPage(1);
 });
 
