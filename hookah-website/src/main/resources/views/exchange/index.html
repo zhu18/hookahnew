@@ -248,6 +248,10 @@ var htmlPart = {
 	<%
 	if(goodsShelvesVoInfo.ind_res_data != ''){
 	var ind_res_data = goodsShelvesVoInfo.ind_res_data;
+	var ind_res_data_1 = goodsShelvesVoInfo.ind_res_data_1;
+	var ind_res_data_2 = goodsShelvesVoInfo.ind_res_data_2;
+	var ind_res_data_3 = goodsShelvesVoInfo.ind_res_data_3;
+	var ind_res_data_4 = goodsShelvesVoInfo.ind_res_data_4;
 	%>
 	<div class="exchange-industry-resource grid-row">
 		<div class="industry-resource-top ">
@@ -309,10 +313,9 @@ var htmlPart = {
 							<!--&lt;!&ndash;</div>&ndash;&gt;-->
 						<!--</li>-->
 						<!--最新的-->
-
 						<li class="slide-item">
 							<div class="slide-item-top">
-								<img src="https://img.alicdn.com/tps/TB16hkwLXXXXXX6XXXXXXXXXXXX-576-840.jpg" alt="" class="bg">
+								<img src="${host.static}/${ind_res_data_1.backImgPath}" alt="" class="bg">
 								<a href="" class="hover-bg">
 									<p>${ind_res_data_1.shelvesName}</p>
 								</a>
@@ -322,14 +325,74 @@ var htmlPart = {
 								for(item in ind_res_data_1.goods){
 								%>
 								<div class="one-info">
-									<p>${item.goodsName}</p>
-									<p class="color-red font-weight-bold">${item.shopPrice}</p>
+									<a href="${host.website}/exchange/details?id=${item.goodsId}" target="_blank">
+										<p>${item.goodsName}</p>
+										<p class="color-red font-weight-bold">${item.shopPrice}</p>
+									</a>
 								</div>
 								<%}%>
-
 							</div>
 						</li>
-
+						<li class="slide-item">
+							<div class="slide-item-top">
+								<img src="${host.static}/${ind_res_data_2.backImgPath}" alt="" class="bg">
+								<a href="" class="hover-bg">
+									<p>${ind_res_data_2.shelvesName}</p>
+								</a>
+							</div>
+							<div class="slide-item-down">
+								<%
+								for(item in ind_res_data_2.goods){
+								%>
+								<div class="one-info">
+									<a href="${host.website}/exchange/details?id=${item.goodsId}" target="_blank">
+										<p>${item.goodsName}</p>
+										<p class="color-red font-weight-bold">${item.shopPrice}</p>
+									</a>
+								</div>
+								<%}%>
+							</div>
+						</li>
+						<li class="slide-item">
+							<div class="slide-item-top">
+								<img src="${host.static}/${ind_res_data_3.backImgPath}" alt="" class="bg">
+								<a href="" class="hover-bg">
+									<p>${ind_res_data_3.shelvesName}</p>
+								</a>
+							</div>
+							<div class="slide-item-down">
+								<%
+								for(item in ind_res_data_3.goods){
+								%>
+								<div class="one-info">
+									<a href="${host.website}/exchange/details?id=${item.goodsId}" target="_blank">
+										<p>${item.goodsName}</p>
+										<p class="color-red font-weight-bold">${item.shopPrice}</p>
+									</a>
+								</div>
+								<%}%>
+							</div>
+						</li>
+						<li class="slide-item">
+							<div class="slide-item-top">
+								<img src="${host.static}/${ind_res_data_4.backImgPath}" alt="" class="bg">
+								<a href="" class="hover-bg">
+									<p>${ind_res_data_4.shelvesName}</p>
+								</a>
+							</div>
+							<div class="slide-item-down">
+								<%
+								for(item in ind_res_data_4.goods){
+								%>
+								<div class="one-info">
+									<a href="${host.website}/exchange/details?id=${item.goodsId}" target="_blank">
+										<p>${item.goodsName}</p>
+										<p class="color-red font-weight-bold">${item.shopPrice}</p>
+									</a>
+								</div>
+								<%}%>
+							</div>
+						</li>
 						<!--追加的-->
 					</ul>
 				</div>
