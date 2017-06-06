@@ -104,7 +104,7 @@ function upPhoto(){
             if (data.result.code == 1) {
                 var obj = data.result.data[0];
                 $(this).siblings("img").attr("src", obj.absPath);
-                $(this).parent().siblings(".hidVal").val(obj.absPath);
+                $(this).parent().siblings(".hidVal").val(obj.filePath);
 				$(this).parents('.file_item').siblings(".error_tip").hide();
 
             } else {
