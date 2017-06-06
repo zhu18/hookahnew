@@ -8,9 +8,9 @@ function loadPageData(data){
             html += '<table>';
             html += '<thead>';
             html += '<tr>';
-            html += '<th class="">' + list[i].addTime + '</th>';
-            html += '<th class="text-align-left">' + '订单号:' + list[i].orderSn + '</th>';
-            html += '<th colspan="2">创建时间:' + list[i].addTime + '</th>';
+            html += '<th class="" style="width: 280px;">' + '订单号:' + list[i].orderSn + '</th>';
+            html += '<th class="text-align-left">创建时间:' + list[i].addTime + '</th>';
+            html += '<th colspan="2"></th>';
             html += '<th colspan="2">总额:￥' + (list[i].orderAmount / 100).toFixed(2) +'</th>';
             html += '</tr>';
             html += '</thead>';
@@ -30,7 +30,7 @@ function loadPageData(data){
 							break;
                     }
                 html += '<tr class="content border-bottom">';
-                html += '<td class="text-align-center">';
+                html += '<td class="text-align-center" style="width: 280px;">';
                 html += '<div class="p-img">';
                 html += '<a href="/exchange/details?id=' + goods[ii].goodsId + '" target="_blank">';
                 html += '<img src="' + goods[ii].goodsImg + '" alt="">';

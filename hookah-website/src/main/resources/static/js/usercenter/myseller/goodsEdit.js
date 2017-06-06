@@ -13,7 +13,7 @@ $(document).ready(function(){
 			},
 			goodsBrief:{
 				required: true,
-				// isGoodsBrief:true
+				isGoodsBrief:true
 			},
 			goodsImg:'required',
 			priceBoxName:'required',
@@ -34,7 +34,7 @@ $(document).ready(function(){
 			},
 			goodsBrief:  {
 				required: '商品简介不能为空',
-				// isGoodsBrief:'长度为30-400个字符（每个汉字为2个字符）'
+				isGoodsBrief:'长度为30-400个字符（每个汉字为2个字符）'
 			},
 			goodsImges:'图片必须上传',
 			goodsImges2:'文件必须上传',

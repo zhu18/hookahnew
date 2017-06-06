@@ -269,7 +269,7 @@ var htmlPart = {
 			$('#login-error').show().children('.notice-descript').html('用户名不能为空');
 		}
 	})
-	$('#fm-login-password').blur(function () {
+	$('#fm-login-password').on('input propertychange',function () {
 		if ($('#fm-login-id').val()) {
 			if ($(this).val()) {
 				$('#login-error').hide();
