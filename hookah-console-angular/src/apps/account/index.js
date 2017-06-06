@@ -40,44 +40,44 @@ app.run(function ($rootScope, $state) {
       "title": "账号查询",
       "url": "account.search"
     },
-    {
-      "title": "新增账号",
-      "url": "account.add"
-    },
-    {
-      "title": "角色管理",
-      "showChild": true,
-      "childs": [
-        {
-          "title": "角色查询",
-          "url": "account.role.search"
-        },
-        {
-          "title": "新增角色",
-          "url": "account.role.add"
-        },
-        {
-          "title": "角色设置",
-          "url": "account.role.setting"
-        },
-      ]
-    }
-    , {
-      "title": "权限管理",
-      "showChild": true,
-      "childs": [
-        {
-          "title": "权限查询",
-          "url": "account.permission.search"
-        }, {
-          "title": "新增权限",
-          "url": "account.permission.add"
-        }, {
-          "title": "权限设置",
-          "url": "account.permission.setting"
-        }
-      ]
-    }
+    // {
+    //   "title": "新增账号",
+    //   "url": "account.add"
+    // },
+    // {
+    //   "title": "角色管理",
+    //   "showChild": true,
+    //   "childs": [
+    //     {
+    //       "title": "角色查询",
+    //       "url": "account.role.search"
+    //     },
+    //     {
+    //       "title": "新增角色",
+    //       "url": "account.role.add"
+    //     },
+    //     {
+    //       "title": "角色设置",
+    //       "url": "account.role.setting"
+    //     },
+    //   ]
+    // }
+    // , {
+    //   "title": "权限管理",
+    //   "showChild": true,
+    //   "childs": [
+    //     {
+    //       "title": "权限查询",
+    //       "url": "account.permission.search"
+    //     }, {
+    //       "title": "新增权限",
+    //       "url": "account.permission.add"
+    //     }, {
+    //       "title": "权限设置",
+    //       "url": "account.permission.setting"
+    //     }
+    //   ]
+    // }
 
   ];
 
