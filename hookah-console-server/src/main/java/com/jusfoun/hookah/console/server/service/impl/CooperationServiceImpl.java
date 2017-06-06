@@ -62,7 +62,7 @@ public class CooperationServiceImpl  extends GenericServiceImpl<Cooperation, Str
         filters.clear();
         filters.add(Condition.eq("cooOrder", coo.getCooOrder()));
         if (exists(filters)){
-            throw new HookahException("显示顺序重复");
+            throw new HookahException("显示顺序已存在");
         }
         if (coo.getState() == null){
             coo.setState(coo.COOPERATION_STATE_ON);
