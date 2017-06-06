@@ -401,5 +401,5 @@ $(function () {
     compatibilityTS()
     hotSwitchHover();
     switchHover();
-    carousel();
+    // carousel();
 });
