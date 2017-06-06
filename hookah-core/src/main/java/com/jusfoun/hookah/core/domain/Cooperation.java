@@ -41,6 +41,8 @@ public class Cooperation extends GenericModel{
 
     private String cooPhone;
 
+    private Integer cooOrder;
+
     public String getCooperationId() {
         return cooperationId;
     }
@@ -111,5 +113,13 @@ public class Cooperation extends GenericModel{
 
     public void setCooPhone(String cooPhone) {
         this.cooPhone = cooPhone;
+    }
+
+    public Integer getCooOrder() {
+        return cooOrder;
+    }
+
+    public void setCooOrder(Integer cooOrder) {
+        this.cooOrder = cooOrder;
     }
 }

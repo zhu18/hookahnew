@@ -8,13 +8,13 @@
     </div>
   </div>
   <div class="col-sm-12">
-    <form class="form-horizontal" role="form" id="newCooperation">
+    <form class="form-horizontal" role="form" id="newCooperation" name="cooperationForm" novalidate>
       <fieldset>
         <h5 style="padding: 0px 20px;">详细信息</h5>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="cooName">机构名称<span class="must">*</span></label>
           <div class="col-sm-4">
-            <input type="text" id="cooName" name="cooName" class="form-control none-edit"/>
+            <input type="text" id="cooName" name="cooName" data-ng-model="cooName" class="form-control none-edit" required/>
           </div>
         </div>
         <div class="form-group">
@@ -30,15 +30,21 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="url">链接地址<span class="must">*</span></label>
+          <label class="col-sm-2 control-label" for="urls">链接地址<span class="must">*</span></label>
           <div class="col-sm-4">
-            <input type="text" id="url" name="url" class="form-control none-edit" placeholder="请以http://或https://为前缀"/>
+            <input type="text" id="urls" name="url" data-ng-model="urls" class="form-control none-edit" placeholder="请以http://或https://为前缀" required/>
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="pictureUrl">logo地址<span class="must">*</span></label>
           <div class="col-sm-4">
-            <input type="text" id="pictureUrl" name="pictureUrl" class="form-control" placeholder="请以http://或https://为前缀"/>
+            <input type="text" id="pictureUrl" name="pictureUrl" data-ng-model="pictureUrl" class="form-control" placeholder="请以http://或https://为前缀" required/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="cooOrder">显示顺序<span class="must">*</span></label>
+          <div class="col-sm-4">
+            <input type="text" id="cooOrder" name="cooOrder" data-ng-model="cooOrder" ng-pattern="/[0-9]/" ng-maxlength="3" class="form-control" placeholder="数字/最长为3位" required/>
           </div>
         </div>
       </fieldset>
@@ -46,9 +52,11 @@
       <div class="form-group">
         <div class="col-sm-2"></div>
         <div class="col-sm-4">
-          <button class="btn btn-primary" data-ng-click="add()">
-            <span class="glyphicon glyphicon-refresh"></span> 保存
-          </button>
+          <!--<button class="btn btn-primary" data-ng-click="add()">-->
+            <!--<span class="glyphicon glyphicon-refresh"></span> 保存-->
+          <!--</button>-->
+          <input class="btn btn-primary" ng-disabled="cooperationForm.$invalid"
+                 type="button" value="保存" data-ng-click="add()"/>
         </div>
       </div>
     </form>
