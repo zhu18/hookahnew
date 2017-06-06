@@ -69,7 +69,7 @@ public class AccountApi {
                 return ReturnData.success("充值成功");
             }
         }else {
-            return ReturnData.error("不能充值负数和小数金额");
+            return ReturnData.error("只能充值正数金额和两位小数的金额");
         }
     }
 }
