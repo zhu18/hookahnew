@@ -242,62 +242,114 @@ var htmlPart = {
 		</div>
 	</div>
 	<%}%>
+
+	<!--更改的行业推荐-->
 	<!--行业资讯-->
-	<%
-	if(goodsShelvesVoInfo.ind_res_data != ''){
-	var ind_res_data = goodsShelvesVoInfo.ind_res_data;
-	%>
-	<div class="exchange-industry-resource ">
-		<div class="industry-resource-top grid-row">
+	<div class="exchange-industry-resource grid-row">
+		<div class="industry-resource-top ">
 			<div class="industry-resource-top-left grid-left">
 				<div class="d">
 					<i class="iconfont icon-hangye color-gray-blue" aria-hidden="true"></i>
-					<span class="font-weight-bold">${ind_res_data.shelvesName}</span>
-					<span class="color-gray-6">${ind_res_data.shelvesDesc}</span>
+					<span class="font-weight-bold">水电费水电费</span>
+					<span class="color-gray-6">大幅度</span>
 				</div>
 			</div>
 			<div class="industry-resource-top-right grid-right">
-				<a href="${host.website}/exchange/shelves?id=${ind_res_data.shelvesId}" class="a-hover-blue" target="_blank" >更多>></a>
+				<a href="" class="a-hover-blue"
+				   target="_blank">更多>></a>
 			</div>
 		</div>
 		<div class="industry-resource-down ">
 			<div class="carousel-box">
 				<div id="arr">
-					<div id="arrow-left" onselectstart="return false;" unselectable="on"><</div>
-					<div id="arrow-right" onselectstart="return false;" unselectable="on">></div>
+					<div id="arrow-left" ><</div>
+					<div id="arrow-right">></div>
 				</div>
-				<div class="screen">
+				<div class="screen" style="width: 1100px;margin: 0 auto">
 					<ul class="clearfix">
-						<%
-						for(item in ind_res_data.goods){
-						%>
 						<li class="slide-item">
-							<a href="${host.website}/exchange/details?id=${item.goodsId}" target="_blank" >
-								<img src="https://img.alicdn.com/tps/TB16hkwLXXXXXX6XXXXXXXXXXXX-576-840.jpg" alt="">
-								<div class="bg">
-									<div class="bg-bg"></div>
-									<div class="bg-content">
-										<div class="bg-content-img">
-											<img src="${item.goodsImg}" alt="">
-										</div>
-										<p class="bg-boundary"><i></i></p>
-										<h3 class="bg-title">${item.goodsName}</h3>
-										<p class="bg-info">${item.goodsBrief}</p>
-										<div class="bg-btn btn-hover-white">
-											查看详情
-										</div>
-									</div>
+							<div class="slide-item-top">
+								<img src="https://img.alicdn.com/tps/TB16hkwLXXXXXX6XXXXXXXXXXXX-576-840.jpg" class="img" alt="">
+								<a href="" class="bg">
+									<img src="/static/images/help/img-8.png" alt="">
+									<p>银行信贷</p>
+								</a>
+							</div>
+							<div class="slide-item-down">
+								<div class="one-info">
+									<p>大法师打发斯蒂芬</p>
+									<p class="color-red font-weight-bold">按需资费</p>
 								</div>
-							</a>
+								<div class="two-info">
+									<p>胜多负少的发生的</p>
+									<p class="color-red "><span>￥</span><span class="font-weight-bold font-size-18">100</span>/<span>2000次</span></p>
+								</div>
+							</div>
 						</li>
-						<%}%>
+						<li class="slide-item">
+							<div class="slide-item-top">
+								<img src="https://img.alicdn.com/tps/TB16hkwLXXXXXX6XXXXXXXXXXXX-576-840.jpg" class="img" alt="">
+								<a href="" class="bg">
+									<img src="/static/images/help/img-8.png" alt="">
+									<p>银行信贷</p>
+								</a>
+							</div>
+							<div class="slide-item-down">
+								<div class="one-info">
+									<p>大法师打发斯蒂芬</p>
+									<p>按需资费</p>
+								</div>
+								<div class="two-info">
+									<p>胜多负少的发生的</p>
+									<p><span>￥</span><span>100</span>/<span>2000次</span></p>
+								</div>
+							</div>
+						</li>
+						<li class="slide-item">
+							<div class="slide-item-top">
+								<img src="https://img.alicdn.com/tps/TB16hkwLXXXXXX6XXXXXXXXXXXX-576-840.jpg" class="img" alt="">
+								<a href="" class="bg">
+									<img src="/static/images/help/img-8.png" alt="">
+									<p>银行信贷</p>
+								</a>
+							</div>
+							<div class="slide-item-down">
+								<div class="one-info">
+									<p>大法师打发斯蒂芬</p>
+									<p>按需资费</p>
+								</div>
+								<div class="two-info">
+									<p>胜多负少的发生的</p>
+									<p><span>￥</span><span>100</span>/<span>2000次</span></p>
+								</div>
+							</div>
+						</li>
+						<li class="slide-item">
+							<div class="slide-item-top">
+								<img src="https://img.alicdn.com/tps/TB16hkwLXXXXXX6XXXXXXXXXXXX-576-840.jpg" class="img" alt="">
+								<a href="" class="bg">
+									<img src="/static/images/help/img-8.png" alt="">
+									<p>银行信贷</p>
+								</a>
+							</div>
+							<div class="slide-item-down">
+								<div class="one-info">
+									<p>大法师打发斯蒂芬</p>
+									<p>按需资费</p>
+								</div>
+								<div class="two-info">
+									<p>胜多负少的发生的</p>
+									<p><span>￥</span><span>100</span>/<span>2000次</span></p>
+								</div>
+							</div>
+						</li>
 						<!--追加的-->
 					</ul>
 				</div>
 			</div>
 		</div>
 	</div>
-	<%}%>
+
 	<!--底部分类-->
 	<div class="exchange-category-down grid-row">
 		<div class="category-left grid-left">
