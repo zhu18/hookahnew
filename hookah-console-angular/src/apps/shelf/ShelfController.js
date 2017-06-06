@@ -91,7 +91,7 @@ class ShelfController {
         }
     }
 
-   if ($state.current.name == "shelf.add") {
+   if ($state.current.name == "shelf.add" || $state.current.name == "shelf.update") {
        var editor = new wangEditor('content');
        //上传图片（举例）
        editor.config.uploadImgUrl = $rootScope.url.uploadUrl;
