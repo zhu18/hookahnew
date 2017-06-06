@@ -111,8 +111,8 @@ var htmlPart = {
                     <ul class="grid-right margin-right-20">
                         <li>付款方式：<span>${order.payName}</span></li>
                         <li>付款时间：<span>${order.payTime,dateFormat="yyyy-MM-dd"}&nbsp;&nbsp;</span></li>
-                        <li>商品总额：<span>¥${trunc(order.goodsAmount / 100 , 2)}</span></li>
-                        <li>应付总额：<span>¥${trunc(order.orderAmount / 100 , 2)}</span></li>
+                        <li>商品总额：<span>¥${(order.goodsAmount / 100) ,numberFormat="0.00"}</span></li>
+                        <li>应付总额：<span>¥${(order.goodsAmount / 100) ,numberFormat="0.00"}</span></li>
                     </ul>
                 </div>
             </div>

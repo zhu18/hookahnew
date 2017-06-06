@@ -47,4 +47,9 @@ export default function userRouting($stateProvider, $urlRouterProvider) {
         template: require('./checkResultList.html'),
         controller: UserVerifyController,
     })
+      .state('user.recharge', {
+          url: '/user/recharge',
+          template: require('./recharge.html'),
+          controller: UserController,
+      })
 };
