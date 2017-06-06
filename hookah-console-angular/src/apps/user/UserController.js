@@ -52,7 +52,8 @@ class UserController {
         url: $rootScope.site.apiServer + "/api/account/recharge",
           params: {
               userId:$("#userId").val(),
-              moneyBalance:$("#moneyBalance").val()
+              moneyBalance:$("#moneyBalance").val(),
+              recharge:$("#recharge").val()
           }
       });
       promise.then(function (res, status, config, headers) {
