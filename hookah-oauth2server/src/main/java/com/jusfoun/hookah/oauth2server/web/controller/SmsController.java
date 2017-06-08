@@ -42,7 +42,7 @@ public class SmsController {
      * @param mobile
      * @return
      */
-    @RequestMapping(value = "/sms/send", method = RequestMethod.GET)
+    @RequestMapping(value = "/sms/send", method = RequestMethod.POST)
     @ResponseBody
     public ReturnData sendSms(@RequestParam String mobile, @RequestParam Integer type, HttpServletRequest request) {
         String code = StrUtil.random(4);
@@ -74,7 +74,7 @@ public class SmsController {
      * @param userId
      * @return
      */
-    @RequestMapping(value = "/sms/sendToUser", method = RequestMethod.GET)
+    @RequestMapping(value = "/sms/sendToUser", method = RequestMethod.POST)
     @ResponseBody
     public ReturnData sendSmsByUserId(@RequestParam String userId,@RequestParam Integer type, HttpServletRequest request) {
         String code = StrUtil.random(4);
