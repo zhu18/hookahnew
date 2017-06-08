@@ -78,23 +78,16 @@ public class AccountApi extends BaseController{
 
     @RequestMapping(value = "/recharge", method = RequestMethod.POST)
     public ReturnData recharge(User user,String recharge) {
-        List<Condition> filters = new ArrayList<>();
         NumberValidationUtils nv = new NumberValidationUtils();
 
-        if (StringUtils.isNoneBlank(user.getUserId())) {
-            filters.add(Condition.eq("userId", user.getUserId()));
-        }else {
+        if (StringUtils.isBlank(user.getUserId())) {
             return ReturnData.error("充值失败请返回重新充值");
         }
-        if (nv.isPositiveInteger(recharge)){
+        if (nv.isNatureInteger(recharge)){
             Long charge = Long.parseLong(recharge)*100;
-            if (charge < 0){
-                return ReturnData.error("充值金额不能为负值");
-            }else {
-                user.setMoneyBalance(user.getMoneyBalance()+charge);
-                userService.updateByConditionSelective(user, filters);
-                return ReturnData.success("充值成功");
-            }
+            user.setMoneyBalance(user.getMoneyBalance()+charge);
+            userService.updateByIdSelective(user);
+            return ReturnData.success("充值成功");
         }else {
             return ReturnData.error("只能充值整数金额");
         }
