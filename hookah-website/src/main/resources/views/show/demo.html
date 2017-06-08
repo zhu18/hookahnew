@@ -897,27 +897,27 @@
 
     var resultdata0 = [];
     var sum0 = 0;
-    var sum1 = 0;
-    var sum2 = 0;
+//    var sum1 = 0;
+//    var sum2 = 0;
     var titledata = [];
     for (var i = 0; i < data.length; i++) {
         var d0 = {
             name: data[i].name,
             value: data[i].value1 + data[i].value2
         };
-        var d1 = {
-            name: data[i].name,
-            value: data[i].value1
-        };
-        var d2 = {
-            name: data[i].name,
-            value: data[i].value2
-        };
+//        var d1 = {
+//            name: data[i].name,
+//            value: data[i].value1
+//        };
+//        var d2 = {
+//            name: data[i].name,
+//            value: data[i].value2
+//        };
         titledata.push(data[i].name);
         resultdata0.push(d0);
         sum0 += data[i].value1 + data[i].value2;
-        sum1 += data[i].value1;
-        sum2 += data[i].value2;
+//        sum1 += data[i].value1;
+//        sum2 += data[i].value2;
     }
 
     function NumDescSort(a,b){
