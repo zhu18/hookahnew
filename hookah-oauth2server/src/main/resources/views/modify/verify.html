@@ -110,14 +110,19 @@ var htmlPart = {
 		return result ? decodeURIComponent(result[2]) : null;
 	};
 	var type = $.getUrlParam('type');
+	var typeNum = null;
 	if(type == 'mobile'){
 		$('#ui-step-text').html('修改手机号');
+		typeNum = 3;
 	}else if(type == 'loginPassword'){
 		$('#ui-step-text').html('修改登录密码');
+		typeNum = 2;
 	}else if(type == 'setPayPassword'){
 		$('#ui-step-text').html('设置支付密码');
+		typeNum = 5;
 	}else if(type == 'payPassword'){
 		$('#ui-step-text').html('修改支付密码');
+		typeNum = 4;
 	}else if(type == 'mail'){
 		$('#ui-step-text').html('修改邮箱');
 	}
@@ -172,7 +177,8 @@ var htmlPart = {
 			url:'${host.auth}/sms/send',
 			type:'post',
 			data:{
-				mobile:mobile
+				mobile:mobile,
+				type:typeNum
 			},
 			success:function(data){
 				if(data.code == 1){
