@@ -156,26 +156,35 @@ public class EsApi {
 
     //删除索引
     @RequestMapping(value  = "/del", method = RequestMethod.POST)
-    public void delete(String index) {
+    public ReturnData delete(String index) {
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
         try {
             //"qingdao-goods-v1" "qingdao-category-v1"
             elasticSearchService.deleteIndex(index);
         } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
             e.printStackTrace();
         }
+        return returnData;
     }
 
 
 //删除商品
     @RequestMapping(value  = "/delGoods", method = RequestMethod.POST)
-    public void delete(String goodsId, String indexName, String type) {
+    public ReturnData delete(String goodsId, String indexName, String type) {
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
         try {
-            System.exit(0);
             //"qingdao-goods-v1" "qingdao-category-v1"
             elasticSearchService.deleteById(indexName, type, goodsId);
         } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
             e.printStackTrace();
         }
+        return returnData;
     }
 
 
@@ -194,7 +203,10 @@ public class EsApi {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public void init(@RequestParam(value= "diff")  String diff) {
+    public ReturnData init(@RequestParam(value= "diff")  String diff) {
+
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
 
         String goodsIndex = null;
         String goodsType = null;
@@ -220,8 +232,11 @@ public class EsApi {
             //如果能获取到主键字段说明是新创建的type，导入数据
             elasticSearchService.bulkInsert(goodsKeyField, goodsIndex, goodsType);
         } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
             e.printStackTrace();
         }
+        return returnData;
     }
 
     @RequestMapping("init/cat")

@@ -37,8 +37,9 @@ class EsController {
         promise.then(function (res, status, config, headers) {
             $rootScope.loadingState = false;
             if(res.data.code == "1"){
-                $scope.search();
-                growl.addSuccessMessage("数据加载完毕。。。");
+                growl.addSuccessMessage("操作成功。。。")
+               // $scope.search();
+                //growl.addSuccessMessage("数据加载完毕。。。");
             }
         });
     };
@@ -60,8 +61,9 @@ class EsController {
           promise.then(function (res, status, config, headers) {
               $rootScope.loadingState = false;
               if(res.data.code == "1"){
+                  growl.addSuccessMessage("操作成功。。。");
                   $scope.search();
-                  growl.addSuccessMessage("数据加载完毕。。。");
+                  //growl.addSuccessMessage("数据加载完毕。。。");
               }
           });
       };
@@ -79,78 +81,12 @@ class EsController {
           });
           promise.then(function (res, status, config, headers) {
               console.log(res.data)
-              // if(res.data.code == "1"){
-              //     growl.addSuccessMessage("索引重建完毕。。。");
-              //     $state.go('elastic.search');
-              // }
+              if(res.data.code == "1"){
+                  growl.addSuccessMessage("索引重建完毕。。。");
+                 // $state.go('elastic.search');
+              }
           });
       };
-
-    $scope.updateGoods = function (event, item) {
-      console.log("去修改……");
-      $rootScope.editData = item;
-      $state.go('items.update', {data: item});
-    };
-
-
-      /**
-       * 1 审核  2强制下架
-       * @param item
-       * @param n
-       */
-    $scope.goCheck = function (item, n) {
-      console.log("去审核……");
-      console.log(n);
-
-        var promise = $http({
-            method: 'GET',
-            url: $rootScope.site.apiServer + "/api/goods/getGoodsInfo",
-            params: {goodsId: item.goodsId}
-        });
-        promise.then(function (res, status, config, headers) {
-            console.log(res.data)
-            if(res.data.code == "1"){
-                $rootScope.editData = res.data.data;
-                $rootScope.operatorFlag = n;
-
-                // 格式化json字符串  暂时取消
-
-                // try{
-                //     if($rootScope.editData.apiInfo != null){
-                //         $rootScope.editData.apiInfo.respSample = JSON.stringify(JSON.parse($rootScope.editData.apiInfo.respSample), null, "\t");
-                //     }
-                //     $state.go('items.goodsDetail', {data: $rootScope.editData});
-                // }catch (e) {
-                    $state.go('items.goodsDetail', {data: $rootScope.editData});
-                // }
-            }
-        });
-    };
-
-    $scope.lookDetail = function (item) {
-      console.log("查看商品详情……");
-        var promise = $http({
-            method: 'GET',
-            url: $rootScope.site.apiServer + "/api/goods/getGoodsInfo",
-            params: {goodsId: item.goodsId}
-        });
-        promise.then(function (res, status, config, headers) {
-            console.log(res.data)
-            if(res.data.code == "1"){
-                $rootScope.editData = res.data.data;
-                // try{
-                //     if($rootScope.editData.apiInfo != null){
-                //         $rootScope.editData.apiInfo.respSample = JSON.stringify(JSON.parse($rootScope.editData.apiInfo.respSample), null, "\t");
-                //     }
-                //     $state.go('items.lookDetail', {data: $rootScope.editData});
-                // }catch (e) {
-                    $state.go('items.lookDetail', {data: $rootScope.editData});
-                // }
-
-                // console.log($.format($rootScope.editData.apiInfo.respSample,{method: 'json',step: '    ',preserveComments: false }));
-            }
-        });
-    };
 
     $scope.pageChanged = function () {
       $scope.search();
