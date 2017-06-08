@@ -114,6 +114,7 @@ include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 <script>
     $(function(){
         isHot();
+        console.log(123123)
         function isHot(){
             $.ajax({
                 url:'/sysNews/listByGroup',
@@ -122,15 +123,16 @@ include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
                     pageNumber:1,
                     pageSize:2,
                     newsGroup:"information",
-                    newsSonGroup:${sysNews.newsSonGroup}
+                    newsSonGroup:1
                 },
                 success:function(data){
+//                	console.log(${sysNews.newsSonGroup})
                     if(data.code=="1"){
                         var html="";
                         if (data.data.list.length > 0){
                             var list = data.data.list;
                             for (var i = 0; i < list.length; i++){
-                                console.log("hot:"+list[i].isHot);
+//                                console.log("hot:"+list[i].isHot);
                                 var n;
                                 if(list[i].isHot=="1"){
                                     n++;
