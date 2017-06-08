@@ -228,7 +228,7 @@ Attention.add = function (goodsId) {
 							$('.attention .eval').html('已关注:');
 							var nums = parseInt($('#J_atonNum').html());
 							$('#J_atonNum').html(nums+1);
-							$('#J_attenBtn').removeAttr('onclick').css('cursor','no-drop');
+							$('#J_attenBtn').removeAttr('onclick').css('cursor','default');
 							$.alert("关注成功");
 						} else {
 
