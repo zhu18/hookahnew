@@ -410,13 +410,13 @@ var htmlPart = {
 			data: {text: $('#J_Capcha').val()},
 			success: function (data) {
 				if (data.code == 1) {
-					if (data.data == 1) {
+					if (data.data == 1) {//成功之后请求手机号验证码
 						getMobileVerify(that);
 					} else if (data.data == 0) {
 						$('#J_Capcha').focus().val('');
 						$('#J_MsgCaptcha').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_REGISTER_CHECKCODE_NOT_MATCH).siblings('.iconfont').html('󰅕');
 					}
-					//成功之后请求手机号验证码
+
 				} else {
 					console.log(data.message)
 				}
@@ -428,7 +428,8 @@ var htmlPart = {
 			url:'${host.auth}/sms/send',
 			type:'post',
 			data:{
-				mobile:$('#J_Mobile').val()
+				mobile:$('#J_Mobile').val(),
+				type:0
 			},
 			success:function(data){
 				if(data.code == 1){
