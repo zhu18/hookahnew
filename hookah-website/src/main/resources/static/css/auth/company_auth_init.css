@@ -2,7 +2,6 @@
     color: #00b1ff;
 }
 .auth-box .auth-content{
-    padding-bottom:150px;
 }
 .auth-box .auth-content .auth-info .steps{
     padding:40px 0 25px;
@@ -17,7 +16,7 @@
     background-position: 0 -38px;
 }
 .auth-box .auth-content .auth-info {
-    height: 1700px;
+    height: auto;
     padding:30px 50px 30px;
     border-top: 1px solid #e2e2e2;
     -moz-box-sizing: border-box;
