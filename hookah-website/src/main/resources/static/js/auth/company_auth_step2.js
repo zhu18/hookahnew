@@ -118,7 +118,7 @@ function companyAuth(){
 $("#companyForm").validate({
 	rules: {
 		governmentName:'required',
-		creditCode:'required',
+		// creditCode:'required',
 		businessLicence:'required',
 		taxRegCertificate:'required',
 		companyLegal:'required',
@@ -128,7 +128,7 @@ $("#companyForm").validate({
 		address:'required',
 		licensePath:'required',
 		taxPath:'required',
-		certifictePath:'required',
+		// certifictePath:'required',
 		tel:{
 		    required:true,
 			isMobile:true
