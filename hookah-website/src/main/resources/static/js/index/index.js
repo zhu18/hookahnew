@@ -76,7 +76,7 @@ function loadIndexData2(){
 		},
 		success:function(data){
 			if(data.code == 1){
-				var list = data.data.list[data.data.list.length - 1];
+				var list = data.data.list[0];
 				var html = '';
 
 				// for(var i = 0 ; i < list.length ; i++){
