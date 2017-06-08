@@ -15,7 +15,7 @@ public class HookahConstants {
     /** 短信缓存前缀  */
     public static final String REDIS_SMS_CACHE_PREFIX = "smscache";
     /** 短信过期时间，单位随 分 */
-    public static final Integer SMS_DURATION_MINITE = 2;
+    public static final Integer SMS_DURATION_MINITE = 10;
 
     public static final Integer SMS_USER_REGISTER = 6524;  //注册
     public static final Integer SMS_FIND_USER_PWD = 6525;   //找回登录密码
@@ -28,7 +28,8 @@ public class HookahConstants {
         SMS_FIND_USER_PWD("6525"),   //找回登录密码
         SMS_CHANGE_USER_PWD("6527"),   //修改登录密码
         SMS_CHANGE_MOBILE("6526"),   //修改手机号
-        SMS_CHANGE_PAY_PWD("6528");   //修改支付密码
+        SMS_CHANGE_PAY_PWD("6528"),   //修改支付密码
+        SMS_SET_PAY_PWD("6587");   //设置支付密码
 
         public String code;
 

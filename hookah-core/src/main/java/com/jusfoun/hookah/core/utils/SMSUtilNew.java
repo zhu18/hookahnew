@@ -84,10 +84,10 @@ public class SMSUtilNew {
             httpClient = HttpClients.custom().setDefaultRequestConfig(requestConfig).build();
             HttpResponse response = httpClient.execute(httpPost);
             HttpEntity entity = response.getEntity();
-            System.out.println(EntityUtils.toString(entity));
+            logger.info(EntityUtils.toString(entity));
             EntityUtils.consume(entity);
         } catch (Exception e) {
-            System.out.println(e.toString());
+            logger.error(e.getMessage());
         } finally {
             httpPost.releaseConnection();
         }
@@ -147,10 +147,10 @@ public class SMSUtilNew {
             httpClient = HttpClients.custom().setDefaultRequestConfig(requestConfig).build();
             HttpResponse response = httpClient.execute(httpPost);
             HttpEntity entity = response.getEntity();
-            System.out.println(EntityUtils.toString(entity));
+            logger.info(EntityUtils.toString(entity));
             EntityUtils.consume(entity);
         } catch (Exception e) {
-            System.out.println(e.toString());
+            logger.error(e.getMessage());
         } finally {
             httpPost.releaseConnection();
         }
