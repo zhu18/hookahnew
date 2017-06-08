@@ -1,7 +1,4 @@
-var getImg = "";
-var id = $.getUrlParam('id');
-console.log("id:" + id);
-var editor=null;
+createEidtor();
 function createEidtor() {
 	//富文本
 	editor = new wangEditor('content');
@@ -21,58 +18,9 @@ function createEidtor() {
 	});
 	editor.create();
 }
-if (id) {
-	// $(".user-center-box .center-title").text("编辑文章");
-	$.ajax({
-		type: "get",
-		url: "/sysNews/details",
-		data: {id: id},
-		success: function (data) {
-			$("#newsGroup").val(data.data.newsGroup);
-			$("#newsTitle").val(data.data.newsTitle);
-			$("input[name='isHot'][value=" + data.data.isHot + "]").attr("checked", true);
-			$("#preview-img").attr('src', data.data.pictureUrl);
-			$("#content").html(data.data.content);
-			createEidtor();
-			getImg = data.data.pictureUrl;
-		}
-	})
-} else {
-	createEidtor();
-}
 
-var imgSrc = '';
-//上传图片
 
-//选择文件之后执行上传
-var fileUploadUrl = host.static + '/upload/fileUpload';
-$('#filename').fileupload({
-	url: fileUploadUrl,
-	dataType: 'json',
-	add: function (e, data) {
-		var filesize = data.files[0].size;
-		if(Math.ceil(filesize / 1024) > 1024*5){
-			console.log('文件过大'+filesize);
-			$.alert('文件过大');
-			return;
-		}
-		data.submit();
-	},
-	done: function (e, data) {
-		if (data.result.code == 1) {
-			var obj = data.result.data[0];
-			$("#preview-img").attr("src", obj.absPath);
-			$('input[name="goodsImges"]').val(obj.absPath);
-			imgSrc = obj.absPath;
-		} else {
-			$.alert(data.result.message)
-		}
 
-	},
-	progressall: function (e, data) {
-
-	}
-})
 function changes(that) {
 	var thisVal = $(that).val();
 	$('.select-hide').hide();
@@ -84,79 +32,35 @@ function changes(that) {
 		$('#newsSonGroup').hide();
 		$('.select-line').hide();
 	}
-//        if($(that).val() == 0){
-//            $(that).parents().siblings('.errors').show();
-//        }else{
-//            $(that).parents().siblings('.errors').hide();
-//        }
 }
 
 function published() {
 	var data = {};
 	var url = '';
 	data.newsGroup = $('#newsGroup').val();
-	data.newsTitle = $.trim($('#newsTitle').val());
-	data.contentValidity = $.trim($('#newsInfo').val());
+	data.newsTitle = $('#newsTitle').val();
+	data.contentValidity = $('#newsInfo').val();
 	data.isHot = $("input[name='isHot']:checked").val();
-	data.content = $.trim($('#content').text()).length;
+	data.content = $('#content').val();
 	data.newsSonGroup = $('#newsSonGroup').val();
-	if (id) {
-		data.pictureUrl = getImg;
-		url = "/sysNews/update";
-		data.newsId = id;
-	} else {
-		data.pictureUrl = imgSrc;
-		url = "/sysNews/insert";
-	}
-	if (data.newsGroup == 0) {
-		$('#newsGroup').focus();
-		$('#newsGroup').parents().siblings('.errors').show();
-		return;
-	} else if (data.newsGroup === 'information') {
-		if (data.newsSonGroup == 0) {
-			$('#newsSonGroup').focus();
-			$('#newsSonGroup').parents().siblings('.errors').show();
-			return;
-		}
-	}
-	if (data.newsTitle == "" || data.newsTitle == null) {
-		$.alert("请输入文章标题", true, function () {
-		});
-		// $('#newsTitle').focus();
-		return;
-	} else if (data.content =0 || data.newsTitle == null ) {
-		$.alert('请输入文章内容！', true, function () {
-            console.log(1);
-            console.log(data.content);
-        })
-        console.log(data.content);
-        return;
-	} else if (data.pictureUrl == "") {
-		$.alert('请上传图片！', true, function () {
-		})
-		return;
-	} else {
-		if (id) {
-			ajaxFun(id, url)
-		} else {
-			ajaxFun(id, url)
-		}
-	}
-	function ajaxFun(id, url) {
-		$.ajax({
-			type: "POST",
-			url: url,
-			data: data,
-			success: function (msg) {
-				if (msg.code == 1) {
-					$.alert('提交成功');
-					// window.location.href = "/admin/articleManage";
-				} else {
-					$.alert(msg.message)
-				}
+	data.pictureUrl = imgSrc;
+	url = "/sysNews/insert";
+	ajaxFun(url,data)
+}
+function ajaxFun(url,data) {
+	$.ajax({
+		type: "POST",
+		url: url,
+		data: data,
+		success: function (msg) {
+			if (msg.code == 1) {
+				$.alert('提交成功');
+				window.location.href = "/admin/articleManage";
+			} else {
+				$.alert(msg.message)
 			}
-		});
-	}
+		}
+	});
 }
 
 //     文章内容预览
@@ -182,29 +86,6 @@ $('#preview-content').click(function () {
 	})
 });
 //替换图片的隐显
-$('#preview-div').hover(function () {
-	if ($('#preview-img').attr('src')) {
-		$('#replace-btn').toggle();
-	}
-});
-// $("#newsTitle").bind("input propertychange", function () {
-// 	var len = $.trim($("#newsTitle").val().length);
-// 	$(".input-count strong").text(len);
-// 	if (len > 60) {
-// 		var value = $("#newsTitle").val();
-// 		$("#newsTitle").val(value.substring(0, 60));
-// 		$(".input-count strong").text(60);
-// 	}
-// });
-// $("#newsInfo").bind("input propertychange", function () {
-// 	var len = $.trim($("#newsInfo").val().length);
-// 	$(".input-count .info").text(len);
-// 	if (len > 60) {
-// 		var value = $("#newsInfo").val();
-// 		$("#newsInfo").val(value.substring(0, 60));
-// 		$(".input-count .info").text(60);
-// 	}
-// });
 
 $("#publishArticle").validate({
 	rules: {
@@ -270,9 +151,60 @@ $('#submit-article').click(function () {
 			published()
 		} else {
 			$.alert('文章描述不能为空', true, function () {
-                $('#content').focus()
+                // $('#content').focus()
 			})
 
 		}
 	}
 });
+
+
+
+
+
+
+
+
+var getImg = "";
+var imgSrc = '';
+//上传图片
+
+//选择文件之后执行上传
+var fileUploadUrl = host.static + '/upload/fileUpload';
+$('#filename').fileupload({
+	url: fileUploadUrl,
+	dataType: 'json',
+	add: function (e, data) {
+		var filesize = data.files[0].size;
+		if(Math.ceil(filesize / 1024) > 1024*5){
+			console.log('文件过大'+filesize);
+			$.alert('文件过大');
+			return;
+		}
+		data.submit();
+	},
+	done: function (e, data) {
+		if (data.result.code == 1) {
+			var obj = data.result.data[0];
+			$("#preview-img").attr("src", obj.absPath);
+			$('input[name="goodsImges"]').val(obj.absPath);
+			imgSrc = obj.absPath;
+		} else {
+			$.alert(data.result.message)
+		}
+
+	},
+	progressall: function (e, data) {
+
+	}
+})
+
+$('#preview-div').hover(function () {
+	if ($('#preview-img').attr('src')) {
+		$('#replace-btn').toggle();
+	}
+});
+
+
+
+
