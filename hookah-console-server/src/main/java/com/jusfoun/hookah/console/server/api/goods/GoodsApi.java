@@ -192,8 +192,8 @@ public class GoodsApi extends BaseController{
             if(list .size() > 0 && list != null){
                 list.stream().forEach(goods ->
                         {
-                            goods.setGoodsArea(goods.getGoodsArea() == null ? "" : DictionaryUtil.getRegionById(goods.getGoodsArea()).getMergerName());
-                            goods.setCatId(goods.getCatId() == null ? "" : DictionaryUtil.getCategoryById(goods.getCatId().substring(0, 3)).getCatName());
+                            goods.setGoodsArea((goods.getGoodsArea() == null || "".equals(goods.getGoodsArea())) ? "全部" : DictionaryUtil.getRegionById(goods.getGoodsArea()).getMergerName());
+                            goods.setCatId((goods.getCatId() == null || "".equals(goods.getCatId())) ? "全部" : DictionaryUtil.getCategoryById(goods.getCatId().substring(0, 3)).getCatName());
                         });
             }
         } catch (Exception e) {
@@ -213,13 +213,11 @@ public class GoodsApi extends BaseController{
         try {
 
             Goods goods = goodsService.selectById(goodsId);
-            MgGoods mgGoods = mgGoodsService.selectById(goodsId);
             if(goods != null){
-                if(goods.getGoodsArea() != null && !"全部".equals(goods.getGoodsArea())){
-                    goods.setGoodsArea(DictionaryUtil.getRegionById(goods.getGoodsArea()).getMergerName());
-                }
+                goods.setGoodsArea((goods.getGoodsArea() == null || "全部".equals(goods.getGoodsArea()) || "".equals(goods.getGoodsArea())? "全部" : DictionaryUtil.getRegionById(goods.getGoodsArea()).getMergerName()));
                 BeanUtils.copyProperties(goods, goodsVo);
             }
+            MgGoods mgGoods = mgGoodsService.selectById(goodsId);
             if(mgGoods != null){
                 BeanUtils.copyProperties(mgGoods, goodsVo);
             }
