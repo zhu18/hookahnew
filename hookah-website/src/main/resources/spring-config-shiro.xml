@@ -127,6 +127,7 @@
     <property name="filterChainDefinitions">
       <value>
         /static/** = anon
+        /show = anon
         / = anon
         /help** = anon
         /help/** = anon
