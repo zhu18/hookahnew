@@ -251,20 +251,43 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         return goodsSuggestion(prefix, null);
     }
 
-    @Override
-    public EsTypesVo getTypes(EsGoods goods) throws Exception {
+    /**
+     * 商品分类需要展现所有根节点的，需要单独处理
+     * @param goods
+     * @return
+     * @throws Exception
+     */
+    private List<EsTreeVo<Category>> getCatTypes(EsGoods goods) throws Exception {
         List<EsAgg> listCnt = new ArrayList<>();
-        EsTypesVo esTypesVo = new EsTypesVo();
-        List<EsTreeVo<Category>> categoryList = new ArrayList<>();
-        List<EsTreeVo<GoodsAttrType>> goodsAttrTypeList = new ArrayList<>();
-        List<EsTreeVo<Region>> areaCountryList = new ArrayList<>();
-        List<EsTreeVo<Region>> areaProvinceList = new ArrayList<>();
-        List<EsTreeVo<Region>> areaCityList = new ArrayList<>();
-        //添加需要聚合的字段
+        List<EsTreeVo<Category>> categoryList = new ArrayList<>();//添加需要聚合的字段
         if(goods != null && StringUtils.isNotBlank(goods.getCatIds())) {
             listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_CATEGORY, HookahConstants.GOODS_AGG_CATEGORY_FIELD));
             goods.setCatIds(goods.getCatIds().substring(0, 3));
         }
+        //按查询条件查询分类集合
+        Map<String, List<EsAggResult>> map = esTemplate.getCounts(esTransportClient.getObject(),
+                Constants.GOODS_INDEX, Constants.GOODS_TYPE, goods != null ? AnnotationUtil.convert2Map(goods) : null, listCnt);
+        if (map != null && map.size() > 0) {
+            for (Map.Entry<String, List<EsAggResult>> entry : map.entrySet()) {
+                switch (entry.getKey()) {
+                    case HookahConstants.GOODS_AGG_CATEGORY:
+                        this.getCategoryTypes(entry, categoryList);
+                        break;
+                }
+            }
+        }
+        return categoryList;
+    }
+
+    @Override
+    public EsTypesVo getTypes(EsGoods goods) throws Exception {
+        List<EsAgg> listCnt = new ArrayList<>();
+        EsTypesVo esTypesVo = new EsTypesVo();
+        List<EsTreeVo<GoodsAttrType>> goodsAttrTypeList = new ArrayList<>();
+        List<EsTreeVo<Region>> areaCountryList = new ArrayList<>();
+        List<EsTreeVo<Region>> areaProvinceList = new ArrayList<>();
+        List<EsTreeVo<Region>> areaCityList = new ArrayList<>();
+
         listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_ATTR, HookahConstants.GOODS_AGG_ATTR_FIELD));
         listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_ATTR_TYPE, HookahConstants.GOODS_AGG_ATTR_TYPE_FIELD));
         listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_AREA_COUNTRY, HookahConstants.GOODS_AGG_AREA_COUNTRY_FIELD));
@@ -276,9 +299,6 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         if (map != null && map.size() > 0) {
             for (Map.Entry<String, List<EsAggResult>> entry : map.entrySet()) {
                 switch (entry.getKey()) {
-                    case HookahConstants.GOODS_AGG_CATEGORY :
-                        this.getCategoryTypes(entry, categoryList);
-                        break;
                     case HookahConstants.GOODS_AGG_ATTR_TYPE:
                         this.getGoodsAttrType(entry, goodsAttrTypeList);
                         break;
@@ -298,7 +318,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
                 }
             }
         }
-        esTypesVo.setCategoryList(categoryList);
+        esTypesVo.setCategoryList(getCatTypes(goods));
         esTypesVo.setGoodsAttrTypeList(goodsAttrTypeList);
         esTypesVo.setAreaCountryList(areaCountryList);
         esTypesVo.setAreaProvinceList(areaProvinceList);
