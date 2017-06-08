@@ -8,7 +8,7 @@ server:
       name: hookah_sid
 spring:
   datasource:
-    url: jdbc:log4jdbc:mysql://192.168.15.90:3306/hookah_prd?characterEncoding=utf8&useSSL=false&autoReconnect=true&failOverReadOnly=false&autoReconnectForPools=true
+    url: jdbc:log4jdbc:mysql://192.168.15.90:3306/hookah?characterEncoding=utf8&useSSL=false&autoReconnect=true&failOverReadOnly=false&autoReconnectForPools=true
     driverClassName: net.sf.log4jdbc.DriverSpy
     #driverClassName: com.mysql.jdbc.Driver
     #url: jdbc:mysql://192.168.15.90:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
@@ -40,7 +40,7 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
   data:
     mongodb:
-      uri:  mongodb://192.168.15.90:27017/hookah_prd
+      uri:  mongodb://192.168.15.90:27017/hookah
   rabbitmq:
     addresses: 192.168.200.116:5672
     username: root
@@ -95,5 +95,5 @@ myconf:
     auth: ${server.http.protocal}auth.qddata.com.cn
     console: ${server.http.protocal}console.qddata.com.cn
   site:
-      user-default-img: /static/images/timg.jpeg
+      user-default-img: /static/images/user-safe-head.png
 debug: true

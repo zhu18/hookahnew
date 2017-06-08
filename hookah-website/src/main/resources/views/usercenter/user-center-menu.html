@@ -57,6 +57,12 @@
         }else if(url == '/usercenter/trade'){
 			$('.adminS ul li').eq(3).addClass('active').children('a').css("color","#247DE8").siblings().removeClass("active");
         }
+        if(url == '/usercenter/goodsManage'){
+            $('.adminS ul li:nth-child(2)').addClass('active').siblings().removeClass("active").children('a').css("color","#247DE8");
+        }
+        if(url == '/usercenter/trade'){
+            $('.adminS ul li:nth-child(3)').addClass('active').siblings().removeClass("active").children('a').css("color","#247DE8");
+        }
 
         if(url=="/usercenter/buyer/orderStay"||url=="/order/viewDetails" ||url=="/usercenter/sunAlone"){
             $('.u2 li:nth-child(2)').addClass('active').siblings().removeClass("active");
