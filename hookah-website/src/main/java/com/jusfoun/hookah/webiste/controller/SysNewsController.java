@@ -86,7 +86,7 @@ public class SysNewsController extends BaseController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        model.addAttribute("title", sysN.getNewsTitle());
+        model.addAttribute("title", sysN.getNewsTitle() + "-");
         model.addAttribute("sysNews", sysN);
         return "information/details";
     }
