@@ -319,8 +319,8 @@ public class GoodsApi extends BaseController{
             if(page.getList() != null && page.getList().size() > 0){
                 page.getList().stream().forEach(goodsCheckedVo ->
                         {
-                            goodsCheckedVo.setGoodsArea((goodsCheckedVo.getGoodsArea() == null || "".equals(goodsCheckedVo.getGoodsArea())) ? "" : DictionaryUtil.getRegionById(goodsCheckedVo.getGoodsArea()).getMergerName());
-                            goodsCheckedVo.setCatId((goodsCheckedVo.getCatId() == null || "".equals(goodsCheckedVo.getCatId())) ? "" : DictionaryUtil.getCategoryById(goodsCheckedVo.getCatId().substring(0, 3)).getCatName());
+                            goodsCheckedVo.setGoodsArea((goodsCheckedVo.getGoodsArea() == null || "".equals(goodsCheckedVo.getGoodsArea())) ? "全部" : DictionaryUtil.getRegionById(goodsCheckedVo.getGoodsArea()).getMergerName());
+                            goodsCheckedVo.setCatId((goodsCheckedVo.getCatId() == null || "".equals(goodsCheckedVo.getCatId())) ? "全部" : DictionaryUtil.getCategoryById(goodsCheckedVo.getCatId().substring(0, 3)).getCatName());
                         }
                 );
                 pagination.setTotalItems(page.getTotal());
