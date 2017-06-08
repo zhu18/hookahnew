@@ -13,7 +13,6 @@ import com.jusfoun.hookah.core.domain.es.EsGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.vo.GoodsCheckedVo;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
-import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
@@ -81,6 +80,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         obj.setAddTime(date);
         obj.setLastUpdateTime(date);
         obj.setGoodsSn(generateSn(obj, currentUser));
+        obj.setAddUser(currentUser.getUserId());
         obj = (GoodsVo)super.insert(obj);
         if(obj == null)
             throw new HookahException("操作失败");
