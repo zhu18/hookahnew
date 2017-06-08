@@ -74,7 +74,8 @@ include("layout/base.html",{headSection:head,htmlSection:htmlPart}){}
                 url: '${host.auth}/sms/sendToUser',
                 type: 'post',
                 data: {
-                    userId: '${userId}'
+                    userId: '${userId}',
+                    type:1
                 },
                 success: function (data) {
                     if (data.code == 1) {
