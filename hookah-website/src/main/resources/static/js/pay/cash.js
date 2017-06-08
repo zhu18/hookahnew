@@ -34,6 +34,7 @@ function getPayPwdStatus() {
 							setPayPwdCon();
 						} else {
 							this.hide();
+							$('#J_authSubmit').attr('disabled','disabled').css({'background':'#ccc','cursor':'no-drop'});
 						}
 					})
 				} else {
@@ -52,6 +53,7 @@ function setPayPwdCon() {
 			getPayPwdStatus()
 		} else {
 			this.hide();
+			$('#J_authSubmit').attr('disabled','disabled').css({'background':'#ccc','cursor':'no-drop'});
 		}
 	})
 }
@@ -65,15 +67,12 @@ function getCheckVal() {
 			if (this.value == 1) {
 				console.log('======1')
 				if (goodsAmount > moneyBalance) {
-					console.log('trueeeeeee')
 					$('#J-security').hide();
 					$('#J-rcSubmit').hide();
 				} else {
-					console.log('falseeeeee')
 					$('#J-balanceNt').hide();
 				}
 			} else {
-				console.log('!!!!====1')
 				$('#J-security').hide();
 				$('#J-balanceNt').hide();
 			}

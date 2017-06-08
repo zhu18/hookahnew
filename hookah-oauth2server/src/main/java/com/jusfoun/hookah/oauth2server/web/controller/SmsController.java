@@ -3,8 +3,9 @@ package com.jusfoun.hookah.oauth2server.web.controller;
 import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
-import com.jusfoun.hookah.core.utils.SMSUtil;
+import com.jusfoun.hookah.core.utils.SMSUtilNew;
 import com.jusfoun.hookah.core.utils.StrUtil;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.slf4j.Logger;
@@ -12,10 +13,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author huang lei
@@ -40,15 +44,20 @@ public class SmsController {
      */
     @RequestMapping(value = "/sms/send", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnData sendSms(String mobile, HttpServletRequest request) {
+    public ReturnData sendSms(@RequestParam String mobile, @RequestParam Integer type, HttpServletRequest request) {
         String code = StrUtil.random(4);
-        StringBuffer content = new StringBuffer();
-        content.append("验证码为：").append(code).append(",有效时间").append(HookahConstants.SMS_DURATION_MINITE).append("分钟。");
+        Map<String,String> param = new HashMap<>(1);
+        param.put("code",code);
+        param.put("mobile",mobile.substring(mobile.length()-4));
+        //StringBuffer content = new StringBuffer();
+        //content.append("验证码为：").append(code).append(",有效时间").append(HookahConstants.SMS_DURATION_MINITE).append("分钟。");
 
-        logger.info("发送短信，接收方：{}，内容为:{},验证码为:{}",mobile,content,code);
+        //logger.info("发送短信，接收方：{}，内容为:{},验证码为:{}",mobile,content,code);
         try {
-            SMSUtil.sendSMS(mobile, content.toString());
-
+            //SMSUtil.sendSMS(mobile, content.toString());
+            String vars = JsonUtils.toJson(param);
+            String templateId = HookahConstants.SmsType.values()[type].toString();
+            SMSUtilNew.send(mobile,vars,templateId);
             //缓存短信
             redisOperate.set(HookahConstants.REDIS_SMS_CACHE_PREFIX+":"+mobile, code, HookahConstants.SMS_DURATION_MINITE * 60);
             logger.info(redisOperate.get(mobile));
@@ -67,17 +76,25 @@ public class SmsController {
      */
     @RequestMapping(value = "/sms/sendToUser", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnData sendSmsByUserId(String userId, HttpServletRequest request) {
+    public ReturnData sendSmsByUserId(@RequestParam String userId,@RequestParam Integer type, HttpServletRequest request) {
         String code = StrUtil.random(4);
         StringBuffer content = new StringBuffer();
-        content.append("验证码为：").append(code).append(",有效时间").append(HookahConstants.SMS_DURATION_MINITE).append("分钟。");
+        //content.append("验证码为：").append(code).append(",有效时间").append(HookahConstants.SMS_DURATION_MINITE).append("分钟。");
 
 
         try {
             User user = userService.selectById(userId);
             String mobile = user.getMobile();
-            SMSUtil.sendSMS(mobile, content.toString());
-            logger.info("发送短信，接收方：{}，内容为:{},验证码为:{}",mobile,content,code);
+
+            Map<String,String> param = new HashMap<>(1);
+            param.put("code",code);
+            param.put("mobile",mobile.substring(mobile.length()-4));
+
+            String vars = JsonUtils.toJson(param);
+            String templateId = HookahConstants.SmsType.values()[type].toString();
+            SMSUtilNew.send(mobile,vars,templateId);
+           // SMSUtil.sendSMS(mobile, content.toString());
+            //logger.info("发送短信，接收方：{}，内容为:{},验证码为:{}",mobile,content,code);
 
             //缓存短信
             redisOperate.set(HookahConstants.REDIS_SMS_CACHE_PREFIX+":"+mobile, code, HookahConstants.SMS_DURATION_MINITE * 60);

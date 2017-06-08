@@ -107,7 +107,7 @@ public class ExchangeController extends BaseController{
             model.addAttribute("goodsGrades",commentService.countGoodsGradesByGoodsId(id).getData());
 
             model.addAttribute("goodsDetails", goodsVo);
-            model.addAttribute("title", goodsVo.getGoodsName());
+            model.addAttribute("title", goodsVo.getGoodsName() + "-");
             //推荐商品
             Map<String,GoodsShelvesVo> goodsMap = goodsShelvesService.getShevlesGoodsVoList(new HashMap<String,Object>());
             model.addAttribute("reCommData", goodsMap.get("recomm_data"));

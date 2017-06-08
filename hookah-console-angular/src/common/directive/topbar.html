@@ -134,6 +134,12 @@
         <!--</div>-->
         <div class="topbar-left topbar-user" ng-class="{'topbar-user-large':account.currentStructure}">
           <div class="dropdown topbar-info-item" dropdown="">
+            <a href="{{site.websiteServer}}/show" target="_blank" role="menuitem" aria-haspopup="true" class="dropdown-toggle topbar-btn">
+              <span title="" class="">数据演示</span>
+              <span class="icon-arrow-down"></span>
+            </a>
+          </div>
+          <div class="dropdown topbar-info-item" dropdown="">
             <a href="#" role="menuitem" aria-haspopup="true" class="dropdown-toggle topbar-btn" data-toggle="dropdown">
               <span title="" class="" ng-bind="user.userName"></span>
               <span class="icon-arrow-down"></span>

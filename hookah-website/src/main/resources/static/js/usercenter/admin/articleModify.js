@@ -69,6 +69,7 @@ $('#filename').fileupload({
             var obj = data.result.data[0];
             $("#preview-img").attr("src", obj.absPath);
             imgSrc = obj.absPath;
+			getImg = obj.absPath;
         } else {
             $.alert(data.result.message);
         }

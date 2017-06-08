@@ -15,8 +15,7 @@ import java.io.UnsupportedEncodingException;
 /**
  * 使用示例
  * 1、发送：SMSUtil.sendSMS("18612344322","测试内容");
- * 2、将内容set 到MgSmsValidate对象，并存入mongodb(针对验证码)，有效时长为10分钟，失效后自动删除缓存
- * mgSmsValidateService.insert(mgSmsValidate);
+ * 2、将内容set 到session，并存入mongodb(针对验证码)，有效时长为10分钟，失效后自动删除缓存
  * 3、校验时按手机号和验证码查询，如果有则对，查不到则说明 验证码错误 或者 已经失效
  */
 public class SMSUtil {
