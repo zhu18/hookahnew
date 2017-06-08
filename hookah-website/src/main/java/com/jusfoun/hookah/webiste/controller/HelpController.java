@@ -238,4 +238,10 @@ public class HelpController extends BaseController{
         return returnData;
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/helpApi/search", method = RequestMethod.GET)
+    public ReturnData helpApiSearch() {
+        List<Help> helps = helpService.selectList();
+        return ReturnData.success(helps);
+    }
 }
