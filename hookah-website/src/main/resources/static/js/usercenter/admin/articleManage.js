@@ -27,26 +27,46 @@ function loadPageData(data){ //渲染页面数据
 function changes(that){ //筛选状态改变
     var thisVal = $(that).val();
     $('.select-hide').hide();
-    if(thisVal == 'information' || that == 'information'){
-        $('#newsSonGroup').show();
+    // if(thisVal == 'information' || that == 'information'){
+    //     $('#newsSonGroup').show();
+    //     $('.select-line').show();
+    //     if(thisVal){
+    //         dataParm.newsGroup = thisVal;
+    //     }else{
+    //         dataParm.newsGroup = that;
+    //     }
+    //     dataParm.newsSonGroup = $("#newsSonGroup").val();
+    //     goPage("1");
+    // }else{
+    //     $('#newsSonGroup').hide();
+    //     $('.select-line').hide();
+    //     if(thisVal){
+    //         dataParm.newsGroup = thisVal;
+    //     }else{
+    //         dataParm.newsGroup = that;
+    //     }
+    //     dataParm.newsSonGroup = "";
+    //     goPage("1");
+    // }
+    console.log(thisVal)
+	if(!thisVal){
+		$('#newsSonGroup').hide();
+		$('.select-line').hide();
+		delete dataParm.newsGroup;
+		delete dataParm.newsSonGroup;
+		goPage("1");
+	}else if(thisVal == 'information'){
+		$('#newsSonGroup').show();
         $('.select-line').show();
-        if(thisVal){
-            dataParm.newsGroup = thisVal;
-        }else{
-            dataParm.newsGroup = that;
-        }
-        dataParm.newsSonGroup = $("#newsSonGroup").val();
-        goPage("1");
+		dataParm.newsGroup = thisVal;
+		dataParm.newsSonGroup = $("#newsSonGroup").val();
+		goPage("1");
     }else{
-        $('#newsSonGroup').hide();
-        $('.select-line').hide();
-        if(thisVal){
-            dataParm.newsGroup = thisVal;
-        }else{
-            dataParm.newsGroup = that;
-        }
-        dataParm.newsSonGroup = "";
-        goPage("1");
+		$('#newsSonGroup').hide();
+		$('.select-line').hide();
+		dataParm.newsGroup = thisVal;
+		delete dataParm.newsSonGroup;
+		goPage("1");
     }
 }
 function second(that){

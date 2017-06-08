@@ -8,7 +8,7 @@
     <!--</ul>-->
     <ul>
         <!--<li class="text-align-center active"><span class="fa fa-caret-down"></span><span class="fa fa-caret-up" style="display: none;"></span>文章管理 <span class="fa fa-"></span></li>-->
-        <li class="text-align-center active"><a href="/admin/articleManage"><span class="fa fa-file-text"></span>文章列表</a></li>
+        <li class="text-align-center"><a href="/admin/articleManage"><span class="fa fa-file-text"></span>文章列表</a></li>
         <li class="text-align-center"><a href="/usercenter/goodsManage"><span class="fa fa-cog"></span>商品管理</a></li>
         <li class="text-align-center"><a href="/usercenter/trade"><span class="fa fa-indent"></span>交易管理</a></li>
     </ul>
@@ -53,9 +53,15 @@
             }
         });
         if(url == '/admin/articleManage' || url == '/admin/articlePublish' || url == '/admin/articleModify'){
-            $('.adminS ul li:first-child').addClass('active').siblings().removeClass("active").children('a').css("color","#247DE8");
-        }else{
-			$('.adminS ul li:first-child').removeClass("active").siblings().addClass('active').children('a').css("color","#247DE8");
+            $('.adminS ul li:first-child').addClass('active').children('a').css("color","#247DE8").siblings().removeClass("active");
+        }else if(url == '/usercenter/trade'){
+			$('.adminS ul li').eq(3).addClass('active').children('a').css("color","#247DE8").siblings().removeClass("active");
+        }
+        if(url == '/usercenter/goodsManage'){
+            $('.adminS ul li:nth-child(2)').addClass('active').siblings().removeClass("active").children('a').css("color","#247DE8");
+        }
+        if(url == '/usercenter/trade'){
+            $('.adminS ul li:nth-child(3)').addClass('active').siblings().removeClass("active").children('a').css("color","#247DE8");
         }
 
         if(url=="/usercenter/buyer/orderStay"||url=="/order/viewDetails" ||url=="/usercenter/sunAlone"){
