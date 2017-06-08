@@ -41,8 +41,8 @@
         }
         .box .header{
             width: 100%;
-            height: 60px;
-            line-height: 60px;
+            height: 80px;
+            line-height: 80px;
             text-align: center;
         }
         .box .header h1{
@@ -53,7 +53,7 @@
             -webkit-text-fill-color: transparent;
         }
         .content{
-            height: calc(100% - 60px);
+            height: calc(100% - 80px);
             width: 100%;
         }
         .content  .common{
@@ -64,7 +64,7 @@
             margin-right: calc(3px /2);
         }
         .content  .d {
-            height: calc(100% - 10%);
+            /*height: calc(100% - 10%);*/
             width: calc(100%/2 - 1px);
             float: left;
             margin-right: calc(2px /1);
@@ -107,7 +107,7 @@
             left: -16px;
             width: 6px;
             height: 20px;
-            border: 1px solid #07DAFF;
+            border: 1px solid #E34F4F;
             -moz-border-radius: 6px / 7px;
             -webkit-border-radius:6px / 7px;
             border-radius: 6px / 7px;
@@ -120,7 +120,7 @@
             left: -13px;
             width: 2px;
             height: 15px;
-            background-color:#07DAFF;
+            background-color:#E34F4F;
         }
         .content .common  .info{
             position: absolute;
@@ -222,16 +222,16 @@
             height: 40%;
             position: relative;
         }
-        .content .content-down-box .oneLay:after{
-            content: "";
-            display: block;
-            position: absolute;
-            bottom: 0;
-            left: 2%;
-            width: 96%;
-            height: 1px;
-            background: #0971C8;
-        }
+        /*.content .content-down-box .oneLay:after{*/
+            /*content: "";*/
+            /*display: block;*/
+            /*position: absolute;*/
+            /*bottom: 0;*/
+            /*left: 2%;*/
+            /*width: 96%;*/
+            /*height: 1px;*/
+            /*background: #0971C8;*/
+        /*}*/
         .content .content-down-box .twoLay{
             height: 60%;
         }
@@ -342,17 +342,17 @@
                    </div>
                </div>
                <div class="twoLay">
-                   <ul class="clearfix">
-                       <li class="line1 active">最近一周</li>
-                       <li class="line1">最近半个月</li>
-                       <li>最近一个月</li>
-                       <li class="last">
-                           <label for="">日期区间:</label>
-                           <input type="text"/>
-                           至
-                           <input type="text"/>
-                       </li>
-                   </ul>
+                   <!--<ul class="clearfix">-->
+                       <!--<li class="line1 active">最近一周</li>-->
+                       <!--<li class="line1">最近半个月</li>-->
+                       <!--<li>最近一个月</li>-->
+                       <!--<li class="last">-->
+                           <!--<label for="">日期区间:</label>-->
+                           <!--<input type="text"/>-->
+                           <!--至-->
+                           <!--<input type="text"/>-->
+                       <!--</li>-->
+                   <!--</ul>-->
                    <div class="common d seven line">
                        <h2>商品类型交易金额分析</h2>
                        <div id="seven" class="seven sub-common"></div>
@@ -826,27 +826,39 @@
         legend: {
             orient: 'vertical',
             left: '68%',
-            top:"10%",
+            top:"20%",
             itemHeight:8,
             itemWidth :10,
             textStyle: {
                 fontSize: 12,
                 color: '#88C6FF'
             },
-            data:['数据源','数据模型']
+            data:['数据分析','数据模型','应用场景','可视化引擎','采集爬取','清洗脱敏','数据源','数据开发','数据管理','数据安全']
         },
         series: [{
             type: 'pie',
             radius: [30, '55%'],
-            center: ['40%', '60%'],
+            center: ['40%', '65%'],
             roseType: 'radius',
-            color: ['#0699F4', '#07A6F4', '#07D0F5','#09DEEA','#21C893','#C1DF55','#CEB347','#CE9C4F','#D08465'],
+            color: ['#0699F4', '#07D0F5', '#D08465','#09DEEA','#21C893','#C1DF55','#CEB347','#CE9C4F','#07A6F4'],
             data: [
                 {value:9020, name:'数据源'},
-                {value:790, name:'数据模型'}
+                {value:0, name:'应用场景'},
+                {value:790, name:'数据模型'},
+                {value:0, name:'可视化引擎'},
+                {value:0, name:'采集爬取'},
+                {value:0, name:'清洗脱敏'},
+                {value:0, name:'数据分析'},
+                {value:0, name:'数据开发'},
+                {value:0, name:'数据管理'},
+                {value:0, name:'数据安全'}
             ],
             label: {
                 normal: {
+//                    show:function(){
+//                        if (value == 0.00)
+//                        { return false; }
+//                    }(),
                     textStyle: {
                         fontSize: 14
                     },
@@ -857,6 +869,9 @@
             },
             labelLine: {
                 normal: {
+//                    show:function(value){
+//                        if(value == 0) return false;
+//                    }(),
                     smooth: true,
                     lineStyle: {
                         width: 1
@@ -881,7 +896,7 @@
         value1:3,
         value2: 3
     }, {
-        name: '山东',
+        name: '四川',
         value1: 2,
         value2: 2
     }, {
@@ -889,7 +904,7 @@
         value1: 4,
         value2: 4
     }, {
-        name: '四川',
+        name: '山东',
         value1: 1,
         value2: 1
     }];
@@ -923,6 +938,7 @@
         },
         geo: {
             map: 'china',
+            top:"20%",
             left:"15%",
             label: {
                 normal: {
@@ -970,7 +986,7 @@
         },
         grid: {
             right: "5%",
-            bottom: 40,
+            bottom: 15,
             height:"70%",
             width: '30%'
         },
