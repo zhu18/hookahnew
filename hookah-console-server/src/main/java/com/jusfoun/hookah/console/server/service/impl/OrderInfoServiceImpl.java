@@ -140,8 +140,8 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         og.setGoodsFormat(cart.getGoodsFormat());
         og.setFormatNumber(cart.getFormatNumber());
         og.setFormatList(cart.getGoods().getFormatList());
-        og.setGoodsPrice(cart.getGoodsPrice());
-        og.setGoodsNumber(cart.getGoodsNumber());
+        og.setGoodsNumber(cart.getGoodsNumber().intValue());
+        og.setAddUser(cart.getGoods().getAddUser());
         og.setFormatId(cart.getFormatId());
         og.setSourceId(cart.getGoods().getSourceId());
         og.setGoodsType(cart.getGoods().getGoodsType());
@@ -156,8 +156,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         BeanUtils.copyProperties(goods,og);
 
         og.setGoodsName(goods.getGoodsName());
-        og.setGoodsNumber(goodsNumber);
+        og.setGoodsNumber(goodsNumber.intValue());
         og.setGoodsType(goods.getGoodsType());
+        og.setAddUser(goods.getAddUser());
         og.setIsOnsale(goods.getIsOnsale());
         og.setSourceId(goods.getSourceId());
         og.setGoodsPrice(format.getPrice());
@@ -465,6 +466,32 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         pagination.setPageSize(pageSize);
         pagination.setCurrentPage(pageNum);
         pagination.setList(page);
+        logger.info(JsonUtils.toJson(pagination));
+        return pagination;
+    }
+
+    public Pagination<OrderInfoVo> getSaledOrderListInPage(Integer pageNum, Integer pageSize, List<Condition> filters, String userId,
+                                                           List<OrderBy> orderBys){
+        filters.add(Condition.eq("orderGoodsList.addUser", userId));
+        PageHelper.startPage(pageNum, pageSize);
+        List<OrderInfoVo> list =  mgOrderInfoService.selectList(filters,orderBys);
+        if (list!=null && list.size()!=0) {
+            for (OrderInfoVo orderInfoVo : list){
+                List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
+                List<MgOrderGoods> goods = new ArrayList<MgOrderGoods>();
+                for (MgOrderGoods mgOrderGoods : goodsList){
+                    if (mgOrderGoods.getAddUser().equals(userId)){
+                        goods.add(mgOrderGoods);
+                    }
+                }
+                orderInfoVo.setMgOrderGoodsList(goods);
+            }
+        }
+
+        Pagination<OrderInfoVo> pagination = new Pagination<OrderInfoVo>();
+        pagination.setPageSize(pageSize);
+        pagination.setCurrentPage(pageNum);
+        pagination.setList(list);
         logger.info(JsonUtils.toJson(pagination));
         return pagination;
     }
