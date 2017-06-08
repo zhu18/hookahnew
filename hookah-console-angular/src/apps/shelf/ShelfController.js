@@ -117,6 +117,7 @@ class ShelfController {
 
            $scope.backImg = filePath;
            $scope.$apply();
+           editor.clear();
 
            // 如果 resultText 是图片的url地址，可以这样插入图片：
            editor.command(null, 'insertHtml', '<img src="' + JSON.parse(resultText).data[0].absPath + '" alt="' + originalName + '" style="max-width:100%;"/>');
@@ -150,6 +151,7 @@ class ShelfController {
               $scope.editData.backImgPath = filePath;
               $scope.$apply();
 
+              editor.clear();
               // 如果 resultText 是图片的url地址，可以这样插入图片：
               editor.command(null, 'insertHtml', '<img src="' + JSON.parse(resultText).data[0].absPath + '" alt="' + originalName + '" style="max-width:100%;"/>');
           }

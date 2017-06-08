@@ -53,7 +53,7 @@ class UserController {
           params: {
               userId:$("#userId").val(),
               moneyBalance:($("#moneyBalance").val())*100,
-              recharge:($("#recharge").val())*100
+              recharge:$("#recharge").val()
           }
       });
       promise.then(function (res, status, config, headers) {
