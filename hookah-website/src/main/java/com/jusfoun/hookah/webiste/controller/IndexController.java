@@ -37,9 +37,6 @@ public class IndexController {
     MqSenderService mqSenderService;
 
     @Resource
-    MgSmsValidateService mgSmsValidateService;
-
-    @Resource
     MailService mailService;
 
 

@@ -3,15 +3,20 @@ package com.jusfoun.hookah.oauth2server.web.controller;
 import com.google.code.kaptcha.Constants;
 import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.constants.HookahConstants;
-import com.jusfoun.hookah.core.domain.SysNews;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.vo.UserValidVo;
-import com.jusfoun.hookah.core.exception.*;
+import com.jusfoun.hookah.core.exception.UserRegConfirmPwdException;
+import com.jusfoun.hookah.core.exception.UserRegEmptyPwdException;
+import com.jusfoun.hookah.core.exception.UserRegExistMobileException;
+import com.jusfoun.hookah.core.exception.UserRegExistUsernameException;
+import com.jusfoun.hookah.core.exception.UserRegExpiredSmsException;
+import com.jusfoun.hookah.core.exception.UserRegInvalidCaptchaException;
+import com.jusfoun.hookah.core.exception.UserRegInvalidSmsException;
+import com.jusfoun.hookah.core.exception.UserRegSimplePwdException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.FormatCheckUtil;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.oauth2server.config.MyProps;
-import com.jusfoun.hookah.rpc.api.MgSmsValidateService;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -31,7 +36,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author huang lei
@@ -51,8 +60,6 @@ public class RegController {
     @Resource
     UserService userService;
 
-    @Resource
-    private MgSmsValidateService mgSmsValidateService;
 
     @RequestMapping(value = "/reg", method = RequestMethod.GET)
     public String reg(Model model) {
