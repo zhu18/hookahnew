@@ -2,6 +2,14 @@
 var head = {
 %>
 <link rel="stylesheet" href="/static/css/usercenter/myseller/myseller.css">
+<script type="text/javascript">
+	var pagePath = host.website+'/order/saledOrder';
+	var pageType = 'get';
+	var dataParm = {};
+	dataParm.pageNumber = 1;
+	dataParm.pageSize = 10;
+
+</script>
 <%};%>
 
 <%
@@ -21,14 +29,18 @@ var htmlPart = {
                     </div>
                     <div class="trade-box">
                         <table>
+                            <thead>
                             <tr>
                                 <th class="text-center">宝贝</th>
                                 <th>订单号</th>
+                                <th>出手时间</th>
                                 <th class="text-left">单价（元）</th>
                                 <th class="text-center">数量</th>
                                 <th class="text-left">实收款（元）</th>
                                 <!--<th>评价</th>-->
                             </tr>
+                            </thead>
+                            <tbody>
                             <tr>
                                 <td class="text-center">
                                     <a href="javascript:void(0)">
@@ -61,8 +73,10 @@ var htmlPart = {
                                     <!--<span>tip:速度快，信息全</span>-->
                                 <!--</td>-->
                             </tr>
+                            </tbody>
                         </table>
                     </div>
+                    <%include("/layout/pageaction.html"){} %>
                 </div>
             </div>
         </div>
@@ -72,6 +86,6 @@ var htmlPart = {
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
-
+<script type="text/javascript" src="/static/js/usercenter/myseller/trade.js"></script>
 
 
