@@ -76,12 +76,17 @@ function loadIndexData2(){
 		},
 		success:function(data){
 			if(data.code == 1){
-				var list = data.data.list;
+				var list = data.data.list[data.data.list.length - 1];
 				var html = '';
-				for(var i = 0 ; i < list.length ; i++){
-					html += '<li><span class="serial" style="display:inline-block;float:left;">'+(i+1)+'.</span><a style="width: 150px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;display:inline-block;float:left;" target="_blank" href="/sysNews/details?id='+list[i].newsId+'">'+list[i].newsTitle+'</a><span class="grid-right" style="width:72px;height:40px;overflow:hidden;">'+list[i].updateTime+'</span></li>';
-				}
+
+				// for(var i = 0 ; i < list.length ; i++){
+				// 	html += '<li><span class="serial" style="display:inline-block;float:left;">'+(i+1)+'.</span><a style="width: 150px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;display:inline-block;float:left;" target="_blank" href="/sysNews/details?id='+list[i].newsId+'">'+list[i].newsTitle+'</a><span class="grid-right" style="width:72px;height:40px;overflow:hidden;">'+list[i].sytTime+'</span></li>';
+				// }
+					html += '<li><span class="serial" style="display:inline-block;float:left;">'+1+'.</span><a style="width: 150px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;display:inline-block;float:left;" target="_blank" href="/sysNews/details?id='+list.newsId+'">'+list.newsTitle+'</a><span class="grid-right" style="width:72px;height:40px;overflow:hidden;">'+list.sytTime+'</span></li>';
+
 				$('#J_dataRR').html(html);
+			}else{
+				$('#J_dataRR').html('暂无公告');
 			}
 		}
 
