@@ -12,7 +12,7 @@ class AccountController {
         growl.addSuccessMessage("数据加载完毕。。。");
       });
     };
-    
+
       $scope.edit = function (event, item) {
           var promise = $http({
               method: 'POST',
@@ -51,6 +51,7 @@ class AccountController {
           });
           promise.then(function (res, status, config, headers) {
               $rootScope.cuserd=res.data.data;
+              console.log($rootScope.cuserd);
           });
       };
     $scope.add = function () {
@@ -69,11 +70,28 @@ class AccountController {
         $rootScope.loadingState = false;
           if(res.data.code == "1"){
               $state.go('account.search');
+          }else{
+              alert(res.data.message);
           }
         growl.addSuccessMessage("数据加载完毕。。。");
       });
     };
 
+      $scope.editPassword = function (event, item) {
+          var promise = $http({
+              method: 'POST',
+              url: $rootScope.site.apiServer + "/api/account/upd",
+              data: $("#editPasswordForm").serialize()
+          });
+          promise.then(function (res, status, config, headers) {
+              if (res.data.code == "1") {
+                  alert(res.data.data);
+                  $state.go('account.search');
+              } else {
+                  alert(res.data.message);
+              }
+          });
+      };
 
     $scope.pageChanged = function () {
       $scope.search();

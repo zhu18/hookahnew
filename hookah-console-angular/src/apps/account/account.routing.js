@@ -60,5 +60,10 @@ export default function accountRouting($stateProvider, $urlRouterProvider) {
       template: require('./edit.html'),
       controller: AccountController,
     })
+      .state('account.editPassword', {
+          url: '/account/editPassword',
+          template: require('./editPassword.html'),
+          controller: AccountController,
+      })
 
 };

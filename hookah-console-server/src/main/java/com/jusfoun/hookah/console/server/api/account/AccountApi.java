@@ -2,8 +2,6 @@ package com.jusfoun.hookah.console.server.api.account;
 
 import com.jusfoun.hookah.console.server.controller.BaseController;
 import com.jusfoun.hookah.console.server.util.NumberValidationUtils;
-import com.jusfoun.hookah.core.domain.Goods;
-import com.jusfoun.hookah.core.domain.SysNotice;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -11,7 +9,6 @@ import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.SecurityUtils;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -50,7 +46,8 @@ public class AccountApi extends BaseController{
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public ReturnData saveSysAccount(User user) {
+    @Transactional
+    public ReturnData saveSysAccount(User user) throws Exception {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
@@ -58,6 +55,11 @@ public class AccountApi extends BaseController{
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.eq("orgId", 0));
             filters.add(Condition.eq("userName", user.getUserName()));
+//            if (StringUtils.isNoneBlank(user.getPassword())){
+//                filters.add(Condition.eq("password", user.getPassword()));
+//            }else {
+//                throw new HookahException("密码不能为空");
+//            }
             isExists = userService.exists(filters);
             if (isExists) {
                 throw new Exception("该账户已注册");
