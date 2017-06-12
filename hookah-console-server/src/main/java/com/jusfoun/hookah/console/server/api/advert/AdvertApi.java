@@ -90,8 +90,14 @@ public class AdvertApi {
 
     @RequestMapping("/update")
     public ReturnData updateCarouselFigure(Advert advert){
+        if(StringUtils.isBlank(advert.getUrl())){
+            return ReturnData.error("跳转路径不可为空");
+        }
+        if(StringUtils.isBlank(advert.getHref())){
+            return ReturnData.error("图片路径不可为空");
+        }
         try {
-            int i = advertService.updateByIdSelective(advert);
+            advertService.updateByIdSelective(advert);
         } catch (Exception e) {
             return ReturnData.error("修改失败");
         }
