@@ -76,14 +76,11 @@ public class CooperationServiceImpl  extends GenericServiceImpl<Cooperation, Str
     @Transactional
     public void modify(Cooperation coo) throws Exception{
         Date date = DateUtils.now();
-        List<Condition> filters = new ArrayList<>();
         Pattern pattern = Pattern
                 .compile("^([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~\\/])+$");
         Pattern pattern1 = Pattern.compile("^((17[0-9])(14[0-9])|(13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");
-        if (StringUtils.isNoneBlank(coo.getCooperationId())) {
-            filters.add(Condition.eq("cooperationId", coo.getCooperationId()));
-        }else {
-            throw new HookahException("未选择修改机构，请重新操作");
+        if (StringUtils.isBlank(coo.getCooperationId())) {
+            throw new HookahException("修改失败，请重新操作");
         }
         if (StringUtils.isBlank(coo.getCooPhone())){
             throw new HookahException("手机号不能为空");
@@ -101,20 +98,17 @@ public class CooperationServiceImpl  extends GenericServiceImpl<Cooperation, Str
             throw new HookahException("logo地址格式不正确");
         }
         coo.setLastUpdateTime(date);
-        cooperationMapper.updateByExampleSelective(coo,convertFilter2Example(filters));
+        cooperationMapper.updateByPrimaryKeySelective(coo);
     }
 
     @Override
     @Transactional
     public void updateState(Cooperation coo) throws Exception{
         Date date = DateUtils.now();
-        List<Condition> filters = new ArrayList<>();
-        if (StringUtils.isNoneBlank(coo.getCooperationId())) {
-            filters.add(Condition.eq("cooperationId", coo.getCooperationId()));
-        }else {
-            throw new HookahException("未选中修改机构，请重新操作");
+        if (StringUtils.isBlank(coo.getCooperationId())) {
+            throw new HookahException("修改失败，请重新操作");
         }
         coo.setLastUpdateTime(date);
-        cooperationMapper.updateByExampleSelective(coo,convertFilter2Example(filters));
+        cooperationMapper.updateByPrimaryKeySelective(coo);
     }
 }

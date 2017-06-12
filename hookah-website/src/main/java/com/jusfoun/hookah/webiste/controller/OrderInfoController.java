@@ -267,8 +267,8 @@ public class OrderInfoController extends BaseController {
             return ReturnData.success(pOrders);
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error("分页查询订单错误", e);
-            return ReturnData.error("分页查询错误");
+            logger.error("分页查询已售出商品错误", e);
+            return ReturnData.error("查询已售出商品错误");
         }
     }
 
