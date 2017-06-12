@@ -44,7 +44,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr data-ng-if="!loadingState" data-ng-repeat="item in sysAccount" class="">
+            <tr data-ng-if="!loadingState" data-ng-repeat="item in pagination.store" class="">
               <!--<td width="10">-->
                 <!--<input type="checkbox" data-ng-model="item.selected" ng-change="changeSelection({data: item})"-->
                        <!--class=" ">-->
@@ -114,7 +114,7 @@
                   <!--</div>-->
                 <!--</div>-->
                 <div class="pull-right page-box">
-                  <!--<div class="pagination-info">共有{{pagination.totalItems}}条，每页显示：{{pagination.pageSize}}条</div>-->
+                  <div class="pagination-info">共有{{pagination.totalItems}}条，每页显示：{{pagination.pageSize}}条</div>
                   <ul uib-pagination ng-change="pageChanged(page)" total-items="pagination.totalItems"
                       ng-model="pagination.currentPage" items-per-page="pagination.pageSize"
                       max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"

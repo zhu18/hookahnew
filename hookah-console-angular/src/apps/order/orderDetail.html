@@ -23,7 +23,7 @@
   <div class="row margin-top">
     <div class="col-sm-12">
         <div us-spinner ng-show="showSpinner" spinner-start-active="true" spinner-key="showSpinner"></div>
-        <table class="table table-hover" style="margin-bottom: 30px;">
+        <table class="table table-hover" style="margin-bottom: 20px;">
           <thead>
           <tr style="font-size: 16px;line-height: 16px;">
             <th>数据商品</th>
@@ -54,8 +54,7 @@
             <td ng-bind="goods.goodsNumber"></td>
             <td>¥{{goods.goodsNumber * goods.goodsPrice / 100}}</td>
             <td>
-              <span text-length="50" ng-show="goods.goodsType == 0">常规商品</span>
-              <span text-length="50" ng-show="goods.goodsType == 1">api商品</span>
+              <span text-length="50" ng-bind="goods.goodsType | goodsType"></span>
             </td>
             <td class="operate text-center">
               <!--<a href="${host.website}/exchange/details?id='goods.goodsId'" class="buy btn-full-blue display-inline-block">再次购买</a>-->
