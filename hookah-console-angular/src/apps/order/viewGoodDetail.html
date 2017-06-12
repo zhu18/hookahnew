@@ -93,9 +93,10 @@
           <label class="col-sm-2 control-label">商品描述</label>
           <div class="col-sm-5">
             <!--<input type="text" class="form-control" value="{{editData.goodsDesc}}" readonly="true" />-->
-            <textarea style="margin: 0px; width: 452px; height: 120px;" readonly="true">
-              {{editData.goodsDesc}}
-            </textarea>
+            <!--<textarea style="margin: 0px; width: 452px; height: 120px;" readonly="true">-->
+              <!--{{editData.goodsDesc}}-->
+            <!--</textarea>-->
+            <p ng-bind-html="editData.goodsDesc | trustHtml"></p>
           </div>
         </div>
         <div data-ng-if="editData.goodsType == 1">
