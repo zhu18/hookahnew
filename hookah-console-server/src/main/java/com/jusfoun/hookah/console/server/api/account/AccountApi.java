@@ -2,9 +2,13 @@ package com.jusfoun.hookah.console.server.api.account;
 
 import com.jusfoun.hookah.console.server.controller.BaseController;
 import com.jusfoun.hookah.console.server.util.NumberValidationUtils;
+import com.jusfoun.hookah.core.common.Pagination;
+import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.domain.SysNotice;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
+import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.UserService;
@@ -35,14 +39,29 @@ public class AccountApi extends BaseController{
     UserService userService;
 
     @RequestMapping(value = "/sys_all", method = RequestMethod.GET)
-    public ReturnData getSysAccount(HttpServletRequest request, HttpServletResponse response,String userName) {
-        List<Condition> filters = new ArrayList<>();
-        filters.add(Condition.eq("orgId", 0));
-        if(StringUtils.isNotBlank(userName)){
-            filters.add(Condition.like("userName", userName.trim()));
+    public ReturnData getSysAccount(String currentPage, String pageSize ,User user) {
+        Pagination<User> page = new Pagination<>();
+        try {
+            List<Condition> filters = new ArrayList<>();
+            List<OrderBy> orderBys = new ArrayList();
+            orderBys.add(OrderBy.desc("addTime"));
+            filters.add(Condition.eq("orgId", 0));
+            if(StringUtils.isNotBlank(user.getUserName())){
+                filters.add(Condition.like("userName", user.getUserName().trim()));
+            }
+            int pageNumberNew = HookahConstants.PAGE_NUM;
+            if (StringUtils.isNotBlank(currentPage)) {
+                pageNumberNew = Integer.parseInt(currentPage);
+            }
+            int pageSizeNew = HookahConstants.PAGE_SIZE;
+            if (StringUtils.isNotBlank(pageSize)) {
+                pageSizeNew = Integer.parseInt(pageSize);
+            }
+          page = userService.getListInPage(pageNumberNew, pageSizeNew, filters,orderBys);
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        List<User> sysUser = userService.selectList(filters);
-        return ReturnData.success(sysUser);
+        return ReturnData.success(page);
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
