@@ -90,7 +90,9 @@ class AccountCarouselController {
             }
         });
     };
-
+    $scope.break = function () {
+        location.reload();
+    };
     $scope.pageChanged = function () {
        $scope.search();
        console.log('Page changed to: ' + $rootScope.pagination.currentPage);
