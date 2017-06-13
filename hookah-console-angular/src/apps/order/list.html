@@ -32,7 +32,8 @@
             <tr>
               <th>序号</th>
               <th>订单编号</th>
-              <th>买方</th>
+              <th>买方姓名</th>
+              <th>买方类型</th>
               <th>订单金额</th>
               <th>支付状态</th>
               <th width="135">订单时间</th>
@@ -49,7 +50,10 @@
                 </a>
               </td>
               <td>
-                <span text-length="50" ng-bind="item.userName"></span>
+                <span text-length="50" ng-bind="item.realName"></span>
+              </td>
+              <td>
+                <span text-length="50" ng-bind="item.userType | UserType"></span>
               </td>
               <td>
                 <span text-length="50" ng-bind="item.orderAmount / 100"></span>
