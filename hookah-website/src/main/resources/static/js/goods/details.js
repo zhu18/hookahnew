@@ -2,6 +2,8 @@
  * Created by lss on 2017/4/7 0007.
  */
 // 列表切换功能
+var priceT = (JshopPrice / 100).toFixed(2)
+$('#J_goodsPrice').html(priceT);
 function switchHover() {
     $(".goods-table .table-content .table-item").each(function () {
         if ($(this).hasClass('active')) {
