@@ -226,9 +226,9 @@ public class HelpController extends BaseController{
 //                    dataMap.put("sSAintroduce", goodsVo.getAsSaaS().getsSAintroduce());
 //                    dataMap.put("otherDesc", goodsVo.getAsSaaS().getOtherDesc());
                     //last end
-                    MgGoods.ASSaaSBean asSaaSBean = goodsVo.getAsSaaS();
-                    if(Objects.nonNull(asSaaSBean) && Objects.nonNull(asSaaSBean.getDataAddress())){
-                        returnData.setData(asSaaSBean.getDataAddress());
+                    MgGoods.ASAloneSoftwareBean asAloneSoftware = goodsVo.getAsAloneSoftware();
+                    if(Objects.nonNull(asAloneSoftware) && Objects.nonNull(asAloneSoftware.getDataAddress())){
+                        returnData.setData(asAloneSoftware.getDataAddress());
                     }else{
                         returnData.setMessage("数据地址为空，请联系管理员！^_^");
                         returnData.setCode(ExceptionConst.Failed);
