@@ -413,6 +413,8 @@ public class MgGoods extends GenericModel {
         private String sSAexp;        // 应用经验
         private String sSAintroduce;  // 应用介绍
         private String otherDesc;
+        private String dataAddress;//数据地址
+
 
         public String getsSComplexity() {
             return sSComplexity;
@@ -460,6 +462,14 @@ public class MgGoods extends GenericModel {
 
         public void setOtherDesc(String otherDesc) {
             this.otherDesc = otherDesc;
+        }
+
+        public String getDataAddress() {
+            return dataAddress;
+        }
+
+        public void setDataAddress(String dataAddress) {
+            this.dataAddress = dataAddress;
         }
     }
 
