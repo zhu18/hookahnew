@@ -45,7 +45,7 @@ function loadPageData(data){
                 html += '<td class="text-align-left">x' + goods[ii].goodsNumber +'<br/><br/>'+ '规格:'+ (goods[ii].goodsPrice / 100).toFixed(2) +'/'+ mMat +'</td>';
                 // html += '<td><a href="/exchange/orderEndDetails?id='+goods[ii].goodsId+'&orderSn='+list[i].orderSn+'">下载<br/><span class="fa fa-download font-size-18"></span></a></td>';
                 if(catidS == '104'){
-					html += '<td><a href="javascript:getDataPackageD(\''+goods[ii].goodsId+'\' , \''+goods[ii].sourceId+'\',\''+list[i].orderSn+'\');">查看<br/><span class="fa fa-eye font-size-18"></span></a></td>';
+					html += '<td><a target="_blank" href="javascript:getDataPackageD(\''+goods[ii].goodsId+'\' , \''+goods[ii].sourceId+'\',\''+list[i].orderSn+'\');">查看<br/><span class="fa fa-eye font-size-18"></span></a></td>';
 				}else{
 					html += '<td><a href="javascript:getDataPackageD(\''+goods[ii].goodsId+'\' , \''+goods[ii].sourceId+'\',\''+list[i].orderSn+'\');">下载<br/><span class="fa fa-download font-size-18"></span></a></td>';
 				}
