@@ -483,6 +483,7 @@ public class MgGoods extends GenericModel {
         private String aSAintroduce;  // 应用介绍
         private String aSCloudHardwareResource;  // 云硬件资源
         private String otherDesc;
+        private String dataAddress;//数据地址
 
         public String getaSComplexity() {
             return aSComplexity;
@@ -538,6 +539,14 @@ public class MgGoods extends GenericModel {
 
         public void setOtherDesc(String otherDesc) {
             this.otherDesc = otherDesc;
+        }
+
+        public String getDataAddress() {
+            return dataAddress;
+        }
+
+        public void setDataAddress(String dataAddress) {
+            this.dataAddress = dataAddress;
         }
     }
 
