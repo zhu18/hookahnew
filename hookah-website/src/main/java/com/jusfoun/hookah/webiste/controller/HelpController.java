@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.domain.Help;
+import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -16,10 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author huang lei
@@ -194,14 +192,23 @@ public class HelpController extends BaseController{
 //                private String aSAintroduce;  // 应用介绍
 //                private String aSCloudHardwareResource;  // 云硬件资源
 //                private String otherDesc;
-                    dataMap.put("aSComplexity", goodsVo.getAsAloneSoftware().getaSComplexity());
-                    dataMap.put("aSVersionDesc", goodsVo.getAsAloneSoftware().getaSVersionDesc());
-                    dataMap.put("aSServiceLevel", goodsVo.getAsAloneSoftware().getaSServiceLevel());
-                    dataMap.put("aSAexp", goodsVo.getAsAloneSoftware().getaSAexp());
-                    dataMap.put("aSAintroduce", goodsVo.getAsAloneSoftware().getaSAintroduce());
-                    dataMap.put("aSCloudHardwareResource", goodsVo.getAsAloneSoftware().getaSCloudHardwareResource());
-                    dataMap.put("otherDesc", goodsVo.getAsAloneSoftware().getOtherDesc());
-
+                    //last start
+//                    dataMap.put("aSComplexity", goodsVo.getAsAloneSoftware().getaSComplexity());
+//                    dataMap.put("aSVersionDesc", goodsVo.getAsAloneSoftware().getaSVersionDesc());
+//                    dataMap.put("aSServiceLevel", goodsVo.getAsAloneSoftware().getaSServiceLevel());
+//                    dataMap.put("aSAexp", goodsVo.getAsAloneSoftware().getaSAexp());
+//                    dataMap.put("aSAintroduce", goodsVo.getAsAloneSoftware().getaSAintroduce());
+//                    dataMap.put("aSCloudHardwareResource", goodsVo.getAsAloneSoftware().getaSCloudHardwareResource());
+//                    dataMap.put("otherDesc", goodsVo.getAsAloneSoftware().getOtherDesc());
+                    //last end
+                    MgGoods.ASSaaSBean asSaaSBean = goodsVo.getAsSaaS();
+                    if(Objects.nonNull(asSaaSBean) && Objects.nonNull(asSaaSBean.getDataAddress())){
+                        returnData.setData(asSaaSBean.getDataAddress());
+                    }else{
+                        returnData.setMessage("数据地址为空，请联系管理员！^_^");
+                        returnData.setCode(ExceptionConst.Failed);
+                    }
+                    return returnData;
                 }else if(goodsVo.getGoodsType() == 7){
                     // 应用场景  ApplicationScene SaaS
 //                private String sSComplexity;  // 复杂度
@@ -211,12 +218,22 @@ public class HelpController extends BaseController{
 //                private String sSAintroduce;  // 应用介绍
 //                private String otherDesc;
 
-                    dataMap.put("sSComplexity", goodsVo.getAsSaaS().getsSComplexity());
-                    dataMap.put("sSVersionDesc", goodsVo.getAsSaaS().getsSVersionDesc());
-                    dataMap.put("sServiceLevel", goodsVo.getAsSaaS().getsServiceLevel());
-                    dataMap.put("sSAexp", goodsVo.getAsSaaS().getsSAexp());
-                    dataMap.put("sSAintroduce", goodsVo.getAsSaaS().getsSAintroduce());
-                    dataMap.put("otherDesc", goodsVo.getAsSaaS().getOtherDesc());
+                    //last start
+//                    dataMap.put("sSComplexity", goodsVo.getAsSaaS().getsSComplexity());
+//                    dataMap.put("sSVersionDesc", goodsVo.getAsSaaS().getsSVersionDesc());
+//                    dataMap.put("sServiceLevel", goodsVo.getAsSaaS().getsServiceLevel());
+//                    dataMap.put("sSAexp", goodsVo.getAsSaaS().getsSAexp());
+//                    dataMap.put("sSAintroduce", goodsVo.getAsSaaS().getsSAintroduce());
+//                    dataMap.put("otherDesc", goodsVo.getAsSaaS().getOtherDesc());
+                    //last end
+                    MgGoods.ASAloneSoftwareBean asAloneSoftware = goodsVo.getAsAloneSoftware();
+                    if(Objects.nonNull(asAloneSoftware) && Objects.nonNull(asAloneSoftware.getDataAddress())){
+                        returnData.setData(asAloneSoftware.getDataAddress());
+                    }else{
+                        returnData.setMessage("数据地址为空，请联系管理员！^_^");
+                        returnData.setCode(ExceptionConst.Failed);
+                    }
+                    return returnData;
                 }else{
                     returnData.setMessage("文件类型不存在，请联系管理员！^_^");
                     returnData.setCode(ExceptionConst.Failed);
