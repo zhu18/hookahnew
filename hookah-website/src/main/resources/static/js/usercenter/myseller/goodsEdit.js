@@ -544,6 +544,7 @@ function submitGoodsPublish(){
 		data.asAloneSoftware.aSAexp = $('input[name="aSAexp"]').val();
 		data.asAloneSoftware.aSAintroduce = $('#aSAintroduce').val();
 		data.asAloneSoftware.aSCloudHardwareResource = $('#aSCloudHardwareResource').val();
+		data.asAloneSoftware.dataAddress = $('input[name="dataAddress"]').val();
 		data.asAloneSoftware.otherDesc = $('.app-info-box .otherDesc').val();
 	}else if(data.goodsType == 7){
 		data.asSaaS = {};
@@ -552,6 +553,7 @@ function submitGoodsPublish(){
 		data.asSaaS.sServiceLevel = $('input[name="aSServiceLevel"]').val();
 		data.asSaaS.sSAexp = $('input[name="aSAexp"]').val();
 		data.asSaaS.sSAintroduce = $('#aSAintroduce').val();
+		data.asSaaS.dataAddress = $('input[name="dataAddress"]').val();
 		data.asSaaS.otherDesc = $('.app-info-box .otherDesc').val();
 
 	}
