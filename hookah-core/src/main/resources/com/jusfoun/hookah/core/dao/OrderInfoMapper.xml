@@ -3,7 +3,7 @@
 <mapper namespace="com.jusfoun.hookah.core.dao.OrderInfoMapper">
 
     <select id="getUserCount" resultType="java.lang.Integer">
-      SELECT COUNT(DISTINCT(user_id)) from order_info
+      SELECT COUNT(DISTINCT(user_id)) from order_info WHERE pay_status=2
     </select>
 
 </mapper>
