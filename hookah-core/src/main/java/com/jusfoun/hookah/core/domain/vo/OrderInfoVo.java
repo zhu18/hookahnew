@@ -58,6 +58,10 @@ public class OrderInfoVo extends OrderInfo {
 	private String userEmail;//用户邮箱
 	@Transient
 	private String userName;//用户名称
+	@Transient
+	private Integer userType;
+	@Transient
+	private String realName;
 
 	public String getOrderStatusName() {
 		return orderStatusName;
@@ -210,5 +214,21 @@ public class OrderInfoVo extends OrderInfo {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public Integer getUserType() {
+		return userType;
+	}
+
+	public void setUserType(Integer userType) {
+		this.userType = userType;
+	}
+
+	public String getRealName() {
+		return realName;
+	}
+
+	public void setRealName(String realName) {
+		this.realName = realName;
 	}
 }

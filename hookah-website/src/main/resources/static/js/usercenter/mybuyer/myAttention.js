@@ -5,6 +5,18 @@ function loadPageData(data){
         var list = data.data.list;
         var html = '';
         for(var i=0; i<list.length; i++){
+			var mMat = null;
+			switch(list[i].shopFormat){
+				case(0):
+					mMat = '次';
+					break;
+				case(1):
+					mMat = '天';
+					break;
+				case(2):
+					mMat = '年';
+					break;
+			}
             html += '<li>';
 			html += '<a target="_blank" class="item-top" href="/exchange/details?id='+list[i].goodsId+'">';
 			html += '<p class="goods-img">';
@@ -14,7 +26,7 @@ function loadPageData(data){
 			html += '<p class="goods-brief">'+list[i].goodsBrief+'</p>';
 			html += '</a>';
 			html += '<div class="item-down clearfix">';
-			html += '<span class="grid-left goods-price">￥<span>'+Number(list[i].shopPrice/100)+'</span>/次';
+			html += '<span class="grid-left goods-price">￥<span>'+Number(list[i].shopPrice/100)+'</span>/'+mMat;
 			html += '</span>';
 			if(list[i].isOnSale == 0){
 				html +='<span class="color-red">该商品已下架</span>';

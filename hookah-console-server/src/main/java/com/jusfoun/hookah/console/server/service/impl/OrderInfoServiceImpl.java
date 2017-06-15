@@ -4,10 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.dao.OrderInfoMapper;
-import com.jusfoun.hookah.core.domain.Goods;
-import com.jusfoun.hookah.core.domain.OrderInfo;
-import com.jusfoun.hookah.core.domain.PayCore;
-import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.domain.*;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
 import com.jusfoun.hookah.core.domain.vo.CartVo;
@@ -67,6 +64,12 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
     @Resource
     UserService userService;
+
+    @Resource
+    UserDetailService userDetailService;
+
+    @Resource
+    OrganizationService organizationService;
 
     @Resource
     public void setDao(OrderInfoMapper orderinfoMapper) {
@@ -605,6 +608,14 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             OrderInfoVo mgOrder = mgOrderInfoService.selectById(orderInfoVo.getOrderId());
             User user = userService.selectById(orderInfoVo.getUserId());
             orderInfoVo.setUserName(user.getUserName());
+            orderInfoVo.setUserType(user.getUserType());
+            if (user.getUserType() == 2){
+                UserDetail userDetail = userDetailService.selectById(orderInfoVo.getUserId());
+                orderInfoVo.setRealName(userDetail.getRealName());
+            }else if (user.getUserType() == 4){
+                Organization organization = organizationService.selectById(user.getOrgId());
+                orderInfoVo.setRealName(organization.getOrgName());
+            }
             page.add(orderInfoVo);
         }
 

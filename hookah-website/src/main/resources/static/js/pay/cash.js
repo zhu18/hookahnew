@@ -4,12 +4,23 @@ $('.order-ext-trigger').click(function () {
 });
 $('.manage-more').click(function () {
 	if($(this).hasClass('manage-colse')){
-		$('.saved-card-list .channel-balance').siblings().slideUp();
+		// $('.saved-card-list li').siblings().slideUp();
+		$('.saved-card-list li').each(function () {
+            if($(this).find("input").is(':checked')){
+                $(this).siblings().slideUp()
+			}
+        });
 		$(this).removeClass('manage-colse').html('显示其他支付方式');
 	}else{
-		$('.saved-card-list .channel-balance').siblings().slideDown();
+        $('.saved-card-list li').each(function () {
+            if($(this).find("input").is(':checked')){
+                $(this).siblings().slideDown()
+            }
+        });
+        // $('.saved-card-list li').slideDown();
 		$(this).addClass('manage-colse').html('隐藏其他支付方式');
 	}
+
 });
 $('.saved-card-list>.row-container').click(function () {
 	var that = $(this);
@@ -111,7 +122,10 @@ function check() {
 				} else {
 					$('.ui-form-error').show().children('p').html('支付密码不符合要求');
 				}
-			} else {
+			} else if(this.value == 2){
+				$.alert('支付宝');
+				return false;
+			}else{
 				$.alert('暂不支持该支付方式');
 				return false;
 			}

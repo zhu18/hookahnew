@@ -131,6 +131,16 @@ public class HelpApi extends BaseController {
 
     @RequestMapping("/category/update")
     public ReturnData updateCategory(Help help){
+        if(help.getName().length()>20){
+            return ReturnData.error("分类名称最长为20");
+        }
+        if(StringUtils.isBlank(help.getName())){
+            return ReturnData.error("分类名称不可为空");
+        }
+        String reg = "[\\u4e00-\\u9fa5]+";
+        if(!help.getName().matches(reg)){
+            return ReturnData.error("分类名称请使用中文");
+        }
         try {
             helpService.updateByIdSelective(help);
         } catch (Exception e) {
