@@ -55,4 +55,6 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
     public Map<String,Long> getOrderStatisticWithBuydate(Date startTime,Date endTime) throws HookahException;
 
     public MgOrderGoods getGoodsUserBuyed(String userId,String goodsId);
+
+    Map<String,Integer> getOrderCount();
 }

@@ -626,4 +626,34 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         logger.info(JsonUtils.toJson(pagination));
         return pagination;
     }
+
+    @Override
+    public Map<String,Integer> getOrderCount(){
+        Map<String,Integer> map = new HashMap();
+        List<OrderInfo> notPay = new ArrayList();
+        List<OrderInfo> paid = new ArrayList();
+        List<OrderInfo> isDeleted = new ArrayList();
+        List<OrderInfo> list = orderinfoMapper.selectAll();
+        int userCount = orderinfoMapper.getUserCount();
+        if (!list.isEmpty()){
+            for (OrderInfo orderInfo : list){
+                if (orderInfo.getIsDeleted() == 0){
+                    if (orderInfo.getPayStatus() == 2){
+                        paid.add(orderInfo);
+                    }else {
+                        notPay.add(orderInfo);
+                    }
+                }else {
+                    if (orderInfo.getPayStatus() != 2){
+                        isDeleted.add(orderInfo);
+                    }
+                }
+            }
+        }
+        map.put("notPay",notPay.size());
+        map.put("paid",paid.size());
+        map.put("isDelete",isDeleted.size());
+        map.put("userCount",userCount);
+        return map;
+    }
 }
