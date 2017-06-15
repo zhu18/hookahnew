@@ -48,7 +48,7 @@ module.exports = function makeWebpackConfig() {
    * Karma will set this when it's a test build
    */
   config.entry = isTest ? {} : {
-      vendor: ['jquery', 'bootstrap', 'angular', 'angular-ui-bootstrap', 'angular-ui-router', 'spin', 'angular-spinner', 'ng-file-upload'],
+      vendor: ['jquery', 'bootstrap', 'angular', 'angular-ui-bootstrap', 'angular-ui-router', 'spin', 'angular-spinner'],
       uibootstrap: [ 'wangEditor', 'angular-growl-v2','angular-bootstrap-grid-tree']
     };
   config.entry = Object.assign({}, config.entry, newEntries);
