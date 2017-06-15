@@ -122,7 +122,10 @@ function check() {
 				} else {
 					$('.ui-form-error').show().children('p').html('支付密码不符合要求');
 				}
-			} else {
+			} else if(this.value == 2){
+				$.alert('支付宝');
+				return false;
+			}else{
 				$.alert('暂不支持该支付方式');
 				return false;
 			}

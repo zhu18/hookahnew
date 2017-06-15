@@ -8,13 +8,13 @@ public class AlipayConfig {
 	public static final String alipayGateway = "https://mapi.alipay.com/gateway.do?";
 	
 	/** 合作身份者ID，签约账号*/
-	public static final String partner = "2088421313381178";
+	public static final String partner = "2088721171740277";
 	
 	/** 收款支付宝账号*/
 	public static final String seller_id = partner;
 	
 	/** MD5密钥，安全检验码*/
-	public static String key = "jffjabg1gda0ob1p98q8x5x05wy5d026";
+	public static String key = "z7gd4j4u2b9h39p2wgewq9epku0m9nqp";
 	
 	/** 服务器异步通知页面路径*/
 //	public static String notify_url = "http://商户网址/create_direct_pay_by_user-JAVA-UTF-8/notify_url.jsp";

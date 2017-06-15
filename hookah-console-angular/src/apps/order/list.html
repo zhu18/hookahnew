@@ -27,17 +27,17 @@
         </div>
         <div class="gridSection">
           <div us-spinner ng-show="showSpinner" spinner-start-active="true" spinner-key="showSpinner"></div>
-          <table class="table table-hover" style="margin-bottom: 57px;">
+          <table class="table table-hover text-center" style="margin-bottom: 57px;">
             <thead>
             <tr>
-              <th>序号</th>
-              <th>订单编号</th>
-              <th>买方姓名</th>
-              <th>买方类型</th>
-              <th>订单金额</th>
-              <th>支付状态</th>
-              <th width="135">订单时间</th>
-              <th  width="130" class="text-center">操作</th>
+              <th class="text-center">序号</th>
+              <th class="text-center">订单编号</th>
+              <th class="text-center">买方姓名</th>
+              <th class="text-center">买方类型</th>
+              <th class="text-center">订单金额</th>
+              <th class="text-center">支付状态</th>
+              <th class="text-center">订单时间</th>
+              <!--<th  width="130" class="text-center">操作</th>-->
             </tr>
             </thead>
             <tbody>
@@ -50,7 +50,7 @@
                 </a>
               </td>
               <td>
-                <span text-length="50" ng-bind="item.realName"></span>
+                <span text-length="50" ng-bind="item.realName | limitTo:20" title="{{item.realName}}"></span>
               </td>
               <td>
                 <span text-length="50" ng-bind="item.userType | UserType"></span>
@@ -68,21 +68,21 @@
               <td>
                 <span text-length="40" ng-bind="item.addTime"></span>
               </td>
-              <td class="text-center">
-                <!--<span ng-show="item.payStatus == 0">
-                  <a href="javascript:;" ng-click="editProduct($event,item)">修改</a>
-                  <span class="text-explode">|</span>
-                  <i class="link-space"></i>
-                  <a href="javascript:;" target="_blank">删除</a>
-                  <span class="text-explode">|</span>
-                  <i class="link-space"></i>
-                   <a  ui-sref="order.viewOrderDetails" ng-click="getDetails($event,item.orderId)" >查看</a>
-                </span>
-                <span ng-show="item.payStatus == 2">
-                </span>
-                -->
-                <a  ui-sref="order.viewOrderDetails" ng-click="getDetails($event,item.orderId)">查看</a>
-              </td>
+              <!--<td class="text-center">-->
+                <!--&lt;!&ndash;<span ng-show="item.payStatus == 0">-->
+                  <!--<a href="javascript:;" ng-click="editProduct($event,item)">修改</a>-->
+                  <!--<span class="text-explode">|</span>-->
+                  <!--<i class="link-space"></i>-->
+                  <!--<a href="javascript:;" target="_blank">删除</a>-->
+                  <!--<span class="text-explode">|</span>-->
+                  <!--<i class="link-space"></i>-->
+                   <!--<a  ui-sref="order.viewOrderDetails" ng-click="getDetails($event,item.orderId)" >查看</a>-->
+                <!--</span>-->
+                <!--<span ng-show="item.payStatus == 2">-->
+                <!--</span>-->
+                <!--&ndash;&gt;-->
+                <!--<a  ui-sref="order.viewOrderDetails" ng-click="getDetails($event,item.orderId)">查看</a>-->
+              <!--</td>-->
 
             </tr>
             </tbody>

@@ -66,6 +66,8 @@ class HelpCategoryController {
             if(res.data.code == "1"){
                 growl.addSuccessMessage("数据修改完毕。。。");
                 $state.go('help.category.search');
+            }else{
+                alert(res.data.message);
             }
         });
     };

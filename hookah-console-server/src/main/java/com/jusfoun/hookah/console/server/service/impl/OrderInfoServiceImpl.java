@@ -69,6 +69,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     UserDetailService userDetailService;
 
     @Resource
+    OrganizationService organizationService;
+
+    @Resource
     public void setDao(OrderInfoMapper orderinfoMapper) {
         super.setDao(orderinfoMapper);
     }
@@ -604,10 +607,15 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
             OrderInfoVo mgOrder = mgOrderInfoService.selectById(orderInfoVo.getOrderId());
             User user = userService.selectById(orderInfoVo.getUserId());
-            UserDetail userDetail = userDetailService.selectById(orderInfoVo.getUserId());
             orderInfoVo.setUserName(user.getUserName());
             orderInfoVo.setUserType(user.getUserType());
-            orderInfoVo.setRealName(userDetail.getRealName());
+            if (user.getUserType() == 2){
+                UserDetail userDetail = userDetailService.selectById(orderInfoVo.getUserId());
+                orderInfoVo.setRealName(userDetail.getRealName());
+            }else if (user.getUserType() == 4){
+                Organization organization = organizationService.selectById(user.getOrgId());
+                orderInfoVo.setRealName(organization.getOrgName());
+            }
             page.add(orderInfoVo);
         }
 
