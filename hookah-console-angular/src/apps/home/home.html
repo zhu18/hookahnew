@@ -21,7 +21,7 @@
       </thead>
       <tbody>
       <tr>
-        <td>待付款订单：20</td>
+        <td>待付款订单：{{owner.orderNotPay}}</td>
         <td ng-bind="owner.orgName"></td>
       </tr>
       <!--<tr>
@@ -29,11 +29,11 @@
         <td ng-bind="owner.faxes"></td>
       </tr>-->
       <tr>
-        <td>已付款订单：3</td>
+        <td>已付款订单：{{owner.orderPaid}}</td>
         <td ng-bind="owner.orgAddress"></td>
       </tr>
       <tr>
-        <td>已取消订单：34</td>
+        <td>已取消订单：{{owner.orderIsDeleted}}</td>
         <td ng-bind="owner.description"></td>
       </tr>
       </tbody>
@@ -48,9 +48,9 @@
       </thead>
       <tbody>
       <tr>
-        <td style="background-color: #F5F6FA">上架商品：&nbsp;&nbsp;928</td>
+        <td style="background-color: #F5F6FA">上架商品：&nbsp;&nbsp;{{owner.addedGoodsCount}}</td>
         <td ng-bind="owner.orgName"></td>
-        <td style="background-color: #F5F6FA">下架商品：&nbsp;&nbsp;130</td>
+        <td style="background-color: #F5F6FA">下架商品：&nbsp;&nbsp;{{owner.offGoodsCount}}</td>
         <td ng-bind="owner.faxes"></td>
       </tr>
       <tr>
@@ -64,7 +64,7 @@
         <td ng-bind="owner.description"></td>
       </tr>
       <tr >
-        <td style="background-color: #F5F6FA">商品分类：&nbsp;&nbsp;10</td>
+        <td style="background-color: #F5F6FA">商品分类：&nbsp;&nbsp;{{owner.goodsOneCategoryCount}}</td>
         <td ng-bind="owner.description"></td>
       </tr>
       </tbody>
@@ -81,15 +81,15 @@
       </thead>
       <tbody>
       <tr>
-        <td>会员总数：&nbsp;&nbsp;&nbsp;10</td>
+        <td>会员总数：&nbsp;&nbsp;&nbsp;{{owner.userCount}}</td>
         <td ng-bind="owner.orgName"></td>
-        <td>购买过商品会员：3</td>
+        <td>购买过商品会员：{{owner.orderUserCount}}</td>
         <td ng-bind="owner.faxes"></td>
       </tr>
       <tr>
-        <td>待审核会员：6</td>
+        <td>待审核会员：{{owner.pendCheckUserCount}}</td>
         <td ng-bind="owner.orgAddress"></td>
-        <td>待实名会员：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0</td>
+        <td>实名会员：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{owner.realUserCount}}</td>
         <td ng-bind="owner.description"></td>
       </tr>
       <tr>

@@ -5,10 +5,11 @@ class HomeController {
     console.log($rootScope.config);
     $.ajax({
       type: "GET",
-      url: $rootScope.site.apiServer+"/api/org/owner",
+      url: $rootScope.site.apiServer+"/api/home/init",
       success: function (data) {
         console.log(data);
         $scope.owner = data.data;
+        console.log(data.data);
       },
       error: function (XMLHttpRequest, textStatus, errorThrown) {
         console.log(XMLHttpRequest);
