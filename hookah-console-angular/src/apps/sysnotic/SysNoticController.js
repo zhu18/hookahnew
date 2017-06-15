@@ -57,8 +57,6 @@ class SysNoticController {
                 //     noticeTitle: $("#noticeTitle").val(),
                 // }
             });
-
-
             promise.then(function (res, status, config, headers) {
                 $rootScope.loadingState = false;
                 if (res.data.code == "1"){
@@ -70,6 +68,9 @@ class SysNoticController {
                 growl.addSuccessMessage("数据加载完毕。。。");
             });
         };
+        $scope.refresh = function(){
+            $scope.search();
+        }
         $scope.updateStatus = function (item, flag) {
             console.log(item.noticeId, item.status);
             var promise = $http({
