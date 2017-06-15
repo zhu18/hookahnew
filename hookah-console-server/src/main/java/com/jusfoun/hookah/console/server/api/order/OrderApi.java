@@ -3,6 +3,8 @@ package com.jusfoun.hookah.console.server.api.order;
 import com.jusfoun.hookah.console.server.controller.BaseController;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.dao.OrderInfoMapper;
+import com.jusfoun.hookah.core.domain.OrderInfo;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -19,7 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by dengxu on 2017/4/24/0024.
@@ -34,6 +38,8 @@ public class OrderApi extends BaseController{
     OrderInfoService orderInfoService;
     @Resource
     UserService userService;
+    @Resource
+    OrderInfoMapper orderInfoMapper;
 
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
@@ -87,6 +93,36 @@ public class OrderApi extends BaseController{
             return ReturnData.error(e.getMessage());
         }
         return ReturnData.success(list);
+    }
+
+    @RequestMapping(value = "/getOrderCount", method = RequestMethod.GET)
+    public ReturnData getOrderCount(){
+        Map map = new HashMap();
+        List<OrderInfo> notPay = new ArrayList();
+        List<OrderInfo> paid = new ArrayList();
+        List<OrderInfo> isDeleted = new ArrayList();
+        List<OrderInfo> list = orderInfoService.selectList();
+        int userCount = orderInfoMapper.getUserCount();
+        if (!list.isEmpty()){
+            for (OrderInfo orderInfo : list){
+                if (orderInfo.getIsDeleted() == 0){
+                    if (orderInfo.getPayStatus() == 2){
+                        paid.add(orderInfo);
+                    }else {
+                        notPay.add(orderInfo);
+                    }
+                }else {
+                    if (orderInfo.getPayStatus() != 2){
+                        isDeleted.add(orderInfo);
+                    }
+                }
+            }
+        }
+        map.put("notPay",notPay.size());
+        map.put("paid",paid.size());
+        map.put("isDelete",isDeleted.size());
+        map.put("userCount",userCount);
+        return ReturnData.success(map);
     }
 
 
