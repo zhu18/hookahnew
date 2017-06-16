@@ -148,7 +148,7 @@
 }
 .box .detail .bot .leftContent h3{
     font-size: 20px;
-    text-align: center;
+    /*text-align: center;*/
 }
 .box .detail .bot .leftContent .auth {
     color:#B2B2B2;
