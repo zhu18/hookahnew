@@ -18,17 +18,19 @@ function loadPageData(data){
             var goods = list[i].mgOrderGoodsList;
             for (var ii = 0; ii < goods.length; ii++) {
                 var mMat = null;
-                    switch(goods[ii].goodsFormat){
-                        case(0):
-							mMat = '次';
-                            break;
-						case(1):
-							mMat = '天';
-							break;
-						case(2):
-							mMat = '年';
-							break;
-                    }
+				switch(goods[ii].goodsFormat){
+					case(0):
+						mMat = '次';
+						break;
+					case(1):
+						mMat = '天';
+						break;
+					case(2):
+						mMat = '年';
+						break;
+				}
+				var catidS = (goods[ii].catId).substring(0,3);
+
                 html += '<tr class="content border-bottom">';
                 html += '<td class="text-align-center" style="width: 280px;">';
                 html += '<div class="p-img">';
@@ -42,7 +44,11 @@ function loadPageData(data){
                 html += '</td>';
                 html += '<td class="text-align-left">x' + goods[ii].goodsNumber +'<br/><br/>'+ '规格:'+ (goods[ii].goodsPrice / 100).toFixed(2) +'/'+ mMat +'</td>';
                 // html += '<td><a href="/exchange/orderEndDetails?id='+goods[ii].goodsId+'&orderSn='+list[i].orderSn+'">下载<br/><span class="fa fa-download font-size-18"></span></a></td>';
-                html += '<td><a href="javascript:getDataPackageD(\''+goods[ii].goodsId+'\' , \''+goods[ii].sourceId+'\',\''+list[i].orderSn+'\');">下载<br/><span class="fa fa-download font-size-18"></span></a></td>';
+                if(catidS == '104'){
+					html += '<td><a target="_blank" href="javascript:getDataPackageD(\''+goods[ii].goodsId+'\' , \''+goods[ii].sourceId+'\',\''+list[i].orderSn+'\');">查看<br/><span class="fa fa-eye font-size-18"></span></a></td>';
+				}else{
+					html += '<td><a href="javascript:getDataPackageD(\''+goods[ii].goodsId+'\' , \''+goods[ii].sourceId+'\',\''+list[i].orderSn+'\');">下载<br/><span class="fa fa-download font-size-18"></span></a></td>';
+				}
                 html += '<td style="width:190px;" class="">金额:￥&nbsp;' + ((goods[ii].goodsPrice / 100) * goods[ii].goodsNumber).toFixed(2) + '<br/><br/>' + list[i].payName + '</td>';//订单总金额
                 // html += '<td class="text-align-center">';
                 // if (list[i].commentFlag == 0) {

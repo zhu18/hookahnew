@@ -4,6 +4,9 @@ var head = {
 <link rel="stylesheet" href="/static/css/index/index.css">
 <link rel="stylesheet" href="/static/css/common.css">
 <link rel="stylesheet" href="/static/css/exchange/style.css">
+<script>
+	var JshopPrice = ${goodsDetails.shopPrice};
+</script>
 <%};%>
 <%
 var htmlPart = {
@@ -60,7 +63,7 @@ var htmlPart = {
 								<i class="iconfont icon-jushoucanggift color-red"></i>
 								<span class="eval">已关注:</span>
 								<%}else{%>
-								<i class="iconfont icon-jushoucanggift" style="cursor:pointer;" onclick="Attention.add('${goodsDetails.goodsId}')"></i>
+								<i class="iconfont icon-jushoucanggift" style="cursor:pointer;" id="J_attenBtn" onclick="Attention.add('${goodsDetails.goodsId}')"></i>
 								<span class="eval">关注:</span>
 								<%}%><span id="J_atonNum">${goodsDetails.followNum}</span>
 							</span>
@@ -205,7 +208,7 @@ var htmlPart = {
 						<table>
 							<caption><h3>返回参数</h3></caption>
 							<tr>
-								<th>错误码</th>
+								<th>字段</th>
 								<th>说明</th>
 							</tr>
 							<%for(items in goodsDetails.apiInfo.respParamList){%>
@@ -433,7 +436,7 @@ var htmlPart = {
 							<img src="${item.goodsImg}" alt="">
 							<div class="img-info">
 								<p class="title">${item.goodsName}</p>
-								<p class="color-orange">￥${item.shopPrice / 100}/${item.shopNumber == 1 ? '' : item.shopNumber}${decode(item.shopFormat,0,'次',1,'天',2,'年','未知')}</p>
+								<p class="color-orange">￥${item.shopPrice /100}/${item.shopNumber == 1 ? '' : item.shopNumber}${decode(item.shopFormat,0,'次',1,'天',2,'年','未知')}</p>
 							</div>
 						</a>
 					</li>

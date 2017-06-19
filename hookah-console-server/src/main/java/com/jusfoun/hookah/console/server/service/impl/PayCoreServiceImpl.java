@@ -354,8 +354,7 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 		AccNoToken record = new AccNoToken(userId, accNo);
 		if(CollectionUtils.isEmpty(accNoTokenMapper.select(record))){
 			record.setOrderSn(payVo.getOrderSn());
-			accNoTokenMapper.insert(record);
-		}
+			accNoTokenMapper.insert(record); }
 		else{
 			record.setOrderSn(payVo.getOrderSn());
 			accNoTokenMapper.updateOrderSnByUserIdAndAccNo(record);

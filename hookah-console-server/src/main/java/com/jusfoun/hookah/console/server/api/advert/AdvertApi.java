@@ -90,8 +90,20 @@ public class AdvertApi {
 
     @RequestMapping("/update")
     public ReturnData updateCarouselFigure(Advert advert){
+        if(StringUtils.isBlank(advert.getUrl())){
+            return ReturnData.error("跳转路径不可为空");
+        }
+        if(advert.getUrl().length()>30){
+            return ReturnData.error("跳转路径最长为30");
+        }
+        if(StringUtils.isBlank(advert.getHref())){
+            return ReturnData.error("图片路径不可为空");
+        }
+        if(advert.getHref().length()>30){
+            return ReturnData.error("图片路径最长为30");
+        }
         try {
-            int i = advertService.updateByIdSelective(advert);
+            advertService.updateByIdSelective(advert);
         } catch (Exception e) {
             return ReturnData.error("修改失败");
         }

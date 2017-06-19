@@ -33,7 +33,7 @@ public class CommentController extends  BaseController{
             user = getCurrentUser();
         }catch (Exception e){
             returnData.setCode(ExceptionConst.Error);
-            returnData.setMessage(e.toString());
+            returnData.setMessage(e.getMessage());
             e.printStackTrace();
             return returnData;
         }

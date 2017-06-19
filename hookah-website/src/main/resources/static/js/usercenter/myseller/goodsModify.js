@@ -661,38 +661,6 @@ function backAddFn(data){
 		}
 	});
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function submitGoodsPublish(){
 	var data = {};
 	data.goodsId = goodsId;
@@ -808,6 +776,7 @@ function submitGoodsPublish(){
 		data.asAloneSoftware.aSAexp = $('input[name="aSAexp"]').val();
 		data.asAloneSoftware.aSAintroduce = $('#aSAintroduce').val();
 		data.asAloneSoftware.aSCloudHardwareResource = $('#aSCloudHardwareResource').val();
+		data.asAloneSoftware.dataAddress = $('input[name="dataAddress"]').val();
 		data.asAloneSoftware.otherDesc = $('.app-info-box .otherDesc').val();
 	}else if(data.goodsType == 7){
 		data.asSaaS = {};
@@ -816,6 +785,7 @@ function submitGoodsPublish(){
 		data.asSaaS.sServiceLevel = $('input[name="aSServiceLevel"]').val();
 		data.asSaaS.sSAexp = $('input[name="aSAexp"]').val();
 		data.asSaaS.sSAintroduce = $('#aSAintroduce').val();
+		data.asSaaS.dataAddress = $('input[name="dataAddress"]').val();
 		data.asSaaS.otherDesc = $('.app-info-box .otherDesc').val();
 
 	}
@@ -942,6 +912,7 @@ function renderAppInfo(asAloneSoftware){
 	$('.app-info-box input[name="aSVersionDesc"]').val(asAloneSoftware.aSVersionDesc);
 	$('.app-info-box input[name="aSServiceLevel"]').val(asAloneSoftware.aSServiceLevel);
 	$('.app-info-box input[name="aSAexp"]').val(asAloneSoftware.aSAexp);
+	$('.app-info-box input[name="dataAddress"]').val(asAloneSoftware.dataAddress);
 	$('.app-info-box #aSCloudHardwareResource').val(asAloneSoftware.aSCloudHardwareResource);
 	$('.app-info-box #aSAintroduce').val(asAloneSoftware.aSAintroduce);
 	$('.app-info-box .otherDesc').val(asAloneSoftware.otherDesc);
@@ -951,6 +922,7 @@ function renderAppSaasInfo(asSaaS){
 	$('.app-info-box input[name="aSVersionDesc"]').val(asSaaS.sSVersionDesc);
 	$('.app-info-box input[name="aSServiceLevel"]').val(asSaaS.sServiceLevel);
 	$('.app-info-box input[name="aSAexp"]').val(asSaaS.sSAexp);
+	$('.app-info-box input[name="dataAddress"]').val(asSaaS.dataAddress);
 	$('.app-info-box #aSAintroduce').val(asSaaS.sSAintroduce);
 	$('.app-info-box .otherDesc').val(asSaaS.otherDesc);
 }

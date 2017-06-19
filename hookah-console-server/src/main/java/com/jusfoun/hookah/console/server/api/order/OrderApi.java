@@ -29,12 +29,10 @@ import java.util.List;
 @RequestMapping(value = "/api/order")
 public class OrderApi extends BaseController{
 
-
     @Resource
     OrderInfoService orderInfoService;
     @Resource
     UserService userService;
-
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ReturnData getListInPage(String currentPage, String pageSize, String orderSn) {
@@ -88,6 +86,5 @@ public class OrderApi extends BaseController{
         }
         return ReturnData.success(list);
     }
-
 
 }

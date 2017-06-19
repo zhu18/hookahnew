@@ -29,10 +29,10 @@ var htmlPart = {
 								<i class="iconfont icon-jushoucanggift color-red"></i>
 								<span class="eval">已关注:</span>
 								<%}else{%>
-								<i class="iconfont icon-jushoucanggift" style="cursor:pointer;" onclick="Attention.add('${goodsDetails.goodsId}')"></i>
+								<i class="iconfont icon-jushoucanggift" style="cursor:pointer;" id="J_attenBtn" onclick="Attention.add('${goodsDetails.goodsId}')"></i>
 								<span class="eval">关注:</span>
 								<%}%>
-								<span>${goodsDetails.followNum}</span>
+								<span id="J_atonNum">${goodsDetails.followNum}</span>
 							</span>
 						</p>
 					</div>
@@ -112,7 +112,7 @@ var htmlPart = {
 						<li class="grid-left">API详情</li>
 						<li class="grid-left">返回参数</li>
 						<%}%>
-						<li class="grid-left">评价</li>
+						<li class="grid-left evaluate">评价</li>
 					</ul>
 				</div>
 				<div class="table-content">
@@ -180,8 +180,8 @@ var htmlPart = {
 						</table>
 					</div>
 					<%}%>
-					<div class="table-item">
-						<!--<h1 class="font-size-14 margin-bottom-10">最新评论</h1>-->
+					<div class="table-item evaluate">
+						<h1 class="font-size-14 margin-bottom-10" style="display: none">最新评论</h1>
 						<ol>
 							<!--<li>-->
 								<!--<div class="comment-title margin-bottom-10">-->
@@ -215,7 +215,7 @@ var htmlPart = {
 								<!--</div>-->
 								<!--<div class="comment-content padding-left-20 margin-bottom-20">借口不错，速度很快</div>-->
 							<!--</li>-->
-							<p style="text-align: center;min-height:100px; font-size: 18px;">暂无评论</p>
+							<!--<p style="text-align: center;min-height:100px; font-size: 18px;">暂无评论</p>-->
 						</ol>
 					</div>
 				</div>

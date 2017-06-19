@@ -130,6 +130,9 @@ class CooperationController {
         $scope.pageChanged = function () {
             $scope.search();
         };
+        $scope.refresh = function () {
+            $scope.search();
+        };
         $scope.search();
     }
 }

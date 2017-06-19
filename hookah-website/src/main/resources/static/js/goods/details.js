@@ -2,86 +2,131 @@
  * Created by lss on 2017/4/7 0007.
  */
 // 列表切换功能
-function switchHover() {
-    $(".goods-table .table-content .table-item").each(function () {
-        if ($(this).hasClass('active')) {
-            $(this).css({
-                'display': 'block'
-            }).siblings().css({
-                'display': 'none'
-            })
-        }
-    })
-    $(".goods-table .table-title li").on('click', function () {
-        $(this).addClass('active').siblings().removeClass('active');
-        var index = $(this).index();
+$(function(){
+    function switchHover() {
         $(".goods-table .table-content .table-item").each(function () {
-            if (index == $(this).index()) {
+            if ($(this).hasClass('active')) {
                 $(this).css({
                     'display': 'block'
                 }).siblings().css({
                     'display': 'none'
                 })
             }
-        });
-        if ($(document).scrollTop() >= 570) {
-            $("body").animate({scrollTop: 570}, 300);
-        }
-    })
-}
+        })
+        $(".goods-table .table-title li").on('click', function () {
+            $(this).addClass('active').siblings().removeClass('active');
+            var index = $(this).index();
+            $(".goods-table .table-content .table-item").each(function () {
+                if (index == $(this).index()) {
+                    $(this).css({
+                        'display': 'block'
+                    }).siblings().css({
+                        'display': 'none'
+                    })
+                }
+            });
+            if ($(document).scrollTop() >= 570) {
+                $("body").animate({scrollTop: 570}, 300);
+            }
+        })
+    }
 // 购买数量功能
-function purchaseQuantity() {
-    var conut = '';
-    // 对输入框中的数据进行格式化
-    $('.purchase-quantity input').blur(function () {
-        var val = $(this).val();
-        if (isNaN(val)) {
-            $(this).val(1);
-        } else if (val < 1 || val > 999) {
-            $.alert('数量只能在1-999之间')
-            $(this).val(1);
-        }
+    function purchaseQuantity() {
+        var conut = '';
+        // 对输入框中的数据进行格式化
+        $('.purchase-quantity input').blur(function () {
+            var val = $(this).val();
+            if (isNaN(val)) {
+                $(this).val(1);
+            } else if (val < 1 || val > 999) {
+                $.alert('数量只能在1-999之间')
+                $(this).val(1);
+            }
 
-    })
-    $(".purchase-quantity .btn-sub").on('click', function () {
-        var val = $('.purchase-quantity input').val();
-        if (val == 1) {
-            return;
-        }
-        val = val - 1;
-        $('.purchase-quantity input').val(val);
-    });
-    $(".purchase-quantity .btn-plus").on('click', function () {
-        var val = $('.purchase-quantity input').val();
-        if (val == 999) {
-            return;
-        }
-        val = parseInt(val) + 1;
-        $('.purchase-quantity input').val(val);
-    });
-}
+        })
+        $(".purchase-quantity .btn-sub").on('click', function () {
+            var val = $('.purchase-quantity input').val();
+            if (val == 1) {
+                return;
+            }
+            val = val - 1;
+            $('.purchase-quantity input').val(val);
+        });
+        $(".purchase-quantity .btn-plus").on('click', function () {
+            var val = $('.purchase-quantity input').val();
+            if (val == 999) {
+                return;
+            }
+            val = parseInt(val) + 1;
+            $('.purchase-quantity input').val(val);
+        });
+    }
 
 // 悬浮框
-function suspensionBox() {
-    var nav = $(".goods-table .table-title").children('ul'); //得到导航对象
-    $(window).scroll(function () {
-        if ($(document).scrollTop() >= 570) {
-            nav.addClass('fiexd');
-            nav.fadeIn();
-        } else {
-            nav.removeClass('fiexd');
-        }
+    function suspensionBox() {
+        var nav = $(".goods-table .table-title").children('ul'); //得到导航对象
+        $(window).scroll(function () {
+            if ($(document).scrollTop() >= 570) {
+                nav.addClass('fiexd');
+                nav.fadeIn();
+            } else {
+                nav.removeClass('fiexd');
+            }
+        })
+    }
+    suspensionBox();
+    switchHover();
+    purchaseQuantity();
+
+    $(".evaluate").on("click",function () {
+        evaluate($.getUrlParam("id"));
+        console.log($.getUrlParam("id"));
     })
-}
-suspensionBox();
-switchHover();
-purchaseQuantity();
+    function evaluate(goodsId){
+        $.ajax({
+            url:host.website+'/comment/serachByGoodsId',
+            type:'get',
+            data:{
+                goodsId:goodsId
+            },
+            success:function(data){
+                if(data.code==1){
+                    if(data.data.list.length>0){
+                        var list =data.data.list;
+                        var html = '';
+                        for(var i=0;i<list.length;i++){
+                            html += '<li>';
+                            html += '<div class="comment-title margin-bottom-10">';
+                            html += '<span class="name padding-left-10">'+list[i].username+'</span>';
+                            html += '<span class="date padding-left-20">'+list[i].addTime+'</span>';
+                            // html += '<a href="javascript:void(0)" class="padding-left-20">回复</a>';
+                            html += '</div>';
+                            html += '<div class="comment-content padding-left-20 margin-bottom-20">'+list[i].commentContent+'</div>';
+                            html += '</li>';
+                        }
+                        $(".evaluate h1").css('display','block');
+                        $('.evaluate ol').html(html);
+                    }else{
+                        $(".evaluate ol").html('<p style="text-align: center;min-height:100px; font-size: 18px;">暂无评论</p>');
+                    }
+                }else{
+                    $.alert(data.message)
+                }
+            }
+        })
+    }
+})
+
 
 // $.getUrlParam = function (key) {
 //     var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
 //     var result = window.location.search.substr(1).match(reg);
 //     return result ? decodeURIComponent(result[2]) : null;
 // };
+
+var priceT = (JshopPrice / 100).toFixed(2)
+$('#J_goodsPrice').html(priceT);
+
 var id = $.getUrlParam('id');
 var format = $.getUrlParam('format');
 var txts = null;

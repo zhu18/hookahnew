@@ -85,10 +85,14 @@ class AccountCarouselController {
             if(res.data.code == "1"){
                 growl.addSuccessMessage("数据修改完毕。。。");
                 $state.go('advert.carousel.search');
+            }else{
+                alert(res.data.message);
             }
         });
     };
-
+    $scope.break = function () {
+        location.reload();
+    };
     $scope.pageChanged = function () {
        $scope.search();
        console.log('Page changed to: ' + $rootScope.pagination.currentPage);

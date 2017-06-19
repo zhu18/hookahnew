@@ -50,25 +50,25 @@ public class GoodsBackController extends BaseController {
 
     /**
      * 已上架的商品列表
-     * @param pageNum
+     * @param pageNumber
      * @param pageSize
      * @param goodsName
      * @return
      */
     @RequestMapping(value = "/sale/list", method = RequestMethod.GET)
     @ResponseBody
-    public ReturnData saleList(String pageNum, String pageSize, String goodsName) {
+    public ReturnData saleList(String pageNumber, String pageSize, String goodsName) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
             String userId = this.getCurrentUser().getUserId();
-            if(StringUtils.isBlank(pageNum)) {
-                pageNum = this.PAGE_NUM;
+            if(StringUtils.isBlank(pageNumber)) {
+                pageNumber = this.PAGE_NUM;
             }
             if(StringUtils.isBlank(pageSize)) {
                 pageSize = this.PAGE_SIZE;
             }
-            returnData.setData(goodsService.saleList(pageNum, pageSize, goodsName, userId));
+            returnData.setData(goodsService.saleList(pageNumber, pageSize, goodsName, userId));
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());
@@ -79,18 +79,18 @@ public class GoodsBackController extends BaseController {
     // 待上架商品列表
     @RequestMapping(value = "/wait/list", method = RequestMethod.GET)
     @ResponseBody
-    public ReturnData waitList(String pageNum, String pageSize, String goodsName, Integer checkStatus, Integer isBook) {
+    public ReturnData waitList(String pageNumber, String pageSize, String goodsName, Integer checkStatus, Integer isBook) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
             String userId = this.getCurrentUser().getUserId();
-            if(StringUtils.isBlank(pageNum)) {
-                pageNum = this.PAGE_NUM;
+            if(StringUtils.isBlank(pageNumber)) {
+                pageNumber = this.PAGE_NUM;
             }
             if(StringUtils.isBlank(pageSize)) {
                 pageSize = this.PAGE_SIZE;
             }
-            returnData.setData(goodsService.waitList(pageNum, pageSize, goodsName, userId, checkStatus, isBook));
+            returnData.setData(goodsService.waitList(pageNumber, pageSize, goodsName, userId, checkStatus, isBook));
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());
@@ -101,25 +101,25 @@ public class GoodsBackController extends BaseController {
 
     /**
      * 已下架商品列表
-     * @param pageNum
+     * @param pageNumber
      * @param pageSize
      * @param goodsName
      * @return
      */
     @RequestMapping(value = "/offsale/list", method = RequestMethod.GET)
     @ResponseBody
-    public ReturnData offsaleList(String pageNum, String pageSize, String goodsName) {
+    public ReturnData offsaleList(String pageNumber, String pageSize, String goodsName) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
             String userId = this.getCurrentUser().getUserId();
-            if(StringUtils.isBlank(pageNum)) {
-                pageNum = this.PAGE_NUM;
+            if(StringUtils.isBlank(pageNumber)) {
+                pageNumber = this.PAGE_NUM;
             }
             if(StringUtils.isBlank(pageSize)) {
                 pageSize = this.PAGE_SIZE;
             }
-            returnData.setData(goodsService.offsaleList(pageNum, pageSize, goodsName, userId));
+            returnData.setData(goodsService.offsaleList(pageNumber, pageSize, goodsName, userId));
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());
@@ -130,18 +130,18 @@ public class GoodsBackController extends BaseController {
     // 违规商品列表
     @RequestMapping(value = "/illegal/list", method = RequestMethod.GET)
     @ResponseBody
-    public ReturnData illegalList(String pageNum, String pageSize, String goodsName) {
+    public ReturnData illegalList(String pageNumber, String pageSize, String goodsName) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
             String userId = this.getCurrentUser().getUserId();
-            if(StringUtils.isBlank(pageNum)) {
-                pageNum = this.PAGE_NUM;
+            if(StringUtils.isBlank(pageNumber)) {
+                pageNumber = this.PAGE_NUM;
             }
             if(StringUtils.isBlank(pageSize)) {
                 pageSize = this.PAGE_SIZE;
             }
-            returnData.setData(goodsService.illegalList(pageNum, pageSize, goodsName, userId));
+            returnData.setData(goodsService.illegalList(pageNumber, pageSize, goodsName, userId));
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());
