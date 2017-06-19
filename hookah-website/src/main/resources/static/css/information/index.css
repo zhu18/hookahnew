@@ -150,6 +150,9 @@
     font-size: 20px;
     /*text-align: center;*/
 }
+.box .detail .bot .leftContent h3#newsTitle{
+    text-align: center;
+}
 .box .detail .bot .leftContent .auth {
     color:#B2B2B2;
     position:relative;
