@@ -290,6 +290,34 @@ public class GoodsApi extends BaseController{
     }
 
     /**
+     * 强制下架的商品改成已下架
+     * @param goodsId           商品id
+     * @return
+     */
+    @RequestMapping(value = "/off", method = RequestMethod.POST)
+    public ReturnData off(String goodsId) {
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+
+            Goods goods1 = goodsService.selectById(goodsId);
+            Byte isOnsale = goods1.getIsOnsale();
+            if(HookahConstants.SaleStatus.forceOff.getCode().equals(String.valueOf(isOnsale))){
+                Goods goods = new Goods();
+                goods.setGoodsId(goodsId);
+                goods.setIsOnsale(Byte.parseByte(HookahConstants.SaleStatus.off.getCode()));
+                goodsService.updateByIdSelective(goods);
+            }
+        } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
+
+
+    /**
      * 获取已审核的数据
      * @param currentPage
      * @param pageSize
