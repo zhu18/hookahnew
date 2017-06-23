@@ -76,12 +76,16 @@ function renderData(data){//渲染页面
 		if (data.goodsType == 0) {
 			$('select[name="isOnline"]').val(data.offLineData.isOnline);
 			$('input[name="dataPwd"]').val(data.offLineData.dataPwd);
+			console.log(data.offLineData.isOnline)
 			if(data.offLineData.isOnline == 0 ){
 				$('#J_fileUploadSS').val(data.uploadUrl);
 				$('.fileUploads span').html(data.uploadUrl);
 				$('input[name="goodsImges2"]').val(data.uploadUrl);
+				$('.selector_offLine_input').hide();
 			}else{
+				$('.selector_offLine_input').show();
 				$('input[name="onlineUrl"]').val(data.offLineData.onlineUrl);
+				$('.selector_offLine_upLoad').hide();
 			}
 		} else if (data.goodsType == 1) {
 			renderApiInfo(data.apiInfo);
@@ -130,7 +134,7 @@ function renderData(data){//渲染页面
 	renderIsBook(data.isBook, data.onsaleStartDate);
 	// $('#showcontent').html(getLength($('#J-goodsName').val()));
 	// $('#showcontent2').html(getLength($('#J-goodsBrief').val()));
-	console.log(data.areaProvince);
+	// console.log(data.areaProvince);
 	if(data.areaCountry > 0){
 		loadCountry(data.areaCountry,data.areaProvince)
 	}else{
@@ -151,6 +155,7 @@ function selectGoodsType(that){
 function childrenSelects(that){
 	$('.file-info-box').hide();
 	$('.struct.selects').hide();
+	$('#isOffline').val('0');
 	var childVal = $(that).val();
 	if(childVal == 0){
 		$('.file-info-box').show();

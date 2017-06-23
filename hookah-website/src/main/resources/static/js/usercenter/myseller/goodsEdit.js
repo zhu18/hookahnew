@@ -98,7 +98,7 @@ function selectGoodsType(that){
 function childrenSelects(that){
 	$('.file-info-box').hide();
 	$('.struct.selects').hide();
-	$('#is_offline').val('0');
+	$('#isOffline').val('0');
 	var childVal = $(that).val();
 	if(childVal == 0){
 		$('.file-info-box').show();
@@ -536,7 +536,7 @@ function submitGoodsPublish(){
 	}else if($('select[name="country"]').val() > 0){
 		data.goodsArea = $('select[name="country"]').val();
 	}
-	if(data.isOffline) {
+	if(data.isOffline == 0) {
 		if (data.goodsType == 0) {
 			data.uploadUrl = $('#J_fileUploadSS').val();
 			data.offLineData = {};
@@ -626,7 +626,7 @@ function submitGoodsPublish(){
 			data.asSaaS.otherDesc = $('.app-info-box .otherDesc').val();
 
 		}
-	}else{
+	}else if(data.isOffline == 1){
 		data.offLineInfo = {};
 		data.offLineInfo.concatName= $('.isOffLine-info-box input[name="concatName"]').val();
 		data.offLineInfo.concatPhone= $('.isOffLine-info-box input[name="concatPhone"]').val();

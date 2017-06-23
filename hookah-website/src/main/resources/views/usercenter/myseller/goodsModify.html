@@ -195,7 +195,7 @@ var htmlPart = {
                                     <td class="bar">交付方式：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="select-box">
-                                            <select name="is_offline" class="is_offline" onchange="selectLineInfo(this)" id="is_offline">
+                                            <select name="isOffline" class="isOffline" onchange="selectLineInfo(this)" id="isOffline">
                                                 <option value="0">线上交付</option>
                                                 <option value="1">线下交付</option>
                                             </select>
@@ -258,7 +258,7 @@ var htmlPart = {
                                     <td class="bar">数据来源：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="select-box">
-                                            <select name="selector_offLines" class="selector_offLines" onchange="selector_offLine_fn(this)" id="selector_offLines">
+                                            <select name="isOnline" class="isOnline" onchange="selector_offLine_fn(this)" id="isOnline">
                                                 <option value="0">数据上传</option>
                                                 <option value="1">数据地址</option>
                                             </select>
@@ -280,7 +280,7 @@ var htmlPart = {
                                     <td class="bar">数据地址：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="text-box">
-                                            <input type="text" name="apiUrl" required="required">
+                                            <input type="text" name="onlineUrl" required="required">
                                             <span class="input-count"></span>
                                         </div>
                                     </td>
@@ -289,7 +289,7 @@ var htmlPart = {
                                     <td class="bar">数据包密码：</td>
                                     <td>
                                         <div class="text-box">
-                                            <input type="text" name="apiUrl">
+                                            <input type="text" name="dataPwd">
                                             <span class="input-count"></span>
                                         </div>
                                     </td>
