@@ -103,14 +103,9 @@ function renderData(data){//渲染页面
 	}else if(data.isOffline == 1){
 		$('.struct.selects').hide();
 		$('.isOffLine-info-box').show();
-		if(data.offLineInfo){
-			$('.isOffLine-info-box input[name="concatName"]').val(data.offLineInfo.concatName);
-			$('.isOffLine-info-box input[name="concatPhone"]').val(data.offLineInfo.concatPhone);
-			$('.isOffLine-info-box input[name="concatEmail"]').val(data.offLineInfo.concatEmail);
-		}else{
-			$.alert('线下交付信息不完整，请及时补充');
-		}
-
+		$('.isOffLine-info-box input[name="concatName"]').val(data.offLineInfo.concatName);
+		$('.isOffLine-info-box input[name="concatPhone"]').val(data.offLineInfo.concatPhone);
+		$('.isOffLine-info-box input[name="concatEmail"]').val(data.offLineInfo.concatEmail);
 	}
 
 
