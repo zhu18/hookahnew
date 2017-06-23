@@ -215,6 +215,15 @@ function selectLineInfo(that){
 		}
 	}
 }
+function selector_offLine_fn(that){
+	$('.selector_offLine').hide();
+	var vals = $(that).val();
+	if(vals == 0){
+		$('.selector_offLine_upLoad').show();
+	}else{
+		$('.selector_offLine_input').show();
+	}
+}
 function selectGoodsTypes(goodsTypeVal){
 	$('.file-info-box').hide();
 	$('.struct.selects').hide();
