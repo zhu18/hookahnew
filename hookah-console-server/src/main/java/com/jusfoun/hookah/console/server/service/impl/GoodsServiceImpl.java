@@ -436,4 +436,22 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
     public List<GoodsCheckedVo> getListForChecked(String goodsName, String goodsSn) {
         return goodsMapper.getListForChecked(goodsName, goodsSn);
     }
+
+    /**
+     * 修改联系信息
+     * @param goodsId 商品id
+     * @param isOffline 是否线下交付：0 线下交付；1 线上交付
+     * @param goodsType 商品类型：0 离线数据；1 api；2 数据模型；4 分析工具--独立软件；5 分析工具--SaaS；6 应用场景--独立软件； 7 应用场景--SaaS
+     * @param concatInfo 联系信息
+     */
+    public void changeConcatInfo(String goodsId, Byte isOffline, Byte goodsType, MgGoods.OffLineInfoBean concatInfo) {
+        MgGoods mgGoods = mgGoodsService.selectById(goodsId);
+        if(HookahConstants.GOODS_OFF_LINE.equals(isOffline)) {
+            mgGoods.setOffLineInfo(concatInfo);
+        }else if(HookahConstants.GOODS_ON_LINE.equals(isOffline)
+                && HookahConstants.GOODS_TYPE_2.equals(goodsType)){
+            mgGoods.getDataModel().setConcatInfo(concatInfo);
+        }
+        mongoTemplate.save(mgGoods);
+    }
 }
