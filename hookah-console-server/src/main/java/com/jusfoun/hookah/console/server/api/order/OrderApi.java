@@ -10,9 +10,9 @@ import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.OrderInfoService;
 import com.jusfoun.hookah.rpc.api.UserService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by dengxu on 2017/4/24/0024.
@@ -93,8 +95,8 @@ public class OrderApi extends BaseController{
      * @return
      * @author lt
      */
-    @RequestMapping(value = "/updRemark", method = RequestMethod.POST)
-    public ReturnData updateOrderDetail(@RequestParam MgOrderGoods mgOrderGoods){
+    @RequestMapping(value = "/updRemark", method = RequestMethod.GET)
+    public ReturnData updateOrderDetail(MgOrderGoods mgOrderGoods){
         try {
             if (StringUtils.isNotBlank(mgOrderGoods.getOrderId()) && StringUtils.isNotBlank(mgOrderGoods.getGoodsId())){
                 orderInfoService.updateMgOrderGoodsRemark(mgOrderGoods);
@@ -114,16 +116,16 @@ public class OrderApi extends BaseController{
      */
     @RequestMapping(value = "/getRemark", method = RequestMethod.GET)
     public ReturnData getOrderDetail(MgOrderGoods mgOrderGoods){
-        String remark = new String();
+        Map map = new HashMap();
         try {
             if (StringUtils.isNotBlank(mgOrderGoods.getOrderId()) && StringUtils.isNotBlank(mgOrderGoods.getGoodsId())){
-                remark = orderInfoService.getRemark(mgOrderGoods);
+                map = orderInfoService.getRemark(mgOrderGoods);
             }
         }catch (Exception e){
             logger.info(e.getMessage());
             return ReturnData.error(e.getMessage());
         }
-        return ReturnData.success(remark);
+        return ReturnData.success(map);
     }
 
 }

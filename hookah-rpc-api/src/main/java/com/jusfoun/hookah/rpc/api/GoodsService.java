@@ -42,4 +42,6 @@ public interface GoodsService extends GenericService<Goods,String> {
     GoodsVo findGoodsByIdWebsite(String goodsId) throws HookahException;
 
     List<GoodsCheckedVo> getListForChecked(String goodsName, String goodsSn);
+
+    void changeConcatInfo(String goodsId, Byte isOffline, Byte goodsType, MgGoods.OffLineInfoBean concatInfo);
 }

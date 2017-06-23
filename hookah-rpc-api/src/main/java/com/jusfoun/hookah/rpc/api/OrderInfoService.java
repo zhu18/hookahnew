@@ -72,5 +72,5 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
      * @return
      * @throws HookahException
      */
-    String getRemark(MgOrderGoods mgOrderGoods);
+    Map getRemark(MgOrderGoods mgOrderGoods);
 }
