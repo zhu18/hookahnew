@@ -563,7 +563,7 @@ public class OrderInfoController extends BaseController {
      * @param
      * @return
      */
-    @RequestMapping(value="/order/delete",method=RequestMethod.GET)
+    @RequestMapping(value = "/order/delete", method = RequestMethod.GET)
     @ResponseBody
     public ReturnData delete(@RequestParam String orderId){
         try{
@@ -573,5 +573,20 @@ public class OrderInfoController extends BaseController {
             logger.error("删除错误",e);
             return ReturnData.error("删除错误");
         }
+    }
+
+    @RequestMapping(value = "/order/getRemark", method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnData getRemark(MgOrderGoods mgOrderGoods){
+        String remark = new String();
+        try {
+            if (StringUtils.isNotBlank(mgOrderGoods.getOrderId()) && StringUtils.isNotBlank(mgOrderGoods.getGoodsId())){
+                remark = orderInfoService.getRemark(mgOrderGoods);
+            }
+        }catch (Exception e){
+            logger.info(e.getMessage());
+            return ReturnData.error("加载失败");
+        }
+        return ReturnData.success(remark);
     }
 }

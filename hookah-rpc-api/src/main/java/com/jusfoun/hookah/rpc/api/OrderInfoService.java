@@ -57,4 +57,20 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
     public MgOrderGoods getGoodsUserBuyed(String userId,String goodsId);
 
     Map<String,Integer> getOrderCount();
+
+    /**
+     * 根据订单Id和商品Id修改备注
+     * @param mgOrderGoods
+     * @throws HookahException
+     * @author lt
+     */
+    void updateMgOrderGoodsRemark(MgOrderGoods mgOrderGoods);
+
+    /**
+     * 根据订单Id和商品Id获取备注信息
+     * @param mgOrderGoods
+     * @return
+     * @throws HookahException
+     */
+    String getRemark(MgOrderGoods mgOrderGoods);
 }
