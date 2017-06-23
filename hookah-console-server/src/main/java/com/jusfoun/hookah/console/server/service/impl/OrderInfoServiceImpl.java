@@ -161,6 +161,10 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         og.setOffLineInfo(cart.getGoods().getOffLineInfo());
         og.setOffLineData(cart.getGoods().getOffLineData());
         og.setDataModel(cart.getGoods().getDataModel());
+        og.setPayInfoFileUrl("");
+        og.setPayInfoPassword("");
+        og.setPayInfoSerialNumber("");
+        og.setPayInfoUserName("");
 //		og.setSendNumber(cart.getS);
         return og;
     }
@@ -198,6 +202,10 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         og.setOffLineInfo(goods.getOffLineInfo());
         og.setOffLineData(goods.getOffLineData());
         og.setDataModel(goods.getDataModel());
+        og.setPayInfoFileUrl("");
+        og.setPayInfoPassword("");
+        og.setPayInfoSerialNumber("");
+        og.setPayInfoUserName("");
         //og.setMarketPrice(goods.getShopPrice());
 //		og.setSendNumber(cart.getS);
         return og;
@@ -713,10 +721,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
         for (MgOrderGoods mgOrderGood:goodsList) {
             if (mgOrderGood.getGoodsId().equals(mgOrderGoods.getGoodsId())){
-                String remark = mgOrderGoods.getRemark();
-                if (mgOrderGood.getGoodsType() == 7){
-
-                }
+                mgOrderGood.getDataModel().setConcatInfo(mgOrderGoods.getDataModel().getConcatInfo());
             }
         }
         mongoTemplate.save(mgOrderGoods);
