@@ -71,22 +71,37 @@ function renderData(data){//渲染页面
 	});
 	var goodsTypeVal = $('#parentSelect').val();
 	selectGoodsTypes(goodsTypeVal);
-	if(data.goodsType == 0){
-		$('#J_fileUploadSS').val(data.uploadUrl);
-		$('.fileUploads span').html(data.uploadUrl);
-		$('input[name="goodsImges2"]').val(data.uploadUrl);
-	}else if(data.goodsType == 1){
-		renderApiInfo(data.apiInfo);
-	}else if(data.goodsType == 2){
-		renderDataModel(data.dataModel);
-	}else if(data.goodsType == 4){
-		renderToolInfo(data.atAloneSoftware);
-	}else if(data.goodsType == 5){
-		renderToolSaasInfo(data.atSaaS);
-	}else if(data.goodsType == 6){
-		renderAppInfo(data.asAloneSoftware)
-	}else if(data.goodsType == 7){
-		renderAppSaasInfo(data.asSaaS)
+	$('#isOffline').val(data.isOffline);
+	if(data.isOffline == 0) {
+		if (data.goodsType == 0) {
+			$('select[name="isOnline"]').val(data.offLineData.isOnline);
+			$('input[name="dataPwd"]').val(data.offLineData.dataPwd);
+			if(data.offLineData.isOnline == 0 ){
+				$('#J_fileUploadSS').val(data.uploadUrl);
+				$('.fileUploads span').html(data.uploadUrl);
+				$('input[name="goodsImges2"]').val(data.uploadUrl);
+			}else{
+				$('input[name="onlineUrl"]').val(data.offLineData.onlineUrl);
+			}
+		} else if (data.goodsType == 1) {
+			renderApiInfo(data.apiInfo);
+		} else if (data.goodsType == 2) {
+			renderDataModel(data.dataModel);
+		} else if (data.goodsType == 4) {
+			renderToolInfo(data.atAloneSoftware);
+		} else if (data.goodsType == 5) {
+			renderToolSaasInfo(data.atSaaS);
+		} else if (data.goodsType == 6) {
+			renderAppInfo(data.asAloneSoftware)
+		} else if (data.goodsType == 7) {
+			renderAppSaasInfo(data.asSaaS)
+		}
+	}else if(data.isOffline == 1){
+		$('.struct.selects').hide();
+		$('.isOffLine-info-box').show();
+		$('.isOffLine-info-box input[name="concatName"]').val(data.offLineInfo.concatName);
+		$('.isOffLine-info-box input[name="concatPhone"]').val(data.offLineInfo.concatPhone);
+		$('.isOffLine-info-box input[name="concatEmail"]').val(data.offLineInfo.concatEmail);
 	}
 
 
@@ -153,6 +168,46 @@ function childrenSelects(that){
 	}else if(childVal == 7){
 		$('.app-info-box').show();
 		$('.app-saas-info').hide();
+	}
+}
+function selectLineInfo(that){
+	var isOffLineVal = $(that).val();
+	var p_val = $('.parentSelect').val();
+	var c_val = null;
+	console.log(c_val)
+	if(isOffLineVal == 1){
+		$('.struct.selects').hide();
+		$('.isOffLine-info-box').show();
+	}else{
+		$('.struct.selects').hide();
+		if(p_val == 100){
+			c_val = $('#childrenSelect1').val();
+			if(c_val == 0){
+				$('.file-info-box').show()
+			}else{
+				$('.api-info-box').show()
+			}
+		}else if(p_val == 300){
+			c_val = $('#childrenSelect2').val();
+			if(c_val == 6){
+				$('.app-info-box').show();
+				$('.app-saas-info').show();
+			}else if(c_val == 7){
+				$('.app-info-box').show();
+				$('.app-saas-info').hide();
+			}
+		}else if(p_val == 400){
+			c_val = $('#childrenSelect3').val();
+			if(c_val == 4){
+				$('.tool-info-box').show();
+				$('.tool-saas-info').show();
+			}else if(c_val == 5){
+				$('.tool-info-box').show();
+				$('.tool-saas-info').hide();
+			}
+		}else if(p_val == 2){
+			$('.dataModel-info-box').show()
+		}
 	}
 }
 function selectGoodsTypes(goodsTypeVal){
@@ -707,6 +762,7 @@ function submitGoodsPublish(){
 	data.goodsDesc = $('#textarea1').val();
 	data.catId = catId; //此ID为url上的id
 	data.isBook = $('input[name="isBook"]:checked').val();
+	data.isOffline = $('select[name="isOffline"]').val(); // 交付方式  0 线上支付；1 线下支付
 	if (data.isBook == 1) {
 		data.onsaleStartDate = $('#indate').val();
 	}
@@ -717,77 +773,101 @@ function submitGoodsPublish(){
 	}else if($('select[name="country"]').val() > 0){
 		data.goodsArea = $('select[name="country"]').val();
 	}
-	if(data.goodsType == 0){
-		data.uploadUrl = $('#J_fileUploadSS').val();
-	}else if (data.goodsType == 1) {//------------------------------
-		data.apiInfo = {};
-		data.apiInfo.apiUrl = $('.api-info-box').find('input[name="apiUrl"]').val();
-		data.apiInfo.apiMethod = $('.api-info-box').find('input[name="apiMethod"]:checked').val();
-		data.apiInfo.reqSample = $('.api-info-box').find('input[name="reqSample"]').val();
-		data.apiInfo.apiDesc = $('.api-info-box').find('#apiDesc').val();
-		data.apiInfo.reqParamList = [];
-		$('table[d-type="requestHtml"] tbody tr').each(function (i, item) {
-			var listData = {};
-			listData.fieldName = $(item).find('input[name="fieldName"]').val();
-			listData.fieldType = $(item).find('select[name="fieldType"]').val();
-			listData.isMust = $(item).find('input[name="isMust' + i + '"]:checked').val();
-			listData.fieldSample = $(item).find('input[name="fieldSample"]').val();
-			listData.fieldDefault = $(item).find('input[name="fieldDefault"]').val();
-			listData.describle = $(item).find('textarea[name="describle"]').val();
-			data.apiInfo.reqParamList.push(listData);
-		});
-		data.apiInfo.respParamList = [];
-		$('table[d-type="returnHtml"] tbody tr').each(function () {
-			var listData = {};
-			listData.fieldName = $(this).find('input[name="fieldName"]').val();
-			listData.fieldType = $(this).find('select[name="fieldType"]').val();
-			listData.describle = $(this).find('textarea[name="describle"]').val();
-			data.apiInfo.respParamList.push(listData);
-		});
-		console.log(data.apiInfo.respParamList);//----------------------
-		data.apiInfo.respSample = $('#respSample').val();
-	}else if(data.goodsType == 2){
-		data.dataModel = {};
-		data.dataModel.complexity = $('input[name="complexity"]').val();
-		data.dataModel.maturity = $('input[name="maturity"]').val();
-		data.dataModel.aexp = $('input[name="aexp"]').val();
-		data.dataModel.modelFile = $('input[name="modelFile"]').val();
-		data.dataModel.configFile = $('input[name="configFile"]').val();
-		data.dataModel.configParams = $('input[name="configParams"]').val();
-		data.dataModel.otherDesc = $('.dataModel-info-box .otherDesc').val();
-	}else if(data.goodsType == 4){
-		data.atAloneSoftware = {};
-		data.atAloneSoftware.aTAloneIndustryField = $('input[name="aTIndustryField"]').val();
-		data.atAloneSoftware.aTAloneVersionDesc = $('input[name="aTVersionDesc"]').val();
-		data.atAloneSoftware.aTAloneToolsIntroduce = $('#aTToolsIntroduce').val();
-		data.atAloneSoftware.aTAloneCloudHardwareResource = $('#aTAloneCloudHardwareResource').val();
-		data.atAloneSoftware.otherDesc = $('.tool-info-box .otherDesc').val();
-	}else if(data.goodsType == 5){
-		data.atSaaS = {};
-		data.atSaaS.aTIndustryField = $('input[name="aTIndustryField"]').val();
-		data.atSaaS.aTVersionDesc = $('input[name="aTVersionDesc"]').val();
-		data.atSaaS.aTToolsIntroduce = $('#aTToolsIntroduce').val();
-		data.atSaaS.otherDesc = $('.tool-info-box .otherDesc').val();
-	}else if(data.goodsType == 6){
-		data.asAloneSoftware = {};
-		data.asAloneSoftware.aSComplexity = $('input[name="aSComplexity"]').val();
-		data.asAloneSoftware.aSVersionDesc = $('input[name="aSVersionDesc"]').val();
-		data.asAloneSoftware.aSServiceLevel = $('input[name="aSServiceLevel"]').val();
-		data.asAloneSoftware.aSAexp = $('input[name="aSAexp"]').val();
-		data.asAloneSoftware.aSAintroduce = $('#aSAintroduce').val();
-		data.asAloneSoftware.aSCloudHardwareResource = $('#aSCloudHardwareResource').val();
-		data.asAloneSoftware.dataAddress = $('input[name="dataAddress"]').val();
-		data.asAloneSoftware.otherDesc = $('.app-info-box .otherDesc').val();
-	}else if(data.goodsType == 7){
-		data.asSaaS = {};
-		data.asSaaS.sSComplexity = $('input[name="aSComplexity"]').val();
-		data.asSaaS.sSVersionDesc = $('input[name="aSVersionDesc"]').val();
-		data.asSaaS.sServiceLevel = $('input[name="aSServiceLevel"]').val();
-		data.asSaaS.sSAexp = $('input[name="aSAexp"]').val();
-		data.asSaaS.sSAintroduce = $('#aSAintroduce').val();
-		data.asSaaS.dataAddress = $('input[name="dataAddress"]').val();
-		data.asSaaS.otherDesc = $('.app-info-box .otherDesc').val();
+	if(data.isOffline) {
+		if (data.goodsType == 0) {
+			data.uploadUrl = $('#J_fileUploadSS').val();
+			data.offLineData = {};
+			data.offLineData.isOnline = $('select[name="isOnline"]').val();
+			data.offLineData.dataPwd = $('input[name="dataPwd"]').val();
+			if(data.offLineData.isOnline == 0){
+				data.offLineData.localUrl = $('#J_fileUploadSS').val();
+			}else{
+				data.offLineData.onlineUrl = $('input[name="onlineUrl"]').val();
+			}
+		} else if (data.goodsType == 1) {//------------------------------
+			data.apiInfo = {};
+			data.apiInfo.apiUrl = $('.api-info-box').find('input[name="apiUrl"]').val();
+			data.apiInfo.apiMethod = $('.api-info-box').find('input[name="apiMethod"]:checked').val();
+			data.apiInfo.reqSample = $('.api-info-box').find('input[name="reqSample"]').val();
+			data.apiInfo.apiDesc = $('.api-info-box').find('#apiDesc').val();
+			data.apiInfo.reqParamList = [];
+			$('table[d-type="requestHtml"] tbody tr').each(function (i, item) {
+				var listData = {};
+				listData.fieldName = $(item).find('input[name="fieldName"]').val();
+				listData.fieldType = $(item).find('select[name="fieldType"]').val();
+				listData.isMust = $(item).find('input[name="isMust' + i + '"]:checked').val();
+				listData.fieldSample = $(item).find('input[name="fieldSample"]').val();
+				listData.fieldDefault = $(item).find('input[name="fieldDefault"]').val();
+				listData.describle = $(item).find('textarea[name="describle"]').val();
+				data.apiInfo.reqParamList.push(listData);
+			});
+			data.apiInfo.respParamList = [];
+			$('table[d-type="returnHtml"] tbody tr').each(function () {
+				var listData = {};
+				listData.fieldName = $(this).find('input[name="fieldNames"]').val();
+				listData.fieldType = $(this).find('select[name="fieldType"]').val();
+				listData.describle = $(this).find('textarea[name="describle"]').val();
+				data.apiInfo.respParamList.push(listData);
+			});
+			console.log(data.apiInfo.respParamList);//----------------------
+			data.apiInfo.respSample = $('#respSample').val();
+		} else if (data.goodsType == 2) {
+			data.dataModel = {};
+			data.dataModel.complexity = $('input[name="complexity"]').val();
+			data.dataModel.maturity = $('input[name="maturity"]').val();
+			data.dataModel.aexp = $('input[name="aexp"]').val();
+			data.dataModel.modelFile = $('input[name="modelFile"]').val();
+			data.dataModel.modelFilePwd = $('input[name="modelFilePwd"]').val();
+			data.dataModel.configFile = $('input[name="configFile"]').val();
+			data.dataModel.configFilePwd = $('input[name="configFilePwd"]').val();
+			data.dataModel.configParams = $('input[name="configParams"]').val();
+			data.dataModel.configParamsPwd = $('input[name="configParamsPwd"]').val();
+			data.dataModel.otherDesc = $('.dataModel-info-box .otherDesc').val();
+			data.dataModel.concatInfo = {};
+			data.dataModel.concatInfo.concatName = $('.dataModel_concat input[name="concatName"]').val();
+			data.dataModel.concatInfo.concatPhone = $('.dataModel_concat input[name="concatPhone"]').val();
+			data.dataModel.concatInfo.concatEmail = $('.dataModel_concat input[name="concatEmail"]').val();
+		} else if (data.goodsType == 4) {
+			data.atAloneSoftware = {};
+			data.atAloneSoftware.aTAloneIndustryField = $('input[name="aTIndustryField"]').val();
+			data.atAloneSoftware.aTAloneVersionDesc = $('input[name="aTVersionDesc"]').val();
+			data.atAloneSoftware.aTAloneToolsIntroduce = $('#aTToolsIntroduce').val();
+			data.atAloneSoftware.aTAloneCloudHardwareResource = $('#aTAloneCloudHardwareResource').val();
+			data.atAloneSoftware.otherDesc = $('.tool-info-box .otherDesc').val();
+			data.atAloneSoftware.dataAddress = $('input[name="dataAddress"]').val();
+		} else if (data.goodsType == 5) {
+			data.atSaaS = {};
+			data.atSaaS.aTIndustryField = $('input[name="aTIndustryField"]').val();
+			data.atSaaS.aTVersionDesc = $('input[name="aTVersionDesc"]').val();
+			data.atSaaS.aTToolsIntroduce = $('#aTToolsIntroduce').val();
+			data.atSaaS.otherDesc = $('.tool-info-box .otherDesc').val();
+			data.atSaaS.dataAddress = $('input[name="dataAddress"]').val();
+		} else if (data.goodsType == 6) {
+			data.asAloneSoftware = {};
+			data.asAloneSoftware.aSComplexity = $('input[name="aSComplexity"]').val();
+			data.asAloneSoftware.aSVersionDesc = $('input[name="aSVersionDesc"]').val();
+			data.asAloneSoftware.aSServiceLevel = $('input[name="aSServiceLevel"]').val();
+			data.asAloneSoftware.aSAexp = $('input[name="aSAexp"]').val();
+			data.asAloneSoftware.aSAintroduce = $('#aSAintroduce').val();
+			data.asAloneSoftware.aSCloudHardwareResource = $('#aSCloudHardwareResource').val();
+			data.asAloneSoftware.dataAddress = $('input[name="dataAddress"]').val();
+			data.asAloneSoftware.otherDesc = $('.app-info-box .otherDesc').val();
+		} else if (data.goodsType == 7) {
+			data.asSaaS = {};
+			data.asSaaS.sSComplexity = $('input[name="aSComplexity"]').val();
+			data.asSaaS.sSVersionDesc = $('input[name="aSVersionDesc"]').val();
+			data.asSaaS.sServiceLevel = $('input[name="aSServiceLevel"]').val();
+			data.asSaaS.sSAexp = $('input[name="aSAexp"]').val();
+			data.asSaaS.sSAintroduce = $('#aSAintroduce').val();
+			data.asSaaS.dataAddress = $('input[name="dataAddress"]').val();
+			data.asSaaS.otherDesc = $('.app-info-box .otherDesc').val();
 
+		}
+	}else{
+		data.offLineInfo = {};
+		data.offLineInfo.concatName= $('.isOffLine-info-box input[name="concatName"]').val();
+		data.offLineInfo.concatPhone= $('.isOffLine-info-box input[name="concatPhone"]').val();
+		data.offLineInfo.concatEmail= $('.isOffLine-info-box input[name="concatEmail"]').val();
 	}
 	// alert(JSON.stringify(data));
 	return data;
@@ -892,6 +972,12 @@ function renderDataModel(dataModel){ //渲染数据模型---2
 	$('.dataModel-info-box input[name="configFiles"]').val(dataModel.configFile);
 	$('.dataModel-info-box input[name="configParams"]').val(dataModel.configParams);
 	$('.dataModel-info-box input[name="configParam"]').val(dataModel.configParams);
+	$('.dataModel-info-box input[name="modelFilePwd"]').val(dataModel.modelFilePwd);
+	$('.dataModel-info-box input[name="configFilePwd"]').val(dataModel.configFilePwd);
+	$('.dataModel-info-box input[name="configParamsPwd"]').val(dataModel.configParamsPwd);
+	$('.dataModel-info-box input[name="concatName"]').val(dataModel.concatInfo.concatName);
+	$('.dataModel-info-box input[name="concatPhone"]').val(dataModel.concatInfo.concatPhone);
+	$('.dataModel-info-box input[name="concatEmail"]').val(dataModel.concatInfo.concatEmail);
 	$('.dataModel-info-box .otherDesc').val(dataModel.otherDesc);
 }
 function renderToolInfo(atAloneSoftware){
@@ -900,12 +986,14 @@ function renderToolInfo(atAloneSoftware){
 	$('.tool-info-box #aTToolsIntroduce').val(atAloneSoftware.aTAloneToolsIntroduce);
 	$('.tool-info-box #aTAloneCloudHardwareResource').val(atAloneSoftware.aTAloneCloudHardwareResource);
 	$('.tool-info-box .otherDesc').val(atAloneSoftware.otherDesc);
+	$('.tool-info-box input[name="dataAddress"]').val(atAloneSoftware.dataAddress);
 }
 function renderToolSaasInfo(atSaaS){
 	$('.tool-info-box input[name="aTIndustryField"]').val(atSaaS.aTIndustryField);
 	$('.tool-info-box input[name="aTVersionDesc"]').val(atSaaS.aTVersionDesc);
 	$('.tool-info-box #aTToolsIntroduce').val(atSaaS.aTToolsIntroduce);
 	$('.tool-info-box .otherDesc').val(atSaaS.otherDesc);
+	$('.tool-info-box input[name="dataAddress"]').val(atSaaS.dataAddress);
 }
 function renderAppInfo(asAloneSoftware){
 	$('.app-info-box input[name="aSComplexity"]').val(asAloneSoftware.aSComplexity);

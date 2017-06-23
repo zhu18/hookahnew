@@ -90,11 +90,11 @@ var htmlPart = {
                                             </select>
                                             <select name="childrenSelect2" class="childrenSelect" onchange="childrenSelects(this)" id="childrenSelect2">
                                                 <option value="6">独立软件</option>
-                                                <option value="7">Saas</option>
+                                                <option value="7">SaaS</option>
                                             </select>
                                             <select name="childrenSelect3" class="childrenSelect" onchange="childrenSelects(this)" id="childrenSelect3">
                                                 <option value="4">独立软件</option>
-                                                <option value="5">Saas</option>
+                                                <option value="5">SaaS</option>
                                             </select>
                                         </div>
                                     </td>
@@ -192,14 +192,106 @@ var htmlPart = {
                                         </div>
                                     </td>
                                 </tr>
-                                <tr class="file-info-box">
-                                    <td class="bar">文件上传：<span class="requireds">*</span></td>
+                                <tr class="">
+                                    <td class="bar">交付方式：<span class="requireds">*</span></td>
+                                    <td>
+                                        <div class="select-box">
+                                            <select name="isOffline" class="isOffline" onchange="selectLineInfo(this)" id="isOffline">
+                                                <option value="0">线上交付</option>
+                                                <option value="1">线下交付</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!--<tr class="file-info-box">-->
+                                    <!--<td class="bar">文件上传：<span class="requireds">*</span></td>-->
+                                    <!--<td>-->
+                                        <!--<div class="fileUploads">-->
+                                            <!--<input type="hidden" id="J_fileUploadSS" required="required" name="fileUploadSS">-->
+                                            <!--<button>选择文件</button><span>未选择任何文件</span>-->
+                                            <!--<input id="fileupload2" type="file" name="filename" multiple="" class="preview-btn">-->
+                                            <!--<input type="text" style="opacity: 0;width:20px;position: absolute"  name="goodsImges2" required="required">-->
+                                        <!--</div>-->
+                                    <!--</td>-->
+                                <!--</tr>-->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="struct selects isOffLine-info-box">
+                            <h1 class="">线下交付信息：</h1>
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td class="bar">联系人：<span class="requireds">*</span></td>
+                                    <td>
+                                        <div class="text-box">
+                                            <input type="text" name="concatName" required="required">
+                                            <span class="input-count"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar">电话：<span class="requireds">*</span></td>
+                                    <td>
+                                        <div class="text-box">
+                                            <input type="text" name="concatPhone" required="required">
+                                            <span class="input-count"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar">邮箱：<span class="requireds">*</span></td>
+                                    <td>
+                                        <div class="text-box">
+                                            <input type="text" name="concatEmail" required="required">
+                                            <span class="input-count"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="struct selects file-info-box">
+                            <h1>离线数据:</h1>
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td class="bar">数据来源：<span class="requireds">*</span></td>
+                                    <td>
+                                        <div class="select-box">
+                                            <select name="isOnline" class="isOnline" onchange="selector_offLine_fn(this)" id="isOnline">
+                                                <option value="0">数据上传</option>
+                                                <option value="1">数据地址</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="selector_offLine selector_offLine_upLoad">
+                                    <td class="bar">数据上传：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="fileUploads">
                                             <input type="hidden" id="J_fileUploadSS" required="required" name="fileUploadSS">
                                             <button>选择文件</button><span>未选择任何文件</span>
                                             <input id="fileupload2" type="file" name="filename" multiple="" class="preview-btn">
                                             <input type="text" style="opacity: 0;width:20px;position: absolute"  name="goodsImges2" required="required">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="selector_offLine selector_offLine_input" style="display: none">
+                                    <td class="bar">数据地址：<span class="requireds">*</span></td>
+                                    <td>
+                                        <div class="text-box">
+                                            <input type="text" name="onlineUrl" required="required">
+                                            <span class="input-count"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="">
+                                    <td class="bar">数据包密码：</td>
+                                    <td>
+                                        <div class="text-box">
+                                            <input type="text" name="dataPwd">
+                                            <span class="input-count"></span>
                                         </div>
                                     </td>
                                 </tr>
@@ -419,6 +511,15 @@ var htmlPart = {
                                                 </td>
                                             </tr>
                                             <tr>
+                                                <td class="bar">模型文件密码：</td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="modelFilePwd">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
                                                 <td class="bar">配置文件：<span class="requireds">*</span></td>
                                                 <td>
                                                     <div class="text-box readonlyInput">
@@ -434,6 +535,15 @@ var htmlPart = {
                                                 </td>
                                             </tr>
                                             <tr>
+                                                <td class="bar">配置文件密码：</td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="configFilePwd">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
                                                 <td class="bar">配置参数：<span class="requireds">*</span></td>
                                                 <td>
                                                     <div class="text-box readonlyInput">
@@ -445,6 +555,51 @@ var htmlPart = {
                                                         </a>
                                                         <div style="clear: both"></div>
                                                         <div class="readonlyWrap"></div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">配置参数密码：</td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="configParamsPwd">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr class="dataModel_concat">
+                                    <td class="bar"><h3>联系方式：</h3></td>
+                                    <td>
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td class="bar">联系姓名：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="concatName" required="required">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">联系电话：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="concatPhone" required="required">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">联系邮件：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="concatEmail" required="required">
+                                                        <span class="input-count"></span>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -534,12 +689,12 @@ var htmlPart = {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="bar"><h3>数据地址：</h3></td>
+                                    <td class="bar"><h3>下载地址：</h3></td>
                                     <td>
                                         <table>
                                             <tbody>
                                             <tr>
-                                                <td class="bar">数据地址：<span class="requireds">*</span></td>
+                                                <td class="bar">下载地址：<span class="requireds">*</span></td>
                                                 <td>
                                                     <div class="text-box">
                                                         <input type="text" name="dataAddress" required="required">
@@ -626,6 +781,24 @@ var htmlPart = {
                                                 <td colspan="1000">
                                                     <div class="textarea-box">
                                                         <textarea id="aTToolsIntroduce"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar"><h3>下载地址：</h3></td>
+                                    <td>
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td class="bar">下载地址：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="dataAddress" required="required">
+                                                        <span class="input-count"></span>
                                                     </div>
                                                 </td>
                                             </tr>
