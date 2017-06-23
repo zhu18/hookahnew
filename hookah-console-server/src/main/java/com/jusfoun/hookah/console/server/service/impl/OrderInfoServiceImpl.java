@@ -706,6 +706,11 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     }
 
     @Override
+    public void updateConcatInfo(MgOrderGoods mgOrderGoods){
+
+    }
+
+    @Override
     public Map getRemark(MgOrderGoods mgOrderGoods){
         OrderInfoVo orderInfoVo = mgOrderInfoService.selectById(mgOrderGoods.getOrderId());
         List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
@@ -730,13 +735,14 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                         //Saas，独立部署商品
                         if (mgOrderGood.getIsOffline() == 0){
                             map.put("data",mgOrderGood.getRemark());
-                            if (mgOrderGood.getGoodsType() == 7){
+                            map.put("ConcatInfo",mgOrderGood.getDataModel().getConcatInfo());
+                            if (mgOrderGood.getGoodsType() == 7){ //应用场景--saas
                                 map.put("url",mgOrderGood.getAsSaaS());
-                            }else if (mgOrderGood.getGoodsType() == 5){
+                            }else if (mgOrderGood.getGoodsType() == 5){ //分析工具--saas
                                 map.put("url",mgOrderGood.getAtSaaS());
-                            }else if (mgOrderGood.getGoodsType() == 4){
+                            }else if (mgOrderGood.getGoodsType() == 4){ //分析工具--独立软件
                                 map.put("url",mgOrderGood.getAtAloneSoftware());
-                            }else {
+                            }else { //应用场景--独立软件
                                 map.put("url",mgOrderGood.getAsAloneSoftware());
                             }
                         }else {
