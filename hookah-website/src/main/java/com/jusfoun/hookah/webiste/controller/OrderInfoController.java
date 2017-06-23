@@ -578,15 +578,15 @@ public class OrderInfoController extends BaseController {
     @RequestMapping(value = "/order/getRemark", method = RequestMethod.GET)
     @ResponseBody
     public ReturnData getRemark(MgOrderGoods mgOrderGoods){
-        String remark = new String();
+        Map map = new HashMap();
         try {
             if (StringUtils.isNotBlank(mgOrderGoods.getOrderId()) && StringUtils.isNotBlank(mgOrderGoods.getGoodsId())){
-                remark = orderInfoService.getRemark(mgOrderGoods);
+                map = orderInfoService.getRemark(mgOrderGoods);
             }
         }catch (Exception e){
             logger.info(e.getMessage());
             return ReturnData.error("加载失败");
         }
-        return ReturnData.success(remark);
+        return ReturnData.success(map);
     }
 }

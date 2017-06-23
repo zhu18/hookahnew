@@ -131,6 +131,13 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         return orderinfo;
     }
 
+    /**
+     * 购物车生成订单
+     * @param cart
+     * @param orderInfo
+     * @return
+     * @author jsshao
+     */
     private MgOrderGoods getMgOrderGoodsByCart(CartVo cart,OrderInfo orderInfo) {
         MgOrderGoods og = new MgOrderGoods();
         BeanUtils.copyProperties(cart.getGoods(),og);
@@ -150,10 +157,23 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         og.setGoodsType(cart.getGoods().getGoodsType());
         og.setIsOnsale(cart.getGoods().getIsOnsale());
         og.setRemark("");
+        og.setIsOffline(cart.getGoods().getIsOffline());
+        og.setOffLineInfo(cart.getGoods().getOffLineInfo());
+        og.setOffLineData(cart.getGoods().getOffLineData());
+        og.setDataModel(cart.getGoods().getDataModel());
 //		og.setSendNumber(cart.getS);
         return og;
     }
 
+    /**
+     * 直接购买生成订单
+     * @param goods
+     * @param format
+     * @param goodsNumber
+     * @param orderInfo
+     * @return
+     * @author jsshao
+     */
     private MgOrderGoods getMgOrderGoodsByGoodsFormat(GoodsVo goods, MgGoods.FormatBean format, Long goodsNumber,OrderInfo orderInfo) {
         MgOrderGoods og = new MgOrderGoods();
         og.setDiscountFee(0L);
@@ -174,6 +194,10 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         og.setPayTime(orderInfo.getPayTime());
         og.setOrderSn(orderInfo.getOrderSn());
         og.setRemark("");
+        og.setIsOffline(goods.getIsOffline());
+        og.setOffLineInfo(goods.getOffLineInfo());
+        og.setOffLineData(goods.getOffLineData());
+        og.setDataModel(goods.getDataModel());
         //og.setMarketPrice(goods.getShopPrice());
 //		og.setSendNumber(cart.getS);
         return og;
@@ -431,7 +455,14 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     }
 
 
-
+    /**
+     * 订单详情
+     * @param pageNum
+     * @param pageSize
+     * @param filters
+     * @param orderBys
+     * @return
+     */
     @Override
     public Pagination<OrderInfoVo> getDetailListInPage(Integer pageNum, Integer pageSize, List<Condition> filters,
                                            List<OrderBy> orderBys) {
@@ -663,22 +694,48 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     public void updateMgOrderGoodsRemark(MgOrderGoods mgOrderGoods){
         String orderId = mgOrderGoods.getOrderId();
         String goodsId = mgOrderGoods.getGoodsId();
-        List<Condition> filter = new ArrayList<>();
-        filter.add(Condition.eq("orderGoodsList.goodsId",goodsId));
         OrderInfoVo orderInfoVo = mgOrderInfoService.selectById(orderId);
-        mgOrderInfoService.updateByConditionSelective(orderInfoVo,filter);
+        List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
+        for (MgOrderGoods mgOrderGood:goodsList) {
+            if (mgOrderGood.getGoodsId().equals(goodsId)){
+                mgOrderGood.setRemark(mgOrderGoods.getRemark());
+            }
+        }
+        mongoTemplate.save(orderInfoVo);
     }
 
     @Override
-    public String getRemark(MgOrderGoods mgOrderGoods){
+    public Map getRemark(MgOrderGoods mgOrderGoods){
         OrderInfoVo orderInfoVo = mgOrderInfoService.selectById(mgOrderGoods.getOrderId());
         List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
+        Map map = new HashMap();
         String remark = null;
         for (MgOrderGoods mgOrderGood:goodsList) {
             if (mgOrderGood.getGoodsId().equals(mgOrderGoods.getGoodsId())){
-                remark = mgOrderGood.getRemark();
+                switch (mgOrderGood.getGoodsType()){
+                    case 0:case 1:case 2:
+                        if (mgOrderGood.getIsOffline() == 0){
+                            //获取商品
+                            if (mgOrderGood.getGoodsType() == 0){
+                                map.put("data",mgOrderGood.getOffLineData());
+                            }else if (mgOrderGood.getGoodsType() == 2){
+                                map.put("data",mgOrderGood.getDataModel());
+                            }
+                        }else {
+                            map.put("data",mgOrderGood.getOffLineInfo());
+                        }
+                        break;
+                    case 4:case 5:case 6:case 7:
+                        //Saas，独立部署商品
+                        if (mgOrderGood.getIsOffline() == 0){
+                            map.put("data",mgOrderGood.getRemark());
+                        }else {
+                            map.put("data",mgOrderGood.getOffLineInfo());
+                        }
+                        break;
+                }
             }
         }
-        return remark;
+        return map;
     }
 }

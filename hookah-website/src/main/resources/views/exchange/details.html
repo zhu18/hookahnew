@@ -139,9 +139,12 @@ var htmlPart = {
 				<div class="table-title">
 					<ul>
 						<li class="grid-left active">详情介绍</li>
-						<%if(goodsDetails.goodsType == 1){%>
-						<li class="grid-left">API详情</li>
-						<li class="grid-left">返回参数</li>
+						<%if(goodsDetails.isOffline == 0){%>
+							<%if(goodsDetails.goodsType == 1){%>
+							<li class="grid-left">API详情</li>
+							<li class="grid-left">返回参数</li>
+							<%}%>
+						<%} else if (goodsDetails.isOffline == 1) {%>
 						<%}%>
 						<%if(goodsDetails.goodsType == 2){%>
 						<li class="grid-left">数据模型</li>
@@ -159,66 +162,69 @@ var htmlPart = {
 					<div class="table-item active detail margin-bottom-10" id="J_goodsDesc">
 						${goodsDetails.goodsDesc}
 					</div>
-					<%if(goodsDetails.goodsType == 1){%>
-					<div class="table-item">
-						<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
-						<table class="tab-one">
-							<caption><h3>标示信息</h3></caption>
-							<tr>
-								<td>接口地址：</td>
-								<td>${goodsDetails.apiInfo.apiUrl}</td>
-							</tr>
-							<tr>
-								<td>请求方式：</td>
-								<td>${goodsDetails.apiInfo.apiMethod}</td>
-							</tr>
-							<tr>
-								<td>请求示例：</td>
-								<td>${goodsDetails.apiInfo.reqSample}</td>
-							</tr>
-							<tr>
-								<td>接口描述：</td>
-								<td>${goodsDetails.apiInfo.apiDesc}</td>
-							</tr>
-						</table>
-						<table class="tab-two margin-top-20 margin-bottom-40">
-							<caption><h3>请求参数</h3></caption>
-							<tr>
-								<th>名称</th>
-								<th>类型</th>
-								<th>必填</th>
-								<th>示例值</th>
-								<th>默认值</th>
-								<th>描述</th>
-							</tr>
-							<%for(items in goodsDetails.apiInfo.reqParamList){%>
-							<tr>
-								<td>${items.fieldName}</td>
-								<td>${items.fieldType}</td>
-								<td>${decode(items.isMust,"0","否","1","是","未知")}</td>
-								<td>${items.fieldSample}</td>
-								<td>${items.fieldDefault}</td>
-								<td>${items.describle}</td>
-							</tr>
-							<%}%>
-						</table>
-					</div>
-					<!--返回参数-->
-					<div class="table-item margin-bottom-10" >
-						<table>
-							<caption><h3>返回参数</h3></caption>
-							<tr>
-								<th>字段</th>
-								<th>说明</th>
-							</tr>
-							<%for(items in goodsDetails.apiInfo.respParamList){%>
-							<tr>
-								<td>${items.fieldName}</td>
-								<td>${items.describle}</td>
-							</tr>
-							<%}%>
-						</table>
-					</div>
+					<%if(goodsDetails.isOffline == 0){%>
+						<%if(goodsDetails.goodsType == 1){%>
+						<div class="table-item">
+							<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
+							<table class="tab-one">
+								<caption><h3>标示信息</h3></caption>
+								<tr>
+									<td>接口地址：</td>
+									<td>${goodsDetails.apiInfo.apiUrl}</td>
+								</tr>
+								<tr>
+									<td>请求方式：</td>
+									<td>${goodsDetails.apiInfo.apiMethod}</td>
+								</tr>
+								<tr>
+									<td>请求示例：</td>
+									<td>${goodsDetails.apiInfo.reqSample}</td>
+								</tr>
+								<tr>
+									<td>接口描述：</td>
+									<td>${goodsDetails.apiInfo.apiDesc}</td>
+								</tr>
+							</table>
+							<table class="tab-two margin-top-20 margin-bottom-40">
+								<caption><h3>请求参数</h3></caption>
+								<tr>
+									<th>名称</th>
+									<th>类型</th>
+									<th>必填</th>
+									<th>示例值</th>
+									<th>默认值</th>
+									<th>描述</th>
+								</tr>
+								<%for(items in goodsDetails.apiInfo.reqParamList){%>
+								<tr>
+									<td>${items.fieldName}</td>
+									<td>${items.fieldType}</td>
+									<td>${decode(items.isMust,"0","否","1","是","未知")}</td>
+									<td>${items.fieldSample}</td>
+									<td>${items.fieldDefault}</td>
+									<td>${items.describle}</td>
+								</tr>
+								<%}%>
+							</table>
+						</div>
+						<!--返回参数-->
+						<div class="table-item margin-bottom-10" >
+							<table>
+								<caption><h3>返回参数</h3></caption>
+								<tr>
+									<th>字段</th>
+									<th>说明</th>
+								</tr>
+								<%for(items in goodsDetails.apiInfo.respParamList){%>
+								<tr>
+									<td>${items.fieldName}</td>
+									<td>${items.describle}</td>
+								</tr>
+								<%}%>
+							</table>
+						</div>
+						<%}%>
+					<%} else if (goodsDetails.isOffline == 1) {%>
 					<%}%>
 					<%if(goodsDetails.goodsType == 2){%>
 					<div class="table-item">
