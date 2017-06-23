@@ -787,7 +787,7 @@ function submitGoodsPublish(){
 	}else if($('select[name="country"]').val() > 0){
 		data.goodsArea = $('select[name="country"]').val();
 	}
-	if(data.isOffline) {
+	if(data.isOffline == 0) {
 		if (data.goodsType == 0) {
 			data.uploadUrl = $('#J_fileUploadSS').val();
 			data.offLineData = {};
