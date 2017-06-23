@@ -64,6 +64,14 @@ public class MgOrderGoods extends GoodsVo {
 
     private String remark;
 
+    private String payInfoUserName;
+
+    private String payInfoPassword;
+
+    private String payInfoSerialNumber;
+
+    private String payInfoFileUrl;
+
 
 
 
@@ -687,5 +695,37 @@ public class MgOrderGoods extends GoodsVo {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getPayInfoUserName() {
+        return payInfoUserName;
+    }
+
+    public void setPayInfoUserName(String payInfoUserName) {
+        this.payInfoUserName = payInfoUserName;
+    }
+
+    public String getPayInfoPassword() {
+        return payInfoPassword;
+    }
+
+    public void setPayInfoPassword(String payInfoPassword) {
+        this.payInfoPassword = payInfoPassword;
+    }
+
+    public String getPayInfoSerialNumber() {
+        return payInfoSerialNumber;
+    }
+
+    public void setPayInfoSerialNumber(String payInfoSerialNumber) {
+        this.payInfoSerialNumber = payInfoSerialNumber;
+    }
+
+    public String getPayInfoFileUrl() {
+        return payInfoFileUrl;
+    }
+
+    public void setPayInfoFileUrl(String payInfoFileUrl) {
+        this.payInfoFileUrl = payInfoFileUrl;
     }
 }

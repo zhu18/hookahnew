@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.console.server.api.order;
 
 import com.jusfoun.hookah.console.server.controller.BaseController;
+import com.jusfoun.hookah.console.server.service.impl.GoodsServiceImpl;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.User;
@@ -11,6 +12,7 @@ import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
+import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.OrderInfoService;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -90,13 +92,13 @@ public class OrderApi extends BaseController{
     }
 
     /**
-     * 订单商品修改备注
+     * 订单商品修改交付信息
      * @param mgOrderGoods
      * @return
      * @author lt
      */
-    @RequestMapping(value = "/updRemark", method = RequestMethod.GET)
-    public ReturnData updateOrderDetail(MgOrderGoods mgOrderGoods){
+    @RequestMapping(value = "/updRemark", method = RequestMethod.POST)
+    public ReturnData updateRemark(MgOrderGoods mgOrderGoods){
         try {
             if (StringUtils.isNotBlank(mgOrderGoods.getOrderId()) && StringUtils.isNotBlank(mgOrderGoods.getGoodsId())){
                 orderInfoService.updateMgOrderGoodsRemark(mgOrderGoods);
@@ -109,7 +111,29 @@ public class OrderApi extends BaseController{
     }
 
     /**
-     * 订单商品获取备注
+     * 订单商品修改联系信息
+     * @param mgOrderGoods
+     * @return
+     * @author lt
+     */
+    @RequestMapping(value = "/updConcatInfo", method = RequestMethod.POST)
+    public ReturnData updateConcatInfo(MgOrderGoods mgOrderGoods){
+        try {
+            if (StringUtils.isNotBlank(mgOrderGoods.getOrderId()) && StringUtils.isNotBlank(mgOrderGoods.getGoodsId())){
+                GoodsServiceImpl goodsService = new GoodsServiceImpl();
+                goodsService.changeConcatInfo(mgOrderGoods.getGoodsId(),mgOrderGoods.getIsOffline(),
+                        mgOrderGoods.getGoodsType(),mgOrderGoods.getDataModel().getConcatInfo());
+                orderInfoService.updateConcatInfo(mgOrderGoods);
+            }
+        }catch (Exception e){
+            logger.info(e.getMessage());
+            return ReturnData.error(e.getMessage());
+        }
+        return ReturnData.success();
+    }
+
+    /**
+     * 订单商品获取交付信息
      * @param mgOrderGoods
      * @return
      * @author lt
