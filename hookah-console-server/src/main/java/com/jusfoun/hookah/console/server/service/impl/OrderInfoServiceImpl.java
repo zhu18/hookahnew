@@ -698,7 +698,8 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
         for (MgOrderGoods mgOrderGood:goodsList) {
             if (mgOrderGood.getGoodsId().equals(goodsId)){
-                mgOrderGood.setRemark(mgOrderGoods.getRemark());
+                String remark = mgOrderGoods.getRemark();
+
             }
         }
         mongoTemplate.save(orderInfoVo);
@@ -729,6 +730,15 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                         //Saas，独立部署商品
                         if (mgOrderGood.getIsOffline() == 0){
                             map.put("data",mgOrderGood.getRemark());
+                            if (mgOrderGood.getGoodsType() == 7){
+                                map.put("url",mgOrderGood.getAsSaaS());
+                            }else if (mgOrderGood.getGoodsType() == 5){
+                                map.put("url",mgOrderGood.getAtSaaS());
+                            }else if (mgOrderGood.getGoodsType() == 4){
+                                map.put("url",mgOrderGood.getAtAloneSoftware());
+                            }else {
+                                map.put("url",mgOrderGood.getAsAloneSoftware());
+                            }
                         }else {
                             map.put("data",mgOrderGood.getOffLineInfo());
                         }
