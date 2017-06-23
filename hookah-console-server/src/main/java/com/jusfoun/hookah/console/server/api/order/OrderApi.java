@@ -121,8 +121,8 @@ public class OrderApi extends BaseController{
         try {
             if (StringUtils.isNotBlank(mgOrderGoods.getOrderId()) && StringUtils.isNotBlank(mgOrderGoods.getGoodsId())){
                 GoodsServiceImpl goodsService = new GoodsServiceImpl();
-                goodsService.changeConcatInfo(mgOrderGoods.getGoodsId(),mgOrderGoods.getIsOffline(),
-                        mgOrderGoods.getGoodsType(),mgOrderGoods.getDataModel().getConcatInfo());
+//                goodsService.changeConcatInfo(mgOrderGoods.getGoodsId(),mgOrderGoods.getIsOffline(),
+//                        mgOrderGoods.getGoodsType(),mgOrderGoods.getDataModel().getConcatInfo());
                 orderInfoService.updateConcatInfo(mgOrderGoods);
             }
         }catch (Exception e){
