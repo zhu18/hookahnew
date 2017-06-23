@@ -64,7 +64,7 @@ public class HookahConstants {
     public static final String CACHE_GOODS_ATTR = "goodsAttrInfo";//商品属性
     public static final String CACHE_GOODS_AREA = "regionInfo";//地域信息
 
-    /**  */
+    /** 商品状态 */
     public static final Byte GOODS_STATUS_DELETE = 0;
     public static final Byte GOODS_STATUS_UNDELETE = 1;
     public static final Byte GOODS_STATUS_ONSALE = 1;
@@ -73,6 +73,17 @@ public class HookahConstants {
     public static final Byte GOODS_CHECK_STATUS_WAIT = 0;
     public static final Byte GOODS_CHECK_STATUS_YES = 1;
     public static final Byte GOODS_CHECK_STATUS_NOT = 2;
+
+    public static final Byte GOODS_ON_LINE = 0;//线上支付
+    public static final Byte GOODS_OFF_LINE = 1;//线下支付
+
+    public static final Byte GOODS_TYPE_0 = 0;//离线数据
+    public static final Byte GOODS_TYPE_1 = 1;//API
+    public static final Byte GOODS_TYPE_2 = 2;//数据模型
+    public static final Byte GOODS_TYPE_3 = 4;//分析工具--独立软件
+    public static final Byte GOODS_TYPE_5 = 5;//分析工具--SaaS
+    public static final Byte GOODS_TYPE_6 = 6;//应用场景--独立软件
+    public static final Byte GOODS_TYPE_7 = 7;//应用场景--SaaS
 
     /** 此字段用于比较当前时间与onsaleStartDate关系，选出非预约上架的商品 */
     public static final String ONSALE_START_DATE_FILEDNAME = "onsaleStartDate";
