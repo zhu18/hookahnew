@@ -179,7 +179,7 @@ export default angular.module('Common', [
     return function (input) {
       switch (input) {
         case 0:
-          return '常规商品';
+          return '离线数据';
           break;
         case 1:
           return 'API';
