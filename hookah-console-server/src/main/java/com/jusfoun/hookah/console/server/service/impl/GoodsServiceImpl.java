@@ -97,6 +97,8 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         mgGoods.setAtSaaS(obj.getAtSaaS());
         mgGoods.setDataModel(obj.getDataModel());
         mgGoods.setClickRate((long) 0);
+        mgGoods.setOffLineData(obj.getOffLineData());
+        mgGoods.setOffLineInfo(obj.getOffLineInfo());
         mongoTemplate.insert(mgGoods);
     }
 
@@ -159,6 +161,8 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             mgGoods.setAtAloneSoftware(obj.getAtAloneSoftware());
             mgGoods.setAtSaaS(obj.getAtSaaS());
             mgGoods.setDataModel(obj.getDataModel());
+            mgGoods.setOffLineData(obj.getOffLineData());
+            mgGoods.setOffLineInfo(obj.getOffLineInfo());
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.eq("goodsId", obj.getGoodsId()));
             MgGoods mgGoods1 = mgGoodsService.selectOne(filters);
@@ -370,6 +374,8 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             goodsVo.setAtSaaS(mgGoods.getAtSaaS());
             goodsVo.setDataModel(mgGoods.getDataModel());
             goodsVo.setClickRate(mgGoods.getClickRate());
+            goodsVo.setOffLineData(mgGoods.getOffLineData());
+            goodsVo.setOffLineInfo(mgGoods.getOffLineInfo());
         }
         goodsVo.setCatName(DictionaryUtil.getCategoryById(goodsVo.getCatId()) == null
                 ? "" : DictionaryUtil.getCategoryById(goodsVo.getCatId()).getCatName());
@@ -413,6 +419,8 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             goodsVo.setAtSaaS(mgGoods.getAtSaaS());
             goodsVo.setDataModel(mgGoods.getDataModel());
             goodsVo.setClickRate(mgGoods.getClickRate());
+            goodsVo.setOffLineData(mgGoods.getOffLineData());
+            goodsVo.setOffLineInfo(mgGoods.getOffLineInfo());
         }
         goodsVo.setCatName(DictionaryUtil.getCategoryById(goodsVo.getCatId()) == null
                 ? "" : DictionaryUtil.getCategoryById(goodsVo.getCatId()).getCatName());

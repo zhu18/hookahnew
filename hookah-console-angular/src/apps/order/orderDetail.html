@@ -27,6 +27,7 @@
       <th class="text-center">数量</th>
       <th class="text-center">小计</th>
       <th class="text-center">商品类型</th>
+      <th class="text-center">备注</th>
     </tr>
     </thead>
     <tbody class="text-center">
@@ -49,6 +50,9 @@
       <td>¥{{goods.goodsNumber * goods.goodsPrice / 100}}</td>
       <td>
         <span text-length="50" ng-bind="goods.goodsType | goodsType"></span>
+      </td>
+      <td>
+        <button class="btn btn-primary"></button>
       </td>
       <!--<td class="operate text-center">-->
       <!--&lt;!&ndash;<a href="${host.website}/exchange/details?id='goods.goodsId'" class="buy btn-full-blue display-inline-block">再次购买</a>&ndash;&gt;-->

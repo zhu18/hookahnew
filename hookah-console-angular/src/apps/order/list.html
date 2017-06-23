@@ -32,8 +32,9 @@
             <tr>
               <th class="text-center">序号</th>
               <th class="text-center">订单编号</th>
-              <th class="text-center">买方姓名</th>
-              <th class="text-center">买方类型</th>
+              <th class="text-center">买家账号</th>
+              <th class="text-center">实名认证</th>
+              <th class="text-center">类型</th>
               <th class="text-center">订单金额</th>
               <th class="text-center">支付状态</th>
               <th class="text-center">订单时间</th>
@@ -48,6 +49,9 @@
                 <a  ui-sref="order.viewOrderDetails" ng-click="getDetails($event,item.orderId)" >
                   <span text-length="50" ng-bind="item.orderSn"></span>
                 </a>
+              </td>
+              <td>
+                <span text-length="50" ng-bind="item.userName | limitTo:20"></span>
               </td>
               <td>
                 <span text-length="50" ng-bind="item.realName | limitTo:20" title="{{item.realName}}"></span>

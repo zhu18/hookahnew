@@ -62,6 +62,8 @@ public class MgOrderGoods extends GoodsVo {
 
     private Long formatNumber;
 
+    private String remark;
+
 
 
 
@@ -677,4 +679,13 @@ public class MgOrderGoods extends GoodsVo {
 //    public void setIsOnsale(Byte isOnsale) {
 //        this.isOnsale = isOnsale;
 //    }
+
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 }

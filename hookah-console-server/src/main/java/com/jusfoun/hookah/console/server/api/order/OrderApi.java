@@ -4,6 +4,7 @@ import com.jusfoun.hookah.console.server.controller.BaseController;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
@@ -74,7 +75,6 @@ public class OrderApi extends BaseController{
         OrderInfoVo vo = new OrderInfoVo();
         List list = new ArrayList();
         try{
-            String a = new String();
             vo = orderInfoService.findDetailById(orderId);
             User user = userService.selectById(vo.getUserId());
             list.add(vo);
@@ -85,6 +85,45 @@ public class OrderApi extends BaseController{
             return ReturnData.error(e.getMessage());
         }
         return ReturnData.success(list);
+    }
+
+    /**
+     * 订单商品修改备注
+     * @param mgOrderGoods
+     * @return
+     * @author lt
+     */
+    @RequestMapping(value = "/updRemark", method = RequestMethod.POST)
+    public ReturnData updateOrderDetail(@RequestParam MgOrderGoods mgOrderGoods){
+        try {
+            if (StringUtils.isNotBlank(mgOrderGoods.getOrderId()) && StringUtils.isNotBlank(mgOrderGoods.getGoodsId())){
+                orderInfoService.updateMgOrderGoodsRemark(mgOrderGoods);
+            }
+        }catch (Exception e){
+            logger.info(e.getMessage());
+            return ReturnData.error(e.getMessage());
+        }
+        return ReturnData.success();
+    }
+
+    /**
+     * 订单商品获取备注
+     * @param mgOrderGoods
+     * @return
+     * @author lt
+     */
+    @RequestMapping(value = "/getRemark", method = RequestMethod.GET)
+    public ReturnData getOrderDetail(MgOrderGoods mgOrderGoods){
+        String remark = new String();
+        try {
+            if (StringUtils.isNotBlank(mgOrderGoods.getOrderId()) && StringUtils.isNotBlank(mgOrderGoods.getGoodsId())){
+                remark = orderInfoService.getRemark(mgOrderGoods);
+            }
+        }catch (Exception e){
+            logger.info(e.getMessage());
+            return ReturnData.error(e.getMessage());
+        }
+        return ReturnData.success(remark);
     }
 
 }

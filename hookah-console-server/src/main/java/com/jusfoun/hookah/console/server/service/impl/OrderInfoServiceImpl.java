@@ -149,6 +149,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         og.setSourceId(cart.getGoods().getSourceId());
         og.setGoodsType(cart.getGoods().getGoodsType());
         og.setIsOnsale(cart.getGoods().getIsOnsale());
+        og.setRemark("");
 //		og.setSendNumber(cart.getS);
         return og;
     }
@@ -172,6 +173,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         og.setIsReal(0);
         og.setPayTime(orderInfo.getPayTime());
         og.setOrderSn(orderInfo.getOrderSn());
+        og.setRemark("");
         //og.setMarketPrice(goods.getShopPrice());
 //		og.setSendNumber(cart.getS);
         return og;
@@ -655,5 +657,28 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         map.put("isDelete",isDeleted.size());
         map.put("userCount",userCount);
         return map;
+    }
+
+    @Override
+    public void updateMgOrderGoodsRemark(MgOrderGoods mgOrderGoods){
+        String orderId = mgOrderGoods.getOrderId();
+        String goodsId = mgOrderGoods.getGoodsId();
+        List<Condition> filter = new ArrayList<>();
+        filter.add(Condition.eq("orderGoodsList.goodsId",goodsId));
+        OrderInfoVo orderInfoVo = mgOrderInfoService.selectById(orderId);
+        mgOrderInfoService.updateByConditionSelective(orderInfoVo,filter);
+    }
+
+    @Override
+    public String getRemark(MgOrderGoods mgOrderGoods){
+        OrderInfoVo orderInfoVo = mgOrderInfoService.selectById(mgOrderGoods.getOrderId());
+        List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
+        String remark = null;
+        for (MgOrderGoods mgOrderGood:goodsList) {
+            if (mgOrderGood.getGoodsId().equals(mgOrderGoods.getGoodsId())){
+                remark = mgOrderGood.getRemark();
+            }
+        }
+        return remark;
     }
 }
