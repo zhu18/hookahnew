@@ -597,14 +597,14 @@ function submitGoodsPublish(){
 			data.atAloneSoftware.aTAloneToolsIntroduce = $('#aTToolsIntroduce').val();
 			data.atAloneSoftware.aTAloneCloudHardwareResource = $('#aTAloneCloudHardwareResource').val();
 			data.atAloneSoftware.otherDesc = $('.tool-info-box .otherDesc').val();
-			data.atAloneSoftware.dataAddress = $('input[name="dataAddress"]').val();
+			data.atAloneSoftware.dataAddress = $('.tool-info-box input[name="dataAddress"]').val();
 		} else if (data.goodsType == 5) {
 			data.atSaaS = {};
 			data.atSaaS.aTIndustryField = $('input[name="aTIndustryField"]').val();
 			data.atSaaS.aTVersionDesc = $('input[name="aTVersionDesc"]').val();
 			data.atSaaS.aTToolsIntroduce = $('#aTToolsIntroduce').val();
 			data.atSaaS.otherDesc = $('.tool-info-box .otherDesc').val();
-			data.atSaaS.dataAddress = $('input[name="dataAddress"]').val();
+			data.atSaaS.dataAddress = $('.tool-info-box input[name="dataAddress"]').val();
 		} else if (data.goodsType == 6) {
 			data.asAloneSoftware = {};
 			data.asAloneSoftware.aSComplexity = $('input[name="aSComplexity"]').val();
@@ -613,7 +613,7 @@ function submitGoodsPublish(){
 			data.asAloneSoftware.aSAexp = $('input[name="aSAexp"]').val();
 			data.asAloneSoftware.aSAintroduce = $('#aSAintroduce').val();
 			data.asAloneSoftware.aSCloudHardwareResource = $('#aSCloudHardwareResource').val();
-			data.asAloneSoftware.dataAddress = $('input[name="dataAddress"]').val();
+			data.asAloneSoftware.dataAddress = $('.app-info-box input[name="dataAddress"]').val();
 			data.asAloneSoftware.otherDesc = $('.app-info-box .otherDesc').val();
 		} else if (data.goodsType == 7) {
 			data.asSaaS = {};
@@ -622,7 +622,7 @@ function submitGoodsPublish(){
 			data.asSaaS.sServiceLevel = $('input[name="aSServiceLevel"]').val();
 			data.asSaaS.sSAexp = $('input[name="aSAexp"]').val();
 			data.asSaaS.sSAintroduce = $('#aSAintroduce').val();
-			data.asSaaS.dataAddress = $('input[name="dataAddress"]').val();
+			data.asSaaS.dataAddress = $('.app-info-box input[name="dataAddress"]').val();
 			data.asSaaS.otherDesc = $('.app-info-box .otherDesc').val();
 
 		}
