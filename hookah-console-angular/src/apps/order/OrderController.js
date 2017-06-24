@@ -94,7 +94,7 @@ class ShelfController {
               modalInstance = $rootScope.openConfirmDialogModal(modalDom);
 
             } else if (goodsType == 4 || goodsType == 6) { //独立软件 手动填写数据  TODO:安装包下载地址暂时没有
-              var proSoftDom = "<h4>商品交付信息：</h4><h5>安装包下载地址：<span>http://www.google.com</span></h5><h5>序列号：<input type='text' value='" + res.data.data.payInfoSerialNumber + "'></h5><h5>许可文件获取地址：<input type='text' value='" + res.data.data.payInfoFileUrl + "'></h5>";//独立部署软件
+              var proSoftDom = "<h4>商品交付信息：</h4><h5>安装包下载地址：<span>" + res.data.data.url.dataAddress + "</span></h5><h5>序列号：<input type='text' value='" + res.data.data.payInfoSerialNumber + "'></h5><h5>许可文件获取地址：<input type='text' value='" + res.data.data.payInfoFileUrl + "'></h5>";//独立部署软件
               modalInstance = $rootScope.openConfirmDialogModal(proSoftDom);
 
             } else if (goodsType == 5 || goodsType == 7) { //SaaS  手动填写数据
