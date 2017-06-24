@@ -681,6 +681,7 @@ public class MgGoods extends GenericModel {
         private String aTAloneVersionDesc;       // 版本说明
         private String aTAloneToolsIntroduce;       // 工具介绍
         private String aTAloneCloudHardwareResource;  // 云硬件资源
+        private String dataAddress;//数据地址
         private String otherDesc;
 
         public String getaTAloneIndustryField() {
@@ -721,6 +722,14 @@ public class MgGoods extends GenericModel {
 
         public void setOtherDesc(String otherDesc) {
             this.otherDesc = otherDesc;
+        }
+
+        public String getDataAddress() {
+            return dataAddress;
+        }
+
+        public void setDataAddress(String dataAddress) {
+            this.dataAddress = dataAddress;
         }
     }
 
