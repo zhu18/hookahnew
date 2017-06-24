@@ -156,6 +156,10 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         og.setSourceId(cart.getGoods().getSourceId());
         og.setGoodsType(cart.getGoods().getGoodsType());
         og.setIsOnsale(cart.getGoods().getIsOnsale());
+//        og.setAtAloneSoftware(cart.getGoods().getAtAloneSoftware());
+//        og.setAsAloneSoftware(cart.getGoods().getAsAloneSoftware());
+//        og.setAtSaaS(cart.getGoods().getAtSaaS());
+//        og.setAsSaaS(cart.getGoods().getAsSaaS());
         og.setRemark("");
         og.setIsOffline(cart.getGoods().getIsOffline());
         og.setOffLineInfo(cart.getGoods().getOffLineInfo());
@@ -197,6 +201,10 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         og.setIsReal(0);
         og.setPayTime(orderInfo.getPayTime());
         og.setOrderSn(orderInfo.getOrderSn());
+//        og.setAtAloneSoftware(goods.getAtAloneSoftware());
+//        og.setAsAloneSoftware(goods.getAsAloneSoftware());
+//        og.setAtSaaS(goods.getAtSaaS());
+//        og.setAsSaaS(goods.getAsSaaS());
         og.setRemark("");
         og.setIsOffline(goods.getIsOffline());
         og.setOffLineInfo(goods.getOffLineInfo());
@@ -724,10 +732,10 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                     case 2:
                         String concatName = data[0];
                         String concatPhone = data[1];
-                        String concatEmail = data[3];
-                        mgOrderGood.getOffLineInfo().setConcatName(concatName);
-                        mgOrderGood.getOffLineInfo().setConcatPhone(concatPhone);
-                        mgOrderGood.getOffLineInfo().setConcatEmail(concatEmail);
+                        String concatEmail = data[2];
+                        mgOrderGood.getDataModel().getConcatInfo().setConcatName(concatName);
+                        mgOrderGood.getDataModel().getConcatInfo().setConcatPhone(concatPhone);
+                        mgOrderGood.getDataModel().getConcatInfo().setConcatEmail(concatEmail);
                 }
             }
         }
@@ -759,41 +767,98 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                 switch (mgOrderGood.getGoodsType()){
                     case 0:case 1:case 2:
                         if (mgOrderGood.getIsOffline() == 0){
-                            //获取商品
-                            if (mgOrderGood.getGoodsType() == 0){
+                            if (mgOrderGood.getGoodsType() == 0){  //离线数据包
+                                if (mgOrderGood.getOffLineData().getIsOnline().equals("0")){
+                                    String localUrl = mgOrderGood.getOffLineData().getLocalUrl();
+                                    mgOrderGood.getOffLineData().setLocalUrl("http://static.qddata.com.cn" + localUrl);
+                                }
                                 map.put("data",mgOrderGood.getOffLineData());
-                            }else if (mgOrderGood.getGoodsType() == 2){
+                            }else if (mgOrderGood.getGoodsType() == 2){  //数据模型
+                                String configFile = mgOrderGood.getDataModel().getConfigFile();
+                                String configParams = mgOrderGood.getDataModel().getConfigParams();
+                                String modelFile = mgOrderGood.getDataModel().getModelFile();
+                                if (!configFile.contains("http")){
+                                    configFile = "http://static.qddata.com.cn" + configFile;
+                                    mgOrderGood.getDataModel().setConfigFile(configFile);
+                                }
+                                if (!configParams.contains("http")){
+                                    configParams = "http://static.qddata.com.cn" + configParams;
+                                    mgOrderGood.getDataModel().setConfigParams(configParams);
+                                }
+                                if (!modelFile.contains("http")){
+                                    modelFile = "http://static.qddata.com.cn" + modelFile;
+                                    mgOrderGood.getDataModel().setModelFile(modelFile);
+                                }
                                 map.put("data",mgOrderGood.getDataModel());
                             }
                         }else {
                             map.put("data",mgOrderGood.getOffLineInfo());
                         }
                         break;
-                    case 4:case 5:case 6:case 7:
-                        //Saas，独立部署商品
+                    case 4:  //分析工具--独立软件
                         if (mgOrderGood.getIsOffline() == 0){
                             map.put("data",mgOrderGood.getRemark());
-                            if (mgOrderGood.getGoodsType() == 7){ //应用场景--saas
-                                map.put("url",mgOrderGood.getAsSaaS());
-                                map.put("payInfoUserName",mgOrderGood.getPayInfoUserName());
-                                map.put("payInfoPassword",mgOrderGood.getPayInfoPassword());
-                            }else if (mgOrderGood.getGoodsType() == 5){ //分析工具--saas
-                                map.put("url",mgOrderGood.getAtSaaS());
-                                map.put("payInfoUserName",mgOrderGood.getPayInfoUserName());
-                                map.put("payInfoPassword",mgOrderGood.getPayInfoPassword());
-                            }else if (mgOrderGood.getGoodsType() == 4){ //分析工具--独立软件
-                                map.put("url",mgOrderGood.getAtAloneSoftware());
-                                map.put("payInfoFileUrl",mgOrderGood.getPayInfoFileUrl());
-                                map.put("payInfoSerialNumber",mgOrderGood.getPayInfoSerialNumber());
-                            }else { //应用场景--独立软件
-                                map.put("url",mgOrderGood.getAsAloneSoftware());
-                                map.put("payInfoFileUrl",mgOrderGood.getPayInfoFileUrl());
-                                map.put("payInfoSerialNumber",mgOrderGood.getPayInfoSerialNumber());
-                            }
+                            map.put("url",mgOrderGood.getAtAloneSoftware());
+                            map.put("payInfoFileUrl",mgOrderGood.getPayInfoFileUrl());
+                            map.put("payInfoSerialNumber",mgOrderGood.getPayInfoSerialNumber());
                         }else {
                             map.put("data",mgOrderGood.getOffLineInfo());
                         }
                         break;
+                    case 5:  //分析工具--saas
+                        if (mgOrderGood.getIsOffline() == 0){
+                            map.put("data",mgOrderGood.getRemark());
+                            map.put("url",mgOrderGood.getAtSaaS());
+                            map.put("payInfoUserName",mgOrderGood.getPayInfoUserName());
+                            map.put("payInfoPassword",mgOrderGood.getPayInfoPassword());
+                        }else {
+                            map.put("data",mgOrderGood.getOffLineInfo());
+                        }
+                        break;
+                    case 6:  //应用场景--独立软件
+                        if (mgOrderGood.getIsOffline() == 0){
+                            map.put("data",mgOrderGood.getRemark());
+                            map.put("url",mgOrderGood.getAsAloneSoftware());
+                            map.put("payInfoFileUrl",mgOrderGood.getPayInfoFileUrl());
+                            map.put("payInfoSerialNumber",mgOrderGood.getPayInfoSerialNumber());
+                        }else {
+                            map.put("data",mgOrderGood.getOffLineInfo());
+                        }
+                        break;
+                    case 7:  //应用场景--saas
+                        if (mgOrderGood.getIsOffline() == 0){
+                            map.put("data",mgOrderGood.getRemark());
+                            map.put("url",mgOrderGood.getAsSaaS());
+                            map.put("payInfoUserName",mgOrderGood.getPayInfoUserName());
+                            map.put("payInfoPassword",mgOrderGood.getPayInfoPassword());
+                        }else {
+                            map.put("data",mgOrderGood.getOffLineInfo());
+                        }
+                        break;
+//                        //Saas，独立部署商品
+//                        if (mgOrderGood.getIsOffline() == 0){
+//                            map.put("data",mgOrderGood.getRemark());
+//                            if (mgOrderGood.getGoodsType() == 7){ //应用场景--saas
+//                                map.put("url",mgOrderGood.getAsSaaS());
+//                                map.put("payInfoUserName",mgOrderGood.getPayInfoUserName());
+//                                map.put("payInfoPassword",mgOrderGood.getPayInfoPassword());
+//                            }else if (mgOrderGood.getGoodsType() == 5){ //分析工具--saas
+//                                map.put("url",mgOrderGood.getAtSaaS());
+//                                map.put("payInfoUserName",mgOrderGood.getPayInfoUserName());
+//                                map.put("payInfoPassword",mgOrderGood.getPayInfoPassword());
+//                            }else if (mgOrderGood.getGoodsType() == 4){ //分析工具--独立软件
+//                                map.put("url",mgOrderGood.getAtAloneSoftware());
+//                                map.put("payInfoFileUrl",mgOrderGood.getPayInfoFileUrl());
+//                                map.put("payInfoSerialNumber",mgOrderGood.getPayInfoSerialNumber());
+//                            }else { //应用场景--独立软件
+//                                map.put("url",mgOrderGood.getAsAloneSoftware());
+//                                map.put("payInfoFileUrl",mgOrderGood.getPayInfoFileUrl());
+//                                map.put("payInfoSerialNumber",mgOrderGood.getPayInfoSerialNumber());
+//                            }
+//                        }else {
+//                            map.put("data",mgOrderGood.getOffLineInfo());
+//                        }
+//                        break;
                 }
             }
         }
