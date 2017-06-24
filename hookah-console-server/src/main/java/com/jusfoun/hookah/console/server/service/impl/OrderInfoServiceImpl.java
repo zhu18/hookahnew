@@ -707,11 +707,27 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         for (MgOrderGoods mgOrderGood:goodsList) {
             if (mgOrderGood.getGoodsId().equals(goodsId)){
                 String remark = mgOrderGoods.getRemark();
+                String[] data = remark.split(",");
                 switch (mgOrderGood.getGoodsType()){
                     case 5:case 7:
-                        String[] data = remark.split(",");
                         String name = data[0];
                         String password = data[1];
+                        mgOrderGood.setPayInfoUserName(name);
+                        mgOrderGood.setPayInfoPassword(password);
+                        break;
+                    case 4:case 6:
+                        String serialNumber = data[0];
+                        String fileUrl = data[1];
+                        mgOrderGood.setPayInfoFileUrl(fileUrl);
+                        mgOrderGood.setPayInfoSerialNumber(serialNumber);
+                        break;
+                    case 2:
+                        String concatName = data[0];
+                        String concatPhone = data[1];
+                        String concatEmail = data[3];
+                        mgOrderGood.getOffLineInfo().setConcatName(concatName);
+                        mgOrderGood.getOffLineInfo().setConcatPhone(concatPhone);
+                        mgOrderGood.getOffLineInfo().setConcatEmail(concatEmail);
                 }
             }
         }
