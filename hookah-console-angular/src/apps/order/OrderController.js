@@ -81,8 +81,8 @@ class ShelfController {
                 tempUrl = res.data.data.data.onlineUrl;
               }
               var pruDom = "<h4>商品交付信息：</h4>" +
-                "<h5>离线数据包下载地址：<span>" + tempUrl + "</span></h5>" +
-                "<h5>数据包解压密码：<span>" + res.data.data.data.dataPwd + "</span></h5>"; //离线数据包
+                "<h5>离线数据包下载地址：<a target='_blank' style='text-decoration: underline;color:blue; ' href='" + tempUrl + "'>下载</a></h5>" +
+                "<h5>数据包解压密码：<span>" + res.data.data.data.dataPwd + "</span></h5>"; //离线数据包 
               modalInstance = $rootScope.openConfirmDialogModal(pruDom);
 
 
@@ -176,25 +176,19 @@ class ShelfController {
       /*
        switch (goodsType) {
        case 0:
-       return '常规商品'; //离线数据包
-       break;
+       return '常规商品'; //离线数据包    数据源-离线数据
        case 1:
-       return 'API'; //不做修改  下载
-       break;
+       return 'API'; //不做修改  下载     数据源-API
        case 2:
-       return '数据模型';//模型
-       break;
+       return '数据模型';//模型       模型
        case 4:
-       return '分析工具--独立软件';//独立部署软件
-       break;
+       return '分析工具--独立软件';//独立部署软件     分析工具-独立部署软件
        case 5:
-       return '分析工具--SaaS';//saas
-       break;
+       return '分析工具--SaaS';//saas          分析工具-SaaS
        case 6:
-       return '应用场景--独立软件';//独立部署软件
-       break;
+       return '应用场景--独立软件';//独立部署软件     应用场景-独立部署软件
        case 7:
-       return '应用场景--SaaS'; //saas
+       return '应用场景--SaaS'; //saas    应用场景-SaaS
        break;
        }
        */

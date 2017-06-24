@@ -24,8 +24,8 @@ function loadPageData(data) {
       html += '<thead>';
       html += '<tr>';
       html += '<th class="" style="width: 280px;">' + '订单号:' + list[i].orderSn + '</th>';
-      html += '<th class="text-align-left">创建时间:' + list[i].addTime + '</th>';
-      html += '<th></th>';
+      html += '<th class="text-align-left"  colspan=2 style="position: relative;">创建时间:' + list[i].addTime + '</th>';
+      // html += '<th></th>';
       html += '<th colspan="2" style="width:190px;">总额:￥' + (list[i].orderAmount / 100).toFixed(2) + '</th>';
       html += '</tr>';
       html += '</thead>';
@@ -45,7 +45,43 @@ function loadPageData(data) {
             break;
         }
         var catidS = (goods[ii].catId).substring(0, 3);
-
+        var isOfflineInfo='';
+        var goodsTypeInfo='';
+        if(goods[ii].goodsType==0){
+           goodsTypeInfo="数据源-离线数据"
+        }else if(goods[ii].goodsType==1){
+           goodsTypeInfo="数据源-API"
+        }else if(goods[ii].goodsType==2){
+           goodsTypeInfo="模型"
+        }else if(goods[ii].goodsType==4){
+           goodsTypeInfo="分析工具-独立部署软件"
+        }else if(goods[ii].goodsType==5){
+           goodsTypeInfo="分析工具-SaaS"
+        }else if(goods[ii].goodsType==6){
+           goodsTypeInfo="应用场景-独立部署软件"
+        }else if(goods[ii].goodsType==7){
+           goodsTypeInfo="应用场景-SaaS"
+        }
+        if(goods[ii].isOffline==1){
+          isOfflineInfo="交付方式：线上"
+        }else if(goods[ii].isOffline==0){
+          isOfflineInfo="交付方式：线下"
+        }
+      /*case 0:
+        return '常规商品'; //离线数据包    数据源-离线数据
+      case 1:
+        return 'API'; //不做修改  下载     数据源-API
+      case 2:
+        return '数据模型';//模型       模型
+      case 4:
+        return '分析工具--独立软件';//独立部署软件     分析工具-独立部署软件
+      case 5:
+        return '分析工具--SaaS';//saas          分析工具-SaaS
+      case 6:
+        return '应用场景--独立软件';//独立部署软件     应用场景-独立部署软件
+      case 7:
+        return '应用场景--SaaS'; //saas    应用场景-SaaS
+        break;*/
         html += '<tr class="content border-bottom">';
         html += '<td class="text-align-center" style="width: 280px;">';
         html += '<div class="p-img">';
@@ -57,7 +93,8 @@ function loadPageData(data) {
         html += '<a href="/exchange/details?id=' + goods[ii].goodsId + '" target="_blank">' + goods[ii].goodsName + '</a>';
         html += '</div>';
         html += '</td>';
-        html += '<td class="text-align-left">x' + goods[ii].goodsNumber + '<br/><br/>' + '规格:' + (goods[ii].goodsPrice / 100).toFixed(2) + '/' + mMat + '</td>';
+        html += '<td class="text-align-left">x' + goods[ii].goodsNumber +
+          '<br/>' + '规格:' + (goods[ii].goodsPrice / 100).toFixed(2) + '/' + mMat + '<br />'+ goodsTypeInfo+ '<br />'+ isOfflineInfo+'</td>';
         // html += '<td><a href="/exchange/orderEndDetails?id='+goods[ii].goodsId+'&orderSn='+list[i].orderSn+'">下载<br/><span class="fa fa-download font-size-18"></span></a></td>';
         /*
          if (catidS == '104') {
@@ -66,10 +103,10 @@ function loadPageData(data) {
          */
         // html += '<td><a href="javascript:getDataPackageD(\'' + goods[ii].goodsId + '\' , \'' + goods[ii].sourceId + '\',\'' + list[i].orderSn + '\');">获取密钥<br/><span class="fa fa-download font-size-18"></span></a></td>';
         if(goods[ii].goodsType == 1){ //如果是API产品 点击下载
-          html += '<td><a href="javascript:getDataPackageD(\'' + goods[ii].goodsId + '\' , \'' + goods[ii].sourceId + '\',\'' + list[i].orderSn + '\');">获取密钥<br/><span class="fa fa-download font-size-18"></span></a></td>';
+          html += '<td><a href="javascript:getDataPackageD(\'' + goods[ii].goodsId + '\' , \'' + goods[ii].sourceId + '\',\'' + list[i].orderSn + '\');">交付信息<br/><span class="fa fa-download font-size-18"></span></a></td>';
 
         }else{
-          html += '<td><a href="javascript:getKey(\'' + goods[ii].goodsId + '\' , \'' + goods[ii].sourceId + '\',\'' + list[i].orderId + '\',\'' + goods[ii].goodsType + '\',\'' + goods[ii].isOffline + '\');">获取密钥<br/><span class="fa fa-download font-size-18"></span></a></td>';
+          html += '<td><a href="javascript:getKey(\'' + goods[ii].goodsId + '\' , \'' + goods[ii].sourceId + '\',\'' + list[i].orderId + '\',\'' + goods[ii].goodsType + '\',\'' + goods[ii].isOffline + '\');">交付信息<br/><span class="fa fa-download font-size-18"></span></a></td>';
 
         }
 
@@ -258,7 +295,7 @@ function getKey(goodsId, sourceId, orderId, goodsType, isOffline) {
             }
             tempHtml = '<div class="confirmKey"><h4>您获取的商品密钥为：</h4>\
            <div>\
-             <h5>&nbsp;&nbsp;离线数据包下载地址：<span>' + tempUrl + '</span></h5>\
+             <h5>&nbsp;&nbsp;离线数据包下载地址：<a target="_blank" style="text-decoration: underline;color:blue; " href="' + tempUrl + '">下载</a></h5>\
              <h5>&nbsp;&nbsp;数据包解压密码：<span>' + data.data.data.dataPwd + '</span></h5>\
            </div></div>'
           } else if (goodsType == 1) { //API
