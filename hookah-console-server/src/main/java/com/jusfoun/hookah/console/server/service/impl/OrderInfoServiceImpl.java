@@ -707,8 +707,11 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         for (MgOrderGoods mgOrderGood:goodsList) {
             if (mgOrderGood.getGoodsId().equals(goodsId)){
                 String remark = mgOrderGoods.getRemark();
-                if (mgOrderGood.getGoodsType() == 7){
-                    String name = "";
+                switch (mgOrderGood.getGoodsType()){
+                    case 5:case 7:
+                        String[] data = remark.split(",");
+                        String name = data[0];
+                        String password = data[1];
                 }
             }
         }
@@ -721,9 +724,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
         for (MgOrderGoods mgOrderGood:goodsList) {
             if (mgOrderGood.getGoodsId().equals(goodsId)){
-                mgOrderGood.getDataModel().getConcatInfo().setConcatName(concatName);
-                mgOrderGood.getDataModel().getConcatInfo().setConcatPhone(concatPhone);
-                mgOrderGood.getDataModel().getConcatInfo().setConcatEmail(concatEmail);
+                mgOrderGood.getOffLineInfo().setConcatPhone(concatPhone);
+                mgOrderGood.getOffLineInfo().setConcatEmail(concatEmail);
+                mgOrderGood.getOffLineInfo().setConcatName(concatName);
             }
         }
         mongoTemplate.save(orderInfoVo);
