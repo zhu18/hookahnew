@@ -74,5 +74,5 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
      */
     Map getRemark(MgOrderGoods mgOrderGoods);
 
-    void updateConcatInfo(MgOrderGoods mgOrderGoods);
+    void updateConcatInfo(String orderId,String goodsId,String concatName,String concatPhone,String concatEmail);
 }

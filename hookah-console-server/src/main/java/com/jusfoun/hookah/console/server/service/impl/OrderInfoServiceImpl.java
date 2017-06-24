@@ -708,7 +708,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             if (mgOrderGood.getGoodsId().equals(goodsId)){
                 String remark = mgOrderGoods.getRemark();
                 if (mgOrderGood.getGoodsType() == 7){
-
+                    String name = "";
                 }
             }
         }
@@ -716,15 +716,17 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     }
 
     @Override
-    public void updateConcatInfo(MgOrderGoods mgOrderGoods){
-        OrderInfoVo orderInfoVo = mgOrderInfoService.selectById(mgOrderGoods.getOrderId());
+    public void updateConcatInfo(String orderId,String goodsId,String concatName,String concatPhone,String concatEmail){
+        OrderInfoVo orderInfoVo = mgOrderInfoService.selectById(orderId);
         List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
         for (MgOrderGoods mgOrderGood:goodsList) {
-            if (mgOrderGood.getGoodsId().equals(mgOrderGoods.getGoodsId())){
-                mgOrderGood.getDataModel().setConcatInfo(mgOrderGoods.getDataModel().getConcatInfo());
+            if (mgOrderGood.getGoodsId().equals(goodsId)){
+                mgOrderGood.getDataModel().getConcatInfo().setConcatName(concatName);
+                mgOrderGood.getDataModel().getConcatInfo().setConcatPhone(concatPhone);
+                mgOrderGood.getDataModel().getConcatInfo().setConcatEmail(concatEmail);
             }
         }
-        mongoTemplate.save(mgOrderGoods);
+        mongoTemplate.save(orderInfoVo);
     }
 
     @Override

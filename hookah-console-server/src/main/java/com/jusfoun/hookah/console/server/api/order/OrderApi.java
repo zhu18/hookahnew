@@ -112,24 +112,24 @@ public class OrderApi extends BaseController{
 
     /**
      * 订单商品修改联系信息
-     * @param mgOrderGoods
+     * @param
      * @return
      * @author lt
      */
     @RequestMapping(value = "/updConcatInfo", method = RequestMethod.POST)
-    public ReturnData updateConcatInfo(MgOrderGoods mgOrderGoods){
+    public ReturnData updateConcatInfo(String orderId,String goodsId,String concatName,String concatPhone,String concatEmail){
         try {
-            if (StringUtils.isNotBlank(mgOrderGoods.getOrderId()) && StringUtils.isNotBlank(mgOrderGoods.getGoodsId())){
+            if (StringUtils.isNotBlank(orderId) && StringUtils.isNotBlank(goodsId)){
                 GoodsServiceImpl goodsService = new GoodsServiceImpl();
 //                goodsService.changeConcatInfo(mgOrderGoods.getGoodsId(),mgOrderGoods.getIsOffline(),
 //                        mgOrderGoods.getGoodsType(),mgOrderGoods.getDataModel().getConcatInfo());
-                orderInfoService.updateConcatInfo(mgOrderGoods);
+                orderInfoService.updateConcatInfo(orderId,goodsId,concatName,concatPhone,concatEmail);
             }
         }catch (Exception e){
             logger.info(e.getMessage());
             return ReturnData.error(e.getMessage());
         }
-        return ReturnData.success();
+        return ReturnData.success("修改成功");
     }
 
     /**
