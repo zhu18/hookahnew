@@ -65,7 +65,14 @@ function loadPageData(data) {
          } else {
          */
         // html += '<td><a href="javascript:getDataPackageD(\'' + goods[ii].goodsId + '\' , \'' + goods[ii].sourceId + '\',\'' + list[i].orderSn + '\');">获取密钥<br/><span class="fa fa-download font-size-18"></span></a></td>';
-        html += '<td><a href="javascript:getKey(\'' + goods[ii].goodsId + '\' , \'' + goods[ii].sourceId + '\',\'' + list[i].orderId + '\',\'' + goods[ii].goodsType + '\',\'' + goods[ii].isOffline + '\');">获取密钥<br/><span class="fa fa-download font-size-18"></span></a></td>';
+        if(goods[ii].goodsType == 1){ //如果是API产品 点击下载
+          html += '<td><a href="javascript:getDataPackageD(\'' + goods[ii].goodsId + '\' , \'' + goods[ii].sourceId + '\',\'' + list[i].orderSn + '\');">获取密钥<br/><span class="fa fa-download font-size-18"></span></a></td>';
+
+        }else{
+          html += '<td><a href="javascript:getKey(\'' + goods[ii].goodsId + '\' , \'' + goods[ii].sourceId + '\',\'' + list[i].orderId + '\',\'' + goods[ii].goodsType + '\',\'' + goods[ii].isOffline + '\');">获取密钥<br/><span class="fa fa-download font-size-18"></span></a></td>';
+
+        }
+
         // }
         html += '<td style="width:190px;" class="">金额:￥&nbsp;' + ((goods[ii].goodsPrice / 100) * goods[ii].goodsNumber).toFixed(2) + '<br/><br/>' + list[i].payName + '</td>';//订单总金额
         // html += '<td class="text-align-center">';
@@ -243,9 +250,15 @@ function getKey(goodsId, sourceId, orderId, goodsType, isOffline) {
         if (isOffline == 0) {
 
           if (goodsType == 0) {
+            var tempUrl = null;
+            if (data.data.data.isOnline == 0) {
+              tempUrl = data.data.data.localUrl;
+            } else {
+              tempUrl = data.data.data.onlineUrl;
+            }
             tempHtml = '<div class="confirmKey"><h4>您获取的商品密钥为：</h4>\
            <div>\
-             <h5>&nbsp;&nbsp;离线数据包下载地址：<span>' + data.data.data.onlineUrl + '</span></h5>\
+             <h5>&nbsp;&nbsp;离线数据包下载地址：<span>' + tempUrl + '</span></h5>\
              <h5>&nbsp;&nbsp;数据包解压密码：<span>' + data.data.data.dataPwd + '</span></h5>\
            </div></div>'
           } else if (goodsType == 1) { //API
@@ -255,11 +268,11 @@ function getKey(goodsId, sourceId, orderId, goodsType, isOffline) {
               "<h5>联系人姓名：<span>" + data.data.data.concatInfo.concatName + "</span></h5>" +
               "<h5>联系人电话：<span>" + data.data.data.concatInfo.concatPhone + "</span></h5>" +
               "<h5>联系人邮箱：<span>" + data.data.data.concatInfo.concatEmail + "</span></h5>" +
-              "<h5>模型文件：<span>" + data.data.data.modelFile + "</span></h5>" +
+              "<h5>模型文件：<span><a style='color:blue; text-decoration: underline' target='_blank' href='" + data.data.data.modelFile + "'>下载</a></span></h5>" +
               "<h5>模型文件密码：<span>" + data.data.data.modelFilePwd + "</span></h5>" +
-              "<h5>配置文件：<span>" + data.data.data.configFile + "</span></h5>" +
+              "<h5>配置文件：<span><a style='color:blue; text-decoration: underline' target='_blank' href='" + data.data.data.configFile + "'>下载</a></span></h5>" +
               "<h5>配置文件密码：<span>" + data.data.data.configFilePwd + "</span></h5>" +
-              "<h5>配置参数：<span>" + data.data.data.configParams + "</span></h5>" +
+              "<h5>配置参数：<span><a style='color:blue; text-decoration: underline' target='_blank' href='" + data.data.data.configParams + "'>下载</a></span></h5>" +
               "<h5>配置参数密码：<span>" + data.data.data.configParamsPwd + "</span></h5></div>"
             ;
 

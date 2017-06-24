@@ -56,12 +56,12 @@ class ShelfController {
       history.back();
     };
     $scope.search();
-    $scope.remark = function (goodsId, orderId, goodsType, isOffline) {
+    $scope.remark = function (goodsId, orderId, goodsType, isOffline, goods) {
       console.log("goodsId：" + goodsId, "orderId：" + orderId, "goodsType：" + goodsType, "isOffline：" + isOffline);
       var inserDOM = null;
       var modalInstance = null;
 
-      var promiseGet01 = $http({ //请求支付信息
+      var promiseGet01 = $http({ //请求备注信息
         method: 'get',
         url: $rootScope.site.apiServer + "/api/order/getRemark",
         params: {
@@ -74,10 +74,17 @@ class ShelfController {
         if (isOffline == 0) {
           if (res.data.code == 1) {
             if (goodsType == 0) { //常规商品
+              var tempUrl = null;
+              if (res.data.data.data.isOnline == 0) {
+                tempUrl = res.data.data.data.localUrl;
+              } else {
+                tempUrl = res.data.data.data.onlineUrl;
+              }
               var pruDom = "<h4>商品交付信息：</h4>" +
-                "<h5>离线数据包下载地址：<span>" + res.data.data.data.onlineUrl + "</span></h5>" +
-                "<h5>数据包解压密码：<span>" + res.data.data.data.dataPwd + "</span></h5>";//离线数据包
+                "<h5>离线数据包下载地址：<span>" + tempUrl + "</span></h5>" +
+                "<h5>数据包解压密码：<span>" + res.data.data.data.dataPwd + "</span></h5>"; //离线数据包
               modalInstance = $rootScope.openConfirmDialogModal(pruDom);
+
 
             } else if (goodsType == 1) { //API
               return false;
@@ -86,11 +93,11 @@ class ShelfController {
                   "<h5>联系人姓名：<input type='text' id='J_val01' value='" + res.data.data.data.concatInfo.concatName + "'></h5>" +
                   "<h5>联系人电话：<input type='text' id='J_val02' value='" + res.data.data.data.concatInfo.concatPhone + "'></h5>" +
                   "<h5>联系人邮箱：<input type='text' id='J_val03' value='" + res.data.data.data.concatInfo.concatEmail + "'></h5>" +
-                  "<h5>模型文件：<span>" + res.data.data.data.modelFile + "</span></h5>" +
+                  "<h5>模型文件：<a target='_blank' href='" + res.data.data.data.modelFile + "'>下载</a></h5>" +
                   "<h5>模型文件密码：<span>" + res.data.data.data.modelFilePwd + "</span></h5>" +
-                  "<h5>配置文件：<span>" + res.data.data.data.configFile + "</span></h5>" +
+                  "<h5>配置文件：<a target='_blank' href='" + res.data.data.data.configFile + "'>下载</a></h5>" +
                   "<h5>配置文件密码：<span>" + res.data.data.data.configFilePwd + "</span></h5>" +
-                  "<h5>配置参数：<span>" + res.data.data.data.configParams + "</span></h5>" +
+                  "<h5>配置参数：<a target='_blank' href='" + res.data.data.data.configParams + "'>下载</a></h5>" +
                   "<h5>配置参数密码：<span>" + res.data.data.data.configParamsPwd + "</span></h5>"
                 ;
               modalInstance = $rootScope.openConfirmDialogModal(modalDom);
@@ -110,7 +117,7 @@ class ShelfController {
               modalInstance = $rootScope.openConfirmDialogModal(sassDom);
             }
           } else {
-            console.log('other') ;
+            console.log('other');
           }
         } else { //线下
           var offlineDom = "<h4>线下交付联系方式：</h4>" +
@@ -122,28 +129,28 @@ class ShelfController {
         }
 
         modalInstance.result.then(function () { //模态点确定
-          var promise=null;
-          if(isOffline == 0){
+          var promise = null;
+          if (isOffline == 0) {
             promise = $http({
               method: 'POST',
               url: $rootScope.site.apiServer + "/api/order/updRemark",
               params: {
                 goodsId: goodsId,
                 orderId: orderId,
-                remark: $('#J_val01').val()+','+$('#J_val02').val()+','+$('#J_val03').val()
+                remark: $('#J_val01').val() + ',' + $('#J_val02').val() + ',' + $('#J_val03').val()
               }
             });
 
-          }else{
+          } else {
             promise = $http({
               method: 'POST',
               url: $rootScope.site.apiServer + "/api/order/updConcatInfo",
               params: {
                 goodsId: goodsId,
                 orderId: orderId,
-                concatName:$('#J_concatName').val(),
-                concatPhone:$('#J_concatPhone').val(),
-                concatEmail:$('#J_concatEmail').val()
+                concatName: $('#J_concatName').val(),
+                concatPhone: $('#J_concatPhone').val(),
+                concatEmail: $('#J_concatEmail').val()
               }
             });
           }
@@ -172,7 +179,7 @@ class ShelfController {
        return '常规商品'; //离线数据包
        break;
        case 1:
-       return 'API'; //不做修改
+       return 'API'; //不做修改  下载
        break;
        case 2:
        return '数据模型';//模型
