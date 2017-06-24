@@ -161,6 +161,10 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         og.setOffLineInfo(cart.getGoods().getOffLineInfo());
         og.setOffLineData(cart.getGoods().getOffLineData());
         og.setDataModel(cart.getGoods().getDataModel());
+        og.setPayInfoFileUrl("");
+        og.setPayInfoPassword("");
+        og.setPayInfoSerialNumber("");
+        og.setPayInfoUserName("");
 //		og.setSendNumber(cart.getS);
         return og;
     }
@@ -198,6 +202,10 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         og.setOffLineInfo(goods.getOffLineInfo());
         og.setOffLineData(goods.getOffLineData());
         og.setDataModel(goods.getDataModel());
+        og.setPayInfoFileUrl("");
+        og.setPayInfoPassword("");
+        og.setPayInfoSerialNumber("");
+        og.setPayInfoUserName("");
         //og.setMarketPrice(goods.getShopPrice());
 //		og.setSendNumber(cart.getS);
         return og;
@@ -698,7 +706,43 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
         for (MgOrderGoods mgOrderGood:goodsList) {
             if (mgOrderGood.getGoodsId().equals(goodsId)){
-                mgOrderGood.setRemark(mgOrderGoods.getRemark());
+                String remark = mgOrderGoods.getRemark();
+                String[] data = remark.split(",");
+                switch (mgOrderGood.getGoodsType()){
+                    case 5:case 7:
+                        String name = data[0];
+                        String password = data[1];
+                        mgOrderGood.setPayInfoUserName(name);
+                        mgOrderGood.setPayInfoPassword(password);
+                        break;
+                    case 4:case 6:
+                        String serialNumber = data[0];
+                        String fileUrl = data[1];
+                        mgOrderGood.setPayInfoFileUrl(fileUrl);
+                        mgOrderGood.setPayInfoSerialNumber(serialNumber);
+                        break;
+                    case 2:
+                        String concatName = data[0];
+                        String concatPhone = data[1];
+                        String concatEmail = data[3];
+                        mgOrderGood.getOffLineInfo().setConcatName(concatName);
+                        mgOrderGood.getOffLineInfo().setConcatPhone(concatPhone);
+                        mgOrderGood.getOffLineInfo().setConcatEmail(concatEmail);
+                }
+            }
+        }
+        mongoTemplate.save(orderInfoVo);
+    }
+
+    @Override
+    public void updateConcatInfo(String orderId,String goodsId,String concatName,String concatPhone,String concatEmail){
+        OrderInfoVo orderInfoVo = mgOrderInfoService.selectById(orderId);
+        List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
+        for (MgOrderGoods mgOrderGood:goodsList) {
+            if (mgOrderGood.getGoodsId().equals(goodsId)){
+                mgOrderGood.getOffLineInfo().setConcatPhone(concatPhone);
+                mgOrderGood.getOffLineInfo().setConcatEmail(concatEmail);
+                mgOrderGood.getOffLineInfo().setConcatName(concatName);
             }
         }
         mongoTemplate.save(orderInfoVo);
@@ -729,6 +773,23 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                         //Saas，独立部署商品
                         if (mgOrderGood.getIsOffline() == 0){
                             map.put("data",mgOrderGood.getRemark());
+                            if (mgOrderGood.getGoodsType() == 7){ //应用场景--saas
+                                map.put("url",mgOrderGood.getAsSaaS());
+                                map.put("payInfoUserName",mgOrderGood.getPayInfoUserName());
+                                map.put("payInfoPassword",mgOrderGood.getPayInfoPassword());
+                            }else if (mgOrderGood.getGoodsType() == 5){ //分析工具--saas
+                                map.put("url",mgOrderGood.getAtSaaS());
+                                map.put("payInfoUserName",mgOrderGood.getPayInfoUserName());
+                                map.put("payInfoPassword",mgOrderGood.getPayInfoPassword());
+                            }else if (mgOrderGood.getGoodsType() == 4){ //分析工具--独立软件
+                                map.put("url",mgOrderGood.getAtAloneSoftware());
+                                map.put("payInfoFileUrl",mgOrderGood.getPayInfoFileUrl());
+                                map.put("payInfoSerialNumber",mgOrderGood.getPayInfoSerialNumber());
+                            }else { //应用场景--独立软件
+                                map.put("url",mgOrderGood.getAsAloneSoftware());
+                                map.put("payInfoFileUrl",mgOrderGood.getPayInfoFileUrl());
+                                map.put("payInfoSerialNumber",mgOrderGood.getPayInfoSerialNumber());
+                            }
                         }else {
                             map.put("data",mgOrderGood.getOffLineInfo());
                         }
