@@ -770,7 +770,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                             if (mgOrderGood.getGoodsType() == 0){  //离线数据包
                                 if (mgOrderGood.getOffLineData().getIsOnline().equals("0")){
                                     String localUrl = mgOrderGood.getOffLineData().getLocalUrl();
-                                    mgOrderGood.getOffLineData().setLocalUrl("http://static.qddata.com.cn" + localUrl);
+                                    mgOrderGood.getOffLineData().setLocalUrl("http://static.qddata.com.cn/" + localUrl);
                                 }
                                 map.put("data",mgOrderGood.getOffLineData());
                             }else if (mgOrderGood.getGoodsType() == 2){  //数据模型
@@ -778,15 +778,15 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                                 String configParams = mgOrderGood.getDataModel().getConfigParams();
                                 String modelFile = mgOrderGood.getDataModel().getModelFile();
                                 if (!configFile.contains("http")){
-                                    configFile = "http://static.qddata.com.cn" + configFile;
+                                    configFile = "http://static.qddata.com.cn/" + configFile;
                                     mgOrderGood.getDataModel().setConfigFile(configFile);
                                 }
                                 if (!configParams.contains("http")){
-                                    configParams = "http://static.qddata.com.cn" + configParams;
+                                    configParams = "http://static.qddata.com.cn/" + configParams;
                                     mgOrderGood.getDataModel().setConfigParams(configParams);
                                 }
                                 if (!modelFile.contains("http")){
-                                    modelFile = "http://static.qddata.com.cn" + modelFile;
+                                    modelFile = "http://static.qddata.com.cn/" + modelFile;
                                     mgOrderGood.getDataModel().setModelFile(modelFile);
                                 }
                                 map.put("data",mgOrderGood.getDataModel());
