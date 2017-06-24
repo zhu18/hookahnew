@@ -53,6 +53,18 @@
     right: 8px;
     color: #E5E5E5;
 }
+/*新添加弹出获取密钥*/
+.confirmKey{
+    text-align: left; padding: 0 10px;
+}
+
+.confirmKey h4{ font-size: 16px;position: relative; top: -12px;}
+.confirmKey h5{ line-height: 35px;}
+.confirmKey h5 span{
+     font-weight:normal;
+}
+
+
 /*搜索条件样式开始*/
 .searchQuery{
     width: 936px;

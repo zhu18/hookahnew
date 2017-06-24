@@ -59,12 +59,14 @@ function loadPageData(data) {
         html += '</td>';
         html += '<td class="text-align-left">x' + goods[ii].goodsNumber + '<br/><br/>' + '规格:' + (goods[ii].goodsPrice / 100).toFixed(2) + '/' + mMat + '</td>';
         // html += '<td><a href="/exchange/orderEndDetails?id='+goods[ii].goodsId+'&orderSn='+list[i].orderSn+'">下载<br/><span class="fa fa-download font-size-18"></span></a></td>';
-        if (catidS == '104') {
-          html += '<td><a target="_blank" href="javascript:getDataPackageD(\'' + goods[ii].goodsId + '\' , \'' + goods[ii].sourceId + '\',\'' + list[i].orderSn + '\');">查看<br/><span class="fa fa-eye font-size-18"></span></a></td>';
-        } else {
-          // html += '<td><a href="javascript:getDataPackageD(\'' + goods[ii].goodsId + '\' , \'' + goods[ii].sourceId + '\',\'' + list[i].orderSn + '\');">获取密钥<br/><span class="fa fa-download font-size-18"></span></a></td>';
-          html += '<td><a href="javascript:getKey(\'' + goods[ii].goodsId + '\' , \'' + goods[ii].sourceId + '\',\'' + list[i].orderId + '\');">获取密钥<br/><span class="fa fa-download font-size-18"></span></a></td>';
-        }
+        /*
+         if (catidS == '104') {
+         html += '<td><a target="_blank" href="javascript:getDataPackageD(\'' + goods[ii].goodsId + '\' , \'' + goods[ii].sourceId + '\',\'' + list[i].orderSn + '\');">查看<br/><span class="fa fa-eye font-size-18"></span></a></td>';
+         } else {
+         */
+        // html += '<td><a href="javascript:getDataPackageD(\'' + goods[ii].goodsId + '\' , \'' + goods[ii].sourceId + '\',\'' + list[i].orderSn + '\');">获取密钥<br/><span class="fa fa-download font-size-18"></span></a></td>';
+        html += '<td><a href="javascript:getKey(\'' + goods[ii].goodsId + '\' , \'' + goods[ii].sourceId + '\',\'' + list[i].orderId + '\',\'' + goods[ii].goodsType + '\',\'' + goods[ii].isOffline + '\');">获取密钥<br/><span class="fa fa-download font-size-18"></span></a></td>';
+        // }
         html += '<td style="width:190px;" class="">金额:￥&nbsp;' + ((goods[ii].goodsPrice / 100) * goods[ii].goodsNumber).toFixed(2) + '<br/><br/>' + list[i].payName + '</td>';//订单总金额
         // html += '<td class="text-align-center">';
         // if (list[i].commentFlag == 0) {
@@ -219,9 +221,12 @@ var keyDialogHtml = '<div id="myDialog" title="My Dialog">\
     <p>&nbsp;&nbsp;有效期：<em class="j_time">2342342</em></p>\
   </div>\
 ';
-function getKey(goodsId, sourceId, orderId) {
-  console.log('goodsId：' + goodsId, "sourceId：" + sourceId, "orderId：" + orderId);
+function getKey(goodsId, sourceId, orderId, goodsType, isOffline) {
 
+  console.log('goodsId：' + goodsId, "sourceId：" + sourceId, "orderId：" + orderId, "goodsType：" + goodsType, "isOffline：" + isOffline);
+  if (goodsType == 1){
+    return false;
+  }
   $.ajax({
     url: '/order/getRemark',
     type: 'get',
@@ -234,6 +239,61 @@ function getKey(goodsId, sourceId, orderId) {
       if (data.code == 1) {
         // window.location.href = data.data;
         // window.location.href = data.data;
+        var tempHtml = null;
+        if (isOffline == 0) {
+
+          if (goodsType == 0) {
+            tempHtml = '<div class="confirmKey"><h4>您获取的商品密钥为：</h4>\
+           <div>\
+             <h5>&nbsp;&nbsp;离线数据包下载地址：<span>' + data.data.data.onlineUrl + '</span></h5>\
+             <h5>&nbsp;&nbsp;数据包解压密码：<span>' + data.data.data.dataPwd + '</span></h5>\
+           </div></div>'
+          } else if (goodsType == 1) { //API
+            return false;
+          } else if (goodsType == 2) { //模型
+            tempHtml = "<div class='confirmKey'><h4>模型压缩包下载地址：</h4>" +
+              "<h5>联系人姓名：<span>" + data.data.data.concatInfo.concatName + "</span></h5>" +
+              "<h5>联系人电话：<span>" + data.data.data.concatInfo.concatPhone + "</span></h5>" +
+              "<h5>联系人邮箱：<span>" + data.data.data.concatInfo.concatEmail + "</span></h5>" +
+              "<h5>模型文件：<span>" + data.data.data.modelFile + "</span></h5>" +
+              "<h5>模型文件密码：<span>" + data.data.data.modelFilePwd + "</span></h5>" +
+              "<h5>配置文件：<span>" + data.data.data.configFile + "</span></h5>" +
+              "<h5>配置文件密码：<span>" + data.data.data.configFilePwd + "</span></h5>" +
+              "<h5>配置参数：<span>" + data.data.data.configParams + "</span></h5>" +
+              "<h5>配置参数密码：<span>" + data.data.data.configParamsPwd + "</span></h5></div>"
+            ;
+
+          } else if (goodsType == 4 || goodsType == 6) { //独立软件 手动填写数据
+            tempHtml = "<div class='confirmKey'><h4>商品交付信息：</h4>" +
+              "<h5>安装包下载地址：<span>" + data.data.url.dataAddress + "</span></h5>" +
+              "<h5>序列号：<span>" + data.data.payInfoSerialNumber + "</span></h5>" +
+              "<h5>许可文件获取地址：<span>" + data.data.payInfoFileUrl + "</span></h5></div>";
+
+          } else if (goodsType == 5 || goodsType == 7) { //SaaS  手动填写数据
+            tempHtml = "<div class='confirmKey'><h4>商品交付信息：</h4>" +
+              "<h5>在线访问地址：<span>" + data.data.url.dataAddress + "</span></h5>" +
+              "<h5>用户名：<span>" + data.data.payInfoUserName + "</span></h5>" +
+              "<h5>密码：<span>" + data.data.payInfoPassword + "</span></h5></div>";//sass
+          }
+
+
+        } else {
+          tempHtml = '<div class="confirmKey"><h4>线下交付联系方式：</h4>\
+           <div>\
+             <h5>&nbsp;&nbsp;联系人姓名：<span>' + data.data.data.concatName + '</span></h5>\
+             <h5>&nbsp;&nbsp;联系人电话：<span>' + data.data.data.concatPhone + '</span></h5>\
+             <h5>&nbsp;&nbsp;联系人邮箱：<span>' + data.data.data.concatEmail + '</span></h5>\
+           </div></div>'
+        }
+
+        $.confirm(tempHtml, [{close: '关闭'}],
+          function () {
+            var vals = $('#inputss').serializeArray();
+            console.log(JSON.stringify(vals));
+            this.hide();
+
+
+          }, {width: "500"});
       } else {
         // $.alert(data.message)
         // $.alert('下载失败')

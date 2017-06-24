@@ -126,7 +126,7 @@ class ShelfController {
           if(isOffline == 0){
             promise = $http({
               method: 'POST',
-              url: $rootScope.site.apiServer + "/api/order/getRemark",
+              url: $rootScope.site.apiServer + "/api/order/updRemark",
               params: {
                 goodsId: goodsId,
                 orderId: orderId,
@@ -137,7 +137,7 @@ class ShelfController {
           }else{
             promise = $http({
               method: 'POST',
-              url: $rootScope.site.apiServer + "/api/order//updConcatInfo",
+              url: $rootScope.site.apiServer + "/api/order/updConcatInfo",
               params: {
                 goodsId: goodsId,
                 orderId: orderId,
@@ -153,10 +153,10 @@ class ShelfController {
             $rootScope.loadingState = false;
             console.log(res);
             if (res.data.code == 1) {
-              growl.addSuccessMessage("删除成功。。。");
+              growl.addSuccessMessage("保存成功。。。");
               $scope.search();
             } else {
-              growl.addErrorMessage("删除失败。。。");
+              growl.addErrorMessage("保存失败。。。");
             }
 
           });
