@@ -63,9 +63,9 @@ function loadPageData(data) {
            goodsTypeInfo="应用场景-SaaS"
         }
         if(goods[ii].isOffline==1){
-          isOfflineInfo="交付方式：线上"
-        }else if(goods[ii].isOffline==0){
           isOfflineInfo="交付方式：线下"
+        }else if(goods[ii].isOffline==0){
+          isOfflineInfo="交付方式：线上"
         }
       /*case 0:
         return '常规商品'; //离线数据包    数据源-离线数据
