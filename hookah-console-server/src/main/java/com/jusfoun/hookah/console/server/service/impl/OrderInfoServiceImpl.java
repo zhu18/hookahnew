@@ -161,6 +161,10 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         og.setOffLineInfo(cart.getGoods().getOffLineInfo());
         og.setOffLineData(cart.getGoods().getOffLineData());
         og.setDataModel(cart.getGoods().getDataModel());
+        og.setPayInfoFileUrl("");
+        og.setPayInfoPassword("");
+        og.setPayInfoSerialNumber("");
+        og.setPayInfoUserName("");
 //		og.setSendNumber(cart.getS);
         return og;
     }
@@ -198,6 +202,10 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         og.setOffLineInfo(goods.getOffLineInfo());
         og.setOffLineData(goods.getOffLineData());
         og.setDataModel(goods.getDataModel());
+        og.setPayInfoFileUrl("");
+        og.setPayInfoPassword("");
+        og.setPayInfoSerialNumber("");
+        og.setPayInfoUserName("");
         //og.setMarketPrice(goods.getShopPrice());
 //		og.setSendNumber(cart.getS);
         return og;
@@ -698,10 +706,25 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
         for (MgOrderGoods mgOrderGood:goodsList) {
             if (mgOrderGood.getGoodsId().equals(goodsId)){
-                mgOrderGood.setRemark(mgOrderGoods.getRemark());
+                String remark = mgOrderGoods.getRemark();
+                if (mgOrderGood.getGoodsType() == 7){
+
+                }
             }
         }
         mongoTemplate.save(orderInfoVo);
+    }
+
+    @Override
+    public void updateConcatInfo(MgOrderGoods mgOrderGoods){
+        OrderInfoVo orderInfoVo = mgOrderInfoService.selectById(mgOrderGoods.getOrderId());
+        List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
+        for (MgOrderGoods mgOrderGood:goodsList) {
+            if (mgOrderGood.getGoodsId().equals(mgOrderGoods.getGoodsId())){
+                mgOrderGood.getDataModel().setConcatInfo(mgOrderGoods.getDataModel().getConcatInfo());
+            }
+        }
+        mongoTemplate.save(mgOrderGoods);
     }
 
     @Override
@@ -729,6 +752,23 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                         //Saas，独立部署商品
                         if (mgOrderGood.getIsOffline() == 0){
                             map.put("data",mgOrderGood.getRemark());
+                            if (mgOrderGood.getGoodsType() == 7){ //应用场景--saas
+                                map.put("url",mgOrderGood.getAsSaaS());
+                                map.put("payInfoUserName",mgOrderGood.getPayInfoUserName());
+                                map.put("payInfoPassword",mgOrderGood.getPayInfoPassword());
+                            }else if (mgOrderGood.getGoodsType() == 5){ //分析工具--saas
+                                map.put("url",mgOrderGood.getAtSaaS());
+                                map.put("payInfoUserName",mgOrderGood.getPayInfoUserName());
+                                map.put("payInfoPassword",mgOrderGood.getPayInfoPassword());
+                            }else if (mgOrderGood.getGoodsType() == 4){ //分析工具--独立软件
+                                map.put("url",mgOrderGood.getAtAloneSoftware());
+                                map.put("payInfoFileUrl",mgOrderGood.getPayInfoFileUrl());
+                                map.put("payInfoSerialNumber",mgOrderGood.getPayInfoSerialNumber());
+                            }else { //应用场景--独立软件
+                                map.put("url",mgOrderGood.getAsAloneSoftware());
+                                map.put("payInfoFileUrl",mgOrderGood.getPayInfoFileUrl());
+                                map.put("payInfoSerialNumber",mgOrderGood.getPayInfoSerialNumber());
+                            }
                         }else {
                             map.put("data",mgOrderGood.getOffLineInfo());
                         }

@@ -27,7 +27,7 @@
       <th class="text-center">数量</th>
       <th class="text-center">小计</th>
       <th class="text-center">商品类型</th>
-      <th class="text-center">备注</th>
+      <th class="text-center">交付信息</th>
     </tr>
     </thead>
     <tbody class="text-center">
@@ -52,7 +52,14 @@
         <span text-length="50" ng-bind="goods.goodsType | goodsType"></span>
       </td>
       <td>
-        <button class="btn btn-primary"></button>
+
+        <button class="btn btn-primary" ng-disabled="goods.goodsType==1" ng-click="remark(goods.goodsId,order.orderId,goods.goodsType,goods.isOffline)">查看</button>
+ <!--       <div ng-if="goods.goodsType == 1">
+          <a ui-sref="{{item.url}}">
+            <div class="nav-icon"></div>
+            <div class="nav-title " ng-bind="item.title"></div>
+          </a>
+        </div>-->
       </td>
       <!--<td class="operate text-center">-->
       <!--&lt;!&ndash;<a href="${host.website}/exchange/details?id='goods.goodsId'" class="buy btn-full-blue display-inline-block">再次购买</a>&ndash;&gt;-->
