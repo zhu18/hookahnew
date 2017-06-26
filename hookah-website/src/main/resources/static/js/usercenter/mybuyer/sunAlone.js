@@ -82,7 +82,7 @@ function check(orderId){
             "orderId":orderId,
             "goodsId":$('.item-' + i + ' .pic a').attr('name'),
             "commentContent":$('.item-' + i + ' .area').val(),
-            "commentLevel":$('.item-' + i + ' .function-demo input').val()
+            "goodsCommentGrade":$('.item-' + i + ' .function-demo input').val()
         })
     }
     $.ajax({
