@@ -245,9 +245,11 @@ function check() {
 					$.alert('');
 					return false;
 				}
-			}else{
-				window.location.href = host.loginUrl + window.location.href
-			}
+            }else{
+                window.location.href = host.loginUrl
+                    + encodeURIComponent(host.website+'/order/directInfo?goodsId=' + $('#J_goodsId').val()
+                        + '&goodsNumber=' + $('#J_buyNumber').val() + '&formatId=' + $('#J_formatId').val());
+            }
 		}
 	});
 	// return false;

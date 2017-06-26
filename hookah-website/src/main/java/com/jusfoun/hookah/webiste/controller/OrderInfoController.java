@@ -85,7 +85,7 @@ public class OrderInfoController extends BaseController {
 
     }
 
-    @RequestMapping(value = "/order/directInfo", method = RequestMethod.POST)
+    @RequestMapping(value = "/order/directInfo")
     public String orderInfo(String goodsId, Integer formatId,Long goodsNumber,Model model) {
         List<CartVo> list = new ArrayList<>(1);
         try {
