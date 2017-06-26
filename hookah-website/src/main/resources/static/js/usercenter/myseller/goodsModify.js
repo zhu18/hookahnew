@@ -74,18 +74,36 @@ function renderData(data){//渲染页面
 	$('#isOffline').val(data.isOffline);
 	if(data.isOffline == 0) {
 		if (data.goodsType == 0) {
-			$('select[name="isOnline"]').val(data.offLineData.isOnline);
-			$('input[name="dataPwd"]').val(data.offLineData.dataPwd);
-			console.log(data.offLineData.isOnline)
-			if(data.offLineData.isOnline == 0 ){
+			// console.log(data.offLineData.isOnline)
+			var S_isOnline = null;
+			var S_dataPwd = null;
+			if(data.offLineData){
+				if(data.offLineData.isOnline){
+					S_isOnline = data.offLineData.isOnline;
+				}else{
+					S_isOnline = 0;
+				}
+				if(data.offLineData.dataPwd){
+					S_dataPwd = data.offLineData.dataPwd ;
+				}else{
+					S_dataPwd = '';
+				}
+			}else{
+				S_isOnline = 0;
+				S_dataPwd = '';
+			}
+			$('select[name="isOnline"]').val(S_isOnline);
+			$('input[name="dataPwd"]').val(S_dataPwd);
+			// console.log(data.offLineData.isOnline)
+			if(data.offLineData && data.offLineData.isOnline == 1 ){
+				$('.selector_offLine_input').show();
+				$('input[name="onlineUrl"]').val(data.offLineData && data.offLineData.onlineUrl ? data.offLineData.onlineUrl : '');
+				$('.selector_offLine_upLoad').hide();
+			}else{
 				$('#J_fileUploadSS').val(data.uploadUrl);
 				$('.fileUploads span').html(data.uploadUrl);
 				$('input[name="goodsImges2"]').val(data.uploadUrl);
 				$('.selector_offLine_input').hide();
-			}else{
-				$('.selector_offLine_input').show();
-				$('input[name="onlineUrl"]').val(data.offLineData.onlineUrl);
-				$('.selector_offLine_upLoad').hide();
 			}
 		} else if (data.goodsType == 1) {
 			renderApiInfo(data.apiInfo);
@@ -793,7 +811,7 @@ function submitGoodsPublish(){
 			data.offLineData = {};
 			data.offLineData.isOnline = $('select[name="isOnline"]').val();
 			data.offLineData.dataPwd = $('input[name="dataPwd"]').val();
-			if(data.offLineData.isOnline == 0){
+			if(data.offLineData.isOnline && data.offLineData.isOnline == 0){
 				data.offLineData.localUrl = $('#J_fileUploadSS').val();
 			}else{
 				data.offLineData.onlineUrl = $('input[name="onlineUrl"]').val();
