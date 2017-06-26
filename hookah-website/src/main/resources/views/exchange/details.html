@@ -144,16 +144,16 @@ var htmlPart = {
 							<li class="grid-left">API详情</li>
 							<li class="grid-left">返回参数</li>
 							<%}%>
-						<%} else if (goodsDetails.isOffline == 1) {%>
-						<%}%>
-						<%if(goodsDetails.goodsType == 2){%>
-						<li class="grid-left">数据模型</li>
-						<%}%>
-						<%if(goodsDetails.goodsType == 6 || goodsDetails.goodsType == 7){%>
-						<li class="grid-left">应用场景</li>
-						<%}%>
-						<%if(goodsDetails.goodsType == 4 || goodsDetails.goodsType == 5){%>
-						<li class="grid-left">分析工具</li>
+
+							<%if(goodsDetails.goodsType == 2){%>
+							<li class="grid-left">数据模型</li>
+							<%}%>
+							<%if(goodsDetails.goodsType == 6 || goodsDetails.goodsType == 7){%>
+							<li class="grid-left">应用场景</li>
+							<%}%>
+							<%if(goodsDetails.goodsType == 4 || goodsDetails.goodsType == 5){%>
+							<li class="grid-left">分析工具</li>
+							<%}%>
 						<%}%>
 						<li class="grid-left evaluate">评价</li>
 					</ul>
@@ -224,172 +224,172 @@ var htmlPart = {
 							</table>
 						</div>
 						<%}%>
-					<%} else if (goodsDetails.isOffline == 1) {%>
-					<%}%>
-					<%if(goodsDetails.goodsType == 2){%>
-					<div class="table-item">
-						<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
-						<table class="tab-one">
-							<caption><h3>模型规则</h3></caption>
-							<tr>
-								<td>复杂度：</td>
-								<td>${goodsDetails.dataModel.complexity}</td>
-							</tr>
-							<tr>
-								<td>成熟度：</td>
-								<td>${goodsDetails.dataModel.maturity}</td>
-							</tr>
-							<tr>
-								<td>应用经验：</td>
-								<td>${goodsDetails.dataModel.aexp}</td>
-							</tr>
-						</table>
-						<table class="tab-one margin-top-20  margin-bottom-20">
-							<caption><h3>其他说明</h3></caption>
-							<tr>
-								<td>其他说明：</td>
-								<td>${goodsDetails.dataModel.otherDesc}</td>
-							</tr>
-						</table>
-					</div>
-					<%}%>
-					<%if(goodsDetails.goodsType == 6){%>
-					<div class="table-item">
-						<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
-						<table class="tab-one">
-							<caption><h3>应用场景规则</h3></caption>
-							<tr>
-								<td>应用复杂度：</td>
-								<td>${goodsDetails.asAloneSoftware.aSComplexity}</td>
-							</tr>
-							<tr>
-								<td>版本说明：</td>
-								<td>${goodsDetails.asAloneSoftware.aSVersionDesc}</td>
-							</tr>
-							<tr>
-								<td>服务等级：</td>
-								<td>${goodsDetails.asAloneSoftware.aSServiceLevel}</td>
-							</tr>
-							<tr>
-								<td>应用经验：</td>
-								<td>${goodsDetails.asAloneSoftware.aSAexp}</td>
-							</tr>
-							<tr>
-								<td>应用介绍：</td>
-								<td>${goodsDetails.asAloneSoftware.aSAintroduce}</td>
-							</tr>
-						</table>
-						<table class="tab-one margin-top-20  margin-bottom-20">
-							<caption><h3>使用规格</h3></caption>
-							<tr>
-								<td>云硬件资源：</td>
-								<td>${goodsDetails.asAloneSoftware.aSCloudHardwareResource}</td>
-							</tr>
-						</table>
-						<table class="tab-one margin-top-20  margin-bottom-20">
-							<caption><h3>其他说明</h3></caption>
-							<tr>
-								<td>其他说明：</td>
-								<td>${goodsDetails.asAloneSoftware.otherDesc}</td>
-							</tr>
-						</table>
-					</div>
-					<%}%>
-					<%if(goodsDetails.goodsType == 7){%>
-					<div class="table-item">
-						<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
-						<table class="tab-one">
-							<caption><h3>应用场景规则</h3></caption>
-							<tr>
-								<td>应用复杂度：</td>
-								<td>${goodsDetails.asSaaS.sSComplexity}</td>
-							</tr>
-							<tr>
-								<td>版本说明：</td>
-								<td>${goodsDetails.asSaaS.sSVersionDesc}</td>
-							</tr>
-							<tr>
-								<td>服务等级：</td>
-								<td>${goodsDetails.asSaaS.sServiceLevel}</td>
-							</tr>
-							<tr>
-								<td>应用经验：</td>
-								<td>${goodsDetails.asSaaS.sSAexp}</td>
-							</tr>
-							<tr>
-								<td>应用介绍：</td>
-								<td>${goodsDetails.asSaaS.sSAintroduce}</td>
-							</tr>
-						</table>
-						<table class="tab-one margin-top-20  margin-bottom-20">
-							<caption><h3>其他说明</h3></caption>
-							<tr>
-								<td>其他说明：</td>
-								<td>${goodsDetails.asSaaS.otherDesc}</td>
-							</tr>
-						</table>
-					</div>
-					<%}%>
-					<%if(goodsDetails.goodsType == 4){%>
-					<div class="table-item">
-						<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
-						<table class="tab-one">
-							<caption><h3>工具规格</h3></caption>
-							<tr>
-								<td>行业领域：</td>
-								<td>${goodsDetails.atAloneSoftware.aTAloneIndustryField}</td>
-							</tr>
-							<tr>
-								<td>版本说明：</td>
-								<td>${goodsDetails.atAloneSoftware.aTAloneVersionDesc}</td>
-							</tr>
-							<tr>
-								<td>工具介绍：</td>
-								<td>${goodsDetails.atAloneSoftware.aTAloneToolsIntroduce}</td>
-							</tr>
-						</table>
-						<table class="tab-one margin-top-20  margin-bottom-20">
-							<caption><h3>使用规格</h3></caption>
-							<tr>
-								<td>云硬件资源：</td>
-								<td>${goodsDetails.atAloneSoftware.aTAloneCloudHardwareResource}</td>
-							</tr>
-						</table>
-						<table class="tab-one margin-top-20  margin-bottom-20">
-							<caption><h3>其他说明</h3></caption>
-							<tr>
-								<td>其他说明：</td>
-								<td>${goodsDetails.atAloneSoftware.otherDesc}</td>
-							</tr>
-						</table>
-					</div>
-					<%}%>
-					<%if(goodsDetails.goodsType ==5){%>
-					<div class="table-item">
-						<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
-						<table class="tab-one">
-							<caption><h3>工具规格</h3></caption>
-							<tr>
-								<td>行业领域：</td>
-								<td>${goodsDetails.atSaaS.aTIndustryField}</td>
-							</tr>
-							<tr>
-								<td>版本说明：</td>
-								<td>${goodsDetails.atSaaS.aTVersionDesc}</td>
-							</tr>
-							<tr>
-								<td>工具介绍：</td>
-								<td>${goodsDetails.atSaaS.aTToolsIntroduce}</td>
-							</tr>
-						</table>
-						<table class="tab-one margin-top-20  margin-bottom-20">
-							<caption><h3>其他说明</h3></caption>
-							<tr>
-								<td>其他说明：</td>
-								<td>${goodsDetails.atSaaS.otherDesc}</td>
-							</tr>
-						</table>
-					</div>
+
+						<%if(goodsDetails.goodsType == 2){%>
+						<div class="table-item">
+							<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
+							<table class="tab-one">
+								<caption><h3>模型规则</h3></caption>
+								<tr>
+									<td>复杂度：</td>
+									<td>${goodsDetails.dataModel.complexity}</td>
+								</tr>
+								<tr>
+									<td>成熟度：</td>
+									<td>${goodsDetails.dataModel.maturity}</td>
+								</tr>
+								<tr>
+									<td>应用经验：</td>
+									<td>${goodsDetails.dataModel.aexp}</td>
+								</tr>
+							</table>
+							<table class="tab-one margin-top-20  margin-bottom-20">
+								<caption><h3>其他说明</h3></caption>
+								<tr>
+									<td>其他说明：</td>
+									<td>${goodsDetails.dataModel.otherDesc}</td>
+								</tr>
+							</table>
+						</div>
+						<%}%>
+						<%if(goodsDetails.goodsType == 6){%>
+						<div class="table-item">
+							<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
+							<table class="tab-one">
+								<caption><h3>应用场景规则</h3></caption>
+								<tr>
+									<td>应用复杂度：</td>
+									<td>${goodsDetails.asAloneSoftware.aSComplexity}</td>
+								</tr>
+								<tr>
+									<td>版本说明：</td>
+									<td>${goodsDetails.asAloneSoftware.aSVersionDesc}</td>
+								</tr>
+								<tr>
+									<td>服务等级：</td>
+									<td>${goodsDetails.asAloneSoftware.aSServiceLevel}</td>
+								</tr>
+								<tr>
+									<td>应用经验：</td>
+									<td>${goodsDetails.asAloneSoftware.aSAexp}</td>
+								</tr>
+								<tr>
+									<td>应用介绍：</td>
+									<td>${goodsDetails.asAloneSoftware.aSAintroduce}</td>
+								</tr>
+							</table>
+							<table class="tab-one margin-top-20  margin-bottom-20">
+								<caption><h3>使用规格</h3></caption>
+								<tr>
+									<td>云硬件资源：</td>
+									<td>${goodsDetails.asAloneSoftware.aSCloudHardwareResource}</td>
+								</tr>
+							</table>
+							<table class="tab-one margin-top-20  margin-bottom-20">
+								<caption><h3>其他说明</h3></caption>
+								<tr>
+									<td>其他说明：</td>
+									<td>${goodsDetails.asAloneSoftware.otherDesc}</td>
+								</tr>
+							</table>
+						</div>
+						<%}%>
+						<%if(goodsDetails.goodsType == 7){%>
+						<div class="table-item">
+							<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
+							<table class="tab-one">
+								<caption><h3>应用场景规则</h3></caption>
+								<tr>
+									<td>应用复杂度：</td>
+									<td>${goodsDetails.asSaaS.sSComplexity}</td>
+								</tr>
+								<tr>
+									<td>版本说明：</td>
+									<td>${goodsDetails.asSaaS.sSVersionDesc}</td>
+								</tr>
+								<tr>
+									<td>服务等级：</td>
+									<td>${goodsDetails.asSaaS.sServiceLevel}</td>
+								</tr>
+								<tr>
+									<td>应用经验：</td>
+									<td>${goodsDetails.asSaaS.sSAexp}</td>
+								</tr>
+								<tr>
+									<td>应用介绍：</td>
+									<td>${goodsDetails.asSaaS.sSAintroduce}</td>
+								</tr>
+							</table>
+							<table class="tab-one margin-top-20  margin-bottom-20">
+								<caption><h3>其他说明</h3></caption>
+								<tr>
+									<td>其他说明：</td>
+									<td>${goodsDetails.asSaaS.otherDesc}</td>
+								</tr>
+							</table>
+						</div>
+						<%}%>
+						<%if(goodsDetails.goodsType == 4){%>
+						<div class="table-item">
+							<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
+							<table class="tab-one">
+								<caption><h3>工具规格</h3></caption>
+								<tr>
+									<td>行业领域：</td>
+									<td>${goodsDetails.atAloneSoftware.aTAloneIndustryField}</td>
+								</tr>
+								<tr>
+									<td>版本说明：</td>
+									<td>${goodsDetails.atAloneSoftware.aTAloneVersionDesc}</td>
+								</tr>
+								<tr>
+									<td>工具介绍：</td>
+									<td>${goodsDetails.atAloneSoftware.aTAloneToolsIntroduce}</td>
+								</tr>
+							</table>
+							<table class="tab-one margin-top-20  margin-bottom-20">
+								<caption><h3>使用规格</h3></caption>
+								<tr>
+									<td>云硬件资源：</td>
+									<td>${goodsDetails.atAloneSoftware.aTAloneCloudHardwareResource}</td>
+								</tr>
+							</table>
+							<table class="tab-one margin-top-20  margin-bottom-20">
+								<caption><h3>其他说明</h3></caption>
+								<tr>
+									<td>其他说明：</td>
+									<td>${goodsDetails.atAloneSoftware.otherDesc}</td>
+								</tr>
+							</table>
+						</div>
+						<%}%>
+						<%if(goodsDetails.goodsType ==5){%>
+						<div class="table-item">
+							<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
+							<table class="tab-one">
+								<caption><h3>工具规格</h3></caption>
+								<tr>
+									<td>行业领域：</td>
+									<td>${goodsDetails.atSaaS.aTIndustryField}</td>
+								</tr>
+								<tr>
+									<td>版本说明：</td>
+									<td>${goodsDetails.atSaaS.aTVersionDesc}</td>
+								</tr>
+								<tr>
+									<td>工具介绍：</td>
+									<td>${goodsDetails.atSaaS.aTToolsIntroduce}</td>
+								</tr>
+							</table>
+							<table class="tab-one margin-top-20  margin-bottom-20">
+								<caption><h3>其他说明</h3></caption>
+								<tr>
+									<td>其他说明：</td>
+									<td>${goodsDetails.atSaaS.otherDesc}</td>
+								</tr>
+							</table>
+						</div>
+						<%}%>
 					<%}%>
 					<div class="table-item evaluate">
 						<h1 class="font-size-14 margin-bottom-10" style="display: none">最新评论</h1>
