@@ -72,7 +72,7 @@ public class MgOrderGoods extends GoodsVo {
 
     private String payInfoFileUrl;
 
-    private String supplier;
+    private String supplier;  //供应商名称
 
 
 
