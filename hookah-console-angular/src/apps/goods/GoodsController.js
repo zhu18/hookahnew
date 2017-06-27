@@ -1,6 +1,13 @@
 class GoodsController {
   constructor($scope, $rootScope, $state, $stateParams, $http, $sce, $uibModal, usSpinnerService, growl) {
     console.log($rootScope.config);
+	  $rootScope.currentS= "1";
+	  $rootScope.setCurrentS = function (param) {
+			  // console.log(param);
+			  $rootScope.currentS = param;
+
+	  };
+
 
       // if ($state.current.name == "items.lookDetail") {
       //     var editor = new wangEditor('goodsDesc');
