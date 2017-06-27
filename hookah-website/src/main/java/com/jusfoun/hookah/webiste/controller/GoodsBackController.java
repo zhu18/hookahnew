@@ -21,6 +21,7 @@ import java.util.List;
 
 /**
  * @author bingbing wu
+ * @author wangjl
  * @date 2017/3/13 下午9:33
  * @desc
  */
@@ -127,6 +128,36 @@ public class GoodsBackController extends BaseController {
         }
         return returnData;
     }
+
+    /**
+     * 未通过商品列表
+     * @param pageNumber
+     * @param pageSize
+     * @param goodsName
+     * @return
+     */
+    @RequestMapping(value = "/checkfailed/list", method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnData checkFailed(String pageNumber, String pageSize, String goodsName) {
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            String userId = this.getCurrentUser().getUserId();
+            if(StringUtils.isBlank(pageNumber)) {
+                pageNumber = this.PAGE_NUM;
+            }
+            if(StringUtils.isBlank(pageSize)) {
+                pageSize = this.PAGE_SIZE;
+            }
+            returnData.setData(goodsService.checkFailed(pageNumber, pageSize, goodsName, userId));
+        } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
+
     // 违规商品列表
     @RequestMapping(value = "/illegal/list", method = RequestMethod.GET)
     @ResponseBody

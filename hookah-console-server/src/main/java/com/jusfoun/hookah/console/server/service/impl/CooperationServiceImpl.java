@@ -6,6 +6,7 @@ import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.DateUtils;
+import com.jusfoun.hookah.core.utils.FormatCheckUtil;
 import com.jusfoun.hookah.rpc.api.CooperationService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -35,8 +36,8 @@ public class CooperationServiceImpl  extends GenericServiceImpl<Cooperation, Str
     @Transactional
     public void addCooperation(Cooperation coo) throws Exception{
         Date date = DateUtils.now();
-        Pattern pattern = Pattern
-                .compile("^([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~\\/])+$");
+//        Pattern pattern = Pattern
+//                .compile("^([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~\\/])+$");
         boolean isExists = true;
         List<Condition> filters = new ArrayList<>();
         filters.clear();
@@ -47,12 +48,12 @@ public class CooperationServiceImpl  extends GenericServiceImpl<Cooperation, Str
         }
         if (StringUtils.isBlank(coo.getUrl())){
             throw new HookahException("机构链接地址不能为空");
-        }else if(!pattern.matcher(coo.getUrl()).matches()){
+        }else if(!FormatCheckUtil.checkURL(coo.getUrl())){
             throw new HookahException("机构链接地址格式不正确");
         }
         if (StringUtils.isBlank(coo.getPictureUrl())){
             throw new HookahException("logo地址不能为空");
-        }else if(!pattern.matcher(coo.getPictureUrl()).matches()){
+        }else if(!FormatCheckUtil.checkURL(coo.getPictureUrl())){
             throw new HookahException("logo地址格式不正确");
         }
         isExists = exists(filters);
@@ -76,26 +77,34 @@ public class CooperationServiceImpl  extends GenericServiceImpl<Cooperation, Str
     @Transactional
     public void modify(Cooperation coo) throws Exception{
         Date date = DateUtils.now();
-        Pattern pattern = Pattern
-                .compile("^([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~\\/])+$");
-        Pattern pattern1 = Pattern.compile("^((17[0-9])(14[0-9])|(13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");
+        List<Condition> filter = new ArrayList<>();
+//        Pattern pattern = Pattern
+//                .compile("^([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~\\/])+$");
         if (StringUtils.isBlank(coo.getCooperationId())) {
             throw new HookahException("修改失败，请重新操作");
         }
         if (StringUtils.isBlank(coo.getCooPhone())){
             throw new HookahException("手机号不能为空");
-        }else if(!pattern1.matcher(coo.getCooPhone()).matches()){
+        }else if(!FormatCheckUtil.checkMobile(coo.getCooPhone())){
             throw new HookahException("手机号格式不正确");
         }
         if (StringUtils.isBlank(coo.getUrl())){
             throw new HookahException("机构链接地址不能为空");
-        }else if(!pattern.matcher(coo.getUrl()).matches()){
+        }else if(!FormatCheckUtil.checkURL(coo.getUrl())){
             throw new HookahException("机构链接地址格式不正确");
         }
         if (StringUtils.isBlank(coo.getPictureUrl())){
             throw new HookahException("logo地址不能为空");
-        }else if(!pattern.matcher(coo.getPictureUrl()).matches()){
+        }else if(!FormatCheckUtil.checkURL(coo.getPictureUrl())){
             throw new HookahException("logo地址格式不正确");
+        }
+        filter.clear();
+        filter.add(Condition.eq("cooOrder", coo.getCooOrder()));
+        List<Cooperation> oldCooperation = cooperationMapper.selectByExample(convertFilter2Example(filter));
+        for (Cooperation cooperation:oldCooperation) {
+            if (!cooperation.getCooperationId().equals(coo.getCooperationId())){
+                throw new HookahException("该显示顺序已经存在");
+            }
         }
         coo.setLastUpdateTime(date);
         cooperationMapper.updateByPrimaryKeySelective(coo);

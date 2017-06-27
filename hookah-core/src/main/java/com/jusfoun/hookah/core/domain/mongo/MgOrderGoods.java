@@ -72,6 +72,8 @@ public class MgOrderGoods extends GoodsVo {
 
     private String payInfoFileUrl;
 
+    private String supplier;
+
 
 
 
@@ -727,5 +729,13 @@ public class MgOrderGoods extends GoodsVo {
 
     public void setPayInfoFileUrl(String payInfoFileUrl) {
         this.payInfoFileUrl = payInfoFileUrl;
+    }
+
+    public String getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(String supplier) {
+        this.supplier = supplier;
     }
 }
