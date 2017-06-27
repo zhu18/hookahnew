@@ -187,7 +187,7 @@
             <if test="checkStatus!=null">
                 AND check_status = #{checkStatus}
             </if>
-            AND ((onsale_start_date > SYSDATE() and check_status = 1) OR check_status in(0, 2))
+            AND ((onsale_start_date > SYSDATE() and check_status = 1) OR check_status = 0)
         ORDER BY
             last_update_time DESC
     </sql>

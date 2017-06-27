@@ -19,6 +19,7 @@ import com.jusfoun.hookah.core.utils.HttpClientUtil;
 import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.OrderHelper;
 import com.jusfoun.hookah.core.utils.StringUtils;
+import com.jusfoun.hookah.core.utils.FormatCheckUtil;
 import com.jusfoun.hookah.rpc.api.*;
 import org.apache.http.HttpException;
 import org.springframework.beans.BeanUtils;
@@ -151,7 +152,11 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         og.setFormatNumber(cart.getFormatNumber());
         og.setFormatList(cart.getGoods().getFormatList());
         og.setGoodsNumber(cart.getGoodsNumber().intValue());
-        og.setAddUser(cart.getGoods().getAddUser());
+        String addUser = cart.getGoods().getAddUser();
+        og.setAddUser(addUser);
+        User user = userService.selectById(addUser);
+        Organization organization = organizationService.selectById(user.getOrgId());
+        og.setSupplier(organization.getOrgName());
         og.setFormatId(cart.getFormatId());
         og.setSourceId(cart.getGoods().getSourceId());
         og.setGoodsType(cart.getGoods().getGoodsType());
@@ -190,7 +195,11 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         og.setGoodsName(goods.getGoodsName());
         og.setGoodsNumber(goodsNumber.intValue());
         og.setGoodsType(goods.getGoodsType());
-        og.setAddUser(goods.getAddUser());
+        String addUser = goods.getAddUser();
+        og.setAddUser(addUser);
+        User user = userService.selectById(addUser);
+        Organization organization = organizationService.selectById(user.getOrgId());
+        og.setSupplier(organization.getOrgName());
         og.setIsOnsale(goods.getIsOnsale());
         og.setSourceId(goods.getSourceId());
         og.setGoodsPrice(format.getPrice());
@@ -472,7 +481,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
 
     /**
-     * 订单详情
+     * 前台订单管理列表
      * @param pageNum
      * @param pageSize
      * @param filters
@@ -522,6 +531,17 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         return pagination;
     }
 
+    /**
+     * 商家已售出商品列表
+     * @param pageNum
+     * @param pageSize
+     * @param filters
+     * @param userId
+     * @param orderBys
+     * @return
+     * @author lt
+     */
+    @Override
     public Pagination<OrderInfoVo> getSaledOrderListInPage(Integer pageNum, Integer pageSize, List<Condition> filters, String userId,
                                                            List<OrderBy> orderBys){
         filters.add(Condition.eq("orderGoodsList.addUser", userId));
@@ -642,6 +662,14 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         return orderInfoVo;
     }
 
+    /**
+     * 订单列表
+     * @param pageNum
+     * @param pageSize
+     * @param filters
+     * @param orderBys
+     * @return
+     */
     @Override
     public Pagination<OrderInfoVo> getUserListInPage(Integer pageNum, Integer pageSize, List<Condition> filters,
                                                        List<OrderBy> orderBys) {
@@ -707,7 +735,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     }
 
     @Override
-    public void updateMgOrderGoodsRemark(MgOrderGoods mgOrderGoods){
+    public void updateMgOrderGoodsRemark(MgOrderGoods mgOrderGoods) throws HookahException{
         String orderId = mgOrderGoods.getOrderId();
         String goodsId = mgOrderGoods.getGoodsId();
         OrderInfoVo orderInfoVo = mgOrderInfoService.selectById(orderId);
@@ -733,9 +761,17 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                         String concatName = data[0];
                         String concatPhone = data[1];
                         String concatEmail = data[2];
+                        if (FormatCheckUtil.checkMobile(concatPhone)){
+                            mgOrderGood.getDataModel().getConcatInfo().setConcatPhone(concatPhone);
+                        }else {
+                            throw new HookahException("联系电话格式不正确，请重新输入");
+                        }
+                        if (FormatCheckUtil.checkEmail(concatEmail)){
+                            mgOrderGood.getDataModel().getConcatInfo().setConcatEmail(concatEmail);
+                        }else {
+                            throw new HookahException("联系邮箱格式不正确，请重新输入");
+                        }
                         mgOrderGood.getDataModel().getConcatInfo().setConcatName(concatName);
-                        mgOrderGood.getDataModel().getConcatInfo().setConcatPhone(concatPhone);
-                        mgOrderGood.getDataModel().getConcatInfo().setConcatEmail(concatEmail);
                 }
             }
         }
@@ -743,13 +779,21 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     }
 
     @Override
-    public void updateConcatInfo(String orderId,String goodsId,String concatName,String concatPhone,String concatEmail){
+    public void updateConcatInfo(String orderId,String goodsId,String concatName,String concatPhone,String concatEmail) throws HookahException{
         OrderInfoVo orderInfoVo = mgOrderInfoService.selectById(orderId);
         List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
         for (MgOrderGoods mgOrderGood:goodsList) {
             if (mgOrderGood.getGoodsId().equals(goodsId)){
-                mgOrderGood.getOffLineInfo().setConcatPhone(concatPhone);
-                mgOrderGood.getOffLineInfo().setConcatEmail(concatEmail);
+                if (FormatCheckUtil.checkMobile(concatPhone)){
+                    mgOrderGood.getOffLineInfo().setConcatPhone(concatPhone);
+                }else {
+                    throw new HookahException("联系电话格式不正确，请重新输入");
+                }
+                if (FormatCheckUtil.checkEmail(concatEmail)){
+                    mgOrderGood.getOffLineInfo().setConcatEmail(concatEmail);
+                }else {
+                    throw new HookahException("联系邮箱格式不正确，请重新输入");
+                }
                 mgOrderGood.getOffLineInfo().setConcatName(concatName);
             }
         }
@@ -761,36 +805,40 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         OrderInfoVo orderInfoVo = mgOrderInfoService.selectById(mgOrderGoods.getOrderId());
         List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
         Map map = new HashMap();
-        String remark = null;
         for (MgOrderGoods mgOrderGood:goodsList) {
             if (mgOrderGood.getGoodsId().equals(mgOrderGoods.getGoodsId())){
                 switch (mgOrderGood.getGoodsType()){
-                    case 0:case 1:case 2:
+                    case 0:  //离线数据包
                         if (mgOrderGood.getIsOffline() == 0){
-                            if (mgOrderGood.getGoodsType() == 0){  //离线数据包
-                                if (mgOrderGood.getOffLineData().getIsOnline().equals("0")){
-                                    String localUrl = mgOrderGood.getOffLineData().getLocalUrl();
-                                    mgOrderGood.getOffLineData().setLocalUrl("http://static.qddata.com.cn/" + localUrl);
-                                }
-                                map.put("data",mgOrderGood.getOffLineData());
-                            }else if (mgOrderGood.getGoodsType() == 2){  //数据模型
-                                String configFile = mgOrderGood.getDataModel().getConfigFile();
-                                String configParams = mgOrderGood.getDataModel().getConfigParams();
-                                String modelFile = mgOrderGood.getDataModel().getModelFile();
-                                if (!configFile.contains("http")){
-                                    configFile = "http://static.qddata.com.cn/" + configFile;
-                                    mgOrderGood.getDataModel().setConfigFile(configFile);
-                                }
-                                if (!configParams.contains("http")){
-                                    configParams = "http://static.qddata.com.cn/" + configParams;
-                                    mgOrderGood.getDataModel().setConfigParams(configParams);
-                                }
-                                if (!modelFile.contains("http")){
-                                    modelFile = "http://static.qddata.com.cn/" + modelFile;
-                                    mgOrderGood.getDataModel().setModelFile(modelFile);
-                                }
-                                map.put("data",mgOrderGood.getDataModel());
+                            if (mgOrderGood.getOffLineData().getIsOnline().equals("0") &&
+                                    !mgOrderGood.getOffLineData().getLocalUrl().contains("http")){
+                                String localUrl = mgOrderGood.getOffLineData().getLocalUrl();
+                                mgOrderGood.getOffLineData().setLocalUrl("http://static.qddata.com.cn/" + localUrl);
                             }
+                            map.put("data",mgOrderGood.getOffLineData());
+                        }else {
+                            map.put("data",mgOrderGood.getOffLineInfo());
+                        }
+                        break;
+                    case 2:  //数据模型
+                        if (mgOrderGood.getIsOffline() == 0){
+                            String configFile = mgOrderGood.getDataModel().getConfigFile();
+                            String configParams = mgOrderGood.getDataModel().getConfigParams();
+                            String modelFile = mgOrderGood.getDataModel().getModelFile();
+                            String prefix = "http://static.qddata.com.cn/";
+                            if (!configFile.contains("http")){
+                                configFile = prefix + configFile;
+                                mgOrderGood.getDataModel().setConfigFile(configFile);
+                            }
+                            if (!configParams.contains("http")){
+                                configParams = prefix + configParams;
+                                mgOrderGood.getDataModel().setConfigParams(configParams);
+                            }
+                            if (!modelFile.contains("http")){
+                                modelFile = prefix + modelFile;
+                                mgOrderGood.getDataModel().setModelFile(modelFile);
+                            }
+                            map.put("data",mgOrderGood.getDataModel());
                         }else {
                             map.put("data",mgOrderGood.getOffLineInfo());
                         }
@@ -835,30 +883,6 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                             map.put("data",mgOrderGood.getOffLineInfo());
                         }
                         break;
-//                        //Saas，独立部署商品
-//                        if (mgOrderGood.getIsOffline() == 0){
-//                            map.put("data",mgOrderGood.getRemark());
-//                            if (mgOrderGood.getGoodsType() == 7){ //应用场景--saas
-//                                map.put("url",mgOrderGood.getAsSaaS());
-//                                map.put("payInfoUserName",mgOrderGood.getPayInfoUserName());
-//                                map.put("payInfoPassword",mgOrderGood.getPayInfoPassword());
-//                            }else if (mgOrderGood.getGoodsType() == 5){ //分析工具--saas
-//                                map.put("url",mgOrderGood.getAtSaaS());
-//                                map.put("payInfoUserName",mgOrderGood.getPayInfoUserName());
-//                                map.put("payInfoPassword",mgOrderGood.getPayInfoPassword());
-//                            }else if (mgOrderGood.getGoodsType() == 4){ //分析工具--独立软件
-//                                map.put("url",mgOrderGood.getAtAloneSoftware());
-//                                map.put("payInfoFileUrl",mgOrderGood.getPayInfoFileUrl());
-//                                map.put("payInfoSerialNumber",mgOrderGood.getPayInfoSerialNumber());
-//                            }else { //应用场景--独立软件
-//                                map.put("url",mgOrderGood.getAsAloneSoftware());
-//                                map.put("payInfoFileUrl",mgOrderGood.getPayInfoFileUrl());
-//                                map.put("payInfoSerialNumber",mgOrderGood.getPayInfoSerialNumber());
-//                            }
-//                        }else {
-//                            map.put("data",mgOrderGood.getOffLineInfo());
-//                        }
-//                        break;
                 }
             }
         }

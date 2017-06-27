@@ -64,7 +64,7 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
      * @throws HookahException
      * @author lt
      */
-    void updateMgOrderGoodsRemark(MgOrderGoods mgOrderGoods);
+    void updateMgOrderGoodsRemark(MgOrderGoods mgOrderGoods) throws HookahException;
 
     /**
      * 根据订单Id和商品Id获取备注信息
@@ -74,5 +74,5 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
      */
     Map getRemark(MgOrderGoods mgOrderGoods);
 
-    void updateConcatInfo(String orderId,String goodsId,String concatName,String concatPhone,String concatEmail);
+    void updateConcatInfo(String orderId,String goodsId,String concatName,String concatPhone,String concatEmail) throws HookahException;
 }

@@ -102,6 +102,8 @@ public class OrderApi extends BaseController{
         try {
             if (StringUtils.isNotBlank(mgOrderGoods.getOrderId()) && StringUtils.isNotBlank(mgOrderGoods.getGoodsId())){
                 orderInfoService.updateMgOrderGoodsRemark(mgOrderGoods);
+            }else {
+                return ReturnData.error("保存失败");
             }
         }catch (Exception e){
             logger.info(e.getMessage());
@@ -120,10 +122,12 @@ public class OrderApi extends BaseController{
     public ReturnData updateConcatInfo(String orderId,String goodsId,String concatName,String concatPhone,String concatEmail){
         try {
             if (StringUtils.isNotBlank(orderId) && StringUtils.isNotBlank(goodsId)){
-                GoodsServiceImpl goodsService = new GoodsServiceImpl();
+//                GoodsServiceImpl goodsService = new GoodsServiceImpl();
 //                goodsService.changeConcatInfo(mgOrderGoods.getGoodsId(),mgOrderGoods.getIsOffline(),
 //                        mgOrderGoods.getGoodsType(),mgOrderGoods.getDataModel().getConcatInfo());
                 orderInfoService.updateConcatInfo(orderId,goodsId,concatName,concatPhone,concatEmail);
+            }else {
+                return ReturnData.error("保存失败");
             }
         }catch (Exception e){
             logger.info(e.getMessage());
@@ -144,6 +148,8 @@ public class OrderApi extends BaseController{
         try {
             if (StringUtils.isNotBlank(mgOrderGoods.getOrderId()) && StringUtils.isNotBlank(mgOrderGoods.getGoodsId())){
                 map = orderInfoService.getRemark(mgOrderGoods);
+            }else {
+                return ReturnData.error("加载失败");
             }
         }catch (Exception e){
             logger.info(e.getMessage());
