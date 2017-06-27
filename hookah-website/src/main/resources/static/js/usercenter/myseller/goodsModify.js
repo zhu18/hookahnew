@@ -1,7 +1,12 @@
 var goodsId = $.getUrlParam('id');
+if(!goodsId){
+	window.location.href='/usercenter/goodsOffSale';
+}
 var attrIds = [];
 var regionParam = 100000;
 var catId = '';
+var categoryHtml = '';
+var isHasChild = null;
 getGoodsDetails(); //根据id获取商品详情
 function getGoodsDetails(){
 	$.ajax({
@@ -14,11 +19,58 @@ function getGoodsDetails(){
 			if(data.code == 1){
 				var data = data.data;
 				renderData(data);
+				loadFirstCategory(data.catId); //获取第一个分类
 			}else{
 				$.alert(data.message);
 			}
 		}
 	})
+}
+function loadFirstCategory(catId){ //获取首个分类
+	loadCategoryData($('#firstCategory'),0,catId.substring(0,3));
+	if(catId.substring(0,3)){
+		loadCategoryData($('#twoCategory'),catId.substring(0,3),catId.substring(0,6));
+	}
+	if(catId.substring(0,6)){
+		loadCategoryData($('#lastCategory'),catId.substring(0,6),catId.substring(0,9));
+	}
+}
+function loadLastChild(that){
+	loadCategoryData($('#lastCategory'),$(that).val(),null);
+}
+function selectCatId(that){
+	catId = $(that).val();
+}
+// loadCategoryData(pid); //获取分类
+
+
+function loadCategoryData(that,pid,currentPid){
+
+	$.ajax({
+		type: "get",
+		url: '/category/findByPId/1',
+		data: {
+			pid:pid
+		},
+		success: function(data){
+			if(data.code == 1){
+				datas = data.data;
+				if(datas.length > 0){
+					for(var i = 0; i < datas.length; i++){
+						if(datas[i].catId == currentPid){
+							categoryHtml += '<option value="'+datas[i].catId+'" selected="selected">'+datas[i].catName+'</option>';
+						}else{
+							categoryHtml += '<option value="'+datas[i].catId+'">'+datas[i].catName+'</option>';
+						}
+					}
+					$(that).show().html(categoryHtml);
+					categoryHtml = '';
+				}
+			}else{
+				$.alert(data.message)
+			}
+		}
+	});
 }
 var jmz = {};
 jmz.GetLength = function(str) {
@@ -27,7 +79,7 @@ jmz.GetLength = function(str) {
 
 function renderData(data){//渲染页面
 	catId = data.catId;
-	$('.category-title-box').html(data.catFullName); //商品分类
+	// $('.category-title-box').html(data.catFullName); //商品分类
 	$('#J-goodsName').val(data.goodsName);//商品名称
 	$('#J-goodsBrief').val(data.goodsBrief);//简介
     $('#showcontent').html(jmz.GetLength(data.goodsName));//商品名称长度

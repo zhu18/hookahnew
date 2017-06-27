@@ -21,7 +21,7 @@ function loadPageData(data){
                 html += '<td class="text-center" style="width: 160px;"><span class="color-red">不通过</span><br>（'+list[i].checkReason+'）</td>';
             }
 			html += '<td class="text-right">'+list[i].onsaleStartDate+'</td>';
-			html += '<td>';
+			html += '<td style="min-width: 100px;">';
 			html += '<a style="padding: 0;margin:5px 0;" href="javascript:offSale(\'' + list[i].goodsId + '\');">取消上架</a>';
 			if(list[i].checkStatus == 2){
 				html += '<a style="padding: 0;margin:5px 0;" href="'+host.website+'/usercenter/goodsModify?id=' + list[i].goodsId + '">修改</a>';
