@@ -216,7 +216,10 @@ function addCart(goodsId) {
 			},
 			error:function(e){
 				if(e.status == 401){
-					window.location.href = host.loginUrl+window.location.href
+					window.location.href = host.loginUrl
+                        + encodeURIComponent(host.website + '/cart/addToCartByGet?goodsId=' + goodsId
+                            + '&goodsNumber=' + $('#J_buyNumber').val() + '&formatId=' + $('#J_goodsPrice').attr('formatid')
+                            + "&number=" + $('#J_buyNumber').val() + '&fmt=' + formatname + '&gm=' + $('#J_goodsPrice').html());
 				}
 			}
 		});
