@@ -127,7 +127,7 @@ public class OrderInfoController extends BaseController {
     }
 
     /**
-     * 分页查询
+     * 前台分页查询订单列表
      *
      * @param pageNumber
      * @param pageSize
@@ -150,7 +150,26 @@ public class OrderInfoController extends BaseController {
 
             List<Condition> paidFilters = new ArrayList<>();
             List<Condition> unpaidFilters = new ArrayList<>();
+            List<Condition> deletedFilters = new ArrayList<>();
+            List<Condition> allFilters = new ArrayList<>();
             List<Condition> listFilters = new ArrayList<>();
+            Long paid = 0L,unpaid=0L,deleted=0L,total=0L;
+
+            //未删除的已付款订单
+            paidFilters.add(Condition.eq("userId", userId));
+            paidFilters.add(Condition.eq("payStatus", 2));
+            paidFilters.add(Condition.eq("isDeleted",0));
+            //未删除的未付款订单
+            unpaidFilters.add(Condition.eq("userId", userId));
+            unpaidFilters.add(Condition.ne("payStatus", 2));
+            unpaidFilters.add(Condition.eq("isDeleted",0));
+            //已删除的订单
+            deletedFilters.add(Condition.eq("userId", userId));
+            deletedFilters.add(Condition.eq("isDeleted",1));
+            //用户所有未删除订单
+            allFilters.add(Condition.eq("isDeleted",0));
+            allFilters.add(Condition.eq("userId",userId));
+
             if (StringUtils.isNotBlank(startDate)) {
                 if(payStatus==1){
                     paidFilters.add(Condition.ge("addTime", DateUtils.getDate(startDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
@@ -167,7 +186,6 @@ public class OrderInfoController extends BaseController {
                 }
                 listFilters.add(Condition.le("addTime", DateUtils.getDate(endDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
             }
-
             if (commentFlag != null) {
                 if(payStatus==1){
                     paidFilters.add(Condition.eq("commentFlag", commentFlag));
@@ -177,13 +195,16 @@ public class OrderInfoController extends BaseController {
             if (payStatus != null) {
                 if(payStatus==1) {
                     listFilters.add(Condition.eq("payStatus", 2));
-                }else{
+                    listFilters.add(Condition.eq("isDeleted",0));
+                }else if (payStatus == 0){
                     listFilters.add(Condition.ne("payStatus", 2));
+                    listFilters.add(Condition.eq("isDeleted",0));
+                }else {
+                    listFilters.add(Condition.eq("isDeleted",1));
                 }
-                paidFilters.add(Condition.eq("payStatus", 2));
-                unpaidFilters.add(Condition.ne("payStatus", 2));
+            }else {
+                listFilters.add(Condition.eq("isDeleted",0));
             }
-
             if (domainName != null) {
                 if (payStatus==1){
                     paidFilters.add(Condition.like("domainName", "%" + domainName + "%"));
@@ -192,12 +213,7 @@ public class OrderInfoController extends BaseController {
                 }
                 listFilters.add(Condition.like("domainName", "%" + domainName + "%"));
             }
-            paidFilters.add(Condition.eq("userId", userId));
-            paidFilters.add(Condition.eq("isDeleted", 0));
-            unpaidFilters.add(Condition.eq("userId", userId));
-            unpaidFilters.add(Condition.eq("isDeleted", 0));
             listFilters.add(Condition.eq("userId", userId));
-            listFilters.add(Condition.eq("isDeleted", 0));
 
             //查询列表
             List<OrderBy> orderBys = new ArrayList<>();
@@ -207,23 +223,20 @@ public class OrderInfoController extends BaseController {
 //            filters.remove(condition); //移除支付状态条件
 //            //查询数量
 //            filters.add(Condition.eq("payStatus", 2));
-            Long paid = 0L,unpaid=0L;
-            if(payStatus!=1){
-                paid = orderInfoService.count(paidFilters);  //已支付数量
-            }else{
-                paid = pOrders.getTotalItems();
-            }
 
-            map.put("paidCount",paid);
+            unpaid = orderInfoService.count(unpaidFilters);
+            deleted = orderInfoService.count(deletedFilters);
+            paid = orderInfoService.count(paidFilters);
+            total = orderInfoService.count(allFilters);
+
 //
 //            filters.remove(filters.size()-1);
 //            filters.add(Condition.ne("payStatus", 2));
-            if(payStatus==1){
-                unpaid = orderInfoService.count(unpaidFilters); //未支付数量
-            }else{
-                unpaid = pOrders.getTotalItems();
-            }
+
+            map.put("paidCount",paid);
+            map.put("deletedCount",deleted);
             map.put("unpaidCount",unpaid);
+            map.put("totalCount",total);
 
             logger.info(JsonUtils.toJson(map));
             return ReturnData.success(map);

@@ -61,6 +61,13 @@ public class AdvertApi {
     @RequestMapping("/add")
     public ReturnData addCarouselFigure(Advert advert) {
         try {
+            boolean isExists = true;
+            List<Condition> filters = new ArrayList();
+            filters.add(Condition.eq("advertOrder", advert.getAdvertOrder()));
+            isExists = advertService.exists(filters);
+            if (isExists) {
+                return ReturnData.error("此轮播顺序有已有，请重新输入");
+            }
             advert.setAdvertType("2");
             advert = advertService.insert(advert);
             if(advert == null) {
@@ -101,6 +108,12 @@ public class AdvertApi {
         }
         if(advert.getHref().length()>30){
             return ReturnData.error("图片路径最长为30");
+        }
+        if(advert.getAdvertOrder().length()>3){
+            return ReturnData.error("轮播顺序最长为3");
+        }
+        if(advert.getAdvertGroup().length()>2){
+            return ReturnData.error("轮播分组最长为2");
         }
         try {
             advertService.updateByIdSelective(advert);
