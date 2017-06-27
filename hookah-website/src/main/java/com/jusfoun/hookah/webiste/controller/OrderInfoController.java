@@ -582,10 +582,12 @@ public class OrderInfoController extends BaseController {
         try {
             if (StringUtils.isNotBlank(mgOrderGoods.getOrderId()) && StringUtils.isNotBlank(mgOrderGoods.getGoodsId())){
                 map = orderInfoService.getRemark(mgOrderGoods);
+            }else {
+                return ReturnData.error("加载失败请重新操作");
             }
         }catch (Exception e){
             logger.info(e.getMessage());
-            return ReturnData.error("加载失败");
+            return ReturnData.error(e.getMessage());
         }
         return ReturnData.success(map);
     }

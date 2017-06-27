@@ -59,9 +59,9 @@ public class OrderInfoVo extends OrderInfo {
 	@Transient
 	private String userName;//用户名称
 	@Transient
-	private Integer userType;
+	private Integer userType;//用户类型
 	@Transient
-	private String realName;
+	private String realName;//用户认证名称
 
 	public String getOrderStatusName() {
 		return orderStatusName;
