@@ -33,6 +33,8 @@ public interface GoodsService extends GenericService<Goods,String> {
 
     Pagination offsaleList(String pageNum, String pageSize, String goodsName, String userId);
 
+    Pagination checkFailed(String pageNum, String pageSize, String goodsName, String userId);
+
     Pagination illegalList(String pageNum, String pageSize, String goodsName, String userId);
 
     GoodsVo findGoodsById(String goodsId) throws HookahException;

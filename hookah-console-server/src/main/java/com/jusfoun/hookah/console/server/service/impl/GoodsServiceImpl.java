@@ -297,6 +297,22 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         return pagination;
     }
 
+    // 未通过商品
+    @Override
+    public Pagination checkFailed(String pageNum, String pageSize, String goodsName, String userId) {
+        List<Condition> filters = new ArrayList();
+        List<OrderBy> orderBys = new ArrayList();
+        orderBys.add(OrderBy.desc("lastUpdateTime"));
+        filters.add(Condition.eq("checkStatus", HookahConstants.GOODS_CHECK_STATUS_NOT));
+        filters.add(Condition.eq("addUser", userId));
+        if (StringUtils.isNotBlank(goodsName)) {
+            filters.add(Condition.like("goodsName", goodsName.trim()));
+        }
+        Pagination pagination = this.getListInPage(Integer.parseInt(pageNum), Integer.parseInt(pageSize), filters, orderBys);
+        pagination.setList(this.copyGoodsData(pagination.getList()));
+        return pagination;
+    }
+
     // 违规商品列表
     @Override
     public Pagination illegalList(String pageNum, String pageSize, String goodsName, String userId) {
