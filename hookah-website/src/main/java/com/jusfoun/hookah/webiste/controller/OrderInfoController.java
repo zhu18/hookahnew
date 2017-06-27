@@ -195,8 +195,10 @@ public class OrderInfoController extends BaseController {
             if (payStatus != null) {
                 if(payStatus==1) {
                     listFilters.add(Condition.eq("payStatus", 2));
+                    listFilters.add(Condition.eq("isDeleted",0));
                 }else if (payStatus == 0){
                     listFilters.add(Condition.ne("payStatus", 2));
+                    listFilters.add(Condition.eq("isDeleted",0));
                 }else {
                     listFilters.add(Condition.eq("isDeleted",1));
                 }
