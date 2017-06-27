@@ -22,7 +22,7 @@
     <thead>
     <tr style="font-size: 16px;line-height: 16px;">
       <th style="padding-left: 40px;">数据商品</th>
-      <th class="text-center">买方</th>
+      <th class="text-center">供应商</th>
       <th class="text-center">价格</th>
       <th class="text-center">数量</th>
       <th class="text-center">小计</th>
@@ -44,7 +44,7 @@
           </a>
         </div>
       </td>
-      <td>{{buyer.userName}}</td>
+      <td>{{goods.supplier}}</td>
       <td>¥{{goods.goodsPrice / 100}}</td>
       <td ng-bind="goods.goodsNumber"></td>
       <td>¥{{goods.goodsNumber * goods.goodsPrice / 100}}</td>
