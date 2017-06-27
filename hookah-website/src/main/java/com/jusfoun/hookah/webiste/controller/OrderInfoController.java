@@ -159,13 +159,13 @@ public class OrderInfoController extends BaseController {
             //未删除的已付款订单
             paidFilters.add(Condition.eq("userId", userId));
             paidFilters.add(Condition.eq("payStatus", 2));
-            paidFilters.add(Condition.eq("isDelete",0));
+            paidFilters.add(Condition.eq("isDeleted",0));
             //未删除的未付款订单
             unpaidFilters.add(Condition.eq("userId", userId));
             unpaidFilters.add(Condition.ne("payStatus", 2));
-            unpaidFilters.add(Condition.eq("isDelete",0));
+            unpaidFilters.add(Condition.eq("isDeleted",0));
             //已删除的订单
-            deletedFilters.add(Condition.eq("isDelete",1));
+            deletedFilters.add(Condition.eq("isDeleted",1));
 
             if (StringUtils.isNotBlank(startDate)) {
                 if(payStatus==1){
@@ -195,7 +195,7 @@ public class OrderInfoController extends BaseController {
                 }else if (payStatus == 0){
                     listFilters.add(Condition.ne("payStatus", 2));
                 }else {
-                    listFilters.add(Condition.eq("isDelete",1));
+                    listFilters.add(Condition.eq("isDeleted",1));
                 }
             }
             if (domainName != null) {
