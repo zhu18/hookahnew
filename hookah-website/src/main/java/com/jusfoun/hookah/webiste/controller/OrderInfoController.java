@@ -151,11 +151,10 @@ public class OrderInfoController extends BaseController {
             List<Condition> paidFilters = new ArrayList<>();
             List<Condition> unpaidFilters = new ArrayList<>();
             List<Condition> deletedFilters = new ArrayList<>();
+            List<Condition> allFilters = new ArrayList<>();
             List<Condition> listFilters = new ArrayList<>();
             Long paid = 0L,unpaid=0L,deleted=0L,total=0L;
 
-            listFilters.add(Condition.eq("userId", userId));
-            listFilters.add(Condition.eq("isDeleted", 0));
             //未删除的已付款订单
             paidFilters.add(Condition.eq("userId", userId));
             paidFilters.add(Condition.eq("payStatus", 2));
@@ -165,7 +164,11 @@ public class OrderInfoController extends BaseController {
             unpaidFilters.add(Condition.ne("payStatus", 2));
             unpaidFilters.add(Condition.eq("isDeleted",0));
             //已删除的订单
+            deletedFilters.add(Condition.eq("userId", userId));
             deletedFilters.add(Condition.eq("isDeleted",1));
+            //用户所有未删除订单
+            allFilters.add(Condition.eq("isDeleted",0));
+            allFilters.add(Condition.eq("userId",userId));
 
             if (StringUtils.isNotBlank(startDate)) {
                 if(payStatus==1){
@@ -197,6 +200,8 @@ public class OrderInfoController extends BaseController {
                 }else {
                     listFilters.add(Condition.eq("isDeleted",1));
                 }
+            }else {
+                listFilters.add(Condition.eq("isDeleted",0));
             }
             if (domainName != null) {
                 if (payStatus==1){
@@ -206,6 +211,7 @@ public class OrderInfoController extends BaseController {
                 }
                 listFilters.add(Condition.like("domainName", "%" + domainName + "%"));
             }
+            listFilters.add(Condition.eq("userId", userId));
 
             //查询列表
             List<OrderBy> orderBys = new ArrayList<>();
@@ -219,7 +225,7 @@ public class OrderInfoController extends BaseController {
             unpaid = orderInfoService.count(unpaidFilters);
             deleted = orderInfoService.count(deletedFilters);
             paid = orderInfoService.count(paidFilters);
-            total = pOrders.getTotalItems();
+            total = orderInfoService.count(allFilters);
 
 //
 //            filters.remove(filters.size()-1);
