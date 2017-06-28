@@ -543,18 +543,21 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
      */
     @Override
     public Pagination<OrderInfoVo> getSoldOrderListInPage(Integer pageNum, Integer pageSize, List<Condition> filters, String userId,
-                                                           List<OrderBy> orderBys){
-        if (userId != "1"){
-            filters.add(Condition.eq("orderGoodsList.addUser", userId));
+                                                           Byte goodsType, List<OrderBy> orderBys){
+//        if (userId != "1"){
+//            filters.add(Condition.eq("orderGoodsList.addUser", userId));
+//        }
+        if (goodsType != null){
+            filters.add(Condition.eq("orderGoodsList.goodsType", goodsType));
         }
         PageHelper.startPage(pageNum, pageSize);
         List<OrderInfoVo> list =  mgOrderInfoService.selectList(filters,orderBys);
-        if (list!=null && list.size()!=0 && userId != "1") {
+        if (list!=null && list.size()!=0) {
             for (OrderInfoVo orderInfoVo : list){
                 List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
                 List<MgOrderGoods> goods = new ArrayList<MgOrderGoods>();
                 for (MgOrderGoods mgOrderGoods : goodsList){
-                    if (mgOrderGoods.getAddUser().equals(userId)){
+                    if (mgOrderGoods.getGoodsType().equals(goodsType)){
                         goods.add(mgOrderGoods);
                     }
                 }
@@ -665,7 +668,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     }
 
     /**
-     * 订单列表
+     * 后台订单列表
      * @param pageNum
      * @param pageSize
      * @param filters

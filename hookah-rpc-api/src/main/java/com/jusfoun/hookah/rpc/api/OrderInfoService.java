@@ -31,7 +31,7 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
                                                  List<OrderBy> orderBys);
 
     public Pagination<OrderInfoVo> getSoldOrderListInPage(Integer pageNum, Integer pageSize, List<Condition> filters, String userId,
-                                                       List<OrderBy> orderBys);
+                                                          Byte goodsType, List<OrderBy> orderBys);
 
     public Pagination<MgOrderGoods> getGoodsListInPage(Integer pageNum, Integer pageSize, List<Condition> filters,
                                                        List<OrderBy> orderBys);

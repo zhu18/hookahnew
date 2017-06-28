@@ -40,7 +40,7 @@ public class OrderApi extends BaseController{
     UserService userService;
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public ReturnData getListInPage(String currentPage, String pageSize, String orderSn) {
+    public ReturnData getListInPage(String currentPage, String pageSize, String startDate, String endDate, OrderInfoVo orderInfoVo ) {
         Pagination<OrderInfoVo> page = new Pagination<>();
         try {
             List<Condition> filters = new ArrayList();
@@ -48,6 +48,25 @@ public class OrderApi extends BaseController{
             orderBys.add(OrderBy.desc("addTime"));
             //只查询商品状态为未删除的商品
 //            filters.add(Condition.eq("isDelete", 1));
+
+            String orderSn = orderInfoVo.getOrderSn();
+            String userName = orderInfoVo.getUserName();
+            Integer userType = orderInfoVo.getUserType();
+            Integer payStatus = orderInfoVo.getPayStatus();
+            Integer solveStatus = orderInfoVo.getSolveStatus();
+
+            if (StringUtils.isNotBlank(userName)){
+                filters.add(Condition.eq("userName", userName));
+            }
+            if (userType != null){
+                filters.add(Condition.eq("userType", userType));
+            }
+            if (payStatus != null){
+                filters.add(Condition.eq("payStatus", payStatus));
+            }
+            if (solveStatus != null){
+                filters.add(Condition.eq("solveStatus", solveStatus));
+            }
 
             if(StringUtils.isNotBlank(orderSn)){
                 filters.add(Condition.like("orderSn", orderSn));
