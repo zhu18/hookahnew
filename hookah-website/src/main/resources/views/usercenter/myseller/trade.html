@@ -2,8 +2,10 @@
 var head = {
 %>
 <link rel="stylesheet" href="/static/css/usercenter/myseller/myseller.css">
+<!--<link rel="stylesheet" href="/static/css/usercenter/buyer/buyer.css">-->
 <script type="text/javascript">
-	var pagePath = host.website+'/order/saledOrder';
+	var pagePath = host.website+'/order/soldOrder';
+//	var pagePath = host.website+'/order/saledOrder';
 	var pageType = 'get';
 	var dataParm = {};
 	dataParm.pageNumber = 1;
@@ -27,20 +29,47 @@ var htmlPart = {
                             <!--<li class=""><a href="/usercenter/tradeRate">评价管理</a></li>-->
                         </ul>
                     </div>
+                    <div class="searchQuery padding-top-10">
+                        <div class="date grid-left">
+                            <label for="startDate" class="start-date grid-left">开始时间：<input id="startDate" type="text" placeholder="请选择开始时间" readonly=""></label>
+                            <label for="endDate" class="start-date grid-left">结束时间：<input id="endDate" type="text" placeholder="请选择结束时间" readonly=""></label>
+                            <!--<label for="orderSource" class="start-date  grid-left">订单来源：-->
+                                <!--<select name="" >-->
+                                    <!--<option value="">全部</option>-->
+                                    <!--<option value="">渠道订单</option>-->
+                                    <!--<option value="">本地订单</option>-->
+                                <!--</select>-->
+                            <!--</label>-->
+                            <label for="commodityType" class="start-date  grid-left">商品类型：
+                                <select name="" >
+                                    <option value="">全部</option>
+                                    <option value="0">常规商品</option>
+                                    <option value="1">API</option>
+                                    <option value="2">数据模型</option>
+                                    <option value="4">分析工具--独立软件</option>
+                                    <option value="5">分析工具--SaaS</option>
+                                    <option value="6">应用场景--独立软件</option>
+                                    <option value="7">应用场景--SaaS</option>
+                                </select>
+                            </label>
+                        </div>
+
+                        <button class="search grid-right">查询</button>
+                    </div>
                     <div class="trade-box">
-                        <table>
-                            <thead>
-                            <tr>
-                                <th class="text-center">宝贝</th>
-                                <th>订单号</th>
-                                <th>出售时间</th>
-                                <th class="text-left">单价（元）</th>
-                                <th class="text-center">数量</th>
-                                <th class="text-left">实收款（元）</th>
-                                <!--<th>评价</th>-->
-                            </tr>
-                            </thead>
-                            <tbody>
+                        <!--<table>-->
+                            <!--<thead>-->
+                            <!--<tr>-->
+                                <!--<th class="text-center">宝贝</th>-->
+                                <!--<th>订单号</th>-->
+                                <!--<th>出售时间</th>-->
+                                <!--<th class="text-left">单价（元）</th>-->
+                                <!--<th class="text-center">数量</th>-->
+                                <!--<th class="text-left">实收款（元）</th>-->
+                                <!--&lt;!&ndash;<th>评价</th>&ndash;&gt;-->
+                            <!--</tr>-->
+                            <!--</thead>-->
+                            <!--<tbody>-->
                             <!--<tr>-->
                                 <!--<td class="text-center">-->
                                     <!--<a href="javascript:void(0)">-->
@@ -72,9 +101,9 @@ var htmlPart = {
                                     <!--&lt;!&ndash;<span>好评</span>&ndash;&gt;-->
                                     <!--&lt;!&ndash;<span>tip:速度快，信息全</span>&ndash;&gt;-->
                                 <!--&lt;!&ndash;</td>&ndash;&gt;-->
-                            <!--</tr>-->
-                            </tbody>
-                        </table>
+                            <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+                            <!--</tbody>-->
+                        <!--</table>-->
                     </div>
                     <%include("/layout/pageaction.html"){} %>
                 </div>

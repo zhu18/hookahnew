@@ -503,4 +503,54 @@ td{
 }
 
 
+/*搜索条件样式开始*/
+.trade-wrapper .searchQuery{
+    width: 936px;
+    height: 50px;
+    padding-left:20px;
+    padding-right:20px;
+}
+
+.searchQuery .date{
+    width: 89%;
+    margin-bottom:28px;
+}
+.searchQuery .start-date{
+    /*width:250px;*/
+    margin-right:10px;
+}
+.searchQuery #startDate,.searchQuery #endDate{
+    width:150px;
+    height: 25px;
+    padding-left:5px;
+    border:1px solid #ccc;
+}
+.searchQuery #startDate:focus,.searchQuery #endDate:focus{
+    border:1px solid #ccc;
+}
+.searchQuery .comment-status{
+    float: left;
+}
+
+.searchQuery .search{
+    width: 100px;
+    height: 30px;
+    border:none;
+    font:14px/30px "microsoft yahei";
+    color: #fff;
+    border-radius: 5px;
+    background-color: #ffa800;
+}
+.searchQuery .search:hover{
+    background-color: #eb9c03;
+}
+.searchQuery select{
+    /*width:150px;*/
+    height: 25px;
+    padding-left:5px;
+    border:1px solid #ccc;
+}
+#noPaySearch{
+    height: 40px;
+}
 
