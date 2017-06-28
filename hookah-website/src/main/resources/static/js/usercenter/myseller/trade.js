@@ -159,7 +159,16 @@ var end = {
     choosefun: function (elem, datas) {
         start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
     }
-
 };
 $.jeDate("#startDate", start);
 $.jeDate("#endDate", end);
+
+
+$("#search-btn").on('click',function () {
+    console.log(1);
+    var startDate = $("#startDate").val();
+    var endDate = $("#endDate").val();
+    dataParm.startDate = startDate ? startDate : null;
+    dataParm.endDate = endDate ? endDate : null;
+    goPage(1);
+});
