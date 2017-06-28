@@ -142,8 +142,6 @@ function loadPageData(data){
 		$('.trade-box').html('<tr><td colspan="10"><div class="noData">暂无数据</div></td></tr>');
     }
 }
-
-
 var start = {
     format: "YYYY-MM-DD hh:mm:ss",
     isTime: true,
