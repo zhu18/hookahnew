@@ -95,7 +95,7 @@ function loadPageData(data){
                 // }
 
                 // }
-                html += '<td style="width:190px;border: 1px solid #e5e5e5;" class="">金额:￥&nbsp;' + ((goods[ii].goodsPrice / 100) * goods[ii].goodsNumber).toFixed(2) + '<br/><br/>' + list[i].payName + '</td>';//订单总金额
+                html += '<td style="width:190px;" class="">金额:￥&nbsp;' + ((goods[ii].goodsPrice / 100) * goods[ii].goodsNumber).toFixed(2) + '<br/><br/>' + list[i].payName + '</td>';//订单总金额
                 // html += '<td class="text-align-center">';
                 // if (list[i].commentFlag == 0) {
                 //     html += '<a target="_blank" href="/order/sunAlone?orderId=' + list[i].orderId + '" class="display-block">评价晒单</a>';
@@ -223,7 +223,7 @@ function loadPageData(data){
                 html += '<td class="text-align-left">x' + goods[ii].goodsNumber +
                     '<br/>' + '规格:' + (goods[ii].goodsPrice / 100).toFixed(2) + '/' + mMat + '<br />'+ goodsTypeInfo+ '<br />'+ isOfflineInfo+'</td>';
 
-                html += '<td style="width:190px;border: 1px solid #e5e5e5;" class="">金额:￥&nbsp;' + ((goods[ii].goodsPrice / 100) * goods[ii].goodsNumber).toFixed(2) + '<br/><br/>' + data.payName + '</td>';//订单总金额
+                html += '<td style="width:190px;" class="">金额:￥&nbsp;' + ((goods[ii].goodsPrice / 100) * goods[ii].goodsNumber).toFixed(2) + '<br/><br/>' + data.payName + '</td>';//订单总金额
                 if (ii == 0) {
                     html += '<td rowspan="' + goods.length + '" class="border-left" style="width:190px;border: 1px solid #e5e5e5;">';
                     html += '<span>已完成</span>';
