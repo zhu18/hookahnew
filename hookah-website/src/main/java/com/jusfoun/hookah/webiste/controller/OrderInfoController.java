@@ -257,7 +257,7 @@ public class OrderInfoController extends BaseController {
      */
     @RequestMapping(value = "/order/soldOrder", method = RequestMethod.GET)
     @ResponseBody
-    public ReturnData getSoldOrder(Integer pageNumber, Integer pageSize, String startDate, String endDate, String domainName){
+    public ReturnData getSoldOrder(Integer pageNumber, Integer pageSize, String startDate, String endDate, String domainName, Byte goodsType){
         try {
             String userId = this.getCurrentUser().getUserId();
 
@@ -283,7 +283,7 @@ public class OrderInfoController extends BaseController {
             //查询列表
             List<OrderBy> orderBys = new ArrayList<>();
             orderBys.add(OrderBy.desc("addTime"));
-            Pagination<OrderInfoVo> pOrders = orderInfoService.getSoldOrderListInPage(pageNumber, pageSize, listFilters, userId, orderBys);
+            Pagination<OrderInfoVo> pOrders = orderInfoService.getSoldOrderListInPage(pageNumber, pageSize, listFilters, userId, goodsType, orderBys);
 
 //            logger.info(JsonUtils.toJson(map));
             return ReturnData.success(pOrders);
