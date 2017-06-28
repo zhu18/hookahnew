@@ -10,7 +10,8 @@ class UserController {
             pageSize: $rootScope.pagination.pageSize,
             userName: $scope.userName,
             mobile: $scope.mobile,
-            email: $scope.email
+            email: $scope.email,
+            userType: $scope.userType
         }
       });
       promise.then(function (res, status, config, headers) {
@@ -72,6 +73,14 @@ class UserController {
       $scope.search();
     };
     $scope.search();
+
+    if ($state.$current.name == "user.search") {
+        $scope.title = '用户查询';
+        $scope.userTypes = [{id:-1,name:"全部"},{id:1,name:"未认证"},{id:2,name:"个人"},{id:3,name:"个人待审核"},
+            {id:4,name:"企业"},{id:5,name:"企业待审核"},{id:6,name:"个人审核失败"},{id:7,name:"企业审核失败"}];
+        $scope.userType = -1;
+        $scope.search();
+    }
   }
 }
 
