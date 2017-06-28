@@ -5,7 +5,7 @@ var head = {
 <script src="/static/js/plugins/jedate/jquery.jedate.min.js"></script>
 <link rel="stylesheet" href="/static/css/usercenter/myseller/myseller.css">
 <script type="text/javascript">
-	var pagePath = host.website+'/order/soldOrder';
+	var pagePath = host.website+'/order/viewSoldDetails';
 //	var pagePath = host.website+'/order/saledOrder';
 	var pageType = 'get';
 	var dataParm = {};
@@ -41,7 +41,7 @@ var htmlPart = {
                                 <!--</select>-->
                             <!--</label>-->
                             <label for="commodityType" class="start-date  grid-left">商品类型：
-                                <select name="" >
+                                <select id="sel" name="" >
                                     <option value="">全部</option>
                                     <option value="0">常规商品</option>
                                     <option value="1">API</option>
@@ -52,6 +52,7 @@ var htmlPart = {
                                     <option value="7">应用场景--SaaS</option>
                                 </select>
                             </label>
+
                         </div>
                         <button id="search-btn" class="search grid-right">查询</button>
                     </div>
