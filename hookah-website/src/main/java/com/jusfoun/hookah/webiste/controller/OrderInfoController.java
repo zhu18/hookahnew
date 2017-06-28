@@ -141,7 +141,7 @@ public class OrderInfoController extends BaseController {
     @RequestMapping(value = "/order/pageData", method = RequestMethod.GET)
     @ResponseBody
     public ReturnData findByPage(Integer pageNumber, Integer pageSize, Integer payStatus, Integer commentFlag, String startDate, String endDate, String domainName) {
-        Map map = new HashMap<>(3);
+        Map map = new HashMap<>(5);
         try {
             String userId = this.getCurrentUser().getUserId();
 
@@ -246,9 +246,18 @@ public class OrderInfoController extends BaseController {
         }
     }
 
-    @RequestMapping(value = "/order/saledOrder", method = RequestMethod.GET)
+    /**
+     * 商家已卖出的商品订单
+     * @param pageNumber
+     * @param pageSize
+     * @param startDate
+     * @param endDate
+     * @param domainName
+     * @return
+     */
+    @RequestMapping(value = "/order/soldOrder", method = RequestMethod.GET)
     @ResponseBody
-    public ReturnData getSaledOrder(Integer pageNumber, Integer pageSize, String startDate, String endDate, String domainName){
+    public ReturnData getSoldOrder(Integer pageNumber, Integer pageSize, String startDate, String endDate, String domainName){
         try {
             String userId = this.getCurrentUser().getUserId();
 
@@ -269,12 +278,12 @@ public class OrderInfoController extends BaseController {
                 listFilters.add(Condition.like("domainName", "%" + domainName + "%"));
             }
 //            listFilters.add(Condition.eq("orderGoodsList.addUser", userId));
-//            listFilters.add(Condition.eq("isDeleted", 0));
+            listFilters.add(Condition.eq("isDeleted", 0));
 
             //查询列表
             List<OrderBy> orderBys = new ArrayList<>();
             orderBys.add(OrderBy.desc("addTime"));
-            Pagination<OrderInfoVo> pOrders = orderInfoService.getSaledOrderListInPage(pageNumber, pageSize, listFilters, userId, orderBys);
+            Pagination<OrderInfoVo> pOrders = orderInfoService.getSoldOrderListInPage(pageNumber, pageSize, listFilters, userId, orderBys);
 
 //            logger.info(JsonUtils.toJson(map));
             return ReturnData.success(pOrders);
@@ -285,6 +294,17 @@ public class OrderInfoController extends BaseController {
         }
     }
 
+    /**
+     * 前台进入个人中心时调用，显示已购买商品
+     * @param pageNumber
+     * @param pageSize
+     * @param payStatus
+     * @param commentFlag
+     * @param startDate
+     * @param endDate
+     * @param domainName
+     * @return
+     */
     @RequestMapping(value="order/goodsList",method = RequestMethod.GET)
     @ResponseBody
     public ReturnData getOrderGooodsList(Integer pageNumber, Integer pageSize, Integer payStatus, Integer commentFlag, String startDate, String endDate, String domainName){

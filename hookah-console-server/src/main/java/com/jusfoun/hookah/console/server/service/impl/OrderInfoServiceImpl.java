@@ -542,12 +542,14 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
      * @author lt
      */
     @Override
-    public Pagination<OrderInfoVo> getSaledOrderListInPage(Integer pageNum, Integer pageSize, List<Condition> filters, String userId,
+    public Pagination<OrderInfoVo> getSoldOrderListInPage(Integer pageNum, Integer pageSize, List<Condition> filters, String userId,
                                                            List<OrderBy> orderBys){
-        filters.add(Condition.eq("orderGoodsList.addUser", userId));
+        if (userId != "1"){
+            filters.add(Condition.eq("orderGoodsList.addUser", userId));
+        }
         PageHelper.startPage(pageNum, pageSize);
         List<OrderInfoVo> list =  mgOrderInfoService.selectList(filters,orderBys);
-        if (list!=null && list.size()!=0) {
+        if (list!=null && list.size()!=0 && userId != "1") {
             for (OrderInfoVo orderInfoVo : list){
                 List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
                 List<MgOrderGoods> goods = new ArrayList<MgOrderGoods>();
@@ -734,6 +736,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         return map;
     }
 
+    @Transactional
     @Override
     public void updateMgOrderGoodsRemark(MgOrderGoods mgOrderGoods) throws HookahException{
         String orderId = mgOrderGoods.getOrderId();
@@ -778,6 +781,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         mongoTemplate.save(orderInfoVo);
     }
 
+    @Transactional
     @Override
     public void updateConcatInfo(String orderId,String goodsId,String concatName,String concatPhone,String concatEmail) throws HookahException{
         OrderInfoVo orderInfoVo = mgOrderInfoService.selectById(orderId);
