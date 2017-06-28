@@ -286,8 +286,6 @@ var end = {
 };
 $.jeDate("#startDate", start);
 $.jeDate("#endDate", end);
-
-
 $("#search-btn").on('click',function () {
     var startDate = $("#startDate").val();
     var endDate = $("#endDate").val();
