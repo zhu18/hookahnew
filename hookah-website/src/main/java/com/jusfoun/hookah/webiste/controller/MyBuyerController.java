@@ -18,6 +18,15 @@ public class MyBuyerController {
         return "/usercenter/buyer/orderManagement";
     }
 
+    @RequestMapping(value = "/buyer/allOrderList", method = RequestMethod.GET)
+    public String allOrderList() {
+        return "/usercenter/buyer/allOrderList";
+    }
+    @RequestMapping(value = "/buyer/cancelOrderList", method = RequestMethod.GET)
+    public String cancelOrderList() {
+        return "/usercenter/buyer/cancelOrderList";
+    }
+
     @RequestMapping(value = "/buyer/orderStay", method = RequestMethod.GET)
     public String orderStay() {
         return "/usercenter/buyer/orderStay";
