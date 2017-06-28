@@ -358,6 +358,19 @@ public class OrderInfoController extends BaseController {
         }
     }
 
+    @RequestMapping(value = "/order/viewSoldDetails", method = RequestMethod.GET)
+    public String getsOLDOrderDetail(@RequestParam String orderId,Model model){
+        try{
+            OrderInfoVo vo = orderInfoService.findDetailById(orderId);
+            model.addAttribute("order",vo);
+            logger.info(JsonUtils.toJson(vo));
+            return "/usercenter/buyer/viewDetails";
+        }catch (Exception e){
+            logger.info(e.getMessage());
+            return "/error/500";
+        }
+    }
+
     @RequestMapping(value = "/order/sunAlone", method = RequestMethod.GET)
     public String getOrderDetail(@RequestParam String orderId, Model model){
         try{
