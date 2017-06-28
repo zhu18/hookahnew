@@ -223,4 +223,60 @@ public class HookahConstants {
         }
     }
 
+    /**
+     * 流水状态
+     * 0    处理中
+     * 1    成功
+     * 2    失败
+     */
+    public enum CashStatus {
+
+        handing((byte)0),
+        success((byte)1),
+        fail((byte)2);
+
+        public byte code;
+
+        CashStatus(byte code) {
+            this.code = code;
+        }
+
+        public byte getCode() {
+            return code;
+        }
+    }
+
+    /**
+         账务类型：
+         1-商品支付扣款,
+         2-商品销售入账,
+         3-在线充值,
+         4-在线提现,
+         5-手工充值,
+         6-手工扣款,
+         7-线下充值,
+         8-提现冲账
+     */
+    public enum CashType {
+
+        Deduct((byte)1),
+        IntoAccount((byte)2),
+        OnlineRecharge((byte)3),
+        OnlineCash((byte)4),
+        ManualRecharge((byte)5),
+        ManualDebit((byte)6),
+        OfflineRecharge((byte)7),
+        CashREverse((byte)8);
+
+        public byte code;
+
+        CashType(byte code) {
+            this.code = code;
+        }
+
+        public byte getCode() {
+            return code;
+        }
+    }
+
 }
