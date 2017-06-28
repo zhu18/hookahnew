@@ -135,24 +135,24 @@ function loadPageData(data){
     }
 
     $(".tr-list").on('click',function () {
-    	// $(this).
-        // $.ajax({
-        //     type: "get",
-        //     url: "",
-        //     cache:false,
-        //     // data: {
-        //      //    orderId:
-			// // },
-        //     success: function (data) {
-        //         if (data.code == "1") {
-        //             orderInfo(data);
-        //             Loading.stop();
-        //         } else {
-        //             Loading.stop();
-        //             console.log(data.message);
-        //         }
-        //     }
-        // })
+        console.log($(this).find("tr").getAttribute("data-id"));
+        $.ajax({
+            type: "get",
+            url: host.website+'/order/viewSoldDetails',
+            cache:false,
+            // data: {
+             //    orderId:
+			// },
+            success: function (data) {
+                if (data.code == "1") {
+                    orderInfo(data);
+                    Loading.stop();
+                } else {
+                    Loading.stop();
+                    console.log(data.message);
+                }
+            }
+        })
     });
 
     function orderInfo() {
@@ -265,7 +265,7 @@ function loadPageData(data){
         }
         html += '</tbody>';
         html += '</table>';
-
+        $('.trade-box').html(html);
     }
 }
 var start = {
