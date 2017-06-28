@@ -566,6 +566,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         }
 
         Pagination<OrderInfoVo> pagination = new Pagination<OrderInfoVo>();
+
         pagination.setPageSize(pageSize);
         pagination.setCurrentPage(pageNum);
         pagination.setList(list);
