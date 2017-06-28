@@ -1,8 +1,9 @@
 <%
 var head = {
 %>
+<link rel="stylesheet" href="/static/css/plugins/jedate/jedate.css">
+<script src="/static/js/plugins/jedate/jquery.jedate.min.js"></script>
 <link rel="stylesheet" href="/static/css/usercenter/myseller/myseller.css">
-<!--<link rel="stylesheet" href="/static/css/usercenter/buyer/buyer.css">-->
 <script type="text/javascript">
 	var pagePath = host.website+'/order/soldOrder';
 //	var pagePath = host.website+'/order/saledOrder';
@@ -10,7 +11,6 @@ var head = {
 	var dataParm = {};
 	dataParm.pageNumber = 1;
 	dataParm.pageSize = 10;
-
 </script>
 <%};%>
 
@@ -53,7 +53,6 @@ var htmlPart = {
                                 </select>
                             </label>
                         </div>
-
                         <button class="search grid-right">查询</button>
                     </div>
                     <div class="trade-box">

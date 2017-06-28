@@ -142,3 +142,24 @@ function loadPageData(data){
 		$('.trade-box').html('<tr><td colspan="10"><div class="noData">暂无数据</div></td></tr>');
     }
 }
+
+
+var start = {
+    format: "YYYY-MM-DD hh:mm:ss",
+    isTime: true,
+    maxDate: $.nowDate(0),
+    choosefun: function (elem, datas) {
+        end.minDate = datas; //开始日选好后，重置结束日的最小日期
+    }
+};
+var end = {
+    format: "YYYY-MM-DD hh:mm:ss",
+    isTime: true,
+    maxDate: $.nowDate(0),
+    choosefun: function (elem, datas) {
+        start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
+    }
+
+};
+$.jeDate("#startDate", start);
+$.jeDate("#endDate", end);
