@@ -31,13 +31,13 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
                                                  List<OrderBy> orderBys);
 
     public Pagination<OrderInfoVo> getSoldOrderListInPage(Integer pageNum, Integer pageSize, List<Condition> filters, String userId,
-                                                          Byte goodsType, List<OrderBy> orderBys, Date startTime, Date endTime);
+                                                          Byte goodsType, Date startTime, Date endTime);
 
     public Pagination<MgOrderGoods> getGoodsListInPage(Integer pageNum, Integer pageSize, List<Condition> filters,
                                                        List<OrderBy> orderBys);
 
     public Pagination<OrderInfoVo> getUserListInPage(Integer pageNum, Integer pageSize, List<Condition> filters,
-                                                       List<OrderBy> orderBys);
+                                                     Date startTime, Date endTime);
 
     /**
      * 根据订单号查询支付信息

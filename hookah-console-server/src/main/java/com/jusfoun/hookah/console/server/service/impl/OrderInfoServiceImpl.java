@@ -350,6 +350,8 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                 orderInfo = super.insert(orderInfo);
                 BeanUtils.copyProperties(orderInfo,orderInfoVo);
                 User user = userService.selectById(orderInfoVo.getUserId());
+                orderInfoVo.setUserName(user.getUserName());
+                orderInfoVo.setUserType(user.getUserType());
                 if (user.getUserType() == 2){
                     UserDetail userDetail = userDetailService.selectById(orderInfoVo.getUserId());
                     orderInfoVo.setRealName(userDetail.getRealName());
@@ -417,6 +419,8 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             orderInfo = super.insert(orderInfo);
             BeanUtils.copyProperties(orderInfo,orderInfoVo);
             User user = userService.selectById(orderInfoVo.getUserId());
+            orderInfoVo.setUserName(user.getUserName());
+            orderInfoVo.setUserType(user.getUserType());
             if (user.getUserType() == 2){
                 UserDetail userDetail = userDetailService.selectById(orderInfoVo.getUserId());
                 orderInfoVo.setRealName(userDetail.getRealName());
@@ -583,14 +587,14 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
     @Override
     public Pagination<OrderInfoVo> getSoldOrderListInPage(Integer pageNum, Integer pageSize, List<Condition> filters, String userId,
-                                                          Byte goodsType, List<OrderBy> orderBys, Date startTime, Date endTime){
+                                                          Byte goodsType, Date startTime, Date endTime){
 //        if (userId != "1"){
 //            filters.add(Condition.eq("orderGoodsList.addUser", userId));
 //        }
         if (goodsType != null){
             filters.add(Condition.eq("orderGoodsList.goodsType", goodsType));
         }
-        Pagination<OrderInfoVo> pagination = mgOrderInfoService.getSoldOrderList(pageNum, pageSize, filters, orderBys, startTime, endTime);
+        Pagination<OrderInfoVo> pagination = mgOrderInfoService.getSoldOrderList(pageNum, pageSize, filters, startTime, endTime);
         List<OrderInfoVo> orderInfoVos = pagination.getList();
         for (OrderInfoVo orderInfoVo:orderInfoVos){
             List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
@@ -706,37 +710,38 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
      * @param pageNum
      * @param pageSize
      * @param filters
-     * @param orderBys
      * @return
      */
     @Override
     public Pagination<OrderInfoVo> getUserListInPage(Integer pageNum, Integer pageSize, List<Condition> filters,
-                                                     List<OrderBy> orderBys) {
+                                                     Date startTime, Date endTime) {
         // TODO Auto-generated method stub
-        PageHelper.startPage(pageNum, pageSize);
-        Page<OrderInfo> list =  (Page<OrderInfo>) super.selectList(filters,orderBys);
-        Page<OrderInfoVo> page = new Page<OrderInfoVo>(pageNum,pageSize);
-        for(OrderInfo order:list){
-            OrderInfoVo orderInfoVo = new OrderInfoVo();
-            this.copyProperties(order,orderInfoVo,null);
+//        PageHelper.startPage(pageNum, pageSize);
+//        Page<OrderInfo> list =  (Page<OrderInfo>) super.selectList(filters,orderBys);
+//        Page<OrderInfoVo> page = new Page<OrderInfoVo>(pageNum,pageSize);
+//        for(OrderInfo order:list){
+//            OrderInfoVo orderInfoVo = new OrderInfoVo();
+//            this.copyProperties(order,orderInfoVo,null);
+//
+//            OrderInfoVo mgOrder = mgOrderInfoService.selectById(orderInfoVo.getOrderId());
+//            if (mgOrder != null){
+//                User user = userService.selectById(orderInfoVo.getUserId());
+//                orderInfoVo.setUserName(user.getUserName());
+//                orderInfoVo.setUserType(user.getUserType());
+//                orderInfoVo.setSolveStatus(mgOrder.getSolveStatus());
+//                orderInfoVo.setRealName(mgOrder.getRealName());
+//                page.add(orderInfoVo);
+//            }
+//        }
+//
+//        Pagination<OrderInfoVo> pagination = new Pagination<OrderInfoVo>();
+//        pagination.setTotalItems(list.getTotal());
+//        pagination.setPageSize(pageSize);
+//        pagination.setCurrentPage(pageNum);
+//        pagination.setList(page);
+//        logger.info(JsonUtils.toJson(pagination));
+        Pagination<OrderInfoVo> pagination = mgOrderInfoService.getSoldOrderList(pageNum, pageSize, filters, startTime, endTime);
 
-            OrderInfoVo mgOrder = mgOrderInfoService.selectById(orderInfoVo.getOrderId());
-            if (mgOrder != null){
-                User user = userService.selectById(orderInfoVo.getUserId());
-                orderInfoVo.setUserName(user.getUserName());
-                orderInfoVo.setUserType(user.getUserType());
-                orderInfoVo.setSolveStatus(mgOrder.getSolveStatus());
-                orderInfoVo.setRealName(mgOrder.getRealName());
-                page.add(orderInfoVo);
-            }
-        }
-
-        Pagination<OrderInfoVo> pagination = new Pagination<OrderInfoVo>();
-        pagination.setTotalItems(list.getTotal());
-        pagination.setPageSize(pageSize);
-        pagination.setCurrentPage(pageNum);
-        pagination.setList(page);
-        logger.info(JsonUtils.toJson(pagination));
         return pagination;
     }
 

@@ -172,5 +172,8 @@ public interface GenericService<Model extends GenericModel, ID extends Serializa
      *
      * @return 对象集合，带分页
      */
-    Pagination<Model> getSoldOrderList(Integer pageNum, Integer pageSize, List<Condition> filters, List<OrderBy> orderBys, Date startTime, Date endTime);
+    Pagination<Model> getSoldOrderList(Integer pageNum, Integer pageSize, List<Condition> filters, Date startTime, Date endTime);
+
+//    Pagination<Model> getUserListInPage(Integer pageNum, Integer pageSize, List<Condition> filters,
+//                                        List<OrderBy> orderBys, Date startTime, Date endTime);
 }
