@@ -52,6 +52,7 @@ class GoodsCheckController {
         $rootScope.Shop = $scope.searchShop;
         $rootScope.CheckStatus = $scope.searchCheckStatus;
         $rootScope.OnSaleStatus = $scope.searchOnSaleStatus;
+        $rootScope.orgName = $scope.orgName;
 
 
       var promise = $http({
@@ -60,7 +61,8 @@ class GoodsCheckController {
         params: {currentPage: $rootScope.pagination.currentPage,
                  pageSize: $rootScope.pagination.pageSize,
                     goodsName: $scope.searchName,
-                    goodsSn: $scope.searchSn
+                    goodsSn: $scope.searchSn,
+                    orgName:$scope.orgName
         }
       });
       promise.then(function (res, status, config, headers) {
@@ -101,8 +103,10 @@ class GoodsCheckController {
                 // if($rootScope.editData.apiInfo != null){
                 //     $rootScope.editData.apiInfo.respSample = JSON.stringify(JSON.parse($rootScope.editData.apiInfo.respSample), null, "\t");
                 // }
-                $rootScope.operatorFlag = n;
-                $state.go('items.goodsDetail', {data: $rootScope.editData});
+                //版本更新
+                // $rootScope.operatorFlag = n;
+                // $state.go('items.goodsDetail', {data: $rootScope.editData});
+                $state.go('items.lookDetail');
             }
         });
     }

@@ -8,6 +8,8 @@ import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.domain.Goods;
+import com.jusfoun.hookah.core.domain.Organization;
+import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgShelvesGoods;
 import com.jusfoun.hookah.core.domain.vo.GoodsCheckedVo;
@@ -26,6 +28,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author huang lei
@@ -49,6 +53,13 @@ public class GoodsApi extends BaseController{
     MgGoodsShelvesGoodsService mgGoodsShelvesGoodsService;
 
     @Resource
+    OrganizationService organizationService;
+
+    @Resource
+    UserService userService;
+
+
+    @Resource
     MqSenderService mqSenderService;
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
@@ -57,7 +68,7 @@ public class GoodsApi extends BaseController{
                                     String keywords, String shopName,
                                     Byte checkStatus, Byte onSaleStatus
     ) {
-        Pagination<Goods> page = new Pagination<>();
+        Pagination page = new Pagination<>();
         try {
             List<Condition> filters = new ArrayList();
             List<OrderBy> orderBys = new ArrayList();
@@ -96,10 +107,25 @@ public class GoodsApi extends BaseController{
             }
             page = goodsService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
 
+            page.setList(copyGoodsData(page.getList()));
+
         } catch (Exception e) {
             e.printStackTrace();
         }
         return ReturnData.success(page);
+    }
+
+    private List<GoodsVo> copyGoodsData(List<Goods> list) {
+        List<GoodsVo> list1 = new ArrayList<>();
+        for(Goods goods : list) {
+            GoodsVo goodsVo = new GoodsVo();
+            BeanUtils.copyProperties(goods, goodsVo);
+            goodsVo.setGoodsArea((goods.getGoodsArea() == null || "".equals(goods.getGoodsArea())) ? "全部" : DictionaryUtil.getRegionById(goods.getGoodsArea()).getMergerName());
+            goodsVo.setCatName(DictionaryUtil.getCategoryById(goods.getCatId()) == null ? "" : DictionaryUtil.getCategoryById(goods.getCatId()).getCatName());
+            goodsVo.setOrgName(organizationService.findOrgByUserId(goods.getAddUser())==null?"":organizationService.findOrgByUserId(goods.getAddUser()).getOrgName());
+            list1.add(goodsVo);
+        }
+        return list1;
     }
 
     @RequestMapping(value = "/allNotInShelf", method = RequestMethod.GET)
@@ -152,9 +178,10 @@ public class GoodsApi extends BaseController{
     @RequestMapping(value = "/allNotCheck", method = RequestMethod.GET)
     public ReturnData allNotCheck(String currentPage, String pageSize,
                                   String goodsName, String goodsSn,
-                                  String keywords, String shopName) {
-        Pagination<Goods> page = new Pagination<>();
+                                  String keywords, String shopName,String orgName) {
+        Pagination page = new Pagination<>();
         try {
+
 
             List<Condition> filters = new ArrayList();
             List<OrderBy> orderBys = new ArrayList();
@@ -177,6 +204,23 @@ public class GoodsApi extends BaseController{
                 filters.add(Condition.like("shopName", shopName.trim()));
             }
 
+            //获取匹配到的供应商发布的GoodsId
+            if(StringUtils.isNotBlank(orgName)){
+                List<String> userIds = new ArrayList<String>();
+                userIds.add("");
+                List<Condition> orgFilters = new ArrayList();
+                orgFilters.add(Condition.like("orgName",orgName));
+                List<Organization> organizations = organizationService.selectList(orgFilters);
+                if(Objects.nonNull(organizations) && organizations.size() > 0){
+                    List<String> orgIds = organizations.stream().map(org->{return org.getOrgId();}).collect(Collectors.toList());
+                    List<Condition> userFilters = new ArrayList();
+                    userFilters.add(Condition.in("orgId",orgIds.toArray()));
+                    List<User> users = userService.selectList(userFilters);
+                    userIds = users.stream().map(user->{return user.getUserId();}).collect(Collectors.toList());
+                }
+                filters.add(Condition.in("addUser", userIds.toArray()));
+            }
+
             //参数校验
             int pageNumberNew = HookahConstants.PAGE_NUM;
             if (StringUtils.isNotBlank(currentPage)) {
@@ -188,14 +232,16 @@ public class GoodsApi extends BaseController{
             }
             page = goodsService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
 
-            List<Goods> list = page.getList();
-            if(list .size() > 0 && list != null){
-                list.stream().forEach(goods ->
-                        {
-                            goods.setGoodsArea((goods.getGoodsArea() == null || "".equals(goods.getGoodsArea())) ? "全部" : DictionaryUtil.getRegionById(goods.getGoodsArea()).getMergerName());
-                            goods.setCatId((goods.getCatId() == null || "".equals(goods.getCatId())) ? "全部" : DictionaryUtil.getCategoryById(goods.getCatId().substring(0, 3)).getCatName());
-                        });
-            }
+            page.setList(copyGoodsData(page.getList()));
+
+//            List<Goods> list = page.getList();
+//            if(list .size() > 0 && list != null){
+//                list.stream().forEach(goods ->
+//                {
+//                    goods.setGoodsArea((goods.getGoodsArea() == null || "".equals(goods.getGoodsArea())) ? "全部" : DictionaryUtil.getRegionById(goods.getGoodsArea()).getMergerName());
+//                    goods.setCatId((goods.getCatId() == null || "".equals(goods.getCatId())) ? "全部" : DictionaryUtil.getCategoryById(goods.getCatId().substring(0, 3)).getCatName());
+//                });
+//            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -324,7 +370,7 @@ public class GoodsApi extends BaseController{
      * @return
      */
     @RequestMapping(value = "/checkedList")
-    public ReturnData checkedList(String currentPage, String pageSize, String goodsName, String goodsSn) {
+    public ReturnData checkedList(String currentPage, String pageSize, String goodsName, String goodsSn,String orgName) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         Pagination<GoodsCheckedVo> pagination = null;
@@ -342,7 +388,7 @@ public class GoodsApi extends BaseController{
             pagination = new Pagination<>(pageNumberNew, pageSizeNew);
             PageHelper.startPage(pageNumberNew, pageSizeNew);//pageNum为第几页，pageSize为每页数量
 
-            List<GoodsCheckedVo> list = goodsService.getListForChecked(goodsName, goodsSn);
+            List<GoodsCheckedVo> list = goodsService.getListForChecked(goodsName, goodsSn,orgName);
             page = new PageInfo<GoodsCheckedVo>(list);
             if(page.getList() != null && page.getList().size() > 0){
                 page.getList().stream().forEach(goodsCheckedVo ->

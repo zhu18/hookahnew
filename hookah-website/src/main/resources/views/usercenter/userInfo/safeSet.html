@@ -23,17 +23,17 @@ var htmlPart = {
 					</div>
 					<div class="login-account">
 						<p>登录账号：<span class="user-account">${userCur.userName}</span>
-							<%if(userCur.userType ==1){%>
-							<span class="isAuth">您还未进行实名认证,<a href="/auth/index" class="color-blue">去认证</a></span>
-							<%}else if(userCur.userType ==2){%>
-							<span class="isAuth">(您已通过实名认证)</span>
-							<%}else if(userCur.userType ==3){%>
-							<span class="isAuth">(正在审核您的个人资料)</span>
-							<%}else if(userCur.userType ==4){%>
-							<span class="isAuth">(您已通过企业认证)</span>
-							<%}else if(userCur.userType ==5){%>
-							<span class="isAuth">(正在审核您的企业资料)</span>
-							<%}%>
+							<!--<%if(userCur.userType ==1){%>-->
+							<!--&lt;!&ndash;<span class="isAuth">您还未进行实名认证,<a href="/auth/index" class="color-blue">去认证</a></span>&ndash;&gt;-->
+							<!--<%}else if(userCur.userType ==2){%>-->
+							<!--<span class="isAuth">(您已通过实名认证)</span>-->
+							<!--<%}else if(userCur.userType ==3){%>-->
+							<!--<span class="isAuth">(正在审核您的个人资料)</span>-->
+							<!--<%}else if(userCur.userType ==4){%>-->
+							<!--<span class="isAuth">(您已通过企业认证)</span>-->
+							<!--<%}else if(userCur.userType ==5){%>-->
+							<!--<span class="isAuth">(正在审核您的企业资料)</span>-->
+							<!--<%}%>-->
 						</p>
 						<p class="register-time">注册时间：<span>${userCur.regTime, "yyyy-MM-dd HH:mm:ss"}</span></p>
 					</div>

@@ -35,7 +35,8 @@ public class GoodsVo extends Goods implements Serializable {
     private String areaCity;
     private String catFullName;
     private Long clickRate;
-    private Double goodsGrades;
+    private Double goodsGrades;//商品分数
+    private String orgName;//供应商名称
 
     public List<MgCategoryAttrType.AttrTypeBean> getAttrTypeList() {
         return attrTypeList;
@@ -219,5 +220,13 @@ public class GoodsVo extends Goods implements Serializable {
 
     public void setOffLineData(MgGoods.OffLineDataBean offLineData) {
         this.offLineData = offLineData;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
     }
 }

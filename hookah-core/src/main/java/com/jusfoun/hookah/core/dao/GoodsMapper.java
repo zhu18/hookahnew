@@ -28,5 +28,5 @@ public interface GoodsMapper extends GenericDao<Goods> {
 
     int updateByGidForFollowNum(Map<String, Object> map);
 
-    List<GoodsCheckedVo> getListForChecked(@Param("goodsName") String goodsName, @Param("goodsSn") String goodsSn);
+    List<GoodsCheckedVo> getListForChecked(@Param("goodsName") String goodsName, @Param("goodsSn") String goodsSn,@Param("orgName") String orgName);
 }

@@ -19,6 +19,8 @@ class UserController {
         growl.addSuccessMessage("数据加载完毕。。。");
       });
     };
+
+    //  用户信息详情
     $scope.detail = function (event, item) {
 
       $rootScope.cuser = item;
@@ -29,6 +31,7 @@ class UserController {
       promise.then(function (res, status, config, headers) {
         $rootScope.loadingState = false;
         $rootScope.cuserd=res.data.data;
+        console.log(res.data.data);
         growl.addSuccessMessage("数据加载完毕。。。");
       });
     };
