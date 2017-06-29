@@ -59,7 +59,6 @@
               <!--<input ng-model="addTime" type="text" class="form-control" placeholder="结束日期">-->
               <button style="margin-top: 5px" type="submit" class="btn btn-primary" data-ng-click="search()">搜索</button>
             </div>
-
           </form>
         </div>
         <div class="gridSection">
@@ -81,7 +80,6 @@
             </thead>
             <tbody>
             <tr data-ng-if="!loadingState" data-ng-repeat="item in pagination.store" class="" >
-
               <td>{{ $index + 1 }}</td>
               <td>
                 <a  ui-sref="order.viewOrderDetails" ng-click="getDetails($event,item.orderId)" >
