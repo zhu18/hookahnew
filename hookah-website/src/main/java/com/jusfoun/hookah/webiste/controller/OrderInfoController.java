@@ -285,7 +285,7 @@ public class OrderInfoController extends BaseController {
             //查询列表
             List<OrderBy> orderBys = new ArrayList<>();
             orderBys.add(OrderBy.desc("addTime"));
-            Pagination<OrderInfoVo> pOrders = orderInfoService.getSoldOrderListInPage(pageNumber, pageSize, listFilters, userId, goodsType, orderBys ,startTime, endTime);
+            Pagination<OrderInfoVo> pOrders = orderInfoService.getSoldOrderListInPage(pageNumber, pageSize, listFilters, userId, goodsType ,startTime, endTime);
 
 //            logger.info(JsonUtils.toJson(map));
             return ReturnData.success(pOrders);

@@ -1,6 +1,5 @@
 package com.jusfoun.hookah.core.generic;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.jusfoun.hookah.core.common.Pagination;
 import org.apache.commons.beanutils.ConvertUtils;
@@ -8,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -224,7 +224,8 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
     }
 
     @Override
-    public Pagination<Model> getSoldOrderList(Integer pageNum, Integer pageSize, List<Condition> filters, List<OrderBy> orderBys, Date startTime, Date endTime) {
+    public Pagination<Model> getSoldOrderList(Integer pageNum, Integer pageSize, List<Condition> filters,
+                                              Date startTime, Date endTime) {
         Type type = getClass().getGenericSuperclass();
         Type trueType = ((ParameterizedType) type).getActualTypeArguments()[0];
 
@@ -241,6 +242,7 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
             criteria = Criteria.where("addTime").gte(startTime);
             query.addCriteria(criteria);
         }
+        query.with(new Sort(Sort.Direction.DESC, "addTime"));
         List<Model> list = this.mongoTemplate.find(query, (Class)trueType);
         query.skip((pageNum-1)*pageSize);
         query.limit(pageSize);

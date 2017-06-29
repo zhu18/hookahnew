@@ -20,10 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by dengxu on 2017/4/24/0024.
@@ -54,11 +51,13 @@ public class OrderApi extends BaseController{
             Integer payStatus = orderInfoVo.getPayStatus();
             Integer solveStatus = orderInfoVo.getSolveStatus();
 
-            if (StringUtils.isNotBlank(startDate)) {
-                filters.add(Condition.ge("addTime", DateUtils.getDate(startDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
+            Date startTime = null;
+            Date endTime = null;
+            if (org.apache.commons.lang3.StringUtils.isNotBlank(startDate)) {
+                startTime = DateUtils.getDate(startDate,DateUtils.DEFAULT_DATE_TIME_FORMAT);
             }
-            if (StringUtils.isNotBlank(endDate)) {
-                filters.add(Condition.le("addTime", DateUtils.getDate(endDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
+            if (org.apache.commons.lang3.StringUtils.isNotBlank(endDate)) {
+                endTime = DateUtils.getDate(endDate,DateUtils.DEFAULT_DATE_TIME_FORMAT);
             }
             if (StringUtils.isNotBlank(userName)){
                 filters.add(Condition.eq("userName", userName));
@@ -86,7 +85,7 @@ public class OrderApi extends BaseController{
             if (StringUtils.isNotBlank(pageSize)) {
                 pageSizeNew = Integer.parseInt(pageSize);
             }
-            page = orderInfoService.getUserListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
+            page = orderInfoService.getUserListInPage(pageNumberNew, pageSizeNew, filters, startTime, endTime);
         } catch (Exception e) {
             e.printStackTrace();
         }
