@@ -1,6 +1,5 @@
 class ShelfController {
   constructor($scope, $rootScope, $state, $http, $uibModal, usSpinnerService, growl) {
-      require('/vendor/jedate/jquery.jedate.min.js');
       $scope.dataStart=""
       $scope.dataEnd=""
       $scope.search = function () {
