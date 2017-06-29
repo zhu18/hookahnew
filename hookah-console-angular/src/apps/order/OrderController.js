@@ -30,6 +30,7 @@ class ShelfController {
       }
 
     $scope.search1 = function () {
+        console.log($scope.startDate);
         var promise = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/order/all",
@@ -40,9 +41,9 @@ class ShelfController {
           userName:$scope.userName,
           userType:$scope.userType,
           payStatus:$scope.payStatus,
-          startDate:format($scope.startDate, 'yyyy-MM-dd HH:mm:ss'),
+          startDate:$scope.startDate?format($scope.startDate, 'yyyy-MM-dd HH:mm:ss'):null,
           solveStatus:$scope.solveStatus,
-          endDate:format($scope.startDate, 'yyyy-MM-dd HH:mm:ss')
+          endDate:$scope.endDate?format($scope.endDate, 'yyyy-MM-dd HH:mm:ss'):null
         }
       });
       promise.then(function (res, status, config, headers) {
@@ -61,9 +62,9 @@ class ShelfController {
           userName:$scope.userName,
           userType:$scope.userType,
           payStatus:$scope.payStatus,
-          startDate:$scope.startDate,
+          startDate:null,
           solveStatus:$scope.solveStatus,
-          endDate:$scope.endDate
+          endDate:null
         }
       });
       promise.then(function (res, status, config, headers) {
