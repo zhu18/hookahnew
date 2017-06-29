@@ -20,7 +20,8 @@ class GoodsCheckController {
                  goodsName: $scope.searchName,
                  goodsSn: $scope.searchSn,
                  keywords: $scope.searchKw,
-                 shopName: $scope.searchShop
+                 shopName: $scope.searchShop,
+                 orgName:$scope.orgName
         }
       });
       promise.then(function (res, status, config, headers) {
@@ -123,7 +124,8 @@ class GoodsCheckController {
               // keywords: $scope.searchKw,
               // shopName: $scope.searchShop,
               checkStatus: $rootScope.CheckStatus,
-              onSaleStatus: $rootScope.OnSaleStatus
+              onSaleStatus: $rootScope.OnSaleStatus,
+              orgName:$scope.orgName
           }
         });
         promise.then(function (res, status, config, headers) {

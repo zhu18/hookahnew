@@ -449,8 +449,8 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
     }
 
     @Override
-    public List<GoodsCheckedVo> getListForChecked(String goodsName, String goodsSn) {
-        return goodsMapper.getListForChecked(goodsName, goodsSn);
+    public List<GoodsCheckedVo> getListForChecked(String goodsName, String goodsSn,String orgName) {
+        return goodsMapper.getListForChecked(goodsName, goodsSn,orgName);
     }
 
     /**

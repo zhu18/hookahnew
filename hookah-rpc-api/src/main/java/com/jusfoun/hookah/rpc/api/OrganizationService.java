@@ -9,4 +9,7 @@ import com.jusfoun.hookah.core.generic.GenericService;
  * @desc
  */
 public interface OrganizationService extends GenericService<Organization,String> {
+
+    Organization findOrgByUserId(String userId);
+
 }
