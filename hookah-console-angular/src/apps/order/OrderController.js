@@ -1,5 +1,6 @@
 class ShelfController {
   constructor($scope, $rootScope, $state, $http, $uibModal, usSpinnerService, growl) {
+      require('/vendor/jedate/jquery.jedate.min.js');
       $scope.dataStart=""
       $scope.dataEnd=""
       $scope.search = function () {
@@ -198,68 +199,88 @@ class ShelfController {
 
 
     };
-      $scope.inlineOptions = {
-          customClass: getDayClass,
-          minDate:new Date(2000, 5, 22),
-          showWeeks: true
-      };
-      // $scope.dateOptions = {
-      //     dateDisabled: disabled,
-      //     formatYear: 'yy',
-      //     maxDate: new Date(2020, 5, 22),
-      //     minDate: new Date(2000, 5, 22),
-      //     startingDay: 1
+      // $scope.inlineOptions = {
+      //     customClass: getDayClass,
+      //     minDate:new Date(2000, 5, 22),
+      //     showWeeks: true
       // };
-
-      // Disable weekend selection
-      // function disabled(data) {
+      // // $scope.dateOptions = {
+      // //     dateDisabled: disabled,
+      // //     formatYear: 'yy',
+      // //     maxDate: new Date(2020, 5, 22),
+      // //     minDate: new Date(2000, 5, 22),
+      // //     startingDay: 1
+      // // };
+      //
+      // // Disable weekend selection
+      // // function disabled(data) {
+      // //     var date = data.date,
+      // //         mode = data.mode;
+      // //     return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+      // // }
+      // $scope.open1 = function() {
+      //     $scope.popup1.opened = true;
+      // };
+      // $scope.open2 = function() {
+      //     $scope.popup2.opened = true;
+      // };
+      // $scope.popup1 = {
+      //     opened: false
+      // };
+      // $scope.popup2 = {
+      //     opened: false
+      // };
+      // var tomorrow = new Date();
+      // tomorrow.setDate(tomorrow.getDate() + 1);
+      // var afterTomorrow = new Date();
+      // afterTomorrow.setDate(tomorrow.getDate() + 1);
+      // $scope.events = [
+      //     {
+      //         date: tomorrow,
+      //         status: 'full'
+      //     },
+      //     {
+      //         date: afterTomorrow,
+      //         status: 'partially'
+      //     }
+      // ];
+      // function getDayClass(data) {
       //     var date = data.date,
       //         mode = data.mode;
-      //     return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+      //     if (mode === 'day') {
+      //         var dayToCheck = new Date(date).setHours(0,0,0,0);
+      //
+      //         for (var i = 0; i < $scope.events.length; i++) {
+      //             var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+      //
+      //             if (dayToCheck === currentDay) {
+      //                 return $scope.events[i].status;
+      //             }
+      //         }
+      //     }
+      //
+      //     return '';
       // }
-      $scope.open1 = function() {
-          $scope.popup1.opened = true;
-      };
-      $scope.open2 = function() {
-          $scope.popup2.opened = true;
-      };
-      $scope.popup1 = {
-          opened: false
-      };
-      $scope.popup2 = {
-          opened: false
-      };
-      var tomorrow = new Date();
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      var afterTomorrow = new Date();
-      afterTomorrow.setDate(tomorrow.getDate() + 1);
-      $scope.events = [
-          {
-              date: tomorrow,
-              status: 'full'
-          },
-          {
-              date: afterTomorrow,
-              status: 'partially'
+
+      var start = {
+          format: "YYYY-MM-DD hh:mm:ss",
+          isTime: true,
+          maxDate: new Date(2000, 5, 22),
+          choosefun: function (elem, datas) {
+              end.minDate = datas; //开始日选好后，重置结束日的最小日期
           }
-      ];
-      function getDayClass(data) {
-          var date = data.date,
-              mode = data.mode;
-          if (mode === 'day') {
-              var dayToCheck = new Date(date).setHours(0,0,0,0);
-
-              for (var i = 0; i < $scope.events.length; i++) {
-                  var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
-
-                  if (dayToCheck === currentDay) {
-                      return $scope.events[i].status;
-                  }
-              }
+      };
+      var end = {
+          format: "YYYY-MM-DD hh:mm:ss",
+          isTime: true,
+          maxDate: new Date(2000, 5, 22),
+          choosefun: function (elem, datas) {
+              start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
           }
 
-          return '';
-      }
+      };
+      $.jeDate("#startDate", start);
+      $.jeDate("#endDate", end);
   }
 }
 export default ShelfController;
