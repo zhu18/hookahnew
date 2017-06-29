@@ -99,6 +99,11 @@ public class UserApi {
         try {
             Map<String, Object> map = new HashedMap();
             User user = userService.selectById(id);
+
+            if(user.getMoneyBalance() != null && user.getMoneyBalance() != 0){
+                user.setMoneyBalance(user.getMoneyBalance() / 100);
+            }
+
             if(user.getUserType() != null){
                 if(user.getUserType() == 1){
                     map.put("user", user);
