@@ -3,8 +3,6 @@ class ShelfController {
       $scope.dataStart=""
       $scope.dataEnd=""
       $scope.search = function () {
-      console.log("查询。。。。");
-      console.log($scope.userType);
         var promise = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/order/all",
@@ -16,6 +14,7 @@ class ShelfController {
           userType:$scope.userType,
           payStatus:$scope.payStatus,
           startDate:$scope.startDate,
+          solveStatus:$scope.solveStatus,
           endDate:$scope.endDate
         }
       });
