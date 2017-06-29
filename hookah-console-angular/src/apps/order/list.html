@@ -1,7 +1,7 @@
 <style>
   .form-inline .form-control{
     width: 110px;
-    margin-top: 5px;
+    /*margin-top: 5px;*/
   }.form-inline label{
     margin-top: 5px;
   }
@@ -42,12 +42,23 @@
                 <option value="">已支付</option>
               </select>
               <label class="control-label">下单时间：</label>
-              <input ng-model="addTime" type="text" class="form-control" placeholder="起始日期">
+                  <p class="input-group" style="margin-top: 15px">
+                    <input type="text" class="form-control" uib-datepicker-popup ng-model="dataStart" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                    <span class="input-group-btn" >
+                         <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                  </p>
+              <!--<input ng-model="addTime" type="text" class="form-control" placeholder="起始日期">-->
               <label class="control-label">至</label>
-              <input ng-model="addTime" type="text" class="form-control" placeholder="结束日期">
-              <button type="submit" class="btn btn-primary" data-ng-click="search()">搜索</button>
+              <p class="input-group" style="margin-top: 15px">
+                <input type="text" class="form-control" uib-datepicker-popup ng-model="dataEnd" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                <span class="input-group-btn" >
+                         <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+              </p>
+              <!--<input ng-model="addTime" type="text" class="form-control" placeholder="结束日期">-->
+              <button style="margin-top: 5px" type="submit" class="btn btn-primary" data-ng-click="search()">搜索</button>
             </div>
-
           </form>
         </div>
         <div class="gridSection">
@@ -61,6 +72,7 @@
               <th class="text-center">实名认证</th>
               <th class="text-center">类型</th>
               <th class="text-center">订单金额</th>
+              <th class="text-center">处理状态</th>
               <th class="text-center">支付状态</th>
               <th class="text-center">订单时间</th>
               <!--<th  width="130" class="text-center">操作</th>-->
@@ -68,7 +80,6 @@
             </thead>
             <tbody>
             <tr data-ng-if="!loadingState" data-ng-repeat="item in pagination.store" class="" >
-
               <td>{{ $index + 1 }}</td>
               <td>
                 <a  ui-sref="order.viewOrderDetails" ng-click="getDetails($event,item.orderId)" >
@@ -87,7 +98,11 @@
               <td>
                 <span text-length="50" ng-bind="item.orderAmount / 100"></span>
               </td>
-
+              <td>
+                <span text-length="50" ng-show="item.handleStatus == 0">未处理</span>
+                <span text-length="50" ng-show="item.handleStatus == 1">已处理</span>
+                <span text-length="50" ng-show="item.handleStatus == 2">无需处理</span>
+              </td>
               <td>
                 <span text-length="50" ng-show="item.payStatus == 0">未付款</span>
                 <span text-length="50" ng-show="item.payStatus == 1">付款中</span>
