@@ -116,17 +116,18 @@ class UserVerifyController {
 
     };
 
+    // 审核详情
     $scope.checkDetail = function (event, item) {
       var promise = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/userCheck/" + item.id,
       });
       promise.then(function (res, status, config, headers) {
-          console.log(res.data);
-          if(res.data.code == "1"){
-              alert("提交成功");
-              $state.go('user.verify.resultAll');
-          }
+          console.log(res.data.data);
+          // if(res.data.code == "1"){
+          //     alert("提交成功");
+          //     $state.go('user.verify.resultAll');
+          // }
       });
 
     };
