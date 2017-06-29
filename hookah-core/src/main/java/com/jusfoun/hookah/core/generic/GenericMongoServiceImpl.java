@@ -230,13 +230,13 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
 
         Query query = new Query();
         query = this.convertFilter2Query(filters);
-        if (startTime!=null&&endTime!=null){
+        if (startTime!=null || endTime!=null){
             Criteria criteria = null;
             criteria = Criteria.where("addTime").gte(startTime).lt(endTime);
             query.addCriteria(criteria);
         }
         List<Model> list = this.mongoTemplate.find(query, (Class)trueType);
-        query.skip(pageNum);
+        query.skip((pageNum-1)*pageSize);
         query.limit(pageSize);
         logger.info("[Mongo Dao ]queryPage:{}({},{})" , query,pageNum,pageSize );
         List<Model> page = this.mongoTemplate.find(query, (Class)trueType);
