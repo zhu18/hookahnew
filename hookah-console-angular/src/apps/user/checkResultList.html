@@ -70,7 +70,10 @@
                 <span class="" ng-bind="item.checkTime"></span>
               </td>
               <td class="text-center">
-                <a ng-click="checkDetail($event,item)">审核详情</a>
+                <!--<a ng-click="checkDetail($event,item)">审核详情</a>-->
+                <a ui-sref="user.verifyDetail" ng-click="checkDetail($event,item)" class="">
+                  审核详情
+                </a>
               </td>
             </tr>
             </tbody>

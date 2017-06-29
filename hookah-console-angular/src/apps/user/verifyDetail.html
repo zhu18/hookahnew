@@ -11,14 +11,14 @@
     <div class="console-title console-title-border clearfix">
       <div class="pull-left"><h5>用户详情</h5></div>
       <div class="pull-right">
-        <button class="btn btn-default" ui-sref="user.search" data-ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span> 返回</button>
+        <button class="btn btn-default" ui-sref="user.verify.resultAll" data-ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span> 返回</button>
       </div>
     </div>
   </div>
   <div class="col-sm-12">
     <form class="form-horizontal" role="form" id="userDetail">
       <fieldset>
-        <h5 style="padding: 0px 20px;">基本信息</h5>
+        <h5 style="padding: 0px 20px;">基本信息 <span ng-bind="cuser.userType"></span></h5>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="userName">账户名:</label>
           <div class="col-sm-4">
@@ -62,7 +62,7 @@
           </div>
         </div>
       </fieldset>
-      <fieldset ng-if="cuser.userType == 2">
+      <fieldset ng-if="cuser.userType == 0">
         <h5 style="margin: 0px 20px;padding-bottom: 3px; border-bottom: 1px dashed #DDD;">详细信息</h5>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="realName">真实姓名:</label>
@@ -70,24 +70,7 @@
             <input disabled="disabled" type="text" id="realName" name="realName" class="form-control none-edit" value="{{cuserd.realName}}"/>
           </div>
         </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="gender">性别:</label>
-          <div class="col-sm-4">
-            <input disabled="disabled" type="text" id="gender" name="gender" class="form-control none-edit" value="{{cuserd.gender}}"/>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="birthday">生日:</label>
-          <div class="col-sm-4">
-            <input disabled="disabled" type="text" id="birthday" name="birthday" class="form-control none-edit" value="{{cuserd.birthday}}"/>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="address">住址:</label>
-          <div class="col-sm-4">
-            <input disabled="disabled" type="text" id="address" name="address" class="form-control none-edit" value="{{cuserd.address}}"/>
-          </div>
-        </div>
+
         <div class="form-group">
           <label class="col-sm-2 control-label" for="cardNum">身份证号:</label>
           <div class="col-sm-4">
@@ -107,7 +90,7 @@
 
 
 
-      <fieldset ng-if="cuser.userType == 4">
+      <fieldset ng-if="cuser.userType == 1">
         <h5 style="padding: 0px 20px;">企业信息</h5>
         <div class="form-group">
           <label class="col-sm-2 control-label" >单位名称:</label>
@@ -181,6 +164,41 @@
             <img ng-click="showBigImg(cuserd.certifictePath)" src="http://static.qddata.com.cn/{{cuserd.certifictePath}}" style="max-width: 450px; max-height: 600px">
           </div>
         </div>
+      </fieldset>
+
+
+      <fieldset ng-if="userCheck.checkStatus == 2">
+        <div class="form-group">
+          <label class="col-sm-2 control-label" >审核状态:</label>
+          <div class="col-sm-4">
+            未通过
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" >审核意见:</label>
+          <div class="col-sm-4">
+            <span ng-bind="userCheck.checkContent"></span>
+          </div>
+        </div>
+
+      </fieldset>
+      <fieldset ng-if="userCheck.checkStatus == 1">
+        <div class="form-group">
+          <label class="col-sm-2 control-label" >审核状态:</label>
+          <div class="col-sm-4">
+            通过
+          </div>
+        </div>
+      </fieldset>
+      <fieldset ng-if="userCheck.checkStatus == 0">
+        <div class="form-group">
+          <label class="col-sm-2 control-label" >审核状态:</label>
+          <div class="col-sm-4">
+            审核中
+          </div>
+        </div>
+
+
       </fieldset>
 
 
