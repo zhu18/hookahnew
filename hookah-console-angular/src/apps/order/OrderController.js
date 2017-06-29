@@ -1,8 +1,56 @@
 class ShelfController {
-  constructor($scope, $rootScope, $state, $http, $uibModal, usSpinnerService, growl) {
-      $scope.dataStart=""
-      $scope.dataEnd=""
-      $scope.search = function () {
+  constructor($scope, $rootScope, $state, $http, $uibModal, uibDateParser, usSpinnerService, growl) {
+      var format = function(time, format)
+
+      {
+          var t = new Date(time);
+          var tf = function(i){return (i < 10 ? '0' : "") + i};
+          return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function(a){
+              switch(a){
+                  case 'yyyy':
+                      return tf(t.getFullYear());
+                      break;
+                  case 'MM':
+                      return tf(t.getMonth() + 1);
+                      break;
+                  case 'mm':
+                      return tf(t.getMinutes());
+                      break;
+                  case 'dd':
+                      return tf(t.getDate());
+                      break;
+                  case 'HH':
+                      return tf(t.getHours());
+                      break;
+                  case 'ss':
+                      return tf(t.getSeconds());
+                      break;
+              }
+          })
+      }
+
+    $scope.search1 = function () {
+        var promise = $http({
+        method: 'GET',
+        url: $rootScope.site.apiServer + "/api/order/all",
+        params: {
+          currentPage: $rootScope.pagination.currentPage,
+          pageSize: $rootScope.pagination.pageSize,
+          orderSn: $scope.orderSn,
+          userName:$scope.userName,
+          userType:$scope.userType,
+          payStatus:$scope.payStatus,
+          startDate:format($scope.startDate, 'yyyy-MM-dd HH:mm:ss'),
+          solveStatus:$scope.solveStatus,
+          endDate:format($scope.startDate, 'yyyy-MM-dd HH:mm:ss')
+        }
+      });
+      promise.then(function (res, status, config, headers) {
+        $rootScope.loadingState = false;
+        growl.addSuccessMessage("订单数据加载完毕。。。");
+      });
+    };
+    $scope.search = function () {
         var promise = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/order/all",
@@ -198,88 +246,88 @@ class ShelfController {
 
 
     };
-      // $scope.inlineOptions = {
-      //     customClass: getDayClass,
-      //     minDate:new Date(2000, 5, 22),
-      //     showWeeks: true
+      $scope.inlineOptions = {
+          customClass: getDayClass,
+          minDate:new Date(2000, 5, 22),
+          showWeeks: true
+      };
+      // $scope.dateOptions = {
+      //     dateDisabled: disabled,
+      //     formatYear: 'yy',
+      //     maxDate: new Date(2020, 5, 22),
+      //     minDate: new Date(2000, 5, 22),
+      //     startingDay: 1
       // };
-      // // $scope.dateOptions = {
-      // //     dateDisabled: disabled,
-      // //     formatYear: 'yy',
-      // //     maxDate: new Date(2020, 5, 22),
-      // //     minDate: new Date(2000, 5, 22),
-      // //     startingDay: 1
-      // // };
-      //
-      // // Disable weekend selection
-      // // function disabled(data) {
-      // //     var date = data.date,
-      // //         mode = data.mode;
-      // //     return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
-      // // }
-      // $scope.open1 = function() {
-      //     $scope.popup1.opened = true;
-      // };
-      // $scope.open2 = function() {
-      //     $scope.popup2.opened = true;
-      // };
-      // $scope.popup1 = {
-      //     opened: false
-      // };
-      // $scope.popup2 = {
-      //     opened: false
-      // };
-      // var tomorrow = new Date();
-      // tomorrow.setDate(tomorrow.getDate() + 1);
-      // var afterTomorrow = new Date();
-      // afterTomorrow.setDate(tomorrow.getDate() + 1);
-      // $scope.events = [
-      //     {
-      //         date: tomorrow,
-      //         status: 'full'
-      //     },
-      //     {
-      //         date: afterTomorrow,
-      //         status: 'partially'
-      //     }
-      // ];
-      // function getDayClass(data) {
+
+      // Disable weekend selection
+      // function disabled(data) {
       //     var date = data.date,
       //         mode = data.mode;
-      //     if (mode === 'day') {
-      //         var dayToCheck = new Date(date).setHours(0,0,0,0);
-      //
-      //         for (var i = 0; i < $scope.events.length; i++) {
-      //             var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
-      //
-      //             if (dayToCheck === currentDay) {
-      //                 return $scope.events[i].status;
-      //             }
-      //         }
+      //     return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+      // }
+      $scope.open1 = function() {
+          $scope.popup1.opened = true;
+      };
+      $scope.open2 = function() {
+          $scope.popup2.opened = true;
+      };
+      $scope.popup1 = {
+          opened: false
+      };
+      $scope.popup2 = {
+          opened: false
+      };
+      var tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      var afterTomorrow = new Date();
+      afterTomorrow.setDate(tomorrow.getDate() + 1);
+      $scope.events = [
+          {
+              date: tomorrow,
+              status: 'full'
+          },
+          {
+              date: afterTomorrow,
+              status: 'partially'
+          }
+      ];
+      function getDayClass(data) {
+          var date = data.date,
+              mode = data.mode;
+          if (mode === 'day') {
+              var dayToCheck = new Date(date).setHours(0,0,0,0);
+
+              for (var i = 0; i < $scope.events.length; i++) {
+                  var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+
+                  if (dayToCheck === currentDay) {
+                      return $scope.events[i].status;
+                  }
+              }
+          }
+
+          return '';
+      }
+
+      // var start = {
+      //     format: "YYYY-MM-DD hh:mm:ss",
+      //     isTime: true,
+      //     maxDate: new Date(2000, 5, 22),
+      //     choosefun: function (elem, datas) {
+      //         end.minDate = datas; //开始日选好后，重置结束日的最小日期
+      //     }
+      // };
+      // var end = {
+      //     format: "YYYY-MM-DD hh:mm:ss",
+      //     isTime: true,
+      //     maxDate: new Date(2000, 5, 22),
+      //     choosefun: function (elem, datas) {
+      //         start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
       //     }
       //
-      //     return '';
-      // }
-
-      var start = {
-          format: "YYYY-MM-DD hh:mm:ss",
-          isTime: true,
-          maxDate: new Date(2000, 5, 22),
-          choosefun: function (elem, datas) {
-              end.minDate = datas; //开始日选好后，重置结束日的最小日期
-          }
-      };
-      var end = {
-          format: "YYYY-MM-DD hh:mm:ss",
-          isTime: true,
-          maxDate: new Date(2000, 5, 22),
-          choosefun: function (elem, datas) {
-              start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
-          }
-
-      };
-      $.jeDate("#startDate", start);
-      $.jeDate("#endDate", end);
+      // };
+      // $.jeDate("#startDate", start);
+      // $.jeDate("#endDate", end);
   }
 }
 export default ShelfController;
