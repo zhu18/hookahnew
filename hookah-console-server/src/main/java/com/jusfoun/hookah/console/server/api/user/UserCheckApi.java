@@ -72,8 +72,15 @@ public class UserCheckApi extends BaseController{
 
             UserCheck userCheck = userCheckService.selectById(id);
             if(userCheck.getUserType() != null && userCheck.getUserId() != null){
+
                 User user = userService.selectById(userCheck.getUserId());
+
                 if(user != null){
+
+                    if(user.getMoneyBalance() != null && user.getMoneyBalance() != 0){
+                        user.setMoneyBalance(user.getMoneyBalance() / 100);
+                    }
+
                     if("0".equals(userCheck.getUserType())){// 个人
                         UserDetail userDetail = userDetailService.selectById(user.getUserId());
                         map.put("user", user);

@@ -55,10 +55,13 @@
             <tr>
               <th>编号</th>
               <th>名称</th>
+              <th>所属地域</th>
               <th>类型</th>
+              <th>所属供应商</th>
               <th>审核状态</th>
               <th>上架状态</th>
               <th>创建时间</th>
+              <th>渠道来源</th>
               <th width="200" class="text-center">操作</th>
             </tr>
             </thead>
@@ -73,7 +76,13 @@
                 </a>
               </td>
               <td>
+                <span class="column-text" ng-bind="item.goodsArea"></span>
+              </td>
+              <td>
                 <span class="column-text" ng-bind="item.goodsType | goodsType"></span>
+              </td>
+              <td>
+                <span class="column-text" ng-bind="item.orgName"></span>
               </td>
               <td>
                 <span class="column-text" style="color: red" ng-show="item.checkStatus == 2">未通过</span>
@@ -88,6 +97,9 @@
               </td>
               <td>
                 <span class="column-text" ng-bind="item.lastUpdateTime"></span>
+              </td>
+              <td>
+                <span class="column-text">本地资源</span>
               </td>
               <td class="text-center" data-ng-if="item.isDelete == 1">
                 <span data-ng-if="item.isOnsale == '1' && item.checkStatus == '0'">

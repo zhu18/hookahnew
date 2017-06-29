@@ -13,6 +13,8 @@ public class GoodsCheckedVo extends Goods {
 
     private Date checkTime;
 
+    private String orgName;
+
     public String getCheckUser() {
         return checkUser;
     }
@@ -27,5 +29,13 @@ public class GoodsCheckedVo extends Goods {
 
     public void setCheckTime(Date checkTime) {
         this.checkTime = checkTime;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
     }
 }

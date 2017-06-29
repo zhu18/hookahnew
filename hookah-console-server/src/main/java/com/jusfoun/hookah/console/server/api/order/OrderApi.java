@@ -1,7 +1,6 @@
 package com.jusfoun.hookah.console.server.api.order;
 
 import com.jusfoun.hookah.console.server.controller.BaseController;
-import com.jusfoun.hookah.console.server.service.impl.GoodsServiceImpl;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.User;
@@ -9,10 +8,10 @@ import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
+import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
-import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.OrderInfoService;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,6 +54,12 @@ public class OrderApi extends BaseController{
             Integer payStatus = orderInfoVo.getPayStatus();
             Integer solveStatus = orderInfoVo.getSolveStatus();
 
+            if (StringUtils.isNotBlank(startDate)) {
+                filters.add(Condition.ge("addTime", DateUtils.getDate(startDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
+            }
+            if (StringUtils.isNotBlank(endDate)) {
+                filters.add(Condition.le("addTime", DateUtils.getDate(endDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
+            }
             if (StringUtils.isNotBlank(userName)){
                 filters.add(Condition.eq("userName", userName));
             }

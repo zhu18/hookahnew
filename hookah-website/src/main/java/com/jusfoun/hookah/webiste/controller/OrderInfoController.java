@@ -265,11 +265,13 @@ public class OrderInfoController extends BaseController {
             if (pageSize==null) pageSize = Integer.parseInt(PAGE_SIZE);
 
             List<Condition> listFilters = new ArrayList<>();
+            Date startTime = null;
+            Date endTime = null;
             if (StringUtils.isNotBlank(startDate)) {
-                listFilters.add(Condition.ge("addTime", DateUtils.getDate(startDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
+                startTime = DateUtils.getDate(startDate,DateUtils.DEFAULT_DATE_TIME_FORMAT);
             }
             if (StringUtils.isNotBlank(endDate)) {
-                listFilters.add(Condition.le("addTime", DateUtils.getDate(endDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
+                endTime = DateUtils.getDate(endDate,DateUtils.DEFAULT_DATE_TIME_FORMAT);
             }
 
             listFilters.add(Condition.eq("payStatus", 2));
@@ -283,7 +285,7 @@ public class OrderInfoController extends BaseController {
             //查询列表
             List<OrderBy> orderBys = new ArrayList<>();
             orderBys.add(OrderBy.desc("addTime"));
-            Pagination<OrderInfoVo> pOrders = orderInfoService.getSoldOrderListInPage(pageNumber, pageSize, listFilters, userId, goodsType, orderBys);
+            Pagination<OrderInfoVo> pOrders = orderInfoService.getSoldOrderListInPage(pageNumber, pageSize, listFilters, userId, goodsType, orderBys ,startTime, endTime);
 
 //            logger.info(JsonUtils.toJson(map));
             return ReturnData.success(pOrders);
