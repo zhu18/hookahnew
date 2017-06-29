@@ -596,7 +596,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
             List<MgOrderGoods> goods = new ArrayList<MgOrderGoods>();
             for (MgOrderGoods mgOrderGoods : goodsList){
-                if (mgOrderGoods.getGoodsType().equals(goodsType)){
+                if (goodsType!=null && mgOrderGoods.getGoodsType().equals(goodsType)){
+                    goods.add(mgOrderGoods);
+                }else if (goodsType == null){
                     goods.add(mgOrderGoods);
                 }
             }
