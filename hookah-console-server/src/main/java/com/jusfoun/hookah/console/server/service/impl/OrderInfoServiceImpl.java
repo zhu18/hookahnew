@@ -303,6 +303,13 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     }
 
 
+    /**
+     * 购物车生成订单
+     * @param orderInfo
+     * @param cartIdArray
+     * @return
+     * @throws Exception
+     */
     @Transactional(readOnly=false)
     @Override
     public OrderInfo insert(OrderInfo orderInfo,String[] cartIdArray) throws Exception {
@@ -363,6 +370,15 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         return orderInfo;
     }
 
+    /**
+     * 直接购买生成订单
+     * @param orderInfo
+     * @param goodsId
+     * @param formatId
+     * @param goodsNumber
+     * @return
+     * @throws Exception
+     */
     @Transactional(readOnly=false)
     @Override
     public OrderInfo insert(OrderInfo orderInfo, String goodsId, Integer formatId, Long goodsNumber) throws Exception {
@@ -574,42 +590,18 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         if (goodsType != null){
             filters.add(Condition.eq("orderGoodsList.goodsType", goodsType));
         }
-//        PageHelper.startPage(pageNum, pageSize);
-//        Page<OrderInfo> list =  (Page<OrderInfo>) super.selectList(filters,orderBys);
-//        Page<OrderInfoVo> page = new Page<OrderInfoVo>(pageNum,pageSize);
-//        for(OrderInfo order:list){
-//            OrderInfoVo orderInfoVo = new OrderInfoVo();
-//            this.copyProperties(order,orderInfoVo,null);
-//
-//            OrderInfoVo mgOrder = mgOrderInfoService.selectById(orderInfoVo.getOrderId());
-//            if (mgOrder != null){
-//                orderInfoVo.setMgOrderGoodsList(mgOrder.getMgOrderGoodsList());
-//                page.add(orderInfoVo);
-//            }
-//        }
-//        if (list!=null && list.size()!=0 && goodsType != null) {
-//            for (OrderInfoVo orderInfoVo : list){
-//                List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
-//                List<MgOrderGoods> goods = new ArrayList<MgOrderGoods>();
-//                for (MgOrderGoods mgOrderGoods : goodsList){
-//                    if (mgOrderGoods.getGoodsType().equals(goodsType)){
-//                        goods.add(mgOrderGoods);
-//                    }
-//                }
-//                orderInfoVo.setMgOrderGoodsList(goods);
-//            }
-//        }
-//        List<OrderInfoVo> page = new ArrayList<>();
-//        for (int start = (pageNum-1)*pageSize; start < pageNum*pageSize-1; start++){
-//            page.add(list.get(start));
-//        }
-
-//        Pagination<OrderInfoVo> pagination = new Pagination<OrderInfoVo>();
-//        pagination.setPageSize(pageSize);
-//        pagination.setCurrentPage(pageNum);
-//        pagination.setList(page);
-//        logger.info(JsonUtils.toJson(pagination));
         Pagination<OrderInfoVo> pagination = mgOrderInfoService.getSoldOrderList(pageNum, pageSize, filters, orderBys, startTime, endTime);
+        List<OrderInfoVo> orderInfoVos = pagination.getList();
+        for (OrderInfoVo orderInfoVo:orderInfoVos){
+            List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
+            List<MgOrderGoods> goods = new ArrayList<MgOrderGoods>();
+            for (MgOrderGoods mgOrderGoods : goodsList){
+                if (mgOrderGoods.getGoodsType().equals(goodsType)){
+                    goods.add(mgOrderGoods);
+                }
+            }
+            orderInfoVo.setMgOrderGoodsList(goods);
+        }
         return pagination;
     }
 
