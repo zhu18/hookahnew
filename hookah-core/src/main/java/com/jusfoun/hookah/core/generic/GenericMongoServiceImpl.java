@@ -21,13 +21,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 
 /**
@@ -219,9 +213,31 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
         query.skip(pageNum);
         query.limit(pageSize);
         logger.info("[Mongo Dao ]queryPage:{}({},{})" , query,pageNum,pageSize );
-        Page<Model> page = (Page<Model>)this.mongoTemplate.find(query, (Class)trueType);
+        List<Model> page = this.mongoTemplate.find(query, (Class)trueType);
         Pagination<Model> pagination = new Pagination<Model>();
-        pagination.setTotalItems(page.getTotal());
+        pagination.setTotalItems(page.size());
+        pagination.setPageSize(pageSize);
+        pagination.setCurrentPage(pageNum);
+        pagination.setList(page);
+        return pagination;
+    }
+
+    @Override
+    public Pagination<Model> getSoldOrderList(Integer pageNum, Integer pageSize, List<Condition> filters, List<OrderBy> orderBys, Date startTime, Date endTime) {
+        Type type = getClass().getGenericSuperclass();
+        Type trueType = ((ParameterizedType) type).getActualTypeArguments()[0];
+
+        Query query = new Query();
+        query = this.convertFilter2Query(filters);
+        Criteria criteria = null;
+        criteria = Criteria.where("addTime").gte(startTime).lt(endTime);
+        query.addCriteria(criteria);
+        query.skip(pageNum);
+        query.limit(pageSize);
+        logger.info("[Mongo Dao ]queryPage:{}({},{})" , query,pageNum,pageSize );
+        List<Model> page = this.mongoTemplate.find(query, (Class)trueType);
+        Pagination<Model> pagination = new Pagination<Model>();
+        pagination.setTotalItems(page.size());
         pagination.setPageSize(pageSize);
         pagination.setCurrentPage(pageNum);
         pagination.setList(page);

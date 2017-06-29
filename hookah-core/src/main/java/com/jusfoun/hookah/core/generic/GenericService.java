@@ -4,6 +4,7 @@ package com.jusfoun.hookah.core.generic;
 import com.jusfoun.hookah.core.common.Pagination;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 
@@ -165,4 +166,11 @@ public interface GenericService<Model extends GenericModel, ID extends Serializa
 	 * @return 实体对象数量
 	 */
 	long count(List<Condition> filters);
+
+    /**
+     * 查询分页，有排序，有按照日期区间查询
+     *
+     * @return 对象集合，带分页
+     */
+    Pagination<Model> getSoldOrderList(Integer pageNum, Integer pageSize, List<Condition> filters, List<OrderBy> orderBys, Date startTime, Date endTime);
 }
