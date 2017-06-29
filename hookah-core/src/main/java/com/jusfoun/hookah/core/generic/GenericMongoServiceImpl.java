@@ -230,9 +230,15 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
 
         Query query = new Query();
         query = this.convertFilter2Query(filters);
-        if (startTime!=null || endTime!=null){
-            Criteria criteria = null;
+        Criteria criteria = null;
+        if (startTime!=null && endTime!=null){
             criteria = Criteria.where("addTime").gte(startTime).lt(endTime);
+            query.addCriteria(criteria);
+        }else if (startTime==null && endTime!=null){
+            criteria = Criteria.where("addTime").lt(endTime);
+            query.addCriteria(criteria);
+        }else if (startTime!=null && endTime==null){
+            criteria = Criteria.where("addTime").gte(startTime);
             query.addCriteria(criteria);
         }
         List<Model> list = this.mongoTemplate.find(query, (Class)trueType);
