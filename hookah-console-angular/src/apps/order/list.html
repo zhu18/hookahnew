@@ -21,29 +21,30 @@
               <label class="control-label">订单编号：</label>
               <input ng-model="orderSn" type="text" class="form-control" placeholder="请输入订单编号">
               <label class="control-label">买家帐号：</label>
-              <input ng-model="orderSn" type="text" class="form-control" placeholder="请输入订单编号">
+              <input ng-model="userName" type="text" class="form-control" placeholder="请输入买家帐号">
               <label class="control-label">处理状态：</label>
-              <select name="" class="form-control">
+              <select name="" class="form-control" ng-model="solveStatus">
                 <option value="">全部</option>
-                <option value="">未处理</option>
-                <option value="">已处理</option>
-                <option value="">无需处理</option>
+                <option value="2">未处理</option>
+                <option value="1">已处理</option>
+                <option value="0">无需处理</option>
               </select>
-              <label class="control-label">账号类型：</label>
-              <select name="" class="form-control">
+              <label class="control-label" >账号类型：</label>
+              <select name="" ng-model="userType" class="form-control">
                 <option value="">全部</option>
-                <option value="">企业</option>
-                <option value="">个人</option>
+                <option value="4">企业</option>
+                <option value="2">个人</option>
               </select>
               <label class="control-label">支付状态：</label>
-              <select name="" class="form-control">
+              <select name="" ng-model="payStatus" class="form-control">
                 <option value="">全部</option>
-                <option value="">未支付</option>
-                <option value="">已支付</option>
+                <option value="0">未付款</option>
+                <option value="1">付款中</option>
+                <option value="2">已款中</option>
               </select>
               <label class="control-label">下单时间：</label>
                   <p class="input-group" style="margin-top: 15px">
-                    <input type="text" class="form-control" uib-datepicker-popup ng-model="dataStart" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                    <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd HH:mm:ss" ng-model="startDate" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
                     <span class="input-group-btn" >
                          <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
@@ -51,7 +52,7 @@
               <!--<input ng-model="addTime" type="text" class="form-control" placeholder="起始日期">-->
               <label class="control-label">至</label>
               <p class="input-group" style="margin-top: 15px">
-                <input type="text" class="form-control" uib-datepicker-popup ng-model="dataEnd" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                <input type="text" class="form-control" uib-datepicker-popup ng-model="endDate" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
                 <span class="input-group-btn" >
                          <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
@@ -99,9 +100,9 @@
                 <span text-length="50" ng-bind="item.orderAmount / 100"></span>
               </td>
               <td>
-                <span text-length="50" ng-show="item.handleStatus == 0">未处理</span>
-                <span text-length="50" ng-show="item.handleStatus == 1">已处理</span>
-                <span text-length="50" ng-show="item.handleStatus == 2">无需处理</span>
+                <span text-length="50" ng-show="item.solveStatus == 2">未处理</span>
+                <span text-length="50" ng-show="item.solveStatus == 1">已处理</span>
+                <span text-length="50" ng-show="item.solveStatus == 0">无需处理</span>
               </td>
               <td>
                 <span text-length="50" ng-show="item.payStatus == 0">未付款</span>

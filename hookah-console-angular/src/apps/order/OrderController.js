@@ -4,14 +4,19 @@ class ShelfController {
       $scope.dataEnd=""
       $scope.search = function () {
       console.log("查询。。。。");
-      console.log($scope.dataStart);
-      var promise = $http({
+      console.log($scope.userType);
+        var promise = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/order/all",
         params: {
           currentPage: $rootScope.pagination.currentPage,
           pageSize: $rootScope.pagination.pageSize,
-          orderSn: $scope.orderSn
+          orderSn: $scope.orderSn,
+          userName:$scope.userName,
+          userType:$scope.userType,
+          payStatus:$scope.payStatus,
+          startDate:$scope.startDate,
+          endDate:$scope.endDate
         }
       });
       promise.then(function (res, status, config, headers) {
@@ -19,7 +24,6 @@ class ShelfController {
         growl.addSuccessMessage("订单数据加载完毕。。。");
       });
     };
-
     $scope.getDetails = function (event, orderId) {
       var promise = $http({
         method: 'GET',
@@ -48,7 +52,6 @@ class ShelfController {
         }
       });
     };
-
     $scope.pageChanged = function () {
       $scope.search();
       console.log('Page changed to: ' + $rootScope.pagination.currentPage);
@@ -201,7 +204,6 @@ class ShelfController {
           minDate:new Date(2000, 5, 22),
           showWeeks: true
       };
-
       // $scope.dateOptions = {
       //     dateDisabled: disabled,
       //     formatYear: 'yy',
@@ -219,19 +221,15 @@ class ShelfController {
       $scope.open1 = function() {
           $scope.popup1.opened = true;
       };
-
       $scope.open2 = function() {
           $scope.popup2.opened = true;
       };
-
       $scope.popup1 = {
           opened: false
       };
-
       $scope.popup2 = {
           opened: false
       };
-
       var tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
       var afterTomorrow = new Date();
@@ -246,7 +244,6 @@ class ShelfController {
               status: 'partially'
           }
       ];
-
       function getDayClass(data) {
           var date = data.date,
               mode = data.mode;
@@ -264,8 +261,6 @@ class ShelfController {
 
           return '';
       }
-
   }
 }
-
 export default ShelfController;
