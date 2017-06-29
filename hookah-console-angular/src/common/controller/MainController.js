@@ -60,6 +60,35 @@ class MainController{
         // $log.info('Modal dismissed at: ' + new Date());
       });
     };
+$rootScope.openJustShowDialogModal = function (message) {
+      var modalInstance = $uibModal.open({
+        animation: true,
+        template: require('../justShowDialogModal.html'),
+        controller: function($scope,$sce, $uibModalInstance, message){
+          $scope.message = $sce.trustAsHtml(message);
+
+          $scope.ok = function () {
+            $uibModalInstance.close($scope.selected.item);
+          };
+
+          $scope.cancel = function () {
+            $uibModalInstance.dismiss('cancel');
+          };
+        },
+        // size: 'lg',
+        backdrop: 'static',
+        resolve: {
+          message: function () {
+            return message;
+          }
+        }
+      });
+      modalInstance.result.then(function () {
+        //
+      }, function () {
+        // $log.info('Modal dismissed at: ' + new Date());
+      });
+    };
 
     $rootScope.openConfirmDialogModal = function (message) {
       return $uibModal.open({
