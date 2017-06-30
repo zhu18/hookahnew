@@ -2,6 +2,7 @@ package com.jusfoun.hookah.console.server.api.user;
 
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.domain.LoginLog;
 import com.jusfoun.hookah.core.domain.Organization;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.UserDetail;
@@ -9,6 +10,7 @@ import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.rpc.api.LoginLogService;
 import com.jusfoun.hookah.rpc.api.OrganizationService;
 import com.jusfoun.hookah.rpc.api.UserDetailService;
 import com.jusfoun.hookah.rpc.api.UserService;
@@ -43,6 +45,9 @@ public class UserApi {
 
     @Resource
     OrganizationService organizationService;
+
+    @Resource
+    LoginLogService loginLogService;
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ReturnData getAllUser(String currentPage, String pageSize, HttpServletRequest request,
@@ -100,10 +105,28 @@ public class UserApi {
             Map<String, Object> map = new HashedMap();
             User user = userService.selectById(id);
 
+            if(user == null){
+                returnData.setCode(ExceptionConst.Failed);
+                returnData.setMessage("未查询到此用户，如有疑问请联系管理员！");
+                return returnData;
+            }
+
             if(user.getMoneyBalance() != null && user.getMoneyBalance() != 0){
                 user.setMoneyBalance(user.getMoneyBalance() / 100);
             }
 
+            List<Condition> filtersl = new ArrayList();
+            List<OrderBy> orderBys = new ArrayList();
+            orderBys.add(OrderBy.desc("addTime"));
+            filtersl.add(Condition.eq("loginName", user.getUserName()));
+            List<LoginLog> loginLogs = loginLogService.selectList(filtersl, orderBys);
+            if(loginLogs.size() > 0 && loginLogs != null){
+                if(loginLogs.size() > 10){
+                    map.put("loginLogs", loginLogs.subList(0, 10));
+                }else {
+                    map.put("loginLogs", loginLogs);
+                }
+            }
             if(user.getUserType() != null){
                 if(user.getUserType() == 1){
                     map.put("user", user);
