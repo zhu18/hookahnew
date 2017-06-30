@@ -4,9 +4,7 @@ import com.jusfoun.hookah.console.server.controller.BaseController;
 import com.jusfoun.hookah.console.server.util.NumberValidationUtils;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
-import com.jusfoun.hookah.core.domain.SysNotice;
 import com.jusfoun.hookah.core.domain.User;
-import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
@@ -20,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -99,20 +95,30 @@ public class AccountApi extends BaseController{
 
     @RequestMapping(value = "/recharge", method = RequestMethod.POST)
     public ReturnData recharge(User user,String recharge) {
-        NumberValidationUtils nv = new NumberValidationUtils();
+        try {
+            NumberValidationUtils nv = new NumberValidationUtils();
 
-        if (StringUtils.isBlank(user.getUserId())) {
-            return ReturnData.error("充值失败请返回重新充值");
-        }
-        if (nv.isNatureInteger(recharge)){
-            Long charge = Long.parseLong(recharge)*100;
-            user.setMoneyBalance(user.getMoneyBalance()+charge);
-            userService.updateByIdSelective(user);
-            return ReturnData.success("充值成功");
-        }else {
-            return ReturnData.error("只能充值整数金额");
+            if (StringUtils.isBlank(user.getUserId())) {
+                return ReturnData.error("充值失败请返回重新充值");
+            }
+            if (nv.isNatureInteger(recharge)){
+                //            Long charge = Long.parseLong(recharge)*100;
+                //            user.setMoneyBalance(user.getMoneyBalance()+charge);
+                //            userService.updateByIdSelective(user);
+                int n = userService.manualRecharge(user.getUserId(), Long.parseLong(recharge) * 100, getCurrentUser().getUserName());
+                if(n > 0){
+                    return ReturnData.success("充值成功");
+                }else{
+                    return ReturnData.success("充值失败");
+                }
+            }else {
+                return ReturnData.error("只能充值整数金额");
+            }
+        } catch (Exception e) {
+            return ReturnData.success("充值失败");
         }
     }
+
     @RequestMapping("delete")
     public ReturnData deleteAccount(User user){
         try {

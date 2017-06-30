@@ -10,7 +10,7 @@
   <bean id="userService" class="com.jusfoun.hookah.oauth2server.service.impl.UserServiceImpl"/>
   <bean id="roleService" class="com.jusfoun.hookah.oauth2server.service.impl.RoleServiceImpl"/>
   <bean id="permisstionService" class="com.jusfoun.hookah.oauth2server.service.impl.PermisstionServiceImpl"/>
-  <!--<bean id="cashRecordService" class="com.jusfoun.hookah.oauth2server.service.impl.CashRecordServiceImpl"/>-->
+  <bean id="cashRecordService" class="com.jusfoun.hookah.oauth2server.service.impl.CashRecordServiceImpl"/>
   <bean id="loginLogService" class="com.jusfoun.hookah.oauth2server.service.impl.LoginLogServiceImpl"/>
 
 
@@ -40,9 +40,9 @@
   <motan:service interface="com.jusfoun.hookah.rpc.api.PermisstionService"
                  ref="permisstionService" export="hookah:5003" basicService="serviceBasicConfig">
   </motan:service>
-  <!--<motan:service interface="com.jusfoun.hookah.rpc.api.CashRecordService"-->
-                 <!--ref="cashRecordService" export="hookah:5003" basicService="serviceBasicConfig">-->
-  <!--</motan:service>-->
+  <motan:service interface="com.jusfoun.hookah.rpc.api.CashRecordService"
+                 ref="cashRecordService" export="hookah:5003" basicService="serviceBasicConfig">
+  </motan:service>
   <motan:service interface="com.jusfoun.hookah.rpc.api.LoginLogService"
                  ref="loginLogService" export="hookah:5003" basicService="serviceBasicConfig">
   </motan:service>
