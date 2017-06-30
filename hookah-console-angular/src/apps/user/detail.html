@@ -97,10 +97,10 @@
         <div class="form-group">
           <label class="col-sm-2 control-label" for="cardNum">身份证扫描件:</label>
           <div class="col-sm-4">
-            <label class="">正面照:</label><img ng-click="showBigImg(cuserd.identityCardFrontPath)" style="height: 200px;width: 200px" src="{{'http://static.qddata.com.cn/'+cuserd.identityCardFrontPath}}"/>
+            <p class="">正面照:</p><img ng-click="showBigImg(cuserd.identityCardFrontPath)" style="height: 200px;width: 200px" src="{{'http://static.qddata.com.cn/'+cuserd.identityCardFrontPath}}"/>
           </div>
           <div class="col-sm-4">
-            <label class="">反面照:</label><img ng-click="showBigImg(cuserd.identityCardReversePath)" style="height: 200px;width: 200px" src="{{'http://static.qddata.com.cn/'+cuserd.identityCardReversePath}}"/>
+            <p class="">反面照:</p><img ng-click="showBigImg(cuserd.identityCardReversePath)" style="height: 200px;width: 200px" src="{{'http://static.qddata.com.cn/'+cuserd.identityCardReversePath}}"/>
           </div>
         </div>
       </fieldset>
@@ -182,6 +182,16 @@
           </div>
         </div>
       </fieldset>
+        <table class="table table-hover" style="width:400px;margin-left:180px">
+          <tr>
+            <th> 登录时间 </th>
+            <th> 登录IP</th>
+          </tr>
+          <tr  data-ng-repeat="item in loginLog" class="">
+            <td data-ng-bind="item.addTime"></td>
+            <td data-ng-bind="item.clientIp"></td>
+          </tr>
+        </table>
 
 
 

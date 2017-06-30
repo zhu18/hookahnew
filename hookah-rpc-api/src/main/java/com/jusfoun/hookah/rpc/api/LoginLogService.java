@@ -7,4 +7,6 @@ import com.jusfoun.hookah.core.generic.GenericService;
  * dx
  */
 public interface LoginLogService extends GenericService<LoginLog, String> {
+
+    void addLoginLog(String username, String ipAddr);
 }

@@ -120,7 +120,7 @@ public class UserApi {
             orderBys.add(OrderBy.desc("addTime"));
             filtersl.add(Condition.eq("loginName", user.getUserName()));
             List<LoginLog> loginLogs = loginLogService.selectList(filtersl, orderBys);
-            if(loginLogs.size() > 0 && loginLogs != null){
+            if(loginLogs != null){
                 if(loginLogs.size() > 10){
                     map.put("loginLogs", loginLogs.subList(0, 10));
                 }else {
