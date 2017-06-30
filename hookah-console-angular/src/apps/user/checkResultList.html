@@ -48,10 +48,9 @@
             <tbody>
             <tr data-ng-if="!loadingState" data-ng-repeat="item in pagination.store" class="">
               <td>
-                <a ng-click="checkDetail($event,item)"
-                   class="">
+                <!--<a ng-click="checkDetail($event,item)" class="">-->
                   <span ng-bind="item.userName" ></span>
-                </a>
+                <!--</a>-->
               </td>
               <td>
                 <span class="column-text" ng-show="item.userType == 0">个人</span>
