@@ -49,8 +49,8 @@
       <td ng-bind="goods.goodsNumber"></td>
       <!--<td>¥{{goods.payName * goods.goodsPrice / 100}}</td>-->
       <td>
-        <p style="border-bottom: 1px dashed #eee">¥{{goods.goodsNumber * goods.goodsPrice / 100}}</p>
-        <p>{{goods.payName}}</p>
+        <p >¥{{goods.goodsNumber * goods.goodsPrice / 100}}</p>
+        <p style="border-top: 1px dashed #eee">{{goods.payName}}</p>
       </td>
       <td>
         <span text-length="50" ng-bind="goods.goodsType | goodsType"></span>

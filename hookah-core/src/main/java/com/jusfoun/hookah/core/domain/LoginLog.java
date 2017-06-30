@@ -1,6 +1,8 @@
 package com.jusfoun.hookah.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jusfoun.hookah.core.generic.GenericModel;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -56,6 +58,8 @@ public class LoginLog extends GenericModel {
      *
      * @mbggenerated
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addTime;
 
     /**
@@ -64,6 +68,8 @@ public class LoginLog extends GenericModel {
      *
      * @mbggenerated
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
     /**
