@@ -99,7 +99,7 @@
                 <span text-length="50" ng-bind="item.userType | UserType"></span>
               </td>
               <td>
-                <span text-length="50" ng-bind="item.orderAmount / 100"></span>
+                ¥<span text-length="50" ng-bind="item.orderAmount / 100 | number:2"></span>
               </td>
               <td>
                 <span text-length="50" ng-show="item.solveStatus == 2">未处理</span>
