@@ -47,7 +47,11 @@
       <td>{{goods.supplier}}</td>
       <td>¥{{goods.goodsPrice / 100}}</td>
       <td ng-bind="goods.goodsNumber"></td>
-      <td>¥{{goods.goodsNumber * goods.goodsPrice / 100}}</td>
+      <!--<td>¥{{goods.payName * goods.goodsPrice / 100}}</td>-->
+      <td>
+        <p style="border-bottom: 1px dashed #eee">¥{{goods.goodsNumber * goods.goodsPrice / 100}}</p>
+        <p>{{goods.payName}}</p>
+      </td>
       <td>
         <span text-length="50" ng-bind="goods.goodsType | goodsType"></span>
       </td>
@@ -68,22 +72,22 @@
     </tr>
     </tbody>
   </table>
-  <div class="text-left" style="border-bottom: 1px solid #d4dde4;">
+  <div class="text-left">
     <ul class="" style="list-style-type:none;padding-bottom: 20px;">
-      <li style="color: #949494;font-size: 16px;padding-top: 15px;">订单合计：
+      <li style="color: #949494;font-size: 16px;padding-top: 15px;text-align: right">订单合计：
         <span style="color: black;font-size: 16px; padding-top: 15px;">¥{{order.orderAmount / 100}}</span></li>
-      <li style="color: #949494;font-size: 16px;padding-top: 15px;">订单优惠：
-        <span style="color: black;font-size: 16px;padding-top: 15px;">¥{{order.goodsDiscountFee / 100}}</span></li>
-      <li style="color: #949494;font-size: 16px;padding-top: 15px;">实际应付：
-        <span style="color: black;font-size: 16px;padding-top: 15px;">¥{{(order.orderAmount - order.discountFee)/ 100}}</span></li>
-      <li style="color: #949494;font-size: 16px;padding-top: 15px;">付款方式：
-        <span ng-bind="order.payName" style="color: black;font-size: 16px;padding-top: 15px;"></span></li>
+      <!--<li style="color: #949494;font-size: 16px;padding-top: 15px;">订单优惠：-->
+        <!--<span style="color: black;font-size: 16px;padding-top: 15px;">¥{{order.goodsDiscountFee / 100}}</span></li>-->
+      <!--<li style="color: #949494;font-size: 16px;padding-top: 15px;">实际应付：-->
+        <!--<span style="color: black;font-size: 16px;padding-top: 15px;">¥{{(order.orderAmount - order.discountFee)/ 100}}</span></li>-->
+      <!--<li style="color: #949494;font-size: 16px;padding-top: 15px;">付款方式：-->
+        <!--<span ng-bind="order.payName" style="color: black;font-size: 16px;padding-top: 15px;"></span></li>-->
     </ul>
   </div>
-  <div style="color: #949494;font-size: 16px; line-height: 16px;padding-top: 20px; padding-left: 40px;">
-    开具类型：<span style="color: black;">{{order.invMedia}}&nbsp;&nbsp;</span>
-    发票类型：<span style="color: black;">{{order.invType}}&nbsp;&nbsp;</span>
-    发票抬头：<span style="color: black;">{{order.invHead}}&nbsp;&nbsp;</span>
-    发票内容：<span style="color: black;">{{order.invContent}}&nbsp;&nbsp;</span>
-  </div>
+  <!--<div style="color: #949494;font-size: 16px; line-height: 16px;padding-top: 20px; padding-left: 40px;">-->
+    <!--开具类型：<span style="color: black;">{{order.invMedia}}&nbsp;&nbsp;</span>-->
+    <!--发票类型：<span style="color: black;">{{order.invType}}&nbsp;&nbsp;</span>-->
+    <!--发票抬头：<span style="color: black;">{{order.invHead}}&nbsp;&nbsp;</span>-->
+    <!--发票内容：<span style="color: black;">{{order.invContent}}&nbsp;&nbsp;</span>-->
+  <!--</div>-->
 </div>

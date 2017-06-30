@@ -51,27 +51,27 @@ class ShelfController {
         growl.addSuccessMessage("订单数据加载完毕。。。");
       });
     };
-    $scope.search = function () {
-        var promise = $http({
-        method: 'GET',
-        url: $rootScope.site.apiServer + "/api/order/all",
-        params: {
-          currentPage: $rootScope.pagination.currentPage,
-          pageSize: $rootScope.pagination.pageSize,
-          orderSn: $scope.orderSn,
-          userName:$scope.userName,
-          userType:$scope.userType,
-          payStatus:$scope.payStatus,
-          startDate:null,
-          solveStatus:$scope.solveStatus,
-          endDate:null
-        }
-      });
-      promise.then(function (res, status, config, headers) {
-        $rootScope.loadingState = false;
-        growl.addSuccessMessage("订单数据加载完毕。。。");
-      });
-    };
+    // $scope.search = function () {
+    //     var promise = $http({
+    //     method: 'GET',
+    //     url: $rootScope.site.apiServer + "/api/order/all",
+    //     params: {
+    //       currentPage: $rootScope.pagination.currentPage,
+    //       pageSize: $rootScope.pagination.pageSize,
+    //       orderSn: $scope.orderSn,
+    //       userName:$scope.userName,
+    //       userType:$scope.userType,
+    //       payStatus:$scope.payStatus,
+    //       startDate:null,
+    //       solveStatus:$scope.solveStatus,
+    //       endDate:null
+    //     }
+    //   });
+    //   promise.then(function (res, status, config, headers) {
+    //     $rootScope.loadingState = false;
+    //     growl.addSuccessMessage("订单数据加载完毕。。。");
+    //   });
+    // };
     $scope.getDetails = function (event, orderId) {
       var promise = $http({
         method: 'GET',
@@ -107,7 +107,7 @@ class ShelfController {
     $scope.back = function () {
       history.back();
     };
-    $scope.search();
+    $scope.search1();
     $scope.remark = function (goodsId, orderId, goodsType, isOffline, goods) {
       console.log("goodsId：" + goodsId, "orderId：" + orderId, "goodsType：" + goodsType, "isOffline：" + isOffline);
       var inserDOM = null;
