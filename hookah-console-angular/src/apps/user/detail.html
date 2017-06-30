@@ -182,6 +182,16 @@
           </div>
         </div>
       </fieldset>
+        <table class="table table-hover" style="width:400px;margin-left:180px">
+          <tr>
+            <th> 登录时间 </th>
+            <th> 登录IP</th>
+          </tr>
+          <tr  data-ng-repeat="item in loginLog" class="">
+            <td data-ng-bind="item.addTime"></td>
+            <td data-ng-bind="item.clientIp"></td>
+          </tr>
+        </table>
 
 
 

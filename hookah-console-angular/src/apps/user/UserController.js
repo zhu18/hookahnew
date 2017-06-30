@@ -41,7 +41,7 @@ class UserController {
         }else if (item.userType == 1) {//未认证
 
         }
-
+        $rootScope.loginLog=res.data.data.loginLogs;
         growl.addSuccessMessage("数据加载完毕。。。");
       });
     };
