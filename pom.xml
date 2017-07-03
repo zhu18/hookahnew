@@ -15,6 +15,7 @@
     <module>hookah-rpc-api</module>
     <module>hookah-oauth2server</module>
     <module>hookah-static-server</module>
+    <module>hookah-pay</module>
   </modules>
 
   <properties>

@@ -125,7 +125,7 @@ $(document).ready(function () {
 		img.on('error', function () {
 			img.attr('src', '/static/images/timg.jpeg')
 		})
-	})
+	});
 	// 兼容性placeholder
 	compatibilityPL();
 	shoppingCart();
