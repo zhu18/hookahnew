@@ -874,15 +874,15 @@ function submitGoodsPublish(){
 			}
 		} else if (data.goodsType == 1) {//------------------------------
 			data.apiInfo = {};
-			data.apiInfo.apiMethod = $('.api-info-box').find('input[name="apiType"]:checked').val();
-			data.apiInfo.apiUrl = $('.api-info-box').find('input[name="invokeMethod"]').val();
+			data.apiInfo.apiType = $('.api-info-box').find('input[name="apiType"]:checked').val();
+			data.apiInfo.invokeMethod = $('.api-info-box').find('input[name="invokeMethod"]').val();
 			data.apiInfo.apiUrl = $('.api-info-box').find('input[name="apiUrl"]').val();
 			data.apiInfo.apiMethod = $('.api-info-box').find('input[name="apiMethod"]:checked').val();
 			data.apiInfo.reqSample = $('.api-info-box').find('input[name="reqSample"]').val();
-			data.apiInfo.apiMethod = $('.api-info-box').find('input[name="respDataFormat"]:checked').val();
+			data.apiInfo.respDataFormat = $('.api-info-box').find('input[name="respDataFormat"]:checked').val();
 			data.apiInfo.apiDesc = $('.api-info-box').find('#apiDesc').val();
-			data.apiInfo.apiUrl = $('.api-info-box').find('input[name="secretKeyName"]').val();
-			data.apiInfo.apiUrl = $('.api-info-box').find('input[name="secretKeyValue"]').val();
+			data.apiInfo.secretKeyName = $('.api-info-box').find('input[name="secretKeyName"]').val();
+			data.apiInfo.secretKeyValue = $('.api-info-box').find('input[name="secretKeyValue"]').val();
 			data.apiInfo.reqParamList = [];
 			$('table[d-type="requestHtml"] tbody tr').each(function (i, item) {
 				var listData = {};
@@ -897,7 +897,7 @@ function submitGoodsPublish(){
 			data.apiInfo.respParamList = [];
 			$('table[d-type="returnHtml"] tbody tr').each(function () {
 				var listData = {};
-				listData.fieldName = $(this).find('input[name="fieldNames"]').val();
+				listData.fieldName = $(this).find('input[name="fieldName"]').val();
 				listData.fieldType = $(this).find('select[name="fieldType"]').val();
 				listData.describle = $(this).find('textarea[name="describle"]').val();
 				data.apiInfo.respParamList.push(listData);
@@ -976,7 +976,7 @@ function renderApiInfo(apiInfo){ //渲染API ----- 1
 		}
 	});
 	$('.api-info-box input[name="apiUrl"]').val(apiInfo.apiUrl);
-	$('.api-info-box input[name="invokeMethod"]').val(apiInfo.apiUrl);
+	$('.api-info-box input[name="invokeMethod"]').val(apiInfo.invokeMethod);
 	$('.api-info-box input[name="apiMethod"]').each(function(){
 		if($(this).val() == apiInfo.apiMethod){
 			$(this).attr('checked','checked');
@@ -992,8 +992,8 @@ function renderApiInfo(apiInfo){ //渲染API ----- 1
 		}
 	});
 	$('.api-info-box input[name="reqSample"]').val(apiInfo.reqSample);
-	$('.api-info-box input[name="secretKeyName"]').val(apiInfo.reqSample);
-	$('.api-info-box input[name="secretKeyValue"]').val(apiInfo.reqSample);
+	$('.api-info-box input[name="secretKeyName"]').val(apiInfo.secretKeyName);
+	$('.api-info-box input[name="secretKeyValue"]').val(apiInfo.secretKeyValue);
 	$('.api-info-box #apiDesc').val(apiInfo.apiDesc);
 	$('.api-info-box #respSample').val(apiInfo.respSample);
 	var html = '';
