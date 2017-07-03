@@ -7,7 +7,7 @@ function loadPageData(data){ //渲染页面数据
             if(list[i].shopFormat == 0 ){
                 shopFormat = '次';
             }else if(list[i].shopFormat == 1 ){
-                shopFormat = '月';
+                shopFormat = '天';
             }else if(list[i].shopFormat == 2 ){
                 shopFormat = '年';
             }
