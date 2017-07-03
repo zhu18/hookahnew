@@ -80,10 +80,9 @@ jmz.GetLength = function(str) {
 function renderData(data){//渲染页面
 	catId = data.catId;
 	// $('.category-title-box').html(data.catFullName); //商品分类
-
+    $('#J-ver').val(data.ver);//版本号
 	$('#J-goodsName').val(data.goodsName);//商品名称
 	$('#J-goodsBrief').val(data.goodsBrief);//简介
-	$('#keywords').val(data.keywords);//分类信息
     $('#showcontent').html(jmz.GetLength(data.goodsName));//商品名称长度
     $('#showcontent2').html(jmz.GetLength(data.goodsBrief));//商品名称长度
 	$('select[name="parentSelect"] option').each(function(){
@@ -805,10 +804,9 @@ function backAddFn(data){
 function submitGoodsPublish(){
 	var data = {};
 	data.goodsId = goodsId;
-
+    data.ver = $('input[name="ver"]').val();
 	data.goodsName = $('input[name="goodsName"]').val();
 	data.goodsBrief = $('textarea[name="goodsBrief"]').val();
-	data.keywords = $('input[name="keywords"]').val();
 	data.attrTypeList = [];
 	$('.chosen-select').each(function () {
 		var attrTypeList = {};
@@ -874,7 +872,6 @@ function submitGoodsPublish(){
 			}
 		} else if (data.goodsType == 1) {//------------------------------
 			data.apiInfo = {};
-			data.apiInfo.apiType = $('.api-info-box').find('input[name="apiType"]:checked').val();
 			data.apiInfo.apiUrl = $('.api-info-box').find('input[name="apiUrl"]').val();
 			data.apiInfo.apiMethod = $('.api-info-box').find('input[name="apiMethod"]:checked').val();
 			data.apiInfo.reqSample = $('.api-info-box').find('input[name="reqSample"]').val();
@@ -900,9 +897,6 @@ function submitGoodsPublish(){
 			});
 			console.log(data.apiInfo.respParamList);//----------------------
 			data.apiInfo.respSample = $('#respSample').val();
-			data.apiInfo.respDataFormat = $('.api-info-box').find('input[name="respDataFormat"]:checked').val();
-			data.apiInfo.secretKeyName = $('.api-info-box').find('input[name="secretKeyName"]').val();
-			data.apiInfo.secretKeyValue = $('.api-info-box').find('input[name="secretKeyValue"]').val();
 		} else if (data.goodsType == 2) {
 			data.dataModel = {};
 			data.dataModel.complexity = $('input[name="complexity"]').val();
@@ -967,13 +961,6 @@ function submitGoodsPublish(){
 }
 
 function renderApiInfo(apiInfo){ //渲染API ----- 1
-	$('.api-info-box input[name="apiType"]').each(function(){
-		if($(this).val() == apiInfo.apiType){
-			$(this).attr('checked','checked');
-		}else{
-			$(this).removeAttr('checked');
-		}
-	});
 	$('.api-info-box input[name="apiUrl"]').val(apiInfo.apiUrl);
 	$('.api-info-box input[name="apiMethod"]').each(function(){
 		if($(this).val() == apiInfo.apiMethod){
@@ -985,15 +972,6 @@ function renderApiInfo(apiInfo){ //渲染API ----- 1
 	$('.api-info-box input[name="reqSample"]').val(apiInfo.reqSample);
 	$('.api-info-box #apiDesc').val(apiInfo.apiDesc);
 	$('.api-info-box #respSample').val(apiInfo.respSample);
-	$('.api-info-box input[name="secretKeyName"]').val(apiInfo.secretKeyName);
-	$('.api-info-box input[name="secretKeyValue"]').val(apiInfo.secretKeyValue);
-	$('.api-info-box input[name="respDataFormat"]').each(function(){
-		if($(this).val() == apiInfo.respDataFormat){
-			$(this).attr('checked','checked');
-		}else{
-			$(this).removeAttr('checked');
-		}
-	});
 	var html = '';
 	var reqLen = apiInfo.reqParamList.length;
 	$.each(apiInfo.reqParamList,function (index,data) {
