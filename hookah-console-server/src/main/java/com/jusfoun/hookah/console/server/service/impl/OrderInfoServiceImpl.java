@@ -176,7 +176,11 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         og.setPayInfoUserName("");
         switch (cart.getGoods().getGoodsType()){
             case 4:case 5:case 6:case 7:
-                og.setSolveStatus(2);
+                if (cart.getGoods().getIsOffline()==0){
+                    og.setSolveStatus(2);
+                }else {
+                    og.setSolveStatus(0);
+                }
                 break;
             default:
                 og.setSolveStatus(0);
@@ -232,7 +236,11 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         og.setPayInfoUserName("");
         switch (goods.getGoodsType()){
             case 4:case 5:case 6:case 7:
-                og.setSolveStatus(2);
+                if (goods.getIsOffline()==0){
+                    og.setSolveStatus(2);
+                }else {
+                    og.setSolveStatus(0);
+                }
                 break;
             default:
                 og.setSolveStatus(0);
@@ -351,28 +359,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             orderInfo.setGoodsAmount(goodsAmount);
             orderInfo.setOrderAmount(goodsAmount);
 
-            if(ordergoodsList != null && ordergoodsList.size() > 0){
-                orderInfo = super.insert(orderInfo);
-                BeanUtils.copyProperties(orderInfo,orderInfoVo);
-                User user = userService.selectById(orderInfoVo.getUserId());
-                orderInfoVo.setUserName(user.getUserName());
-                orderInfoVo.setUserType(user.getUserType());
-                orderInfoVo.setSolveStatus(0);
-                for (MgOrderGoods mgOrderGoods:ordergoodsList){
-                    if (mgOrderGoods.getSolveStatus()==2){
-                        orderInfoVo.setSolveStatus(2);
-                    }
-                }
-                if (user.getUserType() == 2){
-                    UserDetail userDetail = userDetailService.selectById(orderInfoVo.getUserId());
-                    orderInfoVo.setRealName(userDetail.getRealName());
-                }else if (user.getUserType() == 4){
-                    Organization organization = organizationService.selectById(user.getOrgId());
-                    orderInfoVo.setRealName(organization.getOrgName());
-                }
-                orderInfoVo.setMgOrderGoodsList(ordergoodsList);
-                mgOrderInfoService.insert(orderInfoVo);
-            }
+            insertOrder(ordergoodsList, orderInfoVo, orderInfo);
 //            if(goodsAmount.compareTo(0L)==0){
 //                updatePayStatus(orderInfo.getOrderSn(),2);
 //            }
@@ -417,6 +404,15 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         orderInfo.setGoodsAmount(goodsAmount);
         orderInfo.setOrderAmount(goodsAmount);
 
+        insertOrder(ordergoodsList, orderInfoVo, orderInfo);
+//        if(goodsAmount.compareTo(0L)==0){
+//            updatePayStatus(orderInfo.getOrderSn(),2);
+//        }
+
+        return orderInfo;
+    }
+
+    public void insertOrder(List<MgOrderGoods> ordergoodsList, OrderInfoVo orderInfoVo, OrderInfo orderInfo){
         if(ordergoodsList != null && ordergoodsList.size() > 0){
             orderInfo = super.insert(orderInfo);
             BeanUtils.copyProperties(orderInfo,orderInfoVo);
@@ -440,11 +436,6 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
             mgOrderInfoService.insert(orderInfoVo);
         }
-//        if(goodsAmount.compareTo(0L)==0){
-//            updatePayStatus(orderInfo.getOrderSn(),2);
-//        }
-
-        return orderInfo;
     }
 
     /**
@@ -511,8 +502,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             //支付成功,
             //1、发送api平台
             String url = "http://open.galaxybigdata.com/shop/insert/userapi";
+            String apiUrl = "192.168.15.90:5555/gateway/insert";
             List<Map> list = new ArrayList();
-            List<Map> ApiList = new ArrayList<>();
+            List<Map> apiList = new ArrayList<>();
 
             orderInfoVo.getMgOrderGoodsList().stream()
                     .filter(g -> {
