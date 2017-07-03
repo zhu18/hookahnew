@@ -2,8 +2,11 @@
  * Created by wcq on 2017/4/14.
  */
 function loadPageData(data){
-    $("#payCount").html(data.data.paidCount);
-    $("#noPayCount").html(data.data.unpaidCount);
+	$("#J_allOrder").html(data.data.totalCount);
+	$("#payCount").html(data.data.paidCount);
+	$("#noPayCount").html(data.data.unpaidCount);
+	$("#J_cancelOrder").html(data.data.deletedCount);
+
 	if(data.data.orders.list.length > 0){
 		var list = data.data.orders.list;
 		var html = '';

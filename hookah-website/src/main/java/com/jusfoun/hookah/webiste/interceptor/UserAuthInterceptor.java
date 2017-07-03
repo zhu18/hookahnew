@@ -4,6 +4,7 @@ import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.UserDetail;
 import com.jusfoun.hookah.rpc.api.UserService;
+import com.jusfoun.hookah.webiste.util.PropertiesManager;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -41,7 +42,8 @@ public class UserAuthInterceptor implements HandlerInterceptor {
 
                 Integer userType = user.getUserType();
                 if(!HookahConstants.UserType.SYSTEM.getCode().equals(userType) && !HookahConstants.UserType.ORGANIZATION_CHECK_OK.getCode().equals(userType) && !HookahConstants.UserType.PERSON_CHECK_OK.getCode().equals(userType)){
-                    httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/auth/index");
+//                    httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/auth/index");
+                    httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + PropertiesManager.getInstance().getProperty("no.auth.url"));
                     return false;
                 }
 

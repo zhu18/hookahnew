@@ -24,10 +24,10 @@
               <label class="control-label">电话</label>
               <input ng-model="mobile" type="text" class="form-control">
             </div>
-            <div class="form-group">
+            <!--<div class="form-group">
               <label class="control-label">邮箱</label>
               <input ng-model="email" type="text" class="form-control">
-            </div>
+            </div>-->
             <div class="form-group">
               <label class="control-label" style="width: 100px;">用户类型</label>
               <select data-ng-model="userType"  ng-options="userType.id as userType.name for userType in userTypes"  style="width: 184px;height: 32px">
@@ -43,10 +43,10 @@
             <tr>
               <th>用户名</th>
               <th>电话</th>
-              <th>邮箱</th>
+              <!--<th>邮箱</th>-->
               <th>用户类型</th>
               <th>提交审核时间</th>
-              <th>禁用</th>
+              <!--<th>禁用</th>-->
               <th width="130" class="text-center">操作</th>
             </tr>
             </thead>
@@ -61,20 +61,20 @@
               <td>
                 <span class="column-text" ng-bind="item.mobile"></span>
               </td>
-              <td>
+              <!--<td>
                 <span class="column-text" ng-bind="item.email"></span>
-              </td>
+              </td>-->
               <td>
                 <span class="column-text" ng-bind="item.userType | UserType"></span>
               </td>
               <td>
                 <span class="" ng-bind="item.regTime"></span>
               </td>
-              <td>
+              <!--<td>
                 <span class="column-text" ng-bind="item.isEnable | yesNo"></span>
-              </td>
+              </td>-->
               <td class="text-center">
-                <a ng-click="detail($event,item)">查看审核</a>
+                <a ng-click="detail($event,item)">审核</a>
               </td>
             </tr>
             </tbody>

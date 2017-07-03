@@ -21,6 +21,8 @@ public class GoodsVo extends Goods implements Serializable {
     private MgGoods.ASAloneSoftwareBean asAloneSoftware;    // 应用场景 独立软件
     private MgGoods.ATSaaSBean atSaaS;                      // 分析工具 SaaS
     private MgGoods.ATAloneSoftwareBean atAloneSoftware;    // 分析工具 独立软件
+    private MgGoods.OffLineInfoBean offLineInfo; //线下交付信息
+    private MgGoods.OffLineDataBean offLineData;//离线数据信息
 
     private boolean orNotFavorite;
     private String userId;
@@ -33,7 +35,8 @@ public class GoodsVo extends Goods implements Serializable {
     private String areaCity;
     private String catFullName;
     private Long clickRate;
-    private Double goodsGrades;
+    private Double goodsGrades;//商品分数
+    private String orgName;//供应商名称
 
     public List<MgCategoryAttrType.AttrTypeBean> getAttrTypeList() {
         return attrTypeList;
@@ -203,4 +206,27 @@ public class GoodsVo extends Goods implements Serializable {
         this.atAloneSoftware = atAloneSoftware;
     }
 
+    public MgGoods.OffLineInfoBean getOffLineInfo() {
+        return offLineInfo;
+    }
+
+    public void setOffLineInfo(MgGoods.OffLineInfoBean offLineInfo) {
+        this.offLineInfo = offLineInfo;
+    }
+
+    public MgGoods.OffLineDataBean getOffLineData() {
+        return offLineData;
+    }
+
+    public void setOffLineData(MgGoods.OffLineDataBean offLineData) {
+        this.offLineData = offLineData;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
 }

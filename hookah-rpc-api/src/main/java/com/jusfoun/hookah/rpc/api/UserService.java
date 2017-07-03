@@ -11,4 +11,6 @@ import com.jusfoun.hookah.core.generic.GenericService;
 public interface UserService extends GenericService<User, String> {
 
     User insert(User user);
+
+    int manualRecharge(String userId, long l, String userName) throws Exception;
 }

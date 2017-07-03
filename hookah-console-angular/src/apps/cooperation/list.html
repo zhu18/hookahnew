@@ -40,13 +40,13 @@
             <tbody>
             <tr data-ng-if="!loadingState" data-ng-repeat="cooperation in pagination.store" class="">
               <td>
-                <span text-length="50" ng-bind="cooperation.cooName | limitTo:10"></span>
+                <span text-length="50" ng-bind="cooperation.cooName | limitTo:10" title="{{cooperation.cooName}}"></span>
               </td>
               <td>
                 <span text-length="50" ng-bind="cooperation.cooPhone"></span>
               </td>
               <td>
-                <span text-length="50" ng-bind="cooperation.cooAddress | limitTo:10"></span>
+                <span text-length="50" ng-bind="cooperation.cooAddress | limitTo:10" title="{{cooperation.cooAddress}}"></span>
               </td>
               <td>
                 <span text-length="50" ng-bind="cooperation.cooOrder"></span>

@@ -26,8 +26,9 @@
               <input ng-model="mobile" type="text" class="form-control">
             </div>
             <div class="form-group">
-              <label class="control-label">邮箱</label>
-              <input ng-model="email" type="text" class="form-control">
+              <label class="control-label" style="width: 100px;">用户类型</label>
+              <select data-ng-model="userType"  ng-options="userType.id as userType.name for userType in userTypes"  style="width: 184px;height: 32px">
+              </select>
               <button type="submit" class="btn btn-primary" data-ng-click="search()">搜索</button>
             </div>
           </form>
@@ -44,12 +45,13 @@
               <!--<th class="state-column"></th>-->
               <!--<th>Id</th>-->
               <th>用户名</th>
-              <th width="135">电话</th>
-              <th class="">邮箱</th>
+              <th class="135">用户余额(元)</th>
+              <th width="">电话</th>
+              <!--<th class="">邮箱</th>-->
               <th class="">用户类型</th>
               <th width="135">创建时间</th>
               <th width="135">最后登录时间</th>
-              <th width="40">禁用</th>
+              <!--<th width="40">禁用</th>-->
               <th width="130" class="text-right">操作</th>
             </tr>
             </thead>
@@ -75,11 +77,14 @@
                 </a>
               </td>
               <td>
-                <span class="column-text" ng-bind="item.mobile"></span>
+                ¥<span class="column-text" ng-bind="item.moneyBalance/100 | number:2"></span>
               </td>
               <td>
-                <span class="column-text" ng-bind="item.email"></span>
+                <span class="column-text" ng-bind="item.mobile"></span>
               </td>
+              <!--<td>
+                <span class="column-text" ng-bind="item.email"></span>
+              </td>-->
               <td>
                 <span class="column-text" ng-bind="item.userType | UserType"></span>
               </td>
@@ -89,13 +94,13 @@
               <td>
                 <span class="" ng-bind="item.lastLoginTime"></span>
               </td>
-              <td>
+              <!--<td>
                 <span class="column-text" ng-bind="item.isEnable | yesNo"></span>
-              </td>
+              </td>-->
               <td class="text-right">
-                <a ui-sref="user.detail" ng-click="detail($event,item)">查看</a>
+                <!--<a ui-sref="user.detail" ng-click="detail($event,item)">查看</a>
                 <span class="text-explode">|</span>
-                <i class="link-space"></i>
+                <i class="link-space"></i>-->
                 <a ui-sref="user.recharge" ng-click="detail($event,item)">充值</a>
               </td>
             </tr>

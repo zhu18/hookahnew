@@ -85,7 +85,7 @@ public class OrderInfoController extends BaseController {
 
     }
 
-    @RequestMapping(value = "/order/directInfo", method = RequestMethod.POST)
+    @RequestMapping(value = "/order/directInfo")
     public String orderInfo(String goodsId, Integer formatId,Long goodsNumber,Model model) {
         List<CartVo> list = new ArrayList<>(1);
         try {
@@ -127,7 +127,7 @@ public class OrderInfoController extends BaseController {
     }
 
     /**
-     * 分页查询
+     * 前台分页查询订单列表
      *
      * @param pageNumber
      * @param pageSize
@@ -141,7 +141,7 @@ public class OrderInfoController extends BaseController {
     @RequestMapping(value = "/order/pageData", method = RequestMethod.GET)
     @ResponseBody
     public ReturnData findByPage(Integer pageNumber, Integer pageSize, Integer payStatus, Integer commentFlag, String startDate, String endDate, String domainName) {
-        Map map = new HashMap<>(3);
+        Map map = new HashMap<>(5);
         try {
             String userId = this.getCurrentUser().getUserId();
 
@@ -150,7 +150,26 @@ public class OrderInfoController extends BaseController {
 
             List<Condition> paidFilters = new ArrayList<>();
             List<Condition> unpaidFilters = new ArrayList<>();
+            List<Condition> deletedFilters = new ArrayList<>();
+            List<Condition> allFilters = new ArrayList<>();
             List<Condition> listFilters = new ArrayList<>();
+            Long paid = 0L,unpaid=0L,deleted=0L,total=0L;
+
+            //未删除的已付款订单
+            paidFilters.add(Condition.eq("userId", userId));
+            paidFilters.add(Condition.eq("payStatus", 2));
+            paidFilters.add(Condition.eq("isDeleted",0));
+            //未删除的未付款订单
+            unpaidFilters.add(Condition.eq("userId", userId));
+            unpaidFilters.add(Condition.ne("payStatus", 2));
+            unpaidFilters.add(Condition.eq("isDeleted",0));
+            //已删除的订单
+            deletedFilters.add(Condition.eq("userId", userId));
+            deletedFilters.add(Condition.eq("isDeleted",1));
+            //用户所有未删除订单
+            allFilters.add(Condition.eq("isDeleted",0));
+            allFilters.add(Condition.eq("userId",userId));
+
             if (StringUtils.isNotBlank(startDate)) {
                 if(payStatus==1){
                     paidFilters.add(Condition.ge("addTime", DateUtils.getDate(startDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
@@ -167,7 +186,6 @@ public class OrderInfoController extends BaseController {
                 }
                 listFilters.add(Condition.le("addTime", DateUtils.getDate(endDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
             }
-
             if (commentFlag != null) {
                 if(payStatus==1){
                     paidFilters.add(Condition.eq("commentFlag", commentFlag));
@@ -177,13 +195,16 @@ public class OrderInfoController extends BaseController {
             if (payStatus != null) {
                 if(payStatus==1) {
                     listFilters.add(Condition.eq("payStatus", 2));
-                }else{
+                    listFilters.add(Condition.eq("isDeleted",0));
+                }else if (payStatus == 0){
                     listFilters.add(Condition.ne("payStatus", 2));
+                    listFilters.add(Condition.eq("isDeleted",0));
+                }else {
+                    listFilters.add(Condition.eq("isDeleted",1));
                 }
-                paidFilters.add(Condition.eq("payStatus", 2));
-                unpaidFilters.add(Condition.ne("payStatus", 2));
+            }else {
+                listFilters.add(Condition.eq("isDeleted",0));
             }
-
             if (domainName != null) {
                 if (payStatus==1){
                     paidFilters.add(Condition.like("domainName", "%" + domainName + "%"));
@@ -192,12 +213,7 @@ public class OrderInfoController extends BaseController {
                 }
                 listFilters.add(Condition.like("domainName", "%" + domainName + "%"));
             }
-            paidFilters.add(Condition.eq("userId", userId));
-            paidFilters.add(Condition.eq("isDeleted", 0));
-            unpaidFilters.add(Condition.eq("userId", userId));
-            unpaidFilters.add(Condition.eq("isDeleted", 0));
             listFilters.add(Condition.eq("userId", userId));
-            listFilters.add(Condition.eq("isDeleted", 0));
 
             //查询列表
             List<OrderBy> orderBys = new ArrayList<>();
@@ -207,23 +223,20 @@ public class OrderInfoController extends BaseController {
 //            filters.remove(condition); //移除支付状态条件
 //            //查询数量
 //            filters.add(Condition.eq("payStatus", 2));
-            Long paid = 0L,unpaid=0L;
-            if(payStatus!=1){
-                paid = orderInfoService.count(paidFilters);  //已支付数量
-            }else{
-                paid = pOrders.getTotalItems();
-            }
 
-            map.put("paidCount",paid);
+            unpaid = orderInfoService.count(unpaidFilters);
+            deleted = orderInfoService.count(deletedFilters);
+            paid = orderInfoService.count(paidFilters);
+            total = orderInfoService.count(allFilters);
+
 //
 //            filters.remove(filters.size()-1);
 //            filters.add(Condition.ne("payStatus", 2));
-            if(payStatus==1){
-                unpaid = orderInfoService.count(unpaidFilters); //未支付数量
-            }else{
-                unpaid = pOrders.getTotalItems();
-            }
+
+            map.put("paidCount",paid);
+            map.put("deletedCount",deleted);
             map.put("unpaidCount",unpaid);
+            map.put("totalCount",total);
 
             logger.info(JsonUtils.toJson(map));
             return ReturnData.success(map);
@@ -233,9 +246,18 @@ public class OrderInfoController extends BaseController {
         }
     }
 
-    @RequestMapping(value = "/order/saledOrder", method = RequestMethod.GET)
+    /**
+     * 商家已卖出的商品订单
+     * @param pageNumber
+     * @param pageSize
+     * @param startDate
+     * @param endDate
+     * @param domainName
+     * @return
+     */
+    @RequestMapping(value = "/order/soldOrder", method = RequestMethod.GET)
     @ResponseBody
-    public ReturnData getSaledOrder(Integer pageNumber, Integer pageSize, String startDate, String endDate, String domainName){
+    public ReturnData getSoldOrder(Integer pageNumber, Integer pageSize, String startDate, String endDate, String domainName, Byte goodsType){
         try {
             String userId = this.getCurrentUser().getUserId();
 
@@ -243,11 +265,13 @@ public class OrderInfoController extends BaseController {
             if (pageSize==null) pageSize = Integer.parseInt(PAGE_SIZE);
 
             List<Condition> listFilters = new ArrayList<>();
+            Date startTime = null;
+            Date endTime = null;
             if (StringUtils.isNotBlank(startDate)) {
-                listFilters.add(Condition.ge("addTime", DateUtils.getDate(startDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
+                startTime = DateUtils.getDate(startDate,DateUtils.DEFAULT_DATE_TIME_FORMAT);
             }
             if (StringUtils.isNotBlank(endDate)) {
-                listFilters.add(Condition.le("addTime", DateUtils.getDate(endDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
+                endTime = DateUtils.getDate(endDate,DateUtils.DEFAULT_DATE_TIME_FORMAT);
             }
 
             listFilters.add(Condition.eq("payStatus", 2));
@@ -256,12 +280,12 @@ public class OrderInfoController extends BaseController {
                 listFilters.add(Condition.like("domainName", "%" + domainName + "%"));
             }
 //            listFilters.add(Condition.eq("orderGoodsList.addUser", userId));
-//            listFilters.add(Condition.eq("isDeleted", 0));
+            listFilters.add(Condition.eq("isDeleted", 0));
 
             //查询列表
             List<OrderBy> orderBys = new ArrayList<>();
             orderBys.add(OrderBy.desc("addTime"));
-            Pagination<OrderInfoVo> pOrders = orderInfoService.getSaledOrderListInPage(pageNumber, pageSize, listFilters, userId, orderBys);
+            Pagination<OrderInfoVo> pOrders = orderInfoService.getSoldOrderListInPage(pageNumber, pageSize, listFilters, userId, goodsType ,startTime, endTime);
 
 //            logger.info(JsonUtils.toJson(map));
             return ReturnData.success(pOrders);
@@ -272,6 +296,17 @@ public class OrderInfoController extends BaseController {
         }
     }
 
+    /**
+     * 前台进入个人中心时调用，显示已购买商品
+     * @param pageNumber
+     * @param pageSize
+     * @param payStatus
+     * @param commentFlag
+     * @param startDate
+     * @param endDate
+     * @param domainName
+     * @return
+     */
     @RequestMapping(value="order/goodsList",method = RequestMethod.GET)
     @ResponseBody
     public ReturnData getOrderGooodsList(Integer pageNumber, Integer pageSize, Integer payStatus, Integer commentFlag, String startDate, String endDate, String domainName){
@@ -322,6 +357,18 @@ public class OrderInfoController extends BaseController {
         }catch (Exception e){
             logger.info(e.getMessage());
             return "/error/500";
+        }
+    }
+
+    @RequestMapping(value = "/order/viewSoldDetails", method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnData getSoldOrderDetail(@RequestParam String orderId){
+        try{
+            OrderInfoVo vo = orderInfoService.findDetailById(orderId);
+            return ReturnData.success(vo);
+        }catch (Exception e){
+            logger.info(e.getMessage());
+            return ReturnData.error("已售订单详情查询错误");
         }
     }
 
@@ -563,7 +610,7 @@ public class OrderInfoController extends BaseController {
      * @param
      * @return
      */
-    @RequestMapping(value="/order/delete",method=RequestMethod.GET)
+    @RequestMapping(value = "/order/delete", method = RequestMethod.GET)
     @ResponseBody
     public ReturnData delete(@RequestParam String orderId){
         try{
@@ -573,5 +620,22 @@ public class OrderInfoController extends BaseController {
             logger.error("删除错误",e);
             return ReturnData.error("删除错误");
         }
+    }
+
+    @RequestMapping(value = "/order/getRemark", method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnData getRemark(MgOrderGoods mgOrderGoods){
+        Map map = new HashMap();
+        try {
+            if (StringUtils.isNotBlank(mgOrderGoods.getOrderId()) && StringUtils.isNotBlank(mgOrderGoods.getGoodsId())){
+                map = orderInfoService.getRemark(mgOrderGoods);
+            }else {
+                return ReturnData.error("加载失败请重新操作");
+            }
+        }catch (Exception e){
+            logger.info(e.getMessage());
+            return ReturnData.error(e.getMessage());
+        }
+        return ReturnData.success(map);
     }
 }

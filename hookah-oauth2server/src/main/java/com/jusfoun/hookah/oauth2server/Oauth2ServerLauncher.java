@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import javax.annotation.PostConstruct;
 
@@ -24,6 +25,7 @@ import javax.annotation.PostConstruct;
 @ComponentScan(basePackages = "com.jusfoun.hookah")
 @EnableAutoConfiguration
 @EntityScan("com.jusfoun.hookah.core.domain")
+@EnableAsync
 public class Oauth2ServerLauncher {
     private static final Logger logger = LoggerFactory.getLogger(Oauth2ServerLauncher.class);
     public static void main(String[] args) throws InterruptedException {

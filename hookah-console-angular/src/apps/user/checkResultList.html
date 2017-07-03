@@ -39,7 +39,7 @@
               <th>用户名</th>
               <th>用户类型</th>
               <th>审核状态</th>
-              <th>审核内容</th>
+              <!--<th>审核内容</th>-->
               <th>审核用户</th>
               <th>审核时间</th>
               <th width="150" class="text-center">操作</th>
@@ -48,10 +48,9 @@
             <tbody>
             <tr data-ng-if="!loadingState" data-ng-repeat="item in pagination.store" class="">
               <td>
-                <a ng-click="checkDetail($event,item)"
-                   class="">
+                <!--<a ng-click="checkDetail($event,item)" class="">-->
                   <span ng-bind="item.userName" ></span>
-                </a>
+                <!--</a>-->
               </td>
               <td>
                 <span class="column-text" ng-show="item.userType == 0">个人</span>
@@ -60,9 +59,9 @@
               <td>
                 <span class="column-text" ng-bind="item.checkStatus | checkStatus"></span>
               </td>
-              <td>
+              <!--<td>
                 <span class="column-text" ng-bind="item.checkContent | limitTo:10"></span>
-              </td>
+              </td>-->
               <td>
                 <span class="column-text" ng-bind="item.checkUser"></span>
               </td>
@@ -70,7 +69,10 @@
                 <span class="" ng-bind="item.checkTime"></span>
               </td>
               <td class="text-center">
-                <a ng-click="checkDetail($event,item)">审核详情</a>
+                <!--<a ng-click="checkDetail($event,item)">审核详情</a>-->
+                <a ui-sref="user.verifyDetail" ng-click="checkDetail($event,item)" class="">
+                  审核详情
+                </a>
               </td>
             </tr>
             </tbody>

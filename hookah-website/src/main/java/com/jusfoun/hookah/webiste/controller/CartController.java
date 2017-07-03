@@ -7,6 +7,7 @@ import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.CartService;
 import com.jusfoun.hookah.rpc.api.GoodsService;
+import com.jusfoun.hookah.webiste.config.MyProps;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,6 +35,9 @@ public class CartController extends BaseController {
 
     @Autowired
     private GoodsService goodsService;
+
+    @Autowired
+    MyProps myProps;
 
     @RequestMapping(value = "/cart", method = RequestMethod.GET)
     public String cart(Model model) {
@@ -113,6 +118,79 @@ public class CartController extends BaseController {
             return ReturnData.error(e.getMessage());
         }
     }
+
+    /**
+     * get 方式增加购物车  并跳转到 购物车页面
+     *
+     * @param cart
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/cart/addToCartByGet")
+    public String addByGet(Cart cart, Model model, String number, String fmt, String gm) {
+        try {
+            //需要先获取当前用户id
+            String userId = this.getCurrentUser().getUserId();
+            logger.info("当前用户是:{}", userId);
+
+            List<Condition> filters = new ArrayList<>();
+            filters.add(Condition.eq("userId", userId));
+            filters.add(Condition.eq("goodsId", cart.getGoodsId()));
+            filters.add(Condition.eq("formatId", cart.getFormatId()));
+            filters.add(Condition.eq("isDeleted", 0));
+            Cart existCart  = cartService.selectOne(filters);
+            MgGoods.FormatBean format = goodsService.getFormat(cart.getGoodsId(),cart.getFormatId());
+            StringBuilder sb = new StringBuilder();
+            sb.append(format.getNumber());
+            switch (format.getFormat()){
+                case 0:
+                    sb.append("次");
+                    break;
+                case 1:
+                    sb.append("天");
+                    break;
+                case 2:
+                    sb.append("年");
+                    break;
+            }
+            if(existCart != null){
+
+                //补充商品信息
+                existCart.setGoodsNumber(existCart.getGoodsNumber() + cart.getGoodsNumber());
+
+                //入库
+                cartService.updateByIdSelective(existCart);
+            }else{
+
+                cart.setUserId(userId);
+                cart.setAddTime(new Date());
+                cart.setIsGift(new Integer(0).shortValue());
+                cart.setIsDeleted(new Byte("0"));
+
+//                MgGoods.FormatBean format= goodsService.getFormat(cart.getGoodsId(),cart.getFormatId());
+
+                //补充商品信息
+                Goods goods = goodsService.selectById(cart.getGoodsId());
+                cart.setGoodsSn(goods.getGoodsSn());
+                cart.setGoodsName(goods.getGoodsName());
+                cart.setGoodsImg(goods.getGoodsImg());
+                cart.setGoodsFormat(format.getFormat());
+                cart.setFormatNumber((long)format.getNumber());
+                cart.setGoodsPrice(format.getPrice());
+
+                //入库
+                cartService.insert(cart);
+            }
+
+            return "redirect:" + myProps.getHost().get("website") + "/exchange/addToCart?goodsId=" + cart.getGoodsId()
+                                + "&number=" + number + "&fmt=" + java.net.URLEncoder.encode(sb.toString(),"UTF-8") + "&gm=" + gm;
+
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+            return "/error/500";
+        }
+    }
+
 
     /**
      * Ajax 方式增加购物车

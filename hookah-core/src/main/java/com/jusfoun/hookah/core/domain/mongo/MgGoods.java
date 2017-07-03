@@ -33,6 +33,8 @@ public class MgGoods extends GenericModel {
     private ATSaaSBean atSaaS;
     private ATAloneSoftwareBean atAloneSoftware;
     private Long clickRate;
+    private OffLineInfoBean offLineInfo;//线下交付信息
+    private OffLineDataBean offLineData;//离线数据信息
 
     public List<MgCategoryAttrType.AttrTypeBean> getAttrTypeList() {
         return attrTypeList;
@@ -345,7 +347,11 @@ public class MgGoods extends GenericModel {
         private String modelFile;   // 模型文件
         private String configFile;  // 配置文件
         private String configParams;    // 配置参数
+        private String modelFilePwd; //模型文件密码
+        private String configFilePwd; // 配置文件密码
+        private String configParamsPwd;// 配置参数密码
         private String otherDesc;
+        private OffLineInfoBean concatInfo;// 联系信息
 
         public String getComplexity() {
             return complexity;
@@ -402,6 +408,38 @@ public class MgGoods extends GenericModel {
         public void setOtherDesc(String otherDesc) {
             this.otherDesc = otherDesc;
         }
+
+        public String getModelFilePwd() {
+            return modelFilePwd;
+        }
+
+        public void setModelFilePwd(String modelFilePwd) {
+            this.modelFilePwd = modelFilePwd;
+        }
+
+        public String getConfigFilePwd() {
+            return configFilePwd;
+        }
+
+        public void setConfigFilePwd(String configFilePwd) {
+            this.configFilePwd = configFilePwd;
+        }
+
+        public String getConfigParamsPwd() {
+            return configParamsPwd;
+        }
+
+        public void setConfigParamsPwd(String configParamsPwd) {
+            this.configParamsPwd = configParamsPwd;
+        }
+
+        public OffLineInfoBean getConcatInfo() {
+            return concatInfo;
+        }
+
+        public void setConcatInfo(OffLineInfoBean concatInfo) {
+            this.concatInfo = concatInfo;
+        }
     }
 
     public static class ASSaaSBean implements Serializable {
@@ -414,6 +452,8 @@ public class MgGoods extends GenericModel {
         private String sSAintroduce;  // 应用介绍
         private String otherDesc;
         private String dataAddress;//数据地址
+        private String sUser;//用户名
+        private String sPwd;//密码
 
 
         public String getsSComplexity() {
@@ -470,6 +510,22 @@ public class MgGoods extends GenericModel {
 
         public void setDataAddress(String dataAddress) {
             this.dataAddress = dataAddress;
+        }
+
+        public String getsUser() {
+            return sUser;
+        }
+
+        public void setsUser(String sUser) {
+            this.sUser = sUser;
+        }
+
+        public String getsPwd() {
+            return sPwd;
+        }
+
+        public void setsPwd(String sPwd) {
+            this.sPwd = sPwd;
         }
     }
 
@@ -557,6 +613,9 @@ public class MgGoods extends GenericModel {
         private String aTVersionDesc;       // 版本说明
         private String aTToolsIntroduce;       // 工具介绍
         private String otherDesc;
+        private String dataAddress;//数据地址
+        private String sUser;//用户名
+        private String sPwd;//密码
 
         public String getaTIndustryField() {
             return aTIndustryField;
@@ -589,6 +648,30 @@ public class MgGoods extends GenericModel {
         public void setOtherDesc(String otherDesc) {
             this.otherDesc = otherDesc;
         }
+
+        public String getDataAddress() {
+            return dataAddress;
+        }
+
+        public void setDataAddress(String dataAddress) {
+            this.dataAddress = dataAddress;
+        }
+
+        public String getsUser() {
+            return sUser;
+        }
+
+        public void setsUser(String sUser) {
+            this.sUser = sUser;
+        }
+
+        public String getsPwd() {
+            return sPwd;
+        }
+
+        public void setsPwd(String sPwd) {
+            this.sPwd = sPwd;
+        }
     }
 
     public static class ATAloneSoftwareBean implements Serializable {
@@ -598,6 +681,7 @@ public class MgGoods extends GenericModel {
         private String aTAloneVersionDesc;       // 版本说明
         private String aTAloneToolsIntroduce;       // 工具介绍
         private String aTAloneCloudHardwareResource;  // 云硬件资源
+        private String dataAddress;//数据地址
         private String otherDesc;
 
         public String getaTAloneIndustryField() {
@@ -639,5 +723,98 @@ public class MgGoods extends GenericModel {
         public void setOtherDesc(String otherDesc) {
             this.otherDesc = otherDesc;
         }
+
+        public String getDataAddress() {
+            return dataAddress;
+        }
+
+        public void setDataAddress(String dataAddress) {
+            this.dataAddress = dataAddress;
+        }
+    }
+
+    public static class OffLineInfoBean implements Serializable {
+        private String concatName; // 联系名称
+        private String concatPhone; // 联系电话
+        private String concatEmail; // 联系邮件
+
+        public String getConcatName() {
+            return concatName;
+        }
+
+        public void setConcatName(String concatName) {
+            this.concatName = concatName;
+        }
+
+        public String getConcatPhone() {
+            return concatPhone;
+        }
+
+        public void setConcatPhone(String concatPhone) {
+            this.concatPhone = concatPhone;
+        }
+
+        public String getConcatEmail() {
+            return concatEmail;
+        }
+
+        public void setConcatEmail(String concatEmail) {
+            this.concatEmail = concatEmail;
+        }
+    }
+
+    public static class OffLineDataBean implements Serializable {
+        private String isOnline; //数据来源: 0 数据文件； 1 数据地址
+        private String onlineUrl;//在线地址
+        private String localUrl;//本地上传地址
+        private String dataPwd;//数据密码
+
+        public String getIsOnline() {
+            return isOnline;
+        }
+
+        public void setIsOnline(String isOnline) {
+            this.isOnline = isOnline;
+        }
+
+        public String getOnlineUrl() {
+            return onlineUrl;
+        }
+
+        public void setOnlineUrl(String onlineUrl) {
+            this.onlineUrl = onlineUrl;
+        }
+
+        public String getLocalUrl() {
+            return localUrl;
+        }
+
+        public void setLocalUrl(String localUrl) {
+            this.localUrl = localUrl;
+        }
+
+        public String getDataPwd() {
+            return dataPwd;
+        }
+
+        public void setDataPwd(String dataPwd) {
+            this.dataPwd = dataPwd;
+        }
+    }
+
+    public OffLineInfoBean getOffLineInfo() {
+        return offLineInfo;
+    }
+
+    public void setOffLineInfo(OffLineInfoBean offLineInfo) {
+        this.offLineInfo = offLineInfo;
+    }
+
+    public OffLineDataBean getOffLineData() {
+        return offLineData;
+    }
+
+    public void setOffLineData(OffLineDataBean offLineData) {
+        this.offLineData = offLineData;
     }
 }

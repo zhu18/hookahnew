@@ -22,11 +22,15 @@ export default function userRouting($stateProvider, $urlRouterProvider) {
       template: '<div ui-view></div>',
       showSubMenu: true
     })
-    .state('user.verify.all', {
-      url: '/user/verify/all',
-      template: require('./checkList.html'),
+    .state('user.verifyDetail', {
+      url: '/user/verifyDetail',
+      template: require('./verifyDetail.html'),
       controller: UserVerifyController,
-    })
+    }).state('user.verify.all', {
+    url: '/user/verify/all',
+    template: require('./checkList.html'),
+    controller: UserVerifyController,
+  })
     .state('user.verify.person', {
       url: '/user/verify/person',
       template: require('./list.html'),
@@ -38,18 +42,18 @@ export default function userRouting($stateProvider, $urlRouterProvider) {
       controller: UserVerifyController,
     })
     .state('user.verify.checkUserDetail', {
-        url: '/user/verify/checkUserDetail',
-        template: require('./checkUserDetail.html'),
-        controller: UserVerifyController,
+      url: '/user/verify/checkUserDetail',
+      template: require('./checkUserDetail.html'),
+      controller: UserVerifyController,
     })
     .state('user.verify.resultAll', {
-        url: '/user/verify/resultAll',
-        template: require('./checkResultList.html'),
-        controller: UserVerifyController,
+      url: '/user/verify/resultAll',
+      template: require('./checkResultList.html'),
+      controller: UserVerifyController,
     })
-      .state('user.recharge', {
-          url: '/user/recharge',
-          template: require('./recharge.html'),
-          controller: UserController,
-      })
+    .state('user.recharge', {
+      url: '/user/recharge',
+      template: require('./recharge.html'),
+      controller: UserController,
+    })
 };

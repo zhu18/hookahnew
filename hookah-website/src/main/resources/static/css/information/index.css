@@ -148,6 +148,9 @@
 }
 .box .detail .bot .leftContent h3{
     font-size: 20px;
+    /*text-align: center;*/
+}
+.box .detail .bot .leftContent h3#newsTitle{
     text-align: center;
 }
 .box .detail .bot .leftContent .auth {

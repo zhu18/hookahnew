@@ -1,0 +1,216 @@
+<style>
+  .none-edit{
+    border: none;
+    background: none;
+    box-shadow:none;
+    cursor: default;
+  }
+</style>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="console-title console-title-border clearfix">
+      <div class="pull-left"><h5>用户详情</h5></div>
+      <div class="pull-right">
+        <button class="btn btn-default" ui-sref="user.verify.resultAll" data-ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span> 返回</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12">
+    <form class="form-horizontal" role="form" id="userDetail">
+      <fieldset>
+        <h5 style="padding: 0px 20px;">基本信息 <span ng-bind="cuser.userType"></span></h5>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="userName">账户名:</label>
+          <div class="col-sm-4">
+            <input disabled="disabled" type="text" id="userName" name="userName" class="form-control none-edit" value="{{cuser.userName}}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="email">邮箱:</label>
+          <div class="col-sm-4">
+            <input type="text" disabled="disabled" id="email" name="email" value="{{user.email}}" class="form-control none-edit" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="mobile">手机:</label>
+          <div class="col-sm-4">
+            <input type="text" disabled="disabled" value="{{user.mobile}}" id="mobile" name="mobile" class="form-control none-edit" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="regTime">注册时间:</label>
+          <div class="col-sm-4">
+            <input type="text" disabled="disabled" value="{{user.regTime}}" id="regTime" name="regTime" class="form-control none-edit" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="regTime">账户余额:</label>
+          <div class="col-sm-4">
+            <input type="text" disabled="disabled" value="{{user.moneyBalance}}元" id="moneyBalance" name="moneyBalance" class="form-control none-edit" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="lastLoginIp">最后登录IP:</label>
+          <div class="col-sm-4">
+            <input type="text" disabled="disabled" value="{{user.lastLoginIp}}" id="lastLoginIp" name="lastLoginIp" class="form-control none-edit" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="lastLoginTime">最后登录时间:</label>
+          <div class="col-sm-4">
+            <input type="text" disabled="disabled" value="{{user.lastLoginTime}}" id="lastLoginTime" name="lastLoginTime" class="form-control none-edit" />
+          </div>
+        </div>
+      </fieldset>
+      <fieldset ng-if="cuser.userType == 0">
+        <h5 style="margin: 0px 20px;padding-bottom: 3px; border-bottom: 1px dashed #DDD;">详细信息</h5>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="realName">真实姓名:</label>
+          <div class="col-sm-4">
+            <input disabled="disabled" type="text" id="realName" name="realName" class="form-control none-edit" value="{{userDetail.realName}}"/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="cardNum">身份证号:</label>
+          <div class="col-sm-4">
+            <input disabled="disabled" type="text" id="cardNum" name="cardNum" class="form-control none-edit" value="{{userDetail.cardNum}}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="cardNum">身份证扫描件:</label>
+          <div class="col-sm-4">
+            <label class="">正面照:</label><img ng-click="showBigImg(userDetail.identityCardFrontPath)" style="height: 200px;width: 200px" src="{{'http://static.qddata.com.cn/'+userDetail.identityCardFrontPath}}"/>
+          </div>
+          <div class="col-sm-4">
+            <label class="">反面照:</label><img ng-click="showBigImg(userDetail.identityCardReversePath)" style="height: 200px;width: 200px" src="{{'http://static.qddata.com.cn/'+userDetail.identityCardReversePath}}"/>
+          </div>
+        </div>
+      </fieldset>
+
+
+
+      <fieldset ng-if="cuser.userType == 1">
+        <h5 style="padding: 0px 20px;">企业信息</h5>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" >单位名称:</label>
+          <div class="col-sm-4">
+            <input disabled="disabled" type="text" name="orgName" class="form-control none-edit" value="{{cuserd.orgName}}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="email">法人代表:</label>
+          <div class="col-sm-4">
+            <input type="text" disabled="disabled"  name="certificateCode" value="{{cuserd.certificateCode}}" class="form-control none-edit" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="email">主营业务:</label>
+          <div class="col-sm-4">
+            <input type="text" disabled="disabled"  name="industry" value="{{cuserd.industry}}" class="form-control none-edit" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="mobile">所在地:</label>
+          <div class="col-sm-4">
+            <input type="text" disabled="disabled" value="{{cuserd.region}}" name="region" class="form-control none-edit" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="mobile">详细地址:</label>
+          <div class="col-sm-4">
+            <input type="text" disabled="disabled" value="{{cuserd.orgAddress}}" name="orgAddress" class="form-control none-edit" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="cardNum">手机号:</label>
+          <div class="col-sm-4">
+            <input disabled="disabled" type="text" name="orgPhone" class="form-control none-edit" value="{{cuserd.orgPhone}}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="cardNum">营业执照编号:</label>
+          <div class="col-sm-4">
+            <input disabled="disabled" type="text" name="licenseCode" class="form-control none-edit" value="{{cuserd.licenseCode}}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="regTime">营业执照扫描件:</label>
+          <div class="col-sm-4">
+            <img ng-click="showBigImg(cuserd.licensePath)" src="http://static.qddata.com.cn/{{cuserd.licensePath}}" style="max-width: 450px; max-height: 600px">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="lastLoginIp">税务登记证编号:</label>
+          <div class="col-sm-4">
+            <input type="text" disabled="disabled" value="{{cuserd.taxCode}}" name="taxCode" class="form-control none-edit" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="lastLoginTime">税务登记证扫描件:</label>
+          <div class="col-sm-4">
+            <img ng-click="showBigImg(cuserd.taxPath)" src="http://static.qddata.com.cn/{{cuserd.taxPath}}" style="max-width: 450px; max-height: 600px">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="realName">单位代码证编号:</label>
+          <div class="col-sm-4">
+            <input disabled="disabled" type="text" name="certificateCode" class="form-control none-edit" value="{{cuserd.certificateCode}}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="lastLoginTime">单位代码证扫描件:</label>
+          <div class="col-sm-4">
+            <img ng-click="showBigImg(cuserd.certifictePath)" src="http://static.qddata.com.cn/{{cuserd.certifictePath}}" style="max-width: 450px; max-height: 600px">
+          </div>
+        </div>
+      </fieldset>
+
+
+      <fieldset ng-if="userCheck.checkStatus == 2">
+        <div class="form-group">
+          <label class="col-sm-2 control-label" >审核状态:</label>
+          <div class="col-sm-4">
+            未通过
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" >审核意见:</label>
+          <div class="col-sm-4">
+            <span ng-bind="userCheck.checkContent"></span>
+          </div>
+        </div>
+
+      </fieldset>
+      <fieldset ng-if="userCheck.checkStatus == 1">
+        <div class="form-group">
+          <label class="col-sm-2 control-label" >审核状态:</label>
+          <div class="col-sm-4">
+            通过
+          </div>
+        </div>
+      </fieldset>
+      <fieldset ng-if="userCheck.checkStatus == 0">
+        <div class="form-group">
+          <label class="col-sm-2 control-label" >审核状态:</label>
+          <div class="col-sm-4">
+            审核中
+          </div>
+        </div>
+
+
+      </fieldset>
+
+
+
+     <!-- <div class="form-group">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-4">
+          <button class="btn btn-primary" data-ng-click="save()">
+            <span class="glyphicon glyphicon-refresh"></span> 保存
+          </button>
+        </div>
+      </div>-->
+    </form>
+  </div>
+</div>

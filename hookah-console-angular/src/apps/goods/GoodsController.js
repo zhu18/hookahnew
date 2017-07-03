@@ -1,6 +1,13 @@
 class GoodsController {
   constructor($scope, $rootScope, $state, $stateParams, $http, $sce, $uibModal, usSpinnerService, growl) {
     console.log($rootScope.config);
+	  $rootScope.currentS= "1";
+	  $rootScope.setCurrentS = function (param) {
+			  // console.log(param);
+			  $rootScope.currentS = param;
+
+	  };
+
 
       // if ($state.current.name == "items.lookDetail") {
       //     var editor = new wangEditor('goodsDesc');
@@ -115,6 +122,20 @@ class GoodsController {
         });
     };
 
+      $scope.goOff = function(item){
+          var promise = $http({
+              method: 'POST',
+              url: $rootScope.site.apiServer + "/api/goods/off",
+              params: {goodsId:item.goodsId}
+          });
+          promise.then(function (res, status, config, headers) {
+              console.log(res.data)
+              if(res.data.code == "1"){
+                  $scope.refresh();
+              }
+          });
+      }
+
     $scope.pageChanged = function () {
       $scope.search();
       console.log('Page changed to: ' + $rootScope.pagination.currentPage);
@@ -135,7 +156,7 @@ class GoodsController {
     $scope.checkStatuss = [{id:-1, name:"全部"}, {id:0, name:"待审核"}, {id:1, name:"已通过"}, {id:2, name:"未通过"}];
     $scope.searchCheckStatus = -1;
 
-    $scope.onSaleStatuss = [{id:-1, name:"全部"}, {id:0, name:"已上架"}, {id:1, name:"已下架"}, {id:2, name:"强制下架"}];
+    $scope.onSaleStatuss = [{id:-1, name:"全部"}, {id:0, name:"已下架"}, {id:1, name:"已上架"}, {id:2, name:"强制下架"}];
     $scope.searchOnSaleStatus = -1;
 
 

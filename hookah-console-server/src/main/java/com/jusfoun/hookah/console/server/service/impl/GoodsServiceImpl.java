@@ -97,6 +97,8 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         mgGoods.setAtSaaS(obj.getAtSaaS());
         mgGoods.setDataModel(obj.getDataModel());
         mgGoods.setClickRate((long) 0);
+        mgGoods.setOffLineData(obj.getOffLineData());
+        mgGoods.setOffLineInfo(obj.getOffLineInfo());
         mongoTemplate.insert(mgGoods);
     }
 
@@ -159,6 +161,8 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             mgGoods.setAtAloneSoftware(obj.getAtAloneSoftware());
             mgGoods.setAtSaaS(obj.getAtSaaS());
             mgGoods.setDataModel(obj.getDataModel());
+            mgGoods.setOffLineData(obj.getOffLineData());
+            mgGoods.setOffLineInfo(obj.getOffLineInfo());
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.eq("goodsId", obj.getGoodsId()));
             MgGoods mgGoods1 = mgGoodsService.selectOne(filters);
@@ -293,6 +297,22 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         return pagination;
     }
 
+    // 未通过商品
+    @Override
+    public Pagination checkFailed(String pageNum, String pageSize, String goodsName, String userId) {
+        List<Condition> filters = new ArrayList();
+        List<OrderBy> orderBys = new ArrayList();
+        orderBys.add(OrderBy.desc("lastUpdateTime"));
+        filters.add(Condition.eq("checkStatus", HookahConstants.GOODS_CHECK_STATUS_NOT));
+        filters.add(Condition.eq("addUser", userId));
+        if (StringUtils.isNotBlank(goodsName)) {
+            filters.add(Condition.like("goodsName", goodsName.trim()));
+        }
+        Pagination pagination = this.getListInPage(Integer.parseInt(pageNum), Integer.parseInt(pageSize), filters, orderBys);
+        pagination.setList(this.copyGoodsData(pagination.getList()));
+        return pagination;
+    }
+
     // 违规商品列表
     @Override
     public Pagination illegalList(String pageNum, String pageSize, String goodsName, String userId) {
@@ -370,6 +390,8 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             goodsVo.setAtSaaS(mgGoods.getAtSaaS());
             goodsVo.setDataModel(mgGoods.getDataModel());
             goodsVo.setClickRate(mgGoods.getClickRate());
+            goodsVo.setOffLineData(mgGoods.getOffLineData());
+            goodsVo.setOffLineInfo(mgGoods.getOffLineInfo());
         }
         goodsVo.setCatName(DictionaryUtil.getCategoryById(goodsVo.getCatId()) == null
                 ? "" : DictionaryUtil.getCategoryById(goodsVo.getCatId()).getCatName());
@@ -413,6 +435,8 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             goodsVo.setAtSaaS(mgGoods.getAtSaaS());
             goodsVo.setDataModel(mgGoods.getDataModel());
             goodsVo.setClickRate(mgGoods.getClickRate());
+            goodsVo.setOffLineData(mgGoods.getOffLineData());
+            goodsVo.setOffLineInfo(mgGoods.getOffLineInfo());
         }
         goodsVo.setCatName(DictionaryUtil.getCategoryById(goodsVo.getCatId()) == null
                 ? "" : DictionaryUtil.getCategoryById(goodsVo.getCatId()).getCatName());
@@ -425,7 +449,25 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
     }
 
     @Override
-    public List<GoodsCheckedVo> getListForChecked(String goodsName, String goodsSn) {
-        return goodsMapper.getListForChecked(goodsName, goodsSn);
+    public List<GoodsCheckedVo> getListForChecked(String goodsName, String goodsSn,String orgName) {
+        return goodsMapper.getListForChecked(goodsName, goodsSn,orgName);
+    }
+
+    /**
+     * 修改联系信息
+     * @param goodsId 商品id
+     * @param isOffline 是否线下交付：0 线下交付；1 线上交付
+     * @param goodsType 商品类型：0 离线数据；1 api；2 数据模型；4 分析工具--独立软件；5 分析工具--SaaS；6 应用场景--独立软件； 7 应用场景--SaaS
+     * @param concatInfo 联系信息
+     */
+    public void changeConcatInfo(String goodsId, Byte isOffline, Byte goodsType, MgGoods.OffLineInfoBean concatInfo) {
+        MgGoods mgGoods = mgGoodsService.selectById(goodsId);
+        if(HookahConstants.GOODS_OFF_LINE.equals(isOffline)) {
+            mgGoods.setOffLineInfo(concatInfo);
+        }else if(HookahConstants.GOODS_ON_LINE.equals(isOffline)
+                && HookahConstants.GOODS_TYPE_2.equals(goodsType)){
+            mgGoods.getDataModel().setConcatInfo(concatInfo);
+        }
+        mongoTemplate.save(mgGoods);
     }
 }

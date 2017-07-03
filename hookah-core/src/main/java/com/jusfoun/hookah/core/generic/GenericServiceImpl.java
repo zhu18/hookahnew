@@ -553,4 +553,16 @@ public class GenericServiceImpl<Model extends GenericModel, ID extends Serializa
         logger.info(JsonUtils.toJson(user));
         return user;
     }
+
+    @Override
+    public Pagination<Model> getSoldOrderList(Integer pageNum, Integer pageSize, List<Condition> filters,
+                                              Date startTime, Date endTime){
+        return new Pagination<Model>();
+    }
+
+//    @Override
+//    public Pagination<Model> getUserListInPage(Integer pageNum, Integer pageSize, List<Condition> filters,
+//                                               List<OrderBy> orderBys, Date startTime, Date endTime){
+//        return new Pagination<Model>();
+//    }
 }

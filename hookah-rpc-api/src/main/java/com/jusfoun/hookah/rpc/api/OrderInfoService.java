@@ -30,14 +30,14 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
     public Pagination<OrderInfoVo> getDetailListInPage(Integer pageNum, Integer pageSize, List<Condition> filters,
                                                  List<OrderBy> orderBys);
 
-    public Pagination<OrderInfoVo> getSaledOrderListInPage(Integer pageNum, Integer pageSize, List<Condition> filters, String userId,
-                                                       List<OrderBy> orderBys);
+    public Pagination<OrderInfoVo> getSoldOrderListInPage(Integer pageNum, Integer pageSize, List<Condition> filters, String userId,
+                                                          Byte goodsType, Date startTime, Date endTime);
 
     public Pagination<MgOrderGoods> getGoodsListInPage(Integer pageNum, Integer pageSize, List<Condition> filters,
                                                        List<OrderBy> orderBys);
 
     public Pagination<OrderInfoVo> getUserListInPage(Integer pageNum, Integer pageSize, List<Condition> filters,
-                                                       List<OrderBy> orderBys);
+                                                     Date startTime, Date endTime);
 
     /**
      * 根据订单号查询支付信息
@@ -55,4 +55,24 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
     public Map<String,Long> getOrderStatisticWithBuydate(Date startTime,Date endTime) throws HookahException;
 
     public MgOrderGoods getGoodsUserBuyed(String userId,String goodsId);
+
+    Map<String,Integer> getOrderCount();
+
+    /**
+     * 根据订单Id和商品Id修改备注
+     * @param mgOrderGoods
+     * @throws HookahException
+     * @author lt
+     */
+    void updateMgOrderGoodsRemark(MgOrderGoods mgOrderGoods) throws HookahException;
+
+    /**
+     * 根据订单Id和商品Id获取备注信息
+     * @param mgOrderGoods
+     * @return
+     * @throws HookahException
+     */
+    Map getRemark(MgOrderGoods mgOrderGoods);
+
+    void updateConcatInfo(String orderId,String goodsId,String concatName,String concatPhone,String concatEmail) throws HookahException;
 }

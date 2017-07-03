@@ -95,6 +95,7 @@
         <result column="source_type" jdbcType="VARCHAR" property="sourceType" />
         <result column="check_time" jdbcType="TIMESTAMP" property="checkTime" />
         <result column="check_user" jdbcType="VARCHAR" property="checkUser" />
+        <result column="org_name" jdbcType="VARCHAR" property="orgName" />
     </resultMap>
 
     <select id="getNeedEsGoods" resultMap="EsResultMap">
@@ -187,7 +188,7 @@
             <if test="checkStatus!=null">
                 AND check_status = #{checkStatus}
             </if>
-            AND ((onsale_start_date > SYSDATE() and check_status = 1) OR check_status in(0, 2))
+            AND ((onsale_start_date > SYSDATE() and check_status = 1) OR check_status = 0)
         ORDER BY
             last_update_time DESC
     </sql>
@@ -250,21 +251,25 @@
 
     <select id="getListForChecked" resultMap="GCResult">
         SELECT
-            goods.goods_id,
-            goods.goods_sn,
-            goods.goods_name,
-            goods.is_delete,
-            goods.goods_type,
-            goods.goods_area,
-            goods.cat_id,
-            goods.shop_name,
-            goods.check_status,
-            goods.is_onsale,
-            goodsCheck.check_user,
-            goodsCheck.check_time
+        goods.goods_id,
+        goods.goods_sn,
+        goods.goods_name,
+        goods.is_delete,
+        goods.goods_type,
+        goods.goods_area,
+        goods.shop_price,
+        goods.cat_id,
+        goods.shop_name,
+        goods.check_status,
+        goods.is_onsale,
+        goodsCheck.check_user,
+        goodsCheck.check_time,
+        org.org_name
         FROM
         goods_check goodsCheck
         RIGHT JOIN goods goods ON goodsCheck.goods_id = goods.goods_id
+        LEFT JOIN user u ON u.user_id = goods.add_user
+        LEFT JOIN organization org ON org.org_id = u.org_id
         WHERE
         goods.check_status != 0
         AND goods.is_delete = 1
@@ -273,6 +278,9 @@
         </if>
         <if test="goodsName != '' and goodsName != null">
             AND goods.goods_name like '%${goodsName}%'
+        </if>
+        <if test="orgName != '' and orgName != null">
+            AND org.org_name like '%${orgName}%'
         </if>
     </select>
 

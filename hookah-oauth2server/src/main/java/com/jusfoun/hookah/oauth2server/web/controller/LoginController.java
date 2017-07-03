@@ -1,11 +1,11 @@
 package com.jusfoun.hookah.oauth2server.web.controller;
 
 import com.jusfoun.hookah.core.domain.User;
-import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.FormatCheckUtil;
 import com.jusfoun.hookah.core.utils.NetUtils;
 import com.jusfoun.hookah.oauth2server.config.MyProps;
 import com.jusfoun.hookah.oauth2server.security.UsernameAndPasswordToken;
+import com.jusfoun.hookah.rpc.api.LoginLogService;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -22,9 +22,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,6 +39,9 @@ public class LoginController {
 
     @Resource
     UserService userService;
+
+    @Resource
+    LoginLogService loginLogService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model) {
@@ -91,13 +91,8 @@ public class LoginController {
         Map<String,String> host = myProps.getHost();
         //验证是否登录成功
         if (currentUser.isAuthenticated()) {
-            User updateUser = new User();
-            updateUser.setLastLoginIp(NetUtils.getIpAddr(request));
-            updateUser.setLastLoginTime(new Date());
-            List<Condition> filters = new ArrayList();
-            filters.add(Condition.eq("userName", username));
-            userService.updateByConditionSelective(updateUser,filters);
             //TODO...登录日志
+            loginLogService.addLoginLog(username, NetUtils.getIpAddr(request));
             logger.info("用户[" + username + "]登录认证通过(这里可以进行一些认证通过后的一些系统参数初始化操作)");
             return "redirect:"+host.get("website")+"/login";
         } else {

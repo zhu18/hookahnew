@@ -6,7 +6,7 @@
 <div class="row">
   <div class="col-sm-12">
     <div class="console-title console-title-border clearfix">
-      <div class="pull-left"><h5>待审核商品</h5></div>
+      <div class="pull-left"><h5>商品审核结果</h5></div>
       <div class="pull-right">
       </div>
     </div>
@@ -21,6 +21,10 @@
             <div class="form-group">
               <label class="control-label">商品编码</label>
               <input ng-model="searchSn" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+              <label class="control-label">供应商名称</label>
+              <input ng-model="orgName" type="text" class="form-control">
             </div>
             <!--<div class="form-group">
               <label class="control-label">商品关键字</label>
@@ -41,6 +45,7 @@
               <th>商品编号</th>
               <th>商品名称</th>
               <th>审核状态</th>
+              <th>价格</th>
               <th>所属地域</th>
               <th>商品场景分类</th>
               <th>商品类型</th>
@@ -66,6 +71,9 @@
                 <span class="column-text" ng-show="item.checkStatus == 0">待审核</span>
               </td>
               <td>
+                ¥<span class="column-text" ng-bind="item.shopPrice/100 | number:2"></span>
+              </td>
+              <td>
                 <span class="column-text" ng-bind="item.goodsArea"></span>
               </td>
               <td>
@@ -75,7 +83,7 @@
                 <span class="column-text" ng-bind="item.goodsType | goodsType"></span>
               </td>
               <td>
-                <span class="column-text" ng-bind="item.shopName"></span>
+                <span class="column-text" ng-bind="item.orgName"></span>
               </td>
               <td>
                 <span class="column-text" style="width: 100px;white-space:nowrap;" ng-bind="item.checkTime | date:'yyyy-MM-dd hh:mm:ss'"></span>

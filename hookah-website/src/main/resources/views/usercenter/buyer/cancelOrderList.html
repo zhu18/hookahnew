@@ -1,0 +1,107 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/plugins/jedate/jedate.css">
+<link rel="stylesheet" href="/static/css/usercenter/buyer/buyer.css">
+<script src="/static/js/plugins/jedate/jquery.jedate.min.js"></script>
+<script type="text/javascript">
+    var pagePath = '/order/pageData';
+    var pageType = 'get';
+    var dataParm = {};
+    dataParm.pageNumber = 1;
+    dataParm.pageSize = 5;
+    dataParm.payStatus = 3;//0:未付款，1：已付款，3：取消订单
+    dataParm.startDate = null;
+    dataParm.endDate = null;
+</script>
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray ">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="orderManagement margin-left-10 margin-top-10 grid-right padding-bottom-20 margin-bottom-30">
+            <div class="title clearfix margin-bottom-15">
+                <ul class="grid-left all">
+                    <li><a href="/usercenter/buyer/allOrderList" >全部订单
+                        <span id="J_allOrder"></span>
+                    </a>
+                    </li>
+                    <li><a href="/usercenter/buyer/orderManagement" >已付款
+                        <span id="payCount"></span>
+                    </a>
+                    </li>
+                    <li><a href="/usercenter/buyer/orderStay">待付款
+                        <span id="noPayCount"></span></a>
+                    </li>
+                    <li  class="active"><a href="javascript:void(0)">已取消
+                        <span id="J_cancelOrder"></span></a>
+                    </li>
+                </ul>
+                <!--<div class="search grid-right">-->
+                <!--<input type="search" name="search" placeholder="商品名称/订单号/商品编号">-->
+                <!--<span class="fa fa-search"></span>-->
+                <!--</div>-->
+            </div>
+            <div class="searchQuery padding-top-10 clearfix" id="noPaySearch">
+                <div class="date clearfix grid-left">
+                    <label for="startDate" class="start-date grid-left">
+                        开始时间：<input id="startDate" type="text"  placeholder="请选择开始时间"  readonly="">
+                    </label>
+                    <label for="endDate" class="end-date grid-left">
+                        结束时间：<input id="endDate" type="text"  placeholder="请选择结束时间"  readonly="">
+                    </label>
+                </div>
+                <button class="search grid-right">查询</button>
+            </div>
+            <div class="list">
+                <div class="order">
+                    <!--<table>
+                        <thead>
+                        <tr>
+                            <th class="">订单号</th>
+                            &lt;!&ndash;<th class="text-align-center">商品信息</span></th>&ndash;&gt;
+                            &lt;!&ndash;<th class="text-align-center">数量</th>&ndash;&gt;
+                            &lt;!&ndash;<th class="text-align-center">规格</th>&ndash;&gt;
+                            <th class="text-align-right money">金额</th>
+                            <th class="">创建时间</th>
+                            <th class="">状态</th>
+                            <th class="text-align-center">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>-->
+                    <!--<tr class="content border-bottom">-->
+                    <!--<td class="text-align-center">-->
+                    <!--2017022813474081863964-->
+                    <!--</td>-->
+                    <!--&lt;!&ndash;<td class="text-align-center">&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash;<img src="/static/images/xm.png" alt="">&ndash;&gt;&ndash;&gt;-->
+                    <!--&lt;!&ndash;<a href="" class="display-block">银行卡实名认证接口（需个人授权）</a>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</td>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<td class="text-align-center">1</td>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<td class="text-align-center">次</td>&ndash;&gt;-->
+                    <!--<td class="text-align-right">￥&nbsp;200.00</td>-->
+                    <!--<td>2017-02-28&nbsp;&nbsp;19:20:20</td>-->
+                    <!--<td>未付款</td>-->
+                    <!--<td class="text-align-center">-->
+                    <!--<a href="" class="display-inline-block goPay btn btn-full-orange">去支付</a>-->
+                    <!--<a href="/usercenter/viewDetails" class="display-block padding-top-5">查看详情</a>-->
+                    <!--<a href="" class="display-block">删除</a>-->
+                    <!--</td>-->
+                    <!--</tr>-->
+                    <!--  </tbody>
+                  </table>-->
+                </div>
+                <!--由于原分页的逻辑中通过data.data.totalPage是取不到数据的，所以更改为pageaction1.html-->
+                <%include("/layout/pageaction1.html"){} %>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+<script src="/static/js/usercenter/mybuyer/cancelOrderList.js"></script>

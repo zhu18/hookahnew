@@ -23,7 +23,7 @@ function loadRegion(id,regionParam) {
     $(regionParam).nextAll().html('<option value="-1"></option>')
     $.ajax({
         type: "get",
-        url: host.website+'/region/getRegionCodeByPid',
+        url: "/region/getRegionCodeByPid",
         data: {
             parentId: parentId
         },
@@ -119,15 +119,15 @@ $("#companyForm").validate({
 	rules: {
 		governmentName:'required',
 		// creditCode:'required',
-		businessLicence:'required',
-		taxRegCertificate:'required',
+		// businessLicence:'required',
+		// taxRegCertificate:'required',
 		companyLegal:'required',
 		mainBusiness:'required',
 		// province:'required',
 		city:'required',
 		address:'required',
-		licensePath:'required',
-		taxPath:'required',
+		// licensePath:'required',
+		// taxPath:'required',
 		// certifictePath:'required',
 		tel:{
 		    required:true,

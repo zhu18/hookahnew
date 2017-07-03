@@ -24,7 +24,15 @@ var htmlPart = {
             <form action="" id="goodsModifyForm">
                 <div class="usercenter-right-box">
                     <div class="goodsEdit-box">
-                        <h1>当前类目：<span class="category-title-box"></span></h1>
+                        <!--<h1>当前类目：<span class="category-title-box"></span></h1>-->
+                        <h1>
+                            <span>当前类目：</span>
+                            <div class="select-box display-inline-block">
+                                <select name="firstCategory" id="firstCategory" style="display: none" disabled="disabled"></select>
+                                <select name="twoCategory" id="twoCategory" style="display: none" onchange="loadLastChild(this)"></select>
+                                <select name="lastCategory" id="lastCategory" style="display: none" onchange="selectCatId(this)"></select>
+                            </div>
+                        </h1>
                         <h1>商品基本信息：</h1>
                         <div class="struct">
                             <table>
@@ -191,14 +199,106 @@ var htmlPart = {
                                         </div>
                                     </td>
                                 </tr>
-                                <tr class="file-info-box">
-                                    <td class="bar">文件上传：<span class="requireds">*</span></td>
+                                <tr class="">
+                                    <td class="bar">交付方式：<span class="requireds">*</span></td>
+                                    <td>
+                                        <div class="select-box">
+                                            <select name="isOffline" class="isOffline" onchange="selectLineInfo(this)" id="isOffline">
+                                                <option value="0">线上交付</option>
+                                                <option value="1">线下交付</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!--<tr class="file-info-box">-->
+                                <!--<td class="bar">文件上传：<span class="requireds">*</span></td>-->
+                                <!--<td>-->
+                                <!--<div class="fileUploads">-->
+                                <!--<input type="hidden" id="J_fileUploadSS" required="required" name="fileUploadSS">-->
+                                <!--<button>选择文件</button><span>未选择任何文件</span>-->
+                                <!--<input id="fileupload2" type="file" name="filename" multiple="" class="preview-btn">-->
+                                <!--<input type="text" style="opacity: 0;width:20px;position: absolute"  name="goodsImges2" required="required">-->
+                                <!--</div>-->
+                                <!--</td>-->
+                                <!--</tr>-->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="struct selects isOffLine-info-box">
+                            <h1 class="">线下交付信息：</h1>
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td class="bar">联系人：<span class="requireds">*</span></td>
+                                    <td>
+                                        <div class="text-box">
+                                            <input type="text" name="concatName" required="required">
+                                            <span class="input-count"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar">电话：<span class="requireds">*</span></td>
+                                    <td>
+                                        <div class="text-box">
+                                            <input type="text" name="concatPhone" required="required">
+                                            <span class="input-count"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar">邮箱：<span class="requireds">*</span></td>
+                                    <td>
+                                        <div class="text-box">
+                                            <input type="text" name="concatEmail" required="required">
+                                            <span class="input-count"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="struct selects file-info-box">
+                            <h1>离线数据:</h1>
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td class="bar">数据来源：<span class="requireds">*</span></td>
+                                    <td>
+                                        <div class="select-box">
+                                            <select name="isOnline" class="isOnline" onchange="selector_offLine_fn(this)" id="isOnline">
+                                                <option value="0">数据上传</option>
+                                                <option value="1">数据地址</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="selector_offLine selector_offLine_upLoad">
+                                    <td class="bar">数据上传：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="fileUploads">
                                             <input type="hidden" id="J_fileUploadSS" required="required" name="fileUploadSS">
                                             <button>选择文件</button><span>未选择任何文件</span>
                                             <input id="fileupload2" type="file" name="filename" multiple="" class="preview-btn">
                                             <input type="text" style="opacity: 0;width:20px;position: absolute"  name="goodsImges2" required="required">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="selector_offLine selector_offLine_input" style="display: none">
+                                    <td class="bar">数据地址：<span class="requireds">*</span></td>
+                                    <td>
+                                        <div class="text-box">
+                                            <input type="text" name="onlineUrl" required="required">
+                                            <span class="input-count"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="">
+                                    <td class="bar">数据包密码：</td>
+                                    <td>
+                                        <div class="text-box">
+                                            <input type="text" name="dataPwd">
+                                            <span class="input-count"></span>
                                         </div>
                                     </td>
                                 </tr>
@@ -296,7 +396,7 @@ var htmlPart = {
                                                         <div class="inputbox"><input type="text" name="fieldSample" placeholder="请输入示例"></div>
                                                     </td>
                                                     <td>
-                                                        <div class="inputbox"><textarea id="describle" placeholder="请输入描述"></textarea></div>
+                                                        <div class="inputbox"><textarea name="describle" placeholder="请输入描述"></textarea></div>
                                                     </td>
                                                     <td>
                                                         <span class="table-plus-btn itemNum" onclick="tablePlus(this)">+</span>
@@ -332,7 +432,7 @@ var htmlPart = {
                                                 <tbody>
                                                 <tr class="parent-tr">
                                                     <td class="errorNum-input">
-                                                        <div class="inputbox"><input type="text" name="fieldName" placeholder="请输入错误码" required="required"></div>
+                                                        <div class="inputbox"><input type="text" name="fieldNames" placeholder="请输入错误码" required="required"></div>
                                                     </td>
                                                     <td class="type-input">
                                                         <div class="selectbox">
@@ -343,8 +443,7 @@ var htmlPart = {
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <div class="inputbox"><textarea id="describle2"
-                                                                                        placeholder="请输入说明" name="describles" required="required"></textarea></div>
+                                                        <div class="inputbox"><textarea placeholder="请输入说明" name="describle" required="required"></textarea></div>
                                                     </td>
                                                     <td>
                                                         <span class="table-plus-btn" onclick="tablePlus(this)">+</span>
@@ -534,12 +633,12 @@ var htmlPart = {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="bar"><h3>数据地址：</h3></td>
+                                    <td class="bar"><h3>下载地址：</h3></td>
                                     <td>
                                         <table>
                                             <tbody>
                                             <tr>
-                                                <td class="bar">数据地址：<span class="requireds">*</span></td>
+                                                <td class="bar">下载地址：<span class="requireds">*</span></td>
                                                 <td>
                                                     <div class="text-box">
                                                         <input type="text" name="dataAddress" required="required">
@@ -626,6 +725,24 @@ var htmlPart = {
                                                 <td colspan="1000">
                                                     <div class="textarea-box">
                                                         <textarea id="aTToolsIntroduce"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar"><h3>下载地址：</h3></td>
+                                    <td>
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td class="bar">下载地址：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="dataAddress" required="required">
+                                                        <span class="input-count"></span>
                                                     </div>
                                                 </td>
                                             </tr>

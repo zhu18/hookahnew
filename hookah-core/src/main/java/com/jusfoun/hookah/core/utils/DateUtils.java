@@ -100,5 +100,12 @@ public abstract class DateUtils {
         return Calendar.getInstance();
     }
 
+    /**
+     * 返回当前时间
+     * @return yyyyMMddHHmmssSSS格式
+     */
+    public static String getCurrentTimeFormat(Date date){
+        return new SimpleDateFormat("yyyyMMddHHmmss").format(date).toString();
+    }
 
 }

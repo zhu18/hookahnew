@@ -64,7 +64,7 @@ public class HookahConstants {
     public static final String CACHE_GOODS_ATTR = "goodsAttrInfo";//商品属性
     public static final String CACHE_GOODS_AREA = "regionInfo";//地域信息
 
-    /**  */
+    /** 商品状态 */
     public static final Byte GOODS_STATUS_DELETE = 0;
     public static final Byte GOODS_STATUS_UNDELETE = 1;
     public static final Byte GOODS_STATUS_ONSALE = 1;
@@ -73,6 +73,17 @@ public class HookahConstants {
     public static final Byte GOODS_CHECK_STATUS_WAIT = 0;
     public static final Byte GOODS_CHECK_STATUS_YES = 1;
     public static final Byte GOODS_CHECK_STATUS_NOT = 2;
+
+    public static final Byte GOODS_ON_LINE = 0;//线上支付
+    public static final Byte GOODS_OFF_LINE = 1;//线下支付
+
+    public static final Byte GOODS_TYPE_0 = 0;//离线数据
+    public static final Byte GOODS_TYPE_1 = 1;//API
+    public static final Byte GOODS_TYPE_2 = 2;//数据模型
+    public static final Byte GOODS_TYPE_3 = 4;//分析工具--独立软件
+    public static final Byte GOODS_TYPE_5 = 5;//分析工具--SaaS
+    public static final Byte GOODS_TYPE_6 = 6;//应用场景--独立软件
+    public static final Byte GOODS_TYPE_7 = 7;//应用场景--SaaS
 
     /** 此字段用于比较当前时间与onsaleStartDate关系，选出非预约上架的商品 */
     public static final String ONSALE_START_DATE_FILEDNAME = "onsaleStartDate";
@@ -208,6 +219,62 @@ public class HookahConstants {
         }
 
         public Integer getCode() {
+            return code;
+        }
+    }
+
+    /**
+     * 流水状态
+     * 0    处理中
+     * 1    成功
+     * 2    失败
+     */
+    public enum CashStatus {
+
+        handing((byte)0),
+        success((byte)1),
+        fail((byte)2);
+
+        public byte code;
+
+        CashStatus(byte code) {
+            this.code = code;
+        }
+
+        public byte getCode() {
+            return code;
+        }
+    }
+
+    /**
+         账务类型：
+         1-商品支付扣款,
+         2-商品销售入账,
+         3-在线充值,
+         4-在线提现,
+         5-手工充值,
+         6-手工扣款,
+         7-线下充值,
+         8-提现冲账
+     */
+    public enum CashType {
+
+        Deduct((byte)1),
+        IntoAccount((byte)2),
+        OnlineRecharge((byte)3),
+        OnlineCash((byte)4),
+        ManualRecharge((byte)5),
+        ManualDebit((byte)6),
+        OfflineRecharge((byte)7),
+        CashREverse((byte)8);
+
+        public byte code;
+
+        CashType(byte code) {
+            this.code = code;
+        }
+
+        public byte getCode() {
             return code;
         }
     }

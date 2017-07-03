@@ -45,6 +45,14 @@
             </div>
 
             <div class="form-group">
+                <label class="col-sm-2 control-label" for="catSign">是否显示</label>
+                <div class="col-sm-4">
+                    <label class="radio-inline"><input type="radio"  ng-checked="editData.isShow == 0" name="isShow" id="isShow"  value="0"/>否</label>
+                    <label class="radio-inline"> <input type="radio" ng-checked="editData.isShow == 1" name="isShow" id="isShow_1"  value="1"/>是</label>
+                </div>
+            </div>
+
+            <div class="form-group">
                 <div class="col-sm-2"></div>
                 <div class="col-sm-4">
                     <button class="btn btn-primary" data-ng-click="save()" ng-disabled="category.$invalid">

@@ -139,3 +139,4 @@ local.properties
 /hookah-console-webapi/src/main/resources/application-dev.yml
 /hookah-console-server/src/main/resources/application-dev.yml
 /hookah-oauth2server/src/main/resources/application-dev.yml
+/hookah-console-angular/package-lock.json

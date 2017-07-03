@@ -59,9 +59,11 @@ public class OrderInfoVo extends OrderInfo {
 	@Transient
 	private String userName;//用户名称
 	@Transient
-	private Integer userType;
+	private Integer userType;//用户类型
 	@Transient
-	private String realName;
+	private String realName;//用户认证名称
+	@Transient
+	private Integer solveStatus;//处理状态 0无需处理，1已处理，2未处理
 
 	public String getOrderStatusName() {
 		return orderStatusName;
@@ -230,5 +232,13 @@ public class OrderInfoVo extends OrderInfo {
 
 	public void setRealName(String realName) {
 		this.realName = realName;
+	}
+
+	public Integer getSolveStatus() {
+		return solveStatus;
+	}
+
+	public void setSolveStatus(Integer solveStatus) {
+		this.solveStatus = solveStatus;
 	}
 }
