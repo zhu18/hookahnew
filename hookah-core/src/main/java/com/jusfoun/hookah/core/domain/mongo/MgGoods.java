@@ -225,6 +225,7 @@ public class MgGoods extends GenericModel {
         private String respSample;//返回示例
 
         private String apiType; // 接口类型： restful/webservice
+        private String invokeMethod; //调用方法名
         private String respDataFormat; // 返回数据格式 json/xml
         private String secretKeyName; // 密钥名称
         private String secretKeyValue; //密钥值
@@ -295,6 +296,14 @@ public class MgGoods extends GenericModel {
 
         public void setRespDataFormat(String respDataFormat) {
             this.respDataFormat = respDataFormat;
+        }
+
+        public String getInvokeMethod() {
+            return invokeMethod;
+        }
+
+        public void setInvokeMethod(String invokeMethod) {
+            this.invokeMethod = invokeMethod;
         }
 
         public String getSecretKeyName() {
