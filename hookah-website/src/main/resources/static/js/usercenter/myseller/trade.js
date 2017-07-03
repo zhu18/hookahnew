@@ -131,7 +131,7 @@ function loadPageData(data){
         }
         $('.trade-box').html(html);
     }else{
-		$('.trade-box').html('<tr><td colspan="10"><div class="noData">暂无数据</div></td></tr>');
+		$('.trade-box').html('<table style="border-collapse: inherit;"><thead></thead><tbody><tr><td colspan="10"><div class="noData">暂无数据</div></td></tr></tbody></table>');
     }
 
     $(".tr-list").on('click',function () {
