@@ -1,5 +1,6 @@
 class ShelfController {
   constructor($scope, $rootScope, $state, $http, $uibModal, uibDateParser, usSpinnerService, growl) {
+      // 处理日期插件的获取日期的格式
       var format = function(time, format)
 
       {
@@ -29,20 +30,19 @@ class ShelfController {
           })
       }
 
-    $scope.search1 = function () {
-        console.log($scope.startDate);
+    $scope.search = function () {
         var promise = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/order/all",
         params: {
           currentPage: $rootScope.pagination.currentPage,
           pageSize: $rootScope.pagination.pageSize,
-          orderSn: $scope.orderSn,
-          userName:$scope.userName,
-          userType:$scope.userType,
-          payStatus:$scope.payStatus,
+          orderSn: $scope.orderSn?$scope.orderSn:null,
+          userName:$scope.userName?$scope.userName:null,
+          userType:$scope.userType?$scope.userType:null,
+          payStatus:$scope.payStatus?$scope.payStatus:null,
           startDate:$scope.startDate?format($scope.startDate, 'yyyy-MM-dd HH:mm:ss'):null,
-          solveStatus:$scope.solveStatus,
+          solveStatus:$scope.solveStatus?$scope.solveStatus:null,
           endDate:$scope.endDate?format($scope.endDate, 'yyyy-MM-dd HH:mm:ss'):null
         }
       });
@@ -107,12 +107,11 @@ class ShelfController {
     $scope.back = function () {
       history.back();
     };
-    $scope.search1();
+    $scope.search();
     $scope.remark = function (goodsId, orderId, goodsType, isOffline, goods) {
       console.log("goodsId：" + goodsId, "orderId：" + orderId, "goodsType：" + goodsType, "isOffline：" + isOffline);
       var inserDOM = null;
       var modalInstance = null;
-
       var promiseGet01 = $http({ //请求备注信息
         method: 'get',
         url: $rootScope.site.apiServer + "/api/order/getRemark",
@@ -136,8 +135,6 @@ class ShelfController {
                 "<h5>离线数据包下载地址：<a target='_blank' style='text-decoration: underline;color:blue; ' href='" + tempUrl + "'>下载</a></h5>" +
                 "<h5>数据包解压密码：<span>" + res.data.data.data.dataPwd + "</span></h5>"; //离线数据包 
               modalInstance = $rootScope.openConfirmDialogModal(pruDom);
-
-
             } else if (goodsType == 1) { //API
               return false;
             } else if (goodsType == 2) { //模型
