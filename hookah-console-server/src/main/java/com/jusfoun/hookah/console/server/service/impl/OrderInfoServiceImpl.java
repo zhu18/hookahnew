@@ -174,6 +174,13 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         og.setPayInfoPassword("");
         og.setPayInfoSerialNumber("");
         og.setPayInfoUserName("");
+        switch (cart.getGoods().getGoodsType()){
+            case 4:case 5:case 6:case 7:
+                og.setSolveStatus(2);
+                break;
+            default:
+                og.setSolveStatus(0);
+        }
 //		og.setSendNumber(cart.getS);
         return og;
     }
@@ -223,6 +230,13 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         og.setPayInfoPassword("");
         og.setPayInfoSerialNumber("");
         og.setPayInfoUserName("");
+        switch (goods.getGoodsType()){
+            case 4:case 5:case 6:case 7:
+                og.setSolveStatus(2);
+                break;
+            default:
+                og.setSolveStatus(0);
+        }
         //og.setMarketPrice(goods.getShopPrice());
 //		og.setSendNumber(cart.getS);
         return og;
@@ -332,15 +346,6 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                 goodsAmount += cart.getFormat().getPrice()  * cart.getGoodsNumber();  //商品单价 * 套餐内数量 * 购买套餐数量
 
                 MgOrderGoods og = getMgOrderGoodsByCart(cart,orderInfo);
-                if (og != null){
-                    switch (og.getGoodsType()){
-                        case 4:case 5:case 6:case 7:
-                            orderInfoVo.setSolveStatus(2);
-                            break;
-                        default:
-                            orderInfoVo.setSolveStatus(0);
-                    }
-                }
                 ordergoodsList.add(og);
             }
             orderInfo.setGoodsAmount(goodsAmount);
@@ -352,6 +357,12 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                 User user = userService.selectById(orderInfoVo.getUserId());
                 orderInfoVo.setUserName(user.getUserName());
                 orderInfoVo.setUserType(user.getUserType());
+                orderInfoVo.setSolveStatus(0);
+                for (MgOrderGoods mgOrderGoods:ordergoodsList){
+                    if (mgOrderGoods.getSolveStatus()==2){
+                        orderInfoVo.setSolveStatus(2);
+                    }
+                }
                 if (user.getUserType() == 2){
                     UserDetail userDetail = userDetailService.selectById(orderInfoVo.getUserId());
                     orderInfoVo.setRealName(userDetail.getRealName());
@@ -402,15 +413,6 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         }
         MgOrderGoods og = getMgOrderGoodsByGoodsFormat(g,format,goodsNumber,orderInfo);
         OrderInfoVo orderInfoVo = new OrderInfoVo();
-        if (og != null){
-            switch (og.getGoodsType()){
-                case 4:case 5:case 6:case 7:
-                    orderInfoVo.setSolveStatus(2);
-                    break;
-                default:
-                    orderInfoVo.setSolveStatus(0);
-            }
-        }
         ordergoodsList.add(og);
         orderInfo.setGoodsAmount(goodsAmount);
         orderInfo.setOrderAmount(goodsAmount);
@@ -421,6 +423,12 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             User user = userService.selectById(orderInfoVo.getUserId());
             orderInfoVo.setUserName(user.getUserName());
             orderInfoVo.setUserType(user.getUserType());
+            orderInfoVo.setSolveStatus(0);
+            for (MgOrderGoods mgOrderGoods:ordergoodsList){
+                if (mgOrderGoods.getSolveStatus()==2){
+                    orderInfoVo.setSolveStatus(2);
+                }
+            }
             if (user.getUserType() == 2){
                 UserDetail userDetail = userDetailService.selectById(orderInfoVo.getUserId());
                 orderInfoVo.setRealName(userDetail.getRealName());
@@ -504,6 +512,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             //1、发送api平台
             String url = "http://open.galaxybigdata.com/shop/insert/userapi";
             List<Map> list = new ArrayList();
+            List<Map> ApiList = new ArrayList<>();
 
             orderInfoVo.getMgOrderGoodsList().stream()
                     .filter(g -> {
@@ -514,15 +523,20 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                     })
                     .forEach(goods -> {
                         Map<String, String> param = new HashMap<>();
+                        Map<String, Object> apiParam = new HashMap<>();
                         param.put("userId", orderInfoVo.getUserId());
-
-
                         //param.put("endTime",orderInfo.getUserId());
-
                         param.put("orderNo", orderInfo.getOrderSn());
                         param.put("apiId", goods.getSourceId());
                         param.put("goodsId", goods.getGoodsId());
                         param.put("totalCount", new Long(goods.getGoodsNumber() * goods.getFormatNumber()).toString());
+
+//                        apiParam.put("totalCount", new Long(goods.getGoodsNumber() * goods.getFormatNumber()).toString());
+//                        apiParam.put("userId", orderInfoVo.getUserId());
+//                        apiParam.put("orderSn", orderInfoVo.getOrderSn());
+//                        apiParam.put("goodsSn", goods.getOrderSn());
+//                        apiParam.put("type", goods.getGoodsFormat());
+//                        apiParam.put("url", goods.getApiInfo().getApiUrl());
                         list.add(param);
                     });
             Map rs = HttpClientUtil.PostMethod(url, JsonUtils.toJson(list));
@@ -790,14 +804,20 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                     case 5:case 7:
                         String name = data[0];
                         String password = data[1];
-                        mgOrderGood.setPayInfoUserName(name);
-                        mgOrderGood.setPayInfoPassword(password);
+                        if (name!=null&&password!=null){
+                            mgOrderGood.setPayInfoUserName(name);
+                            mgOrderGood.setPayInfoPassword(password);
+                            mgOrderGood.setSolveStatus(1);
+                        }
                         break;
                     case 4:case 6:
                         String serialNumber = data[0];
                         String fileUrl = data[1];
-                        mgOrderGood.setPayInfoFileUrl(fileUrl);
-                        mgOrderGood.setPayInfoSerialNumber(serialNumber);
+                        if (serialNumber!=null&&fileUrl!=null){
+                            mgOrderGood.setPayInfoFileUrl(fileUrl);
+                            mgOrderGood.setPayInfoSerialNumber(serialNumber);
+                            mgOrderGood.setSolveStatus(1);
+                        }
                         break;
                     case 2:
                         String concatName = data[0];
@@ -817,6 +837,18 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                 }
             }
         }
+        if (orderInfoVo.getSolveStatus()==2){
+            boolean flag = true;
+            for (MgOrderGoods goods:goodsList){
+                if (goods.getSolveStatus()==2){
+                    flag = false;
+                }
+            }
+            if (flag){
+                orderInfoVo.setSolveStatus(1);
+            }
+        }
+
         mongoTemplate.save(orderInfoVo);
     }
 
@@ -863,6 +895,15 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                             map.put("data",mgOrderGood.getOffLineInfo());
                         }
                         break;
+//                    case 1:  //API
+//                        if (mgOrderGood.getIsOffline() == 0){
+//                            String localUrl = mgOrderGood.getOffLineData().getLocalUrl();
+//                            mgOrderGood.getOffLineData().setLocalUrl("http://static.qddata.com.cn/" + localUrl);
+//                            map.put("data",mgOrderGood.getOffLineData());
+//                        }else {
+//                            map.put("data",mgOrderGood.getOffLineInfo());
+//                        }
+//                        break;
                     case 2:  //数据模型
                         if (mgOrderGood.getIsOffline() == 0){
                             String configFile = mgOrderGood.getDataModel().getConfigFile();
