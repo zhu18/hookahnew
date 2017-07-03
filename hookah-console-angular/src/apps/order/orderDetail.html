@@ -52,7 +52,7 @@
       <!--<td>¥{{goods.payName * goods.goodsPrice / 100}}</td>-->
       <td>
         <p >¥{{goods.goodsNumber * goods.goodsPrice / 100}}</p>
-        <p style="border-top: 1px dashed #eee" ng-bind="order.payName"></p>
+        <p style="border-top: 1px dashed #eee" ng-if="payStatusName" ng-bind="order.payName"></p>
       </td>
       <td>
         <span text-length="50" ng-bind="goods.goodsType | goodsType"></span>

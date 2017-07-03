@@ -14,6 +14,9 @@ class orderDetailController {
         promise.then(function (res, status, config, headers) {
           $rootScope.order = res.data.data[0];
           $rootScope.buyer = res.data.data[1];
+          if(!($rootScope.order.payStatusName=="未付款")){
+                $scope.payStatusName=true;
+          }
         });
         $scope.back = function () {
             history.back();

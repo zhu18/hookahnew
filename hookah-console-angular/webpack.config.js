@@ -49,7 +49,7 @@ module.exports = function makeWebpackConfig() {
    */
   config.entry = isTest ? {} : {
       vendor: ['jquery', 'bootstrap', 'angular', 'angular-ui-bootstrap', 'angular-ui-router', 'spin', 'angular-spinner'],
-      uibootstrap: [ 'wangEditor', 'angular-growl-v2','angular-bootstrap-grid-tree']
+      uibootstrap: [ 'wangEditor', 'angular-growl-v2','angular-bootstrap-grid-tree','cn']
     };
   config.entry = Object.assign({}, config.entry, newEntries);
   console.log(config.entry);
@@ -60,8 +60,7 @@ module.exports = function makeWebpackConfig() {
       'bootstrapCss': __dirname + '/node_modules/bootstrap/dist/css/bootstrap.css',
       'wangEditor': __dirname + '/vendor/wangEditor/wangEditor.min.js',
       'wangEditorCss': __dirname + '/vendor/wangEditor/wangEditor.min.css',
-      // 'jedate': __dirname + '/vendor/jedate/jquery.jedate.min.js',
-      // 'jedateCss': __dirname + '/vendor/jedate/jedate.css',
+      'cn': __dirname + '/vendor/cn/angular-locale_zh-cn.js.js',
       'angular-growl-v2': __dirname + '/vendor/angular-growl/build/angular-growl.js',
       'treeGridCss': __dirname + '/node_modules/angular-bootstrap-grid-tree',
       'spin': __dirname + '/node_modules/spin.js/spin.js',
