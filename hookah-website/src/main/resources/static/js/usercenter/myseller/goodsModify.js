@@ -80,6 +80,7 @@ jmz.GetLength = function(str) {
 function renderData(data){//渲染页面
 	catId = data.catId;
 	// $('.category-title-box').html(data.catFullName); //商品分类
+
 	$('#J-goodsName').val(data.goodsName);//商品名称
 	$('#J-goodsBrief').val(data.goodsBrief);//简介
     $('#showcontent').html(jmz.GetLength(data.goodsName));//商品名称长度
@@ -803,6 +804,7 @@ function backAddFn(data){
 function submitGoodsPublish(){
 	var data = {};
 	data.goodsId = goodsId;
+
 	data.goodsName = $('input[name="goodsName"]').val();
 	data.goodsBrief = $('textarea[name="goodsBrief"]').val();
 	data.attrTypeList = [];
