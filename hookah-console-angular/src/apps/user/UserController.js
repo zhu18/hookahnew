@@ -21,29 +21,8 @@ class UserController {
     };
 
     //  用户信息详情
-    $scope.detail = function (event, item) {
-
-      $rootScope.cuser = item;
-      var promise = $http({
-        method: 'GET',
-        url: $rootScope.site.apiServer + "/api/user/" + item.userId
-      });
-      promise.then(function (res, status, config, headers) {
-        console.log(res);
-        $rootScope.loadingState = false;
-
-        if (item.userType == 2) {//个人用户
-          $rootScope.cuserd = res.data.data.userDetail;
-
-        }else if (item.userType == 4) {//企业用户
-          $rootScope.cuserd = res.data.data.organization;
-
-        }else if (item.userType == 1) {//未认证
-
-        }
-        $rootScope.loginLog=res.data.data.loginLogs;
-        growl.addSuccessMessage("数据加载完毕。。。");
-      });
+    $scope.detail = function (item) {
+        $state.go('user.detail', {id: item.userId});
     };
     $scope.showBigImg=function (imgUrl) {
       console.log(imgUrl)
