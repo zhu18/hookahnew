@@ -551,6 +551,7 @@ function submitGoodsPublish(){
 		} else if (data.goodsType == 1) {//------------------------------
 			data.apiInfo = {};
 			data.apiInfo.apiType = $('.api-info-box').find('input[name="apiType"]:checked').val();
+			data.apiInfo.invokeMethod = $('.api-info-box').find('input[name="invokeMethod"]').val();
 			data.apiInfo.apiUrl = $('.api-info-box').find('input[name="apiUrl"]').val();
 			data.apiInfo.apiMethod = $('.api-info-box').find('input[name="apiMethod"]:checked').val();
 			data.apiInfo.reqSample = $('.api-info-box').find('input[name="reqSample"]').val();
