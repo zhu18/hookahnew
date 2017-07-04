@@ -25,7 +25,6 @@ class UserListDetailController {
         });
 
         $scope.showBigImg=function (imgUrl) {
-            console.log(imgUrl)
             var pruDom='<div><img width="100%" src="http://static.qddata.com.cn/'+imgUrl+'" alt=""></div>';
             var modalInstance = $rootScope.openJustShowDialogModal(pruDom);
         };
