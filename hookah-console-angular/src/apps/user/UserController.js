@@ -19,15 +19,9 @@ class UserController {
         growl.addSuccessMessage("数据加载完毕。。。");
       });
     };
-
     //  用户信息详情
-    $scope.detail = function (item) {
-        $state.go('user.detail', {id: item.userId});
-    };
-    $scope.showBigImg=function (imgUrl) {
-      console.log(imgUrl)
-      var pruDom='<div><img width="100%" src="http://static.qddata.com.cn/'+imgUrl+'" alt=""></div>';
-      var modalInstance = $rootScope.openJustShowDialogModal(pruDom);
+    $scope.detail = function (id) {
+        $state.go('user.detail', {id:id});
     };
     $scope.save = function () {
       var promise = $http({
