@@ -2,14 +2,13 @@
  * Created by lss on 2017/7/4 0004.
  */
 class UserListDetailController {
-    constructor($scope, $rootScope, $state, $http, $uibModal, usSpinnerService, $stateParams,growl) {
+    constructor($scope, $rootScope,$http, $stateParams,growl) {
         var promise = $http({
           method: 'GET',
           url: $rootScope.site.apiServer + "/api/user/" + $stateParams.id
         });
         promise.then(function (res, status, config, headers) {
-          console.log(res.data.data.user);
-            $rootScope.cuser=res.data.data.user
+          $rootScope.cuser=res.data.data.user;
           $rootScope.loadingState = false;
 
           if ($rootScope.cuser.userType == 2) {//个人用户
@@ -24,6 +23,11 @@ class UserListDetailController {
           $rootScope.loginLog=res.data.data.loginLogs;
           growl.addSuccessMessage("数据加载完毕。。。");
         });
+
+        $scope.showBigImg=function (imgUrl) {
+            var pruDom='<div><img width="100%" src="http://static.qddata.com.cn/'+imgUrl+'" alt=""></div>';
+            var modalInstance = $rootScope.openJustShowDialogModal(pruDom);
+        };
     }
 }
 
