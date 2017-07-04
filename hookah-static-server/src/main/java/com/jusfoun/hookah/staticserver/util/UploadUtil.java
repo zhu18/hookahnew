@@ -21,8 +21,7 @@ import java.util.List;
 public class UploadUtil {
     private static String FILE_PATH = PropertiesManager.getInstance().getProperty("upload.filepath");
     private static String url = PropertiesManager.getInstance().getProperty("upload.url");
-
-    public static List<UploadResult> uploadFile(HttpServletRequest request, MultipartFile[] files) throws HookahException, IOException {
+    public static List<UploadResult> uploadFile(HttpServletRequest request, String prexPath, String midPath, MultipartFile[] files) throws HookahException, IOException {
         if (files.length <= 0)
             throw new HookahException("未找到上传文件！");
 
@@ -37,7 +36,7 @@ public class UploadUtil {
             String datePath = DateUtils.toDateText(new Date(), "yyyyMMdd");
             //如果名称不为“”,说明该文件存在，否则说明该文件不存在
             if (fileName.trim() != "") {
-                tmpPath = FILE_PATH + datePath + "/";
+                tmpPath = FILE_PATH + "/" + (prexPath == null ? "" : prexPath + "/") + datePath + "/" + (midPath == null ? "" : midPath + "/");
                 File pathFile = new File(tmpPath);
                 if (!pathFile.exists() && !pathFile.isDirectory()) {
                     pathFile.mkdirs();
@@ -45,10 +44,18 @@ public class UploadUtil {
                 File localFile = new File(tmpPath + fileName);
                 file.transferTo(localFile);
             }
-            String filePath1 = datePath + "/" + fileName;
+            String filePath1 = (prexPath == null ? "" : prexPath + "/") + datePath +  "/" + (midPath == null ?  "" : midPath + "/" ) + fileName;
             list.add(new UploadResult(fileName, filePath1, url + filePath1));
         }
         return list;
+    }
+
+    public static List<UploadResult> uploadFile(HttpServletRequest request, MultipartFile[] files) throws HookahException, IOException {
+        return uploadFile(request, null, null, files);
+    }
+
+    public static List<UploadResult> uploadFile(HttpServletRequest request, String prexPath, MultipartFile[] files) throws HookahException, IOException {
+        return uploadFile(request, prexPath, null, files);
     }
 
     public static void downLoad(String filePath, HttpServletResponse response)

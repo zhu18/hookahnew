@@ -17,6 +17,7 @@ import com.jusfoun.hookah.core.domain.UploadResult;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.staticserver.util.PropertiesManager;
 import com.jusfoun.hookah.staticserver.util.UploadUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +43,8 @@ import java.util.List;
 @RequestMapping("/upload")
 public class UploadfileController {
 	private static Logger logger = LoggerFactory.getLogger(UploadfileController.class);
+    private static String PRE_FILE = PropertiesManager.getInstance().getProperty("upload.other.prefix");
+    private static String PRE_IMG = PropertiesManager.getInstance().getProperty("upload.img.prefix");
 
     @RequestMapping("test")
     public String test() {
@@ -54,7 +57,6 @@ public class UploadfileController {
         ReturnData returnData = new ReturnData();
         returnData.setCode(ExceptionConst.Success);
         try {
-//            System.out.println("=========akkd======" + super.getCurrentUser().getUserId());
             returnData.setData(UploadUtil.uploadFile(request, myfiles));
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
@@ -62,52 +64,6 @@ public class UploadfileController {
             e.printStackTrace();
         }
         return returnData;
-//
-//        DateFormat df = new SimpleDateFormat("yyyyMMdd");
-//		String dirs = df.format(new Date());
-//		response.setContentType("json; charset=UTF-8");
-//		HashMap result = new HashMap();
-//		String originalFilename = null;
-//
-//		String laterFilename = null;
-//
-//		for (MultipartFile myfile : myfiles) {
-//			if (myfile.isEmpty()) {
-//				result.put("res_code", "000099");
-//				result.put("res_msg", "文件不能为空");
-//			} else {
-//				originalFilename = myfile.getOriginalFilename();
-//				UUID uuid = UUID.randomUUID();
-//				String orginstr="";
-//				String uustr = uuid.toString();
-//				if(originalFilename.substring(originalFilename.length() - 4, originalFilename.length()).toUpperCase().equals("JPEG")){
-//					 orginstr = originalFilename.substring(originalFilename.length() - 5, originalFilename.length());
-//
-//				}else{
-//					 orginstr = originalFilename.substring(originalFilename.length() -4, originalFilename.length());
-//				}
-//				laterFilename = uustr + orginstr;
-//				HashMap qryTokenMap = new HashMap();
-//				try {
-//					String path1 = "/upload/image/"+dirs+ "/" + laterFilename;
-//					SSHHelper sh = new SSHHelper();
-//	                sh.file_upload(myfile.getInputStream(),path1 );
-//					result.put("res_code", "000000");
-//					result.put("res_msg", "文件上传成功");
-//					result.put("path", path1);
-//					return result;
-//
-//				} catch (IOException e) {
-//					logger.info("文件[" + originalFilename + "]上传失败,堆栈轨迹如下");
-//					e.printStackTrace();
-//					result.put("res_code", "000097");
-//					result.put("res_msg", "文件上传失败");
-//				}
-//			}
-//
-//		}
-//
-//		return result;
 	}
 
     @RequestMapping(value="wangeditor", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -150,4 +106,41 @@ public class UploadfileController {
 //    }
 
 
+    /**
+     * 上传文件
+     * @param request
+     * @param userId
+     * @param typeId
+     * @param myfiles
+     * @return
+     */
+    @RequestMapping(value="other", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @ResponseBody
+    public ReturnData fileUpload(HttpServletRequest request, String userId, String typeId, @RequestParam("filename") MultipartFile[] myfiles) {
+        ReturnData returnData = new ReturnData();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            returnData.setData(UploadUtil.uploadFile(request, PRE_FILE, typeId + "/" + userId, myfiles));
+        } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
+
+    @RequestMapping(value="img", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @ResponseBody
+    public ReturnData fileUpload(HttpServletRequest request, String userId, @RequestParam("filename") MultipartFile[] myfiles) {
+        ReturnData returnData = new ReturnData();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            returnData.setData(UploadUtil.uploadFile(request, PRE_IMG, userId, myfiles));
+        } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
 }
