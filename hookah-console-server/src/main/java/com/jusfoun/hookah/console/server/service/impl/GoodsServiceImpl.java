@@ -170,7 +170,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         if(mgGoodsHistory != null){
 
             List<MgGoodsHistory.AllGoodsBean> list1 = mgGoodsHistory.getMgGoodsHistoriesList();
-            if(list1 != null && list1.size() > 0 && !list1.isEmpty()){
+            if(null != list1 && !list1.isEmpty()){
 
                 list = new ArrayList<MgGoodsHistory.AllGoodsBean>();
                 list.addAll(list1);
