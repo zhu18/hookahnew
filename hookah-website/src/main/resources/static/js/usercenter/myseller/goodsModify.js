@@ -80,8 +80,10 @@ jmz.GetLength = function(str) {
 function renderData(data){//渲染页面
 	catId = data.catId;
 	// $('.category-title-box').html(data.catFullName); //商品分类
+    $('#J-ver').val(data.ver);//版本号
 	$('#J-goodsName').val(data.goodsName);//商品名称
 	$('#J-goodsBrief').val(data.goodsBrief);//简介
+	$('#keywords').val(data.keywords);//标签
     $('#showcontent').html(jmz.GetLength(data.goodsName));//商品名称长度
     $('#showcontent2').html(jmz.GetLength(data.goodsBrief));//商品名称长度
 	$('select[name="parentSelect"] option').each(function(){
@@ -803,7 +805,9 @@ function backAddFn(data){
 function submitGoodsPublish(){
 	var data = {};
 	data.goodsId = goodsId;
+    data.ver = $('input[name="ver"]').val();
 	data.goodsName = $('input[name="goodsName"]').val();
+	data.keywords = $('input[name="keywords"]').val();
 	data.goodsBrief = $('textarea[name="goodsBrief"]').val();
 	data.attrTypeList = [];
 	$('.chosen-select').each(function () {
@@ -870,10 +874,15 @@ function submitGoodsPublish(){
 			}
 		} else if (data.goodsType == 1) {//------------------------------
 			data.apiInfo = {};
+			data.apiInfo.apiType = $('.api-info-box').find('input[name="apiType"]:checked').val();
+			data.apiInfo.invokeMethod = $('.api-info-box').find('input[name="invokeMethod"]').val();
 			data.apiInfo.apiUrl = $('.api-info-box').find('input[name="apiUrl"]').val();
 			data.apiInfo.apiMethod = $('.api-info-box').find('input[name="apiMethod"]:checked').val();
 			data.apiInfo.reqSample = $('.api-info-box').find('input[name="reqSample"]').val();
+			data.apiInfo.respDataFormat = $('.api-info-box').find('input[name="respDataFormat"]:checked').val();
 			data.apiInfo.apiDesc = $('.api-info-box').find('#apiDesc').val();
+			data.apiInfo.secretKeyName = $('.api-info-box').find('input[name="secretKeyName"]').val();
+			data.apiInfo.secretKeyValue = $('.api-info-box').find('input[name="secretKeyValue"]').val();
 			data.apiInfo.reqParamList = [];
 			$('table[d-type="requestHtml"] tbody tr').each(function (i, item) {
 				var listData = {};
@@ -888,7 +897,7 @@ function submitGoodsPublish(){
 			data.apiInfo.respParamList = [];
 			$('table[d-type="returnHtml"] tbody tr').each(function () {
 				var listData = {};
-				listData.fieldName = $(this).find('input[name="fieldNames"]').val();
+				listData.fieldName = $(this).find('input[name="fieldName"]').val();
 				listData.fieldType = $(this).find('select[name="fieldType"]').val();
 				listData.describle = $(this).find('textarea[name="describle"]').val();
 				data.apiInfo.respParamList.push(listData);
@@ -959,7 +968,15 @@ function submitGoodsPublish(){
 }
 
 function renderApiInfo(apiInfo){ //渲染API ----- 1
+	$('.api-info-box input[name="apiType"]').each(function(){
+		if($(this).val() == apiInfo.apiType){
+			$(this).attr('checked','checked');
+		}else{
+			$(this).removeAttr('checked');
+		}
+	});
 	$('.api-info-box input[name="apiUrl"]').val(apiInfo.apiUrl);
+	$('.api-info-box input[name="invokeMethod"]').val(apiInfo.invokeMethod);
 	$('.api-info-box input[name="apiMethod"]').each(function(){
 		if($(this).val() == apiInfo.apiMethod){
 			$(this).attr('checked','checked');
@@ -967,7 +984,16 @@ function renderApiInfo(apiInfo){ //渲染API ----- 1
 			$(this).removeAttr('checked');
 		}
 	});
+	$('.api-info-box input[name="respDataFormat"]').each(function(){
+		if($(this).val() == apiInfo.respDataFormat){
+			$(this).attr('checked','checked');
+		}else{
+			$(this).removeAttr('checked');
+		}
+	});
 	$('.api-info-box input[name="reqSample"]').val(apiInfo.reqSample);
+	$('.api-info-box input[name="secretKeyName"]').val(apiInfo.secretKeyName);
+	$('.api-info-box input[name="secretKeyValue"]').val(apiInfo.secretKeyValue);
 	$('.api-info-box #apiDesc').val(apiInfo.apiDesc);
 	$('.api-info-box #respSample').val(apiInfo.respSample);
 	var html = '';

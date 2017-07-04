@@ -32,7 +32,12 @@ class UserVerifyController {
       });
     };
 
-
+      $scope.refresh = function () {
+          $scope.search();
+      }
+      $scope.refresh1 = function () {
+        $scope.searchCheckResult();
+      }
     $scope.searchCheckResult = function () {
       var promise = $http({
         method: 'GET',

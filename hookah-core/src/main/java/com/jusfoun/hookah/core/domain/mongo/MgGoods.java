@@ -224,6 +224,12 @@ public class MgGoods extends GenericModel {
         private List<FiledBean> respParamList;//返回参数
         private String respSample;//返回示例
 
+        private String apiType; // 接口类型： restful/webservice
+        private String invokeMethod; //调用方法名
+        private String respDataFormat; // 返回数据格式 json/xml
+        private String secretKeyName; // 密钥名称
+        private String secretKeyValue; //密钥值
+
         public String getApiUrl() {
             return apiUrl;
         }
@@ -260,9 +266,7 @@ public class MgGoods extends GenericModel {
             return reqParamList;
         }
 
-        public void setReqParamList(List<FiledBean> reqParamList) {
-            this.reqParamList = reqParamList;
-        }
+        public void setReqParamList(List<FiledBean> reqParamList) { this.reqParamList = reqParamList; }
 
         public List<FiledBean> getRespParamList() {
             return respParamList;
@@ -272,12 +276,50 @@ public class MgGoods extends GenericModel {
             this.respParamList = respParamList;
         }
 
-        public String getRespSample() {
-            return respSample;
-        }
+        public String getRespSample() { return respSample; }
 
         public void setRespSample(String respSample) {
             this.respSample = respSample;
+        }
+
+        public String getApiType() {
+            return apiType;
+        }
+
+        public void setApiType(String apiType) {
+            this.apiType = apiType;
+        }
+
+        public String getRespDataFormat() {
+            return respDataFormat;
+        }
+
+        public void setRespDataFormat(String respDataFormat) {
+            this.respDataFormat = respDataFormat;
+        }
+
+        public String getInvokeMethod() {
+            return invokeMethod;
+        }
+
+        public void setInvokeMethod(String invokeMethod) {
+            this.invokeMethod = invokeMethod;
+        }
+
+        public String getSecretKeyName() {
+            return secretKeyName;
+        }
+
+        public void setSecretKeyName(String secretKeyName) {
+            this.secretKeyName = secretKeyName;
+        }
+
+        public String getSecretKeyValue() {
+            return secretKeyValue;
+        }
+
+        public void setSecretKeyValue(String secretKeyValue) {
+            this.secretKeyValue = secretKeyValue;
         }
     }
 

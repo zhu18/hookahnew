@@ -39,13 +39,12 @@
               <select name="" ng-model="payStatus" class="form-control">
                 <option value="">全部</option>
                 <option value="0">未付款</option>
-                <option value="1">付款中</option>
-                <option value="2">已款中</option>
+                <option value="2">已付款</option>
               </select>
               <div style="display: inline-block" >
                 <label class="control-label">下单时间：</label>
                 <p class="input-group" style="margin-top: 15px">
-                  <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" type="datetime-local" ng-model="startDate" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                  <input   style="background-color: transparent;" ng-keypress="$event.preventDefault()" ng-paste="$event.preventDefault()" type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" type="datetime-local" ng-model="startDate" is-open="popup1.opened" datepicker-options="dateOptions"  close-text="关闭"  clear-text="清除" current-text="今天" readonly="true"/>
                   <span class="input-group-btn" >
                          <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
@@ -53,14 +52,14 @@
                 <!--<input ng-model="addTime" type="text" class="form-control" placeholder="起始日期">-->
                 <label class="control-label">至</label>
                 <p class="input-group" style="margin-top: 15px">
-                  <input type="text" class="form-control" uib-datepicker-popup ng-model="endDate" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                  <input style="background-color: transparent;"  ng-keypress="$event.preventDefault()" ng-paste="$event.preventDefault()" type="text" class="form-control" uib-datepicker-popup ng-model="endDate" is-open="popup2.opened" datepicker-options="dateOptions"  close-text="Close" close-text="关闭"  clear-text="清除" current-text="今天" readonly="true"/>
                   <span class="input-group-btn" >
                          <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
                 </p>
               </div>
               <!--<input ng-model="addTime" type="text" class="form-control" placeholder="结束日期">-->
-              <button style="margin-top: 5px" type="submit" class="btn btn-primary" data-ng-click="search1()">搜索</button>
+              <button style="margin-top: 5px" type="submit" class="btn btn-primary" data-ng-click="search()">搜索</button>
             </div>
           </form>
         </div>
@@ -85,7 +84,7 @@
             <tr data-ng-if="!loadingState" data-ng-repeat="item in pagination.store" class="" >
               <td>{{ $index + 1 }}</td>
               <td>
-                <a  ui-sref="order.viewOrderDetails" ng-click="getDetails($event,item.orderId)" >
+                <a   ng-click="getDetails($event,item.orderId)" >
                   <span text-length="50" ng-bind="item.orderSn"></span>
                 </a>
               </td>
@@ -108,7 +107,7 @@
               </td>
               <td>
                 <span text-length="50" ng-show="item.payStatus == 0">未付款</span>
-                <span text-length="50" ng-show="item.payStatus == 1">付款中</span>
+                <!--<span text-length="50" ng-show="item.payStatus == 1">付款中</span>-->
                 <span text-length="50" ng-show="item.payStatus == 2">已付款</span>
               </td>
 

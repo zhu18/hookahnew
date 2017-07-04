@@ -40,6 +40,7 @@ var htmlPart = {
                                 <tr>
                                     <td class="bar">商品名称：<span class="requireds">*</span></td>
                                     <td>
+                                        <input type="hidden" name="ver" id="J-ver"/>
                                         <div class="text-box"><input name="goodsName" id="J-goodsName" type="text" required="required">
                                             <span class="input-count"><strong id="showcontent">0</strong>/60</span>
                                         </div>
@@ -57,6 +58,17 @@ var htmlPart = {
                                         </div>
                                         <div class="errors">
                                             <span class="errorinfo">请填写商品简介，不能超过200个字!</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar">商品标签：<span class="requireds">*</span></td>
+                                    <td>
+                                        <div class="block info" style="margin: 0px 0px 3px;">
+                                            分类信息为该商品定义关键词，可由多个词组组装成，使用英文“;”号隔开。
+                                        </div>
+                                        <div class="text-box">
+                                            <input name="keywords" id="keywords" type="text" required="required">
                                         </div>
                                     </td>
                                 </tr>
@@ -310,6 +322,28 @@ var htmlPart = {
                             <table>
                                 <tbody>
                                 <tr>
+                                    <td class="bar">接口类型：<span class="requireds">*</span></td>
+                                    <td>
+                                        <div class="radio-box">
+                                            <label>
+                                                <input type="radio" name="apiType" value="restful" checked="">restful
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="apiType" value="webservice">webservice
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar">调用方法名：<span class="requireds">*</span></td>
+                                    <td>
+                                        <div class="text-box">
+                                            <input type="text" name="invokeMethod" required="required">
+                                            <span class="input-count"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td class="bar">接口地址：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="text-box">
@@ -417,6 +451,19 @@ var htmlPart = {
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td class="bar">返回格式：<span class="requireds">*</span></td>
+                                    <td>
+                                        <div class="radio-box">
+                                            <label>
+                                                <input type="radio" name="respDataFormat" value="json" checked="">json
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="respDataFormat" value="xml">xml
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td class="bar">返回参数：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="table-box">
@@ -452,6 +499,33 @@ var htmlPart = {
                                                 </tbody>
                                             </table>
                                         </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar">加密信息：<span class="requireds">*</span></td>
+                                    <td>
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td class="bar">密钥名称：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="secretKeyName" required="required">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">密钥值：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="secretKeyValue" required="required">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
                                     </td>
                                 </tr>
                                 </tbody>

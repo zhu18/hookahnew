@@ -60,9 +60,7 @@
 
 .confirmKey h4{ font-size: 16px;position: relative; top: -12px;}
 .confirmKey h5{ line-height: 35px;}
-.confirmKey h5 span{
-     font-weight:normal;
-}
+.confirmKey h5 span{ font-weight:normal;word-break: break-all; }
 
 
 /*搜索条件样式开始*/

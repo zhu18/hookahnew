@@ -11,6 +11,7 @@ import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.es.EsGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
+import com.jusfoun.hookah.core.domain.mongo.MgGoodsHistory;
 import com.jusfoun.hookah.core.domain.vo.GoodsCheckedVo;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.exception.HookahException;
@@ -47,6 +48,9 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
 
     @Resource
     MgGoodsService mgGoodsService;
+
+    @Resource
+    MgGoodsHistoryService mgGoodsHistoryService;
 
     @Resource
     MqSenderService mqSenderService;
@@ -137,6 +141,58 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
     @Override
     @Transactional
     public void updateGoods(GoodsVo obj) throws HookahException {
+
+        /**
+         *  Add guoruibing start
+         * 更新前，将goods历史数据插入到gongo
+         */
+        Goods goods = super.selectById(obj.getGoodsId());
+
+        // 将数据放入mongo
+        MgGoods mgGoods1 = new MgGoods();
+        mgGoods1.setAttrTypeList(obj.getAttrTypeList());
+        mgGoods1.setFormatList(obj.getFormatList());
+        mgGoods1.setImgList(obj.getImgList());
+        mgGoods1.setGoodsId(obj.getGoodsId());
+        mgGoods1.setApiInfo(obj.getApiInfo());
+        mgGoods1.setAsAloneSoftware(obj.getAsAloneSoftware());
+        mgGoods1.setAsSaaS(obj.getAsSaaS());
+        mgGoods1.setAtAloneSoftware(obj.getAtAloneSoftware());
+        mgGoods1.setAtSaaS(obj.getAtSaaS());
+        mgGoods1.setDataModel(obj.getDataModel());
+        mgGoods1.setClickRate((long) 0);
+        mgGoods1.setOffLineData(obj.getOffLineData());
+        mgGoods1.setOffLineInfo(obj.getOffLineInfo());
+
+        MgGoodsHistory mgGoodsHistory = mgGoodsHistoryService.selectById(obj.getGoodsId());
+
+        List<MgGoodsHistory.AllGoodsBean> list = new ArrayList<MgGoodsHistory.AllGoodsBean>();
+        if(mgGoodsHistory != null){
+
+            List<MgGoodsHistory.AllGoodsBean> list1 = mgGoodsHistory.getMgGoodsHistoriesList();
+            if(null != list1 && !list1.isEmpty()){
+
+                list = new ArrayList<MgGoodsHistory.AllGoodsBean>();
+                list.addAll(list1);
+
+            }
+        }
+        mgGoodsHistory = new MgGoodsHistory();
+        MgGoodsHistory.AllGoodsBean allGoodsBean = new MgGoodsHistory.AllGoodsBean();
+        allGoodsBean.setGoods(goods);
+        allGoodsBean.setMgGoods(mgGoods1);
+        list.add(allGoodsBean);
+
+        mgGoodsHistory.setGoodsId(obj.getGoodsId());
+        mgGoodsHistory.setMgGoodsHistoriesList(list);
+
+        mongoTemplate.save(mgGoodsHistory);
+
+
+        /**
+         *  Add guoruibing end
+         */
+
         Date date = DateUtils.now();
         obj.setLastUpdateTime(date);
         obj.setIsOnsale(HookahConstants.GOODS_STATUS_ONSALE);
@@ -145,6 +201,12 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         }
         obj.setOnsaleEndDate(null);
         obj.setCheckStatus(HookahConstants.GOODS_CHECK_STATUS_WAIT);
+        /* Add guoruibing start */
+        String ver = obj.getVer();
+        String version = ver.substring(1);
+        Integer verNum = Integer.parseInt(version);
+        obj.setVer("V"+ (verNum + 1));
+        /* Add guoruibing end */
         int i = super.updateByIdSelective(obj);
         if(i < 1) {
             throw new HookahException("更新失败！");
@@ -165,8 +227,8 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             mgGoods.setOffLineInfo(obj.getOffLineInfo());
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.eq("goodsId", obj.getGoodsId()));
-            MgGoods mgGoods1 = mgGoodsService.selectOne(filters);
-            mgGoods.setClickRate(mgGoods1.getClickRate() == null ? (long)0 : mgGoods1.getClickRate());
+            MgGoods mgGoods2 = mgGoodsService.selectOne(filters);
+            mgGoods.setClickRate(mgGoods2.getClickRate() == null ? (long)0 : mgGoods2.getClickRate());
             mgGoodsService.delete(obj.getGoodsId());
             mongoTemplate.save(mgGoods);
         }
@@ -396,6 +458,30 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         goodsVo.setCatName(DictionaryUtil.getCategoryById(goodsVo.getCatId()) == null
                 ? "" : DictionaryUtil.getCategoryById(goodsVo.getCatId()).getCatName());
         return goodsVo;
+    }
+
+    /**
+     *  Add  by guoruibing  2017-07-03
+     * @param goodsId 商品id
+     * @param version 版本号
+     * @return
+     */
+    @Override
+    public MgGoods.ApiInfoBean getApiInfo(String goodsId, String version)  throws HookahException {
+        MgGoodsHistory mgGoods = mgGoodsHistoryService.selectById(goodsId);
+        if (mgGoods == null) {
+            throw new HookahException("未查到商品信息");
+        }
+
+        List<MgGoodsHistory.AllGoodsBean> list = mgGoods.getMgGoodsHistoriesList();
+
+        for (MgGoodsHistory.AllGoodsBean allGoodsBean : list) {
+            Goods goods = allGoodsBean.getGoods();
+            if (version.equals(goods.getVer())) {
+                return allGoodsBean.getMgGoods().getApiInfo();
+            }
+        }
+        throw new HookahException("未查到对应的商品规格");
     }
     /**
      * 作废

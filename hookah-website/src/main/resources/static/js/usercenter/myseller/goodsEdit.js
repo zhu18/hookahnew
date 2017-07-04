@@ -484,6 +484,7 @@ function submitGoodsPublish(){
 	var data = {};
 	data.goodsName = $('input[name="goodsName"]').val();
 	data.goodsBrief = $('textarea[name="goodsBrief"]').val();
+	data.keywords = $('input[name="keywords"]').val();
 	data.attrTypeList = [];
 	$('.chosen-select').each(function () {
 		var attrTypeList = {};
@@ -549,6 +550,8 @@ function submitGoodsPublish(){
 			}
 		} else if (data.goodsType == 1) {//------------------------------
 			data.apiInfo = {};
+			data.apiInfo.apiType = $('.api-info-box').find('input[name="apiType"]:checked').val();
+			data.apiInfo.invokeMethod = $('.api-info-box').find('input[name="invokeMethod"]').val();
 			data.apiInfo.apiUrl = $('.api-info-box').find('input[name="apiUrl"]').val();
 			data.apiInfo.apiMethod = $('.api-info-box').find('input[name="apiMethod"]:checked').val();
 			data.apiInfo.reqSample = $('.api-info-box').find('input[name="reqSample"]').val();
@@ -574,6 +577,9 @@ function submitGoodsPublish(){
 			});
 			console.log(data.apiInfo.respParamList);//----------------------
 			data.apiInfo.respSample = $('#respSample').val();
+			data.apiInfo.respDataFormat = $('.api-info-box').find('input[name="respDataFormat"]:checked').val();
+			data.apiInfo.secretKeyName = $('.api-info-box').find('input[name="secretKeyName"]').val();
+			data.apiInfo.secretKeyValue = $('.api-info-box').find('input[name="secretKeyValue"]').val();
 		} else if (data.goodsType == 2) {
 			data.dataModel = {};
 			data.dataModel.complexity = $('input[name="complexity"]').val();

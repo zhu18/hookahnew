@@ -1,5 +1,6 @@
 import UserController from './UserController';
 import UserVerifyController from './UserVerifyController';
+import UserListDetailController from './UserListDetailController';
 userRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function userRouting($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/user/search');
@@ -14,9 +15,9 @@ export default function userRouting($stateProvider, $urlRouterProvider) {
       controller: UserController,
     })
     .state('user.detail', {
-      url: '/user/detail',
+      url: '/user/detail/:id',
       template: require('./detail.html'),
-      controller: UserController,
+      controller: UserListDetailController,
     })
     .state('user.verify', {
       template: '<div ui-view></div>',

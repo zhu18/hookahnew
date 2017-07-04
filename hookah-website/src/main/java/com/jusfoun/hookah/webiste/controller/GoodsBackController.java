@@ -244,6 +244,28 @@ public class GoodsBackController extends BaseController {
         return returnData;
     }
 
+    /**
+     * Add by guoruibing 2017-07-03
+     * 根据id查询商品详情
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping("/findByIdAndVersion")
+    @ResponseBody
+    public ReturnData findByIdAndVersion(String id, String version) {
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            returnData.setData(goodsService.getApiInfo(id, version));
+        } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
+
     @RequestMapping("/update")
     @ResponseBody
     public ReturnData update(@Valid @RequestBody GoodsVo obj) {

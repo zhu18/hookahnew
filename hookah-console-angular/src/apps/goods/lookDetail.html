@@ -16,7 +16,12 @@
 					<li data-ng-class="{'active':currentS == 1}"  data-ng-click="setCurrentS(1)">
 						<a href="javascript:void(0)">基本信息</a>
 					</li>
-					<li data-ng-class="{'active' : currentS == 2}" data-ng-click="setCurrentS(2)"><a href="javascript:void(0)">补充信息</a></li>
+					<li data-ng-class="{'active' : currentS == 2}" data-ng-click="setCurrentS(2)">
+						<a href="javascript:void(0)">补充信息</a>
+					</li>
+					<li data-ng-class="{'active' : currentS == 3}" data-ng-show="editData.goodsType == 1" data-ng-click="setCurrentS(3)">
+						<a href="javascript:void(0)">封装内容</a>
+					</li>
 				</ul>
 				<div data-ng-show="currentS == 1">
 					<div class="form-group">
@@ -32,6 +37,12 @@
 						<div class="col-sm-5">
 							<!--<input type="text" class="form-control" value="{{editData.goodsBrief}}" readonly="true" />-->
 							<textarea style="margin: 0px; width: 452px; height: 84px;" readonly="true">{{editData.goodsBrief}}</textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">商品简介</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control" name="goodsName" value="{{editData.keywords}}" readonly="true"/>
 						</div>
 					</div>
 					<div class="form-group">
@@ -125,7 +136,7 @@
 							</div>
 						</div>
 					</div>
-					<!--离线数据-->
+					<!--线上-->
 					<div data-ng-if="editData.isOffline == 0">
 						<div data-ng-if="editData.goodsType == 0">
 							<div class="form-group">
@@ -153,6 +164,23 @@
 							</div>
 						</div>
 						<div data-ng-if="editData.goodsType == 1">
+							<div class="form-group">
+								<label class="col-sm-2 control-label">接口类型</label>
+								<div class="col-sm-5">
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.apiInfo.apiType == 'restful'" disabled/>restful
+									</label>
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.apiInfo.apiType == 'webservice'" disabled/>webservice
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">调用方法名</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.apiInfo.invokeMethod}}" readonly="true"/>
+								</div>
+							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">接口地址</label>
 								<div class="col-sm-5">
@@ -253,9 +281,32 @@
 								</div>
 							</div>
 							<div class="form-group">
+								<label class="col-sm-2 control-label">返回格式</label>
+								<div class="col-sm-5">
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.apiInfo.apiType == 'json'" disabled/>json
+									</label>
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.apiInfo.apiType == 'xml'" disabled/>xml
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
 								<label class="col-sm-2 control-label">资源有效时间:</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control"  readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">密钥名称:</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.apiInfo.secretKeyName}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">密钥值:</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.apiInfo.secretKeyValue}}" readonly="true"/>
 								</div>
 							</div>
 						</div>
@@ -374,7 +425,158 @@
 							</div>
 						</div>
 					</div>
-				<!--</div>-->
+				</div>
+				<div data-ng-show="currentS == 3 && editData.goodsType == 1">
+					<div data-ng-if="editData.isOffline == 0">
+						<div data-ng-if="editData.goodsType == 1">
+							<div class="form-group">
+								<label class="col-sm-2 control-label">接口类型</label>
+								<div class="col-sm-5">
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.apiInfo.apiType == 'restful'" disabled/>restful
+									</label>
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.apiInfo.apiType == 'webservice'" disabled/>webservice
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">调用方法名</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.apiInfo.invokeMethod}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">接口地址</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.apiInfo.apiUrl}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">请求方式</label>
+								<div class="col-sm-5">
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.apiInfo.apiMethod == 'GET' || editData.apiInfo.apiMethod == 'get'" disabled/>GET
+									</label>
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.apiInfo.apiMethod == 'POST' || editData.apiInfo.apiMethod == 'post'" disabled/>POST
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">请求示例</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.apiInfo.reqSample}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">接口描述</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.apiInfo.apiDesc}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">请求参数</label>
+								<div class="col-sm-5">
+									<table class="table table-hover">
+										<thead>
+										<tr>
+											<th>名称</th>
+											<th>类型</th>
+											<th>默认值</th>
+											<th>必填</th>
+											<th>示例</th>
+											<th>描述</th>
+										</tr>
+										</thead>
+										<tbody>
+										<tr data-ng-repeat="req in editData.apiInfo.reqParamList" class="">
+											<td>
+												<span class="" ng-bind="req.fieldName"></span>
+											</td>
+											<td>
+												<span class="column-text" ng-bind="req.fieldType"></span>
+											</td>
+											<td>
+												<span class="column-text" ng-bind="req.fieldDefault"></span>
+											</td>
+											<td>
+												<span class="column-text" ng-bind="req.isMust | isMust">否</span>
+											</td>
+											<td>
+												<span class="column-text" ng-bind="req.fieldSample"></span>
+											</td>
+											<td>
+												<span class="column-text" ng-bind="req.describle"></span>
+											</td>
+										</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">返回参数</label>
+								<div class="col-sm-5">
+									<table class="table table-hover">
+										<thead>
+										<tr>
+											<th>参数名称</th>
+											<th>参数说明</th>
+										</tr>
+										</thead>
+										<tbody>
+										<tr data-ng-repeat="req in editData.apiInfo.respParamList" class="">
+											<td>
+												<span class="" ng-bind="req.fieldName"></span>
+											</td>
+											<td>
+												<span class="column-text" ng-bind="req.describle"></span>
+											</td>
+										</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">返回示例</label>
+								<div class="col-sm-5">
+									<textarea style="margin: 0px; width: 452px; height: 150px;" readonly="true">
+									{{editData.apiInfo.respSample}}
+									</textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">返回格式</label>
+								<div class="col-sm-5">
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.apiInfo.apiType == 'json'" disabled/>json
+									</label>
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.apiInfo.apiType == 'xml'" disabled/>xml
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">资源有效时间:</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control"  readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">密钥名称:</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.apiInfo.secretKeyName}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">密钥值:</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.apiInfo.secretKeyValue}}" readonly="true"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</fieldset>
 		</form>
 	</div>

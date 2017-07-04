@@ -158,7 +158,7 @@ function renderDetails() {
                     if (type == 0) {
                         return '次';
                     } else if (type == 1) {
-                        return '月';
+                        return '天';
                     } else if (type == 2) {
                         return '年';
                     }

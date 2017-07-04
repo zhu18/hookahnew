@@ -74,6 +74,8 @@ public class MgOrderGoods extends GoodsVo {
 
     private String supplier;  //供应商名称
 
+    private Integer solveStatus;//处理状态 0无需处理，1已处理，2未处理
+
 
 
 
@@ -737,5 +739,13 @@ public class MgOrderGoods extends GoodsVo {
 
     public void setSupplier(String supplier) {
         this.supplier = supplier;
+    }
+
+    public Integer getSolveStatus() {
+        return solveStatus;
+    }
+
+    public void setSolveStatus(Integer solveStatus) {
+        this.solveStatus = solveStatus;
     }
 }
