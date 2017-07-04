@@ -165,6 +165,23 @@
 						</div>
 						<div data-ng-if="editData.goodsType == 1">
 							<div class="form-group">
+								<label class="col-sm-2 control-label">接口类型</label>
+								<div class="col-sm-5">
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.apiInfo.apiType == 'restful'" disabled/>restful
+									</label>
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.apiInfo.apiType == 'webservice'" disabled/>webservice
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">调用方法名</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.apiInfo.invokeMethod}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
 								<label class="col-sm-2 control-label">接口地址</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.apiInfo.apiUrl}}" readonly="true"/>
@@ -264,9 +281,32 @@
 								</div>
 							</div>
 							<div class="form-group">
+								<label class="col-sm-2 control-label">返回格式</label>
+								<div class="col-sm-5">
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.apiInfo.apiType == 'json'" disabled/>json
+									</label>
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.apiInfo.apiType == 'xml'" disabled/>xml
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
 								<label class="col-sm-2 control-label">资源有效时间:</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control"  readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">密钥名称:</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.apiInfo.secretKeyName}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">密钥值:</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.apiInfo.secretKeyValue}}" readonly="true"/>
 								</div>
 							</div>
 						</div>
@@ -390,6 +430,23 @@
 					<div data-ng-if="editData.isOffline == 0">
 						<div data-ng-if="editData.goodsType == 1">
 							<div class="form-group">
+								<label class="col-sm-2 control-label">接口类型</label>
+								<div class="col-sm-5">
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.apiInfo.apiType == 'restful'" disabled/>restful
+									</label>
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.apiInfo.apiType == 'webservice'" disabled/>webservice
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">调用方法名</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.apiInfo.invokeMethod}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
 								<label class="col-sm-2 control-label">接口地址</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.apiInfo.apiUrl}}" readonly="true"/>
@@ -489,13 +546,35 @@
 								</div>
 							</div>
 							<div class="form-group">
+								<label class="col-sm-2 control-label">返回格式</label>
+								<div class="col-sm-5">
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.apiInfo.apiType == 'json'" disabled/>json
+									</label>
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.apiInfo.apiType == 'xml'" disabled/>xml
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
 								<label class="col-sm-2 control-label">资源有效时间:</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control"  readonly="true"/>
 								</div>
 							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">密钥名称:</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.apiInfo.secretKeyName}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">密钥值:</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.apiInfo.secretKeyValue}}" readonly="true"/>
+								</div>
+							</div>
 						</div>
-
 					</div>
 				</div>
 			</fieldset>
