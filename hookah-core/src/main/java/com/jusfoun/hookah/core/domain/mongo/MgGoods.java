@@ -141,11 +141,11 @@ public class MgGoods extends GenericModel {
          * status : 0
          */
 
-        private Integer formatId;
-        private String formatName;
-        private int format;
-        private Integer number;
-        private Long price;
+        private Integer formatId; //规格ID
+        private String formatName; //名称
+        private int format; //类型
+        private Integer number; //规格
+        private Long price; //价格
 
         public int getFormat() {
             return format;
@@ -233,11 +233,17 @@ public class MgGoods extends GenericModel {
         private List<FiledBean> respParamList;//返回参数
         private String respSample;//返回示例
 
-        private String apiType; // 接口类型： restful/webservice
+        private String apiType; // 接口类型： 0：restful ,1：webservice
         private String invokeMethod; //调用方法名
-        private String respDataFormat; // 返回数据格式 json/xml
-        private String secretKeyName; // 密钥名称
-        private String secretKeyValue; //密钥值
+        private String respDataFormat; // 返回数据格式 0：json ,1：xml , 2：text
+        private EncryptInfo encryptInfo; //加密信息
+//        private String secretKeyName; // 密钥名称
+//        private String secretKeyValue; //密钥值
+
+        private RespDataMapping respDataMapping; //返回数据映射
+        private String updateFreq; //更新频率
+        private Integer dataNumDivRowNum; //数据条数/行数
+
 
         public String getApiUrl() {
             return apiUrl;
@@ -315,6 +321,15 @@ public class MgGoods extends GenericModel {
             this.invokeMethod = invokeMethod;
         }
 
+    }
+
+    /**
+     *  add by guoruibing 2017-07-05
+     */
+    public static class EncryptInfo implements Serializable {
+        private String secretKeyName; // 密钥名称
+        private String secretKeyValue; //密钥值
+
         public String getSecretKeyName() {
             return secretKeyName;
         }
@@ -329,6 +344,72 @@ public class MgGoods extends GenericModel {
 
         public void setSecretKeyValue(String secretKeyValue) {
             this.secretKeyValue = secretKeyValue;
+        }
+    }
+    public static class RespDataMapping implements Serializable {
+
+        private String codeAttr; //编码属性
+        private String successCode; //成功
+        private String failedCode; //失败
+        private String successNoData; // 成功无数据
+        private String infoAttr; // 信息属性
+        private String dataAttr; //数据属性
+        private String totalNumAttr; //总条数属性
+
+        public String getCodeAttr() {
+            return codeAttr;
+        }
+
+        public void setCodeAttr(String codeAttr) {
+            this.codeAttr = codeAttr;
+        }
+
+        public String getSuccessCode() {
+            return successCode;
+        }
+
+        public void setSuccessCode(String successCode) {
+            this.successCode = successCode;
+        }
+
+        public String getFailedCode() {
+            return failedCode;
+        }
+
+        public void setFailedCode(String failedCode) {
+            this.failedCode = failedCode;
+        }
+
+        public String getSuccessNoData() {
+            return successNoData;
+        }
+
+        public void setSuccessNoData(String successNoData) {
+            this.successNoData = successNoData;
+        }
+
+        public String getInfoAttr() {
+            return infoAttr;
+        }
+
+        public void setInfoAttr(String infoAttr) {
+            this.infoAttr = infoAttr;
+        }
+
+        public String getDataAttr() {
+            return dataAttr;
+        }
+
+        public void setDataAttr(String dataAttr) {
+            this.dataAttr = dataAttr;
+        }
+
+        public String getTotalNumAttr() {
+            return totalNumAttr;
+        }
+
+        public void setTotalNumAttr(String totalNumAttr) {
+            this.totalNumAttr = totalNumAttr;
         }
     }
 
@@ -976,4 +1057,4 @@ public class MgGoods extends GenericModel {
     public void setOffLineData(OffLineDataBean offLineData) {
         this.offLineData = offLineData;
     }
-}
+]}
