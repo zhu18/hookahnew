@@ -17,11 +17,14 @@ var head = {
 <%
 var htmlPart = {
 %>
+
 <div class="grid-0 backgorund-gray">
     <div class="grid-row clearfix">
         <%include("/usercenter/user-center-menu.html"){} %>
         <div class="grid-right margin-top-10">
             <form action="" id="goodsModifyForm">
+                <input type="hidden" name="userId" value="${user.userId}">
+                <input type="hidden" name="typeId">
                 <div class="usercenter-right-box">
                     <div class="goodsEdit-box">
                         <h1>当前类目：<span class="category-title-box"></span></h1>
@@ -56,7 +59,7 @@ var htmlPart = {
                                     <td class="bar">商品标签：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="block info" style="margin: 0px 0px 3px;">
-                                            分类信息为该商品定义关键词，可由多个词组组装成，使用英文“;”号隔开。
+                                            分类信息为该商品定义关键词，可由多个词组组装成，使用英文“,”号隔开。
                                         </div>
                                         <div class="text-box">
                                             <input name="keywords" id="keywords" type="text" required="required">
@@ -114,15 +117,10 @@ var htmlPart = {
                                     <td class="bar">所属区域：</td>
                                     <td>
                                         <div class="select-box">
-                                            <!--<select name="country" id="country">-->
-                                                <!--<option value="100000">中国</option>-->
-                                            <!--</select>-->
                                             <select name="province" id="province" onchange="loadRegion('city', this)">
                                                 <option value="-1">全部</option>
                                             </select>
-                                            <!--<select name="city" id="city" onchange="loadRegion('county', this)"><option value="-1">全部</option></select>-->
                                             <select name="city" id="city"><option value="-1">全部</option></select>
-                                            <!--<select name="county" id="county"><option value="-1">全部</option></select>-->
                                         </div>
                                     </td>
                                 </tr>
@@ -146,6 +144,18 @@ var htmlPart = {
                                                     </div>
                                                 </li>
                                             </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar">使用范围：<span class="requireds">*</span></td>
+                                    <td>
+                                        <div class="textarea-box">
+                                            <textarea type="text" name="trialRange" id="trialRange" required="required"></textarea>
+                                            <span class="input-count"><strong id="trialRange_s">0</strong>/400</span>
+                                        </div>
+                                        <div class="errors">
+                                            <span class="errorinfo">请填写商品简介，不能超过200个字!</span>
                                         </div>
                                     </td>
                                 </tr>
@@ -200,6 +210,43 @@ var htmlPart = {
                                     <td>
                                         <div class="wangEditor-wrapper">
                                             <textarea id="textarea1" style="height: 500px; display: none;" name="goodsDescBox" required="required"></textarea>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar">商品优势：<span class="requireds">*</span></td>
+                                    <td>
+                                        <div class="wangEditor-wrapper">
+                                            <textarea id="textarea2" style="height: 500px; display: none;" name="goodsAdvantage" required="required"></textarea>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar">售后服务：<span class="requireds">*</span></td>
+                                    <td>
+                                        <div class="wangEditor-wrapper">
+                                            <textarea id="textarea3" style="height: 500px; display: none;" name="afterSaleService" required="required"></textarea>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="dataSample-info-box">
+                                    <td class="bar">数据样例：<span class="requireds">*</span></td>
+                                    <td>
+                                        <p>只支持xls、xlsx格式文件</p>
+                                        <div class="fileUploads fileUploads_j">
+                                            <input type="hidden" id="dataSample" required="required" name="dataSample">
+                                            <button>选择文件</button>
+                                            <span>未选择任何文件</span>
+                                            <input id="fileupload11" style="height: 32px;position: absolute;left: 0;top: 0;opacity: 0;cursor: pointer;" type="file" name="filename" multiple="" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" class="preview-btn">
+                                            <input type="text" style="opacity: 0;width:20px;position: absolute" name="dataSample_s" required="required">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar">应用案例：<span class="requireds">*</span></td>
+                                    <td>
+                                        <div class="wangEditor-wrapper">
+                                            <textarea id="textarea4" style="height: 500px; display: none;" name="appCase" required="required"></textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -447,10 +494,13 @@ var htmlPart = {
                                     <td>
                                         <div class="radio-box">
                                             <label>
-                                                <input type="radio" name="respDataFormat" value="json" checked="">json
+                                                <input type="radio" name="respDataFormat" value="0" checked="">json
                                             </label>
                                             <label>
-                                                <input type="radio" name="respDataFormat" value="xml">xml
+                                                <input type="radio" name="respDataFormat" value="1">xml
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="respDataFormat" value="2">txt
                                             </label>
                                         </div>
                                     </td>
@@ -494,7 +544,97 @@ var htmlPart = {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="bar">加密信息：<span class="requireds">*</span></td>
+                                    <td class="bar">返回数据映射：</td>
+                                    <td>
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td class="bar">编码属性：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="codeAttr" required="required" placeholder="请输入编码属性，示例：code">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">成功：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="successCode" required="required" placeholder="示例：200">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">失败：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="failedCode" required="required" placeholder="示例：-9999">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">成功无数据：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="successNoData" required="required" placeholder="示例：0">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">信息属性：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="infoAttr" required="required" placeholder="示例：message，多个之间用英文“,”分隔">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">数据属性：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="dataAttr" required="required" placeholder="示例：data，多个之间英文“,”分隔">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">总条数属性：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="text-box">
+                                                        <input type="text" name="totalNumAttr" required="required" placeholder="示例：total，多个之间英文“,”分隔">
+                                                        <span class="input-count"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar">更新频率：<span class="requireds">*</span></td>
+                                    <td>
+                                        <div class="text-box">
+                                            <input type="text" name="updateFreq" required="required">
+                                            <span class="input-count"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar">数据条数/行数：<span class="requireds">*</span></td>
+                                    <td>
+                                        <div class="text-box">
+                                            <input type="text" name="dataNumDivRowNum" required="required">
+                                            <span class="input-count"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar">加密信息：</td>
                                     <td>
                                         <table>
                                             <tbody>
