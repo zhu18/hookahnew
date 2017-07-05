@@ -27,6 +27,7 @@ public class MgGoods extends GenericModel {
     private List<FormatBean> formatList;
     private List<ImgBean> imgList;
     private ApiInfoBean apiInfo;
+    private PackageApiInfoBean packageApiInfoBean ;
     private DataModelBean dataModel;
     private ASSaaSBean asSaaS;
     private ASAloneSoftwareBean asAloneSoftware;
@@ -124,6 +125,14 @@ public class MgGoods extends GenericModel {
         this.apiInfo = apiInfo;
     }
 
+    public PackageApiInfoBean getPackageApiInfoBean() {
+        return packageApiInfoBean;
+    }
+
+    public void setPackageApiInfoBean(PackageApiInfoBean packageApiInfoBean) {
+        this.packageApiInfoBean = packageApiInfoBean;
+    }
+
     public static class FormatBean implements Serializable {
         /**
          * format : 1
@@ -216,6 +225,114 @@ public class MgGoods extends GenericModel {
     }
 
     public static class ApiInfoBean implements Serializable {
+        private String apiUrl; //接口地址
+        private String apiMethod;//请求方式：GET/POST
+        private String reqSample;//请求示例
+        private String apiDesc;//接口描述
+        private List<FiledBean> reqParamList;//请求参数
+        private List<FiledBean> respParamList;//返回参数
+        private String respSample;//返回示例
+
+        private String apiType; // 接口类型： restful/webservice
+        private String invokeMethod; //调用方法名
+        private String respDataFormat; // 返回数据格式 json/xml
+        private String secretKeyName; // 密钥名称
+        private String secretKeyValue; //密钥值
+
+        public String getApiUrl() {
+            return apiUrl;
+        }
+
+        public void setApiUrl(String apiUrl) {
+            this.apiUrl = apiUrl;
+        }
+
+        public String getApiMethod() {
+            return apiMethod;
+        }
+
+        public void setApiMethod(String apiMethod) {
+            this.apiMethod = apiMethod;
+        }
+
+        public String getReqSample() {
+            return reqSample;
+        }
+
+        public void setReqSample(String reqSample) {
+            this.reqSample = reqSample;
+        }
+
+        public String getApiDesc() {
+            return apiDesc;
+        }
+
+        public void setApiDesc(String apiDesc) {
+            this.apiDesc = apiDesc;
+        }
+
+        public List<FiledBean> getReqParamList() {
+            return reqParamList;
+        }
+
+        public void setReqParamList(List<FiledBean> reqParamList) { this.reqParamList = reqParamList; }
+
+        public List<FiledBean> getRespParamList() {
+            return respParamList;
+        }
+
+        public void setRespParamList(List<FiledBean> respParamList) {
+            this.respParamList = respParamList;
+        }
+
+        public String getRespSample() { return respSample; }
+
+        public void setRespSample(String respSample) {
+            this.respSample = respSample;
+        }
+
+        public String getApiType() {
+            return apiType;
+        }
+
+        public void setApiType(String apiType) {
+            this.apiType = apiType;
+        }
+
+        public String getRespDataFormat() {
+            return respDataFormat;
+        }
+
+        public void setRespDataFormat(String respDataFormat) {
+            this.respDataFormat = respDataFormat;
+        }
+
+        public String getInvokeMethod() {
+            return invokeMethod;
+        }
+
+        public void setInvokeMethod(String invokeMethod) {
+            this.invokeMethod = invokeMethod;
+        }
+
+        public String getSecretKeyName() {
+            return secretKeyName;
+        }
+
+        public void setSecretKeyName(String secretKeyName) {
+            this.secretKeyName = secretKeyName;
+        }
+
+        public String getSecretKeyValue() {
+            return secretKeyValue;
+        }
+
+        public void setSecretKeyValue(String secretKeyValue) {
+            this.secretKeyValue = secretKeyValue;
+        }
+    }
+
+    public static class PackageApiInfoBean implements Serializable {
         private String apiUrl; //接口地址
         private String apiMethod;//请求方式：GET/POST
         private String reqSample;//请求示例
