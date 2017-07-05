@@ -89,7 +89,7 @@ function companyAuth(){
             "licensePath":$("input[name='licensePath']").val(),//营业执照存放路径
             "certifictePath":$("input[name='certifictePath']").val(),//企业代码存放路径
             "lawPersonName":$("input[name='companyLegal']").val(),//企业法人代表
-            "region":$('select[name="province"] option:selected').text()+$('select[name="city"] option:selected').text(),//所在地
+            "region":$('select[name="city"] option:selected').val(),//所在地
             "contactAddress":$("input[name='address']").val(),//详细地址
             "orgPhone":$("input[name='tel']").val(),//联系电话
             "industry":$("input[name='mainBusiness']").val(),//行业
@@ -104,17 +104,6 @@ function companyAuth(){
         }
     });
 }
-
-
-
-
-
-
-
-
-
-
-
 $("#companyForm").validate({
 	rules: {
 		governmentName:'required',
