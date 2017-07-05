@@ -23,6 +23,7 @@ public class GoodsVo extends Goods implements Serializable {
     private MgGoods.ATAloneSoftwareBean atAloneSoftware;    // 分析工具 独立软件
     private MgGoods.OffLineInfoBean offLineInfo; //线下交付信息
     private MgGoods.OffLineDataBean offLineData;//离线数据信息
+    private MgGoods.PackageApiInfoBean packageApiInfo;
 
     private boolean orNotFavorite;
     private String userId;
@@ -228,5 +229,13 @@ public class GoodsVo extends Goods implements Serializable {
 
     public void setOrgName(String orgName) {
         this.orgName = orgName;
+    }
+
+    public MgGoods.PackageApiInfoBean getPackageApiInfo() {
+        return packageApiInfo;
+    }
+
+    public void setPackageApiInfo(MgGoods.PackageApiInfoBean packageApiInfo) {
+        this.packageApiInfo = packageApiInfo;
     }
 }

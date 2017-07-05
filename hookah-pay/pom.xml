@@ -288,6 +288,35 @@
       <optional>true</optional>
     </dependency>
 
+    <dependency>
+      <groupId>fixcommom</groupId>
+      <artifactId>fixcommom</artifactId>
+      <version>3.7.3_1</version>
+      <scope>system</scope>
+      <systemPath>${basedir}/src/lib/fixcommon-3.7.3_1.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>jdom</groupId>
+      <artifactId>jdom</artifactId>
+      <version>1.1.3</version>
+      <scope>system</scope>
+      <systemPath>${basedir}/src/lib/jdom-1.1.3.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>not-yet-commons-ssl</groupId>
+      <artifactId>not-yet-commons-ssl</artifactId>
+      <version>0.3.11</version>
+      <scope>system</scope>
+      <systemPath>${basedir}/src/lib/not-yet-commons-ssl-0.3.11.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>qss-client-1.0-jdk1.6</groupId>
+      <artifactId>qss-client-1.0-jdk1.6</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>${basedir}/src/lib/qss-client-1.0-jdk1.6.jar</systemPath>
+    </dependency>
+
   </dependencies>
   <build>
     <resources>
@@ -318,6 +347,20 @@
         <directory>src/main/resources</directory>
         <filtering>false</filtering>
       </resource>
+
+      <resource>
+        <directory>src/lib</directory>
+        <targetPath>BOOT-INF/lib/</targetPath>
+        <includes>
+        <include>**/*.jar</include>
+        </includes>
+      </resource>
+
+      <resource>
+        <directory>src/main/resources</directory>
+        <targetPath>BOOT-INF/classes/</targetPath>
+      </resource>
+
     </resources>
     <pluginManagement>
       <plugins>
