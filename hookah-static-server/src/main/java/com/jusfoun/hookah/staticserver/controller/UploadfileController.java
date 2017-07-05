@@ -45,6 +45,7 @@ public class UploadfileController {
 	private static Logger logger = LoggerFactory.getLogger(UploadfileController.class);
     private static String PRE_FILE = PropertiesManager.getInstance().getProperty("upload.other.prefix");
     private static String PRE_IMG = PropertiesManager.getInstance().getProperty("upload.img.prefix");
+    private static String PRE_WANG = PropertiesManager.getInstance().getProperty("upload.wang.prefix");
 
     @RequestMapping("test")
     public String test() {
@@ -71,7 +72,7 @@ public class UploadfileController {
     public String upload(HttpServletRequest request, @RequestParam("filename") MultipartFile[] myfiles) {
         String url = "";
         try {
-            List<UploadResult> results = UploadUtil.uploadFile(request, myfiles);
+            List<UploadResult> results = UploadUtil.uploadFile(request, PRE_WANG, myfiles);
             url = results.get(0).getAbsPath();
         } catch (HookahException e) {
             e.printStackTrace();
