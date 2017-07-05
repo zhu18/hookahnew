@@ -51,7 +51,7 @@ public class GoodsCheckApi extends BaseController{
             if(Objects.nonNull(apiInfoBean)){
                 if(StringUtils.isNoneBlank(goodsCheck.getGoodsId())){
                     MgGoods mgGoods = mgGoodsService.selectById(goodsCheck.getGoodsId());
-                    mgGoods.setPackageApiInfoBean(apiInfoBean);
+                    mgGoods.setPackageApiInfo(apiInfoBean);
                     mongoTemplate.save(mgGoods);
                 }
             }

@@ -39,6 +39,12 @@
 						</div>
 					</div>
 					<div class="form-group">
+						<label class="col-sm-2 control-label">商品标签</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control" name="goodsName" value="{{editData.keywords}}" readonly="true"/>
+						</div>
+					</div>
+					<div class="form-group">
 						<label class="col-sm-2 control-label">商品类型</label>
 						<div class="col-sm-5">
 							<select disabled>
@@ -62,7 +68,7 @@
 						<label class="col-sm-2 control-label">商品图片</label>
 						<div class="col-sm-5">
 							<a href="{{editData.goodsImg}}" target="_blank">
-								<img ng-src="{{editData.goodsImg}}" style="max-width: 450px; max-height: 600px">
+								<img ng-src="{{editData.goodsImg}}" style="max-width:300px;">
 							</a>
 							<!--<img ng-src="{{editData.goodsImg}}" style="max-width: 300px; max-height: 500px">-->
 						</div>
@@ -429,46 +435,46 @@
 								<label class="col-sm-2 control-label">接口类型</label>
 								<div class="col-sm-5">
 									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.apiInfo.apiType == 'restful'" />restful
+										<input name="apiType" type="radio" ng-checked="editData.packageApiInfo.apiType == 'restful'" />restful
 									</label>
 									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.apiInfo.apiType == 'webservice'" />webservice
+										<input name="apiType" type="radio" ng-checked="editData.packageApiInfo.apiType == 'webservice'" />webservice
 									</label>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">调用方法名</label>
 								<div class="col-sm-5">
-									<input type="text" class="form-control" value="{{editData.apiInfo.invokeMethod}}"/>
+									<input type="text" name="invokeMethod" class="form-control" value="{{editData.packageApiInfo.invokeMethod}}"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">接口地址</label>
 								<div class="col-sm-5">
-									<input type="text" class="form-control" value="{{editData.apiInfo.apiUrl}}"/>
+									<input type="text" name="apiUrl" class="form-control" value="{{editData.packageApiInfo.apiUrl}}"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">请求方式</label>
 								<div class="col-sm-5">
 									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.apiInfo.apiMethod == 'GET' || editData.apiInfo.apiMethod == 'get'"/>GET
+										<input type="radio" name="apiMethod" ng-checked="editData.packageApiInfo.apiMethod == 'GET' || editData.packageApiInfo.apiMethod == 'get'"/>GET
 									</label>
 									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.apiInfo.apiMethod == 'POST' || editData.apiInfo.apiMethod == 'post'"/>POST
+										<input type="radio" name="apiMethod" ng-checked="editData.packageApiInfo.apiMethod == 'POST' || editData.packageApiInfo.apiMethod == 'post'"/>POST
 									</label>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">请求示例</label>
 								<div class="col-sm-5">
-									<input type="text" class="form-control" value="{{editData.apiInfo.reqSample}}"/>
+									<input type="text" name="reqSample" class="form-control" value="{{editData.packageApiInfo.reqSample}}"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">接口描述</label>
 								<div class="col-sm-5">
-									<input type="text" class="form-control" value="{{editData.apiInfo.apiDesc}}" disabled/>
+									<input type="text" class="form-control" name="apiDesc" value="{{editData.packageApiInfo.apiDesc}}" disabled/>
 								</div>
 							</div>
 							<div class="form-group">
@@ -487,9 +493,9 @@
 										</tr>
 										</thead>
 										<tbody>
-										<tr data-ng-repeat="req in editData.apiInfo.reqParamList" class="">
+										<tr data-ng-repeat="req in editData.packageApiInfo.reqParamList" class="">
 											<td>
-												<input type="text" value="{{req.fieldName}}">
+												<input type="text" name="fieldName" value="{{req.fieldName}}">
 											</td>
 											<td>
 												<select name="fieldType">
@@ -498,7 +504,7 @@
 												</select>
 											</td>
 											<td>
-												<input type="text" value="{{req.fieldDefault}}">
+												<input name="fieldDefault" type="text" value="{{req.fieldDefault}}">
 											</td>
 											<td>
 												<select name="isMust">
@@ -507,10 +513,10 @@
 												</select>
 											</td>
 											<td>
-												<input type="text" value="{{req.fieldSample}}">
+												<input name="fieldSample" type="text" value="{{req.fieldSample}}">
 											</td>
 											<td>
-												<input type="text" value="{{req.describle}}">
+												<input name="describle" type="text" value="{{req.describle}}">
 											</td>
 											<td>
 												<span class="column-text">-</span>
@@ -531,7 +537,7 @@
 										</tr>
 										</thead>
 										<tbody>
-										<tr data-ng-repeat="req in editData.apiInfo.respParamList" class="">
+										<tr data-ng-repeat="req in editData.packageApiInfo.respParamList" class="">
 											<td>
 												<span class="" ng-bind="req.fieldName"></span>
 											</td>
@@ -546,8 +552,8 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">返回示例</label>
 								<div class="col-sm-5">
-									<textarea style="margin: 0px; width: 452px; height: 150px;">
-									{{editData.apiInfo.respSample}}
+									<textarea style="margin: 0px; width: 452px; height: 150px;" name="respSample">
+									{{editData.packageApiInfo.respSample}}
 									</textarea>
 								</div>
 							</div>
@@ -555,29 +561,29 @@
 								<label class="col-sm-2 control-label">返回格式</label>
 								<div class="col-sm-5">
 									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.apiInfo.apiType == 'json'"/>json
+										<input name="apiType" type="radio" ng-checked="editData.packageApiInfo.apiType == 'json'"/>json
 									</label>
 									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.apiInfo.apiType == 'xml'"/>xml
+										<input name="apiType" type="radio" ng-checked="editData.packageApiInfo.apiType == 'xml'"/>xml
 									</label>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">资源有效时间:</label>
 								<div class="col-sm-5">
-									<input type="text" class="form-control"  readonly="true"/>
+									<input type="text" name="" class="form-control"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">密钥名称:</label>
 								<div class="col-sm-5">
-									<input type="text" class="form-control" value="{{editData.apiInfo.secretKeyName}}"/>
+									<input type="text" name="secretKeyName" class="form-control" value="{{editData.packageApiInfo.secretKeyName}}"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">密钥值:</label>
 								<div class="col-sm-5">
-									<input type="text" class="form-control" value="{{editData.apiInfo.secretKeyValue}}"/>
+									<input type="text" name="secretKeyValue" class="form-control" value="{{editData.packageApiInfo.secretKeyValue}}"/>
 								</div>
 							</div>
 						</div>
@@ -625,13 +631,13 @@
 					<label class="col-sm-2 control-label">强制下架理由</label>
 					<div class="col-sm-5">
 						<label>
-            <textarea name="offReason"
-					  data-ng-model="offReason"
-					  ng-maxlength="255"
-					  style="margin: 0px; width: 452px; height: 84px;"
-					  placeholder="255字以内"
-					  required>
-            </textarea>
+							<textarea name="offReason"
+									  data-ng-model="offReason"
+									  ng-maxlength="255"
+									  style="margin: 0px; width: 452px; height: 84px;"
+									  placeholder="255字以内"
+									  required>
+							</textarea>
 						</label>
 					</div>
 				</div>

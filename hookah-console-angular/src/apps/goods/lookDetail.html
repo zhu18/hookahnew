@@ -40,7 +40,7 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-sm-2 control-label">商品简介</label>
+						<label class="col-sm-2 control-label">商品标签</label>
 						<div class="col-sm-5">
 							<input type="text" class="form-control" name="goodsName" value="{{editData.keywords}}" readonly="true"/>
 						</div>
@@ -433,46 +433,46 @@
 								<label class="col-sm-2 control-label">接口类型</label>
 								<div class="col-sm-5">
 									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.apiInfo.apiType == 'restful'" disabled/>restful
+										<input type="radio" ng-checked="editData.packageApiInfo.apiType == 'restful'" disabled/>restful
 									</label>
 									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.apiInfo.apiType == 'webservice'" disabled/>webservice
+										<input type="radio" ng-checked="editData.packageApiInfo.apiType == 'webservice'" disabled/>webservice
 									</label>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">调用方法名</label>
 								<div class="col-sm-5">
-									<input type="text" class="form-control" value="{{editData.apiInfo.invokeMethod}}" readonly="true"/>
+									<input type="text" class="form-control" value="{{editData.packageApiInfo.invokeMethod}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">接口地址</label>
 								<div class="col-sm-5">
-									<input type="text" class="form-control" value="{{editData.apiInfo.apiUrl}}" readonly="true"/>
+									<input type="text" class="form-control" value="{{editData.packageApiInfo.apiUrl}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">请求方式</label>
 								<div class="col-sm-5">
 									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.apiInfo.apiMethod == 'GET' || editData.apiInfo.apiMethod == 'get'" disabled/>GET
+										<input type="radio" ng-checked="editData.packageApiInfo.apiMethod == 'GET' || editData.packageApiInfo.apiMethod == 'get'" disabled/>GET
 									</label>
 									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.apiInfo.apiMethod == 'POST' || editData.apiInfo.apiMethod == 'post'" disabled/>POST
+										<input type="radio" ng-checked="editData.packageApiInfo.apiMethod == 'POST' || editData.packageApiInfo.apiMethod == 'post'" disabled/>POST
 									</label>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">请求示例</label>
 								<div class="col-sm-5">
-									<input type="text" class="form-control" value="{{editData.apiInfo.reqSample}}" readonly="true"/>
+									<input type="text" class="form-control" value="{{editData.packageApiInfo.reqSample}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">接口描述</label>
 								<div class="col-sm-5">
-									<input type="text" class="form-control" value="{{editData.apiInfo.apiDesc}}" readonly="true"/>
+									<input type="text" class="form-control" value="{{editData.packageApiInfo.apiDesc}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
@@ -490,7 +490,7 @@
 										</tr>
 										</thead>
 										<tbody>
-										<tr data-ng-repeat="req in editData.apiInfo.reqParamList" class="">
+										<tr data-ng-repeat="req in editData.packageApiInfo.reqParamList" class="">
 											<td>
 												<span class="" ng-bind="req.fieldName"></span>
 											</td>
@@ -525,7 +525,7 @@
 										</tr>
 										</thead>
 										<tbody>
-										<tr data-ng-repeat="req in editData.apiInfo.respParamList" class="">
+										<tr data-ng-repeat="req in editData.packageApiInfo.respParamList" class="">
 											<td>
 												<span class="" ng-bind="req.fieldName"></span>
 											</td>
@@ -541,7 +541,7 @@
 								<label class="col-sm-2 control-label">返回示例</label>
 								<div class="col-sm-5">
 									<textarea style="margin: 0px; width: 452px; height: 150px;" readonly="true">
-									{{editData.apiInfo.respSample}}
+									{{editData.packageApiInfo.respSample}}
 									</textarea>
 								</div>
 							</div>
@@ -549,10 +549,10 @@
 								<label class="col-sm-2 control-label">返回格式</label>
 								<div class="col-sm-5">
 									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.apiInfo.apiType == 'json'" disabled/>json
+										<input type="radio" ng-checked="editData.packageApiInfo.apiType == 'json'" disabled/>json
 									</label>
 									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.apiInfo.apiType == 'xml'" disabled/>xml
+										<input type="radio" ng-checked="editData.packageApiInfo.apiType == 'xml'" disabled/>xml
 									</label>
 								</div>
 							</div>
@@ -565,13 +565,13 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">密钥名称:</label>
 								<div class="col-sm-5">
-									<input type="text" class="form-control" value="{{editData.apiInfo.secretKeyName}}" readonly="true"/>
+									<input type="text" class="form-control" value="{{editData.packageApiInfo.secretKeyName}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">密钥值:</label>
 								<div class="col-sm-5">
-									<input type="text" class="form-control" value="{{editData.apiInfo.secretKeyValue}}" readonly="true"/>
+									<input type="text" class="form-control" value="{{editData.packageApiInfo.secretKeyValue}}" readonly="true"/>
 								</div>
 							</div>
 						</div>
