@@ -37,7 +37,7 @@ public class QDSendRequestUtil {
         if(fixClient != null){
             return;
         }
-        String certDir = "/Users/linyuanmai/Downloads/GSCS/";
+        String certDir = "/cers/";
         fixClient = new FixClientImpl();
         FixCommInfoBean bean = new FixCommInfoBean();
         //设置fix 服务器IP地址，格式：{ip}@{port}/tcp
@@ -50,7 +50,7 @@ public class QDSendRequestUtil {
         bean.setVerify(true);//是否校验服务器证书 false:不校验，true:校验
         bean.setTrustListStr(certDir + "QSZX113_ca.cer");//可选项目,可以多次增加信任证书(作为可配置，允许为空字符串) ，多个用逗号“,”分隔
         bean.setCertPath(certDir + "QSZX113_api_GSCS.pfx");//设置客户端证书
-        bean.setCertPwd("87654321");//客户端证书的密码(可配置参数，允许全部为空字符串)
+        bean.setCertPwd("密码123456");//客户端证书的密码(可配置参数，允许全部为空字符串)
         bean.setEnableSSL(false); //启用SSL协议,true|false
         bean.setEnableTLS(false); //启用TSL协议,true|false
         bean.setClientInfo("00:e0:4c:68:06:e6 192.168.1.1");//设置客户端信息。格式：mac地址 + 一个空格 + ip地址

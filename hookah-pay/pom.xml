@@ -288,6 +288,7 @@
       <optional>true</optional>
     </dependency>
 
+    <!-- 清算中心相关jar -->
     <dependency>
       <groupId>fixcommom</groupId>
       <artifactId>fixcommom</artifactId>
@@ -347,20 +348,6 @@
         <directory>src/main/resources</directory>
         <filtering>false</filtering>
       </resource>
-
-      <resource>
-        <directory>src/lib</directory>
-        <targetPath>BOOT-INF/lib/</targetPath>
-        <includes>
-        <include>**/*.jar</include>
-        </includes>
-      </resource>
-
-      <resource>
-        <directory>src/main/resources</directory>
-        <targetPath>BOOT-INF/classes/</targetPath>
-      </resource>
-
     </resources>
     <pluginManagement>
       <plugins>
