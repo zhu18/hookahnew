@@ -80,21 +80,21 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 			 *              FID_ZZJE    转账金额*
 			 *              FID_SQRQ    申请日期
 			 *              FID_SQSJ    申请时间
-			 *              FID_SQH 申请号*
+			 *              FID_SQH 	申请号*
 			 *              FID_YHZH    银行账户*
 			 *              FID_YHDM    银行代码*
 			 *              FID_YHMM    银行密码
 			 *              FID_CZZD    操作站点
 			 *              FID_BZXX    备注信息
 			 *              FID_ZJZH    资金账户*
-			 *              FID_WDH  网点号
-			 *              FID_CS1 预留参数1 如果需要签名信息，对应签名信息
-			 *              FID_CS2 预留参数2 签名流水号，如果是农行，此处必填，主要用来验证加签信息
-			 *              FID_CS3 预留参数3 账单号，如果是农行，此处必填，主要用来验证加签信息
-			 *              FID_CS4 预留参数4
+			 *              FID_WDH  	网点号
+			 *              FID_CS1 	预留参数1 如果需要签名信息，对应签名信息
+			 *              FID_CS2 	预留参数2 签名流水号，如果是农行，此处必填，主要用来验证加签信息
+			 *              FID_CS3 	预留参数3 账单号，如果是农行，此处必填，主要用来验证加签信息
+			 *              FID_CS4 	预留参数4
 			 */
 
-			paramMap.put("FID_JYS","");
+			paramMap.put("FID_JYS", PayConstants.FID_JYS);
 			paramMap.put("FID_BZ", PayConstants.QD_BZ);
 			paramMap.put("FID_SQRQ", LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE));
 			paramMap.put("FID_SQSJ", LocalTime.now().withNano(0).toString());
@@ -102,7 +102,7 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 			paramMap.put("FID_YHZH", "");
 			paramMap.put("FID_YHDM", PayConstants.BankCode.NYYH.code);
 			paramMap.put("FID_CZZD", "");
-			paramMap.put("FID_ZJZH", "");
+			paramMap.put("FID_ZJZH", moneyInOutBo.userId);
 			paramMap.put("FID_CS1", "");	// k宝返回
 			paramMap.put("FID_CS2", "");	// BD + k宝返回
 
@@ -123,7 +123,7 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 						payAccountRecord.setTransferCode(jFixSess.getItem(FixConstants.FID_CODE));
 						payAccountRecord.setTransferMessage(jFixSess.getItem(FixConstants.FID_MESSAGE));
 						if(jFixSess.getItem(FixConstants.FID_SQBH) != null || jFixSess.getItem(FixConstants.FID_SQBH) != ""){
-							payAccountRecord.setSqbhNumber(Integer.parseInt(jFixSess.getItem(FixConstants.FID_SQBH)));
+							payAccountRecord.setSqbhNumber(jFixSess.getItem(FixConstants.FID_SQBH));
 						}
 
 						payAccountRecord.setTransferResult(jFixSess.getItem(FixConstants.FID_CLJG));
@@ -136,12 +136,11 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 						if(jFixSess.getCount() > 0){
 							jFixSess.go(0);
 							if (jFixSess.getCode() > 0){
-	//							String FID_CID =  jFixSess.getItem(FixConstants.FID_CID);
-	//							String FID_MID =  jFixSess.getItem(FixConstants.FID_MID);
-	//							String msg =  jFixSess.getItem(FixConstants.FID_MESSAGE);
+								String FID_CID =  jFixSess.getItem(FixConstants.FID_CID);
+								String FID_MID =  jFixSess.getItem(FixConstants.FID_MID);
+								String msg =  jFixSess.getItem(FixConstants.FID_MESSAGE);
 								String FID_CODE =  jFixSess.getItem(FixConstants.FID_CODE);
-	//							String FID_CLJG =  jFixSess.getItem(FixConstants.FID_CLJG);
-	//							msg = msg != null ? msg : "处理成功";
+								msg = msg != null ? msg : "处理成功";
 								if(Integer.parseInt(FID_CODE) >= 0){ // >=0 成功 <0 失败
 
 									// 账户加钱 加流水

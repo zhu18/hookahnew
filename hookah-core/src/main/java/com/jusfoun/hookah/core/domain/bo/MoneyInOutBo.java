@@ -4,7 +4,7 @@ public class MoneyInOutBo {
 
     public String userId;
 
-    public Integer payAccountID;
+    public Long payAccountID;
 
     public Long Money;
 
@@ -18,11 +18,11 @@ public class MoneyInOutBo {
         this.userId = userId;
     }
 
-    public Integer getPayAccountID() {
+    public Long getPayAccountID() {
         return payAccountID;
     }
 
-    public void setPayAccountID(Integer payAccountID) {
+    public void setPayAccountID(Long payAccountID) {
         this.payAccountID = payAccountID;
     }
 
