@@ -7,8 +7,6 @@ import com.apex.etm.qss.client.fixservice.bean.ResultBean;
 import com.apex.fix.AxCallFunc;
 import com.apex.fix.JFixComm;
 import com.apex.fix.JFixSess;
-import com.jusfoun.hookah.core.dao.PayAccountRecordMapper;
-import com.jusfoun.hookah.core.domain.PayAccountRecord;
 import com.jusfoun.hookah.core.domain.bo.MoneyInOutBo;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.pay.util.ChannelType;
@@ -29,6 +27,7 @@ import java.util.Map;
 /**
  * dengxu
  */
+
 @Service
 public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRecord, Integer> implements
 		PayAccountRecordService {
@@ -118,6 +117,14 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 					 * 	        FID_CLJG	处理结果  -111失败  111成功  0 申请中(存疑)
 					 * 	        FID_JGSM	结果说明
 					 */
+					payAccountRecord.setTransferCode(jFixSess.getItem(FixConstants.FID_CODE));
+					payAccountRecord.setTransferMessage(jFixSess.getItem(FixConstants.FID_MESSAGE));
+					if(jFixSess.getItem(FixConstants.FID_SQBH) != null || jFixSess.getItem(FixConstants.FID_SQBH) != ""){
+						payAccountRecord.setSqbhNumber(Integer.parseInt(jFixSess.getItem(FixConstants.FID_SQBH)));
+					}
+
+					payAccountRecord.setTransferResult(jFixSess.getItem(FixConstants.FID_CLJG));
+					payAccountRecord.setTransferDesc(jFixSess.getItem(FixConstants.FID_JGSM));
 
 					// 返回报文信息先存到Mongon
 
@@ -126,28 +133,35 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 					if(jFixSess.getCount() > 0){
 						jFixSess.go(0);
 						if (jFixSess.getCode() > 0){
-							String FID_CID =  jFixSess.getItem(FixConstants.FID_CID);
-							String FID_MID =  jFixSess.getItem(FixConstants.FID_MID);
-							String msg =  jFixSess.getItem(FixConstants.FID_MESSAGE);
+//							String FID_CID =  jFixSess.getItem(FixConstants.FID_CID);
+//							String FID_MID =  jFixSess.getItem(FixConstants.FID_MID);
+//							String msg =  jFixSess.getItem(FixConstants.FID_MESSAGE);
 							String FID_CODE =  jFixSess.getItem(FixConstants.FID_CODE);
-							String FID_CLJG =  jFixSess.getItem(FixConstants.FID_CLJG);
-							msg = msg != null ? msg : "处理成功";
+//							String FID_CLJG =  jFixSess.getItem(FixConstants.FID_CLJG);
+//							msg = msg != null ? msg : "处理成功";
 							if(Integer.parseInt(FID_CODE) >= 0){ // >=0 成功 <0 失败
+
+								// 账户加钱 加流水
 
 							}
 
 							//todo 成功后处理
 							payAccountRecord.setTransferStatus(PayConstants.TransferStatus.success.code);
-							payAccountRecord.setSqbhNumber();
+
 
 						}else{
 							String errorMsg = String.format("[fix async error][%s]%s",jFixSess.getItem(FixConstants.FID_CODE), jFixSess.getItem(FixConstants.FID_MESSAGE));
 							//todo 失败后处理
+							payAccountRecord.setTransferStatus(PayConstants.TransferStatus.fail.code);
 						}
 					}else{
 						String errorMsg = String.format("[fix async error][%s]%s",jFixSess.getItem(FixConstants.FID_CODE), jFixSess.getItem(FixConstants.FID_MESSAGE));
 						//todo 失败后处理
+						payAccountRecord.setTransferStatus(PayConstants.TransferStatus.fail.code);
 					}
+					payAccountRecord.setUpdateOperator("SYSTEM");
+					payAccountRecord.setUpdateTime(LocalDateTime.now());
+					payAccountRecordMapper.updateByPrimaryKeySelective(payAccountRecord);
 
 				}catch (Exception e){
 					e.printStackTrace();
@@ -164,20 +178,19 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 		if(resultBean.isSuccess()){
 			//发送成功
 			//todo 发送成功处理
+			String successMsg = "[fix error]" + String.format("[%s]%s",resultBean.getCode() , resultBean.getMsg());
+			payAccountRecord.setSendMsg(successMsg);
 		} else{
 			//发送失败
 			String errorMsg = "[fix error]" + String.format("[%s]%s",resultBean.getCode() , resultBean.getMsg());
 
 			//todo 发送失败处理
+			payAccountRecord.setSendMsg(errorMsg);
 			payAccountRecord.setTransferStatus(PayConstants.TransferStatus.fail.code);
-			payAccountRecord.setTransferMsg(errorMsg);
-			payAccountRecord.setUpdateOperator("SYSTEM");
-			payAccountRecord.setUpdateTime(LocalDateTime.now());
-			payAccountRecordMapper.updateByPrimaryKeySelective(payAccountRecord);
-
 		}
-
-
+		payAccountRecord.setUpdateOperator("SYSTEM");
+		payAccountRecord.setUpdateTime(LocalDateTime.now());
+		payAccountRecordMapper.updateByPrimaryKeySelective(payAccountRecord);
 	}
 
 	public static void main(String[] args){
