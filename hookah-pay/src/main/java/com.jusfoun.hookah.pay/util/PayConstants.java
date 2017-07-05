@@ -7,6 +7,11 @@ package com.jusfoun.hookah.pay.util;
 public class PayConstants {
 
     /**
+     * 测试环境 市场编码
+     */
+    public final static String FID_JYS = "8902";
+
+    /**
      银行代码
      0000   未签约清算中心的银行
      JSYH   建行
@@ -59,5 +64,63 @@ public class PayConstants {
      * 农行签名流水号前缀BD
      */
     public static final String QDABC_PREFIX = "BD";
+
+    /**
+     * 青岛清算中心测试IP
+     */
+    public static final String QD_TEST_IP = "222.173.102.106";
+
+    /**
+     * 青岛清算中心测试PORT
+     */
+    public static final String QD_TEST_PORT = "8005";
+
+    /**
+     * 币种
+     */
+    public static final String QD_BZ = "RMB";
+
+    /**
+     * transfer 类型 2出金 1入金
+     */
+    public enum TransferType {
+
+        MONEY_IN((byte)1),
+        MONEY_OUT((byte)2);
+
+        public byte code;
+
+        TransferType(byte code) {
+            this.code = code;
+        }
+
+        public byte getCode() {
+            return code;
+        }
+    }
+
+    /**
+     * transfer 状态 0处理中 1成功 2失败
+     */
+    public enum TransferStatus {
+
+        handing((byte)0),
+        success((byte)1),
+        fail((byte)2);
+
+        public byte code;
+
+        TransferStatus(byte code) {
+            this.code = code;
+        }
+
+        public byte getCode() {
+            return code;
+        }
+    }
+
+
+
+
 
 }
