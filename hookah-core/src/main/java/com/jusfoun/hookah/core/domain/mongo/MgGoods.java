@@ -623,6 +623,15 @@ public class MgGoods extends GenericModel {
         private String configParamsPwd;// 配置参数密码
         private String otherDesc;
         private OffLineInfoBean concatInfo;// 联系信息
+        private String deliveryMethod;//交付方式
+
+        public String getDeliveryMethod() {
+            return deliveryMethod;
+        }
+
+        public void setDeliveryMethod(String deliveryMethod) {
+            this.deliveryMethod = deliveryMethod;
+        }
 
         public String getComplexity() {
             return complexity;
@@ -725,7 +734,51 @@ public class MgGoods extends GenericModel {
         private String dataAddress;//数据地址
         private String sUser;//用户名
         private String sPwd;//密码
+        private String coreFunction;//核心功能
+        private String teamAdvantage;//团队优势
+        private String desiredEnvironment;//所需环境
+        private String dataNeeded;//所需数据
+        private String deliveryMethod;//交付方式
 
+        public String getCoreFunction() {
+            return coreFunction;
+        }
+
+        public void setCoreFunction(String coreFunction) {
+            this.coreFunction = coreFunction;
+        }
+
+        public String getTeamAdvantage() {
+            return teamAdvantage;
+        }
+
+        public void setTeamAdvantage(String teamAdvantage) {
+            this.teamAdvantage = teamAdvantage;
+        }
+
+        public String getDesiredEnvironment() {
+            return desiredEnvironment;
+        }
+
+        public void setDesiredEnvironment(String desiredEnvironment) {
+            this.desiredEnvironment = desiredEnvironment;
+        }
+
+        public String getDataNeeded() {
+            return dataNeeded;
+        }
+
+        public void setDataNeeded(String dataNeeded) {
+            this.dataNeeded = dataNeeded;
+        }
+
+        public String getDeliveryMethod() {
+            return deliveryMethod;
+        }
+
+        public void setDeliveryMethod(String deliveryMethod) {
+            this.deliveryMethod = deliveryMethod;
+        }
 
         public String getsSComplexity() {
             return sSComplexity;
@@ -811,6 +864,60 @@ public class MgGoods extends GenericModel {
         private String aSCloudHardwareResource;  // 云硬件资源
         private String otherDesc;
         private String dataAddress;//数据地址
+        private String coreFunction;//核心功能
+        private String technologicalSuperiority;//技术优势
+        private String teamAdvantage;//团队优势
+        private String desiredEnvironment;//所需环境
+        private String dataNeeded;//所需数据
+        private String deliveryMethod;//交付方式
+
+        public String getCoreFunction() {
+            return coreFunction;
+        }
+
+        public void setCoreFunction(String coreFunction) {
+            this.coreFunction = coreFunction;
+        }
+
+        public String getTechnologicalSuperiority() {
+            return technologicalSuperiority;
+        }
+
+        public void setTechnologicalSuperiority(String technologicalSuperiority) {
+            this.technologicalSuperiority = technologicalSuperiority;
+        }
+
+        public String getTeamAdvantage() {
+            return teamAdvantage;
+        }
+
+        public void setTeamAdvantage(String teamAdvantage) {
+            this.teamAdvantage = teamAdvantage;
+        }
+
+        public String getDesiredEnvironment() {
+            return desiredEnvironment;
+        }
+
+        public void setDesiredEnvironment(String desiredEnvironment) {
+            this.desiredEnvironment = desiredEnvironment;
+        }
+
+        public String getDataNeeded() {
+            return dataNeeded;
+        }
+
+        public void setDataNeeded(String dataNeeded) {
+            this.dataNeeded = dataNeeded;
+        }
+
+        public String getDeliveryMethod() {
+            return deliveryMethod;
+        }
+
+        public void setDeliveryMethod(String deliveryMethod) {
+            this.deliveryMethod = deliveryMethod;
+        }
 
         public String getaSComplexity() {
             return aSComplexity;
@@ -1039,6 +1146,51 @@ public class MgGoods extends GenericModel {
         private String onlineUrl;//在线地址
         private String localUrl;//本地上传地址
         private String dataPwd;//数据密码
+        private String timeFrame;//时间范围
+        private String dataRows;//数据行数
+        private String dataCapacity;//数据容量
+        private String dataFormat ;//数据格式
+        private String deliveryMethod;//交付方式
+
+        public String getTimeFrame() {
+            return timeFrame;
+        }
+
+        public void setTimeFrame(String timeFrame) {
+            this.timeFrame = timeFrame;
+        }
+
+        public String getDataRows() {
+            return dataRows;
+        }
+
+        public void setDataRows(String dataRows) {
+            this.dataRows = dataRows;
+        }
+
+        public String getDataCapacity() {
+            return dataCapacity;
+        }
+
+        public void setDataCapacity(String dataCapacity) {
+            this.dataCapacity = dataCapacity;
+        }
+
+        public String getDataFormat() {
+            return dataFormat;
+        }
+
+        public void setDataFormat(String dataFormat) {
+            this.dataFormat = dataFormat;
+        }
+
+        public String getDeliveryMethod() {
+            return deliveryMethod;
+        }
+
+        public void setDeliveryMethod(String deliveryMethod) {
+            this.deliveryMethod = deliveryMethod;
+        }
 
         public String getIsOnline() {
             return isOnline;
@@ -1088,4 +1240,5 @@ public class MgGoods extends GenericModel {
     public void setOffLineData(OffLineDataBean offLineData) {
         this.offLineData = offLineData;
     }
+
 }
