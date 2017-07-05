@@ -173,7 +173,7 @@
         </configuration>
       </plugin>
       <!-- 自动生成代码配置开始 -->
-      <plugin>
+      <!--<plugin>
       <groupId>org.mybatis.generator</groupId>
       <artifactId>mybatis-generator-maven-plugin</artifactId>
       <version>1.3.2</version>
@@ -190,7 +190,7 @@
       </goals>
       </execution>
       </executions>
-      </plugin>
+      </plugin>-->
       <!-- 自动生成代码配置结束-->
     </plugins>
   </build>
