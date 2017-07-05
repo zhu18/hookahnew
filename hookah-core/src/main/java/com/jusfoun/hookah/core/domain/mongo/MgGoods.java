@@ -30,7 +30,7 @@ public class MgGoods extends GenericModel {
     private PackageApiInfoBean packageApiInfo;
     private DataModelBean dataModel;
     private ASSaaSBean asSaaS;
-    private ASAloneSoftwareBean asAloneSoftware;
+    private ASAloneSoftwareBean asAloneSoftware; //应用场景独立软件
     private ATSaaSBean atSaaS;
     private ATAloneSoftwareBean atAloneSoftware;
     private Long clickRate;
