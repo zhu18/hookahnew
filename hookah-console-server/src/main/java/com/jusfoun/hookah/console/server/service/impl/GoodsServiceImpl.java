@@ -27,10 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author huang lei
@@ -105,10 +102,10 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         mgGoods.setOffLineInfo(obj.getOffLineInfo());
 
         if(HookahConstants.GOODS_TYPE_1.equals(obj.getGoodsType())){
-            MgGoods.PackageApiInfoBean packageApiInfoBean = mgGoods.getPackageApiInfo();
+            MgGoods.PackageApiInfoBean packageApiInfoBean = new MgGoods.PackageApiInfoBean();
             BeanUtils.copyProperties(obj.getApiInfo(),packageApiInfoBean);
             packageApiInfoBean.setApiUrl(PropertiesManager.getInstance().getProperty("package.apiInfo.apiUrl") +
-                    obj.getGoodsId() + "/" + obj.getVer() + "/" + obj.getCatId());
+                    obj.getGoodsId() + "/" + obj.getVer()==null?"V0":obj.getVer() + "/" + obj.getCatId());
             mgGoods.setPackageApiInfo(packageApiInfoBean);
         }
 
@@ -226,6 +223,37 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             filters.add(Condition.eq("goodsId", obj.getGoodsId()));
             MgGoods mgGoods2 = mgGoodsService.selectOne(filters);
             mgGoods.setClickRate(mgGoods2.getClickRate() == null ? (long)0 : mgGoods2.getClickRate());
+
+            if(HookahConstants.GOODS_TYPE_1.equals(obj.getGoodsType())){
+                MgGoods.PackageApiInfoBean packageApiInfoBean = mgGoods2.getPackageApiInfo()==null?new MgGoods.PackageApiInfoBean():mgGoods2.getPackageApiInfo();
+                String apiUrl = packageApiInfoBean.getApiUrl();
+
+                if(StringUtils.isNoneBlank(apiUrl)){
+                    //修改封装后的Url的版本号
+                    String[] apiUrlArray = apiUrl.split("/");
+                    if(Objects.nonNull(apiUrlArray) && apiUrlArray.length > 3){
+                        StringBuilder newApiUrl =  new StringBuilder();
+                        apiUrlArray[apiUrlArray.length-1] = obj.getCatId();
+                        apiUrlArray[apiUrlArray.length-2] = obj.getVer();
+                        apiUrlArray[apiUrlArray.length-3] = obj.getGoodsId();
+                        for(String api : apiUrlArray){
+                            newApiUrl.append(api + "/");
+                        }
+                        apiUrl = newApiUrl.toString();
+                    }else{
+                        apiUrl = PropertiesManager.getInstance().getProperty("package.apiInfo.apiUrl") +
+                                obj.getGoodsId() + "/" + obj.getVer() + "/" + obj.getCatId();
+                    }
+                }else{
+                    apiUrl = PropertiesManager.getInstance().getProperty("package.apiInfo.apiUrl") +
+                            obj.getGoodsId() + "/" + obj.getVer() + "/" + obj.getCatId();
+                }
+
+                BeanUtils.copyProperties(obj.getApiInfo(),packageApiInfoBean);
+                packageApiInfoBean.setApiUrl(apiUrl);
+                mgGoods.setPackageApiInfo(packageApiInfoBean);
+            }
+
             mgGoodsService.delete(obj.getGoodsId());
             mongoTemplate.save(mgGoods);
         }

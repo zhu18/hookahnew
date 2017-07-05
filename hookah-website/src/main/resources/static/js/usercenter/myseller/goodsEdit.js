@@ -1,4 +1,5 @@
 var regionParam = 100000;
+var userId = $("input[name='userId']").val();
 var catId = $.getUrlParam('catId'),
 	category = $.getUrlParam('category');
 $(document).ready(function(){
@@ -87,6 +88,7 @@ $(document).ready(function(){
 		$('#parentSelect').val(400).attr('disabled','disabled');
 		selectGoodsTypes(400)
 	}
+	$("input[name='typeId']").val(catId.substring(0,3));
 });
 function selectGoodsType(that){
 	$('.struct.selects').hide();
@@ -197,12 +199,29 @@ function selectGoodsTypes(goodsTypeVal){
 }
 var editor=null;
 function renderWangEdit(){
-	editor = new wangEditor('textarea1');
-	editor.config.uploadImgUrl = host.static+'/upload/wangeditor';//上传图片（举例）
-	editor.config.uploadImgFileName = 'filename';
-	editor.config.menuFixed = false;//关闭菜单栏fixed
+	// editor = new wangEditor('textarea1','textarea2');
+	// editor.config.uploadImgUrl = host.static+'/upload/wangeditor';//上传图片（举例）
+	// editor.config.uploadImgFileName = 'filename';
+	// editor.config.menuFixed = false;//关闭菜单栏fixed
+	// // editor.config.pasteText = true;
+	// editor.config.menus = $.map(wangEditor.config.menus, function (item, key) {
+	// 	if (item === 'location') {
+	// 		return null;
+	// 	}
+	// 	if (item === 'video') {
+	// 		return null;
+	// 	}
+	// 	return item;
+	// });
+	// editor.create(); //初始化富文本
+
+
+	var E = window.wangEditor;
+	E.config.uploadImgUrl = host.static+'/upload/wangeditor';//上传图片（举例）
+	E.config.uploadImgFileName = 'filename';
+	E.config.menuFixed = false;//关闭菜单栏fixed
 	// editor.config.pasteText = true;
-	editor.config.menus = $.map(wangEditor.config.menus, function (item, key) {
+	E.config.menus = $.map(wangEditor.config.menus, function (item, key) {
 		if (item === 'location') {
 			return null;
 		}
@@ -211,7 +230,16 @@ function renderWangEdit(){
 		}
 		return item;
 	});
-	editor.create(); //初始化富文本
+
+	var editor1 = new E('textarea1');
+	editor1.create();
+	var editor2 = new E('textarea2');
+	editor2.create();
+	var editor3 = new E('textarea3');
+	editor3.create();
+	var editor4 = new E('textarea4');
+	editor4.create();
+
 }
 //加载地区
 function loadRegion(id,regionParam) {
@@ -247,7 +275,7 @@ function renderRegion(id,data){
 	$('#'+id).html(html);
 }
 $('#fileupload').fileupload({   //图片上传
-	url: host.static+'/upload/fileUpload',
+	url: host.static+'/upload/img',
 	dataType: 'json',
 	add: function (e, data) {
 		var filesize = data.files[0].size;
@@ -262,7 +290,7 @@ $('#fileupload').fileupload({   //图片上传
 		if(data.result.code == 1){
 			var obj = data.result.data[0];
 			$("#preview-img").attr("src", obj.absPath);
-			$('input[name="goodsImges"]').val(obj.absPath);
+			$('input[name="goodsImges"]').val(obj.filePath);
 		}else{
 			$.alert(data.result.message)
 		}
@@ -279,7 +307,7 @@ $('#fileupload').fileupload({   //图片上传
 	}
 });
 $('#fileupload2').fileupload({ //文件上传
-	url: host.static+'/upload/fileUpload',
+	url: host.static+'/upload/other',
 	dataType: 'json',
 	done: function (e, data) {
 		if(data.result.code == 1){
@@ -287,6 +315,24 @@ $('#fileupload2').fileupload({ //文件上传
 			$("#J_fileUploadSS").val(obj.filePath);
 			$('.fileUploads span').html(data.files[0].name);
 			$('input[name="goodsImges2"]').val(obj.absPath);
+		}else{
+			$.alert(data.result.message)
+		}
+
+	},
+	progressall: function (e, data) {
+
+	}
+});
+$('#fileupload11').fileupload({ //文件上传
+	url: host.static+'/upload/other',
+	dataType: 'json',
+	done: function (e, data) {
+		if(data.result.code == 1){
+			var obj = data.result.data[0];
+			$("#dataSample").val(obj.filePath);
+			$('.fileUploads_j span').html(data.files[0].name);
+			$('input[name="dataSample_s"]').val(obj.absPath);
 		}else{
 			$.alert(data.result.message)
 		}
@@ -500,7 +546,9 @@ function submitGoodsPublish(){
 		attrTypeList.attrList =attrBs;
 		data.attrTypeList.push(attrTypeList);
 	});
-	data.goodsImg = $('#preview-img').attr('src');
+	data.goodsImg = $("input[name='goodsImges']").val();
+	data.dataSample = $("input[name='dataSample_s']").val();
+	data.trialRange = $('textarea[name="trialRange"]').val();
 	data.formatList = [];
 	$('table[d-type="priceHtml"] tbody tr').each(function () {
 		var listData = {};
@@ -524,6 +572,9 @@ function submitGoodsPublish(){
 		data.goodsType = $('select[name="childrenSelect3"]').val();
 	}
 	data.goodsDesc = $('#textarea1').val(); //商品详情
+	data.goodsAdvantage = $('#textarea2').val(); //商品优势
+	data.afterSaleService = $('#textarea3').val(); //售后服务
+	data.appCase = $('#textarea4').val(); //应用案例
 	data.catId = catId; //此ID为url上的id
 	data.isBook = $('input[name="isBook"]:checked').val(); //上架方式
 	data.isOffline = $('select[name="isOffline"]').val(); // 交付方式  0 线上支付；1 线下支付
@@ -667,7 +718,7 @@ function floorPrice(){
 	});
 }
 $('.fileUploadBtn').fileupload({
-	url: host.static+'/upload/fileUpload',
+	url: host.static+'/upload/other',
 	dataType: 'json',
 	done: function (e, data) {
 		if(data.result.code == 1){
@@ -678,7 +729,6 @@ $('.fileUploadBtn').fileupload({
 		}else{
 			$.alert(data.result.message)
 		}
-
 	},
 	progressall: function (e, data) {
 

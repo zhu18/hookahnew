@@ -22,6 +22,8 @@ var htmlPart = {
         <%include("/usercenter/user-center-menu.html"){} %>
         <div class="grid-right margin-top-10">
             <form action="" id="goodsModifyForm">
+                <input type="hidden" name="userId" value="${user.userId}">
+                <input type="hidden" name="typeId">
                 <div class="usercenter-right-box">
                     <div class="goodsEdit-box">
                         <!--<h1>当前类目：<span class="category-title-box"></span></h1>-->
