@@ -27,7 +27,7 @@ public class MgGoods extends GenericModel {
     private List<FormatBean> formatList;
     private List<ImgBean> imgList;
     private ApiInfoBean apiInfo;
-    private PackageApiInfoBean packageApiInfoBean ;
+    private PackageApiInfoBean packageApiInfo;
     private DataModelBean dataModel;
     private ASSaaSBean asSaaS;
     private ASAloneSoftwareBean asAloneSoftware;
@@ -125,12 +125,12 @@ public class MgGoods extends GenericModel {
         this.apiInfo = apiInfo;
     }
 
-    public PackageApiInfoBean getPackageApiInfoBean() {
-        return packageApiInfoBean;
+    public PackageApiInfoBean getPackageApiInfo() {
+        return packageApiInfo;
     }
 
-    public void setPackageApiInfoBean(PackageApiInfoBean packageApiInfoBean) {
-        this.packageApiInfoBean = packageApiInfoBean;
+    public void setPackageApiInfo(PackageApiInfoBean packageApiInfo) {
+        this.packageApiInfo = packageApiInfo;
     }
 
     public static class FormatBean implements Serializable {

@@ -105,11 +105,11 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         mgGoods.setOffLineInfo(obj.getOffLineInfo());
 
         if(HookahConstants.GOODS_TYPE_1.equals(obj.getGoodsType())){
-            MgGoods.PackageApiInfoBean packageApiInfoBean = mgGoods.getPackageApiInfoBean();
+            MgGoods.PackageApiInfoBean packageApiInfoBean = mgGoods.getPackageApiInfo();
             BeanUtils.copyProperties(obj.getApiInfo(),packageApiInfoBean);
             packageApiInfoBean.setApiUrl(PropertiesManager.getInstance().getProperty("package.apiInfo.apiUrl") +
-                    obj.getGoodsId() + "/" + obj.getVer());
-            mgGoods.setPackageApiInfoBean(packageApiInfoBean);
+                    obj.getGoodsId() + "/" + obj.getVer() + "/" + obj.getCatId());
+            mgGoods.setPackageApiInfo(packageApiInfoBean);
         }
 
         mongoTemplate.insert(mgGoods);
