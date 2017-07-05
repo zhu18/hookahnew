@@ -321,6 +321,37 @@ public class MgGoods extends GenericModel {
             this.invokeMethod = invokeMethod;
         }
 
+        public EncryptInfo getEncryptInfo() {
+            return encryptInfo;
+        }
+
+        public void setEncryptInfo(EncryptInfo encryptInfo) {
+            this.encryptInfo = encryptInfo;
+        }
+
+        public RespDataMapping getRespDataMapping() {
+            return respDataMapping;
+        }
+
+        public void setRespDataMapping(RespDataMapping respDataMapping) {
+            this.respDataMapping = respDataMapping;
+        }
+
+        public String getUpdateFreq() {
+            return updateFreq;
+        }
+
+        public void setUpdateFreq(String updateFreq) {
+            this.updateFreq = updateFreq;
+        }
+
+        public Integer getDataNumDivRowNum() {
+            return dataNumDivRowNum;
+        }
+
+        public void setDataNumDivRowNum(Integer dataNumDivRowNum) {
+            this.dataNumDivRowNum = dataNumDivRowNum;
+        }
     }
 
     /**
