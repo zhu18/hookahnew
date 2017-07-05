@@ -157,22 +157,10 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
          */
         Goods goods = super.selectById(obj.getGoodsId());
 
-        // 将数据放入mongo
-        MgGoods mgGoods1 = new MgGoods();
-        mgGoods1.setAttrTypeList(obj.getAttrTypeList());
-        mgGoods1.setFormatList(obj.getFormatList());
-        mgGoods1.setImgList(obj.getImgList());
-        mgGoods1.setGoodsId(obj.getGoodsId());
-        mgGoods1.setApiInfo(obj.getApiInfo());
-        mgGoods1.setAsAloneSoftware(obj.getAsAloneSoftware());
-        mgGoods1.setAsSaaS(obj.getAsSaaS());
-        mgGoods1.setAtAloneSoftware(obj.getAtAloneSoftware());
-        mgGoods1.setAtSaaS(obj.getAtSaaS());
-        mgGoods1.setDataModel(obj.getDataModel());
-        mgGoods1.setClickRate((long) 0);
-        mgGoods1.setOffLineData(obj.getOffLineData());
-        mgGoods1.setOffLineInfo(obj.getOffLineInfo());
+        // 获取mongo数据
+        MgGoods mgGoods1 = mgGoodsService.selectById(obj.getGoodsId());
 
+        // 获取mongo历史数据
         MgGoodsHistory mgGoodsHistory = mgGoodsHistoryService.selectById(obj.getGoodsId());
 
         List<MgGoodsHistory.AllGoodsBean> list = new ArrayList<MgGoodsHistory.AllGoodsBean>();
