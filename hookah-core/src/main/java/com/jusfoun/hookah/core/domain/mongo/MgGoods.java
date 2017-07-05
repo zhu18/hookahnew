@@ -1088,4 +1088,4 @@ public class MgGoods extends GenericModel {
     public void setOffLineData(OffLineDataBean offLineData) {
         this.offLineData = offLineData;
     }
-]}
+}
