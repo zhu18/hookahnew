@@ -1,14 +1,14 @@
 class ShelfController {
   constructor($scope, $rootScope, $http, $state, $uibModal, usSpinnerService, growl) {
-
     $scope.search = function () {
       console.log("货架查询。。。。");
         var promise = $http({
             method: 'GET',
             url: $rootScope.site.apiServer + "/api/shelf/all",
-            params: {currentPage: $rootScope.pagination.currentPage,
-                        pageSize: $rootScope.pagination.pageSize,
-                        shelfName: $scope.shelfName
+            params: {
+                currentPage: $rootScope.pagination.currentPage,
+                pageSize: $rootScope.pagination.pageSize,
+                shelfName: $scope.shelfName
             }
         });
         promise.then(function (res, status, config, headers) {
@@ -16,7 +16,6 @@ class ShelfController {
             growl.addSuccessMessage("数据加载完毕。。。");
         });
     };
-
     $scope.add = function () {
         var promise = $http({
             method: 'POST',
