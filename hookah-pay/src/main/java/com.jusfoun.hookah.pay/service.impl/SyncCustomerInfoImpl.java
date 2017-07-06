@@ -12,16 +12,16 @@ import com.apex.fix.JFixComm;
 import com.apex.fix.JFixSess;
 import com.jusfoun.hookah.pay.util.FixClientUtil;
 import com.jusfoun.hookah.pay.util.PayConstants;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
 public class SyncCustomerInfoImpl {
 
-    @Autowired
+    @Resource
     private FixClientUtil client;
 
     private IFixClient fixClient=client.createClient();
