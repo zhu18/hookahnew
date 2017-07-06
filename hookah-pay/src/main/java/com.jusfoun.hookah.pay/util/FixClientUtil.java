@@ -77,8 +77,4 @@ public class FixClientUtil {
         fixClient.createClient(bean, "32");
         return fixClient;
     }
-
-    public static void main(String[] args){
-
-    }
 }
