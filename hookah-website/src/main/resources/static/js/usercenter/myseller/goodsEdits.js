@@ -868,9 +868,18 @@ function renderData(data){//渲染页面
 			attrIds.push(item.attrId);
 		});
 	});
-	$('#preview-img').attr('src','host.static'+data.goodsImg);//图片
+	console.log(host.static+data.goodsImg);
+	$('#preview-img').attr('src',host.static+'/'+data.goodsImg);//图片
 	$('input[name="goodsImg"]').val(data.goodsImg);
 	$('input[name="goodsImges"]').val(data.goodsImg);
+	$('#preview-div').mouseover(function(){
+		if($('#preview-img').attr('src')){
+			$('#replace-btn').show()
+		}
+	});
+	$('#preview-div').mouseout(function(){
+		$('#replace-btn').hide()
+	});
 	$('.fileUploads_j span').html(data.dataSample);//数据样例
 	$('input[name="dataSample_s"]').val(data.dataSample);
 	$('#dataSample').val(data.dataSample);
@@ -884,9 +893,6 @@ function renderData(data){//渲染页面
 		}
 	});
 	renderIsBook(data.isBook, data.onsaleStartDate);
-	// $('#showcontent').html(getLength($('#J-goodsName').val()));
-	// $('#showcontent2').html(getLength($('#J-goodsBrief').val()));
-	// console.log(data.areaProvince);
 	if(data.areaCountry > 0){
 		loadCountry(data.areaCountry,data.areaProvince)
 	}else{
@@ -898,6 +904,7 @@ function renderData(data){//渲染页面
 	initialize(); // 初始化数据
 	$('#parentSelect').attr('disabled','disabled');
 	$('.childrenSelect').attr('disabled','disabled');
+	uploadGoodsImg();
 }
 function renderApiInfo(apiInfo){ //渲染API ----- 1
 	$('.api-info-box input[name="apiType"]').each(function(){
