@@ -15,7 +15,7 @@ public class PayBankCard extends GenericModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer payAccountId;
+    private Long payAccountId;
 
     private String userId;
 
@@ -49,11 +49,11 @@ public class PayBankCard extends GenericModel {
         this.id = id;
     }
 
-    public Integer getPayAccountId() {
+    public Long getPayAccountId() {
         return payAccountId;
     }
 
-    public void setPayAccountId(Integer payAccountId) {
+    public void setPayAccountId(Long payAccountId) {
         this.payAccountId = payAccountId;
     }
 
