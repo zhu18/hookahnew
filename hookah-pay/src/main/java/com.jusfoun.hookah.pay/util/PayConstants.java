@@ -120,6 +120,26 @@ public class PayConstants {
     }
 
 
+    /**
+     * pay_bank_card 状态 0正常 1解除绑定
+     */
+    public enum BankCardStatus {
+
+        binded((byte)0),
+        unbind((byte)1);
+
+        public int code;
+
+        BankCardStatus(int code) {
+            this.code = code;
+        }
+
+        public int getCode() {
+            return code;
+        }
+    }
+
+
 
 
 
