@@ -8,10 +8,7 @@ import com.apex.fix.JFixSess;
 import com.jusfoun.hookah.core.dao.PayBankCardMapper;
 import com.jusfoun.hookah.core.domain.PayBankCard;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
-import com.jusfoun.hookah.pay.util.ChannelType;
-import com.jusfoun.hookah.pay.util.DateUtil;
-import com.jusfoun.hookah.pay.util.PayConstants;
-import com.jusfoun.hookah.pay.util.PayUtil;
+import com.jusfoun.hookah.pay.util.*;
 import com.jusfoun.hookah.rpc.api.PayBankCardService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +25,9 @@ public class PayBankCardImpl extends GenericServiceImpl<PayBankCard, String> imp
     private PayBankCardMapper payBankCardMapper;
 
     @Resource
-    private IFixClient fixClient;
+    FixClientUtil client;
+
+    private IFixClient fixClient = client.createClientSSL();
 
     @Resource
     public void setDao(PayBankCardMapper payBankCardMapper) {
