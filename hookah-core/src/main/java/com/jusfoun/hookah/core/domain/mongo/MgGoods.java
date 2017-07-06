@@ -379,44 +379,17 @@ public class MgGoods extends GenericModel {
     }
     public static class RespDataMapping implements Serializable {
 
-        private String codeAttr; //编码属性
-        private String successCode; //成功
-        private String failedCode; //失败
-        private String successNoData; // 成功无数据
+        private CodeAttrBean codeAttrBean; //编码属性对象
         private String infoAttr; // 信息属性
         private String dataAttr; //数据属性
         private String totalNumAttr; //总条数属性
 
-        public String getCodeAttr() {
-            return codeAttr;
+        public CodeAttrBean getCodeAttrBean() {
+            return codeAttrBean;
         }
 
-        public void setCodeAttr(String codeAttr) {
-            this.codeAttr = codeAttr;
-        }
-
-        public String getSuccessCode() {
-            return successCode;
-        }
-
-        public void setSuccessCode(String successCode) {
-            this.successCode = successCode;
-        }
-
-        public String getFailedCode() {
-            return failedCode;
-        }
-
-        public void setFailedCode(String failedCode) {
-            this.failedCode = failedCode;
-        }
-
-        public String getSuccessNoData() {
-            return successNoData;
-        }
-
-        public void setSuccessNoData(String successNoData) {
-            this.successNoData = successNoData;
+        public void setCodeAttrBean(CodeAttrBean codeAttrBean) {
+            this.codeAttrBean = codeAttrBean;
         }
 
         public String getInfoAttr() {
@@ -441,6 +414,58 @@ public class MgGoods extends GenericModel {
 
         public void setTotalNumAttr(String totalNumAttr) {
             this.totalNumAttr = totalNumAttr;
+        }
+    }
+
+    public static class CodeAttrBean implements Serializable {
+
+        private String codeAttr; //编码属性
+        private CodeInfoBean codeInfoBean; // 编码属性对象信息
+
+        public String getCodeAttr() {
+            return codeAttr;
+        }
+
+        public void setCodeAttr(String codeAttr) {
+            this.codeAttr = codeAttr;
+        }
+
+        public CodeInfoBean getCodeInfoBean() {
+            return codeInfoBean;
+        }
+
+        public void setCodeInfoBean(CodeInfoBean codeInfoBean) {
+            this.codeInfoBean = codeInfoBean;
+        }
+    }
+    public static class CodeInfoBean implements Serializable {
+
+        private String successCode; //成功
+        private String failedCode; //失败
+        private String successNoData; // 成功无数据
+
+        public String getSuccessCode() {
+            return successCode;
+        }
+
+        public void setSuccessCode(String successCode) {
+            this.successCode = successCode;
+        }
+
+        public String getFailedCode() {
+            return failedCode;
+        }
+
+        public void setFailedCode(String failedCode) {
+            this.failedCode = failedCode;
+        }
+
+        public String getSuccessNoData() {
+            return successNoData;
+        }
+
+        public void setSuccessNoData(String successNoData) {
+            this.successNoData = successNoData;
         }
     }
 
