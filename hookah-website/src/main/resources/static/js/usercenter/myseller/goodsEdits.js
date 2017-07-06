@@ -519,7 +519,7 @@ function submitGoodsPublish(){
 			}else{
 				data.offLineData.onlineUrl = $('input[name="onlineUrl"]').val();
 			}
-		} else if (data.goodsType == 1) {//------------------------------
+		} else if (data.goodsType == 1) {//API------------------------------
 			data.apiInfo = {};
 			data.apiInfo.apiType = $('.api-info-box').find('input[name="apiType"]:checked').val();
 			data.apiInfo.invokeMethod = $('.api-info-box').find('input[name="invokeMethod"]').val();
@@ -550,10 +550,12 @@ function submitGoodsPublish(){
 			data.apiInfo.respSample = $('#respSample').val();
 			data.apiInfo.respDataFormat = $('.api-info-box').find('input[name="respDataFormat"]:checked').val();
 			data.apiInfo.respDataMapping = {};
-			data.apiInfo.respDataMapping.codeAttr = $('input[name="codeAttr"]').val();
-			data.apiInfo.respDataMapping.successCode = $('input[name="successCode"]').val();
-			data.apiInfo.respDataMapping.failedCode = $('input[name="failedCode"]').val();
-			data.apiInfo.respDataMapping.successNoData = $('input[name="successNoData"]').val();
+			data.apiInfo.respDataMapping.codeAttrBean = {};
+			data.apiInfo.respDataMapping.codeAttrBean.codeAttr = $('input[name="codeAttr"]').val();
+			data.apiInfo.respDataMapping.codeAttrBean.codeInfoBean = {};
+			data.apiInfo.respDataMapping.codeAttrBean.codeInfoBean.successCode = $('input[name="successCode"]').val();
+			data.apiInfo.respDataMapping.codeAttrBean.codeInfoBean.failedCode = $('input[name="failedCode"]').val();
+			data.apiInfo.respDataMapping.codeAttrBean.codeInfoBean.successNoData = $('input[name="successNoData"]').val();
 			data.apiInfo.respDataMapping.infoAttr = $('input[name="infoAttr"]').val();
 			data.apiInfo.respDataMapping.dataAttr = $('input[name="dataAttr"]').val();
 			data.apiInfo.respDataMapping.totalNumAttr = $('input[name="totalNumAttr"]').val();
@@ -766,6 +768,7 @@ function renderData(data){//渲染页面
 	$('#keywords').val(data.keywords);//标签
 	$('#showcontent').html(getLength(data.goodsName));//商品名称长度
 	$('#showcontent2').html(getLength(data.goodsBrief));//商品名称长度
+	$('#trialRange').val(data.trialRange);//使用范围
 	$('select[name="parentSelect"] option').each(function(){
 		if(data.goodsType == 0 || data.goodsType == 1){
 			$('#childrenSelect1').show();
@@ -865,9 +868,12 @@ function renderData(data){//渲染页面
 			attrIds.push(item.attrId);
 		});
 	});
-	$('#preview-img').attr('src',data.goodsImg);//图片
+	$('#preview-img').attr('src','host.static'+data.goodsImg);//图片
 	$('input[name="goodsImg"]').val(data.goodsImg);
 	$('input[name="goodsImges"]').val(data.goodsImg);
+	$('.fileUploads_j span').html(data.dataSample);//数据样例
+	$('input[name="dataSample_s"]').val(data.dataSample);
+	$('#dataSample').val(data.dataSample);
 	if(data.formatList && data.formatList.length > 0){
 		renderFormatList(data.formatList);//渲染价格
 	}
@@ -918,8 +924,8 @@ function renderApiInfo(apiInfo){ //渲染API ----- 1
 		}
 	});
 	$('.api-info-box input[name="reqSample"]').val(apiInfo.reqSample);
-	$('.api-info-box input[name="secretKeyName"]').val(apiInfo.secretKeyName);
-	$('.api-info-box input[name="secretKeyValue"]').val(apiInfo.secretKeyValue);
+	$('.api-info-box input[name="secretKeyName"]').val(apiInfo.encryptInfo.secretKeyName);
+	$('.api-info-box input[name="secretKeyValue"]').val(apiInfo.encryptInfo.secretKeyValue);
 	$('.api-info-box #apiDesc').val(apiInfo.apiDesc);
 	$('.api-info-box #respSample').val(apiInfo.respSample);
 	var html = '';
@@ -997,6 +1003,15 @@ function renderApiInfo(apiInfo){ //渲染API ----- 1
 		html2 += '</tr>';
 	});
 	$('table[d-type="returnHtml"] tbody').html(html2);
+	// $('.api-info-box input[name="codeAttr"]').val(apiInfo.respDataMapping.codeAttrBean.codeAttr);
+	// $('.api-info-box input[name="successCode"]').val(apiInfo.respDataMapping.codeAttrBean.codeInfoBean.successCode);
+	// $('.api-info-box input[name="failedCode"]').val(apiInfo.respDataMapping.codeAttrBean.codeInfoBean.failedCode);
+	// $('.api-info-box input[name="successNoData"]').val(apiInfo.respDataMapping.codeAttrBean.codeInfoBean.successNoData);
+	// $('.api-info-box input[name="infoAttr"]').val(apiInfo.respDataMapping.infoAttr);
+	// $('.api-info-box input[name="dataAttr"]').val(apiInfo.respDataMapping.dataAttr);
+	// $('.api-info-box input[name="totalNumAttr"]').val(apiInfo.respDataMapping.totalNumAttr);
+	// $('.api-info-box input[name="updateFreq"]').val(apiInfo.updateFreq);
+	// $('.api-info-box input[name="dataNumDivRowNum"]').val(apiInfo.dataNumDivRowNum);
 }
 function renderDataModel(dataModel){ //渲染数据模型---2
 	$('.dataModel-info-box input[name="complexity"]').val(dataModel.complexity);
