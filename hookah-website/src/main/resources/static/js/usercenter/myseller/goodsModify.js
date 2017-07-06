@@ -41,9 +41,6 @@ function loadLastChild(that){
 function selectCatId(that){
 	catId = $(that).val();
 }
-// loadCategoryData(pid); //获取分类
-
-
 function loadCategoryData(that,pid,currentPid){
 
 	$.ajax({
