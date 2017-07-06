@@ -150,6 +150,62 @@
 									</label>
 								</div>
 							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">数据格式</label>
+								<div class="col-sm-5">
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.offLineData.dataFormat == 0" disabled/>xls/xlsx
+									</label>
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.offLineData.dataFormat == 1" disabled/>csv
+									</label>
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.offLineData.dataFormat == 2" disabled/>txt
+									</label>
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.offLineData.dataFormat == 3" disabled/>图片
+									</label>
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.offLineData.dataFormat == 4" disabled/>音频
+									</label>
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.offLineData.dataFormat == 5" disabled/>视频
+									</label>
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.offLineData.dataFormat == 6" disabled/>其他
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">时间范围</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.offLineData.timeFrame}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">数据行数</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.offLineData.dataRows}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">数据容量</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.offLineData.dataCapacity}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">交付方式</label>
+								<div class="col-sm-5">
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.offLineData.deliveryMethod == 0" disabled/>线上交付
+									</label>
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.offLineData.deliveryMethod == 1" disabled/>线下交付
+									</label>
+								</div>
+							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">线上url</label>
 								<div class="col-sm-5">
@@ -343,6 +399,17 @@
 									联系邮件：<input type="text" class="form-control" value="{{editData.dataModel.concatInfo.concatEmail}}" readonly="true"/>
 								</div>
 							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">交付方式</label>
+								<div class="col-sm-5">
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.dataModel.deliveryMethod == 0" disabled/>线上交付
+									</label>
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.dataModel.deliveryMethod == 1" disabled/>线下交付
+									</label>
+								</div>
+							</div>
 						</div>
 						<div data-ng-if="editData.goodsType == 4">
 							<div class="form-group">
@@ -365,6 +432,49 @@
 									<input type="text" class="form-control" value="{{editData.atAloneSoftware.otherDesc}}" readonly="true"/>
 								</div>
 							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">核心功能</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.atAloneSoftware.coreFunction}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">技术优势</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.atAloneSoftware.technologicalSuperiority}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">团队优势</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.atAloneSoftware.teamAdvantage}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">所需环境</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.atAloneSoftware.desiredEnvironment}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">所需数据</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.atAloneSoftware.dataNeeded}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">交付方式</label>
+								<div class="col-sm-5">
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.atAloneSoftware.deliveryMethod == 0" disabled/>线上交付
+									</label>
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.atAloneSoftware.deliveryMethod == 1" disabled/>线下交付
+									</label>
+								</div>
+							</div>
+
 						</div>
 						<div data-ng-if="editData.goodsType == 5">
 							<div class="form-group">
@@ -423,6 +533,43 @@
 									<input type="text" class="form-control" value="{{editData.asSaaS.otherDesc}}" readonly="true"/>
 								</div>
 							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">核心功能</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.asSaaS.coreFunction}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">团队优势</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.asSaaS.teamAdvantage}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">所需环境</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.asSaaS.desiredEnvironment}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">所需数据</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.asSaaS.dataNeeded}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">交付方式</label>
+								<div class="col-sm-5">
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.asSaaS.deliveryMethod == 0" disabled/>线上交付
+									</label>
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.asSaaS.deliveryMethod == 1" disabled/>线下交付
+									</label>
+								</div>
+							</div>
+
 						</div>
 					</div>
 				</div>
