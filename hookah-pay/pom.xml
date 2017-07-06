@@ -305,8 +305,7 @@
     </dependency>
     <dependency>
       <groupId>not-yet-commons-ssl</groupId>
-      <artifactId>not-yet-commons-ssl</artifactId>
-      <version>0.3.11</version>
+       <version>0.3.11</version>
       <scope>system</scope>
       <systemPath>${basedir}/src/lib/not-yet-commons-ssl-0.3.11.jar</systemPath>
     </dependency>
@@ -316,6 +315,12 @@
       <version>1.0</version>
       <scope>system</scope>
       <systemPath>${basedir}/src/lib/qss-client-1.0-jdk1.6.jar</systemPath>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>2.6</version>
     </dependency>
 
   </dependencies>

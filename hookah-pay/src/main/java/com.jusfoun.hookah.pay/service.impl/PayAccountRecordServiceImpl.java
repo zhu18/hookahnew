@@ -12,7 +12,7 @@ import com.jusfoun.hookah.core.domain.PayAccountRecord;
 import com.jusfoun.hookah.core.domain.bo.MoneyInOutBo;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.pay.util.ChannelType;
-import com.jusfoun.hookah.pay.util.DateUtil;
+import com.jusfoun.hookah.pay.util.FixClientUtil;
 import com.jusfoun.hookah.pay.util.PayConstants;
 import com.jusfoun.hookah.pay.util.PayUtil;
 import com.jusfoun.hookah.rpc.api.PayAccountRecordService;
@@ -21,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -36,7 +35,10 @@ import java.util.Map;
 public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRecord, Integer> implements
 		PayAccountRecordService {
 
-	private IFixClient fixClient;
+	@Resource
+	FixClientUtil client;
+
+	private IFixClient fixClient = client.createClientSSL();
 
 	@Resource
 	private PayAccountRecordMapper payAccountRecordMapper;
@@ -71,6 +73,9 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 			payAccountRecord.setChannelType(ChannelType.QDABC);
 			payAccountRecord.setAddTime(new Date());
 	//		payAccountRecord.setAddOperator();	//userID用户的username
+			int n = payAccountRecordMapper.insert(payAccountRecord);
+			System.out.println(n);
+			logger.info("插入" + (n > 0 ? "成功" : "失败"));
 
 			// 拼装报文 发送请求 根据请求返回结果 进行后续处理
 			Map<String, String> paramMap = new HashMap<String, String>();
@@ -105,8 +110,6 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 			paramMap.put("FID_ZJZH", moneyInOutBo.userId);
 			paramMap.put("FID_CS1", "");	// k宝返回
 			paramMap.put("FID_CS2", "");	// BD + k宝返回
-
-
 
 			AxCallFunc callFunc = new AxCallFunc() {
 				public boolean onReply(JFixSess jFixSess, JFixComm jFixComm) {
@@ -176,7 +179,12 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 
 			// 待发送报文信息先存到Mongon
 
-			ResultBean<Map<String, String>> resultBean = this.fixClient.sendMoneyIn(paramMap, callFunc);
+			ResultBean<Map<String, String>> resultBean;
+			if(moneyInOutBo.getOperatorType() == 1){
+				resultBean = fixClient.sendMoneyIn(paramMap, callFunc);
+			}else{
+				resultBean = fixClient.sendMoneyOut(paramMap, callFunc);
+			}
 			if(resultBean.isSuccess()){
 				//发送成功
 				//todo 发送成功处理
