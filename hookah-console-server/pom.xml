@@ -306,7 +306,7 @@
           <include>**/.txt</include>
         </includes>
       </resource>
-       打包时注释下面的resource
+       <!--打包时注释下面的resource-->
       <resource>
       <targetPath>${project.build.directory}/classes</targetPath>
       <directory>src/main/resources</directory>
