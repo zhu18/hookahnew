@@ -9,23 +9,26 @@ import com.apex.fix.JFixComm;
 import com.apex.fix.JFixSess;
 import com.jusfoun.hookah.core.dao.PayAccountRecordMapper;
 import com.jusfoun.hookah.core.domain.PayAccountRecord;
+import com.jusfoun.hookah.core.domain.PayBankCard;
 import com.jusfoun.hookah.core.domain.bo.MoneyInOutBo;
+import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
+import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.pay.util.ChannelType;
 import com.jusfoun.hookah.pay.util.FixClientUtil;
 import com.jusfoun.hookah.pay.util.PayConstants;
 import com.jusfoun.hookah.pay.util.PayUtil;
 import com.jusfoun.hookah.rpc.api.PayAccountRecordService;
+import com.jusfoun.hookah.rpc.api.PayBankCardService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * dengxu
@@ -48,14 +51,15 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 		super.setDao(payAccountRecordMapper);
 	}
 
+//	@Resource
+//	PayBankCardService payBankCardService;
+
 	@Transactional
 	public void entryAndExitPayments(MoneyInOutBo moneyInOutBo) {
 
 		try {
 			// 获取农行k宝密码
 			String kbaoRS = "";
-
-			// 根据当前用户信息获取银行卡信息
 
 			// 获取交易市场申请号
 			String serialNum = PayUtil.createChannelSerial(ChannelType.QDABC);
@@ -66,8 +70,11 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 			payAccountRecord.setUserId(moneyInOutBo.getUserId());		//当前操作用户的userID
 			payAccountRecord.setTransferDate(new Date());
 			payAccountRecord.setMoney(moneyInOutBo.getMoney());		//当前用户的入金出金的金额
-			payAccountRecord.setTransferType(PayConstants.TransferType.MONEY_IN.code);	//根据操作类型  入金
-	//		payAccountRecord.setTransferType(PayConstants.TransferType.MONEY_OUT.code);	//根据操作类型  出金
+			if(moneyInOutBo.getOperatorType() == 1){
+				payAccountRecord.setTransferType(PayConstants.TransferType.MONEY_IN.code);	//根据操作类型  入金
+			}else{
+				payAccountRecord.setTransferType(PayConstants.TransferType.MONEY_OUT.code);	//根据操作类型  出金
+			}
 			payAccountRecord.setTransferStatus(PayConstants.TransferStatus.handing.code);
 			payAccountRecord.setSerialNumber(serialNum);
 			payAccountRecord.setChannelType(ChannelType.QDABC);
@@ -75,7 +82,17 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 	//		payAccountRecord.setAddOperator();	//userID用户的username
 			int n = payAccountRecordMapper.insertAndGetId(payAccountRecord);
 			System.out.println(n);
-			logger.info("插入" + (n > 0 ? "成功" : "失败"));
+			logger.info("payAccountRecord初始化插入" + (n > 0 ? "成功" : "失败") + "-->操作时间：" + LocalDateTime.now());
+
+			// 根据当前用户信息获取银行卡信息
+//			List<Condition> filters = new ArrayList();
+//			filters.add(Condition.eq("userId", moneyInOutBo.getUserId()));
+//			filters.add(Condition.eq("payAccountId", moneyInOutBo.getPayAccountID()));
+//			PayBankCard payBankCard = payBankCardService.selectOne(filters);
+//			if(payBankCard == null){
+//				logger.info("获取银行卡信息失败-->操作时间：" + LocalDateTime.now());
+//				throw new RuntimeException();
+//			}
 
 			// 拼装报文 发送请求 根据请求返回结果 进行后续处理
 			Map<String, String> paramMap = new HashMap<String, String>();
@@ -104,9 +121,9 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 			paramMap.put("FID_SQRQ", LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE));
 			paramMap.put("FID_SQSJ", LocalTime.now().withNano(0).toString());
 			paramMap.put("FID_SQH", serialNum);
-			paramMap.put("FID_YHZH", "");
+//			paramMap.put("FID_YHZH", payBankCard.getCardCode());
 			paramMap.put("FID_YHDM", PayConstants.BankCode.NYYH.code);
-			paramMap.put("FID_CZZD", "");
+			paramMap.put("FID_CZZD", "");   //操作站点
 			paramMap.put("FID_ZJZH", moneyInOutBo.userId);
 			paramMap.put("FID_CS1", "");	// k宝返回
 			paramMap.put("FID_CS2", "");	// BD + k宝返回
@@ -166,7 +183,8 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 						}
 						payAccountRecord.setUpdateOperator("SYSTEM");
 						payAccountRecord.setUpdateTime(new Date());
-						payAccountRecordMapper.updateByPrimaryKeySelective(payAccountRecord);
+						int j = payAccountRecordMapper.updateByPrimaryKeySelective(payAccountRecord);
+						logger.info("业务处理--->payAccountRecord修改" + (j > 0 ? "成功" : "失败") + "-->操作时间：" + LocalDateTime.now());
 
 					}catch (Exception e){
 						e.printStackTrace();
@@ -200,7 +218,8 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 			}
 			payAccountRecord.setUpdateOperator("SYSTEM");
 			payAccountRecord.setUpdateTime(new Date());
-			payAccountRecordMapper.updateByPrimaryKeySelective(payAccountRecord);
+			int m = payAccountRecordMapper.updateByPrimaryKeySelective(payAccountRecord);
+			logger.info("发送处理--->payAccountRecord修改" + (m > 0 ? "成功" : "失败") + "-->操作时间：" + LocalDateTime.now());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
