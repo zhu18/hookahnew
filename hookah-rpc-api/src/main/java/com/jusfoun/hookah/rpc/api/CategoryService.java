@@ -29,4 +29,6 @@ public interface CategoryService extends GenericService<Category,String> {
      * @return
      */
     public List<CategoryVo> getAdminCatTree();
+
+    public ReturnData findOneLevelGoodsType();
 }
