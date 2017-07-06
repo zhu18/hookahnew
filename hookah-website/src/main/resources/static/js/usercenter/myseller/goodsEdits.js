@@ -8,6 +8,7 @@ var E = window.wangEditor; //初始化富文本
 var itemNum = 0; //添加规格计数器
 var goodsTypeVal = $('#parentSelect').val();
 var categoryHtml = '';
+var ajaxUrl = null;
 E.config.uploadImgUrl = host.static+'/upload/wangeditor';//上传图片
 E.config.uploadImgFileName = 'filename';
 E.config.menuFixed = false;//关闭菜单栏fixed
@@ -28,12 +29,14 @@ $(document).ready(function(){
 		}else{
 			goodsEditFn();
 		}
+		ajaxUrl = host.website+'/goods/back/add';
 	}else if(urlPath == '/usercenter/goodsModify'){ //修改商品
 		if(!goodsId){
 			window.location.href='/usercenter/goodsOffSale';
 		}else{
 			goodsModifyFn();
 		}
+		ajaxUrl = host.website+'/goods/back/update';
 	}
 
 });
@@ -327,7 +330,7 @@ function tablePlus(that) {
 	requestHtml += '</tr>';
 	var returnHtml = '';//返回借口
 	returnHtml += '<tr class="parent-tr">';
-	returnHtml += '<td class="errorNum-input"><div class="inputbox"><input type="text" placeholder="请输入错误码" name="fieldNames"></div></td>';
+	returnHtml += '<td class="errorNum-input"><div class="inputbox"><input type="text" placeholder="请输入错误码" name="fieldName"></div></td>';
 	returnHtml += '<td class="type-input"><div class="selectbox"><select name="fieldType"><option value="String">String</option><option value="int">int</option></select></div></td>';
 	returnHtml += '<td><div class="inputbox"><textarea placeholder="请输入说明" name="describle"></textarea></div></td>';
 	returnHtml += '<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
@@ -424,7 +427,7 @@ function backAddFn(data){
 	Loading.start();
 	$.ajax({
 		type: 'POST',
-		url: '/goods/back/add',
+		url: ajaxUrl,
 		data: JSON.stringify(data),
 		dataType: 'json',
 		contentType: 'application/json',
@@ -448,6 +451,10 @@ function backAddFn(data){
 }
 function submitGoodsPublish(){
 	var data = {};
+	if(urlPath == '/usercenter/goodsModify'){ //修改商品
+		data.goodsId = goodsId;
+		data.ver = $('input[name="ver"]').val();
+	}
 	data.goodsName = $('input[name="goodsName"]').val();
 	data.goodsBrief = $('textarea[name="goodsBrief"]').val();
 	data.keywords = $('input[name="keywords"]').val();
@@ -541,7 +548,7 @@ function submitGoodsPublish(){
 			data.apiInfo.respParamList = [];
 			$('table[d-type="returnHtml"] tbody tr').each(function () {
 				var listData = {};
-				listData.fieldName = $(this).find('input[name="fieldNames"]').val();
+				listData.fieldName = $(this).find('input[name="fieldName"]').val();
 				listData.fieldType = $(this).find('select[name="fieldType"]').val();
 				listData.describle = $(this).find('textarea[name="describle"]').val();
 				data.apiInfo.respParamList.push(listData);
@@ -761,6 +768,7 @@ function loadCategoryData(that,pid,currentPid){
 }
 function renderData(data){//渲染页面
 	catId = data.catId;
+	$('#J-ver').val(data.ver);//版本号
 	$("input[name='typeId']").val(catId.substring(0,3));
 	$('#J-ver').val(data.ver);//版本号
 	$('#J-goodsName').val(data.goodsName);//商品名称
@@ -868,9 +876,18 @@ function renderData(data){//渲染页面
 			attrIds.push(item.attrId);
 		});
 	});
-	$('#preview-img').attr('src','host.static'+data.goodsImg);//图片
+	console.log(host.static+data.goodsImg);
+	$('#preview-img').attr('src',host.static+'/'+data.goodsImg);//图片
 	$('input[name="goodsImg"]').val(data.goodsImg);
 	$('input[name="goodsImges"]').val(data.goodsImg);
+	$('#preview-div').mouseover(function(){
+		if($('#preview-img').attr('src')){
+			$('#replace-btn').show()
+		}
+	});
+	$('#preview-div').mouseout(function(){
+		$('#replace-btn').hide()
+	});
 	$('.fileUploads_j span').html(data.dataSample);//数据样例
 	$('input[name="dataSample_s"]').val(data.dataSample);
 	$('#dataSample').val(data.dataSample);
@@ -884,9 +901,6 @@ function renderData(data){//渲染页面
 		}
 	});
 	renderIsBook(data.isBook, data.onsaleStartDate);
-	// $('#showcontent').html(getLength($('#J-goodsName').val()));
-	// $('#showcontent2').html(getLength($('#J-goodsBrief').val()));
-	// console.log(data.areaProvince);
 	if(data.areaCountry > 0){
 		loadCountry(data.areaCountry,data.areaProvince)
 	}else{
@@ -898,6 +912,7 @@ function renderData(data){//渲染页面
 	initialize(); // 初始化数据
 	$('#parentSelect').attr('disabled','disabled');
 	$('.childrenSelect').attr('disabled','disabled');
+	uploadGoodsImg();
 }
 function renderApiInfo(apiInfo){ //渲染API ----- 1
 	$('.api-info-box input[name="apiType"]').each(function(){
@@ -1003,15 +1018,15 @@ function renderApiInfo(apiInfo){ //渲染API ----- 1
 		html2 += '</tr>';
 	});
 	$('table[d-type="returnHtml"] tbody').html(html2);
-	// $('.api-info-box input[name="codeAttr"]').val(apiInfo.respDataMapping.codeAttrBean.codeAttr);
-	// $('.api-info-box input[name="successCode"]').val(apiInfo.respDataMapping.codeAttrBean.codeInfoBean.successCode);
-	// $('.api-info-box input[name="failedCode"]').val(apiInfo.respDataMapping.codeAttrBean.codeInfoBean.failedCode);
-	// $('.api-info-box input[name="successNoData"]').val(apiInfo.respDataMapping.codeAttrBean.codeInfoBean.successNoData);
-	// $('.api-info-box input[name="infoAttr"]').val(apiInfo.respDataMapping.infoAttr);
-	// $('.api-info-box input[name="dataAttr"]').val(apiInfo.respDataMapping.dataAttr);
-	// $('.api-info-box input[name="totalNumAttr"]').val(apiInfo.respDataMapping.totalNumAttr);
-	// $('.api-info-box input[name="updateFreq"]').val(apiInfo.updateFreq);
-	// $('.api-info-box input[name="dataNumDivRowNum"]').val(apiInfo.dataNumDivRowNum);
+	$('.api-info-box input[name="codeAttr"]').val(apiInfo.respDataMapping.codeAttrBean.codeAttr);
+	$('.api-info-box input[name="successCode"]').val(apiInfo.respDataMapping.codeAttrBean.codeInfoBean.successCode);
+	$('.api-info-box input[name="failedCode"]').val(apiInfo.respDataMapping.codeAttrBean.codeInfoBean.failedCode);
+	$('.api-info-box input[name="successNoData"]').val(apiInfo.respDataMapping.codeAttrBean.codeInfoBean.successNoData);
+	$('.api-info-box input[name="infoAttr"]').val(apiInfo.respDataMapping.infoAttr);
+	$('.api-info-box input[name="dataAttr"]').val(apiInfo.respDataMapping.dataAttr);
+	$('.api-info-box input[name="totalNumAttr"]').val(apiInfo.respDataMapping.totalNumAttr);
+	$('.api-info-box input[name="updateFreq"]').val(apiInfo.updateFreq);
+	$('.api-info-box input[name="dataNumDivRowNum"]').val(apiInfo.dataNumDivRowNum);
 }
 function renderDataModel(dataModel){ //渲染数据模型---2
 	$('.dataModel-info-box input[name="complexity"]').val(dataModel.complexity);
