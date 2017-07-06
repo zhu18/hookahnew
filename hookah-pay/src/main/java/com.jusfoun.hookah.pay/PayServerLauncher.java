@@ -35,6 +35,8 @@ public class PayServerLauncher {
             "classpath*:spring/spring-config.xml",
             "classpath*:hookah_rpc_server.xml",
             "classpath*:hookah_rpc_client.xml",
+            "classpath*:hookah_rpc_client_pay.xml",
+            "classpath*:hookah_rpc_server_pay.xml",
             PayServerLauncher.class
         }, args);
         MotanSwitcherUtil.setSwitcherValue(MotanConstants.REGISTRY_HEARTBEAT_SWITCHER, true);

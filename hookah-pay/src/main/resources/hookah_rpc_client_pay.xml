@@ -5,12 +5,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
        http://api.weibo.com/schema/motan http://api.weibo.com/schema/motan.xsd">
 
-
-    <!-- 业务具体实现类 -->
-    <bean id="payAccountRecordService" class="com.jusfoun.hookah.pay.service.impl.PayAccountRecordServiceImpl"/>
-
-    <!-- 具体rpc服务配置，声明实现的接口类。-->
-    <motan:service interface="com.jusfoun.hookah.rpc.api.PayAccountRecordService"
-                   ref="payAccountRecordService" export="hookah:5001" basicService="serviceBasicConfig">
-    </motan:service>
+    <!-- 具体referer配置。使用方通过beanid使用服务接口类 -->
+    <motan:referer id="organizationService"
+                   interface="com.jusfoun.hookah.rpc.api.OrganizationService"
+                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
 </beans>
