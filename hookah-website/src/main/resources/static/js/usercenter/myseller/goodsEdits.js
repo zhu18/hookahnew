@@ -7,6 +7,7 @@ var urlPath = window.location.pathname;
 var E = window.wangEditor; //初始化富文本
 var itemNum = 0; //添加规格计数器
 var goodsTypeVal = $('#parentSelect').val();
+var categoryHtml = '';
 E.config.uploadImgUrl = host.static+'/upload/wangeditor';//上传图片
 E.config.uploadImgFileName = 'filename';
 E.config.menuFixed = false;//关闭菜单栏fixed
@@ -19,12 +20,8 @@ E.config.menus = $.map(wangEditor.config.menus, function (item, key) {
 	}
 	return item;
 });
-
 $(document).ready(function(){
-	editor1 = new E('textarea1');
-	editor2 = new E('textarea2');
-	editor3 = new E('textarea3');
-	editor4 = new E('textarea4');
+
 	if(urlPath == '/usercenter/goodsEdit'){ //上传商品
 		if(!catId){
 			window.location.href = '/usercenter/goodsManage';
@@ -42,7 +39,7 @@ $(document).ready(function(){
 });
 //商品添加-------------------------------↓↓↓↓↓↓↓↓↓↓↓↓↓
 function goodsEditFn(){
-	$('.category-title-box').text(category);//渲染分类
+	$('.select-box.display-inline-block').text(category);//渲染分类
 	loadRegion('province', regionParam); //加载地区
 	renderWangEdit(); // 渲染富文本
 	uploadGoodsImg(); //上传商品图片
@@ -263,6 +260,10 @@ function renderRegion(id,data){
 	$('#'+id).html(html);
 }
 function renderWangEdit(){ // 渲染富文本
+	editor1 = new E('textarea1');
+	editor2 = new E('textarea2');
+	editor3 = new E('textarea3');
+	editor4 = new E('textarea4');
 	editor1.create();
 	editor2.create();
 	editor3.create();
@@ -759,7 +760,6 @@ function loadCategoryData(that,pid,currentPid){
 function renderData(data){//渲染页面
 	catId = data.catId;
 	$("input[name='typeId']").val(catId.substring(0,3));
-	// $('.category-title-box').html(data.catFullName); //商品分类
 	$('#J-ver').val(data.ver);//版本号
 	$('#J-goodsName').val(data.goodsName);//商品名称
 	$('#J-goodsBrief').val(data.goodsBrief);//简介
@@ -859,11 +859,7 @@ function renderData(data){//渲染页面
 		$('.isOffLine-info-box input[name="concatPhone"]').val(data.offLineInfo.concatPhone);
 		$('.isOffLine-info-box input[name="concatEmail"]').val(data.offLineInfo.concatEmail);
 	}
-
-
-
 	// goodsTypes(data.goodsType,data.apiInfo,data.uploadUrl);
-	getAttrFn(data.catId); //获取属性
 	$.each(data.attrTypeList,function(index,items){
 		$.each(items.attrList,function(index,item){
 			attrIds.push(item.attrId);
@@ -875,9 +871,7 @@ function renderData(data){//渲染页面
 	if(data.formatList && data.formatList.length > 0){
 		renderFormatList(data.formatList);//渲染价格
 	}
-	if(data.goodsDesc){
-		renderGoodsDeac(data.goodsDesc);
-	}
+	renderGoodsDeac(data);
 	$('input[name="isBook"]').each(function(){
 		if($(this).val() == data.isBook){
 			$(this).attr('checked','true')
@@ -896,7 +890,296 @@ function renderData(data){//渲染页面
 		loadCity(data.areaProvince,data.areaCity)
 	}
 	initialize(); // 初始化数据
+	$('#parentSelect').attr('disabled','disabled');
+	$('.childrenSelect').attr('disabled','disabled');
 }
+function renderApiInfo(apiInfo){ //渲染API ----- 1
+	$('.api-info-box input[name="apiType"]').each(function(){
+		if($(this).val() == apiInfo.apiType){
+			$(this).attr('checked','checked');
+		}else{
+			$(this).removeAttr('checked');
+		}
+	});
+	$('.api-info-box input[name="apiUrl"]').val(apiInfo.apiUrl);
+	$('.api-info-box input[name="invokeMethod"]').val(apiInfo.invokeMethod);
+	$('.api-info-box input[name="apiMethod"]').each(function(){
+		if($(this).val() == apiInfo.apiMethod){
+			$(this).attr('checked','checked');
+		}else{
+			$(this).removeAttr('checked');
+		}
+	});
+	$('.api-info-box input[name="respDataFormat"]').each(function(){
+		if($(this).val() == apiInfo.respDataFormat){
+			$(this).attr('checked','checked');
+		}else{
+			$(this).removeAttr('checked');
+		}
+	});
+	$('.api-info-box input[name="reqSample"]').val(apiInfo.reqSample);
+	$('.api-info-box input[name="secretKeyName"]').val(apiInfo.secretKeyName);
+	$('.api-info-box input[name="secretKeyValue"]').val(apiInfo.secretKeyValue);
+	$('.api-info-box #apiDesc').val(apiInfo.apiDesc);
+	$('.api-info-box #respSample').val(apiInfo.respSample);
+	var html = '';
+	var reqLen = apiInfo.reqParamList.length;
+	$.each(apiInfo.reqParamList,function (index,data) {
+		html +='<tr class="parent-tr">';
+		html +='<td class="name-input"><div class="inputbox "><input type="text" name="fieldName" placeholder="请输入名称" value="'+data.fieldName+'" required="required"></div></td>';
+		html +='<td class="type-input"><div class="selectbox"><select name="fieldType">';
+		if(data.fieldType == 'String'){
+			html +='<option value="String" selected="selected">String</option>';
+		}else{
+			html +='<option value="String">String</option>';
+		}
+		if(data.fieldType == 'int'){
+			html +='<option value="int" selected="selected">int</option>';
+		}else{
+			html +='<option value="int">int</option>';
+		}
+		html +='</select></div></td>';
+		html +='<td class="type-input"><div class="inputbox"><input type="text" name="fieldDefault" placeholder="请输入默认值" value="'+data.fieldDefault+'"></div></td>';
+		html +='<td>';
+		html +='<div class="radio-box">';
+		if(data.isMust == 0){
+			html +='<label><input type="radio" name="isMust'+index+'" checked="checked" value="0">否</label>';
+		}else{
+			html +='<label><input type="radio" name="isMust'+index+'" value="0">否</label>';
+		}
+		if(data.isMust == 1){
+			html +='<label><input type="radio" name="isMust'+index+'" checked="checked" value="1">是</label>';
+		}else{
+			html +='<label><input type="radio" name="isMust'+index+'" value="1">是</label>';
+		}
+		html +='</div>';
+		html +='</td>';
+		html +='<td><div class="inputbox"><input type="text" name="fieldSample" placeholder="请输入示例" value="'+data.fieldSample+'"></div></td>';
+		html +='<td><div class="inputbox"><textarea name="describle" placeholder="请输入描述">'+data.describle+'</textarea></div></td>';
+		if(index === reqLen-1){
+			html +='<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
+		}else{
+			html +='<td><span class="table-plus-btn" onclick="tableDelete(this)">-</span></td>';
+		}
+		html +='</tr>';
+	});
+	$('table[d-type="requestHtml"] tbody').html(html);
+	var html2 = '';
+	var resqLen = apiInfo.respParamList.length;
+	$.each(apiInfo.respParamList, function (index,data) {
+		html2 += '<tr class="parent-tr">';
+		html2 += '<td class="errorNum-input"><div class="inputbox"><input type="text" name="fieldName" value="'+data.fieldName+'" placeholder="请输入错误码"></div></td>';
+		html2 +='<td class="type-input"><div class="selectbox"><select name="fieldType">';
+		if(data.fieldType){
+			if(data.fieldType == 'String'){
+				html2 +='<option value="String" selected="selected">String</option>';
+			}else{
+				html2 +='<option value="String">String</option>';
+			}
+			if(data.fieldType == 'int'){
+				html2 +='<option value="int" selected="selected">int</option>';
+			}else{
+				html2 +='<option value="int">int</option>';
+			}
+			console.log(111)
+		}else{
+			console.log(222)
+			html2 +='<option value="String">String</option>';
+			html2 +='<option value="int">int</option>';
+		}
+		html2 +='</select></div></td>';
+		html2 += '<td><div class="inputbox"><textarea name="describle" placeholder="请输入说明">'+data.describle+'</textarea></div></td>';
+		if(index === reqLen-1) {
+			html2 += '<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
+		}else{
+			html2 += '<td><span class="table-plus-btn" onclick="tableDelete(this)">-</span></td>';
+		}
+		html2 += '</tr>';
+	});
+	$('table[d-type="returnHtml"] tbody').html(html2);
+}
+function renderDataModel(dataModel){ //渲染数据模型---2
+	$('.dataModel-info-box input[name="complexity"]').val(dataModel.complexity);
+	$('.dataModel-info-box input[name="maturity"]').val(dataModel.maturity);
+	$('.dataModel-info-box input[name="aexp"]').val(dataModel.aexp);
+	$('.dataModel-info-box input[name="modelFile"]').val(dataModel.modelFile);
+	$('.dataModel-info-box input[name="modelFiles"]').val(dataModel.modelFile);
+	$('.dataModel-info-box input[name="configFile"]').val(dataModel.configFile);
+	$('.dataModel-info-box input[name="configFiles"]').val(dataModel.configFile);
+	$('.dataModel-info-box input[name="configParams"]').val(dataModel.configParams);
+	$('.dataModel-info-box input[name="configParam"]').val(dataModel.configParams);
+	$('.dataModel-info-box input[name="modelFilePwd"]').val(dataModel.modelFilePwd);
+	$('.dataModel-info-box input[name="configFilePwd"]').val(dataModel.configFilePwd);
+	$('.dataModel-info-box input[name="configParamsPwd"]').val(dataModel.configParamsPwd);
+	$('.dataModel-info-box input[name="concatName"]').val(dataModel.concatInfo.concatName);
+	$('.dataModel-info-box input[name="concatPhone"]').val(dataModel.concatInfo.concatPhone);
+	$('.dataModel-info-box input[name="concatEmail"]').val(dataModel.concatInfo.concatEmail);
+	$('.dataModel-info-box .otherDesc').val(dataModel.otherDesc);
+}
+function renderToolInfo(atAloneSoftware){
+	$('.tool-info-box input[name="aTIndustryField"]').val(atAloneSoftware.aTAloneIndustryField);
+	$('.tool-info-box input[name="aTVersionDesc"]').val(atAloneSoftware.aTAloneVersionDesc);
+	$('.tool-info-box #aTToolsIntroduce').val(atAloneSoftware.aTAloneToolsIntroduce);
+	$('.tool-info-box #aTAloneCloudHardwareResource').val(atAloneSoftware.aTAloneCloudHardwareResource);
+	$('.tool-info-box .otherDesc').val(atAloneSoftware.otherDesc);
+	$('.tool-info-box input[name="dataAddress"]').val(atAloneSoftware.dataAddress);
+}
+function renderToolSaasInfo(atSaaS){
+	$('.tool-info-box input[name="aTIndustryField"]').val(atSaaS.aTIndustryField);
+	$('.tool-info-box input[name="aTVersionDesc"]').val(atSaaS.aTVersionDesc);
+	$('.tool-info-box #aTToolsIntroduce').val(atSaaS.aTToolsIntroduce);
+	$('.tool-info-box .otherDesc').val(atSaaS.otherDesc);
+	$('.tool-info-box input[name="dataAddress"]').val(atSaaS.dataAddress);
+}
+function renderAppInfo(asAloneSoftware){
+	$('.app-info-box input[name="aSComplexity"]').val(asAloneSoftware.aSComplexity);
+	$('.app-info-box input[name="aSVersionDesc"]').val(asAloneSoftware.aSVersionDesc);
+	$('.app-info-box input[name="aSServiceLevel"]').val(asAloneSoftware.aSServiceLevel);
+	$('.app-info-box input[name="aSAexp"]').val(asAloneSoftware.aSAexp);
+	$('.app-info-box input[name="dataAddress"]').val(asAloneSoftware.dataAddress);
+	$('.app-info-box #aSCloudHardwareResource').val(asAloneSoftware.aSCloudHardwareResource);
+	$('.app-info-box #aSAintroduce').val(asAloneSoftware.aSAintroduce);
+	$('.app-info-box .otherDesc').val(asAloneSoftware.otherDesc);
+}
+function renderAppSaasInfo(asSaaS){
+	$('.app-info-box input[name="aSComplexity"]').val(asSaaS.sSComplexity);
+	$('.app-info-box input[name="aSVersionDesc"]').val(asSaaS.sSVersionDesc);
+	$('.app-info-box input[name="aSServiceLevel"]').val(asSaaS.sServiceLevel);
+	$('.app-info-box input[name="aSAexp"]').val(asSaaS.sSAexp);
+	$('.app-info-box input[name="dataAddress"]').val(asSaaS.dataAddress);
+	$('.app-info-box #aSAintroduce').val(asSaaS.sSAintroduce);
+	$('.app-info-box .otherDesc').val(asSaaS.otherDesc);
+}
+function renderFormatList(formatList){
+	var html = '';
+	var len = formatList.length;
+	$.each(formatList,function(index,data){
+		html += '<tr class="parent-tr">';
+		html += '<td class="name-input"><div class="inputbox"><input type="text" datatype="name" value="'+data.formatName+'" placeholder="请输入名称"></div></td>';
+		html += '<td class="number-input"><div class="inputbox"><input type="text" datatype="number" value="'+data.number+'" digits="true" placeholder="请输入规格" min="0"></div></td>';
+		html += '<td><div class="selectbox"><select name="format">';
+		if(data.format == 0){
+			html += '<option value="0" selected="selected">次</option>';
+		}else{
+			html += '<option value="0">次</option>';
+		}
+		if(data.format == 1){
+			html += '<option value="1" selected="selected">天</option>';
+		}else{
+			html += '<option value="1">天</option>';
+		}
+		if(data.format == 2){
+			html += '<option value="2" selected="selected">年</option>';
+		}else{
+			html += '<option value="2">年</option>';
+		}
+		html += '</select></div></td>';
+		html += '<td class="price-input"><div class="inputbox"><input class="price-inputs number " min="0" datatype="price" value="'+data.price / 100+'" type="text" placeholder="请输入价格"></div></td>';
+		if(index === len-1){
+			html += '<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
+		}else{
+			html += '<td><span class="table-plus-btn" onclick="tableDelete(this)">-</span></td>';
+		}
+
+		html += '</tr>';
+	});
+	$('table[d-type="priceHtml"] tbody').html(html);
+}
+function renderGoodsDeac(data){
+	$('#textarea1').val(data.goodsDesc);
+	$('#textarea2').val(data.goodsAdvantage);
+	$('#textarea3').val(data.afterSaleService);
+	$('#textarea4').val(data.appCase);
+	renderWangEdit();
+}
+function renderIsBook(isBook, onsaleStartDate){
+	if(isBook == 1){
+		$('#indate').val(onsaleStartDate);
+		$.jeDate("#indate", {
+			format: "YYYY-MM-DD hh:mm:ss",
+			isTime: true,
+			minDate: $.nowDate(0),
+			choosefun: function(val) {
+				$('#indate_s').val(val)
+			}
+		});
+	}else{
+		$.jeDate("#indate", {
+			format: "YYYY-MM-DD hh:mm:ss",
+			isTime: true,
+			minDate: $.nowDate(0),
+			choosefun: function(val) {
+				$('#indate_s').val(val)
+			}
+		});
+	}
+}
+function loadCountry(idCountry,idProvince) {
+	$.ajax({
+		type: "get",
+		url: host.website+'/region/getRegionCodeByPid',
+		data: {
+			parentId: idCountry
+		},
+		success: function (data) {
+			if (data.code == 1) {
+				if(data.data.length > 0){
+					renderOneRegion(idProvince,data.data)
+				}
+			} else {
+				$.alert(data.message)
+			}
+		}
+	});
+}
+function loadCity(idProvince,idCity) {
+	$.ajax({
+		type: "get",
+		url: host.website+'/region/getRegionCodeByPid',
+		data: {
+			parentId: idProvince
+		},
+		success: function (data) {
+			if (data.code == 1) {
+				if(data.data.length > 0){
+					renderTwoRegion(idCity,data.data)
+				}
+			} else {
+				$.alert(data.message)
+			}
+		}
+	});
+}
+function renderOneRegion(idProvince,data){
+	var html = '<option value="-1">全部</option>';
+	data.forEach(function(e){
+		if(e.id == idProvince){
+			html += '<option selected="selected" value="'+e.id+'">'+e.name+'</option>';
+		}else{
+			html += '<option value="'+e.id+'">'+e.name+'</option>';
+		}
+	});
+	$('#province').html(html);
+}
+function renderTwoRegion(idCity,data){
+	var html = '<option value="-1">全部</option>';
+	data.forEach(function(e){
+		if(e.id == idCity){
+			html += '<option selected="selected" value="'+e.id+'">'+e.name+'</option>';
+		}else{
+			html += '<option value="'+e.id+'">'+e.name+'</option>';
+		}
+	});
+	$('#city').html(html);
+}
+function initialize() {
+	getPriceBox();
+	floorPrice();
+}
+
+
+
+
 
 $('#J_submitBtn').click(function(){
 	if($("#goodsModifyForm").valid()){

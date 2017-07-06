@@ -28,6 +28,14 @@ var htmlPart = {
                 <div class="usercenter-right-box">
                     <div class="goodsEdit-box">
                         <h1>当前类目：<span class="category-title-box"></span></h1>
+                        <h1>
+                            <span>当前类目：</span>
+                            <div class="select-box display-inline-block">
+                                <select name="firstCategory" id="firstCategory" style="display: none" disabled="disabled"></select>
+                                <select name="twoCategory" id="twoCategory" style="display: none" onchange="loadLastChild(this)"></select>
+                                <select name="lastCategory" id="lastCategory" style="display: none" onchange="selectCatId(this)"></select>
+                            </div>
+                        </h1>
                         <h1>商品基本信息：</h1>
                         <div class="struct">
                             <table>
