@@ -2,10 +2,11 @@ var regionParam = 100000;
 var userId = $("input[name='userId']").val();
 var catId = $.getUrlParam('catId'),
 	category = $.getUrlParam('category'),
-	goodId = $.getUrlParam('id');
+	goodsId = $.getUrlParam('id');
 var urlPath = window.location.pathname;
 var E = window.wangEditor; //初始化富文本
 var itemNum = 0; //添加规格计数器
+var goodsTypeVal = $('#parentSelect').val();
 E.config.uploadImgUrl = host.static+'/upload/wangeditor';//上传图片
 E.config.uploadImgFileName = 'filename';
 E.config.menuFixed = false;//关闭菜单栏fixed
@@ -39,6 +40,7 @@ $(document).ready(function(){
 	}
 
 });
+//商品添加-------------------------------↓↓↓↓↓↓↓↓↓↓↓↓↓
 function goodsEditFn(){
 	$('.category-title-box').text(category);//渲染分类
 	loadRegion('province', regionParam); //加载地区
@@ -46,6 +48,142 @@ function goodsEditFn(){
 	uploadGoodsImg(); //上传商品图片
 	floorPrice();//监控价格输入为“.”时转换为“0.”
 	validataFn();//表单验证
+	$('#preview-div').mouseover(function(){
+		if($('#preview-img').attr('src')){
+			$('#replace-btn').show()
+		}
+	});
+	$('#preview-div').mouseout(function(){
+		$('#replace-btn').hide()
+	});
+	selectGoodsTypes(goodsTypeVal);
+	selectGoodsTypeFn();
+	$("input[name='typeId']").val(catId.substring(0,3));
+}
+function selectGoodsTypeFn(){ //选择商品类型
+	$('.struct.selects').hide();
+	$('.childrenSelect').hide();
+	$('.file-info-box').hide();
+	if(catId.substring(0,3) == 101){
+		$('#parentSelect').val(100).attr('disabled','disabled');
+		selectGoodsTypes(100)
+	}else if(catId.substring(0,3) == 102){
+		$('#parentSelect').val(2).attr('disabled','disabled');
+		selectGoodsTypes(2)
+	}else if(catId.substring(0,3) == 104){
+		$('#parentSelect').val(300).attr('disabled','disabled');
+		selectGoodsTypes(300)
+	}else{
+		$('#parentSelect').val(400).attr('disabled','disabled');
+		selectGoodsTypes(400)
+	}
+}
+function selectGoodsType(that){
+	$('.struct.selects').hide();
+	$('.childrenSelect').hide();
+	$('.file-info-box').hide();
+	var goodsTypeVal = $(that).val();
+	selectGoodsTypes(goodsTypeVal)
+}
+function childrenSelects(that){
+	$('.file-info-box').hide();
+	$('.struct.selects').hide();
+	$('#isOffline').val('0');
+	var childVal = $(that).val();
+	if(childVal == 0){
+		$('.file-info-box').show();
+	}else if(childVal == 1){
+		$('.api-info-box').show();
+	}else if(childVal == 4){
+		$('.tool-info-box').show();
+		$('.tool-saas-info').show();
+	}else if(childVal == 5){
+		$('.tool-info-box').show();
+		$('.tool-saas-info').hide();
+	}else if(childVal == 6){
+		$('.app-info-box').show();
+		$('.app-saas-info').show();
+	}else if(childVal == 7){
+		$('.app-info-box').show();
+		$('.app-saas-info').hide();
+	}
+}
+function selectLineInfo(that){
+	var isOffLineVal = $(that).val();
+	var p_val = $('.parentSelect').val();
+	var c_val = null;
+	console.log(c_val)
+	if(isOffLineVal == 1){
+		$('.struct.selects').hide();
+		$('.isOffLine-info-box').show();
+	}else{
+		$('.struct.selects').hide();
+		if(p_val == 100){
+			c_val = $('#childrenSelect1').val();
+			if(c_val == 0){
+				$('.file-info-box').show()
+			}else{
+				$('.api-info-box').show()
+			}
+		}else if(p_val == 300){
+			c_val = $('#childrenSelect2').val();
+			if(c_val == 6){
+				$('.app-info-box').show();
+				$('.app-saas-info').show();
+			}else if(c_val == 7){
+				$('.app-info-box').show();
+				$('.app-saas-info').hide();
+			}
+		}else if(p_val == 400){
+			c_val = $('#childrenSelect3').val();
+			if(c_val == 4){
+				$('.tool-info-box').show();
+				$('.tool-saas-info').show();
+			}else if(c_val == 5){
+				$('.tool-info-box').show();
+				$('.tool-saas-info').hide();
+			}
+		}else if(p_val == 2){
+			$('.dataModel-info-box').show()
+		}
+	}
+}
+function selector_offLine_fn(that){
+	$('.selector_offLine').hide();
+	var vals = $(that).val();
+	if(vals == 0){
+		$('.selector_offLine_upLoad').show();
+	}else{
+		$('.selector_offLine_input').show();
+	}
+}
+function selectGoodsTypes(goodsTypeVal){
+	if(goodsTypeVal == 100){
+		$('#childrenSelect1').show();
+		if($('#childrenSelect1').val() == 0){
+			$('.file-info-box').show();
+		}else if($('#childrenSelect1').val() == 1){
+			$('.api-info-box').show();
+		}
+	}else if(goodsTypeVal == 300){
+		$('#childrenSelect2').show();
+		$('.app-info-box').show();
+		if($('#childrenSelect2').val() == 6){
+			$('.app-saas-info').show();
+		}else if($('#childrenSelect2').val() == 7){
+			$('.app-saas-info').hide();
+		}
+	}else if(goodsTypeVal == 400){
+		$('#childrenSelect3').show();
+		$('.tool-info-box').show();
+		if($('#childrenSelect3').val() == 4){
+			$('.tool-info-box').show();
+		}else if($('#childrenSelect3').val() == 5){
+			$('.tool-saas-info').hide();
+		}
+	}else{
+		$('.dataModel-info-box').show();
+	}
 }
 function validataFn(){
 	$("#goodsModifyForm").validate({
@@ -281,27 +419,6 @@ $.validator.addMethod("isPricceData", function(value, element) {
 	var len = value.replace(/[\u0391-\uFFE5]/g,"aa").length;
 	return this.optional(element) || isPricce;
 }, "小数点不能超过2位");
-$('#J_submitBtn').click(function(){
-	if($("#goodsModifyForm").valid()){
-		if($.trim(editor1.$txt.text()).length > 0){
-			if($.trim(editor2.$txt.text()).length > 0){
-				if($.trim(editor3.$txt.text()).length > 0){
-					if($.trim(editor4.$txt.text()).length > 0){
-						backAddFn(submitGoodsPublish())
-					}else{
-						$.alert('商品描述不能为空',true,function () {})
-					}
-				}else{
-					$.alert('商品优势不能为空',true,function () {})
-				}
-			}else{
-				$.alert('售后服务不能为空',true,function () {})
-			}
-		}else{
-			$.alert('应用案例不能为空',true,function () {})
-		}
-	}
-});
 function backAddFn(data){
 	Loading.start();
 	$.ajax({
@@ -536,5 +653,269 @@ $('.fileUploadBtn').fileupload({
 	},
 	progressall: function (e, data) {
 
+	}
+});
+$('#fileupload11').fileupload({ //文件上传
+	url: host.static+'/upload/other',
+	dataType: 'json',
+	done: function (e, data) {
+		if(data.result.code == 1){
+			var obj = data.result.data[0];
+			$("#dataSample").val(obj.filePath);
+			$('.fileUploads_j span').html(data.files[0].name);
+			$('input[name="dataSample_s"]').val(obj.filePath);
+		}else{
+			$.alert(data.result.message)
+		}
+
+	},
+	progressall: function (e, data) {
+
+	}
+});
+$('#fileupload2').fileupload({ //文件上传
+	url: host.static+'/upload/other',
+	dataType: 'json',
+	done: function (e, data) {
+		if(data.result.code == 1){
+			var obj = data.result.data[0];
+			$("#J_fileUploadSS").val(obj.filePath);
+			$('.fileUploads span').html(data.files[0].name);
+			$('input[name="goodsImges2"]').val(obj.filePath);
+		}else{
+			$.alert(data.result.message)
+		}
+
+	},
+	progressall: function (e, data) {
+
+	}
+});
+//商品修改-------------------------------↓↓↓↓↓↓↓↓↓↓↓↓↓
+function goodsModifyFn(){
+	getGoodsDetails();
+}
+function getGoodsDetails(){ //获取商品信息
+	$.ajax({
+		url:host.website+'/goods/back/findById',
+		type:'get',
+		data:{
+			id:goodsId
+		},
+		success:function(data){
+			if(data.code == 1){
+				var data = data.data;
+				renderData(data);
+				loadFirstCategory(data.catId); //获取第一个分类
+			}else{
+				$.alert(data.message);
+			}
+		}
+	})
+}
+function loadFirstCategory(catId){ //获取首个分类
+	loadCategoryData($('#firstCategory'),0,catId.substring(0,3));
+	if(catId.substring(0,3)){
+		loadCategoryData($('#twoCategory'),catId.substring(0,3),catId.substring(0,6));
+	}
+	if(catId.substring(0,6)){
+		loadCategoryData($('#lastCategory'),catId.substring(0,6),catId.substring(0,9));
+	}
+}
+function loadLastChild(that){
+	loadCategoryData($('#lastCategory'),$(that).val(),null);
+}
+function selectCatId(that){
+	catId = $(that).val();
+}
+function loadCategoryData(that,pid,currentPid){
+
+	$.ajax({
+		type: "get",
+		url: '/category/findByPId/1',
+		data: {
+			pid:pid
+		},
+		success: function(data){
+			if(data.code == 1){
+				datas = data.data;
+				if(datas.length > 0){
+					for(var i = 0; i < datas.length; i++){
+						if(datas[i].catId == currentPid){
+							categoryHtml += '<option value="'+datas[i].catId+'" selected="selected">'+datas[i].catName+'</option>';
+						}else{
+							categoryHtml += '<option value="'+datas[i].catId+'">'+datas[i].catName+'</option>';
+						}
+					}
+					$(that).show().html(categoryHtml);
+					categoryHtml = '';
+				}
+			}else{
+				$.alert(data.message)
+			}
+		}
+	});
+}
+function renderData(data){//渲染页面
+	catId = data.catId;
+	$("input[name='typeId']").val(catId.substring(0,3));
+	// $('.category-title-box').html(data.catFullName); //商品分类
+	$('#J-ver').val(data.ver);//版本号
+	$('#J-goodsName').val(data.goodsName);//商品名称
+	$('#J-goodsBrief').val(data.goodsBrief);//简介
+	$('#keywords').val(data.keywords);//标签
+	$('#showcontent').html(getLength(data.goodsName));//商品名称长度
+	$('#showcontent2').html(getLength(data.goodsBrief));//商品名称长度
+	$('select[name="parentSelect"] option').each(function(){
+		if(data.goodsType == 0 || data.goodsType == 1){
+			$('#childrenSelect1').show();
+			if($(this).attr('value') == 100){
+				$(this).attr('selected','true')
+			}
+			$('select[name="childrenSelect1"] option').each(function(){
+				if($(this).attr('value') == data.goodsType){
+					$(this).attr('selected','true')
+				}
+			})
+		}else if(data.goodsType == 2){
+			if($(this).attr('value') == 2){
+				$(this).attr('selected','true')
+			}
+		}else if(data.goodsType == 4 || data.goodsType == 5){
+			$('#childrenSelect3').show();
+			if($(this).attr('value') == 400){
+				$(this).attr('selected','true')
+			}
+			$('select[name="childrenSelect3"] option').each(function(){
+				if($(this).attr('value') == data.goodsType){
+					$(this).attr('selected','true')
+				}
+			})
+		}else if(data.goodsType == 6 || data.goodsType == 7){
+			$('#childrenSelect2').show();
+			if($(this).attr('value') == 300){
+				$(this).attr('selected','true')
+			}
+			$('select[name="childrenSelect2"] option').each(function(){
+				if($(this).attr('value') == data.goodsType){
+					$(this).attr('selected','true')
+				}
+			})
+		}
+	});
+	var goodsTypeVal = $('#parentSelect').val();
+	selectGoodsTypes(goodsTypeVal);
+	$('#isOffline').val(data.isOffline);
+	if(data.isOffline == 0) {
+		if (data.goodsType == 0) {
+			// console.log(data.offLineData.isOnline)
+			var S_isOnline = null;
+			var S_dataPwd = null;
+			if(data.offLineData){
+				if(data.offLineData.isOnline){
+					S_isOnline = data.offLineData.isOnline;
+				}else{
+					S_isOnline = 0;
+				}
+				if(data.offLineData.dataPwd){
+					S_dataPwd = data.offLineData.dataPwd ;
+				}else{
+					S_dataPwd = '';
+				}
+			}else{
+				S_isOnline = 0;
+				S_dataPwd = '';
+			}
+			$('select[name="isOnline"]').val(S_isOnline);
+			$('input[name="dataPwd"]').val(S_dataPwd);
+			// console.log(data.offLineData.isOnline)
+			if(data.offLineData && data.offLineData.isOnline == 1 ){
+				$('.selector_offLine_input').show();
+				$('input[name="onlineUrl"]').val(data.offLineData && data.offLineData.onlineUrl ? data.offLineData.onlineUrl : '');
+				$('.selector_offLine_upLoad').hide();
+			}else{
+				$('#J_fileUploadSS').val(data.uploadUrl);
+				$('.fileUploads span').html(data.uploadUrl);
+				$('input[name="goodsImges2"]').val(data.uploadUrl);
+				$('.selector_offLine_input').hide();
+			}
+		} else if (data.goodsType == 1) {
+			renderApiInfo(data.apiInfo);
+		} else if (data.goodsType == 2) {
+			renderDataModel(data.dataModel);
+		} else if (data.goodsType == 4) {
+			renderToolInfo(data.atAloneSoftware);
+		} else if (data.goodsType == 5) {
+			renderToolSaasInfo(data.atSaaS);
+		} else if (data.goodsType == 6) {
+			renderAppInfo(data.asAloneSoftware)
+		} else if (data.goodsType == 7) {
+			renderAppSaasInfo(data.asSaaS)
+		}
+	}else if(data.isOffline == 1){
+		$('.struct.selects').hide();
+		$('.isOffLine-info-box').show();
+		$('.isOffLine-info-box input[name="concatName"]').val(data.offLineInfo.concatName);
+		$('.isOffLine-info-box input[name="concatPhone"]').val(data.offLineInfo.concatPhone);
+		$('.isOffLine-info-box input[name="concatEmail"]').val(data.offLineInfo.concatEmail);
+	}
+
+
+
+	// goodsTypes(data.goodsType,data.apiInfo,data.uploadUrl);
+	getAttrFn(data.catId); //获取属性
+	$.each(data.attrTypeList,function(index,items){
+		$.each(items.attrList,function(index,item){
+			attrIds.push(item.attrId);
+		});
+	});
+	$('#preview-img').attr('src',data.goodsImg);//图片
+	$('input[name="goodsImg"]').val(data.goodsImg);
+	$('input[name="goodsImges"]').val(data.goodsImg);
+	if(data.formatList && data.formatList.length > 0){
+		renderFormatList(data.formatList);//渲染价格
+	}
+	if(data.goodsDesc){
+		renderGoodsDeac(data.goodsDesc);
+	}
+	$('input[name="isBook"]').each(function(){
+		if($(this).val() == data.isBook){
+			$(this).attr('checked','true')
+		}
+	});
+	renderIsBook(data.isBook, data.onsaleStartDate);
+	// $('#showcontent').html(getLength($('#J-goodsName').val()));
+	// $('#showcontent2').html(getLength($('#J-goodsBrief').val()));
+	// console.log(data.areaProvince);
+	if(data.areaCountry > 0){
+		loadCountry(data.areaCountry,data.areaProvince)
+	}else{
+		loadCountry(100000,data.areaProvince)
+	}
+	if(data.areaProvince > 0){
+		loadCity(data.areaProvince,data.areaCity)
+	}
+	initialize(); // 初始化数据
+}
+
+$('#J_submitBtn').click(function(){
+	if($("#goodsModifyForm").valid()){
+		if($.trim(editor1.$txt.text()).length > 0){
+			if($.trim(editor2.$txt.text()).length > 0){
+				if($.trim(editor3.$txt.text()).length > 0){
+					if($.trim(editor4.$txt.text()).length > 0){
+						backAddFn(submitGoodsPublish())
+					}else{
+						$.alert('商品描述不能为空',true,function () {})
+					}
+				}else{
+					$.alert('商品优势不能为空',true,function () {})
+				}
+			}else{
+				$.alert('售后服务不能为空',true,function () {})
+			}
+		}else{
+			$.alert('应用案例不能为空',true,function () {})
+		}
 	}
 });
