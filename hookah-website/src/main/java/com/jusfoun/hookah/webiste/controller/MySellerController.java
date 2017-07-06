@@ -81,7 +81,7 @@ public class MySellerController {
 
     @RequestMapping(value = "/goodsModify", method = RequestMethod.GET)
     public String goodsModify(){
-        return "usercenter/myseller/goodsModify";
+        return "usercenter/myseller/goodsEdit";
     }
 
     @RequestMapping(value = "/trade", method = RequestMethod.GET)

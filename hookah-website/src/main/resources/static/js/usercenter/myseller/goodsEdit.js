@@ -197,25 +197,11 @@ function selectGoodsTypes(goodsTypeVal){
 		$('.dataModel-info-box').show();
 	}
 }
-var editor=null;
+var editor1 = null;
+var editor2 = null;
+var editor3 = null;
+var editor4 = null;
 function renderWangEdit(){
-	// editor = new wangEditor('textarea1','textarea2');
-	// editor.config.uploadImgUrl = host.static+'/upload/wangeditor';//上传图片（举例）
-	// editor.config.uploadImgFileName = 'filename';
-	// editor.config.menuFixed = false;//关闭菜单栏fixed
-	// // editor.config.pasteText = true;
-	// editor.config.menus = $.map(wangEditor.config.menus, function (item, key) {
-	// 	if (item === 'location') {
-	// 		return null;
-	// 	}
-	// 	if (item === 'video') {
-	// 		return null;
-	// 	}
-	// 	return item;
-	// });
-	// editor.create(); //初始化富文本
-
-
 	var E = window.wangEditor;
 	E.config.uploadImgUrl = host.static+'/upload/wangeditor';//上传图片（举例）
 	E.config.uploadImgFileName = 'filename';
@@ -231,13 +217,13 @@ function renderWangEdit(){
 		return item;
 	});
 
-	var editor1 = new E('textarea1');
+	editor1 = new E('textarea1');
 	editor1.create();
-	var editor2 = new E('textarea2');
+	editor2 = new E('textarea2');
 	editor2.create();
-	var editor3 = new E('textarea3');
+	editor3 = new E('textarea3');
 	editor3.create();
-	var editor4 = new E('textarea4');
+	editor4 = new E('textarea4');
 	editor4.create();
 
 }
@@ -314,7 +300,7 @@ $('#fileupload2').fileupload({ //文件上传
 			var obj = data.result.data[0];
 			$("#J_fileUploadSS").val(obj.filePath);
 			$('.fileUploads span').html(data.files[0].name);
-			$('input[name="goodsImges2"]').val(obj.absPath);
+			$('input[name="goodsImges2"]').val(obj.filePath);
 		}else{
 			$.alert(data.result.message)
 		}
@@ -332,7 +318,7 @@ $('#fileupload11').fileupload({ //文件上传
 			var obj = data.result.data[0];
 			$("#dataSample").val(obj.filePath);
 			$('.fileUploads_j span').html(data.files[0].name);
-			$('input[name="dataSample_s"]').val(obj.absPath);
+			$('input[name="dataSample_s"]').val(obj.filePath);
 		}else{
 			$.alert(data.result.message)
 		}
@@ -492,11 +478,22 @@ $.validator.addMethod("isPricceData", function(value, element) {
 }, "小数点不能超过2位");
 $('#J_submitBtn').click(function(){
 	if($("#goodsModifyForm").valid()){
-		if($.trim(editor.$txt.text()).length>0){
-			backAddFn(submitGoodsPublish())
+		if($.trim(editor1.$txt.text()).length > 0){
+			if($.trim(editor2.$txt.text()).length > 0){
+				if($.trim(editor3.$txt.text()).length > 0){
+					if($.trim(editor4.$txt.text()).length > 0){
+						backAddFn(submitGoodsPublish())
+					}else{
+						$.alert('商品描述不能为空',true,function () {})
+					}
+				}else{
+					$.alert('商品优势不能为空',true,function () {})
+				}
+			}else{
+				$.alert('售后服务不能为空',true,function () {})
+			}
 		}else{
-			$.alert('商品描述不能为空',true,function () {
-			})
+			$.alert('应用案例不能为空',true,function () {})
 		}
 	}
 });
@@ -629,8 +626,19 @@ function submitGoodsPublish(){
 			console.log(data.apiInfo.respParamList);//----------------------
 			data.apiInfo.respSample = $('#respSample').val();
 			data.apiInfo.respDataFormat = $('.api-info-box').find('input[name="respDataFormat"]:checked').val();
-			data.apiInfo.secretKeyName = $('.api-info-box').find('input[name="secretKeyName"]').val();
-			data.apiInfo.secretKeyValue = $('.api-info-box').find('input[name="secretKeyValue"]').val();
+			data.apiInfo.respDataMapping = {};
+			data.apiInfo.respDataMapping.codeAttr = $('input[name="codeAttr"]').val();
+			data.apiInfo.respDataMapping.successCode = $('input[name="successCode"]').val();
+			data.apiInfo.respDataMapping.failedCode = $('input[name="failedCode"]').val();
+			data.apiInfo.respDataMapping.successNoData = $('input[name="successNoData"]').val();
+			data.apiInfo.respDataMapping.infoAttr = $('input[name="infoAttr"]').val();
+			data.apiInfo.respDataMapping.dataAttr = $('input[name="dataAttr"]').val();
+			data.apiInfo.respDataMapping.totalNumAttr = $('input[name="totalNumAttr"]').val();
+			data.apiInfo.updateFreq = $('input[name="updateFreq"]').val();
+			data.apiInfo.dataNumDivRowNum = $('input[name="dataNumDivRowNum"]').val();
+			data.apiInfo.encryptInfo = {};
+			data.apiInfo.encryptInfo.secretKeyName = $('.api-info-box').find('input[name="secretKeyName"]').val();
+			data.apiInfo.encryptInfo.secretKeyValue = $('.api-info-box').find('input[name="secretKeyValue"]').val();
 		} else if (data.goodsType == 2) {
 			data.dataModel = {};
 			data.dataModel.complexity = $('input[name="complexity"]').val();

@@ -379,44 +379,17 @@ public class MgGoods extends GenericModel {
     }
     public static class RespDataMapping implements Serializable {
 
-        private String codeAttr; //编码属性
-        private String successCode; //成功
-        private String failedCode; //失败
-        private String successNoData; // 成功无数据
+        private CodeAttrBean codeAttrBean; //编码属性对象
         private String infoAttr; // 信息属性
         private String dataAttr; //数据属性
         private String totalNumAttr; //总条数属性
 
-        public String getCodeAttr() {
-            return codeAttr;
+        public CodeAttrBean getCodeAttrBean() {
+            return codeAttrBean;
         }
 
-        public void setCodeAttr(String codeAttr) {
-            this.codeAttr = codeAttr;
-        }
-
-        public String getSuccessCode() {
-            return successCode;
-        }
-
-        public void setSuccessCode(String successCode) {
-            this.successCode = successCode;
-        }
-
-        public String getFailedCode() {
-            return failedCode;
-        }
-
-        public void setFailedCode(String failedCode) {
-            this.failedCode = failedCode;
-        }
-
-        public String getSuccessNoData() {
-            return successNoData;
-        }
-
-        public void setSuccessNoData(String successNoData) {
-            this.successNoData = successNoData;
+        public void setCodeAttrBean(CodeAttrBean codeAttrBean) {
+            this.codeAttrBean = codeAttrBean;
         }
 
         public String getInfoAttr() {
@@ -444,6 +417,58 @@ public class MgGoods extends GenericModel {
         }
     }
 
+    public static class CodeAttrBean implements Serializable {
+
+        private String codeAttr; //编码属性
+        private CodeInfoBean codeInfoBean; // 编码属性对象信息
+
+        public String getCodeAttr() {
+            return codeAttr;
+        }
+
+        public void setCodeAttr(String codeAttr) {
+            this.codeAttr = codeAttr;
+        }
+
+        public CodeInfoBean getCodeInfoBean() {
+            return codeInfoBean;
+        }
+
+        public void setCodeInfoBean(CodeInfoBean codeInfoBean) {
+            this.codeInfoBean = codeInfoBean;
+        }
+    }
+    public static class CodeInfoBean implements Serializable {
+
+        private String successCode; //成功
+        private String failedCode; //失败
+        private String successNoData; // 成功无数据
+
+        public String getSuccessCode() {
+            return successCode;
+        }
+
+        public void setSuccessCode(String successCode) {
+            this.successCode = successCode;
+        }
+
+        public String getFailedCode() {
+            return failedCode;
+        }
+
+        public void setFailedCode(String failedCode) {
+            this.failedCode = failedCode;
+        }
+
+        public String getSuccessNoData() {
+            return successNoData;
+        }
+
+        public void setSuccessNoData(String successNoData) {
+            this.successNoData = successNoData;
+        }
+    }
+
     public static class PackageApiInfoBean implements Serializable {
         private String apiUrl; //接口地址
         private String apiMethod;//请求方式：GET/POST
@@ -453,11 +478,13 @@ public class MgGoods extends GenericModel {
         private List<FiledBean> respParamList;//返回参数
         private String respSample;//返回示例
 
-        private String apiType; // 接口类型： restful/webservice
+        private String apiType; // 接口类型： 0：restful ,1：webservice
         private String invokeMethod; //调用方法名
-        private String respDataFormat; // 返回数据格式 json/xml
-        private String secretKeyName; // 密钥名称
-        private String secretKeyValue; //密钥值
+        private String respDataFormat; // 返回数据格式 0：json ,1：xml , 2：text
+        private EncryptInfo encryptInfo; //加密信息
+        private RespDataMapping respDataMapping; //返回数据映射
+        private String updateFreq; //更新频率
+        private Integer dataNumDivRowNum; //数据条数/行数
 
         public String getApiUrl() {
             return apiUrl;
@@ -535,20 +562,36 @@ public class MgGoods extends GenericModel {
             this.invokeMethod = invokeMethod;
         }
 
-        public String getSecretKeyName() {
-            return secretKeyName;
+        public EncryptInfo getEncryptInfo() {
+            return encryptInfo;
         }
 
-        public void setSecretKeyName(String secretKeyName) {
-            this.secretKeyName = secretKeyName;
+        public void setEncryptInfo(EncryptInfo encryptInfo) {
+            this.encryptInfo = encryptInfo;
         }
 
-        public String getSecretKeyValue() {
-            return secretKeyValue;
+        public RespDataMapping getRespDataMapping() {
+            return respDataMapping;
         }
 
-        public void setSecretKeyValue(String secretKeyValue) {
-            this.secretKeyValue = secretKeyValue;
+        public void setRespDataMapping(RespDataMapping respDataMapping) {
+            this.respDataMapping = respDataMapping;
+        }
+
+        public String getUpdateFreq() {
+            return updateFreq;
+        }
+
+        public void setUpdateFreq(String updateFreq) {
+            this.updateFreq = updateFreq;
+        }
+
+        public Integer getDataNumDivRowNum() {
+            return dataNumDivRowNum;
+        }
+
+        public void setDataNumDivRowNum(Integer dataNumDivRowNum) {
+            this.dataNumDivRowNum = dataNumDivRowNum;
         }
     }
 

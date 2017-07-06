@@ -52,7 +52,7 @@
         <div class="form-group">
           <label class="col-sm-2 control-label" for="regTime">账户余额:</label>
           <div class="col-sm-4">
-            <input type="text" disabled="disabled" value="{{cuser.moneyBalance/100}}元" id="moneyBalance"
+            <input type="text" disabled="disabled" value="{{cuser.moneyBalance/100 | number:2}}元" id="moneyBalance"
                    name="moneyBalance" class="form-control none-edit"/>
           </div>
         </div>

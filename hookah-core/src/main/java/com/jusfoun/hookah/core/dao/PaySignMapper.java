@@ -4,4 +4,5 @@ import com.jusfoun.hookah.core.domain.PaySign;
 import com.jusfoun.hookah.core.generic.GenericDao;
 
 public interface PaySignMapper extends GenericDao<PaySign> {
+    int insertAndGetId(PaySign paySign);
 }

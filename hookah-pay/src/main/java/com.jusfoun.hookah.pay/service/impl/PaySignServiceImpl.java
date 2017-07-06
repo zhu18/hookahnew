@@ -5,9 +5,9 @@ import com.apex.etm.qss.client.fixservice.bean.ResultBean;
 import com.jusfoun.hookah.core.dao.PaySignMapper;
 import com.jusfoun.hookah.core.domain.PaySign;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
+import com.jusfoun.hookah.pay.util.FixClientUtil;
 import com.jusfoun.hookah.pay.util.PayConstants;
 import com.jusfoun.hookah.rpc.api.PaySignService;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +23,11 @@ import java.util.Map;
 @Service
 public class PaySignServiceImpl extends GenericServiceImpl<PaySign, String> implements PaySignService {
 
-	private IFixClient fixClient;
+	/*@Resource
+	private FixClientUtil client;*/
+
+	private IFixClient fixClient =new FixClientUtil().createClient();
+
 	@Resource
 	private PaySignMapper mapper;
 

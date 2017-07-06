@@ -120,7 +120,59 @@ public class PayConstants {
     }
 
 
+    /**
+     * pay_bank_card 状态 0正常 1解除绑定
+     */
+    public enum BankCardStatus {
 
+        binded((byte)0),
+        unbind((byte)1);
+
+        public int code;
+
+        BankCardStatus(int code) {
+            this.code = code;
+        }
+
+        public int getCode() {
+            return code;
+        }
+    }
+
+
+    /**
+     * payTradeRecode
+     账务类型：
+     1-商品支付扣款,
+     2-商品销售入账,
+     3-在线充值,
+     4-在线提现,
+     5-手工充值,
+     6-手工扣款,
+     7-线下充值,
+     8-提现冲账
+     */
+    public enum TradeType {
+
+        Deduct((byte)1),
+        IntoAccount((byte)2),
+        OnlineRecharge((byte)3),
+        OnlineCash((byte)4),
+        ManualRecharge((byte)5),
+        ManualDebit((byte)6),
+        OfflineRecharge((byte)7),
+        CashREverse((byte)8);
+
+        public byte code;
+
+        TradeType(byte code) {
+            this.code = code;
+        }
+
+        public byte getCode() {
+            return code;
+        }
+    }
 
 
 }

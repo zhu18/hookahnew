@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jusfoun.hookah.core.dao.ShowMapper">
+  <resultMap id="ListUserMap" type="com.jusfoun.hookah.core.domain.vo.ShowVO">
+    <id column="userId"  property="userId"/>
+    <id column="addTime"  property="addTime"/>
+  </resultMap>
+
+  <resultMap id="ListAmountMap" type="com.jusfoun.hookah.core.domain.vo.ShowVO">
+    <id column="orderAmount"  property="orderAmount"/>
+    <id column="addTime"  property="addTime"/>
+    <id column="pay_status"  property="payStatus"/>
+  </resultMap>
+
+  <resultMap id="activeUserMap" type="com.jusfoun.hookah.core.domain.vo.ShowVO">
+    <id column="loginName"  property="loginName"/>
+    <id column="addTime"  property="addTime"/>
+  </resultMap>
+
+  <resultMap id="areaMap" type="com.jusfoun.hookah.core.domain.vo.ShowVO">
+    <id column="count"  property="count"/>
+    <id column="pid"  property="pid"/>
+    <id column="name"  property="name"/>
+  </resultMap>
+
+  <select id="getRegisterUserCount" resultMap="ListUserMap">
+    SELECT COUNT(DISTINCT(user_id)) AS userId,
+    DATE_FORMAT(add_time,'%Y%m%d') addTime FROM user GROUP BY addTime DESC
+  </select>
+
+  <select id="getActiveUserCount" resultMap="activeUserMap">
+   SELECT COUNT(login_name) loginName,DATE_FORMAT(add_time,'%Y%m%d') addTime FROM login_log GROUP BY addTime DESC
+  </select>
+
+  <select id="getPayAmount" resultMap="ListAmountMap">
+     SELECT sum(order_amount) orderAmount,DATE_FORMAT(add_time,'%Y%m%d') addTime FROM order_info WHERE pay_status=2 GROUP BY addTime DESC
+  </select>
+
+  <select id="getUnPayAmount" resultMap="ListAmountMap">
+    SELECT sum(order_amount) orderAmount,DATE_FORMAT(add_time,'%Y%m%d') addTime FROM order_info WHERE pay_status=1 GROUP BY addTime DESC
+  </select>
+
+  <!--注册用户地域分布-->
+  <select id="userArea" resultMap="areaMap">
+  SELECT COUNT(a.pid) count,a.name from organization o JOIN
+  (SELECT b.id,a.id pid,a.name FROM region a JOIN region b ON a.id = b.pid where a.lel in(1,2) and b.lel in(1,2))a on a.id=o.region
+  group by a.pid
+  </select>
+
+</mapper>
