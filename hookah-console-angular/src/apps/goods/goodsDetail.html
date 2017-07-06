@@ -387,13 +387,13 @@
 								<label class="col-sm-2 control-label">返回格式</label>
 								<div class="col-sm-5">
 									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.apiInfo.apiType == '0'" disabled/>json
+										<input type="radio" ng-checked="editData.apiInfo.respDataFormat == '0'" disabled/>json
 									</label>
 									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.apiInfo.apiType == '1'" disabled/>xml
+										<input type="radio" ng-checked="editData.apiInfo.respDataFormat == '1'" disabled/>xml
 									</label>
 									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.apiInfo.apiType == '2'" disabled/>text
+										<input type="radio" ng-checked="editData.apiInfo.respDataFormat == '2'" disabled/>text
 									</label>
 								</div>
 							</div>
@@ -815,13 +815,13 @@
 								<label class="col-sm-2 control-label">返回格式</label>
 								<div class="col-sm-5">
 									<label class="radio-inline">
-										<input name="apiType" type="radio" ng-checked="editData.packageApiInfo.apiType == '0'"/>json
+										<input name="respDataFormat" type="radio" ng-checked="editData.packageApiInfo.respDataFormat == '0'"/>json
 									</label>
 									<label class="radio-inline">
-										<input name="apiType" type="radio" ng-checked="editData.packageApiInfo.apiType == '1'"/>xml
+										<input name="respDataFormat" type="radio" ng-checked="editData.packageApiInfo.respDataFormat == '1'"/>xml
 									</label>
 									<label class="radio-inline">
-										<input name="apiType" type="radio" ng-checked="editData.packageApiInfo.apiType == '2'"/>text
+										<input name="respDataFormat" type="radio" ng-checked="editData.packageApiInfo.respDataFormat == '2'"/>text
 									</label>
 								</div>
 							</div>
@@ -835,25 +835,25 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">编码属性</label>
 								<div class="col-sm-5">
-									<input type="text" name="codeAttr" class="form-control" value="{{editData.packageApiInfo.respDataMapping.codeAttr}}"/>
+									<input type="text" name="codeAttr" class="form-control" value="{{editData.packageApiInfo.respDataMapping.codeAttrBean.codeAttr}}"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">成功</label>
 								<div class="col-sm-5">
-									<input type="text" name="successCode" class="form-control" value="{{editData.packageApiInfo.respDataMapping.successCode}}"/>
+									<input type="text" name="successCode" class="form-control" value="{{editData.packageApiInfo.respDataMapping.codeAttrBean.codeInfoBean.successCode}}"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">失败</label>
 								<div class="col-sm-5">
-									<input type="text" name="failedCode" class="form-control" value="{{editData.packageApiInfo.respDataMapping.failedCode}}"/>
+									<input type="text" name="failedCode" class="form-control" value="{{editData.packageApiInfo.respDataMapping.codeAttrBean.codeInfoBean.failedCode}}"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">成功无数据</label>
 								<div class="col-sm-5">
-									<input type="text" name="successNoData" class="form-control" value="{{editData.packageApiInfo.respDataMapping.successNoData}}"/>
+									<input type="text" name="successNoData" class="form-control" value="{{editData.packageApiInfo.respDataMapping.codeAttrBean.codeInfoBean.successNoData}}"/>
 								</div>
 							</div>
 							<div class="form-group">
@@ -877,13 +877,13 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">更新频率</label>
 								<div class="col-sm-5">
-									<input type="text" name="updateFreq" class="form-control" value="{{editData.packageApiInfo.totalNumAttr}}"/>
+									<input type="text" name="updateFreq" class="form-control" value="{{editData.packageApiInfo.updateFreq}}"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">数据条数/行数</label>
 								<div class="col-sm-5">
-									<input type="text" name="dataNumDivRowNum" class="form-control" value="{{editData.packageApiInfo.totalNumAttr}}"/>
+									<input type="text" name="dataNumDivRowNum" class="form-control" value="{{editData.packageApiInfo.dataNumDivRowNum}}"/>
 								</div>
 							</div>
 
