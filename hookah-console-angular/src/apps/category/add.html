@@ -18,7 +18,7 @@
                  data-ng-model="catName" ng-maxlength="10" required/>
         </div>
       </div>
-      <div class="form-group">
+      <!--<div class="form-group">
         <label class="col-sm-2 control-label" for="domainId">店铺编码</label>
         <div class="col-sm-4">
           <input type="text" id="domainId" name="domainId" placeholder="必填项 / 最长为32"
@@ -33,6 +33,25 @@
         <div class="col-sm-4">
           <input type="text" id="catDesc" placeholder="必填项"
                  name="catDesc" class="form-control" data-ng-model="catDesc" required/>
+        </div>
+      </div>-->
+
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="goodsTypeId">数据类型</label>
+        <input type="hidden" id="goodsTypeId" name="goodsTypeId" value="{{dataTemp}}"/>
+        <input type="hidden" id="goodsTypeName" name="goodsTypeName"/>
+        <div class="col-sm-4">
+          <select id="dataTemp" data-ng-model="dataTemp" ng-options="dataTemp.typeId as dataTemp.typeName for dataTemp in dataTemps"  style="width: 184px;height: 32px">
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="goodsCode">商品代码</label>
+        <div class="col-sm-4">
+          <input type="text" id="goodsCode" placeholder="必填项"
+                 name="goodsCode" class="form-control" data-ng-model="goodsCode" ng-maxlength="20" required/>
         </div>
       </div>
 

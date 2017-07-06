@@ -1,8 +1,11 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
 import com.jusfoun.hookah.core.dao.CategoryMapper;
+import com.jusfoun.hookah.core.dao.GoodsTypeMapper;
 import com.jusfoun.hookah.core.domain.Category;
 import com.jusfoun.hookah.core.domain.CategoryVo;
+import com.jusfoun.hookah.core.domain.Goods;
+import com.jusfoun.hookah.core.domain.GoodsType;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
@@ -31,6 +34,9 @@ public class CategoryServiceImpl extends GenericServiceImpl<Category, String> im
 
     @Resource
     private CategoryMapper categoryMapper;
+
+    @Resource
+    GoodsTypeMapper goodsTypeMapper;
 
     @Resource
     public void setDao(CategoryMapper categoryMapper) {
@@ -83,6 +89,11 @@ public class CategoryServiceImpl extends GenericServiceImpl<Category, String> im
         Category treeNode = super.selectOne(filters1);
         CategoryVo nodeVo = new CategoryVo();
         BeanUtils.copyProperties(treeNode, nodeVo);
+/*
+        //绑定商品类型名称 ctp 2017.7.6 start
+        GoodsType goodsType = goodsTypeMapper.selectByPrimaryKey(treeNode.getDataTemp());
+        nodeVo.setGoodsTypeName(goodsType==null?"":goodsType.getTypeName());
+        //end*/
 
         List<Condition> filters = new ArrayList<>();
         if(Objects.nonNull(catSign)){
@@ -124,6 +135,10 @@ public class CategoryServiceImpl extends GenericServiceImpl<Category, String> im
                 //获取父类的层级
                 Category parentCat = super.selectById(parentId);
                 category.setLevel((byte)(1 + parentCat.getLevel()));
+                //获取父类的数据绑定类型和商品代码并赋值
+                category.setGoodsTypeId(parentCat.getGoodsTypeId());
+                category.setGoodsCode(parentCat.getGoodsCode());
+                category.setGoodsTypeName(parentCat.getGoodsTypeName());
             }
             //获取当前父节点下的属性的最大Id值
             String maxId = categoryMapper.findMaxByParentId(parentId);
@@ -157,8 +172,20 @@ public class CategoryServiceImpl extends GenericServiceImpl<Category, String> im
                 returnData.setMessage(ExceptionConst.get(ExceptionConst.AssertFailed));
                 return returnData;
             }
+            int count = super.updateByIdSelective(category);
+            if(count > 0){
+                //修改子类数据的商品类型和商品编码
+                Category category1 = super.selectById(cateId);
+                List<Condition> fifters = new ArrayList<Condition>();
+                fifters.add(Condition.eq("parentId",category1.getCatId()));
 
-            super.updateByIdSelective(category);
+                Category category2 = new Category();
+                category2.setGoodsTypeId(category1.getGoodsTypeId());
+                category2.setGoodsTypeName(category1.getGoodsTypeName());
+                category2.setGoodsCode(category1.getGoodsCode());
+                super.updateByConditionSelective(category2,fifters);
+            }
+
         }catch (Exception e) {
             returnData.setCode(ExceptionConst.Error);
             returnData.setMessage(e.toString());
@@ -184,6 +211,22 @@ public class CategoryServiceImpl extends GenericServiceImpl<Category, String> im
             returnData.setCode(ExceptionConst.Error);
             returnData.setMessage(e.toString());
             logger.error(e.getMessage());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
+
+    @Override
+    public ReturnData findOneLevelGoodsType() {
+        ReturnData returnData = new ReturnData();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            GoodsType goodsType = new GoodsType();
+            goodsType.setLevel(Byte.valueOf("1"));
+            returnData.setData(goodsTypeMapper.select(goodsType));
+        } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setMessage(e.getMessage());
             e.printStackTrace();
         }
         return returnData;

@@ -121,12 +121,42 @@ public class Category extends GenericModel {
 
     private String code; // 2017-05-24 15:30 编码
 
+    private Byte goodsTypeId; //2017-07-06 ctp 数据类型
+
+    private String goodsCode;
+
+    private String goodsTypeName;
+
     public String getCode() {
         return code;
     }
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getGoodsCode() {
+        return goodsCode;
+    }
+
+    public void setGoodsCode(String goodsCode) {
+        this.goodsCode = goodsCode;
+    }
+
+    public Byte getGoodsTypeId() {
+        return goodsTypeId;
+    }
+
+    public void setGoodsTypeId(Byte goodsTypeId) {
+        this.goodsTypeId = goodsTypeId;
+    }
+
+    public String getGoodsTypeName() {
+        return goodsTypeName;
+    }
+
+    public void setGoodsTypeName(String goodsTypeName) {
+        this.goodsTypeName = goodsTypeName;
     }
 
     /**
