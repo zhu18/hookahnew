@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jusfoun.hookah.core.generic.GenericModel;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Id;
 import java.util.Date;
 
 public class PayAccountRecord extends GenericModel {
@@ -13,6 +14,7 @@ public class PayAccountRecord extends GenericModel {
      *
      * @mbggenerated
      */
+    @Id
     private Long id;
 
     /**
