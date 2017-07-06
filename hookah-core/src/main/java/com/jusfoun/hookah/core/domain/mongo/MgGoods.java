@@ -453,11 +453,13 @@ public class MgGoods extends GenericModel {
         private List<FiledBean> respParamList;//返回参数
         private String respSample;//返回示例
 
-        private String apiType; // 接口类型： restful/webservice
+        private String apiType; // 接口类型： 0：restful ,1：webservice
         private String invokeMethod; //调用方法名
-        private String respDataFormat; // 返回数据格式 json/xml
-        private String secretKeyName; // 密钥名称
-        private String secretKeyValue; //密钥值
+        private String respDataFormat; // 返回数据格式 0：json ,1：xml , 2：text
+        private EncryptInfo encryptInfo; //加密信息
+        private RespDataMapping respDataMapping; //返回数据映射
+        private String updateFreq; //更新频率
+        private Integer dataNumDivRowNum; //数据条数/行数
 
         public String getApiUrl() {
             return apiUrl;
@@ -535,20 +537,36 @@ public class MgGoods extends GenericModel {
             this.invokeMethod = invokeMethod;
         }
 
-        public String getSecretKeyName() {
-            return secretKeyName;
+        public EncryptInfo getEncryptInfo() {
+            return encryptInfo;
         }
 
-        public void setSecretKeyName(String secretKeyName) {
-            this.secretKeyName = secretKeyName;
+        public void setEncryptInfo(EncryptInfo encryptInfo) {
+            this.encryptInfo = encryptInfo;
         }
 
-        public String getSecretKeyValue() {
-            return secretKeyValue;
+        public RespDataMapping getRespDataMapping() {
+            return respDataMapping;
         }
 
-        public void setSecretKeyValue(String secretKeyValue) {
-            this.secretKeyValue = secretKeyValue;
+        public void setRespDataMapping(RespDataMapping respDataMapping) {
+            this.respDataMapping = respDataMapping;
+        }
+
+        public String getUpdateFreq() {
+            return updateFreq;
+        }
+
+        public void setUpdateFreq(String updateFreq) {
+            this.updateFreq = updateFreq;
+        }
+
+        public Integer getDataNumDivRowNum() {
+            return dataNumDivRowNum;
+        }
+
+        public void setDataNumDivRowNum(Integer dataNumDivRowNum) {
+            this.dataNumDivRowNum = dataNumDivRowNum;
         }
     }
 

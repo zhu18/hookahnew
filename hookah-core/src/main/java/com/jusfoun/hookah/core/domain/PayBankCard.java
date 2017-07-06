@@ -17,11 +17,11 @@ public class PayBankCard extends GenericModel {
 
     private Integer payAccountId;
 
-    private String userid;
+    private String userId;
 
     private String bankName;
 
-    private String bankCore;
+    private String bankCode;
 
     private String cardOwner;
 
@@ -57,12 +57,12 @@ public class PayBankCard extends GenericModel {
         this.payAccountId = payAccountId;
     }
 
-    public String getUserid() {
-        return userid;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid == null ? null : userid.trim();
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
     }
 
     public String getBankName() {
@@ -73,12 +73,12 @@ public class PayBankCard extends GenericModel {
         this.bankName = bankName == null ? null : bankName.trim();
     }
 
-    public String getBankCore() {
-        return bankCore;
+    public String getBankCode() {
+        return bankCode;
     }
 
-    public void setBankCore(String bankCore) {
-        this.bankCore = bankCore == null ? null : bankCore.trim();
+    public void setBankCode(String bankCode) {
+        this.bankCode = bankCode == null ? null : bankCode.trim();
     }
 
     public String getCardOwner() {
