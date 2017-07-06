@@ -3,8 +3,18 @@ package com.jusfoun.hookah.pay.util;
 import com.apex.etm.qss.client.FixClientImpl;
 import com.apex.etm.qss.client.IFixClient;
 import com.apex.etm.qss.client.fixservice.FixCommInfoBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+import org.springframework.util.ResourceUtils;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
+@Component
 public class FixClientUtil {
+
+    private final static Logger logger = LoggerFactory.getLogger(FixClientUtil.class);
 
     private static IFixClient fixClient = null;
 
@@ -35,7 +45,17 @@ public class FixClientUtil {
         if(fixClient != null){
             return fixClient;
         }
-        String certDir = "/cers/";
+
+        File cfgFile = null;
+        try {
+            cfgFile = ResourceUtils.getFile("classpath");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            logger.error("FixClientUtil ---- 获取根路径失败");
+        }
+        String absolutePath = cfgFile.getAbsolutePath();
+        String certDir = absolutePath + File.separator + "cers" + File.separator;
+
         fixClient = new FixClientImpl();
         FixCommInfoBean bean = new FixCommInfoBean();
         //设置fix 服务器IP地址，格式：{ip}@{port}/tcp

@@ -73,7 +73,7 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 			payAccountRecord.setChannelType(ChannelType.QDABC);
 			payAccountRecord.setAddTime(new Date());
 	//		payAccountRecord.setAddOperator();	//userID用户的username
-			int n = payAccountRecordMapper.insert(payAccountRecord);
+			int n = payAccountRecordMapper.insertAndGetId(payAccountRecord);
 			System.out.println(n);
 			logger.info("插入" + (n > 0 ? "成功" : "失败"));
 
