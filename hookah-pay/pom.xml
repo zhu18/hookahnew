@@ -305,6 +305,7 @@
     </dependency>
     <dependency>
       <groupId>not-yet-commons-ssl</groupId>
+      <artifactId>not-yet-commons-ssl</artifactId>
        <version>0.3.11</version>
       <scope>system</scope>
       <systemPath>${basedir}/src/lib/not-yet-commons-ssl-0.3.11.jar</systemPath>
