@@ -61,6 +61,27 @@ public class PayConstants {
     }
 
     /**
+     * 1    签到
+     * 2    签退
+     */
+    public enum Sign {
+
+        SIGN_IN("1"),
+        SIGN_OUT("2");
+
+        public String code;
+
+        Sign(String code) {
+            this.code = code;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+    }
+    
+    /**
      * 农行签名流水号前缀BD
      */
     public static final String QDABC_PREFIX = "BD";
