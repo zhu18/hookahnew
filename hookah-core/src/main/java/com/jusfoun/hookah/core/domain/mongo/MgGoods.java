@@ -1160,21 +1160,42 @@ public class MgGoods extends GenericModel {
         }
     }
 
+    public static class TimeFrameBean implements Serializable{
+        private String startDate; // 开始时间
+        private String endDate; // 结束时间
+
+        public String getStartDate() {
+            return startDate;
+        }
+
+        public void setStartDate(String startDate) {
+            this.startDate = startDate;
+        }
+
+        public String getEndDate() {
+            return endDate;
+        }
+
+        public void setEndDate(String endDate) {
+            this.endDate = endDate;
+        }
+    }
+
     public static class OffLineDataBean implements Serializable {
         private String isOnline; //数据来源: 0 数据文件； 1 数据地址
         private String onlineUrl;//在线地址
         private String localUrl;//本地上传地址
         private String dataPwd;//数据密码
-        private String timeFrame;//时间范围
+        private TimeFrameBean timeFrame;//时间范围
         private String dataRows;//数据行数
         private String dataCapacity;//数据容量
         private String dataFormat ;//数据格式
 
-        public String getTimeFrame() {
+        public TimeFrameBean getTimeFrame() {
             return timeFrame;
         }
 
-        public void setTimeFrame(String timeFrame) {
+        public void setTimeFrame(TimeFrameBean timeFrame) {
             this.timeFrame = timeFrame;
         }
 
@@ -1233,6 +1254,8 @@ public class MgGoods extends GenericModel {
         public void setDataPwd(String dataPwd) {
             this.dataPwd = dataPwd;
         }
+
+
     }
 
     public OffLineInfoBean getOffLineInfo() {
