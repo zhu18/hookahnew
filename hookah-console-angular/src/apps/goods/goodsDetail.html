@@ -68,7 +68,7 @@
 						<label class="col-sm-2 control-label">商品图片</label>
 						<div class="col-sm-5">
 							<a href="{{editData.goodsImg}}" target="_blank">
-								<img ng-src="{{editData.goodsImg}}" style="max-width:300px;">
+								<img ng-src="host.static+'/'+{{editData.goodsImg}}" style="max-width:300px;">
 							</a>
 							<!--<img ng-src="{{editData.goodsImg}}" style="max-width: 300px; max-height: 500px">-->
 						</div>
@@ -684,15 +684,15 @@
 				</div>
 				<div data-ng-show="currentS == 3 && editData.goodsType == 1">
 					<div data-ng-if="editData.isOffline == 0">
-						<div data-ng-if="editData.goodsType == 1">
+						<div data-ng-if="editData.goodsType == 1" class="api-info-box">
 							<div class="form-group">
 								<label class="col-sm-2 control-label">接口类型</label>
 								<div class="col-sm-5">
 									<label class="radio-inline">
-										<input name="apiType" type="radio" ng-checked="editData.packageApiInfo.apiType == '0'" />restful
+										<input name="apiType"  value='0' type="radio" ng-checked="editData.packageApiInfo.apiType == '0'" />restful
 									</label>
 									<label class="radio-inline">
-										<input name="apiType" type="radio" ng-checked="editData.packageApiInfo.apiType == '1'" />webservice
+										<input name="apiType" value='1' type="radio" ng-checked="editData.packageApiInfo.apiType == '1'" />webservice
 									</label>
 								</div>
 							</div>
@@ -815,13 +815,13 @@
 								<label class="col-sm-2 control-label">返回格式</label>
 								<div class="col-sm-5">
 									<label class="radio-inline">
-										<input name="respDataFormat" type="radio" ng-checked="editData.packageApiInfo.respDataFormat == '0'"/>json
+										<input name="respDataFormat" value='0' type="radio" ng-checked="editData.packageApiInfo.respDataFormat == '0'"/>json
 									</label>
 									<label class="radio-inline">
-										<input name="respDataFormat" type="radio" ng-checked="editData.packageApiInfo.respDataFormat == '1'"/>xml
+										<input name="respDataFormat" value='1' type="radio" ng-checked="editData.packageApiInfo.respDataFormat == '1'"/>xml
 									</label>
 									<label class="radio-inline">
-										<input name="respDataFormat" type="radio" ng-checked="editData.packageApiInfo.respDataFormat == '2'"/>text
+										<input name="respDataFormat" value='2' type="radio" ng-checked="editData.packageApiInfo.respDataFormat == '2'"/>text
 									</label>
 								</div>
 							</div>
