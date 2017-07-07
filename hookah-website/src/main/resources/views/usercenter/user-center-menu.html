@@ -17,14 +17,15 @@
 <%}else{%>
 <div class="grid-left left-bar margin-top-10 margin-bottom-30 status">
     <ul class="u1">
-        <li class="text-align-center"><span class="fa fa-caret-down"></span><span class="fa fa-caret-up" style="display: none;"></span>用户中心 <span class="fa fa-"></span></li>
+        <li class="text-align-center">用户中心 <span class="fa fa-"></span></li>
         <!--<li class="text-align-center"><a href="/usercenter/userProfile"><span class="fa fa-file-text"></span>个人资料</a></li>-->
         <li class="text-align-center"><a href="/usercenter/index"><span class="fa fa-file-text"></span>个人中心</a></li>
         <!--<li class="text-align-center"><a href="/usercenter/infoCenter"><span class="fa fa-id-card-o"></span>信息中心</a></li>-->
         <li class="text-align-center">
-            <a href="/usercenter/fundmanage"><span class="fa fa-life-buoy" aria-hidden="true"></span>资金管理</a>
+             <div><span class="fa fa-caret-down"></span><span class="fa fa-caret-up" style="display: none;"></span>资金管理</div>
+             <!--<a href="/usercenter/fundmanage"><span class="fa fa-life-buoy" aria-hidden="true"></span>资金管理</a>-->
              <ul>
-                 <li>资金总览</li>
+                 <li><a href="/usercenter/fundmanage"></a>资金总览</li>
                  <li>充值</li>
                  <li>提现</li>
                  <li>资金记录</li>
