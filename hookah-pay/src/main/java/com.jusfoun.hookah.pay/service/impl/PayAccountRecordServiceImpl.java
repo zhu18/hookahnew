@@ -75,26 +75,26 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 
 			// 如果是提现 就先去扣客户帐
 			if(moneyInOutBo.getOperatorType() == PayConstants.TradeType.OnlineCash.code){
-				logger.info("提现操作先去扣客户账-->操作时间：" + LocalDateTime.now());
+				logger.info("当前用户【PayAccountID】---<" +moneyInOutBo.getPayAccountID()+ ">---提现操作先去扣客户账-->操作时间：" + LocalDateTime.now());
 				payAccountService.operatorByType(moneyInOutBo.getPayAccountID(), moneyInOutBo.operatorType, moneyInOutBo.getMoney());
 			}
 
 			// 添加外部流水记录 处理中状态
 			PayAccountRecord payAccountRecord = initPayAccountRecord(moneyInOutBo, serialNum);
-			logger.info("添加payAccountRecord记录-->操作时间：" + LocalDateTime.now());
+			logger.info("当前用户【PayAccountID】---<" +moneyInOutBo.getPayAccountID()+ ">---添加payAccountRecord记录-->操作时间：" + LocalDateTime.now());
 
 			// 添加内部流水记录
 			PayTradeRecord payTradeRecord = payTradeRecordService.initPayTradeRecord(moneyInOutBo);
-			logger.info("添加payTradeRecord记录-->操作时间：" + LocalDateTime.now());
+			logger.info("当前用户【PayAccountID】---<" +moneyInOutBo.getPayAccountID()+ ">---添加payTradeRecord记录-->操作时间：" + LocalDateTime.now());
 
 			// 根据当前用户信息获取银行卡信息
 			List<Condition> filters = new ArrayList();
 			filters.add(Condition.eq("userId", moneyInOutBo.getUserId()));
 			filters.add(Condition.eq("payAccountId", moneyInOutBo.getPayAccountID()));
 			PayBankCard payBankCard = payBankCardService.selectOne(filters);
-			logger.info("获取银行卡信息-->操作时间：" + LocalDateTime.now());
+			logger.info("当前用户【PayAccountID】---<" +moneyInOutBo.getPayAccountID()+ ">---获取银行卡信息-->操作时间：" + LocalDateTime.now());
 			if(payBankCard == null){
-				logger.info("获取银行卡信息失败-->操作时间：" + LocalDateTime.now());
+				logger.info("当前用户【PayAccountID】---<" +moneyInOutBo.getPayAccountID()+ ">---获取银行卡信息失败-->操作时间：" + LocalDateTime.now());
 				throw new RuntimeException();
 			}
 
@@ -134,7 +134,7 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 
 			// 待发送报文信息先存到Mongon
 			mgMoneyInOutLogService.initMgMoneyInOutLog(moneyInOutBo, paramMap, payAccountRecord.getId());
-			logger.info("待发送报文信息存到MgMoneyInOutLog数据库-->操作时间：" + LocalDateTime.now());
+			logger.info("当前用户【PayAccountID】---<" +moneyInOutBo.getPayAccountID()+ ">---待发送报文信息存到MgMoneyInOutLog数据库-->操作时间：" + LocalDateTime.now());
 
 			AxCallFunc callFunc = new AxCallFunc() {
 				public boolean onReply(JFixSess jFixSess, JFixComm jFixComm) {
@@ -148,7 +148,7 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 						resultMap.put("FID_CLJG", jFixSess.getItem(FixConstants.FID_CLJG));
 						resultMap.put("FID_JGSM", jFixSess.getItem(FixConstants.FID_JGSM));
 						mgMoneyInOutLogService.updateMgMoneyInOutLog(moneyInOutBo, resultMap, payAccountRecord.getId());
-						logger.info("返回报文信息存到MgMoneyInOutLog数据库-->操作时间：" + LocalDateTime.now());
+						logger.info("当前用户【PayAccountID】---<" +moneyInOutBo.getPayAccountID()+ ">---返回报文信息存到MgMoneyInOutLog数据库-->操作时间：" + LocalDateTime.now());
 
 						/**
 						 * 异步调用返回：
@@ -192,7 +192,7 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 
 
 								if(moneyInOutBo.getOperatorType() == PayConstants.TradeType.OnlineCash.code){
-									logger.info("提现失败冲正客户账-->操作时间：" + LocalDateTime.now());
+									logger.info("当前用户【PayAccountID】---<" +moneyInOutBo.getPayAccountID()+ ">---提现失败冲正客户账-->操作时间：" + LocalDateTime.now());
 									payAccountService.operatorByType(moneyInOutBo.getPayAccountID(), PayConstants.TradeType.CashREverse.code, moneyInOutBo.getMoney());
 								}
 							}
@@ -205,12 +205,12 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 						payTradeRecord.setUpdateOperator("SYSTEM");
 						payTradeRecord.setUpdateTime(new Date());
 						int n = payTradeRecordService.updateByIdSelective(payTradeRecord);
-						logger.info("业务处理--->payTradeRecord修改" + (n > 0 ? "成功" : "失败") + "-->操作时间：" + LocalDateTime.now());
+						logger.info("当前用户【PayAccountID】---<" +moneyInOutBo.getPayAccountID()+ ">---业务处理--->payTradeRecord修改" + (n > 0 ? "成功" : "失败") + "-->操作时间：" + LocalDateTime.now());
 
 						payAccountRecord.setUpdateOperator("SYSTEM");
 						payAccountRecord.setUpdateTime(new Date());
 						int j = payAccountRecordMapper.updateByPrimaryKeySelective(payAccountRecord);
-						logger.info("业务处理--->payAccountRecord修改" + (j > 0 ? "成功" : "失败") + "-->操作时间：" + LocalDateTime.now());
+						logger.info("当前用户【PayAccountID】---<" +moneyInOutBo.getPayAccountID()+ ">---业务处理--->payAccountRecord修改" + (j > 0 ? "成功" : "失败") + "-->操作时间：" + LocalDateTime.now());
 
 					}catch (Exception e){
 						e.printStackTrace();
@@ -222,12 +222,15 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 			};
 
 			ResultBean<Map<String, String>> resultBean;
-			if(moneyInOutBo.getOperatorType() == PayConstants.TransferType.MONEY_IN.code){
+			if(moneyInOutBo.getOperatorType() == PayConstants.TradeType.OnlineRecharge.code){
 				resultBean = fixClient.sendMoneyIn(paramMap, callFunc);
-			}else{
+			}else if(moneyInOutBo.getOperatorType() == PayConstants.TradeType.OnlineCash.code){
 				resultBean = fixClient.sendMoneyOut(paramMap, callFunc);
+			}else{
+				logger.error("当前用户【PayAccountID】---<" +moneyInOutBo.getPayAccountID()+ ">---出入金可操作类型错误-----{}", moneyInOutBo.getOperatorType());
+				return;
 			}
-			logger.info("发送报文-->操作时间：" + LocalDateTime.now());
+			logger.info("当前用户【PayAccountID】---<" +moneyInOutBo.getPayAccountID()+ ">---发送报文-->操作时间：" + LocalDateTime.now());
 			if(resultBean.isSuccess()){
 				//发送成功
 				//todo 发送成功处理
@@ -237,9 +240,9 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 				payAccountRecord.setUpdateTime(new Date());
 				int m = payAccountRecordMapper.updateByPrimaryKeySelective(payAccountRecord);
 				if(m != 1){
-					logger.error("报文发送成功，payAccountRecordMapper修改失败-->操作时间" + LocalDateTime.now());
+					logger.error("当前用户【PayAccountID】---<" +moneyInOutBo.getPayAccountID()+ ">---报文发送成功，payAccountRecordMapper修改失败-->操作时间" + LocalDateTime.now());
 				}
-				logger.info("报文发送成功-->操作时间：" + LocalDateTime.now());
+				logger.info("当前用户【PayAccountID】---<" +moneyInOutBo.getPayAccountID()+ ">---报文发送成功-->操作时间：" + LocalDateTime.now());
 
 			} else{
 				//发送失败
@@ -251,7 +254,7 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 				payTradeRecord.setTradeStatus(PayConstants.TransferStatus.fail.code);
 				int y = payTradeRecordService.updateByIdSelective(payTradeRecord);
 				if(y != 1){
-					logger.error("报文发送失败，payTradeRecordService修改失败-->操作时间" + LocalDateTime.now());
+					logger.error("当前用户【PayAccountID】---<" +moneyInOutBo.getPayAccountID()+ ">---报文发送失败，payTradeRecordService修改失败-->操作时间" + LocalDateTime.now());
 				}
 
 				payAccountRecord.setSendMsg(errorMsg);
@@ -260,9 +263,9 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 				payAccountRecord.setUpdateTime(new Date());
 				int m = payAccountRecordMapper.updateByPrimaryKeySelective(payAccountRecord);
 				if(m != 1){
-					logger.error("报文发送失败，payAccountRecordMapper修改失败-->操作时间" + LocalDateTime.now());
+					logger.error("当前用户【PayAccountID】---<" +moneyInOutBo.getPayAccountID()+ ">---报文发送失败，payAccountRecordMapper修改失败-->操作时间" + LocalDateTime.now());
 				}
-				logger.info("报文发送失败-->操作时间：" + LocalDateTime.now());
+				logger.info("当前用户【PayAccountID】---<" +moneyInOutBo.getPayAccountID()+ ">---报文发送失败-->操作时间：" + LocalDateTime.now());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -287,7 +290,7 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 		//		payAccountRecord.setAddOperator();	//userID用户的username
 		int n = payAccountRecordMapper.insertAndGetId(payAccountRecord);
 		if(n != 1){
-			logger.info("payAccountRecord初始化插入" + (n > 0 ? "成功" : "失败") + "-->操作时间：" + LocalDateTime.now());
+			logger.info("当前用户【PayAccountID】---<" +moneyInOutBo.getPayAccountID()+ ">---payAccountRecord初始化插入" + (n > 0 ? "成功" : "失败") + "-->操作时间：" + LocalDateTime.now());
 			throw new RuntimeException();
 		}
 		System.out.println(n);
