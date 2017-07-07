@@ -680,8 +680,8 @@ public class MgGoods extends GenericModel {
     public static class DataModelBean implements Serializable {
         // 数据模型
         private Integer modelType; // 模型类型：0 分类，1 回归，2 识别，3 预测，4 聚类，5 时间序列化，6 关联将维，7 优化
-        private String complexity; // 复杂度
-        private String maturity;    // 成熟度
+        private Integer complexity; // 复杂度: 0 高；1 中； 2 低
+        private Integer maturity;    // 成熟度：0 高；1 中； 2 低
         private String aexp;        // 应用经验
         private String relationServ;   // 配套服务
         private FileBean modelFile; // 模型文件及密码
@@ -697,19 +697,19 @@ public class MgGoods extends GenericModel {
             this.modelType = modelType;
         }
 
-        public String getComplexity() {
+        public Integer getComplexity() {
             return complexity;
         }
 
-        public void setComplexity(String complexity) {
+        public void setComplexity(Integer complexity) {
             this.complexity = complexity;
         }
 
-        public String getMaturity() {
+        public Integer getMaturity() {
             return maturity;
         }
 
-        public void setMaturity(String maturity) {
+        public void setMaturity(Integer maturity) {
             this.maturity = maturity;
         }
 
