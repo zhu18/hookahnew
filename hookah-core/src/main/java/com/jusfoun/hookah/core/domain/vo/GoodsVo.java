@@ -17,10 +17,10 @@ public class GoodsVo extends Goods implements Serializable {
     private MgGoods.ApiInfoBean apiInfo;
 
     private MgGoods.DataModelBean dataModel;                //数据模型
-    private MgGoods.ASSaaSBean asSaaS;                      // 应用场景SaaS
-    private MgGoods.ASAloneSoftwareBean asAloneSoftware;    // 应用场景 独立软件
-    private MgGoods.ATSaaSBean atSaaS;                      // 分析工具 SaaS
-    private MgGoods.ATAloneSoftwareBean atAloneSoftware;    // 分析工具 独立软件
+    private MgGoods.SaasAndAloneBean asSaaS;                      // 应用场景SaaS
+    private MgGoods.SaasAndAloneBean asAloneSoftware;    // 应用场景 独立软件
+    private MgGoods.SaasAndAloneBean atSaaS;                      // 分析工具 SaaS
+    private MgGoods.SaasAndAloneBean atAloneSoftware;    // 分析工具 独立软件
     private MgGoods.OffLineInfoBean offLineInfo; //线下交付信息
     private MgGoods.OffLineDataBean offLineData;//离线数据信息
     private MgGoods.PackageApiInfoBean packageApiInfo;
@@ -175,35 +175,35 @@ public class GoodsVo extends Goods implements Serializable {
         this.dataModel = dataModel;
     }
 
-    public MgGoods.ASSaaSBean getAsSaaS() {
+    public MgGoods.SaasAndAloneBean getAsSaaS() {
         return asSaaS;
     }
 
-    public void setAsSaaS(MgGoods.ASSaaSBean asSaaS) {
+    public void setAsSaaS(MgGoods.SaasAndAloneBean asSaaS) {
         this.asSaaS = asSaaS;
     }
 
-    public MgGoods.ASAloneSoftwareBean getAsAloneSoftware() {
+    public MgGoods.SaasAndAloneBean getAsAloneSoftware() {
         return asAloneSoftware;
     }
 
-    public void setAsAloneSoftware(MgGoods.ASAloneSoftwareBean asAloneSoftware) {
+    public void setAsAloneSoftware(MgGoods.SaasAndAloneBean asAloneSoftware) {
         this.asAloneSoftware = asAloneSoftware;
     }
 
-    public MgGoods.ATSaaSBean getAtSaaS() {
+    public MgGoods.SaasAndAloneBean getAtSaaS() {
         return atSaaS;
     }
 
-    public void setAtSaaS(MgGoods.ATSaaSBean atSaaS) {
+    public void setAtSaaS(MgGoods.SaasAndAloneBean atSaaS) {
         this.atSaaS = atSaaS;
     }
 
-    public MgGoods.ATAloneSoftwareBean getAtAloneSoftware() {
+    public MgGoods.SaasAndAloneBean getAtAloneSoftware() {
         return atAloneSoftware;
     }
 
-    public void setAtAloneSoftware(MgGoods.ATAloneSoftwareBean atAloneSoftware) {
+    public void setAtAloneSoftware(MgGoods.SaasAndAloneBean atAloneSoftware) {
         this.atAloneSoftware = atAloneSoftware;
     }
 
