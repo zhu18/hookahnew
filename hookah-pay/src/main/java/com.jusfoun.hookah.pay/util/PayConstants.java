@@ -81,12 +81,12 @@ public class PayConstants {
     public static final String QD_BZ = "RMB";
 
     /**
-     * transfer 类型 2出金 1入金
+     * transfer 类型 2出金 1入金 和 payTradeRecord 同步 3入金4出金
      */
     public enum TransferType {
 
-        MONEY_IN((byte)1),
-        MONEY_OUT((byte)2);
+        MONEY_IN((byte)3),
+        MONEY_OUT((byte)4);
 
         public byte code;
 

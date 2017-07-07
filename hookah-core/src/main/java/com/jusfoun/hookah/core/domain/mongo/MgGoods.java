@@ -28,11 +28,11 @@ public class MgGoods extends GenericModel {
     private List<ImgBean> imgList;
     private ApiInfoBean apiInfo;
     private PackageApiInfoBean packageApiInfo;
-    private DataModelBean dataModel;
-    private ASSaaSBean asSaaS;
-    private ASAloneSoftwareBean asAloneSoftware; //应用场景独立软件
-    private ATSaaSBean atSaaS;
-    private ATAloneSoftwareBean atAloneSoftware;
+    private DataModelBean dataModel; // 数据模型
+    private SaasAndAloneBean asSaaS; //应用场景  ApplicationScene SaaS
+    private SaasAndAloneBean asAloneSoftware; //应用场景 独立软件
+    private SaasAndAloneBean atSaaS; //分析工具 SaaS
+    private SaasAndAloneBean atAloneSoftware;// 分析工具 独立软件
     private Long clickRate;
     private OffLineInfoBean offLineInfo;//线下交付信息
     private OffLineDataBean offLineData;//离线数据信息
@@ -89,38 +89,6 @@ public class MgGoods extends GenericModel {
         this.dataModel = dataModel;
     }
 
-    public ASSaaSBean getAsSaaS() {
-        return asSaaS;
-    }
-
-    public void setAsSaaS(ASSaaSBean asSaaS) {
-        this.asSaaS = asSaaS;
-    }
-
-    public ASAloneSoftwareBean getAsAloneSoftware() {
-        return asAloneSoftware;
-    }
-
-    public void setAsAloneSoftware(ASAloneSoftwareBean asAloneSoftware) {
-        this.asAloneSoftware = asAloneSoftware;
-    }
-
-    public ATSaaSBean getAtSaaS() {
-        return atSaaS;
-    }
-
-    public void setAtSaaS(ATSaaSBean atSaaS) {
-        this.atSaaS = atSaaS;
-    }
-
-    public ATAloneSoftwareBean getAtAloneSoftware() {
-        return atAloneSoftware;
-    }
-
-    public void setAtAloneSoftware(ATAloneSoftwareBean atAloneSoftware) {
-        this.atAloneSoftware = atAloneSoftware;
-    }
-
     public void setApiInfo(ApiInfoBean apiInfo) {
         this.apiInfo = apiInfo;
     }
@@ -131,6 +99,63 @@ public class MgGoods extends GenericModel {
 
     public void setPackageApiInfo(PackageApiInfoBean packageApiInfo) {
         this.packageApiInfo = packageApiInfo;
+    }
+
+    public static class SaasAndAloneBean implements Serializable {
+        private String coreFunction;//核心功能
+        private String technologicalSuperiority;//技术优势
+        private String teamAdvantage;//团队优势
+        private String desiredEnvironment;//所需环境
+        private String dataNeeded;//所需数据
+        private String dataAddress;//下载地址,在线访问地址
+
+        public String getCoreFunction() {
+            return coreFunction;
+        }
+
+        public void setCoreFunction(String coreFunction) {
+            this.coreFunction = coreFunction;
+        }
+
+        public String getTechnologicalSuperiority() {
+            return technologicalSuperiority;
+        }
+
+        public void setTechnologicalSuperiority(String technologicalSuperiority) {
+            this.technologicalSuperiority = technologicalSuperiority;
+        }
+
+        public String getTeamAdvantage() {
+            return teamAdvantage;
+        }
+
+        public void setTeamAdvantage(String teamAdvantage) {
+            this.teamAdvantage = teamAdvantage;
+        }
+
+        public String getDesiredEnvironment() {
+            return desiredEnvironment;
+        }
+
+        public void setDesiredEnvironment(String desiredEnvironment) {
+            this.desiredEnvironment = desiredEnvironment;
+        }
+
+        public String getDataNeeded() {
+            return dataNeeded;
+        }
+
+        public void setDataNeeded(String dataNeeded) {
+            this.dataNeeded = dataNeeded;
+        }
+
+        public String getDataAddress() {
+            return dataAddress;
+        }
+
+        public void setDataAddress(String dataAddress) {
+            this.dataAddress = dataAddress;
+        }
     }
 
     public static class FormatBean implements Serializable {
@@ -653,42 +678,38 @@ public class MgGoods extends GenericModel {
     }
 
     public static class DataModelBean implements Serializable {
-
         // 数据模型
-        private String complexity;  // 复杂度
-        private String maturity;    // 成熟度
+        private Integer modelType; // 模型类型：0 分类，1 回归，2 识别，3 预测，4 聚类，5 时间序列化，6 关联将维，7 优化
+        private Integer complexity; // 复杂度: 0 高；1 中； 2 低
+        private Integer maturity;    // 成熟度：0 高；1 中； 2 低
         private String aexp;        // 应用经验
-        private String modelFile;   // 模型文件
-        private String configFile;  // 配置文件
-        private String configParams;    // 配置参数
-        private String modelFilePwd; //模型文件密码
-        private String configFilePwd; // 配置文件密码
-        private String configParamsPwd;// 配置参数密码
-        private String otherDesc;
+        private String relationServ;   // 配套服务
+        private FileBean modelFile; // 模型文件及密码
+        private FileBean configFile; // 配置文件及密码
+        private FileBean paramFile; // 配置参数及密码
         private OffLineInfoBean concatInfo;// 联系信息
-        private String deliveryMethod;//交付方式
 
-        public String getDeliveryMethod() {
-            return deliveryMethod;
+        public Integer getModelType() {
+            return modelType;
         }
 
-        public void setDeliveryMethod(String deliveryMethod) {
-            this.deliveryMethod = deliveryMethod;
+        public void setModelType(Integer modelType) {
+            this.modelType = modelType;
         }
 
-        public String getComplexity() {
+        public Integer getComplexity() {
             return complexity;
         }
 
-        public void setComplexity(String complexity) {
+        public void setComplexity(Integer complexity) {
             this.complexity = complexity;
         }
 
-        public String getMaturity() {
+        public Integer getMaturity() {
             return maturity;
         }
 
-        public void setMaturity(String maturity) {
+        public void setMaturity(Integer maturity) {
             this.maturity = maturity;
         }
 
@@ -700,60 +721,36 @@ public class MgGoods extends GenericModel {
             this.aexp = aexp;
         }
 
-        public String getModelFile() {
+        public String getRelationServ() {
+            return relationServ;
+        }
+
+        public void setRelationServ(String relationServ) {
+            this.relationServ = relationServ;
+        }
+
+        public FileBean getModelFile() {
             return modelFile;
         }
 
-        public void setModelFile(String modelFile) {
+        public void setModelFile(FileBean modelFile) {
             this.modelFile = modelFile;
         }
 
-        public String getConfigFile() {
+        public FileBean getConfigFile() {
             return configFile;
         }
 
-        public void setConfigFile(String configFile) {
+        public void setConfigFile(FileBean configFile) {
             this.configFile = configFile;
         }
 
-        public String getConfigParams() {
-            return configParams;
+        public FileBean getParamFile() {
+            return paramFile;
         }
 
-        public void setConfigParams(String configParams) {
-            this.configParams = configParams;
-        }
-
-        public String getOtherDesc() {
-            return otherDesc;
-        }
-
-        public void setOtherDesc(String otherDesc) {
-            this.otherDesc = otherDesc;
-        }
-
-        public String getModelFilePwd() {
-            return modelFilePwd;
-        }
-
-        public void setModelFilePwd(String modelFilePwd) {
-            this.modelFilePwd = modelFilePwd;
-        }
-
-        public String getConfigFilePwd() {
-            return configFilePwd;
-        }
-
-        public void setConfigFilePwd(String configFilePwd) {
-            this.configFilePwd = configFilePwd;
-        }
-
-        public String getConfigParamsPwd() {
-            return configParamsPwd;
-        }
-
-        public void setConfigParamsPwd(String configParamsPwd) {
-            this.configParamsPwd = configParamsPwd;
+        public void setParamFile(FileBean paramFile) {
+            this.paramFile = paramFile;
         }
 
         public OffLineInfoBean getConcatInfo() {
@@ -765,392 +762,24 @@ public class MgGoods extends GenericModel {
         }
     }
 
-    public static class ASSaaSBean implements Serializable {
+    public static class FileBean implements Serializable{
+        private String fileAddress; // 文件地址
+        private String filePwd; // 密码
 
-        // 应用场景  ApplicationScene SaaS
-        private String sSComplexity;  // 复杂度
-        private String sSVersionDesc;  // 版本说明
-        private String sServiceLevel;  // 服务等级
-        private String sSAexp;        // 应用经验
-        private String sSAintroduce;  // 应用介绍
-        private String otherDesc;
-        private String dataAddress;//数据地址
-        private String sUser;//用户名
-        private String sPwd;//密码
-        private String coreFunction;//核心功能
-        private String teamAdvantage;//团队优势
-        private String desiredEnvironment;//所需环境
-        private String dataNeeded;//所需数据
-        private String deliveryMethod;//交付方式
-
-        public String getCoreFunction() {
-            return coreFunction;
-        }
-
-        public void setCoreFunction(String coreFunction) {
-            this.coreFunction = coreFunction;
-        }
-
-        public String getTeamAdvantage() {
-            return teamAdvantage;
-        }
-
-        public void setTeamAdvantage(String teamAdvantage) {
-            this.teamAdvantage = teamAdvantage;
-        }
-
-        public String getDesiredEnvironment() {
-            return desiredEnvironment;
-        }
-
-        public void setDesiredEnvironment(String desiredEnvironment) {
-            this.desiredEnvironment = desiredEnvironment;
-        }
-
-        public String getDataNeeded() {
-            return dataNeeded;
-        }
-
-        public void setDataNeeded(String dataNeeded) {
-            this.dataNeeded = dataNeeded;
-        }
-
-        public String getDeliveryMethod() {
-            return deliveryMethod;
-        }
-
-        public void setDeliveryMethod(String deliveryMethod) {
-            this.deliveryMethod = deliveryMethod;
-        }
-
-        public String getsSComplexity() {
-            return sSComplexity;
-        }
-
-        public void setsSComplexity(String sSComplexity) {
-            this.sSComplexity = sSComplexity;
-        }
-
-        public String getsSVersionDesc() {
-            return sSVersionDesc;
-        }
-
-        public void setsSVersionDesc(String sSVersionDesc) {
-            this.sSVersionDesc = sSVersionDesc;
-        }
-
-        public String getsServiceLevel() {
-            return sServiceLevel;
-        }
-
-        public void setsServiceLevel(String sServiceLevel) {
-            this.sServiceLevel = sServiceLevel;
-        }
-
-        public String getsSAexp() {
-            return sSAexp;
-        }
-
-        public void setsSAexp(String sSAexp) {
-            this.sSAexp = sSAexp;
-        }
-
-        public String getsSAintroduce() {
-            return sSAintroduce;
-        }
-
-        public void setsSAintroduce(String sSAintroduce) {
-            this.sSAintroduce = sSAintroduce;
-        }
-
-        public String getOtherDesc() {
-            return otherDesc;
-        }
-
-        public void setOtherDesc(String otherDesc) {
-            this.otherDesc = otherDesc;
-        }
-
-        public String getDataAddress() {
-            return dataAddress;
-        }
-
-        public void setDataAddress(String dataAddress) {
-            this.dataAddress = dataAddress;
-        }
-
-        public String getsUser() {
-            return sUser;
-        }
-
-        public void setsUser(String sUser) {
-            this.sUser = sUser;
-        }
-
-        public String getsPwd() {
-            return sPwd;
-        }
-
-        public void setsPwd(String sPwd) {
-            this.sPwd = sPwd;
-        }
-    }
-
-    public static class ASAloneSoftwareBean implements Serializable {
-
-        // 应用场景  ApplicationScene  独立软件
-        private String aSComplexity;  // 复杂度
-        private String aSVersionDesc;  // 版本说明
-        private String aSServiceLevel;  // 服务等级
-        private String aSAexp;        // 应用经验
-        private String aSAintroduce;  // 应用介绍
-        private String aSCloudHardwareResource;  // 云硬件资源
-        private String otherDesc;
-        private String dataAddress;//数据地址
-        private String coreFunction;//核心功能
-        private String technologicalSuperiority;//技术优势
-        private String teamAdvantage;//团队优势
-        private String desiredEnvironment;//所需环境
-        private String dataNeeded;//所需数据
-        private String deliveryMethod;//交付方式
-
-        public String getCoreFunction() {
-            return coreFunction;
-        }
-
-        public void setCoreFunction(String coreFunction) {
-            this.coreFunction = coreFunction;
-        }
-
-        public String getTechnologicalSuperiority() {
-            return technologicalSuperiority;
-        }
-
-        public void setTechnologicalSuperiority(String technologicalSuperiority) {
-            this.technologicalSuperiority = technologicalSuperiority;
-        }
-
-        public String getTeamAdvantage() {
-            return teamAdvantage;
-        }
-
-        public void setTeamAdvantage(String teamAdvantage) {
-            this.teamAdvantage = teamAdvantage;
-        }
-
-        public String getDesiredEnvironment() {
-            return desiredEnvironment;
-        }
-
-        public void setDesiredEnvironment(String desiredEnvironment) {
-            this.desiredEnvironment = desiredEnvironment;
-        }
-
-        public String getDataNeeded() {
-            return dataNeeded;
-        }
-
-        public void setDataNeeded(String dataNeeded) {
-            this.dataNeeded = dataNeeded;
-        }
-
-        public String getDeliveryMethod() {
-            return deliveryMethod;
-        }
-
-        public void setDeliveryMethod(String deliveryMethod) {
-            this.deliveryMethod = deliveryMethod;
-        }
-
-        public String getaSComplexity() {
-            return aSComplexity;
-        }
-
-        public void setaSComplexity(String aSComplexity) {
-            this.aSComplexity = aSComplexity;
-        }
-
-        public String getaSVersionDesc() {
-            return aSVersionDesc;
-        }
-
-        public void setaSVersionDesc(String aSVersionDesc) {
-            this.aSVersionDesc = aSVersionDesc;
-        }
-
-        public String getaSServiceLevel() {
-            return aSServiceLevel;
-        }
-
-        public void setaSServiceLevel(String aSServiceLevel) {
-            this.aSServiceLevel = aSServiceLevel;
-        }
-
-        public String getaSAexp() {
-            return aSAexp;
-        }
-
-        public void setaSAexp(String aSAexp) {
-            this.aSAexp = aSAexp;
-        }
-
-        public String getaSAintroduce() {
-            return aSAintroduce;
-        }
-
-        public void setaSAintroduce(String aSAintroduce) {
-            this.aSAintroduce = aSAintroduce;
-        }
-
-        public String getaSCloudHardwareResource() {
-            return aSCloudHardwareResource;
-        }
-
-        public void setaSCloudHardwareResource(String aSCloudHardwareResource) {
-            this.aSCloudHardwareResource = aSCloudHardwareResource;
-        }
-
-        public String getOtherDesc() {
-            return otherDesc;
-        }
-
-        public void setOtherDesc(String otherDesc) {
-            this.otherDesc = otherDesc;
-        }
-
-        public String getDataAddress() {
-            return dataAddress;
-        }
-
-        public void setDataAddress(String dataAddress) {
-            this.dataAddress = dataAddress;
-        }
-    }
-
-    public static class ATSaaSBean implements Serializable {
-
-        // 分析工具 SaaS
-        private String aTIndustryField;       // 行业领域
-        private String aTVersionDesc;       // 版本说明
-        private String aTToolsIntroduce;       // 工具介绍
-        private String otherDesc;
-        private String dataAddress;//数据地址
-        private String sUser;//用户名
-        private String sPwd;//密码
-
-        public String getaTIndustryField() {
-            return aTIndustryField;
-        }
-
-        public void setaTIndustryField(String aTIndustryField) {
-            this.aTIndustryField = aTIndustryField;
-        }
-
-        public String getaTVersionDesc() {
-            return aTVersionDesc;
-        }
-
-        public void setaTVersionDesc(String aTVersionDesc) {
-            this.aTVersionDesc = aTVersionDesc;
-        }
-
-        public String getaTToolsIntroduce() {
-            return aTToolsIntroduce;
-        }
-
-        public void setaTToolsIntroduce(String aTToolsIntroduce) {
-            this.aTToolsIntroduce = aTToolsIntroduce;
-        }
-
-        public String getOtherDesc() {
-            return otherDesc;
-        }
-
-        public void setOtherDesc(String otherDesc) {
-            this.otherDesc = otherDesc;
-        }
-
-        public String getDataAddress() {
-            return dataAddress;
-        }
-
-        public void setDataAddress(String dataAddress) {
-            this.dataAddress = dataAddress;
-        }
-
-        public String getsUser() {
-            return sUser;
-        }
-
-        public void setsUser(String sUser) {
-            this.sUser = sUser;
-        }
-
-        public String getsPwd() {
-            return sPwd;
-        }
-
-        public void setsPwd(String sPwd) {
-            this.sPwd = sPwd;
-        }
-    }
-
-    public static class ATAloneSoftwareBean implements Serializable {
-
-        // 分析工具 独立软件  AnalysisToolAloneSoftware
-        private String aTAloneIndustryField;       // 行业领域
-        private String aTAloneVersionDesc;       // 版本说明
-        private String aTAloneToolsIntroduce;       // 工具介绍
-        private String aTAloneCloudHardwareResource;  // 云硬件资源
-        private String dataAddress;//数据地址
-        private String otherDesc;
-
-        public String getaTAloneIndustryField() {
-            return aTAloneIndustryField;
-        }
-
-        public void setaTAloneIndustryField(String aTAloneIndustryField) {
-            this.aTAloneIndustryField = aTAloneIndustryField;
-        }
-
-        public String getaTAloneVersionDesc() {
-            return aTAloneVersionDesc;
-        }
-
-        public void setaTAloneVersionDesc(String aTAloneVersionDesc) {
-            this.aTAloneVersionDesc = aTAloneVersionDesc;
-        }
-
-        public String getaTAloneToolsIntroduce() {
-            return aTAloneToolsIntroduce;
-        }
-
-        public void setaTAloneToolsIntroduce(String aTAloneToolsIntroduce) {
-            this.aTAloneToolsIntroduce = aTAloneToolsIntroduce;
-        }
-
-        public String getaTAloneCloudHardwareResource() {
-            return aTAloneCloudHardwareResource;
-        }
-
-        public void setaTAloneCloudHardwareResource(String aTAloneCloudHardwareResource) {
-            this.aTAloneCloudHardwareResource = aTAloneCloudHardwareResource;
-        }
-
-        public String getOtherDesc() {
-            return otherDesc;
+        public String getFileAddress() {
+            return fileAddress;
         }
 
-        public void setOtherDesc(String otherDesc) {
-            this.otherDesc = otherDesc;
+        public void setFileAddress(String fileAddress) {
+            this.fileAddress = fileAddress;
         }
 
-        public String getDataAddress() {
-            return dataAddress;
+        public String getFilePwd() {
+            return filePwd;
         }
 
-        public void setDataAddress(String dataAddress) {
-            this.dataAddress = dataAddress;
+        public void setFilePwd(String filePwd) {
+            this.filePwd = filePwd;
         }
     }
 
@@ -1184,22 +813,42 @@ public class MgGoods extends GenericModel {
         }
     }
 
+    public static class TimeFrameBean implements Serializable{
+        private String startDate; // 开始时间
+        private String endDate; // 结束时间
+
+        public String getStartDate() {
+            return startDate;
+        }
+
+        public void setStartDate(String startDate) {
+            this.startDate = startDate;
+        }
+
+        public String getEndDate() {
+            return endDate;
+        }
+
+        public void setEndDate(String endDate) {
+            this.endDate = endDate;
+        }
+    }
+
     public static class OffLineDataBean implements Serializable {
+        private TimeFrameBean timeFrame;//时间范围
+        private String dataRows;//数据行数
+        private String dataCapacity;//数据容量
+        private Integer dataFormat ;//数据格式： 0 xls/xlsx, 1 csv, 2 txt, 3 图片， 4 音频， 5 视频， 6 其它
         private String isOnline; //数据来源: 0 数据文件； 1 数据地址
         private String onlineUrl;//在线地址
         private String localUrl;//本地上传地址
-        private String dataPwd;//数据密码
-        private String timeFrame;//时间范围
-        private String dataRows;//数据行数
-        private String dataCapacity;//数据容量
-        private String dataFormat ;//数据格式
-        private String deliveryMethod;//交付方式
+        private String dataPwd;//数据包密码
 
-        public String getTimeFrame() {
+        public TimeFrameBean getTimeFrame() {
             return timeFrame;
         }
 
-        public void setTimeFrame(String timeFrame) {
+        public void setTimeFrame(TimeFrameBean timeFrame) {
             this.timeFrame = timeFrame;
         }
 
@@ -1219,20 +868,12 @@ public class MgGoods extends GenericModel {
             this.dataCapacity = dataCapacity;
         }
 
-        public String getDataFormat() {
+        public Integer getDataFormat() {
             return dataFormat;
         }
 
-        public void setDataFormat(String dataFormat) {
+        public void setDataFormat(Integer dataFormat) {
             this.dataFormat = dataFormat;
-        }
-
-        public String getDeliveryMethod() {
-            return deliveryMethod;
-        }
-
-        public void setDeliveryMethod(String deliveryMethod) {
-            this.deliveryMethod = deliveryMethod;
         }
 
         public String getIsOnline() {
@@ -1266,6 +907,8 @@ public class MgGoods extends GenericModel {
         public void setDataPwd(String dataPwd) {
             this.dataPwd = dataPwd;
         }
+
+
     }
 
     public OffLineInfoBean getOffLineInfo() {
@@ -1284,4 +927,35 @@ public class MgGoods extends GenericModel {
         this.offLineData = offLineData;
     }
 
+    public SaasAndAloneBean getAsSaaS() {
+        return asSaaS;
+    }
+
+    public void setAsSaaS(SaasAndAloneBean asSaaS) {
+        this.asSaaS = asSaaS;
+    }
+
+    public SaasAndAloneBean getAsAloneSoftware() {
+        return asAloneSoftware;
+    }
+
+    public void setAsAloneSoftware(SaasAndAloneBean asAloneSoftware) {
+        this.asAloneSoftware = asAloneSoftware;
+    }
+
+    public SaasAndAloneBean getAtSaaS() {
+        return atSaaS;
+    }
+
+    public void setAtSaaS(SaasAndAloneBean atSaaS) {
+        this.atSaaS = atSaaS;
+    }
+
+    public SaasAndAloneBean getAtAloneSoftware() {
+        return atAloneSoftware;
+    }
+
+    public void setAtAloneSoftware(SaasAndAloneBean atAloneSoftware) {
+        this.atAloneSoftware = atAloneSoftware;
+    }
 }

@@ -59,8 +59,30 @@ function goodsEditFn(){
 	selectGoodsTypes(goodsTypeVal);
 	selectGoodsTypeFn();
 	$("input[name='typeId']").val(catId.substring(0,3));
+	var start = {
+		format: "YYYY-MM-DD hh:mm:ss",
+		isTime: true,
+		choosefun: function (elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+		}
+	};
+	var end = {
+		format: "YYYY-MM-DD hh:mm:ss",
+		isTime: true,
+		choosefun: function (elem, datas) {
+			start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
+		}
+	};
+
+	$.jeDate("#offLine_startDate", start);
+	$.jeDate("#offLine_endDate", end);
 }
 function selectGoodsTypeFn(){ //选择商品类型
+	$('.goodsDesc-box').hide(); //商品描述
+	$('.goodsAdvantage-box').hide(); //商品优势
+	$('.afterSaleService-box').hide(); //售后服务
+	$('.dataSample-info-box').hide();//数据样例
+	$('.appCase-box').hide();//应用案例
 	$('.struct.selects').hide();
 	$('.childrenSelect').hide();
 	$('.file-info-box').hide();
@@ -94,6 +116,7 @@ function childrenSelects(that){
 		$('.file-info-box').show();
 	}else if(childVal == 1){
 		$('.api-info-box').show();
+		$('.appCase-box').show();//应用案例
 	}else if(childVal == 4){
 		$('.tool-info-box').show();
 		$('.tool-saas-info').show();
@@ -159,15 +182,25 @@ function selector_offLine_fn(that){
 }
 function selectGoodsTypes(goodsTypeVal){
 	if(goodsTypeVal == 100){
+		$('.dataSample-info-box').show();//数据样例
 		$('#childrenSelect1').show();
 		if($('#childrenSelect1').val() == 0){
 			$('.file-info-box').show();
+			$('.goodsDesc-box').show(); //商品描述
+			$('.goodsAdvantage-box').show(); //商品优势
+			$('.afterSaleService-box').show(); //售后服务
 		}else if($('#childrenSelect1').val() == 1){
 			$('.api-info-box').show();
+			$('.goodsDesc-box').show(); //商品描述
+			$('.goodsAdvantage-box').show(); //商品优势
+			$('.afterSaleService-box').show(); //售后服务
+			$('.appCase-box').show();//应用案例
 		}
 	}else if(goodsTypeVal == 300){
 		$('#childrenSelect2').show();
 		$('.app-info-box').show();
+		$('.afterSaleService-box').show(); //售后服务
+		$('.appCase-box').show(); //应用案例
 		if($('#childrenSelect2').val() == 6){
 			$('.app-saas-info').show();
 		}else if($('#childrenSelect2').val() == 7){
@@ -176,6 +209,8 @@ function selectGoodsTypes(goodsTypeVal){
 	}else if(goodsTypeVal == 400){
 		$('#childrenSelect3').show();
 		$('.tool-info-box').show();
+		$('.afterSaleService-box').show(); //售后服务
+		$('.appCase-box').show(); //应用案例
 		if($('#childrenSelect3').val() == 4){
 			$('.tool-info-box').show();
 		}else if($('#childrenSelect3').val() == 5){
@@ -183,6 +218,10 @@ function selectGoodsTypes(goodsTypeVal){
 		}
 	}else{
 		$('.dataModel-info-box').show();
+		$('.goodsDesc-box').show(); //商品描述
+		$('.goodsAdvantage-box').show(); //商品优势
+		$('.afterSaleService-box').show(); //售后服务
+		$('.isOffLine-box').hide();
 	}
 }
 function validataFn(){
@@ -267,10 +306,30 @@ function renderWangEdit(){ // 渲染富文本
 	editor2 = new E('textarea2');
 	editor3 = new E('textarea3');
 	editor4 = new E('textarea4');
+	editorA = new E('textareaA');
+	editorB = new E('textareaB');
+	editorC = new E('textareaC');
+	editorD = new E('textareaD');
+	editorE = new E('textareaE');
+	editorAs = new E('textareaAs');
+	editorBs = new E('textareaBs');
+	editorCs = new E('textareaCs');
+	editorDs = new E('textareaDs');
+	editorEs = new E('textareaEs');
 	editor1.create();
 	editor2.create();
 	editor3.create();
 	editor4.create();
+	editorA.create();
+	editorB.create();
+	editorC.create();
+	editorD.create();
+	editorE.create();
+	editorAs.create();
+	editorBs.create();
+	editorCs.create();
+	editorDs.create();
+	editorEs.create();
 }
 function uploadGoodsImg(){ //上传商品图片
 	$('#fileupload').fileupload({   //图片上传
@@ -498,10 +557,6 @@ function submitGoodsPublish(){
 	}else if($('select[name="parentSelect"]').val() == '400'){
 		data.goodsType = $('select[name="childrenSelect3"]').val();
 	}
-	data.goodsDesc = $('#textarea1').val(); //商品详情
-	data.goodsAdvantage = $('#textarea2').val(); //商品优势
-	data.afterSaleService = $('#textarea3').val(); //售后服务
-	data.appCase = $('#textarea4').val(); //应用案例
 	data.catId = catId; //此ID为url上的id
 	data.isBook = $('input[name="isBook"]:checked').val(); //上架方式
 	data.isOffline = $('select[name="isOffline"]').val(); // 交付方式  0 线上支付；1 线下支付
@@ -517,8 +572,17 @@ function submitGoodsPublish(){
 	}
 	if(data.isOffline == 0) {
 		if (data.goodsType == 0) {
-			data.uploadUrl = $('#J_fileUploadSS').val();
 			data.offLineData = {};
+			data.goodsDesc = $('#textarea1').val(); //商品详情
+			data.goodsAdvantage = $('#textarea2').val(); //商品优势
+			data.afterSaleService = $('#textarea3').val(); //售后服务
+			data.offLineData = {};
+			data.offLineData.timeFrame = {};
+			data.offLineData.timeFrame.startDate = $('#offLine_startDate').val();
+			data.offLineData.timeFrame.endDate = $('#offLine_endDate').val();
+			data.offLineData.dataRows = $('input[name="dataRows"]').val();
+			data.offLineData.dataCapacity = $('input[name="dataCapacity"]').val();
+			data.offLineData.dataFormat = $('input[name="dataFormat"]').val();
 			data.offLineData.isOnline = $('select[name="isOnline"]').val();
 			data.offLineData.dataPwd = $('input[name="dataPwd"]').val();
 			if(data.offLineData.isOnline == 0){
@@ -527,6 +591,10 @@ function submitGoodsPublish(){
 				data.offLineData.onlineUrl = $('input[name="onlineUrl"]').val();
 			}
 		} else if (data.goodsType == 1) {//API------------------------------
+			data.goodsDesc = $('#textarea1').val(); //商品详情
+			data.goodsAdvantage = $('#textarea2').val(); //商品优势
+			data.afterSaleService = $('#textarea3').val(); //售后服务
+			data.appCase = $('#textarea4').val(); //应用案例
 			data.apiInfo = {};
 			data.apiInfo.apiType = $('.api-info-box').find('input[name="apiType"]:checked').val();
 			data.apiInfo.invokeMethod = $('.api-info-box').find('input[name="invokeMethod"]').val();
@@ -573,54 +641,62 @@ function submitGoodsPublish(){
 			data.apiInfo.encryptInfo.secretKeyValue = $('.api-info-box').find('input[name="secretKeyValue"]').val();
 		} else if (data.goodsType == 2) {
 			data.dataModel = {};
-			data.dataModel.complexity = $('input[name="complexity"]').val();
-			data.dataModel.maturity = $('input[name="maturity"]').val();
-			data.dataModel.aexp = $('input[name="aexp"]').val();
-			data.dataModel.modelFile = $('input[name="modelFile"]').val();
-			data.dataModel.modelFilePwd = $('input[name="modelFilePwd"]').val();
-			data.dataModel.configFile = $('input[name="configFile"]').val();
-			data.dataModel.configFilePwd = $('input[name="configFilePwd"]').val();
-			data.dataModel.configParams = $('input[name="configParams"]').val();
-			data.dataModel.configParamsPwd = $('input[name="configParamsPwd"]').val();
-			data.dataModel.otherDesc = $('.dataModel-info-box .otherDesc').val();
+			data.dataModel.modelType = $('select[name="modelType"]').val();
+			data.dataModel.complexity = $('select[name="complexity"]').val();
+			data.dataModel.maturity = $('select[name="maturity"]').val();
+			data.dataModel.aexp = $('textarea[name="aexp"]').val();
+			data.dataModel.relationServ = $('textarea[name="relationServ"]').val();
+			data.dataModel.modelFile = {};
+			data.dataModel.modelFile.fileAddress = $('input[name="modelFile"]').val();
+			data.dataModel.modelFile.filePwd = $('input[name="modelFilePwd"]').val();
+			data.dataModel.configFile = {};
+			data.dataModel.configFile.fileAddress = $('input[name="configFile"]').val();
+			data.dataModel.configFile.filePwd = $('input[name="configFilePwd"]').val();
+			data.dataModel.paramFile = {};
+			data.dataModel.configParams.fileAddress = $('.dataModel-info-box input[name="configParams"]').val();
+			data.dataModel.configParams.filePwd = $('input[name="configParamsPwd"]').val();
 			data.dataModel.concatInfo = {};
 			data.dataModel.concatInfo.concatName = $('.dataModel_concat input[name="concatName"]').val();
 			data.dataModel.concatInfo.concatPhone = $('.dataModel_concat input[name="concatPhone"]').val();
 			data.dataModel.concatInfo.concatEmail = $('.dataModel_concat input[name="concatEmail"]').val();
 		} else if (data.goodsType == 4) {
+			data.afterSaleService = $('#textarea3').val(); //售后服务
+			data.appCase = $('#textarea4').val(); //应用案例
 			data.atAloneSoftware = {};
-			data.atAloneSoftware.aTAloneIndustryField = $('input[name="aTIndustryField"]').val();
-			data.atAloneSoftware.aTAloneVersionDesc = $('input[name="aTVersionDesc"]').val();
-			data.atAloneSoftware.aTAloneToolsIntroduce = $('#aTToolsIntroduce').val();
-			data.atAloneSoftware.aTAloneCloudHardwareResource = $('#aTAloneCloudHardwareResource').val();
-			data.atAloneSoftware.otherDesc = $('.tool-info-box .otherDesc').val();
+			data.atAloneSoftware.coreFunction = $('#textareaAs').val();
+			data.atAloneSoftware.technologicalSuperiority = $('#textareaBs').val();
+			data.atAloneSoftware.teamAdvantage = $('#textareaCs').val();
+			data.atAloneSoftware.desiredEnvironment = $('#textareaDs').val();
+			data.atAloneSoftware.dataNeeded = $('#textareaEs').val();
 			data.atAloneSoftware.dataAddress = $('.tool-info-box input[name="dataAddress"]').val();
 		} else if (data.goodsType == 5) {
+			data.afterSaleService = $('#textarea3').val(); //售后服务
+			data.appCase = $('#textarea4').val(); //应用案例
 			data.atSaaS = {};
-			data.atSaaS.aTIndustryField = $('input[name="aTIndustryField"]').val();
-			data.atSaaS.aTVersionDesc = $('input[name="aTVersionDesc"]').val();
-			data.atSaaS.aTToolsIntroduce = $('#aTToolsIntroduce').val();
-			data.atSaaS.otherDesc = $('.tool-info-box .otherDesc').val();
+			data.atSaaS.coreFunction = $('#textareaAs').val();
+			data.atSaaS.teamAdvantage = $('#textareaCs').val();
+			data.atSaaS.desiredEnvironment = $('#textareaDs').val();
+			data.atSaaS.dataNeeded = $('#textareaEs').val();
 			data.atSaaS.dataAddress = $('.tool-info-box input[name="dataAddress"]').val();
 		} else if (data.goodsType == 6) {
+			data.afterSaleService = $('#textarea3').val(); //售后服务
+			data.appCase = $('#textarea4').val(); //应用案例
 			data.asAloneSoftware = {};
-			data.asAloneSoftware.aSComplexity = $('input[name="aSComplexity"]').val();
-			data.asAloneSoftware.aSVersionDesc = $('input[name="aSVersionDesc"]').val();
-			data.asAloneSoftware.aSServiceLevel = $('input[name="aSServiceLevel"]').val();
-			data.asAloneSoftware.aSAexp = $('input[name="aSAexp"]').val();
-			data.asAloneSoftware.aSAintroduce = $('#aSAintroduce').val();
-			data.asAloneSoftware.aSCloudHardwareResource = $('#aSCloudHardwareResource').val();
+			data.atAloneSoftware.coreFunction = $('#textareaA').val();
+			data.atAloneSoftware.technologicalSuperiority = $('#textareaB').val();
+			data.atAloneSoftware.teamAdvantage = $('#textareaC').val();
+			data.atAloneSoftware.desiredEnvironment = $('#textareaD').val();
+			data.atAloneSoftware.dataNeeded = $('#textareaE').val();
 			data.asAloneSoftware.dataAddress = $('.app-info-box input[name="dataAddress"]').val();
-			data.asAloneSoftware.otherDesc = $('.app-info-box .otherDesc').val();
 		} else if (data.goodsType == 7) {
+			data.afterSaleService = $('#textarea3').val(); //售后服务
+			data.appCase = $('#textarea4').val(); //应用案例
 			data.asSaaS = {};
-			data.asSaaS.sSComplexity = $('input[name="aSComplexity"]').val();
-			data.asSaaS.sSVersionDesc = $('input[name="aSVersionDesc"]').val();
-			data.asSaaS.sServiceLevel = $('input[name="aSServiceLevel"]').val();
-			data.asSaaS.sSAexp = $('input[name="aSAexp"]').val();
-			data.asSaaS.sSAintroduce = $('#aSAintroduce').val();
+			data.asSaaS.coreFunction = $('#textareaA').val();
+			data.asSaaS.teamAdvantage = $('#textareaC').val();
+			data.asSaaS.desiredEnvironment = $('#textareaD').val();
+			data.asSaaS.dataNeeded = $('#textareaE').val();
 			data.asSaaS.dataAddress = $('.app-info-box input[name="dataAddress"]').val();
-			data.asSaaS.otherDesc = $('.app-info-box .otherDesc').val();
 
 		}
 	}else if(data.isOffline == 1){
@@ -1206,29 +1282,25 @@ function initialize() {
 	getPriceBox();
 	floorPrice();
 }
-
-
-
-
-
 $('#J_submitBtn').click(function(){
 	if($("#goodsModifyForm").valid()){
-		if($.trim(editor1.$txt.text()).length > 0){
-			if($.trim(editor2.$txt.text()).length > 0){
-				if($.trim(editor3.$txt.text()).length > 0){
-					if($.trim(editor4.$txt.text()).length > 0){
-						backAddFn(submitGoodsPublish())
-					}else{
-						$.alert('商品描述不能为空',true,function () {})
-					}
-				}else{
-					$.alert('商品优势不能为空',true,function () {})
-				}
-			}else{
-				$.alert('售后服务不能为空',true,function () {})
-			}
-		}else{
-			$.alert('应用案例不能为空',true,function () {})
-		}
+		// if($.trim(editor1.$txt.text()).length > 0){
+		// 	if($.trim(editor2.$txt.text()).length > 0){
+		// 		if($.trim(editor3.$txt.text()).length > 0){
+		// 			if($.trim(editor4.$txt.text()).length > 0){
+		// 				backAddFn(submitGoodsPublish())
+		// 			}else{
+		// 				$.alert('应用案例不能为空',true,function () {})
+		// 			}
+		// 		}else{
+		// 			$.alert('售后服务不能为空',true,function () {})
+		// 		}
+		// 	}else{
+		// 		$.alert('商品优势不能为空',true,function () {})
+		// 	}
+		// }else{
+		// 	$.alert('商品描述不能为空',true,function () {})
+		// }
+		backAddFn(submitGoodsPublish())
 	}
 });
