@@ -198,6 +198,8 @@ function selectGoodsTypes(goodsTypeVal){
 	}else if(goodsTypeVal == 300){
 		$('#childrenSelect2').show();
 		$('.app-info-box').show();
+		$('.afterSaleService-box').show(); //售后服务
+		$('.appCase-box').show(); //售后服务
 		if($('#childrenSelect2').val() == 6){
 			$('.app-saas-info').show();
 		}else if($('#childrenSelect2').val() == 7){
@@ -206,6 +208,8 @@ function selectGoodsTypes(goodsTypeVal){
 	}else if(goodsTypeVal == 400){
 		$('#childrenSelect3').show();
 		$('.tool-info-box').show();
+		$('.afterSaleService-box').show(); //售后服务
+		$('.appCase-box').show(); //售后服务
 		if($('#childrenSelect3').val() == 4){
 			$('.tool-info-box').show();
 		}else if($('#childrenSelect3').val() == 5){
@@ -216,6 +220,7 @@ function selectGoodsTypes(goodsTypeVal){
 		$('.goodsDesc-box').show(); //商品描述
 		$('.goodsAdvantage-box').show(); //商品优势
 		$('.afterSaleService-box').show(); //售后服务
+		$('.isOffLine-box').hide();
 	}
 }
 function validataFn(){
@@ -551,10 +556,6 @@ function submitGoodsPublish(){
 	}else if($('select[name="parentSelect"]').val() == '400'){
 		data.goodsType = $('select[name="childrenSelect3"]').val();
 	}
-	data.goodsDesc = $('#textarea1').val(); //商品详情
-	data.goodsAdvantage = $('#textarea2').val(); //商品优势
-	data.afterSaleService = $('#textarea3').val(); //售后服务
-	data.appCase = $('#textarea4').val(); //应用案例
 	data.catId = catId; //此ID为url上的id
 	data.isBook = $('input[name="isBook"]:checked').val(); //上架方式
 	data.isOffline = $('select[name="isOffline"]').val(); // 交付方式  0 线上支付；1 线下支付
@@ -570,8 +571,17 @@ function submitGoodsPublish(){
 	}
 	if(data.isOffline == 0) {
 		if (data.goodsType == 0) {
-			data.uploadUrl = $('#J_fileUploadSS').val();
 			data.offLineData = {};
+			data.goodsDesc = $('#textarea1').val(); //商品详情
+			data.goodsAdvantage = $('#textarea2').val(); //商品优势
+			data.afterSaleService = $('#textarea3').val(); //售后服务
+			data.offLineData = {};
+			data.offLineData.timeFrame = {};
+			data.offLineData.timeFrame.startDate = $('input[name="offLine_startDate"]').val();
+			data.offLineData.timeFrame.endDate = $('input[name="offLine_endDate"]').val();
+			data.offLineData.dataRows = $('input[name="dataRows"]').val();
+			data.offLineData.dataCapacity = $('input[name="dataCapacity"]').val();
+			data.offLineData.dataFormat = $('input[name="dataFormat"]').val();
 			data.offLineData.isOnline = $('select[name="isOnline"]').val();
 			data.offLineData.dataPwd = $('input[name="dataPwd"]').val();
 			if(data.offLineData.isOnline == 0){
@@ -579,13 +589,11 @@ function submitGoodsPublish(){
 			}else{
 				data.offLineData.onlineUrl = $('input[name="onlineUrl"]').val();
 			}
-			data.offLineData.timeFrame = {};
-			data.offLineData.timeFrame.startDate = $('input[name="offLine_startDate"]').val();
-			data.offLineData.timeFrame.endDate = $('input[name="offLine_endDate"]').val();
-			data.offLineData.dataRows = $('input[name="dataRows"]').val();
-			data.offLineData.dataCapacity = $('input[name="dataCapacity"]').val();
-			data.offLineData.dataFormat = $('input[name="dataFormat"]').val();
 		} else if (data.goodsType == 1) {//API------------------------------
+			data.goodsDesc = $('#textarea1').val(); //商品详情
+			data.goodsAdvantage = $('#textarea2').val(); //商品优势
+			data.afterSaleService = $('#textarea3').val(); //售后服务
+			data.appCase = $('#textarea4').val(); //应用案例
 			data.apiInfo = {};
 			data.apiInfo.apiType = $('.api-info-box').find('input[name="apiType"]:checked').val();
 			data.apiInfo.invokeMethod = $('.api-info-box').find('input[name="invokeMethod"]').val();
@@ -632,54 +640,62 @@ function submitGoodsPublish(){
 			data.apiInfo.encryptInfo.secretKeyValue = $('.api-info-box').find('input[name="secretKeyValue"]').val();
 		} else if (data.goodsType == 2) {
 			data.dataModel = {};
-			data.dataModel.complexity = $('input[name="complexity"]').val();
-			data.dataModel.maturity = $('input[name="maturity"]').val();
-			data.dataModel.aexp = $('input[name="aexp"]').val();
-			data.dataModel.modelFile = $('input[name="modelFile"]').val();
-			data.dataModel.modelFilePwd = $('input[name="modelFilePwd"]').val();
-			data.dataModel.configFile = $('input[name="configFile"]').val();
-			data.dataModel.configFilePwd = $('input[name="configFilePwd"]').val();
-			data.dataModel.configParams = $('input[name="configParams"]').val();
-			data.dataModel.configParamsPwd = $('input[name="configParamsPwd"]').val();
-			data.dataModel.otherDesc = $('.dataModel-info-box .otherDesc').val();
+			data.dataModel.modelType = $('select[name="modelType"]').val();
+			data.dataModel.complexity = $('select[name="complexity"]').val();
+			data.dataModel.maturity = $('select[name="maturity"]').val();
+			data.dataModel.aexp = $('textarea[name="aexp"]').val();
+			data.dataModel.relationServ = $('textarea[name="relationServ"]').val();
+			data.dataModel.modelFile = {};
+			data.dataModel.modelFile.fileAddress = $('input[name="modelFile"]').val();
+			data.dataModel.modelFile.filePwd = $('input[name="modelFilePwd"]').val();
+			data.dataModel.configFile = {};
+			data.dataModel.configFile.fileAddress = $('input[name="configFile"]').val();
+			data.dataModel.configFile.filePwd = $('input[name="configFilePwd"]').val();
+			data.dataModel.paramFile = {};
+			data.dataModel.configParams.fileAddress = $('input[name="configParams"]').val();
+			data.dataModel.configParams.filePwd = $('input[name="configParamsPwd"]').val();
 			data.dataModel.concatInfo = {};
 			data.dataModel.concatInfo.concatName = $('.dataModel_concat input[name="concatName"]').val();
 			data.dataModel.concatInfo.concatPhone = $('.dataModel_concat input[name="concatPhone"]').val();
 			data.dataModel.concatInfo.concatEmail = $('.dataModel_concat input[name="concatEmail"]').val();
 		} else if (data.goodsType == 4) {
+			data.afterSaleService = $('#textarea3').val(); //售后服务
+			data.appCase = $('#textarea4').val(); //应用案例
 			data.atAloneSoftware = {};
-			data.atAloneSoftware.aTAloneIndustryField = $('input[name="aTIndustryField"]').val();
-			data.atAloneSoftware.aTAloneVersionDesc = $('input[name="aTVersionDesc"]').val();
-			data.atAloneSoftware.aTAloneToolsIntroduce = $('#aTToolsIntroduce').val();
-			data.atAloneSoftware.aTAloneCloudHardwareResource = $('#aTAloneCloudHardwareResource').val();
-			data.atAloneSoftware.otherDesc = $('.tool-info-box .otherDesc').val();
+			data.atAloneSoftware.coreFunction = $('#textareaAs').val();
+			data.atAloneSoftware.technologicalSuperiority = $('#textareaBs').val();
+			data.atAloneSoftware.teamAdvantage = $('#textareaCs').val();
+			data.atAloneSoftware.desiredEnvironment = $('#textareaDs').val();
+			data.atAloneSoftware.dataNeeded = $('#textareaEs').val();
 			data.atAloneSoftware.dataAddress = $('.tool-info-box input[name="dataAddress"]').val();
 		} else if (data.goodsType == 5) {
+			data.afterSaleService = $('#textarea3').val(); //售后服务
+			data.appCase = $('#textarea4').val(); //应用案例
 			data.atSaaS = {};
-			data.atSaaS.aTIndustryField = $('input[name="aTIndustryField"]').val();
-			data.atSaaS.aTVersionDesc = $('input[name="aTVersionDesc"]').val();
-			data.atSaaS.aTToolsIntroduce = $('#aTToolsIntroduce').val();
-			data.atSaaS.otherDesc = $('.tool-info-box .otherDesc').val();
+			data.atSaaS.coreFunction = $('#textareaAs').val();
+			data.atSaaS.teamAdvantage = $('#textareaCs').val();
+			data.atSaaS.desiredEnvironment = $('#textareaDs').val();
+			data.atSaaS.dataNeeded = $('#textareaEs').val();
 			data.atSaaS.dataAddress = $('.tool-info-box input[name="dataAddress"]').val();
 		} else if (data.goodsType == 6) {
+			data.afterSaleService = $('#textarea3').val(); //售后服务
+			data.appCase = $('#textarea4').val(); //应用案例
 			data.asAloneSoftware = {};
-			data.asAloneSoftware.aSComplexity = $('input[name="aSComplexity"]').val();
-			data.asAloneSoftware.aSVersionDesc = $('input[name="aSVersionDesc"]').val();
-			data.asAloneSoftware.aSServiceLevel = $('input[name="aSServiceLevel"]').val();
-			data.asAloneSoftware.aSAexp = $('input[name="aSAexp"]').val();
-			data.asAloneSoftware.aSAintroduce = $('#aSAintroduce').val();
-			data.asAloneSoftware.aSCloudHardwareResource = $('#aSCloudHardwareResource').val();
+			data.atAloneSoftware.coreFunction = $('#textareaA').val();
+			data.atAloneSoftware.technologicalSuperiority = $('#textareaB').val();
+			data.atAloneSoftware.teamAdvantage = $('#textareaC').val();
+			data.atAloneSoftware.desiredEnvironment = $('#textareaD').val();
+			data.atAloneSoftware.dataNeeded = $('#textareaE').val();
 			data.asAloneSoftware.dataAddress = $('.app-info-box input[name="dataAddress"]').val();
-			data.asAloneSoftware.otherDesc = $('.app-info-box .otherDesc').val();
 		} else if (data.goodsType == 7) {
+			data.afterSaleService = $('#textarea3').val(); //售后服务
+			data.appCase = $('#textarea4').val(); //应用案例
 			data.asSaaS = {};
-			data.asSaaS.sSComplexity = $('input[name="aSComplexity"]').val();
-			data.asSaaS.sSVersionDesc = $('input[name="aSVersionDesc"]').val();
-			data.asSaaS.sServiceLevel = $('input[name="aSServiceLevel"]').val();
-			data.asSaaS.sSAexp = $('input[name="aSAexp"]').val();
-			data.asSaaS.sSAintroduce = $('#aSAintroduce').val();
+			data.asSaaS.coreFunction = $('#textareaA').val();
+			data.asSaaS.teamAdvantage = $('#textareaC').val();
+			data.asSaaS.desiredEnvironment = $('#textareaD').val();
+			data.asSaaS.dataNeeded = $('#textareaE').val();
 			data.asSaaS.dataAddress = $('.app-info-box input[name="dataAddress"]').val();
-			data.asSaaS.otherDesc = $('.app-info-box .otherDesc').val();
 
 		}
 	}else if(data.isOffline == 1){

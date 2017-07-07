@@ -258,7 +258,7 @@ var htmlPart = {
                                         </div>
                                     </td>
                                 </tr>
-                                <tr class="">
+                                <tr class="isOffLine-box">
                                     <td class="bar">交付方式：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="select-box">
@@ -760,7 +760,7 @@ var htmlPart = {
                                                 <td class="bar">复杂度：<span class="requireds">*</span></td>
                                                 <td>
                                                     <div class="select-box">
-                                                        <select>
+                                                        <select name="complexity">
                                                             <option value="0">高</option>
                                                             <option value="1">中</option>
                                                             <option value="2">低</option>
@@ -772,7 +772,7 @@ var htmlPart = {
                                                 <td class="bar">成熟度：<span class="requireds">*</span></td>
                                                 <td>
                                                     <div class="select-box">
-                                                        <select>
+                                                        <select name="maturity">
                                                             <option value="0">高</option>
                                                             <option value="1">中</option>
                                                             <option value="2">低</option>
@@ -786,20 +786,13 @@ var htmlPart = {
                                                     <div class="textarea-box">
                                                         <textarea type="text" name="aexp" required="required"></textarea>
                                                     </div>
-                                                    <div class="errors">
-                                                        <span class="errorinfo">请填写商品简介，不能超过200个字!</span>
-                                                    </div>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="bar">配套服务：<span class="requireds">*</span></td>
                                                 <td>
                                                     <div class="textarea-box">
-                                                        <textarea type="text" name="goodsBrief" id="" required="required"></textarea>
-                                                        <span class="input-count"><strong id="showcontent2">0</strong>/400</span>
-                                                    </div>
-                                                    <div class="errors">
-                                                        <span class="errorinfo">请填写商品简介，不能超过200个字!</span>
+                                                        <textarea type="text" name="relationServ" id="" required="required"></textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -931,7 +924,7 @@ var htmlPart = {
                             <h1 class="">应用场景：</h1>
                             <table>
                                 <tbody>
-                                <tr class="goodsAdvantage-box" style="display: none;">
+                                <tr>
                                     <td class="bar">核心功能：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="wangEditor-wrapper">
@@ -939,7 +932,7 @@ var htmlPart = {
                                         </div>
                                     </td>
                                 </tr>
-                                <tr class="goodsAdvantage-box app-saas-info" style="display: none;">
+                                <tr class="app-saas-info">
                                     <td class="bar">技术优势：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="wangEditor-wrapper">
@@ -947,7 +940,7 @@ var htmlPart = {
                                         </div>
                                     </td>
                                 </tr>
-                                <tr class="goodsAdvantage-box" style="display: none;">
+                                <tr>
                                     <td class="bar">团队优势：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="wangEditor-wrapper">
@@ -955,7 +948,7 @@ var htmlPart = {
                                         </div>
                                     </td>
                                 </tr>
-                                <tr class="goodsAdvantage-box" style="display: none;">
+                                <tr>
                                     <td class="bar">所需环境：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="wangEditor-wrapper">
@@ -963,7 +956,7 @@ var htmlPart = {
                                         </div>
                                     </td>
                                 </tr>
-                                <tr class="goodsAdvantage-box" style="display: none;">
+                                <tr>
                                     <td class="bar">所需数据：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="wangEditor-wrapper">
@@ -996,7 +989,7 @@ var htmlPart = {
                             <h1 class="">分析工具：</h1>
                             <table>
                                 <tbody>
-                                <tr class="goodsAdvantage-box" style="display: none;">
+                                <tr>
                                     <td class="bar">核心功能：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="wangEditor-wrapper">
@@ -1004,7 +997,7 @@ var htmlPart = {
                                         </div>
                                     </td>
                                 </tr>
-                                <tr class="goodsAdvantage-box app-saas-info" style="display: none;">
+                                <tr class="app-saas-info">
                                     <td class="bar">技术优势：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="wangEditor-wrapper">
@@ -1012,7 +1005,7 @@ var htmlPart = {
                                         </div>
                                     </td>
                                 </tr>
-                                <tr class="goodsAdvantage-box" style="display: none;">
+                                <tr>
                                     <td class="bar">团队优势：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="wangEditor-wrapper">
@@ -1020,7 +1013,7 @@ var htmlPart = {
                                         </div>
                                     </td>
                                 </tr>
-                                <tr class="goodsAdvantage-box" style="display: none;">
+                                <tr>
                                     <td class="bar">所需环境：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="wangEditor-wrapper">
@@ -1028,7 +1021,7 @@ var htmlPart = {
                                         </div>
                                     </td>
                                 </tr>
-                                <tr class="goodsAdvantage-box" style="display: none;">
+                                <tr>
                                     <td class="bar">所需数据：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="wangEditor-wrapper">
