@@ -6,7 +6,7 @@ import com.jusfoun.hookah.core.generic.GenericService;
 /**
  * dx
  */
-public interface PayAccountService extends GenericService<PayAccount, Integer> {
+public interface PayAccountService extends GenericService<PayAccount, Long> {
 
     int operatorByType(Long payAccountId, byte operatorType, Long money);
 }

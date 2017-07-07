@@ -56,6 +56,14 @@
         balance = balance - #{changeMoney},
         use_balance = use_balance - #{changeMoney}
       </if>
+      <if test="type == 'FreezaIn'">
+        balance = balance + #{changeMoney},
+        frozenBalance = frozenBalance + #{changeMoney}
+      </if>
+      <if test="type == 'releaseDraw'">
+        use_balance = use_balance + #{changeMoney},
+        frozenBalance = frozenBalance - #{changeMoney}
+      </if>
     where id = #{id}
 
   </update>

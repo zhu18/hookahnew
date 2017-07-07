@@ -8,6 +8,7 @@ import com.apex.fix.AxCallFunc;
 import com.apex.fix.JFixComm;
 import com.apex.fix.JFixSess;
 import com.jusfoun.hookah.core.dao.PayAccountRecordMapper;
+import com.jusfoun.hookah.core.domain.PayAccount;
 import com.jusfoun.hookah.core.domain.PayAccountRecord;
 import com.jusfoun.hookah.core.domain.PayBankCard;
 import com.jusfoun.hookah.core.domain.PayTradeRecord;
@@ -57,10 +58,10 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 	PayTradeRecordService payTradeRecordService;
 
 	@Resource
-	PayAccountService payAccountService;
+	MgMoneyInOutLogService mgMoneyInOutLogService;
 
 	@Resource
-	MgMoneyInOutLogService mgMoneyInOutLogService;
+	PayAccountService payAccountService;
 
 	@Transactional
 	public void entryAndExitPayments(MoneyInOutBo moneyInOutBo) {
@@ -73,7 +74,7 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 			String serialNum = PayUtil.createChannelSerial(ChannelType.QDABC);
 
 			// 如果是提现 就先去扣客户帐
-			if(moneyInOutBo.getOperatorType() == PayConstants.TransferType.MONEY_OUT.code){
+			if(moneyInOutBo.getOperatorType() == PayConstants.TradeType.OnlineCash.code){
 				logger.info("提现操作先去扣客户账-->操作时间：" + LocalDateTime.now());
 				payAccountService.operatorByType(moneyInOutBo.getPayAccountID(), moneyInOutBo.operatorType, moneyInOutBo.getMoney());
 			}
@@ -178,7 +179,7 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 								//todo 成功后处理  账户加钱 修改内部流水状态成功 修改外部流水状态成功
 								if(Integer.parseInt(FID_CODE) >= 0){ // >=0 成功 <0 失败
 
-									payAccountService.operatorByType(moneyInOutBo.getPayAccountID(), moneyInOutBo.operatorType, moneyInOutBo.getMoney());
+									payAccountService.operatorByType(moneyInOutBo.getPayAccountID(), moneyInOutBo.getOperatorType(), moneyInOutBo.getMoney());
 
 									payTradeRecord.setTradeStatus(PayConstants.TransferStatus.success.getCode());
 								}
@@ -190,7 +191,7 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 								payAccountRecord.setTransferStatus(PayConstants.TransferStatus.fail.code);
 
 
-								if(moneyInOutBo.getOperatorType() == PayConstants.TransferType.MONEY_OUT.code){
+								if(moneyInOutBo.getOperatorType() == PayConstants.TradeType.OnlineCash.code){
 									logger.info("提现失败冲正客户账-->操作时间：" + LocalDateTime.now());
 									payAccountService.operatorByType(moneyInOutBo.getPayAccountID(), PayConstants.TradeType.CashREverse.code, moneyInOutBo.getMoney());
 								}
@@ -275,9 +276,9 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 		payAccountRecord.setTransferDate(new Date());
 		payAccountRecord.setMoney(moneyInOutBo.getMoney());		//当前用户的入金出金的金额
 		if(moneyInOutBo.getOperatorType() == 1){
-			payAccountRecord.setTransferType(PayConstants.TransferType.MONEY_IN.code);	//根据操作类型  入金
+			payAccountRecord.setTransferType(PayConstants.TradeType.OnlineRecharge.code);	//根据操作类型  入金
 		}else{
-			payAccountRecord.setTransferType(PayConstants.TransferType.MONEY_OUT.code);	//根据操作类型  出金
+			payAccountRecord.setTransferType(PayConstants.TradeType.OnlineCash.code);	//根据操作类型  出金
 		}
 		payAccountRecord.setTransferStatus(PayConstants.TransferStatus.handing.code);
 		payAccountRecord.setSerialNumber(serialNum);
