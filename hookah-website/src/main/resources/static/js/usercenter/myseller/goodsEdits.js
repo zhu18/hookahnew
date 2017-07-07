@@ -305,6 +305,11 @@ function renderWangEdit(){ // 渲染富文本
 	editorC = new E('textareaC');
 	editorD = new E('textareaD');
 	editorE = new E('textareaE');
+	editorAs = new E('textareaAs');
+	editorBs = new E('textareaBs');
+	editorCs = new E('textareaCs');
+	editorDs = new E('textareaDs');
+	editorEs = new E('textareaEs');
 	editor1.create();
 	editor2.create();
 	editor3.create();
@@ -314,6 +319,11 @@ function renderWangEdit(){ // 渲染富文本
 	editorC.create();
 	editorD.create();
 	editorE.create();
+	editorAs.create();
+	editorBs.create();
+	editorCs.create();
+	editorDs.create();
+	editorEs.create();
 }
 function uploadGoodsImg(){ //上传商品图片
 	$('#fileupload').fileupload({   //图片上传
