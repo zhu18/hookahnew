@@ -230,17 +230,6 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">交付方式</label>
-								<div class="col-sm-5">
-									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.offLineData.deliveryMethod == 0" disabled/>线上交付
-									</label>
-									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.offLineData.deliveryMethod == 1" disabled/>线下交付
-									</label>
-								</div>
-							</div>
-							<div class="form-group">
 								<label class="col-sm-2 control-label">线上url</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.offLineData.onlineUrl}}" readonly="true"/>
@@ -492,17 +481,6 @@
 									联系邮件：<input type="text" class="form-control" value="{{editData.dataModel.concatInfo.concatEmail}}" readonly="true"/>
 								</div>
 							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">交付方式</label>
-								<div class="col-sm-5">
-									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.dataModel.deliveryMethod == 0" disabled/>线上交付
-									</label>
-									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.dataModel.deliveryMethod == 1" disabled/>线下交付
-									</label>
-								</div>
-							</div>
 						</div>
 						<div data-ng-if="editData.goodsType == 4">
 							<div class="form-group">
@@ -554,17 +532,6 @@
 								<label class="col-sm-2 control-label">所需数据</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.atAloneSoftware.dataNeeded}}" readonly="true"/>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">交付方式</label>
-								<div class="col-sm-5">
-									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.atAloneSoftware.deliveryMethod == 0" disabled/>线上交付
-									</label>
-									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.atAloneSoftware.deliveryMethod == 1" disabled/>线下交付
-									</label>
 								</div>
 							</div>
 
@@ -649,17 +616,6 @@
 								<label class="col-sm-2 control-label">所需数据</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.asSaaS.dataNeeded}}" readonly="true"/>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">交付方式</label>
-								<div class="col-sm-5">
-									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.asSaaS.deliveryMethod == 0" disabled/>线上交付
-									</label>
-									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.asSaaS.deliveryMethod == 1" disabled/>线下交付
-									</label>
 								</div>
 							</div>
 
