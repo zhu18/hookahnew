@@ -32,22 +32,6 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Intege
 	}
 
 	@Transactional
-	public int operatorByType(MoneyInOutBo moneyInOutBo) {
-
-		Map<String, Object> map = new HashMap<>();
-		map.put("type", moneyInOutBo.getOperatorType());
-		map.put("id", moneyInOutBo.getPayAccountID());
-		map.put("changeMoney", moneyInOutBo.getMoney());
-		int n = payAccountMapper.OperatorByType(map);
-		if(n != 1){
-			logger.info("用户[userId]->" + moneyInOutBo.getUserId() + "===>"
-					+ (moneyInOutBo.getOperatorType() == 1 ? "入金" : "出金") + "操作失败" + LocalDateTime.now());
-			throw new RuntimeException();
-		}
-		return n;
-	}
-
-	@Override
 	public int operatorByType(Long payAccountId, byte operatorType, Long money) {
 
 		Map<String, Object> map = new HashMap<>();
