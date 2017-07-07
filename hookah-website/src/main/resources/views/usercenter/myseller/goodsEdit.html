@@ -213,7 +213,7 @@ var htmlPart = {
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr class="goodsDesc-box" style="display: none;">
                                     <td class="bar">商品描述：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="wangEditor-wrapper">
@@ -221,7 +221,7 @@ var htmlPart = {
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr class="goodsAdvantage-box" style="display: none;">
                                     <td class="bar">商品优势：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="wangEditor-wrapper">
@@ -229,7 +229,7 @@ var htmlPart = {
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr class="afterSaleService-box" style="display: none;">
                                     <td class="bar">售后服务：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="wangEditor-wrapper">
@@ -237,7 +237,7 @@ var htmlPart = {
                                         </div>
                                     </td>
                                 </tr>
-                                <tr class="dataSample-info-box">
+                                <tr class="dataSample-info-box" style="display: none;">
                                     <td class="bar">数据样例：<span class="requireds">*</span></td>
                                     <td>
                                         <p>只支持xls、xlsx格式文件</p>
@@ -250,7 +250,7 @@ var htmlPart = {
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr class="appCase-box">
                                     <td class="bar">应用案例：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="wangEditor-wrapper">
@@ -258,7 +258,7 @@ var htmlPart = {
                                         </div>
                                     </td>
                                 </tr>
-                                <tr class="">
+                                <tr class="isOffLine-box">
                                     <td class="bar">交付方式：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="select-box">
@@ -321,6 +321,64 @@ var htmlPart = {
                             <h1>离线数据:</h1>
                             <table>
                                 <tbody>
+                                <tr class="">
+                                    <td class="bar">时间范围：</td>
+                                    <td>
+                                        <div class="date-box grid-left">
+                                            <input type="text" id="offLine_startDate" placeholder="点击选择开始时间">
+                                        </div>
+                                        <div class="margin-left-10 margin-right-10 grid-left">-</div>
+                                        <div class="date-box grid-left">
+                                            <input type="text" id="offLine_endDate" placeholder="点击选择结束时间">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="">
+                                    <td class="bar">数据条数/行数：</td>
+                                    <td>
+                                        <div class="text-box">
+                                            <input type="text" name="dataRows" placeholder="请输入数据数，示例：35000行">
+                                            <span class="input-count"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="">
+                                    <td class="bar">数据容量：</td>
+                                    <td>
+                                        <div class="text-box">
+                                            <input type="text" name="dataCapacity" placeholder="请输入数据容量，示例：35M">
+                                            <span class="input-count"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="">
+                                    <td class="bar">数据格式：</td>
+                                    <td>
+                                        <div class="radio-box">
+                                            <label>
+                                                <input type="radio" name="dataFormat" checked="" value="0">xls/xlsx
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="dataFormat" value="1">csv
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="dataFormat" value="2">txt
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="dataFormat" value="3">图片
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="dataFormat" value="4">音频
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="dataFormat" value="5">视频
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="dataFormat" value="6">其他
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td class="bar">数据来源：<span class="requireds">*</span></td>
                                     <td>
@@ -675,35 +733,66 @@ var htmlPart = {
                             <h1 class="">数据模型：</h1>
                             <table>
                                 <tbody>
+
                                 <tr>
                                     <td class="bar"><h3>模型规则：</h3></td>
                                     <td>
                                         <table>
                                             <tbody>
                                             <tr>
+                                                <td class="bar">模型类型：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="select-box">
+                                                        <select name="modelType">
+                                                            <option value="0">分类</option>
+                                                            <option value="1">回归</option>
+                                                            <option value="2">识别</option>
+                                                            <option value="3">预测</option>
+                                                            <option value="4">聚类</option>
+                                                            <option value="5">时间序列</option>
+                                                            <option value="6">关联降维</option>
+                                                            <option value="7">优化</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
                                                 <td class="bar">复杂度：<span class="requireds">*</span></td>
                                                 <td>
-                                                    <div class="text-box">
-                                                        <input type="text" name="complexity" required="required">
-                                                        <span class="input-count"></span>
+                                                    <div class="select-box">
+                                                        <select name="complexity">
+                                                            <option value="0">高</option>
+                                                            <option value="1">中</option>
+                                                            <option value="2">低</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="bar">成熟度：<span class="requireds">*</span></td>
                                                 <td>
-                                                    <div class="text-box">
-                                                        <input type="text" name="maturity" required="required">
-                                                        <span class="input-count"></span>
+                                                    <div class="select-box">
+                                                        <select name="maturity">
+                                                            <option value="0">高</option>
+                                                            <option value="1">中</option>
+                                                            <option value="2">低</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="bar">应用经验：<span class="requireds">*</span></td>
                                                 <td>
-                                                    <div class="text-box">
-                                                        <input type="text" name="aexp" required="required">
-                                                        <span class="input-count"></span>
+                                                    <div class="textarea-box">
+                                                        <textarea type="text" name="aexp" required="required"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">配套服务：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="textarea-box">
+                                                        <textarea type="text" name="relationServ" id="" required="required"></textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -828,25 +917,6 @@ var htmlPart = {
                                         </table>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="bar"><h3>其他说明：</h3></td>
-                                    <td>
-                                        <table>
-                                            <tbody>
-                                            <tr>
-                                                <td class="bar">其他说明</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="textarea-box">
-                                                        <textarea class="otherDesc" cols="30" rows="10"></textarea>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -855,58 +925,43 @@ var htmlPart = {
                             <table>
                                 <tbody>
                                 <tr>
-                                    <td class="bar"><h3>应用场景规则：</h3></td>
+                                    <td class="bar">核心功能：<span class="requireds">*</span></td>
                                     <td>
-                                        <table>
-                                            <tbody>
-                                            <tr>
-                                                <td class="bar">应用复杂度：<span class="requireds">*</span></td>
-                                                <td>
-                                                    <div class="text-box">
-                                                        <input type="text" name="aSComplexity" required="required">
-                                                        <span class="input-count"></span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="bar">版本说明：<span class="requireds">*</span></td>
-                                                <td>
-                                                    <div class="text-box">
-                                                        <input type="text" name="aSVersionDesc" required="required">
-                                                        <span class="input-count"></span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="bar">服务等级：<span class="requireds">*</span></td>
-                                                <td>
-                                                    <div class="text-box">
-                                                        <input type="text" name="aSServiceLevel" required="required">
-                                                        <span class="input-count"></span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="bar">应用经验：<span class="requireds">*</span></td>
-                                                <td>
-                                                    <div class="text-box">
-                                                        <input type="text" name="aSAexp" required="required">
-                                                        <span class="input-count"></span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="bar">应用介绍</td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="1000">
-                                                    <div class="textarea-box">
-                                                        <textarea id="aSAintroduce"></textarea>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                                        <div class="wangEditor-wrapper">
+                                            <textarea id="textareaA" style="height: 500px; display: none;" name="coreFunction" required="required"></textarea>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="app-saas-info">
+                                    <td class="bar">技术优势：<span class="requireds">*</span></td>
+                                    <td>
+                                        <div class="wangEditor-wrapper">
+                                            <textarea id="textareaB" style="height: 500px; display: none;" name="technologicalSuperiority" required="required"></textarea>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar">团队优势：<span class="requireds">*</span></td>
+                                    <td>
+                                        <div class="wangEditor-wrapper">
+                                            <textarea id="textareaC" style="height: 500px; display: none;" name="teamAdvantage" required="required"></textarea>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar">所需环境：<span class="requireds">*</span></td>
+                                    <td>
+                                        <div class="wangEditor-wrapper">
+                                            <textarea id="textareaD" style="height: 500px; display: none;" name="desiredEnvironment" required="required"></textarea>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar">所需数据：<span class="requireds">*</span></td>
+                                    <td>
+                                        <div class="wangEditor-wrapper">
+                                            <textarea id="textareaE" style="height: 500px; display: none;" name="dataNeeded" required="required"></textarea>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -920,44 +975,6 @@ var htmlPart = {
                                                     <div class="text-box">
                                                         <input type="text" name="dataAddress" required="required">
                                                         <span class="input-count"></span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr class="app-saas-info">
-                                    <td class="bar"><h3>使用规格：</h3></td>
-                                    <td>
-                                        <table>
-                                            <tbody>
-                                            <tr>
-                                                <td class="bar">云硬件资源</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="textarea-box">
-                                                        <textarea id="aSCloudHardwareResource"></textarea>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="bar"><h3>其他说明：</h3></td>
-                                    <td>
-                                        <table>
-                                            <tbody>
-                                            <tr>
-                                                <td class="bar">其他说明</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="textarea-box">
-                                                        <textarea class="otherDesc"></textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -973,96 +990,43 @@ var htmlPart = {
                             <table>
                                 <tbody>
                                 <tr>
-                                    <td class="bar"><h3>工具规格：</h3></td>
+                                    <td class="bar">核心功能：<span class="requireds">*</span></td>
                                     <td>
-                                        <table>
-                                            <tbody>
-                                            <tr>
-                                                <td class="bar">行业领域：<span class="requireds">*</span></td>
-                                                <td>
-                                                    <div class="text-box">
-                                                        <input type="text" name="aTIndustryField" required="required">
-                                                        <span class="input-count"></span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="bar">版本说明：<span class="requireds">*</span></td>
-                                                <td>
-                                                    <div class="text-box">
-                                                        <input type="text" name="aTVersionDesc" required="required">
-                                                        <span class="input-count"></span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="bar">工具介绍</td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="1000">
-                                                    <div class="textarea-box">
-                                                        <textarea id="aTToolsIntroduce"></textarea>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                                        <div class="wangEditor-wrapper">
+                                            <textarea id="textareaAs" style="height: 500px; display: none;" name="coreFunction" required="required"></textarea>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="app-saas-info">
+                                    <td class="bar">技术优势：<span class="requireds">*</span></td>
+                                    <td>
+                                        <div class="wangEditor-wrapper">
+                                            <textarea id="textareaBs" style="height: 500px; display: none;" name="technologicalSuperiority" required="required"></textarea>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="bar"><h3>下载地址：</h3></td>
+                                    <td class="bar">团队优势：<span class="requireds">*</span></td>
                                     <td>
-                                        <table>
-                                            <tbody>
-                                            <tr>
-                                                <td class="bar">下载地址：<span class="requireds">*</span></td>
-                                                <td>
-                                                    <div class="text-box">
-                                                        <input type="text" name="dataAddress" required="required">
-                                                        <span class="input-count"></span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr class="tool-saas-info">
-                                    <td class="bar"><h3>使用规格：</h3></td>
-                                    <td>
-                                        <table>
-                                            <tbody>
-                                            <tr>
-                                                <td class="bar">云硬件资源</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="textarea-box">
-                                                        <textarea id="aTAloneCloudHardwareResource"></textarea>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                                        <div class="wangEditor-wrapper">
+                                            <textarea id="textareaCs" style="height: 500px; display: none;" name="teamAdvantage" required="required"></textarea>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="bar"><h3>其他说明：</h3></td>
+                                    <td class="bar">所需环境：<span class="requireds">*</span></td>
                                     <td>
-                                        <table>
-                                            <tbody>
-                                            <tr>
-                                                <td class="bar">其他说明</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="textarea-box">
-                                                        <textarea class="otherDesc"></textarea>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                                        <div class="wangEditor-wrapper">
+                                            <textarea id="textareaDs" style="height: 500px; display: none;" name="desiredEnvironment" required="required"></textarea>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bar">所需数据：<span class="requireds">*</span></td>
+                                    <td>
+                                        <div class="wangEditor-wrapper">
+                                            <textarea id="textareaEs" style="height: 500px; display: none;" name="dataNeeded" required="required"></textarea>
+                                        </div>
                                     </td>
                                 </tr>
                                 </tbody>

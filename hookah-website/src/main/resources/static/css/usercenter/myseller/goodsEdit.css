@@ -82,6 +82,13 @@ h1{
     color: #333;
     padding: 2px 5px;
 }
+.selects .date-box input{
+    width: 182px;
+    border: 1px solid #ccc;
+    height: 22px;
+    color: #333;
+    padding: 2px 5px;
+}
 .select-box select{
     height:30px;
     line-height:20px;
@@ -106,7 +113,7 @@ h1{
     resize:none;
 }
 .selects .textarea-box textarea{
-    width: 660px;
+    width: 620px;
     border: 1px solid #ccc;
     height: 80px;
     color: #333;

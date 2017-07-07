@@ -48,11 +48,11 @@
   <update id="OperatorByType" parameterType="java.util.HashMap">
 
     update pay_account set
-      <if test="type == 1">
+      <if test="type == 'plus'">
         balance = balance + #{changeMoney},
         use_balance = use_balance + #{changeMoney}
       </if>
-      <if test="type == 2">
+      <if test="type == 'sub'">
         balance = balance - #{changeMoney},
         use_balance = use_balance - #{changeMoney}
       </if>
