@@ -267,7 +267,7 @@ public class MgGoods extends GenericModel {
 
         private RespDataMapping respDataMapping; //返回数据映射
         private String updateFreq; //更新频率
-        private Integer dataNumDivRowNum; //数据条数/行数
+        private String dataNumDivRowNum; //数据条数/行数
 
 
         public String getApiUrl() {
@@ -370,11 +370,11 @@ public class MgGoods extends GenericModel {
             this.updateFreq = updateFreq;
         }
 
-        public Integer getDataNumDivRowNum() {
+        public String getDataNumDivRowNum() {
             return dataNumDivRowNum;
         }
 
-        public void setDataNumDivRowNum(Integer dataNumDivRowNum) {
+        public void setDataNumDivRowNum(String dataNumDivRowNum) {
             this.dataNumDivRowNum = dataNumDivRowNum;
         }
     }
@@ -509,7 +509,7 @@ public class MgGoods extends GenericModel {
         private EncryptInfo encryptInfo; //加密信息
         private RespDataMapping respDataMapping; //返回数据映射
         private String updateFreq; //更新频率
-        private Integer dataNumDivRowNum; //数据条数/行数
+        private String dataNumDivRowNum; //数据条数/行数
 
         public String getApiUrl() {
             return apiUrl;
@@ -611,11 +611,11 @@ public class MgGoods extends GenericModel {
             this.updateFreq = updateFreq;
         }
 
-        public Integer getDataNumDivRowNum() {
+        public String getDataNumDivRowNum() {
             return dataNumDivRowNum;
         }
 
-        public void setDataNumDivRowNum(Integer dataNumDivRowNum) {
+        public void setDataNumDivRowNum(String dataNumDivRowNum) {
             this.dataNumDivRowNum = dataNumDivRowNum;
         }
     }
