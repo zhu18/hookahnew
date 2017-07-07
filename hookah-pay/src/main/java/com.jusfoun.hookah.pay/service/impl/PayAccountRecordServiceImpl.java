@@ -158,7 +158,7 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 								//todo 成功后处理  账户加钱 修改内部流水状态成功 修改外部流水状态成功
 								if(Integer.parseInt(FID_CODE) >= 0){ // >=0 成功 <0 失败
 
-									payAccountService.operatorByType(moneyInOutBo);
+//									payAccountService.operatorByType(moneyInOutBo);
 									payTradeRecord.setTradeStatus(PayConstants.TransferStatus.success.getCode());
 								}
 								payAccountRecord.setTransferStatus(PayConstants.TransferStatus.success.code);

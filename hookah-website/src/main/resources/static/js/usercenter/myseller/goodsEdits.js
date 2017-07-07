@@ -116,6 +116,7 @@ function childrenSelects(that){
 		$('.file-info-box').show();
 	}else if(childVal == 1){
 		$('.api-info-box').show();
+		$('.appCase-box').show();//应用案例
 	}else if(childVal == 4){
 		$('.tool-info-box').show();
 		$('.tool-saas-info').show();
@@ -181,6 +182,7 @@ function selector_offLine_fn(that){
 }
 function selectGoodsTypes(goodsTypeVal){
 	if(goodsTypeVal == 100){
+		$('.dataSample-info-box').show();//数据样例
 		$('#childrenSelect1').show();
 		if($('#childrenSelect1').val() == 0){
 			$('.file-info-box').show();
@@ -192,14 +194,13 @@ function selectGoodsTypes(goodsTypeVal){
 			$('.goodsDesc-box').show(); //商品描述
 			$('.goodsAdvantage-box').show(); //商品优势
 			$('.afterSaleService-box').show(); //售后服务
-			$('.dataSample-info-box').show();//数据样例
 			$('.appCase-box').show();//应用案例
 		}
 	}else if(goodsTypeVal == 300){
 		$('#childrenSelect2').show();
 		$('.app-info-box').show();
 		$('.afterSaleService-box').show(); //售后服务
-		$('.appCase-box').show(); //售后服务
+		$('.appCase-box').show(); //应用案例
 		if($('#childrenSelect2').val() == 6){
 			$('.app-saas-info').show();
 		}else if($('#childrenSelect2').val() == 7){
@@ -209,7 +210,7 @@ function selectGoodsTypes(goodsTypeVal){
 		$('#childrenSelect3').show();
 		$('.tool-info-box').show();
 		$('.afterSaleService-box').show(); //售后服务
-		$('.appCase-box').show(); //售后服务
+		$('.appCase-box').show(); //应用案例
 		if($('#childrenSelect3').val() == 4){
 			$('.tool-info-box').show();
 		}else if($('#childrenSelect3').val() == 5){
@@ -577,8 +578,8 @@ function submitGoodsPublish(){
 			data.afterSaleService = $('#textarea3').val(); //售后服务
 			data.offLineData = {};
 			data.offLineData.timeFrame = {};
-			data.offLineData.timeFrame.startDate = $('input[name="offLine_startDate"]').val();
-			data.offLineData.timeFrame.endDate = $('input[name="offLine_endDate"]').val();
+			data.offLineData.timeFrame.startDate = $('#offLine_startDate').val();
+			data.offLineData.timeFrame.endDate = $('#offLine_endDate').val();
 			data.offLineData.dataRows = $('input[name="dataRows"]').val();
 			data.offLineData.dataCapacity = $('input[name="dataCapacity"]').val();
 			data.offLineData.dataFormat = $('input[name="dataFormat"]').val();
@@ -652,7 +653,7 @@ function submitGoodsPublish(){
 			data.dataModel.configFile.fileAddress = $('input[name="configFile"]').val();
 			data.dataModel.configFile.filePwd = $('input[name="configFilePwd"]').val();
 			data.dataModel.paramFile = {};
-			data.dataModel.configParams.fileAddress = $('input[name="configParams"]').val();
+			data.dataModel.configParams.fileAddress = $('.dataModel-info-box input[name="configParams"]').val();
 			data.dataModel.configParams.filePwd = $('input[name="configParamsPwd"]').val();
 			data.dataModel.concatInfo = {};
 			data.dataModel.concatInfo.concatName = $('.dataModel_concat input[name="concatName"]').val();
