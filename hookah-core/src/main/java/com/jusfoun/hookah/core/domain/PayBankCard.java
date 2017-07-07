@@ -3,6 +3,7 @@ package com.jusfoun.hookah.core.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jusfoun.hookah.core.generic.GenericModel;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.GeneratedValue;
@@ -15,7 +16,7 @@ public class PayBankCard extends GenericModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer payAccountId;
+    private Long payAccountId;
 
     private String userId;
 
@@ -49,11 +50,11 @@ public class PayBankCard extends GenericModel {
         this.id = id;
     }
 
-    public Integer getPayAccountId() {
+    public Long getPayAccountId() {
         return payAccountId;
     }
 
-    public void setPayAccountId(Integer payAccountId) {
+    public void setPayAccountId(Long payAccountId) {
         this.payAccountId = payAccountId;
     }
 

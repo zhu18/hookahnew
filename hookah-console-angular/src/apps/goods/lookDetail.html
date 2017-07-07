@@ -74,6 +74,12 @@
 						</div>
 					</div>
 					<div class="form-group">
+						<label class="col-sm-2 control-label">适用范围</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control" value="{{editData.trialange}}" readonly="true"/>
+						</div>
+					</div>
+					<div class="form-group">
 						<label class="col-sm-2 control-label">规格及价格</label>
 						<div class="col-sm-5">
 							<table class="table table-hover">
@@ -113,6 +119,34 @@
 							<p ng-bind-html="editData.goodsDesc"></p>
 						</div>
 					</div>
+
+					<div class="form-group">
+						<label class="col-sm-2 control-label">商品优势</label>
+						<div class="col-sm-5">
+							<p ng-bind-html="editData.goodsAdvantage"></p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">售后服务</label>
+						<div class="col-sm-5">
+							<p ng-bind-html="editData.afterSaleService"></p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">数据样例</label>
+						<div class="col-sm-5">
+							<a href="{{editData.dataSample}}" target="_blank">
+								<img ng-src="{{editData.dataSample}}" style="max-width: 450px; max-height: 600px">
+							</a>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">应用案例</label>
+						<div class="col-sm-5">
+							<p ng-bind-html="editData.appCase"></p>
+						</div>
+					</div>
+
 				</div>
 				<div data-ng-show="currentS == 2">
 					<!-- 线下数据公共数据 -->
@@ -193,17 +227,6 @@
 								<label class="col-sm-2 control-label">数据容量</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.offLineData.dataCapacity}}" readonly="true"/>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">交付方式</label>
-								<div class="col-sm-5">
-									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.offLineData.deliveryMethod == 0" disabled/>线上交付
-									</label>
-									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.offLineData.deliveryMethod == 1" disabled/>线下交付
-									</label>
 								</div>
 							</div>
 							<div class="form-group">
@@ -340,10 +363,13 @@
 								<label class="col-sm-2 control-label">返回格式</label>
 								<div class="col-sm-5">
 									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.apiInfo.apiType == 'json'" disabled/>json
+										<input type="radio" ng-checked="editData.apiInfo.respDataFormat == '0'" disabled/>json
 									</label>
 									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.apiInfo.apiType == 'xml'" disabled/>xml
+										<input type="radio" ng-checked="editData.apiInfo.respDataFormat == '1'" disabled/>xml
+									</label>
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.apiInfo.respDataFormat == '2'" disabled/>text
 									</label>
 								</div>
 							</div>
@@ -353,16 +379,72 @@
 									<input type="text" class="form-control"  readonly="true"/>
 								</div>
 							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">编码属性</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.apiInfo.respDataMapping.codeAttrBean.codeAttr}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">成功</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.apiInfo.respDataMapping.codeAttrBean.codeInfoBean.successCode}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">失败</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.apiInfo.respDataMapping.codeAttrBean.codeInfoBean.failedCode}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">成功无数据</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.apiInfo.respDataMapping.codeAttrBean.codeInfoBean.successNoData}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">信息属性</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.apiInfo.respDataMapping.infoAttr}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">数据属性</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.apiInfo.respDataMapping.dataAttr}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">总条数属性</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.apiInfo.respDataMapping.totalNumAttr}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">更新频率</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.apiInfo.updateFreq}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">数据条数/行数</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.apiInfo.dataNumDivRowNum}}" readonly="true"/>
+								</div>
+							</div>
+
 							<div class="form-group">
 								<label class="col-sm-2 control-label">密钥名称:</label>
 								<div class="col-sm-5">
-									<input type="text" class="form-control" value="{{editData.apiInfo.secretKeyName}}" readonly="true"/>
+									<input type="text" class="form-control" value="{{editData.apiInfo.encryptInfo.secretKeyName}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">密钥值:</label>
 								<div class="col-sm-5">
-									<input type="text" class="form-control" value="{{editData.apiInfo.secretKeyValue}}" readonly="true"/>
+									<input type="text" class="form-control" value="{{editData.apiInfo.encryptInfo.secretKeyValue}}" readonly="true"/>
 								</div>
 							</div>
 						</div>
@@ -397,17 +479,6 @@
 									联系姓名：<input type="text" class="form-control" value="{{editData.dataModel.concatInfo.concatName}}" readonly="true"/>
 									联系电话：<input type="text" class="form-control" value="{{editData.dataModel.concatInfo.concatPhone}}" readonly="true"/>
 									联系邮件：<input type="text" class="form-control" value="{{editData.dataModel.concatInfo.concatEmail}}" readonly="true"/>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">交付方式</label>
-								<div class="col-sm-5">
-									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.dataModel.deliveryMethod == 0" disabled/>线上交付
-									</label>
-									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.dataModel.deliveryMethod == 1" disabled/>线下交付
-									</label>
 								</div>
 							</div>
 						</div>
@@ -461,17 +532,6 @@
 								<label class="col-sm-2 control-label">所需数据</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.atAloneSoftware.dataNeeded}}" readonly="true"/>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">交付方式</label>
-								<div class="col-sm-5">
-									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.atAloneSoftware.deliveryMethod == 0" disabled/>线上交付
-									</label>
-									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.atAloneSoftware.deliveryMethod == 1" disabled/>线下交付
-									</label>
 								</div>
 							</div>
 
@@ -558,17 +618,6 @@
 									<input type="text" class="form-control" value="{{editData.asSaaS.dataNeeded}}" readonly="true"/>
 								</div>
 							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">交付方式</label>
-								<div class="col-sm-5">
-									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.asSaaS.deliveryMethod == 0" disabled/>线上交付
-									</label>
-									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.asSaaS.deliveryMethod == 1" disabled/>线下交付
-									</label>
-								</div>
-							</div>
 
 						</div>
 					</div>
@@ -580,10 +629,10 @@
 								<label class="col-sm-2 control-label">接口类型</label>
 								<div class="col-sm-5">
 									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.packageApiInfo.apiType == 'restful'" disabled/>restful
+										<input type="radio" ng-checked="editData.packageApiInfo.apiType == '0'" disabled/>restful
 									</label>
 									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.packageApiInfo.apiType == 'webservice'" disabled/>webservice
+										<input type="radio" ng-checked="editData.packageApiInfo.apiType == '1'" disabled/>webservice
 									</label>
 								</div>
 							</div>
@@ -696,13 +745,72 @@
 								<label class="col-sm-2 control-label">返回格式</label>
 								<div class="col-sm-5">
 									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.packageApiInfo.apiType == 'json'" disabled/>json
+										<input type="radio" ng-checked="editData.packageApiInfo.respDataFormat == '0'" disabled/>json
 									</label>
 									<label class="radio-inline">
-										<input type="radio" ng-checked="editData.packageApiInfo.apiType == 'xml'" disabled/>xml
+										<input type="radio" ng-checked="editData.packageApiInfo.respDataFormat == '1'" disabled/>xml
+									</label>
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.packageApiInfo.respDataFormat == '2'" disabled/>text
 									</label>
 								</div>
 							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">编码属性</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.packageApiInfo.respDataMapping.codeAttrBean.codeAttr}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">成功</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.packageApiInfo.respDataMapping.codeAttrBean.codeInfoBean.successCode}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">失败</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.packageApiInfo.respDataMapping.codeAttrBean.codeInfoBean.failedCode}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">成功无数据</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.packageApiInfo.respDataMapping.codeAttrBean.codeInfoBean.successNoData}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">信息属性</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.packageApiInfo.respDataMapping.infoAttr}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">数据属性</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.packageApiInfo.respDataMapping.dataAttr}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">总条数属性</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.packageApiInfo.respDataMapping.totalNumAttr}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">更新频率</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.packageApiInfo.updateFreq}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">数据条数/行数</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.packageApiInfo.dataNumDivRowNum}}" readonly="true"/>
+								</div>
+							</div>
+
 							<div class="form-group">
 								<label class="col-sm-2 control-label">资源有效时间:</label>
 								<div class="col-sm-5">
@@ -712,13 +820,13 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">密钥名称:</label>
 								<div class="col-sm-5">
-									<input type="text" class="form-control" value="{{editData.packageApiInfo.secretKeyName}}" readonly="true"/>
+									<input type="text" class="form-control" value="{{editData.packageApiInfo.encryptInfo.secretKeyName}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">密钥值:</label>
 								<div class="col-sm-5">
-									<input type="text" class="form-control" value="{{editData.packageApiInfo.secretKeyValue}}" readonly="true"/>
+									<input type="text" class="form-control" value="{{editData.packageApiInfo.encryptInfo.secretKeyValue}}" readonly="true"/>
 								</div>
 							</div>
 						</div>

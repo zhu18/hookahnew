@@ -6,23 +6,30 @@ import com.apex.fix.AxCallFunc;
 import com.apex.fix.JFixComm;
 import com.apex.fix.JFixSess;
 import com.jusfoun.hookah.core.dao.PayBankCardMapper;
+import com.jusfoun.hookah.core.domain.PayAccountRecord;
 import com.jusfoun.hookah.core.domain.PayBankCard;
+import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.pay.util.*;
+import com.jusfoun.hookah.rpc.api.PayAccountRecordService;
 import com.jusfoun.hookah.rpc.api.PayBankCardService;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class PayBankCardImpl extends GenericServiceImpl<PayBankCard, String> implements PayBankCardService {
+    @Resource
+    private MongoTemplate mongoTemplate;
 
     @Resource
     private PayBankCardMapper payBankCardMapper;
+
+    @Resource
+    private PayAccountRecordService payAccountRecordService;
 
     @Resource
     FixClientUtil client;
@@ -47,13 +54,16 @@ public class PayBankCardImpl extends GenericServiceImpl<PayBankCard, String> imp
     @Transactional(readOnly = false)
     @Override
     public boolean bankCardSignOn(String userId, String customerNum, String bankName, String bankCardNum, String bankCardOwner, String ip, String ukey) {
-        //TODO 根据userId查询accountId
+        //根据userId查询accountId
+        List<Condition> filters = new ArrayList();
+        filters.add(Condition.eq("userId", userId));
+        PayAccountRecord payAccountRecord = payAccountRecordService.selectOne(filters);
         // 组装参数
         Map<String, String> paramMap = buildSignOnParam(customerNum, bankCardNum, bankCardOwner, ip, ukey);
         //构造数据库对象
         PayBankCard payBankCard = new PayBankCard();
         //插入记录
-        //TODO payBankCard.setPayAccountId();
+        payBankCard.setPayAccountId(payAccountRecord.getPayAccountId());
         payBankCard.setUserId(userId);
         payBankCard.setBankName(bankName);
         payBankCard.setBankCode(PayConstants.BankCode.NY02.code);
@@ -69,7 +79,7 @@ public class PayBankCardImpl extends GenericServiceImpl<PayBankCard, String> imp
             }
         });
         if (resultBean.isSuccess()) {
-            //TODO 发送成功，插入mongo
+            //TODO 发送成功
 
         } else {
             //发送失败
@@ -86,6 +96,8 @@ public class PayBankCardImpl extends GenericServiceImpl<PayBankCard, String> imp
                     //成功后插入数据
                     payBankCard.setBindFlag(PayConstants.BankCardStatus.binded.code);
                     payBankCardMapper.insert(payBankCard);
+                    //插入mongo
+                    mongoTemplate.insert(payBankCard);
                 } else {
                     return false;
                 }
@@ -130,7 +142,7 @@ public class PayBankCardImpl extends GenericServiceImpl<PayBankCard, String> imp
             }
         });
         if (resultBean.isSuccess()) {
-            //TODO 发送成功，插入mongo
+            //TODO 发送成功
 
         } else {
             //发送失败
