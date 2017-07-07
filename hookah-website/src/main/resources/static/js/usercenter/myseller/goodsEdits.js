@@ -300,10 +300,20 @@ function renderWangEdit(){ // 渲染富文本
 	editor2 = new E('textarea2');
 	editor3 = new E('textarea3');
 	editor4 = new E('textarea4');
+	editorA = new E('textareaA');
+	editorB = new E('textareaB');
+	editorC = new E('textareaC');
+	editorD = new E('textareaD');
+	editorE = new E('textareaE');
 	editor1.create();
 	editor2.create();
 	editor3.create();
 	editor4.create();
+	editorA.create();
+	editorB.create();
+	editorC.create();
+	editorD.create();
+	editorE.create();
 }
 function uploadGoodsImg(){ //上传商品图片
 	$('#fileupload').fileupload({   //图片上传
