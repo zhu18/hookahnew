@@ -105,7 +105,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             MgGoods.PackageApiInfoBean packageApiInfoBean = new MgGoods.PackageApiInfoBean();
             BeanUtils.copyProperties(obj.getApiInfo(),packageApiInfoBean);
             packageApiInfoBean.setApiUrl(PropertiesManager.getInstance().getProperty("package.apiInfo.apiUrl") +
-                    obj.getGoodsId() + "/" + obj.getVer()==null?"V0":obj.getVer() + "/" + obj.getCatId());
+                    obj.getGoodsId() + "/" + (obj.getVer()==null?"V0":obj.getVer()) + "/" + obj.getCatId());
             mgGoods.setPackageApiInfo(packageApiInfoBean);
         }
 
