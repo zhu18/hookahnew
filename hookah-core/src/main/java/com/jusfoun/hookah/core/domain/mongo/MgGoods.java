@@ -666,15 +666,7 @@ public class MgGoods extends GenericModel {
         private String configParamsPwd;// 配置参数密码
         private String otherDesc;
         private OffLineInfoBean concatInfo;// 联系信息
-        private String deliveryMethod;//交付方式
 
-        public String getDeliveryMethod() {
-            return deliveryMethod;
-        }
-
-        public void setDeliveryMethod(String deliveryMethod) {
-            this.deliveryMethod = deliveryMethod;
-        }
 
         public String getComplexity() {
             return complexity;
@@ -781,7 +773,6 @@ public class MgGoods extends GenericModel {
         private String teamAdvantage;//团队优势
         private String desiredEnvironment;//所需环境
         private String dataNeeded;//所需数据
-        private String deliveryMethod;//交付方式
 
         public String getCoreFunction() {
             return coreFunction;
@@ -815,13 +806,6 @@ public class MgGoods extends GenericModel {
             this.dataNeeded = dataNeeded;
         }
 
-        public String getDeliveryMethod() {
-            return deliveryMethod;
-        }
-
-        public void setDeliveryMethod(String deliveryMethod) {
-            this.deliveryMethod = deliveryMethod;
-        }
 
         public String getsSComplexity() {
             return sSComplexity;
@@ -912,7 +896,6 @@ public class MgGoods extends GenericModel {
         private String teamAdvantage;//团队优势
         private String desiredEnvironment;//所需环境
         private String dataNeeded;//所需数据
-        private String deliveryMethod;//交付方式
 
         public String getCoreFunction() {
             return coreFunction;
@@ -954,13 +937,6 @@ public class MgGoods extends GenericModel {
             this.dataNeeded = dataNeeded;
         }
 
-        public String getDeliveryMethod() {
-            return deliveryMethod;
-        }
-
-        public void setDeliveryMethod(String deliveryMethod) {
-            this.deliveryMethod = deliveryMethod;
-        }
 
         public String getaSComplexity() {
             return aSComplexity;
@@ -1193,7 +1169,6 @@ public class MgGoods extends GenericModel {
         private String dataRows;//数据行数
         private String dataCapacity;//数据容量
         private String dataFormat ;//数据格式
-        private String deliveryMethod;//交付方式
 
         public String getTimeFrame() {
             return timeFrame;
@@ -1225,14 +1200,6 @@ public class MgGoods extends GenericModel {
 
         public void setDataFormat(String dataFormat) {
             this.dataFormat = dataFormat;
-        }
-
-        public String getDeliveryMethod() {
-            return deliveryMethod;
-        }
-
-        public void setDeliveryMethod(String deliveryMethod) {
-            this.deliveryMethod = deliveryMethod;
         }
 
         public String getIsOnline() {
