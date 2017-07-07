@@ -213,7 +213,7 @@ var htmlPart = {
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr class="goodsDesc-box" style="display: none;">
                                     <td class="bar">商品描述：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="wangEditor-wrapper">
@@ -221,7 +221,7 @@ var htmlPart = {
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr class="goodsAdvantage-box" style="display: none;">
                                     <td class="bar">商品优势：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="wangEditor-wrapper">
@@ -229,7 +229,7 @@ var htmlPart = {
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr class="afterSaleService-box" style="display: none;">
                                     <td class="bar">售后服务：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="wangEditor-wrapper">
@@ -237,7 +237,7 @@ var htmlPart = {
                                         </div>
                                     </td>
                                 </tr>
-                                <tr class="dataSample-info-box">
+                                <tr class="dataSample-info-box" style="display: none;">
                                     <td class="bar">数据样例：<span class="requireds">*</span></td>
                                     <td>
                                         <p>只支持xls、xlsx格式文件</p>
@@ -250,7 +250,7 @@ var htmlPart = {
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr class="appCase-box">
                                     <td class="bar">应用案例：<span class="requireds">*</span></td>
                                     <td>
                                         <div class="wangEditor-wrapper">
@@ -321,6 +321,64 @@ var htmlPart = {
                             <h1>离线数据:</h1>
                             <table>
                                 <tbody>
+                                <tr class="">
+                                    <td class="bar">时间范围：</td>
+                                    <td>
+                                        <div class="date-box grid-left">
+                                            <input type="text" id="offLine_startDate" placeholder="点击选择开始时间">
+                                        </div>
+                                        <div class="margin-left-10 margin-right-10 grid-left">-</div>
+                                        <div class="date-box grid-left">
+                                            <input type="text" id="offLine_endDate" placeholder="点击选择结束时间">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="">
+                                    <td class="bar">数据条数/行数：</td>
+                                    <td>
+                                        <div class="text-box">
+                                            <input type="text" name="dataRows" placeholder="请输入数据数，示例：35000行">
+                                            <span class="input-count"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="">
+                                    <td class="bar">数据容量：</td>
+                                    <td>
+                                        <div class="text-box">
+                                            <input type="text" name="dataCapacity" placeholder="请输入数据容量，示例：35M">
+                                            <span class="input-count"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="">
+                                    <td class="bar">数据格式：</td>
+                                    <td>
+                                        <div class="radio-box">
+                                            <label>
+                                                <input type="radio" name="dataFormat" checked="" value="0">xls/xlsx
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="dataFormat" value="1">csv
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="dataFormat" value="2">txt
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="dataFormat" value="3">图片
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="dataFormat" value="4">音频
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="dataFormat" value="5">视频
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="dataFormat" value="6">其他
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td class="bar">数据来源：<span class="requireds">*</span></td>
                                     <td>
@@ -675,35 +733,74 @@ var htmlPart = {
                             <h1 class="">数据模型：</h1>
                             <table>
                                 <tbody>
+
                                 <tr>
                                     <td class="bar"><h3>模型规则：</h3></td>
                                     <td>
                                         <table>
                                             <tbody>
                                             <tr>
+                                                <td class="bar">模型类型：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="select-box">
+                                                        <select>
+                                                            <option value="分类">分类</option>
+                                                            <option value="回归">回归</option>
+                                                            <option value="识别">识别</option>
+                                                            <option value="预测">预测</option>
+                                                            <option value="聚类">聚类</option>
+                                                            <option value="时间序列">时间序列</option>
+                                                            <option value="关联降维">关联降维</option>
+                                                            <option value="优化">优化</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
                                                 <td class="bar">复杂度：<span class="requireds">*</span></td>
                                                 <td>
-                                                    <div class="text-box">
-                                                        <input type="text" name="complexity" required="required">
-                                                        <span class="input-count"></span>
+                                                    <div class="select-box">
+                                                        <select>
+                                                            <option value="分类">高</option>
+                                                            <option value="回归">中</option>
+                                                            <option value="识别">低</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="bar">成熟度：<span class="requireds">*</span></td>
                                                 <td>
-                                                    <div class="text-box">
-                                                        <input type="text" name="maturity" required="required">
-                                                        <span class="input-count"></span>
+                                                    <div class="select-box">
+                                                        <select>
+                                                            <option value="分类">高</option>
+                                                            <option value="回归">中</option>
+                                                            <option value="识别">低</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="bar">应用经验：<span class="requireds">*</span></td>
                                                 <td>
-                                                    <div class="text-box">
-                                                        <input type="text" name="aexp" required="required">
-                                                        <span class="input-count"></span>
+                                                    <div class="textarea-box">
+                                                        <textarea type="text" name="goodsBrief" required="required"></textarea>
+                                                        <span class="input-count"><strong id="showcontent2">0</strong>/400</span>
+                                                    </div>
+                                                    <div class="errors">
+                                                        <span class="errorinfo">请填写商品简介，不能超过200个字!</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bar">配套服务：<span class="requireds">*</span></td>
+                                                <td>
+                                                    <div class="textarea-box">
+                                                        <textarea type="text" name="goodsBrief" id="" required="required"></textarea>
+                                                        <span class="input-count"><strong id="showcontent2">0</strong>/400</span>
+                                                    </div>
+                                                    <div class="errors">
+                                                        <span class="errorinfo">请填写商品简介，不能超过200个字!</span>
                                                     </div>
                                                 </td>
                                             </tr>

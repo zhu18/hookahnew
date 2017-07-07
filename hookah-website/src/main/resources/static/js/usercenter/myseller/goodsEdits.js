@@ -59,8 +59,30 @@ function goodsEditFn(){
 	selectGoodsTypes(goodsTypeVal);
 	selectGoodsTypeFn();
 	$("input[name='typeId']").val(catId.substring(0,3));
+	var start = {
+		format: "YYYY-MM-DD hh:mm:ss",
+		isTime: true,
+		choosefun: function (elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+		}
+	};
+	var end = {
+		format: "YYYY-MM-DD hh:mm:ss",
+		isTime: true,
+		choosefun: function (elem, datas) {
+			start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
+		}
+	};
+
+	$.jeDate("#offLine_startDate", start);
+	$.jeDate("#offLine_endDate", end);
 }
 function selectGoodsTypeFn(){ //选择商品类型
+	$('.goodsDesc-box').hide(); //商品描述
+	$('.goodsAdvantage-box').hide(); //商品优势
+	$('.afterSaleService-box').hide(); //售后服务
+	$('.dataSample-info-box').hide();//数据样例
+	$('.appCase-box').hide();//应用案例
 	$('.struct.selects').hide();
 	$('.childrenSelect').hide();
 	$('.file-info-box').hide();
@@ -162,8 +184,16 @@ function selectGoodsTypes(goodsTypeVal){
 		$('#childrenSelect1').show();
 		if($('#childrenSelect1').val() == 0){
 			$('.file-info-box').show();
+			$('.goodsDesc-box').show(); //商品描述
+			$('.goodsAdvantage-box').show(); //商品优势
+			$('.afterSaleService-box').show(); //售后服务
 		}else if($('#childrenSelect1').val() == 1){
 			$('.api-info-box').show();
+			$('.goodsDesc-box').show(); //商品描述
+			$('.goodsAdvantage-box').show(); //商品优势
+			$('.afterSaleService-box').show(); //售后服务
+			$('.dataSample-info-box').show();//数据样例
+			$('.appCase-box').show();//应用案例
 		}
 	}else if(goodsTypeVal == 300){
 		$('#childrenSelect2').show();
@@ -183,6 +213,9 @@ function selectGoodsTypes(goodsTypeVal){
 		}
 	}else{
 		$('.dataModel-info-box').show();
+		$('.goodsDesc-box').show(); //商品描述
+		$('.goodsAdvantage-box').show(); //商品优势
+		$('.afterSaleService-box').show(); //售后服务
 	}
 }
 function validataFn(){
@@ -526,6 +559,12 @@ function submitGoodsPublish(){
 			}else{
 				data.offLineData.onlineUrl = $('input[name="onlineUrl"]').val();
 			}
+			data.offLineData.timeFrame = {};
+			data.offLineData.timeFrame.startDate = $('input[name="offLine_startDate"]').val();
+			data.offLineData.timeFrame.endDate = $('input[name="offLine_endDate"]').val();
+			data.offLineData.dataRows = $('input[name="dataRows"]').val();
+			data.offLineData.dataCapacity = $('input[name="dataCapacity"]').val();
+			data.offLineData.dataFormat = $('input[name="dataFormat"]').val();
 		} else if (data.goodsType == 1) {//API------------------------------
 			data.apiInfo = {};
 			data.apiInfo.apiType = $('.api-info-box').find('input[name="apiType"]:checked').val();
@@ -1206,29 +1245,25 @@ function initialize() {
 	getPriceBox();
 	floorPrice();
 }
-
-
-
-
-
 $('#J_submitBtn').click(function(){
 	if($("#goodsModifyForm").valid()){
-		if($.trim(editor1.$txt.text()).length > 0){
-			if($.trim(editor2.$txt.text()).length > 0){
-				if($.trim(editor3.$txt.text()).length > 0){
-					if($.trim(editor4.$txt.text()).length > 0){
-						backAddFn(submitGoodsPublish())
-					}else{
-						$.alert('商品描述不能为空',true,function () {})
-					}
-				}else{
-					$.alert('商品优势不能为空',true,function () {})
-				}
-			}else{
-				$.alert('售后服务不能为空',true,function () {})
-			}
-		}else{
-			$.alert('应用案例不能为空',true,function () {})
-		}
+		// if($.trim(editor1.$txt.text()).length > 0){
+		// 	if($.trim(editor2.$txt.text()).length > 0){
+		// 		if($.trim(editor3.$txt.text()).length > 0){
+		// 			if($.trim(editor4.$txt.text()).length > 0){
+		// 				backAddFn(submitGoodsPublish())
+		// 			}else{
+		// 				$.alert('应用案例不能为空',true,function () {})
+		// 			}
+		// 		}else{
+		// 			$.alert('售后服务不能为空',true,function () {})
+		// 		}
+		// 	}else{
+		// 		$.alert('商品优势不能为空',true,function () {})
+		// 	}
+		// }else{
+		// 	$.alert('商品描述不能为空',true,function () {})
+		// }
+		backAddFn(submitGoodsPublish())
 	}
 });
