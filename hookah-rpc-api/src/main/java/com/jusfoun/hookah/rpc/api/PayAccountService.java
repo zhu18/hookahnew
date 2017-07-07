@@ -9,4 +9,6 @@ import com.jusfoun.hookah.core.generic.GenericService;
  */
 public interface PayAccountService extends GenericService<PayAccount, Integer> {
     int operatorByType(MoneyInOutBo moneyInOutBo);
+
+    int operatorByType(Long payAccountId, byte operatorType, Long money);
 }
