@@ -36,7 +36,7 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
   data:
     mongodb:
-      uri:  mongodb://192.168.15.90:27017/hookah
+      uri:  mongodb://192.168.15.90:27017/hookah_pay
   rabbitmq:
     addresses: 192.168.200.116:5672
     username: root

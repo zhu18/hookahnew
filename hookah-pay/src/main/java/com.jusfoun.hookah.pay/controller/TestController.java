@@ -27,7 +27,7 @@ public class TestController {
         MoneyInOutBo moneyInOutBo = new MoneyInOutBo();
         moneyInOutBo.setMoney(1000L);
         moneyInOutBo.setPayAccountID(2l);
-        moneyInOutBo.setOperatorType(1);
+        moneyInOutBo.setOperatorType((byte)1);
         moneyInOutBo.setUserId("1234567");
         payAccountRecordService.entryAndExitPayments(moneyInOutBo);
     }
