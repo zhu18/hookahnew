@@ -300,5 +300,25 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 	public static void main(String[] args){
 		System.out.println(LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE));
 		System.out.println(LocalTime.now().withNano(0));
+
+		// 获取当天日期
+		LocalDate today = LocalDate.now();
+
+		// 获取当天日期的后一天
+		LocalDate day1 = today.plusDays(1);
+
+		// 获取当天日期的前一天
+		LocalDate day_1 = today.minusDays(1);
+
+		// 获取当天日期的前2天
+		LocalDate day_2 = today.minusDays(2);
+
+		// 获取当天日期的前3天
+		LocalDate day_3 = today.minusDays(3);
+
+		System.out.println(day1);
+		System.out.println(day_1);
+		System.out.println(day_2);
+		System.out.println(day_3);
 	}
 }
