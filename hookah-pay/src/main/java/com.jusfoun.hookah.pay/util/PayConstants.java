@@ -42,20 +42,20 @@ public class PayConstants {
 
     /**
      * 0    普通投资者
-     * 9    市场受益者
+     * 9    交易中心
      */
     public enum UserType {
 
-        Personal(0),
-        Enterprise(9);
+        Personal((byte)0),
+        Enterprise((byte)9);
 
-        public Integer code;
+        public Byte code;
 
-        UserType(Integer code) {
+        UserType(Byte code) {
             this.code = code;
         }
 
-        public Integer getCode() {
+        public Byte getCode() {
             return code;
         }
     }
