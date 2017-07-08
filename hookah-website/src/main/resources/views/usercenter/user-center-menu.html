@@ -26,9 +26,9 @@
              <!--<a href="/usercenter/fundmanage"><span class="fa fa-life-buoy" aria-hidden="true"></span>资金管理</a>-->
              <ul class="three-level-menu">
                  <li class=""><a href="/usercenter/fundmanage">资金总览</a></li>
-                 <li class=""><a href="">充值</a></li>
-                 <li class=""><a href="">提现</a></li>
-                 <li class=""><a href="">资金记录</a></li>
+                 <li class=""><a href="/usercenter/recharge">充值</a></li>
+                 <li class=""><a href="/usercenter/withdrawals">提现</a></li>
+                 <li class=""><a href="/usercenter/capitalRecord">资金记录</a></li>
              </ul>
         </li>
         <li class="padding-left-30"><a href="/usercenter/safeSet"><span class="fa fa-unlock-alt" aria-hidden="true"></span>安全设置</a></li>
@@ -54,14 +54,14 @@
 
 <script>
     $(function(){
-//        var url=window.location.pathname;
-//        $('.status ul li').each(function () {
-//            var href = $(this).children('a').attr('href');
-//            if (url.indexOf(href) >= 0) {
-//                $(this).addClass('active').siblings().removeClass("active");
-////                $(this).children('a').css("color","#247DE8");
-//            }
-//        });
+        var url=window.location.pathname;
+        $('.status ul li').each(function () {
+            var href = $(this).children('a').attr('href');
+            if (url.indexOf(href) >= 0) {
+                $(this).addClass('active').siblings().removeClass("active");
+//                $(this).children('a').css("color","#247DE8");
+            }
+        });
       /*  if(url == '/admin/articleManage' || url == '/admin/articlePublish' || url == '/admin/articleModify'){
             $('.adminS ul li:first-child').addClass('active').children('a').css("color","#247DE8").siblings().removeClass("active");
         }else if(url == '/usercenter/trade'){

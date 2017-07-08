@@ -130,9 +130,11 @@
 }
 .fundmanage-box .fundmanage-bd .account-funds .account-funds-content{
     padding: 15px 0px 15px 50px;
+    overflow: hidden;
 }
 .fundmanage-box .fundmanage-bd .account-funds .account-funds-content-left{
     display: inline-block;
+    float: left;
     width: 570px;
 }
 .fundmanage-box .fundmanage-bd .account-funds .account-funds-content-left .title{
@@ -162,11 +164,51 @@
 }
 .fundmanage-box .fundmanage-bd .account-funds .account-funds-content-right{
     display: inline-block;
-    width: 300px;
+    float: right;
+    font-size: 14px;
+    color: #656565;
+    width: 340px;
+    height: 152px;
+    background: url(../../../images/fundmanage/fundmanage.png) no-repeat 135px 0px;
 }
 /*我的银行卡*/
 .fundmanage-box .fundmanage-bd .bank-card{
+    height: 340px;
+    border: 1px solid #E9E9E9;
+}
+.fundmanage-box .fundmanage-bd .bank-card .bank-card-title{
+    display: inline-block;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    font-weight: bold;
+    font-size: 14px;
+    background-color: #F4F4F4;
+    border-bottom: 1px solid #E9E9E9;
+    padding-left: 15px;
+}
+.fundmanage-box .fundmanage-bd .bank-card .bank-card-content{
 
+}
+.fundmanage-box .fundmanage-bd .bank-card .bank-card-content .add-card{
+    width: 336px;
+    height: 186px;
+    display: inline-block;
+
+    border: 1px dashed #5799F2;
+    margin: 15px 0px 0px 15px;
+}
+.fundmanage-box .fundmanage-bd .bank-card .bank-card-content .add-card p{
+    text-align: center;
+    color: #85B3FD;
+}
+.fundmanage-box .fundmanage-bd .bank-card .bank-card-content .add-card .Plus{
+    font-size: 80px;
+    line-height: 80px;
+    color: #247DE8;
+}
+.fundmanage-box .fundmanage-bd .bank-card .bank-card-content .add-card .tip{
+    color:#999999;
 }
 /*.fundmanage-box .fundmanage-bd .user-infos{*/
     /*width:200px;*/
