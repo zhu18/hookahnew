@@ -22,8 +22,18 @@ public class PayUtil {
         return sb.toString();
     }
 
+    public static String moneyConver(Long money){
+        return String.format("%.2f", (double)money).toString();
+    }
+
 
     public static void main(String[] args){
         System.out.println(createChannelSerial(ChannelType.QDABC));
+
+
+        System.out.println(moneyConver(100l));
+
+
+
     }
 }

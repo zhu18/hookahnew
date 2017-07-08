@@ -20,7 +20,7 @@ import java.util.Map;
  */
 
 @Service
-public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Integer> implements
+public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> implements
 		PayAccountService {
 
 	@Resource
@@ -36,22 +36,44 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Intege
 
 		Map<String, Object> map = new HashMap<>();
 
+//		入账到可用余额
+//		1：在线充值（入金），
+//		5：手工充值,
+//		7：线下充值，
+//		8：提现冲账
+//		3001：销售（货款）收入
+//		3007：交易交收手续费-收入
+
+//		扣款可用余额
+//		2：在线提现（出金），
+//		6：手工扣款，
+//		4001：销售（货款）支出
+
+//		入账到冻结账户
+//		6003：冻结划入-收益账户
+
+//		扣款冻结账户到可用余额
+//		6004：释放划出-收益账户
+
 		// 加钱
-		if(operatorType == PayConstants.TradeType.IntoAccount.code ||
-			operatorType == PayConstants.TradeType.OnlineRecharge.code ||
+		if(operatorType == PayConstants.TradeType.OnlineRecharge.code ||
 			operatorType == PayConstants.TradeType.ManualRecharge.code ||
 			operatorType == PayConstants.TradeType.CashREverse.code ||
+			operatorType == PayConstants.TradeType.SalesIn.code ||
+			operatorType == PayConstants.TradeType.ChargeIn.code ||
 			operatorType == PayConstants.TradeType.OfflineRecharge.code){
-
 			map.put("type", "plus");
 		}else if( // 减钱
-				operatorType == PayConstants.TradeType.Deduct.code ||
 				operatorType == PayConstants.TradeType.OnlineCash.code ||
+				operatorType == PayConstants.TradeType.SalesOut.code ||
 				operatorType == PayConstants.TradeType.ManualDebit.code
 				){
 			map.put("type", "sub");
+		}else if(operatorType == PayConstants.TradeType.FreezaIn.code){
+			map.put("type", "FreezaIn");
+		}else if(operatorType == PayConstants.TradeType.releaseDraw.code){
+			map.put("type", "releaseDraw");
 		}
-
 		map.put("id", payAccountId);
 		map.put("changeMoney", money);
 		int n = payAccountMapper.OperatorByType(map);

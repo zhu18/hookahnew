@@ -11,6 +11,6 @@ public interface SyncCustomerInfoService  extends GenericService<PayAccount, Int
     /**
      * 客户信息同步
      */
-    public void sendFirmReg(PayAccount payAccount);
+    void sendFirmReg(String userId);
 
 }
