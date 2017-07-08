@@ -140,19 +140,21 @@
     </w:t>
 </w:r></w:p></w:tc></w:tr></w:tbl><w:p w:rsidR="00A8356E" w:rsidRPr="00A8356E" w:rsidRDefault="00A8356E" w:rsidP="00A8356E"><w:pPr><w:jc w:val="left"/></w:pPr></w:p><w:p w:rsidR="00A8356E" w:rsidRDefault="00A8356E" w:rsidP="00A8356E"><w:pPr><w:jc w:val="left"/><w:rPr><w:b/></w:rPr></w:pPr><w:r w:rsidRPr="00A8356E"><w:rPr><w:rFonts w:hint="eastAsia"/><w:b/></w:rPr><w:t>返回数据映射</w:t></w:r><w:r><w:rPr><w:rFonts w:hint="eastAsia"/><w:b/></w:rPr><w:t>：</w:t></w:r></w:p><w:tbl><w:tblPr><w:tblStyle w:val="a5"/><w:tblW w:w="0" w:type="auto"/><w:tblLook w:val="04A0" w:firstRow="1" w:lastRow="0" w:firstColumn="1" w:lastColumn="0" w:noHBand="0" w:noVBand="1"/></w:tblPr><w:tblGrid><w:gridCol w:w="4148"/><w:gridCol w:w="4148"/></w:tblGrid><w:tr w:rsidR="00A8356E" w:rsidTr="00E07C91"><w:tc><w:tcPr><w:tcW w:w="4148" w:type="dxa"/></w:tcPr><w:p w:rsidR="00A8356E" w:rsidRDefault="00A8356E" w:rsidP="00E07C91"><w:pPr><w:jc w:val="center"/><w:rPr><w:b/></w:rPr></w:pPr><w:r w:rsidRPr="00A8356E"><w:rPr><w:rFonts w:hint="eastAsia"/><w:b/></w:rPr><w:t>编码属性对象</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcW w:w="4148" w:type="dxa"/></w:tcPr><w:p w:rsidR="00A8356E" w:rsidRDefault="00A8356E" w:rsidP="00E07C91"><w:pPr><w:jc w:val="center"/><w:rPr><w:b/></w:rPr></w:pPr><w:r w:rsidRPr="00265948"><w:rPr><w:rFonts w:hint="eastAsia"/></w:rPr>
 	<w:t>
+		<#if respDataMapping ?? >
+			<#if respDataMapping.codeAttrBean ?? >
+				<#if respDataMapping.codeAttrBean.codeAttr ?? >
+					${respDataMapping.codeAttrBean.codeAttr}
+				</#if>
+			</#if>
+		</#if>
+	</w:t>
+</w:r></w:p></w:tc></w:tr><w:tr w:rsidR="00A8356E" w:rsidTr="00E07C91"><w:tc><w:tcPr><w:tcW w:w="4148" w:type="dxa"/></w:tcPr><w:p w:rsidR="00A8356E" w:rsidRDefault="00265948" w:rsidP="00E07C91"><w:pPr><w:jc w:val="center"/><w:rPr><w:b/></w:rPr></w:pPr><w:r w:rsidRPr="00265948"><w:rPr><w:rFonts w:hint="eastAsia"/><w:b/></w:rPr><w:t>信息属性</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcW w:w="4148" w:type="dxa"/></w:tcPr><w:p w:rsidR="00A8356E" w:rsidRDefault="00265948" w:rsidP="00265948"><w:pPr><w:jc w:val="center"/><w:rPr><w:b/></w:rPr></w:pPr><w:r w:rsidRPr="00265948"><w:rPr><w:rFonts w:hint="eastAsia"/></w:rPr>
+    <w:t>
 	<#if respDataMapping ?? >
 				<#if respDataMapping.infoAttr ?? >
 	${respDataMapping.infoAttr}
 	</#if>
 			</#if>
-	</w:t>
-</w:r></w:p></w:tc></w:tr><w:tr w:rsidR="00A8356E" w:rsidTr="00E07C91"><w:tc><w:tcPr><w:tcW w:w="4148" w:type="dxa"/></w:tcPr><w:p w:rsidR="00A8356E" w:rsidRDefault="00265948" w:rsidP="00E07C91"><w:pPr><w:jc w:val="center"/><w:rPr><w:b/></w:rPr></w:pPr><w:r w:rsidRPr="00265948"><w:rPr><w:rFonts w:hint="eastAsia"/><w:b/></w:rPr><w:t>信息属性</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcW w:w="4148" w:type="dxa"/></w:tcPr><w:p w:rsidR="00A8356E" w:rsidRDefault="00265948" w:rsidP="00265948"><w:pPr><w:jc w:val="center"/><w:rPr><w:b/></w:rPr></w:pPr><w:r w:rsidRPr="00265948"><w:rPr><w:rFonts w:hint="eastAsia"/></w:rPr>
-    <w:t>
-		<#if respDataMapping ?? >
-			<#if respDataMapping.codeAttrBean ?? >
-				${respDataMapping.codeAttrBean}
-			</#if>
-		</#if>
     </w:t>
 </w:r></w:p></w:tc></w:tr><w:tr w:rsidR="001E573F" w:rsidTr="00E07C91"><w:tc><w:tcPr><w:tcW w:w="4148" w:type="dxa"/></w:tcPr><w:p w:rsidR="001E573F" w:rsidRPr="00A8356E" w:rsidRDefault="00265948" w:rsidP="00E07C91"><w:pPr><w:jc w:val="center"/><w:rPr><w:rFonts w:hint="eastAsia"/><w:b/></w:rPr></w:pPr><w:r w:rsidRPr="00265948"><w:rPr><w:rFonts w:hint="eastAsia"/><w:b/></w:rPr><w:t>数据属性</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcW w:w="4148" w:type="dxa"/></w:tcPr><w:p w:rsidR="001E573F" w:rsidRDefault="00265948" w:rsidP="001E573F"><w:pPr><w:jc w:val="center"/><w:rPr><w:rFonts w:hint="eastAsia"/><w:b/></w:rPr></w:pPr><w:r w:rsidRPr="00265948"><w:rPr><w:rFonts w:hint="eastAsia"/></w:rPr>
     <w:t>
