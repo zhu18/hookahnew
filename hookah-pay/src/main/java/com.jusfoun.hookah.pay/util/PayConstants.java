@@ -102,6 +102,11 @@ public class PayConstants {
     public static final String QD_BZ = "RMB";
 
     /**
+     * 下载文件存储地址
+     */
+    public static final String FILE_PATH = "D:\\\\apex\\\\download";
+
+    /**
      * transfer 类型 2出金 1入金 和 payTradeRecord 同步 3入金4出金
      */
     public enum TransferType {

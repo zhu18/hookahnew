@@ -8,9 +8,13 @@
 
     <!-- 业务具体实现类 -->
     <bean id="payAccountRecordService" class="com.jusfoun.hookah.pay.service.impl.PayAccountRecordServiceImpl"/>
+    <bean id="payAccountService" class="com.jusfoun.hookah.pay.service.impl.PayAccountServiceImpl"/>
 
     <!-- 具体rpc服务配置，声明实现的接口类。-->
     <motan:service interface="com.jusfoun.hookah.rpc.api.PayAccountRecordService"
                    ref="payAccountRecordService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+    <motan:service interface="com.jusfoun.hookah.rpc.api.PayAccountService"
+                   ref="payAccountService" export="hookah:5001" basicService="serviceBasicConfig">
     </motan:service>
 </beans>

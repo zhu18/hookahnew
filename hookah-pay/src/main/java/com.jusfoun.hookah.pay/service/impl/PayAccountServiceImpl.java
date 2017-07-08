@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,5 +83,44 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 			throw new RuntimeException();
 		}
 		return n;
+	}
+
+	/**
+	 *  用户注册时，同时在pay_account表插入记录
+	 * @param userId
+	 * @param userName
+	 */
+	public void insertPayAccountByUserIdAndName(String userId, String userName) {
+
+		PayAccount payAccount = payAccountMapper.selectByPrimaryKey(userId);
+
+		if (payAccount == null) {
+			PayAccount pa = new PayAccount();
+			pa.setUserId(userId);
+			pa.setUserName(userName);
+			pa.setBalance(0l);
+			pa.setUseBalance(0l);
+			pa.setFrozenBalance(0l);
+			pa.setPayPassword("00000000");
+			pa.setAccountFlag((byte) 1);
+			pa.setMerchantId("");
+			pa.setSyncFlag((byte) 0);
+			pa.setAddTime(new Date());
+			pa.setAddOperator("system");
+			payAccountMapper.insertAndGetId(pa);
+		}
+	}
+
+	/**
+	 *  重置支付密码
+	 * @param id 账户表即pay_account表主键
+	 * @param payPassword   支付密码
+	 */
+	public void resetPayPassword(Long id, String payPassword) {
+		Map<String, Object> map = new HashMap<>();
+		PayAccount pa = new PayAccount();
+		map.put("id", id);
+		map.put("payPassword", payPassword);
+		payAccountMapper.resetPayPassword(map);
 	}
 }
