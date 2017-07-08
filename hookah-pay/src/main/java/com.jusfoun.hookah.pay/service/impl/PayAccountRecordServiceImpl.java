@@ -76,7 +76,7 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 			// 如果是提现 就先去扣客户帐
 			if(moneyInOutBo.getOperatorType() == PayConstants.TradeType.OnlineCash.code){
 				logger.info("当前用户【PayAccountID】---<" +moneyInOutBo.getPayAccountID()+ ">---提现操作先去扣客户账-->操作时间：" + LocalDateTime.now());
-				payAccountService.operatorByType(moneyInOutBo.getPayAccountID(), moneyInOutBo.operatorType, moneyInOutBo.getMoney());
+				payAccountService.operatorByType(moneyInOutBo.getPayAccountID(), moneyInOutBo.getOperatorType(), moneyInOutBo.getMoney());
 			}
 
 			// 添加外部流水记录 处理中状态
@@ -128,7 +128,7 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 			paramMap.put("FID_YHZH", payBankCard.getCardCode());
 			paramMap.put("FID_YHDM", PayConstants.BankCode.NY02.code);
 			paramMap.put("FID_CZZD", "");   								//操作站点
-			paramMap.put("FID_ZJZH", moneyInOutBo.userId);
+			paramMap.put("FID_ZJZH", moneyInOutBo.getUserId());
 			paramMap.put("FID_CS1", kbaoRS);								// k宝返回
 			paramMap.put("FID_CS2", PayConstants.QDABC_PREFIX + kbaoRS);	// BD + k宝返回
 
