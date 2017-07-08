@@ -10,4 +10,6 @@ public interface PayAccountMapper extends GenericDao<PayAccount> {
     int insertAndGetId(PayAccount PayAccount);
 
     int OperatorByType(Map<String, Object> map);
+
+    void resetPayPassword(Map<String, Object> map);
 }
