@@ -16,32 +16,33 @@
 </div>
 <%}else{%>
 <div class="grid-left left-bar margin-top-10 margin-bottom-30 status">
-    <ul class="u1">
-        <li class="text-align-center">用户中心 <span class="fa fa-"></span></li>
+    <ul class="one-level-menu-user">
+        <li class="font-weight-bold padding-left-20">用户中心</li>
         <!--<li class="text-align-center"><a href="/usercenter/userProfile"><span class="fa fa-file-text"></span>个人资料</a></li>-->
-        <li class="text-align-center"><a href="/usercenter/index"><span class="fa fa-file-text"></span>个人中心</a></li>
+        <li class="padding-left-30"><a href="/usercenter/index"><span class="fa fa-file-text"></span>个人中心</a></li>
         <!--<li class="text-align-center"><a href="/usercenter/infoCenter"><span class="fa fa-id-card-o"></span>信息中心</a></li>-->
-        <li class="text-align-center">
-             <div><span class="fa fa-caret-down"></span><span class="fa fa-caret-up" style="display: none;"></span>资金管理</div>
+        <li class="two-level-menu">
+             <div class="padding-left-30"><span class="fa fa-caret-down"></span><span class="fa fa-caret-up" style="display: none;"></span>资金管理</div>
              <!--<a href="/usercenter/fundmanage"><span class="fa fa-life-buoy" aria-hidden="true"></span>资金管理</a>-->
-             <ul>
-                 <li><a href="/usercenter/fundmanage"></a>资金总览</li>
-                 <li>充值</li>
-                 <li>提现</li>
-                 <li>资金记录</li>
+             <ul class="three-level-menu">
+                 <li class=""><a href="/usercenter/fundmanage">资金总览</a></li>
+                 <li class=""><a href="">充值</a></li>
+                 <li class=""><a href="">提现</a></li>
+                 <li class=""><a href="">资金记录</a></li>
              </ul>
         </li>
-        <li class="text-align-center"><a href="/usercenter/safeSet"><span class="fa fa-unlock-alt" aria-hidden="true"></span>安全设置</a></li>
+        <li class="padding-left-30"><a href="/usercenter/safeSet"><span class="fa fa-unlock-alt" aria-hidden="true"></span>安全设置</a></li>
     </ul>
-    <ul class="u2">
-        <li class="text-align-center"><span class="fa fa-caret-down"></span><span class="fa fa-caret-up" style="display: none;"></span>买家中心 <span class=""></span></li>
-        <li class="text-align-center"><a href="/usercenter/buyer/orderManagement"><span class="fa fa-indent"></span>订单管理</a></li>
+    <ul class="one-level-menu-buyer">
+        <li class="font-weight-bold padding-left-20">买家中心</li>
+        <!--<li class="text-align-center"><span class="fa fa-caret-down"></span><span class="fa fa-caret-up" style="display: none;"></span>买家中心 <span class=""></span></li>-->
+        <li class="padding-left-30"><a href="/usercenter/buyer/orderManagement"><span class="fa fa-indent"></span>订单管理</a></li>
         <!--<li class="text-align-center"><a href="/usercenter/invoice"><span class="fa fa-list-alt"></span>我的发票</a></li>-->
         <!--<li class="text-align-center"><a href="/usercenter/buyer/cart"><span class="fa fa-shopping-cart"></span>购物车&nbsp;&nbsp;&nbsp;</a></li>-->
         <!--<li class="text-align-center"><a href="/usercenter/buyer/evaluation"><span class="fa fa-building"></span>我的评价</a></li>-->
-        <li class="text-align-center"><a href="/usercenter/myAttention"><span class="fa fa-star"></span>我的关注</a></li>
+        <li class="padding-left-30"><a href="/usercenter/myAttention"><span class="fa fa-star"></span>我的关注</a></li>
     </ul>
-    <!--<ul class="u3">-->
+    <!--<ul class="one-level-menu-seller">-->
         <!--<li class="text-align-center"><span class="fa fa-caret-down"></span><span class="fa fa-caret-up" style="display: none;"></span>卖家中心 <span class=""></span></li>-->
         <!--<li class="text-align-center goods"><a href="/usercenter/goodsManage"><span class="fa fa-cart-plus"></span>商品管理</a></li>-->
         <!--<li class="text-align-center"><a href="/usercenter/trade"><span class="fa fa-indent"></span>交易管理</a></li>-->
@@ -53,14 +54,14 @@
 
 <script>
     $(function(){
-        var url=window.location.pathname;
-        $('.status ul li').each(function () {
-            var href = $(this).children('a').attr('href');
-            if (url.indexOf(href) >= 0) {
-                $(this).addClass('active').siblings().removeClass("active");
-                $(this).children('a').css("color","#247DE8");
-            }
-        });
+//        var url=window.location.pathname;
+//        $('.status ul li').each(function () {
+//            var href = $(this).children('a').attr('href');
+//            if (url.indexOf(href) >= 0) {
+//                $(this).addClass('active').siblings().removeClass("active");
+////                $(this).children('a').css("color","#247DE8");
+//            }
+//        });
       /*  if(url == '/admin/articleManage' || url == '/admin/articlePublish' || url == '/admin/articleModify'){
             $('.adminS ul li:first-child').addClass('active').children('a').css("color","#247DE8").siblings().removeClass("active");
         }else if(url == '/usercenter/trade'){

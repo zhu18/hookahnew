@@ -3,28 +3,28 @@
     background-color: #fff;
 }
 .left-bar li{
-    height: 46px;
+    /*height: 46px;*/
     font-size:14px;
     line-height: 46px;
     border-bottom:1px solid #E9E9E9;
 }
-.left-bar li a {
-    display: inline-block;
-    padding:0px 40px;
-}
+/*.left-bar li a {*/
+    /*display: inline-block;*/
+    /*padding:0px 40px;*/
+/*}*/
 .left-bar li a:hover {
     outline:none;
 }
 .left-bar li span{
-    margin-right:22px;
+    margin-right:15px;
 }
-.left-bar ul li:nth-child(1){
-    font-size:15px;
-    font-weight:bold;
+.left-bar .two-level-menu{
 
 }
-.left-bar ul:nth-child(2) {
-    border-bottom:none;
+.left-bar .three-level-menu li a{
+    margin-left:53px;
+    text-decoration: none;
+    color: #666;
 }
 .left-bar .active{
     border-left:2px solid #247DE8;

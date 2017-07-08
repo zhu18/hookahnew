@@ -82,7 +82,7 @@ public class UserCenterController {
 //    public String infoDetail() {
 //        return "usercenter/userInfo/infoDetail";
 //    }
-
+    //     资金总览页面
     @RequestMapping(value = "/fundmanage", method = RequestMethod.GET)
     public String fundmanage(Model model) {
         Session session = SecurityUtils.getSubject().getSession();
@@ -92,15 +92,20 @@ public class UserCenterController {
         model.addAttribute("userCur",user);
         return "usercenter/userInfo/fundmanage";
     }
-
+    //     充值页面
     @RequestMapping(value = "/recharge", method = RequestMethod.GET)
     public String recharge() {
         return "/usercenter/userInfo/recharge";
     }
-
+    //     取款页面
     @RequestMapping(value = "/withdrawals", method = RequestMethod.GET)
     public String withdrawals() {
         return "/usercenter/userInfo/withdrawals";
+    }
+    //     资金记录页面
+    @RequestMapping(value = "/capitalRecord", method = RequestMethod.GET)
+    public String capitalRecord() {
+        return "/usercenter/userInfo/capitalRecord";
     }
 
     /**
