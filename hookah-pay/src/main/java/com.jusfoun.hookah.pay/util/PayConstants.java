@@ -203,4 +203,20 @@ public class PayConstants {
     }
 
 
+    public enum UploadedNoticeFileType {
+
+        fundFile("1"),
+        tradeFile("2");
+
+        public String code;
+
+        UploadedNoticeFileType(String code) {
+            this.code = code;
+        }
+
+        public String getCode() {
+            return code;
+        }
+    }
+
 }
