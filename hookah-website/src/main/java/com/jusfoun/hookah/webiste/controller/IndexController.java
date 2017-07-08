@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.webiste.controller;
 
+import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.rpc.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -9,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 
 /**
  * Created by huanglei on 2016/11/8.
@@ -39,9 +43,9 @@ public class IndexController {
     @Resource
     MailService mailService;
 
-
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home(Model model) {
+        userService.pVCount();
         return "index";
     }
 

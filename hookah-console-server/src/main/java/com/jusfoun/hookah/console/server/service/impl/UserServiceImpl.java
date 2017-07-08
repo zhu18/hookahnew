@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
+import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.UserMapper;
 import com.jusfoun.hookah.core.domain.CashRecord;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -34,6 +36,9 @@ public class UserServiceImpl extends GenericServiceImpl<User, String> implements
 
     @Resource
     CashRecordService cashRecordService;
+
+    @Resource
+    RedisOperate redisOperate;
 
     public User insert(User user) {
         String encPassword = new Md5Hash(user.getPassword()).toString();
@@ -70,6 +75,17 @@ public class UserServiceImpl extends GenericServiceImpl<User, String> implements
             throw new RuntimeException("操作失败");
         }
         return m;
+    }
+
+    @Override
+    public void setPVCountByDate() {
+        String pvKey = "pv:"+ LocalDate.now().toString();
+        redisOperate.incr(pvKey);
+    }
+
+    @Override
+    public List getPVCountByDate(String key) {
+
     }
 
 }

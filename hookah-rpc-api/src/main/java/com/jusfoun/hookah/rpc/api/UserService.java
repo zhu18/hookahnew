@@ -13,4 +13,9 @@ public interface UserService extends GenericService<User, String> {
     User insert(User user);
 
     int manualRecharge(String userId, long l, String userName) throws Exception;
+
+    void setPVCountByDate();
+
+    void getPVCountByDate(String key);
+
 }
