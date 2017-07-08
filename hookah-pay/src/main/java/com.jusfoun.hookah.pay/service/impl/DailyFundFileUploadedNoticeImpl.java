@@ -16,10 +16,6 @@ import java.util.Map;
 @Service
 public class DailyFundFileUploadedNoticeImpl implements DailyFundFileUploadedNoticeService {
     @Resource
-    private MongoTemplate mongoTemplate;
-
-
-    @Resource
     FixClientUtil client;
 
     private IFixClient fixClient = client.createClientSSL();
