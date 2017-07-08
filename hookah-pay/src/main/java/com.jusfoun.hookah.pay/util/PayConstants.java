@@ -61,6 +61,27 @@ public class PayConstants {
     }
 
     /**
+     * 1    签到
+     * 2    签退
+     */
+    public enum Sign {
+
+        SIGN_IN("1"),
+        SIGN_OUT("2");
+
+        public String code;
+
+        Sign(String code) {
+            this.code = code;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+    }
+    
+    /**
      * 农行签名流水号前缀BD
      */
     public static final String QDABC_PREFIX = "BD";
@@ -81,12 +102,12 @@ public class PayConstants {
     public static final String QD_BZ = "RMB";
 
     /**
-     * transfer 类型 2出金 1入金
+     * transfer 类型 2出金 1入金 和 payTradeRecord 同步 3入金4出金
      */
     public enum TransferType {
 
-        MONEY_IN((byte)1),
-        MONEY_OUT((byte)2);
+        MONEY_IN((byte)3),
+        MONEY_OUT((byte)4);
 
         public byte code;
 
@@ -142,26 +163,33 @@ public class PayConstants {
 
     /**
      * payTradeRecode
-     账务类型：
-     1-商品支付扣款,
-     2-商品销售入账,
-     3-在线充值,
-     4-在线提现,
-     5-手工充值,
-     6-手工扣款,
-     7-线下充值,
-     8-提现冲账
+     交易平台类型
+     1：在线充值（入金），
+     2：在线提现（出金），
+     5：手工充值,
+     6：手工扣款，
+     7：线下充值，
+     8：提现冲账
+     清算中心类型
+     3001：销售（货款）收入
+     3007：交易交收手续费-收入
+     4001：销售（货款）支出
+     6003：冻结划入-收益账户
+     6004：释放划出-收益账户
      */
     public enum TradeType {
 
-        Deduct((byte)1),
-        IntoAccount((byte)2),
-        OnlineRecharge((byte)3),
-        OnlineCash((byte)4),
+        OnlineRecharge((byte)1),
+        OnlineCash((byte)2),
         ManualRecharge((byte)5),
         ManualDebit((byte)6),
         OfflineRecharge((byte)7),
-        CashREverse((byte)8);
+        CashREverse((byte)8),
+        SalesIn((byte)3001),
+        SalesOut((byte)4001),
+        ChargeIn((byte)3007),
+        FreezaIn((byte)6003),
+        releaseDraw((byte)6004);
 
         public byte code;
 

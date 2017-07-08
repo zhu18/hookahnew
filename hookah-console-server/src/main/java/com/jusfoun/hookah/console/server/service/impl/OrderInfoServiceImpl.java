@@ -533,6 +533,8 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                     });
             Map rs = HttpClientUtil.PostMethod(url, JsonUtils.toJson(list));
             logger.info("订单{}商品放api平台返回信息：{}", orderInfo.getOrderId(),  JsonUtils.toJson(rs));
+//            Map apiRs = HttpClientUtil.PostMethod(apiUrl,JsonUtils.toJson(list));
+//            logger.info("订单{}API商品插入网管接口：{}", orderInfo.getOrderId(),  JsonUtils.toJson(apiRs));
         }catch (Exception e){
             e.printStackTrace();
             logger.error("发送商品到api平台发生异常");
@@ -898,22 +900,16 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 //                        break;
                     case 2:  //数据模型
                         if (mgOrderGood.getIsOffline() == 0){
-                            String configFile = mgOrderGood.getDataModel().getConfigFile();
-                            String configParams = mgOrderGood.getDataModel().getConfigParams();
-                            String modelFile = mgOrderGood.getDataModel().getModelFile();
+                            String configFile = mgOrderGood.getDataModel().getConfigFile().getFileAddress();
+                            String configParams = mgOrderGood.getDataModel().getParamFile().getFileAddress();
+                            String modelFile = mgOrderGood.getDataModel().getModelFile().getFileAddress();
                             String prefix = "http://static.qddata.com.cn/";
-                            if (!configFile.contains("http")){
-                                configFile = prefix + configFile;
-                                mgOrderGood.getDataModel().setConfigFile(configFile);
-                            }
-                            if (!configParams.contains("http")){
-                                configParams = prefix + configParams;
-                                mgOrderGood.getDataModel().setConfigParams(configParams);
-                            }
-                            if (!modelFile.contains("http")){
-                                modelFile = prefix + modelFile;
-                                mgOrderGood.getDataModel().setModelFile(modelFile);
-                            }
+                            configFile = prefix + configFile;
+                            mgOrderGood.getDataModel().getConfigFile().setFileAddress(configFile);
+                            configParams = prefix + configParams;
+                            mgOrderGood.getDataModel().getParamFile().setFileAddress(configParams);
+                            modelFile = prefix + modelFile;
+                            mgOrderGood.getDataModel().getModelFile().setFileAddress(modelFile);
                             map.put("data",mgOrderGood.getDataModel());
                         }else {
                             map.put("data",mgOrderGood.getOffLineInfo());
