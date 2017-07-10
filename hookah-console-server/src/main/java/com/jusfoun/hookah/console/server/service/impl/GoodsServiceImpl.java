@@ -470,7 +470,8 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             goodsVo.setFormatList(mgGoods.getFormatList());
             goodsVo.setImgList(mgGoods.getImgList());
             goodsVo.setAttrTypeList(mgGoods.getAttrTypeList());
-            goodsVo.setApiInfo(mgGoods.getApiInfo());
+//            goodsVo.setApiInfo(mgGoods.getApiInfo());
+            goodsVo.setPackageApiInfo(mgGoods.getPackageApiInfo());
             goodsVo.setAsAloneSoftware(mgGoods.getAsAloneSoftware());
             goodsVo.setAsSaaS(mgGoods.getAsSaaS());
             goodsVo.setAtAloneSoftware(mgGoods.getAtAloneSoftware());
