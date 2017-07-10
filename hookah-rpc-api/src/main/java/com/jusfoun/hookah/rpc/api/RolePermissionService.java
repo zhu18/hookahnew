@@ -8,5 +8,6 @@ import com.jusfoun.hookah.core.generic.GenericService;
  * @date 2017/4/5 上午9:28
  * @desc
  */
-public interface RolePermisstionService extends GenericService<RolePermission, String> {
+public interface RolePermissionService extends GenericService<RolePermission, String> {
+    int deletePermissionsByRoleId(String roleId);
 }

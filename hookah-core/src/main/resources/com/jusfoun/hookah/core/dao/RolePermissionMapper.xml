@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jusfoun.hookah.core.dao.RolePermissionMapper" >
+
+  <delete id="deletePermissionsByRoleId">
+    delete from role_permission
+    <where>1=1
+      <if test="roleId !=null and roleId !=''">
+      and role_id=#{roleId}
+      </if>
+    </where>
+  </delete>
+
+</mapper>
