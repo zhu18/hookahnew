@@ -8,7 +8,7 @@ import com.jusfoun.hookah.core.generic.GenericService;
  */
 public interface PaySignService extends GenericService<PaySign,String> {
 
-    void sendMarketLogin(PaySign paySign);
+    void sendMarketLogin();
 
-    void sendMarketLogout(PaySign paySign);
+    void sendMarketLogout();
 }
