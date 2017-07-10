@@ -5,13 +5,13 @@ import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.GoodsCheck;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
+import com.jusfoun.hookah.core.domain.vo.GoodsCheckVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.GoodsCheckService;
 import com.jusfoun.hookah.rpc.api.MgGoodsService;
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,14 +46,14 @@ public class GoodsCheckApi extends BaseController{
      * @return
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ReturnData goodsCheck(@RequestBody MgGoods.PackageApiInfoBean apiInfoBean) {
+    public ReturnData goodsCheck(@RequestBody GoodsCheckVo goodsCheckVo) {
 
-        GoodsCheck goodsCheck = new GoodsCheck(); //goodsCheckVo.getGoodsCheck();
-        MgGoods.PackageApiInfoBean apiInfoBeanTar = new MgGoods.PackageApiInfoBean();//goodsCheckVo.getApiInfoBean();
+        GoodsCheck goodsCheck = goodsCheckVo.getGoodsCheck();
+        MgGoods.PackageApiInfoBean apiInfoBeanTar = goodsCheckVo.getApiInfoBean();
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
-            if(Objects.nonNull(apiInfoBean)){
+            if(Objects.nonNull(apiInfoBeanTar)){
                 if(StringUtils.isNoneBlank(goodsCheck.getGoodsId())){
                     MgGoods mgGoods = mgGoodsService.selectById(goodsCheck.getGoodsId());
                     mgGoods.setPackageApiInfo(apiInfoBeanTar);
