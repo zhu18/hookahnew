@@ -4,18 +4,27 @@ import com.apex.etm.qss.client.IFixClient;
 import com.apex.etm.qss.client.fixservice.bean.ResultBean;
 import com.jusfoun.hookah.core.dao.PaySignMapper;
 import com.jusfoun.hookah.core.domain.PaySign;
+import com.jusfoun.hookah.core.domain.mongo.MgPaySign;
+import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
+import com.jusfoun.hookah.core.utils.FileUtils;
+import com.jusfoun.hookah.pay.util.DateUtil;
 import com.jusfoun.hookah.pay.util.FixClientUtil;
 import com.jusfoun.hookah.pay.util.PayConstants;
+import com.jusfoun.hookah.rpc.api.MgPaySignService;
 import com.jusfoun.hookah.rpc.api.PaySignService;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by lt on 2017/7/5.
@@ -23,10 +32,13 @@ import java.util.Map;
 @Service
 public class PaySignServiceImpl extends GenericServiceImpl<PaySign, String> implements PaySignService {
 
-	/*@Resource
-	private FixClientUtil client;*/
+	@Resource
+	FixClientUtil fixClientUtil;
 
-	private IFixClient fixClient =new FixClientUtil().createClient();
+	private IFixClient fixClient = fixClientUtil.createClientSSL();
+
+	@Resource
+	MgPaySignService mgPaySignService;
 
 	@Resource
 	private PaySignMapper mapper;
@@ -38,16 +50,16 @@ public class PaySignServiceImpl extends GenericServiceImpl<PaySign, String> impl
 
 	@Transactional
 	@Override
-//	@Scheduled(cron = "0 05 8 * * ?")//每天08:05执行定时任务
-	public void sendMarketLogin(PaySign paySign){
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
-		String yerq = simpleDateFormat.format(new Date());
+//	@Scheduled(cron = "0 50 17 * * ?")//每天08:05执行定时任务
+	public void sendMarketLogin(){
+		PaySign paySign = new PaySign();
+		String taskDate = DateUtil.getCurrentDate("YYYYMMDD");
 		Map<String, String> paramMap = new HashMap<String,String>();
-		paramMap.put("FID_YWRQ",yerq);//业务日期
+		paramMap.put("FID_YWRQ",taskDate);//业务日期
 		paramMap.put("FID_JYS",PayConstants.FID_JYS);//交易所代码
 
 		paySign.setAddTime(new Date());
-		paySign.setSignFlag(paySign.SIGN_IN);
+		paySign.setSignFlag(PayConstants.Sign.SIGN_IN.getCode());
 		paySign.setTradeMarket(PayConstants.FID_JYS);
 		paySign.setTaskDate(new Date());
 		paySign.setUpdateTime(new Date());
@@ -56,24 +68,29 @@ public class PaySignServiceImpl extends GenericServiceImpl<PaySign, String> impl
 			ResultBean<Map<String, String>> resultBean = this.fixClient.sendMarketLogin(paramMap);
 			paySign.setResultCode(resultBean.getCode());
 			paySign.setResultMsg(resultBean.getMsg());
-			mapper.insert(paySign);
+			mapper.insertAndGetId(paySign);
+			MgPaySign mgPaySign = new MgPaySign();
+			BeanUtils.copyProperties(paySign,mgPaySign);
+			mgPaySignService.insert(mgPaySign);
 		}catch (Exception e){
 			logger.info(e.getMessage());
+			e.printStackTrace();
 		}
 //		Asser.assertTrue(resultBean.isSuccess());
 	}
 
+	@Transactional
 	@Override
 //	@Scheduled(cron = "0 55 19 * * ?")//每天七点55执行定时任务
-	public void sendMarketLogout(PaySign paySign){
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
-		String yerq = formatter.format(new Date());
+	public void sendMarketLogout(){
+		PaySign paySign = new PaySign();
+		String taskDate = DateUtil.getCurrentDate("YYYYMMDD");
 		Map<String, String> paramMap = new HashMap<String, String>();
-		paramMap.put("FID_YWRQ",yerq);//业务日期
+		paramMap.put("FID_YWRQ",taskDate);//业务日期
 		paramMap.put("FID_JYS", PayConstants.FID_JYS);//交易所代码
 
 		paySign.setAddTime(new Date());
-		paySign.setSignFlag(paySign.SIGN_OUT);
+		paySign.setSignFlag(PayConstants.Sign.SIGN_OUT.getCode());
 		paySign.setTradeMarket(PayConstants.FID_JYS);
 		paySign.setTaskDate(new Date());
 		paySign.setUpdateTime(new Date());
@@ -89,21 +106,4 @@ public class PaySignServiceImpl extends GenericServiceImpl<PaySign, String> impl
 
 	}
 
-	/**
-	 * 上传、发送 清算文件前的校验 719021
-	 * FID_WJLX 参数 先做11 or 22 的检查 判断文件是否允许上传
-	 * 文件上传成功后在做1 or 2 的确认
-	 */
-	public void sendFundFileCheck(){
-		/**
-		 * FID_YWRQ 业务日期
-		 * FID_JYS 交易市场
-		 * FID_WJLX 文件类型 （1资金日终    11撤销（检查）资金日终    2交易日终  22撤销（检查）交易日终）
-		 *              先做11 or 22 的检查，处理成功后在做1 or 2 的确认
-		 */
-		Map<String, String> paramMap = new HashMap<>();
-		paramMap.put("FID_YWRQ","");
-
-		ResultBean<Map<String, String>> resultBean = this.fixClient.sendFundFileCheck(paramMap);
-	}
 }
