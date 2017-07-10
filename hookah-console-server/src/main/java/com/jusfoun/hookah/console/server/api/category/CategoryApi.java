@@ -66,4 +66,9 @@ public class CategoryApi {
     public ReturnData deleteCategory(@PathVariable String cateId) {
         return categoryService.deleteById(cateId);
     }
+
+    @RequestMapping("findOneGoodsType")
+    public ReturnData findOneGoodsType(){
+        return  categoryService.findOneLevelGoodsType();
+    }
 }

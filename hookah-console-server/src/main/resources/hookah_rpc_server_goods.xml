@@ -14,6 +14,7 @@
     <bean id="mgCategoryAttrTypeService" class="com.jusfoun.hookah.console.server.service.impl.MgCategoryAttrTypeServiceImpl"/>
     <!-- 商品添加 -->
     <bean id="mgGoodsService" class="com.jusfoun.hookah.console.server.service.impl.MgGoodsServiceImpl"/>
+    <bean id="mgGoodsHistoryService" class="com.jusfoun.hookah.console.server.service.impl.MgGoodsHistoryServiceImpl"/>
     <!-- 商品货架 -->
     <bean id="shelvesService" class="com.jusfoun.hookah.console.server.service.impl.ShelvesServiceImpl"/>
     <!-- ES -->
@@ -37,6 +38,9 @@
     </motan:service>
     <motan:service interface="com.jusfoun.hookah.rpc.api.MgGoodsService"
                    ref="mgGoodsService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+    <motan:service interface="com.jusfoun.hookah.rpc.api.MgGoodsHistoryService"
+                   ref="mgGoodsHistoryService" export="hookah:5001" basicService="serviceBasicConfig">
     </motan:service>
     <motan:service interface="com.jusfoun.hookah.rpc.api.ShelvesService"
                    ref="shelvesService" export="hookah:5001" basicService="serviceBasicConfig">

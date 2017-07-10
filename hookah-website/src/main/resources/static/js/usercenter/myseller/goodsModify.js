@@ -41,9 +41,6 @@ function loadLastChild(that){
 function selectCatId(that){
 	catId = $(that).val();
 }
-// loadCategoryData(pid); //获取分类
-
-
 function loadCategoryData(that,pid,currentPid){
 
 	$.ajax({
@@ -79,6 +76,7 @@ jmz.GetLength = function(str) {
 
 function renderData(data){//渲染页面
 	catId = data.catId;
+	$("input[name='typeId']").val(catId.substring(0,3));
 	// $('.category-title-box').html(data.catFullName); //商品分类
     $('#J-ver').val(data.ver);//版本号
 	$('#J-goodsName').val(data.goodsName);//商品名称
@@ -552,7 +550,7 @@ $('#preview-div').hover(function () {
 		$('#replace-btn').toggle();
 	}
 });
-var fileUploadUrl = host.static+'/upload/fileUpload'; //图片上传
+var fileUploadUrl = host.static+'/upload/img'; //图片上传
 $('#fileupload').fileupload({
 	url: fileUploadUrl,
 	dataType: 'json',
@@ -569,7 +567,7 @@ $('#fileupload').fileupload({
 		if(data.result.code == 1){
 			var obj = data.result.data[0];
 			$("#preview-img").attr("src", obj.absPath);
-			$('input[name="goodsImg"]').val(obj.absPath);
+			$('input[name="goodsImg"]').val(obj.filePath);
 			imgSrc = obj.absPath;
 		}else{
 			$.alert(data.result.message)
@@ -1125,7 +1123,7 @@ function renderAppSaasInfo(asSaaS){
 	$('.app-info-box .otherDesc').val(asSaaS.otherDesc);
 }
 $('#fileupload2').fileupload({ //文件上传
-	url: host.static+'/upload/fileUpload',
+	url: host.static+'/upload/other',
 	dataType: 'json',
 	done: function (e, data) {
 		if(data.result.code == 1){
@@ -1143,7 +1141,7 @@ $('#fileupload2').fileupload({ //文件上传
 	}
 });
 $('.fileUploadBtn').fileupload({
-	url: host.static+'/upload/fileUpload',
+	url: host.static+'/upload/other',
 	dataType: 'json',
 	done: function (e, data) {
 		if(data.result.code == 1){

@@ -11,6 +11,7 @@ import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.es.EsGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
+import com.jusfoun.hookah.core.domain.mongo.MgGoodsHistory;
 import com.jusfoun.hookah.core.domain.vo.GoodsCheckedVo;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.exception.HookahException;
@@ -26,10 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author huang lei
@@ -47,6 +45,9 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
 
     @Resource
     MgGoodsService mgGoodsService;
+
+    @Resource
+    MgGoodsHistoryService mgGoodsHistoryService;
 
     @Resource
     MqSenderService mqSenderService;
@@ -99,6 +100,15 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         mgGoods.setClickRate((long) 0);
         mgGoods.setOffLineData(obj.getOffLineData());
         mgGoods.setOffLineInfo(obj.getOffLineInfo());
+
+        if(HookahConstants.GOODS_TYPE_1.equals(obj.getGoodsType())){
+            MgGoods.PackageApiInfoBean packageApiInfoBean = new MgGoods.PackageApiInfoBean();
+            BeanUtils.copyProperties(obj.getApiInfo(),packageApiInfoBean);
+            packageApiInfoBean.setApiUrl(PropertiesManager.getInstance().getProperty("package.apiInfo.apiUrl") +
+                    obj.getGoodsId() + "/" + (obj.getVer()==null?"V0":obj.getVer()) + "/" + obj.getCatId());
+            mgGoods.setPackageApiInfo(packageApiInfoBean);
+        }
+
         mongoTemplate.insert(mgGoods);
     }
 
@@ -137,6 +147,46 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
     @Override
     @Transactional
     public void updateGoods(GoodsVo obj) throws HookahException {
+
+        /**
+         *  Add guoruibing start
+         * 更新前，将goods历史数据插入到gongo
+         */
+        Goods goods = super.selectById(obj.getGoodsId());
+
+        // 获取mongo数据
+        MgGoods mgGoods1 = mgGoodsService.selectById(obj.getGoodsId());
+
+        // 获取mongo历史数据
+        MgGoodsHistory mgGoodsHistory = mgGoodsHistoryService.selectById(obj.getGoodsId());
+
+        List<MgGoodsHistory.AllGoodsBean> list = new ArrayList<MgGoodsHistory.AllGoodsBean>();
+        if(mgGoodsHistory != null){
+
+            List<MgGoodsHistory.AllGoodsBean> list1 = mgGoodsHistory.getMgGoodsHistoriesList();
+            if(null != list1 && !list1.isEmpty()){
+
+                list = new ArrayList<MgGoodsHistory.AllGoodsBean>();
+                list.addAll(list1);
+
+            }
+        }
+        mgGoodsHistory = new MgGoodsHistory();
+        MgGoodsHistory.AllGoodsBean allGoodsBean = new MgGoodsHistory.AllGoodsBean();
+        allGoodsBean.setGoods(goods);
+        allGoodsBean.setMgGoods(mgGoods1);
+        list.add(allGoodsBean);
+
+        mgGoodsHistory.setGoodsId(obj.getGoodsId());
+        mgGoodsHistory.setMgGoodsHistoriesList(list);
+
+        mongoTemplate.save(mgGoodsHistory);
+
+
+        /**
+         *  Add guoruibing end
+         */
+
         Date date = DateUtils.now();
         obj.setLastUpdateTime(date);
         obj.setIsOnsale(HookahConstants.GOODS_STATUS_ONSALE);
@@ -145,6 +195,12 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         }
         obj.setOnsaleEndDate(null);
         obj.setCheckStatus(HookahConstants.GOODS_CHECK_STATUS_WAIT);
+        /* Add guoruibing start */
+        String ver = obj.getVer();
+        String version = ver.substring(1);
+        Integer verNum = Integer.parseInt(version);
+        obj.setVer("V"+ (verNum + 1));
+        /* Add guoruibing end */
         int i = super.updateByIdSelective(obj);
         if(i < 1) {
             throw new HookahException("更新失败！");
@@ -165,8 +221,39 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             mgGoods.setOffLineInfo(obj.getOffLineInfo());
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.eq("goodsId", obj.getGoodsId()));
-            MgGoods mgGoods1 = mgGoodsService.selectOne(filters);
-            mgGoods.setClickRate(mgGoods1.getClickRate() == null ? (long)0 : mgGoods1.getClickRate());
+            MgGoods mgGoods2 = mgGoodsService.selectOne(filters);
+            mgGoods.setClickRate(mgGoods2.getClickRate() == null ? (long)0 : mgGoods2.getClickRate());
+
+            if(HookahConstants.GOODS_TYPE_1.equals(obj.getGoodsType())){
+                MgGoods.PackageApiInfoBean packageApiInfoBean = mgGoods2.getPackageApiInfo()==null?new MgGoods.PackageApiInfoBean():mgGoods2.getPackageApiInfo();
+                String apiUrl = packageApiInfoBean.getApiUrl();
+
+                if(StringUtils.isNoneBlank(apiUrl)){
+                    //修改封装后的Url的版本号
+                    String[] apiUrlArray = apiUrl.split("/");
+                    if(Objects.nonNull(apiUrlArray) && apiUrlArray.length > 3){
+                        StringBuilder newApiUrl =  new StringBuilder();
+                        apiUrlArray[apiUrlArray.length-1] = obj.getCatId();
+                        apiUrlArray[apiUrlArray.length-2] = obj.getVer();
+                        apiUrlArray[apiUrlArray.length-3] = obj.getGoodsId();
+                        for(String api : apiUrlArray){
+                            newApiUrl.append(api + "/");
+                        }
+                        apiUrl = newApiUrl.toString();
+                    }else{
+                        apiUrl = PropertiesManager.getInstance().getProperty("package.apiInfo.apiUrl") +
+                                obj.getGoodsId() + "/" + obj.getVer() + "/" + obj.getCatId();
+                    }
+                }else{
+                    apiUrl = PropertiesManager.getInstance().getProperty("package.apiInfo.apiUrl") +
+                            obj.getGoodsId() + "/" + obj.getVer() + "/" + obj.getCatId();
+                }
+
+                BeanUtils.copyProperties(obj.getApiInfo(),packageApiInfoBean);
+                packageApiInfoBean.setApiUrl(apiUrl);
+                mgGoods.setPackageApiInfo(packageApiInfoBean);
+            }
+
             mgGoodsService.delete(obj.getGoodsId());
             mongoTemplate.save(mgGoods);
         }
@@ -383,7 +470,8 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             goodsVo.setFormatList(mgGoods.getFormatList());
             goodsVo.setImgList(mgGoods.getImgList());
             goodsVo.setAttrTypeList(mgGoods.getAttrTypeList());
-            goodsVo.setApiInfo(mgGoods.getApiInfo());
+//            goodsVo.setApiInfo(mgGoods.getApiInfo());
+            goodsVo.setPackageApiInfo(mgGoods.getPackageApiInfo());
             goodsVo.setAsAloneSoftware(mgGoods.getAsAloneSoftware());
             goodsVo.setAsSaaS(mgGoods.getAsSaaS());
             goodsVo.setAtAloneSoftware(mgGoods.getAtAloneSoftware());
@@ -396,6 +484,30 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         goodsVo.setCatName(DictionaryUtil.getCategoryById(goodsVo.getCatId()) == null
                 ? "" : DictionaryUtil.getCategoryById(goodsVo.getCatId()).getCatName());
         return goodsVo;
+    }
+
+    /**
+     *  Add  by guoruibing  2017-07-03
+     * @param goodsId 商品id
+     * @param version 版本号
+     * @return
+     */
+    @Override
+    public MgGoods.ApiInfoBean getApiInfo(String goodsId, String version)  throws HookahException {
+        MgGoodsHistory mgGoods = mgGoodsHistoryService.selectById(goodsId);
+        if (mgGoods == null) {
+            throw new HookahException("未查到商品信息");
+        }
+
+        List<MgGoodsHistory.AllGoodsBean> list = mgGoods.getMgGoodsHistoriesList();
+
+        for (MgGoodsHistory.AllGoodsBean allGoodsBean : list) {
+            Goods goods = allGoodsBean.getGoods();
+            if (version.equals(goods.getVer())) {
+                return allGoodsBean.getMgGoods().getApiInfo();
+            }
+        }
+        throw new HookahException("未查到对应的商品规格");
     }
     /**
      * 作废

@@ -278,5 +278,4 @@ public class HookahConstants {
             return code;
         }
     }
-
 }

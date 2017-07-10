@@ -38,7 +38,7 @@
     position: absolute;
     text-align: center;
     cursor: pointer;
-    top: -10px;
+    /*top: -10px;*/
 }
 .search-list {
     display: none;

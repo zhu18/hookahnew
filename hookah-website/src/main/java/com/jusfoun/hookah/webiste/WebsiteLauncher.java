@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
@@ -26,6 +27,7 @@ import javax.annotation.PostConstruct;
 @Configuration
 @EnableAutoConfiguration(exclude = {ThymeleafAutoConfiguration.class})
 @EnableScheduling
+@EnableAsync
 @ComponentScan
 public class WebsiteLauncher {
     private static final Logger logger = LoggerFactory.getLogger(WebsiteLauncher.class);

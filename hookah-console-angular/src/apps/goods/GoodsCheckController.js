@@ -107,6 +107,12 @@ class GoodsCheckController {
                 // $rootScope.operatorFlag = n;
                 // $state.go('items.goodsDetail', {data: $rootScope.editData});
                 $state.go('items.lookDetail');
+				$rootScope.currentS= "1";
+				$rootScope.setCurrentS = function (param) {
+					// console.log(param);
+					$rootScope.currentS = param;
+
+				};
             }
         });
     }
@@ -120,38 +126,41 @@ class GoodsCheckController {
 
     $scope.showCurrentGoods = function(item){
         $rootScope.selectId = item.goodsId;
-    }
+    };
+
+    $scope.addData = '';
 
     $scope.submitCheck = function(){
-        if($('input[name="checkStatus"]:checked').val() == 2){
-            if($("#checkContent").val().trim() != ''){
-                var promise = $http({
-                    method: 'POST',
-                    url: $rootScope.site.apiServer + "/api/goodsCheck/add",
-                    data: $("#goodsCheckForm").serialize()
-                });
-                promise.then(function (res, status, config, headers) {
-                    console.log(res.data)
-                    if(res.data.code == "1"){
-                        $state.go('items.check');
-                    }
-                });
-            }else{
-                $rootScope.openErrorDialogModal('请填写审核意见^_^');
-            }
-        }else{
-            var promise = $http({
-                method: 'POST',
-                url: $rootScope.site.apiServer + "/api/goodsCheck/add",
-                data: $("#goodsCheckForm").serialize()
-            });
-            promise.then(function (res, status, config, headers) {
-                console.log(res.data)
-                if(res.data.code == "1"){
-                    $state.go('items.check');
-                }
-            });
-        }
+        // alert(typeof $("#goodsCheckForm").serialize());
+        // if($('input[name="checkStatus"]:checked').val() == 2){
+        //     if($("#checkContent").val().trim() != ''){
+        //         var promise = $http({
+        //             method: 'POST',
+        //             url: $rootScope.site.apiServer + "/api/goodsCheck/add",
+        //             data: $("#goodsCheckForm").serialize()
+        //         });
+        //         promise.then(function (res, status, config, headers) {
+        //             console.log(res.data)
+        //             if(res.data.code == "1"){
+        //                 // $state.go('items.check');
+        //             }
+        //         });
+        //     }else{
+        //         $rootScope.openErrorDialogModal('请填写审核意见^_^');
+        //     }
+        // }else{
+        //     var promise = $http({
+        //         method: 'POST',
+        //         url: $rootScope.site.apiServer + "/api/goodsCheck/add",
+        //         data: $("#goodsCheckForm").serialize()
+        //     });
+        //     promise.then(function (res, status, config, headers) {
+        //         console.log(res.data)
+        //         if(res.data.code == "1"){
+        //             // $state.go('items.check');
+        //         }
+        //     });
+        // }
     }
 
       /**

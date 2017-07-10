@@ -17,13 +17,26 @@ class CategoryController {
             field: "catName",
             displayName: "分类名称"
         };
-        $scope.col_defs = [
-            {
+
+        /**{
                 field: "domainId",
                 displayName: "编码"
             },{
                 field: "catDesc",
                 displayName: "描述"
+            }
+         */
+
+        $scope.col_defs = [
+            {
+                field: "goodsTypeName",
+                displayName:"程序模板"
+            },{
+                field: "catId",
+                displayName: "分类编码"
+            },{
+                field: "goodsCode",
+                displayName: "商品代码"
             }, {
                 field: "isShow",
                 displayName: "是否启用",
@@ -74,6 +87,9 @@ class CategoryController {
             // $scope.title = "新增分类";
             // $state.go("category.add");
             //新增一级分类
+            console.log("dataTemp value:"+ $("#dataTemp").val());
+            console.log("dataTemp text:"+ $("#dataTemp option:selected").text());
+            $("#goodsTypeName").val($("#dataTemp option:selected").text());
             var promise = $http({
                 method: 'POST',
                 url: $rootScope.site.apiServer + "/api/category/add",
@@ -128,6 +144,10 @@ class CategoryController {
 
         };
         $scope.save = function () {
+
+            $("#dataTemp").attr("disabled",false);
+            $("#goodsTypeName").val($("#dataTemp option:selected").text());
+
             if ($("#catId").val() != null && $("#catId").val() != '') {
                 var promise = $http({
                     method: 'POST',
@@ -145,6 +165,7 @@ class CategoryController {
 
                 });
             }else {
+                // $("#goodsTypeName").val($("#dataTemp option:selected").text());
                 var promise = $http({
                     method: 'POST',
                     url: $rootScope.site.apiServer + "/api/category/add",
@@ -174,6 +195,75 @@ class CategoryController {
         if ($state.$current.name == "category.search") {
             $scope.search();
         }
+
+        if ($state.$current.name == "category.add") {
+            var promise = $http({
+                method: 'POST',
+                url: $rootScope.site.apiServer + "/api/category/findOneGoodsType",
+            });
+            promise.then(function (res, status, config, headers) {
+                $rootScope.loadingState = false;
+                console.log("获取数据:" + res.data);
+                if (res.data.code == 1) {
+                    console.log(res.data.data);
+                    $scope.dataTemps = res.data.data;
+                    $scope.dataTemp = $scope.dataTemps[0].typeId;
+                }
+            });
+        }
+
+        if ($state.$current.name == "category.add_child") {
+            console.log("父类数据:" + $rootScope.parentCategory.goodsCode);
+            $scope.goodsCode = $rootScope.parentCategory.goodsCode;
+
+            var promise = $http({
+                method: 'POST',
+                url: $rootScope.site.apiServer + "/api/category/findOneGoodsType",
+            });
+            promise.then(function (res, status, config, headers) {
+                $rootScope.loadingState = false;
+                console.log("获取数据:" + res.data);
+                if (res.data.code == 1) {
+                    console.log(res.data.data);
+                    $scope.dataTemps = res.data.data;
+                    var goodsTypeId = $rootScope.parentCategory.goodsTypeId;
+                    if(goodsTypeId == null || goodsTypeId == ""){
+                        $scope.dataTemp = $scope.dataTemps[0].typeId;
+                    }else {
+                        $scope.dataTemp = goodsTypeId;
+                    }
+
+                }
+            });
+        }
+
+        if($state.$current.name == "category.edit"){
+            console.log("当前数据测试:" + $rootScope.editData.level);
+            var catData = $rootScope.editData;
+            if(catData.level != 1){
+                $("#goodsCode").attr("readonly",true);
+                $("#dataTemp").attr("disabled",true);
+            }
+            var promise = $http({
+                method: 'POST',
+                url: $rootScope.site.apiServer + "/api/category/findOneGoodsType",
+            });
+            promise.then(function (res, status, config, headers) {
+                $rootScope.loadingState = false;
+                if (res.data.code == 1) {
+                    console.log(res.data.data);
+                    $scope.dataTemps = res.data.data;
+                    if(catData.goodsTypeId == null || catData.goodsTypeId == ""){
+                        $scope.dataTemp = $scope.dataTemps[0].typeId;
+                    }else {
+                        $scope.dataTemp = catData.goodsTypeId;
+                    }
+
+                }
+            });
+        }
+
+
 
     }
 }

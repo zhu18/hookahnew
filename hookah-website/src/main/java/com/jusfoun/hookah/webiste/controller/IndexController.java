@@ -39,9 +39,9 @@ public class IndexController {
     @Resource
     MailService mailService;
 
-
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home(Model model) {
+        userService.setPVCountByDate();
         return "index";
     }
 

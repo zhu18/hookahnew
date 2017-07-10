@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfigurati
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -23,6 +24,7 @@ import javax.annotation.PostConstruct;
 @Configuration
 @EnableAutoConfiguration(exclude = {ThymeleafAutoConfiguration.class, DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 @EnableScheduling
+@EnableAsync
 @ComponentScan
 @EnableTransactionManagement
 public class PayServerLauncher {
@@ -35,6 +37,8 @@ public class PayServerLauncher {
             "classpath*:spring/spring-config.xml",
             "classpath*:hookah_rpc_server.xml",
             "classpath*:hookah_rpc_client.xml",
+            "classpath*:hookah_rpc_client_pay.xml",
+            "classpath*:hookah_rpc_server_pay.xml",
             PayServerLauncher.class
         }, args);
         MotanSwitcherUtil.setSwitcherValue(MotanConstants.REGISTRY_HEARTBEAT_SWITCHER, true);

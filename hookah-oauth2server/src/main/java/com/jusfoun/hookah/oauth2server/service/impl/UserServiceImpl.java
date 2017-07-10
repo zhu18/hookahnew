@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.oauth2server.service.impl;
 
+import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.UserMapper;
 import com.jusfoun.hookah.core.domain.CashRecord;
@@ -8,12 +9,18 @@ import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.rpc.api.CashRecordService;
 import com.jusfoun.hookah.rpc.api.UserService;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.shiro.crypto.hash.Md5Hash;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author huang lei
@@ -25,6 +32,9 @@ public class UserServiceImpl extends GenericServiceImpl<User, String> implements
 
     @Resource
     private UserMapper userMapper;
+
+    @Resource
+    RedisOperate redisOperate;
 
     @Resource
     public void setDao(UserMapper userMapper) {
@@ -71,4 +81,38 @@ public class UserServiceImpl extends GenericServiceImpl<User, String> implements
         return m;
     }
 
+    @Async
+    public void setPVCountByDate() {
+        String pvKey = "pv:"+ LocalDate.now().toString();
+        redisOperate.incr(pvKey);
+    }
+
+    @Async
+    public void setUVCountByDate() {
+        String pvKey = "uv:"+ LocalDate.now().toString();
+        redisOperate.incr(pvKey);
+    }
+
+    @Override
+    public Map<String, Object> getPUVCountByDate() {
+
+        Map<String, Object> map = new HashedMap();
+        int n = 4;
+        List<Integer> listPv = new ArrayList<>(); //pv数据集合
+        List<Integer> listUv = new ArrayList<>(); //uv数据集合
+        List<String> listDate = new ArrayList<>(); //日期集合
+        LocalDate today = LocalDate.now();
+        listDate.add(today.toString());
+        listPv.add(Integer.parseInt(redisOperate.get("pv:" + today.toString())));
+        listUv.add(Integer.parseInt(redisOperate.get("uv:" + today.toString())));
+        for(int i = 1; i <= n; i++){
+            listDate.add(today.minusDays(i).toString());
+            listPv.add(Integer.parseInt(redisOperate.get("pv:" + today.minusDays(i).toString())));
+            listUv.add(Integer.parseInt(redisOperate.get("uv:" + today.minusDays(i).toString())));
+        }
+        map.put("puvdate", listDate);
+        map.put("pvdata", listPv);
+        map.put("uvdata", listUv);
+        return map;
+    }
 }

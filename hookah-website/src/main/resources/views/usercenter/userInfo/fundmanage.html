@@ -10,20 +10,41 @@ var htmlPart = {
 <div class="grid-0 backgorund-gray">
     <div class="grid-row clearfix">
         <%include("/usercenter/user-center-menu.html"){} %>
-        <div class="grid-left info-center-box ">
+        <div class="grid-right info-center-box ">
             <div class="user-center-box grid-right">
                 <div class="header">
                     <h4 class="center-title">资金管理</h4>
                 </div>
                 <div class="fundmanage-box">
                     <div class="fundmanage-bd">
-                        <div class="user-balance grid-left">
-                            <div class="title">余额:</div>
-                            <div class="price">${isNotEmpty(userCur.moneyBalance)
-                                ? (userCur.moneyBalance / 100) : '0.00'}元</div>
-                            <div class="operation">
-                                <a href="/usercenter/recharge" class="btn-full-blue">充值</a>
-                                <!--<a href="/usercenter/withdrawals" class="btn-full-orange">提现</a>-->
+                        <div class="account-funds margin-top-10">
+                            <div class="account-funds-title">账户资金</div>
+                            <div class="account-funds-content">
+                                <div class="account-funds-content-left">
+                                    <div class="title margin-bottom-15">我的可用余额</div>
+                                    <div class="money margin-bottom-15">￥5464546465</div>
+                                    <div class="operation-btn margin-bottom-20">
+                                        <a href="" class="btn-full-orange margin-right-20">充值</a>
+                                        <a href="" class="btn-full-blue">提现</a>
+                                    </div>
+                                    <div class="tip">
+                                        提示：请在08:30-19:30之间进行充值、提现、绑定银行卡、解绑银行卡操作
+                                    </div>
+                                </div>
+                                <div class="account-funds-content-right">
+                                    <p class="margin-top-40 margin-bottom-15"><span></span>账户余额：<span>￥4565465.0</span></p>
+                                    <p><span></span>冻结金额：<span>￥4500.0</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bank-card  margin-top-10">
+                            <div class="bank-card-title">我的银行卡</div>
+                            <div class="bank-card-content margin-bottom-30">
+                                <a href="" class="add-card">
+                                 <p class="Plus margin-top-20">+</p>
+                                 <p>添加银行</p>
+                                </a>
+                                <p class="margin-left-15 margin-top-20 tip">提示：只能用ie浏览器......</p>
                             </div>
                         </div>
                     </div>
