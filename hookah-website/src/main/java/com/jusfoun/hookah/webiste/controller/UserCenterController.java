@@ -92,15 +92,40 @@ public class UserCenterController {
         model.addAttribute("userCur",user);
         return "usercenter/userInfo/fundmanage";
     }
-    //     充值页面
+    //     充值页面第一步
     @RequestMapping(value = "/recharge", method = RequestMethod.GET)
     public String recharge() {
         return "/usercenter/userInfo/recharge";
+    }
+    //     充值页面第二步
+    @RequestMapping(value = "/rechargeStep2", method = RequestMethod.GET)
+    public String rechargeStep2() {
+        return "/usercenter/userInfo/rechargeStep2";
+    }
+    // 充值失败
+    @RequestMapping(value = "/rechargeFailure", method = RequestMethod.GET)
+    public String rechargeFailure() {
+        return "/usercenter/userInfo/rechargeFailure";
+    }
+    // 充值成功
+    @RequestMapping(value = "/rechargeSuccess", method = RequestMethod.GET)
+    public String rechargeSuccess() {
+        return "/usercenter/userInfo/rechargeSuccess";
     }
     //     取款页面
     @RequestMapping(value = "/withdrawals", method = RequestMethod.GET)
     public String withdrawals() {
         return "/usercenter/userInfo/withdrawals";
+    }
+    //     取款页面第二步
+    @RequestMapping(value = "/withdrawalStep2", method = RequestMethod.GET)
+    public String withdrawalStep2() {
+        return "/usercenter/userInfo/withdrawalStep2";
+    }
+    //     取款页面第三步
+    @RequestMapping(value = "/withdrawalStep3", method = RequestMethod.GET)
+    public String withdrawalStep3() {
+        return "/usercenter/userInfo/withdrawalStep3";
     }
     //     资金记录页面
     @RequestMapping(value = "/capitalRecord", method = RequestMethod.GET)
