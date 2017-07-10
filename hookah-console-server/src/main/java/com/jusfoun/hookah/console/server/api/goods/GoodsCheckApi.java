@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.console.server.api.goods;
 
+import com.alibaba.fastjson.JSON;
 import com.jusfoun.hookah.console.server.controller.BaseController;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -46,8 +48,9 @@ public class GoodsCheckApi extends BaseController{
      * @return
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ReturnData goodsCheck(@RequestBody GoodsCheckVo goodsCheckVo) {
-
+    public ReturnData goodsCheck( HttpServletRequest request) {
+        String voStr = request.getParameter("voStr");
+        GoodsCheckVo goodsCheckVo = JSON.parseObject(voStr, GoodsCheckVo.class);
         GoodsCheck goodsCheck = goodsCheckVo.getGoodsCheck();
         MgGoods.PackageApiInfoBean apiInfoBeanTar = goodsCheckVo.getApiInfoBean();
         ReturnData returnData = new ReturnData<>();
