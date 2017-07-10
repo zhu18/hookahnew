@@ -43,6 +43,45 @@ class GoodsCheckController {
                 $rootScope.editData = res.data.data;
                 $rootScope.operatorFlag = n;
                 $state.go('items.checkGoodsDetail', {data: $rootScope.editData});
+
+				$rootScope.currentS= "1";
+				$rootScope.setCurrentS = function (param) {
+					// console.log(param);
+					$rootScope.currentS = param;
+
+				};
+
+				$rootScope.packageApiInfo = res.data.data.packageApiInfo;
+				$rootScope.addData={
+					goodsCheck:{
+						goodsId : $rootScope.editData.goodsId,//商品ID
+                        goodsSn : $rootScope.editData.goodsSn,//商品编号
+				        goodsName : $rootScope.editData.goodsName,//商品名称
+				        checkStatus : $rootScope.packageApiInfo.checkStatus,//审核状态
+				        checkContentddd : $rootScope.packageApiInfo.checkContentddd,//审核意见
+                    },
+					apiInfoBean:{
+						apiType : $rootScope.packageApiInfo.apiType,//接口类型q
+						invokeMethod : $rootScope.packageApiInfo.invokeMethod,//调用方法名q
+						respDataFormat : $rootScope.packageApiInfo.respDataFormat,//返回格式q
+                        apiUrl : $rootScope.packageApiInfo.apiUrl,//接口地址q
+                        apiMethod : $rootScope.packageApiInfo.apiMethod,//请求方式q
+                        reqSample : $rootScope.packageApiInfo.reqSample,//请求示例
+                        apiDesc : $rootScope.packageApiInfo.apiDesc, //接口描述
+                        respSample : $rootScope.packageApiInfo.respSample, //返回示例
+						codeAttr : $rootScope.packageApiInfo.respDataMapping.codeAttrBean.codeAttr,//编码属性
+                        successCode : $rootScope.packageApiInfo.respDataMapping.codeAttrBean.codeInfoBean.successCode,//成功
+                        failedCode : $rootScope.packageApiInfo.respDataMapping.codeAttrBean.codeInfoBean.failedCode,//失败
+                        successNoData : $rootScope.packageApiInfo.respDataMapping.codeAttrBean.codeInfoBean.successNoData,//成功无数据
+                        infoAttr : $rootScope.packageApiInfo.respDataMapping.infoAttr,//信息属性
+                        dataAttr : $rootScope.packageApiInfo.respDataMapping.dataAttr,//数据属性
+                        totalNumAttr : $rootScope.packageApiInfo.respDataMapping.totalNumAttr,//总条数属性
+                        updateFreq : $rootScope.packageApiInfo.updateFreq,//更新频率
+                        dataNumDivRowNum : $rootScope.packageApiInfo.dataNumDivRowNum,//数据条数/行数
+                        secretKeyName : $rootScope.packageApiInfo.encryptInfo.secretKeyName,//密钥名称
+                        secretKeyValue : $rootScope.packageApiInfo.encryptInfo.secretKeyValue//密钥值
+					},
+                };
             }
         });
     }
@@ -52,35 +91,24 @@ class GoodsCheckController {
     }
 
     $scope.submitCheck = function(){
-        if($('input[name="checkStatus"]:checked').val() == 2){
-            if($("#checkContent").val().trim() != ''){
-                var promise = $http({
-                    method: 'POST',
-                    url: $rootScope.site.apiServer + "/api/goodsCheck/add",
-                    data: $("#goodsCheckForm").serialize()
-                });
-                promise.then(function (res, status, config, headers) {
-                    console.log(res.data)
-                    if(res.data.code == "1"){
-                        $state.go('items.check');
-                    }
-                });
-            }else{
-                $rootScope.openErrorDialogModal('请填写审核意见^_^');
-            }
-        }else{
+        if($("#checkContent").val().trim() != ''){
             var promise = $http({
-                method: 'POST',
-                url: $rootScope.site.apiServer + "/api/goodsCheck/add",
-                data: $("#goodsCheckForm").serialize()
+                method: 'JSON',
+				url: $rootScope.site.apiServer + "/api/goodsCheck/add",
+				headers:{
+                    'Content-Type':'application/json;charset=UTF-8'
+                },
+				data:{data:$rootScope.addData}
             });
             promise.then(function (res, status, config, headers) {
-                console.log(res.data)
                 if(res.data.code == "1"){
                     $state.go('items.check');
                 }
             });
+        }else{
+            $rootScope.openErrorDialogModal('请填写审核意见^_^');
         }
+
     }
 
     $scope.forceOff = function(){

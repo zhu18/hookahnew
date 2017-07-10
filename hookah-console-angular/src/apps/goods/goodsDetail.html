@@ -652,46 +652,46 @@
 								<label class="col-sm-2 control-label">接口类型</label>
 								<div class="col-sm-5">
 									<label class="radio-inline">
-										<input name="apiType"  value='0' type="radio" ng-checked="editData.packageApiInfo.apiType == '0'" />restful
+										<input name="apiType"  value='0' type="radio" data-ng-model="addData.apiInfoBean.apiType" />restful
 									</label>
 									<label class="radio-inline">
-										<input name="apiType" value='1' type="radio" ng-checked="editData.packageApiInfo.apiType == '1'" />webservice
+										<input name="apiType" value='1' type="radio" data-ng-model="addData.apiInfoBean.apiType" />webservice
 									</label>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">调用方法名</label>
 								<div class="col-sm-5">
-									<input type="text" name="invokeMethod" class="form-control" value="{{editData.packageApiInfo.invokeMethod}}"/>
+									<input type="text" name="invokeMethod" class="form-control" data-ng-model="addData.apiInfoBean.invokeMethod"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">接口地址</label>
 								<div class="col-sm-5">
-									<input type="text" name="apiUrl" class="form-control" value="{{editData.packageApiInfo.apiUrl}}"/>
+									<input type="text" name="apiUrl" class="form-control" data-ng-model="addData.apiInfoBean.apiUrl"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">请求方式</label>
 								<div class="col-sm-5">
 									<label class="radio-inline">
-										<input type="radio" name="apiMethod" ng-checked="editData.packageApiInfo.apiMethod == 'GET' || editData.packageApiInfo.apiMethod == 'get'"/>GET
+										<input type="radio" name="apiMethod" data-ng-model="addData.apiInfoBean.apiMethod" value="GET"/>GET
 									</label>
 									<label class="radio-inline">
-										<input type="radio" name="apiMethod" ng-checked="editData.packageApiInfo.apiMethod == 'POST' || editData.packageApiInfo.apiMethod == 'post'"/>POST
+										<input type="radio" name="apiMethod" data-ng-model="addData.apiInfoBean.apiMethod" value="POST"/>POST
 									</label>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">请求示例</label>
 								<div class="col-sm-5">
-									<input type="text" name="reqSample" class="form-control" value="{{editData.packageApiInfo.reqSample}}"/>
+									<input type="text" name="reqSample" class="form-control" data-ng-model="addData.apiInfoBean.reqSample"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">接口描述</label>
 								<div class="col-sm-5">
-									<input type="text" class="form-control" name="apiDesc" value="{{editData.packageApiInfo.apiDesc}}" disabled/>
+									<input type="text" class="form-control" name="apiDesc" data-ng-model="addData.apiInfoBean.apiDesc" disabled/>
 								</div>
 							</div>
 							<div class="form-group">
@@ -769,8 +769,7 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">返回示例</label>
 								<div class="col-sm-5">
-									<textarea style="margin: 0px; width: 452px; height: 150px;" name="respSample">
-									{{editData.packageApiInfo.respSample}}
+									<textarea style="margin: 0px; width: 452px; height: 150px;" name="respSample" data-ng-model="addData.apiInfoBean.respSample">
 									</textarea>
 								</div>
 							</div>
@@ -795,73 +794,73 @@
 								</div>
 							</div>
 
-							<div class="form-group">
-								<label class="col-sm-2 control-label">编码属性</label>
-								<div class="col-sm-5">
-									<input type="text" name="codeAttr" class="form-control" value="{{editData.packageApiInfo.respDataMapping.codeAttrBean.codeAttr}}"/>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">成功</label>
-								<div class="col-sm-5">
-									<input type="text" name="successCode" class="form-control" value="{{editData.packageApiInfo.respDataMapping.codeAttrBean.codeInfoBean.successCode}}"/>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">失败</label>
-								<div class="col-sm-5">
-									<input type="text" name="failedCode" class="form-control" value="{{editData.packageApiInfo.respDataMapping.codeAttrBean.codeInfoBean.failedCode}}"/>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">成功无数据</label>
-								<div class="col-sm-5">
-									<input type="text" name="successNoData" class="form-control" value="{{editData.packageApiInfo.respDataMapping.codeAttrBean.codeInfoBean.successNoData}}"/>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">信息属性</label>
-								<div class="col-sm-5">
-									<input type="text" name="infoAttr" class="form-control" value="{{editData.packageApiInfo.respDataMapping.infoAttr}}"/>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">数据属性</label>
-								<div class="col-sm-5">
-									<input type="text" name="dataAttr" class="form-control" value="{{editData.packageApiInfo.respDataMapping.dataAttr}}"/>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">总条数属性</label>
-								<div class="col-sm-5">
-									<input type="text" name="totalNumAttr" class="form-control" value="{{editData.packageApiInfo.respDataMapping.totalNumAttr}}"/>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">更新频率</label>
-								<div class="col-sm-5">
-									<input type="text" name="updateFreq" class="form-control" value="{{editData.packageApiInfo.updateFreq}}"/>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">数据条数/行数</label>
-								<div class="col-sm-5">
-									<input type="text" name="dataNumDivRowNum" class="form-control" value="{{editData.packageApiInfo.dataNumDivRowNum}}"/>
-								</div>
-							</div>
+							<!--<div class="form-group">-->
+								<!--<label class="col-sm-2 control-label">编码属性</label>-->
+								<!--<div class="col-sm-5">-->
+									<!--<input type="text" name="codeAttr" class="form-control" data-ng-model="addData.apiInfoBean.codeAttr"/>-->
+								<!--</div>-->
+							<!--</div>-->
+							<!--<div class="form-group">-->
+								<!--<label class="col-sm-2 control-label">成功</label>-->
+								<!--<div class="col-sm-5">-->
+									<!--<input type="text" name="successCode" class="form-control" data-ng-model="addData.apiInfoBean.successCode"/>-->
+								<!--</div>-->
+							<!--</div>-->
+							<!--<div class="form-group">-->
+								<!--<label class="col-sm-2 control-label">失败</label>-->
+								<!--<div class="col-sm-5">-->
+									<!--<input type="text" name="failedCode" class="form-control" data-ng-model="addData.apiInfoBean.failedCode"/>-->
+								<!--</div>-->
+							<!--</div>-->
+							<!--<div class="form-group">-->
+								<!--<label class="col-sm-2 control-label">成功无数据</label>-->
+								<!--<div class="col-sm-5">-->
+									<!--<input type="text" name="successNoData" class="form-control" data-ng-model="addData.apiInfoBean.successNoData"/>-->
+								<!--</div>-->
+							<!--</div>-->
+							<!--<div class="form-group">-->
+								<!--<label class="col-sm-2 control-label">信息属性</label>-->
+								<!--<div class="col-sm-5">-->
+									<!--<input type="text" name="infoAttr" class="form-control" data-ng-model="addData.apiInfoBean.infoAttr"/>-->
+								<!--</div>-->
+							<!--</div>-->
+							<!--<div class="form-group">-->
+								<!--<label class="col-sm-2 control-label">数据属性</label>-->
+								<!--<div class="col-sm-5">-->
+									<!--<input type="text" name="dataAttr" class="form-control" data-ng-model="addData.apiInfoBean.dataAttr"/>-->
+								<!--</div>-->
+							<!--</div>-->
+							<!--<div class="form-group">-->
+								<!--<label class="col-sm-2 control-label">总条数属性</label>-->
+								<!--<div class="col-sm-5">-->
+									<!--<input type="text" name="totalNumAttr" class="form-control" data-ng-model="addData.apiInfoBean.totalNumAttr"/>-->
+								<!--</div>-->
+							<!--</div>-->
+							<!--<div class="form-group">-->
+								<!--<label class="col-sm-2 control-label">更新频率</label>-->
+								<!--<div class="col-sm-5">-->
+									<!--<input type="text" name="updateFreq" class="form-control" data-ng-model="addData.apiInfoBean.updateFreq"/>-->
+								<!--</div>-->
+							<!--</div>-->
+							<!--<div class="form-group">-->
+								<!--<label class="col-sm-2 control-label">数据条数/行数</label>-->
+								<!--<div class="col-sm-5">-->
+									<!--<input type="text" name="dataNumDivRowNum" class="form-control" data-ng-model="addData.apiInfoBean.dataNumDivRowNum"/>-->
+								<!--</div>-->
+							<!--</div>-->
 
-							<div class="form-group">
-								<label class="col-sm-2 control-label">密钥名称:</label>
-								<div class="col-sm-5">
-									<input type="text" name="secretKeyName" class="form-control" value="{{editData.packageApiInfo.encryptInfo.secretKeyName}}"/>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">密钥值:</label>
-								<div class="col-sm-5">
-									<input type="text" name="secretKeyValue" class="form-control" value="{{editData.packageApiInfo.encryptInfo.secretKeyValue}}"/>
-								</div>
-							</div>
+							<!--<div class="form-group">-->
+								<!--<label class="col-sm-2 control-label">密钥名称:</label>-->
+								<!--<div class="col-sm-5">-->
+									<!--<input type="text" name="secretKeyName" class="form-control" data-ng-model="addData.apiInfoBean.secretKeyName"/>-->
+								<!--</div>-->
+							<!--</div>-->
+							<!--<div class="form-group">-->
+								<!--<label class="col-sm-2 control-label">密钥值:</label>-->
+								<!--<div class="col-sm-5">-->
+									<!--<input type="text" name="secretKeyValue" class="form-control" data-ng-model="addData.apiInfoBean.secretKeyValue"/>-->
+								<!--</div>-->
+							<!--</div>-->
 						</div>
 					</div>
 				</div>
@@ -887,7 +886,7 @@
 					<label class="col-sm-2 control-label">审核意见</label>
 					<div class="col-sm-5">
 						<label>
-              <textarea name="checkContent" id="checkContent"
+              <textarea name="checkContent" data-ng-model="checkContent" id="checkContent"
 						style="margin: 0px; width: 452px; height: 84px;"></textarea>
 						</label>
 					</div>
