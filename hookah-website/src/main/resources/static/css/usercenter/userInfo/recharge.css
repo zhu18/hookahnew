@@ -1,0 +1,16 @@
+.fundmanage-box .recharge{
+     margin-top: 12px;
+     height: 255px;
+     border: 1px solid #E5E5E5;
+ }
+.fundmanage-box .recharge ul{
+    display: inline-block;
+    padding-left: 280px;
+}
+
+.fundmanage-box .recharge ul li{
+    height: 50px;
+    color: #333333;
+    line-height:50px;
+    font-size: 14px;
+}

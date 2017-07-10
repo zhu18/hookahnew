@@ -1,7 +1,8 @@
 <%
 var head = {
 %>
-<link rel="stylesheet" href="/static/css/usercenter/userInfo/fundmanage.css">
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/recharge.css">
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
 <%};%>
 
 <%
@@ -16,12 +17,25 @@ var htmlPart = {
                     <h4 class="center-title">充值</h4>
                 </div>
                 <div class="fundmanage-box">
-                    <div class="fundmanage-bd">
-                        <div class="user-balance">
-                            <div class="price-input"><label>请输入您要充值的金额：</label><input type="text">元</div>
-                            <div class="operation withdrawals-btn"><a href="javascript:void(0)" onclick="nullFn()" class="btn-full-blue">下一步</a></div>
+                        <div class="recharge">
+                            <ul class="recharge-content">
+                                <li>
+                                    <label for="">当前余额：</label>
+                                </li>
+                                <li>
+                                    <label for="">充值账号：</label>
+                                </li>
+                                <li>
+                                    <label for="">充值金额：</label>
+                                    <input type="text">
+                                </li>
+                                <li>
+                                    <a href="">下一步</a>
+                                </li>
+                            </ul>
+                            <!--<div class="price-input"><label>请输入您要充值的金额：</label><input type="text">元</div>-->
+                            <!--<div class="operation withdrawals-btn"><a href="javascript:void(0)" onclick="nullFn()" class="btn-full-blue">下一步</a></div>-->
                         </div>
-                    </div>
                 </div>
             </div>
         </div>
