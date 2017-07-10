@@ -111,7 +111,7 @@ public class HelpController extends BaseController{
             if(goodsVo != null){
                 dataMap.put("goodsName", goodsVo.getGoodsName());
 
-                if(goodsVo.getGoodsType() == 0) { // 普通文件
+               /* if(goodsVo.getGoodsType() == 0) { // 普通文件
 
                     if(!StringUtils.isNotBlank(goodsVo.getUploadUrl())){
                         returnData.setMessage("文件下载地址不存在，请联系管理员！^_^");
@@ -237,6 +237,39 @@ public class HelpController extends BaseController{
 //                    }
                     return returnData;
                 }else{
+                    returnData.setMessage("文件类型不存在，请联系管理员！^_^");
+                    returnData.setCode(ExceptionConst.Failed);
+                    return returnData;
+                }*/
+
+                if(goodsVo.getGoodsType() == 1) { //api
+
+//                private String apiUrl; //接口地址
+//                private String apiMethod;//请求方式：GET/POST
+//                private String reqSample;//请求示例
+//                private String apiDesc;//接口描述
+//                private List<FiledBean> reqParamList;//请求参数
+//                private List<FiledBean> respParamList;//返回参数
+//                private String respSample;//返回示例
+
+                    dataMap.put("apiUrl", goodsVo.getApiInfo().getApiUrl().replace("&", "&amp;"));
+                    dataMap.put("apiMethod", goodsVo.getApiInfo().getApiMethod());
+                    dataMap.put("reqSample", goodsVo.getApiInfo().getReqSample() == null ? goodsVo.getApiInfo().getReqSample() : goodsVo.getApiInfo().getReqSample().replace("&", "&amp;"));
+                    dataMap.put("apiDesc", goodsVo.getApiInfo().getApiDesc() == null ? goodsVo.getApiInfo().getApiDesc() : goodsVo.getApiInfo().getApiDesc().replace("&", "&amp;"));
+                    dataMap.put("reqParamList", goodsVo.getApiInfo().getReqParamList());
+                    dataMap.put("respParamList", goodsVo.getApiInfo().getRespParamList());
+                    dataMap.put("respSample", goodsVo.getApiInfo().getRespSample() == null ? goodsVo.getApiInfo().getRespSample() : goodsVo.getApiInfo().getRespSample().replace("&", "&amp;"));
+
+                    dataMap.put("apiType", goodsVo.getApiInfo().getApiType());
+                    dataMap.put("invokeMethod", goodsVo.getApiInfo().getInvokeMethod());
+                    dataMap.put("respDataFormat", goodsVo.getApiInfo().getRespDataFormat());
+                    dataMap.put("updateFreq", goodsVo.getApiInfo().getUpdateFreq());
+                    dataMap.put("dataNumDivRowNum", goodsVo.getApiInfo().getDataNumDivRowNum());
+                    dataMap.put("respDataMapping", goodsVo.getApiInfo().getRespDataMapping());
+                    dataMap.put("encryptInfo", goodsVo.getApiInfo().getEncryptInfo());
+
+
+                }else {
                     returnData.setMessage("文件类型不存在，请联系管理员！^_^");
                     returnData.setCode(ExceptionConst.Failed);
                     return returnData;

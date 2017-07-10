@@ -15,11 +15,7 @@ import java.util.Date;
  */
 public class PaySign extends GenericModel {
 
-	public static final String SIGN_IN = "1";
-	public static final String SIGN_OUT = "2";
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

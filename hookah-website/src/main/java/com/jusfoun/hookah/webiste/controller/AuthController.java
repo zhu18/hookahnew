@@ -5,7 +5,6 @@ import com.jusfoun.hookah.core.domain.Organization;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.UserCheck;
 import com.jusfoun.hookah.core.domain.UserDetail;
-import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.OrganizationService;
@@ -13,7 +12,6 @@ import com.jusfoun.hookah.rpc.api.UserCheckService;
 import com.jusfoun.hookah.rpc.api.UserDetailService;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,9 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -69,6 +65,7 @@ public class AuthController extends BaseController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(String redirect_uri, HttpServletRequest request) {
+        userService.setUVCountByDate();
         if (!StringUtils.isEmpty(redirect_uri)) {
             return "redirect:" + redirect_uri;
         } else {

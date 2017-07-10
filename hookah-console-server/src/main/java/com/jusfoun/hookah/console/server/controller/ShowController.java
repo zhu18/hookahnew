@@ -1,6 +1,5 @@
 package com.jusfoun.hookah.console.server.controller;
 
-import com.jusfoun.hookah.console.server.util.PropertiesManager;
 import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.OrderInfo;
@@ -10,8 +9,6 @@ import com.jusfoun.hookah.core.domain.vo.ShowVO;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.*;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -248,11 +245,10 @@ public class ShowController {
      */
     @RequestMapping("/viewsCount")
     public ReturnData viewsCount(){
-        /*String view = "http://www.qddata.com.cn/";
-        String views = "http://www.qddata.com.cn/login";
-
-        redisOperate.incr("http://www.qddata.comn/");
-        redisOperate.incr("http://www.qddata.comn/login");*/
+        Map<String, Object> map = userService.getPUVCountByDate();
+        System.out.println("日期" + map.get("puvdate"));
+        System.out.println("PV" + map.get("pvdata"));
+        System.out.println("UV" + map.get("uvdata"));
         return ReturnData.success();
     }
 
