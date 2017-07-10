@@ -32,16 +32,18 @@ public class PayTradeRecordServiceImpl extends GenericServiceImpl<PayTradeRecord
 
 
 	@Transactional
-	public PayTradeRecord initPayTradeRecord(MoneyInOutBo moneyInOutBo) {
+	public PayTradeRecord initPayTradeRecord(MoneyInOutBo moneyInOutBo, String payAccountRecordId) {
 
 		PayTradeRecord payTradeRecord = new PayTradeRecord();
 		payTradeRecord.setPayAccountId(moneyInOutBo.getPayAccountID());
 		payTradeRecord.setUserId(moneyInOutBo.getUserId());
 		payTradeRecord.setMoney(moneyInOutBo.getMoney());
-		payTradeRecord.setTradeType(PayConstants.TradeType.OnlineRecharge.getCode());
+		payTradeRecord.setTradeType(moneyInOutBo.getOperatorType());
 		payTradeRecord.setTradeStatus(PayConstants.TransferStatus.handing.getCode());
 		payTradeRecord.setAddTime(new Date());
+		payTradeRecord.setOrderSn(payAccountRecordId);
 		payTradeRecord.setAddOperator(moneyInOutBo.getUserId());
+		payTradeRecord.setTransferDate(new Date());
 		int n = payTradeRecordMapper.insertAndGetId(payTradeRecord);
 		if(n != 1){
 			logger.info("添加内部流水失败");

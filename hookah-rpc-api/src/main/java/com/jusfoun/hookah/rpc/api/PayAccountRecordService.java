@@ -13,5 +13,7 @@ public interface PayAccountRecordService extends GenericService<PayAccountRecord
     /**
      * 出入金接口
      */
-    public void entryAndExitPayments(MoneyInOutBo moneyInOutBo);
+    public void entryPayments(MoneyInOutBo moneyInOutBo);
+
+    public void ExitPayments(MoneyInOutBo moneyInOutBo);
 }

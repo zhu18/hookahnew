@@ -9,4 +9,8 @@
     <motan:referer id="organizationService"
                    interface="com.jusfoun.hookah.rpc.api.OrganizationService"
                    connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+
+    <motan:referer id="userService"
+                   interface="com.jusfoun.hookah.rpc.api.UserService"
+                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
 </beans>

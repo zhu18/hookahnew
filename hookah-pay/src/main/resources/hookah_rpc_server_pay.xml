@@ -12,9 +12,9 @@
 
     <!-- 具体rpc服务配置，声明实现的接口类。-->
     <motan:service interface="com.jusfoun.hookah.rpc.api.PayAccountRecordService"
-                   ref="payAccountRecordService" export="hookah:5001" basicService="serviceBasicConfig">
+                   ref="payAccountRecordService" export="hookah:5008" basicService="serviceBasicConfig">
     </motan:service>
     <motan:service interface="com.jusfoun.hookah.rpc.api.PayAccountService"
-                   ref="payAccountService" export="hookah:5001" basicService="serviceBasicConfig">
+                   ref="payAccountService" export="hookah:5008" basicService="serviceBasicConfig">
     </motan:service>
 </beans>
