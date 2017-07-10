@@ -11,8 +11,10 @@ import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.GoodsCheckService;
 import com.jusfoun.hookah.rpc.api.MgGoodsService;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,14 +46,17 @@ public class GoodsCheckApi extends BaseController{
      * @return
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ReturnData goodsCheck(GoodsCheck goodsCheck, MgGoods.PackageApiInfoBean apiInfoBean) {
+    public ReturnData goodsCheck(@RequestBody MgGoods.PackageApiInfoBean apiInfoBean) {
+
+        GoodsCheck goodsCheck = new GoodsCheck(); //goodsCheckVo.getGoodsCheck();
+        MgGoods.PackageApiInfoBean apiInfoBeanTar = new MgGoods.PackageApiInfoBean();//goodsCheckVo.getApiInfoBean();
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
             if(Objects.nonNull(apiInfoBean)){
                 if(StringUtils.isNoneBlank(goodsCheck.getGoodsId())){
                     MgGoods mgGoods = mgGoodsService.selectById(goodsCheck.getGoodsId());
-                    mgGoods.setPackageApiInfo(apiInfoBean);
+                    mgGoods.setPackageApiInfo(apiInfoBeanTar);
                     mongoTemplate.save(mgGoods);
                 }
             }
