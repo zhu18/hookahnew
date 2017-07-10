@@ -1,5 +1,4 @@
-import EsController from './EsController';
-import pagination from 'angular-ui-bootstrap/src/pagination';
+import EsController from "./EsController";
 esRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function esRouting($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/elastic/search');
@@ -12,16 +11,19 @@ export default function esRouting($stateProvider, $urlRouterProvider) {
       url: '/elastic/search',
       template: require('./list.html'),
       controller: EsController,
+      permission: 'elastic_search'
     })
-      .state('elastic.add', {
+    .state('elastic.add', {
       url: '/elastic/add',
       template: require('./add.html'),
       controller: EsController,
+      permission: 'elastic_add'
     })
-      .state('elastic.delGoods', {
-          url: '/elastic/delGoods',
-          template: require('./goodslist.html'),
-          controller: EsController,
-      })
+    .state('elastic.delGoods', {
+      url: '/elastic/delGoods',
+      template: require('./goodslist.html'),
+      controller: EsController,
+      permission:'elastic_delGoods'
+    })
 
 };

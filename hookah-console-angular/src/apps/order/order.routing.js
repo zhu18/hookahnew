@@ -12,6 +12,7 @@ export default function shelfRouting($stateProvider, $urlRouterProvider) {
       url: '/order/search',
       template: require('./list.html'),
       controller: OrderController,
+      permission: 'order_search'
     })
     .state('order.viewOrderDetails', {//单条订单详情页
       url: '/order/viewOrderDetails/:id',

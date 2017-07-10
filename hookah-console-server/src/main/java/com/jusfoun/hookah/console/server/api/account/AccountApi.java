@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,7 +42,7 @@ public class AccountApi extends BaseController{
             List<Condition> filters = new ArrayList<>();
             List<OrderBy> orderBys = new ArrayList();
             orderBys.add(OrderBy.desc("addTime"));
-            filters.add(Condition.eq("orgId", 0));
+            filters.add(Condition.eq("userType", 0));
             if(StringUtils.isNotBlank(user.getUserName())){
                 filters.add(Condition.like("userName", user.getUserName().trim()));
             }
@@ -62,13 +63,14 @@ public class AccountApi extends BaseController{
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @Transactional
-    public ReturnData saveSysAccount(User user) throws Exception {
+    public ReturnData saveSysAccount(User user,HttpServletRequest httpServletRequest) throws Exception {
+       String ss  = httpServletRequest.getParameter("user");
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
             boolean isExists = true;
             List<Condition> filters = new ArrayList<>();
-            filters.add(Condition.eq("orgId", 0));
+            filters.add(Condition.eq("userType", 0));
             filters.add(Condition.eq("userName", user.getUserName()));
 //            if (StringUtils.isNoneBlank(user.getPassword())){
 //                filters.add(Condition.eq("password", user.getPassword()));
@@ -80,7 +82,7 @@ public class AccountApi extends BaseController{
                 throw new Exception("该账户已注册");
             }else{
                 String creatorId = getCurrentUser().getCreatorId();
-                user.setOrgId("0");
+                user.setUserType(0);
                 user.setCreatorId(creatorId);
                 user.setAddTime(new Date());
                 User savedUser = userService.insert(user);

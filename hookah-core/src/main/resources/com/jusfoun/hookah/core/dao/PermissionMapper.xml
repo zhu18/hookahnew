@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jusfoun.hookah.core.dao.PermissionMapper" >
+
+  <select id="selectPermissionsByRoleId" resultType="java.lang.String">
+    select a.permission_name from permission a
+    left join role_permission b on a.permission_id = b.permission_id
+    left join role c on b.role_id = c.role_id
+    <where>1=1
+      <if test="roleId !=null and roleId !=''">
+        and c.role_id=#{roleId}
+      </if>
+    </where>
+  </select>
+
+  <select id="selectPermissionsByUserId" resultType="java.lang.String">
+    select a.permission_name from permission a
+    left join role_permission b on a.permission_id = b.permission_id
+    left join role c on b.role_id = c.role_id
+    left join user_role d on c.role_id = d.role_id
+    left join `user` e on e.user_id = d.user_id
+    <where>1=1
+      <if test="userId !=null and userId !=''">
+      and e.user_id=#{userId}
+      </if>
+    </where>
+  </select>
+</mapper>
