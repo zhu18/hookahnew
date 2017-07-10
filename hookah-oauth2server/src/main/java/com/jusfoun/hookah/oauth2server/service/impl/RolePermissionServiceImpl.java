@@ -3,7 +3,7 @@ package com.jusfoun.hookah.oauth2server.service.impl;
 import com.jusfoun.hookah.core.dao.RolePermissionMapper;
 import com.jusfoun.hookah.core.domain.RolePermission;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
-import com.jusfoun.hookah.rpc.api.RolePermisstionService;
+import com.jusfoun.hookah.rpc.api.RolePermissionService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -14,7 +14,7 @@ import javax.annotation.Resource;
  * @desc
  */
 @Service
-public class RolePermisstionServiceImpl extends GenericServiceImpl<RolePermission, String> implements RolePermisstionService {
+public class RolePermissionServiceImpl extends GenericServiceImpl<RolePermission, String> implements RolePermissionService {
 
     @Resource
     private RolePermissionMapper rolePermissionMapper;
@@ -24,4 +24,8 @@ public class RolePermisstionServiceImpl extends GenericServiceImpl<RolePermissio
         super.setDao(rolePermissionMapper);
     }
 
+    @Override
+    public int deletePermissionsByRoleId(String roleId) {
+        return rolePermissionMapper.deletePermissionsByRoleId(roleId);
+    }
 }

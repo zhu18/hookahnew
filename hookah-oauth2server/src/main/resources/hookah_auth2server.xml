@@ -9,7 +9,8 @@
   <!-- 业务具体实现类 -->
   <bean id="userService" class="com.jusfoun.hookah.oauth2server.service.impl.UserServiceImpl"/>
   <bean id="roleService" class="com.jusfoun.hookah.oauth2server.service.impl.RoleServiceImpl"/>
-  <bean id="permisstionService" class="com.jusfoun.hookah.oauth2server.service.impl.PermisstionServiceImpl"/>
+  <bean id="permissionService" class="com.jusfoun.hookah.oauth2server.service.impl.PermissionServiceImpl"/>
+  <bean id="rolePermissionService" class="com.jusfoun.hookah.oauth2server.service.impl.RolePermissionServiceImpl"/>
   <bean id="cashRecordService" class="com.jusfoun.hookah.oauth2server.service.impl.CashRecordServiceImpl"/>
   <bean id="loginLogService" class="com.jusfoun.hookah.oauth2server.service.impl.LoginLogServiceImpl"/>
 
@@ -37,8 +38,11 @@
   <motan:service interface="com.jusfoun.hookah.rpc.api.RoleService"
                  ref="roleService" export="hookah:5003" basicService="serviceBasicConfig">
   </motan:service>
-  <motan:service interface="com.jusfoun.hookah.rpc.api.PermisstionService"
-                 ref="permisstionService" export="hookah:5003" basicService="serviceBasicConfig">
+  <motan:service interface="com.jusfoun.hookah.rpc.api.PermissionService"
+                 ref="permissionService" export="hookah:5003" basicService="serviceBasicConfig">
+  </motan:service>
+  <motan:service interface="com.jusfoun.hookah.rpc.api.RolePermissionService"
+                 ref="rolePermissionService" export="hookah:5003" basicService="serviceBasicConfig">
   </motan:service>
   <motan:service interface="com.jusfoun.hookah.rpc.api.CashRecordService"
                  ref="cashRecordService" export="hookah:5003" basicService="serviceBasicConfig">
