@@ -53,13 +53,19 @@ class GoodsCheckController {
 					};
 
 					$rootScope.packageApiInfo = res.data.data.packageApiInfo;
+                    // $rootScope.checkStatusVal = "1";
+                    // $rootScope.checkContentVal = "qweqewqweeqw";
+
+
 					$rootScope.addData = {
 						goodsCheck: {
 							goodsId: $rootScope.editData.goodsId,//商品ID
 							goodsSn: $rootScope.editData.goodsSn,//商品编号
 							goodsName: $rootScope.editData.goodsName,//商品名称
-							checkStatus: $rootScope.packageApiInfo.checkStatus,//审核状态
-							checkContentddd: $rootScope.packageApiInfo.checkContentddd,//审核意见
+                            // checkStatus: $rootScope.checkStatusVal,//审核状态
+                            // checkContent: $rootScope.checkContentVal,//审核意见
+							// checkStatus: $('input[name="checkStatus"]:checked').val(),//审核状态
+							//checkContent: $('#checkContent').val(),//审核意见
 						},
 						apiInfoBean: {
 							apiType: $rootScope.packageApiInfo.apiType,//接口类型q
@@ -71,17 +77,27 @@ class GoodsCheckController {
 							apiDesc: $rootScope.packageApiInfo.apiDesc, //接口描述
 
 							respSample: $rootScope.packageApiInfo.respSample, //返回示例
-							codeAttr: $rootScope.packageApiInfo.respDataMapping.codeAttrBean.codeAttr,//编码属性
-							successCode: $rootScope.packageApiInfo.respDataMapping.codeAttrBean.codeInfoBean.successCode,//成功
-							failedCode: $rootScope.packageApiInfo.respDataMapping.codeAttrBean.codeInfoBean.failedCode,//失败
-							successNoData: $rootScope.packageApiInfo.respDataMapping.codeAttrBean.codeInfoBean.successNoData,//成功无数据
-							infoAttr: $rootScope.packageApiInfo.respDataMapping.infoAttr,//信息属性
-							dataAttr: $rootScope.packageApiInfo.respDataMapping.dataAttr,//数据属性
-							totalNumAttr: $rootScope.packageApiInfo.respDataMapping.totalNumAttr,//总条数属性
-							updateFreq: $rootScope.packageApiInfo.updateFreq,//更新频率
+
+                            respDataMapping: {
+                                codeAttrBean: {
+                                    codeAttr: $rootScope.packageApiInfo.respDataMapping.codeAttrBean.codeAttr,//编码属性
+                                    codeInfoBean:{
+                                        successCode: $rootScope.packageApiInfo.respDataMapping.codeAttrBean.codeInfoBean.successCode,//成功
+                                        failedCode: $rootScope.packageApiInfo.respDataMapping.codeAttrBean.codeInfoBean.failedCode,//失败
+                                        successNoData: $rootScope.packageApiInfo.respDataMapping.codeAttrBean.codeInfoBean.successNoData,//成功无数据
+									}
+								},
+                                infoAttr: $rootScope.packageApiInfo.respDataMapping.infoAttr,//信息属性
+                                dataAttr: $rootScope.packageApiInfo.respDataMapping.dataAttr,//数据属性
+                                totalNumAttr: $rootScope.packageApiInfo.respDataMapping.totalNumAttr,//总条数属性
+							},
+
+                            updateFreq: $rootScope.packageApiInfo.updateFreq,//更新频率
 							dataNumDivRowNum: $rootScope.packageApiInfo.dataNumDivRowNum,//数据条数/行数
-							secretKeyName: $rootScope.packageApiInfo.encryptInfo.secretKeyName,//密钥名称
-							secretKeyValue: $rootScope.packageApiInfo.encryptInfo.secretKeyValue//密钥值
+                            encryptInfo:{
+                                secretKeyName: $rootScope.packageApiInfo.encryptInfo.secretKeyName,//密钥名称
+                                secretKeyValue: $rootScope.packageApiInfo.encryptInfo.secretKeyValue//密钥值
+							}
 						},
 					};
 				}
@@ -92,13 +108,18 @@ class GoodsCheckController {
 			$rootScope.selectId = item.goodsId;
 		}
 
-		$scope.submitCheck = function () {
-			console.log(typeof $rootScope.addData);
-			console.log(JSON.stringify($rootScope.addData.goodsCheck));
-			if ($("#checkContent").val().trim() != '') {
+		$scope.submitCheck = function (that) {
+
+
+			alert(that);
+            $rootScope.addData.goodsCheck.checkStatus = $('input[name="checkStatus"]:checked').val();
+            $rootScope.addData.goodsCheck.checkContent = $('#checkContent').val();
+
+            console.log($rootScope.addData.goodsCheck);
+            if ($("#checkContent").val().trim() != '') {
 				var promise = $http({
 					method: 'post',
-					url: $rootScope.site.apiServer + "/api/goodsCheck/add",
+					url: $rootScope.site.apiServer + "/api/goodsCheck/addApi",
 					data: "voStr="+JSON.stringify($rootScope.addData)
 				});
 				promise.then(function (res, status, config, headers) {
