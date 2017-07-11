@@ -37,4 +37,7 @@
   <motan:referer id="payAccountService"
                  interface="com.jusfoun.hookah.rpc.api.CooperationService"
                  connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+  <motan:referer id="supplierService"
+                 interface="com.jusfoun.hookah.rpc.api.SupplierService"
+                 connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
 </beans>

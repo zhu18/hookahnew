@@ -140,6 +140,11 @@ public class User extends GenericModel {
     //支付密码状态  0 未设置 ,1 已设置
     private Integer paymentPasswordStatus;
 
+    //联系人信息(用户认证之后填写)
+    private String contactName;
+    private String contactPhone;
+    private String contactAddress;
+
     public Integer getUserType() {
         return userType;
     }
@@ -462,5 +467,29 @@ public class User extends GenericModel {
      */
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    public String getContactName() {
+        return contactName;
+    }
+
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+    }
+
+    public String getContactPhone() {
+        return contactPhone;
+    }
+
+    public void setContactPhone(String contactPhone) {
+        this.contactPhone = contactPhone;
+    }
+
+    public String getContactAddress() {
+        return contactAddress;
+    }
+
+    public void setContactAddress(String contactAddress) {
+        this.contactAddress = contactAddress;
     }
 }
