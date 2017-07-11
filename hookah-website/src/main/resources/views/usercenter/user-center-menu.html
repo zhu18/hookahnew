@@ -16,39 +16,39 @@
 </div>
 <%}else{%>
 <div class="grid-left left-bar margin-top-10 margin-bottom-30 status">
-    <div class="one-level-menu">
-        <div class="title "><span class="fa fa-caret-down margin-right-25"></span>账户中心</div>
+    <div class="one-level-menu ">
+        <div class="title"><span class="fa fa-caret-down margin-right-25"></span>账户中心</div>
         <ul>
-            <li><a href=""><span></span>基本信息</a></li>
-            <li><a href=""><span></span>账户信息</a></li>
-            <li><a href=""><span></span>安全中心</a></li>
-            <li><a href=""><span></span>实名认证</a></li>
-            <li><a href=""><span></span>站内信息</a></li>
-            <li><a href=""><span></span>联系信息</a></li>
+            <li><a href="/usercenter/index"><span class="fa fa-id-card-o margin-right-22 "></span>基本信息</a></li>
+            <li><a href="javascript:void(0);"><span class="fa fa-id-card-o margin-right-22"></span>账户信息</a></li>
+            <li><a href="javascript:void(0);"><span class="fa fa-id-card-o margin-right-22"></span>安全中心</a></li>
+            <li><a href="javascript:void(0);"><span class="fa fa-id-card-o margin-right-22"></span>实名认证</a></li>
+            <li><a href="javascript:void(0);"><span class="fa fa-id-card-o margin-right-22"></span>站内信息</a></li>
+            <li><a href="javascript:void(0);"><span class="fa fa-id-card-o margin-right-22"></span>联系信息</a></li>
         </ul>
     </div>
     <div class="one-level-menu">
         <div class="title"><span class="fa fa-caret-down margin-right-25"></span>资金管理</div>
         <ul>
-            <li><a href=""><span></span>资金总览</a></li>
-            <li><a href=""><span></span>资金记录</a></li>
+            <li><a href="/usercenter/fundmanage"><span class="fa fa-id-card-o margin-right-22"></span>资金总览</a></li>
+            <li><a href="/usercenter/capitalRecord"><span class="fa fa-id-card-o margin-right-22"></span>资金记录</a></li>
         </ul>
     </div>
     <div class="one-level-menu">
         <div class="title"><span class="fa fa-caret-down margin-right-25"></span>买家中心</div>
         <ul>
-            <li><a href=""><span></span>我的订单</a></li>
-            <li><a href=""><span></span>订单评价</a></li>
-            <li><a href=""><span></span>我得收藏</a></li>
-            <li><a href=""><span></span>我的商品</a></li>
+            <li><a href="/usercenter/buyer/orderManagement"><span class="fa fa-id-card-o margin-right-22"></span>我的订单</a></li>
+            <li><a href="javascript:void(0);"><span class="fa fa-id-card-o margin-right-22"></span>订单评价</a></li>
+            <li><a href="javascript:void(0);"><span class="fa fa-id-card-o margin-right-22"></span>我得收藏</a></li>
+            <li><a href="javascript:void(0);"><span class="fa fa-id-card-o margin-right-22"></span>我的商品</a></li>
         </ul>
     </div>
     <div class="one-level-menu">
         <div class="title"><span class="fa fa-caret-down margin-right-25"></span>卖家中心</div>
         <ul>
-            <li><a href=""><span></span>商品管理</a></li>
-            <li><a href=""><span></span>交易管理</a></li>
-            <li><a href=""><span></span>结算记录</a></li>
+            <li><a href="javascript:void(0);"><span class="fa fa-id-card-o margin-right-22"></span>商品管理</a></li>
+            <li><a href="javascript:void(0);"><span class="fa fa-id-card-o margin-right-22"></span>交易管理</a></li>
+            <li><a href="javascript:void(0);"><span class="fa fa-id-card-o margin-right-22"></span>结算记录</a></li>
         </ul>
     </div>
     <!--<ul class="one-level-menu-user">-->
@@ -103,9 +103,25 @@
             var href = $(this).children('a').attr('href');
             if (url.indexOf(href) >= 0) {
                 $(this).addClass('active').siblings().removeClass("active");
-//                $(this).children('a').css("color","#247DE8");
+                $(this).siblings().addClass('item-active')
+                $(this).parent().siblings().addClass('active')
+            }
+
+        });
+//        控制菜单下拉
+        $('.title').on('click',function () {
+            var display=$(this).siblings().css("display");
+            $(this).addClass('active').parent().siblings().find(".title").removeClass('active');
+            if(display=="block" ){
+                $(this).siblings().hide()
+            }else {
+                $(this).siblings().show()
+                $(this).siblings().find("li")
             }
         });
+//        $('.one-level-menu ul li').on("click",function () {
+//            $(this).addClass('active').siblings().removeClass('active')
+//        })
       /*  if(url == '/admin/articleManage' || url == '/admin/articlePublish' || url == '/admin/articleModify'){
             $('.adminS ul li:first-child').addClass('active').children('a').css("color","#247DE8").siblings().removeClass("active");
         }else if(url == '/usercenter/trade'){
