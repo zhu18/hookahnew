@@ -37,19 +37,11 @@ var htmlPart = {
 			%>
 
 		</div>
-
-
-
-
-
-
-
-
 		<div class="grid-left goods-left bdg-row">
 			<div class="goods-details clearfix">
 				<div class="goods-details-img grid-left bdg-row">
 					<div class="img-box">
-						<img src="${goodsDetails.goodsImg}" alt="" id="J_goodsImg">
+						<img src="${host.static}/${goodsDetails.goodsImg}" alt="" id="J_goodsImg">
 					</div>
 					<div class="collect-box margin-top-20">
 						<p class="display-inline-block">
@@ -140,30 +132,89 @@ var htmlPart = {
 					<ul>
 						<li class="grid-left active">详情介绍</li>
 						<%if(goodsDetails.isOffline == 0){%>
-							<%if(goodsDetails.goodsType == 1){%>
+							<%if(goodsDetails.goodsType == 0){%>
+							<li class="grid-left">数据特性</li>
+							<li class="grid-left">产品优势</li>
+							<li class="grid-left">售后服务</li>
+							<%}else if(goodsDetails.goodsType == 1){%>
+							<li class="grid-left">产品优势</li>
+							<li class="grid-left">应用案例</li>
+							<li class="grid-left">售后服务</li>
 							<li class="grid-left">API详情</li>
 							<li class="grid-left">返回参数</li>
-							<%}%>
-
-							<%if(goodsDetails.goodsType == 2){%>
-							<li class="grid-left">数据模型</li>
-							<%}%>
-							<%if(goodsDetails.goodsType == 6 || goodsDetails.goodsType == 7){%>
-							<li class="grid-left">应用场景</li>
-							<%}%>
-							<%if(goodsDetails.goodsType == 4 || goodsDetails.goodsType == 5){%>
-							<li class="grid-left">分析工具</li>
+							<%}else if(goodsDetails.goodsType == 2){%>
+							<li class="grid-left">产品优势</li>
+							<li class="grid-left">产品</li>
+							<li class="grid-left">售后服务</li>
+							<%}else if(goodsDetails.goodsType == 6 || goodsDetails.goodsType == 7){%>
+							<li class="grid-left">核心功能</li>
+							<li class="grid-left">技术优势</li>
+							<li class="grid-left">团队优势</li>
+							<li class="grid-left">所需环境</li>
+							<li class="grid-left">所需数据</li>
+							<li class="grid-left">应用案例</li>
+							<li class="grid-left">售后服务</li>
+							<%}else if(goodsDetails.goodsType == 4 || goodsDetails.goodsType == 5){%>
+							<li class="grid-left">核心功能</li>
+							<li class="grid-left">技术优势</li>
+							<li class="grid-left">团队优势</li>
+							<li class="grid-left">所需环境</li>
+							<li class="grid-left">所需数据</li>
+							<li class="grid-left">应用案例</li>
+							<li class="grid-left">售后服务</li>
 							<%}%>
 						<%}%>
 						<li class="grid-left evaluate">评价</li>
 					</ul>
 				</div>
 				<div class="table-content">
-					<div class="table-item active detail margin-bottom-10" id="J_goodsDesc">
-						${goodsDetails.goodsDesc}
+					<div class="table-item active detail margin-bottom-10" id="">
+						<table class="tab-one">
+							<tr>
+								<td>商品编码：</td>
+								<td>${goodsDetails.goodsSn}</td>
+							</tr>
+							<tr>
+								<td>适用范围：</td>
+								<td>${goodsDetails.trialRange}</td>
+							</tr>
+							<tr>
+								<td>所属地域：</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>产品描述：</td>
+								<td>${goodsDetails.goodsDesc}</td>
+							</tr>
+						</table>
 					</div>
 					<%if(goodsDetails.isOffline == 0){%>
-						<%if(goodsDetails.goodsType == 1){%>
+						<%if(goodsDetails.goodsType == 0){%>
+
+						<div class="table-item">
+							<table class="tab-one margin-bottom-10">
+								<tr>
+									<td>时间：</td>
+									<td>${goodsDetails.offLineData.timeFrame.startDate}&nbsp;至&nbsp;${goodsDetails.offLineData.timeFrame.endDate}</td>
+								</tr>
+								<tr>
+									<td>数据条数/行数：</td>
+									<td>${goodsDetails.offLineData.dataRows}</td>
+								</tr>
+								<tr>
+									<td>数据容量：</td>
+									<td>${goodsDetails.offLineData.dataCapacity}</td>
+								</tr>
+								<tr>
+									<td>数据格式：</td>
+									<td>${decode(goodsDetails.offLineData.dataFormat,0,'xls/xlsx',1,'csv',2,'txt',3,'图片',4,'音频',5,'视频',6,'其他','未知')}</td>
+								</tr>
+							</table>
+						</div>
+						<div class="table-item">
+
+						</div>
+						<%}else if(goodsDetails.goodsType == 1){%>
 						<div class="table-item">
 							<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
 							<table class="tab-one">
@@ -223,9 +274,7 @@ var htmlPart = {
 								<%}%>
 							</table>
 						</div>
-						<%}%>
-
-						<%if(goodsDetails.goodsType == 2){%>
+						<%}else if(goodsDetails.goodsType == 2){%>
 						<div class="table-item">
 							<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
 							<table class="tab-one">
@@ -251,8 +300,7 @@ var htmlPart = {
 								</tr>
 							</table>
 						</div>
-						<%}%>
-						<%if(goodsDetails.goodsType == 6){%>
+						<%}else if(goodsDetails.goodsType == 6){%>
 						<div class="table-item">
 							<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
 							<table class="tab-one">
@@ -293,8 +341,7 @@ var htmlPart = {
 								</tr>
 							</table>
 						</div>
-						<%}%>
-						<%if(goodsDetails.goodsType == 7){%>
+						<%}else if(goodsDetails.goodsType == 7){%>
 						<div class="table-item">
 							<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
 							<table class="tab-one">
@@ -328,8 +375,7 @@ var htmlPart = {
 								</tr>
 							</table>
 						</div>
-						<%}%>
-						<%if(goodsDetails.goodsType == 4){%>
+						<%}else if(goodsDetails.goodsType == 4){%>
 						<div class="table-item">
 							<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
 							<table class="tab-one">
@@ -362,8 +408,7 @@ var htmlPart = {
 								</tr>
 							</table>
 						</div>
-						<%}%>
-						<%if(goodsDetails.goodsType ==5){%>
+						<%}else if(goodsDetails.goodsType ==5){%>
 						<div class="table-item">
 							<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
 							<table class="tab-one">

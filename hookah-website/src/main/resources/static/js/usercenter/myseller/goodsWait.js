@@ -6,7 +6,7 @@ function loadPageData(data){
             html += '<tr>';
             html += '<td class="text-center">';
             html += '<a href="javascript:void(0)">';
-            html += '<img src="'+list[i].goodsImg+'" alt="">';
+            html += '<img src="'+host.static+'/'+list[i].goodsImg+'" alt="">';
             html += '<p>'+list[i].goodsName+'</p>';
             html += '</a>';
             html += '</td>';
