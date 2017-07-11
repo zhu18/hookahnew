@@ -65,10 +65,10 @@ public class AuthController extends BaseController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(String redirect_uri, HttpServletRequest request) {
-        userService.setUVCountByDate();
         if (!StringUtils.isEmpty(redirect_uri)) {
             return "redirect:" + redirect_uri;
         } else {
+            userService.setUVCountByDate();
             return "redirect:/";
         }
     }
