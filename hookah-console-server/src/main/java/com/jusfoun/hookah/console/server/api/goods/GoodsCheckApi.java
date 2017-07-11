@@ -14,6 +14,7 @@ import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.GoodsCheckService;
 import com.jusfoun.hookah.rpc.api.MgGoodsService;
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONObject;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,12 +44,34 @@ public class GoodsCheckApi extends BaseController{
     private MongoTemplate mongoTemplate;
 
     /**
-     * 商品审核
+     * 非商品审核
      * @param goodsCheck
      * @return
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ReturnData goodsCheck( HttpServletRequest request) {
+        String voStr = request.getParameter("voStr");
+        GoodsCheck goodsCheck = JSON.parseObject(voStr, GoodsCheck.class);
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            goodsCheck.setCheckUser(getCurrentUser().getUserName());
+            goodsCheckService.insertRecord(goodsCheck);
+        } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
+
+    /**
+     * 商品审核
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/addApi", method = RequestMethod.POST)
+    public ReturnData goodsCheckApi( HttpServletRequest request) {
         String voStr = request.getParameter("voStr");
         GoodsCheckVo goodsCheckVo = JSON.parseObject(voStr, GoodsCheckVo.class);
         GoodsCheck goodsCheck = goodsCheckVo.getGoodsCheck();
@@ -56,6 +79,10 @@ public class GoodsCheckApi extends BaseController{
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
+            goodsCheck.setCheckUser(getCurrentUser().getUserName());
+            goodsCheckService.insertRecord(goodsCheck);
+
+            // 封装api 方法
             if(Objects.nonNull(apiInfoBeanTar)){
                 if(StringUtils.isNoneBlank(goodsCheck.getGoodsId())){
                     MgGoods mgGoods = mgGoodsService.selectById(goodsCheck.getGoodsId());
@@ -63,8 +90,6 @@ public class GoodsCheckApi extends BaseController{
                     mongoTemplate.save(mgGoods);
                 }
             }
-            goodsCheck.setCheckUser(getCurrentUser().getUserName());
-            goodsCheckService.insertRecord(goodsCheck);
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());

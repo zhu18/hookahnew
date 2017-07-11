@@ -122,7 +122,7 @@
 						</div>
 					</div>
 
-					<div class="form-group">
+					<div class="form-group" data-ng-if="editData.goodsType == 0 || editData.goodsType == 1 || editData.goodsType == 2">
 						<label class="col-sm-2 control-label">商品优势</label>
 						<div class="col-sm-5">
 							<!--<input type="text" class="form-control" value="{{editData.goodsDesc}}" readonly="true" />-->
@@ -140,7 +140,7 @@
 							<p ng-bind-html="editData.afterSaleService | trustHtml"></p>
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="form-group" data-ng-if="editData.goodsType == 0 || editData.goodsType == 1">
 						<label class="col-sm-2 control-label">数据样例</label>
 						<div class="col-sm-5">
 							<a href="{{editData.dataSample}}" target="_blank">
@@ -149,7 +149,7 @@
 							<!--<img ng-src="{{editData.goodsImg}}" style="max-width: 300px; max-height: 500px">-->
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="form-group" data-ng-if="editData.goodsType == 1 || editData.goodsType == 4 || editData.goodsType == 5 || editData.goodsType == 6 || editData.goodsType == 7">
 						<label class="col-sm-2 control-label">应用案例</label>
 						<div class="col-sm-5">
 							<!--<input type="text" class="form-control" value="{{editData.goodsDesc}}" readonly="true" />-->
@@ -389,25 +389,25 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">编码属性</label>
 								<div class="col-sm-5">
-									<input type="text" class="form-control" value="{{editData.apiInfo.respDataMapping.codeAttr}}" readonly="true"/>
+									<input type="text" class="form-control" value="{{editData.apiInfo.respDataMapping.codeAttrBean.codeAttr}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">成功</label>
 								<div class="col-sm-5">
-									<input type="text" class="form-control" value="{{editData.apiInfo.respDataMapping.successCode}}" readonly="true"/>
+									<input type="text" class="form-control" value="{{editData.apiInfo.respDataMapping.codeAttrBean.codeInfoBean.successCode}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">失败</label>
 								<div class="col-sm-5">
-									<input type="text" class="form-control" value="{{editData.apiInfo.respDataMapping.failedCode}}" readonly="true"/>
+									<input type="text" class="form-control" value="{{editData.apiInfo.respDataMapping.codeAttrBean.codeInfoBean.failedCode}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">成功无数据</label>
 								<div class="col-sm-5">
-									<input type="text" class="form-control" value="{{editData.apiInfo.respDataMapping.successNoData}}" readonly="true"/>
+									<input type="text" class="form-control" value="{{editData.apiInfo.respDataMapping.codeAttrBean.codeInfoBean.successNoData}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
@@ -712,7 +712,7 @@
 										<tbody>
 										<tr data-ng-repeat="req in editData.packageApiInfo.reqParamList" class="">
 											<td>
-												<input type="text" name="fieldName" value="{{req.fieldName}}" data-ng-model="">
+												<input type="text" name="fieldName" value="{{req.fieldName}}">
 											</td>
 											<td>
 												<select name="fieldType">
@@ -875,10 +875,13 @@
 					<label class="col-sm-2 control-label">审核状态</label>
 					<div class="col-sm-5">
 						<label class="radio-inline">
-							<input type="radio" id="checkStatus_1" name="checkStatus" value="1" checked/>通过
+							<input type="radio" name="checkStatus" value = "1" checked/>通过
+								   <!--id="checkStatus_1" name="checkStatus" value="1" checked-->
+
 						</label>
 						<label class="radio-inline">
-							<input type="radio" id="checkStatus_2" name="checkStatus" value="2"/>不通过
+							<input type="radio" name="checkStatus" value = "2" />不通过
+							<!--<input type="radio" id="checkStatus_2" name="checkStatus" value="2"/>不通过-->
 						</label>
 					</div>
 				</div>
@@ -886,7 +889,7 @@
 					<label class="col-sm-2 control-label">审核意见</label>
 					<div class="col-sm-5">
 						<label>
-              <textarea name="checkContent" data-ng-model="checkContent" id="checkContent"
+              <textarea name="checkContent" data-ng-model="checkContentVal" id="checkContent"
 						style="margin: 0px; width: 452px; height: 84px;"></textarea>
 						</label>
 					</div>
@@ -894,7 +897,7 @@
 				<div class="form-group">
 					<div class="col-sm-2"></div>
 					<div class="col-sm-5">
-						<button class="btn btn-primary" data-ng-click="submitCheck()" ng-disabled="checkForm.$invalid">
+						<button class="btn btn-primary" data-ng-click="submitCheck({{editData.goodsType}})" ng-disabled="checkForm.$invalid">
 							<span class="glyphicon glyphicon-refresh"></span> 提交审核
 						</button>
 					</div>
