@@ -1,0 +1,52 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/recharge.css">
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="grid-left info-center-box ">
+            <div class="user-center-box grid-right">
+                <div class="header">
+                    <h4 class="center-title">充值</h4>
+                </div>
+                <div class="fundmanage-box">
+                    <div class="recharge">
+                        <ul class="recharge-content">
+                            <li>
+                                <label >当前余额：</label><span class="color-orange">￥555555</span>
+                            </li>
+                            <li>
+                                <label >充值账号：</label><span>某某公司</span>
+                            </li>
+                            <li class="money">
+                                <label for="money">充值金额：</label>
+                                <input type="text" id="money">
+                            </li>
+                            <li>
+                                <a href="">下一步</a>
+                            </li>
+                        </ul>
+                        <!--<div class="price-input"><label>请输入您要充值的金额：</label><input type="text">元</div>-->
+                        <!--<div class="operation withdrawals-btn"><a href="javascript:void(0)" onclick="nullFn()" class="btn-full-blue">下一步</a></div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+    function nullFn(){
+        $.alert('暂未开放，敬请期待');
+    }
+</script>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>

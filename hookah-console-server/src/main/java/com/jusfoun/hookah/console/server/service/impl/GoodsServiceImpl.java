@@ -470,7 +470,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             goodsVo.setFormatList(mgGoods.getFormatList());
             goodsVo.setImgList(mgGoods.getImgList());
             goodsVo.setAttrTypeList(mgGoods.getAttrTypeList());
-//            goodsVo.setApiInfo(mgGoods.getApiInfo());
+            goodsVo.setApiInfo(mgGoods.getApiInfo());
             goodsVo.setPackageApiInfo(mgGoods.getPackageApiInfo());
             goodsVo.setAsAloneSoftware(mgGoods.getAsAloneSoftware());
             goodsVo.setAsSaaS(mgGoods.getAsSaaS());
@@ -481,6 +481,19 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             goodsVo.setOffLineData(mgGoods.getOffLineData());
             goodsVo.setOffLineInfo(mgGoods.getOffLineInfo());
         }
+
+        if(goodsVo.getAreaProvince() == null) {
+            goodsVo.setGoodsAreaFullName("全部");
+        }
+        if (goodsVo.getAreaProvince() != null) {
+            if(goodsVo.getAreaCity() == null) {
+                goodsVo.setGoodsAreaFullName(DictionaryUtil.getRegionById(goodsVo.getAreaProvince()).getName());
+            }else {
+                goodsVo.setGoodsAreaFullName(DictionaryUtil.getRegionById(goodsVo.getAreaProvince()).getName()
+                    + "-" + DictionaryUtil.getRegionById(goodsVo.getAreaCity()).getName());
+            }
+        }
+
         goodsVo.setCatName(DictionaryUtil.getCategoryById(goodsVo.getCatId()) == null
                 ? "" : DictionaryUtil.getCategoryById(goodsVo.getCatId()).getCatName());
         return goodsVo;

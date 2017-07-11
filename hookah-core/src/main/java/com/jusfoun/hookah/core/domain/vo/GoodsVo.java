@@ -38,6 +38,7 @@ public class GoodsVo extends Goods implements Serializable {
     private Long clickRate;
     private Double goodsGrades;//商品分数
     private String orgName;//供应商名称
+    private String goodsAreaFullName;//地区全称
 
     public List<MgCategoryAttrType.AttrTypeBean> getAttrTypeList() {
         return attrTypeList;
@@ -237,5 +238,13 @@ public class GoodsVo extends Goods implements Serializable {
 
     public void setPackageApiInfo(MgGoods.PackageApiInfoBean packageApiInfo) {
         this.packageApiInfo = packageApiInfo;
+    }
+
+    public String getGoodsAreaFullName() {
+        return goodsAreaFullName;
+    }
+
+    public void setGoodsAreaFullName(String goodsAreaFullName) {
+        this.goodsAreaFullName = goodsAreaFullName;
     }
 }

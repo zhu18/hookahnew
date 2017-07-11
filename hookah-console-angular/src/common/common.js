@@ -1,5 +1,7 @@
 var config = {
   user: "",
+  permissionList: "",
+  permissionArray:"",
   site: {
     adminServer: "http://admin.qddata.com.cn",
     apiServer: "http://console.qddata.com.cn",
@@ -10,7 +12,7 @@ var config = {
   url: {
     loginUrl: "http://auth.qddata.com.cn/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://console.qddata.com.cn/login&backurl=",
     uploadUrl: "http://static.qddata.com.cn/upload/fileUpload",
-    uploadEditor:"http://static.qddata.com.cn/upload/wangeditor",
+    uploadEditor: "http://static.qddata.com.cn/upload/wangeditor",
   }
 };
 angular.element(document).ready(function () {
@@ -25,15 +27,26 @@ angular.element(document).ready(function () {
     url: config.site.apiServer + "/api/auth/current_user",
     success: function (data) {
       config.user = data.data;
-      angular.element(document).ready(function () {
-        angular.bootstrap(document, ['Hookah']);
+      //加载用户权限列表
+      $.ajax({
+        type: "GET",
+        url: config.site.apiServer + "/api/permission/current_user_permission",
+        data: {userId: config.user.userId},
+        success: function (data) {
+          config.permissionList = data.data.toString();
+          config.permissionArray = data.data;
+          angular.element(document).ready(function () {
+            angular.bootstrap(document, ['Hookah']);
+          });
+        }
       });
+
     },
     error: function (XMLHttpRequest, textStatus, errorThrown) {
       var currUrl = window.location;
-      console.log(currUrl);
+      // console.log(currUrl);
       //TODO...
-      console.log(XMLHttpRequest);
+      // console.log(XMLHttpRequest);
       if (401 === XMLHttpRequest.status) {
         window.location.href = config.url.loginUrl + currUrl;
       }
@@ -93,6 +106,34 @@ export default angular.module('Common', [
   .directive('topBar', TopBarDirective.directiveFactory)
   .directive('sideBar', SideBarDirective.directiveFactory)
   .directive('productNavbar', ProductNavbarDirective.directiveFactory)
+  .directive('convertToNumber', function () {
+    return {
+      require: 'ngModel',
+      link: function (scope, element, attrs, ngModel) {
+        ngModel.$parsers.push(function (val) {
+          return val ? parseInt(val, 10) : null;
+        });
+        ngModel.$formatters.push(function (val) {
+          return val ? '' + val : null;
+        });
+      }
+    };
+  })
+  //权限控制
+  .factory('permissions', function ($rootScope) {
+    return {
+      hasPermission: function (permission) {
+        if (permission) {
+          if (typeof(permission) == "string") {
+            if (config.permissionList.indexOf(permission) > -1) {
+              return true;
+            }
+          }
+        }
+        return false;
+      }
+    };
+  })
   // 定义一个 Service ，稍等将会把它作为 Interceptors 的处理函数
   .factory('HttpInterceptor', ['$q', '$rootScope', '$location', '$window', HttpInterceptor])
   // 添加对应的 Interceptors
@@ -102,6 +143,11 @@ export default angular.module('Common', [
     $httpProvider.interceptors.push(HttpInterceptor);
   }])
   .filter('yesNo', function () {
+    return function (input) {
+      return input ? '是' : '否';
+    }
+  })
+  .filter('isDeleted', function () {
     return function (input) {
       return input ? '是' : '否';
     }
@@ -202,96 +248,105 @@ export default angular.module('Common', [
       }
     }
   })
-  .filter('isAttr',function () {
-      return function (input) {
-          switch (input){
-              case 0:
-                return '叶子节点';
-                break;
-              case 1:
-                return '非叶子节点';
-                break;
-          }
+  .filter('isAttr', function () {
+    return function (input) {
+      switch (input) {
+        case 0:
+          return '叶子节点';
+          break;
+        case 1:
+          return '非叶子节点';
+          break;
       }
+    }
   })
-  .filter('checkStatus',function(){
-      return function (input) {
-          switch (input) {
-              case 0:
-                  return '审核中';
-                  break;
-              case 1:
-                  return '已通过';
-                  break;
-              case 2:
-                  return '未通过';
-                  break;
-          }
+  .filter('checkStatus', function () {
+    return function (input) {
+      switch (input) {
+        case 0:
+          return '审核中';
+          break;
+        case 1:
+          return '已通过';
+          break;
+        case 2:
+          return '未通过';
+          break;
       }
+    }
   })
-  .filter('shelvesStatus',function(){
-      return function (input) {
-          switch (input) {
-              case 0:
-                  return '停用';
-                  break;
-              case 1:
-                  return '启用';
-                  break;
-              case 2:
-                  return '审核中';
-                  break;
-          }
+  .filter('shelvesStatus', function () {
+    return function (input) {
+      switch (input) {
+        case 0:
+          return '停用';
+          break;
+        case 1:
+          return '启用';
+          break;
+        case 2:
+          return '审核中';
+          break;
       }
+    }
   })
-  .filter('goodsFormat',function(){
-      return function (input) {
-          switch (input) {
-              case 0:
-                  return '次';
-                  break;
-              case 1:
-                  return '天';
-                  break;
-              case 2:
-                  return '年';
-                  break;
-          }
+  .filter('goodsFormat', function () {
+    return function (input) {
+      switch (input) {
+        case 0:
+          return '次';
+          break;
+        case 1:
+          return '天';
+          break;
+        case 2:
+          return '年';
+          break;
       }
+    }
   })
-  .filter('isOnsale',function(){
-      return function (input) {
-          switch (input) {
-              case 0:
-                  return '已下架';
-                  break;
-              case 1:
-                  return '已上架';
-                  break;
-              case 2:
-                  return '强制下架';
-                  break;
-          }
+  .filter('isOnsale', function () {
+    return function (input) {
+      switch (input) {
+        case 0:
+          return '已下架';
+          break;
+        case 1:
+          return '已上架';
+          break;
+        case 2:
+          return '强制下架';
+          break;
       }
+    }
   })
-  .filter('trustHtml', function($sce){
-      return function (input) {
-          return $sce.trustAsHtml(input);
-      }
+  .filter('trustHtml', function ($sce) {
+    return function (input) {
+      return $sce.trustAsHtml(input);
+    }
   })
   .controller("MainController", MainController)
-  .run(function ($rootScope) {
+  .run(function ($rootScope, $window, $location, $state, permissions) {
     // console.log("common init..");
     $rootScope.user = config.user;
     $rootScope.url = config.url;
     $rootScope.site = config.site;
+    $rootScope.permissionArray = config.permissionArray;
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+      var permission = toState.permission;
+      if (!permissions.hasPermission(permission)) {
+        // event.preventDefault();
+        // $state.transitionTo("home");
+        // $window.location.href = "/home";
+        // var dialogModal = $rootScope.openErrorDialogModal("您没有权限使用该功能，需要开通请联系管理员！！！");
+      }
+    });
   });
 function HttpInterceptor($q, $rootScope, $location, $window) {
   return {
     request: function (config) {
       $rootScope.startSpin();
       config.requestTimestamp = new Date().getTime();
-
       return config;
     },
     requestError: function (err) {

@@ -1,0 +1,120 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="console-title console-title-border clearfix">
+      <div class="pull-left"><h5>新增角色</h5></div>
+      <div class="pull-right">
+        <!--<button class="btn btn-default" ui-sref="account.search" data-ng-click="refresh()"><span-->
+          <!--class="glyphicon glyphicon-refresh"></span> 返回-->
+        <!--</button>-->
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <form class="form-horizontal" role="form" id="roleForm" name="roleForm" novalidate>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="roleName">角色名<span class="must">*</span></label>
+        <div class="col-sm-4">
+          <input type="text" id="roleId" name="roleId" ng-model="item.roleId" hidden>
+          <input type="text" id="roleName" name="roleName" class="form-control" ng-model="item.roleName" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="roleExplain">说明<span class="must">*</span></label>
+        <div class="col-sm-4">
+            <textarea id="roleExplain" name="roleExplain" class="form-control" ng-model="item.roleExplain" required>
+            </textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-2">
+          <input type="checkbox" ng-click="selectAll()">全选
+        </div>
+        <div class="col-sm-10">
+          <div class="col-sm-2"><input name="permissions" type="checkbox" value="home" ng-checked="isSelected('home')">后台首页</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-2">商品管理</div>
+        <div class="col-sm-10">
+          <div class="col-sm-2"><input id="items_search" name="permissions" type="checkbox" value="items_search" ng-checked="isSelected('items_search')">商品查询</div>
+          <div class="col-sm-2"><input id="items_check" name="permissions" type="checkbox" value="items_check" ng-checked="isSelected('items_check')">待审核资源</div>
+          <div class="col-sm-2"><input id="items_checkedList" name="permissions" type="checkbox" value="items_checkedList" ng-checked="isSelected('items_checkedList')">已审核资源</div>
+          <div class="col-sm-2"><input id="shelf_search" name="permissions" type="checkbox" value="shelf_search" ng-checked="isSelected('shelf_search')">货架查询</div>
+          <div class="col-sm-2"><input id="shelf_add" name="permissions" type="checkbox" value="shelf_add" ng-checked="isSelected('shelf_add')">新增货架</div>
+          <div class="col-sm-2"><input id="category_search" name="permissions" type="checkbox" value="category_search" ng-checked="isSelected('category_search')">分类查询</div>
+          <div class="col-sm-2"><input id="category_add" name="permissions" type="checkbox" value="category_add" ng-checked="isSelected('category_add')">添加分类</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-2">ES管理</div>
+        <div class="col-sm-10">
+          <div class="col-sm-2"><input id="elastic_search" name="permissions" type="checkbox" value="elastic_search" ng-checked="isSelected('elastic_search')">索引删除</div>
+          <div class="col-sm-2"><input id="elastic_add" name="permissions" type="checkbox" value="elastic_add" ng-checked="isSelected('elastic_add')">索引重建</div>
+          <div class="col-sm-2"><input id="elastic_delGoods" name="permissions" type="checkbox" value="elastic_delGoods" ng-checked="isSelected('elastic_delGoods')">商品删除</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-2">订单管理</div>
+        <div class="col-sm-10">
+          <div class="col-sm-2"><input id="order_search" name="permissions" type="checkbox" value="order_search" ng-checked="isSelected('order_search')">订单查询</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-2">用户中心</div>
+        <div class="col-sm-10">
+          <div class="col-sm-2"><input id="user_search" name="permissions" type="checkbox" value="user_search" ng-checked="isSelected('user_search')">用户查询</div>
+          <div class="col-sm-2"><input id="user_verify_all" name="permissions" type="checkbox" value="user_verify_all" ng-checked="isSelected('user_verify_all')">待审核</div>
+          <div class="col-sm-2"><input id="user_verify_resultAll" name="permissions" type="checkbox" value="user_verify_resultAll" ng-checked="isSelected('user_verify_resultAll')">审核记录</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-2">广告中心</div>
+        <div class="col-sm-10">
+          <div class="col-sm-2"><input id="advert_carousel" name="permissions" type="checkbox" value="advert_carousel" ng-checked="isSelected('advert_carousel')">轮播分组查询</div>
+          <div class="col-sm-2"><input id="advert_add" name="permissions" type="checkbox" value="advert_add" ng-checked="isSelected('advert_add')">新建轮播分组</div>
+          <div class="col-sm-2"><input id="cooperation_search" name="permissions" type="checkbox" value="cooperation_search" ng-checked="isSelected('cooperation_search')">合作机构查询</div>
+          <div class="col-sm-2"><input id="cooperation_add" name="permissions" type="checkbox" value="cooperation_add" ng-checked="isSelected('cooperation_add')">新增合作机构</div>
+          <div class="col-sm-2"><input id="sysnotice_search" name="permissions" type="checkbox" value="sysnotice_search" ng-checked="isSelected('sysnotice_search')">公告查询</div>
+          <div class="col-sm-2"><input id="sysnotice_add" name="permissions" type="checkbox" value="sysnotice_add" ng-checked="isSelected('sysnotice_add')">发布公告</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-2">帮助中心</div>
+        <div class="col-sm-10">
+          <div class="col-sm-2"><input id="help_search" name="permissions" type="checkbox" value="help_search" ng-checked="isSelected('help_search')">帮助查询</div>
+          <div class="col-sm-2"><input id="help_category_search" name="permissions" type="checkbox" value="help_category_search" ng-checked="isSelected('help_category_search')">分类查询</div>
+          <div class="col-sm-2"><input id="help_category_add" name="permissions" type="checkbox" value="help_category_add" ng-checked="isSelected('help_category_add')">新增一级分类</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-2">系统账号管理</div>
+        <div class="col-sm-10">
+          <div class="col-sm-2"><input id="account_search" name="permissions" type="checkbox" value="account_search" ng-checked="isSelected('account_search')">账号查询</div>
+          <div class="col-sm-2"><input id="account_add" name="permissions" type="checkbox" value="account_add" ng-checked="isSelected('account_add')">新增账号</div>
+          <div class="col-sm-2"><input id="account_role_search" name="permissions" type="checkbox" value="account_role_search" ng-checked="isSelected('account_role_search')">角色查询</div>
+          <div class="col-sm-2"><input id="account_role_add" name="permissions" type="checkbox" value="account_role_add" ng-checked="isSelected('account_role_add')">角色新增</div>
+          <div class="col-sm-2"><input id="account_role_edit" name="permissions" type="checkbox" value="account_role_edit" ng-checked="isSelected('account_role_edit')">角色修改</div>
+          <div class="col-sm-2"><input id="account_permission_search" name="permissions" type="checkbox" value="account_permission_search" ng-checked="isSelected('account_permission_search')">权限查询</div>
+          <div class="col-sm-2"><input id="account_permission_add" name="permissions" type="checkbox" value="account_permission_add" ng-checked="isSelected('account_permission_add')">新增权限</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-2">系统设置</div>
+        <div class="col-sm-10">
+          <div class="col-sm-2"><input name="permissions" type="checkbox" value="sys_region_search" ng-checked="isSelected('sys_region_search')">地域管理</div>
+          <div class="col-sm-2"><input name="permissions" type="checkbox" value="sys_industry_search" ng-checked="isSelected('sys_industry_search')">行业管理</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-4">
+          <button class="btn btn-primary" data-ng-click="save()" ng-disabled="roleForm.$pristine || roleForm.$invalid">
+            <span class="glyphicon glyphicon-refresh"></span> 保存
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

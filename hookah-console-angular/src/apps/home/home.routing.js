@@ -7,11 +7,7 @@ export default function homeRouting($stateProvider, $urlRouterProvider) {
       url: '/home',
       // abstract: true,
       template: require('./home.html'),
-      // controller: function ($scope, $rootScope) {
-      //   $rootScope.config.productNavBar = 'disabled';
-      //   $rootScope.config.sidebar = 'full';
-      //   console.log("home page...");
-      // }
-      controller:HomeController
+      controller:HomeController,
+      permission:'home'
     });
 };
