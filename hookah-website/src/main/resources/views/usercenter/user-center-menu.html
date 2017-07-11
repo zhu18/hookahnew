@@ -103,7 +103,7 @@
             var href = $(this).children('a').attr('href');
             if (url.indexOf(href) >= 0) {
                 $(this).addClass('active').siblings().removeClass("active");
-                $(this).siblings().addClass('item-active')
+                $(this).siblings().addClass('item-active');
                 $(this).parent().siblings().addClass('active')
             }
 
@@ -116,12 +116,8 @@
                 $(this).siblings().hide()
             }else {
                 $(this).siblings().show()
-                $(this).siblings().find("li")
             }
         });
-//        $('.one-level-menu ul li').on("click",function () {
-//            $(this).addClass('active').siblings().removeClass('active')
-//        })
       /*  if(url == '/admin/articleManage' || url == '/admin/articlePublish' || url == '/admin/articleModify'){
             $('.adminS ul li:first-child').addClass('active').children('a').css("color","#247DE8").siblings().removeClass("active");
         }else if(url == '/usercenter/trade'){
