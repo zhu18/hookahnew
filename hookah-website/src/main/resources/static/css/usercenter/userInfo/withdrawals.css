@@ -1,0 +1,24 @@
+.fundmanage-box .withdrawals{
+    margin: 12px 0 256px 0px;
+    height: 392px;
+    border: 1px solid #E5E5E5;
+}
+.fundmanage-box .withdrawals .withdrawals-content{
+    padding-left: 254px;
+    margin-top: 32px;
+}
+
+.fundmanage-box .withdrawals .withdrawals-content li label{
+    text-align: right;
+    display: inline-block;
+    width: 112px;
+    height: 32px;
+}
+.fundmanage-box .withdrawals .withdrawals-content .apply-money{
+
+}
+.fundmanage-box .withdrawals .withdrawals-content .apply-money input{
+    width: 107px;
+    height: 30px;
+    border: 1px solid #E5E5E5;
+}

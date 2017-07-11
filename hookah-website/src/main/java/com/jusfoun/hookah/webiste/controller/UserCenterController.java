@@ -92,6 +92,12 @@ public class UserCenterController {
         model.addAttribute("userCur",user);
         return "usercenter/userInfo/fundmanage";
     }
+
+    //     绑定银行卡
+    @RequestMapping(value = "/bindBankCard", method = RequestMethod.GET)
+    public String bindBankCard() {
+        return "/usercenter/userInfo/bindBankCard";
+    }
     //     充值页面第一步
     @RequestMapping(value = "/recharge", method = RequestMethod.GET)
     public String recharge() {
