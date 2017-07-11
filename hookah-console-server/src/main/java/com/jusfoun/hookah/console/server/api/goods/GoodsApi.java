@@ -8,6 +8,7 @@ import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.domain.Goods;
+import com.jusfoun.hookah.core.domain.MessageCode;
 import com.jusfoun.hookah.core.domain.Organization;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
@@ -325,7 +326,13 @@ public class GoodsApi extends BaseController{
 
             //消息 es
             if(n > 0) {
+                //从ES删除商品
                 mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_GOODS_ID, goodsId);
+                //发送消息，下发短信/站内信/邮件
+                MessageCode messageCode = new MessageCode();
+                messageCode.setCode(HookahConstants.MESSAGE_503);
+                messageCode.setBusinessId(goodsId);
+                mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_NEW_MESSAGE, messageCode);
             }
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);

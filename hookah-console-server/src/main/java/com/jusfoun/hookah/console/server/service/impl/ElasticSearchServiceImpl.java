@@ -29,6 +29,8 @@ import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.client.transport.TransportClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.ConversionFailedException;
+import org.springframework.core.convert.ConverterNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -148,29 +150,32 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
                     DateUtils.DEFAULT_DATE_TIME_FORMAT), DateUtils.DEFAULT_DATE_TIME_FORMAT));
         }
         //查询mongo中的数据
-        MgGoods mgGoods = mgGoodsService.selectById(goods.getGoodsId());
-        goods.setSuggest(goods.getGoodsName());
-        //获取商品属性
-        if(mgGoods != null) {
-            List<MgCategoryAttrType.AttrTypeBean> list1 = mgGoods.getAttrTypeList();
-            StringBuffer attrType = new StringBuffer();
-            StringBuffer attr = new StringBuffer();
-            for(MgCategoryAttrType.AttrTypeBean bean : list1) {
-                attrType.append(bean.getTypeId()).append(" ");
+        try {
+            MgGoods mgGoods = mgGoodsService.selectById(goods.getGoodsId());
+            goods.setSuggest(goods.getGoodsName());
+            //获取商品属性
+            if(mgGoods != null) {
+                List<MgCategoryAttrType.AttrTypeBean> list1 = mgGoods.getAttrTypeList();
+                StringBuffer attrType = new StringBuffer();
+                StringBuffer attr = new StringBuffer();
+                for(MgCategoryAttrType.AttrTypeBean bean : list1) {
+                    attrType.append(bean.getTypeId()).append(" ");
 
-                if(bean.getAttrList() != null) {
-                    for (MgCategoryAttrType.AttrTypeBean.AttrBean attrBean : bean.getAttrList()) {
-                        attr.append(attrBean.getAttrId()).append(" ");
+                    if(bean.getAttrList() != null) {
+                        for (MgCategoryAttrType.AttrTypeBean.AttrBean attrBean : bean.getAttrList()) {
+                            attr.append(attrBean.getAttrId()).append(" ");
+                        }
+                    }else {
+                        attrType = new StringBuffer();
                     }
-                }else {
-                    attrType = new StringBuffer();
+                }
+                if(!"".equals(attrType.toString()) && !"".equals(attr.toString())) {
+                    goods.setAttrTypeId(attrType.toString().split(" "));
+                    goods.setAttrId(attr.toString().split(" "));
+                    goods.setAttrIds(attrType.toString() + attr.toString());
                 }
             }
-            if(!"".equals(attrType.toString()) && !"".equals(attr.toString())) {
-                goods.setAttrTypeId(attrType.toString().split(" "));
-                goods.setAttrId(attr.toString().split(" "));
-                goods.setAttrIds(attrType.toString() + attr.toString());
-            }
+        }catch (ConverterNotFoundException | ConversionFailedException e) {
         }
         return AnnotationUtil.convert2Map(goods);
     }

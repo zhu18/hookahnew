@@ -92,6 +92,21 @@ public class HookahConstants {
     public static final String SPACE_SIGN = "&nbsp;&nbsp;";
     public static final Integer ES_SIZE_BIGGER = 99999;
 
+    /** 消息编号 */
+    public static final Integer MESSAGE_201 = 201;//单位认证通过
+    public static final Integer MESSAGE_202 = 202;//单位认证不通过
+    public static final Integer MESSAGE_301 = 301;//银行卡签约绑定申请时，验证预留手机号码
+    public static final Integer MESSAGE_302 = 302;//银行卡签约绑定成功后，通知用户
+    public static final Integer MESSAGE_303 = 303;//银行卡签约绑定失败后，通知用户
+    public static final Integer MESSAGE_401 = 401;//供应商审核通过
+    public static final Integer MESSAGE_402 = 402;//供应商审核未通过
+    public static final Integer MESSAGE_501 = 501;//商品上架审核通过
+    public static final Integer MESSAGE_502 = 502;//商品上架审核不通过
+    public static final Integer MESSAGE_503 = 503;//商品强制下架
+    public static final Integer MESSAGE_601 = 601;//充值成功
+    public static final Integer MESSAGE_602 = 602;//充值失败
+    public static final Integer MESSAGE_603 = 603;//支付成功
+    public static final Integer MESSAGE_604 = 604;//支付失败
 
     public enum AnalyzeOpt {
         ANALYZED("analyzed"),

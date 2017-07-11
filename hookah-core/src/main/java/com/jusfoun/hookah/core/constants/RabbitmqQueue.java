@@ -19,4 +19,7 @@ public interface RabbitmqQueue {
 
     /**  */
     public final String CONTRACE_GOODS_ID ="CONTRACT_GOODS_ID";
+
+    /** 新站内信-wangjl */
+    public final String CONTRACE_NEW_MESSAGE ="CONTRACE_NEW_MESSAGE";
 }

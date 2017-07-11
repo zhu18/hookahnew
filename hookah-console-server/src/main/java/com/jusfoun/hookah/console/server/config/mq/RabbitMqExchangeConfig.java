@@ -73,6 +73,12 @@ public class RabbitMqExchangeConfig {
     }
 
 
+    @Bean
+    Queue queueNewMessage(RabbitAdmin rabbitAdmin) {
+        Queue queue = new Queue(RabbitmqQueue.CONTRACE_NEW_MESSAGE, true);
+        rabbitAdmin.declareQueue(queue);
+        return queue;
+    }
 
     /*************   开始  将 queue 绑定到 指定交换机   *******************/
 
@@ -122,6 +128,13 @@ public class RabbitMqExchangeConfig {
     @Bean
     Binding bindingExchangeGoodsId(Queue queueGoodsId, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
         Binding binding = BindingBuilder.bind(queueGoodsId).to(exchange).with(RabbitmqQueue.CONTRACE_GOODS_ID);
+        rabbitAdmin.declareBinding(binding);
+        return binding;
+    }
+
+    @Bean
+    Binding bindingExchangeNewMessage(Queue queueNewMessage, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueNewMessage).to(exchange).with(RabbitmqQueue.CONTRACE_NEW_MESSAGE);
         rabbitAdmin.declareBinding(binding);
         return binding;
     }

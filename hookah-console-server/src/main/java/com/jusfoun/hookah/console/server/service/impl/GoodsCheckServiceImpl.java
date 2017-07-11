@@ -5,6 +5,7 @@ import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.dao.GoodsCheckMapper;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.GoodsCheck;
+import com.jusfoun.hookah.core.domain.MessageCode;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
@@ -51,17 +52,26 @@ public class GoodsCheckServiceImpl extends GenericServiceImpl<GoodsCheck, String
 
         Goods goods = new Goods();
         goods.setGoodsId(goodsCheck.getGoodsId());
+        MessageCode messageCode = new MessageCode();
+        messageCode.setBusinessId(goodsCheck.getId());
         if(goodsCheck.getCheckStatus() == 1){
             goods.setCheckStatus(Byte.parseByte(HookahConstants.CheckStatus.audit_success.getCode()));
             goodsService.updateByIdSelective(goods);
+            messageCode.setCode(HookahConstants.MESSAGE_501);
             try {
+                //添加商品到ES
                 mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_GOODS_ID, goodsCheck.getGoodsId());
+                //发送消息，下发短信/站内信/邮件
+                mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_NEW_MESSAGE, messageCode);
             }catch (Exception e){
                 logger.error("审核处理消息队列发送失败：" + e.getMessage());
             }
         }else if(goodsCheck.getCheckStatus() == 2){
             goods.setCheckStatus(Byte.parseByte(HookahConstants.CheckStatus.audit_fail.getCode()));
             goodsService.updateByIdSelective(goods);
+            //发送消息，下发短信/站内信/邮件
+            messageCode.setCode(HookahConstants.MESSAGE_502);
+            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_NEW_MESSAGE, messageCode);
         }
     }
 
