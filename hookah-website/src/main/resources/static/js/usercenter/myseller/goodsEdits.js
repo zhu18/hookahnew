@@ -38,9 +38,91 @@ $(document).ready(function(){
 		}
 		ajaxUrl = host.website+'/goods/back/update';
 	}
-
 });
 //商品添加-------------------------------↓↓↓↓↓↓↓↓↓↓↓↓↓
+//初始化商品类型
+function initializeGoodsType(){
+	var startGoodsVal = null;
+	if(catId.substring(0,3) == 101){
+		$('#parentSelect').val(100).attr('disabled','disabled');
+		startGoodsVal = 100;
+	}else if(catId.substring(0,3) == 102){
+		$('#parentSelect').val(2).attr('disabled','disabled');
+		startGoodsVal = 2;
+	}else if(catId.substring(0,3) == 104){
+		$('#parentSelect').val(300).attr('disabled','disabled');
+		startGoodsVal = 300;
+	}else{
+		$('#parentSelect').val(400).attr('disabled','disabled');
+		startGoodsVal = 400;
+	}
+	initializeGoodsTypeEnd(startGoodsVal,null)
+}
+function initializeGoodsTypeEnd(goodsTypeVal,endTypeVal){
+	$('.edit-all').hide();
+	$('.struct.selects').hide();
+	$('.offline-isShow').hide();
+	if(goodsTypeVal == 100){
+		$('#childrenSelect1').show();
+		endTypeVal = $('#childrenSelect1');
+		if($(endTypeVal).val() == 0){
+			$('.goodsDesc-box').show(); //商品描述
+			$('.goodsAdvantage-box').show();//商品优势
+			$('.afterSaleService-box').show();//售后服务
+			$('.dataSample-info-box').show(); //数据样例
+			$('.isOffLine-select-box').show(); //交付方式
+			$('.offline-isOnLine-box').show(); //数据来源
+		}else if($(endTypeVal).val() == 1){
+			$('.goodsDesc-box').show(); //商品描述
+			$('.goodsAdvantage-box').show();//商品优势
+			$('.afterSaleService-box').show();//售后服务
+			$('.dataSample-info-box').show(); //数据样例
+			$('.appCase-box').show(); //应用案例
+			$('.api-info-box').show();
+		}
+	}else if(goodsTypeVal == 300){
+		$('#childrenSelect2').show();
+		endTypeVal = $('#childrenSelect2');
+		if($(endTypeVal).val() == 6){
+			$('.afterSaleService-box').show();//售后服务
+			$('.isOffLine-select-box').show(); //交付方式
+			$('.appCase-box').show(); //应用案例
+			$('.app-info-box').show(); //
+			$('.downloadAddress-isOnLine-box').show(); //下载地址
+		}else if($(endTypeVal).val() == 7){
+			$('.afterSaleService-box').show();//售后服务
+			$('.isOffLine-select-box').show(); //交付方式
+			$('.appCase-box').show(); //应用案例
+			$('.app-info-box').show(); //
+			$('.app-info-box .app-saas-info').hide(); //技术优势
+			$('.downloadAddress-isOnLine-box').show(); //下载地址
+		}
+	}else if(goodsTypeVal == 400){
+		$('#childrenSelect3').show();
+		endTypeVal = $('#childrenSelect3');
+		if($(endTypeVal).val() == 4){
+			$('.afterSaleService-box').show();//售后服务
+			$('.isOffLine-select-box').show(); //交付方式
+			$('.appCase-box').show(); //应用案例
+			$('.tool-info-box').show(); //
+			$('.visitOnline-isOnLine-box').show(); //下载地址
+		}else if($(endTypeVal).val() == 5){
+			$('.afterSaleService-box').show();//售后服务
+			$('.isOffLine-select-box').show(); //交付方式
+			$('.appCase-box').show(); //应用案例
+			$('.tool-info-box').show(); //
+			$('.tool-info-box .app-saas-info').hide(); //技术优势
+			$('.visitOnline-isOnLine-box').show(); //下载地址
+		}
+	}else{
+		$('.goodsDesc-box').show(); //商品描述
+		$('.goodsAdvantage-box').show();//商品优势
+		$('.dataModel-info-box').show();//
+		$('.afterSaleService-box').show();//售后服务
+		$('.isOffLine-select-box').show(); //交付方式
+		$('.dataModel-isOnLine-box').show(); //交付方式
+	}
+}//初始化商品类型
 function goodsEditFn(){
 	$('.select-box.display-inline-block').text(category);//渲染分类
 	loadRegion('province', regionParam); //加载地区
@@ -56,8 +138,7 @@ function goodsEditFn(){
 	$('#preview-div').mouseout(function(){
 		$('#replace-btn').hide()
 	});
-	selectGoodsTypes(goodsTypeVal);
-	selectGoodsTypeFn();
+	initializeGoodsType(null);
 	$("input[name='typeId']").val(catId.substring(0,3));
 	var start = {
 		format: "YYYY-MM-DD hh:mm:ss",
@@ -77,100 +158,47 @@ function goodsEditFn(){
 	$.jeDate("#offLine_startDate", start);
 	$.jeDate("#offLine_endDate", end);
 }
-function selectGoodsTypeFn(){ //选择商品类型
-	$('.goodsDesc-box').hide(); //商品描述
-	$('.goodsAdvantage-box').hide(); //商品优势
-	$('.afterSaleService-box').hide(); //售后服务
-	$('.dataSample-info-box').hide();//数据样例
-	$('.appCase-box').hide();//应用案例
-	$('.struct.selects').hide();
-	$('.childrenSelect').hide();
-	$('.file-info-box').hide();
-	if(catId.substring(0,3) == 101){
-		$('#parentSelect').val(100).attr('disabled','disabled');
-		selectGoodsTypes(100)
-	}else if(catId.substring(0,3) == 102){
-		$('#parentSelect').val(2).attr('disabled','disabled');
-		selectGoodsTypes(2)
-	}else if(catId.substring(0,3) == 104){
-		$('#parentSelect').val(300).attr('disabled','disabled');
-		selectGoodsTypes(300)
-	}else{
-		$('#parentSelect').val(400).attr('disabled','disabled');
-		selectGoodsTypes(400)
-	}
-}
-function selectGoodsType(that){
-	$('.struct.selects').hide();
-	$('.childrenSelect').hide();
-	$('.file-info-box').hide();
-	var goodsTypeVal = $(that).val();
-	selectGoodsTypes(goodsTypeVal)
-}
 function childrenSelects(that){
-	$('.file-info-box').hide();
-	$('.struct.selects').hide();
-	$('#isOffline').val('0');
-	var childVal = $(that).val();
-	if(childVal == 0){
-		$('.file-info-box').show();
-	}else if(childVal == 1){
-		$('.api-info-box').show();
-		$('.appCase-box').show();//应用案例
-	}else if(childVal == 4){
-		$('.tool-info-box').show();
-		$('.tool-saas-info').show();
-	}else if(childVal == 5){
-		$('.tool-info-box').show();
-		$('.tool-saas-info').hide();
-	}else if(childVal == 6){
-		$('.app-info-box').show();
-		$('.app-saas-info').show();
-	}else if(childVal == 7){
-		$('.app-info-box').show();
-		$('.app-saas-info').hide();
-	}
+	initializeGoodsType($('#parentSelect').val(),that);
 }
 function selectLineInfo(that){
 	var isOffLineVal = $(that).val();
 	var p_val = $('.parentSelect').val();
 	var c_val = null;
-	console.log(c_val)
 	if(isOffLineVal == 1){
-		$('.struct.selects').hide();
+		$('.offline-isShow').hide();
 		$('.isOffLine-info-box').show();
+		$('.isOnLine-info-box').hide();
 	}else{
-		$('.struct.selects').hide();
+		$('.isOnLine-info-box').show();
+		$('.isOffLine-info-box').hide();
+		$('.offline-isShow').hide();
 		if(p_val == 100){
 			c_val = $('#childrenSelect1').val();
 			if(c_val == 0){
-				$('.file-info-box').show()
-			}else{
-				$('.api-info-box').show()
+				$('.offline-isOnLine-box').show()
 			}
 		}else if(p_val == 300){
 			c_val = $('#childrenSelect2').val();
 			if(c_val == 6){
-				$('.app-info-box').show();
-				$('.app-saas-info').show();
+				$('.downloadAddress-isOnLine-box').show(); //下载地址
 			}else if(c_val == 7){
-				$('.app-info-box').show();
-				$('.app-saas-info').hide();
+				$('.downloadAddress-isOnLine-box').show(); //下载地址
 			}
 		}else if(p_val == 400){
 			c_val = $('#childrenSelect3').val();
 			if(c_val == 4){
-				$('.tool-info-box').show();
-				$('.tool-saas-info').show();
+				$('.visitOnline-isOnLine-box').show(); //在线访问地址
 			}else if(c_val == 5){
-				$('.tool-info-box').show();
-				$('.tool-saas-info').hide();
+				$('.visitOnline-isOnLine-box').show(); //在线访问地址
 			}
 		}else if(p_val == 2){
-			$('.dataModel-info-box').show()
+			$('.dataModel-isOnLine-box').show()
 		}
+		console.log('p_val==:'+p_val+'----c_val==:'+c_val)
 	}
-}
+
+} //选择交付方式
 function selector_offLine_fn(that){
 	$('.selector_offLine').hide();
 	var vals = $(that).val();
@@ -179,51 +207,7 @@ function selector_offLine_fn(that){
 	}else{
 		$('.selector_offLine_input').show();
 	}
-}
-function selectGoodsTypes(goodsTypeVal){
-	if(goodsTypeVal == 100){
-		$('.dataSample-info-box').show();//数据样例
-		$('#childrenSelect1').show();
-		if($('#childrenSelect1').val() == 0){
-			$('.file-info-box').show();
-			$('.goodsDesc-box').show(); //商品描述
-			$('.goodsAdvantage-box').show(); //商品优势
-			$('.afterSaleService-box').show(); //售后服务
-		}else if($('#childrenSelect1').val() == 1){
-			$('.api-info-box').show();
-			$('.goodsDesc-box').show(); //商品描述
-			$('.goodsAdvantage-box').show(); //商品优势
-			$('.afterSaleService-box').show(); //售后服务
-			$('.appCase-box').show();//应用案例
-		}
-	}else if(goodsTypeVal == 300){
-		$('#childrenSelect2').show();
-		$('.app-info-box').show();
-		$('.afterSaleService-box').show(); //售后服务
-		$('.appCase-box').show(); //应用案例
-		if($('#childrenSelect2').val() == 6){
-			$('.app-saas-info').show();
-		}else if($('#childrenSelect2').val() == 7){
-			$('.app-saas-info').hide();
-		}
-	}else if(goodsTypeVal == 400){
-		$('#childrenSelect3').show();
-		$('.tool-info-box').show();
-		$('.afterSaleService-box').show(); //售后服务
-		$('.appCase-box').show(); //应用案例
-		if($('#childrenSelect3').val() == 4){
-			$('.tool-info-box').show();
-		}else if($('#childrenSelect3').val() == 5){
-			$('.tool-saas-info').hide();
-		}
-	}else{
-		$('.dataModel-info-box').show();
-		$('.goodsDesc-box').show(); //商品描述
-		$('.goodsAdvantage-box').show(); //商品优势
-		$('.afterSaleService-box').show(); //售后服务
-		$('.isOffLine-box').hide();
-	}
-}
+}//选择数据来源
 function validataFn(){
 	$("#goodsModifyForm").validate({
 		rules: {
@@ -233,6 +217,9 @@ function validataFn(){
 			},
 			goodsBrief:{
 				required: true,
+				isGoodsBrief:true
+			},
+			trialRange:{
 				isGoodsBrief:true
 			},
 			goodsImg:'required',
@@ -373,7 +360,7 @@ function tablePlus(that) {
 	priceHtml += '<tr class="parent-tr">';
 	priceHtml += '<td class="name-input"><div class="inputbox"><input type="text" datatype="name" placeholder="请输入名称"></div></td>';
 	priceHtml += '<td class="number-input"><div class="inputbox"><input type="number" datatype="number" digits="true" placeholder="请输入规格"></div></td>';
-	priceHtml += '<td><div class="selectbox"><select name="format" ><option value="0">次</option><option value="1">天</option><option value="2">年</option></select></div></td>';
+	priceHtml += '<td><div class="selectbox"><select name="format" ><option value="0">次</option><option value="1">月</option><option value="2">年</option></select></div></td>';
 	priceHtml += '<td class="price-input"><div class="inputbox"><input type="text" class="price-inputs number" datatype="price" placeholder="请输入价格" isPricceData="true"></div></td>';
 	priceHtml += '<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
 	priceHtml += '</tr>';
@@ -389,7 +376,7 @@ function tablePlus(that) {
 	requestHtml += '</tr>';
 	var returnHtml = '';//返回借口
 	returnHtml += '<tr class="parent-tr">';
-	returnHtml += '<td class="errorNum-input"><div class="inputbox"><input type="text" placeholder="请输入错误码" name="fieldName"></div></td>';
+	returnHtml += '<td class="errorNum-input"><div class="inputbox"><input type="text" placeholder="请输入字段" name="fieldName"></div></td>';
 	returnHtml += '<td class="type-input"><div class="selectbox"><select name="fieldType"><option value="String">String</option><option value="int">int</option></select></div></td>';
 	returnHtml += '<td><div class="inputbox"><textarea placeholder="请输入说明" name="describle"></textarea></div></td>';
 	returnHtml += '<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
@@ -446,8 +433,11 @@ function getLength(str){
 $('#J-goodsName').on('input onporpertychange',function () {
 	$('#showcontent').html(getLength($(this).val()));
 });
-$('#J-goodsBrief').on('input onporpertychange',function () {
-	$('#showcontent2').html(getLength($(this).val()));
+$('#goodsBriefes').on('input onporpertychange',function () {
+	$('.showcontentes').html(getLength($(this).val()));
+});
+$('#trialRange').on('input onporpertychange',function () {
+	$('#trialRange_s').html(getLength($(this).val()));
 });
 $.validator.addMethod("isGoodsName", function(value, element) {
 	var len = value.replace(/[\u0391-\uFFE5]/g,"aa").length;
@@ -656,7 +646,7 @@ function submitGoodsPublish(){
 			data.dataModel.configFile.fileAddress = $('input[name="configFile"]').val();
 			data.dataModel.configFile.filePwd = $('input[name="configFilePwd"]').val();
 			data.dataModel.paramFile = {};
-			data.dataModel.paramFile.fileAddress = $('.dataModel-info-box input[name="configParams"]').val();
+			data.dataModel.paramFile.fileAddress = $('.dataModel-isOnLine-box input[name="configParams"]').val();
 			data.dataModel.paramFile.filePwd = $('input[name="configParamsPwd"]').val();
 			data.dataModel.concatInfo = {};
 			data.dataModel.concatInfo.concatName = $('.dataModel_concat input[name="concatName"]').val();
@@ -671,7 +661,7 @@ function submitGoodsPublish(){
 			data.atAloneSoftware.teamAdvantage = $('#textareaCs').val();
 			data.atAloneSoftware.desiredEnvironment = $('#textareaDs').val();
 			data.atAloneSoftware.dataNeeded = $('#textareaEs').val();
-			data.atAloneSoftware.dataAddress = $('.tool-info-box input[name="dataAddress"]').val();
+			data.atAloneSoftware.dataAddress = $('.visitOnline-isOnLine-box input[name="dataAddress"]').val();
 		} else if (data.goodsType == 5) {
 			data.afterSaleService = $('#textarea3').val(); //售后服务
 			data.appCase = $('#textarea4').val(); //应用案例
@@ -680,7 +670,7 @@ function submitGoodsPublish(){
 			data.atSaaS.teamAdvantage = $('#textareaCs').val();
 			data.atSaaS.desiredEnvironment = $('#textareaDs').val();
 			data.atSaaS.dataNeeded = $('#textareaEs').val();
-			data.atSaaS.dataAddress = $('.tool-info-box input[name="dataAddress"]').val();
+			data.atSaaS.dataAddress = $('.visitOnline-isOnLine-box input[name="dataAddress"]').val();
 		} else if (data.goodsType == 6) {
 			data.afterSaleService = $('#textarea3').val(); //售后服务
 			data.appCase = $('#textarea4').val(); //应用案例
@@ -690,7 +680,7 @@ function submitGoodsPublish(){
 			data.asAloneSoftware.teamAdvantage = $('#textareaC').val();
 			data.asAloneSoftware.desiredEnvironment = $('#textareaD').val();
 			data.asAloneSoftware.dataNeeded = $('#textareaE').val();
-			data.asAloneSoftware.dataAddress = $('.app-info-box input[name="dataAddress"]').val();
+			data.asAloneSoftware.dataAddress = $('.downloadAddress-isOnLine-box input[name="dataAddress"]').val();
 		} else if (data.goodsType == 7) {
 			data.afterSaleService = $('#textarea3').val(); //售后服务
 			data.appCase = $('#textarea4').val(); //应用案例
@@ -699,7 +689,7 @@ function submitGoodsPublish(){
 			data.asSaaS.teamAdvantage = $('#textareaC').val();
 			data.asSaaS.desiredEnvironment = $('#textareaD').val();
 			data.asSaaS.dataNeeded = $('#textareaE').val();
-			data.asSaaS.dataAddress = $('.app-info-box input[name="dataAddress"]').val();
+			data.asSaaS.dataAddress = $('.downloadAddress-isOnLine-box input[name="dataAddress"]').val();
 
 		}
 	}else if(data.isOffline == 1){
@@ -804,59 +794,16 @@ function getGoodsDetails(){ //获取商品信息
 		}
 	})
 }
-function loadFirstCategory(catId){ //获取首个分类
-	loadCategoryData($('#firstCategory'),0,catId.substring(0,3));
-	if(catId.substring(0,3)){
-		loadCategoryData($('#twoCategory'),catId.substring(0,3),catId.substring(0,6));
-	}
-	if(catId.substring(0,6)){
-		loadCategoryData($('#lastCategory'),catId.substring(0,6),catId.substring(0,9));
-	}
-}
-function loadLastChild(that){
-	loadCategoryData($('#lastCategory'),$(that).val(),null);
-}
-function selectCatId(that){
-	catId = $(that).val();
-}
-function loadCategoryData(that,pid,currentPid){
-
-	$.ajax({
-		type: "get",
-		url: '/category/findByPId/1',
-		data: {
-			pid:pid
-		},
-		success: function(data){
-			if(data.code == 1){
-				datas = data.data;
-				if(datas.length > 0){
-					for(var i = 0; i < datas.length; i++){
-						if(datas[i].catId == currentPid){
-							categoryHtml += '<option value="'+datas[i].catId+'" selected="selected">'+datas[i].catName+'</option>';
-						}else{
-							categoryHtml += '<option value="'+datas[i].catId+'">'+datas[i].catName+'</option>';
-						}
-					}
-					$(that).show().html(categoryHtml);
-					categoryHtml = '';
-				}
-			}else{
-				$.alert(data.message)
-			}
-		}
-	});
-}
 function renderData(data){//渲染页面
 	catId = data.catId;
 	$('#J-ver').val(data.ver);//版本号
 	$("input[name='typeId']").val(catId.substring(0,3));
 	$('#J-ver').val(data.ver);//版本号
 	$('#J-goodsName').val(data.goodsName);//商品名称
-	$('#J-goodsBrief').val(data.goodsBrief);//简介
+	$('#goodsBriefes').val(data.goodsBrief);//简介
 	$('#keywords').val(data.keywords);//标签
 	$('#showcontent').html(getLength(data.goodsName));//商品名称长度
-	$('#showcontent2').html(getLength(data.goodsBrief));//商品名称长度
+	$('.showcontentes').html(getLength(data.goodsBrief));//商品名称长度
 	$('#trialRange').val(data.trialRange);//使用范围
 	$('select[name="parentSelect"] option').each(function(){
 		if(data.goodsType == 0 || data.goodsType == 1){
@@ -896,7 +843,8 @@ function renderData(data){//渲染页面
 		}
 	});
 	var goodsTypeVal = $('#parentSelect').val();
-	selectGoodsTypes(goodsTypeVal);
+	// selectGoodsTypes(goodsTypeVal);
+	initializeGoodsTypeEnd(goodsTypeVal,null);
 	$('#isOffline').val(data.isOffline);
 	if(data.isOffline == 0) {
 		if (data.goodsType == 0) {
@@ -1023,6 +971,49 @@ function renderData(data){//渲染页面
 	$('.childrenSelect').attr('disabled','disabled');
 	uploadGoodsImg();
 }
+function loadFirstCategory(catId){ //获取首个分类
+	loadCategoryData($('#firstCategory'),0,catId.substring(0,3));
+	if(catId.substring(0,3)){
+		loadCategoryData($('#twoCategory'),catId.substring(0,3),catId.substring(0,6));
+	}
+	if(catId.substring(0,6)){
+		loadCategoryData($('#lastCategory'),catId.substring(0,6),catId.substring(0,9));
+	}
+}
+function loadLastChild(that){
+	loadCategoryData($('#lastCategory'),$(that).val(),null);
+}
+function selectCatId(that){
+	catId = $(that).val();
+}
+function loadCategoryData(that,pid,currentPid){
+
+	$.ajax({
+		type: "get",
+		url: '/category/findByPId/1',
+		data: {
+			pid:pid
+		},
+		success: function(data){
+			if(data.code == 1){
+				datas = data.data;
+				if(datas.length > 0){
+					for(var i = 0; i < datas.length; i++){
+						if(datas[i].catId == currentPid){
+							categoryHtml += '<option value="'+datas[i].catId+'" selected="selected">'+datas[i].catName+'</option>';
+						}else{
+							categoryHtml += '<option value="'+datas[i].catId+'">'+datas[i].catName+'</option>';
+						}
+					}
+					$(that).show().html(categoryHtml);
+					categoryHtml = '';
+				}
+			}else{
+				$.alert(data.message)
+			}
+		}
+	});
+}
 function renderApiInfo(apiInfo){ //渲染API ----- 1
 	$('.api-info-box input[name="apiType"]').each(function(){
 		if($(this).val() == apiInfo.apiType){
@@ -1098,7 +1089,7 @@ function renderApiInfo(apiInfo){ //渲染API ----- 1
 	var resqLen = apiInfo.respParamList.length;
 	$.each(apiInfo.respParamList, function (index,data) {
 		html2 += '<tr class="parent-tr">';
-		html2 += '<td class="errorNum-input"><div class="inputbox"><input type="text" name="fieldName" value="'+data.fieldName+'" placeholder="请输入错误码"></div></td>';
+		html2 += '<td class="errorNum-input"><div class="inputbox"><input type="text" name="fieldName" value="'+data.fieldName+'" placeholder="请输入字段"></div></td>';
 		html2 +='<td class="type-input"><div class="selectbox"><select name="fieldType">';
 		if(data.fieldType){
 			if(data.fieldType == 'String'){
@@ -1163,6 +1154,7 @@ function renderToolInfo(atAloneSoftware){
 	$('.tool-info-box #textareaCs').val(atAloneSoftware.teamAdvantage);
 	$('.tool-info-box #textareaDs').val(atAloneSoftware.desiredEnvironment);
 	$('.tool-info-box #textareaEs').val(atAloneSoftware.dataNeeded);
+
 	$('.tool-info-box input[name="dataAddress"]').val(atAloneSoftware.dataAddress);
 }
 function renderToolSaasInfo(atSaaS){
@@ -1170,7 +1162,7 @@ function renderToolSaasInfo(atSaaS){
 	$('.tool-info-box #textareaBs').val(atSaaS.technologicalSuperiority);
 	$('.tool-info-box #textareaCs').val(atSaaS.teamAdvantage);
 	$('.tool-info-box #textareaDs').val(atSaaS.desiredEnvironment);
-	$('.tool-info-box #textareaEs').val(atSaaS.dataNeeded);
+	$('.tool-info-box #textareaE"]').val(atSaaS.dataNeeded);
 	$('.tool-info-box input[name="dataAddress"]').val(atSaaS.dataAddress);
 }
 function renderAppInfo(asAloneSoftware){
@@ -1204,9 +1196,9 @@ function renderFormatList(formatList){
 			html += '<option value="0">次</option>';
 		}
 		if(data.format == 1){
-			html += '<option value="1" selected="selected">天</option>';
+			html += '<option value="1" selected="selected">月</option>';
 		}else{
-			html += '<option value="1">天</option>';
+			html += '<option value="1">月</option>';
 		}
 		if(data.format == 2){
 			html += '<option value="2" selected="selected">年</option>';
