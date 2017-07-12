@@ -42,6 +42,10 @@ public class PayBankCard extends GenericModel {
 
     private String updateOperator;
 
+    private String openBank;
+
+    private String phoneNumber;
+
     public Integer getId() {
         return id;
     }
@@ -137,4 +141,12 @@ public class PayBankCard extends GenericModel {
     public void setUpdateOperator(String updateOperator) {
         this.updateOperator = updateOperator == null ? null : updateOperator.trim();
     }
+
+    public String getOpenBank() { return openBank; }
+
+    public void setOpenBank(String openBank) { this.openBank = openBank; }
+
+    public String getPhoneNumber() { return phoneNumber; }
+
+    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
 }
