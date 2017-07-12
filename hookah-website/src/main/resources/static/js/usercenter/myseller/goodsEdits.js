@@ -885,8 +885,6 @@ function renderData(data){//渲染页面
 		}
 	});
 	var goodsTypeVal = $('#parentSelect').val();
-	// selectGoodsTypes(goodsTypeVal);
-	initializeGoodsTypeEnd(goodsTypeVal,null);
 	$('#isOffline').val(data.isOffline);
 	if(data.isOffline == 0) {
 		if (data.goodsType == 0) {
@@ -992,8 +990,8 @@ function renderData(data){//渲染页面
 	$('#dataSample').val(data.dataSample);
 	if(data.formatList && data.formatList.length > 0){
 		renderFormatList(data.formatList);//渲染价格
-		renderFormatFn(goodsTypeId)
 	}
+	initializeGoodsTypeEnd(goodsTypeVal,null);
 	renderGoodsDeac(data);
 	$('input[name="isBook"]').each(function(){
 		if($(this).val() == data.isBook){
