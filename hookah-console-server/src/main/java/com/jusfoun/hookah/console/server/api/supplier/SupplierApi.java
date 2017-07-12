@@ -7,11 +7,11 @@ import com.jusfoun.hookah.core.domain.Supplier;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.DateUtils;
-import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.SupplierService;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -39,7 +39,7 @@ public class SupplierApi extends BaseController {
      * @param pageSize
      * @return
      */
-    @RequestMapping("/getListByCondition")
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ReturnData getListInPage(String checkStatus, String contactPhone, String orgName, String startDate,
                                     String endDate, String currentPage, String pageSize){
         Pagination<Supplier> page = new Pagination<>();
@@ -81,9 +81,21 @@ public class SupplierApi extends BaseController {
         return ReturnData.success(page);
     }
 
-    @RequestMapping("updateInfo")
-    public ReturnData updateInfo(){
-
-        return ReturnData.success();
+    @RequestMapping(value = "/updateInfo", method = RequestMethod.POST)
+    public ReturnData updateInfo(String id, String checkContent, Byte checkStatus){
+        try {
+            String checkUser = this.getCurrentUser().getUserId();
+            Supplier supplier = supplierService.selectById(id);
+            if (supplier!=null){
+                supplier.setCheckStatus(checkStatus);
+                supplier.setCheckContent(checkContent.replaceAll(" ",""));
+                supplier.setCheckUser(checkUser);
+            }
+            supplierService.updateByIdSelective(supplier);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ReturnData.error(e.getMessage());
+        }
+        return ReturnData.success("保存成功");
     }
 }

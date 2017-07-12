@@ -9,6 +9,7 @@ var itemNum = 0; //添加规格计数器
 var goodsTypeVal = $('#parentSelect').val();
 var categoryHtml = '';
 var ajaxUrl = null;
+var goodsTypeId = null;
 E.config.uploadImgUrl = host.static+'/upload/wangeditor';//上传图片
 E.config.uploadImgFileName = 'filename';
 E.config.menuFixed = false;//关闭菜单栏fixed
@@ -56,7 +57,7 @@ function initializeGoodsType(){
 		$('#parentSelect').val(400).attr('disabled','disabled');
 		startGoodsVal = 400;
 	}
-	initializeGoodsTypeEnd(startGoodsVal,null)
+	initializeGoodsTypeEnd(startGoodsVal,null);
 }
 function initializeGoodsTypeEnd(goodsTypeVal,endTypeVal){
 	$('.edit-all').hide();
@@ -72,6 +73,7 @@ function initializeGoodsTypeEnd(goodsTypeVal,endTypeVal){
 			$('.dataSample-info-box').show(); //数据样例
 			$('.isOffLine-select-box').show(); //交付方式
 			$('.offline-isOnLine-box').show(); //数据来源
+			goodsTypeId = 0;
 		}else if($(endTypeVal).val() == 1){
 			$('.goodsDesc-box').show(); //商品描述
 			$('.goodsAdvantage-box').show();//商品优势
@@ -79,6 +81,7 @@ function initializeGoodsTypeEnd(goodsTypeVal,endTypeVal){
 			$('.dataSample-info-box').show(); //数据样例
 			$('.appCase-box').show(); //应用案例
 			$('.api-info-box').show();
+			goodsTypeId = 1;
 		}
 	}else if(goodsTypeVal == 300){
 		$('#childrenSelect2').show();
@@ -89,6 +92,7 @@ function initializeGoodsTypeEnd(goodsTypeVal,endTypeVal){
 			$('.appCase-box').show(); //应用案例
 			$('.app-info-box').show(); //
 			$('.downloadAddress-isOnLine-box').show(); //下载地址
+			goodsTypeId = 6;
 		}else if($(endTypeVal).val() == 7){
 			$('.afterSaleService-box').show();//售后服务
 			$('.isOffLine-select-box').show(); //交付方式
@@ -96,6 +100,7 @@ function initializeGoodsTypeEnd(goodsTypeVal,endTypeVal){
 			$('.app-info-box').show(); //
 			$('.app-info-box .app-saas-info').hide(); //技术优势
 			$('.downloadAddress-isOnLine-box').show(); //下载地址
+			goodsTypeId = 7;
 		}
 	}else if(goodsTypeVal == 400){
 		$('#childrenSelect3').show();
@@ -106,6 +111,7 @@ function initializeGoodsTypeEnd(goodsTypeVal,endTypeVal){
 			$('.appCase-box').show(); //应用案例
 			$('.tool-info-box').show(); //
 			$('.visitOnline-isOnLine-box').show(); //下载地址
+			goodsTypeId = 4;
 		}else if($(endTypeVal).val() == 5){
 			$('.afterSaleService-box').show();//售后服务
 			$('.isOffLine-select-box').show(); //交付方式
@@ -113,6 +119,7 @@ function initializeGoodsTypeEnd(goodsTypeVal,endTypeVal){
 			$('.tool-info-box').show(); //
 			$('.tool-info-box .app-saas-info').hide(); //技术优势
 			$('.visitOnline-isOnLine-box').show(); //下载地址
+			goodsTypeId = 5;
 		}
 	}else{
 		$('.goodsDesc-box').show(); //商品描述
@@ -121,8 +128,38 @@ function initializeGoodsTypeEnd(goodsTypeVal,endTypeVal){
 		$('.afterSaleService-box').show();//售后服务
 		$('.isOffLine-select-box').show(); //交付方式
 		$('.dataModel-isOnLine-box').show(); //交付方式
+		goodsTypeId = 2;
 	}
+	renderFormatFn(goodsTypeId)
 }//初始化商品类型
+function renderFormatFn(goodsTypeId){
+	if(goodsTypeId == 0 || goodsTypeId == 2 || goodsTypeId == 4 || goodsTypeId == 6){
+		$('select[name="format"] option').each(function(){
+			if($(this).val() != 3){
+				$(this).attr('disabled','disabled')
+			}
+			if($(this).val() == 3){
+				$(this).attr('selected','selected')
+			}
+
+		})
+	}else if(goodsTypeId == 1){
+		$('select[name="format"] option').each(function() {
+			if ($(this).val() == 3) {
+				$(this).attr('disabled', 'disabled')
+			}
+		})
+	}else if(goodsTypeId == 5 || goodsTypeId == 7){
+		$('select[name="format"] option').each(function() {
+			if ($(this).val() == 0 || $(this).val() == 3) {
+				$(this).attr('disabled', 'disabled')
+			}
+			if ($(this).val() == 1) {
+				$(this).attr('selected', 'selected')
+			}
+		})
+	}
+}
 function goodsEditFn(){
 	$('.select-box.display-inline-block').text(category);//渲染分类
 	loadRegion('province', regionParam); //加载地区
@@ -360,8 +397,10 @@ function tablePlus(that) {
 	priceHtml += '<tr class="parent-tr">';
 	priceHtml += '<td class="name-input"><div class="inputbox"><input type="text" datatype="name" placeholder="请输入名称"></div></td>';
 	priceHtml += '<td class="number-input"><div class="inputbox"><input type="number" datatype="number" digits="true" placeholder="请输入规格"></div></td>';
-	priceHtml += '<td><div class="selectbox"><select name="format" ><option value="0">次</option><option value="1">月</option><option value="2">年</option></select></div></td>';
-	priceHtml += '<td class="price-input"><div class="inputbox"><input type="text" class="price-inputs number" datatype="price" placeholder="请输入价格" isPricceData="true"></div></td>';
+	priceHtml += '<td><div class="selectbox"><select name="format" ><option value="0">次</option><option value="1">月</option><option value="2">年</option><option value="3">套</option></select></div></td>';
+	priceHtml += '<td class="price-input"><div class="inputbox"><input type="text" class="price-inputs number" datatype="settlementPrice" placeholder="请输入结算价" isPricceData="true"></div></td>';
+	priceHtml += '<td class="price-input"><div class="inputbox"><input type="text" class="price-inputs number" datatype="agencyPrice" placeholder="请输入代理价" isPricceData="true"></div></td>';
+	priceHtml += '<td class="price-input"><div class="inputbox"><input type="text" class="price-inputs number" datatype="price" placeholder="请输入零售价" isPricceData="true"></div></td>';
 	priceHtml += '<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
 	priceHtml += '</tr>';
 	var requestHtml = '';//请求接口
@@ -407,6 +446,7 @@ function tablePlus(that) {
 		$(that).text('-').attr('onclick', 'tableDelete(this)');
 	}
 	floorPrice();
+	renderFormatFn(goodsTypeId)
 }
 function floorPrice(){ //监控价格输入为“.”时转换为“0.”
 	$('.price-inputs').on('input onporpertychange',function () {
@@ -532,6 +572,8 @@ function submitGoodsPublish(){
 		listData.formatName = $(this).find('input[datatype="name"]').val();
 		listData.number = $(this).find('input[datatype="number"]').val();
 		listData.format = $(this).find('select[name="format"]').val();
+		listData.settlementPrice = ($(this).find('input[datatype="settlementPrice"]').val()) * 100;
+		listData.agencyPrice = ($(this).find('input[datatype="agencyPrice"]').val()) * 100;
 		listData.price = ($(this).find('input[datatype="price"]').val()) * 100;
 		data.formatList.push(listData);
 	});
@@ -950,6 +992,7 @@ function renderData(data){//渲染页面
 	$('#dataSample').val(data.dataSample);
 	if(data.formatList && data.formatList.length > 0){
 		renderFormatList(data.formatList);//渲染价格
+		renderFormatFn(goodsTypeId)
 	}
 	renderGoodsDeac(data);
 	$('input[name="isBook"]').each(function(){
@@ -1154,20 +1197,19 @@ function renderToolInfo(atAloneSoftware){
 	$('.tool-info-box #textareaCs').val(atAloneSoftware.teamAdvantage);
 	$('.tool-info-box #textareaDs').val(atAloneSoftware.desiredEnvironment);
 	$('.tool-info-box #textareaEs').val(atAloneSoftware.dataNeeded);
-
-	$('.tool-info-box input[name="dataAddress"]').val(atAloneSoftware.dataAddress);
+	$('.visitOnline-isOnLine-box input[name="dataAddress"]').val(atAloneSoftware.dataAddress);
 }
 function renderToolSaasInfo(atSaaS){
 	$('.tool-info-box #textareaAs').val(atSaaS.coreFunction);
 	$('.tool-info-box #textareaBs').val(atSaaS.technologicalSuperiority);
 	$('.tool-info-box #textareaCs').val(atSaaS.teamAdvantage);
 	$('.tool-info-box #textareaDs').val(atSaaS.desiredEnvironment);
-	$('.tool-info-box #textareaE"]').val(atSaaS.dataNeeded);
-	$('.tool-info-box input[name="dataAddress"]').val(atSaaS.dataAddress);
+	$('.tool-info-box #textareaEs').val(atSaaS.dataNeeded);
+	$('.visitOnline-isOnLine-box input[name="dataAddress"]').val(atSaaS.dataAddress);
 }
 function renderAppInfo(asAloneSoftware){
 	console.log(asAloneSoftware.coreFunction);
-	$('.app-info-box input[name="dataAddress"]').val(asAloneSoftware.dataAddress);
+	$('.downloadAddress-isOnLine-box input[name="dataAddress"]').val(asAloneSoftware.dataAddress);
 	$('.app-info-box #textareaA').val(asAloneSoftware.coreFunction);
 	$('.app-info-box #textareaB').val(asAloneSoftware.technologicalSuperiority);
 	$('.app-info-box #textareaC').val(asAloneSoftware.teamAdvantage);
@@ -1175,7 +1217,7 @@ function renderAppInfo(asAloneSoftware){
 	$('.app-info-box #textareaE').val(asAloneSoftware.dataNeeded);
 }
 function renderAppSaasInfo(asSaaS){
-	$('.app-info-box input[name="dataAddress"]').val(asSaaS.dataAddress);
+	$('.downloadAddress-isOnLine-box input[name="dataAddress"]').val(asSaaS.dataAddress);
 	$('.app-info-box #textareaA').val(asSaaS.coreFunction);
 	$('.app-info-box #textareaB').val(asSaaS.technologicalSuperiority);
 	$('.app-info-box #textareaC').val(asSaaS.teamAdvantage);
@@ -1205,8 +1247,15 @@ function renderFormatList(formatList){
 		}else{
 			html += '<option value="2">年</option>';
 		}
+		if(data.format == 3){
+			html += '<option value="3" selected="selected">套</option>';
+		}else{
+			html += '<option value="3">套</option>';
+		}
 		html += '</select></div></td>';
-		html += '<td class="price-input"><div class="inputbox"><input class="price-inputs number " min="0" datatype="price" value="'+data.price / 100+'" type="text" placeholder="请输入价格"></div></td>';
+		html += '<td class="price-input"><div class="inputbox"><input class="price-inputs number " min="0" datatype="settlementPrice" value="'+data.settlementPrice / 100+'" type="text" placeholder="请输入结算价"></div></td>';
+		html += '<td class="price-input"><div class="inputbox"><input class="price-inputs number " min="0" datatype="agencyPrice" value="'+data.agencyPrice / 100+'" type="text" placeholder="请输入代理价"></div></td>';
+		html += '<td class="price-input"><div class="inputbox"><input class="price-inputs number " min="0" datatype="price" value="'+data.price / 100+'" type="text" placeholder="请输入零售价"></div></td>';
 		if(index === len-1){
 			html += '<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
 		}else{
