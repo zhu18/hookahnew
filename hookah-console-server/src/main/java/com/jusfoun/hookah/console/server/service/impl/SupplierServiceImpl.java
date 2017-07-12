@@ -9,9 +9,11 @@ import com.jusfoun.hookah.core.dao.UserMapper;
 import com.jusfoun.hookah.core.domain.Organization;
 import com.jusfoun.hookah.core.domain.Supplier;
 import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.generic.OrderBy;
+import com.jusfoun.hookah.core.utils.FormatCheckUtil;
 import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.rpc.api.SupplierService;
 import org.springframework.stereotype.Service;
@@ -43,13 +45,17 @@ public class SupplierServiceImpl extends GenericServiceImpl<Supplier, String> im
 
     @Override
     @Transactional
-    public void toBeSupplier(String contactName, String contactPhone, String contactAddress, String userId){
+    public void toBeSupplier(String contactName, String contactPhone, String contactAddress, String userId) throws Exception{
         User user = userMapper.selectByPrimaryKey(userId);
         Organization organization = organizationMapper.selectByPrimaryKey(user.getOrgId());
         Supplier supplier = new Supplier();
 
         user.setContactName(contactName);
-        user.setContactPhone(contactPhone);
+        if (contactPhone!=null && !FormatCheckUtil.checkMobile(contactPhone)){
+            throw new HookahException("联系人电话格式不正确");
+        }else {
+            user.setContactPhone(contactPhone);
+        }
         user.setContactAddress(contactAddress);
 
         supplier.setUserId(userId);
@@ -57,6 +63,7 @@ public class SupplierServiceImpl extends GenericServiceImpl<Supplier, String> im
         supplier.setOrgId(organization.getOrgId());
         supplier.setOrgName(organization.getOrgName());
         supplier.setContactPhone(contactPhone);
+        supplier.setCheckStatus(supplier.CHECK_STATUS);
 
         userMapper.updateByPrimaryKey(user);
         supplierMapper.insert(supplier);

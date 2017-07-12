@@ -144,6 +144,7 @@ public class User extends GenericModel {
     private String contactName;
     private String contactPhone;
     private String contactAddress;
+    private Integer postCode;
 
     public Integer getUserType() {
         return userType;
@@ -491,5 +492,13 @@ public class User extends GenericModel {
 
     public void setContactAddress(String contactAddress) {
         this.contactAddress = contactAddress;
+    }
+
+    public Integer getPostCode() {
+        return postCode;
+    }
+
+    public void setPostCode(Integer postCode) {
+        this.postCode = postCode;
     }
 }

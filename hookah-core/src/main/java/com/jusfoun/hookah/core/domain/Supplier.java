@@ -14,7 +14,12 @@ import java.util.Date;
  */
 public class Supplier extends GenericModel {
 
+    public static final Byte CHECK_STATUS = 0;
+    public static final Byte CHECK_STATUS_SUCCESS = 1;
+    public static final Byte CHECK_STATUS_FAILED = 2;
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     private String userId;
