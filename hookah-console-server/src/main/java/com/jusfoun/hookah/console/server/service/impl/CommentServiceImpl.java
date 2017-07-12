@@ -199,8 +199,13 @@ public class CommentServiceImpl extends GenericServiceImpl<Comment,String> imple
         try {
             //参数处理
             String[] ids=commentIds.split(",");
-            Byte statusByte = new Byte(status) ;
+            if (!(status.equals("1")||status.equals("2"))){
+                returnData.setCode(ExceptionConst.Failed);
+                returnData.setMessage("审核状态参数不正确！");
+                return returnData;
+            }
             map.put("ids",ids);
+            Byte statusByte = new Byte(status) ;
             map.put("status",statusByte);
             commentMapper.checkCommentByIds(map);
         }catch (Exception e){
