@@ -1,0 +1,26 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/accountInformation.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="grid-left accountInformation ">
+            <div class="header clearfix">
+                <h4 class="grid-left info-center-title">消息中心</h4>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+<script type="text/javascript" src="/static/js/usercenter/userInfo/accountInformation.js"></script>
+
