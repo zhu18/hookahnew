@@ -131,22 +131,20 @@
     padding:0 20px;
 }
 .bottom .header{
-    height: 31px;
     padding-top:10px;
-    border-bottom: 1px solid #EDEDED;
 }
 .header .my-order{
     width: 100px;
     height: 20px;
     font:14px/20px "microsoft yahei";
     padding-left:10px;
-    border-left:2px solid #237DE7;
 }
-.more a{
-    color: #4B99EB;
+.header .my-order.active{
+    color:#247de8 ;
+    border-bottom: 1px solid #247de8;
 }
 .my-order-list{
-    padding-top:10px;
+    padding-top:26px;
     padding-left:8px;
 }
 .order-list-item{
@@ -169,15 +167,25 @@
     margin-right: 12px;
 }
 .order-list-item .order-list-top .order-list-top-info{
-   display: inline-block;
+    display: inline-block;
+    width: 112px;
 }
 .order-list-item .order-list-top .order-list-top-info h4{
    font-size: 16px;
+    color: #333333;
+   margin-bottom: 8px;
+}
+.order-list-item .order-list-top .order-list-top-info p{
+   font-size: 14px;
+    color: #666666;
+}
+.order-list-item .order-list-top .order-list-top-info p span{
+    color: #f53839;
 }
 .order-list-item .order-list-down {
-   margin-top: 12px;
+   margin-top: 6px;
+   color: #666666;
 }
-
 
 /*.forum-hot{*/
     /*width: 214px;*/
