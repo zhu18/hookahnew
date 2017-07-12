@@ -68,6 +68,7 @@
     left JOIN goods g on c.goods_id = g.goods_id
     left JOIN user u on c.user_id = u.user_id
     WHERE 1=1
+
     <if test="status != null and status !=''">
       c.status = #{status}
     </if>
@@ -117,4 +118,15 @@
       ORDER BY c.add_time DESC   limit #{startIndex},#{pageSize}
 
   </select>
+  <update id="checkCommentByIds" >
+
+    UPDATE comment SET status = #{status}
+
+    WHERE   comm_id IN
+
+    <foreach collection="ids" index="index" item="item" open="("  separator="," close=")">
+      #{item}
+    </foreach>
+
+  </update>
 </mapper>

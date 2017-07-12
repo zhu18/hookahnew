@@ -2,6 +2,7 @@ package com.jusfoun.hookah.console.server.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.jusfoun.hookah.console.server.util.SensitiveWdFilter.WordFilter;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.CommentMapper;
@@ -12,20 +13,13 @@ import com.jusfoun.hookah.core.domain.vo.CommentVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
-import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
-import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.CommentService;
 import com.jusfoun.hookah.rpc.api.OrderInfoService;
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.SecurityUtils;
-import org.omg.CORBA.PUBLIC_MEMBER;
 
 import javax.annotation.Resource;
-import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -132,8 +126,90 @@ public class CommentServiceImpl extends GenericServiceImpl<Comment,String> imple
     }
 
     @Override
-    public ReturnData findByCondition(Map<String, Object> params) {
-        return null;
+    public ReturnData findByCondition(Map<String,Object> params) {
+        ReturnData returnData=new ReturnData();
+        returnData.setCode(ExceptionConst.Success);
+        Pagination page = new Pagination<>();
+        Object pageNumber=params.get("pageNumber");
+        Object pageSize=params.get("pageSize");
+        try {
+            //参数校验
+            if (Objects.isNull(pageNumber)) {
+                pageNumber = HookahConstants.PAGE_NUM;
+            }
+            if (Objects.isNull(pageSize)) {
+                pageSize = HookahConstants.PAGE_SIZE;
+            }
+
+            params.put("pageNumber",pageNumber);
+            params.put("pageSize",pageSize);
+            page = getListInPage(params);
+            returnData.setData(page);
+        }catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
+
+    public Pagination<CommentVo> getListInPage( Map<String,Object> params) {
+        int pageSize=(Integer) params.get("pageSize");
+        int pageNumber=(Integer) params.get("pageNumber");
+        int startIndex= (pageNumber-1)*pageSize;
+        params.put("startIndex",startIndex);
+        int total=commentMapper.selectCountByCondition(params);
+        List<CommentVo> list=commentMapper.selectCommentsByCondition(params);
+        String content="";
+        for (CommentVo comment:list) {
+            content=comment.getCommentContent();
+            comment.setIsContains(WordFilter.isContains(content));
+            comment.setSensitiveWords(WordFilter.doFilter(content));
+        }
+        Pagination<CommentVo> pagination = new Pagination<CommentVo>();
+        pagination.setTotalItems(total);
+        pagination.setPageSize(pageSize);
+        pagination.setCurrentPage(pageNumber);
+        pagination.setList(list);
+        return pagination;
+    }
+
+    /**
+     * 评价审核
+     * @param params
+     * @return
+     */
+    public ReturnData checkComment(Map<String,String> params) {
+        ReturnData<Comment> returnData = new ReturnData<Comment>();
+        returnData.setCode(ExceptionConst.Success);
+        Map<String,Object> map=new HashMap<String,Object>();
+        String commentIds=params.get("commentIds");
+        String status=params.get("status");
+        //参数判断
+        if(StringUtils.isBlank(commentIds)){
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage("评论ID参数为空！");
+            return returnData;
+        }
+        if(StringUtils.isBlank(status)){
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage("审核状态参数不能为空！");
+            return returnData;
+        }
+        try {
+            //参数处理
+            String[] ids=commentIds.split(",");
+            Byte statusByte = new Byte(status) ;
+            map.put("ids",ids);
+            map.put("status",statusByte);
+            commentMapper.checkCommentByIds(map);
+        }catch (Exception e){
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setMessage("操作失败："+e.toString());
+            e.printStackTrace();
+        }
+
+        return returnData;
     }
 
     @Override
