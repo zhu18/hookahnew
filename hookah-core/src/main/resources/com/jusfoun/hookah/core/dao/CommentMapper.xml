@@ -18,6 +18,7 @@
     <result column="comment_content" property="commentContent" jdbcType="LONGVARCHAR" />
     <result column="user_name" property="username" jdbcType="VARCHAR" />
     <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="order_sn" jdbcType="VARCHAR" property="orderSn" />
   </resultMap>
   <sql id="Base_Column_List" >
     comm_id, comment_level, goods_id, user_id, order_id, goods_comment_grade, comment_time,
@@ -67,6 +68,7 @@
     FROM  comment c
     left JOIN goods g on c.goods_id = g.goods_id
     left JOIN user u on c.user_id = u.user_id
+    LEFT JOIN order_info oi on c.order_id = oi.order_id
     WHERE 1=1
 
     <if test="status != null and status !=''">
@@ -111,8 +113,8 @@
       c.praise,
       c. comment_content,
       g.goods_name,
-      u.user_name
-
+      u.user_name,
+      oi.order_sn
       <include refid="SelectConditions"/>
 
       ORDER BY c.add_time DESC   limit #{startIndex},#{pageSize}
