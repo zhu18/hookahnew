@@ -18,27 +18,37 @@ var htmlPart = {
 		<%include("/usercenter/user-center-menu.html"){} %>
 		<div class="top grid-left">
 			<div class="user-name grid-left">
-				<a href="javascript:void(0);"><img width="90" src="${user.headImg}" alt=""></a>
-				<p>Hi,<span id="userName">${user.userName}</span></p>
-				<%if(userCur.userType == 0){%>
-				<p class="usertype">管理员</p>
-				<%}else if(userCur.userType == 1){%>
-				<p class="usertype color-orange">未认证</p>
-				<%}else if(userCur.userType == 2){%>
-				<p class="usertype color-green">个人会员</p>
-				<%}else if(userCur.userType == 3){%>
-				<p class="usertype color-orange">个人认证审核中</p>
-				<%}else if(userCur.userType == 4){%>
-				<p class="usertype color-green">单位会员</p>
-				<%}else if(userCur.userType == 5){%>
-				<p class="usertype color-orange">单位认证审核中</p>
-				<%}else if(userCur.userType == 6){%>
-				<p class="usertype color-red">个人认证审核失败</p>
-				<%}else if(userCur.userType == 7){%>
-				<p class="usertype color-red">单位认证审核失败</p>
-				<%}%>
-
-
+				<div>
+					<a href="javascript:void(0);"><img width="90" src="${user.headImg}" alt=""></a>
+					<div>
+						<span></span>
+						<span></span>
+						<span></span>
+					</div>
+				</div>
+                <div>
+					<p>Hi,<span id="userName">${user.userName}</span></p>
+					<%if(userCur.userType == 0){%>
+					<p class="usertype">管理员</p>
+					<%}else if(userCur.userType == 1){%>
+					<p class="usertype color-orange">未认证</p>
+					<%}else if(userCur.userType == 2){%>
+					<p class="usertype color-green">个人会员</p>
+					<%}else if(userCur.userType == 3){%>
+					<p class="usertype color-orange">个人认证审核中</p>
+					<%}else if(userCur.userType == 4){%>
+					<p class="usertype color-green">单位会员</p>
+					<%}else if(userCur.userType == 5){%>
+					<p class="usertype color-orange">单位认证审核中</p>
+					<%}else if(userCur.userType == 6){%>
+					<p class="usertype color-red">个人认证审核失败</p>
+					<%}else if(userCur.userType == 7){%>
+					<p class="usertype color-red">单位认证审核失败</p>
+					<%}%>
+					<p>用户账号：<span> nihih</span></p>
+					<p>手机号码：<span> 18769883892</span></p>
+					<p>电子邮箱：<span> 409071865@qq.com</span></p>
+				</div>
 				<!--<a id="enterForum" href="javascript:void(0);"><span class="fa fa-twitch"></span>进入论坛</a>-->
 			</div>
 			<div class="user-balance grid-left">
@@ -129,40 +139,41 @@ var htmlPart = {
 					<!--<p class="grid-right more"><a href="javascript:void(0)">查看更多 &gt;</a></p>-->
 				</div>
 				<div class="my-order-list clearfix">
-					<!--<div class="order-info grid-left">-->
-					<!--<div class="grid-left img-box"><img src="/static/images/list01.png" alt=""></div>-->
-					<!--<div class=" grid-left detail-info">-->
-					<!--<h4>银行卡类别查询</h4>-->
-					<!--<p class="application-time">申请时间: <span class="app-time">2013-09-01</span></p>-->
-					<!--&lt;!&ndash;<p class="remain-count">剩余 <span class="many">100</span>次</p>&ndash;&gt;-->
-					<!--<a class="read" href="#">立即查看</a>-->
-					<!--</div>-->
-					<!--</div>-->
+					<div class="order-list-item grid-left">
+					   <div class="order-list-top">
+						   <img src="/static/images/list01.png" alt="">
+						   <div class="order-list-top-info">
+							   <h4>银行卡类别查询</h4>
+							   <p>价格：<span>￥200</span></p>
+						   </div>
+					   </div>
+					   <div class="order-list-down">购买时间: <span class="buy-time">2013-09-01 </span></div>
+					</div>
 				</div>
-				<script>
-					function loadPageData(data) {
-						if (data.data.list.length > 0) {
-							var list = data.data.list;
-							var html = '';
-							for (var i = 0; i < list.length; i++) {
-								html += '<div class="order-info grid-left">';
-								html += '<div class="grid-left img-box">';
-								html += '<img src="' + list[i].goodsImg + '" alt="" width="50px">';
-								html += '</div>';
-								html += '<div class=" grid-left detail-info">';
-								html += '<h4>' + list[i].goodsName + '</h4>';
-								html += '<p class="application-time">申请时间: <span class="app-time">' + list[i].payTime + '</span></p>';
-								html += '<a target="_blank" class="read" href="${host.website}/exchange/orderEndDetails?id=' + list[i].goodsId + '&orderSn=' + list[i].orderSn + '&format='+list[i].goodsFormat+'"　>立即查看</a>';
-								html += '</div>';
-								html += '</div>';
-							}
-							$('.my-order-list').html(html);
-						} else {
-							$('.my-order-list').html('<tr class="noData"><td colspan="5" style="width:978px; text-align:center;line-height:100px;">暂无已购买数据！</td></tr>');
-						}
+				<!--<script>-->
+					<!--function loadPageData(data) {-->
+						<!--if (data.data.list.length > 0) {-->
+							<!--var list = data.data.list;-->
+							<!--var html = '';-->
+							<!--for (var i = 0; i < list.length; i++) {-->
+								<!--html += '<div class="order-info grid-left">';-->
+								<!--html += '<div class="grid-left img-box">';-->
+								<!--html += '<img src="' + list[i].goodsImg + '" alt="" width="50px">';-->
+								<!--html += '</div>';-->
+								<!--html += '<div class=" grid-left detail-info">';-->
+								<!--html += '<h4>' + list[i].goodsName + '</h4>';-->
+								<!--html += '<p class="application-time">申请时间: <span class="app-time">' + list[i].payTime + '</span></p>';-->
+								<!--html += '<a target="_blank" class="read" href="${host.website}/exchange/orderEndDetails?id=' + list[i].goodsId + '&orderSn=' + list[i].orderSn + '&format='+list[i].goodsFormat+'"　>立即查看</a>';-->
+								<!--html += '</div>';-->
+								<!--html += '</div>';-->
+							<!--}-->
+							<!--$('.my-order-list').html(html);-->
+						<!--} else {-->
+							<!--$('.my-order-list').html('<tr class="noData"><td colspan="5" style="width:978px; text-align:center;line-height:100px;">暂无已购买数据！</td></tr>');-->
+						<!--}-->
 
-					}
-				</script>
+					<!--}-->
+				<!--</script>-->
 				<%include("/layout/pageaction.html"){} %>
 			</div>
 		</div>
