@@ -73,6 +73,16 @@ public class UserCenterController {
         return "usercenter/userInfo/userProfile";
     }
 
+    @RequestMapping(value = "/infoStation", method = RequestMethod.GET)
+    public String infoStation(){
+        return "usercenter/userInfo/infoStation";
+    }
+
+    @RequestMapping(value = "/unreadInfo", method = RequestMethod.GET)
+    public String infoStation2(){
+        return "usercenter/userInfo/unreadInfo";
+    }
+
     @RequestMapping(value = "/infoCenter", method = RequestMethod.GET)
     public String infoCenterA() {
         return "usercenter/userInfo/infoCenter";
