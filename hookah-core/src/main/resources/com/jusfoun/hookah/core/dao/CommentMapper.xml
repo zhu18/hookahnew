@@ -9,6 +9,7 @@
     <result column="order_id" property="orderId" jdbcType="VARCHAR" />
     <result column="goods_comment_grade" property="goodsCommentGrade" jdbcType="BIGINT" />
     <result column="comment_time" property="commentTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="TINYINT" />
     <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="praise" property="praise" jdbcType="BIGINT" />
@@ -16,6 +17,7 @@
   <resultMap id="ResultMapWithBLOBs" type="com.jusfoun.hookah.core.domain.vo.CommentVo" extends="BaseResultMap" >
     <result column="comment_content" property="commentContent" jdbcType="LONGVARCHAR" />
     <result column="user_name" property="username" jdbcType="VARCHAR" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
   </resultMap>
   <sql id="Base_Column_List" >
     comm_id, comment_level, goods_id, user_id, order_id, goods_comment_grade, comment_time,
@@ -61,4 +63,58 @@
    ORDER BY comment_time DESC
  </select>
 
+  <sql id="SelectConditions">
+    FROM  comment c
+    left JOIN goods g on c.goods_id = g.goods_id
+    left JOIN user u on c.user_id = u.user_id
+    WHERE 1=1
+    <if test="status != null and status !=''">
+      c.status = #{status}
+    </if>
+    <if test="goodsCommentGrade != null and goodsCommentGrade !=''">
+      c.goods_comment_grade = #{goodsCommentGrade}
+    </if>
+    <if test="orderId != null and orderId !=''">
+      c.order_id = #{orderId}
+    </if>
+    <if test="goodsName != null and goodsName !=''">
+      g.goodsName like CONCAT(CONCAT('%', #{goodsName}),'%')
+    </if>
+    <if test="commentContent != null and commentContent !=''">
+      c.comment_content like CONCAT(CONCAT('%', #{commentContent}),'%')
+    </if>
+    <if test="startTime != null and startTime !=''">
+      c.add_time <![CDATA[  >=  ]]> #{startTime}
+    </if>
+    <if test="endTime != null and endTime !=''">
+      c.add_time <![CDATA[  <=  ]]> #{endTime}
+    </if>
+  </sql>
+
+  <select id="selectCountByCondition" resultType="java.lang.Integer">
+    SELECT  COUNT(c.comm_id)    <include refid="SelectConditions"/>
+  </select>
+
+  <!-- 通过条件动态分页查询评论，用于评论审核 -->
+  <select id="selectCommentsByCondition" resultMap="ResultMapWithBLOBs">
+    SELECT  c.comm_id,
+      c.comment_level,
+      c.goods_id,
+      c.user_id,
+      c.order_id,
+      c.goods_comment_grade,
+      c.comment_time,
+      c.status,
+      c.add_time,
+      c.update_time,
+      c.praise,
+      c. comment_content,
+      g.goods_name,
+      u.user_name
+
+      <include refid="SelectConditions"/>
+
+      ORDER BY c.add_time DESC   limit #{startIndex},#{pageSize}
+
+  </select>
 </mapper>

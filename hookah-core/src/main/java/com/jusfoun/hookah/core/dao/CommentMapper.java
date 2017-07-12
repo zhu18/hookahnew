@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface CommentMapper extends GenericDao<Comment> {
     Double selectGoodsAvgByGoodsId(@Param("goodsId") String goodsId);
@@ -14,4 +15,8 @@ public interface CommentMapper extends GenericDao<Comment> {
     List<String> selectGoodsIdsByData(@Param("startTime") Date startTime ,@Param("endTime") Date endTime);
 
     List<CommentVo> getListForComment(@Param("goodsId") String goodsId);
+
+    int selectCountByCondition(Map<String,Object> params);
+
+    List<CommentVo> selectCommentsByCondition(Map<String,Object> params);
 }
