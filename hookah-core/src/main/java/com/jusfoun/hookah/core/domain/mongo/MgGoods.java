@@ -171,6 +171,8 @@ public class MgGoods extends GenericModel {
         private int format; //类型
         private Integer number; //规格
         private Long price; //价格
+        private Long settlementPrice;//结算价
+        private Long agencyPrice;//代理价
 
         public int getFormat() {
             return format;
@@ -210,6 +212,22 @@ public class MgGoods extends GenericModel {
 
         public void setFormatName(String formatName) {
             this.formatName = formatName;
+        }
+
+        public Long getSettlementPrice() {
+            return settlementPrice;
+        }
+
+        public void setSettlementPrice(Long settlementPrice) {
+            this.settlementPrice = settlementPrice;
+        }
+
+        public Long getAgencyPrice() {
+            return agencyPrice;
+        }
+
+        public void setAgencyPrice(Long agencyPrice) {
+            this.agencyPrice = agencyPrice;
         }
     }
 
