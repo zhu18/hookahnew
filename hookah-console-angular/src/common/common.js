@@ -320,6 +320,18 @@ export default angular.module('Common', [
       }
     }
   })
+  .filter('isRead', function () {
+      return function (input) {
+          switch (input) {
+              case 0:
+                  return '未读';
+                  break;
+              case 1:
+                  return '已读';
+                  break;
+          }
+      }
+  })
   .filter('trustHtml', function ($sce) {
     return function (input) {
       return $sce.trustAsHtml(input);

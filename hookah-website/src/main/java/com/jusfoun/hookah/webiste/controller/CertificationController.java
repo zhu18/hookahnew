@@ -28,7 +28,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/regInfo")
-public class RegController {
+public class CertificationController {
     @Resource
     OrganizationService organizationService;
 

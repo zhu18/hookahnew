@@ -1,0 +1,84 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/infoStation.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="grid-left info-center-box ">
+            <div class="header clearfix">
+                <h4 class="grid-left info-center-title">我的消息</h4>
+                <ul class="grid-left all">
+                    <li class="active"><a href="/usercenter/infoStation" >消息
+                        <span id="">(888)</span>
+                    </a>
+                    </li>
+                    <li class="active"><a href="javascript:void(0);" >未读消息
+                        <span id="">(999)</span>
+                    </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="list">
+                <div class="order">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th class="check">
+                                <input type="checkbox" class="checkbox-title">全选
+                            </th>
+                            <th class="title">标题</th>
+                            <th class="timer">时间</th>
+                            <th class="sender">发送人</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="active">
+                            <td><input type="checkbox" name="checkbox"></td>
+                            <td>asdfsf</td>
+                            <td>2017-7-12</td>
+                            <td>sender</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" name="checkbox"></td>
+                            <td>asdfsf</td>
+                            <td>2017-7-12</td>
+                            <td>sender</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" name="checkbox"></td>
+                            <td>asdfsf</td>
+                            <td>2017-7-12</td>
+                            <td>sender</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" name="checkbox"></td>
+                            <td>asdfsf</td>
+                            <td>2017-7-12</td>
+                            <td>sender</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tableBot">
+                    <input type="checkbox" class="check-all">全选
+                    <span id="delete">删除所有</span>
+                    <span id="flag">标记为已读</span>
+                </div>
+            </div>
+            <%include("/layout/pageaction.html"){} %>
+        </div>
+    </div>
+</div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+<script type="text/javascript" src="/static/js/usercenter/userInfo/infoStation.js"></script>
+
+
