@@ -176,7 +176,7 @@ body .ft-orange {
 	color: #6c6c6c;
 }
 .ui-form-item {
-	padding: 0 5px 20px 190px;
+	padding: 0 5px 20px 310px;
 	zoom: 1;
 }
 .ui-form-item:after {
@@ -200,6 +200,7 @@ body .ft-orange {
 .ui-form-text {
 	display: inline-block;
 	margin-top: 6px;
+	color: #000;
 }
 a:link {
 	color: #f40;
@@ -239,7 +240,9 @@ a:hover, a:visited {
 	position: absolute;
 	right: 0px;
 	top: 0px;
-	background: #fff;
+	background:#F9A13C;
+	color: #ffffff;
+	font-size: 12px;
 	cursor: pointer;
 	width: 95px;
 	height: 36px;
@@ -272,8 +275,8 @@ a:hover, a:visited {
 }
 .ui-button-lorange, .ui-button-morange, .ui-button-sorange {
 	color: #fff;
-	border: 1px solid #f40;
-	background-color: #f40;
+	border: 1px solid #4C94F4;
+	background-color: #4C94F4;
 }
 .ui-button-lorange {
 	line-height: 36px;
