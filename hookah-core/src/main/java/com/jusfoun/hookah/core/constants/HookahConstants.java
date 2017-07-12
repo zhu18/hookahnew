@@ -108,6 +108,11 @@ public class HookahConstants {
     public static final Integer MESSAGE_603 = 603;//支付成功
     public static final Integer MESSAGE_604 = 604;//支付失败
 
+    // 消息类型
+    public static final byte MESSAGE_TYPE_SMS = 0;//短信
+    public static final byte MESSAGE_TYPE_MAIL = 1;//邮件
+    public static final byte MESSAGE_TYPE_STATION = 2;//站内信
+
     public enum AnalyzeOpt {
         ANALYZED("analyzed"),
         NOT_ANALYZED("not_analyzed");
