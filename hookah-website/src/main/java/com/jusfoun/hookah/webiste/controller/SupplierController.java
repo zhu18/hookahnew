@@ -2,6 +2,7 @@ package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.domain.Organization;
 import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.utils.FormatCheckUtil;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.OrganizationService;
 import com.jusfoun.hookah.rpc.api.SupplierService;
@@ -33,7 +34,7 @@ public class SupplierController extends BaseController{
     @Resource
     SupplierService supplierService;
 
-    @RequestMapping(value = "/toBeSupplier", method = RequestMethod.POST)
+    @RequestMapping(value = "/toBeSupplier", method = RequestMethod.GET)
     public ReturnData toBeSupplier(String contactName, String contactPhone, String contactAddress){
         try {
             String userId = this.getCurrentUser().getUserId();
@@ -70,6 +71,44 @@ public class SupplierController extends BaseController{
         }catch (Exception e){
             logger.error("查询用户信息错误", e);
             return ReturnData.error("查询用户信息错误");
+        }
+        return ReturnData.success(map);
+    }
+
+    @RequestMapping(value = "/updateContactInfo", method = RequestMethod.POST)
+    public ReturnData updateContactInfo(String contactName, String contactPhone, String contactAddress, Integer postCode){
+        try {
+            String userId = this.getCurrentUser().getUserId();
+            User user = userService.selectById(userId);
+            user.setContactName(contactName.replaceAll(" ",""));
+            if (contactPhone!=null && !FormatCheckUtil.checkMobile(contactPhone)){
+                return ReturnData.error("联系人手机号格式不正确");
+            }else {
+                user.setContactPhone(contactPhone);
+            }
+            user.setContactAddress(contactAddress);
+            user.setPostCode(postCode);
+            userService.updateById(user);
+        }catch (Exception e){
+            logger.error(e.getMessage());
+            return ReturnData.error(e.getMessage());
+        }
+        return ReturnData.success("联系人信息保存成功");
+    }
+
+    @RequestMapping(value = "/getContactInfo", method = RequestMethod.GET)
+    public ReturnData getContactInfo(){
+        Map<String, Object> map = new HashMap<>(4);
+        try {
+            String userId = this.getCurrentUser().getUserId();
+            User user = userService.selectById(userId);
+            map.put("contactPhone",user.getContactPhone());
+            map.put("contactName",user.getContactName());
+            map.put("contactAddress",user.getContactAddress());
+            map.put("postCode",user.getPostCode());
+        }catch (Exception e){
+            logger.error(e.getMessage());
+            return ReturnData.error(e.getMessage());
         }
         return ReturnData.success(map);
     }
