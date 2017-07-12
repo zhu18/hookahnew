@@ -176,7 +176,8 @@ public class HookahConstants {
 
         audit("0"),
         audit_success("1"),
-        audit_fail("2");
+        audit_fail("2"),
+        audit_forceOff("3");
 
         public String code;
 

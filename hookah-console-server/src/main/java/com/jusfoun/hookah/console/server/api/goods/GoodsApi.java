@@ -7,10 +7,7 @@ import com.jusfoun.hookah.console.server.util.DictionaryUtil;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
-import com.jusfoun.hookah.core.domain.Goods;
-import com.jusfoun.hookah.core.domain.MessageCode;
-import com.jusfoun.hookah.core.domain.Organization;
-import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.domain.*;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgShelvesGoods;
 import com.jusfoun.hookah.core.domain.vo.GoodsCheckedVo;
@@ -324,6 +321,14 @@ public class GoodsApi extends BaseController{
 
             int n = goodsService.updateByIdSelective(goods);
 
+            GoodsCheck goodsCheck = new GoodsCheck();
+            GoodsVo goodsVo = goodsService.findGoodsById(goodsId);
+            BeanUtils.copyProperties(goodsVo, goodsCheck);
+            goodsCheck.setCheckStatus(Byte.parseByte(HookahConstants.CheckStatus.audit_forceOff.getCode()));
+            goodsCheck.setCheckUser(getCurrentUser().getUserName());
+            goodsCheck.setCheckContent(offReason);
+            goodsCheck = goodsCheckService.insert(goodsCheck);
+
             //消息 es
             if(n > 0) {
                 //从ES删除商品
@@ -331,7 +336,7 @@ public class GoodsApi extends BaseController{
                 //发送消息，下发短信/站内信/邮件
                 MessageCode messageCode = new MessageCode();
                 messageCode.setCode(HookahConstants.MESSAGE_503);
-                messageCode.setBusinessId(goodsId);
+                messageCode.setBusinessId(goodsCheck.getId());
                 mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_NEW_MESSAGE, messageCode);
             }
         } catch (Exception e) {
