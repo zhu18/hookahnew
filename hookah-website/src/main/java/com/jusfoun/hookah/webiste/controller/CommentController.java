@@ -52,31 +52,4 @@ public class CommentController extends  BaseController{
         return commentService.countGoodsGradesByGoodsId(goodsId);
     }
 
-    @RequestMapping("/findCommentsByCondition")
-    public ReturnData findCommentsByCondition(String orderId,String goodsName,String startTime,
-                          Integer pageNumber,Integer pageSize,String endTime,String commentContent,
-                          String  status,String  goodsCommentGrade){
-        Map<String,Object> params=new HashMap<>();
-        params.put("orderId",orderId);
-        params.put("goodsName",goodsName);
-        params.put("startTime",startTime);
-        params.put("pageNumber",pageNumber);
-        params.put("pageSize",pageSize);
-        params.put("endTime",endTime);
-        params.put("commentContent",commentContent);
-        params.put("goodsCommentGrade",goodsCommentGrade);
-        params.put("status",status);
-        return commentService.findByCondition(params);
-
-    }
-
-    @RequestMapping("/checkComments")
-    public ReturnData checkComments(String commentIds,String status){
-        Map<String,String> params=new HashMap<>();
-        params.put("commentIds",commentIds);
-        params.put("status",status);
-        return commentService.checkComment(params);
-
-    }
-
 }
