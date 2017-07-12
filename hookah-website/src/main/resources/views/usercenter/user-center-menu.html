@@ -4,15 +4,16 @@
     <!--<ul>-->
         <!--<li class="text-align-center active"><span class="fa fa-caret-down"></span><span class="fa fa-caret-up" style="display: none;"></span>用户中心 <span class="fa fa-"></span></li>-->
         <!--&lt;!&ndash;<li class="text-align-center"><a href="/usercenter/userProfile"><span class="fa fa-file-text"></span>个人资料</a></li>&ndash;&gt;-->
-        <!--<li class="text-align-center"><a href="/usercenter/safeSet"><span class="fa fa-heart-o" aria-hidden="true"></span>安全设置</a></li>-->
+        <!--<li class="text-align-center"><a href="/usercenter/safeSet"><span class="fa fa-heart-o" aria-hidden="true"></span> </a></li>-->
     <!--</ul>-->
-    <ul>
-        <!--<li class="text-align-center active"><span class="fa fa-caret-down"></span><span class="fa fa-caret-up" style="display: none;"></span>文章管理 <span class="fa fa-"></span></li>-->
-        <li class="text-align-center"><a href="/admin/articleManage"><span class="fa fa-file-text"></span>文章列表</a></li>
-        <li class="text-align-center"><a href="/usercenter/goodsManage"><span class="fa fa-cog"></span>商品管理</a></li>
-        <li class="text-align-center"><a href="/usercenter/trade"><span class="fa fa-indent"></span>交易管理</a></li>
-    </ul>
-
+    <div class="one-level-menu ">
+        <ul>
+            <!--<li class="text-align-center active"><span class="fa fa-caret-down"></span><span class="fa fa-caret-up" style="display: none;"></span>文章管理 <span class="fa fa-"></span></li>-->
+            <li class="text-align-center"><a href="/admin/articleManage"><span class="fa fa-file-text"></span>文章列表</a></li>
+            <li class="text-align-center"><a href="/usercenter/goodsManage"><span class="fa fa-cog"></span>商品管理</a></li>
+            <li class="text-align-center"><a href="/usercenter/trade"><span class="fa fa-indent"></span>交易管理</a></li>
+        </ul>
+    </div>
 </div>
 <%}else{%>
 <div class="grid-left left-bar margin-top-10 margin-bottom-30 status">
@@ -20,11 +21,11 @@
         <div class="title"><span class="fa fa-caret-down margin-right-25"></span>账户中心</div>
         <ul>
             <li><a href="/usercenter/index"><span class="fa fa-id-card-o margin-right-22 "></span>基本信息</a></li>
-            <li><a href="javascript:void(0);"><span class="fa fa-id-card-o margin-right-22"></span>账户信息</a></li>
-            <li><a href="javascript:void(0);"><span class="fa fa-id-card-o margin-right-22"></span>安全中心</a></li>
-            <li><a href="javascript:void(0);"><span class="fa fa-id-card-o margin-right-22"></span>实名认证</a></li>
+            <li><a href="/usercenter/accountInformation"><span class="fa fa-id-card-o margin-right-22"></span>账户信息</a></li>
+            <li><a href="/usercenter/safeSet"><span class="fa fa-id-card-o margin-right-22"></span>安全中心</a></li>
+            <li><a href="/usercenter/nameAuthentication"><span class="fa fa-id-card-o margin-right-22"></span>实名认证</a></li>
             <li><a href="/usercenter/infoStation"><span class="fa fa-id-card-o margin-right-22"></span>站内信息</a></li>
-            <li><a href="javascript:void(0);"><span class="fa fa-id-card-o margin-right-22"></span>联系信息</a></li>
+            <li><a href="/usercenter/contactInformation"><span class="fa fa-id-card-o margin-right-22"></span>联系信息</a></li>
         </ul>
     </div>
     <div class="one-level-menu">
@@ -38,16 +39,16 @@
         <div class="title"><span class="fa fa-caret-down margin-right-25"></span>买家中心</div>
         <ul>
             <li><a href="/usercenter/buyer/orderManagement"><span class="fa fa-id-card-o margin-right-22"></span>我的订单</a></li>
-            <li><a href="javascript:void(0);"><span class="fa fa-id-card-o margin-right-22"></span>订单评价</a></li>
-            <li><a href="javascript:void(0);"><span class="fa fa-id-card-o margin-right-22"></span>我得收藏</a></li>
+            <li><a href="/usercenter/buyer/evaluation"><span class="fa fa-id-card-o margin-right-22"></span>订单评价</a></li>
+            <li><a href="/usercenter/myAttention"><span class="fa fa-id-card-o margin-right-22"></span>我得收藏</a></li>
             <li><a href="javascript:void(0);"><span class="fa fa-id-card-o margin-right-22"></span>我的商品</a></li>
         </ul>
     </div>
     <div class="one-level-menu">
         <div class="title"><span class="fa fa-caret-down margin-right-25"></span>卖家中心</div>
         <ul>
-            <li><a href="javascript:void(0);"><span class="fa fa-id-card-o margin-right-22"></span>商品管理</a></li>
-            <li><a href="javascript:void(0);"><span class="fa fa-id-card-o margin-right-22"></span>交易管理</a></li>
+            <li><a href="/usercenter/goodsManage"><span class="fa fa-id-card-o margin-right-22"></span>商品管理</a></li>
+            <li><a href="/usercenter/trade"><span class="fa fa-id-card-o margin-right-22"></span>交易管理</a></li>
             <li><a href="javascript:void(0);"><span class="fa fa-id-card-o margin-right-22"></span>结算记录</a></li>
         </ul>
     </div>

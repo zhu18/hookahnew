@@ -13,1088 +13,1083 @@ var head = {
 <script src="/static/js/plugins/validate/jquery-validate.js"></script>
 <script src="/static/js/plugins/validate/messages_zh.js"></script>
 <%};%>
-
 <%
 var htmlPart = {
 %>
-
 <div class="grid-0 backgorund-gray">
-    <div class="grid-row clearfix">
-        <%include("/usercenter/user-center-menu.html"){} %>
-        <div class="grid-right margin-top-10">
-            <form action="" id="goodsModifyForm">
-                <input type="hidden" name="userId" value="${user.userId}">
-                <input type="hidden" name="typeId">
-                <input type="hidden" name="ver" id="J-ver"/>
-                <div class="usercenter-right-box">
-                    <div class="goodsEdit-box">
-                        <h1>
-                            <span>当前类目：</span>
-                            <div class="select-box display-inline-block">
-                                <select name="firstCategory" id="firstCategory" style="display: none" disabled="disabled"></select>
-                                <select name="twoCategory" id="twoCategory" style="display: none" onchange="loadLastChild(this)"></select>
-                                <select name="lastCategory" id="lastCategory" style="display: none" onchange="selectCatId(this)"></select>
-                            </div>
-                        </h1>
-                        <h1>商品基本信息：</h1>
-                        <div class="struct">
-                            <table>
-                                <tbody>
-                                <tr>
-                                    <td class="bar">商品名称：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="text-box"><input name="goodsName" id="J-goodsName" type="text" required="required">
-                                            <span class="input-count"><strong id="showcontent">0</strong>/60</span>
-                                        </div>
-                                        <div class="errors">
-                                            <span class="errorinfo">请填写商品名称，不能超过60个字!</span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="bar">商品简介：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="textarea-box">
-                                            <textarea type="text" name="goodsBrief" id="J-goodsBrief" required="required"></textarea>
-                                            <span class="input-count"><strong id="showcontent2">0</strong>/400</span>
-                                        </div>
-                                        <div class="errors">
-                                            <span class="errorinfo">请填写商品简介，不能超过200个字!</span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="bar">商品标签：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="block info" style="margin: 0px 0px 3px;">
-                                            分类信息为该商品定义关键词，可由多个词组组装成，使用英文“,”号隔开。
-                                        </div>
-                                        <div class="text-box">
-                                            <input name="keywords" id="keywords" type="text" required="required">
-                                        </div>
-                                    </td>
-                                </tr>
-                                <!--<tr class="attribute-container">-->
-                                    <!--<td class="bar">商品属性：</td>-->
-                                    <!--<td>-->
-                                        <!--<div class="block info" style="margin: 0px 0px 3px;">-->
-                                            <!--商品属性支持默认。-->
-                                        <!--</div>-->
-                                        <!--<div class="attribute-box">-->
-                                            <!--<table>-->
+	<div class="grid-row clearfix">
+		<%include("/usercenter/user-center-menu.html"){} %>
+		<div class="grid-right margin-top-10">
+			<form action="" id="goodsModifyForm">
+				<input type="hidden" name="userId" value="${user.userId}">
+				<input type="hidden" name="typeId">
+				<input type="hidden" name="ver" id="J-ver"/>
+				<div class="usercenter-right-box">
+					<div class="goodsEdit-box">
+						<h1>
+							<span>当前类目：</span>
+							<div class="select-box display-inline-block">
+								<select name="firstCategory" id="firstCategory" style="display: none" disabled="disabled"></select>
+								<select name="twoCategory" id="twoCategory" style="display: none" onchange="loadLastChild(this)"></select>
+								<select name="lastCategory" id="lastCategory" style="display: none" onchange="selectCatId(this)"></select>
+							</div>
+						</h1>
+						<h1>商品基本信息：</h1>
+						<div class="struct">
+							<table>
+								<tbody>
+								<tr>
+									<td class="bar">商品名称：<span class="requireds">*</span></td>
+									<td>
+										<div class="text-box">
+											<input name="goodsName" id="J-goodsName" type="text" required="required">
+											<span class="input-count"><strong id="showcontent">0</strong>/60</span>
+										</div>
+										<div class="errors">
+											<span class="errorinfo">请填写商品名称，不能超过60个字!</span>
+										</div>
+									</td>
+								</tr> <!--商品名称-->
+								<tr>
+									<td class="bar">商品简介：<span class="requireds">*</span></td>
+									<td>
+										<div class="textarea-box">
+											<textarea type="text" name="goodsBrief" id="goodsBriefes" required="required"></textarea>
+											<span class="input-count"><strong class="showcontentes">0</strong>/400</span>
+										</div>
+										<div class="errors">
+											<span class="errorinfo">请填写商品简介，不能超过200个字!</span>
+										</div>
+									</td>
+								</tr><!--商品简介-->
+								<tr>
+									<td class="bar">商品标签：<span class="requireds">*</span></td>
+									<td>
+										<div class="block info" style="margin: 0px 0px 3px;">
+											分类信息为该商品定义关键词，可由多个词组组装成，使用英文“,”号隔开。
+										</div>
+										<div class="text-box">
+											<input name="keywords" id="keywords" type="text" required="required">
+										</div>
+									</td>
+								</tr><!--商品标签-->
+								<tr>
+									<td class="bar">商品类型：<span class="requireds">*</span></td>
+									<td>
+										<!--<div class="radio-box">-->
+										<!--<label>-->
+										<!--<input type="radio" name="goodsTypes" onchange="goodsTypeChange(this)" value="0"-->
+										<!--checked="">常规商品-->
+										<!--</label>-->
+										<!--<label>-->
+										<!--<input type="radio" name="goodsTypes" onchange="goodsTypeChange(this)" value="1">api-->
+										<!--</label>-->
+										<!--</div>-->
+										<div class="select-box">
+											<select name="parentSelect" class="parentSelect" onchange="selectGoodsType(this)" id="parentSelect">
+												<option value="100">数据源</option>
+												<option value="2">数据模型</option>
+												<option value="300">应用场景</option>
+												<option value="400">分析工具</option>
+											</select>
+											<select name="childrenSelect1" class="childrenSelect" onchange="childrenSelects(this)" id="childrenSelect1">
+												<option value="0">离线数据</option>
+												<option value="1">api</option>
+											</select>
+											<select name="childrenSelect2" class="childrenSelect" onchange="childrenSelects(this)" id="childrenSelect2">
+												<option value="6">独立软件</option>
+												<option value="7">SaaS</option>
+											</select>
+											<select name="childrenSelect3" class="childrenSelect" onchange="childrenSelects(this)" id="childrenSelect3">
+												<option value="4">独立软件</option>
+												<option value="5">SaaS</option>
+											</select>
+										</div>
+									</td>
+								</tr><!--商品类型-->
+								<tr class="region-box">
+									<td class="bar">所属区域：</td>
+									<td>
+										<div class="select-box">
+											<select name="province" id="province" onchange="loadRegion('city', this)">
+												<option value="-1">全部</option>
+											</select>
+											<select name="city" id="city">
+												<option value="-1">全部</option>
+											</select>
+										</div>
+									</td>
+								</tr><!--所属区域-->
+								<tr>
+									<td class="bar">商品图标：<span class="requireds">*</span></td>
+									<td>
+										<div class="block info" style="margin: 0px 0px 3px;">
+											商品图标大小不能超过5MB。
+										</div>
+										<div class="multimage-wrap">
+											<ul class="image-list">
+												<li>
+													<div class="preview" id="preview-div">
+														<a title="上传图片" class="upload-tip "><span class="fa fa-plus"></span></a>
+														<img class="preview-img" id="preview-img">
+														<input id="fileupload" accept="image/gif,image/jpeg,image/jpg,image/png" type="file" name="filename" multiple="" class="preview-btn">
+														<a href="javascript:void(0)" class="replace-btn"
+														   id="replace-btn">替换图片</a>
+														<span id="bars"><span id="barSmail"></span><span id="barText"></span></span>
+														<input type="text" style="opacity: 0;width:20px;position: absolute" name="goodsImges" required="required">
+													</div>
+												</li>
+											</ul>
+										</div>
+									</td>
+								</tr><!--商品图标-->
+								<tr>
+									<td class="bar">使用范围：<span class="requireds">*</span></td>
+									<td>
+										<div class="textarea-box">
+											<textarea type="text" name="trialRange" id="trialRange" required="required"></textarea>
+											<span class="input-count"><strong id="trialRange_s">0</strong>/400</span>
+										</div>
+										<div class="errors">
+											<span class="errorinfo">请填写商品简介，不能超过200个字!</span>
+										</div>
+									</td>
+								</tr><!--使用范围-->
+								<tr>
+									<td class="bar">规格及价格：<span class="requireds">*</span></td>
+									<td>
+										<div class="block info" style="margin: 0px 0px 3px;">
+											第一行为默认数据。
+										</div>
+										<div class="table-box">
+											<table class="price-table table-plus" d-type="priceHtml">
+												<thead>
+												<tr>
+													<th>名称</th>
+													<th>规格</th>
+													<th>类型</th>
+													<th>价格（元）</th>
+													<th>操作</th>
+												</tr>
+												</thead>
+												<tbody>
+												<tr class="parent-tr">
+													<td class="name-input">
+														<div class="inputbox">
+															<input type="text" datatype="name" placeholder="请输入名称" required="required">
+														</div>
+													</td>
+													<td class="number-input">
+														<div class="inputbox">
+															<input type="number" datatype="number" placeholder="请输入规格" digits="true" required="required">
+														</div>
+													</td>
+													<td>
+														<div class="selectbox">
+															<select name="format">
+																<option value="0">次</option>
+																<option value="1">月</option>
+																<option value="2">年</option>
+															</select>
+														</div>
+													</td>
+													<td class="price-input">
+														<div class="inputbox">
+															<input class="price-inputs number" datatype="price" type="text" placeholder="请输入价格" required="required">
+														</div>
+													</td>
+													<td>
+														<span class="table-plus-btn" onclick="tablePlus(this)">+</span>
+													</td>
+												</tr>
+												</tbody>
+											</table>
+										</div>
+									</td>
+								</tr><!--规格及价格-->
+								<tr class="edit-all goodsDesc-box" style="display: none;">
+									<td class="bar">商品描述：<span class="requireds">*</span></td>
+									<td>
+										<div class="wangEditor-wrapper">
+											<textarea id="textarea1" style="height: 500px; display: none;" name="goodsDescBox" required="required"></textarea>
+										</div>
+									</td>
+								</tr><!--商品描述-->
+								<tr class="edit-all goodsAdvantage-box" style="display: none;">
+									<td class="bar">商品优势：<span class="requireds">*</span></td>
+									<td>
+										<div class="wangEditor-wrapper">
+											<textarea id="textarea2" style="height: 500px; display: none;" name="goodsAdvantage" required="required"></textarea>
+										</div>
+									</td>
+								</tr><!--商品优势-->
+								<tr class="edit-all afterSaleService-box" style="display: none;">
+									<td class="bar">售后服务：<span class="requireds">*</span></td>
+									<td>
+										<div class="wangEditor-wrapper">
+											<textarea id="textarea3" style="height: 500px; display: none;" name="afterSaleService" required="required"></textarea>
+										</div>
+									</td>
+								</tr><!--售后服务-->
+								<tr class="edit-all dataSample-info-box" style="display: none;">
+									<td class="bar">数据样例：</td>
+									<td>
+										<p>只支持xls、xlsx格式文件</p>
+										<div class="fileUploads fileUploads_j">
+											<input type="hidden" id="dataSample" name="dataSample">
+											<button>选择文件</button>
+											<span>未选择任何文件</span>
+											<input id="fileupload11" style="height: 32px;position: absolute;left: 0;top: 0;opacity: 0;cursor: pointer;" type="file" name="filename" multiple="" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" class="preview-btn">
+											<input type="text" style="opacity: 0;width:20px;position: absolute" name="dataSample_s">
+										</div>
+									</td>
+								</tr><!--数据样例-->
+								<tr class="edit-all appCase-box" style="display: none;">
+									<td class="bar">应用案例：<span class="requireds">*</span></td>
+									<td>
+										<div class="wangEditor-wrapper">
+											<textarea id="textarea4" style="height: 500px; display: none;" name="appCase" required="required"></textarea>
+										</div>
+									</td>
+								</tr><!--应用案例-->
+								</tbody>
+							</table>
+						</div>
+						<div class="struct selects goodsTypeLine file-info-box">
+							<!--<h1>离线数据:</h1>-->
+							<table>
+								<tbody>
+								<tr class="">
+									<td class="bar">时间范围：</td>
+									<td>
+										<div class="date-box grid-left">
+											<input type="text" id="offLine_startDate" placeholder="点击选择开始时间">
+										</div>
+										<div class="margin-left-10 margin-right-10 grid-left">-</div>
+										<div class="date-box grid-left">
+											<input type="text" id="offLine_endDate" placeholder="点击选择结束时间">
+										</div>
+									</td>
+								</tr>
+								<tr class="">
+									<td class="bar">数据条数/行数：</td>
+									<td>
+										<div class="text-box">
+											<input type="text" name="dataRows" placeholder="请输入数据数，示例：35000行">
+											<span class="input-count"></span>
+										</div>
+									</td>
+								</tr>
+								<tr class="">
+									<td class="bar">数据容量：</td>
+									<td>
+										<div class="text-box">
+											<input type="text" name="dataCapacity" placeholder="请输入数据容量，示例：35M">
+										</div>
+									</td>
+								</tr>
+								<tr class="">
+									<td class="bar">数据格式：</td>
+									<td>
+										<div class="radio-box">
+											<label>
+												<input type="radio" name="dataFormat" checked="" value="0">xls/xlsx
+											</label>
+											<label>
+												<input type="radio" name="dataFormat" value="1">csv
+											</label>
+											<label>
+												<input type="radio" name="dataFormat" value="2">txt
+											</label>
+											<label>
+												<input type="radio" name="dataFormat" value="3">图片
+											</label>
+											<label>
+												<input type="radio" name="dataFormat" value="4">音频
+											</label>
+											<label>
+												<input type="radio" name="dataFormat" value="5">视频
+											</label>
+											<label>
+												<input type="radio" name="dataFormat" value="6">其他
+											</label>
+										</div>
+									</td>
+								</tr>
 
-                                            <!--</table>-->
-                                        <!--</div>-->
-                                    <!--</td>-->
-                                <!--</tr>-->
-                                <tr>
-                                    <td class="bar">商品类型：<span class="requireds">*</span></td>
-                                    <td>
-                                        <!--<div class="radio-box">-->
-                                        <!--<label>-->
-                                        <!--<input type="radio" name="goodsTypes" onchange="goodsTypeChange(this)" value="0"-->
-                                        <!--checked="">常规商品-->
-                                        <!--</label>-->
-                                        <!--<label>-->
-                                        <!--<input type="radio" name="goodsTypes" onchange="goodsTypeChange(this)" value="1">api-->
-                                        <!--</label>-->
-                                        <!--</div>-->
-                                        <div class="select-box">
-                                            <select name="parentSelect" class="parentSelect" onchange="selectGoodsType(this)" id="parentSelect">
-                                                <option value="100">数据源</option>
-                                                <option value="2">数据模型</option>
-                                                <option value="300">应用场景</option>
-                                                <option value="400">分析工具</option>
-                                            </select>
-                                            <select name="childrenSelect1" class="childrenSelect" onchange="childrenSelects(this)" id="childrenSelect1">
-                                                <option value="0">离线数据</option>
-                                                <option value="1">api</option>
-                                            </select>
-                                            <select name="childrenSelect2" class="childrenSelect" onchange="childrenSelects(this)" id="childrenSelect2">
-                                                <option value="6">独立软件</option>
-                                                <option value="7">SaaS</option>
-                                            </select>
-                                            <select name="childrenSelect3" class="childrenSelect" onchange="childrenSelects(this)" id="childrenSelect3">
-                                                <option value="4">独立软件</option>
-                                                <option value="5">SaaS</option>
-                                            </select>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="region-box">
-                                    <td class="bar">所属区域：</td>
-                                    <td>
-                                        <div class="select-box">
-                                            <select name="province" id="province" onchange="loadRegion('city', this)">
-                                                <option value="-1">全部</option>
-                                            </select>
-                                            <select name="city" id="city"><option value="-1">全部</option></select>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="bar">商品图标：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="block info" style="margin: 0px 0px 3px;">
-                                            商品图标大小不能超过5MB。
-                                        </div>
-                                        <div class="multimage-wrap">
-                                            <ul class="image-list">
-                                                <li>
-                                                    <div class="preview" id="preview-div">
-                                                        <a title="上传图片" class="upload-tip "><span class="fa fa-plus"></span></a>
-                                                        <img class="preview-img" id="preview-img">
-                                                        <input id="fileupload" accept="image/gif,image/jpeg,image/jpg,image/png" type="file" name="filename" multiple="" class="preview-btn">
-                                                        <a href="javascript:void(0)" class="replace-btn"
-                                                           id="replace-btn">替换图片</a>
-                                                        <span id="bars"><span id="barSmail"></span><span id="barText"></span></span>
-                                                        <input type="text" style="opacity: 0;width:20px;position: absolute"  name="goodsImges" required="required">
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="bar">使用范围：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="textarea-box">
-                                            <textarea type="text" name="trialRange" id="trialRange" required="required"></textarea>
-                                            <span class="input-count"><strong id="trialRange_s">0</strong>/400</span>
-                                        </div>
-                                        <div class="errors">
-                                            <span class="errorinfo">请填写商品简介，不能超过200个字!</span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="bar">规格及价格：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="block info" style="margin: 0px 0px 3px;">
-                                            第一行为默认数据。
-                                        </div>
-                                        <div class="table-box">
-                                            <table class="price-table table-plus" d-type="priceHtml">
-                                                <thead>
-                                                <tr>
-                                                    <th>名称</th>
-                                                    <th>规格</th>
-                                                    <th>类型</th>
-                                                    <th>价格（元）</th>
-                                                    <th>操作</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr class="parent-tr">
-                                                    <td class="name-input">
-                                                        <div class="inputbox"><input type="text" datatype="name" placeholder="请输入名称" required="required"></div>
-                                                    </td>
-                                                    <td class="number-input">
-                                                        <div class="inputbox"><input type="number" datatype="number" placeholder="请输入规格"  digits="true" required="required"></div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="selectbox">
-                                                            <select name="format">
-                                                                <option value="0">次</option>
-                                                                <option value="1">天</option>
-                                                                <option value="2">年</option>
-                                                            </select>
-                                                        </div>
-                                                    </td>
-                                                    <td class="price-input">
-                                                        <div class="inputbox"><input class="price-inputs number" datatype="price" type="text" placeholder="请输入价格" required="required"></div>
-                                                    </td>
-                                                    <td>
-                                                        <span class="table-plus-btn" onclick="tablePlus(this)">+</span>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="goodsDesc-box" style="display: none;">
-                                    <td class="bar">商品描述：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="wangEditor-wrapper">
-                                            <textarea id="textarea1" style="height: 500px; display: none;" name="goodsDescBox" required="required"></textarea>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="goodsAdvantage-box" style="display: none;">
-                                    <td class="bar">商品优势：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="wangEditor-wrapper">
-                                            <textarea id="textarea2" style="height: 500px; display: none;" name="goodsAdvantage" required="required"></textarea>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="afterSaleService-box" style="display: none;">
-                                    <td class="bar">售后服务：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="wangEditor-wrapper">
-                                            <textarea id="textarea3" style="height: 500px; display: none;" name="afterSaleService" required="required"></textarea>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="dataSample-info-box" style="display: none;">
-                                    <td class="bar">数据样例：<span class="requireds">*</span></td>
-                                    <td>
-                                        <p>只支持xls、xlsx格式文件</p>
-                                        <div class="fileUploads fileUploads_j">
-                                            <input type="hidden" id="dataSample" required="required" name="dataSample">
-                                            <button>选择文件</button>
-                                            <span>未选择任何文件</span>
-                                            <input id="fileupload11" style="height: 32px;position: absolute;left: 0;top: 0;opacity: 0;cursor: pointer;" type="file" name="filename" multiple="" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" class="preview-btn">
-                                            <input type="text" style="opacity: 0;width:20px;position: absolute" name="dataSample_s" required="required">
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="appCase-box" style="display: none;">
-                                    <td class="bar">应用案例：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="wangEditor-wrapper">
-                                            <textarea id="textarea4" style="height: 500px; display: none;" name="appCase" required="required"></textarea>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="isOffLine-box">
-                                    <td class="bar">交付方式：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="select-box">
-                                            <select name="isOffline" class="isOffline" onchange="selectLineInfo(this)" id="isOffline">
-                                                <option value="0">线上交付</option>
-                                                <option value="1">线下交付</option>
-                                            </select>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <!--<tr class="file-info-box">-->
-                                    <!--<td class="bar">文件上传：<span class="requireds">*</span></td>-->
-                                    <!--<td>-->
-                                        <!--<div class="fileUploads">-->
-                                            <!--<input type="hidden" id="J_fileUploadSS" required="required" name="fileUploadSS">-->
-                                            <!--<button>选择文件</button><span>未选择任何文件</span>-->
-                                            <!--<input id="fileupload2" type="file" name="filename" multiple="" class="preview-btn">-->
-                                            <!--<input type="text" style="opacity: 0;width:20px;position: absolute"  name="goodsImges2" required="required">-->
-                                        <!--</div>-->
-                                    <!--</td>-->
-                                <!--</tr>-->
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="struct selects isOffLine-info-box">
-                            <h1 class="">线下交付信息：</h1>
-                            <table>
-                                <tbody>
-                                <tr>
-                                    <td class="bar">联系人：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="text-box">
-                                            <input type="text" name="concatName" required="required">
-                                            <span class="input-count"></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="bar">电话：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="text-box">
-                                            <input type="text" name="concatPhone" required="required">
-                                            <span class="input-count"></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="bar">邮箱：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="text-box">
-                                            <input type="text" name="concatEmail" required="required">
-                                            <span class="input-count"></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="struct selects file-info-box">
-                            <h1>离线数据:</h1>
-                            <table>
-                                <tbody>
-                                <tr class="">
-                                    <td class="bar">时间范围：</td>
-                                    <td>
-                                        <div class="date-box grid-left">
-                                            <input type="text" id="offLine_startDate" placeholder="点击选择开始时间">
-                                        </div>
-                                        <div class="margin-left-10 margin-right-10 grid-left">-</div>
-                                        <div class="date-box grid-left">
-                                            <input type="text" id="offLine_endDate" placeholder="点击选择结束时间">
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="">
-                                    <td class="bar">数据条数/行数：</td>
-                                    <td>
-                                        <div class="text-box">
-                                            <input type="text" name="dataRows" placeholder="请输入数据数，示例：35000行">
-                                            <span class="input-count"></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="">
-                                    <td class="bar">数据容量：</td>
-                                    <td>
-                                        <div class="text-box">
-                                            <input type="text" name="dataCapacity" placeholder="请输入数据容量，示例：35M">
-                                            <span class="input-count"></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="">
-                                    <td class="bar">数据格式：</td>
-                                    <td>
-                                        <div class="radio-box">
-                                            <label>
-                                                <input type="radio" name="dataFormat" checked="" value="0">xls/xlsx
-                                            </label>
-                                            <label>
-                                                <input type="radio" name="dataFormat" value="1">csv
-                                            </label>
-                                            <label>
-                                                <input type="radio" name="dataFormat" value="2">txt
-                                            </label>
-                                            <label>
-                                                <input type="radio" name="dataFormat" value="3">图片
-                                            </label>
-                                            <label>
-                                                <input type="radio" name="dataFormat" value="4">音频
-                                            </label>
-                                            <label>
-                                                <input type="radio" name="dataFormat" value="5">视频
-                                            </label>
-                                            <label>
-                                                <input type="radio" name="dataFormat" value="6">其他
-                                            </label>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="bar">数据来源：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="select-box">
-                                            <select name="isOnline" class="isOnline" onchange="selector_offLine_fn(this)" id="isOnline">
-                                                <option value="0">数据上传</option>
-                                                <option value="1">数据地址</option>
-                                            </select>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="selector_offLine selector_offLine_upLoad">
-                                    <td class="bar">数据上传：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="fileUploads">
-                                            <input type="hidden" id="J_fileUploadSS" required="required" name="fileUploadSS">
-                                            <button>选择文件</button><span>未选择任何文件</span>
-                                            <input id="fileupload2" type="file" name="filename" multiple="" class="preview-btn">
-                                            <input type="text" style="opacity: 0;width:20px;position: absolute"  name="goodsImges2" required="required">
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="selector_offLine selector_offLine_input" style="display: none">
-                                    <td class="bar">数据地址：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="text-box">
-                                            <input type="text" name="onlineUrl" required="required">
-                                            <span class="input-count"></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="">
-                                    <td class="bar">数据包密码：</td>
-                                    <td>
-                                        <div class="text-box">
-                                            <input type="text" name="dataPwd">
-                                            <span class="input-count"></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="struct selects api-info-box">
-                            <h1 class="">API信息：</h1>
-                            <table>
-                                <tbody>
-                                <tr>
-                                    <td class="bar">接口类型：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="radio-box">
-                                            <label>
-                                                <input type="radio" name="apiType" value="0" checked="">restful
-                                            </label>
-                                            <label>
-                                                <input type="radio" name="apiType" value="1">webservice
-                                            </label>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="bar">调用方法名：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="text-box">
-                                            <input type="text" name="invokeMethod" required="required">
-                                            <span class="input-count"></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="bar">接口地址：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="text-box">
-                                            <input type="text" name="apiUrl" required="required">
-                                            <span class="input-count"></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="bar">请求方式：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="radio-box">
-                                            <label>
-                                                <input type="radio" name="apiMethod" value="GET" checked="">GET
-                                            </label>
-                                            <label>
-                                                <input type="radio" name="apiMethod" value="POST">POST
-                                            </label>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="bar">请求示例：</td>
-                                    <td>
-                                        <div class="text-box">
-                                            <input type="text" name="reqSample">
-                                            <span class="input-count"></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="bar">接口描述：</td>
-                                    <td>
-                                        <div class="textarea-box">
-                                            <textarea type="text" id="apiDesc"></textarea>
-                                            <span class="input-count"></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="bar">请求参数：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="table-box">
-                                            <table class="price-table table-plus" d-type="requestHtml">
-                                                <thead>
-                                                <tr>
-                                                    <th>名称</th>
-                                                    <th>类型</th>
-                                                    <th>默认值</th>
-                                                    <th>必填</th>
-                                                    <th>示例</th>
-                                                    <th>描述</th>
-                                                    <th>操作</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr class="parent-tr">
-                                                    <td class="name-input">
-                                                        <div class="inputbox"><input type="text" name="fieldName" placeholder="请输入名称" required="required"></div>
-                                                    </td>
-                                                    <td class="type-input">
-                                                        <div class="selectbox">
-                                                            <select name="fieldType">
-                                                                <option value="String">String</option>
-                                                                <option value="int">int</option>
-                                                            </select>
-                                                        </div>
-                                                    </td>
-                                                    <td class="type-input">
-                                                        <div class="inputbox"><input type="text" name="fieldDefault"
-                                                                                     placeholder="请输入默认值"></div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="radio-box">
-                                                            <label>
-                                                                <input type="radio" name="isMust0" checked="" value="0">否
-                                                            </label>
-                                                            <label>
-                                                                <input type="radio" name="isMust0" value="1">是
-                                                            </label>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="inputbox"><input type="text" name="fieldSample" placeholder="请输入示例"></div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="inputbox"><textarea name="describle" placeholder="请输入描述"></textarea></div>
-                                                    </td>
-                                                    <td>
-                                                        <span class="table-plus-btn itemNum" onclick="tablePlus(this)">+</span>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="bar">返回示例：</td>
-                                    <td>
-                                        <div class="textarea-box">
-                                            <textarea type="text" id="respSample"></textarea>
-                                            <span class="input-count"></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="bar">返回格式：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="radio-box">
-                                            <label>
-                                                <input type="radio" name="respDataFormat" value="0" checked="">json
-                                            </label>
-                                            <label>
-                                                <input type="radio" name="respDataFormat" value="1">xml
-                                            </label>
-                                            <label>
-                                                <input type="radio" name="respDataFormat" value="2">txt
-                                            </label>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="bar">返回参数：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="table-box">
-                                            <table class="price-table table-plus" d-type="returnHtml">
-                                                <thead>
-                                                <tr>
-                                                    <th>错误码</th>
-                                                    <th>类型</th>
-                                                    <th>说明</th>
-                                                    <th>操作</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr class="parent-tr">
-                                                    <td class="errorNum-input">
-                                                        <div class="inputbox"><input type="text" name="fieldName" placeholder="请输入错误码" required="required"></div>
-                                                    </td>
-                                                    <td class="type-input">
-                                                        <div class="selectbox">
-                                                            <select name="fieldType">
-                                                                <option value="String">String</option>
-                                                                <option value="int">int</option>
-                                                            </select>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="inputbox"><textarea placeholder="请输入说明" name="describle" required="required"></textarea></div>
-                                                    </td>
-                                                    <td>
-                                                        <span class="table-plus-btn" onclick="tablePlus(this)">+</span>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="bar">返回数据映射：</td>
-                                    <td>
-                                        <table>
-                                            <tbody>
-                                            <tr>
-                                                <td class="bar">编码属性：<span class="requireds">*</span></td>
-                                                <td>
-                                                    <div class="text-box">
-                                                        <input type="text" name="codeAttr" required="required" placeholder="请输入编码属性，示例：code">
-                                                        <span class="input-count"></span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="bar">成功：<span class="requireds">*</span></td>
-                                                <td>
-                                                    <div class="text-box">
-                                                        <input type="text" name="successCode" required="required" placeholder="示例：200">
-                                                        <span class="input-count"></span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="bar">失败：<span class="requireds">*</span></td>
-                                                <td>
-                                                    <div class="text-box">
-                                                        <input type="text" name="failedCode" required="required" placeholder="示例：-9999">
-                                                        <span class="input-count"></span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="bar">成功无数据：<span class="requireds">*</span></td>
-                                                <td>
-                                                    <div class="text-box">
-                                                        <input type="text" name="successNoData" required="required" placeholder="示例：0">
-                                                        <span class="input-count"></span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="bar">信息属性：<span class="requireds">*</span></td>
-                                                <td>
-                                                    <div class="text-box">
-                                                        <input type="text" name="infoAttr" required="required" placeholder="示例：message，多个之间用英文“,”分隔">
-                                                        <span class="input-count"></span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="bar">数据属性：<span class="requireds">*</span></td>
-                                                <td>
-                                                    <div class="text-box">
-                                                        <input type="text" name="dataAttr" required="required" placeholder="示例：data，多个之间英文“,”分隔">
-                                                        <span class="input-count"></span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="bar">总条数属性：<span class="requireds">*</span></td>
-                                                <td>
-                                                    <div class="text-box">
-                                                        <input type="text" name="totalNumAttr" required="required" placeholder="示例：total，多个之间英文“,”分隔">
-                                                        <span class="input-count"></span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="bar">更新频率：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="text-box">
-                                            <input type="text" name="updateFreq" required="required">
-                                            <span class="input-count"></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="bar">数据条数/行数：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="text-box">
-                                            <input type="text" name="dataNumDivRowNum" required="required">
-                                            <span class="input-count"></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="bar">加密信息：</td>
-                                    <td>
-                                        <table>
-                                            <tbody>
-                                            <tr>
-                                                <td class="bar">密钥名称：<span class="requireds">*</span></td>
-                                                <td>
-                                                    <div class="text-box">
-                                                        <input type="text" name="secretKeyName" required="required">
-                                                        <span class="input-count"></span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="bar">密钥值：<span class="requireds">*</span></td>
-                                                <td>
-                                                    <div class="text-box">
-                                                        <input type="text" name="secretKeyValue" required="required">
-                                                        <span class="input-count"></span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="struct selects dataModel-info-box">
-                            <h1 class="">数据模型：</h1>
-                            <table>
-                                <tbody>
-
-                                <tr>
-                                    <td class="bar"><h3>模型规则：</h3></td>
-                                    <td>
-                                        <table>
-                                            <tbody>
-                                            <tr>
-                                                <td class="bar">模型类型：<span class="requireds">*</span></td>
-                                                <td>
-                                                    <div class="select-box">
-                                                        <select name="modelType">
-                                                            <option value="0">分类</option>
-                                                            <option value="1">回归</option>
-                                                            <option value="2">识别</option>
-                                                            <option value="3">预测</option>
-                                                            <option value="4">聚类</option>
-                                                            <option value="5">时间序列</option>
-                                                            <option value="6">关联降维</option>
-                                                            <option value="7">优化</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="bar">复杂度：<span class="requireds">*</span></td>
-                                                <td>
-                                                    <div class="select-box">
-                                                        <select name="complexity">
-                                                            <option value="0">高</option>
-                                                            <option value="1">中</option>
-                                                            <option value="2">低</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="bar">成熟度：<span class="requireds">*</span></td>
-                                                <td>
-                                                    <div class="select-box">
-                                                        <select name="maturity">
-                                                            <option value="0">高</option>
-                                                            <option value="1">中</option>
-                                                            <option value="2">低</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="bar">应用经验：<span class="requireds">*</span></td>
-                                                <td>
-                                                    <div class="textarea-box">
-                                                        <textarea type="text" name="aexp" required="required"></textarea>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="bar">配套服务：<span class="requireds">*</span></td>
-                                                <td>
-                                                    <div class="textarea-box">
-                                                        <textarea type="text" name="relationServ" id="" required="required"></textarea>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="bar"><h3>使用规格：</h3></td>
-                                    <td>
-                                        <table>
-                                            <tbody>
-                                            <tr>
-                                                <td class="bar">模型文件：<span class="requireds">*</span></td>
-                                                <td>
-                                                    <div class="text-box dataModelfileUploads readonlyInput" >
-                                                        <input type="hidden" name="modelFile"  class="fileEndInput" required="required">
-                                                        <input type="text" class="grid-left fileEndInputs" name="modelFiles" required="required">
-                                                        <a href="javascript:void(0);" class="uploadFiles grid-left">
-                                                            <span>选择文件</span>
-                                                            <input type="file" name="filename" class="fileUploadBtn">
-                                                        </a>
-                                                        <div style="clear: both"></div>
-                                                        <div class="readonlyWrap"></div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="bar">模型文件密码：</td>
-                                                <td>
-                                                    <div class="text-box">
-                                                        <input type="text" name="modelFilePwd">
-                                                        <span class="input-count"></span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="bar">配置文件：<span class="requireds">*</span></td>
-                                                <td>
-                                                    <div class="text-box readonlyInput">
-                                                        <input type="hidden" name="configFile" class="fileEndInput" required="required">
-                                                        <input type="text" class="grid-left fileEndInputs" name="configFiles" required="required">
-                                                        <a href="javascript:void(0);" class="uploadFiles grid-left">
-                                                            <span>选择文件</span>
-                                                            <input type="file" name="filename" class="fileUploadBtn" >
-                                                        </a>
-                                                        <div style="clear: both"></div>
-                                                        <div class="readonlyWrap"></div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="bar">配置文件密码：</td>
-                                                <td>
-                                                    <div class="text-box">
-                                                        <input type="text" name="configFilePwd">
-                                                        <span class="input-count"></span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="bar">配置参数：<span class="requireds">*</span></td>
-                                                <td>
-                                                    <div class="text-box readonlyInput">
-                                                        <input type="hidden" name="configParams" class="fileEndInput" required="required">
-                                                        <input type="text" class="grid-left fileEndInputs" name="configParam" required="required">
-                                                        <a href="javascript:void(0);" class="uploadFiles grid-left">
-                                                            <span>选择文件</span>
-                                                            <input type="file" name="filename" class="fileUploadBtn">
-                                                        </a>
-                                                        <div style="clear: both"></div>
-                                                        <div class="readonlyWrap"></div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="bar">配置参数密码：</td>
-                                                <td>
-                                                    <div class="text-box">
-                                                        <input type="text" name="configParamsPwd">
-                                                        <span class="input-count"></span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr class="dataModel_concat">
-                                    <td class="bar"><h3>联系方式：</h3></td>
-                                    <td>
-                                        <table>
-                                            <tbody>
-                                            <tr>
-                                                <td class="bar">联系姓名：<span class="requireds">*</span></td>
-                                                <td>
-                                                    <div class="text-box">
-                                                        <input type="text" name="concatName" required="required">
-                                                        <span class="input-count"></span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="bar">联系电话：<span class="requireds">*</span></td>
-                                                <td>
-                                                    <div class="text-box">
-                                                        <input type="text" name="concatPhone" required="required">
-                                                        <span class="input-count"></span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="bar">联系邮件：<span class="requireds">*</span></td>
-                                                <td>
-                                                    <div class="text-box">
-                                                        <input type="text" name="concatEmail" required="required">
-                                                        <span class="input-count"></span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="struct selects app-info-box">
-                            <h1 class="">应用场景：</h1>
-                            <table>
-                                <tbody>
-                                <tr>
-                                    <td class="bar">核心功能：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="wangEditor-wrapper">
-                                            <textarea id="textareaA" style="height: 500px; display: none;" name="coreFunction" required="required"></textarea>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="app-saas-info">
-                                    <td class="bar">技术优势：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="wangEditor-wrapper">
-                                            <textarea id="textareaB" style="height: 500px; display: none;" name="technologicalSuperiority" required="required"></textarea>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="bar">团队优势：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="wangEditor-wrapper">
-                                            <textarea id="textareaC" style="height: 500px; display: none;" name="teamAdvantage" required="required"></textarea>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="bar">所需环境：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="wangEditor-wrapper">
-                                            <textarea id="textareaD" style="height: 500px; display: none;" name="desiredEnvironment" required="required"></textarea>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="bar">所需数据：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="wangEditor-wrapper">
-                                            <textarea id="textareaE" style="height: 500px; display: none;" name="dataNeeded" required="required"></textarea>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="bar">下载地址：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="text-box">
-                                            <input type="text" name="dataAddress" required="required">
-                                            <span class="input-count"></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="struct selects tool-info-box">
-                            <h1 class="">分析工具：</h1>
-                            <table>
-                                <tbody>
-                                <tr>
-                                    <td class="bar">核心功能：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="wangEditor-wrapper">
-                                            <textarea id="textareaAs" style="height: 500px; display: none;" name="coreFunction" required="required"></textarea>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="app-saas-info">
-                                    <td class="bar">技术优势：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="wangEditor-wrapper">
-                                            <textarea id="textareaBs" style="height: 500px; display: none;" name="technologicalSuperiority" required="required"></textarea>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="bar">团队优势：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="wangEditor-wrapper">
-                                            <textarea id="textareaCs" style="height: 500px; display: none;" name="teamAdvantage" required="required"></textarea>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="bar">所需环境：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="wangEditor-wrapper">
-                                            <textarea id="textareaDs" style="height: 500px; display: none;" name="desiredEnvironment" required="required"></textarea>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="bar">所需数据：<span class="requireds">*</span></td>
-                                    <td>
-                                        <div class="wangEditor-wrapper">
-                                            <textarea id="textareaEs" style="height: 500px; display: none;" name="dataNeeded" required="required"></textarea>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!--<h1>售后保障信息：</h1>-->
-                        <!--<div class="struct">-->
-                            <!--<table>-->
-                                <!--<tbody>-->
-                                <!--<tr>-->
-                                    <!--<td class="bar">售后服务：</td>-->
-                                    <!--<td>-->
-                                        <!--<div class="checkbox-box">-->
-                                            <!--<label><input type="checkbox" checked="">提供发票</label>-->
-                                        <!--</div>-->
-                                    <!--</td>-->
-                                <!--</tr>-->
-                                <!--<tr>-->
-                                    <!--<td class="bar"></td>-->
-                                    <!--<td>-->
-                                        <!--<div class="checkbox-box">-->
-                                            <!--<label><input type="checkbox">保修服务</label>-->
-                                        <!--</div>-->
-                                    <!--</td>-->
-                                <!--</tr>-->
-                                <!--<tr>-->
-                                    <!--<td class="bar"></td>-->
-                                    <!--<td>-->
-                                        <!--<div class="checkbox-box">-->
-                                            <!--<label><input type="checkbox">退换货承诺：凡通过正常流程购买本平台商品，若存在质量问题或与描述不符，本店将主动提供退换货服务</label>-->
-                                        <!--</div>-->
-                                    <!--</td>-->
-                                <!--</tr>-->
-                                <!--</tbody>-->
-                            <!--</table>-->
-                        <!--</div>-->
-                        <h1>商品其他信息：</h1>
-                        <div class="struct">
-                            <table>
-                                <tbody>
-                                <!--<tr>-->
-                                    <!--<td class="bar">库存计数：</td>-->
-                                    <!--<td>-->
-                                        <!--<div class="radio-box">-->
-                                            <!--<label><input type="radio" name="121">买家拍下减库存</label>-->
-                                            <!--<label><input type="radio" name="121" checked="">买家付款减库存</label>-->
-                                        <!--</div>-->
-                                    <!--</td>-->
-                                <!--</tr>-->
-                                <tr>
-                                    <td class="bar">上架时间：</td>
-                                    <td>
-                                        <div class="radio-box">
-                                            <label><input type="radio" name="isBook" value="0" checked="" onchange="isOnsaleFun(this)">立刻上架</label>
-                                            <label><input type="radio" name="isBook" value="1" onchange="isOnsaleFun(this)">定时上架</label>
-                                            <div>
-                                                <label class="isOnsale-box">请选择上架时间：
-                                                    <div style="position: relative;">
-                                                        <input id="indate" style="position: absolute;top: 0;left: 0;z-index: 5;" type="text" placeholder="请选择" readonly>
-                                                        <input type="text" style="opacity: 0;position: absolute;top: 0;left: 0;z-index:3;" required="required" id="indate_s">
-                                                    </div>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="pulish-btn">
-                    <button class="pusGoods-btn btn btn-full-orange"  type="button" id="J_submitBtn">发布商品</button>
-                </div>
-            </form>
-        </div>
-    </div>
+								</tbody>
+							</table>
+						</div><!--离线数据-->
+						<div class="struct selects goodsTypeLine api-info-box">
+							<!--<h1 class="">API信息：</h1>-->
+							<table>
+								<tbody>
+								<tr>
+									<td class="bar">接口类型：</td>
+									<td>
+										<div class="radio-box">
+											<label>
+												<input type="radio" name="apiType" value="0" checked="">restful
+											</label>
+											<label>
+												<input type="radio" name="apiType" value="1">webservice
+											</label>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">调用方法名：</td>
+									<td>
+										<div class="text-box">
+											<input type="text" name="invokeMethod">
+											<span class="input-count"></span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">接口地址：<span class="requireds">*</span></td>
+									<td>
+										<div class="text-box">
+											<input type="text" name="apiUrl" required="required">
+											<span class="input-count"></span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">请求方式：<span class="requireds">*</span></td>
+									<td>
+										<div class="radio-box">
+											<label>
+												<input type="radio" name="apiMethod" value="GET" checked="">GET
+											</label>
+											<label>
+												<input type="radio" name="apiMethod" value="POST">POST
+											</label>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">请求示例：</td>
+									<td>
+										<div class="text-box">
+											<input type="text" name="reqSample">
+											<span class="input-count"></span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">接口描述：</td>
+									<td>
+										<div class="textarea-box">
+											<textarea type="text" id="apiDesc"></textarea>
+											<span class="input-count"></span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">请求参数：<span class="requireds">*</span></td>
+									<td>
+										<div class="table-box">
+											<table class="price-table table-plus" d-type="requestHtml">
+												<thead>
+												<tr>
+													<th>名称</th>
+													<th>类型</th>
+													<th>默认值</th>
+													<th>必填</th>
+													<th>示例</th>
+													<th>描述</th>
+													<th>操作</th>
+												</tr>
+												</thead>
+												<tbody>
+												<tr class="parent-tr">
+													<td class="name-input">
+														<div class="inputbox">
+															<input type="text" name="fieldName" placeholder="请输入名称" required="required">
+														</div>
+													</td>
+													<td class="type-input">
+														<div class="selectbox">
+															<select name="fieldType">
+																<option value="String">String</option>
+																<option value="int">int</option>
+															</select>
+														</div>
+													</td>
+													<td class="type-input">
+														<div class="inputbox"><input type="text" name="fieldDefault"
+																					 placeholder="请输入默认值"></div>
+													</td>
+													<td>
+														<div class="radio-box">
+															<label>
+																<input type="radio" name="isMust0" checked="" value="0">否
+															</label>
+															<label>
+																<input type="radio" name="isMust0" value="1">是
+															</label>
+														</div>
+													</td>
+													<td>
+														<div class="inputbox">
+															<input type="text" name="fieldSample" placeholder="请输入示例">
+														</div>
+													</td>
+													<td>
+														<div class="inputbox">
+															<textarea name="describle" placeholder="请输入描述"></textarea>
+														</div>
+													</td>
+													<td>
+														<span class="table-plus-btn itemNum" onclick="tablePlus(this)">+</span>
+													</td>
+												</tr>
+												</tbody>
+											</table>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">返回示例：</td>
+									<td>
+										<div class="textarea-box">
+											<textarea type="text" id="respSample"></textarea>
+											<span class="input-count"></span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">返回格式：</td>
+									<td>
+										<div class="radio-box">
+											<label>
+												<input type="radio" name="respDataFormat" value="0" checked="">json
+											</label>
+											<label>
+												<input type="radio" name="respDataFormat" value="1">xml
+											</label>
+											<label>
+												<input type="radio" name="respDataFormat" value="2">txt
+											</label>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">返回参数：<span class="requireds">*</span></td>
+									<td>
+										<div class="table-box">
+											<table class="price-table table-plus" d-type="returnHtml">
+												<thead>
+												<tr>
+													<th>字段</th>
+													<th>类型</th>
+													<th>说明</th>
+													<th>操作</th>
+												</tr>
+												</thead>
+												<tbody>
+												<tr class="parent-tr">
+													<td class="errorNum-input">
+														<div class="inputbox">
+															<input type="text" name="fieldName" placeholder="请输入字段" required="required">
+														</div>
+													</td>
+													<td class="type-input">
+														<div class="selectbox">
+															<select name="fieldType">
+																<option value="String">String</option>
+																<option value="int">int</option>
+															</select>
+														</div>
+													</td>
+													<td>
+														<div class="inputbox">
+															<textarea placeholder="请输入说明" name="describle" required="required"></textarea>
+														</div>
+													</td>
+													<td>
+														<span class="table-plus-btn" onclick="tablePlus(this)">+</span>
+													</td>
+												</tr>
+												</tbody>
+											</table>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">返回数据映射：</td>
+									<td>
+										<table>
+											<tbody>
+											<tr>
+												<td class="bar">编码属性：</td>
+												<td>
+													<div class="text-box">
+														<input type="text" name="codeAttr" placeholder="请输入编码属性，示例：code">
+														<span class="input-count"></span>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td></td>
+												<td>
+													<table>
+														<tr>
+															<td class="bar">成功：</td>
+															<td>
+																<div class="text-box">
+																	<input type="text" name="successCode" placeholder="示例：200">
+																	<span class="input-count"></span>
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<td class="bar">失败：</td>
+															<td>
+																<div class="text-box">
+																	<input type="text" name="failedCode" placeholder="示例：-9999">
+																	<span class="input-count"></span>
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<td class="bar">成功无数据：</td>
+															<td>
+																<div class="text-box">
+																	<input type="text" name="successNoData" placeholder="示例：0">
+																	<span class="input-count"></span>
+																</div>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+											<tr>
+												<td class="bar">信息属性：</td>
+												<td>
+													<div class="text-box">
+														<input type="text" name="infoAttr" placeholder="示例：message，多个之间用英文“,”分隔">
+														<span class="input-count"></span>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td class="bar">数据属性：</td>
+												<td>
+													<div class="text-box">
+														<input type="text" name="dataAttr" placeholder="示例：data，多个之间英文“,”分隔">
+														<span class="input-count"></span>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td class="bar">总条数属性：</td>
+												<td>
+													<div class="text-box">
+														<input type="text" name="totalNumAttr" placeholder="示例：total，多个之间英文“,”分隔">
+														<span class="input-count"></span>
+													</div>
+												</td>
+											</tr>
+											</tbody>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">更新频率：</td>
+									<td>
+										<div class="text-box">
+											<input type="text" name="updateFreq">
+											<span class="input-count"></span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">数据条数/行数：</td>
+									<td>
+										<div class="text-box">
+											<input type="text" name="dataNumDivRowNum">
+											<span class="input-count"></span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">加密信息：</td>
+									<td>
+										<table>
+											<tbody>
+											<tr>
+												<td class="bar">密钥名称：</td>
+												<td>
+													<div class="text-box">
+														<input type="text" name="secretKeyName">
+														<span class="input-count"></span>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td class="bar">密钥值：</td>
+												<td>
+													<div class="text-box">
+														<input type="text" name="secretKeyValue">
+														<span class="input-count"></span>
+													</div>
+												</td>
+											</tr>
+											</tbody>
+										</table>
+									</td>
+								</tr>
+								</tbody>
+							</table>
+						</div><!--API信息-->
+						<div class="struct selects goodsTypeLine dataModel-info-box">
+							<!--<h1 class="">数据模型：</h1>-->
+							<table>
+								<tbody>
+								<tr>
+									<td class="bar"><h3>模型规则：</h3></td>
+									<td>
+										<table>
+											<tbody>
+											<tr>
+												<td class="bar">模型类型：<span class="requireds">*</span></td>
+												<td>
+													<div class="select-box">
+														<select name="modelType">
+															<option value="0">分类</option>
+															<option value="1">回归</option>
+															<option value="2">识别</option>
+															<option value="3">预测</option>
+															<option value="4">聚类</option>
+															<option value="5">时间序列</option>
+															<option value="6">关联降维</option>
+															<option value="7">优化</option>
+														</select>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td class="bar">复杂度：<span class="requireds">*</span></td>
+												<td>
+													<div class="select-box">
+														<select name="complexity">
+															<option value="0">高</option>
+															<option value="1">中</option>
+															<option value="2">低</option>
+														</select>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td class="bar">成熟度：<span class="requireds">*</span></td>
+												<td>
+													<div class="select-box">
+														<select name="maturity">
+															<option value="0">高</option>
+															<option value="1">中</option>
+															<option value="2">低</option>
+														</select>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td class="bar">应用经验：<span class="requireds">*</span></td>
+												<td>
+													<div class="textarea-box">
+														<textarea type="text" name="aexp" required="required"></textarea>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td class="bar">配套服务：<span class="requireds">*</span></td>
+												<td>
+													<div class="textarea-box">
+														<textarea type="text" name="relationServ" id="" required="required"></textarea>
+													</div>
+												</td>
+											</tr>
+											</tbody>
+										</table>
+									</td>
+								</tr>
+								</tbody>
+							</table>
+						</div><!--数据模型-->
+						<div class="struct selects goodsTypeLine app-info-box">
+							<!--<h1 class="">应用场景：</h1>-->
+							<table>
+								<tbody>
+								<tr>
+									<td class="bar">核心功能：<span class="requireds">*</span></td>
+									<td>
+										<div class="wangEditor-wrapper">
+											<textarea id="textareaA" style="height: 500px; display: none;" name="coreFunction" required="required"></textarea>
+										</div>
+									</td>
+								</tr>
+								<tr class="app-saas-info">
+									<td class="bar">技术优势：<span class="requireds">*</span></td>
+									<td>
+										<div class="wangEditor-wrapper">
+											<textarea id="textareaB" style="height: 500px; display: none;" name="technologicalSuperiority" required="required"></textarea>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">团队优势：<span class="requireds">*</span></td>
+									<td>
+										<div class="wangEditor-wrapper">
+											<textarea id="textareaC" style="height: 500px; display: none;" name="teamAdvantage" required="required"></textarea>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">所需环境：<span class="requireds">*</span></td>
+									<td>
+										<div class="wangEditor-wrapper">
+											<textarea id="textareaD" style="height: 500px; display: none;" name="desiredEnvironment" required="required"></textarea>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">所需数据：<span class="requireds">*</span></td>
+									<td>
+										<div class="wangEditor-wrapper">
+											<textarea id="textareaE" style="height: 500px; display: none;" name="dataNeeded" required="required"></textarea>
+										</div>
+									</td>
+								</tr>
+								</tbody>
+							</table>
+						</div><!--应用场景-->
+						<div class="struct selects goodsTypeLine tool-info-box">
+							<!--<h1 class="">分析工具：</h1>-->
+							<table>
+								<tbody>
+								<tr>
+									<td class="bar">核心功能：<span class="requireds">*</span></td>
+									<td>
+										<div class="wangEditor-wrapper">
+											<textarea id="textareaAs" style="height: 500px; display: none;" name="coreFunction" required="required"></textarea>
+										</div>
+									</td>
+								</tr>
+								<tr class="app-saas-info">
+									<td class="bar">技术优势：<span class="requireds">*</span></td>
+									<td>
+										<div class="wangEditor-wrapper">
+											<textarea id="textareaBs" style="height: 500px; display: none;" name="technologicalSuperiority" required="required"></textarea>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">团队优势：<span class="requireds">*</span></td>
+									<td>
+										<div class="wangEditor-wrapper">
+											<textarea id="textareaCs" style="height: 500px; display: none;" name="teamAdvantage" required="required"></textarea>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">所需环境：<span class="requireds">*</span></td>
+									<td>
+										<div class="wangEditor-wrapper">
+											<textarea id="textareaDs" style="height: 500px; display: none;" name="desiredEnvironment" required="required"></textarea>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">所需数据：<span class="requireds">*</span></td>
+									<td>
+										<div class="wangEditor-wrapper">
+											<textarea id="textareaEs" style="height: 500px; display: none;" name="dataNeeded" required="required"></textarea>
+										</div>
+									</td>
+								</tr>
+								</tbody>
+							</table>
+						</div><!--分析工具-->
+						<div class="struct selects isOffLine-select-box">
+							<!--<h1 class="">线下交付信息：</h1>-->
+							<table>
+								<tbody>
+								<tr class="isOffLine-box">
+									<td class="bar">交付方式：<span class="requireds">*</span></td>
+									<td>
+										<div class="select-box">
+											<select name="isOffline" class="isOffline" onchange="selectLineInfo(this)" id="isOffline">
+												<option value="0">线上交付</option>
+												<option value="1">线下交付</option>
+											</select>
+										</div>
+									</td>
+								</tr><!--交付方式-->
+								</tbody>
+							</table>
+						</div><!--交付方式-->
+						<div class="struct isOnLine-info-box">
+							<!--<h1 class="">线上交付显示：</h1>-->
+							<table class="offline-isOnLine-box offline-isShow">
+								<tbody>
+								<tr class="">
+									<td class="bar">数据来源：<span class="requireds">*</span></td>
+									<td>
+										<div class="select-box">
+											<select name="isOnline" class="isOnline" onchange="selector_offLine_fn(this)" id="isOnline">
+												<option value="0">数据上传</option>
+												<option value="1">数据地址</option>
+											</select>
+										</div>
+									</td>
+								</tr>
+								<tr class="selector_offLine selector_offLine_upLoad">
+									<td class="bar">数据上传：<span class="requireds">*</span></td>
+									<td>
+										<div class="fileUploads">
+											<input type="hidden" id="J_fileUploadSS" required="required" name="fileUploadSS">
+											<button>选择文件</button>
+											<span>未选择任何文件</span>
+											<input id="fileupload2" type="file" name="filename" multiple="" class="preview-btn">
+											<input type="text" style="opacity: 0;width:20px;position: absolute" name="goodsImges2" required="required">
+										</div>
+									</td>
+								</tr>
+								<tr class="selector_offLine selector_offLine_input" style="display: none">
+									<td class="bar">数据地址：<span class="requireds">*</span></td>
+									<td>
+										<div class="text-box">
+											<input type="text" name="onlineUrl" required="required">
+											<span class="input-count"></span>
+										</div>
+									</td>
+								</tr>
+								<tr class="">
+									<td class="bar">数据包密码：</td>
+									<td>
+										<div class="text-box">
+											<input type="text" name="dataPwd">
+											<span class="input-count"></span>
+										</div>
+									</td>
+								</tr>
+								</tbody>
+							</table> <!--数据来源-->
+							<table class="dataModel-isOnLine-box offline-isShow">
+								<tbody>
+								<tr>
+									<td class="bar"><h3>使用规格：</h3></td>
+									<td>
+										<table>
+											<tbody>
+											<tr>
+												<td class="bar">模型文件：<span class="requireds">*</span></td>
+												<td>
+													<div class="text-box dataModelfileUploads readonlyInput">
+														<input type="hidden" name="modelFile" class="fileEndInput" required="required">
+														<input type="text" class="grid-left fileEndInputs" name="modelFiles" required="required">
+														<a href="javascript:void(0);" class="uploadFiles grid-left">
+															<span>选择文件</span>
+															<input type="file" name="filename" class="fileUploadBtn">
+														</a>
+														<div style="clear: both"></div>
+														<div class="readonlyWrap"></div>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td class="bar">模型文件密码：</td>
+												<td>
+													<div class="text-box">
+														<input type="text" name="modelFilePwd">
+														<span class="input-count"></span>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td class="bar">配置文件：<span class="requireds">*</span></td>
+												<td>
+													<div class="text-box readonlyInput">
+														<input type="hidden" name="configFile" class="fileEndInput" required="required">
+														<input type="text" class="grid-left fileEndInputs" name="configFiles" required="required">
+														<a href="javascript:void(0);" class="uploadFiles grid-left">
+															<span>选择文件</span>
+															<input type="file" name="filename" class="fileUploadBtn">
+														</a>
+														<div style="clear: both"></div>
+														<div class="readonlyWrap"></div>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td class="bar">配置文件密码：</td>
+												<td>
+													<div class="text-box">
+														<input type="text" name="configFilePwd">
+														<span class="input-count"></span>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td class="bar">配置参数：<span class="requireds">*</span></td>
+												<td>
+													<div class="text-box readonlyInput">
+														<input type="hidden" name="configParams" class="fileEndInput" required="required">
+														<input type="text" class="grid-left fileEndInputs" name="configParam" required="required">
+														<a href="javascript:void(0);" class="uploadFiles grid-left">
+															<span>选择文件</span>
+															<input type="file" name="filename" class="fileUploadBtn">
+														</a>
+														<div style="clear: both"></div>
+														<div class="readonlyWrap"></div>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td class="bar">配置参数密码：</td>
+												<td>
+													<div class="text-box">
+														<input type="text" name="configParamsPwd">
+														<span class="input-count"></span>
+													</div>
+												</td>
+											</tr>
+											</tbody>
+										</table>
+									</td>
+								</tr>
+								<tr class="dataModel_concat">
+									<td class="bar"><h3>联系方式：</h3></td>
+									<td>
+										<table>
+											<tbody>
+											<tr>
+												<td class="bar">联系姓名：<span class="requireds">*</span></td>
+												<td>
+													<div class="text-box">
+														<input type="text" name="concatName" required="required">
+														<span class="input-count"></span>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td class="bar">联系电话：<span class="requireds">*</span></td>
+												<td>
+													<div class="text-box">
+														<input type="text" name="concatPhone" required="required">
+														<span class="input-count"></span>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td class="bar">联系邮件：<span class="requireds">*</span></td>
+												<td>
+													<div class="text-box">
+														<input type="text" name="concatEmail" required="required">
+														<span class="input-count"></span>
+													</div>
+												</td>
+											</tr>
+											</tbody>
+										</table>
+									</td>
+								</tr>
+								</tbody>
+							</table> <!--数据模型-->
+							<table class="downloadAddress-isOnLine-box offline-isShow">
+								<tbody>
+								<tr class="offLine-in-box">
+									<td class="bar">下载地址：<span class="requireds">*</span></td>
+									<td>
+										<div class="text-box">
+											<input type="text" name="dataAddress" required="required">
+											<span class="input-count"></span>
+										</div>
+									</td>
+								</tr>
+								</tbody>
+							</table> <!--下载地址-->
+							<table class="visitOnline-isOnLine-box offline-isShow">
+								<tbody>
+								<tr class="offLine-in-box">
+									<td class="bar">在线访问地址：<span class="requireds">*</span></td>
+									<td>
+										<div class="text-box">
+											<input type="text" name="dataAddress" required="required">
+											<span class="input-count"></span>
+										</div>
+									</td>
+								</tr>
+								</tbody>
+							</table> <!--在线访问地址-->
+						</div><!--线上交付数据-->
+						<div class="struct selects isOffLine-info-box">
+							<!--<h1 class="">线下交付信息：</h1>-->
+							<table>
+								<tbody>
+								<tr>
+									<td class="bar">联系人：<span class="requireds">*</span></td>
+									<td>
+										<div class="text-box">
+											<input type="text" name="concatName" required="required">
+											<span class="input-count"></span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">电话：<span class="requireds">*</span></td>
+									<td>
+										<div class="text-box">
+											<input type="text" name="concatPhone" required="required">
+											<span class="input-count"></span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">邮箱：<span class="requireds">*</span></td>
+									<td>
+										<div class="text-box">
+											<input type="text" name="concatEmail" required="required">
+											<span class="input-count"></span>
+										</div>
+									</td>
+								</tr>
+								</tbody>
+							</table>
+						</div><!--线下交付信息-->
+						<h1>商品其他信息：</h1>
+						<div class="struct">
+							<table>
+								<tbody>
+								<tr>
+									<td class="bar">上架时间：</td>
+									<td>
+										<div class="radio-box">
+											<label><input type="radio" name="isBook" value="0" checked="" onchange="isOnsaleFun(this)">立刻上架</label>
+											<label><input type="radio" name="isBook" value="1" onchange="isOnsaleFun(this)">定时上架</label>
+											<div>
+												<label class="isOnsale-box">请选择上架时间：
+													<div style="position: relative;">
+														<input id="indate" style="position: absolute;top: 0;left: 0;z-index: 5;" type="text" placeholder="请选择" readonly>
+														<input type="text" style="opacity: 0;position: absolute;top: 0;left: 0;z-index:3;" required="required" id="indate_s">
+													</div>
+												</label>
+											</div>
+										</div>
+									</td>
+								</tr><!--上架时间-->
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="pulish-btn">
+					<button class="pusGoods-btn btn btn-full-orange" type="button" id="J_submitBtn">发布商品</button>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}

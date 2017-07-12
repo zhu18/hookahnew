@@ -85,7 +85,7 @@ var htmlPart = {
 						<div class="money-standard">
 							<span>规格：</span>
 							<%for(item in goodsDetails.formatList){%>
-							<a href="javascript:;" onclick="editPrice(this, ${item.price}, ${item.formatId})" class="margin-right-5 ${itemLP.first ? 'active':''}" formatid="${item.formatId}" price="${item.price}">${item.number}${decode(item.format,0,"次",1,"天",2,"年","未知")}</a>
+							<a href="javascript:;" onclick="editPrice(this, ${item.price}, ${item.formatId})" class="margin-right-5 ${itemLP.first ? 'active':''}" formatid="${item.formatId}" price="${item.price}">${item.number}${decode(item.format,0,"次",1,"月",2,"年","未知")}</a>
 							<%}%>
 						</div>
 						<%}%>
@@ -144,11 +144,13 @@ var htmlPart = {
 							<li class="grid-left">返回参数</li>
 							<%}else if(goodsDetails.goodsType == 2){%>
 							<li class="grid-left">产品优势</li>
-							<li class="grid-left">产品</li>
+							<li class="grid-left">产品特性</li>
 							<li class="grid-left">售后服务</li>
 							<%}else if(goodsDetails.goodsType == 6 || goodsDetails.goodsType == 7){%>
 							<li class="grid-left">核心功能</li>
+							<%if(goodsDetails.goodsType == 6){%>
 							<li class="grid-left">技术优势</li>
+							<%}%>
 							<li class="grid-left">团队优势</li>
 							<li class="grid-left">所需环境</li>
 							<li class="grid-left">所需数据</li>
@@ -156,7 +158,9 @@ var htmlPart = {
 							<li class="grid-left">售后服务</li>
 							<%}else if(goodsDetails.goodsType == 4 || goodsDetails.goodsType == 5){%>
 							<li class="grid-left">核心功能</li>
+							<%if(goodsDetails.goodsType == 4){%>
 							<li class="grid-left">技术优势</li>
+							<%}%>
 							<li class="grid-left">团队优势</li>
 							<li class="grid-left">所需环境</li>
 							<li class="grid-left">所需数据</li>
@@ -180,7 +184,7 @@ var htmlPart = {
 							</tr>
 							<tr>
 								<td>所属地域：</td>
-								<td></td>
+								<td>${goodsDetails.goodsAreaFullName}</td>
 							</tr>
 							<tr>
 								<td>产品描述：</td>
@@ -190,7 +194,6 @@ var htmlPart = {
 					</div>
 					<%if(goodsDetails.isOffline == 0){%>
 						<%if(goodsDetails.goodsType == 0){%>
-
 						<div class="table-item">
 							<table class="tab-one margin-bottom-10">
 								<tr>
@@ -212,13 +215,22 @@ var htmlPart = {
 							</table>
 						</div>
 						<div class="table-item">
-
+							${goodsDetails.goodsAdvantage}
+						</div>
+						<div class="table-item">
+							${goodsDetails.afterSaleService}
 						</div>
 						<%}else if(goodsDetails.goodsType == 1){%>
+						<div class="table-item">${goodsDetails.goodsAdvantage}</div>
+						<div class="table-item">${goodsDetails.appCase}</div>
+						<div class="table-item">${goodsDetails.afterSaleService}</div>
 						<div class="table-item">
 							<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
 							<table class="tab-one">
-								<caption><h3>标示信息</h3></caption>
+								<tr>
+									<td>接口类型：</td>
+									<td>${decode(goodsDetails.apiInfo.apiType,0,'restful',1,'webservice','未知')}</td>
+								</tr>
 								<tr>
 									<td>接口地址：</td>
 									<td>${goodsDetails.apiInfo.apiUrl}</td>
@@ -234,6 +246,14 @@ var htmlPart = {
 								<tr>
 									<td>接口描述：</td>
 									<td>${goodsDetails.apiInfo.apiDesc}</td>
+								</tr>
+								<tr>
+									<td>更新频率：</td>
+									<td>${goodsDetails.apiInfo.updateFreq}</td>
+								</tr>
+								<tr>
+									<td>数据条数/行数：</td>
+									<td>${goodsDetails.apiInfo.dataNumDivRowNum}</td>
 								</tr>
 							</table>
 							<table class="tab-two margin-top-20 margin-bottom-40">
@@ -276,164 +296,65 @@ var htmlPart = {
 						</div>
 						<%}else if(goodsDetails.goodsType == 2){%>
 						<div class="table-item">
-							<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
-							<table class="tab-one">
-								<caption><h3>模型规则</h3></caption>
+							${goodsDetails.goodsAdvantage}
+						</div>
+						<div class="table-item">
+							<table class="tab-one margin-bottom-10">
+								<tr>
+									<td>模型类型：</td>
+									<td>${decode(goodsDetails.dataModel.modelType,0,'分类',1,'回归',2,'识别',3,'预测',4,'聚类',5,'时间序列化',6,'关联将维',7,'优化','未知')}</td>
+								</tr>
 								<tr>
 									<td>复杂度：</td>
-									<td>${goodsDetails.dataModel.complexity}</td>
+									<td>${decode(goodsDetails.dataModel.complexity,0,'高',1,'中',2,'低','未知')}</td>
 								</tr>
 								<tr>
 									<td>成熟度：</td>
-									<td>${goodsDetails.dataModel.maturity}</td>
+									<td>${decode(goodsDetails.dataModel.maturity,0,'高',1,'中',2,'低','未知')}</td>
 								</tr>
 								<tr>
 									<td>应用经验：</td>
 									<td>${goodsDetails.dataModel.aexp}</td>
 								</tr>
-							</table>
-							<table class="tab-one margin-top-20  margin-bottom-20">
-								<caption><h3>其他说明</h3></caption>
 								<tr>
-									<td>其他说明：</td>
-									<td>${goodsDetails.dataModel.otherDesc}</td>
+									<td>配套服务：</td>
+									<td>${goodsDetails.dataModel.relationServ}</td>
 								</tr>
 							</table>
+						</div>
+						<div class="table-item">
+							${goodsDetails.afterSaleService}
 						</div>
 						<%}else if(goodsDetails.goodsType == 6){%>
-						<div class="table-item">
-							<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
-							<table class="tab-one">
-								<caption><h3>应用场景规则</h3></caption>
-								<tr>
-									<td>应用复杂度：</td>
-									<td>${goodsDetails.asAloneSoftware.aSComplexity}</td>
-								</tr>
-								<tr>
-									<td>版本说明：</td>
-									<td>${goodsDetails.asAloneSoftware.aSVersionDesc}</td>
-								</tr>
-								<tr>
-									<td>服务等级：</td>
-									<td>${goodsDetails.asAloneSoftware.aSServiceLevel}</td>
-								</tr>
-								<tr>
-									<td>应用经验：</td>
-									<td>${goodsDetails.asAloneSoftware.aSAexp}</td>
-								</tr>
-								<tr>
-									<td>应用介绍：</td>
-									<td>${goodsDetails.asAloneSoftware.aSAintroduce}</td>
-								</tr>
-							</table>
-							<table class="tab-one margin-top-20  margin-bottom-20">
-								<caption><h3>使用规格</h3></caption>
-								<tr>
-									<td>云硬件资源：</td>
-									<td>${goodsDetails.asAloneSoftware.aSCloudHardwareResource}</td>
-								</tr>
-							</table>
-							<table class="tab-one margin-top-20  margin-bottom-20">
-								<caption><h3>其他说明</h3></caption>
-								<tr>
-									<td>其他说明：</td>
-									<td>${goodsDetails.asAloneSoftware.otherDesc}</td>
-								</tr>
-							</table>
-						</div>
+						<div class="table-item">${goodsDetails.asAloneSoftware.coreFunction}</div>
+						<div class="table-item">${goodsDetails.asAloneSoftware.technologicalSuperiority}</div>
+						<div class="table-item">${goodsDetails.asAloneSoftware.teamAdvantage}</div>
+						<div class="table-item">${goodsDetails.asAloneSoftware.desiredEnvironment}</div>
+						<div class="table-item">${goodsDetails.asAloneSoftware.dataNeeded}</div>
+						<div class="table-item">${goodsDetails.appCase}</div>
+						<div class="table-item">${goodsDetails.afterSaleService}</div>
 						<%}else if(goodsDetails.goodsType == 7){%>
-						<div class="table-item">
-							<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
-							<table class="tab-one">
-								<caption><h3>应用场景规则</h3></caption>
-								<tr>
-									<td>应用复杂度：</td>
-									<td>${goodsDetails.asSaaS.sSComplexity}</td>
-								</tr>
-								<tr>
-									<td>版本说明：</td>
-									<td>${goodsDetails.asSaaS.sSVersionDesc}</td>
-								</tr>
-								<tr>
-									<td>服务等级：</td>
-									<td>${goodsDetails.asSaaS.sServiceLevel}</td>
-								</tr>
-								<tr>
-									<td>应用经验：</td>
-									<td>${goodsDetails.asSaaS.sSAexp}</td>
-								</tr>
-								<tr>
-									<td>应用介绍：</td>
-									<td>${goodsDetails.asSaaS.sSAintroduce}</td>
-								</tr>
-							</table>
-							<table class="tab-one margin-top-20  margin-bottom-20">
-								<caption><h3>其他说明</h3></caption>
-								<tr>
-									<td>其他说明：</td>
-									<td>${goodsDetails.asSaaS.otherDesc}</td>
-								</tr>
-							</table>
-						</div>
+						<div class="table-item">${goodsDetails.asSaaS.coreFunction}</div>
+						<div class="table-item">${goodsDetails.asSaaS.teamAdvantage}</div>
+						<div class="table-item">${goodsDetails.asSaaS.desiredEnvironment}</div>
+						<div class="table-item">${goodsDetails.asSaaS.dataNeeded}</div>
+						<div class="table-item">${goodsDetails.appCase}</div>
+						<div class="table-item">${goodsDetails.afterSaleService}</div>
 						<%}else if(goodsDetails.goodsType == 4){%>
-						<div class="table-item">
-							<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
-							<table class="tab-one">
-								<caption><h3>工具规格</h3></caption>
-								<tr>
-									<td>行业领域：</td>
-									<td>${goodsDetails.atAloneSoftware.aTAloneIndustryField}</td>
-								</tr>
-								<tr>
-									<td>版本说明：</td>
-									<td>${goodsDetails.atAloneSoftware.aTAloneVersionDesc}</td>
-								</tr>
-								<tr>
-									<td>工具介绍：</td>
-									<td>${goodsDetails.atAloneSoftware.aTAloneToolsIntroduce}</td>
-								</tr>
-							</table>
-							<table class="tab-one margin-top-20  margin-bottom-20">
-								<caption><h3>使用规格</h3></caption>
-								<tr>
-									<td>云硬件资源：</td>
-									<td>${goodsDetails.atAloneSoftware.aTAloneCloudHardwareResource}</td>
-								</tr>
-							</table>
-							<table class="tab-one margin-top-20  margin-bottom-20">
-								<caption><h3>其他说明</h3></caption>
-								<tr>
-									<td>其他说明：</td>
-									<td>${goodsDetails.atAloneSoftware.otherDesc}</td>
-								</tr>
-							</table>
-						</div>
+						<div class="table-item">${goodsDetails.atAloneSoftware.coreFunction}</div>
+						<div class="table-item">${goodsDetails.atAloneSoftware.technologicalSuperiority}</div>
+						<div class="table-item">${goodsDetails.atAloneSoftware.teamAdvantage}</div>
+						<div class="table-item">${goodsDetails.atAloneSoftware.desiredEnvironment}</div>
+						<div class="table-item">${goodsDetails.atAloneSoftware.dataNeeded}</div>
+						<div class="table-item">${goodsDetails.appCase}</div>
+						<div class="table-item">${goodsDetails.afterSaleService}</div>
 						<%}else if(goodsDetails.goodsType ==5){%>
-						<div class="table-item">
-							<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
-							<table class="tab-one">
-								<caption><h3>工具规格</h3></caption>
-								<tr>
-									<td>行业领域：</td>
-									<td>${goodsDetails.atSaaS.aTIndustryField}</td>
-								</tr>
-								<tr>
-									<td>版本说明：</td>
-									<td>${goodsDetails.atSaaS.aTVersionDesc}</td>
-								</tr>
-								<tr>
-									<td>工具介绍：</td>
-									<td>${goodsDetails.atSaaS.aTToolsIntroduce}</td>
-								</tr>
-							</table>
-							<table class="tab-one margin-top-20  margin-bottom-20">
-								<caption><h3>其他说明</h3></caption>
-								<tr>
-									<td>其他说明：</td>
-									<td>${goodsDetails.atSaaS.otherDesc}</td>
-								</tr>
-							</table>
-						</div>
+						<div class="table-item">${goodsDetails.atSaaS.coreFunction}</div>
+						<div class="table-item">${goodsDetails.atSaaS.teamAdvantage}</div>
+						<div class="table-item">${goodsDetails.atSaaS.desiredEnvironment}</div>
+						<div class="table-item">${goodsDetails.atSaaS.dataNeeded}</div>
+						<div class="table-item">${goodsDetails.appCase}</div>
+						<div class="table-item">${goodsDetails.afterSaleService}</div>
 						<%}%>
 					<%}%>
 					<div class="table-item evaluate">
@@ -487,7 +408,7 @@ var htmlPart = {
 							<img src="${item.goodsImg}" alt="">
 							<div class="img-info">
 								<p class="title">${item.goodsName}</p>
-								<p class="color-orange">￥${item.shopPrice /100}/${item.shopNumber == 1 ? '' : item.shopNumber}${decode(item.shopFormat,0,'次',1,'天',2,'年','未知')}</p>
+								<p class="color-orange">￥${item.shopPrice /100}/${item.shopNumber == 1 ? '' : item.shopNumber}${decode(item.shopFormat,0,'次',1,'月',2,'年','未知')}</p>
 							</div>
 						</a>
 					</li>
