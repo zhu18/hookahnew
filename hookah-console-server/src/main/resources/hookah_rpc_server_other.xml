@@ -18,6 +18,7 @@
     <bean id="dictService" class="com.jusfoun.hookah.console.server.service.impl.DictServiceImpl"/>
     <bean id="organizationService" class="com.jusfoun.hookah.console.server.service.impl.OrganizationServiceImpl"/>
     <bean id="cooperationService" class="com.jusfoun.hookah.console.server.service.impl.CooperationServiceImpl"/>
+    <bean id="supplierService" class="com.jusfoun.hookah.console.server.service.impl.SupplierServiceImpl"/>
     <!-- 具体rpc服务配置，声明实现的接口类。-->
     <motan:service interface="com.jusfoun.hookah.rpc.api.MqSenderService"
                    ref="mqSenderService" export="hookah:5001" basicService="serviceBasicConfig">
@@ -55,5 +56,9 @@
     <!-- 合作机构 -->
     <motan:service interface="com.jusfoun.hookah.rpc.api.CooperationService"
                    ref="cooperationService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+    <!-- 成为供应商 -->
+    <motan:service interface="com.jusfoun.hookah.rpc.api.SupplierService"
+                   ref="supplierService" export="hookah:5001" basicService="serviceBasicConfig">
     </motan:service>
 </beans>

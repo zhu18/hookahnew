@@ -108,25 +108,42 @@ class GoodsCheckController {
 			$rootScope.selectId = item.goodsId;
 		}
 
-		$scope.submitCheck = function (that) {
+		$scope.submitCheck = function () {
 
-
-			alert(that);
-            $rootScope.addData.goodsCheck.checkStatus = $('input[name="checkStatus"]:checked').val();
-            $rootScope.addData.goodsCheck.checkContent = $('#checkContent').val();
-
-            console.log($rootScope.addData.goodsCheck);
             if ($("#checkContent").val().trim() != '') {
-				var promise = $http({
-					method: 'post',
-					url: $rootScope.site.apiServer + "/api/goodsCheck/addApi",
-					data: "voStr="+JSON.stringify($rootScope.addData)
-				});
-				promise.then(function (res, status, config, headers) {
-					if (res.data.code == "1") {
-						$state.go('items.check');
-					}
-				});
+            	if($rootScope.editData.goodsType == 1){
+
+                    $rootScope.addData.goodsCheck.checkStatus = $('input[name="checkStatus"]:checked').val();
+                    $rootScope.addData.goodsCheck.checkContent = $('#checkContent').val();
+                    var promise = $http({
+                        method: 'post',
+                        url: $rootScope.site.apiServer + "/api/goodsCheck/addApi",
+                        data: "voStr="+JSON.stringify($rootScope.addData)
+                    });
+                    promise.then(function (res, status, config, headers) {
+                        if (res.data.code == "1") {
+                            $state.go('items.check');
+                        }
+                    });
+				}else{
+
+            		$scope.dataGoods={};
+                    $scope.dataGoods.goodsId = $('#goodsId').val();
+                    $scope.dataGoods.goodsSn = $('#goodsSn').val();
+                    $scope.dataGoods.goodsName = $('#goodsName').val();
+                    $scope.dataGoods.checkStatus = $('input[name="checkStatus"]:checked').val();
+                    $scope.dataGoods.checkContent = $('#checkContent').val();
+                    var promise = $http({
+                        method: 'post',
+                        url: $rootScope.site.apiServer + "/api/goodsCheck/add",
+                        data: "voStr="+JSON.stringify($scope.dataGoods)
+                    });
+                    promise.then(function (res, status, config, headers) {
+                        if (res.data.code == "1") {
+                            $state.go('items.check');
+                        }
+                    });
+				}
 			} else {
 				$rootScope.openErrorDialogModal('请填写审核意见^_^');
 			}

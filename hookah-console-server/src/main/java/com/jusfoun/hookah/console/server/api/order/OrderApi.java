@@ -40,8 +40,6 @@ public class OrderApi extends BaseController{
         Pagination<OrderInfoVo> page = new Pagination<>();
         try {
             List<Condition> filters = new ArrayList();
-            List<OrderBy> orderBys = new ArrayList();
-            orderBys.add(OrderBy.desc("addTime"));
             //只查询商品状态为未删除的商品
 //            filters.add(Condition.eq("isDelete", 1));
 
@@ -53,10 +51,10 @@ public class OrderApi extends BaseController{
 
             Date startTime = null;
             Date endTime = null;
-            if (org.apache.commons.lang3.StringUtils.isNotBlank(startDate)) {
+            if (StringUtils.isNotBlank(startDate)) {
                 startTime = DateUtils.getDate(startDate,DateUtils.DEFAULT_DATE_TIME_FORMAT);
             }
-            if (org.apache.commons.lang3.StringUtils.isNotBlank(endDate)) {
+            if (StringUtils.isNotBlank(endDate)) {
                 endTime = DateUtils.getDate(endDate,DateUtils.DEFAULT_DATE_TIME_FORMAT);
             }
             if (StringUtils.isNotBlank(userName)){

@@ -120,7 +120,7 @@
 						</div>
 					</div>
 
-					<div class="form-group">
+					<div class="form-group" data-ng-if="editData.goodsType == 0 || editData.goodsType == 1 || editData.goodsType == 2">
 						<label class="col-sm-2 control-label">商品优势</label>
 						<div class="col-sm-5">
 							<p ng-bind-html="editData.goodsAdvantage"></p>
@@ -132,7 +132,7 @@
 							<p ng-bind-html="editData.afterSaleService"></p>
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="form-group" data-ng-if="editData.goodsType == 0 || editData.goodsType == 1">
 						<label class="col-sm-2 control-label">数据样例</label>
 						<div class="col-sm-5">
 							<a href="{{editData.dataSample}}" target="_blank">
@@ -140,7 +140,7 @@
 							</a>
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="form-group" data-ng-if="editData.goodsType == 1 || editData.goodsType == 4 || editData.goodsType == 5 || editData.goodsType == 6 || editData.goodsType == 7">
 						<label class="col-sm-2 control-label">应用案例</label>
 						<div class="col-sm-5">
 							<p ng-bind-html="editData.appCase"></p>
