@@ -1,12 +1,16 @@
 package com.jusfoun.hookah.pay.controller;
 
 import com.jusfoun.hookah.core.domain.bo.MoneyInOutBo;
+import com.jusfoun.hookah.core.domain.bo.SettleBo;
+import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
 import com.jusfoun.hookah.rpc.api.PayAccountRecordService;
+import com.jusfoun.hookah.rpc.api.WaitSettleRecordService;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by dengxu on 2017/7/3/0003.
@@ -17,6 +21,9 @@ public class TestController {
 
     @Resource
     PayAccountRecordService payAccountRecordService;
+
+    @Resource
+    WaitSettleRecordService settleService;
 
     @RequestMapping("/test")
     public String test(){
@@ -49,5 +56,19 @@ public class TestController {
         }else if(type.equals(2)){
             payAccountRecordService.ExitPayments(moneyInOutBo);
         }
+    }
+
+    @RequestMapping("/settle")
+    public void moneyIn3(String orderSn, String shopName,
+                         String startTime, String endTime, Integer settleStatus
+    ){
+        SettleBo bo = new SettleBo();
+        bo.setOrderSn(orderSn);
+        bo.setShopName(shopName);
+        bo.setStartDate(startTime);
+        bo.setEndDate(endTime);
+        bo.setSettleStatus(settleStatus);
+
+
     }
 }

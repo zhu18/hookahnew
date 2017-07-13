@@ -33,6 +33,32 @@ public class HookahConstants {
     //消息常量
     public static final String PROPERTY_MESSAGE_CONSTANTS = "MESSAGE_CONSTANTS";
 
+    //第三方短信下发成功失败标志
+    public static final String SMS_SUCCESS = "success";
+    public static final String SMS_FAIL = "fail";
+
+    //消息发送：短信下发成功/失败
+    public static final byte LOCAL_SMS_SUCCESS = 1;
+    public static final byte LOCAL_SMS_FAIL = 0;
+
+    public enum SmsTypeNew {
+        SMS_USER_REGISTER("101"),  //注册
+        SMS_FIND_USER_PWD("102"),   //找回登录密码
+        SMS_CHANGE_USER_PWD("104"),   //修改登录密码
+        SMS_CHANGE_MOBILE("103"),   //修改手机号
+        SMS_CHANGE_PAY_PWD("105");   //修改支付密码
+
+        public String code;
+
+        SmsTypeNew(String  code) {
+            this.code = code;
+        }
+        @Override
+        public String toString(){
+            return this.code;
+        }
+    }
+
     public enum SmsType {
         SMS_USER_REGISTER("6524"),  //注册
         SMS_FIND_USER_PWD("6525"),   //找回登录密码
@@ -309,4 +335,8 @@ public class HookahConstants {
             return code;
         }
     }
+
+    /** 订单结算状态 */
+    public static final Byte NO_SETTLE_STATUS = 0;
+    public static final Byte HAS_SETTLE_STATUS = 1;
 }

@@ -332,6 +332,21 @@ export default angular.module('Common', [
           }
       }
   })
+  .filter('templateType', function () {
+      return function (input) {
+          switch (input) {
+              case 0:
+                  return '短信';
+                  break;
+              case 1:
+                  return '邮件';
+                  break;
+              case 2:
+                  return "站内信";
+                  break
+          }
+      }
+  })
   .filter('trustHtml', function ($sce) {
     return function (input) {
       return $sce.trustAsHtml(input);

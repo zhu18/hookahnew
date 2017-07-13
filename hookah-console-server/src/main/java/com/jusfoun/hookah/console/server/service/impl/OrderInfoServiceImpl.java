@@ -636,7 +636,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
     @Override
     public Pagination<OrderInfoVo> getSoldOrderListByCondition(Integer pageNum, Integer pageSize, List<Condition> filters,
-                                                        Byte goodsType, Date startTime, Date endTime, String addUser){
+                                                         Date startTime, Date endTime, String addUser){
         Pagination<OrderInfoVo> pagination = mgOrderInfoService.getSoldOrderList(pageNum, pageSize, filters, startTime, endTime);
         List<OrderInfoVo> orderInfoVos = pagination.getList();
         for (OrderInfoVo orderInfoVo:orderInfoVos) {

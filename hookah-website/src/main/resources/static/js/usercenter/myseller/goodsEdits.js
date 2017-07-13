@@ -300,7 +300,10 @@ function loadRegion(id,regionParam) {//加载地区
 	}else{
 		parentId = $(regionParam).val();
 	}
-	$(regionParam).nextAll().html('<option value="-1"></option>')
+	if(parentId == '-1'){
+		$('#city').html('<option value="-1">全部</option>')
+	}
+	$(regionParam).nextAll().html('<option value="-1">全部</option>')
 	$.ajax({
 		type: "get",
 		url: host.website+'/region/getRegionCodeByPid',
