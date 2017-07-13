@@ -188,7 +188,7 @@ class MessageController {
 
             //模板类型列表
             $scope.templateTypes = [{id: 0, name: "短信"}, {id: 1, name: "邮件"},{id: 2, name: "站内信"}];
-            $scope.templateTypes.unshift([{id: -1, name: "全部"}]);
+            $scope.templateTypes.unshift({id: -1, name: "全部"});
             $scope.templateType = -1;
 
             //获取消息事件类型列表
@@ -207,7 +207,7 @@ class MessageController {
                 }
             });
 
-            $scope.smsSearch();
+            $scope.templateSearch();
         }
     }
 }
