@@ -23,6 +23,16 @@ public class HookahConstants {
     public static final Integer SMS_CHANGE_MOBILE = 6526;   //修改手机号
     public static final Integer SMS_CHANGE_PAY_PWD = 6528;   //修改支付密码
 
+    //站内信:2 邮件:1 短信:0
+    public static final Byte SEND_TYPE_SYSTEM = 2;
+    public static final Byte SEND_TYPE_EMAIL = 1;
+    public static final Byte SEND_TYPE_SMS = 0;
+
+    //消息事件
+    public static final String property_eventType = "EVENT_TYPE";
+    //消息常量
+    public static final String PROPERTY_MESSAGE_CONSTANTS = "MESSAGE_CONSTANTS";
+
     public enum SmsType {
         SMS_USER_REGISTER("6524"),  //注册
         SMS_FIND_USER_PWD("6525"),   //找回登录密码
