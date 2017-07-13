@@ -23,11 +23,11 @@ public class CommentApi extends BaseController {
     private CommentService commentService;
 
     @RequestMapping("/findCommentsByCondition")
-    public ReturnData findCommentsByCondition(String orderId,String goodsName,String startTime,
+    public ReturnData findCommentsByCondition(String orderSn,String goodsName,String startTime,
                           Integer pageNumber,Integer pageSize,String endTime,String commentContent,
                           String  status,String  goodsCommentGrade){
         Map<String,Object> params=new HashMap<>();
-        params.put("orderId",orderId);
+        params.put("orderSn",orderSn);
         params.put("goodsName",goodsName);
         params.put("startTime",startTime);
         params.put("pageNumber",pageNumber);
