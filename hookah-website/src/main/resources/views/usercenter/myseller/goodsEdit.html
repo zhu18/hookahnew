@@ -1,6 +1,7 @@
 <%
 var head = {
 %>
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
 <link rel="stylesheet" href="/static/css/usercenter/myseller/goodsEdit.css">
 <link rel="stylesheet" href="/static/css/plugins/chosen/chosen.css">
 <link rel="stylesheet" href="/static/css/plugins/jedate/jedate.css">
@@ -19,7 +20,7 @@ var htmlPart = {
 <div class="grid-0 backgorund-gray">
 	<div class="grid-row clearfix">
 		<%include("/usercenter/user-center-menu.html"){} %>
-		<div class="grid-right margin-top-10">
+		<div class="grid-right margin-top-10 info-center-box">
 			<form action="" id="goodsModifyForm">
 				<input type="hidden" name="userId" value="${user.userId}">
 				<input type="hidden" name="typeId">
