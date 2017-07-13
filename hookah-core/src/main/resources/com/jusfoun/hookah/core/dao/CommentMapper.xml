@@ -72,34 +72,34 @@
     WHERE 1=1
 
     <if test="status != null and status !=''">
-      c.status = #{status}
+      AND c.status = #{status}
     </if>
     <if test="goodsCommentGrade != null and goodsCommentGrade !=''">
-      c.goods_comment_grade = #{goodsCommentGrade}
+      AND c.goods_comment_grade = #{goodsCommentGrade}
     </if>
-    <if test="orderId != null and orderId !=''">
-      c.order_id = #{orderId}
+    <if test="orderSn != null and orderSn !=''">
+      AND oi.order_sn = #{orderSn}
     </if>
     <if test="goodsName != null and goodsName !=''">
-      g.goodsName like CONCAT(CONCAT('%', #{goodsName}),'%')
+      AND g.goodsName like CONCAT('%', #{goodsName}, '%')
     </if>
     <if test="commentContent != null and commentContent !=''">
-      c.comment_content like CONCAT(CONCAT('%', #{commentContent}),'%')
+      AND c.comment_content like CONCAT('%', #{commentContent},'%')
     </if>
     <if test="startTime != null and startTime !=''">
-      c.add_time <![CDATA[  >=  ]]> #{startTime}
+      AND c.add_time <![CDATA[  >=  ]]> #{startTime}
     </if>
     <if test="endTime != null and endTime !=''">
-      c.add_time <![CDATA[  <=  ]]> #{endTime}
+      AND c.add_time <![CDATA[  <=  ]]> #{endTime}
     </if>
   </sql>
 
-  <select id="selectCountByCondition" resultType="java.lang.Integer">
+  <select id="selectCountByCondition" resultType="java.lang.Integer" >
     SELECT  COUNT(c.comm_id)    <include refid="SelectConditions"/>
   </select>
 
   <!-- 通过条件动态分页查询评论，用于评论审核 -->
-  <select id="selectCommentsByCondition" resultMap="ResultMapWithBLOBs">
+  <select id="selectCommentsByCondition" resultMap="ResultMapWithBLOBs" parameterType="java.util.HashMap">
     SELECT  c.comm_id,
       c.comment_level,
       c.goods_id,
