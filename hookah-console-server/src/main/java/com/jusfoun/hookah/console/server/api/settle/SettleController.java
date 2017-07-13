@@ -28,7 +28,7 @@ import java.util.List;
  * dx
  */
 @RestController
-@RequestMapping("/api/waitSettle")
+@RequestMapping("/api/settleOrder")
 public class SettleController extends BaseController{
 
     @Resource
@@ -49,7 +49,7 @@ public class SettleController extends BaseController{
     public ReturnData getList(WaitSettleVo waitSettleVo) {
 
         ReturnData returnData = new ReturnData<>();
-        returnData.setCode(ExceptionConst.Failed);
+        returnData.setCode(ExceptionConst.Success);
         Pagination<WaitSettleRecord> page = new Pagination<>();
         try {
 
@@ -88,7 +88,7 @@ public class SettleController extends BaseController{
             }
 
             page = waitSettleRecordService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
-
+            returnData.setData(page);
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage("系统出错，请联系管理员！");
