@@ -335,4 +335,8 @@ public class HookahConstants {
             return code;
         }
     }
+
+    /** 订单结算状态 */
+    public static final Byte NO_SETTLE_STATUS = 0;
+    public static final Byte HAS_SETTLE_STATUS = 1;
 }
