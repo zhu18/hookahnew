@@ -21,9 +21,9 @@ var htmlPart = {
                         <li>
                             <label for="">状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态 :</label>
                             <div class="btn-box">
-                                <a href="">全部</a>
-                                <a href="">待结算</a>
-                                <a href="">已结清</a>
+                                <a href="javascript:void (0);" class="active">全部</a>
+                                <a href="javascript:void (0);">待结算</a>
+                                <a href="javascript:void (0);">已结清</a>
                             </div>
                         </li>
                         <li>
@@ -34,16 +34,16 @@ var htmlPart = {
                                 <input type="text" readonly>
                             </div>
                             <div class="select-month">
-                                <a href="">本月</a>
-                                <a href="">上个月</a>
-                                <a href="">3月</a>
-                                <a href="">半年</a>
+                                <a href="javascript:void (0);" class="active">本月</a>
+                                <a href="javascript:void (0);">上个月</a>
+                                <a href="javascript:void (0);">3月</a>
+                                <a href="javascript:void (0);">半年</a>
                             </div>
                         </li>
                         <li>
                             <label for="">订单编号 :</label>
                             <input type="text" >
-                            <a href="" class="search-btn">查询</a>
+                            <a href="javascript:void (0);" class="search-btn">查询</a>
                         </li>
                     </ul>
                 </div>
@@ -79,5 +79,5 @@ var htmlPart = {
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
-<script type="text/javascript" src="/static/js/usercenter/userInfo/settlementRecord.js"></script>
+<script type="text/javascript" src="/static/js/usercenter/myseller/settlementRecord.js"></script>
 

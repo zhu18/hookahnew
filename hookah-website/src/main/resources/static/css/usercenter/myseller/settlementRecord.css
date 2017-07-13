@@ -73,8 +73,10 @@
    width: 50px;
 }
 .settlementRecord-top .query-condition li .select-month a:first-child{
-    color: #4490f6;
    border-right: 1px solid #CCCCCC;
+}
+.settlementRecord-top .query-condition li .select-month a.active{
+    color: #4490f6;
 }
 .settlementRecord-top .query-condition li .search-btn{
    margin-left: 36px;
