@@ -279,13 +279,12 @@ public class OrderInfoController extends BaseController {
             if (domainName != null) {
                 listFilters.add(Condition.like("domainName", "%" + domainName + "%"));
             }
-//            listFilters.add(Condition.eq("orderGoodsList.addUser", userId));
             listFilters.add(Condition.eq("isDeleted", 0));
 
             //查询列表
             List<OrderBy> orderBys = new ArrayList<>();
             orderBys.add(OrderBy.desc("addTime"));
-            Pagination<OrderInfoVo> pOrders = orderInfoService.getSoldOrderListInPage(pageNumber, pageSize, listFilters, userId, goodsType ,startTime, endTime);
+            Pagination<OrderInfoVo> pOrders = orderInfoService.getSoldOrderListInPage(pageNumber, pageSize, listFilters, goodsType ,startTime, endTime, userId);
 
 //            logger.info(JsonUtils.toJson(map));
             return ReturnData.success(pOrders);

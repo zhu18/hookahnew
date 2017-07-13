@@ -594,23 +594,56 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     }
 
     @Override
-    public Pagination<OrderInfoVo> getSoldOrderListInPage(Integer pageNum, Integer pageSize, List<Condition> filters, String userId,
-                                                          Byte goodsType, Date startTime, Date endTime){
-//        if (userId != "1"){
-//            filters.add(Condition.eq("orderGoodsList.addUser", userId));
-//        }
+    public Pagination<OrderInfoVo> getSoldOrderListInPage(Integer pageNum, Integer pageSize, List<Condition> filters,
+                                                          Byte goodsType, Date startTime, Date endTime, String userId){
+        User user = userService.selectById(userId);
+        String addUser = user.getUserName();
+        if (!userId.equals("1")){
+            filters.add(Condition.eq("orderGoodsList.addUser", addUser));
+        }
         if (goodsType != null){
             filters.add(Condition.eq("orderGoodsList.goodsType", goodsType));
         }
         Pagination<OrderInfoVo> pagination = mgOrderInfoService.getSoldOrderList(pageNum, pageSize, filters, startTime, endTime);
         List<OrderInfoVo> orderInfoVos = pagination.getList();
         for (OrderInfoVo orderInfoVo:orderInfoVos){
+            if (!userId.equals("1")){
+                List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
+                List<MgOrderGoods> goods = new ArrayList<MgOrderGoods>();
+                for (MgOrderGoods mgOrderGoods : goodsList){
+                    if (goodsType!=null && mgOrderGoods.getGoodsType().equals(goodsType) && mgOrderGoods.getAddUser().equals(addUser)){
+                        goods.add(mgOrderGoods);
+                    }else if (goodsType == null && mgOrderGoods.getAddUser().equals(addUser)){
+                        goods.add(mgOrderGoods);
+                    }
+                }
+                orderInfoVo.setMgOrderGoodsList(goods);
+            }else {
+                List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
+                List<MgOrderGoods> goods = new ArrayList<MgOrderGoods>();
+                for (MgOrderGoods mgOrderGoods : goodsList){
+                    if (goodsType!=null && mgOrderGoods.getGoodsType().equals(goodsType)){
+                        goods.add(mgOrderGoods);
+                    }else if (goodsType == null){
+                        goods.add(mgOrderGoods);
+                    }
+                }
+                orderInfoVo.setMgOrderGoodsList(goods);
+            }
+        }
+        return pagination;
+    }
+
+    @Override
+    public Pagination<OrderInfoVo> getSoldOrderListByCondition(Integer pageNum, Integer pageSize, List<Condition> filters,
+                                                        Byte goodsType, Date startTime, Date endTime, String addUser){
+        Pagination<OrderInfoVo> pagination = mgOrderInfoService.getSoldOrderList(pageNum, pageSize, filters, startTime, endTime);
+        List<OrderInfoVo> orderInfoVos = pagination.getList();
+        for (OrderInfoVo orderInfoVo:orderInfoVos) {
             List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
             List<MgOrderGoods> goods = new ArrayList<MgOrderGoods>();
-            for (MgOrderGoods mgOrderGoods : goodsList){
-                if (goodsType!=null && mgOrderGoods.getGoodsType().equals(goodsType)){
-                    goods.add(mgOrderGoods);
-                }else if (goodsType == null){
+            for (MgOrderGoods mgOrderGoods : goodsList) {
+                if (mgOrderGoods.getAddUser().equals(addUser)) {
                     goods.add(mgOrderGoods);
                 }
             }
