@@ -1,6 +1,5 @@
 import '../../common/common';
 import commentRouting from './comment.routing';
-import "treeGridCss";
 const MODULE_NAME = 'Hookah';
 let app = angular.module(MODULE_NAME, [
   'Common',

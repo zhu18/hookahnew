@@ -16,6 +16,9 @@ public class CommentVo extends Comment {
     //是否包含敏感词
     private Boolean isContains;
 
+    //订单编号
+    private String orderSn;
+
     public String getUsername() {
         return username;
     }
@@ -46,5 +49,13 @@ public class CommentVo extends Comment {
 
     public void setIsContains(Boolean isContains) {
         this.isContains = isContains;
+    }
+
+    public String getOrderSn() {
+        return orderSn;
+    }
+
+    public void setOrderSn(String orderSn) {
+        this.orderSn = orderSn;
     }
 }

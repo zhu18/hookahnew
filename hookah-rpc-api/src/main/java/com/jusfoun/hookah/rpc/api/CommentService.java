@@ -5,7 +5,6 @@ import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.generic.GenericService;
 import com.jusfoun.hookah.core.utils.ReturnData;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +33,13 @@ public interface CommentService extends GenericService<Comment,String>{
      * @return
      */
     ReturnData findByCondition(Map<String,Object> params);
+
+    /**
+     * 评价审核操作
+     * @param params
+     * @return
+     */
+    ReturnData checkComment(Map<String,String> params);
 
     /**
      * 计算
