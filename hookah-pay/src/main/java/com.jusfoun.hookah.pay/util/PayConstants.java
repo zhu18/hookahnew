@@ -165,7 +165,6 @@ public class PayConstants {
         }
     }
 
-
     /**
      * payTradeRecode
      交易平台类型
@@ -190,6 +189,7 @@ public class PayConstants {
         ManualDebit((byte)6),
         OfflineRecharge((byte)7),
         CashREverse((byte)8),
+        SettleCut((byte)9),
         SalesIn((byte)3001),
         SalesOut((byte)4001),
         ChargeIn((byte)3007),

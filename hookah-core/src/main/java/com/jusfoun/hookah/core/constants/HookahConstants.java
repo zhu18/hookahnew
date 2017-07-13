@@ -340,4 +340,47 @@ public class HookahConstants {
     /** 订单结算状态 */
     public static final Byte NO_SETTLE_STATUS = 0;
     public static final Byte HAS_SETTLE_STATUS = 1;
+
+    /**
+     * payTradeRecode
+     交易平台类型
+     1：在线充值（入金），
+     2：在线提现（出金），
+     5：手工充值,
+     6：手工扣款，
+     7：线下充值，
+     8：提现冲账
+     9: 结算扣款  从冻结部分和总金额部分 同时减去欲结算的金额
+     清算中心类型
+     3001：销售（货款）收入
+     3007：交易交收手续费-收入
+     4001：销售（货款）支出
+     6003：冻结划入-收益账户
+     6004：释放划出-收益账户
+     */
+    public enum TradeType {
+
+        OnlineRecharge((byte)1),
+        OnlineCash((byte)2),
+        ManualRecharge((byte)5),
+        ManualDebit((byte)6),
+        OfflineRecharge((byte)7),
+        CashREverse((byte)8),
+        SettleCut((byte)9),
+        SalesIn((byte)3001),
+        SalesOut((byte)4001),
+        ChargeIn((byte)3007),
+        FreezaIn((byte)6003),
+        releaseDraw((byte)6004);
+
+        public byte code;
+
+        TradeType(byte code) {
+            this.code = code;
+        }
+
+        public byte getCode() {
+            return code;
+        }
+    }
 }
