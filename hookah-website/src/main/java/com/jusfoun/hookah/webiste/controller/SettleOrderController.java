@@ -65,11 +65,7 @@ public class SettleOrderController extends BaseController{
             if(StringUtils.isNotBlank(waitSettleVo.getOrderSn())){
                 filters.add(Condition.eq("orderSn", waitSettleVo.getOrderSn()));
             }
-
-            if(StringUtils.isNotBlank(waitSettleVo.getShopName())){
-                filters.add(Condition.eq("shopName", waitSettleVo.getShopName()));
-            }
-
+            
             if(waitSettleVo.getSettleStatus() != null){
                 filters.add(Condition.eq("settleStatus", waitSettleVo.getSettleStatus()));
             }
