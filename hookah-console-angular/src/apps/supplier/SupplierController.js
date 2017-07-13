@@ -19,7 +19,7 @@ class CommentController {
         console.log('数据在这里');
         console.log(res);
 
-        if (res.data.code !== '0') {
+        if (res.data.code == '1') {
           $scope.supplierList = res.data.data.list;
           $rootScope.pagination = res.data.data;
           $scope.showNoneDataInfoTip = false;

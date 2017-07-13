@@ -1,0 +1,52 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/contactInformationEdit.css">
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="grid-right info-center-box ">
+            <div class="contactInformationEdit">
+                <div class="header clearfix">
+                    <h4 class="grid-left center-title">账号信息</h4>
+                </div>
+                <ul>
+                    <li>
+                        <label for="contactName">联系人 :</label>
+                        <input type="text" id="contactName">
+                    </li>
+                    <li>
+                        <label for="contactPhone">联系电话 :</label>
+                        <input type="text" id="contactPhone">
+                        <span style="color: red" class="contactPhone-msg"></span>
+                    </li>
+                    <li>
+                        <label for="contactAddress">邮寄地址 :</label>
+                        <input type="text" id="contactAddress">
+                    </li>
+                    <li>
+                        <label for="postCode">邮编 :</label>
+                        <input type="text" id="postCode">
+                    </li>
+                    <li>
+                        <a href="javascript:void (0)" class="save">保存</a>
+                        <a href="/usercenter/contactInformation" class="cancel">取消</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+<script type="text/javascript" src="/static/js/usercenter/userInfo/contactInformationEdit.js"></script>
+

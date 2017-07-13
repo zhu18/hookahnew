@@ -1,6 +1,4 @@
-.contactInformation{
 
-}
 .contactInformation ul{
   margin-top: 62px;
   margin-left: 318px;
@@ -36,15 +34,7 @@
     border-radius: 5px;
     line-height: 36px;
     text-align: center;
-}
-.contactInformation ul li:last-child a.save{
     font-size: 14px;
     color: #ffffff;
-    margin-right: 28px;
     background-color: #5397F3;
-}
-.contactInformation ul li:last-child a.cancel{
-    font-size: 14px;
-    color: #333333;
-    background-color:#EDEDED;
 }

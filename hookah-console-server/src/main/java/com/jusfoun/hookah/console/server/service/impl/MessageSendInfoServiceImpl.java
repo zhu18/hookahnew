@@ -132,9 +132,9 @@ public class MessageSendInfoServiceImpl extends GenericServiceImpl<MessageSendIn
             if (Objects.nonNull(messageCritVo.getStartTime())) {
                 filters.add(Condition.ge("sendTime", messageCritVo.getStartTime()));
             }
-            if (Objects.nonNull(messageCritVo.getSendType())) {
-                filters.add(Condition.le("sendTime", messageCritVo.getEndTime()));
-            }
+//            if (Objects.nonNull(messageCritVo.getSendType())) {
+//                filters.add(Condition.le("sendTime", messageCritVo.getEndTime()));
+//            }
             if (Objects.nonNull(messageCritVo.getEndTime())) {
                 filters.add(Condition.le("sendTime", messageCritVo.getEndTime()));
             }

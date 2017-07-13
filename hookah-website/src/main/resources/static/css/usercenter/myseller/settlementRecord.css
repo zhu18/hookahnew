@@ -30,8 +30,9 @@
     height: 100%;
 }
 .settlementRecord-top .query-condition li input{
-    width: 141px;
+    width: 136px;
     height: calc(100% - 4px);
+    padding-left: 5px;
     border-radius: 3px;
     border: 1px solid #ccc;
 }
