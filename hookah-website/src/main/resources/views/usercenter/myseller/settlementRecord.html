@@ -1,6 +1,8 @@
 <%
 var head = {
 %>
+<link rel="stylesheet" href="/static/css/plugins/jedate/jedate.css">
+<script src="/static/js/plugins/jedate/jquery.jedate.min.js"></script>
 <link rel="stylesheet" href="/static/css/usercenter/myseller/settlementRecord.css">
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
 <%};%>
@@ -21,17 +23,17 @@ var htmlPart = {
                         <li>
                             <label for="">状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态 :</label>
                             <div class="btn-box">
-                                <a href="javascript:void (0);" class="active">全部</a>
-                                <a href="javascript:void (0);">待结算</a>
-                                <a href="javascript:void (0);">已结清</a>
+                                <a href="javascript:void (0);" data-status="null" class="active">全部</a>
+                                <a href="javascript:void (0);" data-status="0">待结算</a>
+                                <a href="javascript:void (0);" data-status="1">已结清</a>
                             </div>
                         </li>
                         <li>
                             <label for="">订单时间 :</label>
                             <div>
-                                <input type="text" readonly>
+                                <input id="startDate" type="text" placeholder="请选择开始时间" readonly="">
                                 <span class="text">至</span>
-                                <input type="text" readonly>
+                                <input id="endDate" type="text" placeholder="请选择结束时间" readonly="">
                             </div>
                             <div class="select-month">
                                 <a href="javascript:void (0);" class="active">本月</a>
@@ -42,7 +44,7 @@ var htmlPart = {
                         </li>
                         <li>
                             <label for="">订单编号 :</label>
-                            <input type="text" >
+                            <input type="text" id="orderSn">
                             <a href="javascript:void (0);" class="search-btn">查询</a>
                         </li>
                     </ul>

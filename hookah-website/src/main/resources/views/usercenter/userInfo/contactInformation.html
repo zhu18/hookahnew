@@ -4,7 +4,6 @@ var head = {
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/contactInformation.css">
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
 <%};%>
-
 <%
 var htmlPart = {
 %>
@@ -18,24 +17,23 @@ var htmlPart = {
                 </div>
                  <ul>
                      <li>
-                         <label for="contacts">联系人 :</label>
-                         <input type="text" id="contacts">
+                         <label>联系人 :</label>
+                         <span class="contactName"></span>
                      </li>
                      <li>
-                         <label for="contact-number">联系电话 :</label>
-                         <input type="text" id="contact-number">
+                         <label >联系电话 :</label>
+                         <span class="contactPhone"></span>
                      </li>
                      <li>
-                         <label for="mailing-address">邮寄地址 :</label>
-                         <input type="text" id="mailing-address">
+                         <label >邮寄地址 :</label>
+                         <span class="contactAddress"></span>
                      </li>
                      <li>
-                         <label for="zip-code">邮编 :</label>
-                         <input type="text" id="zip-code">
+                         <label >邮编 :</label>
+                         <span class="postCode"></span>
                      </li>
                      <li>
-                         <a href="" class="save">保存</a>
-                         <a href="" class="cancel">取消</a>
+                         <a href="/usercenter/contactInformationEdit" class="edit">修改</a>
                      </li>
                  </ul>
             </div>
@@ -47,5 +45,5 @@ var htmlPart = {
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
-<script type="text/javascript" src="/static/js/usercenter/userInfo/accountInformation.js"></script>
+<script type="text/javascript" src="/static/js/usercenter/userInfo/contactInformation.js"></script>
 
