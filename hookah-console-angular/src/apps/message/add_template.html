@@ -1,9 +1,53 @@
+<style>
+  .control-label {
+    width: 80px;
+  }
+  .form-group span{
+    margin-right:20px;
+  }
+</style>
 <div class="row">
   <div class="col-sm-12">
     <div class="console-title console-title-border clearfix">
-      <div class="pull-left"><h5>新增模板</h5></div>
+      <div class="pull-left"><h5>添加消息模板</h5></div>
       <div class="pull-right">
         <button class="btn btn-default" data-ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span> 返回</button>
+      </div>
+    </div>
+    <div class="box " style="margin-top:20px;margin-left:20px;">
+      <div class="form-group">
+        <label class="control-label">事件类型:</label>
+        <select ng-model="eventType"  ng-options="eventType.code as eventType.describle for eventType in eventTypes"  style="width: 155px;height: 32px">
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="control-label">模板类型:</label>
+        <span ><input type="radio" name="info" >站内信</span>
+        <span ><input type="radio" name="info" >短信</span>
+        <span ><input type="radio" name="info" >邮件</span>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="control-label">模板标题:</label>
+        <input type="text" placeholder="密码找回验证通知：您正在找回密码。"　>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="control-label">状态:</label>
+        <span ><input type="radio" name="use">启用</span>
+        <span ><input type="radio" name="use">禁用</span>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="control-label">内容:</label>
+        <textarea name="" id="" cols="50" rows="8"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="control-label">支持变量名:</label>
+      </div>
+      <div class="form-group flag">
+        <button type="submit" class="btn btn-default"　style="">添加</button>
+        <button  class="btn btn-default"　style="">取消</button>
       </div>
     </div>
   </div>
