@@ -10,6 +10,8 @@ import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.MessageSendInfoService;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -82,14 +84,29 @@ public class MessageSendInfoController extends BaseController{
 
     @RequestMapping(value="/markToReadMessage")
     @ResponseBody
-    public ReturnData markMessage(String[] messageId){
+    public ReturnData markMessage(@RequestBody String[] messageId){
         return messageSendInfoService.updateMessageStatus("read",messageId);
     }
 
     @RequestMapping(value="/delMessage")
     @ResponseBody
-    public ReturnData delMessage(String[] messageId){
+    public ReturnData delMessage(@RequestBody String[] messageId){
         return messageSendInfoService.updateMessageStatus("del",messageId);
+    }
+
+    @RequestMapping(value="/detail/{id}")
+    @ResponseBody
+    public ReturnData detail(@PathVariable String id){
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            returnData.setData(messageSendInfoService.selectById(id)==null?new MessageSendInfo():messageSendInfoService.selectById(id));
+        } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.getMessage());
+            e.printStackTrace();
+        }
+        return returnData;
     }
 
 }
