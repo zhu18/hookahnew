@@ -14,19 +14,16 @@ import com.jusfoun.hookah.console.server.pay.wallet.WalletBuilder;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.dao.AccNoTokenMapper;
 import com.jusfoun.hookah.core.dao.PayCoreMapper;
-import com.jusfoun.hookah.core.domain.AccNoToken;
-import com.jusfoun.hookah.core.domain.OrderInfo;
-import com.jusfoun.hookah.core.domain.PayCore;
-import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.domain.*;
+import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
+import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.domain.vo.PayCoreVo;
 import com.jusfoun.hookah.core.domain.vo.PayVo;
 import com.jusfoun.hookah.core.domain.vo.RechargeVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.HttpClientUtil;
-import com.jusfoun.hookah.rpc.api.OrderInfoService;
-import com.jusfoun.hookah.rpc.api.PayCoreService;
-import com.jusfoun.hookah.rpc.api.UserService;
+import com.jusfoun.hookah.rpc.api.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -71,6 +68,12 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 	UserService userService;
 
 	@Resource
+	MgOrderInfoService mgOrderInfoService;
+
+	@Resource
+	WaitSettleRecordService waitSettleRecordService;
+
+	@Resource
 	public void setDao(PayCoreMapper mapper) {
 		super.setDao(mapper);
 	}
@@ -98,6 +101,37 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 		Long newMoneyBalance = oldMoneyBalance - orderAmount;
 		user.setMoneyBalance(newMoneyBalance);
 		userService.updateByIdSelective(user);
+
+		// 支付成功 查询订单 获取订单中商品插入到待清算记录
+		List<Condition> mgfilters = new ArrayList<>();
+		mgfilters.add(Condition.eq("orderSn", orderSn));
+		OrderInfoVo orderInfoVo = mgOrderInfoService.selectOne(mgfilters);
+		if(orderInfoVo != null){
+			List<MgOrderGoods> mgOrderGoodsList = orderInfoVo.getMgOrderGoodsList();
+			List<WaitSettleRecord> waitSettleRecords = new ArrayList<>();
+			if(mgOrderGoodsList != null && mgOrderGoodsList.size() > 0){
+				for(MgOrderGoods mgOrderGoods : mgOrderGoodsList){
+					WaitSettleRecord waitSettleRecord = new WaitSettleRecord();
+					waitSettleRecord.setOrderSn(mgOrderGoods.getOrderSn());
+					waitSettleRecord.setGoodsId(mgOrderGoods.getGoodsId());
+					waitSettleRecord.setOrderId(orderInfoVo.getOrderId());
+					waitSettleRecord.setOrderAmount(mgOrderGoods.getGoodsPrice());
+//					waitSettleRecord.setOrderTime(orderInfoVo.getPayTime());
+					waitSettleRecord.setOrderTime(orderInfoVo.getAddTime());
+					waitSettleRecord.setHasSettleAmount(0L);
+					waitSettleRecord.setNoSettleAmount(mgOrderGoods.getGoodsPrice());
+					waitSettleRecord.setAddTime(new Date());
+					waitSettleRecord.setSettleStatus((byte)0);
+					waitSettleRecord.setShopName(mgOrderGoods.getAddUser());
+					waitSettleRecord.setGoodsName(mgOrderGoods.getGoodsName());
+					waitSettleRecords.add(waitSettleRecord);
+				}
+
+				int n = waitSettleRecordService.insertBatch(waitSettleRecords);
+				System.out.println(n);
+			}
+		}
+
 	}
 
 	@Override
