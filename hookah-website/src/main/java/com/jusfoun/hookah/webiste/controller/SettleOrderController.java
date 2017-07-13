@@ -51,7 +51,7 @@ public class SettleOrderController extends BaseController{
     public ReturnData getList(WaitSettleVo waitSettleVo) {
 
         ReturnData returnData = new ReturnData<>();
-        returnData.setCode(ExceptionConst.Failed);
+        returnData.setCode(ExceptionConst.Success);
         Pagination<WaitSettleRecord> page = new Pagination<>();
         try {
 
@@ -60,7 +60,7 @@ public class SettleOrderController extends BaseController{
 
             List<Condition> filters = new ArrayList();
 
-            filters.add(Condition.eq("showName", getCurrentUser().getUserId()));
+            filters.add(Condition.eq("shopName", getCurrentUser().getUserId()));
 
             if(StringUtils.isNotBlank(waitSettleVo.getOrderSn())){
                 filters.add(Condition.eq("orderSn", waitSettleVo.getOrderSn()));
@@ -92,7 +92,7 @@ public class SettleOrderController extends BaseController{
             }
 
             page = waitSettleRecordService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
-
+            returnData.setData(page);
         } catch (HookahException e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.getMessage());
@@ -135,8 +135,8 @@ public class SettleOrderController extends BaseController{
 
             HashMap<String, Object> map = new HashMap<String, Object>() {
                 {
-                    put("record", record);
-                    put("records", list);
+                    put("waitSettleRecord", record);
+                    put("settleRecords", list);
                 }
             };
 
