@@ -1,7 +1,7 @@
 <%
 var head = {
 %>
-<link rel="stylesheet" href="/static/css/usercenter/userInfo/settlementRecord.css">
+<link rel="stylesheet" href="/static/css/usercenter/myseller/settlementRecord.css">
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
 <%};%>
 
@@ -17,22 +17,23 @@ var htmlPart = {
                     <div class="header clearfix">
                         <h4 class="grid-left center-title">结算管理</h4>
                     </div>
-                    <ul>
+                    <ul class="query-condition ">
                         <li>
-                            <label for="">状态 :</label>
-                            <ul>
-                                <li>全部</li>
-                                <li>待结算</li>
-                                <li>已结清</li>
-                            </ul>
+                            <label for="">状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态 :</label>
+                            <div class="btn-box">
+                                <a href="">全部</a>
+                                <a href="">待结算</a>
+                                <a href="">已结清</a>
+                            </div>
                         </li>
                         <li>
                             <label for="">订单时间 :</label>
                             <div>
-                                <input type="text">至
-                                <input type="text">
+                                <input type="text" readonly>
+                                <span class="text">至</span>
+                                <input type="text" readonly>
                             </div>
-                            <div>
+                            <div class="select-month">
                                 <a href="">本月</a>
                                 <a href="">上个月</a>
                                 <a href="">3月</a>
@@ -41,8 +42,8 @@ var htmlPart = {
                         </li>
                         <li>
                             <label for="">订单编号 :</label>
-                            <input type="text">
-                            <a href="">查询</a>
+                            <input type="text" >
+                            <a href="" class="search-btn">查询</a>
                         </li>
                     </ul>
                 </div>
@@ -59,12 +60,12 @@ var htmlPart = {
                             <th>操作</th>
                         </tr>
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>992737131715</td>
+                            <td>银行卡类别查询</td>
+                            <td>￥50.00</td>
+                            <td>￥50.00</td>
+                            <td>￥50.00</td>
+                            <td>已清算</td>
                             <td>2017-07-04 16:50:27</td>
                             <td><a href="">查看</a></td>
                         </tr>

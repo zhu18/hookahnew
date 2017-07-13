@@ -1,0 +1,68 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/usercenter/myseller/settlementRecordDetails.css">
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="grid-right info-center-box ">
+            <div class="settlementRecordDetails">
+                <div class="settlementRecordDetails-top">
+                    <div class="header clearfix">
+                        <h4 class="grid-left center-title">结算记录</h4>
+                    </div>
+                    <div class="order-info">
+                          <div class="order-info-title">订单信息</div>
+                          <table>
+                              <tr>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                              </tr>
+                              <tr>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+
+                              </tr>
+                          </table>
+                    </div>
+                </div>
+                <div class="settlementRecordDetails-down">
+                    <table class="settlementRecordDetails-list">
+                        <tr>
+                            <th>序列</th>
+                            <th>结算时间</th>
+                            <th>结算金额</th>
+                            <th>结算收入</th>
+                            <th>退款</th>
+
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>201-02-95 10:10:22</td>
+                            <td>￥50.00</td>
+                            <td>￥50.00</td>
+                            <td>￥50.00</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+<script type="text/javascript" src="/static/js/usercenter/userInfo/settlementRecord.js"></script>
+
