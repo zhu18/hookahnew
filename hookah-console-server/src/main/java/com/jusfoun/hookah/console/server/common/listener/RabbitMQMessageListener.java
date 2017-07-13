@@ -51,7 +51,7 @@ public class RabbitMQMessageListener {
         //选择消息发送类型
         if(templates != null) {
             for(MessageTemplate t : templates) {
-                MessageSendInfo messageSendInfo = new MessageSendInfo();
+                MessageSendInfo messageSendInfo;
                 //短信发送(需要调整)
                 if(HookahConstants.MESSAGE_TYPE_SMS == t.getTemplateType()) {
                     messageSendInfo = this.sendSMS(t, user.getMobile(), map);
@@ -66,6 +66,7 @@ public class RabbitMQMessageListener {
                 messageSendInfo.setReceiveUser(user.getUserId());
                 messageSendInfo.setEventType(messageCode.getCode() + "");
                 messageSendInfo.setBusinessId(messageCode.getBusinessId());
+                messageSendInfoMapper.insertSelective(messageSendInfo);
             }
         }else {
             logger.info("短信/邮件/站内信消息：" + messageCode.getCode() + "未查到对应模板,"
@@ -91,13 +92,19 @@ public class RabbitMQMessageListener {
         //获取模板内容
         String content = template.getTemplateContent();
         content = this.getContent(content, map);
-        SMSUtilNew.send(mobileNo, JsonUtils.toJson(map), template.getSmsTypeCode());
+        String retVal = SMSUtilNew.send(mobileNo, JsonUtils.toJson(map), template.getSmsTypeCode());
+        if (HookahConstants.SMS_SUCCESS.equals(retVal)) {
+            sendInfo.setIsSuccess(HookahConstants.LOCAL_SMS_SUCCESS);
+        }else {
+            sendInfo.setIsDelete(HookahConstants.LOCAL_SMS_FAIL);
+        }
         sendInfo.setSendContent(content);
-        sendInfo.setReceiveTel(mobileNo);
+        sendInfo.setReceiveAddr(mobileNo);
         sendInfo.setSendType(HookahConstants.MESSAGE_TYPE_SMS);
         return sendInfo;
     }
 
+    //邮件发送
     public MessageSendInfo sendMail(MessageTemplate template, String mail, Map<String, String> map) {
         MessageSendInfo sendInfo = new MessageSendInfo();
         //获取模板内容
@@ -105,7 +112,7 @@ public class RabbitMQMessageListener {
         content = this.getContent(content, map);
         mailService.send(mail, template.getTemplateHeader(), content);
         sendInfo.setSendContent(content);
-        sendInfo.setReceiveMail(mail);
+        sendInfo.setReceiveAddr(mail);
         sendInfo.setSendHeader(template.getTemplateHeader());
         sendInfo.setSendType(HookahConstants.MESSAGE_TYPE_MAIL);
         return sendInfo;
