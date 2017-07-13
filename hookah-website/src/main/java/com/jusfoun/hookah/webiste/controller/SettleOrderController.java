@@ -6,6 +6,7 @@ import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.SettleRecord;
 import com.jusfoun.hookah.core.domain.WaitSettleRecord;
 import com.jusfoun.hookah.core.domain.vo.WaitSettleVo;
+import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
@@ -30,7 +31,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/settleOrder")
-public class SettleOrderController {
+public class SettleOrderController extends BaseController{
 
     @Resource
     WaitSettleRecordService waitSettleRecordService;
@@ -59,6 +60,8 @@ public class SettleOrderController {
 
             List<Condition> filters = new ArrayList();
 
+            filters.add(Condition.eq("showName", getCurrentUser().getUserId()));
+
             if(StringUtils.isNotBlank(waitSettleVo.getOrderSn())){
                 filters.add(Condition.eq("orderSn", waitSettleVo.getOrderSn()));
             }
@@ -68,7 +71,7 @@ public class SettleOrderController {
             }
 
             if(waitSettleVo.getSettleStatus() != null){
-                filters.add(Condition.eq("shopName", waitSettleVo.getSettleStatus()));
+                filters.add(Condition.eq("settleStatus", waitSettleVo.getSettleStatus()));
             }
 
             if(StringUtils.isNotBlank(waitSettleVo.getStartDate())){
@@ -90,6 +93,9 @@ public class SettleOrderController {
 
             page = waitSettleRecordService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
 
+        } catch (HookahException e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.getMessage());
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage("系统出错，请联系管理员！");

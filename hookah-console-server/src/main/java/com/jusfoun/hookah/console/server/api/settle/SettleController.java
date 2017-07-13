@@ -67,7 +67,7 @@ public class SettleController extends BaseController{
             }
 
             if(waitSettleVo.getSettleStatus() != null){
-                filters.add(Condition.eq("shopName", waitSettleVo.getSettleStatus()));
+                filters.add(Condition.eq("settleStatus", waitSettleVo.getSettleStatus()));
             }
 
             if(StringUtils.isNotBlank(waitSettleVo.getStartDate())){
