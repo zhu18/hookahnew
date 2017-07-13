@@ -1,11 +1,15 @@
 package com.jusfoun.hookah.console.server.api.message;
 
+import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.GeneralCodesMapper;
 import com.jusfoun.hookah.core.domain.GeneralCodes;
+import com.jusfoun.hookah.core.domain.MessageTemplate;
 import com.jusfoun.hookah.core.domain.vo.MessageCritVo;
+import com.jusfoun.hookah.core.domain.vo.TemplateCritVo;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.MessageSendInfoService;
+import com.jusfoun.hookah.rpc.api.MessageTemplateService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,6 +28,9 @@ public class MessageApi {
 
     @Resource
     GeneralCodesMapper generalCodesMapper;
+
+    @Resource
+    MessageTemplateService messageTemplateService;
 
     public static final String property_eventType = "EVENT_TYPE";
 
@@ -77,6 +84,38 @@ public class MessageApi {
             e.printStackTrace();
         }
         return returnData;
+    }
+
+    /**
+     * 获取模板列表
+     * @param templateCritVo
+     * @return
+     */
+    @RequestMapping(value = "/template/all")
+    public ReturnData getTemplateList(TemplateCritVo templateCritVo){
+        return messageTemplateService.findMessageListPage(templateCritVo);
+    }
+
+    //获取模板支持的常量
+    @RequestMapping(value = "/constants/all")
+    public ReturnData getConstantsList(GeneralCodes generalCodes){
+//        ReturnData returnData = new ReturnData<>();
+//        returnData.setCode(ExceptionConst.Success);
+//        try {
+//            generalCodes.setProperty(HookahConstants.PROPERTY_MESSAGE_CONSTANTS);
+//            returnData.setData();
+//        } catch (Exception e) {
+//            returnData.setCode(ExceptionConst.Failed);
+//            returnData.setMessage(e.getMessage());
+//            e.printStackTrace();
+//        }
+        return messageTemplateService.getTempConstantsList();
+    }
+
+    //添加模板
+    @RequestMapping(value = "/template/add")
+    public ReturnData getConstantsList(MessageTemplate messageTemplate){
+        return messageTemplateService.add(messageTemplate);
     }
 
 }

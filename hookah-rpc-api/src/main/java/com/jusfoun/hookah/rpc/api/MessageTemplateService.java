@@ -11,4 +11,8 @@ import com.jusfoun.hookah.core.utils.ReturnData;
  */
 public interface MessageTemplateService extends GenericService<MessageTemplate,String> {
     public ReturnData findMessageListPage(TemplateCritVo templateCritVo);
+
+    public ReturnData add(MessageTemplate messageTemplate);
+
+    public ReturnData getTempConstantsList();
 }
