@@ -30,8 +30,11 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
     public Pagination<OrderInfoVo> getDetailListInPage(Integer pageNum, Integer pageSize, List<Condition> filters,
                                                  List<OrderBy> orderBys);
 
-    public Pagination<OrderInfoVo> getSoldOrderListInPage(Integer pageNum, Integer pageSize, List<Condition> filters, String userId,
-                                                          Byte goodsType, Date startTime, Date endTime);
+    public Pagination<OrderInfoVo> getSoldOrderListInPage(Integer pageNum, Integer pageSize, List<Condition> filters,
+                                                          Byte goodsType, Date startTime, Date endTime, String userId);
+
+    Pagination<OrderInfoVo> getSoldOrderListByCondition(Integer pageNum, Integer pageSize, List<Condition> filters,
+                                                    Date startTime, Date endTime, String addUser);
 
     public Pagination<MgOrderGoods> getGoodsListInPage(Integer pageNum, Integer pageSize, List<Condition> filters,
                                                        List<OrderBy> orderBys);

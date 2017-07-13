@@ -67,8 +67,8 @@
 					<div class="form-group">
 						<label class="col-sm-2 control-label">商品图片</label>
 						<div class="col-sm-5">
-							<a href="{{editData.goodsImg}}" target="_blank">
-								<img ng-src="host.static+'/'+{{editData.goodsImg}}" style="max-width:300px;">
+							<a href="http://static.qddata.com.cn/{{editData.goodsImg}}" target="_blank">
+								<img ng-src="http://static.qddata.com.cn/{{editData.goodsImg}}" style="max-width:300px;">
 							</a>
 							<!--<img ng-src="{{editData.goodsImg}}" style="max-width: 300px; max-height: 500px">-->
 						</div>
@@ -112,7 +112,7 @@
 							</table>
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="form-group" data-ng-if="editData.goodsType == 0 || editData.goodsType == 1 || editData.goodsType == 2">
 						<label class="col-sm-2 control-label">商品描述</label>
 						<div class="col-sm-5">
 							<!--<input type="text" class="form-control" value="{{editData.goodsDesc}}" readonly="true" />-->
@@ -143,10 +143,10 @@
 					<div class="form-group" data-ng-if="editData.goodsType == 0 || editData.goodsType == 1">
 						<label class="col-sm-2 control-label">数据样例</label>
 						<div class="col-sm-5">
-							<a href="{{editData.dataSample}}" target="_blank">
-								<img ng-src="{{editData.dataSample}}" style="max-width:300px;">
-							</a>
-							<!--<img ng-src="{{editData.goodsImg}}" style="max-width: 300px; max-height: 500px">-->
+							<!--<a href="http://static.qddata.com.cn/{{editData.dataSample}}" target="_blank">-->
+								<!--<img ng-src="http://static.qddata.com.cn/{{editData.dataSample}}" style="max-width:300px;">-->
+							<!--</a>-->
+							<input type="text" class="form-control" value="{{editData.dataSample}}" readonly="true"/>
 						</div>
 					</div>
 					<div class="form-group" data-ng-if="editData.goodsType == 1 || editData.goodsType == 4 || editData.goodsType == 5 || editData.goodsType == 6 || editData.goodsType == 7">
@@ -793,74 +793,6 @@
 									<input type="text" name="" class="form-control"/>
 								</div>
 							</div>
-
-							<!--<div class="form-group">-->
-								<!--<label class="col-sm-2 control-label">编码属性</label>-->
-								<!--<div class="col-sm-5">-->
-									<!--<input type="text" name="codeAttr" class="form-control" data-ng-model="addData.apiInfoBean.codeAttr"/>-->
-								<!--</div>-->
-							<!--</div>-->
-							<!--<div class="form-group">-->
-								<!--<label class="col-sm-2 control-label">成功</label>-->
-								<!--<div class="col-sm-5">-->
-									<!--<input type="text" name="successCode" class="form-control" data-ng-model="addData.apiInfoBean.successCode"/>-->
-								<!--</div>-->
-							<!--</div>-->
-							<!--<div class="form-group">-->
-								<!--<label class="col-sm-2 control-label">失败</label>-->
-								<!--<div class="col-sm-5">-->
-									<!--<input type="text" name="failedCode" class="form-control" data-ng-model="addData.apiInfoBean.failedCode"/>-->
-								<!--</div>-->
-							<!--</div>-->
-							<!--<div class="form-group">-->
-								<!--<label class="col-sm-2 control-label">成功无数据</label>-->
-								<!--<div class="col-sm-5">-->
-									<!--<input type="text" name="successNoData" class="form-control" data-ng-model="addData.apiInfoBean.successNoData"/>-->
-								<!--</div>-->
-							<!--</div>-->
-							<!--<div class="form-group">-->
-								<!--<label class="col-sm-2 control-label">信息属性</label>-->
-								<!--<div class="col-sm-5">-->
-									<!--<input type="text" name="infoAttr" class="form-control" data-ng-model="addData.apiInfoBean.infoAttr"/>-->
-								<!--</div>-->
-							<!--</div>-->
-							<!--<div class="form-group">-->
-								<!--<label class="col-sm-2 control-label">数据属性</label>-->
-								<!--<div class="col-sm-5">-->
-									<!--<input type="text" name="dataAttr" class="form-control" data-ng-model="addData.apiInfoBean.dataAttr"/>-->
-								<!--</div>-->
-							<!--</div>-->
-							<!--<div class="form-group">-->
-								<!--<label class="col-sm-2 control-label">总条数属性</label>-->
-								<!--<div class="col-sm-5">-->
-									<!--<input type="text" name="totalNumAttr" class="form-control" data-ng-model="addData.apiInfoBean.totalNumAttr"/>-->
-								<!--</div>-->
-							<!--</div>-->
-							<!--<div class="form-group">-->
-								<!--<label class="col-sm-2 control-label">更新频率</label>-->
-								<!--<div class="col-sm-5">-->
-									<!--<input type="text" name="updateFreq" class="form-control" data-ng-model="addData.apiInfoBean.updateFreq"/>-->
-								<!--</div>-->
-							<!--</div>-->
-							<!--<div class="form-group">-->
-								<!--<label class="col-sm-2 control-label">数据条数/行数</label>-->
-								<!--<div class="col-sm-5">-->
-									<!--<input type="text" name="dataNumDivRowNum" class="form-control" data-ng-model="addData.apiInfoBean.dataNumDivRowNum"/>-->
-								<!--</div>-->
-							<!--</div>-->
-
-							<!--<div class="form-group">-->
-								<!--<label class="col-sm-2 control-label">密钥名称:</label>-->
-								<!--<div class="col-sm-5">-->
-									<!--<input type="text" name="secretKeyName" class="form-control" data-ng-model="addData.apiInfoBean.secretKeyName"/>-->
-								<!--</div>-->
-							<!--</div>-->
-							<!--<div class="form-group">-->
-								<!--<label class="col-sm-2 control-label">密钥值:</label>-->
-								<!--<div class="col-sm-5">-->
-									<!--<input type="text" name="secretKeyValue" class="form-control" data-ng-model="addData.apiInfoBean.secretKeyValue"/>-->
-								<!--</div>-->
-							<!--</div>-->
 						</div>
 					</div>
 				</div>
@@ -889,7 +821,7 @@
 					<label class="col-sm-2 control-label">审核意见</label>
 					<div class="col-sm-5">
 						<label>
-              <textarea name="checkContent" data-ng-model="checkContentVal" id="checkContent"
+              <textarea name="checkContent" id="checkContent"
 						style="margin: 0px; width: 452px; height: 84px;"></textarea>
 						</label>
 					</div>

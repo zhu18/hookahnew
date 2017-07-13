@@ -49,7 +49,7 @@ public class SupplierApi extends BaseController {
             orderBys.add(OrderBy.desc("addTime"));
 
             if (StringUtils.isNotBlank(checkStatus)){
-                filters.add(Condition.eq("checkStatus",Byte.valueOf(checkStatus)));
+                filters.add(Condition.eq("checkStatus",Byte.parseByte(checkStatus)));
             }
             if (StringUtils.isNotBlank(contactPhone)){
                 filters.add(Condition.like("contactPhone",contactPhone.trim()));

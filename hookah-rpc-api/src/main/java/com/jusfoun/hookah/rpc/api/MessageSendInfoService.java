@@ -16,4 +16,8 @@ public interface MessageSendInfoService extends GenericService<MessageSendInfo,S
      * @return
      */
     public ReturnData findList(String messageType,MessageCritVo messageCritVo);
+
+    public ReturnData findByReceiveUser(MessageCritVo messageCritVo);
+
+    public ReturnData updateMessageStatus(String operator,String[] messages);
 }

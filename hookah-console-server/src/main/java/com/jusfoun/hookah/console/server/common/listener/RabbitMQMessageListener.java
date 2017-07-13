@@ -47,25 +47,49 @@ public class RabbitMQMessageListener {
         List<MessageTemplate> templates = messageTemplateList(messageCode.getCode() + "");
         //查询业务数据
         Map<String, String> map = new HashMap<>();
-        User user = this.getBusinessData(messageCode.getBusinessId(), messageCode.getCode(), map);
+        User user = this.getBusinessData(messageCode.getBusinessId(), messageCode, map);
         //选择消息发送类型
         if(templates != null) {
             for(MessageTemplate t : templates) {
                 MessageSendInfo messageSendInfo = new MessageSendInfo();
                 //短信发送(需要调整)
                 if(HookahConstants.MESSAGE_TYPE_SMS == t.getTemplateType()) {
-                    messageSendInfo = this.sendSMS(t, user.getMobile(), map);
+                    if (user != null && user.getUserId() != null && !"".equals(user.getUserId())) {
+                        messageSendInfo = this.sendSMS(t, user.getMobile(), map);
+                    } else if((user == null || user.getUserId() == null || "".equals(user.getUserId()))
+                            && messageCode.getMobileNo() != null) {
+                        messageSendInfo = this.sendSMS(t, messageCode.getMobileNo(), map);
+                    }else {
+                        logger.warn("邮件发送失败:未查询到用户!businessId:"
+                                + messageCode.getBusinessId() + ";code:" + messageCode.getCode());
+                    }
                 }else if(HookahConstants.MESSAGE_TYPE_MAIL == t.getTemplateType()) { // 邮件发送
-                    messageSendInfo = this.sendMail(t, user.getEmail(), map);
+                    if (user != null && user.getUserId() != null && !"".equals(user.getUserId())
+                            && user.getEmail() != null && !"".equals(user.getEmail().trim())) {
+                        messageSendInfo = this.sendMail(t, user.getEmail(), map);
+                    }else if(user != null && user.getUserId() != null && !"".equals(user.getUserId())) {
+                        logger.warn("邮件发送失败:未获取到用户"+ user.getUserId() + "的邮件地址！businessId:"
+                                + messageCode.getBusinessId() + ";code:" + messageCode.getCode());
+                    }else {
+                        logger.warn("邮件发送失败:未查询到用户!businessId:"
+                                + messageCode.getBusinessId() + ";code:" + messageCode.getCode());
+                    }
                 }else { // 站内信发送
-                    messageSendInfo = this.sendStation(t, map);
+                    if (user != null && user.getUserId() != null && !"".equals(user.getUserId())) {
+                        messageSendInfo = this.sendStation(t, map);
+                    }else {
+                        logger.warn("站内信发送失败:未查询到用户!businessId:"
+                                + messageCode.getBusinessId() + ";code:" + messageCode.getCode());
+                    }
                 }
-                messageSendInfo.setReceiveUser(user.getUserId());
+                if(user != null) {
+                    messageSendInfo.setReceiveUser(user.getUserId());
+                }
                 messageSendInfo.setTemplateId(t.getId());
                 messageSendInfo.setSendUser("sys");
-                messageSendInfo.setReceiveUser(user.getUserId());
                 messageSendInfo.setEventType(messageCode.getCode() + "");
                 messageSendInfo.setBusinessId(messageCode.getBusinessId());
+                messageSendInfoMapper.insertSelective(messageSendInfo);
             }
         }else {
             logger.info("短信/邮件/站内信消息：" + messageCode.getCode() + "未查到对应模板,"
@@ -91,13 +115,20 @@ public class RabbitMQMessageListener {
         //获取模板内容
         String content = template.getTemplateContent();
         content = this.getContent(content, map);
-        SMSUtilNew.send(mobileNo, JsonUtils.toJson(map), template.getSmsTypeCode());
+        String retVal = SMSUtilNew.send(mobileNo, JsonUtils.toJson(map), template.getSmsTypeCode());
+        if (HookahConstants.SMS_SUCCESS.equals(retVal)) {
+            sendInfo.setIsSuccess(HookahConstants.LOCAL_SMS_SUCCESS);
+        }else {
+            sendInfo.setIsSuccess(HookahConstants.LOCAL_SMS_FAIL);
+        }
         sendInfo.setSendContent(content);
-        sendInfo.setReceiveTel(mobileNo);
+        sendInfo.setSendHeader(template.getTemplateHeader());
+        sendInfo.setReceiveAddr(mobileNo);
         sendInfo.setSendType(HookahConstants.MESSAGE_TYPE_SMS);
         return sendInfo;
     }
 
+    //邮件发送
     public MessageSendInfo sendMail(MessageTemplate template, String mail, Map<String, String> map) {
         MessageSendInfo sendInfo = new MessageSendInfo();
         //获取模板内容
@@ -105,7 +136,7 @@ public class RabbitMQMessageListener {
         content = this.getContent(content, map);
         mailService.send(mail, template.getTemplateHeader(), content);
         sendInfo.setSendContent(content);
-        sendInfo.setReceiveMail(mail);
+        sendInfo.setReceiveAddr(mail);
         sendInfo.setSendHeader(template.getTemplateHeader());
         sendInfo.setSendType(HookahConstants.MESSAGE_TYPE_MAIL);
         return sendInfo;
@@ -140,9 +171,18 @@ public class RabbitMQMessageListener {
     }
 
     // 获取业务数据
-    public User getBusinessData(String businessId, Integer code, Map<String, String> map) {
+    public User getBusinessData(String businessId, MessageCode messageCode, Map<String, String> map) {
         User user = new User();
-        switch (code) {
+        switch (messageCode.getCode()) {
+            case 101:
+            case 102:
+            case 103:
+            case 104:
+            case 105:
+            case 106:
+                map.put("code", messageCode.getMobileVerfCode());
+                map.put("mobile", messageCode.getMobileNo().substring(messageCode.getMobileNo().length() - 4));
+                break;
             case 501:
             case 502:
             case 503:
@@ -150,6 +190,7 @@ public class RabbitMQMessageListener {
                 Goods goods = goodsMapper.selectByPrimaryKey(goodsCheck.getGoodsId());
                 map.put("goodsSn", goodsCheck.getGoodsSn());
                 map.put("goodsName", goodsCheck.getGoodsName());
+                map.put("goodsId", goodsCheck.getGoodsId());
                 map.put("time", DateUtils.toDateText(goodsCheck.getCheckTime(), "yyyy年MM月dd日HH时mm分ss秒"));
                 user = userMapper.selectByPrimaryKey(goods.getAddUser());
                 map.put("userName", user.getUserName());

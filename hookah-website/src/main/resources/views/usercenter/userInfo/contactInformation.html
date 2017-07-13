@@ -1,0 +1,49 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/contactInformation.css">
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
+<%};%>
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="grid-right info-center-box ">
+            <div class="contactInformation">
+                <div class="header clearfix">
+                    <h4 class="grid-left center-title">账号信息</h4>
+                </div>
+                 <ul>
+                     <li>
+                         <label>联系人 :</label>
+                         <span class="contactName"></span>
+                     </li>
+                     <li>
+                         <label >联系电话 :</label>
+                         <span class="contactPhone"></span>
+                     </li>
+                     <li>
+                         <label >邮寄地址 :</label>
+                         <span class="contactAddress"></span>
+                     </li>
+                     <li>
+                         <label >邮编 :</label>
+                         <span class="postCode"></span>
+                     </li>
+                     <li>
+                         <a href="/usercenter/contactInformationEdit" class="edit">修改</a>
+                     </li>
+                 </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+<script type="text/javascript" src="/static/js/usercenter/userInfo/contactInformation.js"></script>
+

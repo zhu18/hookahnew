@@ -1,5 +1,8 @@
 package com.jusfoun.hookah.core.utils;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.jusfoun.hookah.core.constants.HookahConstants;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -14,12 +17,7 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class SMSUtilNew {
 
@@ -29,17 +27,18 @@ public class SMSUtilNew {
     private static Logger logger = LoggerFactory.getLogger(SMSUtilNew.class);
 	
 	public static String send(String mobile,String vars,String templateId){
+        String retVal = HookahConstants.SMS_FAIL;
         if(StrUtil.isBlank(mobile)){
             logger.error("手机号码为空");
-            return null;
+            return retVal;
         }
         if(StrUtil.isBlank(vars)){
             logger.error("短信模板内参数为空");
-            return null;
+            return retVal;
         }
         if(StrUtil.isBlank(templateId)){
             logger.error("短信模板编号为空");
-            return null;
+            return retVal;
         }
 		String url = "http://www.sendcloud.net/smsapi/send";
 
@@ -84,18 +83,20 @@ public class SMSUtilNew {
             httpClient = HttpClients.custom().setDefaultRequestConfig(requestConfig).build();
             HttpResponse response = httpClient.execute(httpPost);
             HttpEntity entity = response.getEntity();
-            logger.info(EntityUtils.toString(entity));
+            String result = EntityUtils.toString(entity);
+            logger.info("mobile:" + result);
+            JSONObject object = JSON.parseObject(result);
+            retVal = "true".equals(object.get("result").toString()) ? HookahConstants.SMS_SUCCESS : HookahConstants.SMS_FAIL;
             EntityUtils.consume(entity);
         } catch (Exception e) {
             logger.error(e.getMessage());
         } finally {
             httpPost.releaseConnection();
         }
-		
-		return null;
+		return retVal;
 	}
-	
-	public static String sendX(String  tos,String templateId){
+
+    public static String sendX(String  tos,String templateId){
         if(StrUtil.isBlank(tos)){
             logger.error("短信参数为空");
             return null;

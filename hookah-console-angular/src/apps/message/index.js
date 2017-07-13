@@ -51,8 +51,11 @@ app.run(function ($rootScope, $state) {
     {
       "title":"消息模板管理",
       "showChild": true,
-      "url":"message.template.search",
       "childs": [
+          {
+            "title":"邮件记录",
+            "url":"message.template.search"
+          },
           {
             "title":"添加消息模板",
             "url":"message.template.add"

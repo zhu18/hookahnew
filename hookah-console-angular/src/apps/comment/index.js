@@ -10,7 +10,7 @@ let app = angular.module(MODULE_NAME, [
 app.config(commentRouting);
 
 app.run(function ($rootScope, $state) {
-  $rootScope.currentProductId = 'help';
+  $rootScope.currentProductId = 'comment';
   $rootScope.config = {
     "navScene": 'main',
     "isSidebarFold": false,

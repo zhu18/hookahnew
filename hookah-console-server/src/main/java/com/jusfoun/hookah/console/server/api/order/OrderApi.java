@@ -14,10 +14,7 @@ import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.OrderInfoService;
 import com.jusfoun.hookah.rpc.api.UserService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -178,5 +175,65 @@ public class OrderApi extends BaseController{
         }
         return ReturnData.success(map);
     }
+
+    /**
+     * 按照条件查询商家已卖出的商品订单
+     * @param pageNumber
+     * @param pageSize
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    @RequestMapping(value = "/soldOrder", method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnData getSoldOrder(Integer pageNumber, Integer pageSize, String startDate, String endDate,
+                                   OrderInfoVo orderInfoVo, String addUser){
+        try {
+            String userName = orderInfoVo.getUserName(); //买家账号
+            String orderSn = orderInfoVo.getOrderSn();//订单号
+            Integer solveStatus = orderInfoVo.getSolveStatus();//处理状态
+
+            if (pageNumber==null) pageNumber = Integer.parseInt(PAGE_NUM);
+            if (pageSize==null) pageSize = Integer.parseInt(PAGE_SIZE);
+
+            List<Condition> listFilters = new ArrayList<>();
+            Date startTime = null;
+            Date endTime = null;
+            if (org.apache.commons.lang3.StringUtils.isNotBlank(startDate)) {
+                startTime = DateUtils.getDate(startDate,DateUtils.DEFAULT_DATE_TIME_FORMAT);
+            }
+            if (org.apache.commons.lang3.StringUtils.isNotBlank(endDate)) {
+                endTime = DateUtils.getDate(endDate,DateUtils.DEFAULT_DATE_TIME_FORMAT);
+            }
+
+            if (userName!=null){
+                listFilters.add(Condition.like("userName",userName));
+            }
+            if (orderSn!=null){
+                listFilters.add(Condition.eq("orderSn",orderSn));
+            }
+            if (solveStatus!=null){
+                listFilters.add(Condition.eq("solveStatus",solveStatus));
+            }
+            if (addUser!=null){
+                listFilters.add(Condition.eq("orderGoodsList.addUser",addUser));
+            }
+
+            listFilters.add(Condition.eq("payStatus", 2));
+
+            //查询列表
+            List<OrderBy> orderBys = new ArrayList<>();
+            orderBys.add(OrderBy.desc("addTime"));
+            Pagination<OrderInfoVo> pOrders = orderInfoService.getSoldOrderListByCondition(pageNumber, pageSize, listFilters,
+                     startTime, endTime, addUser);
+
+            return ReturnData.success(pOrders);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("分页查询已售出商品错误", e);
+            return ReturnData.error("查询已售出商品错误");
+        }
+    }
+
 
 }

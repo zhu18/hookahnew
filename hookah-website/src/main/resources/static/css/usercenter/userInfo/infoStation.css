@@ -85,6 +85,23 @@ thead{
     margin-top: 20px;;
     font-size:20px;
 }
+
+.confirmKey h4{
+    font-size: 16px;
+    position: relative;
+    top: -27px;
+    background:gray;
+    line-height: 40px;
+}
+.confirmKey h5{
+    line-height: 35px;
+    text-align: left;
+    margin-left: 20px;
+}
+.confirmKey h5 span{
+    font-weight:normal;
+    word-break: break-all;
+}
 /*thead .list1{*/
     /*width: 300px;*/
     /*height: 36px;*/

@@ -89,20 +89,69 @@ class GoodsController {
     $scope.goCheck = function (item, n) {
       console.log("去审核……");
       console.log(n);
+      // $rootScope.item = item;
+      // $rootScope.n = n;
 
-        var promise = $http({
-            method: 'GET',
-            url: $rootScope.site.apiServer + "/api/goods/getGoodsInfo",
-            params: {goodsId: item.goodsId}
-        });
-        promise.then(function (res, status, config, headers) {
-            console.log(res.data)
-            if(res.data.code == "1"){
-                $rootScope.editData = res.data.data;
-                $rootScope.operatorFlag = n;
-                $state.go('items.goodsDetail', {data: $rootScope.editData});
-            }
-        });
+        // var promise = $http({
+        //     method: 'GET',
+        //     url: $rootScope.site.apiServer + "/api/goods/getGoodsInfo",
+        //     params: {goodsId: item.goodsId}
+        // });
+        // promise.then(function (res, status, config, headers) {
+        //     console.log(res.data)
+        //     if(res.data.code == "1"){
+        //         $rootScope.editData = res.data.data;
+        //         $rootScope.operatorFlag = n;
+        //
+        //
+        //         $rootScope.packageApiInfo = res.data.data.packageApiInfo;
+        //
+        //         $rootScope.addData = {
+        //             goodsCheck: {
+        //                 goodsId: $rootScope.editData.goodsId,//商品ID
+        //                 goodsSn: $rootScope.editData.goodsSn,//商品编号
+        //                 goodsName: $rootScope.editData.goodsName,//商品名称
+        //             },
+        //             apiInfoBean: {
+        //                 apiType: $rootScope.packageApiInfo.apiType,//接口类型q
+        //                 invokeMethod: $rootScope.packageApiInfo.invokeMethod,//调用方法名q
+        //                 respDataFormat: $rootScope.packageApiInfo.respDataFormat,//返回格式q
+        //                 apiUrl: $rootScope.packageApiInfo.apiUrl,//接口地址q
+        //                 apiMethod: $rootScope.packageApiInfo.apiMethod,//请求方式q
+        //                 reqSample: $rootScope.packageApiInfo.reqSample,//请求示例
+        //                 apiDesc: $rootScope.packageApiInfo.apiDesc, //接口描述
+        //                 reqParamList:$rootScope.packageApiInfo.reqParamList, //接口描述
+        //                 respParamList:$rootScope.packageApiInfo.respParamList, //接口描述
+        //                 respSample: $rootScope.packageApiInfo.respSample, //返回示例
+        //
+        //                 respDataMapping: {
+        //                     codeAttrBean: {
+        //                         codeAttr: $rootScope.packageApiInfo.respDataMapping.codeAttrBean.codeAttr,//编码属性
+        //                         codeInfoBean:{
+        //                             successCode: $rootScope.packageApiInfo.respDataMapping.codeAttrBean.codeInfoBean.successCode,//成功
+        //                             failedCode: $rootScope.packageApiInfo.respDataMapping.codeAttrBean.codeInfoBean.failedCode,//失败
+        //                             successNoData: $rootScope.packageApiInfo.respDataMapping.codeAttrBean.codeInfoBean.successNoData,//成功无数据
+        //                         }
+        //                     },
+        //                     infoAttr: $rootScope.packageApiInfo.respDataMapping.infoAttr,//信息属性
+        //                     dataAttr: $rootScope.packageApiInfo.respDataMapping.dataAttr,//数据属性
+        //                     totalNumAttr: $rootScope.packageApiInfo.respDataMapping.totalNumAttr,//总条数属性
+        //                 },
+        //
+        //                 updateFreq: $rootScope.packageApiInfo.updateFreq,//更新频率
+        //                 dataNumDivRowNum: $rootScope.packageApiInfo.dataNumDivRowNum,//数据条数/行数
+        //                 encryptInfo:{
+        //                     secretKeyName: $rootScope.packageApiInfo.encryptInfo.secretKeyName,//密钥名称
+        //                     secretKeyValue: $rootScope.packageApiInfo.encryptInfo.secretKeyValue//密钥值
+        //                 }
+        //             },
+        //         };
+
+               $state.go('items.checkGoodsDetail', {data1: item, data2:n});
+
+        //        console.log("JOSNSTR"+ JSON.stringify($rootScope.addData))
+        //     }
+        // });
     };
 
     $scope.lookDetail = function (item) {
@@ -116,7 +165,6 @@ class GoodsController {
             console.log(res.data)
             if(res.data.code == "1"){
                 $rootScope.editData = res.data.data;
-                $rootScope.editData.goodsDesc = $sce.trustAsHtml($rootScope.editData.goodsDesc);
                 $state.go('items.lookDetail', {data: $rootScope.editData});
             }
         });

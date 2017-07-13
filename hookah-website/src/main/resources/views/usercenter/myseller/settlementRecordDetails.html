@@ -1,0 +1,74 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/usercenter/myseller/settlementRecordDetails.css">
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="grid-right info-center-box ">
+            <div class="settlementRecordDetails">
+                <div class="header clearfix">
+                    <h4 class="grid-left center-title">结算记录</h4>
+                </div>
+                <div class="settlementRecordDetails-top">
+                          <div class="settlementRecordDetails-top-title">订单信息</div>
+                          <table>
+                              <tr>
+                                  <td>
+                                      订单编号：992737131715
+                                  </td>
+                                  <td>
+                                      订单时间：2017-07-06 10:30:00
+                                  </td>
+                                  <td>
+                                      商品名称：银行卡类别查询
+                                  </td>
+                                  <td>
+                                      结算状态：待结算
+                                  </td>
+                                  <td>
+                                      订单金额：¥150.00
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>已结算金额：¥100.00</td>
+                                  <td>剩余金额：￥555</td>
+                                  <td>交付情况：已交付</td>
+
+                              </tr>
+                          </table>
+                          <p><span></span>结算政策：结算政策结算政策结算政策结算政策结算政策结算政策</p>
+                </div>
+                    <table class="settlementRecordDetails-list margin-top-10">
+                        <tr>
+                            <th>序列</th>
+                            <th>结算时间</th>
+                            <th>结算金额</th>
+                            <th>结算收入</th>
+                            <th>退款</th>
+
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>201-02-95 10:10:22</td>
+                            <td>￥50.00</td>
+                            <td>￥50.00</td>
+                            <td>￥50.00</td>
+                        </tr>
+                    </table>
+                </div>
+        </div>
+    </div>
+</div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+<script type="text/javascript" src="/static/js/usercenter/userInfo/settlementRecord.js"></script>
+

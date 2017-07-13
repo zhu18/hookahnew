@@ -1,0 +1,61 @@
+.settlementRecordDetails-top{
+    margin-top: 10px;
+    border: 1px solid #E5E5E5;
+}
+
+.settlementRecordDetails-top .settlementRecordDetails-top-title{
+    height: 39px;
+    line-height:39px;
+    font-size: 14px;
+    color: #333333;
+    padding-left: 14px;
+    width:calc(100% - 14px);
+    border-bottom: 1px solid #E5E5E5;
+    background-color: #F4F4F4;
+}
+.settlementRecordDetails-top table {
+    width: 100%;
+    margin-top: 16px;
+    margin-bottom: 18px;
+}
+.settlementRecordDetails-top table tr{
+    height: 45px;
+    line-height: 45px;
+}
+.settlementRecordDetails-top table td{
+    width: calc(20% - 40px);
+    padding: 0 20px;
+    color: #666666;
+    font-size: 14px;
+    text-align: left;
+}
+.settlementRecordDetails-top p{
+   display: inline-block;
+    width: calc(100% - 40px);
+    height: 30px;
+    margin: 0 20px 20px;
+    line-height: 30px;
+    background-color: #F4F8FE;
+}
+.settlementRecordDetails-list {
+    width: 100%;
+    border: 1px solid #e5e5e5;
+}
+.settlementRecordDetails-list tr{
+    height: 39px;
+}
+.settlementRecordDetails-list tr th{
+    font-size: 14px;
+    color: #333333;
+    text-align: center;
+    border-bottom: 1px solid #e5e5e5;
+    background-color: #F4F4F4;
+}
+.settlementRecordDetails-list tr td{
+    font-size: 14px;
+    color: #666666;
+    text-align: center;
+}
+.settlementRecordDetails-list tr td:first-child{
+    color: #333;
+}

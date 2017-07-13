@@ -1,5 +1,8 @@
 class CommentController {
   constructor($scope, $rootScope, $http, $state, $uibModal, usSpinnerService, growl) {
+    $scope.commentList = [];
+    $scope.choseArr = [];//多选数组
+
     $scope.search = function () {
       console.log($scope.levelStar);
       var promise = $http({
@@ -12,7 +15,7 @@ class CommentController {
           endTime: $scope.endDate ? format($scope.endDate, 'yyyy-MM-dd HH:mm:ss') : null,
           commentContent: $scope.commentContent ? $scope.commentContent : null,//评价关键字
           goodsCommentGrade: $scope.goodsCommentGrade ? $scope.goodsCommentGrade : null,//评分等级
-          status: $scope.status ? $scope.status : null,//审核状态
+          status: $scope.status == 0 ? '0' : ($scope.status ? $scope.status : null),//审核状态
           pageNumber: $rootScope.pagination.currentPage, //当前页码
           pageSize: $rootScope.pagination.pageSize
         }
@@ -21,9 +24,15 @@ class CommentController {
         console.log('数据在这里');
         console.log(res);
 
-        if (res.data.code !== '0') {
+        if (res.data.code == '1') {
           $scope.commentList = res.data.data.list;
-        }else{
+          $rootScope.pagination = res.data.data;
+          $scope.showNoneDataInfoTip = false;
+          if (res.data.data.totalPage > 1) {
+            $scope.showPageHelpInfo = true;
+          }
+
+        } else {
           $scope.commentList = [];
           $scope.showNoneDataInfoTip = true;
 
@@ -34,63 +43,96 @@ class CommentController {
       });
 
     };
+    $scope.pageChanged = function () {
+      $scope.search();
+      console.log('Page changed to: ' + $rootScope.pagination.currentPage);
+    };
+    $scope.MultipleCheck = function (status) {
+      if ($scope.choseArr.length > 0) {
+        $scope.commentCheck($scope.choseArr.join(), status)
+        console.log($scope.choseArr.join())
+      } else {
+        alert('请选择多个订单！')
+      }
+    };
+    $scope.commentCheck = function (orderSn, status) {
+      var promise = $http({
+        method: 'GET',
+        url: $rootScope.site.apiServer + "/api/comment/checkComments",
+        params: {
+          commentIds: orderSn,
+          status: status
+        }
+      });
+      promise.then(function (res, status, config, headers) {
+        console.log('数据在这里');
+        console.log(res);
 
+        if (res.data.code == '1') {
+          $scope.search();
+
+        } else {
+
+        }
+
+        $rootScope.loadingState = false;
+        growl.addSuccessMessage("订单数据加载完毕。。。");
+      });
+    }
+
+    //多选
+    var str = "";
+    var len = $scope.commentList.length;
+    var flag = '';//是否点击了全选，是为a
+    $scope.x = false;//默认未选中
+
+    $scope.all = function (c) { //全选
+      var commIdArr = [];
+
+      angular.forEach($scope.commentList, function (value, key) {
+
+        if (value.status == 0) {
+          commIdArr.push(value.commId)
+        }
+
+      });
+      console.log(commIdArr);
+
+      if (c == true) {
+        $scope.x = true;
+        $scope.choseArr = commIdArr;
+        flag = 'a';
+      } else {
+        $scope.x = false;
+        $scope.choseArr = [];
+        flag = 'b';
+      }
+    };
+
+    $scope.chk = function (z, x) { //单选或者多选
+
+
+      if (x == true) {//选中
+        $scope.choseArr.push(z);
+        flag = 'c'
+        if ($scope.choseArr.length == len) {
+          $scope.master = true
+        }
+      } else {
+        $scope.choseArr.splice($scope.choseArr.indexOf(z), 1);//取消选中
+      }
+
+      if ($scope.choseArr.length == 0) {
+        $scope.master = false
+      }
+    };
+    //多选结束
 
     $scope.refresh = function () {
       $scope.search();
     };
+    $scope.search();
 
-    if ($state.current.name == "comment.review") {
-      $scope.search();
-      $scope.expanding_property = "name";
-      $scope.col_defs = [
-        {
-          field: "helpId",
-          displayName: "属性"
-        }
-        , {
-          field: "helpUrl",
-          displayName: "连接",
-          cellTemplate: "<a target='_blank' href='" + $rootScope.site.websiteServer + "{{ row.branch[col.field] }}'>{{ row.branch[col.field] }}</a>",
-        },
-        {
-          field: "creatorName",
-          displayName: "创建者"
-        },
-        {
-          field: "addTime",
-          displayName: "创建时间"
-        }
-
-        , {
-          field: "aa",
-          displayName: "操作",
-          cellTemplate: ' <a href="javascript:;" ng-click="cellTemplateScope.delete(row.branch)" target="_blank">删除</a> <span class="text-explode">|</span> <i class="link-space"></i> <a href="javascript:;" ng-click="cellTemplateScope.addChild(row.branch)">增加子项</a>',
-          cellTemplateScope: {
-            edit: function (data) {
-              $scope.edit(data);
-            },
-            delete: function (data) {
-              if (data.children.length == 0) {
-                var modalInstance = $rootScope.openConfirmDialogModal("确定要删除" + '<span style="font-weight: bold;color: #6b3100">' + data.name + '</span>' + "吗？");
-                modalInstance.result.then(function () {
-                  $scope.delete(data);
-                }, function () {
-                });
-              } else {
-                $rootScope.openErrorDialogModal('<span style="font-weight: bold;color: #6b3100">' + data.name + '</span>' + "下有子项，请先删除所有子项");
-              }
-
-            },
-            addChild: function (data) {
-              $scope.addChild(data);
-            }
-          }
-        }
-      ];
-      $scope.dict_tree = {};
-      $scope.tree_data = {};
-    }
     // 处理日期插件的获取日期的格式
     var format = function (time, format) {
       var t = new Date(time);

@@ -52,7 +52,7 @@ public class UserCenterController {
     @Resource
     UserCheckService userCheckService;
 
-
+//    账户中心
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String userInfo(Model model) {
         Session session = SecurityUtils.getSubject().getSession();
@@ -92,6 +92,27 @@ public class UserCenterController {
 //    public String infoDetail() {
 //        return "usercenter/userInfo/infoDetail";
 //    }
+
+    //       账户信息
+    @RequestMapping(value = "/accountInformation", method = RequestMethod.GET)
+    public String accountInformation() {
+        return "usercenter/userInfo/accountInformation";
+    }
+    //       实名认证
+    @RequestMapping(value = "/nameAuthentication", method = RequestMethod.GET)
+    public String nameAuthentication() {
+        return "usercenter/userInfo/nameAuthentication";
+    }
+    //       联系信息
+    @RequestMapping(value = "/contactInformation", method = RequestMethod.GET)
+    public String contactInformation() {
+        return "usercenter/userInfo/contactInformation";
+    }
+    //       联系信息编辑
+    @RequestMapping(value = "/contactInformationEdit", method = RequestMethod.GET)
+    public String contactInformationEdit() {
+        return "usercenter/userInfo/contactInformationEdit";
+    }
     //     资金总览页面
     @RequestMapping(value = "/fundmanage", method = RequestMethod.GET)
     public String fundmanage(Model model) {
