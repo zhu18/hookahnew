@@ -68,6 +68,53 @@ public class MessageSendInfoServiceImpl extends GenericServiceImpl<MessageSendIn
         return getMessageList(messageCritVo);
     }
 
+    @Override
+    public ReturnData findByReceiveUser(MessageCritVo messageCritVo) {
+        return getMessageList(messageCritVo);
+    }
+
+    @Override
+    public ReturnData updateMessageStatus(String operator,String[] messages) {
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        List<Condition> fifters = new ArrayList<Condition>();
+        fifters.add(Condition.in("id",messages));
+        MessageSendInfo messageSendInfo = new MessageSendInfo();
+        try {
+            switch (operator){
+                case "read":
+                    messageSendInfo.setIsRead(Byte.valueOf("1"));
+                    break;
+                case "del":
+                    messageSendInfo.setIsDelete(Byte.valueOf("0"));
+                    break;
+            }
+
+            int count = this.updateByConditionSelective(messageSendInfo,fifters);
+            returnData.setData(count);
+        } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.getMessage());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
+
+    //通用修改待完善
+    private ReturnData updateMessage(){
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            //this.updateByConditionSelective();
+        } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.getMessage());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
+
+    //通用带分页查询
     private ReturnData getMessageList(MessageCritVo messageCritVo){
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
@@ -100,6 +147,9 @@ public class MessageSendInfoServiceImpl extends GenericServiceImpl<MessageSendIn
             if(Objects.nonNull(messageCritVo.getIsRead()) && !(Byte.valueOf("-1")).equals(messageCritVo.getIsRead())){
                 filters.add(Condition.eq("isRead",messageCritVo.getIsRead()));
             }
+            if(Objects.nonNull(messageCritVo.getReceiveUser())){
+                filters.add(Condition.eq("receiveUser",messageCritVo.getReceiveUser()));
+            }
 
             List<OrderBy> orderBys = new ArrayList<OrderBy>();
             orderBys.add(OrderBy.desc("sendTime"));
@@ -115,6 +165,7 @@ public class MessageSendInfoServiceImpl extends GenericServiceImpl<MessageSendIn
         }
         return returnData;
     }
+    //完善返回的数据
     private List<MessageSendInfoVo> copyMessageSendInfoData(List<MessageSendInfo> messageSendInfos){
         List<MessageSendInfoVo> list1 = new ArrayList<>();
         for(MessageSendInfo messageSendInfo : messageSendInfos) {
