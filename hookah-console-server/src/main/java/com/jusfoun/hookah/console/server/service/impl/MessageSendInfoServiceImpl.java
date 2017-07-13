@@ -150,6 +150,9 @@ public class MessageSendInfoServiceImpl extends GenericServiceImpl<MessageSendIn
             if(Objects.nonNull(messageCritVo.getReceiveUser())){
                 filters.add(Condition.eq("receiveUser",messageCritVo.getReceiveUser()));
             }
+            if(Objects.nonNull(messageCritVo.getIsDelete())){
+                filters.add(Condition.eq("isDelete",messageCritVo.getIsDelete()));
+            }
 
             List<OrderBy> orderBys = new ArrayList<OrderBy>();
             orderBys.add(OrderBy.desc("sendTime"));

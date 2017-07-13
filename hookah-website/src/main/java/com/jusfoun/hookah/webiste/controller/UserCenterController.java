@@ -108,6 +108,11 @@ public class UserCenterController {
     public String contactInformation() {
         return "usercenter/userInfo/contactInformation";
     }
+    //       联系信息编辑
+    @RequestMapping(value = "/contactInformationEdit", method = RequestMethod.GET)
+    public String contactInformationEdit() {
+        return "usercenter/userInfo/contactInformationEdit";
+    }
     //     资金总览页面
     @RequestMapping(value = "/fundmanage", method = RequestMethod.GET)
     public String fundmanage(Model model) {
