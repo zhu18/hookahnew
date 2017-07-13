@@ -1,4 +1,9 @@
-
+.basic-information{
+    width: 982px;
+    margin-top: 10px;
+    padding: 14px;
+    background-color: #FFF;
+}
 .basic-information-top {
     width:100%;
     border: 1px solid #E5E5E5;
@@ -20,10 +25,10 @@
 }
 .basic-information-top  .basic-information-top-content .user-info,.basic-information-top  .basic-information-top-content .user-status{
     width: 49%;
+    height: 100%;
     display: inline-block;
 }
 .basic-information-top  .basic-information-top-content .user-info{
-    height: 100%;
     border-right: 1px solid #E5E5E5;
 }
 .basic-information-top  .basic-information-top-content .user-info .user-info-left{
@@ -62,10 +67,6 @@
 .basic-information-top  .basic-information-top-content .user-status div,.basic-information-top  .basic-information-top-content .user-status p{
     text-align: center;
 }
-.basic-information-top  .basic-information-top-content .user-status{
-    margin-top: 60px;
-    vertical-align: top;
-}
 .basic-information-down {
 
 }
@@ -81,40 +82,58 @@
     margin-right: 5px;
 }
 
-/*.basic-information-top .basic-information-top-content .user-status .auth-introduce{*/
-    /*width: 373px;*/
-    /*height: 130px;*/
-    /*background-color: #fff;*/
-    /*padding-top:20px;*/
-    /*padding-left:20px;*/
-    /*padding-bottom:20px;*/
-    /*border-left:1px dashed #e0e0e0;*/
-/*}*/
-/*.auth-introduce .large-btn{*/
-    /*position: relative;*/
-    /*display: inline-block;*/
-    /*width: 136px;*/
-    /*height: 30px;*/
-    /*margin-right:10px;*/
-    /*padding-right: 14px;*/
-    /*border-radius: 3px;*/
-    /*line-height:30px;*/
-    /*font-size:14px;*/
-    /*text-align: center;*/
-    /*background-color: #2eb5fb;*/
-    /*color: #fff;*/
-/*}*/
-/*.auth-introduce .large-btn:hover{*/
-    /*background-color: #0899f6;*/
-    /*cursor: pointer;*/
-/*}*/
-/*.auth-introduce .blue{*/
-    /*color: #2cb2f8;*/
-/*}*/
-/*.auth-introduce .blue:hover{*/
-    /*cursor: pointer;*/
-    /*text-decoration: underline;*/
-/*}*/
+.user-balance {
+    height: 170px;
+    background-color: #fff;
+    /*border-right:1px dashed #e0e0e0;*/
+}
+.balance-info{
+    width:262px;
+    padding:34px 0 40px 20px;
+}
+.balance-info .account-balance{
+    color: #666;
+    font:14px "microsoft yahei";
+}
+.balance-box .money-count{
+    color: #F53839;
+    font-size:20px;
+    margin-right:12px;
+}
+.top .auth-introduce{
+    width: 373px;
+    height: 130px;
+    background-color: #fff;
+    padding-top:20px;
+    padding-left:20px;
+    padding-bottom:20px;
+    border-left:1px dashed #e0e0e0;
+}
+.auth-introduce .large-btn{
+    position: relative;
+    display: inline-block;
+    width: 136px;
+    height: 30px;
+    margin-right:10px;
+    padding-right: 14px;
+    border-radius: 3px;
+    line-height:30px;
+    font-size:14px;
+    text-align: center;
+    background-color: #2eb5fb;
+    color: #fff;
+}
+.auth-introduce .large-btn:hover{
+    background-color: #0899f6;
+    cursor: pointer;
+}
+.auth-introduce .blue{
+    color: #2cb2f8;
+}
+.auth-introduce .blue:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
 
 
 
@@ -152,18 +171,18 @@
     height: 108px;
     background: url("/static/images/user-balance.png") no-repeat 0 0;
 }
-.basic-information-down {
-    width: calc(100% - 28px - 2px);
-    margin-top: 14px;
+.center-content .bottom{
+    /*height: 332px;*/
+    width: 968px;
     border: 1px solid #EDEDED;
     background-color: #fff;
-    padding: 0 14px;
+    padding:0 20px;
 }
-.basic-information-down .header{
+.bottom .header{
     padding-top:10px;
     padding-left:4px;
 }
-.basic-information-down .header h4{
+.bottom .header h4{
     cursor: pointer;
     height: 30px;
     line-height: 30px;
@@ -181,7 +200,6 @@
 }
 .my-order-list-one,.my-order-list-two{
     padding-top:26px;
-    margin-right: -12px;
 }
 .order-list-item{
     width: 191px;
