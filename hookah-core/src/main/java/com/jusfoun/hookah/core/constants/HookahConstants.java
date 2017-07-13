@@ -46,7 +46,8 @@ public class HookahConstants {
         SMS_FIND_USER_PWD("102"),   //找回登录密码
         SMS_CHANGE_USER_PWD("104"),   //修改登录密码
         SMS_CHANGE_MOBILE("103"),   //修改手机号
-        SMS_CHANGE_PAY_PWD("105");   //修改支付密码
+        SMS_CHANGE_PAY_PWD("105"),   //修改交易密码
+        SMS_SET_PAY_PWD("106");   //设置交易密码
 
         public String code;
 
