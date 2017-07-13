@@ -67,8 +67,8 @@
 					<div class="form-group">
 						<label class="col-sm-2 control-label">商品图片</label>
 						<div class="col-sm-5">
-							<a href="{{editData.goodsImg}}" target="_blank">
-								<img ng-src="host.static+'/'+{{editData.goodsImg}}" style="max-width:300px;">
+							<a href="http://static.qddata.com.cn/{{editData.goodsImg}}" target="_blank">
+								<img ng-src="http://static.qddata.com.cn/{{editData.goodsImg}}" style="max-width:300px;">
 							</a>
 							<!--<img ng-src="{{editData.goodsImg}}" style="max-width: 300px; max-height: 500px">-->
 						</div>
@@ -112,7 +112,7 @@
 							</table>
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="form-group" data-ng-if="editData.goodsType == 0 || editData.goodsType == 1 || editData.goodsType == 2">
 						<label class="col-sm-2 control-label">商品描述</label>
 						<div class="col-sm-5">
 							<!--<input type="text" class="form-control" value="{{editData.goodsDesc}}" readonly="true" />-->
@@ -143,10 +143,10 @@
 					<div class="form-group" data-ng-if="editData.goodsType == 0 || editData.goodsType == 1">
 						<label class="col-sm-2 control-label">数据样例</label>
 						<div class="col-sm-5">
-							<a href="{{editData.dataSample}}" target="_blank">
-								<img ng-src="{{editData.dataSample}}" style="max-width:300px;">
-							</a>
-							<!--<img ng-src="{{editData.goodsImg}}" style="max-width: 300px; max-height: 500px">-->
+							<!--<a href="http://static.qddata.com.cn/{{editData.dataSample}}" target="_blank">-->
+								<!--<img ng-src="http://static.qddata.com.cn/{{editData.dataSample}}" style="max-width:300px;">-->
+							<!--</a>-->
+							<input type="text" class="form-control" value="{{editData.dataSample}}" readonly="true"/>
 						</div>
 					</div>
 					<div class="form-group" data-ng-if="editData.goodsType == 1 || editData.goodsType == 4 || editData.goodsType == 5 || editData.goodsType == 6 || editData.goodsType == 7">
