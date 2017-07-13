@@ -56,6 +56,11 @@ public class MyBuyerController {
     public String myAttention() {
         return "usercenter/buyer/myAttention";
     }
+//    我的商品
+    @RequestMapping(value = "/myGoods", method = RequestMethod.GET)
+    public String myGoods() {
+        return "usercenter/buyer/myGoods";
+    }
 
 //    @RequestMapping(value = "/viewDetails", method = RequestMethod.GET)
 //    public String viewDetails() {  return "usercenter/buyer/viewDetails"; }

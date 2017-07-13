@@ -20,32 +20,25 @@
         <div class="searchSection">
           <form class="form-inline">
             <div class="form-group">
-              <label class="control-label">商品名称</label>
-              <input ng-model="searchName" type="text" class="form-control">
-            </div>
-            <div class="form-group">
-              <label class="control-label">商品编码</label>
-              <input ng-model="searchSn" type="text" class="form-control">
-            </div>
-            <div class="form-group">
-              <label class="control-label">审核状态</label>
-              <select ng-model="searchCheckStatus"  ng-options="checkStatus.id as checkStatus.name for checkStatus in checkStatuss"  style="width: 155px;height: 32px">
+              <label class="control-label">状态</label>
+              <select ng-model="vaild" ng-options="vaild.id as vaild.name for vaild in vailds"  style="width: 155px;height: 32px">
               </select>
             </div>
             <div class="form-group">
-              <label class="control-label">上架状态</label>
-              <select ng-model="searchOnSaleStatus"  ng-options="onSaleStatus.id as onSaleStatus.name for onSaleStatus in onSaleStatuss"  style="width: 155px;height: 32px">
+              <label class="control-label">模板类型</label>
+              <select ng-model="templateType" ng-options="templateType.id as templateType.name for templateType in templateTypes"  style="width: 155px;height: 32px">
               </select>
             </div>
-            <!--<div class="form-group">
-              <label class="control-label">商品关键字</label>
-              <input ng-model="searchKw" type="text" class="form-control">
+            <div class="form-group">
+              <label class="control-label">关键字</label>
+              <input ng-model="keywords"  type="text" placeholder="请输入消息标题/内容关键字"  class="form-control">
             </div>
             <div class="form-group">
-              <label class="control-label">商品店铺</label>
-              <input ng-model="searchShop" type="text" class="form-control">
-            </div>-->
-            <button type="submit" class="btn btn-primary" data-ng-click="search()">搜索</button>
+              <label class="control-label">事件类型</label>
+              <select ng-model="eventType"  ng-options="eventType.code as eventType.describle for eventType in eventTypes"  style="width: 155px;height: 32px">
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary" data-ng-click="systemSearch()">搜索</button>
           </form>
         </div>
         <div class="gridSection">
@@ -53,74 +46,39 @@
           <table class="table table-hover" style="margin-bottom: 57px;">
             <thead>
             <tr>
-              <th>编号</th>
-              <th>名称</th>
-              <th>所属地域</th>
-              <th>类型</th>
-              <th>所属供应商</th>
-              <th>审核状态</th>
-              <th>上架状态</th>
-              <th>创建时间</th>
-              <th>渠道来源</th>
+              <th>序号</th>
+              <th>事件类型</th>
+              <th>模板标题</th>
+              <th>更新时间</th>
+              <th>模板类型</th>
+              <th>启用状态</th>
               <th width="200" class="text-center">操作</th>
             </tr>
             </thead>
             <tbody>
             <tr data-ng-if="!loadingState" data-ng-repeat="item in pagination.store" class="">
               <td>
-                  <span text-length="50" ng-bind="item.goodsSn"></span>
+                <span text-length="50" ng-bind="item.id"></span>
               </td>
               <td>
                 <a href="javascript:;" ng-click="lookDetail(item)">
-                  <span class="column-text" ng-bind="item.goodsName | limitTo:10"></span>
+                  <span class="column-text" ng-bind="item.sendHeader | limitTo:10"></span>
                 </a>
               </td>
               <td>
-                <span class="column-text" ng-bind="item.goodsArea"></span>
+                <span class="column-text" ng-bind="item.sendTime"></span>
               </td>
               <td>
-                <span class="column-text" ng-bind="item.goodsType | goodsType"></span>
+                <span class="column-text" ng-bind="item.receiveUserName"></span>
               </td>
               <td>
-                <span class="column-text" ng-bind="item.orgName"></span>
+                <span class="column-text" ng-bind="item.eventTypeName"></span>
               </td>
               <td>
-                <span class="column-text" style="color: red" ng-show="item.checkStatus == 2">未通过</span>
-                <span class="column-text" style="color: green" ng-show="item.checkStatus == 1">已通过</span>
-                <span class="column-text" ng-show="item.checkStatus == 0">待审核</span>
-              </td>
-              <td>
-                <span class="column-text" ng-show="(item.checkStatus == 0 || item.checkStatus == 2) && item.isOnsale == 1">待上架</span>
-                <span class="column-text" style="color: green" ng-show="item.checkStatus == 1 && item.isOnsale == 1">已上架</span>
-                <span class="column-text" style="color: DimGray " ng-show="item.isOnsale == 0">已下架</span>
-                <span class="column-text" style="color: red" ng-show="item.isOnsale == 2">强制下架</span>
-              </td>
-              <td>
-                <span class="column-text" ng-bind="item.lastUpdateTime"></span>
-              </td>
-              <td>
-                <span class="column-text">本地资源</span>
+                <span class="column-text" ng-bind="item.isRead | isRead"></span>
               </td>
               <td class="text-center" data-ng-if="item.isDelete == 1">
-                <span data-ng-if="item.isOnsale == '1' && item.checkStatus == '0'">
-                  <a href="javascript:;" ng-click="goCheck(item, 1)">去审核</a>
-                </span>
-                <span data-ng-if="item.isOnsale == '1' && item.checkStatus == '1'">
-                  <a href="javascript:;" ng-click="goCheck(item, 2)">强制下架</a>
-                </span>
-                <span data-ng-if="item.isOnsale == '2'">
-                  <a href="javascript:;" ng-click="goOff(item)">下架</a>
-                </span>
-                <!--<span data-ng-if="item.checkStatus ！= 0 && item.isOnsale == 2">-->
-                  <!--<a href="javascript:;">已强制下架</a>-->
-                <!--</span>-->
-                <!--<span data-ng-if="item.isOnsale == 0">-->
-                  <!--<a href="javascript:;">已下架</a>-->
-                <!--</span>-->
-                <!--<span data-ng-if="item.isOnsale == 2 || item.isOnsale == 0">-->
-                  <!--<span class="text-explode">|</span>-->
-                  <!--<a href="javascript:;" ng-click="delGoods($event, item, 3)">上架</a>-->
-                <!--</span>-->
+
               </td>
             </tr>
             </tbody>

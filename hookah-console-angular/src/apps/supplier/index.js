@@ -1,5 +1,5 @@
 import '../../common/common';
-import commentRouting from './comment.routing';
+import SupplierController from './supplier.routing';
 const MODULE_NAME = 'Hookah';
 let app = angular.module(MODULE_NAME, [
   'Common',
@@ -7,10 +7,10 @@ let app = angular.module(MODULE_NAME, [
   'ui.bootstrap',
   'treeGrid'
 ]);
-app.config(commentRouting);
+app.config(SupplierController);
 
 app.run(function ($rootScope, $state) {
-  $rootScope.currentProductId = 'comment';
+  $rootScope.currentProductId = 'supplier';
   $rootScope.config = {
     "navScene": 'main',
     "isSidebarFold": false,
@@ -33,11 +33,11 @@ app.run(function ($rootScope, $state) {
       "folded": false
     }
   };
-  $rootScope.config.title = '评价管理';
+  $rootScope.config.title = '供应商管理';
   $rootScope.config.mainNav =[
     {
-      "title":"评价查询",
-      "url":"comment.review"
+      "title":"供应商查询",
+      "url":"supplier.list"
     },
     // {
     //   "title":"新增帮助",

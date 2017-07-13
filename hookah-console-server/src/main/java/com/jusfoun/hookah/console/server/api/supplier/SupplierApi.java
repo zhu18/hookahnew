@@ -40,7 +40,7 @@ public class SupplierApi extends BaseController {
      * @return
      */
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public ReturnData getListInPage(Byte checkStatus, String contactPhone, String orgName, String startDate,
+    public ReturnData getListInPage(String checkStatus, String contactPhone, String orgName, String startDate,
                                     String endDate, String currentPage, String pageSize){
         Pagination<Supplier> page = new Pagination<>();
         try {
@@ -48,8 +48,8 @@ public class SupplierApi extends BaseController {
             List<OrderBy> orderBys = new ArrayList();
             orderBys.add(OrderBy.desc("addTime"));
 
-            if (StringUtils.isNotBlank(checkStatus.toString())){
-                filters.add(Condition.eq("checkStatus",checkStatus));
+            if (StringUtils.isNotBlank(checkStatus)){
+                filters.add(Condition.eq("checkStatus",Byte.parseByte(checkStatus)));
             }
             if (StringUtils.isNotBlank(contactPhone)){
                 filters.add(Condition.like("contactPhone",contactPhone.trim()));

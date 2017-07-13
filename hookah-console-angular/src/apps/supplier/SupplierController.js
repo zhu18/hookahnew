@@ -4,33 +4,32 @@ class CommentController {
       console.log($scope.levelStar);
       var promise = $http({
         method: 'GET',
-        url: $rootScope.site.apiServer + "/api/comment/findCommentsByCondition",
+        url: $rootScope.site.apiServer + "/api/supplier/all",
         params: {
-          orderSn: $scope.orderSn ? $scope.orderSn : null,
-          goodsName: $scope.goodsName ? $scope.goodsName : null,
-          startTime: $scope.startDate ? format($scope.startDate, 'yyyy-MM-dd HH:mm:ss') : null,
-          endTime: $scope.endDate ? format($scope.endDate, 'yyyy-MM-dd HH:mm:ss') : null,
-          commentContent: $scope.commentContent ? $scope.commentContent : null,//评价关键字
-          goodsCommentGrade: $scope.goodsCommentGrade ? $scope.goodsCommentGrade : null,//评分等级
-          status: $scope.status ? $scope.status : null,//审核状态
-          pageNumber: $rootScope.pagination.currentPage, //当前页码
-          pageSize: $rootScope.pagination.pageSize
+          checkStatus: $scope.checkStatus ? $scope.checkStatus : null,//审核状态
+          contactPhone: $scope.contactPhone ? $scope.contactPhone : null,
+          orgName: $scope.orgName ? $scope.orgName : null,
+          startDate: $scope.startDate ? format($scope.startDate, 'yyyy-MM-dd HH:mm:ss') : null,
+          endDate: $scope.endDate ? format($scope.endDate, 'yyyy-MM-dd HH:mm:ss') : null,
+          currentPage: $rootScope.pagination.currentPage, //当前页码
+          pageSize: $rootScope.pagination.pageSize,
         }
       });
       promise.then(function (res, status, config, headers) {
         console.log('数据在这里');
         console.log(res);
 
-        if (res.data.code == '1') {
-          $scope.commentList = res.data.data.list;
+        if (res.data.code !== '0') {
+          $scope.supplierList = res.data.data.list;
           $rootScope.pagination = res.data.data;
           $scope.showNoneDataInfoTip = false;
           if (res.data.data.totalPage > 1) {
             $scope.showPageHelpInfo = true;
+          } else {
+            $scope.showPageHelpInfo = false;
           }
-
         } else {
-          $scope.commentList = [];
+          $scope.supplierList = [];
           $scope.showNoneDataInfoTip = true;
 
         }
@@ -45,7 +44,6 @@ class CommentController {
     $scope.refresh = function () {
       $scope.search();
     };
-    $scope.search();
 
     // 处理日期插件的获取日期的格式
     var format = function (time, format) {
