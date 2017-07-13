@@ -187,7 +187,7 @@ public class OrderApi extends BaseController{
     @RequestMapping(value = "/soldOrder", method = RequestMethod.GET)
     @ResponseBody
     public ReturnData getSoldOrder(Integer pageNumber, Integer pageSize, String startDate, String endDate,
-                                   Byte goodsType, OrderInfoVo orderInfoVo, String addUser){
+                                   OrderInfoVo orderInfoVo, String addUser){
         try {
             String userName = orderInfoVo.getUserName(); //买家账号
             String orderSn = orderInfoVo.getOrderSn();//订单号
@@ -225,7 +225,7 @@ public class OrderApi extends BaseController{
             List<OrderBy> orderBys = new ArrayList<>();
             orderBys.add(OrderBy.desc("addTime"));
             Pagination<OrderInfoVo> pOrders = orderInfoService.getSoldOrderListByCondition(pageNumber, pageSize, listFilters,
-                    goodsType ,startTime, endTime, addUser);
+                     startTime, endTime, addUser);
 
             return ReturnData.success(pOrders);
         } catch (Exception e) {
