@@ -128,6 +128,11 @@ public class MySellerController {
     public String goodsIllegal(){
         return "usercenter/myseller/goodsIllegal";
     }
+//    结算记录
+    @RequestMapping(value = "/settlementRecord", method = RequestMethod.GET)
+    public String settlementRecord(){
+        return "usercenter/myseller/settlementRecord";
+    }
 
 
 
