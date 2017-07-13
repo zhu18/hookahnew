@@ -1,7 +1,6 @@
 <%
 var head = {
 %>
-<link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/userInfo.css">
 <script type="text/javascript">
 //	var pagePath = '/order/goodsList';
@@ -17,13 +16,13 @@ var htmlPart = {
 <div class="grid-0 backgorund-gray">
 	<div class="grid-row clearfix">
 		<%include("/usercenter/user-center-menu.html"){} %>
-		<div class="info-center-box grid-right">
+		<div class="basic-information grid-right">
 			<div class="basic-information-top ">
 				<div class="basic-information-top-title">
 					基本信息
 				</div>
 				<div class="basic-information-top-content">
-					<div class="user-info">
+					<div class="user-info ">
 						<div class="user-info-left grid-left">
 							<img width="90" src="${user.headImg}" alt="">
 							<div class="icon-box">
@@ -124,8 +123,7 @@ var htmlPart = {
 				</div>
 
 			</div>
-			<div class="center-content">
-				<div class="bottom margin-bottom-30">
+			<div class="basic-information-down">
 					<div class="header clearfix">
 						<h4 class="grid-left my-order active margin-right-15" data-tab-id="one">我购买的数据</h4>
 						<h4 class="grid-left my-order" data-tab-id="tow">我上架的商品</h4>
@@ -266,7 +264,6 @@ var htmlPart = {
 					<!--</script>-->
 					<%include("/layout/pageaction.html"){} %>
 				</div>
-			</div>
 		</div>
 
 		<!--以下代码暂时不要-->
@@ -337,7 +334,7 @@ include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 		window.location.href = '/usercenter/recharge';
 	});
     $(".my-order-list-two").hide();
-	$(".center-content .bottom .header h4").on("click",function () {
+	$(".basic-information-down .header h4").on("click",function () {
 		$(this).addClass("active").siblings().removeClass("active");
 		if($(this).attr('data-tab-id')=="one"){
 		    $(".my-order-list-one").show();
