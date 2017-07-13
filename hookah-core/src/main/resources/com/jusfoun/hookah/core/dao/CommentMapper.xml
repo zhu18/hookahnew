@@ -81,7 +81,7 @@
       AND oi.order_sn = #{orderSn}
     </if>
     <if test="goodsName != null and goodsName !=''">
-      AND g.goodsName like CONCAT('%', #{goodsName}, '%')
+      AND g.goods_name like CONCAT('%', #{goodsName}, '%')
     </if>
     <if test="commentContent != null and commentContent !=''">
       AND c.comment_content like CONCAT('%', #{commentContent},'%')
