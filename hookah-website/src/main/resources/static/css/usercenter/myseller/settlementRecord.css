@@ -104,6 +104,9 @@
     height: 39px;
     border: 1px solid #E5E5E5;
 }
+.settlementRecord-down tr:hover{
+    background: #D7E8FA;
+}
 .settlementRecord-down table tr th{
     font-size: 14px;
     color: #333333;

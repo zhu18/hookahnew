@@ -100,7 +100,7 @@ var htmlPart = {
 						<!--</div>-->
 						<div class="li-item-top">
 							<a target="_blank" href="${host.website}/exchange/details?id=${item[i].goodsId}" class="top-box">
-								<img src="${item[i].goodsImg}" class="top-box-img" alt="">
+								<img src="${host.static}/${item[i].goodsImg}" class="top-box-img" alt="">
 								<div class="padding-left-5 top-box-info">
 									<p class="title">${item[i].goodsName}</p>
 									<p class="subtitle">${item[i].goodsBrief}</p>
@@ -202,7 +202,7 @@ var htmlPart = {
 					for(var i=0;i< index1;i++){
 					%>
 					<tr>
-						<td class="td-one"><img src="${res_item[i].goodsImg}" alt=""></td>
+						<td class="td-one"><img src="${host.static}/${res_item[i].goodsImg}" alt=""></td>
 						<td class="td-two">${res_item[i].goodsName}</td>
 						<td class="td-three"><span class="td-three-money">${res_item[i].shopPrice / 100}</span></td><!--<span>元/次</span>-->
 						<td class="td-four">
@@ -228,7 +228,7 @@ var htmlPart = {
 					for(var i=0;i< index2;i++){
 					%>
 					<li class="${decode(i,0,'active','')}">
-						<img src="${hot_sellItem[i].goodsImg}" class="grid-left" alt="">
+						<img src="${host.static}/${hot_sellItem[i].goodsImg}" class="grid-left" alt="">
 						<div class="infoBox grid-right">
 							<a href="${host.website}/exchange/details?id=${hot_sellItem[i].goodsId}" target="_blank" ><p class="title">
 								${hot_sellItem[i].goodsName}</p></a>
@@ -465,7 +465,7 @@ var htmlPart = {
 						%>
 						<li>
 							<a href="${host.website}/exchange/details?id=${model_item[i].goodsId}" target="_blank" >
-								<img src="${model_item[i].goodsImg}" alt="">
+								<img src="${host.static}/${model_item[i].goodsImg}" alt="">
 								<p class="title">${model_item[i].goodsName}</p>
 								<p class="star-box">
 									<i class="iconfont icon-shoucang color-orange star-item"></i>
@@ -512,7 +512,7 @@ var htmlPart = {
 						%>
 						<li>
 							<a href="${host.website}/exchange/details?id=${scene_item[i].goodsId}" target="_blank" >
-								<img src="${scene_item[i].goodsImg}" alt="">
+								<img src="${host.static}/${scene_item[i].goodsImg}" alt="">
 								<p class="title">${scene_item[i].goodsName}</p>
 								<p class="star-box">
 									<i class="iconfont icon-shoucang color-orange star-item"></i>
@@ -559,7 +559,7 @@ var htmlPart = {
 						%>
 						<li>
 							<a href="${host.website}/exchange/details?id=${plat_item[i].goodsId}" target="_blank" >
-								<img src="${plat_item[i].goodsImg}" alt="">
+								<img src="${host.static}/${plat_item[i].goodsImg}" alt="">
 								<p class="title">${plat_item[i].goodsName}</p>
 								<p class="star-box">
 									<i class="iconfont icon-shoucang color-orange star-item"></i>
@@ -606,7 +606,7 @@ var htmlPart = {
 						%>
 						<li>
 							<a href="${host.website}/exchange/details?id=${tools_item[i].goodsId}" target="_blank" >
-								<img src="${tools_item[i].goodsImg}" alt="">
+								<img src="${host.static}/${tools_item[i].goodsImg}" alt="">
 								<p class="title">${tools_item[i].goodsName}</p>
 								<p class="star-box">
 									<i class="iconfont icon-shoucang color-orange star-item"></i>

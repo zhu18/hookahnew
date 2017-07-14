@@ -120,7 +120,8 @@ public class User extends GenericModel {
 
     private String creatorName;
 
-    //0系统,1未认证,2个人,3个人待审核,4企业,5企业待审核
+    //0系统,1未认证,2个人,3个人待审核,4企业,5企业待审核,6个人审核失败,
+    // 7企业审核失败,8供应商,9供应商待审核,10供应商审核失败
     private Integer userType;
 
 

@@ -1,5 +1,5 @@
 class GoodsCheckController {
-	constructor($scope, $rootScope, $http, $state, $uibModal, usSpinnerService, growl) {
+	constructor($scope, $rootScope, $stateParams, $http, $state, $uibModal, usSpinnerService, growl) {
 
 		$scope.search = function () {
 
@@ -53,19 +53,12 @@ class GoodsCheckController {
 					};
 
 					$rootScope.packageApiInfo = res.data.data.packageApiInfo;
-                    // $rootScope.checkStatusVal = "1";
-                    // $rootScope.checkContentVal = "qweqewqweeqw";
-
 
 					$rootScope.addData = {
 						goodsCheck: {
 							goodsId: $rootScope.editData.goodsId,//商品ID
 							goodsSn: $rootScope.editData.goodsSn,//商品编号
 							goodsName: $rootScope.editData.goodsName,//商品名称
-                            // checkStatus: $rootScope.checkStatusVal,//审核状态
-                            // checkContent: $rootScope.checkContentVal,//审核意见
-							// checkStatus: $('input[name="checkStatus"]:checked').val(),//审核状态
-							//checkContent: $('#checkContent').val(),//审核意见
 						},
 						apiInfoBean: {
 							apiType: $rootScope.packageApiInfo.apiType,//接口类型q
@@ -75,7 +68,8 @@ class GoodsCheckController {
 							apiMethod: $rootScope.packageApiInfo.apiMethod,//请求方式q
 							reqSample: $rootScope.packageApiInfo.reqSample,//请求示例
 							apiDesc: $rootScope.packageApiInfo.apiDesc, //接口描述
-
+                            reqParamList:$rootScope.packageApiInfo.reqParamList, //接口描述
+                            respParamList:$rootScope.packageApiInfo.respParamList, //接口描述
 							respSample: $rootScope.packageApiInfo.respSample, //返回示例
 
                             respDataMapping: {
@@ -100,8 +94,27 @@ class GoodsCheckController {
 							}
 						},
 					};
+					console.log("STR"+JSON.stringify($rootScope.addData));
 				}
 			});
+		}
+
+		$scope.tablePlus = function (that){
+
+            var requestHtml = '';//请求接口
+            requestHtml += '<tr>';
+            requestHtml += '<td></td>';
+            requestHtml += '<td></td>';
+            requestHtml += '<td></td>';
+            requestHtml += '<td></td>';
+            requestHtml += '<td></td>';
+            requestHtml += '<td><</td>';
+            requestHtml += '<td><span class="column-text" onclick="tablePlus(this)">+</span></td>';
+            requestHtml += '</tr>';
+			alert(requestHtml);
+
+			alert($(that).parents('.table-hover tbody'));
+            $(that).parents('.table-hover tbody').append(requestHtml);
 		}
 
 		$scope.showCurrentGoods = function (item) {
@@ -176,6 +189,12 @@ class GoodsCheckController {
 			$scope.searchName = $rootScope.Name;
 			$scope.searchSn = $rootScope.Sn;
 		}
+
+        // if ($state.$current.name == "items.checkGoodsDetail") {
+			// $scope.item = $rootScope.item;
+			// $scope.n = $rootScope.n;
+        //     $scope.checkLookGoods($stateParams.data1, $stateParams.data2);
+        // }
 
 		$scope.returnPage = function () {
 
