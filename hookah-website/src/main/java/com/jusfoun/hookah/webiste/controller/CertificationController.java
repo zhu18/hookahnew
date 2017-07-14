@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.domain.*;
+import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
@@ -26,7 +27,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping(value = "/regInfo")
-public class CertificationController{
+public class CertificationController extends BaseController{
     private static final Logger logger = LoggerFactory.getLogger(SupplierController.class);
 
     @Resource
@@ -47,7 +48,8 @@ public class CertificationController{
     //用户实名认证信息
     @ResponseBody
     @RequestMapping(value = "/verifiedInfo",method = RequestMethod.GET)
-    public ReturnData verifiedInfo(String userId) {
+    public ReturnData verifiedInfo() throws HookahException {
+        String userId = this.getCurrentUser().getUserId();
         Map<String, Object> map = new HashMap<>(6);
         User user = userService.selectById(userId);
         if(StringUtils.isNotBlank(user.getOrgId())) {
@@ -57,9 +59,11 @@ public class CertificationController{
                 List<Condition> filters = new ArrayList();
                 filters.add(Condition.eq("userId", userId));
                 UserCheck userCheck = userCheckService.selectOne(filters);
-                map.put("userType", userCheck.getUserType());
                 map.put("isAuth", organization.getIsAuth());
-                map.put("checkContent", userCheck.getCheckContent());
+                if(userCheck != null){
+                    map.put("userType", userCheck.getUserType());
+                    map.put("checkContent", userCheck.getCheckContent());
+                }
 
                 //详细信息
                 map.put("orgName", organization.getOrgName());
@@ -98,11 +102,12 @@ public class CertificationController{
     //查询账户信息
     @ResponseBody
     @RequestMapping(value = "/selectAccountInfo",method = RequestMethod.GET)
-    public ReturnData getUserById(String userId) {
+    public ReturnData getUserById() {
 
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
+            String userId = this.getCurrentUser().getUserId();
             Map<String, Object> map = new HashedMap();
             User user = userService.selectById(userId);
 
