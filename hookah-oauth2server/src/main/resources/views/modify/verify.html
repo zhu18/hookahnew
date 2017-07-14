@@ -106,10 +106,10 @@ var htmlPart = {
     var dh=(mobile+"").replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
 	$(".ui-form-text").html(dh);
     $.getUrlParam = function (key) {
-		var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
-		var result = window.location.search.substr(1).match(reg);
-		return result ? decodeURIComponent(result[2]) : null;
-	};
+        var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+        var result = window.location.search.substr(1).match(reg);
+        return result ? decodeURIComponent(result[2]) : null;
+    };
 	var type = $.getUrlParam('type');
 	var typeNum = null;
 	if(type == 'mobile'){

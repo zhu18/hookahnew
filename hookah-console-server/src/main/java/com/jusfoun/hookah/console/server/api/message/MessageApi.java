@@ -73,10 +73,10 @@ public class MessageApi {
             GeneralCodes generalCodes = new GeneralCodes();
             generalCodes.setProperty(property_eventType);
             List<GeneralCodes> generalCodesList = generalCodesMapper.select(generalCodes);
-            GeneralCodes generalCodes1 = new GeneralCodes();
-            generalCodes1.setCode("-1");
-            generalCodes1.setDescrible("全部");
-            generalCodesList.add(0,generalCodes1);
+//            GeneralCodes generalCodes1 = new GeneralCodes();
+//            generalCodes1.setCode("-1");
+//            generalCodes1.setDescrible("全部");
+//            generalCodesList.add(0,generalCodes1);
             returnData.setData(generalCodesList);
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);

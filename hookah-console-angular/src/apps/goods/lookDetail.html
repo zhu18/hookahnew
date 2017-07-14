@@ -68,15 +68,15 @@
 					<div class="form-group">
 						<label class="col-sm-2 control-label">商品图片</label>
 						<div class="col-sm-5">
-							<a href="{{editData.goodsImg}}" target="_blank">
-								<img ng-src="{{editData.goodsImg}}" style="max-width: 450px; max-height: 600px">
+							<a href="http://static.qddata.com.cn/{{editData.goodsImg}}" target="_blank">
+								<img ng-src="http://static.qddata.com.cn/{{editData.goodsImg}}" style="max-width: 450px; max-height: 600px">
 							</a>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label">适用范围</label>
 						<div class="col-sm-5">
-							<input type="text" class="form-control" value="{{editData.trialange}}" readonly="true"/>
+							<input type="text" class="form-control" value="{{editData.trialRange}}" readonly="true"/>
 						</div>
 					</div>
 					<div class="form-group">
@@ -110,40 +110,41 @@
 							</table>
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="form-group" data-ng-if="editData.goodsType == 0 || editData.goodsType == 1 || editData.goodsType == 2">
 						<label class="col-sm-2 control-label">商品描述</label>
 						<div class="col-sm-5">
 							<!--<input type="text" class="form-control" value="{{editData.goodsDesc}}" readonly="true" />-->
 							<!--<textarea style="margin: 0px; width: 452px; height: 120px;" readonly="true" ng-bind-html="editData.goodsDesc">-->
 							<!--</textarea>-->
-							<p ng-bind-html="editData.goodsDesc"></p>
+							<p ng-bind-html="editData.goodsDesc | trustHtml"></p>
 						</div>
 					</div>
 
 					<div class="form-group" data-ng-if="editData.goodsType == 0 || editData.goodsType == 1 || editData.goodsType == 2">
 						<label class="col-sm-2 control-label">商品优势</label>
 						<div class="col-sm-5">
-							<p ng-bind-html="editData.goodsAdvantage"></p>
+							<p ng-bind-html="editData.goodsAdvantage | trustHtml"></p>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label">售后服务</label>
 						<div class="col-sm-5">
-							<p ng-bind-html="editData.afterSaleService"></p>
+							<p ng-bind-html="editData.afterSaleService | trustHtml"></p>
 						</div>
 					</div>
 					<div class="form-group" data-ng-if="editData.goodsType == 0 || editData.goodsType == 1">
 						<label class="col-sm-2 control-label">数据样例</label>
 						<div class="col-sm-5">
-							<a href="{{editData.dataSample}}" target="_blank">
-								<img ng-src="{{editData.dataSample}}" style="max-width: 450px; max-height: 600px">
-							</a>
+							<!--<a href="http://static.qddata.com.cn/{{editData.dataSample}}" target="_blank">-->
+								<!--<img ng-src="http://static.qddata.com.cn/{{editData.dataSample}}" style="max-width: 450px; max-height: 600px">-->
+							<!--</a>-->
+							<input type="text" class="form-control" value="{{editData.dataSample}}" readonly="true"/>
 						</div>
 					</div>
 					<div class="form-group" data-ng-if="editData.goodsType == 1 || editData.goodsType == 4 || editData.goodsType == 5 || editData.goodsType == 6 || editData.goodsType == 7">
 						<label class="col-sm-2 control-label">应用案例</label>
 						<div class="col-sm-5">
-							<p ng-bind-html="editData.appCase"></p>
+							<p ng-bind-html="editData.appCase | trustHtml"></p>
 						</div>
 					</div>
 

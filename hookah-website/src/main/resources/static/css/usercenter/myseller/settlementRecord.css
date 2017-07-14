@@ -30,8 +30,9 @@
     height: 100%;
 }
 .settlementRecord-top .query-condition li input{
-    width: 141px;
+    width: 136px;
     height: calc(100% - 4px);
+    padding-left: 5px;
     border-radius: 3px;
     border: 1px solid #ccc;
 }
@@ -102,6 +103,9 @@
 .settlementRecord-down table tr{
     height: 39px;
     border: 1px solid #E5E5E5;
+}
+.settlementRecord-down tr:hover{
+    background: #D7E8FA;
 }
 .settlementRecord-down table tr th{
     font-size: 14px;

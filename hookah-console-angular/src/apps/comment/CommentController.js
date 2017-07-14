@@ -1,5 +1,8 @@
 class CommentController {
   constructor($scope, $rootScope, $http, $state, $uibModal, usSpinnerService, growl) {
+    $scope.commentList = [];
+    $scope.choseArr = [];//多选数组
+
     $scope.search = function () {
       console.log($scope.levelStar);
       var promise = $http({
@@ -12,7 +15,7 @@ class CommentController {
           endTime: $scope.endDate ? format($scope.endDate, 'yyyy-MM-dd HH:mm:ss') : null,
           commentContent: $scope.commentContent ? $scope.commentContent : null,//评价关键字
           goodsCommentGrade: $scope.goodsCommentGrade ? $scope.goodsCommentGrade : null,//评分等级
-          status: $scope.status ? $scope.status : null,//审核状态
+          status: $scope.status == 0 ? '0' : ($scope.status ? $scope.status : null),//审核状态
           pageNumber: $rootScope.pagination.currentPage, //当前页码
           pageSize: $rootScope.pagination.pageSize
         }
@@ -40,7 +43,90 @@ class CommentController {
       });
 
     };
+    $scope.pageChanged = function () {
+      $scope.search();
+      console.log('Page changed to: ' + $rootScope.pagination.currentPage);
+    };
+    $scope.MultipleCheck = function (status) {
+      if ($scope.choseArr.length > 0) {
+        $scope.commentCheck($scope.choseArr.join(), status)
+        console.log($scope.choseArr.join())
+      } else {
+        alert('请选择多个订单！')
+      }
+    };
+    $scope.commentCheck = function (orderSn, status) {
+      var promise = $http({
+        method: 'GET',
+        url: $rootScope.site.apiServer + "/api/comment/checkComments",
+        params: {
+          commentIds: orderSn,
+          status: status
+        }
+      });
+      promise.then(function (res, status, config, headers) {
+        console.log('数据在这里');
+        console.log(res);
 
+        if (res.data.code == '1') {
+          $scope.search();
+
+        } else {
+
+        }
+
+        $rootScope.loadingState = false;
+        growl.addSuccessMessage("订单数据加载完毕。。。");
+      });
+    }
+
+    //多选
+    var str = "";
+    var len = $scope.commentList.length;
+    var flag = '';//是否点击了全选，是为a
+    $scope.x = false;//默认未选中
+
+    $scope.all = function (c) { //全选
+      var commIdArr = [];
+
+      angular.forEach($scope.commentList, function (value, key) {
+
+        if (value.status == 0) {
+          commIdArr.push(value.commId)
+        }
+
+      });
+      console.log(commIdArr);
+
+      if (c == true) {
+        $scope.x = true;
+        $scope.choseArr = commIdArr;
+        flag = 'a';
+      } else {
+        $scope.x = false;
+        $scope.choseArr = [];
+        flag = 'b';
+      }
+    };
+
+    $scope.chk = function (z, x) { //单选或者多选
+
+
+      if (x == true) {//选中
+        $scope.choseArr.push(z);
+        flag = 'c'
+        if ($scope.choseArr.length == len) {
+          $scope.master = true
+        }
+      } else {
+        $scope.choseArr.splice($scope.choseArr.indexOf(z), 1);//取消选中
+      }
+
+      if ($scope.choseArr.length == 0) {
+        $scope.master = false
+      }
+    };
+    //多选结束
 
     $scope.refresh = function () {
       $scope.search();

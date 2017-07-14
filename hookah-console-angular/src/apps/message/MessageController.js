@@ -74,7 +74,7 @@ class MessageController {
                     isVaild: $scope.vaild,
                     keywords: $scope.keywords,
                     eventType: $scope.eventType,
-                    templateType:$scope.eventType,
+                    templateType:$scope.templateType,
                     startData: $scope.searchCheckStatus,
                     endData: $scope.searchOnSaleStatus
                 }
@@ -102,6 +102,7 @@ class MessageController {
                 if (res.data.code == 1) {
                     console.log(res.data.data);
                     $scope.eventTypes = res.data.data;
+                    $scope.eventTypes.unshift({"code":"-1","describle":"全部"});
                     // $scope.eventType = $scope.eventTypes[0].code;
                     $scope.eventType = "-1";
                 }
@@ -123,6 +124,7 @@ class MessageController {
                 if (res.data.code == 1) {
                     console.log(res.data.data);
                     $scope.eventTypes = res.data.data;
+                    $scope.eventTypes.unshift({"code":"-1","describle":"全部"});
                     // $scope.eventType = $scope.eventTypes[0].code;
                     $scope.eventType = "-1";
                 }
@@ -146,6 +148,7 @@ class MessageController {
                 if (res.data.code == 1) {
                     console.log(res.data.data);
                     $scope.eventTypes = res.data.data;
+                    $scope.eventTypes.unshift({"code":"-1","describle":"全部"});
                     // $scope.eventType = $scope.eventTypes[0].code;
                     $scope.eventType = "-1";
                 }
@@ -173,6 +176,7 @@ class MessageController {
                 if (res.data.code == 1) {
                     console.log(res.data.data);
                     $scope.eventTypes = res.data.data;
+                    $scope.eventTypes.unshift({"code":"-1","describle":"全部"});
                     // $scope.eventType = $scope.eventTypes[0].code;
                     $scope.eventType = "-1";
                 }
@@ -203,11 +207,31 @@ class MessageController {
                     console.log(res.data.data);
                     $scope.eventTypes = res.data.data;
                     // $scope.eventType = $scope.eventTypes[0].code;
+                    $scope.eventTypes.unshift({"code":"-1","describle":"全部"});
                     $scope.eventType = "-1";
                 }
             });
 
             $scope.templateSearch();
+        }
+
+        //获取消息事件类型列表
+        $scope.getEventTypeSelect = function () {
+            var promise = $http({
+                method: 'POST',
+                url: $rootScope.site.apiServer + "/api/message/eventType/all",
+            });
+            promise.then(function (res, status, config, headers) {
+                $rootScope.loadingState = false;
+                console.log("获取数据:" + res.data);
+                if (res.data.code == 1) {
+                    console.log(res.data.data);
+                    $scope.eventTypes = res.data.data;
+                    // $scope.eventType = $scope.eventTypes[0].code;
+                    $scope.eventTypes.unshift({"code":"-1","describle":"全部"});
+                    $scope.eventType = "-1";
+                }
+            });
         }
     }
 }
