@@ -97,9 +97,9 @@ class GoodsController {
         promise.then(function (res, status, config, headers) {
             console.log(res.data)
             if(res.data.code == "1"){
-                $rootScope.editData = res.data.data;
+                $rootScope.editDatac = res.data.data;
                 $rootScope.operatorFlag = n;
-                $state.go('items.goodsDetail', {data: $rootScope.editData});
+                $state.go('items.goodsDetail', {data: res.data.data});
             }
         });
     };

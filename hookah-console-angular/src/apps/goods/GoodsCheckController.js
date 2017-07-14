@@ -1,6 +1,8 @@
 class GoodsCheckController {
-	constructor($scope, $rootScope, $http, $state, $uibModal, usSpinnerService, growl) {
-
+	constructor($scope, $rootScope, $http, $state,$stateParams, $uibModal, usSpinnerService, growl) {
+		$scope.editData = $stateParams.data; //获取去审核传值-------------
+		$scope.packageApiInfo =  $stateParams.data.packageApiInfo;
+		// alert(JSON.stringify($scope.packageApiInfo));
 		// $scope.search = function () {
 		//
 		//     $rootScope.Name = $scope.searchName;
@@ -91,36 +93,37 @@ class GoodsCheckController {
 			});
 		};
 
-		$scope.LookGoods = function (item, n) {
-			console.log(item.goodsName);
-			var promise = $http({
-				method: 'GET',
-				url: $rootScope.site.apiServer + "/api/goods/getGoodsInfo",
-				params: {goodsId: item.goodsId}
-			});
-			promise.then(function (res, status, config, headers) {
-				console.log(res.data)
-				if (res.data.code == "1") {
-					$rootScope.editData = res.data.data;
-					// if($rootScope.editData.apiInfo != null){
-					//     $rootScope.editData.apiInfo.respSample = JSON.stringify(JSON.parse($rootScope.editData.apiInfo.respSample), null, "\t");
-					// }
-					//版本更新
-					// $rootScope.operatorFlag = n;
-					// $state.go('items.goodsDetail', {data: $rootScope.editData});
-					$state.go('items.lookDetail');
-					$rootScope.currentS = "1";
-					$rootScope.setCurrentS = function (param) {
-						// console.log(param);
-						$rootScope.currentS = param;
 
-					};
-					alert(12)
-                    $rootScope.packageApiInfo =  $rootScope.editData.packageApiInfo;
-
-				}
-			});
-		};
+		// $scope.LookGoods = function (item, n) {
+		// 	console.log(item.goodsName);
+		// 	var promise = $http({
+		// 		method: 'GET',
+		// 		url: $rootScope.site.apiServer + "/api/goods/getGoodsInfo",
+		// 		params: {goodsId: item.goodsId}
+		// 	});
+		// 	promise.then(function (res, status, config, headers) {
+		// 		console.log(res.data)
+		// 		if (res.data.code == "1") {
+		// 			$rootScope.editData = res.data.data;
+		// 			// if($rootScope.editData.apiInfo != null){
+		// 			//     $rootScope.editData.apiInfo.respSample = JSON.stringify(JSON.parse($rootScope.editData.apiInfo.respSample), null, "\t");
+		// 			// }
+		// 			//版本更新
+		// 			// $rootScope.operatorFlag = n;
+		// 			// $state.go('items.goodsDetail', {data: $rootScope.editData});
+		// 			$state.go('items.lookDetail');
+		// 			$rootScope.currentS = "1";
+		// 			$rootScope.setCurrentS = function (param) {
+		// 				// console.log(param);
+		// 				$rootScope.currentS = param;
+		//
+		// 			};
+		// 			alert(12)
+         //            $rootScope.packageApiInfo =  $rootScope.editData.packageApiInfo;
+		//
+		// 		}
+		// 	});
+		// };
 
 		$scope.LookDetail = function ($event, item) {
 			console.log("去审核详情……");
@@ -217,24 +220,24 @@ class GoodsCheckController {
 		 * @param item
 		 * @param n
 		 */
-		$scope.goCheck = function (item, n) {
-			console.log("去审核……");
-			console.log(n);
-
-			var promise = $http({
-				method: 'GET',
-				url: $rootScope.site.apiServer + "/api/goods/getGoodsInfo",
-				params: {goodsId: item.goodsId}
-			});
-			promise.then(function (res, status, config, headers) {
-				console.log(res.data)
-				if (res.data.code == "1") {
-					$rootScope.editData = res.data.data;
-					$rootScope.operatorFlag = n;
-					$state.go('items.goodsDetail', {data: $rootScope.editData});
-				}
-			});
-		};
+		// $scope.goCheck = function (item, n) {
+		// 	console.log("去审核……");
+		// 	console.log(n);
+		//
+		// 	var promise = $http({
+		// 		method: 'GET',
+		// 		url: $rootScope.site.apiServer + "/api/goods/getGoodsInfo",
+		// 		params: {goodsId: item.goodsId}
+		// 	});
+		// 	promise.then(function (res, status, config, headers) {
+		// 		console.log(res.data)
+		// 		if (res.data.code == "1") {
+		// 			$rootScope.editData = res.data.data;
+		// 			$rootScope.operatorFlag = n;
+		// 			$state.go('items.goodsDetail', {data: $rootScope.editData});
+		// 		}
+		// 	});
+		// };
 
 		$scope.forceOff = function () {
 			var promise = $http({
@@ -251,23 +254,23 @@ class GoodsCheckController {
 			});
 		}
 
-		$scope.aginCheck = function (item) {
-			console.log("重新审核……");
-			// $state.go('items.check');
-			var promise = $http({
-				method: 'GET',
-				url: $rootScope.site.apiServer + "/api/goods/getGoodsInfo",
-				params: {goodsId: item.goodsId}
-			});
-			promise.then(function (res, status, config, headers) {
-				console.log(res.data)
-				if (res.data.code == "1") {
-					$rootScope.editData = res.data.data;
-					$rootScope.operatorFlag = 1;
-					$state.go('items.goodsDetail', {data: $rootScope.editData});
-				}
-			});
-		};
+		// $scope.aginCheck = function (item) {
+		// 	console.log("重新审核……");
+		// 	// $state.go('items.check');
+		// 	var promise = $http({
+		// 		method: 'GET',
+		// 		url: $rootScope.site.apiServer + "/api/goods/getGoodsInfo",
+		// 		params: {goodsId: item.goodsId}
+		// 	});
+		// 	promise.then(function (res, status, config, headers) {
+		// 		console.log(res.data)
+		// 		if (res.data.code == "1") {
+		// 			$rootScope.editData = res.data.data;
+		// 			$rootScope.operatorFlag = 1;
+		// 			$state.go('items.goodsDetail', {data: $rootScope.editData});
+		// 		}
+		// 	});
+		// };
 
 		if ($state.$current.name == "items.check") {
 			$scope.search();
