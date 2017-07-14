@@ -1044,6 +1044,7 @@ function renderData(data){//渲染页面
 	$('#parentSelect').attr('disabled','disabled');
 	$('.childrenSelect').attr('disabled','disabled');
 	uploadGoodsImg();
+	validataFn()
 }
 function loadFirstCategory(catId){ //获取首个分类
 	loadCategoryData($('#firstCategory'),0,catId.substring(0,3));
