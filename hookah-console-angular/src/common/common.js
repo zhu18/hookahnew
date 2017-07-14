@@ -347,6 +347,11 @@ export default angular.module('Common', [
           }
       }
   })
+  .filter('isSuccess', function () {
+      return function (input) {
+          return input == 0 ? '失败' : '成功';
+      }
+  })
   .filter('trustHtml', function ($sce) {
     return function (input) {
       return $sce.trustAsHtml(input);

@@ -100,6 +100,10 @@ public class MessageSendInfoController extends BaseController{
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
+            MessageSendInfo messageSendInfo = new MessageSendInfo();
+            messageSendInfo.setId(id);
+            messageSendInfo.setIsRead((byte)1);
+            messageSendInfoService.updateByIdSelective(messageSendInfo);
             returnData.setData(messageSendInfoService.selectById(id)==null?new MessageSendInfo():messageSendInfoService.selectById(id));
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
