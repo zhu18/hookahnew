@@ -100,7 +100,7 @@ var htmlPart = {
 						<!--</div>-->
 						<div class="li-item-top">
 							<a target="_blank" href="${host.website}/exchange/details?id=${item[i].goodsId}" class="top-box">
-								<img src="${item[i].goodsImg}" class="top-box-img" alt="">
+								<img src="${host.static}/${item[i].goodsImg}" class="top-box-img" alt="">
 								<div class="padding-left-5 top-box-info">
 									<p class="title">${item[i].goodsName}</p>
 									<p class="subtitle">${item[i].goodsBrief}</p>
@@ -202,7 +202,7 @@ var htmlPart = {
 					for(var i=0;i< index1;i++){
 					%>
 					<tr>
-						<td class="td-one"><img src="${res_item[i].goodsImg}" alt=""></td>
+						<td class="td-one"><img src="${host.static}/${res_item[i].goodsImg}" alt=""></td>
 						<td class="td-two">${res_item[i].goodsName}</td>
 						<td class="td-three"><span class="td-three-money">${res_item[i].shopPrice / 100}</span></td><!--<span>元/次</span>-->
 						<td class="td-four">
@@ -228,7 +228,7 @@ var htmlPart = {
 					for(var i=0;i< index2;i++){
 					%>
 					<li class="${decode(i,0,'active','')}">
-						<img src="${hot_sellItem[i].goodsImg}" class="grid-left" alt="">
+						<img src="${host.static}/${hot_sellItem[i].goodsImg}" class="grid-left" alt="">
 						<div class="infoBox grid-right">
 							<a href="${host.website}/exchange/details?id=${hot_sellItem[i].goodsId}" target="_blank" ><p class="title">
 								${hot_sellItem[i].goodsName}</p></a>
