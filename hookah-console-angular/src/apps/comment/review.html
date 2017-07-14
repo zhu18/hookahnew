@@ -92,7 +92,7 @@
                     </button>
 
                 </div>
-                <div>
+                <div data-ng-show="status== null||status==0">
                     <label class="btn btn-default"><input type="checkbox" ng-model="master"
                                                           ng-click="all(master)">全选</label>
                     <button class="btn btn-default" ng-click="MultipleCheck(1)">批量通过</button>
@@ -106,7 +106,8 @@
                     <table class="table table-hover" data-ng-repeat="item in commentList">
                         <thead>
                         <tr>
-                            <th><label><input data-ng-show="item.status==0" type="checkbox" id={{item.commId}} ng-model="x" ng-checked="master"
+                            <th><label><input data-ng-show="item.status==0" type="checkbox" id={{item.commId}}
+                                              ng-model="x" ng-checked="master"
                                               ng-click="chk(item.commId,x)"> 订单编号：</label><a href="#"
                                                                                              ng-bind="item.orderSn"></a>
                             </th>
@@ -115,7 +116,7 @@
                             <th>评价时间：<span ng-bind="item.addTime"></span></th>
                             <th>评价人：<span ng-bind="item.username"></span></th>
                             <th>商品名称：<span ng-bind="item.goodsName"></span></th>
-                            <th width="155">操作</th>
+                            <th width="155" style="text-align:center;">操作</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -126,15 +127,15 @@
                                      data-ng-bind="item.commentContent"></div>
                             </td>
                             <td>
-                                <div data-ng-show="item.status==0">
+                                <div data-ng-show="item.status==0" style="text-align:center;">
                                     <button class="btn btn-default" ng-click="commentCheck(item.commId,1)">通过</button>
                                     <button class="btn btn-default" ng-click="commentCheck(item.commId,2)">不通过</button>
                                 </div>
 
-                                <div data-ng-show="item.status==1">
+                                <div data-ng-show="item.status==1" style="text-align:center;">
                                     审核通过
                                 </div>
-                                <div data-ng-show="item.status==2">
+                                <div data-ng-show="item.status==2" style="text-align:center;">
                                     审核不通过
                                 </div>
 

@@ -43,10 +43,13 @@ class CommentController {
       });
 
     };
-
+    $scope.pageChanged = function () {
+      $scope.search();
+      console.log('Page changed to: ' + $rootScope.pagination.currentPage);
+    };
     $scope.MultipleCheck = function (status) {
       if ($scope.choseArr.length > 0) {
-        $scope.commentCheck($scope.choseArr.join(),status)
+        $scope.commentCheck($scope.choseArr.join(), status)
         console.log($scope.choseArr.join())
       } else {
         alert('请选择多个订单！')
@@ -87,9 +90,13 @@ class CommentController {
       var commIdArr = [];
 
       angular.forEach($scope.commentList, function (value, key) {
-        commIdArr.push(value.commId)
+
+        if (value.status == 0) {
+          commIdArr.push(value.commId)
+        }
+
       });
-      console.log(commIdArr)
+      console.log(commIdArr);
 
       if (c == true) {
         $scope.x = true;
@@ -112,18 +119,14 @@ class CommentController {
           $scope.master = true
         }
       } else {
-
-
         $scope.choseArr.splice($scope.choseArr.indexOf(z), 1);//取消选中
       }
 
       if ($scope.choseArr.length == 0) {
         $scope.master = false
       }
-
-
     };
-
+    //多选结束
 
     $scope.refresh = function () {
       $scope.search();
