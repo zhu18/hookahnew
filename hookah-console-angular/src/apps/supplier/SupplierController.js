@@ -47,9 +47,9 @@ class CommentController {
         $scope.search();
     };
     $scope.remark = function (id) {
-          var modalInstance=null;
-          modalInstance = $rootScope.openConfirmDialogModalSupplier();
-          modalInstance.result.then(function () { //模态点提交
+        var modalInstance=null;
+        modalInstance = $rootScope.openConfirmDialogModalSupplier();
+        modalInstance.result.then(function () { //模态点提交
               var promise = null;
               promise = $http({
                   method: 'POST',
@@ -57,7 +57,7 @@ class CommentController {
                   params: {
                       id:id,
                       checkContent:$('#checkContent').val(),
-                      checkStatus:$('#checkStatus').val()
+                      checkStatus:$('input:radio[name="tRadio"]:checked').val()
                   }
               });
               promise.then(function (res, status, config, headers) {

@@ -109,7 +109,7 @@
                                     <span text-length="50" ng-show="item.checkStatus == 1">已通过</span>
                                     <span text-length="50" ng-show="item.checkStatus == 0">待审核</span>
                                 </td>
-                                <td data-ng-bind="item.orgName"></td>
+                                <td data-ng-bind="item.addTime"></td>
                                 <td>
                                     <button class="btn btn-primary"  ng-show="item.checkStatus == 0" ng-disabled="sonItem.goodsType==1" ng-click="remark(item.id)">
                                         审核
