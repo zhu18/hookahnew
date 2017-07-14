@@ -84,6 +84,7 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
     })
     .state('items.goodsDetail', {
       url: '/items/goodsDetail',
+      params: {'data': null},
       template: require('./goodsDetail.html'),
       controller: GoodsCheckController,
       permission: 'items_goodsDetail'

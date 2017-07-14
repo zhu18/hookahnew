@@ -39,12 +39,14 @@ class CommentController {
       });
 
     };
-
-
+    $scope.search();
     $scope.refresh = function () {
       $scope.search();
     };
-
+    $scope.pageChanged = function () {
+        $scope.search();
+        console.log('Page changed to: ' + $rootScope.pagination.currentPage);
+    };
     // 处理日期插件的获取日期的格式
     var format = function (time, format) {
       var t = new Date(time);
