@@ -1,11 +1,11 @@
-package com.jusfoun.hookah.pay.service.impl;
+package com.jusfoun.hookah.console.server.service.impl;
 
 
+import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.PayTradeRecordMapper;
 import com.jusfoun.hookah.core.domain.PayTradeRecord;
 import com.jusfoun.hookah.core.domain.bo.MoneyInOutBo;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
-import com.jusfoun.hookah.pay.util.PayConstants;
 import com.jusfoun.hookah.rpc.api.PayTradeRecordService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +39,7 @@ public class PayTradeRecordServiceImpl extends GenericServiceImpl<PayTradeRecord
 		payTradeRecord.setUserId(moneyInOutBo.getUserId());
 		payTradeRecord.setMoney(moneyInOutBo.getMoney());
 		payTradeRecord.setTradeType(moneyInOutBo.getOperatorType());
-		payTradeRecord.setTradeStatus(PayConstants.TransferStatus.handing.getCode());
+		payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.handing.getCode());
 		payTradeRecord.setAddTime(new Date());
 		payTradeRecord.setOrderSn(payAccountRecordId);
 		payTradeRecord.setAddOperator(moneyInOutBo.getUserId());
