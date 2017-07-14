@@ -1,3 +1,4 @@
+
 .info-center-box{
     background-color: transparent !important;
     width: 1010px !important;
@@ -106,6 +107,10 @@
 }
 .settlementRecord-down tr:hover{
     background: #D7E8FA;
+}
+.settlementRecord-down tr.no:hover{
+    background:transparent;
+    height: 300px;
 }
 .settlementRecord-down table tr th{
     font-size: 14px;

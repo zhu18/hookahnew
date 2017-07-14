@@ -1,5 +1,6 @@
 import OrderController from './OrderController'
 import OrderDetailController from './OrderDetailController'
+import viewOrderSupplier from './viewOrderSupplier'
 shelfRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function shelfRouting($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/order/search');
@@ -23,5 +24,15 @@ export default function shelfRouting($stateProvider, $urlRouterProvider) {
       url: '/order/viewGoodDetail',
       template: require('./viewGoodDetail.html'),
       controller: OrderController,
+    })
+    .state('order.viewOrderPending', {//订单页面列表待结算页面
+      url: '/order/viewOrderPending',
+      template: require('./viewOrderPending.html'),
+      controller: OrderController,
+    })
+    .state('order.viewOrderSupplier', {//订单页面列表页面
+      url: '/order/viewOrderSupplier',
+      template: require('./viewOrderSupplier.html'),
+      controller: viewOrderSupplier,
     })
 };

@@ -39,6 +39,14 @@ app.run(function ($rootScope, $state) {
       "title": "订单查询",
       "url": "order.search"
     },
+    {
+      "title": "待处理",
+      "url": "order.viewOrderPending"
+    },
+    {
+      "title": "供应商",
+      "url": "order.viewOrderSupplier"
+    },
   ];
 
 });
