@@ -8,7 +8,7 @@ public class MoneyInOutBo {
 
     public Long Money;          //  默认已经乘以100了
 
-    public byte operatorType;
+    public Integer operatorType;
 
     public String getUserId() {
         return userId;
@@ -34,11 +34,11 @@ public class MoneyInOutBo {
         Money = money;
     }
 
-    public byte getOperatorType() {
+    public Integer getOperatorType() {
         return operatorType;
     }
 
-    public void setOperatorType(byte operatorType) {
+    public void setOperatorType(Integer operatorType) {
         this.operatorType = operatorType;
     }
 }

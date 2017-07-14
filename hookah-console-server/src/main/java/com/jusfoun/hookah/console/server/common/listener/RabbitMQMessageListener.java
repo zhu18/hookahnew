@@ -135,7 +135,12 @@ public class RabbitMQMessageListener {
         //获取模板内容
         String content = template.getTemplateContent();
         content = this.getContent(content, map);
-        mailService.send(mail, template.getTemplateHeader(), content);
+        String retVal = mailService.send(mail, template.getTemplateHeader(), content);
+        if (HookahConstants.SMS_SUCCESS.equals(retVal)) {
+            sendInfo.setIsSuccess(HookahConstants.LOCAL_SMS_SUCCESS);
+        }else {
+            sendInfo.setIsSuccess(HookahConstants.LOCAL_SMS_FAIL);
+        }
         sendInfo.setSendContent(content);
         sendInfo.setReceiveAddr(mail);
         sendInfo.setSendHeader(template.getTemplateHeader());

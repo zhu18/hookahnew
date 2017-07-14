@@ -78,6 +78,11 @@ public class MessageSendInfoServiceImpl extends GenericServiceImpl<MessageSendIn
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         List<Condition> fifters = new ArrayList<Condition>();
+        if(null == messages || messages.length == 0){
+            returnData.setCode(ExceptionConst.AssertFailed);
+            returnData.setMessage(ExceptionConst.get(ExceptionConst.AssertFailed));
+            return returnData;
+        }
         fifters.add(Condition.in("id",messages));
         MessageSendInfo messageSendInfo = new MessageSendInfo();
         try {

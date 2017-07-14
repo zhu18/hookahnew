@@ -13,7 +13,7 @@ function loadPageData(data){
             if(list[i].settleStatus== "0"){
                 list[i].settleStatus="待结算"
             }else if(list[i].settleStatus== "1"){
-
+                list[i].settleStatus="已结算"
             }
             html+="<tr >" ;
             html+="<td>"+list[i].orderSn+"</td>" ;
@@ -56,9 +56,10 @@ $(function () {
         var hour = date.getHours();
         var minute = date.getMinutes();
         var second = date.getSeconds();
-        $("#startDate").val(year + '-' + month + '-' + day  + ' ' + hour + ':' + minute + ':' + second)
+        $("#endDate").val(year + '-' + month + '-' + day  + ' ' + hour + ':' + minute + ':' + second)
         if(html=="本月"){
-            month = date.getMonth() +1;
+            month = now.getMonth()+1;
+            day="1";
         } else if(html=="上个月"){
             month = date.getMonth() ;
         } else if(html=="3月"){
@@ -66,7 +67,11 @@ $(function () {
         } else if(html=="半年"){
             month = date.getMonth()-5;
         }
-        $("#endDate").val(year + '-' + month + '-' + day  + ' ' + hour + ':' + minute + ':' + second)
+        $("#startDate").val(year + '-' + month + '-' + day  + ' ' + hour + ':' + minute + ':' + second)
+        dataParm.settleStatus=status || null;
+        dataParm.startDate=$("#startDate").val() || null;
+        dataParm.endDate=$("#endDate").val() || null;
+        goPage(1);
     })
     // 日历input事件
     $("#endDate").click(function () {

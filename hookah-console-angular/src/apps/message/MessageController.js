@@ -315,6 +315,32 @@ class MessageController {
                 }
             });
         }
+
+        $scope.pageChanged = function () {
+            if($state.$current.name == "message.sms.search"){
+                $scope.smsSearch();
+            }else if($state.$current.name == "message.email.search"){
+                $scope.emailSearch();
+            }else if($state.$current.name == "message.system.search"){
+                $scope.systemSearch();
+            }else if($state.$current.name == "message.template.search"){
+                $scope.templateSearch();
+            }
+            console.log('Page changed to: ' + $rootScope.pagination.currentPage);
+        };
+
+        $scope.refresh = function(){
+            if($state.$current.name == "message.sms.search"){
+                $scope.smsSearch();
+            }else if($state.$current.name == "message.email.search"){
+                $scope.emailSearch();
+            }else if($state.$current.name == "message.system.search"){
+                $scope.systemSearch();
+            }else if($state.$current.name == "message.template.search"){
+                $scope.templateSearch();
+            }
+        }
+
     }
 }
 

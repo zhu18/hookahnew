@@ -60,11 +60,15 @@
       </if>
       <if test="type == 'FreezaIn'">
         balance = balance + #{changeMoney},
-        frozenBalance = frozenBalance + #{changeMoney}
+        frozen_balance = frozen_balance + #{changeMoney}
       </if>
       <if test="type == 'releaseDraw'">
         use_balance = use_balance + #{changeMoney},
-        frozenBalance = frozenBalance - #{changeMoney}
+        frozen_balance = frozen_balance - #{changeMoney}
+      </if>
+      <if test="type == 'SettleCut'">
+        balance = balance - #{changeMoney},
+        frozen_balance = frozen_balance - #{changeMoney}
       </if>
     where id = #{id}
 

@@ -6,5 +6,5 @@ package com.jusfoun.hookah.rpc.api;
  */
 public interface MailService {
 
-	void send(String toEmail, String subject, String text);
+	String send(String toEmail, String subject, String text);
 }

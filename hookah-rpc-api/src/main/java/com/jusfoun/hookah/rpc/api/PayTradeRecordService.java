@@ -10,4 +10,6 @@ import com.jusfoun.hookah.core.generic.GenericService;
 public interface PayTradeRecordService extends GenericService<PayTradeRecord, Integer> {
 
     PayTradeRecord initPayTradeRecord(MoneyInOutBo moneyInOutBo, String s);
+
+    int insertAndGetId(PayTradeRecord payTradeRecord);
 }

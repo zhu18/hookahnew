@@ -1,15 +1,18 @@
 package com.jusfoun.hookah.console.server.api.message;
 
+import com.jusfoun.hookah.console.server.controller.BaseController;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.GeneralCodesMapper;
 import com.jusfoun.hookah.core.domain.GeneralCodes;
 import com.jusfoun.hookah.core.domain.MessageTemplate;
+import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.vo.MessageCritVo;
 import com.jusfoun.hookah.core.domain.vo.TemplateCritVo;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.MessageSendInfoService;
 import com.jusfoun.hookah.rpc.api.MessageTemplateService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,7 +24,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/api/message")
-public class MessageApi {
+public class MessageApi extends BaseController{
 
     @Resource
     MessageSendInfoService messageSendInfoService;
@@ -32,7 +35,13 @@ public class MessageApi {
     @Resource
     MessageTemplateService messageTemplateService;
 
+
     public static final String property_eventType = "EVENT_TYPE";
+
+    //是否启用：0 停用；1 启用
+    public static final Byte IS_VAILD_NO = 0;
+    public static final Byte IS_VAILD_YES = 1;
+
 
     /**
      * 获取站内信消息列表
@@ -114,8 +123,80 @@ public class MessageApi {
 
     //添加模板
     @RequestMapping(value = "/template/add")
-    public ReturnData getConstantsList(MessageTemplate messageTemplate){
+    public ReturnData addTemplate(MessageTemplate messageTemplate){
+        User user = null;
+        try {
+            user = this.getCurrentUser();
+            messageTemplate.setUpdateUser(user.getUserId());
+        }catch (Exception e){
+            e.printStackTrace();
+            return ReturnData.error(e.getMessage());
+        }
         return messageTemplateService.add(messageTemplate);
+    }
+
+    //编辑模板
+    @RequestMapping(value = "/template/edit")
+    public ReturnData editTemplate(MessageTemplate messageTemplate){
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+
+        if(null==messageTemplate || StringUtils.isBlank(messageTemplate.getId())){
+            returnData.setCode(ExceptionConst.AssertFailed);
+            returnData.setMessage(ExceptionConst.get(ExceptionConst.AssertFailed));
+            return returnData;
+        }
+
+        MessageTemplate messageTemplate1 = messageTemplateService.selectById(messageTemplate.getId());
+        //是否启用：0 停用；1 启用
+        if(null == messageTemplate1 || "IS_VAILD_YES".equals(messageTemplate1.getIsVaild())){
+            returnData.setCode(ExceptionConst.AssertFailed);
+            returnData.setMessage(ExceptionConst.get(ExceptionConst.Failed));
+            return returnData;
+        }
+
+        try{
+            User user = this.getCurrentUser();
+            messageTemplate.setUpdateUser(user.getUserId());
+            returnData.setData(messageTemplateService.updateByIdSelective(messageTemplate));
+        }catch (Exception e){
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.getMessage());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
+
+
+    //编辑模板
+    @RequestMapping(value = "/template/delete")
+    public ReturnData deleteTemplate(String tempId){
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+
+        if(null == tempId || StringUtils.isBlank(tempId)){
+            returnData.setCode(ExceptionConst.AssertFailed);
+            returnData.setMessage(ExceptionConst.get(ExceptionConst.AssertFailed));
+            return returnData;
+        }
+
+        MessageTemplate messageTemplate1 = messageTemplateService.selectById(tempId);
+        //是否启用：0 停用；1 启用
+        if(null == messageTemplate1 || "IS_VAILD_YES".equals(messageTemplate1.getIsVaild())){
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(ExceptionConst.get(ExceptionConst.Failed));
+            return returnData;
+        }
+
+        try{
+            User user = this.getCurrentUser();
+            returnData.setData(messageTemplateService.delete(tempId));
+        }catch (Exception e){
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.getMessage());
+            e.printStackTrace();
+        }
+        return returnData;
     }
 
 }

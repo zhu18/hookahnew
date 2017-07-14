@@ -3,7 +3,7 @@
  */
 class orderDetailController {
     constructor($scope, $rootScope, $state, $http,$stateParams, growl) {
-        // 处理日期插件的获取日期的格式
+
         var promise = $http({
           method: 'GET',
           url: $rootScope.site.apiServer + "/api/order/viewDetails",
