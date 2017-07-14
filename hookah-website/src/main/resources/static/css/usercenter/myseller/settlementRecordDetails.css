@@ -1,3 +1,4 @@
+
 .settlementRecordDetails-top{
     margin-top: 10px;
     border: 1px solid #E5E5E5;
@@ -43,6 +44,9 @@
 }
 .settlementRecordDetails-list tr{
     height: 39px;
+}
+.settlementRecordDetails-list tr:hover{
+    background: #D7E8FA;
 }
 .settlementRecordDetails-list tr th{
     font-size: 14px;
