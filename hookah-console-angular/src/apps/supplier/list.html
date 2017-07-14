@@ -94,12 +94,12 @@
                             </thead>
                             <tbody>
                             <tr data-ng-repeat="item in supplierList">
-                                <td>1</td>
-                                <td>宇宙公司</td>
-                                <td>招数君的</td>
-                                <td>13811919191</td>
-                                <td>未审核</td>
-                                <td>2017-03-04</td>
+                                <td>{{$index + 1}}</td>
+                                <td data-ng-bind="item.orgName"></td>
+                                <td data-ng-bind="item.checkUser"></td>
+                                <td data-ng-bind="item.contactPhone"></td>
+                                <td data-ng-bind="item.checkStatus"></td>
+                                <td data-ng-bind="item.orgName"></td>
                                 <td>查看</td>
                             </tr>
 
