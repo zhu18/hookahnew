@@ -124,7 +124,7 @@ class GoodsCheckController {
 		$scope.submitCheck = function () {
 
             if ($("#checkContent").val().trim() != '') {
-            	if($rootScope.editData.goodsType == 1){
+            	if($rootScope.editData.goodsType == 1 && $rootScope.editData.isOffline == 0 ){
 
                     $rootScope.addData.goodsCheck.checkStatus = $('input[name="checkStatus"]:checked').val();
                     $rootScope.addData.goodsCheck.checkContent = $('#checkContent').val();

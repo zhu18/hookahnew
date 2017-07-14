@@ -1,6 +1,7 @@
 class MessageController {
     constructor($scope, $rootScope, $http, $state, $stateParams, $uibModal, usSpinnerService, growl) {
-
+		$scope.len = 0;
+		$scope.content = '';
         $scope.systemSearch = function () {
             var promise = $http({
                 method: 'GET',
@@ -20,7 +21,7 @@ class MessageController {
                 console.log($rootScope.pagination);
                 growl.addSuccessMessage("数据加载完毕。。。");
             });
-        }
+        };
 
         $scope.emailSearch = function () {
             var promise = $http({
@@ -41,7 +42,7 @@ class MessageController {
                 console.log($rootScope.pagination);
                 growl.addSuccessMessage("数据加载完毕。。。");
             });
-        }
+        };
 
         $scope.smsSearch = function () {
             var promise = $http({
@@ -62,7 +63,7 @@ class MessageController {
                 console.log($rootScope.pagination);
                 growl.addSuccessMessage("数据加载完毕。。。");
             });
-        }
+        };
 
         $scope.templateSearch = function () {
             var promise = $http({
@@ -84,7 +85,7 @@ class MessageController {
                 console.log($rootScope.pagination);
                 growl.addSuccessMessage("数据加载完毕。。。");
             });
-        }
+        };
 
         $scope.getInfo=function(){
             var promise = $http({
@@ -96,9 +97,10 @@ class MessageController {
                 $rootScope.loadingState = false;
                 $rootScope.list = res.data.data;
                 console.log(res.data.data);
+                $scope.len = res.data.data.length;
                 growl.addSuccessMessage("数据加载完毕。。。");
             });
-        }
+        };
 
         $scope.add = function(){
             var promise = $http({
@@ -111,7 +113,7 @@ class MessageController {
                 console.log(res.data.data);
                 growl.addSuccessMessage("数据加载完毕。。。");
             })
-        }
+        };
 
         if ($state.$current.name == "message.system.search") {
             //消息是否已读
@@ -159,19 +161,57 @@ class MessageController {
                 }
             });
 
-            $scope.content = '';
+
             $scope.flag=false;
-            $scope.$watch('content',function(newVal,oldVal){
-                console.log("typeof:"+typeof newVal);
-                console.log("new:"+newVal.charAt(newVal.length-1));
-                if(newVal.charAt(newVal.length-1) == '['){
-                    $scope.getInfo();
-                    $scope.flag=true;
-                }else{
-                    $scope.flag=false;
-                }
-            })
+            // $scope.$watch('content',function(newVal,oldVal){
+            //     // console.log("typeof:"+typeof newVal);
+            //     // console.log("new:"+newVal.charAt(newVal.length-1));
+            //     if(newVal.charAt(newVal.length-1) == '['){
+            //         $scope.getInfo();
+            //         $scope.flag=true;
+            //     }else{
+            //         $scope.flag=false;
+            //     }
+            // })
         }
+		var ds = 0;
+        $scope.keyDownFn = function(e){
+            var lenth = $scope.len;
+            var conTxt = '';
+			var keycode = window.event?e.keyCode:e.which;
+			if(keycode == 219){
+				$scope.getInfo();
+				$scope.flag=true;
+				conTxt = $scope.content;
+            }
+            if(keycode == 40){
+				ds += 1;
+				if (ds > lenth) {
+					ds = lenth;
+				}
+				$('.tipBox li').eq(ds).addClass('active').siblings().removeClass('active')
+            }
+			if(keycode == 38){
+				ds -= 1;
+				if (ds <= 0) {
+					ds = 0;
+				}
+				$('.tipBox li').eq(ds).addClass('active').siblings().removeClass('active')
+			}
+			if(keycode == 13){
+			    $('#text').blur();
+				$('.tipBox li').each(function () {
+					if ($(this).hasClass('active')) {
+						$scope.content += $(this).attr('d-code')+']';
+
+					}
+				});
+				$('#text').focus();
+				$scope.flag=false;
+				ds = 0;
+            }
+        };
+
 
         if($state.$current.name == "message.email.search"){
             //消息是否已读
