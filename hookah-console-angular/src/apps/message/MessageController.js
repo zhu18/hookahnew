@@ -86,6 +86,33 @@ class MessageController {
             });
         }
 
+        $scope.getInfo=function(){
+            var promise = $http({
+                method: 'GET',
+                url: $rootScope.site.apiServer + "/api/message/constants/all",
+                params:{}
+            });
+            promise.then(function (res, status, config, headers){
+                $rootScope.loadingState = false;
+                $rootScope.list = res.data.data;
+                console.log(res.data.data);
+                growl.addSuccessMessage("数据加载完毕。。。");
+            });
+        }
+
+        $scope.add = function(){
+            var promise = $http({
+                method: 'POST',
+                url: $rootScope.site.apiServer + "/api/message/template/add",
+                data: $("#infoForm").serialize()
+            });
+            promise.then(function (res, status, config, headers){
+                $rootScope.loadingState = false;
+                console.log(res.data.data);
+                growl.addSuccessMessage("数据加载完毕。。。");
+            })
+        }
+
         if ($state.$current.name == "message.system.search") {
             //消息是否已读
             $scope.messageIsReads = [{id: -1, name: "全部"}, {id: 0, name: "未读"}, {id: 1, name: "已读"}];
@@ -113,6 +140,8 @@ class MessageController {
 
         if ($state.$current.name == "message.template.add") {
 
+            $scope.getInfo();
+
             //获取消息事件类型列表
             var promise = $http({
                 method: 'POST',
@@ -124,12 +153,24 @@ class MessageController {
                 if (res.data.code == 1) {
                     console.log(res.data.data);
                     $scope.eventTypes = res.data.data;
-                    $scope.eventTypes.unshift({"code":"-1","describle":"全部"});
-                    // $scope.eventType = $scope.eventTypes[0].code;
-                    $scope.eventType = "-1";
+                    // $scope.eventTypes.unshift({"code":"-1","describle":"全部"});
+                    $scope.eventType = $scope.eventTypes[0].code;
+                    // $scope.eventType = "-1";
                 }
             });
 
+            $scope.content = '';
+            $scope.flag=false;
+            $scope.$watch('content',function(newVal,oldVal){
+                console.log("typeof:"+typeof newVal);
+                console.log("new:"+newVal.charAt(newVal.length-1));
+                if(newVal.charAt(newVal.length-1) == '['){
+                    $scope.getInfo();
+                    $scope.flag=true;
+                }else{
+                    $scope.flag=false;
+                }
+            })
         }
 
         if($state.$current.name == "message.email.search"){
