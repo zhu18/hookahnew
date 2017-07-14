@@ -405,7 +405,7 @@ var htmlPart = {
 					<%for(item in reCommData.goods){%>
 					<li>
 						<a class="display-block" target="_blank" href="${host.website}/exchange/details?id=${item.goodsId}">
-							<img src="${item.goodsImg}" alt="">
+							<img src="${host.static}/${item.goodsImg}" alt="">
 							<div class="img-info">
 								<p class="title">${item.goodsName}</p>
 								<p class="color-orange">￥${item.shopPrice /100}/${item.shopNumber == 1 ? '' : item.shopNumber}${decode(item.shopFormat,0,'次',1,'月',2,'年','未知')}</p>

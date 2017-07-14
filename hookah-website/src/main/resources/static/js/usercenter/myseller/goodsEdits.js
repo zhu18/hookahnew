@@ -72,6 +72,7 @@ function initializeGoodsTypeEnd(goodsTypeVal,endTypeVal){
 			$('.afterSaleService-box').show();//售后服务
 			$('.dataSample-info-box').show(); //数据样例
 			$('.isOffLine-select-box').show(); //交付方式
+			$('.file-info-box').show(); //
 			$('.offline-isOnLine-box').show(); //数据来源
 			goodsTypeId = 0;
 		}else if($(endTypeVal).val() == 1){
@@ -135,27 +136,43 @@ function initializeGoodsTypeEnd(goodsTypeVal,endTypeVal){
 function renderFormatFn(goodsTypeId){
 	if(goodsTypeId == 0 || goodsTypeId == 2 || goodsTypeId == 4 || goodsTypeId == 6){
 		$('select[name="format"] option').each(function(){
-			if($(this).val() != 3){
-				$(this).attr('disabled','disabled')
-			}
 			if($(this).val() == 3){
 				$(this).attr('selected','selected')
+			}else{
+				$(this).removeAttrs('selected')
 			}
+			if($(this).val() != 3){
+				$(this).attr('disabled','disabled')
+			}else{
+				$(this).removeAttrs('disabled');
+			}
+
 
 		})
 	}else if(goodsTypeId == 1){
 		$('select[name="format"] option').each(function() {
 			if ($(this).val() == 3) {
 				$(this).attr('disabled', 'disabled')
+			}else{
+				$(this).removeAttrs('disabled');
+			}
+			if($(this).val() == 0){
+				$(this).attr('selected','selected')
+			}else{
+				$(this).removeAttrs('selected')
 			}
 		})
 	}else if(goodsTypeId == 5 || goodsTypeId == 7){
 		$('select[name="format"] option').each(function() {
 			if ($(this).val() == 0 || $(this).val() == 3) {
-				$(this).attr('disabled', 'disabled')
+				$(this).attr('disabled', 'disabled');
+			}else{
+				$(this).removeAttrs('disabled');
 			}
 			if ($(this).val() == 1) {
 				$(this).attr('selected', 'selected')
+			}else{
+				$(this).removeAttrs('selected')
 			}
 		})
 	}
@@ -194,6 +211,7 @@ function goodsEditFn(){
 
 	$.jeDate("#offLine_startDate", start);
 	$.jeDate("#offLine_endDate", end);
+	getPriceBox()
 }
 function childrenSelects(that){
 	initializeGoodsType($('#parentSelect').val(),that);
@@ -263,6 +281,16 @@ function validataFn(){
 			priceBoxName:'required',
 			priceBoxNumber:'required',
 			priceBoxPrice:{
+				required:true,
+				isPricceData:true,
+				isPricceB:true
+			},
+			priceBoxSettlementPrice:{
+				required:true,
+				isPricceData:true,
+				isPricceB:true
+			},
+			priceBoxAgencyPrice:{
 				required:true,
 				isPricceData:true,
 				isPricceB:true
@@ -400,7 +428,7 @@ function tablePlus(that) {
 	priceHtml += '<tr class="parent-tr">';
 	priceHtml += '<td class="name-input"><div class="inputbox"><input type="text" datatype="name" placeholder="请输入名称"></div></td>';
 	priceHtml += '<td class="number-input"><div class="inputbox"><input type="number" datatype="number" digits="true" placeholder="请输入规格"></div></td>';
-	priceHtml += '<td><div class="selectbox"><select name="format" ><option value="0">次</option><option value="1">月</option><option value="2">年</option><option value="3">套</option></select></div></td>';
+	priceHtml += '<td style="width: 40px;"><div class="selectbox"><select name="format" ><option value="0">次</option><option value="1">月</option><option value="2">年</option><option value="3">套</option></select></div></td>';
 	priceHtml += '<td class="price-input"><div class="inputbox"><input type="text" class="price-inputs number" datatype="settlementPrice" placeholder="请输入结算价" isPricceData="true"></div></td>';
 	priceHtml += '<td class="price-input"><div class="inputbox"><input type="text" class="price-inputs number" datatype="agencyPrice" placeholder="请输入代理价" isPricceData="true"></div></td>';
 	priceHtml += '<td class="price-input"><div class="inputbox"><input type="text" class="price-inputs number" datatype="price" placeholder="请输入零售价" isPricceData="true"></div></td>';
@@ -469,6 +497,8 @@ function getPriceBox(){
 	priceBox.find('input[datatype="name"]').attr('name','priceBoxName');
 	priceBox.find('input[datatype="number"]').attr('name','priceBoxNumber');
 	priceBox.find('input[datatype="price"]').attr('name','priceBoxPrice');
+	priceBox.find('input[datatype="settlementPrice"]').attr('name','priceBoxSettlementPrice');
+	priceBox.find('input[datatype="agencyPrice"]').attr('name','priceBoxAgencyPrice');
 }
 function getLength(str){
 	return str.replace(/[\u0391-\uFFE5]/g,"aa").length;
@@ -1014,6 +1044,7 @@ function renderData(data){//渲染页面
 	$('#parentSelect').attr('disabled','disabled');
 	$('.childrenSelect').attr('disabled','disabled');
 	uploadGoodsImg();
+	validataFn()
 }
 function loadFirstCategory(catId){ //获取首个分类
 	loadCategoryData($('#firstCategory'),0,catId.substring(0,3));
@@ -1232,7 +1263,7 @@ function renderFormatList(formatList){
 		html += '<tr class="parent-tr">';
 		html += '<td class="name-input"><div class="inputbox"><input type="text" datatype="name" value="'+data.formatName+'" placeholder="请输入名称"></div></td>';
 		html += '<td class="number-input"><div class="inputbox"><input type="text" datatype="number" value="'+data.number+'" digits="true" placeholder="请输入规格" min="0"></div></td>';
-		html += '<td><div class="selectbox"><select name="format">';
+		html += '<td style="width: 40px;"><div class="selectbox"><select name="format">';
 		if(data.format == 0){
 			html += '<option value="0" selected="selected">次</option>';
 		}else{

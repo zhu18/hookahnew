@@ -153,8 +153,8 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         og.setFormatList(cart.getGoods().getFormatList());
         og.setGoodsNumber(cart.getGoodsNumber().intValue());
         String addUser = cart.getGoods().getAddUser();
-        og.setAddUser(addUser);
         User user = userService.selectById(addUser);
+        og.setAddUser(user.getUserName());
         Organization organization = organizationService.selectById(user.getOrgId());
         og.setSupplier(organization.getOrgName());
         og.setFormatId(cart.getFormatId());
@@ -207,8 +207,8 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         og.setGoodsNumber(goodsNumber.intValue());
         og.setGoodsType(goods.getGoodsType());
         String addUser = goods.getAddUser();
-        og.setAddUser(addUser);
         User user = userService.selectById(addUser);
+        og.setAddUser(user.getUserName());
         Organization organization = organizationService.selectById(user.getOrgId());
         og.setSupplier(organization.getOrgName());
         og.setIsOnsale(goods.getIsOnsale());
@@ -643,7 +643,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
             List<MgOrderGoods> goods = new ArrayList<MgOrderGoods>();
             for (MgOrderGoods mgOrderGoods : goodsList) {
-                if (mgOrderGoods.getAddUser().equals(addUser)) {
+                if (addUser!=null && mgOrderGoods.getAddUser().equals(addUser)) {
+                    goods.add(mgOrderGoods);
+                }else if (addUser==null){
                     goods.add(mgOrderGoods);
                 }
             }

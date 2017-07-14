@@ -7,6 +7,7 @@ import com.jusfoun.hookah.core.domain.*;
 import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.SMSUtilNew;
+import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.MailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,22 +53,22 @@ public class RabbitMQMessageListener {
         if(templates != null) {
             for(MessageTemplate t : templates) {
                 MessageSendInfo messageSendInfo = new MessageSendInfo();
-                //短信发送(需要调整)
+                //短信发送
                 if(HookahConstants.MESSAGE_TYPE_SMS == t.getTemplateType()) {
-                    if (user != null && user.getUserId() != null && !"".equals(user.getUserId())) {
+                    if (user != null && StringUtils.isNotBlank(user.getUserId()) ) {
                         messageSendInfo = this.sendSMS(t, user.getMobile(), map);
-                    } else if((user == null || user.getUserId() == null || "".equals(user.getUserId()))
-                            && messageCode.getMobileNo() != null) {
+                    } else if((user == null || !StringUtils.isNotBlank(user.getUserId()))
+                            && StringUtils.isNotBlank(messageCode.getMobileNo())) {
                         messageSendInfo = this.sendSMS(t, messageCode.getMobileNo(), map);
                     }else {
                         logger.warn("邮件发送失败:未查询到用户!businessId:"
                                 + messageCode.getBusinessId() + ";code:" + messageCode.getCode());
                     }
                 }else if(HookahConstants.MESSAGE_TYPE_MAIL == t.getTemplateType()) { // 邮件发送
-                    if (user != null && user.getUserId() != null && !"".equals(user.getUserId())
-                            && user.getEmail() != null && !"".equals(user.getEmail().trim())) {
+                    if (user != null && StringUtils.isNotBlank(user.getUserId())
+                            && StringUtils.isNotBlank(user.getEmail())) {
                         messageSendInfo = this.sendMail(t, user.getEmail(), map);
-                    }else if(user != null && user.getUserId() != null && !"".equals(user.getUserId())) {
+                    }else if(user != null && StringUtils.isNotBlank(user.getUserId()) ) {
                         logger.warn("邮件发送失败:未获取到用户"+ user.getUserId() + "的邮件地址！businessId:"
                                 + messageCode.getBusinessId() + ";code:" + messageCode.getCode());
                     }else {
@@ -75,7 +76,7 @@ public class RabbitMQMessageListener {
                                 + messageCode.getBusinessId() + ";code:" + messageCode.getCode());
                     }
                 }else { // 站内信发送
-                    if (user != null && user.getUserId() != null && !"".equals(user.getUserId())) {
+                    if (user != null && StringUtils.isNotBlank(user.getEmail())) {
                         messageSendInfo = this.sendStation(t, map);
                     }else {
                         logger.warn("站内信发送失败:未查询到用户!businessId:"
@@ -174,12 +175,14 @@ public class RabbitMQMessageListener {
     public User getBusinessData(String businessId, MessageCode messageCode, Map<String, String> map) {
         User user = new User();
         switch (messageCode.getCode()) {
-            case 101:
+            case 106:
             case 102:
             case 103:
             case 104:
             case 105:
-            case 106:
+                user.setMobile(messageCode.getMobileNo());
+                user = userMapper.selectOne(user);
+            case 101:
                 map.put("code", messageCode.getMobileVerfCode());
                 map.put("mobile", messageCode.getMobileNo().substring(messageCode.getMobileNo().length() - 4));
                 break;
