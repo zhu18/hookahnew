@@ -13,7 +13,7 @@ function loadPageData(data){
             if(list[i].settleStatus== "0"){
                 list[i].settleStatus="待结算"
             }else if(list[i].settleStatus== "1"){
-
+                list[i].settleStatus="已结算"
             }
             html+="<tr >" ;
             html+="<td>"+list[i].orderSn+"</td>" ;

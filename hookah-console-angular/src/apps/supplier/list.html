@@ -6,6 +6,12 @@
     .form-inline label {
         margin-top: 5px;
     }
+    table th{
+        text-align: center;
+    }
+    table td{
+        text-align: center;
+    }
 </style>
 <div class="row">
     <div class="col-sm-12">
@@ -98,9 +104,23 @@
                                 <td data-ng-bind="item.orgName"></td>
                                 <td data-ng-bind="item.checkUser"></td>
                                 <td data-ng-bind="item.contactPhone"></td>
-                                <td data-ng-bind="item.checkStatus"></td>
+                                <td>
+                                    <span text-length="50" ng-show="item.checkStatus == 2">未通过</span>
+                                    <span text-length="50" ng-show="item.checkStatus == 1">已通过</span>
+                                    <span text-length="50" ng-show="item.checkStatus == 0">待审核</span>
+                                </td>
                                 <td data-ng-bind="item.orgName"></td>
-                                <td>查看</td>
+                                <td>
+                                    <button class="btn btn-primary"  ng-show="item.checkStatus == 0" ng-disabled="sonItem.goodsType==1" ng-click="remark(item.id)">
+                                        审核
+                                    </button>
+                                    <button class="btn btn-primary"  ng-show="item.checkStatus == 1" ng-disabled="sonItem.goodsType==1" ng-click="remark(item.id)">
+                                        查看
+                                    </button>
+                                    <button class="btn btn-primary-red"  ng-show="item.checkStatus == 2" ng-disabled="sonItem.goodsType==1" ng-click="remark(item.id)">
+                                        查看
+                                    </button>
+                                </td>
                             </tr>
 
                             </tbody>

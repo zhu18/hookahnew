@@ -60,7 +60,7 @@ class MainController{
         // $log.info('Modal dismissed at: ' + new Date());
       });
     };
-$rootScope.openJustShowDialogModal = function (message) {
+    $rootScope.openJustShowDialogModal = function (message) {
       var modalInstance = $uibModal.open({
         animation: true,
         template: require('../justShowDialogModal.html'),
@@ -96,7 +96,6 @@ $rootScope.openJustShowDialogModal = function (message) {
         template: require('../confirmDialogModal.html'),
         controller: function($scope,$sce, $uibModalInstance, message){
           $scope.message = $sce.trustAsHtml(message);
-
           $scope.ok = function () {
             $uibModalInstance.close($scope);
           };
@@ -115,7 +114,29 @@ $rootScope.openJustShowDialogModal = function (message) {
       });
 
     };
+    $rootScope.openConfirmDialogModalSupplier = function (message) {
+          return $uibModal.open({
+              animation: true,
+              template: require('../ConfirmDialogModalSupplier.html'),
+              controller: function($scope,$sce, $uibModalInstance, message){
+                  $scope.message = $sce.trustAsHtml(message);
+                  $scope.ok = function () {
+                      $uibModalInstance.close($scope);
+                  };
+                  $scope.cancel = function () {
+                      $uibModalInstance.dismiss('cancel');
+                  };
+              },
+              // size: 'lg',
+              backdrop: 'static',
+              resolve: {
+                  message: function () {
+                      return message;
+                  }
+              }
+          });
 
+      };
     /**
      * 分页设置
      */

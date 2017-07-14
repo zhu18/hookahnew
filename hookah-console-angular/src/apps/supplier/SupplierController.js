@@ -45,8 +45,36 @@ class CommentController {
     };
     $scope.pageChanged = function () {
         $scope.search();
-        console.log('Page changed to: ' + $rootScope.pagination.currentPage);
     };
+    $scope.remark = function (id) {
+          var modalInstance=null;
+          modalInstance = $rootScope.openConfirmDialogModalSupplier();
+          modalInstance.result.then(function () { //模态点提交
+              var promise = null;
+              promise = $http({
+                  method: 'POST',
+                  url: $rootScope.site.apiServer + "/api/supplier/updateInfo",
+                  params: {
+                      id:id,
+                      checkContent:$('#checkContent').val(),
+                      checkStatus:$('#checkStatus').val()
+                  }
+              });
+              promise.then(function (res, status, config, headers) {
+                  $rootScope.loadingState = false;
+                  if (res.data.code == 1) {
+                      growl.addSuccessMessage("保存成功。。。");
+                      $scope.search();
+                  } else {
+                      growl.addErrorMessage("保存失败。。。");
+                  }
+
+              });
+          }, function () {
+
+          });
+
+      };
     // 处理日期插件的获取日期的格式
     var format = function (time, format) {
       var t = new Date(time);
