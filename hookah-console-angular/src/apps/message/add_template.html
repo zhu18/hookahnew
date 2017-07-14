@@ -1,74 +1,94 @@
 <style>
-  .control-label {
-    width: 80px;
-  }
-  .form-group span{
-    margin-right:20px;
-  }
-  .flag {
-    margin-left:150px;
-  }
-  .info ul li:hover{
-    cursor: pointer;
-    background: #e4e4e4;
-  }
-  .support ul li{
-    float: left;
-  }
+	.form-group span {
+		margin-right: 20px;
+	}
+	.flag {
+		margin-left: 150px;
+	}
+	.info ul li{
+		cursor: pointer;
+	}
+	.info ul li:hover {
+
+		background: #e4e4e4;
+	}
+	.info .active{
+		background: #e4e4e4;
+	}
+	.support ul li {
+		float: left;
+	}
 </style>
 <div class="row">
-  <div class="col-sm-12">
-    <div class="console-title console-title-border clearfix">
-      <div class="pull-left"><h5>添加消息模板</h5></div>
-      <div class="pull-right">
-        <button class="btn btn-default" data-ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span> 返回</button>
-      </div>
-    </div>
-    <form class="form-horizontal" role="form" id="infoForm" name="infoForm" novalidate>
-      <div class="box " style="margin-top:20px;margin-left:20px;">
-      <div class="form-group">
-        <label class="control-label ">事件类型:</label>
-        <input type="hidden"  name="eventType" value="{{eventType}}"/>
-        <select ng-model="eventType"  ng-options="eventType.code as eventType.describle for eventType in eventTypes"  style="width: 155px;height: 32px">
-        </select>
-      </div>
-      <div class="form-group">
-        <label class="control-label ">模板类型:</label>
-        <span ><input type="radio" name="templateType" value="2" checked>站内信</span>
-        <span ><input type="radio" name="templateType" value="0">短信</span>
-        <span ><input type="radio" name="templateType" value="1">邮件</span>
-      </div>
-      <div class="form-group">
-        <label class="control-label">模板标题:</label>
-          <input type="text" class="col-sm-4" name="templateHeader"  placeholder="密码找回验证通知：您正在找回密码。"　>
-      </div>
-      <div class="form-group">
-        <label class="control-label ">状态:</label>
-        <span ><input type="radio" name="isVaild"  value="1" checked>启用</span>
-        <span ><input type="radio" name="isVaild" value="0">禁用</span>
-      </div>
-      <div class="form-group">
-        <label class="control-label ">内容:</label>
-        <textarea name="templateContent" id="text" cols="50" rows="8" ng-model="content" ></textarea>
-        <div class="info" ng-show="flag">
-          <ul>
-            <li ng-repeat="item in list" d-id="{{item.id}}" d-code="{{item.code}}" class="active"　ng-click="list('{{item.code}}')">{{item.describle}}</li>
-          </ul>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="control-label">支持变量名:</label>
-        <span class="support">
-          <ul>
-            <li ng-repeat = "item in list" style="margin-right:10px;">[{{item.describle}}]</li>
-          </ul>
-        </span>
-      </div>
-      <div class="form-group flag">
-        <button type="submit" class="btn btn-default" style="margin-right:30px;" data-ng-click="add()">添加</button>
-        <button  class="btn btn-default">取消</button>
-      </div>
-    </div>
-    </form>
-  </div>
+	<div class="col-sm-12">
+		<div class="console-title console-title-border clearfix">
+			<div class="pull-left"><h5>添加消息模板</h5></div>
+			<div class="pull-right">
+				<button class="btn btn-default" data-ng-click="refresh()">
+					<span class="glyphicon glyphicon-refresh"></span> 返回
+				</button>
+			</div>
+		</div>
+		<form class="form-horizontal" role="form" id="infoForm" name="infoForm" novalidate>
+			<div class="box " style="margin-top:20px;margin-left:20px;">
+				<div class="form-group">
+					<label class="col-sm-2 control-label">事件类型:</label>
+					<div class="col-sm-5">
+						<input type="hidden" name="eventType" value="{{eventType}}"/>
+						<select ng-model="eventType" ng-options="eventType.code as eventType.describle for eventType in eventTypes" style="width: 155px;height: 32px">
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">模板类型:</label>
+					<div class="col-sm-5">
+						<span><input type="radio" name="templateType" value="2" checked>站内信</span>
+						<span><input type="radio" name="templateType" value="0">短信</span>
+						<span><input type="radio" name="templateType" value="1">邮件</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">模板标题:</label>
+					<div class="col-sm-5">
+						<input type="text" class="col-sm-4" name="templateHeader" placeholder="密码找回验证通知：您正在找回密码。" 　>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">状态:</label>
+					<div class="col-sm-5">
+						<span><input type="radio" name="isVaild" value="1" checked>启用</span>
+						<span><input type="radio" name="isVaild" value="0">禁用</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">内容:</label>
+					<div class="col-sm-5" style="position: relative">
+						<textarea name="templateContent" id="text" cols="50" rows="8" ng-model="content" ng-keydown="keyDownFn($event)"></textarea>
+						<div class="info" ng-show="flag" style="position: absolute;top: 142px;left: 83px;background: #fff;border: 1px solid #ccc;padding: 10px;z-index: 10;">
+							<ul class="tipBox">
+								<li ng-repeat="item in list" d-id="{{item.id}}" d-code="{{item.code}}" ng-class='{active:$first}' 　ng-click="list('{{item.code}}')">
+									{{item.describle}}
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">支持变量名:</label>
+					<div class="col-sm-5">
+						<span class="support">
+							<ul>
+								<li ng-repeat="item in list" style="margin-right:10px;">[{{item.describle}}]</li>
+							</ul>
+						</span>
+					</div>
+				</div>
+				<div class="form-group flag">
+					<button type="submit" class="btn btn-default" style="margin-right:30px;" data-ng-click="add()">添加
+					</button>
+					<button class="btn btn-default">取消</button>
+				</div>
+			</div>
+		</form>
+	</div>
 </div>
