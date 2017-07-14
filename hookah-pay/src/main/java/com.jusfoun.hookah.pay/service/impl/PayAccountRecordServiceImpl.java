@@ -415,7 +415,7 @@ public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRe
 		payAccountRecord.setUserId(moneyInOutBo.getUserId());		//当前操作用户的userID
 		payAccountRecord.setTransferDate(new Date());
 		payAccountRecord.setMoney(moneyInOutBo.getMoney());		//当前用户的入金出金的金额
-		payAccountRecord.setTransferType(moneyInOutBo.getOperatorType());	//根据操作类型  入金
+		payAccountRecord.setTransferType((byte) moneyInOutBo.getOperatorType().intValue());	//根据操作类型  入金
 		payAccountRecord.setTransferStatus(PayConstants.TransferStatus.handing.code);
 		payAccountRecord.setSerialNumber(serialNum);
 		payAccountRecord.setChannelType(ChannelType.QDABC);

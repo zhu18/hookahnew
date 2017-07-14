@@ -98,6 +98,7 @@ class MessageController {
                 $rootScope.list = res.data.data;
                 console.log(res.data.data);
                 $scope.len = res.data.data.length;
+                console.log("len:"+res.data.data.length);
                 growl.addSuccessMessage("数据加载完毕。。。");
             });
         };

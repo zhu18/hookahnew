@@ -165,7 +165,7 @@ public class SettleController extends BaseController{
             returnData.setMessage(e.getMessage());
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
-            returnData.setMessage("系统出错，请联系管理员！");
+            returnData.setMessage(e.getMessage());
             e.printStackTrace();
         }
         return returnData;

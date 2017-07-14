@@ -44,10 +44,11 @@ spring:
     publisher-confirms: true
     virtual-host: /
   mail:
-      host: smtp.qiye.163.com
-      port: 25
-      username: gbd@jusfoun.com
-      password: 1QAZ2wsx
+      host: smtp.qddata.com.cn
+      username: service@qddata.com.cn
+      password: Bigdata8661101
+      transport:
+        protocol: smtp
       properties:
         mail:
           smtp:

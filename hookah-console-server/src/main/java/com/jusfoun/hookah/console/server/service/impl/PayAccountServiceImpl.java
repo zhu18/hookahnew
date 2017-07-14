@@ -1,12 +1,12 @@
-package com.jusfoun.hookah.pay.service.impl;
+package com.jusfoun.hookah.console.server.service.impl;
 
 
+import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.PayAccountMapper;
 import com.jusfoun.hookah.core.domain.PayAccount;
 import com.jusfoun.hookah.core.domain.PayTradeRecord;
 import com.jusfoun.hookah.core.domain.bo.MoneyInOutBo;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
-import com.jusfoun.hookah.pay.util.PayConstants;
 import com.jusfoun.hookah.rpc.api.PayAccountService;
 import com.jusfoun.hookah.rpc.api.PayTradeRecordService;
 import org.springframework.stereotype.Service;
@@ -62,22 +62,22 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 //		6004：释放划出-收益账户
 
 		// 加钱
-		if(operatorType == PayConstants.TradeType.OnlineRecharge.code ||
-			operatorType == PayConstants.TradeType.ManualRecharge.code ||
-			operatorType == PayConstants.TradeType.CashREverse.code ||
-			operatorType == PayConstants.TradeType.SalesIn.code ||
-			operatorType == PayConstants.TradeType.ChargeIn.code ||
-			operatorType == PayConstants.TradeType.OfflineRecharge.code){
+		if(operatorType == HookahConstants.TradeType.OnlineRecharge.code ||
+			operatorType == HookahConstants.TradeType.ManualRecharge.code ||
+			operatorType == HookahConstants.TradeType.CashREverse.code ||
+			operatorType == HookahConstants.TradeType.SalesIn.code ||
+			operatorType == HookahConstants.TradeType.ChargeIn.code ||
+			operatorType == HookahConstants.TradeType.OfflineRecharge.code){
 			map.put("type", "plus");
 		}else if( // 减钱
-				operatorType == PayConstants.TradeType.OnlineCash.code ||
-				operatorType == PayConstants.TradeType.SalesOut.code ||
-				operatorType == PayConstants.TradeType.ManualDebit.code
+				operatorType == HookahConstants.TradeType.OnlineCash.code ||
+				operatorType == HookahConstants.TradeType.SalesOut.code ||
+				operatorType == HookahConstants.TradeType.ManualDebit.code
 				){
 			map.put("type", "sub");
-		}else if(operatorType == PayConstants.TradeType.FreezaIn.code){
+		}else if(operatorType == HookahConstants.TradeType.FreezaIn.code){
 			map.put("type", "FreezaIn");
-		}else if(operatorType == PayConstants.TradeType.releaseDraw.code){
+		}else if(operatorType == HookahConstants.TradeType.releaseDraw.code){
 			map.put("type", "releaseDraw");
 		}
 		map.put("id", payAccountId);
@@ -99,7 +99,7 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		payTradeRecord.setUserId(userId);
 		payTradeRecord.setMoney(money);
 		payTradeRecord.setTradeType(operatorType);
-		payTradeRecord.setTradeStatus(PayConstants.TransferStatus.handing.getCode());
+		payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.handing.getCode());
 		payTradeRecord.setAddTime(new Date());
 		payTradeRecord.setOrderSn(orderSn);
 		payTradeRecord.setAddOperator(operatorId);
@@ -113,24 +113,24 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		Map<String, Object> map = new HashMap<>();
 
 		// 加钱
-		if(operatorType == PayConstants.TradeType.OnlineRecharge.code ||
-				operatorType == PayConstants.TradeType.ManualRecharge.code ||
-				operatorType == PayConstants.TradeType.CashREverse.code ||
-				operatorType == PayConstants.TradeType.SalesIn.code ||
-				operatorType == PayConstants.TradeType.ChargeIn.code ||
-				operatorType == PayConstants.TradeType.OfflineRecharge.code){
+		if(operatorType == HookahConstants.TradeType.OnlineRecharge.code ||
+				operatorType == HookahConstants.TradeType.ManualRecharge.code ||
+				operatorType == HookahConstants.TradeType.CashREverse.code ||
+				operatorType == HookahConstants.TradeType.SalesIn.code ||
+				operatorType == HookahConstants.TradeType.ChargeIn.code ||
+				operatorType == HookahConstants.TradeType.OfflineRecharge.code){
 			map.put("type", "plus");
 		}else if( // 减钱
-				operatorType == PayConstants.TradeType.OnlineCash.code ||
-						operatorType == PayConstants.TradeType.SalesOut.code ||
-						operatorType == PayConstants.TradeType.ManualDebit.code
+				operatorType == HookahConstants.TradeType.OnlineCash.code ||
+						operatorType == HookahConstants.TradeType.SalesOut.code ||
+						operatorType == HookahConstants.TradeType.ManualDebit.code
 				){
 			map.put("type", "sub");
-		}else if(operatorType == PayConstants.TradeType.FreezaIn.code){ // 冻结转入
+		}else if(operatorType == HookahConstants.TradeType.FreezaIn.code){ // 冻结转入
 			map.put("type", "FreezaIn");
-		}else if(operatorType == PayConstants.TradeType.releaseDraw.code){ // 释放划出
+		}else if(operatorType == HookahConstants.TradeType.releaseDraw.code){ // 释放划出
 			map.put("type", "releaseDraw");
-		}else if(operatorType == PayConstants.TradeType.SettleCut.code){
+		}else if(operatorType == HookahConstants.TradeType.SettleCut.code){
 			map.put("type", "SettleCut");
 		}
 		map.put("id", payAccountId);
@@ -140,7 +140,7 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 			throw new RuntimeException("账户金额操作失败，操作时间" + LocalDateTime.now());
 		}
 
-		payTradeRecord.setTradeStatus(PayConstants.TransferStatus.success.code);
+		payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.success.code);
 		payTradeRecord.setUpdateTime(new Date());
 		int m = payTradeRecordService.updateByIdSelective(payTradeRecord);
 		if(m != 1){
@@ -156,22 +156,22 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		Map<String, Object> map = new HashMap<>();
 		Integer operatorType = moneyInOutBo.getOperatorType();
 		// 加钱
-		if(operatorType == PayConstants.TradeType.OnlineRecharge.code ||
-				operatorType == PayConstants.TradeType.ManualRecharge.code ||
-				operatorType == PayConstants.TradeType.CashREverse.code ||
-				operatorType == PayConstants.TradeType.SalesIn.code ||
-				operatorType == PayConstants.TradeType.ChargeIn.code ||
-				operatorType == PayConstants.TradeType.OfflineRecharge.code){
+		if(operatorType == HookahConstants.TradeType.OnlineRecharge.code ||
+				operatorType == HookahConstants.TradeType.ManualRecharge.code ||
+				operatorType == HookahConstants.TradeType.CashREverse.code ||
+				operatorType == HookahConstants.TradeType.SalesIn.code ||
+				operatorType == HookahConstants.TradeType.ChargeIn.code ||
+				operatorType == HookahConstants.TradeType.OfflineRecharge.code){
 			map.put("type", "plus");
 		}else if( // 减钱
-				operatorType == PayConstants.TradeType.OnlineCash.code ||
-						operatorType == PayConstants.TradeType.SalesOut.code ||
-						operatorType == PayConstants.TradeType.ManualDebit.code
+				operatorType == HookahConstants.TradeType.OnlineCash.code ||
+						operatorType == HookahConstants.TradeType.SalesOut.code ||
+						operatorType == HookahConstants.TradeType.ManualDebit.code
 				){
 			map.put("type", "sub");
-		}else if(operatorType == PayConstants.TradeType.FreezaIn.code){
+		}else if(operatorType == HookahConstants.TradeType.FreezaIn.code){
 			map.put("type", "FreezaIn");
-		}else if(operatorType == PayConstants.TradeType.releaseDraw.code){
+		}else if(operatorType == HookahConstants.TradeType.releaseDraw.code){
 			map.put("type", "releaseDraw");
 		}
 		map.put("id", moneyInOutBo.getPayAccountID());
@@ -181,7 +181,7 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 			logger.info("用户[payAccountId]->" + moneyInOutBo.getPayAccountID() + "===>操作失败" + LocalDateTime.now());
 			throw new RuntimeException();
 		}
-		payTradeRecord.setTradeStatus(PayConstants.TransferStatus.success.code);
+		payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.success.code);
 		payTradeRecord.setUpdateTime(new Date());
 		int m = payTradeRecordService.updateByIdSelective(payTradeRecord);
 		return m;
