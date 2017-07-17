@@ -36,6 +36,7 @@ public class MgGoods extends GenericModel {
     private Long clickRate;
     private OffLineInfoBean offLineInfo;//线下交付信息
     private OffLineDataBean offLineData;//离线数据信息
+    private long sales;//商品销量
 
     public List<MgCategoryAttrType.AttrTypeBean> getAttrTypeList() {
         return attrTypeList;
@@ -975,5 +976,13 @@ public class MgGoods extends GenericModel {
 
     public void setAtAloneSoftware(SaasAndAloneBean atAloneSoftware) {
         this.atAloneSoftware = atAloneSoftware;
+    }
+
+    public long getSales() {
+        return sales;
+    }
+
+    public void setSales(long sales) {
+        this.sales = sales;
     }
 }
