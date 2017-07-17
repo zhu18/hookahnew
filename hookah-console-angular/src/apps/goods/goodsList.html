@@ -80,7 +80,8 @@
 								<span text-length="50" ng-bind="item.goodsSn"></span>
 							</td>
 							<td>
-								<a href="javascript:;" ng-click="goodsDetail(item)">
+								<!--<a href="javascript:;" ng-click="goodsDetail(item)">-->
+								<a href="javascript:;" ng-click="goodsDetail(item,false)">
 									<span class="column-text" ng-bind="item.goodsName | limitTo:10"></span>
 								</a>
 							</td>
@@ -118,7 +119,7 @@
 							</td>
 							<td class="text-center" data-ng-if="item.isDelete == 1">
 								<span data-ng-if="item.isOnsale == '1' && item.checkStatus == '0'">
-								  	<a href="javascript:void(0);" ng-click="goCheck(item, 1)">去审核</a>
+								  	<a href="javascript:void(0);" ng-click="goodsDetail(item,true)">去审核</a>
 								</span>
 								<span data-ng-if="item.isOnsale == '1' && item.checkStatus == '1'">
 								  	<a href="javascript:void(0);" ng-click="forceOffShelf(item)">强制下架</a>

@@ -173,7 +173,7 @@ class GoodsListController {
 			},function(){
 			});
 		};//商品强制下架
-		$scope.goodsDetail = function (item) {//商品详情
+		$scope.goodsDetail = function (item,flag) {//商品详情
 			var promise = $http({
 				method: 'GET',
 				url: $rootScope.site.apiServer + "/api/goods/getGoodsInfo",
@@ -181,8 +181,12 @@ class GoodsListController {
 			});
 			promise.then(function (res, status, config, headers) {
 				if(res.data.code == "1"){
-					$rootScope.editData = res.data.data;
-					$state.go('items.goodsDetail', {data: $rootScope.editData});
+					$state.go('items.goodsDetail', {
+						data:{
+							data:res.data.data,
+							flag:flag
+						}
+					});
 				}
 			});
 		};//商品详情
