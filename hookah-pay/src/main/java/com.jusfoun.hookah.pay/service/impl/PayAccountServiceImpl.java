@@ -5,7 +5,9 @@ import com.jusfoun.hookah.core.dao.PayAccountMapper;
 import com.jusfoun.hookah.core.domain.PayAccount;
 import com.jusfoun.hookah.core.domain.PayTradeRecord;
 import com.jusfoun.hookah.core.domain.bo.MoneyInOutBo;
+import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
+import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.pay.util.PayConstants;
 import com.jusfoun.hookah.rpc.api.PayAccountService;
 import com.jusfoun.hookah.rpc.api.PayTradeRecordService;
@@ -14,9 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * dengxu
@@ -194,7 +194,11 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 	 */
 	public void insertPayAccountByUserIdAndName(String userId, String userName) {
 
-		PayAccount payAccount = payAccountMapper.selectByPrimaryKey(userId);
+		List<Condition> filters = new ArrayList<>();
+		if(StringUtils.isNotBlank(userId)){
+			filters.add(Condition.eq("userId", userId));
+		}
+		PayAccount payAccount = super.selectOne(filters);
 
 		if (payAccount == null) {
 			PayAccount pa = new PayAccount();
