@@ -88,7 +88,9 @@
 									<th>名称</th>
 									<th>规格</th>
 									<th>类型</th>
-									<th>价格</th>
+									<th>结算价（元）</th>
+									<th>代理价（元）</th>
+									<th>零售价（元）</th>
 								</tr>
 								</thead>
 								<tbody>
@@ -103,8 +105,15 @@
 										<span class="column-text" ng-bind="req.format | goodsFormat"></span>
 									</td>
 									<td>
+										<span class="column-text" ng-bind="req.settlementPrice/100"></span>
+									</td>
+									<td>
+										<span class="column-text" ng-bind="req.agencyPrice/100"></span>
+									</td>
+									<td>
 										<span class="column-text" ng-bind="req.price/100"></span>
 									</td>
+
 								</tr>
 								</tbody>
 							</table>
@@ -447,7 +456,7 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">模型规则</label></br>
 							<div class="form-group">
-									<label class="col-sm-2 control-label">数据模型</label>
+									<label class="col-sm-2 control-label">模型类型</label>
 									<div class="col-sm-5">
 										<select disabled>
 											<option value="0" ng-selected="editData.dataModel.modelType == 0">分类</option>
