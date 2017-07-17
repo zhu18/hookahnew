@@ -21,36 +21,12 @@ public class MessageCritVo extends MessageSendInfo implements Serializable {
     private Date endTime;
     private String keywords;
 
-    public String getKeywords() {
-        return keywords;
-    }
-
-    public void setKeywords(String keywords) {
-        this.keywords = keywords;
-    }
-
-    public Date getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
-
     public Integer getPageNumber() {
         return pageNumber;
     }
 
     public void setPageNumber(Integer pageNumber) {
-        pageNumber = pageNumber;
+        this.pageNumber = pageNumber;
     }
 
     public Integer getPageSize() {
@@ -58,7 +34,7 @@ public class MessageCritVo extends MessageSendInfo implements Serializable {
     }
 
     public void setPageSize(Integer pageSize) {
-        pageSize = pageSize;
+        this.pageSize = pageSize;
     }
 
     public String getOrderField() {
@@ -77,4 +53,27 @@ public class MessageCritVo extends MessageSendInfo implements Serializable {
         this.order = order;
     }
 
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
+    }
 }

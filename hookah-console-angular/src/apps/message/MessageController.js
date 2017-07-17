@@ -6,7 +6,7 @@ class MessageController {
             var promise = $http({
                 method: 'GET',
                 url: $rootScope.site.apiServer + "/api/message/system/all",
-                params: {currentPage: $rootScope.pagination.currentPage,
+                params: {pageNumber: $rootScope.pagination.currentPage,
                     pageSize: $rootScope.pagination.pageSize,
                     goodsName: $scope.searchName,
                     isRead: $scope.messageIsRead,
@@ -27,7 +27,7 @@ class MessageController {
             var promise = $http({
                 method: 'GET',
                 url: $rootScope.site.apiServer + "/api/message/email/all",
-                params: {currentPage: $rootScope.pagination.currentPage,
+                params: {pageNumber: $rootScope.pagination.currentPage,
                     pageSize: $rootScope.pagination.pageSize,
                     goodsName: $scope.searchName,
                     isRead: $scope.messageIsRead,
@@ -48,7 +48,7 @@ class MessageController {
             var promise = $http({
                 method: 'GET',
                 url: $rootScope.site.apiServer + "/api/message/sms/all",
-                params: {currentPage: $rootScope.pagination.currentPage,
+                params: {pageNumber: $rootScope.pagination.currentPage,
                     pageSize: $rootScope.pagination.pageSize,
                     goodsName: $scope.searchName,
                     isRead: $scope.messageIsRead,
@@ -69,7 +69,7 @@ class MessageController {
             var promise = $http({
                 method: 'GET',
                 url: $rootScope.site.apiServer + "/api/message/template/all",
-                params: {currentPage: $rootScope.pagination.currentPage,
+                params: {pageNumber: $rootScope.pagination.currentPage,
                     pageSize: $rootScope.pagination.pageSize,
                     goodsName: $scope.searchName,
                     isVaild: $scope.vaild,
