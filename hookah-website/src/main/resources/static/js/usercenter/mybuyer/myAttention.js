@@ -7,15 +7,18 @@ function loadPageData(data){
         for(var i=0; i<list.length; i++){
 			var mMat = null;
 			switch(list[i].shopFormat){
-				case(0):
-					mMat = '次';
-					break;
-				case(1):
-					mMat = '天';
-					break;
-				case(2):
-					mMat = '年';
-					break;
+                case(0):
+                    mMat = '次';
+                    break;
+                case(1):
+                    mMat = '天';
+                    break;
+                case(2):
+                    mMat = '年';
+                    break;
+                case(3):
+                    mMat = '套';
+                    break;
 			}
             html += '<li>';
 			html += '<a target="_blank" class="item-top" href="/exchange/details?id='+list[i].goodsId+'">';

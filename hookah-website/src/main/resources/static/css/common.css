@@ -597,6 +597,10 @@ ul li {
     text-decoration: underline;
 }
 
+.a-color-blue{
+    color: #0781e8 !important;
+    text-decoration: underline !important;
+}
 .noData{
     line-height: 300px;
     height: 300px !important;

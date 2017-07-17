@@ -45,8 +45,8 @@ public class CertificationController extends BaseController{
     @Resource
     UserCheckService userCheckService;
 
-    @Resource
-    PayAccountService payAccountService;
+   /* @Resource
+    PayAccountService payAccountService;*/
     
     //用户实名认证信息
     @ResponseBody
@@ -180,12 +180,12 @@ public class CertificationController extends BaseController{
         if(StringUtils.isNotBlank(userId)){
             filters.add(Condition.eq("userId", userId));
         }
-        PayAccount payAccount = payAccountService.selectOne(filters);
+        /*PayAccount payAccount = payAccountService.selectOne(filters);
         if(StringUtils.isNotBlank(payAccount.getPayPassword())){
             if(payAccount.getPayPassword().equals(payPassword)){
                 return true;
             }
-        }
+        }*/
         return false;
     }
 
