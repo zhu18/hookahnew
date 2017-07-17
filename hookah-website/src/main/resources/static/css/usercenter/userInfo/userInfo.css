@@ -3,6 +3,11 @@
     width:100%;
     border: 1px solid #E5E5E5;
 }
+.basic-information-top .a-color-blue{
+    color:#2980E9 ;
+    font-size: 18px;
+    text-decoration: underline;
+}
 .basic-information-top  .basic-information-top-title{
     width: calc(100% - 14px );
     height: 39px;
@@ -42,10 +47,17 @@
 .basic-information-top  .basic-information-top-content .user-info .user-info-left span{
     width: 30px;
     height: 30px;
+    line-height: 30px;
+    text-align: center;
     margin-right: 8px;
     border-radius: 50%;
-    border:1px solid #2980E9;
+    color: #e5e5e5;
+    border:1px solid #e5e5e5;
     display: inline-block;
+}
+.basic-information-top  .basic-information-top-content .user-info .user-info-left span.color-blue{
+    color: #2980E9;
+    border:1px solid #2980E9;
 }
 .basic-information-top  .basic-information-top-content .user-info .user-info-right .usertype{
     margin-top: 20px;
@@ -207,6 +219,9 @@
     width: 112px;
 }
 .order-list-item .order-list-top .order-list-top-info h4{
+   overflow: hidden;
+   text-overflow:ellipsis;
+   white-space: nowrap;
    cursor: pointer;
    font-size: 16px;
    color: #333333;

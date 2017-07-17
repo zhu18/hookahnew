@@ -1,0 +1,22 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/becomingSupplierStep1.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="grid-left info-center-box ">
+
+        </div>
+    </div>
+</div>
+</div>
+
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
