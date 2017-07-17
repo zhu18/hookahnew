@@ -40,7 +40,7 @@ public class MgMoneyInOutLogServiceImpl extends GenericMongoServiceImpl<MgMoneyI
         }
         mgMoneyInOutLog.setPayAccountRecordId(id);
         mgMoneyInOutLog.setUserId(moneyInOutBo.getUserId());
-        mgMoneyInOutLog.setTransferType(moneyInOutBo.getOperatorType());
+        mgMoneyInOutLog.setTransferType((byte)moneyInOutBo.getOperatorType().intValue());
         mgMoneyInOutLog.setAddTime(new Date());
         mgMoneyInOutLog.setSendArgs(sendArgs);
         mongoTemplate.insert(mgMoneyInOutLog);

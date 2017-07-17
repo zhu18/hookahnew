@@ -78,7 +78,9 @@
                 <span class="column-text" ng-bind="item.isVaild | shelvesStatus"></span>
               </td>
               <td class="text-center">
-                <span>删除</span><span>编辑</span>
+
+                <span><a></a></span>
+                <span><a href="javascript:;" ng-click="deleteTemplate(item)">删除</a></span><span class="text-explode">|</span><span><a href="javascript:;" ng-click="editTemplate(item)">编辑</a></span>
               </td>
             </tr>
             </tbody>

@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
+import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.rpc.api.MailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +10,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 @Service
 public class MailServiceImpl implements MailService {
@@ -23,7 +23,8 @@ public class MailServiceImpl implements MailService {
     String systemMail;
 	
 	@Override
-	public void send(String toEmail,String subject,String text) {
+	public String send(String toEmail,String subject,String text) {
+        String retVal = HookahConstants.SMS_FAIL;
 		logger.info("邮件发送从{}到{}",systemMail,toEmail);
         MimeMessage mail = javaMailSender.createMimeMessage();
         try {
@@ -33,11 +34,12 @@ public class MailServiceImpl implements MailService {
             helper.setFrom(systemMail);
             helper.setSubject(subject);
             helper.setText(text);
-        } catch (MessagingException e) {
+            javaMailSender.send(mail);
+            retVal = HookahConstants.SMS_SUCCESS;
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {}
-        javaMailSender.send(mail);
-        //return helper;
+        return retVal;
     }
 
 }

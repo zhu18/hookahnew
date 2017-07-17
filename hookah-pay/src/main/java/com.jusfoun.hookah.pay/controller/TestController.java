@@ -2,15 +2,12 @@ package com.jusfoun.hookah.pay.controller;
 
 import com.jusfoun.hookah.core.domain.bo.MoneyInOutBo;
 import com.jusfoun.hookah.core.domain.bo.SettleBo;
-import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
 import com.jusfoun.hookah.rpc.api.PayAccountRecordService;
-import com.jusfoun.hookah.rpc.api.WaitSettleRecordService;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * Created by dengxu on 2017/7/3/0003.
@@ -22,16 +19,13 @@ public class TestController {
     @Resource
     PayAccountRecordService payAccountRecordService;
 
-    @Resource
-    WaitSettleRecordService settleService;
-
     @RequestMapping("/test")
     public String test(){
         return "访问此处，你需要支付10000000.00元";
     }
 
     @RequestMapping("/moneyIn/{type}")
-    public void moneyIn(@PathVariable byte type){
+    public void moneyIn(@PathVariable Integer type){
         MoneyInOutBo moneyInOutBo = new MoneyInOutBo();
         moneyInOutBo.setMoney(1000L);
         moneyInOutBo.setPayAccountID(2l);
@@ -49,7 +43,7 @@ public class TestController {
         MoneyInOutBo moneyInOutBo = new MoneyInOutBo();
         moneyInOutBo.setMoney(1000L);
         moneyInOutBo.setPayAccountID(2l);
-        moneyInOutBo.setOperatorType(Byte.parseByte(type));
+        moneyInOutBo.setOperatorType(Integer.parseInt(type));
         moneyInOutBo.setUserId("1234567");
         if(type.equals(1)){
             payAccountRecordService.entryPayments(moneyInOutBo);

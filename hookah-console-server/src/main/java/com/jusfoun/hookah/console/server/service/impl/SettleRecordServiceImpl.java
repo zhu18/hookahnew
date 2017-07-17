@@ -1,12 +1,17 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
+import com.jusfoun.hookah.console.server.util.PropertiesManager;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.SettleRecordMapper;
+import com.jusfoun.hookah.core.domain.PayAccount;
 import com.jusfoun.hookah.core.domain.SettleRecord;
 import com.jusfoun.hookah.core.domain.WaitSettleRecord;
+import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.core.utils.StringUtils;
+import com.jusfoun.hookah.rpc.api.PayAccountService;
 import com.jusfoun.hookah.rpc.api.SettleRecordService;
 import com.jusfoun.hookah.rpc.api.WaitSettleRecordService;
 import org.joda.time.LocalDateTime;
@@ -14,7 +19,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created dx .
@@ -33,13 +40,17 @@ public class SettleRecordServiceImpl extends GenericServiceImpl<SettleRecord, Lo
     @Resource
     WaitSettleRecordService waitSettleRecordService;
 
+    @Resource
+    PayAccountService payAccountService;
+
     @Transactional
-    public ReturnData handleSettle(Long sid, Long supplierAmount, Long tradeCenterAmount, String userId) {
+    public synchronized ReturnData handleSettle(Long sid, Long supplierAmount, Long tradeCenterAmount, String userId) {
 
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
 
         WaitSettleRecord record = waitSettleRecordService.selectById(sid);
+
 
         if(record == null){
             returnData.setCode(ExceptionConst.Failed);
@@ -50,6 +61,12 @@ public class SettleRecordServiceImpl extends GenericServiceImpl<SettleRecord, Lo
         if(HookahConstants.NO_SETTLE_STATUS != record.getSettleStatus()){
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage("该订单已结算！");
+            return returnData;
+        }
+
+        if(!StringUtils.isNotBlank(record.getShopName())){
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage("无法获取商品所属用户信息！");
             return returnData;
         }
 
@@ -72,6 +89,12 @@ public class SettleRecordServiceImpl extends GenericServiceImpl<SettleRecord, Lo
             throw new RuntimeException();
         }
 
+        // 结算总金额等于剩余待结算金额  修改待结算记录的状态
+        if(record.getNoSettleAmount() == (supplierAmount + tradeCenterAmount)){
+            record.setSettleStatus(HookahConstants.HAS_SETTLE_STATUS);
+            waitSettleRecordService.updateById(record);
+        }
+
         // 添加结算记录
         SettleRecord settleRecord = new SettleRecord();
         settleRecord.setGoodsId(record.getGoodsId());
@@ -90,8 +113,42 @@ public class SettleRecordServiceImpl extends GenericServiceImpl<SettleRecord, Lo
             throw new RuntimeException();
         }
 
-        // 进行虚拟账户 内部转账
+        List<Condition> filters = new ArrayList();
+        filters.add(Condition.eq("userId", record.getShopName()));
+        PayAccount payAccount = payAccountService.selectOne(filters);
+        if(payAccount == null){
+            logger.error("无法获取用户的账户信息， 操作时间-->" + LocalDateTime.now() );
+            throw new RuntimeException("无法获取用户的账户信息");
+        }
 
+        // 1.先从交易中心账户扣除 欲结算的金额
+        payAccountService.operatorByType(
+                Long.parseLong(PropertiesManager.getInstance().getProperty("tradeCenterAccount")),
+                PropertiesManager.getInstance().getProperty("jusfounOrgId"),
+                HookahConstants.TradeType.SettleCut.code,
+                (tradeCenterAmount + supplierAmount),
+                record.getOrderSn(),
+                userId.toString());
+
+        // 2.交易中心可获得手续费收入
+        payAccountService.operatorByType(
+                Long.parseLong(PropertiesManager.getInstance().getProperty("tradeCenterAccount")),
+                PropertiesManager.getInstance().getProperty("jusfounOrgId"),
+                HookahConstants.TradeType.ChargeIn.code,
+                tradeCenterAmount,
+                record.getOrderSn(),
+                userId.toString());
+
+        // 3.向供应商账户增加所得金额
+        payAccountService.operatorByType(
+                payAccount.getId(),
+                payAccount.getUserId(),
+                HookahConstants.TradeType.SalesIn.code,
+                supplierAmount,
+                record.getOrderSn(),
+                userId.toString());
+
+        returnData.setMessage("本次结算处理成功！");
         return returnData;
     }
 }

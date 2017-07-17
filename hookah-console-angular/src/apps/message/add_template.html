@@ -50,7 +50,7 @@
 				<div class="form-group">
 					<label class="col-sm-2 control-label">模板标题:</label>
 					<div class="col-sm-5">
-						<input type="text" class="col-sm-4" name="templateHeader" placeholder="密码找回验证通知：您正在找回密码。" 　>
+						<input type="text" style="width:330px;line-height: 25px;" name="templateHeader" placeholder="密码找回验证通知：您正在找回密码。" 　>
 					</div>
 				</div>
 				<div class="form-group">
@@ -64,9 +64,9 @@
 					<label class="col-sm-2 control-label">内容:</label>
 					<div class="col-sm-5" style="position: relative">
 						<textarea name="templateContent" id="text" cols="50" rows="8" ng-model="content" ng-keydown="keyDownFn($event)"></textarea>
-						<div class="info" ng-show="flag" style="position: absolute;top: 142px;left: 83px;background: #fff;border: 1px solid #ccc;padding: 10px;z-index: 10;">
-							<ul class="tipBox">
-								<li ng-repeat="item in list" d-id="{{item.id}}" d-code="{{item.code}}" ng-class='{active:$first}' 　ng-click="list('{{item.code}}')">
+						<div class="info" ng-show="flag" style="position: absolute;top: 142px;left: 15px;background: #fff;border: 1px solid #ccc;padding: 10px;z-index: 10;">
+							<ul class="tipBox" style="list-style:none;">
+								<li ng-repeat="item in list" style="" d-id="{{item.id}}" d-code="{{item.code}}" ng-class='{active:$first}' 　ng-click="list('{{item.code}}')" style="margin-left:-30px;margin-right:10px;">
 									{{item.describle}}
 								</li>
 							</ul>
@@ -76,15 +76,15 @@
 				<div class="form-group">
 					<label class="col-sm-2 control-label">支持变量名:</label>
 					<div class="col-sm-5">
-						<span class="support">
-							<ul>
-								<li ng-repeat="item in list" style="margin-right:10px;">[{{item.describle}}]</li>
+						<span class="support" style="display: inline-block;">
+							<ul style="list-style: none;">
+								<li ng-repeat="item in list" style="line-height:25px;margin-right:10px;">[{{item.describle}}]</li>
 							</ul>
 						</span>
 					</div>
 				</div>
 				<div class="form-group flag">
-					<button type="submit" class="btn btn-default" style="margin-right:30px;" data-ng-click="add()">添加
+					<button type="submit" class="btn btn-default" style="margin-left:200px;margin-right:30px;" data-ng-click="add()">添加
 					</button>
 					<button class="btn btn-default">取消</button>
 				</div>

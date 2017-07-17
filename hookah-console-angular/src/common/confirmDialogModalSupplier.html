@@ -1,0 +1,26 @@
+<div class="console-message-dialog">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" data-ng-click="cancel(false)" aria-hidden="true">×</button>
+    <h5 class="modal-title">供应商审核</h5>
+  </div>
+  <div class="modal-body clearfix">
+    <div class="row">
+      <div>
+        <label for="" class="col-sm-2">审核意见：</label>
+        <textarea name="" id="checkContent" cols="60" rows="10">
+
+        </textarea>
+      </div>
+      <div>
+        <label for="" class="col-sm-2">结果：</label>
+        <input type="radio" name="tRadio" value="1">通过
+        <input type="radio" name="tRadio" value="2">未通过
+      </div>
+
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button ng-click="ok()" class="btn btn-primary" ng-class="">提交</button>
+    <button ng-click="cancel()" class="btn btn-warning" type="button">取消</button>
+  </div>
+</div>

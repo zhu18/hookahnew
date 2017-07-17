@@ -183,26 +183,26 @@ public class PayConstants {
      */
     public enum TradeType {
 
-        OnlineRecharge((byte)1),
-        OnlineCash((byte)2),
-        ManualRecharge((byte)5),
-        ManualDebit((byte)6),
-        OfflineRecharge((byte)7),
-        CashREverse((byte)8),
-        SettleCut((byte)9),
-        SalesIn((byte)3001),
-        SalesOut((byte)4001),
-        ChargeIn((byte)3007),
-        FreezaIn((byte)6003),
-        releaseDraw((byte)6004);
+        OnlineRecharge(1),
+        OnlineCash(2),
+        ManualRecharge(5),
+        ManualDebit(6),
+        OfflineRecharge(7),
+        CashREverse(8),
+        SettleCut(9),
+        SalesIn(3001),
+        SalesOut(4001),
+        ChargeIn(3007),
+        FreezaIn(6003),
+        releaseDraw(6004);
 
-        public byte code;
+        public Integer code;
 
-        TradeType(byte code) {
+        TradeType(Integer code) {
             this.code = code;
         }
 
-        public byte getCode() {
+        public Integer getCode() {
             return code;
         }
     }

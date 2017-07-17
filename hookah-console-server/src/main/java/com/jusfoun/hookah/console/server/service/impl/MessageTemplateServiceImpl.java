@@ -96,6 +96,7 @@ public class MessageTemplateServiceImpl extends GenericServiceImpl<MessageTempla
         return returnData;
     }
 
+
     @Override
     public ReturnData getTempConstantsList() {
         ReturnData returnData = new ReturnData<>();
