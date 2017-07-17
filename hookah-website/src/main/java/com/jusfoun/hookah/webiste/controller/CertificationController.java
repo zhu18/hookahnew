@@ -175,8 +175,7 @@ public class CertificationController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "/paymentPass", method = RequestMethod.GET)
     public boolean paymentPass (String payPassword) throws HookahException {
-        //String userId = this.getCurrentUser().getUserId();
-        String userId = "1234567";
+        String userId = this.getCurrentUser().getUserId();
         List<Condition> filters = new ArrayList();
         if(StringUtils.isNotBlank(userId)){
             filters.add(Condition.eq("userId", userId));
