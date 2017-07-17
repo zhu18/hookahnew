@@ -9,7 +9,7 @@ class GoodsListController {
 		// console.log($state.$current.name);
 		$scope.pageTitle = null; //页面title
 		$scope.getUrl = null;
-
+		$rootScope.pagination.currentPage = 1;
 
 
 
@@ -63,7 +63,6 @@ class GoodsListController {
 			});
 			promise.then(function (res, status, config, headers) {
 				$rootScope.loadingState = false;
-				// console.log('qweqeqweqweqweqweqweqweqweqweqweqwe-----'+JSON.stringify($rootScope.pagination));
 				growl.addSuccessMessage("数据加载完毕。。。");
 			});
 		};
@@ -129,24 +128,71 @@ class GoodsListController {
 		// 	});
 		// };
 		//
-		// $scope.goOff = function(item){
-		// 	var promise = $http({
-		// 		method: 'POST',
-		// 		url: $rootScope.site.apiServer + "/api/goods/off",
-		// 		params: {goodsId:item.goodsId}
-		// 	});
-		// 	promise.then(function (res, status, config, headers) {
-		// 		console.log(res.data)
-		// 		if(res.data.code == "1"){
-		// 			$scope.refresh();
-		// 		}
-		// 	});
-		// }
+		$scope.goOff = function(item){ //商品下架
+			var confirm = $rootScope.openConfirmDialogModal("确认要将&nbsp;<b>" + item.goodsName + "</b>&nbsp;下架吗？");
+			confirm.result.then(function () {
+				var promise = $http({
+					method: 'POST',
+					url: $rootScope.site.apiServer + "/api/goods/off",
+					params: {goodsId: item.goodsId}
+				});
+				promise.then(function (res, status, config, headers) {
+					if (res.data.code == "1") {
+						growl.addSuccessMessage("操作成功");
+						$scope.refresh();
+					}
+				});
+			})
+		};//商品下架
+		$scope.forceOffShelf = function(item){//商品强制下架
+			var title1 = '请输入强制下架理由';
+			var content = '<div> <label for="" class="col-sm-3">强制下架理由：</label> <textarea name="" id="checkContent" cols="60" rows="10"></textarea> </div> ';
+			var modalInstance = $rootScope.openConfirmDialogModel(title1,content);
+
+			modalInstance.result.then(function () { //模态点提交
+				if($('#checkContent').val()){
+					var promise = $http({
+						method: 'POST',
+						url: $rootScope.site.apiServer + "/api/goods/forceOff",
+						params: {
+							goodsId: item.goodsId,
+							offReason:$('#checkContent').val()
+						}
+					});
+					promise.then(function (res, status, config, headers) {
+						if (res.data.code == "1") {
+							growl.addSuccessMessage("操作成功");
+							$scope.refresh();
+						}
+					});
+				}else{
+					$rootScope.openErrorDialogModal('强制下架理由不能为空',function(){
+
+					});
+				}
+			},function(){
+			});
+		};//商品强制下架
+		$scope.goodsDetail = function (item) {//商品详情
+			var promise = $http({
+				method: 'GET',
+				url: $rootScope.site.apiServer + "/api/goods/getGoodsInfo",
+				params: {goodsId: item.goodsId}
+			});
+			promise.then(function (res, status, config, headers) {
+				if(res.data.code == "1"){
+					$rootScope.editData = res.data.data;
+					$state.go('items.goodsDetail', {data: $rootScope.editData});
+				}
+			});
+		};//商品详情
+
+
 		//
-		// $scope.pageChanged = function () {
-		// 	$scope.search();
-		// 	console.log('Page changed to: ' + $rootScope.pagination.currentPage);
-		// };
+		$scope.pageChanged = function () {//翻页
+			$scope.search();
+			console.log('Page changed to: ' + $rootScope.pagination.currentPage);
+		};//翻页
 		//
 		// if ($state.$current.name == "items.search") {
 		// 	$scope.search();
@@ -162,6 +208,7 @@ class GoodsListController {
 			$scope.orgName = '';
 			$scope.search();
 		};
+
 		//
 		// /**
 		//  * select 框 以及 option
@@ -203,6 +250,7 @@ class GoodsListController {
 		// 		growl.addSuccessMessage("数据加载完毕。。。");
 		// 	});
 		// }
+
 		if ($state.$current.name == "items.search") {
 			$scope.pageTitle = '商品查询';
 			$scope.goodsTypeView = 1;
@@ -219,6 +267,7 @@ class GoodsListController {
 			$scope.getUrl = "/api/goods/checkedList";
 			$scope.search();
 		}
+
 
 	}
 }
