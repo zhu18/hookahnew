@@ -297,10 +297,13 @@ export default angular.module('Common', [
           return '次';
           break;
         case 1:
-          return '天';
+          return '月';
           break;
         case 2:
           return '年';
+          break;
+        case 3:
+          return '套';
           break;
       }
     }

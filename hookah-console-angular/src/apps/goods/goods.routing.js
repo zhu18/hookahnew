@@ -7,7 +7,7 @@ import CategoryController from "../category/CategoryController";
 import ManageAttrTypeController from "../category/ManageAttrTypeController";
 import AttrTypeController from "../attrtype/AttrTypeController";
 import GoodsListController from "./GoodsListController";
-
+import GoodsDetailController from "./GoodsDetailController";
 goodsRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function goodsRouting($stateProvider, $urlRouterProvider) {
 	$urlRouterProvider.otherwise('/items/search');
@@ -46,6 +46,13 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
 			controller: GoodsListController,
 			permission: 'items_checkedList'
 		})
+		.state('items.goodsDetail', {
+			url: '/items/goodsDetail',
+			params: {'data': null},
+			template: require('./goodsDetail.html'),
+			controller: GoodsDetailController,
+			permission: 'items_goodsDetail'
+		})
 		.state('items.searchByCon', {
 			// params:{'searchName':null, 'searchSn':null, 'searchCheckStatus':null, 'searchOnSaleStatus':null},
 			url: '/items/searchByCon',
@@ -82,13 +89,6 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
 			template: require('./goodsCheckedList.html'),
 			controller: GoodsCheckController,
 			permission: 'items_checkedList2'
-		})
-		.state('items.goodsDetail', {
-			url: '/items/goodsDetail',
-			params: {'data': null},
-			template: require('./goodsDetail.html'),
-			controller: GoodsCheckController,
-			permission: 'items_goodsDetail'
 		})
 		.state('items.checkGoodsDetail', {
 			url: '/items/checkGoodsDetail',

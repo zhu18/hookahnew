@@ -46,6 +46,8 @@ public class PayBankCard extends GenericModel {
 
     private String phoneNumber;
 
+    private Integer bankAccountType;
+
     public Integer getId() {
         return id;
     }
@@ -149,4 +151,8 @@ public class PayBankCard extends GenericModel {
     public String getPhoneNumber() { return phoneNumber; }
 
     public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+
+    public Integer getBankAccountType() {return bankAccountType;}
+
+    public void setBankAccountType(Integer bankAccountType) {this.bankAccountType = bankAccountType;}
 }

@@ -55,6 +55,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     private GoodsService goodsService;
 
     @Resource
+    MgGoodsService mgGoodsService;
+
+    @Resource
     MgOrderInfoService mgOrderInfoService;
 
     @Resource
@@ -440,6 +443,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
     /**
      * 支付订单，修改支付状态为2（已支付），订单状态改为 5（完成）
+     * 统计订单中商品的销量
      * 支付完成后，API类商品调用api平台接口，启用api调用跟踪
      * 支付完成后，api类商品保存api
      * @param orderSn
@@ -477,9 +481,11 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         orderInfoVo.setPayStatus(payStatus);
         mgOrderInfoService.insert(orderInfoVo);
 
-        //支付成功后
+        //支付成功后,API类商品调用api平台接口，启用api调用跟踪
+        //进行商品销量统计
         if(OrderInfo.PAYSTATUS_PAYED == payStatus){
             managePaySuccess(orderInfo);
+//            countSales(orderInfo.getOrderId());
         }
         //        if(list!=null&&list.size()>0){
         //            mapper.updatePayStatus(orderSn,status);
@@ -487,6 +493,26 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         //            throw new ShopException("无法设置支付状态");
         //        }
 
+    }
+
+    /**
+     * 支付完成后进行商品销量统计
+     * @param orderId
+     */
+    public void countSales(String orderId){
+        try {
+            OrderInfoVo orderInfoVo = findDetailById(orderId);
+            orderInfoVo.getMgOrderGoodsList().stream().forEach(
+                    mgOrderGoods -> {
+                        MgGoods mgGoods = mgGoodsService.selectById(mgOrderGoods.getGoodsId());
+                        long sales = mgGoods.getSales()+mgOrderGoods.getGoodsNumber();
+                        mgGoods.setSales(sales);
+                        mgGoodsService.updateByIdSelective(mgGoods);
+                    });
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.error("统计商品销量错误"+orderId);
+        }
     }
 
     /**

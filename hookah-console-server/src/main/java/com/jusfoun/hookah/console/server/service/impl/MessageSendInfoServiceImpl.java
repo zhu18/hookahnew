@@ -179,8 +179,13 @@ public class MessageSendInfoServiceImpl extends GenericServiceImpl<MessageSendIn
         for(MessageSendInfo messageSendInfo : messageSendInfos) {
             MessageSendInfoVo messageSendInfoVo = new MessageSendInfoVo();
             BeanUtils.copyProperties(messageSendInfo, messageSendInfoVo);
+            //获取收件人
             User user = userService.selectById(messageSendInfo.getReceiveUser());
             messageSendInfoVo.setReceiveUserName(user == null ?"":user.getUserName());
+            //获取发件人
+            User user1 = userService.selectById(messageSendInfo.getSendUser());
+            messageSendInfoVo.setSendUserName(user1 == null ?"系统通知":user1.getUserName());
+
             GeneralCodes generalCodes = new GeneralCodes();
             generalCodes.setProperty(property_eventType);
             generalCodes.setCode(messageSendInfo.getEventType());
