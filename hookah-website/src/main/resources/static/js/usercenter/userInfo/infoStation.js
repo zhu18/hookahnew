@@ -22,9 +22,10 @@
             html +='<tbody>';
             for(var i=0;i<list.length;i++){
                 ids.push(list[i].id);
+                var listStr = "'" +  list[i].id + "'";
                 html +='<tr>';
                 html +='<td><input type="checkbox" name="checkbox" value="'+list[i].id+'"></td>';
-                html +='<td><a href="javascript:getInfo('+list[i].id+')">'+list[i].sendHeader+'</a></td>';
+                html +='<td><a href="javascript:getInfo('+  listStr +')">'+list[i].sendHeader+'</a></td>';
                 html +='<td>'+list[i].sendTime+'</td>';
                 html +='<td>'+list[i].sendUserName+'</td>';
                 html +='</tr>';
@@ -104,7 +105,6 @@ function getInfo(id){
     $.ajax({
         url:'/message/detail/'+id,
         type:'get',
-
         success:function(data){
             if(data.code==1){
                 var html =null;
@@ -113,7 +113,7 @@ function getInfo(id){
                         <h5>&nbsp;&nbsp;标题：<span>' + data.data.sendHeader + '</span></h5>\
                         <h5>&nbsp;&nbsp;内容：<span>' + data.data.sendContent + '</span></h5>\
                         <h5>&nbsp;&nbsp;时间：<span>' + data.data.sendTime + '</span></h5>\
-                        <h5>&nbsp;&nbsp;发送人：<span>' + data.data.sendUserName + '</span></h5>\
+                        <h5>&nbsp;&nbsp;发送人：<span>' + data.data.sendUser + '</span></h5>\
                         </div></div>'
 
                 $.confirm(html, [{close: '关闭'}],
