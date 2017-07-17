@@ -119,14 +119,36 @@ public class EsApi {
 //        return returnData;
 //    }
 
+        //@RequestBody(required = false) EsGoodsVo vo
     @RequestMapping("/v1/goods")
-    public ReturnData searchByCondition(@RequestBody(required = false) EsGoodsVo vo) {
+    public ReturnData searchByCondition(String currentPage, String pageSize,
+                                        String goodsName) {
         ReturnData returnData = new ReturnData<>();
+        EsGoodsVo vo = new EsGoodsVo();
+
+        //参数校验
+        int pageNumberNew = HookahConstants.PAGE_NUM;
+
+        if (StringUtils.isNotBlank(currentPage)) {
+            pageNumberNew = Integer.parseInt(currentPage);
+
+            vo.setPageNumber(pageNumberNew);
+        }
+        int pageSizeNew = HookahConstants.PAGE_SIZE;
+        if (StringUtils.isNotBlank(pageSize)) {
+            pageSizeNew = Integer.parseInt(pageSize);
+            vo.setPageSize(pageSizeNew);
+        }
+        if (StringUtils.isNotBlank(goodsName)) {
+            EsGoods esGoods = new EsGoods();
+            esGoods.setGoodsName(goodsName);
+            vo.setEsGoods(esGoods);
+        }
         returnData.setCode(ExceptionConst.Success);
         try {
-            if(vo == null) {
-                vo = new EsGoodsVo();
-            }
+//            if(vo == null) {
+//                vo = new EsGoodsVo();
+//            }
             returnData.setData(elasticSearchService.search(vo));
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);

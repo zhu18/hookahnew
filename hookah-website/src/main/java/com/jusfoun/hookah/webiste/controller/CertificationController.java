@@ -44,6 +44,9 @@ public class CertificationController extends BaseController{
 
     @Resource
     UserCheckService userCheckService;
+
+    /*@Resource
+    PayAccountService payAccountService;*/
     
     //用户实名认证信息
     @ResponseBody
@@ -59,26 +62,27 @@ public class CertificationController extends BaseController{
                 List<Condition> filters = new ArrayList();
                 filters.add(Condition.eq("userId", userId));
                 UserCheck userCheck = userCheckService.selectOne(filters);
-                map.put("isAuth", organization.getIsAuth());
-                if(userCheck != null){
-                    map.put("userType", userCheck.getUserType());
-                    map.put("checkContent", userCheck.getCheckContent());
+                    if(userCheck != null) {
+                        map.put("userType", userCheck.getUserType());
+                        map.put("checkContent", userCheck.getCheckContent());
+                    }
+                    map.put("isAuth", organization.getIsAuth());
+                    //详细信息
+                    map.put("orgName", organization.getOrgName());
+                    map.put("certificateCode", organization.getCertificateCode());
+                    map.put("certifictePath", organization.getCertifictePath());
+                    map.put("licenseCode", organization.getLicenseCode());
+                    map.put("licensePath", organization.getLicensePath());
+                    map.put("taxCode", organization.getTaxCode());
+                    map.put("industry", organization.getIndustry());
+                    map.put("lawPersonName", organization.getLawPersonName());
+                    map.put("region", organization.getRegion());
+                    map.put("contactAddress", organization.getContactAddress());
+                    map.put("orgPhone", organization.getOrgPhone());
+                }else {
+                    return ReturnData.success("未认证");
                 }
-
-                //详细信息
-                map.put("orgName", organization.getOrgName());
-                map.put("certificateCode", organization.getCertificateCode());
-                map.put("certifictePath", organization.getCertifictePath());
-                map.put("licenseCode", organization.getLicenseCode());
-                map.put("licensePath", organization.getLicensePath());
-                map.put("taxCode", organization.getTaxCode());
-                map.put("industry", organization.getIndustry());
-                map.put("lawPersonName", organization.getLawPersonName());
-                map.put("region", organization.getRegion());
-                map.put("contactAddress", organization.getContactAddress());
-                map.put("orgPhone", organization.getOrgPhone());
             }
-        }
         return ReturnData.success(map);
     }
 
@@ -90,8 +94,7 @@ public class CertificationController extends BaseController{
             return ReturnData.invalidParameters("参数orgId不可为空");
         }
         try {
-            //organizationService.updateByIdSelective(org);
-            organizationService.updateById(org);
+            organizationService.updateByIdSelective(org);
             return ReturnData.success();
         }catch (Exception e){
             logger.error("修改错误", e);
@@ -165,4 +168,25 @@ public class CertificationController extends BaseController{
         }
         return returnData;
     }
+
+
+
+    //验证 支付密码是否正确
+    @ResponseBody
+    @RequestMapping(value = "/paymentPass", method = RequestMethod.GET)
+    public boolean paymentPass (String payPassword) throws HookahException {
+        String userId = this.getCurrentUser().getUserId();
+        List<Condition> filters = new ArrayList();
+        if(StringUtils.isNotBlank(userId)){
+            filters.add(Condition.eq("userId", userId));
+        }
+        /*PayAccount payAccount = payAccountService.selectOne(filters);
+        if(StringUtils.isNotBlank(payAccount.getPayPassword())){
+            if(payAccount.getPayPassword().equals(payPassword)){
+                return true;
+            }
+        }*/
+        return false;
+    }
+
 }
