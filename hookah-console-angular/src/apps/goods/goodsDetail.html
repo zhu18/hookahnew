@@ -12,19 +12,18 @@
 	<div class="col-sm-12">
 		<form class="form-horizontal" role="form">
 			<fieldset>
-				<!--<h5 style="padding: 0px 20px;">基本信息</h5>-->
 				<ul style="padding: 0px 20px;" class="nav nav-tabs">
-					<li data-ng-class="{'active':currentS == 1}" data-ng-click="setCurrentS(1)">
+					<li data-ng-class="{'active':current == 1}" data-ng-click="setCurrent(1)">
 						<a href="javascript:void(0)">基本信息</a>
 					</li>
-					<li data-ng-class="{'active' : currentS == 2}" data-ng-click="setCurrentS(2)">
+					<li data-ng-class="{'active' : current == 2}" data-ng-click="setCurrent(2)">
 						<a href="javascript:void(0)">补充信息</a>
 					</li>
-					<li data-ng-class="{'active' : currentS == 3}" data-ng-show="editData.goodsType == 1 && editData.isOffline == 0" data-ng-click="setCurrentS(3)">
+					<li data-ng-class="{'active' : current == 3}" data-ng-show="editData.goodsType == 1 && editData.isOffline == 0" data-ng-click="setCurrent(3)">
 						<a href="javascript:void(0)">封装内容编辑</a>
 					</li>
 				</ul>
-				<div data-ng-show="currentS == 1">
+				<div data-ng-show="current == 1">
 					<div class="form-group">
 						<label class="col-sm-2 control-label">商品名称</label>
 						<div class="col-sm-5">
@@ -34,7 +33,6 @@
 					<div class="form-group">
 						<label class="col-sm-2 control-label">商品简介</label>
 						<div class="col-sm-5">
-							<!--<input type="text" class="form-control" value="{{editData.goodsBrief}}" readonly="true" />-->
 							<textarea style="margin: 0px; width: 452px; height: 84px;" readonly="true">{{editData.goodsBrief}}</textarea>
 						</div>
 					</div>
@@ -70,17 +68,14 @@
 							<a href="http://static.qddata.com.cn/{{editData.goodsImg}}" target="_blank">
 								<img ng-src="http://static.qddata.com.cn/{{editData.goodsImg}}" style="max-width:300px;">
 							</a>
-							<!--<img ng-src="{{editData.goodsImg}}" style="max-width: 300px; max-height: 500px">-->
 						</div>
 					</div>
-
 					<div class="form-group">
 						<label class="col-sm-2 control-label">适用范围</label>
 						<div class="col-sm-5">
 							<input type="text" class="form-control" value="{{editData.trialRange}}" readonly="true"/>
 						</div>
 					</div>
-
 					<div class="form-group">
 						<label class="col-sm-2 control-label">规格及价格</label>
 						<div class="col-sm-5">
@@ -123,52 +118,41 @@
 					<div class="form-group" data-ng-if="editData.goodsType == 0 || editData.goodsType == 1 || editData.goodsType == 2">
 						<label class="col-sm-2 control-label">商品描述</label>
 						<div class="col-sm-5">
-							<!--<input type="text" class="form-control" value="{{editData.goodsDesc}}" readonly="true" />-->
-							<!--<textarea style="margin: 0px; width: 452px; height: 120px;" readonly="true" ng-bind-html="editData.goodsDesc | trustHtml">-->
-							<!--</textarea>-->
 							<p ng-bind-html="editData.goodsDesc | trustHtml"></p>
 						</div>
 					</div>
-
 					<div class="form-group" data-ng-if="editData.goodsType == 0 || editData.goodsType == 1 || editData.goodsType == 2">
 						<label class="col-sm-2 control-label">商品优势</label>
 						<div class="col-sm-5">
-							<!--<input type="text" class="form-control" value="{{editData.goodsDesc}}" readonly="true" />-->
-							<!--<textarea style="margin: 0px; width: 452px; height: 120px;" readonly="true" ng-bind-html="editData.goodsDesc | trustHtml">-->
-							<!--</textarea>-->
 							<p ng-bind-html="editData.goodsAdvantage | trustHtml"></p>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label">售后服务</label>
 						<div class="col-sm-5">
-							<!--<input type="text" class="form-control" value="{{editData.goodsDesc}}" readonly="true" />-->
-							<!--<textarea style="margin: 0px; width: 452px; height: 120px;" readonly="true" ng-bind-html="editData.goodsDesc | trustHtml">-->
-							<!--</textarea>-->
 							<p ng-bind-html="editData.afterSaleService | trustHtml"></p>
 						</div>
 					</div>
 					<div class="form-group" data-ng-if="editData.goodsType == 0 || editData.goodsType == 1">
 						<label class="col-sm-2 control-label">数据样例</label>
 						<div class="col-sm-5">
-							<!--<a href="http://static.qddata.com.cn/{{editData.dataSample}}" target="_blank">-->
-								<!--<img ng-src="http://static.qddata.com.cn/{{editData.dataSample}}" style="max-width:300px;">-->
-							<!--</a>-->
 							<input type="text" class="form-control" value="{{editData.dataSample}}" readonly="true"/>
 						</div>
 					</div>
 					<div class="form-group" data-ng-if="editData.goodsType == 1 || editData.goodsType == 4 || editData.goodsType == 5 || editData.goodsType == 6 || editData.goodsType == 7">
 						<label class="col-sm-2 control-label">应用案例</label>
 						<div class="col-sm-5">
-							<!--<input type="text" class="form-control" value="{{editData.goodsDesc}}" readonly="true" />-->
-							<!--<textarea style="margin: 0px; width: 452px; height: 120px;" readonly="true" ng-bind-html="editData.goodsDesc | trustHtml">-->
-							<!--</textarea>-->
 							<p ng-bind-html="editData.appCase | trustHtml"></p>
 						</div>
 					</div>
-
+					<div class="form-group" data-ng-if="$flag && editData.checkStatus == 0">
+						<div class="col-sm-2"></div>
+						<div class="col-sm-5">
+							<button class="btn btn-primary" data-ng-click="setCurrent(2)">下一步</button>
+						</div>
+					</div>
 				</div>
-				<div data-ng-show="currentS == 2">
+				<div data-ng-show="current == 2">
 					<!-- 线下数据公共数据 -->
 					<div data-ng-if="editData.isOffline == 1">
 						<div class="form-group">
@@ -189,66 +173,30 @@
 								<input type="text" class="form-control" value="{{editData.offLineInfo.concatEmail}}" readonly="true"/>
 							</div>
 						</div>
-						<form class="form-horizontal" role="form" id="goodsCheckForm" name="checkForm" ng-show="operatorFlag == 1">
-							<input type="hidden" id="goodsId" name="goodsId" value="{{editData.goodsId}}"/>
-							<input type="hidden" id="goodsSn" name="goodsSn" value="{{editData.goodsSn}}"/>
-							<input type="hidden" id="goodsName" name="goodsName" value="{{editData.goodsName}}"/>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">审核状态</label>
-								<div class="col-sm-5">
-									<label class="radio-inline">
-										<input type="radio" name="checkStatus" value = "1" checked/>通过
-										<!--id="checkStatus_1" name="checkStatus" value="1" checked-->
-
-									</label>
-									<label class="radio-inline">
-										<input type="radio" name="checkStatus" value = "2" />不通过
-										<!--<input type="radio" id="checkStatus_2" name="checkStatus" value="2"/>不通过-->
-									</label>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">审核意见</label>
-								<div class="col-sm-5">
-									<label>
-              <textarea name="checkContent" id="checkContent"
-						style="margin: 0px; width: 452px; height: 84px;"></textarea>
-									</label>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-sm-2"></div>
-								<div class="col-sm-5">
-									<button class="btn btn-primary" data-ng-click="submitCheck()" ng-disabled="checkForm.$invalid">
-										<span class="glyphicon glyphicon-refresh"></span> 提交审核
-									</button>
-								</div>
-							</div>
-						</form>
 					</div>
 					<!--线上数据-->
 					<div data-ng-if="editData.isOffline == 0">
 						<div data-ng-if="editData.goodsType == 0">
 							<div class="form-group">
-								<label class="col-sm-2 control-label">时间范围</label>
+								<label class="col-sm-2 control-label">时间范围：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.offLineData.timeFrame}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">数据行数</label>
+								<label class="col-sm-2 control-label">数据行数：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.offLineData.dataRows}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">数据容量</label>
+								<label class="col-sm-2 control-label">数据容量：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.offLineData.dataCapacity}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">数据格式</label>
+								<label class="col-sm-2 control-label">数据格式：</label>
 								<div class="col-sm-5">
 									<label class="radio-inline">
 										<input type="radio" ng-checked="editData.offLineData.dataFormat == 0" disabled/>xls/xlsx
@@ -274,7 +222,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">数据来源</label>
+								<label class="col-sm-2 control-label">数据来源：</label>
 								<div class="col-sm-5">
 									<label class="radio-inline">
 										<input type="radio" ng-checked="editData.offLineData.isOnline == 0" disabled/>数据文件
@@ -285,16 +233,15 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">数据包密码</label>
+								<label class="col-sm-2 control-label">数据包密码：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.offLineData.dataPwd}}" readonly="true"/>
 								</div>
 							</div>
-
 						</div>
 						<div data-ng-if="editData.goodsType == 1">
 							<div class="form-group">
-								<label class="col-sm-2 control-label">接口类型</label>
+								<label class="col-sm-2 control-label">接口类型：</label>
 								<div class="col-sm-5">
 									<label class="radio-inline">
 										<input type="radio" value="0" ng-checked="editData.apiInfo.apiType == '0'" readonly="true"/>restful
@@ -305,19 +252,19 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">调用方法名</label>
+								<label class="col-sm-2 control-label">调用方法名：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.apiInfo.invokeMethod}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">接口地址</label>
+								<label class="col-sm-2 control-label">接口地址：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.apiInfo.apiUrl}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">请求方式</label>
+								<label class="col-sm-2 control-label">请求方式：</label>
 								<div class="col-sm-5">
 									<label class="radio-inline">
 										<input type="radio" ng-checked="editData.apiInfo.apiMethod == 'GET' || editData.apiInfo.apiMethod == 'get'" disabled/>GET
@@ -328,19 +275,19 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">请求示例</label>
+								<label class="col-sm-2 control-label">请求示例：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.apiInfo.reqSample}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">接口描述</label>
+								<label class="col-sm-2 control-label">接口描述：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.apiInfo.apiDesc}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">请求参数</label>
+								<label class="col-sm-2 control-label">请求参数：</label>
 								<div class="col-sm-5">
 									<table class="table table-hover">
 										<thead>
@@ -379,7 +326,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">返回参数</label>
+								<label class="col-sm-2 control-label">返回参数：</label>
 								<div class="col-sm-5">
 									<table class="table table-hover">
 										<thead>
@@ -402,7 +349,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">返回示例</label>
+								<label class="col-sm-2 control-label">返回示例：</label>
 								<div class="col-sm-5">
 									<textarea style="margin: 0px; width: 452px; height: 150px;" readonly="true">
 									{{editData.apiInfo.respSample}}
@@ -410,7 +357,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">返回格式</label>
+								<label class="col-sm-2 control-label">返回格式：</label>
 								<div class="col-sm-5">
 									<label class="radio-inline">
 										<input type="radio" ng-checked="editData.apiInfo.respDataFormat == '0'" disabled/>json
@@ -426,65 +373,63 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">资源有效时间:</label>
 								<div class="col-sm-5">
-									<input type="text" class="form-control"  readonly="true"/>
+									<input type="text" class="form-control" readonly="true"/>
 								</div>
 							</div>
-
 							<div class="form-group">
-								<label class="col-sm-2 control-label">编码属性</label>
+								<label class="col-sm-2 control-label">编码属性：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.apiInfo.respDataMapping.codeAttrBean.codeAttr}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">成功</label>
+								<label class="col-sm-2 control-label">成功：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.apiInfo.respDataMapping.codeAttrBean.codeInfoBean.successCode}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">失败</label>
+								<label class="col-sm-2 control-label">失败：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.apiInfo.respDataMapping.codeAttrBean.codeInfoBean.failedCode}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">成功无数据</label>
+								<label class="col-sm-2 control-label">成功无数据：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.apiInfo.respDataMapping.codeAttrBean.codeInfoBean.successNoData}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">信息属性</label>
+								<label class="col-sm-2 control-label">信息属性：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.apiInfo.respDataMapping.infoAttr}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">数据属性</label>
+								<label class="col-sm-2 control-label">数据属性：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.apiInfo.respDataMapping.dataAttr}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">总条数属性</label>
+								<label class="col-sm-2 control-label">总条数属性：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.apiInfo.respDataMapping.totalNumAttr}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">更新频率</label>
+								<label class="col-sm-2 control-label">更新频率：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.apiInfo.updateFreq}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">数据条数/行数</label>
+								<label class="col-sm-2 control-label">数据条数/行数：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.apiInfo.dataNumDivRowNum}}" readonly="true"/>
 								</div>
 							</div>
-
 							<div class="form-group">
 								<label class="col-sm-2 control-label">密钥名称:</label>
 								<div class="col-sm-5">
@@ -500,41 +445,62 @@
 						</div>
 						<div data-ng-if="editData.goodsType == 2">
 							<div class="form-group">
-								<label class="col-sm-2 control-label">模型规则</label></br>
-
-								<div class="form-group">
-									<label class="col-sm-2 control-label">模型类型</label>
-									<div class="col-sm-5">
-										<select disabled>
-											<option value="0" ng-selected="editData.dataModel.modelType == 0">分类</option>
-											<option value="1" ng-selected="editData.dataModel.modelType == 1">回归</option>
-											<option value="2" ng-selected="editData.dataModel.modelType == 2">识别</option>
-											<option value="3" ng-selected="editData.dataModel.modelType == 2">预测</option>
-											<option value="4" ng-selected="editData.dataModel.modelType == 4">聚类</option>
-											<option value="5" ng-selected="editData.dataModel.modelType == 5">时间序列化</option>
-											<option value="6" ng-selected="editData.dataModel.modelType == 6">关联将维</option>
-											<option value="7" ng-selected="editData.dataModel.modelType == 7">优化</option>
-										</select>
-									</div>
-								</div>
-
+								<label class="col-sm-2 control-label">模型类型：</label>
 								<div class="col-sm-5">
-									复杂度：<input type="text" class="form-control" value="{{editData.dataModel.complexity}}" readonly="true"/>
-									成熟度：<input type="text" class="form-control" value="{{editData.dataModel.maturity}}" readonly="true"/>
-									应用经验：<input type="text" class="form-control" value="{{editData.dataModel.aexp}}" readonly="true"/>
-									配套服务：<input type="text" class="form-control" value="{{editData.dataModel.relationServ}}" readonly="true"/>
+									<select disabled>
+										<option value="0" ng-selected="editData.dataModel.modelType == 0">分类
+										</option>
+										<option value="1" ng-selected="editData.dataModel.modelType == 1">回归
+										</option>
+										<option value="2" ng-selected="editData.dataModel.modelType == 2">识别
+										</option>
+										<option value="3" ng-selected="editData.dataModel.modelType == 2">预测
+										</option>
+										<option value="4" ng-selected="editData.dataModel.modelType == 4">聚类
+										</option>
+										<option value="5" ng-selected="editData.dataModel.modelType == 5">时间序列化
+										</option>
+										<option value="6" ng-selected="editData.dataModel.modelType == 6">关联将维
+										</option>
+										<option value="7" ng-selected="editData.dataModel.modelType == 7">优化
+										</option>
+									</select>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">模型规格</label></br>
+								<label class="col-sm-2 control-label">复杂度：</label>
 								<div class="col-sm-5">
-									模型文件：<input type="text" class="form-control" value="{{editData.dataModel.modelFile}}" readonly="true"/>
-									配置文件：<input type="text" class="form-control" value="{{editData.dataModel.configFile}}" readonly="true"/>
-									配置参数：<input type="text" class="form-control" value="{{editData.dataModel.configParams}}" readonly="true"/>
+									<input type="text" class="form-control" value="{{editData.dataModel.complexity}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">联系方式</label></br>
+								<label class="col-sm-2 control-label">成熟度：</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.dataModel.maturity}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">应用经验：</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.dataModel.aexp}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">配套服务：</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.dataModel.relationServ}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">模型规格：</label></br>
+								<div class="col-sm-5">
+									模型文件：<input type="text" class="form-control" value="{{editData.dataModel.modelFile.fileAddress}}" readonly="true"/>
+									配置文件：<input type="text" class="form-control" value="{{editData.dataModel.configFile.fileAddress}}" readonly="true"/>
+									配置参数：<input type="text" class="form-control" value="{{editData.dataModel.paramFile.fileAddress}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">联系方式：</label></br>
 								<div class="col-sm-5">
 									联系姓名：<input type="text" class="form-control" value="{{editData.dataModel.concatInfo.concatName}}" readonly="true"/>
 									联系电话：<input type="text" class="form-control" value="{{editData.dataModel.concatInfo.concatPhone}}" readonly="true"/>
@@ -543,72 +509,70 @@
 							</div>
 						</div>
 						<div data-ng-if="editData.goodsType == 4">
-
 							<div class="form-group">
-								<label class="col-sm-2 control-label">核心功能</label>
+								<label class="col-sm-2 control-label">核心功能：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.atAloneSoftware.coreFunction}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">技术优势</label>
+								<label class="col-sm-2 control-label">技术优势：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.atAloneSoftware.technologicalSuperiority}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">团队优势</label>
+								<label class="col-sm-2 control-label">团队优势：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.atAloneSoftware.teamAdvantage}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">所需环境</label>
+								<label class="col-sm-2 control-label">所需环境：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.atAloneSoftware.desiredEnvironment}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">所需数据</label>
+								<label class="col-sm-2 control-label">所需数据：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.atAloneSoftware.dataNeeded}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">下载地址</label>
+								<label class="col-sm-2 control-label">下载地址：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.atAloneSoftware.dataAddress}}" readonly="true"/>
 								</div>
 							</div>
-
 						</div>
 						<div data-ng-if="editData.goodsType == 5">
 							<div class="form-group">
-								<label class="col-sm-2 control-label">核心功能</label>
+								<label class="col-sm-2 control-label">核心功能：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.atSaaS.coreFunction}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">团队优势</label>
+								<label class="col-sm-2 control-label">团队优势：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.atSaaS.teamAdvantage}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">所需环境</label>
+								<label class="col-sm-2 control-label">所需环境：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.atSaaS.desiredEnvironment}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">所需数据</label>
+								<label class="col-sm-2 control-label">所需数据：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.atSaaS.dataNeeded}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">在线访问地址</label>
+								<label class="col-sm-2 control-label">在线访问地址：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.atSaaS.dataAddress}}" readonly="true"/>
 								</div>
@@ -616,169 +580,186 @@
 						</div>
 						<div data-ng-if="editData.goodsType == 6">
 							<div class="form-group">
-								<label class="col-sm-2 control-label">核心功能</label>
+								<label class="col-sm-2 control-label">核心功能：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.asAloneSoftware.coreFunction}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">技术优势</label>
+								<label class="col-sm-2 control-label">技术优势：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.asAloneSoftware.technologicalSuperiority}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">团队优势</label>
+								<label class="col-sm-2 control-label">团队优势：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.asAloneSoftware.teamAdvantage}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">所需环境</label>
+								<label class="col-sm-2 control-label">所需环境：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.asAloneSoftware.desiredEnvironment}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">所需数据</label>
+								<label class="col-sm-2 control-label">所需数据：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.asAloneSoftware.dataNeeded}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">下载地址</label>
+								<label class="col-sm-2 control-label">下载地址：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.asAloneSoftware.dataAddress}}" readonly="true"/>
 								</div>
 							</div>
-
 						</div>
 						<div data-ng-if="editData.goodsType == 7">
-
 							<div class="form-group">
-								<label class="col-sm-2 control-label">核心功能</label>
+								<label class="col-sm-2 control-label">核心功能：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.asSaaS.coreFunction}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">团队优势</label>
+								<label class="col-sm-2 control-label">团队优势：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.asSaaS.teamAdvantage}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">所需环境</label>
+								<label class="col-sm-2 control-label">所需环境：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.asSaaS.desiredEnvironment}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">所需数据</label>
+								<label class="col-sm-2 control-label">所需数据：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.asSaaS.dataNeeded}}" readonly="true"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">在线访问地址</label>
+								<label class="col-sm-2 control-label">在线访问地址：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" value="{{editData.asSaaS.dataAddress}}" readonly="true"/>
 								</div>
 							</div>
-
 						</div>
-						<div data-ng-if="editData.isOnsale != 2 && editData.goodsType != 1">
-
-							<form class="form-horizontal" role="form" id="goodsCheckForm" name="checkForm" ng-show="operatorFlag == 1">
-								<input type="hidden" id="goodsId" name="goodsId" value="{{editData.goodsId}}"/>
-								<input type="hidden" id="goodsSn" name="goodsSn" value="{{editData.goodsSn}}"/>
-								<input type="hidden" id="goodsName" name="goodsName" value="{{editData.goodsName}}"/>
-								<div class="form-group">
-									<label class="col-sm-2 control-label">审核状态</label>
-									<div class="col-sm-5">
-										<label class="radio-inline">
-											<input type="radio" name="checkStatus" value = "1" checked/>通过
-											<!--id="checkStatus_1" name="checkStatus" value="1" checked-->
-
-										</label>
-										<label class="radio-inline">
-											<input type="radio" name="checkStatus" value = "2" />不通过
-											<!--<input type="radio" id="checkStatus_2" name="checkStatus" value="2"/>不通过-->
-										</label>
-									</div>
+					</div>
+					<div class="form-group" data-ng-if="$flag && editData.goodsType != 1 && editData.checkStatus == 0">
+						<form class="form-horizontal" role="form" id="goodsCheckForm" name="checkForm">
+							<input type="hidden" id="goodsId" name="goodsId" value="{{editData.goodsId}}"/>
+							<input type="hidden" id="goodsSn" name="goodsSn" value="{{editData.goodsSn}}"/>
+							<input type="hidden" id="goodsName" name="goodsName" value="{{editData.goodsName}}"/>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">审核状态：</label>
+								<div class="col-sm-5">
+									<label class="radio-inline">
+										<input type="radio" name="checkStatus" value="1" checked/>通过
+										<!--id="checkStatus_1" name="checkStatus" value="1" checked-->
+									</label>
+									<label class="radio-inline">
+										<input type="radio" name="checkStatus" value="2"/>不通过
+										<!--<input type="radio" id="checkStatus_2" name="checkStatus" value="2"/>不通过-->
+									</label>
 								</div>
-								<div class="form-group">
-									<label class="col-sm-2 control-label">审核意见</label>
-									<div class="col-sm-5">
-										<label>
-              <textarea name="checkContent" id="checkContent"
-						style="margin: 0px; width: 452px; height: 84px;"></textarea>
-										</label>
-									</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">审核意见：</label>
+								<div class="col-sm-5">
+									<label>
+										<textarea name="checkContent" id="checkContent" style="margin: 0px; width: 452px; height: 84px;"></textarea>
+									</label>
 								</div>
-								<div class="form-group">
-									<div class="col-sm-2"></div>
-									<div class="col-sm-5">
-										<button class="btn btn-primary" data-ng-click="submitCheck()" ng-disabled="checkForm.$invalid">
-											<span class="glyphicon glyphicon-refresh"></span> 提交审核
-										</button>
-									</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-2"></div>
+								<div class="col-sm-5">
+									<button class="btn btn-primary" data-ng-click="setCurrent(1)">上一步</button>
+									<button class="btn btn-primary" data-ng-click="submitCheck()" ng-disabled="checkForm.$invalid">
+										<span class="glyphicon glyphicon-refresh"></span> 提交审核
+									</button>
 								</div>
-							</form>
+							</div>
+						</form>
+					</div>
+					<div class="form-group" data-ng-if="$flag && editData.checkStatus == 0 &&  editData.goodsType == 1">
+						<div class="col-sm-2"></div>
+						<div class="col-sm-5">
+							<button class="btn btn-primary" data-ng-click="setCurrent(1)">上一步</button>
+							<button class="btn btn-primary" data-ng-click="setCurrent(3)">下一步</button>
 						</div>
 					</div>
 				</div>
-				<div data-ng-show="currentS == 3 && editData.goodsType == 1">
+				<div data-ng-show="current == 3 && editData.goodsType == 1">
 					<div data-ng-if="editData.isOffline == 0">
 						<div data-ng-if="editData.goodsType == 1" class="api-info-box">
 							<div class="form-group">
-								<label class="col-sm-2 control-label">接口类型</label>
+								<label class="col-sm-2 control-label">接口类型：</label>
 								<div class="col-sm-5">
-									<label class="radio-inline">
-										<input name="apiType"  value='0' type="radio" data-ng-model="addData.apiInfoBean.apiType" />restful
+									<label class="radio-inline" data-ng-if="$flag">
+										<input name="apiType" value='0' type="radio" data-ng-model="packageApiInfo.apiType"/>restful
 									</label>
-									<label class="radio-inline">
-										<input name="apiType" value='1' type="radio" data-ng-model="addData.apiInfoBean.apiType" />webservice
+									<label class="radio-inline" data-ng-if="!$flag">
+										<input name="apiType" value='0' type="radio" disabled ng-checked="packageApiInfo.apiType"/>restful
 									</label>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">调用方法名</label>
-								<div class="col-sm-5">
-									<input type="text" name="invokeMethod" class="form-control" data-ng-model="addData.apiInfoBean.invokeMethod"/>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">接口地址</label>
-								<div class="col-sm-5">
-									<input type="text" name="apiUrl" class="form-control" data-ng-model="addData.apiInfoBean.apiUrl"/>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">请求方式</label>
-								<div class="col-sm-5">
-									<label class="radio-inline">
-										<input type="radio" name="apiMethod" data-ng-model="addData.apiInfoBean.apiMethod" value="GET"/>GET
+									<label class="radio-inline" data-ng-if="$flag">
+										<input name="apiType" value='1' type="radio" data-ng-model="packageApiInfo.apiType"/>webservice
 									</label>
-									<label class="radio-inline">
-										<input type="radio" name="apiMethod" data-ng-model="addData.apiInfoBean.apiMethod" value="POST"/>POST
+									<label class="radio-inline" data-ng-if="!$flag">
+										<input name="apiType" value='1' type="radio" disabled ng-checked="packageApiInfo.apiType"/>webservice
 									</label>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">请求示例</label>
+								<label class="col-sm-2 control-label">调用方法名：</label>
 								<div class="col-sm-5">
-									<input type="text" name="reqSample" class="form-control" data-ng-model="addData.apiInfoBean.reqSample"/>
+									<input type="text" name="invokeMethod" class="form-control" data-ng-if="$flag" data-ng-model="packageApiInfo.invokeMethod"/>
+									<input type="text" name="invokeMethod" class="form-control" data-ng-if="!$flag" readonly value="{{packageApiInfo.invokeMethod}}"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">接口描述</label>
+								<label class="col-sm-2 control-label">接口地址：</label>
 								<div class="col-sm-5">
-									<input type="text" class="form-control" name="apiDesc" data-ng-model="addData.apiInfoBean.apiDesc" disabled/>
+									<input type="text" name="apiUrl" class="form-control" data-ng-if="$flag" data-ng-model="packageApiInfo.apiUrl"/>
+									<input type="text" name="apiUrl" class="form-control" data-ng-if="!$flag" disabled data-ng-model="packageApiInfo.apiUrl"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">请求参数</label>
+								<label class="col-sm-2 control-label">请求方式：</label>
+								<div class="col-sm-5">
+									<label class="radio-inline" data-ng-if="$flag">
+										<input type="radio" name="apiMethod" data-ng-model="packageApiInfo.apiMethod" value="GET"/>GET
+									</label>
+									<label class="radio-inline" data-ng-if="!$flag">
+										<input type="radio" name="apiMethod" ng-checked="packageApiInfo.apiMethod == 'get' || packageApiInfo.apiMethod == 'GET'" disabled value="GET"/>GET
+									</label>
+									<label class="radio-inline" data-ng-if="$flag">
+										<input type="radio" name="apiMethod" data-ng-model="packageApiInfo.apiMethod" value="POST"/>POST
+									</label>
+									<label class="radio-inline" data-ng-if="!$flag">
+										<input type="radio" name="apiMethod" ng-checked="packageApiInfo.apiMethod == 'post' || packageApiInfo.apiMethod == 'POST' " disabled value="POST"/>POST
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">请求示例：</label>
+								<div class="col-sm-5">
+									<input type="text" name="reqSample" data-ng-if="$flag" class="form-control" data-ng-model="packageApiInfo.reqSample"/>
+									<input type="text" name="reqSample" data-ng-if="!$flag" class="form-control" disabled value="packageApiInfo.reqSample"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">接口描述：</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" name="apiDesc" data-ng-model="packageApiInfo.apiDesc" disabled/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">请求参数：</label>
 								<div class="col-sm-8">
 									<table class="table table-hover">
 										<thead>
@@ -793,30 +774,30 @@
 										</tr>
 										</thead>
 										<tbody>
-										<tr data-ng-repeat="req in editData.packageApiInfo.reqParamList" class="">
+										<tr data-ng-repeat="req in packageApiInfo.reqParamList" class="">
 											<td>
-												<input type="text" name="fieldName" value="{{req.fieldName}}">
+												<input type="text" name="fieldName" value="{{req.fieldName}}" disabled>
 											</td>
 											<td>
-												<select name="fieldType">
+												<select name="fieldType" disabled>
 													<option ng-selected="req.fieldType == 'string'">string</option>
 													<option ng-selected="req.fieldType == 'int'">int</option>
 												</select>
 											</td>
 											<td>
-												<input name="fieldDefault" type="text" value="{{req.fieldDefault}}">
+												<input name="fieldDefault" type="text" value="{{req.fieldDefault}}" disabled>
 											</td>
 											<td>
-												<select name="isMust">
+												<select name="isMust" disabled>
 													<option ng-selected="req.isMust == 0">否</option>
 													<option ng-selected="req.isMust == 1">是</option>
 												</select>
 											</td>
 											<td>
-												<input name="fieldSample" type="text" value="{{req.fieldSample}}">
+												<input name="fieldSample" type="text" value="{{req.fieldSample}}" disabled>
 											</td>
 											<td>
-												<input name="describle" type="text" value="{{req.describle}}">
+												<input name="describle" type="text" value="{{req.describle}}" disabled>
 											</td>
 											<td>
 												<span class="column-text">-</span>
@@ -827,7 +808,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">返回参数</label>
+								<label class="col-sm-2 control-label">返回参数：</label>
 								<div class="col-sm-8">
 									<table class="table table-hover">
 										<thead>
@@ -837,7 +818,7 @@
 										</tr>
 										</thead>
 										<tbody>
-										<tr data-ng-repeat="req in editData.packageApiInfo.respParamList" class="">
+										<tr data-ng-repeat="req in packageApiInfo.respParamList" class="">
 											<td>
 												<span class="" ng-bind="req.fieldName"></span>
 											</td>
@@ -850,100 +831,84 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">返回示例</label>
+								<label class="col-sm-2 control-label">返回示例：</label>
 								<div class="col-sm-5">
-									<textarea style="margin: 0px; width: 452px; height: 150px;" name="respSample" data-ng-model="addData.apiInfoBean.respSample">
-									</textarea>
+									<textarea style="margin: 0px; width: 452px; height: 150px;" data-ng-if="$flag" name="respSample" data-ng-model="packageApiInfo.respSample"></textarea>
+									<textarea style="margin: 0px; width: 452px; height: 150px;" data-ng-if="!$flag" disabled name="respSample" data-ng-model="packageApiInfo.respSample"></textarea>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">返回格式</label>
+								<label class="col-sm-2 control-label">返回格式：</label>
 								<div class="col-sm-5">
-									<label class="radio-inline">
-										<input name="respDataFormat" value='0' type="radio" ng-checked="editData.packageApiInfo.respDataFormat == '0'"/>json
+									<label class="radio-inline" data-ng-if="$flag">
+										<input name="respDataFormat" value='0' type="radio" ng-checked="packageApiInfo.respDataFormat == '0'"/>json
 									</label>
-									<label class="radio-inline">
-										<input name="respDataFormat" value='1' type="radio" ng-checked="editData.packageApiInfo.respDataFormat == '1'"/>xml
+									<label class="radio-inline" data-ng-if="$flag">
+										<input name="respDataFormat" value='1' type="radio" ng-checked="packageApiInfo.respDataFormat == '1'"/>xml
 									</label>
-									<label class="radio-inline">
-										<input name="respDataFormat" value='2' type="radio" ng-checked="editData.packageApiInfo.respDataFormat == '2'"/>text
+									<label class="radio-inline" data-ng-if="$flag">
+										<input name="respDataFormat" value='2' type="radio" ng-checked="packageApiInfo.respDataFormat == '2'"/>text
+									</label>
+									<label class="radio-inline" data-ng-if="!$flag">
+										<input name="respDataFormat" value='0' disabled type="radio" ng-checked="packageApiInfo.respDataFormat == '0'"/>json
+									</label>
+									<label class="radio-inline" data-ng-if="!$flag">
+										<input name="respDataFormat" value='1' disabled type="radio" ng-checked="packageApiInfo.respDataFormat == '1'"/>xml
+									</label>
+									<label class="radio-inline" data-ng-if="!$flag">
+										<input name="respDataFormat" value='2' disabled type="radio" ng-checked="packageApiInfo.respDataFormat == '2'"/>text
 									</label>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">资源有效时间:</label>
+								<label class="col-sm-2 control-label">资源有效时间：</label>
 								<div class="col-sm-5">
 									<input type="text" name="" class="form-control"/>
 								</div>
 							</div>
 						</div>
-						<form class="form-horizontal" role="form" id="goodsCheckForm" name="checkForm" ng-show="operatorFlag == 1">
-							<input type="hidden" id="goodsId" name="goodsId" value="{{editData.goodsId}}"/>
-							<input type="hidden" id="goodsSn" name="goodsSn" value="{{editData.goodsSn}}"/>
-							<input type="hidden" id="goodsName" name="goodsName" value="{{editData.goodsName}}"/>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">审核状态</label>
-								<div class="col-sm-5">
-									<label class="radio-inline">
-										<input type="radio" name="checkStatus" value = "1" checked/>通过
-										<!--id="checkStatus_1" name="checkStatus" value="1" checked-->
-
-									</label>
-									<label class="radio-inline">
-										<input type="radio" name="checkStatus" value = "2" />不通过
-										<!--<input type="radio" id="checkStatus_2" name="checkStatus" value="2"/>不通过-->
-									</label>
+						<div class="form-group" data-ng-if="$flag && editData.goodsType == 1 && editData.checkStatus == 0">
+							<form class="form-horizontal" role="form" id="goodsCheckForm" name="checkForm">
+								<input type="hidden" id="goodsId" name="goodsId" value="{{editData.goodsId}}"/>
+								<input type="hidden" id="goodsSn" name="goodsSn" value="{{editData.goodsSn}}"/>
+								<input type="hidden" id="goodsName" name="goodsName" value="{{editData.goodsName}}"/>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">审核状态：</label>
+									<div class="col-sm-5">
+										<label class="radio-inline">
+											<input type="radio" name="checkStatus" value="1" checked/>通过
+											<!--id="checkStatus_1" name="checkStatus" value="1" checked-->
+										</label>
+										<label class="radio-inline">
+											<input type="radio" name="checkStatus" value="2"/>不通过
+											<!--<input type="radio" id="checkStatus_2" name="checkStatus" value="2"/>不通过-->
+										</label>
+									</div>
 								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">审核意见</label>
-								<div class="col-sm-5">
-									<label>
-              <textarea name="checkContent" id="checkContent"
-						style="margin: 0px; width: 452px; height: 84px;"></textarea>
-									</label>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">审核意见：</label>
+									<div class="col-sm-5">
+										<label>
+											<textarea name="checkContent" id="checkContent" style="margin: 0px; width: 452px; height: 84px;"></textarea>
+										</label>
+									</div>
 								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-sm-2"></div>
-								<div class="col-sm-5">
-									<button class="btn btn-primary" data-ng-click="submitCheck()" ng-disabled="checkForm.$invalid">
-										<span class="glyphicon glyphicon-refresh"></span> 提交审核
-									</button>
+								<div class="form-group">
+									<div class="col-sm-2"></div>
+									<div class="col-sm-5">
+										<button class="btn btn-primary" data-ng-click="setCurrent(2)">
+											上一步
+										</button>
+										<button class="btn btn-primary" data-ng-click="submitCheck()" ng-disabled="checkForm.$invalid">
+											<span class="glyphicon glyphicon-refresh"></span> 提交审核
+										</button>
+									</div>
 								</div>
-							</div>
-						</form>
+							</form>
+						</div>
 					</div>
 				</div>
 			</fieldset>
 		</form>
-		<div data-ng-if="editData.isOnsale != 2">
-
-			<form class="form-horizontal" role="form" id="forceOffForm" name="forceOffForm" ng-show="operatorFlag == 2">
-				<input type="hidden" name="goodsId" value="{{editData.goodsId}}"/>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">强制下架理由</label>
-					<div class="col-sm-5">
-						<label>
-							<textarea name="offReason"
-									  data-ng-model="offReason"
-									  ng-maxlength="255"
-									  style="margin: 0px; width: 452px; height: 84px;"
-									  placeholder="255字以内"
-									  required>
-							</textarea>
-						</label>
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="col-sm-2"></div>
-					<div class="col-sm-5">
-						<button class="btn btn-primary" data-ng-click="forceOff()" ng-disabled="forceOffForm.$invalid">
-							<span class="glyphicon glyphicon-refresh"></span> 强制下架
-						</button>
-					</div>
-				</div>
-			</form>
-		</div>
 	</div>
 </div>

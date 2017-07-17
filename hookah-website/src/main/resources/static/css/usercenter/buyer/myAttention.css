@@ -3,7 +3,7 @@
     margin-top: 10px;
     width: 978px;
     background-color: #fff;
-    padding: 0px 15px 0px 15px;
+    padding: 0 15px 0 15px;
     border: 1px solid #E9E9E9;
     margin-left: 10px;
 }
@@ -39,29 +39,33 @@
     width: 230px;
     float: left;
     color: black;
-    background-color: white;
+    background-color: #fcfcfc;
     border: 1px solid #E5E5E5;
     margin: 10px 10px 0 0;
 }
 
 .order-list ul li .item-top {
-    display: block;
+    display: flex;
+    padding: 18px 0;
+    margin: 0 18px;
+    
 }
 .order-list ul li .item-top p {
-    text-align: center;
+    /*text-align: center;*/
     padding: 4px 0;
 }
-.order-list ul li .item-top .goods-img img {
-    width: 70px;
+.order-list ul li .item-top .goods-img  {
+    width: 60px;
     height: 60px;
-    margin-top: 18px;
+    overflow: hidden;
+    background-color: #ccc;
 }
 .order-list ul li .item-top .goods-name {
-    font-size: 14px;
+    margin-left:12px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    padding: 0 30px 0 20px;
+    font-size: 16px;
 }
 .order-list ul li .item-top .goods-brief {
     padding: 0 10px 3px;
@@ -80,23 +84,31 @@
     color: #B2B2B2;
 }
 .order-list ul li .item-down span label {
-    color: black;
+    color: #666;
     padding-right: 10px;
 }
-.order-list ul li .item-down .goods-price span {
-    color: #fdb868;
-    font-size: 18px;
+.order-list ul li   .goods-price  {    font-size: 14px; }
+.order-list ul li   .goods-price span {
+    color: #f53839;
+    
 }
 .order-list ul li .cancel{
-    height: 30px;
-    line-height: 30px;
+    margin: 0 18px;
+    height: 34px;
+    line-height: 34px;
     text-align: center;
-    background: #f9f9f9;
     display: block;
+    font-size: 14px;
+    border-top: 1px dashed #ccc;
+    
 }
 .order-list ul li .cancel:hover{
+    margin: 0;
     cursor: pointer;
-    color:#237DE7;
+    color:#fff;
+    background-color: #f17d17;
+    border-top: 1px solid #e5e5e5;
+    
 }
 
 

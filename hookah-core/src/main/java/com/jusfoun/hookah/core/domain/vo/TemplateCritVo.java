@@ -16,8 +16,8 @@ public class TemplateCritVo extends MessageTemplate implements Serializable {
     private Integer pageSize = HookahConstants.PAGE_SIZE;
     private String orderField;
     private String order;
-    private Date startTime;
-    private Date endTime;
+    private String startTime;
+    private String endTime;
     private String keywords;
 
     public String getKeywords() {
@@ -28,19 +28,19 @@ public class TemplateCritVo extends MessageTemplate implements Serializable {
         this.keywords = keywords;
     }
 
-    public Date getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 

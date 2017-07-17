@@ -12,6 +12,7 @@ import com.jusfoun.hookah.core.domain.vo.MessageSendInfoVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.generic.OrderBy;
+import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.MessageSendInfoService;
@@ -134,18 +135,26 @@ public class MessageSendInfoServiceImpl extends GenericServiceImpl<MessageSendIn
             if(Objects.nonNull(messageCritVo.getSendType())){
                 filters.add(Condition.eq("sendType",messageCritVo.getSendType()));
             }
-            if (Objects.nonNull(messageCritVo.getStartTime())) {
-                filters.add(Condition.ge("sendTime", messageCritVo.getStartTime()));
-            }
 //            if (Objects.nonNull(messageCritVo.getSendType())) {
 //                filters.add(Condition.le("sendTime", messageCritVo.getEndTime()));
 //            }
+
+            if (Objects.nonNull(messageCritVo.getStartTime())) {
+//                filters.add(Condition.ge("sendTime", messageCritVo.getStartTime()));
+                filters.add(Condition.ge("sendTime", DateUtils.getDate(messageCritVo.getStartTime(),DateUtils.DEFAULT_DATE_TIME_FORMAT)));
+            }
+
             if (Objects.nonNull(messageCritVo.getEndTime())) {
-                filters.add(Condition.le("sendTime", messageCritVo.getEndTime()));
+//                filters.add(Condition.le("sendTime", messageCritVo.getEndTime()));
+                filters.add(Condition.le("sendTime", DateUtils.getDate(messageCritVo.getEndTime(),DateUtils.DEFAULT_DATE_TIME_FORMAT)));
             }
+
+
+
             if (Objects.nonNull(messageCritVo.getKeywords())) {
-                filters.add(Condition.like("sendHeader", messageCritVo.getKeywords()));
+               filters.add(Condition.like("sendHeader", messageCritVo.getKeywords()));
             }
+
             if(Objects.nonNull(messageCritVo.getEventType()) && !"-1".equals(messageCritVo.getEventType())){
                 filters.add(Condition.eq("eventType", messageCritVo.getEventType()));
             }

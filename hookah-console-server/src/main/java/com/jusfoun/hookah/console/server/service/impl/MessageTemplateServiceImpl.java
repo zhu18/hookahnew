@@ -11,6 +11,7 @@ import com.jusfoun.hookah.core.domain.vo.TemplateCritVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.generic.OrderBy;
+import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.MessageTemplateService;
@@ -63,12 +64,15 @@ public class MessageTemplateServiceImpl extends GenericServiceImpl<MessageTempla
             if(Objects.nonNull(templateCritVo.getEventType()) && !"-1".equals(templateCritVo.getEventType())){
                 filters.add(Condition.like("eventType",templateCritVo.getEventType()));
             }
+
+
             if (Objects.nonNull(templateCritVo.getStartTime())) {
-                filters.add(Condition.ge("updateTime", templateCritVo.getStartTime()));
+                filters.add(Condition.ge("updateTime", DateUtils.getDate(templateCritVo.getStartTime(),DateUtils.DEFAULT_DATE_TIME_FORMAT)));
             }
             if (Objects.nonNull(templateCritVo.getEndTime())) {
-                filters.add(Condition.le("updateTime", templateCritVo.getEndTime()));
+                filters.add(Condition.le("updateTime", DateUtils.getDate(templateCritVo.getEndTime(),DateUtils.DEFAULT_DATE_TIME_FORMAT)));
             }
+
             List<OrderBy> orderBys = new ArrayList<OrderBy>();
             orderBys.add(OrderBy.desc("updateTime"));
             Pagination pagination = this.getListInPage(templateCritVo.getPageNumber(),templateCritVo.getPageSize(),filters,orderBys);

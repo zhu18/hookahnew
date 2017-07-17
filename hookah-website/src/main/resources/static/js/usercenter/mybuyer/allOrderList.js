@@ -35,6 +35,9 @@ function loadPageData(data) {
                   case(2):
                       mMat = '年';
                       break;
+                  case(3):
+                      mMat = '套';
+                      break;
               }
               var catidS = (goods[ii].catId).substring(0, 3);
               var isOfflineInfo='';

@@ -45,7 +45,7 @@ public class CertificationController extends BaseController{
     @Resource
     UserCheckService userCheckService;
 
-    /*@Resource
+   /* @Resource
     PayAccountService payAccountService;*/
     
     //用户实名认证信息
