@@ -98,6 +98,21 @@ public class UserCenterController {
     public String accountInformation() {
         return "usercenter/userInfo/accountInformation";
     }
+    //       我要成为供应商第一步
+    @RequestMapping(value = "/becomingSupplierStep1", method = RequestMethod.GET)
+    public String becomingSupplierStep1() {
+        return "usercenter/userInfo/becomingSupplierStep1";
+    }
+    //       我要成为供应商第二步
+    @RequestMapping(value = "/becomingSupplierStep2", method = RequestMethod.GET)
+    public String becomingSupplierStep2() {
+        return "usercenter/userInfo/becomingSupplierStep2";
+    }
+    //       我要成为供应商第三步
+    @RequestMapping(value = "/becomingSupplierStep3", method = RequestMethod.GET)
+    public String becomingSupplierStep3() {
+        return "usercenter/userInfo/becomingSupplierStep3";
+    }
     //       实名认证
     @RequestMapping(value = "/nameAuthentication", method = RequestMethod.GET)
     public String nameAuthentication() {

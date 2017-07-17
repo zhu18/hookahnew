@@ -53,7 +53,7 @@ app.run(function ($rootScope, $state) {
       "showChild": true,
       "childs": [
           {
-            "title":"邮件记录",
+            "title":"模板记录",
             "url":"message.template.search"
           },
           {

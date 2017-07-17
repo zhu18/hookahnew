@@ -4,11 +4,11 @@ var head = {
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/userInfo.css">
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
 <script type="text/javascript">
-//	var pagePath = '/order/goodsList';
-//	var pageType = 'get';
-//	var dataParm = {};
-//	dataParm.pageNumber = 1;
-//	dataParm.pageSize = 6;
+	var pagePath = '/order/goodsList';
+	var pageType = 'get';
+	var dataParm = {};
+	dataParm.pageNumber = 1;
+	dataParm.pageSize = 8;
 </script>
 <%};%>
 <%
@@ -27,9 +27,21 @@ var htmlPart = {
 						<div class="user-info-left grid-left">
 							<img width="90" src="${user.headImg}" alt="">
 							<div class="icon-box">
-								<span></span>
-								<span></span>
-								<span></span>
+								<%if(isNotEmpty(userCur.userName)){%>
+								<span class="fa fa-mobile-phone font-size-18 color-blue"></span>
+								<%}else{%>
+								<span class="fa fa-mobile-phone font-size-18"></span>
+								<%}%>
+								<%if(isNotEmpty(userCur.mobile)){%>
+								<span class="fa fa-envelope-o font-size-18 color-blue"></span>
+								<%}else{%>
+								<span class="fa fa-envelope-o font-size-18"></span>
+								<%}%>
+								<%if(isNotEmpty(userCur.mobile)){%>
+								<span class="fa fa-id-card-o font-size-18 "></span>
+								<%}else{%>
+								<span class="fa fa-id-card-o font-size-18"></span>
+								<%}%>
 							</div>
 						</div>
 						<div class="user-info-right grid-left">
@@ -51,9 +63,9 @@ var htmlPart = {
 							<%}else if(userCur.userType == 7){%>
 							<p class="usertype color-red">单位认证审核失败</p>
 							<%}%>
-							<p class="info">用户账号：<span> nihih</span></p>
-							<p class="info">手机号码：<span> 18769883892</span></p>
-							<p class="info">电子邮箱：<span> 409071865@qq.com</span></p>
+							<p class="info">用户账号：<span> ${userCur.userName}</span></p>
+							<p class="info">手机号码：<span> ${userCur.mobile}</span></p>
+							<p class="info">电子邮箱：<span> ${userCur.email}</span></p>
 						</div>
 						<!--<a id="enterForum" href="javascript:void(0);"><span class="fa fa-twitch"></span>进入论坛</a>-->
 					</div>
@@ -90,6 +102,9 @@ var htmlPart = {
 						<div class="auth-introduce">
 							<p>
 								<span class="font-size-18">您的单位会员认证审核<span class="color-green">已通过</span>！</span>
+							</p>
+							<p class="margin-top-10">
+								<a href="/usercenter/becomingSupplierStep1" class="a-color-blue">我要成为供应商</a>
 							</p>
 						</div>
 						<%}else if(userCur.userType == 5){%>
@@ -129,102 +144,7 @@ var htmlPart = {
 						<h4 class="grid-left my-order" data-tab-id="tow">我上架的商品</h4>
 					</div>
 					<div class="my-order-list-one clearfix">
-						<div class="order-list-item grid-left">
-							<div class="order-list-top clearfix">
-								<img class="grid-left" src="/static/images/list01.png" alt="">
-								<div class="order-list-top-info grid-left">
-									<h4>银行卡类别查询</h4>
-									<p>价格：<span>￥200</span></p>
-								</div>
-							</div>
-							<div class="order-list-down">购买时间: <span class="buy-time">2013-09-01 16:12:00 </span></div>
 
-
-						</div>
-						<div class="order-list-item grid-left">
-							<div class="order-list-top clearfix">
-								<img class="grid-left" src="/static/images/list01.png" alt="">
-								<div class="order-list-top-info grid-left">
-									<h4>银行卡类别查询</h4>
-									<p>价格：<span>￥200</span></p>
-								</div>
-							</div>
-							<div class="order-list-down">购买时间: <span class="buy-time">2013-09-01 16:12:00 </span></div>
-
-
-						</div>
-						<div class="order-list-item grid-left">
-							<div class="order-list-top clearfix">
-								<img class="grid-left" src="/static/images/list01.png" alt="">
-								<div class="order-list-top-info grid-left">
-									<h4>银行卡类别查询</h4>
-									<p>价格：<span>￥200</span></p>
-								</div>
-							</div>
-							<div class="order-list-down">购买时间: <span class="buy-time">2013-09-01 16:12:00 </span></div>
-
-
-						</div>
-						<div class="order-list-item grid-left">
-							<div class="order-list-top clearfix">
-								<img class="grid-left" src="/static/images/list01.png" alt="">
-								<div class="order-list-top-info grid-left">
-									<h4>银行卡类别查询</h4>
-									<p>价格：<span>￥200</span></p>
-								</div>
-							</div>
-							<div class="order-list-down">购买时间: <span class="buy-time">2013-09-01 16:12:00 </span></div>
-
-
-						</div>
-						<div class="order-list-item grid-left">
-							<div class="order-list-top clearfix">
-								<img class="grid-left" src="/static/images/list01.png" alt="">
-								<div class="order-list-top-info grid-left">
-									<h4>银行卡类别查询</h4>
-									<p>价格：<span>￥200</span></p>
-								</div>
-							</div>
-							<div class="order-list-down">购买时间: <span class="buy-time">2013-09-01 16:12:00 </span></div>
-
-
-						</div>
-						<div class="order-list-item grid-left">
-							<div class="order-list-top clearfix">
-								<img class="grid-left" src="/static/images/list01.png" alt="">
-								<div class="order-list-top-info grid-left">
-									<h4>银行卡类别查询</h4>
-									<p>价格：<span>￥200</span></p>
-								</div>
-							</div>
-							<div class="order-list-down">购买时间: <span class="buy-time">2013-09-01 16:12:00 </span></div>
-
-
-						</div>
-						<div class="order-list-item grid-left">
-							<div class="order-list-top clearfix">
-								<img class="grid-left" src="/static/images/list01.png" alt="">
-								<div class="order-list-top-info grid-left">
-									<h4>银行卡类别查询</h4>
-									<p>价格：<span>￥200</span></p>
-								</div>
-							</div>
-							<div class="order-list-down">购买时间: <span class="buy-time">2013-09-01 16:12:00 </span></div>
-
-
-						</div>
-						<div class="order-list-item grid-left">
-							<div class="order-list-top clearfix">
-								<img class="grid-left" src="/static/images/list01.png" alt="">
-								<div class="order-list-top-info grid-left">
-									<h4>银行卡类别查询</h4>
-									<p>价格：<span>￥200</span></p>
-								</div>
-							</div>
-							<div class="order-list-down">购买时间: <span class="buy-time">2013-09-01 16:12:00 </span></div>
-
-
-						</div>
 					</div>
 					<div class="my-order-list-two clearfix">
 						<div class="order-list-item grid-left">
@@ -238,30 +158,6 @@ var htmlPart = {
 							<div class="order-list-down">购买时间: <span class="buy-time">2013-09-01 16:12:00 </span></div>
 						</div>
 					</div>
-					<!--<script>-->
-					<!--function loadPageData(data) {-->
-					<!--if (data.data.list.length > 0) {-->
-					<!--var list = data.data.list;-->
-					<!--var html = '';-->
-					<!--for (var i = 0; i < list.length; i++) {-->
-					<!--html += '<div class="order-info grid-left">';-->
-					<!--html += '<div class="grid-left img-box">';-->
-					<!--html += '<img src="' + list[i].goodsImg + '" alt="" width="50px">';-->
-					<!--html += '</div>';-->
-					<!--html += '<div class=" grid-left detail-info">';-->
-					<!--html += '<h4>' + list[i].goodsName + '</h4>';-->
-					<!--html += '<p class="application-time">申请时间: <span class="app-time">' + list[i].payTime + '</span></p>';-->
-					<!--html += '<a target="_blank" class="read" href="${host.website}/exchange/orderEndDetails?id=' + list[i].goodsId + '&orderSn=' + list[i].orderSn + '&format='+list[i].goodsFormat+'"　>立即查看</a>';-->
-					<!--html += '</div>';-->
-					<!--html += '</div>';-->
-					<!--}-->
-					<!--$('.my-order-list').html(html);-->
-					<!--} else {-->
-					<!--$('.my-order-list').html('<tr class="noData"><td colspan="5" style="width:978px; text-align:center;line-height:100px;">暂无已购买数据！</td></tr>');-->
-					<!--}-->
-
-					<!--}-->
-					<!--</script>-->
 					<%include("/layout/pageaction.html"){} %>
 				</div>
 		</div>
@@ -329,19 +225,4 @@ var htmlPart = {
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
-<script>
-	$(".recharge").click(function () {
-		window.location.href = '/usercenter/recharge';
-	});
-    $(".my-order-list-two").hide();
-	$(".basic-information-down .header h4").on("click",function () {
-		$(this).addClass("active").siblings().removeClass("active");
-		if($(this).attr('data-tab-id')=="one"){
-		    $(".my-order-list-one").show();
-            $(".my-order-list-two").hide();
-		}else {
-            $(".my-order-list-one").hide();
-            $(".my-order-list-two").show();
-		}
-    })
-</script>
+<script type="text/javascript" src="/static/js/usercenter/userInfo/userInfo.js"></script>

@@ -49,7 +49,7 @@ public class TemplateCritVo extends MessageTemplate implements Serializable {
     }
 
     public void setPageNumber(Integer pageNumber) {
-        pageNumber = pageNumber;
+        this.pageNumber = pageNumber;
     }
 
     public Integer getPageSize() {
@@ -57,7 +57,7 @@ public class TemplateCritVo extends MessageTemplate implements Serializable {
     }
 
     public void setPageSize(Integer pageSize) {
-        pageSize = pageSize;
+        this.pageSize = pageSize;
     }
 
     public String getOrderField() {
