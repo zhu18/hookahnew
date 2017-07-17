@@ -21,21 +21,18 @@ function loadPageData(data){
                     break;
 			}
             html += '<li>';
-			html += '<a target="_blank" class="item-top" href="/exchange/details?id='+list[i].goodsId+'">';
-			html += '<p class="goods-img">';
-			html += '<img src="'+list[i].goodsImg+'" alt="">';
-			html += '</p>';
-			html += '<p class="goods-name">'+list[i].goodsName+'</p>';
-			html += '<p class="goods-brief">'+list[i].goodsBrief+'</p>';
+			html += '<a target="_blank" title="'+list[i].goodsName+'" class="item-top" href="/exchange/details?id='+list[i].goodsId+'">';
+			html += '<div class="goods-img">\
+                 <img src="http://static.qddata.com.cn/'+list[i].goodsImg+'" alt="">\
+                </div>';
+			html += '<div class="goods-name">'+list[i].goodsName+'<div class="goods-price">价格：<span>￥'+Number(list[i].shopPrice/100)+'/'+mMat+'</span></div></div>';
+			// html += '<p class="goods-brief">'+list[i].goodsBrief+'</p>';
 			html += '</a>';
-			html += '<div class="item-down clearfix">';
-			html += '<span class="grid-left goods-price">￥<span>'+Number(list[i].shopPrice/100)+'</span>/'+mMat;
-			html += '</span>';
+			html += '';
 			if(list[i].isOnSale == 0){
 				html +='<span class="color-red">该商品已下架</span>';
 			}
 			// html += '<a class="grid-right" href="javascript:addCart(\''+list[i].goodsId+'\','+list[i].shopFormat+','+list[i].shopNumber+');">加入购物车</a>';
-			html += '</div>';
 			html += '<span class="cancel" onclick="cancelAttention(\''+list[i].goodsId+'\')">取消关注</span>';
 			html += '</li>';
         }
