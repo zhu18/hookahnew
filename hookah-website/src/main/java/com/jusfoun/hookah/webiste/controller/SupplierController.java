@@ -34,7 +34,7 @@ public class SupplierController extends BaseController{
     @Resource
     SupplierService supplierService;
 
-    @RequestMapping(value = "/toBeSupplier", method = RequestMethod.GET)
+    @RequestMapping(value = "/toBeSupplier", method = RequestMethod.POST)
     public ReturnData toBeSupplier(String contactName, String contactPhone, String contactAddress){
         try {
             String userId = this.getCurrentUser().getUserId();
