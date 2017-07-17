@@ -84,7 +84,7 @@
     color: #B2B2B2;
 }
 .order-list ul li .item-down span label {
-    color: black;
+    color: #666;
     padding-right: 10px;
 }
 .order-list ul li   .goods-price  {    font-size: 14px; }
