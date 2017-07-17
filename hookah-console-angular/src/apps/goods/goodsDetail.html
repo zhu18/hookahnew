@@ -1,7 +1,7 @@
 <div class="row" xmlns="http://www.w3.org/1999/html">
 	<div class="col-sm-12">
 		<div class="console-title console-title-border clearfix">
-			<div class="pull-left"><h5>商品详情-审核-----{{editData.goodsType}}</h5></div>
+			<div class="pull-left"><h5>商品详情-审核</h5></div>
 			<div class="pull-right">
 				<button class="btn btn-default" data-ng-click="returnPage()">
 					<span class="glyphicon glyphicon-repeat"></span> 返回
@@ -146,9 +146,10 @@
 						</div>
 					</div>
 					<div class="form-group" data-ng-if="$flag && editData.checkStatus == 0">
-						<button class="btn btn-primary" data-ng-click="setCurrent(2)">
-							<span class="glyphicon glyphicon-refresh"></span> 下一步
-						</button>
+						<div class="col-sm-2"></div>
+						<div class="col-sm-5">
+							<button class="btn btn-primary" data-ng-click="setCurrent(2)">下一步</button>
+						</div>
 					</div>
 				</div>
 				<div data-ng-show="current == 2">
@@ -654,7 +655,7 @@
 							<input type="hidden" id="goodsSn" name="goodsSn" value="{{editData.goodsSn}}"/>
 							<input type="hidden" id="goodsName" name="goodsName" value="{{editData.goodsName}}"/>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">审核状态</label>
+								<label class="col-sm-2 control-label">审核状态：</label>
 								<div class="col-sm-5">
 									<label class="radio-inline">
 										<input type="radio" name="checkStatus" value="1" checked/>通过
@@ -667,7 +668,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">审核意见</label>
+								<label class="col-sm-2 control-label">审核意见：</label>
 								<div class="col-sm-5">
 									<label>
 										<textarea name="checkContent" id="checkContent" style="margin: 0px; width: 452px; height: 84px;"></textarea>
@@ -677,6 +678,7 @@
 							<div class="form-group">
 								<div class="col-sm-2"></div>
 								<div class="col-sm-5">
+									<button class="btn btn-primary" data-ng-click="setCurrent(1)">上一步</button>
 									<button class="btn btn-primary" data-ng-click="submitCheck()" ng-disabled="checkForm.$invalid">
 										<span class="glyphicon glyphicon-refresh"></span> 提交审核
 									</button>
@@ -685,16 +687,18 @@
 						</form>
 					</div>
 					<div class="form-group" data-ng-if="$flag && editData.checkStatus == 0 &&  editData.goodsType == 1">
-						<button class="btn btn-primary" data-ng-click="setCurrent(3)">
-							<span class="glyphicon glyphicon-refresh"></span> 下一步
-						</button>
+						<div class="col-sm-2"></div>
+						<div class="col-sm-5">
+							<button class="btn btn-primary" data-ng-click="setCurrent(1)">上一步</button>
+							<button class="btn btn-primary" data-ng-click="setCurrent(3)">下一步</button>
+						</div>
 					</div>
 				</div>
 				<div data-ng-show="current == 3 && editData.goodsType == 1">
 					<div data-ng-if="editData.isOffline == 0">
 						<div data-ng-if="editData.goodsType == 1" class="api-info-box">
 							<div class="form-group">
-								<label class="col-sm-2 control-label">接口类型</label>
+								<label class="col-sm-2 control-label">接口类型：</label>
 								<div class="col-sm-5">
 									<label class="radio-inline" data-ng-if="$flag">
 										<input name="apiType" value='0' type="radio" data-ng-model="packageApiInfo.apiType"/>restful
@@ -711,21 +715,21 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">调用方法名</label>
+								<label class="col-sm-2 control-label">调用方法名：</label>
 								<div class="col-sm-5">
 									<input type="text" name="invokeMethod" class="form-control" data-ng-if="$flag" data-ng-model="packageApiInfo.invokeMethod"/>
 									<input type="text" name="invokeMethod" class="form-control" data-ng-if="!$flag" readonly value="{{packageApiInfo.invokeMethod}}"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">接口地址</label>
+								<label class="col-sm-2 control-label">接口地址：</label>
 								<div class="col-sm-5">
 									<input type="text" name="apiUrl" class="form-control" data-ng-if="$flag" data-ng-model="packageApiInfo.apiUrl"/>
 									<input type="text" name="apiUrl" class="form-control" data-ng-if="!$flag" disabled data-ng-model="packageApiInfo.apiUrl"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">请求方式</label>
+								<label class="col-sm-2 control-label">请求方式：</label>
 								<div class="col-sm-5">
 									<label class="radio-inline" data-ng-if="$flag">
 										<input type="radio" name="apiMethod" data-ng-model="packageApiInfo.apiMethod" value="GET"/>GET
@@ -742,20 +746,20 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">请求示例</label>
+								<label class="col-sm-2 control-label">请求示例：</label>
 								<div class="col-sm-5">
 									<input type="text" name="reqSample" data-ng-if="$flag" class="form-control" data-ng-model="packageApiInfo.reqSample"/>
 									<input type="text" name="reqSample" data-ng-if="!$flag" class="form-control" disabled value="packageApiInfo.reqSample"/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">接口描述</label>
+								<label class="col-sm-2 control-label">接口描述：</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" name="apiDesc" data-ng-model="packageApiInfo.apiDesc" disabled/>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">请求参数</label>
+								<label class="col-sm-2 control-label">请求参数：</label>
 								<div class="col-sm-8">
 									<table class="table table-hover">
 										<thead>
@@ -804,7 +808,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">返回参数</label>
+								<label class="col-sm-2 control-label">返回参数：</label>
 								<div class="col-sm-8">
 									<table class="table table-hover">
 										<thead>
@@ -827,14 +831,14 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">返回示例</label>
+								<label class="col-sm-2 control-label">返回示例：</label>
 								<div class="col-sm-5">
 									<textarea style="margin: 0px; width: 452px; height: 150px;" data-ng-if="$flag" name="respSample" data-ng-model="packageApiInfo.respSample"></textarea>
 									<textarea style="margin: 0px; width: 452px; height: 150px;" data-ng-if="!$flag" disabled name="respSample" data-ng-model="packageApiInfo.respSample"></textarea>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">返回格式</label>
+								<label class="col-sm-2 control-label">返回格式：</label>
 								<div class="col-sm-5">
 									<label class="radio-inline" data-ng-if="$flag">
 										<input name="respDataFormat" value='0' type="radio" ng-checked="packageApiInfo.respDataFormat == '0'"/>json
@@ -857,7 +861,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">资源有效时间:</label>
+								<label class="col-sm-2 control-label">资源有效时间：</label>
 								<div class="col-sm-5">
 									<input type="text" name="" class="form-control"/>
 								</div>
@@ -869,7 +873,7 @@
 								<input type="hidden" id="goodsSn" name="goodsSn" value="{{editData.goodsSn}}"/>
 								<input type="hidden" id="goodsName" name="goodsName" value="{{editData.goodsName}}"/>
 								<div class="form-group">
-									<label class="col-sm-2 control-label">审核状态</label>
+									<label class="col-sm-2 control-label">审核状态：</label>
 									<div class="col-sm-5">
 										<label class="radio-inline">
 											<input type="radio" name="checkStatus" value="1" checked/>通过
@@ -882,7 +886,7 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-sm-2 control-label">审核意见</label>
+									<label class="col-sm-2 control-label">审核意见：</label>
 									<div class="col-sm-5">
 										<label>
 											<textarea name="checkContent" id="checkContent" style="margin: 0px; width: 452px; height: 84px;"></textarea>
@@ -892,6 +896,9 @@
 								<div class="form-group">
 									<div class="col-sm-2"></div>
 									<div class="col-sm-5">
+										<button class="btn btn-primary" data-ng-click="setCurrent(2)">
+											上一步
+										</button>
 										<button class="btn btn-primary" data-ng-click="submitCheck()" ng-disabled="checkForm.$invalid">
 											<span class="glyphicon glyphicon-refresh"></span> 提交审核
 										</button>
