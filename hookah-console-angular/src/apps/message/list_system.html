@@ -37,6 +37,25 @@
               <select ng-model="eventType"  ng-options="eventType.code as eventType.describle for eventType in eventTypes"  style="width: 155px;height: 32px">
               </select>
             </div>
+
+            <div style="display: inline-block" >
+              <label class="control-label">发送时间：</label>
+              <p class="input-group" style="margin-top: 15px">
+                <input   style="background-color: transparent;" ng-keypress="$event.preventDefault()" ng-paste="$event.preventDefault()" type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" type="datetime-local" ng-model="startDate" is-open="popup1.opened" datepicker-options="dateOptions"  close-text="关闭"  clear-text="清除" current-text="今天" readonly="true"/>
+                <span class="input-group-btn" >
+                         <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+              </p>
+              <!--<input ng-model="addTime" type="text" class="form-control" placeholder="起始日期">-->
+              <label class="control-label">至</label>
+              <p class="input-group" style="margin-top: 15px">
+                <input style="background-color: transparent;"  ng-keypress="$event.preventDefault()" ng-paste="$event.preventDefault()" type="text" class="form-control" uib-datepicker-popup ng-model="endDate" is-open="popup2.opened" datepicker-options="dateOptions"  close-text="Close" close-text="关闭"  clear-text="清除" current-text="今天" readonly="true"/>
+                <span class="input-group-btn" >
+                         <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+              </p>
+            </div>
+
             <button type="submit" class="btn btn-primary" data-ng-click="systemSearch()">搜索</button>
           </form>
         </div>

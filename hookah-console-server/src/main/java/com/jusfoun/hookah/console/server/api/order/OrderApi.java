@@ -178,7 +178,7 @@ public class OrderApi extends BaseController{
 
     /**
      * 按照条件查询商家已卖出的商品订单
-     * @param pageNumber
+     * @param currentPage
      * @param pageSize
      * @param startDate
      * @param endDate
@@ -186,14 +186,14 @@ public class OrderApi extends BaseController{
      */
     @RequestMapping(value = "/soldOrder", method = RequestMethod.GET)
     @ResponseBody
-    public ReturnData getSoldOrder(Integer pageNumber, Integer pageSize, String startDate, String endDate,
+    public ReturnData getSoldOrder(Integer currentPage, Integer pageSize, String startDate, String endDate,
                                    OrderInfoVo orderInfoVo, String addUser){
         try {
             String userName = orderInfoVo.getUserName(); //买家账号
             String orderSn = orderInfoVo.getOrderSn();//订单号
             Integer solveStatus = orderInfoVo.getSolveStatus();//处理状态
 
-            if (pageNumber==null) pageNumber = Integer.parseInt(PAGE_NUM);
+            if (currentPage==null) currentPage = Integer.parseInt(PAGE_NUM);
             if (pageSize==null) pageSize = Integer.parseInt(PAGE_SIZE);
 
             List<Condition> listFilters = new ArrayList<>();
@@ -224,7 +224,7 @@ public class OrderApi extends BaseController{
             //查询列表
             List<OrderBy> orderBys = new ArrayList<>();
             orderBys.add(OrderBy.desc("addTime"));
-            Pagination<OrderInfoVo> pOrders = orderInfoService.getSoldOrderListByCondition(pageNumber, pageSize, listFilters,
+            Pagination<OrderInfoVo> pOrders = orderInfoService.getSoldOrderListByCondition(currentPage, pageSize, listFilters,
                      startTime, endTime, addUser);
 
             return ReturnData.success(pOrders);

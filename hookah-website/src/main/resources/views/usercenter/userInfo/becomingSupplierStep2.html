@@ -1,0 +1,65 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/becomingSupplierStep2.css">
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/common-progress-bar.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="grid-right info-center-box ">
+            <div class="becomingSupplierStep2">
+                <div class="becomingSupplierStep1-progress-bar">
+                    <ul class="clearfix">
+                        <li><span class="active"><i>1</i></span>下载合作协议</li>
+                        <li><span><i>2</i></span>提出申请</li>
+                        <li><span><i>3</i></span>等待平台审核</li>
+                    </ul>
+                </div>
+                <div class="becomingSupplierStep2-info">
+                    <div class="unit-contact">
+                        <h4>单位联系人</h4>
+                        <div>
+                            <label for="">业务联系人：</label>
+                            <input type="text">
+                        </div>
+                        <div>
+                            <label for="">联系人手机：</label>
+                            <input type="text">
+                        </div>
+                        <div>
+                            <label for="">联系地址：</label>
+                            <input type="text">
+                        </div>
+                    </div>
+                    <div class="unit-information">
+                        <h4>单位信息</h4>
+                        <div>
+                            <label for="">单位名称：</label>
+                            <span></span>
+                        </div>
+                        <div>
+                            <label for="">法定代表人：</label>
+                            <span></span>
+                        </div>
+                        <div>
+                            <label for="">社会信用代码：</label>
+                            <span></span>
+                        </div>
+                    </div>
+                    <a href="/usercenter/becomingSupplierStep3" class="btn">下一步</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>

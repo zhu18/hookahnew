@@ -67,17 +67,6 @@ spring:
 #        dialect : org.hibernate.dialect.MySQL5Dialect
   mvc:
     static-path-pattern: /static/**
-redis:
-  ip: 192.168.15.90
-  port: 6379
-  password: Yqn2ht4DYkMHlDvTY7CV
-  pool:
-    #最大分配的对象数
-    maxTotal: 1024
-    #最大能够保持idel状态的对象数
-    maxIdle: 200
-    #当调用borrow Object方法时，是否进行有效性检查
-    testOnBorrow: false
 myconf:
   beetl:
     templatesPath: views/

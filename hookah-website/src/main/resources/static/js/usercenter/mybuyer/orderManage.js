@@ -23,15 +23,18 @@ function loadPageData(data) {
       for (var ii = 0; ii < goods.length; ii++) {
         var mMat = null;
         switch (goods[ii].goodsFormat) {
-          case(0):
-            mMat = '次';
-            break;
-          case(1):
-            mMat = '天';
-            break;
-          case(2):
-            mMat = '年';
-            break;
+            case(0):
+                mMat = '次';
+                break;
+            case(1):
+                mMat = '天';
+                break;
+            case(2):
+                mMat = '年';
+                break;
+            case(3):
+                mMat = '套';
+                break;
         }
         var catidS = (goods[ii].catId).substring(0, 3);
         var isOfflineInfo='';
@@ -75,7 +78,7 @@ function loadPageData(data) {
         html += '<td class="text-align-center" style="width: 280px;">';
         html += '<div class="p-img">';
         html += '<a href="/exchange/details?id=' + goods[ii].goodsId + '" target="_blank">';
-        html += '<img src="' + goods[ii].goodsImg + '" alt="">';
+        html += '<img src="http://static.qddata.com.cn/' + goods[ii].goodsImg + '" alt="">';
         html += '</a>';
         html += '</div>';
         html += '<div class="desc margin-top-10 marign-bottom-10" >';
@@ -294,12 +297,12 @@ function getKey(goodsId, sourceId, orderId, goodsType, isOffline) {
               "<h5>联系人姓名：<span>" + data.data.data.concatInfo.concatName + "</span></h5>" +
               "<h5>联系人电话：<span>" + data.data.data.concatInfo.concatPhone + "</span></h5>" +
               "<h5>联系人邮箱：<span>" + data.data.data.concatInfo.concatEmail + "</span></h5>" +
-              "<h5>模型文件：<span><a style='color:blue; text-decoration: underline' target='_blank' href='" + data.data.data.modelFile + "'>下载</a></span></h5>" +
-              "<h5>模型文件密码：<span>" + data.data.data.modelFilePwd + "</span></h5>" +
-              "<h5>配置文件：<span><a style='color:blue; text-decoration: underline' target='_blank' href='" + data.data.data.configFile + "'>下载</a></span></h5>" +
-              "<h5>配置文件密码：<span>" + data.data.data.configFilePwd + "</span></h5>" +
-              "<h5>配置参数：<span><a style='color:blue; text-decoration: underline' target='_blank' href='" + data.data.data.configParams + "'>下载</a></span></h5>" +
-              "<h5>配置参数密码：<span>" + data.data.data.configParamsPwd + "</span></h5></div>"
+              "<h5>模型文件：<span><a style='color:blue; text-decoration: underline' target='_blank' href='" + data.data.data.modelFile.fileAddress + "'>下载</a></span></h5>" +
+              "<h5>模型文件密码：<span>" + data.data.data.modelFile.filePwd + "</span></h5>" +
+              "<h5>配置文件：<span><a style='color:blue; text-decoration: underline' target='_blank' href='" + data.data.data.configFile.fileAddress + "'>下载</a></span></h5>" +
+              "<h5>配置文件密码：<span>" + data.data.data.configFile.filePwd + "</span></h5>" +
+              "<h5>配置参数：<span><a style='color:blue; text-decoration: underline' target='_blank' href='" + data.data.data.paramFile.fileAddress + "'>下载</a></span></h5>" +
+              "<h5>配置参数密码：<span>" + data.data.data.paramFile.filePwd + "</span></h5></div>"
             ;
 
           } else if (goodsType == 4 || goodsType == 6) { //独立软件 手动填写数据

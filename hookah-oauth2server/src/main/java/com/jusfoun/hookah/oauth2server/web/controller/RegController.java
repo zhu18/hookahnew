@@ -17,6 +17,7 @@ import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.FormatCheckUtil;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.oauth2server.config.MyProps;
+import com.jusfoun.hookah.rpc.api.PayAccountService;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -60,6 +61,8 @@ public class RegController {
     @Resource
     UserService userService;
 
+    @Resource
+    PayAccountService payAccountService;
 
     @RequestMapping(value = "/reg", method = RequestMethod.GET)
     public String reg(Model model) {
@@ -143,7 +146,7 @@ public class RegController {
         user.setHeadImg(site.get("user-default-img"));
         User regUser = userService.insert((User) user);
         //redirectAttributes.addAttribute(regUser);
-
+        payAccountService.insertPayAccountByUserIdAndName(regUser.getUserId(),regUser.getUserName());
         //TODO...登录日志
         logger.info("用户[" + user.getUserName() + "]注册成功(这里可以进行一些注册通过后的一些系统参数初始化操作)");
 //            return "redirect:"+host.get("website")+"/login";
