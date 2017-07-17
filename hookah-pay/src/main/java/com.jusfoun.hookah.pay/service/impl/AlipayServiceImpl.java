@@ -117,4 +117,8 @@ public class AlipayServiceImpl extends GenericServiceImpl<PayAccountRecord, Stri
         }
         return mysign;
     }
+
+    public boolean verifyAlipay(Map<String, String> param) {
+        return AlipayNotify.verify(param);
+    }
 }
