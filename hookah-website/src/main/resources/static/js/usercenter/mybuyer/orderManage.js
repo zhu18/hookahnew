@@ -23,15 +23,18 @@ function loadPageData(data) {
       for (var ii = 0; ii < goods.length; ii++) {
         var mMat = null;
         switch (goods[ii].goodsFormat) {
-          case(0):
-            mMat = '次';
-            break;
-          case(1):
-            mMat = '天';
-            break;
-          case(2):
-            mMat = '年';
-            break;
+            case(0):
+                mMat = '次';
+                break;
+            case(1):
+                mMat = '天';
+                break;
+            case(2):
+                mMat = '年';
+                break;
+            case(3):
+                mMat = '套';
+                break;
         }
         var catidS = (goods[ii].catId).substring(0, 3);
         var isOfflineInfo='';

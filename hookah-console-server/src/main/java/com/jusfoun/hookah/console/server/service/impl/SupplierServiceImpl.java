@@ -57,6 +57,7 @@ public class SupplierServiceImpl extends GenericServiceImpl<Supplier, String> im
             user.setContactPhone(contactPhone);
         }
         user.setContactAddress(contactAddress);
+        user.setUserType(9);
 
         supplier.setUserId(userId);
         supplier.setAddTime(new Date());
@@ -81,6 +82,23 @@ public class SupplierServiceImpl extends GenericServiceImpl<Supplier, String> im
         pagination.setList(page);
         logger.info(JsonUtils.toJson(pagination));
         return pagination;
+    }
+
+    @Override
+    @Transactional
+    public void checkSupplier(String id, String checkContent, Byte checkStatus, String checkUser){
+        Supplier supplier = supplierMapper.selectByPrimaryKey(id);
+        supplier.setCheckStatus(checkStatus);
+        supplier.setCheckContent(checkContent.replaceAll(" ",""));
+        supplier.setCheckUser(checkUser);
+        User user = userMapper.selectByPrimaryKey(supplier.getUserId());
+        if (checkStatus.equals("1")){
+            user.setUserType(8);
+        }else{
+            user.setUserType(10);
+        }
+        supplierMapper.updateByPrimaryKeySelective(supplier);
+        userMapper.updateByPrimaryKeySelective(user);
     }
 
 }

@@ -94,7 +94,6 @@ class GoodsCheckController {
 							}
 						},
 					};
-					console.log("STR"+JSON.stringify($rootScope.addData));
 				}
 			});
 		}
