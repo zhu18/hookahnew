@@ -7,6 +7,7 @@ import com.jusfoun.hookah.core.domain.PayAccount;
 import com.jusfoun.hookah.core.domain.bo.MoneyInOutBo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
+import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.PayAccountService;
 import org.springframework.stereotype.Service;
@@ -98,4 +99,8 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 	public String payByAli(OrderInfo orderInfo){
 		return new String();
 	}
+
+	public ReturnData userRecharge(Map<String,Object> params){ return new ReturnData();};
+
+	public void saveRechargeResult(Map<String,String> params){};
 }
