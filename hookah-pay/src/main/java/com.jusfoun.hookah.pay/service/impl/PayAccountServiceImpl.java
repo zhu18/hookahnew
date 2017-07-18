@@ -317,7 +317,7 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		OrderInfo orderinfo = orderInfoService.selectById(orderId);
 		//修改订单支付状态
 		orderinfo.setPayStatus(OrderInfo.PAYSTATUS_PAYED);
-		orderInfoService.updatePayStatus(orderinfo.getOrderSn(), OrderInfo.PAYSTATUS_PAYED);
+		orderInfoService.updatePayStatus(orderinfo.getOrderSn(), OrderInfo.PAYSTATUS_PAYED,0);
 		Long orderAmount = orderinfo.getOrderAmount();
 		//减去余额
 		List<Condition> filter = new ArrayList<>();
@@ -395,7 +395,7 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 				}
 
 				//更新订单状态
-				orderInfoService.updatePayStatus(orderSn, 2);
+//				orderInfoService.updatePayStatus(orderSn, 2);
 			}
 		}
 	}
@@ -429,7 +429,7 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 					payTradeRecord1.setTradeStatus((byte)1);
 				}
 				//更新订单状态
-				orderInfoService.updatePayStatus(orderSn,2);
+//				orderInfoService.updatePayStatus(orderSn,2);
 			}else {
 				List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
 				for (PayTradeRecord payTradeRecord1 : payTradeRecords){

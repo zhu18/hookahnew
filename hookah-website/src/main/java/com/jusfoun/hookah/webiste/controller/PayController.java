@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -63,7 +64,6 @@ public class PayController {
 
 /**
      * 订单支付
-     * @param paramMap
      * @param model
      * @return
      */
@@ -257,7 +257,7 @@ public class PayController {
             if(tradeStatus.equals("TRADE_FINISHED") || tradeStatus.equals("TRADE_SUCCESS")){
                 //交易成功,插交易中心冻结收入流水，更新交易中心虚拟账户金额
                 PayTradeRecord payTradeRecord = new PayTradeRecord();
-                payTradeRecord.setUserId(orderInfo.getUserId());//交易中心Id
+                payTradeRecord.setPayAccountId(HookahConstants.TRADECENTERACCOUNT);
                 payTradeRecord.setMoney(orderInfo.getOrderAmount());
                 payTradeRecord.setTradeType(HookahConstants.TradeType.FreezaIn.getCode());
                 payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.handing.getCode());
@@ -266,23 +266,26 @@ public class PayController {
                 payTradeRecord.setAddOperator(orderInfo.getUserId());
                 payTradeRecord.setTransferDate(new Date());
                 payTradeRecordService.insertAndGetId(payTradeRecord);
-
-
+                //更新交易中心虚拟账户金额,更新流水表状态
+                int n = payAccountService.operatorByType(HookahConstants.TRADECENTERACCOUNT,HookahConstants.TradeType.FreezaIn.getCode(),
+                        orderInfo.getOrderAmount());
+                payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.success.getCode());
+                payTradeRecordService.updateByIdSelective(payTradeRecord);
 
                 //修改内部流水的状态和外部充值状态
                 List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
                 for (PayTradeRecord payTradeRecord1 : payTradeRecords){
-                    payTradeRecord1.setTradeStatus((byte)1);
+                    payTradeRecord1.setTradeStatus(HookahConstants.TransferStatus.success.getCode());
                 }
 
                 //更新订单状态
-                orderService.updatePayStatus(orderSn,2);
+                orderService.updatePayStatus(orderSn,orderInfo.PAYSTATUS_PAYED,1);
                 view = new ModelAndView("redirect:/paySucess.html?orderSn="+orderSn);
             }else{
                 //交易失败
                 List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
                 for (PayTradeRecord payTradeRecord1 : payTradeRecords){
-                    payTradeRecord1.setTradeStatus((byte)2);
+                    payTradeRecord1.setTradeStatus(HookahConstants.TransferStatus.fail.getCode());
                 }
                 view = new ModelAndView("redirect:/payError.html?orderSn="+orderSn);
             }
@@ -293,6 +296,7 @@ public class PayController {
     }
 
     @RequestMapping(value="/alipay_ntf", method = RequestMethod.POST)
+    @Transactional
     String notifyBack4Alipay(HttpServletRequest request, HttpServletResponse response) throws Exception{
         //商户订单号
         String orderSn = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
@@ -303,36 +307,39 @@ public class PayController {
         List<Condition> filter = new ArrayList<>();
         filter.add(Condition.eq("orderSn",orderSn));
         OrderInfo orderInfo = orderService.selectOne(filter);
+        Date date = new Date();
         if(payCoreService.verifyAlipay(getRequestParams(request))){
-            PayCore paied = payCoreService.findPayCoreByOrderSn(orderSn);
             if(tradeStatus.equals("TRADE_SUCCESS") || tradeStatus.equals("TRADE_FINISHED")){
-                //交易成功,插交易中心冻结收入流水，更新交易中心虚拟账户金额
+                //交易成功,插交易中心冻结收入流水，
                 PayTradeRecord payTradeRecord = new PayTradeRecord();
                 payTradeRecord.setPayAccountId(HookahConstants.TRADECENTERACCOUNT);//交易中心虚拟账号Id
-                payTradeRecord.setUserId(orderInfo.getUserId());//交易中心Id
                 payTradeRecord.setMoney(orderInfo.getOrderAmount());
                 payTradeRecord.setTradeType(HookahConstants.TradeType.FreezaIn.getCode());
                 payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.handing.getCode());
-                payTradeRecord.setAddTime(new Date());
+                payTradeRecord.setAddTime(date);
                 payTradeRecord.setOrderSn(orderSn);
                 payTradeRecord.setAddOperator(orderInfo.getUserId());
-                payTradeRecord.setTransferDate(new Date());
+                payTradeRecord.setTransferDate(date);
                 payTradeRecordService.insertAndGetId(payTradeRecord);
+                //更新交易中心虚拟账户金额,更新流水表状态
+                int n = payAccountService.operatorByType(HookahConstants.TRADECENTERACCOUNT,HookahConstants.TradeType.FreezaIn.getCode(),
+                        orderInfo.getOrderAmount());
+                payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.success.getCode());
+                payTradeRecordService.updateByIdSelective(payTradeRecord);
 
                 //修改内部流水的状态和外部充值状态
                 List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
                 for (PayTradeRecord payTradeRecord1 : payTradeRecords){
-                    payTradeRecord1.setTradeStatus((byte)1);
+                    payTradeRecord1.setTradeStatus(HookahConstants.TransferStatus.success.getCode());
                 }
                 //更新订单状态
-                orderService.updatePayStatus(orderSn,2);
+                orderService.updatePayStatus(orderSn,orderInfo.PAYSTATUS_PAYED,1);
             }else {
                 List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
                 for (PayTradeRecord payTradeRecord1 : payTradeRecords){
-                    payTradeRecord1.setTradeStatus((byte)2);
+                    payTradeRecord1.setTradeStatus(HookahConstants.TransferStatus.fail.getCode());
                 }
             }
-//            payCoreService.updatePayCore(paied);
             return "success";
         }else {
             return "fail";
