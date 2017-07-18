@@ -2,6 +2,7 @@ package com.jusfoun.hookah.rpc.api;
 
 
 import com.jusfoun.hookah.core.domain.WithdrawRecord;
+import com.jusfoun.hookah.core.domain.vo.WithdrawVo;
 import com.jusfoun.hookah.core.generic.GenericService;
 import com.jusfoun.hookah.core.utils.ReturnData;
 
@@ -16,5 +17,5 @@ public interface WithdrawRecordService extends GenericService<WithdrawRecord, Lo
 
     ReturnData applyWithdraw(WithdrawRecord withdrawRecord);
 
-    List<WithdrawRecord> getListForPage(String startDate, String endDate, String checkStatus, String orgName);
+    List<WithdrawVo> getListForPage(String startDate, String endDate, String checkStatus, String orgName);
 }
