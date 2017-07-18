@@ -1,35 +1,22 @@
 package com.jusfoun.hookah.pay.service.impl;
 
 
-import com.apex.etm.qss.client.IFixClient;
-import com.apex.etm.qss.client.fixservice.FixConstants;
-import com.apex.etm.qss.client.fixservice.bean.ResultBean;
-import com.apex.fix.AxCallFunc;
-import com.apex.fix.JFixComm;
-import com.apex.fix.JFixSess;
 import com.jusfoun.hookah.core.dao.PayAccountRecordMapper;
 import com.jusfoun.hookah.core.domain.PayAccountRecord;
-import com.jusfoun.hookah.core.domain.PayBankCard;
 import com.jusfoun.hookah.core.domain.PayCore;
-import com.jusfoun.hookah.core.domain.PayTradeRecord;
-import com.jusfoun.hookah.core.domain.bo.MoneyInOutBo;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
-import com.jusfoun.hookah.core.exception.HookahException;
-import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.OrderHelper;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.pay.util.*;
-import com.jusfoun.hookah.rpc.api.*;
+import com.jusfoun.hookah.rpc.api.AlipayService;
+import com.jusfoun.hookah.rpc.api.MgOrderInfoService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Service
