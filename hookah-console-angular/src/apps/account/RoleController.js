@@ -17,11 +17,13 @@ class RoleController {
       });
     };
     $scope.add = function () {
+      $rootScope.title= "新增角色";
       $rootScope.item={};
       $rootScope.selectRolePermissions = "";
 
     };
     $scope.load = function (event, item) {
+      $rootScope.title= "修改角色";
       $rootScope.item = item;
       var promise = $http({
         method: 'GET',

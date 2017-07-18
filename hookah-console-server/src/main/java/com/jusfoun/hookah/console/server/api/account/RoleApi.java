@@ -69,6 +69,14 @@ public class RoleApi extends BaseController {
         return ReturnData.success(page);
     }
 
+
+    @RequestMapping(value = "/user_role", method = RequestMethod.GET)
+    public ReturnData getRoles(String userId) {
+        Set roles = roleService.selectRolesByUserId(userId);
+        return ReturnData.success(roles);
+    }
+
+
     @RequestMapping(value = "/getPermissionsByRoleId", method = RequestMethod.GET)
     public ReturnData getPermissionsByRoleId(String roleId){
         Set<String> permisssions = permissionService.selectPermissionsByRoleId(roleId);
@@ -119,7 +127,7 @@ public class RoleApi extends BaseController {
                     role.setAddTime(new Date());
                     Role savedRole = roleService.insert(role);
                     String[] permArray = rolePermissionVo.getPermissions().split(",");
-                    rolePermisstionService.deletePermissionsByRoleId(rolePermissionVo.getRoleId());
+//                    rolePermisstionService.deletePermissionsByRoleId(rolePermissionVo.getRoleId());
                     for (int i = 0; i < permArray.length; i++) {
                         RolePermission rolePermission = new RolePermission();
                         rolePermission.setRoleId(savedRole.getRoleId());
@@ -143,6 +151,7 @@ public class RoleApi extends BaseController {
         try {
             if (StringUtils.isNotBlank(roleId)) {
                 roleService.delete(roleId);
+                rolePermisstionService.deletePermissionsByRoleId(roleId);
             } else {
                 return ReturnData.error("删除失败");
             }

@@ -225,4 +225,9 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		map.put("payPassword", payPassword);
 		payAccountMapper.resetPayPassword(map);
 	}
+
+	@Override
+	public void payOperator(String userId, String orderId, String orderSn, Long money, String payMode) throws Exception {
+
+	}
 }
