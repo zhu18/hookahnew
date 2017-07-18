@@ -11,24 +11,75 @@ var htmlPart = {
 <div class="grid-0 backgorund-gray">
     <div class="grid-row clearfix">
         <%include("/usercenter/user-center-menu.html"){} %>
-        <div class="grid-left info-center-box ">
-            <div class="user-center-box grid-right">
-                <div class="header">
-                    <h4 class="center-title">资金管理/资金记录</h4>
-                </div>
-                <div class="fundmanage-box">
-                    <div class="capitalRecord">
-                        <div class="search-criteria margin-top-10">
-
+        <div class="grid-right info-center-box ">
+            <div class="header">
+                <h4 class="center-title">资金管理/资金记录</h4>
+            </div>
+            <div class="capitalRecord">
+                <ul class="search-criteria margin-top-10 ">
+                    <li>
+                        <span>交易类型</span>
+                        <ul class="clearfix">
+                            <li>全部</li>
+                            <li>充值</li>
+                            <li>提现</li>
+                            <li>支付</li>
+                            <li>收入</li>
+                            <li>退款</li>
+                            <li>冲账</li>
+                            <li>其他</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span>状态</span>
+                        <ul class="clearfix">
+                            <li>全部</li>
+                            <li>已成功</li>
+                            <li>未成功</li>
+                            <li>处理中</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span>时间</span>
+                        <div class="time-box">
+                            <input id="startDate" type="text" placeholder="请选择开始时间" readonly="">
+                            <div class="line"></div>
+                            <input id="endDate" type="text" placeholder="请选择结束时间" readonly="">
                         </div>
-                        <div class="search-list">
-
+                        <div class="select-month">
+                            <a href="javascript:void (0);" class="active">本月</a>
+                            <a href="javascript:void (0);">上个月</a>
+                            <a href="javascript:void (0);">3月</a>
+                            <a href="javascript:void (0);">半年</a>
                         </div>
-                    </div>
-                </div>
+                    </li>
+                </ul>
+
+                <table class="search-list">
+                    <thead>
+                    <tr>
+                        <th>流水号</th>
+                        <th>交易时间</th>
+                        <th>交易类型</th>
+                        <th>交易金额(元)</th>
+                        <th>状态</th>
+
+                    </tr>
+                    </thead>
+                    <tbody class="search-list-content">
+                    <tr>
+                        <td>992737131715</td>
+                        <td>银行卡类别查询</td>
+                        <td>￥50.00</td>
+                        <td>￥50.00</td>
+                        <td>￥50.00</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+</div>
 </div>
 </div>
 
