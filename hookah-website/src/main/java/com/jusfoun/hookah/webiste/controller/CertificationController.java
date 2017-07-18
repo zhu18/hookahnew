@@ -44,6 +44,9 @@ public class CertificationController extends BaseController{
 
     @Resource
     UserCheckService userCheckService;
+
+    @Resource
+    SupplierService supplierService;
     
     //用户实名认证信息
     @ResponseBody
@@ -52,12 +55,16 @@ public class CertificationController extends BaseController{
         String userId = this.getCurrentUser().getUserId();
         Map<String, Object> map = new HashMap<>(6);
         User user = userService.selectById(userId);
+        List<Condition> filters = new ArrayList();
+        filters.add(Condition.eq("userId", userId));
+        Supplier supplier = supplierService.selectOne(filters);
+        if(supplier != null){
+           map.put("checkStatus",supplier.getCheckStatus());
+        }
         if(StringUtils.isNotBlank(user.getOrgId())) {
             Organization organization = organizationService.selectById(user.getOrgId());//根据用户查询认证信息
             //机构中 已认证状态 与 认证不通过状态
             if (organization.getIsAuth() == 2 || organization.getIsAuth() == 3) {
-                List<Condition> filters = new ArrayList();
-                filters.add(Condition.eq("userId", userId));
                 UserCheck userCheck = userCheckService.selectOne(filters);
                     if(userCheck != null) {
                         map.put("userType", userCheck.getUserType());
@@ -76,6 +83,7 @@ public class CertificationController extends BaseController{
                     map.put("region", organization.getRegion());
                     map.put("contactAddress", organization.getContactAddress());
                     map.put("orgPhone", organization.getOrgPhone());
+                    map.put("taxPath", organization.getTaxPath());
                 }else {
                     return ReturnData.success("未认证");
                 }

@@ -69,7 +69,7 @@ public class AlipayServiceImpl extends GenericServiceImpl<PayAccountRecord, Stri
         //构造html
         String html = buildRequestParams(userId, orderInfoVo, notify_url, return_url);
         //记账
-        PayAccountRecord payAccountRecord = new PayAccountRecord();
+      /*  PayAccountRecord payAccountRecord = new PayAccountRecord();
         payAccountRecord.setPayAccountId(Long.valueOf(userId));
         payAccountRecord.setUserId(userId);
         Date date = new Date();
@@ -78,7 +78,7 @@ public class AlipayServiceImpl extends GenericServiceImpl<PayAccountRecord, Stri
         payAccountRecord.setSerialNumber(orderInfoVo.getOrderSn());//订单号
         payAccountRecord.setAddTime(date);
         payAccountRecord.setAddOperator(userId);
-        insertRecord(payAccountRecord);
+        insertRecord(payAccountRecord);*/
         return html;
     }
 

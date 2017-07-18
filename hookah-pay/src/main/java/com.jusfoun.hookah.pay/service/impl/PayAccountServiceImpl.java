@@ -3,16 +3,17 @@ package com.jusfoun.hookah.pay.service.impl;
 
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.PayAccountMapper;
-import com.jusfoun.hookah.core.domain.OrderInfo;
-import com.jusfoun.hookah.core.domain.PayAccount;
-import com.jusfoun.hookah.core.domain.PayTradeRecord;
-import com.jusfoun.hookah.core.domain.WaitSettleRecord;
+import com.jusfoun.hookah.core.dao.PayAccountRecordMapper;
+import com.jusfoun.hookah.core.dao.PayTradeRecordMapper;
+import com.jusfoun.hookah.core.domain.*;
 import com.jusfoun.hookah.core.domain.bo.MoneyInOutBo;
 import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
+import com.jusfoun.hookah.core.utils.ExceptionConst;
+import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.pay.util.AlipayNotify;
 import com.jusfoun.hookah.pay.util.PayConfiguration;
@@ -52,6 +53,16 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 
 	@Resource
 	MgOrderInfoService mgOrderInfoService;
+
+	@Resource
+	PayTradeRecordMapper payTradeRecordMapper;
+
+	@Resource
+	PayAccountRecordMapper payAccountRecordMapper;
+
+	private String notifyUrl="/payAccount/rechargeResultSync";
+
+	private String returnUrl="/payAccount/rechargeResult";
 
 	@Transactional
 	public int operatorByType(Long payAccountId, Integer operatorType, Long money) {
@@ -462,4 +473,117 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		}
 		return params;
 	}
+
+	public ReturnData userRecharge(Map<String,Object> params){
+		ReturnData returnData = new ReturnData();
+		returnData.setCode(ExceptionConst.Success);
+
+		String userId = "";
+		if(Objects.isNull(params.get("userId"))){
+			returnData.setCode(ExceptionConst.Failed);
+			returnData.setMessage("充值失败：用户ID不能为空！");
+			return returnData;
+		}
+		userId=(String) params.get("userId");
+		Object moneyObj=params.get("money");
+		if(Objects.isNull(moneyObj)){
+			returnData.setCode(ExceptionConst.Failed);
+			returnData.setMessage("充值失败：充值金额不能为空！");
+			return returnData;
+		}
+
+		try {
+			if((double)moneyObj <= 0) {
+				returnData.setCode(ExceptionConst.Failed);
+				returnData.setMessage("充值失败：充值金额必须大于0！");
+				return returnData;
+			}
+			List<Condition> filters = new ArrayList();
+			if(StringUtils.isNotBlank(userId)){
+				filters.add(Condition.eq("userId", userId));
+			}
+			PayAccount payAccount = super.selectOne(filters);
+			//将金额*100转为Long型
+			Long money = Math.round((double)moneyObj*100);
+			if (payAccount == null){
+				returnData.setCode(ExceptionConst.Failed);
+				returnData.setMessage("充值失败：账户不存在！");
+				return returnData;
+			}
+			//insertPayTradeRecord( userId, money, payAccount.getId(), 0, 1);
+			//insertPayAccountRecord( userId, money, payAccount.getId(), 0, 1);
+
+			String html = alipayService.doCharge(userId,(double) moneyObj+"",notifyUrl,returnUrl);
+			returnData.setCode(ExceptionConst.Success);
+			returnData.setMessage(html);
+			return ReturnData.success();
+		}catch (Exception e){
+			returnData.setCode(ExceptionConst.Error);
+			returnData.setMessage(e.toString());
+			e.printStackTrace();
+		}
+
+		return returnData;
+	}
+
+	public void updatePayAccountMoney(Long payAccountId,Long money){
+		Map<String,Long> params=new HashMap<String,Long>();
+		params.put("payAccountId",payAccountId);
+		params.put("money",money);
+		payAccountMapper.updatePayAccountMoney(params);
+	}
+
+	public void insertPayTradeRecord(String userId,Long money,Long payAccountId,int tradeStatus,int tradeType){
+		PayTradeRecord ptr=new PayTradeRecord();
+		ptr.setMoney(Math.abs(money));
+		ptr.setPayAccountId(payAccountId);
+		ptr.setUserId(userId);
+		ptr.setTradeStatus((byte)tradeStatus);
+		ptr.setTradeType(tradeType);
+		ptr.setUpdateOperator(userId);
+		ptr.setUpdateTime(new Date());
+		payTradeRecordMapper.insert(ptr);
+	}
+
+	public void insertPayAccountRecord(String userId,Long money,Long payAccountId,int tradeStatus,int tradeType){
+		PayAccountRecord par = new PayAccountRecord();
+		par.setChannelType("ZFB");
+		par.setMoney(Math.abs(money));
+		par.setPayAccountId(payAccountId);
+		par.setTransferStatus((byte)tradeStatus);
+		par.setTransferType((byte)tradeType);
+		par.setUpdateOperator(userId);
+		par.setUpdateTime(new Date());
+		par.setUserId(userId);
+		payAccountRecordMapper.insert(par);
+	}
+
+	/**
+	 * 根据支付宝返回结果，更新账户表并插入记录表
+	 * @param params
+	 */
+	public void saveRechargeResult(Map<String,String> params){
+		String tradeStatus=params.get("tradeStatus");
+		String totalFee=params.get("totalFee");
+		String userId=params.get("userId");
+		Long money=0l;
+		byte statusFlag=2;
+		List<Condition> filters = new ArrayList();
+		if(StringUtils.isNotBlank(userId)){
+			filters.add(Condition.eq("userId", userId));
+		}
+		//查询出payAccountId
+		PayAccount payAccount = super.selectOne(filters);
+		if(tradeStatus.equals("TRADE_FINISHED") || tradeStatus.equals("TRADE_SUCCESS")){
+			statusFlag=1;
+			money = Math.round(Double.parseDouble(totalFee)*100);
+			//更新账户金额
+			updatePayAccountMoney(payAccount.getId(),money);
+		}
+		//插入记录表
+		insertPayTradeRecord( userId, money, payAccount.getId(), statusFlag, 1);
+		insertPayAccountRecord( userId, money, payAccount.getId(), statusFlag, 1);
+		//payTradeRecordMapper.updateByPrimaryKeySelective();
+	};
+
 }
