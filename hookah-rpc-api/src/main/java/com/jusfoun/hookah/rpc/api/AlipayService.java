@@ -10,11 +10,9 @@ public interface AlipayService extends GenericService<PayAccountRecord, String> 
      *
      * @param userId    用户id
      * @param orderId   订单id
-     * @param notifyUrl 异步通知地址
-     * @param returnUrl 同步通知地址
      * @return 表单
      */
-    String doPay(String userId, String orderId, String notifyUrl, String returnUrl);
+    String doPay(String userId, String orderId);
 
     /**
      * 记账
@@ -31,4 +29,6 @@ public interface AlipayService extends GenericService<PayAccountRecord, String> 
      * @return 是否成功
      */
     boolean updateRecordStatus(PayAccountRecord record);
+
+
 }
