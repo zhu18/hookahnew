@@ -77,7 +77,7 @@
             <tbody>
             <tr data-ng-if="!loadingState" data-ng-repeat="item in pagination.store" class="">
               <td>
-                <span text-length="50" ng-bind="item.id"></span>
+                <span text-length="50" >{{$index+1}}</span>
               </td>
               <td>
                 <a href="javascript:;" ng-click="lookDetail(item)">
