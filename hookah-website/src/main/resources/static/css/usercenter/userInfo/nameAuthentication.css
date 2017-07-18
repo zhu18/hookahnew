@@ -33,6 +33,11 @@
 .nameAuthentication ul li.img-box label{
     line-height: 115px;
 }
+.nameAuthentication ul li.img-box img{
+    height: 107px;
+    vertical-align: middle;
+    margin-left: 115px;
+}
 .nameAuthentication ul li .revise-btn{
     position: absolute;
     top: 0;
