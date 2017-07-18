@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.rpc.api;
 
+import com.jusfoun.hookah.core.domain.OrderInfo;
 import com.jusfoun.hookah.core.domain.PayAccount;
 import com.jusfoun.hookah.core.domain.bo.MoneyInOutBo;
 import com.jusfoun.hookah.core.generic.GenericService;
@@ -36,5 +37,7 @@ public interface PayAccountService extends GenericService<PayAccount, Long> {
 
     void resetPayPassword(Long id, String payPassword);
 
-    void payOperator(String userId, String orderId, String orderSn, Long money, String payMode) throws Exception;
+    void payByBalance(OrderInfo orderInfo) throws Exception;
+
+    String payByAli(OrderInfo orderInfo);
 }

@@ -1,14 +1,12 @@
 package com.jusfoun.hookah.webiste.controller;
 
 import com.github.miemiedev.mybatis.paginator.domain.Order;
-import com.jusfoun.hookah.core.domain.OrderInfo;
-import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.domain.*;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
-import com.jusfoun.hookah.rpc.api.OrderInfoService;
-import com.jusfoun.hookah.rpc.api.PayCoreService;
-import com.jusfoun.hookah.rpc.api.UserService;
+import com.jusfoun.hookah.rpc.api.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
@@ -20,14 +18,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author bingbing wu
@@ -47,6 +44,12 @@ public class PayController {
 
     @Resource
     UserService userService;
+
+    @Resource
+    PayAccountService payAccountService;
+
+    @Resource
+    PayTradeRecordService payTradeRecordService;
 
     @RequestMapping(value = "/createOrder", method = RequestMethod.GET)
     public String createOrder() {
@@ -100,12 +103,11 @@ public class PayController {
     return "pay/success";
 }*/
 
-
     @RequestMapping(value = "/payment", method = RequestMethod.POST)
     public String payPassSta(String orderSn, Model model, HttpServletRequest request) {
 
         long orderAmount = 0 ; //支付金额
-      /*  String orderSn = paramMap.get("orderSn");*/
+        /*  String orderSn = paramMap.get("orderSn");*/
         try {
             Session session = SecurityUtils.getSubject().getSession();
             HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
@@ -125,6 +127,57 @@ public class PayController {
         }
         model.addAttribute("money",orderAmount);
         return "pay/success";
+    }
+
+    @RequestMapping(value = "/balancePay", method = RequestMethod.POST)
+    public String payPassSta(String orderSn, Model model, HttpServletRequest request,String payMode) {
+        long orderAmount = 0 ; //支付金额
+        try {
+            List<Condition> filters = new ArrayList();
+            filters.add(Condition.eq("orderSn", orderSn));
+            OrderInfo orderinfo  = orderService.selectOne(filters);
+            orderAmount= orderinfo.getOrderAmount();
+            //验证支付密码和余额
+            List<Condition> filter = new ArrayList();
+            filter.add(Condition.eq("userId", orderinfo.getUserId()));
+            PayAccount payAccount = payAccountService.selectOne(filter);
+            if (payAccount.getUseBalance()<orderAmount){
+                model.addAttribute("message", "余额不足，支付失败!");
+                return "pay/fail";
+            }
+            //插流水调接口
+            payAccountService.payByBalance(orderinfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("message", "支付失败!");
+            return "pay/fail";
+        }
+        model.addAttribute("money",orderAmount);
+        return "pay/success";
+    }
+
+    @RequestMapping(value = "/aliPay", method = RequestMethod.POST)
+    public Object alipay(String orderSn, HttpServletRequest request) {
+        String reqHtml = null;
+        try {
+            Session session = SecurityUtils.getSubject().getSession();
+            HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
+            User user = userService.selectById(userMap.get("userId"));
+            //根据订单编号获得支付金额
+            List<Condition> filters = new ArrayList();
+            filters.add(Condition.eq("orderSn", orderSn));
+            OrderInfo orderinfo  = orderService.selectOne(filters);
+            //验证支付密码
+
+            //插流水调支付宝接口
+            reqHtml = payAccountService.payByAli(orderinfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(StringUtils.isEmpty(reqHtml)){
+            return "redirect:/404.html";
+        }else
+            return new ResponseEntity<String>(reqHtml, HttpStatus.OK);
     }
 
  /*   @RequestMapping(value = "/payment", method = RequestMethod.GET)
@@ -178,5 +231,131 @@ public class PayController {
             return "redirect:/404.html";
         }else
             return new ResponseEntity<String>(reqHtml, HttpStatus.OK);
+    }
+
+    /**
+     * 支付宝回调
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/alipayRtn",method = RequestMethod.GET)
+    public ModelAndView returnBack4Alipay(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        ModelAndView view = null;
+        //商户订单号
+        String orderSn = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
+        //支付宝交易号
+        String tradeNo = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"),"UTF-8");
+        //交易状态
+        String tradeStatus = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
+        String total_fee = new String(request.getParameter("total_fee").getBytes("ISO-8859-1"),"UTF-8");
+        List<Condition> filter = new ArrayList<>();
+        filter.add(Condition.eq("orderSn",orderSn));
+        OrderInfo orderInfo = orderService.selectOne(filter);
+        if (payCoreService.verifyAlipay(getRequestParams(request))){
+            if(tradeStatus.equals("TRADE_FINISHED") || tradeStatus.equals("TRADE_SUCCESS")){
+                //交易成功,插交易中心冻结收入流水，更新交易中心虚拟账户金额
+                PayTradeRecord payTradeRecord = new PayTradeRecord();
+                payTradeRecord.setUserId(orderInfo.getUserId());//交易中心Id
+                payTradeRecord.setMoney(orderInfo.getOrderAmount());
+                payTradeRecord.setTradeType(HookahConstants.TradeType.FreezaIn.getCode());
+                payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.handing.getCode());
+                payTradeRecord.setAddTime(new Date());
+                payTradeRecord.setOrderSn(orderSn);
+                payTradeRecord.setAddOperator(orderInfo.getUserId());
+                payTradeRecord.setTransferDate(new Date());
+                payTradeRecordService.insertAndGetId(payTradeRecord);
+
+
+
+                //修改内部流水的状态和外部充值状态
+                List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
+                for (PayTradeRecord payTradeRecord1 : payTradeRecords){
+                    payTradeRecord1.setTradeStatus((byte)1);
+                }
+
+                //更新订单状态
+                orderService.updatePayStatus(orderSn,2);
+                view = new ModelAndView("redirect:/paySucess.html?orderSn="+orderSn);
+            }else{
+                //交易失败
+                List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
+                for (PayTradeRecord payTradeRecord1 : payTradeRecords){
+                    payTradeRecord1.setTradeStatus((byte)2);
+                }
+                view = new ModelAndView("redirect:/payError.html?orderSn="+orderSn);
+            }
+        }else{
+            view = new ModelAndView("redirect:/payError.html?orderSn="+orderSn);
+        }
+        return view;
+    }
+
+    @RequestMapping(value="/alipay_ntf", method = RequestMethod.POST)
+    String notifyBack4Alipay(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        //商户订单号
+        String orderSn = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
+        //支付宝交易号
+        String tradeNo = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"),"UTF-8");
+        //交易状态
+        String tradeStatus = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
+        List<Condition> filter = new ArrayList<>();
+        filter.add(Condition.eq("orderSn",orderSn));
+        OrderInfo orderInfo = orderService.selectOne(filter);
+        if(payCoreService.verifyAlipay(getRequestParams(request))){
+            PayCore paied = payCoreService.findPayCoreByOrderSn(orderSn);
+            if(tradeStatus.equals("TRADE_SUCCESS") || tradeStatus.equals("TRADE_FINISHED")){
+                //交易成功,插交易中心冻结收入流水，更新交易中心虚拟账户金额
+                PayTradeRecord payTradeRecord = new PayTradeRecord();
+                payTradeRecord.setPayAccountId(HookahConstants.TRADECENTERACCOUNT);//交易中心虚拟账号Id
+                payTradeRecord.setUserId(orderInfo.getUserId());//交易中心Id
+                payTradeRecord.setMoney(orderInfo.getOrderAmount());
+                payTradeRecord.setTradeType(HookahConstants.TradeType.FreezaIn.getCode());
+                payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.handing.getCode());
+                payTradeRecord.setAddTime(new Date());
+                payTradeRecord.setOrderSn(orderSn);
+                payTradeRecord.setAddOperator(orderInfo.getUserId());
+                payTradeRecord.setTransferDate(new Date());
+                payTradeRecordService.insertAndGetId(payTradeRecord);
+
+                //修改内部流水的状态和外部充值状态
+                List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
+                for (PayTradeRecord payTradeRecord1 : payTradeRecords){
+                    payTradeRecord1.setTradeStatus((byte)1);
+                }
+                //更新订单状态
+                orderService.updatePayStatus(orderSn,2);
+            }else {
+                List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
+                for (PayTradeRecord payTradeRecord1 : payTradeRecords){
+                    payTradeRecord1.setTradeStatus((byte)2);
+                }
+            }
+//            payCoreService.updatePayCore(paied);
+            return "success";
+        }else {
+            return "fail";
+        }
+    }
+
+    @SuppressWarnings("rawtypes")
+    private Map<String,String> getRequestParams(HttpServletRequest request){
+        //处理通知参数
+        Map<String,String> params = new HashMap<String,String>();
+        Map requestParams = request.getParameterMap();
+        for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext();) {
+            String name = (String) iter.next();
+            String[] values = (String[]) requestParams.get(name);
+            String valueStr = "";
+            for (int i = 0; i < values.length; i++) {
+                valueStr = (i == values.length - 1) ? valueStr + values[i]
+                        : valueStr + values[i] + ",";
+            }
+            //乱码解决，这段代码在出现乱码时使用。如果mysign和sign不相等也可以使用这段代码转化
+            //valueStr = new String(valueStr.getBytes("ISO-8859-1"), "gbk");
+            params.put(name, valueStr);
+        }
+        return params;
     }
 }
