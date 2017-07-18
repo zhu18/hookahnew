@@ -42,6 +42,7 @@ public class PayServerLauncher {
             PayServerLauncher.class
         }, args);
         MotanSwitcherUtil.setSwitcherValue(MotanConstants.REGISTRY_HEARTBEAT_SWITCHER, true);
+        System.out.println("pay server start...");
     }
 
     @PostConstruct

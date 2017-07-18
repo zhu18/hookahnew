@@ -1020,15 +1020,15 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         return map;
     }
 
-    @Scheduled()
-    public void deleteOrderByTime(){
-
-        Date date = new Date();
-
-        List<OrderInfo> orderInfos = orderinfoMapper.selectAll();
-        for (OrderInfo orderInfo:orderInfos){
-            long addTime = orderInfo.getAddTime().getTime();
-
-        }
-    }
+//    @Scheduled()
+//    public void deleteOrderByTime(){
+//
+//        Date date = new Date();
+//
+//        List<OrderInfo> orderInfos = orderinfoMapper.selectAll();
+//        for (OrderInfo orderInfo:orderInfos){
+//            long addTime = orderInfo.getAddTime().getTime();
+//
+//        }
+//    }
 }
