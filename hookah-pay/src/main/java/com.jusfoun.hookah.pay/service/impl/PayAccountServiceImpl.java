@@ -1,8 +1,12 @@
 package com.jusfoun.hookah.pay.service.impl;
 
 
+import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.PayAccountMapper;
-import com.jusfoun.hookah.core.domain.*;
+import com.jusfoun.hookah.core.domain.OrderInfo;
+import com.jusfoun.hookah.core.domain.PayAccount;
+import com.jusfoun.hookah.core.domain.PayTradeRecord;
+import com.jusfoun.hookah.core.domain.WaitSettleRecord;
 import com.jusfoun.hookah.core.domain.bo.MoneyInOutBo;
 import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
@@ -19,10 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.*;
-
-/**
- * dengxu
- */
 
 @Service
 public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> implements
@@ -304,10 +304,13 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		List<Condition> filter = new ArrayList<>();
 		filter.add(Condition.eq("userId",userId));
 		PayAccount payAccount = super.selectOne(filter);
-		Long oldBalance = payAccount.getBalance();
-		Long newBalance = oldBalance-orderAmount;
-		payAccount.setBalance(newBalance);
-		payAccountMapper.updateByPrimaryKeySelective(payAccount);
+		operatorByType(payAccount.getId(), HookahConstants.TradeType.SalesOut.getCode(), orderAmount);
+
+//		Long oldBalance = payAccount.getBalance();
+//		Long newBalance = oldBalance-orderAmount;
+//		payAccount.setBalance(newBalance);
+//		payAccountMapper.updateByPrimaryKeySelective(payAccount);
+
 
 		// 支付成功 查询订单 获取订单中商品插入到待清算记录
 		List<Condition> mgfilters = new ArrayList<>();
