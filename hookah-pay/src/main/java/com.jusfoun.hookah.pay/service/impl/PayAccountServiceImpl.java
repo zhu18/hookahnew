@@ -5,6 +5,7 @@ import com.jusfoun.hookah.core.dao.PayAccountMapper;
 import com.jusfoun.hookah.core.domain.PayAccount;
 import com.jusfoun.hookah.core.domain.PayTradeRecord;
 import com.jusfoun.hookah.core.domain.bo.MoneyInOutBo;
+import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.StringUtils;
@@ -228,5 +229,21 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		map.put("id", id);
 		map.put("payPassword", payPassword);
 		payAccountMapper.resetPayPassword(map);
+	}
+
+	//验证 支付密码是否正确
+	public boolean ver (String payPassword) throws HookahException {
+		String userId = this.getCurrentUser().getUserId();
+		List<Condition> filters = new ArrayList();
+		if(org.apache.commons.lang3.StringUtils.isNotBlank(userId)){
+			filters.add(Condition.eq("userId", userId));
+		}
+        PayAccount payAccount = super.selectOne(filters);
+        if(StringUtils.isNotBlank(payAccount.getPayPassword())){
+            if(payAccount.getPayPassword().equals(payPassword)){
+                return true;
+            }
+        }
+		return false;
 	}
 }

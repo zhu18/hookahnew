@@ -5,6 +5,7 @@ $(function(){
     //地域加载
     var regionParam = 100000;
     loadRegion('province', regionParam); //加载地域
+    supplier()
 });
 $('.upLoad').mouseover(function(){
     $(this).children('.upLoad_warp').show();
@@ -158,3 +159,15 @@ $('#verifyBtn').click(function(){
 		companyAuth();
 	}
 });
+
+// 我要成为供应商点击事件
+function supplier() {
+    $(".supplier-info").hide();
+    $(".inputBoxs .supplier").on("click",function () {
+        if($(this).is(":checked")){
+            $(".supplier-info").show()
+        }else{
+            $(".supplier-info").hide()
+        }
+    })
+}

@@ -47,7 +47,7 @@ public class AlipayServiceImpl extends GenericServiceImpl<PayAccountRecord, Stri
     }
 
     @Override
-    public String doPay(String userId, String orderId, String notifyUrl, String returnUrl) {
+    public String doPay(String userId, String orderId) {
         if (!StringUtils.isNotBlank(userId) || !StringUtils.isNotBlank(orderId))
             return null;
         //根据orderId查询orderInfo
@@ -55,7 +55,7 @@ public class AlipayServiceImpl extends GenericServiceImpl<PayAccountRecord, Stri
         if (!orderInfoVo.getOrderStatus().equals(PayCore.PayStatus.unpay))
             return null;
         //构造html
-        String html = buildRequestParams(userId, orderInfoVo, notifyUrl, returnUrl);
+        String html = buildRequestParams(userId, orderInfoVo);
         //记账
         PayAccountRecord payAccountRecord = new PayAccountRecord();
         payAccountRecord.setPayAccountId(Long.valueOf(userId));
@@ -82,7 +82,7 @@ public class AlipayServiceImpl extends GenericServiceImpl<PayAccountRecord, Stri
         return count > 0;
     }
 
-    private String buildRequestParams(String userId, OrderInfoVo payVo, String notifyUrl, String returnUrl) {
+    private String buildRequestParams(String userId, OrderInfoVo payVo) {
         Map<String, String> map = new HashMap<String, String>();
         //基本信息
         map.put("service", AlipayConfig.service);
@@ -90,8 +90,8 @@ public class AlipayServiceImpl extends GenericServiceImpl<PayAccountRecord, Stri
         map.put("seller_id", AlipayConfig.seller_id);
         map.put("_input_charset", AlipayConfig.input_charset);
         map.put("payment_type", AlipayConfig.payment_type);
-        map.put("notify_url", notifyUrl);
-        map.put("return_url", returnUrl);
+        map.put("notify_url", PayConfiguration.ALIPAY_NOTIFY_URL);
+        map.put("return_url", PayConfiguration.ALIPAY_RETURN_URL);
         map.put("anti_phishing_key", AlipayConfig.anti_phishing_key);
         map.put("exter_invoke_ip", AlipayConfig.exter_invoke_ip);
         //订单信息

@@ -403,4 +403,31 @@ public class HookahConstants {
             return code;
         }
     }
+    /**
+     * withdraw
+     * 提现审核状态
+         0待审核
+         1审核成功
+         2审核失败
+         3处理成功
+         4处理失败
+     */
+    public enum WithdrawStatus {
+
+        waitCheck((byte)0),
+        CheckSuccess((byte)1),
+        checkFail((byte)2);
+//        handleSuccess((byte)3),
+//        handleFail((byte)4);
+
+        public byte code;
+
+        WithdrawStatus(byte code) {
+            this.code = code;
+        }
+
+        public byte getCode() {
+            return code;
+        }
+    }
 }
