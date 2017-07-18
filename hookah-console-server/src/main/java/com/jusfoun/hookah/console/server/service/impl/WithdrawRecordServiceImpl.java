@@ -3,6 +3,7 @@ package com.jusfoun.hookah.console.server.service.impl;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.WithdrawRecordMapper;
 import com.jusfoun.hookah.core.domain.WithdrawRecord;
+import com.jusfoun.hookah.core.domain.vo.WithdrawVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.DateUtils;
@@ -72,7 +73,7 @@ public class WithdrawRecordServiceImpl extends GenericServiceImpl<WithdrawRecord
     }
 
     @Override
-    public List<WithdrawRecord> getListForPage(String startDate, String endDate, String checkStatus, String orgName) {
+    public List<WithdrawVo> getListForPage(String startDate, String endDate, String checkStatus, String orgName) {
         return withdrawRecordMapper.getListForPage(startDate, endDate, checkStatus, orgName);
     }
 }

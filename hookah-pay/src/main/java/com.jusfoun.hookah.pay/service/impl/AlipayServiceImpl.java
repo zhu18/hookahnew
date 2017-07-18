@@ -1,34 +1,22 @@
 package com.jusfoun.hookah.pay.service.impl;
 
 
-import com.apex.etm.qss.client.IFixClient;
-import com.apex.etm.qss.client.fixservice.FixConstants;
-import com.apex.etm.qss.client.fixservice.bean.ResultBean;
-import com.apex.fix.AxCallFunc;
-import com.apex.fix.JFixComm;
-import com.apex.fix.JFixSess;
 import com.jusfoun.hookah.core.dao.PayAccountRecordMapper;
 import com.jusfoun.hookah.core.domain.PayAccountRecord;
-import com.jusfoun.hookah.core.domain.PayBankCard;
 import com.jusfoun.hookah.core.domain.PayCore;
-import com.jusfoun.hookah.core.domain.PayTradeRecord;
-import com.jusfoun.hookah.core.domain.bo.MoneyInOutBo;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
-import com.jusfoun.hookah.core.exception.HookahException;
-import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
+import com.jusfoun.hookah.core.utils.OrderHelper;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.pay.util.*;
-import com.jusfoun.hookah.rpc.api.*;
+import com.jusfoun.hookah.rpc.api.AlipayService;
+import com.jusfoun.hookah.rpc.api.MgOrderInfoService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Service
@@ -47,7 +35,7 @@ public class AlipayServiceImpl extends GenericServiceImpl<PayAccountRecord, Stri
     }
 
     @Override
-    public String doPay(String userId, String orderId, String notifyUrl, String returnUrl) {
+    public String doPay(String userId, String orderId, String notify_url, String return_url) {
         if (!StringUtils.isNotBlank(userId) || !StringUtils.isNotBlank(orderId))
             return null;
         //根据orderId查询orderInfo
@@ -55,7 +43,31 @@ public class AlipayServiceImpl extends GenericServiceImpl<PayAccountRecord, Stri
         if (!orderInfoVo.getOrderStatus().equals(PayCore.PayStatus.unpay))
             return null;
         //构造html
-        String html = buildRequestParams(userId, orderInfoVo, notifyUrl, returnUrl);
+        String html = buildRequestParams(userId, orderInfoVo, notify_url, return_url);
+        //记账
+        PayAccountRecord payAccountRecord = new PayAccountRecord();
+        payAccountRecord.setPayAccountId(Long.valueOf(userId));
+        payAccountRecord.setUserId(userId);
+        Date date = new Date();
+        payAccountRecord.setTransferDate(date);
+        payAccountRecord.setMoney(orderInfoVo.getOrderAmount());//订单资金总额
+        payAccountRecord.setSerialNumber(orderInfoVo.getOrderSn());//订单号
+        payAccountRecord.setAddTime(date);
+        payAccountRecord.setAddOperator(userId);
+        insertRecord(payAccountRecord);
+        return html;
+    }
+
+    @Override
+    public String doCharge(String userId, String money, String notify_url, String return_url) {
+        if (!StringUtils.isNotBlank(userId) || !StringUtils.isNotBlank(money))
+            return null;
+        OrderInfoVo orderInfoVo = new OrderInfoVo();
+        orderInfoVo.setOrderSn(OrderHelper.genOrderSn());
+        orderInfoVo.setOrderAmount(Long.valueOf(money));
+        orderInfoVo.setAccount(userId);
+        //构造html
+        String html = buildRequestParams(userId, orderInfoVo, notify_url, return_url);
         //记账
         PayAccountRecord payAccountRecord = new PayAccountRecord();
         payAccountRecord.setPayAccountId(Long.valueOf(userId));
@@ -82,7 +94,7 @@ public class AlipayServiceImpl extends GenericServiceImpl<PayAccountRecord, Stri
         return count > 0;
     }
 
-    private String buildRequestParams(String userId, OrderInfoVo payVo, String notifyUrl, String returnUrl) {
+    private String buildRequestParams(String userId, OrderInfoVo payVo, String notify_url, String return_url) {
         Map<String, String> map = new HashMap<String, String>();
         //基本信息
         map.put("service", AlipayConfig.service);
@@ -90,8 +102,8 @@ public class AlipayServiceImpl extends GenericServiceImpl<PayAccountRecord, Stri
         map.put("seller_id", AlipayConfig.seller_id);
         map.put("_input_charset", AlipayConfig.input_charset);
         map.put("payment_type", AlipayConfig.payment_type);
-        map.put("notify_url", notifyUrl);
-        map.put("return_url", returnUrl);
+        map.put("notify_url", PayConfiguration.ALIPAY_NOTIFY_URL);
+        map.put("return_url", PayConfiguration.ALIPAY_RETURN_URL);
         map.put("anti_phishing_key", AlipayConfig.anti_phishing_key);
         map.put("exter_invoke_ip", AlipayConfig.exter_invoke_ip);
         //订单信息

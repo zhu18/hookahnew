@@ -49,8 +49,8 @@ public class WithdrawRecordController extends BaseController {
 
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
-        Pagination<WithdrawRecord> pagination = new Pagination<>();
-        PageInfo<WithdrawRecord> page = new PageInfo<>();
+        Pagination<WithdrawVo> pagination = new Pagination<>();
+        PageInfo<WithdrawVo> page = new PageInfo<>();
         try {
 
             int pageNumberNew = HookahConstants.PAGE_NUM;
@@ -64,8 +64,8 @@ public class WithdrawRecordController extends BaseController {
             }
 
             PageHelper.startPage(pageNumberNew, pageSizeNew);   //pageNum为第几页，pageSize为每页数量
-            List<WithdrawRecord> list = withdrawRecordService.getListForPage(startDate, endDate, checkStatus, orgName);
-            page = new PageInfo<WithdrawRecord>(list);
+            List<WithdrawVo> list = withdrawRecordService.getListForPage(startDate, endDate, checkStatus, orgName);
+            page = new PageInfo<WithdrawVo>(list);
 
             pagination.setTotalItems(page.getTotal());
             pagination.setPageSize(pageSizeNew);

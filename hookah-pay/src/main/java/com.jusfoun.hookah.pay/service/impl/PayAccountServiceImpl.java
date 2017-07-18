@@ -1,26 +1,28 @@
 package com.jusfoun.hookah.pay.service.impl;
 
 
+import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.PayAccountMapper;
+import com.jusfoun.hookah.core.domain.OrderInfo;
 import com.jusfoun.hookah.core.domain.PayAccount;
 import com.jusfoun.hookah.core.domain.PayTradeRecord;
+import com.jusfoun.hookah.core.domain.WaitSettleRecord;
 import com.jusfoun.hookah.core.domain.bo.MoneyInOutBo;
+import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
+import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
+import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.StringUtils;
+import com.jusfoun.hookah.pay.util.PayConfiguration;
 import com.jusfoun.hookah.pay.util.PayConstants;
-import com.jusfoun.hookah.rpc.api.PayAccountService;
-import com.jusfoun.hookah.rpc.api.PayTradeRecordService;
+import com.jusfoun.hookah.rpc.api.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.*;
-
-/**
- * dengxu
- */
 
 @Service
 public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> implements
@@ -36,6 +38,18 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 
 	@Resource
 	PayTradeRecordService payTradeRecordService;
+
+	@Resource
+	AlipayService alipayService;
+
+	@Resource
+	OrderInfoService orderInfoService;
+
+	@Resource
+	WaitSettleRecordService waitSettleRecordService;
+
+	@Resource
+	MgOrderInfoService mgOrderInfoService;
 
 	@Transactional
 	public int operatorByType(Long payAccountId, Integer operatorType, Long money) {
@@ -228,5 +242,105 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		map.put("id", id);
 		map.put("payPassword", payPassword);
 		payAccountMapper.resetPayPassword(map);
+	}
+
+	//验证 支付密码是否正确
+	public boolean ver (String payPassword) throws HookahException {
+		String userId = this.getCurrentUser().getUserId();
+		List<Condition> filters = new ArrayList();
+		if(org.apache.commons.lang3.StringUtils.isNotBlank(userId)){
+			filters.add(Condition.eq("userId", userId));
+		}
+        PayAccount payAccount = super.selectOne(filters);
+        if(StringUtils.isNotBlank(payAccount.getPayPassword())){
+            if(payAccount.getPayPassword().equals(payPassword)){
+                return true;
+            }
+        }
+		return false;
+	}
+
+	@Override
+	@Transactional
+	public void payOperator(String userId, String orderId, String orderSn, Long money, String payMode) throws Exception{
+		//插内部消费流水
+		PayTradeRecord payTradeRecord = new PayTradeRecord();
+		payTradeRecord.setUserId(userId);
+		payTradeRecord.setMoney(money);
+		payTradeRecord.setTradeType(PayConstants.TradeType.SalesOut.getCode());
+		payTradeRecord.setTradeStatus(PayConstants.TransferStatus.handing.getCode());
+		payTradeRecord.setAddTime(new Date());
+		payTradeRecord.setOrderSn(orderSn);
+		payTradeRecord.setAddOperator(userId);
+		payTradeRecord.setTransferDate(new Date());
+		payTradeRecordService.insertAndGetId(payTradeRecord);
+
+		if (payMode.equals("1")){//余额
+			doPayByBalance(orderId,userId);
+		}else if (payMode.equals("2")){//支付宝
+			//插内部充值流水
+			PayTradeRecord payTrade = new PayTradeRecord();
+			payTrade.setUserId(userId);
+			payTrade.setMoney(money);
+			payTrade.setTradeType(PayConstants.TradeType.OnlineRecharge.getCode());
+			payTrade.setTradeStatus(PayConstants.TransferStatus.handing.getCode());
+			payTrade.setAddTime(new Date());
+			payTrade.setOrderSn(orderSn);
+			payTrade.setAddOperator(userId);
+			payTrade.setTransferDate(new Date());
+			payTradeRecordService.insertAndGetId(payTrade);
+			//调支付宝接口
+			alipayService.doPay(userId,orderId, PayConfiguration.ALIPAY_NOTIFY_URL,PayConfiguration.ALIPAY_RETURN_URL);
+		}
+	}
+
+	public void doPayByBalance(String orderId, String userId) throws Exception{
+		OrderInfo orderinfo  = orderInfoService.selectById(orderId);
+		//修改订单支付状态
+		orderinfo.setPayStatus(OrderInfo.PAYSTATUS_PAYED);
+		orderInfoService.updatePayStatus(orderinfo.getOrderSn(),OrderInfo.PAYSTATUS_PAYED);
+		Long orderAmount = orderinfo.getOrderAmount();
+		//减去余额
+		List<Condition> filter = new ArrayList<>();
+		filter.add(Condition.eq("userId",userId));
+		PayAccount payAccount = super.selectOne(filter);
+		operatorByType(payAccount.getId(), HookahConstants.TradeType.SalesOut.getCode(), orderAmount);
+
+//		Long oldBalance = payAccount.getBalance();
+//		Long newBalance = oldBalance-orderAmount;
+//		payAccount.setBalance(newBalance);
+//		payAccountMapper.updateByPrimaryKeySelective(payAccount);
+
+
+		// 支付成功 查询订单 获取订单中商品插入到待清算记录
+		List<Condition> mgfilters = new ArrayList<>();
+		mgfilters.add(Condition.eq("orderSn", orderinfo.getOrderSn()));
+		OrderInfoVo orderInfoVo = mgOrderInfoService.selectOne(mgfilters);
+		if(orderInfoVo != null){
+			List<MgOrderGoods> mgOrderGoodsList = orderInfoVo.getMgOrderGoodsList();
+			List<WaitSettleRecord> waitSettleRecords = new ArrayList<>();
+			if(mgOrderGoodsList != null && mgOrderGoodsList.size() > 0){
+				for(MgOrderGoods mgOrderGoods : mgOrderGoodsList){
+					WaitSettleRecord waitSettleRecord = new WaitSettleRecord();
+					waitSettleRecord.setOrderSn(mgOrderGoods.getOrderSn());
+					waitSettleRecord.setGoodsId(mgOrderGoods.getGoodsId());
+					waitSettleRecord.setOrderId(orderInfoVo.getOrderId());
+					waitSettleRecord.setOrderAmount(mgOrderGoods.getGoodsPrice());
+//					waitSettleRecord.setOrderTime(orderInfoVo.getPayTime());
+					waitSettleRecord.setOrderTime(orderInfoVo.getAddTime());
+					waitSettleRecord.setHasSettleAmount(0L);
+					waitSettleRecord.setNoSettleAmount(mgOrderGoods.getGoodsPrice());
+					waitSettleRecord.setAddTime(new Date());
+					waitSettleRecord.setSettleStatus((byte)0);
+					waitSettleRecord.setShopName(mgOrderGoods.getAddUser());
+					waitSettleRecord.setGoodsName(mgOrderGoods.getGoodsName());
+					waitSettleRecords.add(waitSettleRecord);
+				}
+
+				int n = waitSettleRecordService.insertBatch(waitSettleRecords);
+				System.out.println(n);
+			}
+		}
+
 	}
 }

@@ -303,7 +303,7 @@
           <include>**/*.xml</include>
           <include>**/*.properties</include>
           <include>**/*.yml</include>
-          <include>**/.txt</include>
+          <include>**/*.txt</include>
         </includes>
       </resource>
        <!--打包时注释下面的resource-->
