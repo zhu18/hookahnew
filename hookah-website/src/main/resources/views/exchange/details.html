@@ -44,12 +44,12 @@ var htmlPart = {
 						<img src="${host.static}/${goodsDetails.goodsImg}" alt="" id="J_goodsImg">
 					</div>
 					<div class="collect-box margin-top-20">
-						<p class="display-inline-block">
+						<p class="display-inline-block" title="浏览量">
 							<i class="iconfont icon-liulan-copy" aria-hidden="true"></i>
-							<span>浏览:</span>
+							<span></span>
 							<span>${goodsDetails.clickRate}</span>
 						</p>
-						<p class="display-inline-block margin-left-40">
+						<p class="display-inline-block margin-left-20" title="点击关注">
 							<span class="attention">
 								<%if(goodsDetails.orNotFavorite){%>
 								<i class="iconfont icon-jushoucanggift color-red"></i>
@@ -59,6 +59,11 @@ var htmlPart = {
 								<span class="eval">关注:</span>
 								<%}%><span id="J_atonNum">${goodsDetails.followNum}</span>
 							</span>
+						</p>
+						<p class="display-inline-block margin-left-20" title="销量">
+							<i class="fa fa-line-chart" aria-hidden="true"></i>
+							<span></span>
+							<span>sales</span>
 						</p>
 					</div>
 				</div>

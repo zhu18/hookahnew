@@ -249,10 +249,13 @@ h1{
     top: 0;
     width: 100px;
     height: 100px;
-    opacity: 0;
-    background: rgba(0,0,0,0.7);
+    background: rgba(0,0,0,0);
     cursor: pointer;
     z-index: 40;
+    filter:alpha(opacity=0); /* IE */
+    -moz-opacity:0; /* 老版Mozilla */
+    -khtml-opacity:0; /* 老版Safari */
+    opacity: 0; /* 支持opacity的浏览器*/
 }
 .multimage-wrap .image-list li .preview .replace-btn {
     display: none;
@@ -317,7 +320,10 @@ h1{
     position: absolute;
     left:0;
     top:0;
-    opacity: 0;
+    filter:alpha(opacity=0); /* IE */
+    -moz-opacity:0; /* 老版Mozilla */
+    -khtml-opacity:0; /* 老版Safari */
+    opacity: 0; /* 支持opacity的浏览器*/
     cursor: pointer;
 }
 .childrenSelect{
@@ -346,7 +352,10 @@ h1{
     font-size: 100px;
     right: 0;
     top: 0;
-    opacity: 0;
+    filter:alpha(opacity=0); /* IE */
+    -moz-opacity:0; /* 老版Mozilla */
+    -khtml-opacity:0; /* 老版Safari */
+    opacity: 0; /* 支持opacity的浏览器*/
 }
 .uploadFiles:hover {
     background: #AADFFD;

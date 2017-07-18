@@ -297,7 +297,13 @@ function validataFn(){
 			},
 			goodsImges:'required',
 			goodsImges2:'required',
-			goodsDescBox:'required'
+			goodsDescBox:'required',
+			aexp:{
+				isModelTool:true,
+			},
+			relationServ:{
+				isModelTool:true,
+			}
 		},
 		messages: {
 			goodsName:  {
@@ -429,9 +435,9 @@ function tablePlus(that) {
 	priceHtml += '<td class="name-input"><div class="inputbox"><input type="text" datatype="name" placeholder="请输入名称"></div></td>';
 	priceHtml += '<td class="number-input"><div class="inputbox"><input type="number" datatype="number" digits="true" placeholder="请输入规格"></div></td>';
 	priceHtml += '<td style="width: 40px;"><div class="selectbox"><select name="format" ><option value="0">次</option><option value="1">月</option><option value="2">年</option><option value="3">套</option></select></div></td>';
-	priceHtml += '<td class="price-input"><div class="inputbox"><input type="text" class="price-inputs number" datatype="settlementPrice" placeholder="请输入结算价" isPricceData="true"></div></td>';
-	priceHtml += '<td class="price-input"><div class="inputbox"><input type="text" class="price-inputs number" datatype="agencyPrice" placeholder="请输入代理价" isPricceData="true"></div></td>';
-	priceHtml += '<td class="price-input"><div class="inputbox"><input type="text" class="price-inputs number" datatype="price" placeholder="请输入零售价" isPricceData="true"></div></td>';
+	priceHtml += '<td class="price-input price-input1"><div class="inputbox"><input type="text" class="price-inputs number" datatype="settlementPrice" placeholder="请输入结算价" isPricceData="true"></div></td>';
+	priceHtml += '<td class="price-input price-input2"><div class="inputbox"><input type="text" class="price-inputs number" datatype="agencyPrice" placeholder="请输入代理价" isPricceData="true"></div></td>';
+	priceHtml += '<td class="price-input price-input3"><div class="inputbox"><input type="text" class="price-inputs number" datatype="price" placeholder="请输入零售价" isPricceData="true"></div></td>';
 	priceHtml += '<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
 	priceHtml += '</tr>';
 	var requestHtml = '';//请求接口
@@ -452,7 +458,7 @@ function tablePlus(that) {
 	returnHtml += '<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
 	returnHtml += '</tr>';
 	if ($(that).parents('.table-plus').attr('d-type') == 'priceHtml') {
-		if ($(that).parent().siblings('.number-input').find('input').val() && $(that).parent().siblings('.price-input').find('input').val()) {
+		if ($(that).parent().siblings('.number-input').find('input').val() && $(that).parent().siblings('.price-input1').find('input').val() && $(that).parent().siblings('.price-input2').find('input').val() && $(that).parent().siblings('.price-input3').find('input').val()) {
 			$(that).parents('.table-plus tbody').append(priceHtml);
 			addItem(that)
 		} else {
@@ -477,7 +483,49 @@ function tablePlus(that) {
 		$(that).text('-').attr('onclick', 'tableDelete(this)');
 	}
 	floorPrice();
-	renderFormatFn(goodsTypeId)
+	renderLastFormatFn(goodsTypeId)
+}
+function renderLastFormatFn(goodsTypeId){
+	if(goodsTypeId == 0 || goodsTypeId == 2 || goodsTypeId == 4 || goodsTypeId == 6){
+		$('table[d-type="priceHtml"] tbody tr:last select[name="format"] option').each(function(){
+			if($(this).val() == 3){
+				$(this).attr('selected','selected')
+			}else{
+				$(this).removeAttrs('selected')
+			}
+			if($(this).val() != 3){
+				$(this).attr('disabled','disabled')
+			}else{
+				$(this).removeAttrs('disabled');
+			}
+		})
+	}else if(goodsTypeId == 1){
+		$('table[d-type="priceHtml"] tbody tr:last select[name="format"] option').each(function() {
+			if ($(this).val() == 3) {
+				$(this).attr('disabled', 'disabled')
+			}else{
+				$(this).removeAttrs('disabled');
+			}
+			if($(this).val() == 0){
+				$(this).attr('selected','selected')
+			}else{
+				$(this).removeAttrs('selected')
+			}
+		})
+	}else if(goodsTypeId == 5 || goodsTypeId == 7){
+		$('table[d-type="priceHtml"] tbody tr:last select[name="format"] option').each(function() {
+			if ($(this).val() == 0 || $(this).val() == 3) {
+				$(this).attr('disabled', 'disabled');
+			}else{
+				$(this).removeAttrs('disabled');
+			}
+			if ($(this).val() == 1) {
+				$(this).attr('selected', 'selected')
+			}else{
+				$(this).removeAttrs('selected')
+			}
+		})
+	}
 }
 function floorPrice(){ //监控价格输入为“.”时转换为“0.”
 	$('.price-inputs').on('input onporpertychange',function () {
@@ -512,6 +560,12 @@ $('#goodsBriefes').on('input onporpertychange',function () {
 $('#trialRange').on('input onporpertychange',function () {
 	$('#trialRange_s').html(getLength($(this).val()));
 });
+$('#aexp').on('input onporpertychange',function () {
+	$('#aexp_s').html(getLength($(this).val()));
+});
+$('#relationServ').on('input onporpertychange',function () {
+	$('#relationServ_s').html(getLength($(this).val()));
+});
 $.validator.addMethod("isGoodsName", function(value, element) {
 	var len = value.replace(/[\u0391-\uFFE5]/g,"aa").length;
 	return this.optional(element) || (10 <= len && len <= 60);
@@ -520,6 +574,10 @@ $.validator.addMethod("isGoodsBrief", function(value, element) {
 	var len = value.replace(/[\u0391-\uFFE5]/g,"aa").length;
 	return this.optional(element) || (30 <= len && len <= 400);
 }, "长度为30-400个字符（每个汉字为2个字符）");
+$.validator.addMethod("isModelTool", function(value, element) {
+	var len = value.replace(/[\u0391-\uFFE5]/g,"aa").length;
+	return this.optional(element) || (0 <= len && len <= 100);
+}, "长度为0-100个字符（每个汉字为2个字符）");
 $.validator.addMethod("isPricceB", function(value, element) {
 	var isPricce = false;
 	if(value > 0){
@@ -622,7 +680,16 @@ function submitGoodsPublish(){
 	}else if($('select[name="parentSelect"]').val() == '400'){
 		data.goodsType = $('select[name="childrenSelect3"]').val();
 	}
-	data.catId = catId; //此ID为url上的id
+
+	if(urlPath == '/usercenter/goodsModify'){ //修改商品
+		if($('#lastCategory').val()){
+			data.catId = $('#lastCategory').val();
+		}else{
+			data.catId = $('#twoCategory').val();
+		}
+	}else{
+		data.catId = catId; //此ID为url上的id
+	}
 	data.isBook = $('input[name="isBook"]:checked').val(); //上架方式
 	data.isOffline = $('select[name="isOffline"]').val(); // 交付方式  0 线上支付；1 线下支付
 	if (data.isBook == 1) {
@@ -635,144 +702,142 @@ function submitGoodsPublish(){
 	}else if($('select[name="country"]').val() > 0){
 		data.goodsArea = $('select[name="country"]').val();
 	}
-	if(data.isOffline == 0) {
-		if (data.goodsType == 0) {
-			data.offLineData = {};
-			data.goodsDesc = $('#textarea1').val(); //商品详情
-			data.goodsAdvantage = $('#textarea2').val(); //商品优势
-			data.afterSaleService = $('#textarea3').val(); //售后服务
-			data.offLineData = {};
-			data.offLineData.timeFrame = {};
-			data.offLineData.timeFrame.startDate = $('#offLine_startDate').val();
-			data.offLineData.timeFrame.endDate = $('#offLine_endDate').val();
-			data.offLineData.dataRows = $('input[name="dataRows"]').val();
-			data.offLineData.dataCapacity = $('input[name="dataCapacity"]').val();
-			data.offLineData.dataFormat = $('input[name="dataFormat"]').val();
-			data.offLineData.isOnline = $('select[name="isOnline"]').val();
-			data.offLineData.dataPwd = $('input[name="dataPwd"]').val();
-			if(data.offLineData.isOnline == 0){
-				data.offLineData.localUrl = $('#J_fileUploadSS').val();
-			}else{
-				data.offLineData.onlineUrl = $('input[name="onlineUrl"]').val();
-			}
-		} else if (data.goodsType == 1) {//API------------------------------
-			data.goodsDesc = $('#textarea1').val(); //商品详情
-			data.goodsAdvantage = $('#textarea2').val(); //商品优势
-			data.afterSaleService = $('#textarea3').val(); //售后服务
-			data.appCase = $('#textarea4').val(); //应用案例
-			data.apiInfo = {};
-			data.apiInfo.apiType = $('.api-info-box').find('input[name="apiType"]:checked').val();
-			data.apiInfo.invokeMethod = $('.api-info-box').find('input[name="invokeMethod"]').val();
-			data.apiInfo.apiUrl = $('.api-info-box').find('input[name="apiUrl"]').val();
-			data.apiInfo.apiMethod = $('.api-info-box').find('input[name="apiMethod"]:checked').val();
-			data.apiInfo.reqSample = $('.api-info-box').find('input[name="reqSample"]').val();
-			data.apiInfo.apiDesc = $('.api-info-box').find('#apiDesc').val();
-			data.apiInfo.reqParamList = [];
-			$('table[d-type="requestHtml"] tbody tr').each(function (i, item) {
-				var listData = {};
-				listData.fieldName = $(item).find('input[name="fieldName"]').val();
-				listData.fieldType = $(item).find('select[name="fieldType"]').val();
-				listData.isMust = $(item).find('input[name="isMust' + i + '"]:checked').val();
-				listData.fieldSample = $(item).find('input[name="fieldSample"]').val();
-				listData.fieldDefault = $(item).find('input[name="fieldDefault"]').val();
-				listData.describle = $(item).find('textarea[name="describle"]').val();
-				data.apiInfo.reqParamList.push(listData);
-			});
-			data.apiInfo.respParamList = [];
-			$('table[d-type="returnHtml"] tbody tr').each(function () {
-				var listData = {};
-				listData.fieldName = $(this).find('input[name="fieldName"]').val();
-				listData.fieldType = $(this).find('select[name="fieldType"]').val();
-				listData.describle = $(this).find('textarea[name="describle"]').val();
-				data.apiInfo.respParamList.push(listData);
-			});
-			console.log(data.apiInfo.respParamList);//----------------------
-			data.apiInfo.respSample = $('#respSample').val();
-			data.apiInfo.respDataFormat = $('.api-info-box').find('input[name="respDataFormat"]:checked').val();
-			data.apiInfo.respDataMapping = {};
-			data.apiInfo.respDataMapping.codeAttrBean = {};
-			data.apiInfo.respDataMapping.codeAttrBean.codeAttr = $('input[name="codeAttr"]').val();
-			data.apiInfo.respDataMapping.codeAttrBean.codeInfoBean = {};
-			data.apiInfo.respDataMapping.codeAttrBean.codeInfoBean.successCode = $('input[name="successCode"]').val();
-			data.apiInfo.respDataMapping.codeAttrBean.codeInfoBean.failedCode = $('input[name="failedCode"]').val();
-			data.apiInfo.respDataMapping.codeAttrBean.codeInfoBean.successNoData = $('input[name="successNoData"]').val();
-			data.apiInfo.respDataMapping.infoAttr = $('input[name="infoAttr"]').val();
-			data.apiInfo.respDataMapping.dataAttr = $('input[name="dataAttr"]').val();
-			data.apiInfo.respDataMapping.totalNumAttr = $('input[name="totalNumAttr"]').val();
-			data.apiInfo.updateFreq = $('input[name="updateFreq"]').val();
-			data.apiInfo.dataNumDivRowNum = $('input[name="dataNumDivRowNum"]').val();
-			data.apiInfo.encryptInfo = {};
-			data.apiInfo.encryptInfo.secretKeyName = $('.api-info-box').find('input[name="secretKeyName"]').val();
-			data.apiInfo.encryptInfo.secretKeyValue = $('.api-info-box').find('input[name="secretKeyValue"]').val();
-		} else if (data.goodsType == 2) {
-			data.goodsDesc = $('#textarea1').val(); //商品详情
-			data.goodsAdvantage = $('#textarea2').val(); //商品优势
-			data.afterSaleService = $('#textarea3').val(); //售后服务
-			data.dataModel = {};
-			data.dataModel.modelType = $('select[name="modelType"]').val();
-			data.dataModel.complexity = $('select[name="complexity"]').val();
-			data.dataModel.maturity = $('select[name="maturity"]').val();
-			data.dataModel.aexp = $('textarea[name="aexp"]').val();
-			data.dataModel.relationServ = $('textarea[name="relationServ"]').val();
-			data.dataModel.modelFile = {};
-			data.dataModel.modelFile.fileAddress = $('input[name="modelFile"]').val();
-			data.dataModel.modelFile.filePwd = $('input[name="modelFilePwd"]').val();
-			data.dataModel.configFile = {};
-			data.dataModel.configFile.fileAddress = $('input[name="configFile"]').val();
-			data.dataModel.configFile.filePwd = $('input[name="configFilePwd"]').val();
-			data.dataModel.paramFile = {};
-			data.dataModel.paramFile.fileAddress = $('.dataModel-isOnLine-box input[name="configParams"]').val();
-			data.dataModel.paramFile.filePwd = $('input[name="configParamsPwd"]').val();
-			data.dataModel.concatInfo = {};
-			data.dataModel.concatInfo.concatName = $('.dataModel_concat input[name="concatName"]').val();
-			data.dataModel.concatInfo.concatPhone = $('.dataModel_concat input[name="concatPhone"]').val();
-			data.dataModel.concatInfo.concatEmail = $('.dataModel_concat input[name="concatEmail"]').val();
-		} else if (data.goodsType == 4) {
-			data.afterSaleService = $('#textarea3').val(); //售后服务
-			data.appCase = $('#textarea4').val(); //应用案例
-			data.atAloneSoftware = {};
-			data.atAloneSoftware.coreFunction = $('#textareaAs').val();
-			data.atAloneSoftware.technologicalSuperiority = $('#textareaBs').val();
-			data.atAloneSoftware.teamAdvantage = $('#textareaCs').val();
-			data.atAloneSoftware.desiredEnvironment = $('#textareaDs').val();
-			data.atAloneSoftware.dataNeeded = $('#textareaEs').val();
-			data.atAloneSoftware.dataAddress = $('.visitOnline-isOnLine-box input[name="dataAddress"]').val();
-		} else if (data.goodsType == 5) {
-			data.afterSaleService = $('#textarea3').val(); //售后服务
-			data.appCase = $('#textarea4').val(); //应用案例
-			data.atSaaS = {};
-			data.atSaaS.coreFunction = $('#textareaAs').val();
-			data.atSaaS.teamAdvantage = $('#textareaCs').val();
-			data.atSaaS.desiredEnvironment = $('#textareaDs').val();
-			data.atSaaS.dataNeeded = $('#textareaEs').val();
-			data.atSaaS.dataAddress = $('.visitOnline-isOnLine-box input[name="dataAddress"]').val();
-		} else if (data.goodsType == 6) {
-			data.afterSaleService = $('#textarea3').val(); //售后服务
-			data.appCase = $('#textarea4').val(); //应用案例
-			data.asAloneSoftware = {};
-			data.asAloneSoftware.coreFunction = $('#textareaA').val();
-			data.asAloneSoftware.technologicalSuperiority = $('#textareaB').val();
-			data.asAloneSoftware.teamAdvantage = $('#textareaC').val();
-			data.asAloneSoftware.desiredEnvironment = $('#textareaD').val();
-			data.asAloneSoftware.dataNeeded = $('#textareaE').val();
-			data.asAloneSoftware.dataAddress = $('.downloadAddress-isOnLine-box input[name="dataAddress"]').val();
-		} else if (data.goodsType == 7) {
-			data.afterSaleService = $('#textarea3').val(); //售后服务
-			data.appCase = $('#textarea4').val(); //应用案例
-			data.asSaaS = {};
-			data.asSaaS.coreFunction = $('#textareaA').val();
-			data.asSaaS.teamAdvantage = $('#textareaC').val();
-			data.asSaaS.desiredEnvironment = $('#textareaD').val();
-			data.asSaaS.dataNeeded = $('#textareaE').val();
-			data.asSaaS.dataAddress = $('.downloadAddress-isOnLine-box input[name="dataAddress"]').val();
-
+	if (data.goodsType == 0) {
+		data.offLineData = {};
+		data.goodsDesc = $('#textarea1').val(); //商品详情
+		data.goodsAdvantage = $('#textarea2').val(); //商品优势
+		data.afterSaleService = $('#textarea3').val(); //售后服务
+		data.offLineData = {};
+		data.offLineData.timeFrame = {};
+		data.offLineData.timeFrame.startDate = $('#offLine_startDate').val();
+		data.offLineData.timeFrame.endDate = $('#offLine_endDate').val();
+		data.offLineData.dataRows = $('input[name="dataRows"]').val();
+		data.offLineData.dataCapacity = $('input[name="dataCapacity"]').val();
+		data.offLineData.dataFormat = $('input[name="dataFormat"]').val();
+		data.offLineData.isOnline = $('select[name="isOnline"]').val();
+		data.offLineData.dataPwd = $('input[name="dataPwd"]').val();
+		if(data.offLineData.isOnline == 0){
+			data.offLineData.localUrl = $('#J_fileUploadSS').val();
+		}else{
+			data.offLineData.onlineUrl = $('input[name="onlineUrl"]').val();
 		}
-	}else if(data.isOffline == 1){
-		data.offLineInfo = {};
-		data.offLineInfo.concatName= $('.isOffLine-info-box input[name="concatName"]').val();
-		data.offLineInfo.concatPhone= $('.isOffLine-info-box input[name="concatPhone"]').val();
-		data.offLineInfo.concatEmail= $('.isOffLine-info-box input[name="concatEmail"]').val();
+	} else if (data.goodsType == 1) {//API------------------------------
+		data.goodsDesc = $('#textarea1').val(); //商品详情
+		data.goodsAdvantage = $('#textarea2').val(); //商品优势
+		data.afterSaleService = $('#textarea3').val(); //售后服务
+		data.appCase = $('#textarea4').val(); //应用案例
+		data.apiInfo = {};
+		data.apiInfo.apiType = $('.api-info-box').find('input[name="apiType"]:checked').val();
+		data.apiInfo.invokeMethod = $('.api-info-box').find('input[name="invokeMethod"]').val();
+		data.apiInfo.apiUrl = $('.api-info-box').find('input[name="apiUrl"]').val();
+		data.apiInfo.apiMethod = $('.api-info-box').find('input[name="apiMethod"]:checked').val();
+		data.apiInfo.reqSample = $('.api-info-box').find('input[name="reqSample"]').val();
+		data.apiInfo.apiDesc = $('.api-info-box').find('#apiDesc').val();
+		data.apiInfo.reqParamList = [];
+		$('table[d-type="requestHtml"] tbody tr').each(function (i, item) {
+			var listData = {};
+			listData.fieldName = $(item).find('input[name="fieldName"]').val();
+			listData.fieldType = $(item).find('select[name="fieldType"]').val();
+			listData.isMust = $(item).find('input[name="isMust' + i + '"]:checked').val();
+			listData.fieldSample = $(item).find('input[name="fieldSample"]').val();
+			listData.fieldDefault = $(item).find('input[name="fieldDefault"]').val();
+			listData.describle = $(item).find('textarea[name="describle"]').val();
+			data.apiInfo.reqParamList.push(listData);
+		});
+		data.apiInfo.respParamList = [];
+		$('table[d-type="returnHtml"] tbody tr').each(function () {
+			var listData = {};
+			listData.fieldName = $(this).find('input[name="fieldName"]').val();
+			listData.fieldType = $(this).find('select[name="fieldType"]').val();
+			listData.describle = $(this).find('textarea[name="describle"]').val();
+			data.apiInfo.respParamList.push(listData);
+		});
+		console.log(data.apiInfo.respParamList);//----------------------
+		data.apiInfo.respSample = $('#respSample').val();
+		data.apiInfo.respDataFormat = $('.api-info-box').find('input[name="respDataFormat"]:checked').val();
+		data.apiInfo.respDataMapping = {};
+		data.apiInfo.respDataMapping.codeAttrBean = {};
+		data.apiInfo.respDataMapping.codeAttrBean.codeAttr = $('input[name="codeAttr"]').val();
+		data.apiInfo.respDataMapping.codeAttrBean.codeInfoBean = {};
+		data.apiInfo.respDataMapping.codeAttrBean.codeInfoBean.successCode = $('input[name="successCode"]').val();
+		data.apiInfo.respDataMapping.codeAttrBean.codeInfoBean.failedCode = $('input[name="failedCode"]').val();
+		data.apiInfo.respDataMapping.codeAttrBean.codeInfoBean.successNoData = $('input[name="successNoData"]').val();
+		data.apiInfo.respDataMapping.infoAttr = $('input[name="infoAttr"]').val();
+		data.apiInfo.respDataMapping.dataAttr = $('input[name="dataAttr"]').val();
+		data.apiInfo.respDataMapping.totalNumAttr = $('input[name="totalNumAttr"]').val();
+		data.apiInfo.updateFreq = $('input[name="updateFreq"]').val();
+		data.apiInfo.dataNumDivRowNum = $('input[name="dataNumDivRowNum"]').val();
+		data.apiInfo.encryptInfo = {};
+		data.apiInfo.encryptInfo.secretKeyName = $('.api-info-box').find('input[name="secretKeyName"]').val();
+		data.apiInfo.encryptInfo.secretKeyValue = $('.api-info-box').find('input[name="secretKeyValue"]').val();
+	} else if (data.goodsType == 2) {
+		data.goodsDesc = $('#textarea1').val(); //商品详情
+		data.goodsAdvantage = $('#textarea2').val(); //商品优势
+		data.afterSaleService = $('#textarea3').val(); //售后服务
+		data.dataModel = {};
+		data.dataModel.modelType = $('select[name="modelType"]').val();
+		data.dataModel.complexity = $('select[name="complexity"]').val();
+		data.dataModel.maturity = $('select[name="maturity"]').val();
+		data.dataModel.aexp = $('textarea[name="aexp"]').val();
+		data.dataModel.relationServ = $('textarea[name="relationServ"]').val();
+		data.dataModel.modelFile = {};
+		data.dataModel.modelFile.fileAddress = $('input[name="modelFile"]').val();
+		data.dataModel.modelFile.filePwd = $('input[name="modelFilePwd"]').val();
+		data.dataModel.configFile = {};
+		data.dataModel.configFile.fileAddress = $('input[name="configFile"]').val();
+		data.dataModel.configFile.filePwd = $('input[name="configFilePwd"]').val();
+		data.dataModel.paramFile = {};
+		data.dataModel.paramFile.fileAddress = $('.dataModel-isOnLine-box input[name="configParams"]').val();
+		data.dataModel.paramFile.filePwd = $('input[name="configParamsPwd"]').val();
+		data.dataModel.concatInfo = {};
+		data.dataModel.concatInfo.concatName = $('.dataModel_concat input[name="concatName"]').val();
+		data.dataModel.concatInfo.concatPhone = $('.dataModel_concat input[name="concatPhone"]').val();
+		data.dataModel.concatInfo.concatEmail = $('.dataModel_concat input[name="concatEmail"]').val();
+	} else if (data.goodsType == 4) {
+		data.afterSaleService = $('#textarea3').val(); //售后服务
+		data.appCase = $('#textarea4').val(); //应用案例
+		data.atAloneSoftware = {};
+		data.atAloneSoftware.coreFunction = $('#textareaAs').val();
+		data.atAloneSoftware.technologicalSuperiority = $('#textareaBs').val();
+		data.atAloneSoftware.teamAdvantage = $('#textareaCs').val();
+		data.atAloneSoftware.desiredEnvironment = $('#textareaDs').val();
+		data.atAloneSoftware.dataNeeded = $('#textareaEs').val();
+		data.atAloneSoftware.dataAddress = $('.visitOnline-isOnLine-box input[name="dataAddress"]').val();
+	} else if (data.goodsType == 5) {
+		data.afterSaleService = $('#textarea3').val(); //售后服务
+		data.appCase = $('#textarea4').val(); //应用案例
+		data.atSaaS = {};
+		data.atSaaS.coreFunction = $('#textareaAs').val();
+		data.atSaaS.teamAdvantage = $('#textareaCs').val();
+		data.atSaaS.desiredEnvironment = $('#textareaDs').val();
+		data.atSaaS.dataNeeded = $('#textareaEs').val();
+		data.atSaaS.dataAddress = $('.visitOnline-isOnLine-box input[name="dataAddress"]').val();
+	} else if (data.goodsType == 6) {
+		data.afterSaleService = $('#textarea3').val(); //售后服务
+		data.appCase = $('#textarea4').val(); //应用案例
+		data.asAloneSoftware = {};
+		data.asAloneSoftware.coreFunction = $('#textareaA').val();
+		data.asAloneSoftware.technologicalSuperiority = $('#textareaB').val();
+		data.asAloneSoftware.teamAdvantage = $('#textareaC').val();
+		data.asAloneSoftware.desiredEnvironment = $('#textareaD').val();
+		data.asAloneSoftware.dataNeeded = $('#textareaE').val();
+		data.asAloneSoftware.dataAddress = $('.downloadAddress-isOnLine-box input[name="dataAddress"]').val();
+	} else if (data.goodsType == 7) {
+		data.afterSaleService = $('#textarea3').val(); //售后服务
+		data.appCase = $('#textarea4').val(); //应用案例
+		data.asSaaS = {};
+		data.asSaaS.coreFunction = $('#textareaA').val();
+		data.asSaaS.teamAdvantage = $('#textareaC').val();
+		data.asSaaS.desiredEnvironment = $('#textareaD').val();
+		data.asSaaS.dataNeeded = $('#textareaE').val();
+		data.asSaaS.dataAddress = $('.downloadAddress-isOnLine-box input[name="dataAddress"]').val();
+
 	}
+	data.offLineInfo = {};
+	data.offLineInfo.concatName= $('.isOffLine-info-box input[name="concatName"]').val();
+	data.offLineInfo.concatPhone= $('.isOffLine-info-box input[name="concatPhone"]').val();
+	data.offLineInfo.concatEmail= $('.isOffLine-info-box input[name="concatEmail"]').val();
+
 	// alert(JSON.stringify(data));
 	return data;
 
@@ -784,14 +849,6 @@ function isOnsaleFun(that) {
 		$('.isOnsale-box').hide();
 	}
 }
-$.jeDate("#indate", {
-	format: "YYYY-MM-DD hh:mm:ss",
-	isTime: true,
-	minDate: $.nowDate(0),
-	choosefun: function(val) {
-		$('#indate_s').val(val)
-	}
-});
 $('.fileUploadBtn').fileupload({
 	url: host.static+'/upload/other',
 	dataType: 'json',
@@ -880,6 +937,7 @@ function renderData(data){//渲染页面
 	$('#showcontent').html(getLength(data.goodsName));//商品名称长度
 	$('.showcontentes').html(getLength(data.goodsBrief));//商品名称长度
 	$('#trialRange').val(data.trialRange);//使用范围
+	$('#trialRange_s').html(getLength(data.trialRange));//使用范围
 	$('select[name="parentSelect"] option').each(function(){
 		if(data.goodsType == 0 || data.goodsType == 1){
 			$('#childrenSelect1').show();
@@ -921,7 +979,6 @@ function renderData(data){//渲染页面
 	$('#isOffline').val(data.isOffline);
 	if(data.isOffline == 0) {
 		if (data.goodsType == 0) {
-			// console.log(data.offLineData.isOnline)
 			var S_isOnline = null;
 			var S_dataPwd = null;
 			if(data.offLineData){
@@ -994,8 +1051,80 @@ function renderData(data){//渲染页面
 			renderAppSaasInfo(data.asSaaS)
 		}
 	}else if(data.isOffline == 1){
+		if (data.goodsType == 0) {
+			var S_isOnline = null;
+			var S_dataPwd = null;
+			if(data.offLineData){
+				if(data.offLineData.isOnline){
+					S_isOnline = data.offLineData.isOnline;
+				}else{
+					S_isOnline = 0;
+				}
+				if(data.offLineData.dataPwd){
+					S_dataPwd = data.offLineData.dataPwd ;
+				}else{
+					S_dataPwd = '';
+				}
+			}else{
+				S_isOnline = 0;
+				S_dataPwd = '';
+			}
+			$('select[name="isOnline"]').val(S_isOnline);
+			$('input[name="dataPwd"]').val(S_dataPwd);
+			// console.log(data.offLineData.isOnline)
+			if(data.offLineData && data.offLineData.isOnline == 1 ){
+				$('.selector_offLine_input').show();
+				$('input[name="onlineUrl"]').val(data.offLineData && data.offLineData.onlineUrl ? data.offLineData.onlineUrl : '');
+				$('.selector_offLine_upLoad').hide();
+			}else{
+				$('#J_fileUploadSS').val(data.offLineData.localUrl);
+				$('.fileUploads span').text(data.offLineData.localUrl);
+				$('input[name="goodsImges2"]').val(data.offLineData.localUrl);
+				$('.selector_offLine_input').hide();
+			}
+			$('#offLine_startDate').val(data.offLineData.timeFrame.startDate);
+			$('#offLine_endDate').val(data.offLineData.timeFrame.endDate);
+			$('input[name="dataRows"]').val(data.offLineData.dataRows);
+			$('input[name="dataCapacity"]').val(data.offLineData.dataCapacity);
+			$('.file-info-box input[name="dataFormat"]').each(function(){
+				if($(this).val() == data.offLineData.dataFormat){
+					$(this).attr('checked','checked');
+				}else{
+					$(this).removeAttr('checked');
+				}
+			});
+			var start = {
+				format: "YYYY-MM-DD hh:mm:ss",
+				isTime: true,
+				choosefun: function (elem, datas) {
+					end.minDate = datas; //开始日选好后，重置结束日的最小日期
+				}
+			};
+			var end = {
+				format: "YYYY-MM-DD hh:mm:ss",
+				isTime: true,
+				choosefun: function (elem, datas) {
+					start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
+				}
+			};
+
+			$.jeDate("#offLine_startDate", start);
+			$.jeDate("#offLine_endDate", end);
+		} else if (data.goodsType == 1) {
+			renderApiInfo(data.apiInfo);
+		} else if (data.goodsType == 2) {
+			renderDataModel(data.dataModel);
+		} else if (data.goodsType == 4) {
+			renderToolInfo(data.atAloneSoftware);
+		} else if (data.goodsType == 5) {
+			renderToolSaasInfo(data.atSaaS);
+		} else if (data.goodsType == 6) {
+			renderAppInfo(data.asAloneSoftware)
+		} else if (data.goodsType == 7) {
+			renderAppSaasInfo(data.asSaaS)
+		}
 		$('.struct.selects').hide();
-		$('.isOffLine-info-box').show();
+		$('.struct.isOffLine-info-box').show();
 		$('.isOffLine-info-box input[name="concatName"]').val(data.offLineInfo.concatName);
 		$('.isOffLine-info-box input[name="concatPhone"]').val(data.offLineInfo.concatPhone);
 		$('.isOffLine-info-box input[name="concatEmail"]').val(data.offLineInfo.concatEmail);
@@ -1044,8 +1173,180 @@ function renderData(data){//渲染页面
 	$('#parentSelect').attr('disabled','disabled');
 	$('.childrenSelect').attr('disabled','disabled');
 	uploadGoodsImg();
-	validataFn()
+	validataFn();
+	ifGoodsTypeRender(data);
 }
+function ifGoodsTypeRender(data){ //根据类型渲染商品类型相关的html
+	$('.edit-all').hide();
+	$('.struct.selects').hide();
+	$('.offline-isShow').hide();
+	var goodsType = data.goodsType;
+	var isOffline = data.isOffline;
+	if(isOffline == 0){
+		$('.isOnLine-info-box').show();
+		if(goodsType == 0){
+			$('.goodsDesc-box').show(); //商品描述
+			$('.goodsAdvantage-box').show();//商品优势
+			$('.afterSaleService-box').show();//售后服务
+			$('.dataSample-info-box').show(); //数据样例
+			$('.isOffLine-select-box').show(); //交付方式
+			$('.file-info-box').show(); //
+			$('.offline-isOnLine-box').show(); //数据来源
+		}else if(goodsType == 1){
+			$('.goodsDesc-box').show(); //商品描述
+			$('.goodsAdvantage-box').show();//商品优势
+			$('.afterSaleService-box').show();//售后服务
+			$('.dataSample-info-box').show(); //数据样例
+			$('.appCase-box').show(); //应用案例
+			$('.api-info-box').show();
+		}else if(goodsType == 2){
+			$('.goodsDesc-box').show(); //商品描述
+			$('.goodsAdvantage-box').show();//商品优势
+			$('.dataModel-info-box').show();//
+			$('.afterSaleService-box').show();//售后服务
+			$('.isOffLine-select-box').show(); //交付方式
+			$('.dataModel-isOnLine-box').show(); //交付方式
+		}else if(goodsType == 4){
+			$('.afterSaleService-box').show();//售后服务
+			$('.isOffLine-select-box').show(); //交付方式
+			$('.appCase-box').show(); //应用案例
+			$('.tool-info-box').show(); //
+			$('.visitOnline-isOnLine-box').show(); //下载地址
+		}else if(goodsType == 5){
+			$('.afterSaleService-box').show();//售后服务
+			$('.isOffLine-select-box').show(); //交付方式
+			$('.appCase-box').show(); //应用案例
+			$('.tool-info-box').show(); //
+			$('.tool-info-box .app-saas-info').hide(); //技术优势
+			$('.visitOnline-isOnLine-box').show(); //下载地址
+		}else if(goodsType == 6){
+			$('.afterSaleService-box').show();//售后服务
+			$('.isOffLine-select-box').show(); //交付方式
+			$('.appCase-box').show(); //应用案例
+			$('.app-info-box').show(); //
+			$('.downloadAddress-isOnLine-box').show(); //下载地址
+		}else if(goodsType == 7){
+			$('.afterSaleService-box').show();//售后服务
+			$('.isOffLine-select-box').show(); //交付方式
+			$('.appCase-box').show(); //应用案例
+			$('.app-info-box').show(); //
+			$('.app-info-box .app-saas-info').hide(); //技术优势
+			$('.downloadAddress-isOnLine-box').show(); //下载地址
+		}
+	}else{
+		$('.struct.selects').hide();
+		$('.struct.isOffLine-info-box').show();
+		if(goodsType == 0){
+			$('.goodsDesc-box').show(); //商品描述
+			$('.goodsAdvantage-box').show();//商品优势
+			$('.afterSaleService-box').show();//售后服务
+			$('.isOffLine-select-box').show(); //交付方式
+			$('.file-info-box').show(); //
+		}else if(goodsType == 1){
+			$('.goodsDesc-box').show(); //商品描述
+			$('.goodsAdvantage-box').show();//商品优势
+			$('.afterSaleService-box').show();//售后服务
+			$('.dataSample-info-box').show(); //数据样例
+			$('.appCase-box').show(); //应用案例
+		}else if(goodsType == 2){
+			$('.goodsDesc-box').show(); //商品描述
+			$('.goodsAdvantage-box').show();//商品优势
+			$('.afterSaleService-box').show();//售后服务
+			$('.isOffLine-select-box').show(); //交付方式
+			$('.dataModel-isOnLine-box').show(); //交付方式
+		}else if(goodsType == 4){
+			$('.afterSaleService-box').show();//售后服务
+			$('.isOffLine-select-box').show(); //交付方式
+			$('.appCase-box').show(); //应用案例
+			$('.visitOnline-isOnLine-box').show(); //下载地址
+		}else if(goodsType == 5){
+			$('.afterSaleService-box').show();//售后服务
+			$('.isOffLine-select-box').show(); //交付方式
+			$('.appCase-box').show(); //应用案例
+			$('.tool-info-box .app-saas-info').hide(); //技术优势
+			$('.visitOnline-isOnLine-box').show(); //下载地址
+		}else if(goodsType == 6){
+			$('.afterSaleService-box').show();//售后服务
+			$('.isOffLine-select-box').show(); //交付方式
+			$('.appCase-box').show(); //应用案例
+			$('.downloadAddress-isOnLine-box').show(); //下载地址
+		}else if(goodsType == 7){
+			$('.afterSaleService-box').show();//售后服务
+			$('.isOffLine-select-box').show(); //交付方式
+			$('.appCase-box').show(); //应用案例
+			$('.app-info-box .app-saas-info').hide(); //技术优势
+			$('.downloadAddress-isOnLine-box').show(); //下载地址
+		}
+	}
+	// if(goodsTypeVal == 100){
+	// 	$('#childrenSelect1').show();
+	// 	endTypeVal = $('#childrenSelect1');
+	// 	if($(endTypeVal).val() == 0){
+	// 		$('.goodsDesc-box').show(); //商品描述
+	// 		$('.goodsAdvantage-box').show();//商品优势
+	// 		$('.afterSaleService-box').show();//售后服务
+	// 		$('.dataSample-info-box').show(); //数据样例
+	// 		$('.isOffLine-select-box').show(); //交付方式
+	// 		$('.file-info-box').show(); //
+	// 		$('.offline-isOnLine-box').show(); //数据来源
+	// 		goodsTypeId = 0;
+	// 	}else if($(endTypeVal).val() == 1){
+	// 		$('.goodsDesc-box').show(); //商品描述
+	// 		$('.goodsAdvantage-box').show();//商品优势
+	// 		$('.afterSaleService-box').show();//售后服务
+	// 		$('.dataSample-info-box').show(); //数据样例
+	// 		$('.appCase-box').show(); //应用案例
+	// 		$('.api-info-box').show();
+	// 		goodsTypeId = 1;
+	// 	}
+	// }else if(goodsTypeVal == 300){
+	// 	$('#childrenSelect2').show();
+	// 	endTypeVal = $('#childrenSelect2');
+	// 	if($(endTypeVal).val() == 6){
+	// 		$('.afterSaleService-box').show();//售后服务
+	// 		$('.isOffLine-select-box').show(); //交付方式
+	// 		$('.appCase-box').show(); //应用案例
+	// 		$('.app-info-box').show(); //
+	// 		$('.downloadAddress-isOnLine-box').show(); //下载地址
+	// 		goodsTypeId = 6;
+	// 	}else if($(endTypeVal).val() == 7){
+	// 		$('.afterSaleService-box').show();//售后服务
+	// 		$('.isOffLine-select-box').show(); //交付方式
+	// 		$('.appCase-box').show(); //应用案例
+	// 		$('.app-info-box').show(); //
+	// 		$('.app-info-box .app-saas-info').hide(); //技术优势
+	// 		$('.downloadAddress-isOnLine-box').show(); //下载地址
+	// 		goodsTypeId = 7;
+	// 	}
+	// }else if(goodsTypeVal == 400){
+	// 	$('#childrenSelect3').show();
+	// 	endTypeVal = $('#childrenSelect3');
+	// 	if($(endTypeVal).val() == 4){
+	// 		$('.afterSaleService-box').show();//售后服务
+	// 		$('.isOffLine-select-box').show(); //交付方式
+	// 		$('.appCase-box').show(); //应用案例
+	// 		$('.tool-info-box').show(); //
+	// 		$('.visitOnline-isOnLine-box').show(); //下载地址
+	// 		goodsTypeId = 4;
+	// 	}else if($(endTypeVal).val() == 5){
+	// 		$('.afterSaleService-box').show();//售后服务
+	// 		$('.isOffLine-select-box').show(); //交付方式
+	// 		$('.appCase-box').show(); //应用案例
+	// 		$('.tool-info-box').show(); //
+	// 		$('.tool-info-box .app-saas-info').hide(); //技术优势
+	// 		$('.visitOnline-isOnLine-box').show(); //下载地址
+	// 		goodsTypeId = 5;
+	// 	}
+	// }else{
+	// 	$('.goodsDesc-box').show(); //商品描述
+	// 	$('.goodsAdvantage-box').show();//商品优势
+	// 	$('.dataModel-info-box').show();//
+	// 	$('.afterSaleService-box').show();//售后服务
+	// 	$('.isOffLine-select-box').show(); //交付方式
+	// 	$('.dataModel-isOnLine-box').show(); //交付方式
+	// 	goodsTypeId = 2;
+	// }
+}//根据类型渲染商品类型相关的html
 function loadFirstCategory(catId){ //获取首个分类
 	loadCategoryData($('#firstCategory'),0,catId.substring(0,3));
 	if(catId.substring(0,3)){
@@ -1057,9 +1358,16 @@ function loadFirstCategory(catId){ //获取首个分类
 }
 function loadLastChild(that){
 	loadCategoryData($('#lastCategory'),$(that).val(),null);
+	if($('#lastCategory').html().length > 0){
+		catId =$('#lastCategory').val();
+	}else{
+		catId = $(that).val();
+	}
+	console.log('22222222++++==='+catId)
 }
 function selectCatId(that){
 	catId = $(that).val();
+	console.log('33333333++++==='+catId)
 }
 function loadCategoryData(that,pid,currentPid){
 
@@ -1204,24 +1512,26 @@ function renderApiInfo(apiInfo){ //渲染API ----- 1
 	$('.api-info-box input[name="dataNumDivRowNum"]').val(apiInfo.dataNumDivRowNum);
 }
 function renderDataModel(dataModel){ //渲染数据模型---2
-	$('.dataModel-info-box select[name="modelType"]').val(dataModel.modelType);
-	$('.dataModel-info-box select[name="complexity"]').val(dataModel.complexity);
-	$('.dataModel-info-box select[name="maturity"]').val(dataModel.maturity);
-	$('.dataModel-info-box textarea[name="aexp"]').val(dataModel.aexp);
-	$('.dataModel-info-box textarea[name="relationServ"]').val(dataModel.relationServ);
-	$('.dataModel-info-box input[name="modelFile"]').val(dataModel.modelFile.fileAddress);
-	$('.dataModel-info-box input[name="modelFiles"]').val(dataModel.modelFile.fileAddress);
-	$('.dataModel-info-box input[name="configFile"]').val(dataModel.configFile.fileAddress);
-	$('.dataModel-info-box input[name="configFiles"]').val(dataModel.configFile.fileAddress);
-	$('.dataModel-info-box input[name="configParams"]').val(dataModel.paramFile.fileAddress);
-	$('.dataModel-info-box input[name="configParam"]').val(dataModel.paramFile.fileAddress);
-	$('.dataModel-info-box input[name="modelFilePwd"]').val(dataModel.modelFile.filePwd);
-	$('.dataModel-info-box input[name="configFilePwd"]').val(dataModel.configFile.filePwd);
-	$('.dataModel-info-box input[name="configParamsPwd"]').val(dataModel.paramFile.filePwd);
-	$('.dataModel-info-box input[name="concatName"]').val(dataModel.concatInfo.concatName);
-	$('.dataModel-info-box input[name="concatPhone"]').val(dataModel.concatInfo.concatPhone);
-	$('.dataModel-info-box input[name="concatEmail"]').val(dataModel.concatInfo.concatEmail);
-	$('.dataModel-info-box .otherDesc').val(dataModel.otherDesc);
+	console.log(JSON.stringify(dataModel));
+	$('.dataModel-info-box select[name="modelType"]').val(dataModel.modelType); //模型类型
+	$('.dataModel-info-box select[name="complexity"]').val(dataModel.complexity);//复杂度
+	$('.dataModel-info-box select[name="maturity"]').val(dataModel.maturity);//成熟度
+	$('.dataModel-info-box textarea[name="aexp"]').val(dataModel.aexp);//应用经验
+	$('#aexp_s').html(getLength(dataModel.aexp));//应用经验长度
+	$('.dataModel-info-box textarea[name="relationServ"]').val(dataModel.relationServ);//配套服务
+	$('#relationServ_s').html(getLength(dataModel.relationServ));//配套服务长度
+	$('.dataModel-isOnLine-box input[name="modelFile"]').val(dataModel.modelFile.fileAddress);//模型类型
+	$('.dataModel-isOnLine-box input[name="modelFiles"]').val(dataModel.modelFile.fileAddress);//模型类型
+	$('.dataModel-isOnLine-box input[name="configFile"]').val(dataModel.configFile.fileAddress);//模型类型
+	$('.dataModel-isOnLine-box input[name="configFiles"]').val(dataModel.configFile.fileAddress);//模型类型
+	$('.dataModel-isOnLine-box input[name="configParams"]').val(dataModel.paramFile.fileAddress);//模型类型
+	$('.dataModel-isOnLine-box input[name="configParam"]').val(dataModel.paramFile.fileAddress);//模型类型
+	$('.dataModel-isOnLine-box input[name="modelFilePwd"]').val(dataModel.modelFile.filePwd);//模型文件密码
+	$('.dataModel-isOnLine-box input[name="configFilePwd"]').val(dataModel.configFile.filePwd);//配置文件密码
+	$('.dataModel-isOnLine-box input[name="configParamsPwd"]').val(dataModel.paramFile.filePwd);//配置参数
+	$('.dataModel-isOnLine-box input[name="concatName"]').val(dataModel.concatInfo.concatName);//联系名称
+	$('.dataModel-isOnLine-box input[name="concatPhone"]').val(dataModel.concatInfo.concatPhone);//联系电话
+	$('.dataModel-isOnLine-box input[name="concatEmail"]').val(dataModel.concatInfo.concatEmail);//联系邮箱
 }
 function renderToolInfo(atAloneSoftware){
 	$('.tool-info-box #textareaAs').val(atAloneSoftware.coreFunction);
@@ -1285,9 +1595,9 @@ function renderFormatList(formatList){
 			html += '<option value="3">套</option>';
 		}
 		html += '</select></div></td>';
-		html += '<td class="price-input"><div class="inputbox"><input class="price-inputs number " min="0" datatype="settlementPrice" value="'+data.settlementPrice / 100+'" type="text" placeholder="请输入结算价"></div></td>';
-		html += '<td class="price-input"><div class="inputbox"><input class="price-inputs number " min="0" datatype="agencyPrice" value="'+data.agencyPrice / 100+'" type="text" placeholder="请输入代理价"></div></td>';
-		html += '<td class="price-input"><div class="inputbox"><input class="price-inputs number " min="0" datatype="price" value="'+data.price / 100+'" type="text" placeholder="请输入零售价"></div></td>';
+		html += '<td class="price-input price-input1"><div class="inputbox"><input class="price-inputs number " min="0" datatype="settlementPrice" value="'+data.settlementPrice / 100+'" type="text" placeholder="请输入结算价"></div></td>';
+		html += '<td class="price-input price-input2"><div class="inputbox"><input class="price-inputs number " min="0" datatype="agencyPrice" value="'+data.agencyPrice / 100+'" type="text" placeholder="请输入代理价"></div></td>';
+		html += '<td class="price-input price-input3"><div class="inputbox"><input class="price-inputs number " min="0" datatype="price" value="'+data.price / 100+'" type="text" placeholder="请输入零售价"></div></td>';
 		if(index === len-1){
 			html += '<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
 		}else{
@@ -1307,26 +1617,22 @@ function renderGoodsDeac(data){
 }
 function renderIsBook(isBook, onsaleStartDate){
 	if(isBook == 1){
+		$('.isOnsale-box').show();
 		$('#indate').val(onsaleStartDate);
-		$.jeDate("#indate", {
-			format: "YYYY-MM-DD hh:mm:ss",
-			isTime: true,
-			minDate: $.nowDate(0),
-			choosefun: function(val) {
-				$('#indate_s').val(val)
-			}
-		});
-	}else{
-		$.jeDate("#indate", {
-			format: "YYYY-MM-DD hh:mm:ss",
-			isTime: true,
-			minDate: $.nowDate(0),
-			choosefun: function(val) {
-				$('#indate_s').val(val)
-			}
-		});
+		$('#indate_s').val(onsaleStartDate);
 	}
 }
+$.jeDate("#indate", {
+	format: "YYYY-MM-DD hh:mm:ss",
+	isTime: true,
+	minDate: $.nowDate(0),
+	choosefun: function(elem, val, date) {
+		$('#indate_s').val(val)
+	},
+	okfun:function(elem, val, date){
+		$('#indate_s').val(val)
+	}
+});
 function loadCountry(idCountry,idProvince) {
 	$.ajax({
 		type: "get",
@@ -1408,6 +1714,21 @@ $('#J_submitBtn').click(function(){
 		// }else{
 		// 	$.alert('商品描述不能为空',true,function () {})
 		// }
-		backAddFn(submitGoodsPublish())
+		var lastChild = $('table[d-type="priceHtml"] tbody tr').last();
+		if ($(lastChild).children('.number-input').find('input').val() && $(lastChild).children('.price-input1').find('input').val() && $(lastChild).children('.price-input2').find('input').val() && $(lastChild).children('.price-input3').find('input').val()) {
+			backAddFn(submitGoodsPublish())
+		} else {
+			$.alert('请完善价格及规格信息',true,function(){});
+		}
+
 	}
 });
+//验证价格是否填写完整
+function valiLastPrice(){
+	var lastChild = $('table[d-type="priceHtml"] tbody tr').last();
+	if ($(lastChild).children('.number-input').find('input').val() && $(lastChild).children('.price-input1').find('input').val() && $(lastChild).children('.price-input2').find('input').val() && $(lastChild).children('.price-input3').find('input').val()) {
+		$.alert('ok',true,function(){});
+	} else {
+		$.alert('请完善本条信息',true,function(){});
+	}
+}

@@ -197,17 +197,17 @@ var htmlPart = {
 															</select>
 														</div>
 													</td>
-													<td class="price-input">
+													<td class="price-input price-input1">
 														<div class="inputbox">
 															<input class="price-inputs number" datatype="settlementPrice" type="text" placeholder="请输入结算价" required="required">
 														</div>
 													</td>
-													<td class="price-input">
+													<td class="price-input price-input2">
 														<div class="inputbox">
 															<input class="price-inputs number" datatype="agencyPrice" type="text" placeholder="请输入代理价" required="required">
 														</div>
 													</td>
-													<td class="price-input">
+													<td class="price-input price-input3">
 														<div class="inputbox">
 															<input class="price-inputs number" datatype="price" type="text" placeholder="请输入零售价" required="required">
 														</div>
@@ -225,7 +225,7 @@ var htmlPart = {
 									<td class="bar">商品描述：<span class="requireds">*</span></td>
 									<td>
 										<div class="wangEditor-wrapper">
-											<textarea id="textarea1" style="height: 500px; display: none;" name="goodsDescBox" required="required"></textarea>
+											<textarea id="textarea1" style="width: 844px;height: 500px; display: none;" name="goodsDescBox" required="required"></textarea>
 										</div>
 									</td>
 								</tr><!--商品描述-->
@@ -233,7 +233,7 @@ var htmlPart = {
 									<td class="bar">商品优势：<span class="requireds">*</span></td>
 									<td>
 										<div class="wangEditor-wrapper">
-											<textarea id="textarea2" style="height: 500px; display: none;" name="goodsAdvantage" required="required"></textarea>
+											<textarea id="textarea2" style="width: 844px;height: 500px; display: none;" name="goodsAdvantage" required="required"></textarea>
 										</div>
 									</td>
 								</tr><!--商品优势-->
@@ -241,7 +241,7 @@ var htmlPart = {
 									<td class="bar">售后服务：<span class="requireds">*</span></td>
 									<td>
 										<div class="wangEditor-wrapper">
-											<textarea id="textarea3" style="height: 500px; display: none;" name="afterSaleService" required="required"></textarea>
+											<textarea id="textarea3" style="width: 844px;height: 500px; display: none;" name="afterSaleService" required="required"></textarea>
 										</div>
 									</td>
 								</tr><!--售后服务-->
@@ -262,7 +262,7 @@ var htmlPart = {
 									<td class="bar">应用案例：<span class="requireds">*</span></td>
 									<td>
 										<div class="wangEditor-wrapper">
-											<textarea id="textarea4" style="height: 500px; display: none;" name="appCase" required="required"></textarea>
+											<textarea id="textarea4" style="width: 844px;height: 500px; display: none;" name="appCase" required="required"></textarea>
 										</div>
 									</td>
 								</tr><!--应用案例-->
@@ -712,7 +712,8 @@ var htmlPart = {
 												<td class="bar">应用经验：<span class="requireds">*</span></td>
 												<td>
 													<div class="textarea-box">
-														<textarea type="text" name="aexp" required="required"></textarea>
+														<textarea type="text" name="aexp" id="aexp" required="required"></textarea>
+														<span class="input-count"><strong id="aexp_s">0</strong>/100</span>
 													</div>
 												</td>
 											</tr>
@@ -720,7 +721,8 @@ var htmlPart = {
 												<td class="bar">配套服务：<span class="requireds">*</span></td>
 												<td>
 													<div class="textarea-box">
-														<textarea type="text" name="relationServ" id="" required="required"></textarea>
+														<textarea type="text" name="relationServ" id="relationServ" required="required"></textarea>
+														<span class="input-count"><strong id="relationServ_s">0</strong>/100</span>
 													</div>
 												</td>
 											</tr>
@@ -739,7 +741,7 @@ var htmlPart = {
 									<td class="bar">核心功能：<span class="requireds">*</span></td>
 									<td>
 										<div class="wangEditor-wrapper">
-											<textarea id="textareaA" style="height: 500px; display: none;" name="coreFunction" required="required"></textarea>
+											<textarea id="textareaA" style="width: 844px;height: 500px; display: none;" name="coreFunction" required="required"></textarea>
 										</div>
 									</td>
 								</tr>
@@ -747,7 +749,7 @@ var htmlPart = {
 									<td class="bar">技术优势：<span class="requireds">*</span></td>
 									<td>
 										<div class="wangEditor-wrapper">
-											<textarea id="textareaB" style="height: 500px; display: none;" name="technologicalSuperiority" required="required"></textarea>
+											<textarea id="textareaB" style="width: 844px;height: 500px; display: none;" name="technologicalSuperiority" required="required"></textarea>
 										</div>
 									</td>
 								</tr>
@@ -755,7 +757,7 @@ var htmlPart = {
 									<td class="bar">团队优势：<span class="requireds">*</span></td>
 									<td>
 										<div class="wangEditor-wrapper">
-											<textarea id="textareaC" style="height: 500px; display: none;" name="teamAdvantage" required="required"></textarea>
+											<textarea id="textareaC" style="width: 844px;height: 500px; display: none;" name="teamAdvantage" required="required"></textarea>
 										</div>
 									</td>
 								</tr>
@@ -763,7 +765,7 @@ var htmlPart = {
 									<td class="bar">所需环境：<span class="requireds">*</span></td>
 									<td>
 										<div class="wangEditor-wrapper">
-											<textarea id="textareaD" style="height: 500px; display: none;" name="desiredEnvironment" required="required"></textarea>
+											<textarea id="textareaD" style="width: 844px;height: 500px; display: none;" name="desiredEnvironment" required="required"></textarea>
 										</div>
 									</td>
 								</tr>
@@ -771,7 +773,7 @@ var htmlPart = {
 									<td class="bar">所需数据：<span class="requireds">*</span></td>
 									<td>
 										<div class="wangEditor-wrapper">
-											<textarea id="textareaE" style="height: 500px; display: none;" name="dataNeeded" required="required"></textarea>
+											<textarea id="textareaE" style="width: 844px;height: 500px; display: none;" name="dataNeeded" required="required"></textarea>
 										</div>
 									</td>
 								</tr>
@@ -786,7 +788,7 @@ var htmlPart = {
 									<td class="bar">核心功能：<span class="requireds">*</span></td>
 									<td>
 										<div class="wangEditor-wrapper">
-											<textarea id="textareaAs" style="height: 500px; display: none;" name="coreFunction" required="required"></textarea>
+											<textarea id="textareaAs" style="width: 844px;height: 500px; display: none;" name="coreFunction" required="required"></textarea>
 										</div>
 									</td>
 								</tr>
@@ -794,7 +796,7 @@ var htmlPart = {
 									<td class="bar">技术优势：<span class="requireds">*</span></td>
 									<td>
 										<div class="wangEditor-wrapper">
-											<textarea id="textareaBs" style="height: 500px; display: none;" name="technologicalSuperiority" required="required"></textarea>
+											<textarea id="textareaBs" style="width: 844px;height: 500px; display: none;" name="technologicalSuperiority" required="required"></textarea>
 										</div>
 									</td>
 								</tr>
@@ -802,7 +804,7 @@ var htmlPart = {
 									<td class="bar">团队优势：<span class="requireds">*</span></td>
 									<td>
 										<div class="wangEditor-wrapper">
-											<textarea id="textareaCs" style="height: 500px; display: none;" name="teamAdvantage" required="required"></textarea>
+											<textarea id="textareaCs" style="width: 844px;height: 500px; display: none;" name="teamAdvantage" required="required"></textarea>
 										</div>
 									</td>
 								</tr>
@@ -810,7 +812,7 @@ var htmlPart = {
 									<td class="bar">所需环境：<span class="requireds">*</span></td>
 									<td>
 										<div class="wangEditor-wrapper">
-											<textarea id="textareaDs" style="height: 500px; display: none;" name="desiredEnvironment" required="required"></textarea>
+											<textarea id="textareaDs" style="width: 844px;height: 500px; display: none;" name="desiredEnvironment" required="required"></textarea>
 										</div>
 									</td>
 								</tr>
@@ -818,7 +820,7 @@ var htmlPart = {
 									<td class="bar">所需数据：<span class="requireds">*</span></td>
 									<td>
 										<div class="wangEditor-wrapper">
-											<textarea id="textareaEs" style="height: 500px; display: none;" name="dataNeeded" required="required"></textarea>
+											<textarea id="textareaEs" style="width: 844px;height: 500px; display: none;" name="dataNeeded" required="required"></textarea>
 										</div>
 									</td>
 								</tr>
@@ -843,7 +845,7 @@ var htmlPart = {
 								</tbody>
 							</table>
 						</div><!--交付方式-->
-						<div class="struct isOnLine-info-box">
+						<div class="struct selects isOnLine-info-box">
 							<!--<h1 class="">线上交付显示：</h1>-->
 							<table class="offline-isOnLine-box offline-isShow">
 								<tbody>
