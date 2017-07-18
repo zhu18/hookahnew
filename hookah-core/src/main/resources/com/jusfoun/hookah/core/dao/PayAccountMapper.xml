@@ -81,4 +81,12 @@
 
   </update>
 
+  <update id="updatePayAccountMoney" parameterType="java.util.HashMap">
+
+    update pay_account set balance = balance + #{money},use_balance = use_balance + #{money}
+    where id = #{payAccountId}
+
+  </update>
+
+
 </mapper>
