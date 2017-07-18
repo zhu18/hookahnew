@@ -7,7 +7,6 @@ $(function () {
         data:{},
         type:'get',
         success:function (data) {
-            console.log(data.data);
             var html="";
             if (data.data.userType =="0"){
                 html +="<li><label>用户类型</label><p>个人会员</p></li>";
@@ -35,18 +34,21 @@ $(function () {
                 data.data.isAuth="已认证"
             }else {
                 data.data.isAuth="未认证"
-
             }
-            // $('#orgName').html(data.data.orgName);
-            // $('#isAuth').html( data.data.isAuth);
-            // $('#certificateCode').html( data.data.certificateCode);
-            // $('#licenseCode').html( data.data.licenseCode);
-            // $('#taxCode').html( data.data.taxCode);
-            // $('#industry').html( data.data.industry);
-            // $('#lawPersonName').html( data.data.lawPersonName);
-            // $('#region').html( data.data.region);
-            // $('#contactAddress').html( data.data.contactAddress);
-            // $('#orgPhone').html( data.data.orgPhone);
+
+            $('#orgName').html(data.data.orgName?data.data.orgName:"无");
+            $('#isAuth').html( data.data.isAuth?data.data.isAuth:"无");
+            $('#certificateCode').html( data.data.certificateCode?data.data.certificateCode:"无");
+            $('#licenseCode').html( data.data.licenseCode?data.data.licenseCode:"无");
+            $('#taxCode').html( data.data.taxCode?data.data.taxCode:"无");
+            $('#industry').html( data.data.industry?data.data.industry:"无");
+            $('#lawPersonName').html( data.data.lawPersonName?data.data.lawPersonName:"无");
+            $('#region').html( data.data.region?data.data.region:"无");
+            $('#contactAddress').html( data.data.contactAddress?data.data.contactAddress:"无");
+            $('#orgPhone').html( data.data.orgPhone?data.data.orgPhone:"无");
+            $('#certifictePath').attr({"src":data.data.certifictePath});
+            $('#licensePath').attr({"src":data.data.licensePath});
+
 
         }
     });

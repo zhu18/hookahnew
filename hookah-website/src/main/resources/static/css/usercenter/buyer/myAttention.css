@@ -60,8 +60,12 @@
     overflow: hidden;
     background-color: #ccc;
 }
+.order-list ul li .item-top .goods-img img {
+    width: 100%;
+}
 .order-list ul li .item-top .goods-name {
     margin-left:12px;
+    width: 120px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

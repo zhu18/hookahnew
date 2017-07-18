@@ -44,9 +44,6 @@ public class CertificationController extends BaseController{
 
     @Resource
     UserCheckService userCheckService;
-
-   /* @Resource
-    PayAccountService payAccountService;*/
     
     //用户实名认证信息
     @ResponseBody
@@ -167,26 +164,6 @@ public class CertificationController extends BaseController{
             e.printStackTrace();
         }
         return returnData;
-    }
-
-
-
-    //验证 支付密码是否正确
-    @ResponseBody
-    @RequestMapping(value = "/paymentPass", method = RequestMethod.GET)
-    public boolean paymentPass (String payPassword) throws HookahException {
-        String userId = this.getCurrentUser().getUserId();
-        List<Condition> filters = new ArrayList();
-        if(StringUtils.isNotBlank(userId)){
-            filters.add(Condition.eq("userId", userId));
-        }
-        /*PayAccount payAccount = payAccountService.selectOne(filters);
-        if(StringUtils.isNotBlank(payAccount.getPayPassword())){
-            if(payAccount.getPayPassword().equals(payPassword)){
-                return true;
-            }
-        }*/
-        return false;
     }
 
 }

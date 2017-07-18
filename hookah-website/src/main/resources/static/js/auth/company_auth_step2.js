@@ -5,6 +5,7 @@ $(function(){
     //地域加载
     var regionParam = 100000;
     loadRegion('province', regionParam); //加载地域
+    supplier()
 });
 $('.upLoad').mouseover(function(){
     $(this).children('.upLoad_warp').show();
@@ -93,6 +94,7 @@ function companyAuth(){
             "contactAddress":$("input[name='address']").val(),//详细地址
             "orgPhone":$("input[name='tel']").val(),//联系电话
             "industry":$("input[name='mainBusiness']").val(),//行业
+            "isSupplier":$("input[name='fruit']").is(":checked")?"1":"0",//我要成为供应商
         },
         type:"post",
         success : function(data) {
@@ -158,3 +160,15 @@ $('#verifyBtn').click(function(){
 		companyAuth();
 	}
 });
+
+// 我要成为供应商点击事件
+function supplier() {
+    $(".supplier-info").hide();
+    $(".inputBoxs .supplier").on("click",function () {
+        if($(this).is(":checked")){
+            $(".supplier-info").show()
+        }else{
+            $(".supplier-info").hide()
+        }
+    })
+}

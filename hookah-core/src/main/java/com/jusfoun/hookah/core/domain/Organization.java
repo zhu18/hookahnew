@@ -241,6 +241,16 @@ public class Organization extends GenericModel {
      */
     private String description;
 
+    private Byte isSupplier;
+
+    public Byte getIsSupplier() {
+        return isSupplier;
+    }
+
+    public void setIsSupplier(Byte isSupplier) {
+        this.isSupplier = isSupplier;
+    }
+
     public Byte getIsAuth() {
         return isAuth;
     }
