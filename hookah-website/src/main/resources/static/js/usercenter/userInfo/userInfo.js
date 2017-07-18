@@ -8,11 +8,12 @@ function loadPageData(data) {
         for (var i = 0; i < list.length; i++) {
           html +='<div class="order-list-item grid-left">';
           html +='<div class="order-list-top clearfix">';
+          html +='<a href="/exchange/details?id=' + list[i].goodsId + '" target="_blank">';
           html +='<img class="grid-left" src="'+list[i].goodsImg+'" alt="">';
           html +='<div class="order-list-top-info grid-left">';
           html +='<h4>'+list[i].goodsName+'</h4>';
-          html +='<p>价格：<span>'+list[i].goodsPrice+'</span></p>';
-          html +='</div></div>';
+          html +='<p>价格：<span>￥'+list[i].goodsPrice+'</span></p>';
+          html +='</div></a></div>';
           html +='<div class="order-list-down">购买时间: <span class="buy-time">' + list[i].addTime + '</span></div>';
           html +='</div>';
         }

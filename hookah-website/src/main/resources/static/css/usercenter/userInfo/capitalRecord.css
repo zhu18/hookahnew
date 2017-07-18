@@ -26,11 +26,15 @@
     float: left;
 }
 .capitalRecord .search-criteria li ul li{
-     float: left;
+    float: left;
     height: 46px;
     line-height: 46px;
     width: 100px;
+    cursor:pointer;
     text-align: center;
+}
+.capitalRecord .search-criteria li ul li.active{
+    color: #247de8;
 }
 .capitalRecord .search-criteria li:last-child div{
     display: inline-block;
@@ -40,7 +44,7 @@
     height: 1px;
     width: 14px;
     background-color: #e5e5e5;
-    margin: 0 5px;
+    margin: 0 5px 4px;
 }
 .capitalRecord .search-criteria li:last-child div input{
     width: 103px;
@@ -50,4 +54,35 @@
 }
 .capitalRecord .search-criteria li:last-child .time-box{
     margin-left: 25px;
+}
+.capitalRecord .search-criteria li:last-child .select-month a{
+   padding: 0 15px ;
+}
+.capitalRecord .search-criteria li:last-child .select-month a.active{
+   color: #247de8;
+}
+.capitalRecord .search-criteria li:last-child .select-month a:first-child{
+   border-right: 1px solid #6E6E6E;
+}
+
+.capitalRecord .search-list{
+   margin-top: 20px;
+    width: 100%;
+    border:1px solid #E5E5E5;
+}
+.capitalRecord .search-list tr th{
+    height: 39px;
+    line-height:39px;
+    background-color: #F4F4F4;
+}
+.capitalRecord .search-list tr td{
+    height: 39px;
+    text-align: center;
+    line-height:39px;
+}
+.capitalRecord .search-list tr td.income{
+    color: #f17d17;
+}
+.capitalRecord .search-list tr td.pay{
+    color: #2282e7;
 }
