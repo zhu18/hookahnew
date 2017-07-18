@@ -8,7 +8,6 @@ class MessageController {
                 url: $rootScope.site.apiServer + "/api/message/system/all",
                 params: {pageNumber: $rootScope.pagination.currentPage,
                     pageSize: $rootScope.pagination.pageSize,
-                    goodsName: $scope.searchName,
                     isRead: $scope.messageIsRead,
                     keywords: $scope.keywords,
                     eventType: $scope.eventType,
@@ -29,8 +28,8 @@ class MessageController {
                 url: $rootScope.site.apiServer + "/api/message/email/all",
                 params: {pageNumber: $rootScope.pagination.currentPage,
                     pageSize: $rootScope.pagination.pageSize,
-                    goodsName: $scope.searchName,
-                    isRead: $scope.messageIsRead,
+                    isSuccess: $scope.messageIsSuccess,
+                    receiveAddr:$scope.receiveAddr,
                     keywords: $scope.keywords,
                     eventType: $scope.eventType,
                     startTime: $scope.startDate?format($scope.startDate, 'yyyy-MM-dd HH:mm:ss'):null,
@@ -50,8 +49,8 @@ class MessageController {
                 url: $rootScope.site.apiServer + "/api/message/sms/all",
                 params: {pageNumber: $rootScope.pagination.currentPage,
                     pageSize: $rootScope.pagination.pageSize,
-                    goodsName: $scope.searchName,
-                    isRead: $scope.messageIsRead,
+                    receiveAddr:$scope.receiveAddr,
+                    isSuccess: $scope.messageIsSuccess,
                     keywords: $scope.keywords,
                     eventType: $scope.eventType,
                     startTime: $scope.startDate?format($scope.startDate, 'yyyy-MM-dd HH:mm:ss'):null,
@@ -215,9 +214,9 @@ class MessageController {
 
 
         if($state.$current.name == "message.email.search"){
-            //消息是否已读
-            $scope.messageIsReads = [{id: -1, name: "全部"}, {id: 0, name: "未读"}, {id: 1, name: "已读"}];
-            $scope.messageIsRead = -1;
+            //消息是否成功
+            $scope.messageIsSuccessList = [{id: -1, name: "全部"}, {id: 0, name: "失败"}, {id: 1, name: "成功"}];
+            $scope.messageIsSuccess = -1;
 
             //获取消息事件类型列表
             var promise = $http({
@@ -243,9 +242,9 @@ class MessageController {
 
 
         if($state.$current.name == "message.sms.search"){
-            //消息是否已读
-            $scope.messageIsReads = [{id: -1, name: "全部"}, {id: 0, name: "未读"}, {id: 1, name: "已读"}];
-            $scope.messageIsRead = -1;
+            //消息是否成功
+            $scope.messageIsSuccessList = [{id: -1, name: "全部"}, {id: 0, name: "失败"}, {id: 1, name: "成功"}];
+            $scope.messageIsSuccess = -1;
 
             //获取消息事件类型列表
             var promise = $http({

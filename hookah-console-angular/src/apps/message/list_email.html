@@ -21,12 +21,12 @@
           <form class="form-inline">
             <div class="form-group">
               <label class="control-label">消息状态</label>
-              <select ng-model="messageIsRead" ng-options="messageIsRead.id as messageIsRead.name for messageIsRead in messageIsReads"  style="width: 155px;height: 32px">
+              <select ng-model="messageIsSuccess" ng-options="messageIsSuccess.id as messageIsSuccess.name for messageIsSuccess in messageIsSuccessList"  style="width: 155px;height: 32px">
               </select>
             </div>
             <div class="form-group">
-              <label class="control-label">收件人</label>
-              <input ng-model="receiveUser" type="text" class="form-control" placeholder="请输入收件人用户名">
+              <label class="control-label">邮箱账号</label>
+              <input ng-model="receiveAddr" type="text" class="form-control" placeholder="请输入收件人用户名">
             </div>
             <div class="form-group">
               <label class="control-label">关键字</label>
@@ -66,6 +66,7 @@
             <tr>
               <th>序号</th>
               <th>标题</th>
+              <th>内容</th>
               <th>发送时间</th>
               <th>用户名</th>
               <th>接收邮箱</th>
@@ -83,6 +84,9 @@
                 <a href="javascript:;" ng-click="lookDetail(item)">
                   <span class="column-text" ng-bind="item.sendHeader | limitTo:10"></span>
                 </a>
+              </td>
+              <td>
+                <span class="column-text" title="{{item.sendContent}}" ng-bind="item.sendContent | limitTo:20"></span>
               </td>
               <td>
                 <span class="column-text" ng-bind="item.sendTime"></span>
