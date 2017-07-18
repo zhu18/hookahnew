@@ -480,6 +480,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             goodsVo.setClickRate(mgGoods.getClickRate());
             goodsVo.setOffLineData(mgGoods.getOffLineData());
             goodsVo.setOffLineInfo(mgGoods.getOffLineInfo());
+            goodsVo.setSales(mgGoods.getSales());
         }
 
         if(goodsVo.getAreaProvince() == null) {

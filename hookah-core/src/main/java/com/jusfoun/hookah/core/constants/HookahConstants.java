@@ -41,6 +41,11 @@ public class HookahConstants {
     public static final byte LOCAL_SMS_SUCCESS = 1;
     public static final byte LOCAL_SMS_FAIL = 0;
 
+    public static final String TIME_FORMAT = "yyyy年MM月dd日HH时mm分ss秒";
+
+    // message exception
+    public static final String MESSAGE_EXCEPTION_NOUSER = "未查询到用户!";
+
     public enum SmsTypeNew {
         SMS_USER_REGISTER("101"),  //注册
         SMS_FIND_USER_PWD("102"),   //找回登录密码

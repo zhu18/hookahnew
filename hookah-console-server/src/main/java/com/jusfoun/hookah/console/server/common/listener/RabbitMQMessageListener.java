@@ -1,9 +1,13 @@
 package com.jusfoun.hookah.console.server.common.listener;
 
+import com.alibaba.fastjson.JSON;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.dao.*;
 import com.jusfoun.hookah.core.domain.*;
+import com.jusfoun.hookah.core.exception.EmailException;
+import com.jusfoun.hookah.core.exception.SmsException;
+import com.jusfoun.hookah.core.exception.StationException;
 import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.SMSUtilNew;
@@ -15,6 +19,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +45,10 @@ public class RabbitMQMessageListener {
     UserMapper userMapper;
     @Autowired
     MailService mailService;
+    @Autowired
+    OrganizationMapper organizationMapper;
+    @Autowired
+    PayAccountRecordMapper payAccountRecordMapper;
 
     //消息发送
     @RabbitListener(queues = RabbitmqQueue.CONTRACE_NEW_MESSAGE)
@@ -48,40 +57,73 @@ public class RabbitMQMessageListener {
         List<MessageTemplate> templates = messageTemplateList(messageCode.getCode() + "");
         //查询业务数据
         Map<String, String> map = new HashMap<>();
-        User user = this.getBusinessData(messageCode.getBusinessId(), messageCode, map);
+        User user = null;
+        try {
+            user = this.getBusinessData(messageCode.getBusinessId(), messageCode, map);
+        } catch (Exception e) {
+            logger.error("短信/邮件/站内信消息获取map数据失败！" + JSON.toJSONString(messageCode) + ":" + e);
+            e.printStackTrace();
+        }
         //选择消息发送类型
         if(templates != null) {
             for(MessageTemplate t : templates) {
                 MessageSendInfo messageSendInfo = new MessageSendInfo();
                 //短信发送
-                if(HookahConstants.MESSAGE_TYPE_SMS == t.getTemplateType()) {
-                    if (user != null && StringUtils.isNotBlank(user.getUserId()) ) {
-                        messageSendInfo = this.sendSMS(t, user.getMobile(), map);
-                    } else if((user == null || !StringUtils.isNotBlank(user.getUserId()))
-                            && StringUtils.isNotBlank(messageCode.getMobileNo())) {
-                        messageSendInfo = this.sendSMS(t, messageCode.getMobileNo(), map);
-                    }else {
-                        logger.warn("邮件发送失败:未查询到用户!businessId:"
-                                + messageCode.getBusinessId() + ";code:" + messageCode.getCode());
+                try {
+                    if(HookahConstants.MESSAGE_TYPE_SMS == t.getTemplateType()) {
+                        if (user != null && StringUtils.isNotBlank(user.getUserId()) ) {
+                            messageSendInfo = this.sendSMS(t, user.getMobile(), map);
+                        } else if((user == null || !StringUtils.isNotBlank(user.getUserId()))
+                                && StringUtils.isNotBlank(messageCode.getMobileNo())) {
+                            messageSendInfo = this.sendSMS(t, messageCode.getMobileNo(), map);
+                        }else {
+                            throw new SmsException("短信发送失败:" + HookahConstants.MESSAGE_EXCEPTION_NOUSER);
+                        }
+                    }else if(HookahConstants.MESSAGE_TYPE_MAIL == t.getTemplateType()) { // 邮件发送
+                        if (user != null && StringUtils.isNotBlank(user.getUserId())
+                                && StringUtils.isNotBlank(user.getEmail())) {
+                            messageSendInfo = this.sendMail(t, user.getEmail(), map);
+                        }else if(user != null && StringUtils.isNotBlank(user.getUserId()) ) {
+                            throw new EmailException("邮件发送失败:未获取到邮箱地址！");
+                        }else {
+                            throw new EmailException("邮件发送失败:" + HookahConstants.MESSAGE_EXCEPTION_NOUSER);
+                        }
+                    }else { // 站内信发送
+                        if (user != null && StringUtils.isNotBlank(user.getUserId())) {
+                            messageSendInfo = this.sendStation(t, map);
+                        }else {
+                            throw new StationException("站内信发送失败:" + HookahConstants.MESSAGE_EXCEPTION_NOUSER);
+                        }
                     }
-                }else if(HookahConstants.MESSAGE_TYPE_MAIL == t.getTemplateType()) { // 邮件发送
-                    if (user != null && StringUtils.isNotBlank(user.getUserId())
-                            && StringUtils.isNotBlank(user.getEmail())) {
-                        messageSendInfo = this.sendMail(t, user.getEmail(), map);
-                    }else if(user != null && StringUtils.isNotBlank(user.getUserId()) ) {
-                        logger.warn("邮件发送失败:未获取到用户"+ user.getUserId() + "的邮件地址！businessId:"
-                                + messageCode.getBusinessId() + ";code:" + messageCode.getCode());
-                    }else {
-                        logger.warn("邮件发送失败:未查询到用户!businessId:"
-                                + messageCode.getBusinessId() + ";code:" + messageCode.getCode());
+                }catch (SmsException e1) {
+                    String userId = "";
+                    String mobile = "";
+                    if (user != null && StringUtils.isNotBlank(user.getUserId())) {
+                        userId = user.getUserId();
+                    }else if((user != null && StringUtils.isNotBlank(user.getMobile())) ||
+                            StringUtils.isNotBlank(messageCode.getMobileNo())) {
+                        mobile = (user != null && StringUtils.isNotBlank(user.getMobile()))
+                                ? user.getMobile() : messageCode.getMobileNo();
                     }
-                }else { // 站内信发送
-                    if (user != null && StringUtils.isNotBlank(user.getEmail())) {
-                        messageSendInfo = this.sendStation(t, map);
-                    }else {
-                        logger.warn("站内信发送失败:未查询到用户!businessId:"
-                                + messageCode.getBusinessId() + ";code:" + messageCode.getCode());
+                    this.errorSend(userId, mobile, e1.toString());
+                    e1.printStackTrace();
+                } catch (EmailException e2) {
+                    String userId = "";
+                    String email = "";
+                    if (user != null && StringUtils.isNotBlank(user.getUserId())) {
+                        userId = user.getUserId();
+                    }else if((user != null && StringUtils.isNotBlank(user.getEmail()))) {
+                        email = user.getEmail();
                     }
+                    this.errorSend(userId, email, e2.toString());
+                    e2.printStackTrace();
+                } catch (StationException e3) {
+                    String userId = "";
+                    if (user != null && StringUtils.isNotBlank(user.getUserId())) {
+                        userId = user.getUserId();
+                    }
+                    this.errorSend(userId, "", e3.toString());
+                    e3.printStackTrace();
                 }
                 if(user != null) {
                     messageSendInfo.setReceiveUser(user.getUserId());
@@ -93,8 +135,7 @@ public class RabbitMQMessageListener {
                 messageSendInfoMapper.insertSelective(messageSendInfo);
             }
         }else {
-            logger.info("短信/邮件/站内信消息：" + messageCode.getCode() + "未查到对应模板,"
-                    + messageCode.getBusinessId() + "未发送消息！");
+            logger.info("短信/邮件/站内信消息：" + JSON.toJSONString(messageCode) + "未发送消息！");
         }
     }
 
@@ -111,7 +152,7 @@ public class RabbitMQMessageListener {
     }
 
     // 短信发送
-    public MessageSendInfo sendSMS(MessageTemplate template, String mobileNo, Map<String, String> map) {
+    public MessageSendInfo sendSMS(MessageTemplate template, String mobileNo, Map<String, String> map) throws SmsException {
         MessageSendInfo sendInfo = new MessageSendInfo();
         //获取模板内容
         String content = template.getTemplateContent();
@@ -130,7 +171,7 @@ public class RabbitMQMessageListener {
     }
 
     //邮件发送
-    public MessageSendInfo sendMail(MessageTemplate template, String mail, Map<String, String> map) {
+    public MessageSendInfo sendMail(MessageTemplate template, String mail, Map<String, String> map) throws EmailException{
         MessageSendInfo sendInfo = new MessageSendInfo();
         //获取模板内容
         String content = template.getTemplateContent();
@@ -177,7 +218,7 @@ public class RabbitMQMessageListener {
     }
 
     // 获取业务数据
-    public User getBusinessData(String businessId, MessageCode messageCode, Map<String, String> map) {
+    public User getBusinessData(String businessId, MessageCode messageCode, Map<String, String> map) throws Exception {
         User user = new User();
         switch (messageCode.getCode()) {
             case 106:
@@ -191,6 +232,18 @@ public class RabbitMQMessageListener {
                 map.put("code", messageCode.getMobileVerfCode());
                 map.put("mobile", messageCode.getMobileNo().substring(messageCode.getMobileNo().length() - 4));
                 break;
+            case 201:
+            case 202:
+                Organization organization = organizationMapper.selectByPrimaryKey(messageCode.getBusinessId());
+                user = userMapper.getOrgUser(messageCode.getBusinessId());
+                map.put("userName", user.getUserName());
+                map.put("orgName", organization.getOrgName());
+                break;
+            case 401:
+            case 402:
+                user = userMapper.selectByPrimaryKey(messageCode.getBusinessId());
+                map.put("userName", user.getUserId());
+                break;
             case 501:
             case 502:
             case 503:
@@ -199,11 +252,58 @@ public class RabbitMQMessageListener {
                 map.put("goodsSn", goodsCheck.getGoodsSn());
                 map.put("goodsName", goodsCheck.getGoodsName());
                 map.put("goodsId", goodsCheck.getGoodsId());
-                map.put("time", DateUtils.toDateText(goodsCheck.getCheckTime(), "yyyy年MM月dd日HH时mm分ss秒"));
+                map.put("time", DateUtils.toDateText(goodsCheck.getCheckTime(), HookahConstants.TIME_FORMAT));
                 user = userMapper.selectByPrimaryKey(goods.getAddUser());
                 map.put("userName", user.getUserName());
                 break;
+            case 601:
+            case 602:
+                PayAccountRecord payAccountRecord = payAccountRecordMapper.selectByPrimaryKey(messageCode.getBusinessId());
+                user = userMapper.selectByPrimaryKey(payAccountRecord.getUserId());
+                map.put("userName", user.getUserName());
+                map.put("time", DateUtils.toDateText(payAccountRecord.getAddTime(), HookahConstants.TIME_FORMAT));
+                map.put("money", String.valueOf(longToMoney(payAccountRecord.getMoney())));
+                break;
         }
         return user;
+    }
+
+    /**
+     * 区号+座机号码+分机号码
+     * @param fixedPhone
+     * @return
+     */
+    public boolean isFixedPhone(String fixedPhone){
+        String reg="(?:(\\(\\+?86\\))(0[0-9]{2,3}\\-?)?([2-9][0-9]{6,7})+(\\-[0-9]{1,4})?)|" +
+                "(?:(86-?)?(0[0-9]{2,3}\\-?)?([2-9][0-9]{6,7})+(\\-[0-9]{1,4})?)";
+        return Pattern.matches(reg, fixedPhone);
+    }
+
+    /**
+     * long转钱
+     * @param num
+     * @return
+     */
+    public BigDecimal longToMoney(long num) {
+        BigDecimal totalFee = new BigDecimal(num);
+        BigDecimal d100 = new BigDecimal(100);
+        BigDecimal fee = totalFee.divide(d100,2,2);//小数点2位
+        return fee;
+    }
+
+    /**
+     * 消息失败处理
+     * @param userId
+     * @param addr
+     * @param errorInfo
+     * @return
+     */
+    public MessageSendInfo errorSend(String userId, String addr, String errorInfo) {
+        MessageSendInfo messageSendInfo = new MessageSendInfo();
+        messageSendInfo.setReceiveAddr(addr);
+        messageSendInfo.setReceiveUser(userId);
+        messageSendInfo.setErrorInfo(errorInfo);
+        messageSendInfo.setIsSuccess(HookahConstants.LOCAL_SMS_FAIL);
+        return messageSendInfo;
     }
 }

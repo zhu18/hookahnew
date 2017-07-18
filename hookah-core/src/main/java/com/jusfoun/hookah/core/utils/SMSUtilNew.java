@@ -3,6 +3,7 @@ package com.jusfoun.hookah.core.utils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.exception.SmsException;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -26,19 +27,19 @@ public class SMSUtilNew {
 
     private static Logger logger = LoggerFactory.getLogger(SMSUtilNew.class);
 	
-	public static String send(String mobile,String vars,String templateId){
+	public static String send(String mobile,String vars,String templateId) throws SmsException{
         String retVal = HookahConstants.SMS_FAIL;
         if(StrUtil.isBlank(mobile)){
             logger.error("手机号码为空");
-            return retVal;
+            throw new SmsException("手机号码为空");
         }
         if(StrUtil.isBlank(vars)){
             logger.error("短信模板内参数为空");
-            return retVal;
+            throw new SmsException("短信模板内参数为空");
         }
         if(StrUtil.isBlank(templateId)){
             logger.error("短信模板编号为空");
-            return retVal;
+            throw new SmsException("短信模板编号为空");
         }
 		String url = "http://www.sendcloud.net/smsapi/send";
 
@@ -89,7 +90,7 @@ public class SMSUtilNew {
             retVal = "true".equals(object.get("result").toString()) ? HookahConstants.SMS_SUCCESS : HookahConstants.SMS_FAIL;
             EntityUtils.consume(entity);
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            throw new SmsException(e);
         } finally {
             httpPost.releaseConnection();
         }
