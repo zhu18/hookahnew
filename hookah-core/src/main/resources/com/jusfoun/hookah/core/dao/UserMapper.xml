@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jusfoun.hookah.core.dao.UserMapper">
-  <sql id="generateKey">
+    <sql id="generateKey">
     select replace(uuid(),'-','')
   </sql>
 
@@ -13,24 +13,88 @@
     </update>
 
 
-  <!--&lt;!&ndash; 批量插入 &ndash;&gt;
-  <insert id="insertBatch" parameterType="java.util.List">
-      insert into cart
-      (
-      rec_id, user_id, goods_id, goods_sn, goods_name, goods_img, market_price, goods_price,
-      goods_format, format_number, goods_number, rec_type, is_gift, add_time, del_flag,
-      format_id
-      )
-      values
-      <foreach collection="list" index="index" item="item" separator=",">
-      (
-          (<include refid="generateKey" />), #{item.userId,jdbcType=VARCHAR}, #{item.goodsId,jdbcType=VARCHAR},
-          #{item.goodsSn,jdbcType=VARCHAR}, #{item.goodsName,jdbcType=VARCHAR}, #{item.goodsImg,jdbcType=VARCHAR},
-          #{item.marketPrice,jdbcType=BIGINT}, #{item.goodsPrice,jdbcType=BIGINT}, #{item.goodsFormat,jdbcType=INTEGER},
-          #{item.formatNumber,jdbcType=BIGINT}, #{item.goodsNumber,jdbcType=BIGINT}, #{item.recType,jdbcType=TINYINT},
-          #{item.isGift,jdbcType=SMALLINT}, #{item.addTime,jdbcType=TIMESTAMP}, #{item.delFlag,jdbcType=SMALLINT},
-          #{item.formatId,jdbcType=VARCHAR}
-      )
-      </foreach>
-  </insert>-->
+    <resultMap id="userFundMap" type="com.jusfoun.hookah.core.domain.vo.UserFundVo" >
+        <id column="userId" property="userId" jdbcType="VARCHAR" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+        <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="user_type" property="userType" jdbcType="TINYINT" />
+        <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+        <result column="bank_code" property="bankCode" jdbcType="VARCHAR" />
+        <result column="card_owner" property="cardOwner" jdbcType="VARCHAR" />
+        <result column="card_code" property="cardCode" jdbcType="VARCHAR" />
+        <result column="bind_flag" property="bindFlag" jdbcType="INTEGER" />
+        <result column="balance" property="balance" jdbcType="BIGINT" />
+        <result column="use_balance" property="useBalance" jdbcType="BIGINT" />
+        <result column="isBind" property="isBind" jdbcType="TINYINT" />
+    </resultMap>
+
+
+
+
+    <!--&lt;!&ndash; 批量插入 &ndash;&gt;
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into cart
+        (
+        rec_id, user_id, goods_id, goods_sn, goods_name, goods_img, market_price, goods_price,
+        goods_format, format_number, goods_number, rec_type, is_gift, add_time, del_flag,
+        format_id
+        )
+        values
+        <foreach collection="list" index="index" item="item" separator=",">
+        (
+            (<include refid="generateKey" />), #{item.userId,jdbcType=VARCHAR}, #{item.goodsId,jdbcType=VARCHAR},
+            #{item.goodsSn,jdbcType=VARCHAR}, #{item.goodsName,jdbcType=VARCHAR}, #{item.goodsImg,jdbcType=VARCHAR},
+            #{item.marketPrice,jdbcType=BIGINT}, #{item.goodsPrice,jdbcType=BIGINT}, #{item.goodsFormat,jdbcType=INTEGER},
+            #{item.formatNumber,jdbcType=BIGINT}, #{item.goodsNumber,jdbcType=BIGINT}, #{item.recType,jdbcType=TINYINT},
+            #{item.isGift,jdbcType=SMALLINT}, #{item.addTime,jdbcType=TIMESTAMP}, #{item.delFlag,jdbcType=SMALLINT},
+            #{item.formatId,jdbcType=VARCHAR}
+        )
+        </foreach>
+    </insert>-->
+
+    <select id="selectUserFundList" parameterType="com.jusfoun.hookah.core.domain.vo.UserFundCritVo" resultMap="userFundMap">
+
+        SELECT
+        u.user_name,
+        u.user_type,
+        org.org_name,
+        pa.use_balance,
+        pa.balance,
+        u.mobile as phone,
+        pbc.bank_name,
+        pbc.bank_code,
+        pbc.card_owner,
+        pbc.card_code,
+        pbc.bind_flag,
+        (
+        CASE
+        WHEN (pbc.bank_code IS NULL) THEN
+        0
+        ELSE
+        1
+        END
+        ) isBind
+
+        FROM
+        `user` u
+        LEFT JOIN pay_account pa on pa.user_id = u.user_id
+        LEFT JOIN pay_bank_card pbc on pbc.pay_account_id = pa.id
+        LEFT JOIN organization org on org.org_id = u.org_id
+        WHERE
+        u.user_type IN (4, 8)
+        <if test="userName != '' and userName != null">
+            AND u.user_name like '%${userName}%'
+        </if>
+        <if test="orgName != '' and orgName != null">
+            AND org.org_name like '%${orgName}%'
+        </if>
+        <if test="phone != '' and phone != null">
+            AND u.mobile like '%${phone}%'
+        </if>
+    </select>
+
+
+
 </mapper>
