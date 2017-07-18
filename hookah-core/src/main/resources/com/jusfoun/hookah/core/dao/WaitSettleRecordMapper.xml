@@ -74,4 +74,56 @@
       </foreach>
   </insert>
 
+  <select id="getListForPage" resultType="com.jusfoun.hookah.core.domain.vo.WaitSettleRecordVo">
+
+      SELECT
+        wsr.id AS id,
+        wsr.order_sn AS orderSn,
+        wsr.goods_name AS goodsName,
+        goods.goods_img AS goodsImg,
+        org.org_name AS orgName,
+        wsr.order_amount AS orderAmount,
+        wsr.has_settle_amount AS hasSettleAmount,
+        wsr.no_settle_amount AS noSettleAmount,
+        wsr.settle_status AS settleStatus,
+        wsr.order_time AS orderTime
+      FROM wait_settle_record wsr
+      LEFT JOIN goods goods ON wsr.goods_id = goods.goods_id
+      LEFT JOIN `user` us ON wsr.shop_name = us.user_id
+      LEFT JOIN organization org ON org.org_id = us.org_id
+      WHERE 1 = 1
+      <if test="startDate != '' and startDate != null">
+        AND wsr.orderTime &gt;= #{startData}
+      </if>
+      <if test="endDate != '' and endDate != null">
+        AND wsr.orderTime &lt;= #{endData}
+      </if>
+      <if test="shopName != '' and shopName != null">
+        AND org.org_name like '%${shopName}%'
+      </if>
+      <if test="settleStatus != '' and settleStatus != null">
+        AND wsr.settle_status = #{settleStatus}
+      </if>
+  </select>
+
+  <select id="selectDetailById" resultType="com.jusfoun.hookah.core.domain.vo.WaitSettleRecordVo">
+
+      SELECT
+        wsr.id AS id,
+        wsr.order_sn AS orderSn,
+        wsr.goods_name AS goodsName,
+        goods.goods_img AS goodsImg,
+        org.org_name AS orgName,
+        wsr.order_amount AS orderAmount,
+        wsr.has_settle_amount AS hasSettleAmount,
+        wsr.no_settle_amount AS noSettleAmount,
+        wsr.settle_status AS settleStatus,
+        wsr.order_time AS orderTime
+      FROM wait_settle_record wsr
+      LEFT JOIN goods goods ON wsr.goods_id = goods.goods_id
+      LEFT JOIN `user` us ON wsr.shop_name = us.user_id
+      LEFT JOIN organization org ON org.org_id = us.org_id
+      WHERE wsr.id = #{id}
+  </select>
+
 </mapper>
