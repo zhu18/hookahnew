@@ -35,4 +35,6 @@ public interface PayAccountService extends GenericService<PayAccount, Long> {
     void insertPayAccountByUserIdAndName(String userId, String userName);
 
     void resetPayPassword(Long id, String payPassword);
+
+    void payOperator(String userId, String orderId, String orderSn, Long money, String payMode) throws Exception;
 }
