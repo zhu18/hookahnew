@@ -47,7 +47,7 @@ public class AlipayServiceImpl extends GenericServiceImpl<PayAccountRecord, Stri
     }
 
     @Override
-    public String doPay(String userId, String orderId) {
+    public String doPay(String userId, String orderId, String notify_url, String return_url) {
         if (!StringUtils.isNotBlank(userId) || !StringUtils.isNotBlank(orderId))
             return null;
         //根据orderId查询orderInfo
@@ -55,7 +55,7 @@ public class AlipayServiceImpl extends GenericServiceImpl<PayAccountRecord, Stri
         if (!orderInfoVo.getOrderStatus().equals(PayCore.PayStatus.unpay))
             return null;
         //构造html
-        String html = buildRequestParams(userId, orderInfoVo);
+        String html = buildRequestParams(userId, orderInfoVo, notify_url, return_url);
         //记账
         PayAccountRecord payAccountRecord = new PayAccountRecord();
         payAccountRecord.setPayAccountId(Long.valueOf(userId));
@@ -82,7 +82,7 @@ public class AlipayServiceImpl extends GenericServiceImpl<PayAccountRecord, Stri
         return count > 0;
     }
 
-    private String buildRequestParams(String userId, OrderInfoVo payVo) {
+    private String buildRequestParams(String userId, OrderInfoVo payVo, String notify_url, String return_url) {
         Map<String, String> map = new HashMap<String, String>();
         //基本信息
         map.put("service", AlipayConfig.service);

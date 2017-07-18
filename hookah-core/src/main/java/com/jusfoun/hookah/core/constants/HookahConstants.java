@@ -256,7 +256,7 @@ public class HookahConstants {
     }
 
     /**
-     * 0系统,1未认证,2个人,3个人待审核,4企业,5企业待审核,6个人审核失败,7企业审核失败
+     * 0系统,1未认证,2个人,3个人待审核,4企业,5企业待审核,6个人审核失败,7企业审核失败8供应商,9供应商待审核,10供应商审核失败
      */
     public enum UserType {
 
@@ -267,8 +267,10 @@ public class HookahConstants {
         PERSON_CHECK_FAIL(6),
         ORGANIZATION_CHECK_OK(4),
         ORGANIZATION_CHECK_NO(5),
-        ORGANIZATION_CHECK_FAIL(7);
-
+        ORGANIZATION_CHECK_FAIL(7),
+        SUPPLIER_CHECK_OK(8),
+        SUPPLIER_CHECK_NO(9),
+        SUPPLIER_CHECK_FAIL(10);
 
         public Integer code;
 

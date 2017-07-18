@@ -94,6 +94,7 @@ function companyAuth(){
             "contactAddress":$("input[name='address']").val(),//详细地址
             "orgPhone":$("input[name='tel']").val(),//联系电话
             "industry":$("input[name='mainBusiness']").val(),//行业
+            "isSupplier":$("input[name='fruit']").is(":checked")?"1":"0",//我要成为供应商
         },
         type:"post",
         success : function(data) {
