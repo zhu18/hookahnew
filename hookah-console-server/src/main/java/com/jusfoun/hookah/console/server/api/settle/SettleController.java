@@ -128,8 +128,8 @@ public class SettleController extends BaseController{
 
             HashMap<String, Object> map = new HashMap<String, Object>() {
                 {
-                    put("record", record);
-                    put("records", list);
+                    put("waitSettleRecord", record);
+                    put("settleRecords", list);
                 }
             };
 
