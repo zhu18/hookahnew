@@ -12,7 +12,7 @@ public interface AlipayService extends GenericService<PayAccountRecord, String> 
      * @param orderId   订单id
      * @return 表单
      */
-    String doPay(String userId, String orderId);
+    String doPay(String userId, String orderId, String notify_url, String return_url);
 
     /**
      * 记账
