@@ -400,7 +400,7 @@ public class GoodsApi extends BaseController{
             pagination = new Pagination<>(pageNumberNew, pageSizeNew);
             PageHelper.startPage(pageNumberNew, pageSizeNew);//pageNum为第几页，pageSize为每页数量
 
-            List<GoodsCheckedVo> list = goodsService.getListForChecked(goodsName, goodsSn,orgName);
+            List<GoodsCheckedVo> list = goodsService.getListForChecked(goodsName, goodsSn, orgName);
             page = new PageInfo<GoodsCheckedVo>(list);
             if(page.getList() != null && page.getList().size() > 0){
                 page.getList().stream().forEach(goodsCheckedVo ->

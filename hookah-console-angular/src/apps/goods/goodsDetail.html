@@ -841,13 +841,13 @@
 								<label class="col-sm-2 control-label">返回格式：</label>
 								<div class="col-sm-5">
 									<label class="radio-inline" data-ng-if="$flag">
-										<input name="respDataFormat" value='0' type="radio" ng-checked="packageApiInfo.respDataFormat == '0'"/>json
+										<input name="respDataFormat" value='0' type="radio" data-ng-model="packageApiInfo.respDataFormat"/>json
 									</label>
 									<label class="radio-inline" data-ng-if="$flag">
-										<input name="respDataFormat" value='1' type="radio" ng-checked="packageApiInfo.respDataFormat == '1'"/>xml
+										<input name="respDataFormat" value='1' type="radio" data-ng-model="packageApiInfo.respDataFormat"/>xml
 									</label>
 									<label class="radio-inline" data-ng-if="$flag">
-										<input name="respDataFormat" value='2' type="radio" ng-checked="packageApiInfo.respDataFormat == '2'"/>text
+										<input name="respDataFormat" value='2' type="radio" data-ng-model="packageApiInfo.respDataFormat"/>text
 									</label>
 									<label class="radio-inline" data-ng-if="!$flag">
 										<input name="respDataFormat" value='0' disabled type="radio" ng-checked="packageApiInfo.respDataFormat == '0'"/>json

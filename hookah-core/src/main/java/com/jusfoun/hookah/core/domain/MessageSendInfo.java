@@ -122,6 +122,8 @@ public class MessageSendInfo extends GenericModel {
 
     private Byte isDelete;
 
+    private String errorInfo;
+
     public Byte getIsDelete() {
         return isDelete;
     }
@@ -432,5 +434,13 @@ public class MessageSendInfo extends GenericModel {
 
     public void setBusinessId(String businessId) {
         this.businessId = businessId;
+    }
+
+    public String getErrorInfo() {
+        return errorInfo;
+    }
+
+    public void setErrorInfo(String errorInfo) {
+        this.errorInfo = errorInfo;
     }
 }

@@ -41,6 +41,11 @@ public class HookahConstants {
     public static final byte LOCAL_SMS_SUCCESS = 1;
     public static final byte LOCAL_SMS_FAIL = 0;
 
+    public static final String TIME_FORMAT = "yyyy年MM月dd日HH时mm分ss秒";
+
+    // message exception
+    public static final String MESSAGE_EXCEPTION_NOUSER = "未查询到用户!";
+
     public enum SmsTypeNew {
         SMS_USER_REGISTER("101"),  //注册
         SMS_FIND_USER_PWD("102"),   //找回登录密码
@@ -256,7 +261,7 @@ public class HookahConstants {
     }
 
     /**
-     * 0系统,1未认证,2个人,3个人待审核,4企业,5企业待审核,6个人审核失败,7企业审核失败
+     * 0系统,1未认证,2个人,3个人待审核,4企业,5企业待审核,6个人审核失败,7企业审核失败8供应商,9供应商待审核,10供应商审核失败
      */
     public enum UserType {
 
@@ -267,8 +272,10 @@ public class HookahConstants {
         PERSON_CHECK_FAIL(6),
         ORGANIZATION_CHECK_OK(4),
         ORGANIZATION_CHECK_NO(5),
-        ORGANIZATION_CHECK_FAIL(7);
-
+        ORGANIZATION_CHECK_FAIL(7),
+        SUPPLIER_CHECK_OK(8),
+        SUPPLIER_CHECK_NO(9),
+        SUPPLIER_CHECK_FAIL(10);
 
         public Integer code;
 
@@ -396,6 +403,33 @@ public class HookahConstants {
         public byte code;
 
         TransferStatus(byte code) {
+            this.code = code;
+        }
+
+        public byte getCode() {
+            return code;
+        }
+    }
+    /**
+     * withdraw
+     * 提现审核状态
+         0待审核
+         1审核成功
+         2审核失败
+         3处理成功
+         4处理失败
+     */
+    public enum WithdrawStatus {
+
+        waitCheck((byte)0),
+        CheckSuccess((byte)1),
+        checkFail((byte)2);
+//        handleSuccess((byte)3),
+//        handleFail((byte)4);
+
+        public byte code;
+
+        WithdrawStatus(byte code) {
             this.code = code;
         }
 

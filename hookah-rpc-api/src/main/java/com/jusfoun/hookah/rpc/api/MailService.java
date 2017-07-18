@@ -1,4 +1,7 @@
 package com.jusfoun.hookah.rpc.api;
+
+import com.jusfoun.hookah.core.exception.EmailException;
+
 /**
  *邮件service
  * @author admin
@@ -6,5 +9,5 @@ package com.jusfoun.hookah.rpc.api;
  */
 public interface MailService {
 
-	String send(String toEmail, String subject, String text);
+	String send(String toEmail, String subject, String text) throws EmailException;
 }

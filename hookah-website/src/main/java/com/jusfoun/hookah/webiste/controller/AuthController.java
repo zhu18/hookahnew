@@ -1,16 +1,11 @@
 package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.constants.HookahConstants;
-import com.jusfoun.hookah.core.domain.Organization;
-import com.jusfoun.hookah.core.domain.User;
-import com.jusfoun.hookah.core.domain.UserCheck;
-import com.jusfoun.hookah.core.domain.UserDetail;
+import com.jusfoun.hookah.core.domain.*;
+import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
-import com.jusfoun.hookah.rpc.api.OrganizationService;
-import com.jusfoun.hookah.rpc.api.UserCheckService;
-import com.jusfoun.hookah.rpc.api.UserDetailService;
-import com.jusfoun.hookah.rpc.api.UserService;
+import com.jusfoun.hookah.rpc.api.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
@@ -24,8 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * All rights Reserved, Designed By
@@ -59,9 +53,16 @@ public class AuthController extends BaseController {
     @Resource
     UserCheckService userCheckService;
 
+    @Resource
+    SupplierService supplierService;
+
     //认证状态(0.未认证 1.认证中 2.已认证 3.认证失败)
     public static final Byte AUTH_STATUS_SUCCESS = 2;
     public static final Byte AUTH_STATUS_CHECKING = 1;
+
+    //是否成为供应商
+    public static final Byte IS_SUPPLIER_NO = 0;
+    public static final Byte IS_SUPPLIER_YES = 1;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(String redirect_uri, HttpServletRequest request) {
@@ -241,15 +242,46 @@ public class AuthController extends BaseController {
                 organization.setIsAuth(AUTH_STATUS_SUCCESS);
                 organization.setOrgId(orgId);
                 organizationService.updateByIdSelective(organization);
+                //给注册的供应商orgId赋值
+                user1.setOrgId(orgId);
             }else {
                 organization = organizationService.insert(organization);
                 user1.setOrgId(organization.getOrgId());
             }
 
-            //用户待审核状态
-            user1.setUserType(HookahConstants.UserType.ORGANIZATION_CHECK_NO.getCode());
-            userService.updateByIdSelective(user1);
 
+            //成为供应商
+            if(IS_SUPPLIER_YES.equals(organization.getIsSupplier())){
+
+                Supplier supplier = new Supplier();
+                supplier.setAddTime(new Date());
+                supplier.setUserId(userId);
+                supplier.setOrgId(user1.getOrgId());
+                supplier.setCheckStatus(Byte.valueOf("0"));
+                supplier.setOrgName(organization.getOrgName());
+               //重新审核 查看是否存在
+                if(!StringUtils.isEmpty(orgId) && !"0".equals(orgId)){
+                    List<Condition> fifters = new ArrayList<>();
+                    fifters.add(Condition.eq("orgId",orgId));
+                    List<Supplier> suppliers = supplierService.selectList(fifters);
+                    if(Objects.nonNull(suppliers) && suppliers.size() > 0){
+                        supplier.setId(suppliers.get(0).getId());
+                        supplierService.updateByIdSelective(supplier);
+                    }else{
+                        supplierService.insert(supplier);
+                    }
+                }else{
+                    supplierService.insert(supplier);
+                }
+
+                //供应商待审核状态
+                user1.setUserType(HookahConstants.UserType.SUPPLIER_CHECK_NO.getCode());
+            }else {
+                //企业待审核状态
+                user1.setUserType(HookahConstants.UserType.ORGANIZATION_CHECK_NO.getCode());
+            }
+
+            userService.updateByIdSelective(user1);
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());

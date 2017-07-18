@@ -13,4 +13,16 @@
     <motan:referer id="userService"
                    interface="com.jusfoun.hookah.rpc.api.UserService"
                    connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+
+    <motan:referer id="mgOrderInfoService"
+                   interface="com.jusfoun.hookah.rpc.api.MgOrderInfoService"
+                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+
+    <motan:referer id="orderInfoService"
+                   interface="com.jusfoun.hookah.rpc.api.OrderInfoService"
+                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+
+    <motan:referer id="waitSettleRecordService"
+                   interface="com.jusfoun.hookah.rpc.api.WaitSettleRecordService"
+                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
 </beans>

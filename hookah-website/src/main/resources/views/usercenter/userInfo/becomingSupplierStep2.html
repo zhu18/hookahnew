@@ -25,31 +25,31 @@ var htmlPart = {
                     <div class="unit-contact">
                         <h4>单位联系人</h4>
                         <div>
-                            <label for="">业务联系人：</label>
-                            <input type="text">
+                            <label for="contactName">业务联系人：</label>
+                            <input type="text" id="contactName">
                         </div>
                         <div>
-                            <label for="">联系人手机：</label>
-                            <input type="text">
+                            <label for="contactPhone">联系人手机：</label>
+                            <input type="text" id="contactPhone">
                         </div>
                         <div>
-                            <label for="">联系地址：</label>
-                            <input type="text">
+                            <label for="contactAddress">联系地址：</label>
+                            <input type="text" id="contactAddress">
                         </div>
                     </div>
                     <div class="unit-information">
                         <h4>单位信息</h4>
                         <div>
                             <label for="">单位名称：</label>
-                            <span></span>
+                            <span id="orgName"></span>
                         </div>
                         <div>
                             <label for="">法定代表人：</label>
-                            <span></span>
+                            <span id="lawPersonName"></span>
                         </div>
                         <div>
                             <label for="">社会信用代码：</label>
-                            <span></span>
+                            <span id="certificateCode"></span>
                         </div>
                     </div>
                     <a href="/usercenter/becomingSupplierStep3" class="btn">下一步</a>
@@ -63,3 +63,5 @@ var htmlPart = {
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
+<script type="text/javascript" src="/static/js/usercenter/userInfo/becomingSupplierStep2.js"></script>
+

@@ -7,27 +7,49 @@ $(function () {
         data:{},
         type:'get',
         success:function (data) {
-            console.log(data.data);
             var html="";
-            html +="<li><label>用户类型</label><p>单位会员</p></li>";
-            html +="<li><label>认证状态</label><p class='position-relative'><span>已认证</span><a href='' class='repeat-revise-btn'>重新修改</a></p></li>";
-            html +="<li><label>审核意见</label><p>通过</p></li>";
+            if (data.data.userType =="0"){
+                html +="<li><label>用户类型</label><p>个人会员</p></li>";
+            }else {
+                html +="<li><label>用户类型</label><p>单位会员</p></li>";
+            }
+            if(!data.data.checkContent){
+                data.data.checkContent="无"
+            }
+            if(data.data.isAuth == '3'){
+                html +="<li><label>认证状态</label><p class='position-relative'><span>未通过</span><a href='' class='repeat-revise-btn'>重新修改</a></p></li>";
+                html +="<li><label>审核意见</label><p>"+data.data.checkContent+"</p></li>";
+            }else if(data.data.isAuth == '2'){
+                html +="<li><label>认证状态</label><p class='position-relative'><span>已认证</span><a href='' class='revise-btn'>修改</a></p></li>";
+                html +="<li><label>审核意见</label><p>"+data.data.checkContent+"</p></li>";
+            }else {
+                html +="<li><label>认证状态</label><p class='position-relative'><span>未认证</span><a href='' class='repeat-revise-btn'>立即认证</a></p></li>";
+                html +="<li><label>审核意见</label><p>"+data.data.checkContent+"</p></li>";
+            }
             $('.ul1').html(html);
 
-            var htmlTabel="";
-            var list=data.data.loginLogs;
-            console.log(list);
-            for (var i=0;i<list.length;i++){
-                if(!list[i].remark){
-                    list[i].remark=""
-                }
-                htmlTabel +="<tr>";
-                htmlTabel +="<td>" +list[i].addTime+"</td>";
-                htmlTabel +="<td>"+list[i].clientIp+"</td>";
-                htmlTabel +="<td>"+list[i].remark+"</td>";
-                htmlTabel +="</tr>";
+            if(data.data.isAuth == '3'){
+                data.data.isAuth="未通过"
+            }else if(data.data.isAuth == '2'){
+                data.data.isAuth="已认证"
+            }else {
+                data.data.isAuth="未认证"
             }
-            $('.ul2').html(htmlTabel);
+
+            $('#orgName').html(data.data.orgName?data.data.orgName:"无");
+            $('#isAuth').html( data.data.isAuth?data.data.isAuth:"无");
+            $('#certificateCode').html( data.data.certificateCode?data.data.certificateCode:"无");
+            $('#licenseCode').html( data.data.licenseCode?data.data.licenseCode:"无");
+            $('#taxCode').html( data.data.taxCode?data.data.taxCode:"无");
+            $('#industry').html( data.data.industry?data.data.industry:"无");
+            $('#lawPersonName').html( data.data.lawPersonName?data.data.lawPersonName:"无");
+            $('#region').html( data.data.region?data.data.region:"无");
+            $('#contactAddress').html( data.data.contactAddress?data.data.contactAddress:"无");
+            $('#orgPhone').html( data.data.orgPhone?data.data.orgPhone:"无");
+            $('#certifictePath').attr({"src":data.data.certifictePath});
+            $('#licensePath').attr({"src":data.data.licensePath});
+
+
         }
     });
 })

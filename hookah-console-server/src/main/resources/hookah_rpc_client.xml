@@ -26,6 +26,10 @@
                  interface="com.jusfoun.hookah.rpc.api.RoleService"
                  connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
 
+  <motan:referer id="userRoleService"
+                 interface="com.jusfoun.hookah.rpc.api.UserRoleService"
+                 connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+
   <!-- 具体referer配置。使用方通过beanid使用服务接口类 -->
   <motan:referer id="cashRecordService"
                  interface="com.jusfoun.hookah.rpc.api.CashRecordService"
@@ -39,7 +43,16 @@
   <motan:referer id="permissionService"
                  interface="com.jusfoun.hookah.rpc.api.PermissionService"
                  connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+
   <motan:referer id="rolePermissionService"
                  interface="com.jusfoun.hookah.rpc.api.RolePermissionService"
+                 connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+
+  <motan:referer id="payAccountService"
+                 interface="com.jusfoun.hookah.rpc.api.PayAccountService"
+                 connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+
+  <motan:referer id="payTradeRecordService"
+                 interface="com.jusfoun.hookah.rpc.api.PayTradeRecordService"
                  connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
 </beans>

@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -49,6 +50,8 @@ public class SupplierServiceImpl extends GenericServiceImpl<Supplier, String> im
         User user = userMapper.selectByPrimaryKey(userId);
         Organization organization = organizationMapper.selectByPrimaryKey(user.getOrgId());
         Supplier supplier = new Supplier();
+        List<Condition> filter = new ArrayList<>();
+        filter.add(Condition.eq("userId",user));
 
         user.setContactName(contactName);
         if (contactPhone!=null && !FormatCheckUtil.checkMobile(contactPhone)){
@@ -59,15 +62,20 @@ public class SupplierServiceImpl extends GenericServiceImpl<Supplier, String> im
         user.setContactAddress(contactAddress);
         user.setUserType(9);
 
-        supplier.setUserId(userId);
-        supplier.setAddTime(new Date());
-        supplier.setOrgId(organization.getOrgId());
-        supplier.setOrgName(organization.getOrgName());
-        supplier.setContactPhone(contactPhone);
-        supplier.setCheckStatus(supplier.CHECK_STATUS);
-
+        Supplier list = super.selectOne(filter);
+        if (list!=null){
+            list.setContactPhone(contactPhone);
+            supplierMapper.updateByPrimaryKeySelective(list);
+        }else {
+            supplier.setContactPhone(contactPhone);
+            supplier.setUserId(userId);
+            supplier.setAddTime(new Date());
+            supplier.setOrgId(organization.getOrgId());
+            supplier.setOrgName(organization.getOrgName());
+            supplier.setCheckStatus(supplier.CHECK_STATUS);
+            supplierMapper.insert(supplier);
+        }
         userMapper.updateByPrimaryKey(user);
-        supplierMapper.insert(supplier);
     }
 
     @Override

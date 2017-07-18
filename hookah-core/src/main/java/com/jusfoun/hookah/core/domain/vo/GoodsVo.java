@@ -24,6 +24,7 @@ public class GoodsVo extends Goods implements Serializable {
     private MgGoods.OffLineInfoBean offLineInfo; //线下交付信息
     private MgGoods.OffLineDataBean offLineData;//离线数据信息
     private MgGoods.PackageApiInfoBean packageApiInfo;
+    private long sales;//商品销量
 
     private boolean orNotFavorite;
     private String userId;
@@ -246,5 +247,13 @@ public class GoodsVo extends Goods implements Serializable {
 
     public void setGoodsAreaFullName(String goodsAreaFullName) {
         this.goodsAreaFullName = goodsAreaFullName;
+    }
+
+    public long getSales() {
+        return sales;
+    }
+
+    public void setSales(long sales) {
+        this.sales = sales;
     }
 }

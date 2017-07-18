@@ -32,22 +32,46 @@ class AccountController {
       });
     };
     $scope.delete = function (event, item) {
-      var promise = $http({
-        method: 'POST',
-        url: $rootScope.site.apiServer + "/api/account/delete",
-        params: {
-          userId: item.userId,
-          userName: item.userName
-        }
+      var confirm = $rootScope.openConfirmDialogModal("确认要删除此&nbsp;<b>" + item.userName + "</b>&nbsp;账户吗？");
+      confirm.result.then(function () {
+        var promise = $http({
+          method: 'POST',
+          url: $rootScope.site.apiServer + "/api/account/delete",
+          params: {
+            userId: item.userId,
+            userName: item.userName
+          }
+        });
+        promise.then(function (res, status, config, headers) {
+          $rootScope.loadingState = false;
+          // alert(res.data.message);
+          $scope.search();
+          growl.addSuccessMessage("数据加载完毕。。。");
+        });
       });
-      promise.then(function (res, status, config, headers) {
-        $rootScope.loadingState = false;
-        // alert(res.data.message);
-        $scope.search();
-        growl.addSuccessMessage("数据加载完毕。。。");
-      });
+
     };
     $scope.load = function (event, item) {
+      var promiseRoles = $http({
+        method: 'GET',
+        url: $rootScope.site.apiServer + "/api/role/role_all",
+        data: ""
+      });
+      promiseRoles.then(function (res, status, config, headers) {
+        $rootScope.roles = res.data.data.list;
+        growl.addSuccessMessage("数据加载完毕。。。");
+      });
+
+      var promiseUserRoles = $http({
+        method: 'GET',
+        url: $rootScope.site.apiServer + "/api/role/user_role?userId=" + item.userId,
+        data: ""
+      });
+      promiseUserRoles.then(function (res, status, config, headers) {
+        $rootScope.user_role = res.data.data;
+        growl.addSuccessMessage("数据加载完毕。。。");
+      });
+
       var promise = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/account/" + item.userId,
@@ -76,6 +100,7 @@ class AccountController {
       promise.then(function (res, status, config, headers) {
         $rootScope.loadingState = false;
         if (res.data.code == "1") {
+          alert(res.data.data);
           $state.go('account.search');
         } else {
           alert(res.data.message);
@@ -83,7 +108,6 @@ class AccountController {
         growl.addSuccessMessage("数据加载完毕。。。");
       });
     };
-
     $scope.editPassword = function (event, item) {
       var promise = $http({
         method: 'POST',
@@ -99,11 +123,26 @@ class AccountController {
         }
       });
     };
-
     $scope.pageChanged = function () {
       $scope.search();
     };
     $scope.search();
+    $scope.isEnable = function (id) {
+      if (id == 1) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+    $scope.hasRoles = function (role) {
+      var roles = $rootScope.user_role.toString();
+      if (roles.indexOf(role) > -1) {
+        return true;
+      } else {
+        return false;
+      }
+
+    }
   }
 }
 
