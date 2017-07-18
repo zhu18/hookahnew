@@ -17,21 +17,44 @@ class GoodsListController {
 		$scope.onSaleStatuss = [{id:-1, name:"全部"}, {id:0, name:"已下架"}, {id:1, name:"已上架"}, {id:2, name:"强制下架"}];
 		$scope.searchOnSaleStatus = -1;
 
-		$scope.search = function () {//获取初始数据
+
+		// $scope.$searchCondition = $stateParams.data.searchCd;
+		// $scope.$flag = $stateParams.data.flag;
+        $scope.searchCondition = {};
+
+        $scope.$on(function(event, data){
+        	$scope.searchCondition = data;
+        	alert(data);
+        	console.log("JSON:========="+JSON.stringify(data))
+		})
+
+
+		$scope.searchPack = function(){
+
+            $scope.searchCondition = {
+                currentPage: $rootScope.pagination.currentPage,
+                pageSize: $rootScope.pagination.pageSize,
+                goodsName: $scope.searchName,
+                goodsSn: $scope.searchSn,
+                keywords: $scope.searchKw,
+                shopName: $scope.searchShop,
+                checkStatus: $scope.searchCheckStatus,
+                onSaleStatus: $scope.searchOnSaleStatus,
+                orgName:$scope.orgName
+            };
+
+            if($scope.$flag){
+            	$scope.search($scope.$searchCondition);
+			}else{
+            	$scope.search($scope.searchCondition);
+			}
+            console.log("------------------------" + JSON.stringify($scope.searchCondition));
+		};
+		$scope.search = function (searchCondition) {//获取初始数据
 			var promise = $http({
 				method: 'GET',
 				url: $rootScope.site.apiServer + $scope.getUrl,
-				params: {
-					currentPage: $rootScope.pagination.currentPage,
-					pageSize: $rootScope.pagination.pageSize,
-					goodsName: $scope.searchName,
-					goodsSn: $scope.searchSn,
-					keywords: $scope.searchKw,
-					shopName: $scope.searchShop,
-					checkStatus: $scope.searchCheckStatus,
-					onSaleStatus: $scope.searchOnSaleStatus,
-					orgName:$scope.orgName
-				}
+				params: searchCondition
 			});
 			promise.then(function (res, status, config, headers) {
 				$rootScope.loadingState = false;
@@ -94,14 +117,16 @@ class GoodsListController {
 					$state.go('items.goodsDetail', {
 						data:{
 							data:res.data.data,
-							flag:flag
+							flag:flag,
+							searchCondition: $scope.searchCondition
+
 						}
 					});
 				}
 			});
 		};//商品详情
 		$scope.pageChanged = function () {//翻页
-			$scope.search();
+			$scope.searchPack();
 			console.log('Page changed to: ' + $rootScope.pagination.currentPage);
 		};//翻页
 		$scope.refresh = function(){ //刷新
@@ -118,17 +143,17 @@ class GoodsListController {
 			$scope.pageTitle = '商品查询';
 			$scope.goodsTypeView = 1;
 			$scope.getUrl = "/api/goods/all";
-			$scope.search();
+			$scope.searchPack();
 		}else if($state.$current.name == "items.check"){
 			$scope.pageTitle = '待审核资源';
 			$scope.goodsTypeView = 2;
 			$scope.getUrl = "/api/goods/allNotCheck";
-			$scope.search();
+			$scope.searchPack();
 		}else if($state.$current.name == "items.checkedList"){
 			$scope.pageTitle = '已审核资源';
 			$scope.goodsTypeView = 3;
 			$scope.getUrl = "/api/goods/checkedList";
-			$scope.search();
+			$scope.searchPack();
 		}//初始化
 
 

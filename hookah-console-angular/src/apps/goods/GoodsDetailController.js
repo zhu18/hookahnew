@@ -4,12 +4,15 @@ class GoodsDetailController {
 		$scope.$flag = $stateParams.data.flag;
 		$scope.packageApiInfo =  $scope.editData.packageApiInfo;
 		$scope.current= "1";
+		$scope.$searchCondition = $stateParams.data.searchCondition;
+		alert("obj:" + $scope.$searchCondition.searchName);
+        console.log("obj:" + $scope.$searchCondition.searchName);
 		$scope.setCurrent = function (param) {
 			$scope.current = param;
 		};
 
 
-        $scope.submitCheck = function () {
+        $scope.submitCheck = function () { // 提交审核
 
             if ($('input[name="checkStatus"]:checked').val() == '2' && $("#checkContent").val().trim() == '') {
                 $rootScope.openErrorDialogModal('请填写审核意见^_^');
@@ -57,7 +60,21 @@ class GoodsDetailController {
                 }
             }
 
-        }
+        } //提交审核
+
+        $
+
+        $scope.returnPage = function () { //返回
+
+            // $scope.$item('data',$stateParams.data.searchCondition);
+            $state.go('items.search', {
+                data:{
+                    searchCd:$stateParams.data.searchCondition,
+                    flag:true
+
+                }
+            });
+        } //返回
 	}
 }
 
