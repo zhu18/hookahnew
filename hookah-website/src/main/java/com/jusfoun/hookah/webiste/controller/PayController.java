@@ -111,7 +111,6 @@ public class PayController {
             HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
             User user = userService.selectById(userMap.get("userId"));
             //支付操作
-
             payCoreService.doPayMoney(orderSn,user.getUserId());
             //根据订单编号获得支付金额
             List<Condition> filters = new ArrayList();
