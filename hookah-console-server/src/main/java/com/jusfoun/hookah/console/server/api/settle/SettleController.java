@@ -100,14 +100,14 @@ public class SettleController extends BaseController{
     /**
      * 根据待结算记录 进行结算 并查询已结算记录
      */
-    @RequestMapping(value = "/getListBySettleId/{settleId}", method = RequestMethod.GET)
-    public ReturnData getListBySettle(@PathVariable Long settleId) {
+    @RequestMapping(value = "/getListBySettleId", method = RequestMethod.GET)
+    public ReturnData getListBySettle(Long id) {
 
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Failed);
         try {
 
-            WaitSettleRecord record = waitSettleRecordService.selectById(settleId);
+            WaitSettleRecord record = waitSettleRecordService.selectById(id);
             if(record == null){
                 returnData.setCode(ExceptionConst.Failed);
                 returnData.setMessage("未查询到该订单，如有疑问请联系管理员！");
@@ -123,7 +123,7 @@ public class SettleController extends BaseController{
             orderBys.add(OrderBy.desc("addTime"));
 
             List<Condition> filters = new ArrayList();
-            filters.add(Condition.eq("waitSettleRecordId", settleId));
+            filters.add(Condition.eq("waitSettleRecordId", id));
             List<SettleRecord> list = settleRecordService.selectList(filters, orderBys);
 
             HashMap<String, Object> map = new HashMap<String, Object>() {
