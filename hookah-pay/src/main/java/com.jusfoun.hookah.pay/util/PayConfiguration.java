@@ -14,7 +14,7 @@ public class PayConfiguration {
     static {
 		InputStream in;
 		try {
-			in = PropertiesUtil.class.getResourceAsStream("/pay-conf-mall.online.properties");
+			in = PropertiesUtil.class.getResourceAsStream("/pay-conf-qddata.online.properties");
 			properties = new Properties();
 			properties.load(in);
 			initConfig();
