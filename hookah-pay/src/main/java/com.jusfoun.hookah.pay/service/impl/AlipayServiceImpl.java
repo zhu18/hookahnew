@@ -17,6 +17,7 @@ import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
+import com.jusfoun.hookah.core.utils.OrderHelper;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.pay.util.*;
 import com.jusfoun.hookah.rpc.api.*;
@@ -54,6 +55,30 @@ public class AlipayServiceImpl extends GenericServiceImpl<PayAccountRecord, Stri
         OrderInfoVo orderInfoVo = mgOrderInfoService.selectById(orderId);
         if (!orderInfoVo.getOrderStatus().equals(PayCore.PayStatus.unpay))
             return null;
+        //构造html
+        String html = buildRequestParams(userId, orderInfoVo, notify_url, return_url);
+        //记账
+        PayAccountRecord payAccountRecord = new PayAccountRecord();
+        payAccountRecord.setPayAccountId(Long.valueOf(userId));
+        payAccountRecord.setUserId(userId);
+        Date date = new Date();
+        payAccountRecord.setTransferDate(date);
+        payAccountRecord.setMoney(orderInfoVo.getOrderAmount());//订单资金总额
+        payAccountRecord.setSerialNumber(orderInfoVo.getOrderSn());//订单号
+        payAccountRecord.setAddTime(date);
+        payAccountRecord.setAddOperator(userId);
+        insertRecord(payAccountRecord);
+        return html;
+    }
+
+    @Override
+    public String doCharge(String userId, String money, String notify_url, String return_url) {
+        if (!StringUtils.isNotBlank(userId) || !StringUtils.isNotBlank(money))
+            return null;
+        OrderInfoVo orderInfoVo = new OrderInfoVo();
+        orderInfoVo.setOrderSn(OrderHelper.genOrderSn());
+        orderInfoVo.setOrderAmount(Long.valueOf(money));
+        orderInfoVo.setAccount(userId);
         //构造html
         String html = buildRequestParams(userId, orderInfoVo, notify_url, return_url);
         //记账
