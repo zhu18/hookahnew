@@ -11,7 +11,7 @@ class settleController {
         params: {
           orderSn: $scope.orderSn ? $scope.orderSn : null,
           settleStatus: $scope.settleStatus == 0 ? '0' : ($scope.settleStatus ? $scope.settleStatus : null),//审核状态
-          shopName: $scope.shopName ? $scope.shopName : null,
+          shopName: $scope.orgName ? $scope.orgName : null,
           startDate: $scope.startDate ? format($scope.startDate, 'yyyy-MM-dd HH:mm:ss') : null,
           endDate: $scope.endDate ? format($scope.endDate, 'yyyy-MM-dd HH:mm:ss') : null,
           currentPage: $rootScope.pagination.currentPage, //当前页码
@@ -22,7 +22,6 @@ class settleController {
       promise.then(function (res, status, config, headers) {
         console.log('数据在这里');
         console.log(res);
-
         if (res.data.code == '1') {
           $scope.settleList = res.data.data.list;
           $rootScope.pagination = res.data.data;
@@ -30,18 +29,22 @@ class settleController {
           if (res.data.data.totalPage > 1) {
             $scope.showPageHelpInfo = true;
           }
-
         } else {
           $scope.settleList = [];
           $scope.showNoneDataInfoTip = true;
 
         }
-
         $rootScope.loadingState = false;
         growl.addSuccessMessage("订单数据加载完毕。。。");
       });
-
     };
+
+    $scope.getDetails = function (id) {
+      $state.go('settle.settleDetails', {id: id});
+    };
+
+
+
     $scope.pageChanged = function () {
       $scope.search();
       console.log('Page changed to: ' + $rootScope.pagination.currentPage);

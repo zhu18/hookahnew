@@ -33,11 +33,11 @@ app.run(function ($rootScope, $state) {
       "folded": false
     }
   };
-  $rootScope.config.title = '评价管理';
+  $rootScope.config.title = '结算管理';
   $rootScope.config.mainNav =[
     {
-      "title":"评价查询",
-      "url":"settle.settle"
+      "title":"结算管理",
+      "url":"settle.list"
     },
     // {
     //   "title":"新增帮助",
