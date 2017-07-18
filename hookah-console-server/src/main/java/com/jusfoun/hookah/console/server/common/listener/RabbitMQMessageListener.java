@@ -72,63 +72,52 @@ public class RabbitMQMessageListener {
                 try {
                     if(HookahConstants.MESSAGE_TYPE_SMS == t.getTemplateType()) {
                         if (user != null && StringUtils.isNotBlank(user.getUserId()) ) {
-                            messageSendInfo = this.sendSMS(t, user.getMobile(), map);
+                            this.sendSMS(t, user.getMobile(), map, messageSendInfo);
                         } else if((user == null || !StringUtils.isNotBlank(user.getUserId()))
                                 && StringUtils.isNotBlank(messageCode.getMobileNo())) {
-                            messageSendInfo = this.sendSMS(t, messageCode.getMobileNo(), map);
+                            this.sendSMS(t, messageCode.getMobileNo(), map, messageSendInfo);
                         }else {
-                            throw new SmsException("短信发送失败:" + HookahConstants.MESSAGE_EXCEPTION_NOUSER);
+                            messageSendInfo.setSendType(HookahConstants.MESSAGE_TYPE_SMS);
+                            if (user != null && StringUtils.isNotBlank(user.getUserId())) {
+                                messageSendInfo.setReceiveUser(user.getUserId());
+                            }
+                            if ((user != null && StringUtils.isNotBlank(user.getMobile())) || StringUtils.isNotBlank(messageCode.getMobileNo())) {
+                                messageSendInfo.setReceiveAddr(StringUtils.isNotBlank(messageCode.getMobileNo()) ?
+                                        messageCode.getMobileNo() : user.getMobile());
+                            }
+                            throw new SmsException("短信发送失败:未查询到用户或者电话号码为空！");
                         }
                     }else if(HookahConstants.MESSAGE_TYPE_MAIL == t.getTemplateType()) { // 邮件发送
                         if (user != null && StringUtils.isNotBlank(user.getUserId())
                                 && StringUtils.isNotBlank(user.getEmail())) {
-                            messageSendInfo = this.sendMail(t, user.getEmail(), map);
-                        }else if(user != null && StringUtils.isNotBlank(user.getUserId()) ) {
+                            this.sendMail(t, user.getEmail(), map, messageSendInfo);
+                        }else if(user != null && StringUtils.isNotBlank(user.getUserId()) && !StringUtils.isNotBlank(user.getEmail()) ) {
+                            messageSendInfo.setSendType(HookahConstants.MESSAGE_TYPE_MAIL);
+                            messageSendInfo.setReceiveUser(user.getUserId());
                             throw new EmailException("邮件发送失败:未获取到邮箱地址！");
                         }else {
+                            messageSendInfo.setSendType(HookahConstants.MESSAGE_TYPE_MAIL);
                             throw new EmailException("邮件发送失败:" + HookahConstants.MESSAGE_EXCEPTION_NOUSER);
                         }
                     }else { // 站内信发送
                         if (user != null && StringUtils.isNotBlank(user.getUserId())) {
-                            messageSendInfo = this.sendStation(t, map);
+                            this.sendStation(t, map, messageSendInfo);
                         }else {
+                            messageSendInfo.setSendType(HookahConstants.MESSAGE_TYPE_STATION);
                             throw new StationException("站内信发送失败:" + HookahConstants.MESSAGE_EXCEPTION_NOUSER);
                         }
                     }
-                }catch (SmsException e1) {
-                    String userId = "";
-                    String mobile = "";
-                    if (user != null && StringUtils.isNotBlank(user.getUserId())) {
-                        userId = user.getUserId();
-                    }else if((user != null && StringUtils.isNotBlank(user.getMobile())) ||
-                            StringUtils.isNotBlank(messageCode.getMobileNo())) {
-                        mobile = (user != null && StringUtils.isNotBlank(user.getMobile()))
-                                ? user.getMobile() : messageCode.getMobileNo();
-                    }
-                    this.errorSend(userId, mobile, e1.toString());
-                    e1.printStackTrace();
-                } catch (EmailException e2) {
-                    String userId = "";
-                    String email = "";
-                    if (user != null && StringUtils.isNotBlank(user.getUserId())) {
-                        userId = user.getUserId();
-                    }else if((user != null && StringUtils.isNotBlank(user.getEmail()))) {
-                        email = user.getEmail();
-                    }
-                    this.errorSend(userId, email, e2.toString());
-                    e2.printStackTrace();
-                } catch (StationException e3) {
-                    String userId = "";
-                    if (user != null && StringUtils.isNotBlank(user.getUserId())) {
-                        userId = user.getUserId();
-                    }
-                    this.errorSend(userId, "", e3.toString());
-                    e3.printStackTrace();
+                }catch (SmsException | EmailException | StationException e) {
+                    messageSendInfo.setErrorInfo(e.toString());
+                    messageSendInfo.setIsSuccess(HookahConstants.LOCAL_SMS_FAIL);
+                    e.printStackTrace();
+                    continue;
                 }
                 if(user != null) {
                     messageSendInfo.setReceiveUser(user.getUserId());
                 }
                 messageSendInfo.setTemplateId(t.getId());
+                messageSendInfo.setSendHeader(t.getTemplateHeader());
                 messageSendInfo.setSendUser("sys");
                 messageSendInfo.setEventType(messageCode.getCode() + "");
                 messageSendInfo.setBusinessId(messageCode.getBusinessId());
@@ -152,8 +141,7 @@ public class RabbitMQMessageListener {
     }
 
     // 短信发送
-    public MessageSendInfo sendSMS(MessageTemplate template, String mobileNo, Map<String, String> map) throws SmsException {
-        MessageSendInfo sendInfo = new MessageSendInfo();
+    public void sendSMS(MessageTemplate template, String mobileNo, Map<String, String> map, MessageSendInfo sendInfo) throws SmsException {
         //获取模板内容
         String content = template.getTemplateContent();
         content = this.getContent(content, map);
@@ -167,12 +155,10 @@ public class RabbitMQMessageListener {
         sendInfo.setSendHeader(template.getTemplateHeader());
         sendInfo.setReceiveAddr(mobileNo);
         sendInfo.setSendType(HookahConstants.MESSAGE_TYPE_SMS);
-        return sendInfo;
     }
 
     //邮件发送
-    public MessageSendInfo sendMail(MessageTemplate template, String mail, Map<String, String> map) throws EmailException{
-        MessageSendInfo sendInfo = new MessageSendInfo();
+    public void sendMail(MessageTemplate template, String mail, Map<String, String> map, MessageSendInfo sendInfo) throws EmailException{
         //获取模板内容
         String content = template.getTemplateContent();
         content = this.getContent(content, map);
@@ -186,20 +172,16 @@ public class RabbitMQMessageListener {
         sendInfo.setReceiveAddr(mail);
         sendInfo.setSendHeader(template.getTemplateHeader());
         sendInfo.setSendType(HookahConstants.MESSAGE_TYPE_MAIL);
-        return sendInfo;
-
     }
 
     //站内信发送
-    public MessageSendInfo sendStation(MessageTemplate template, Map<String, String> map) {
-        MessageSendInfo sendInfo = new MessageSendInfo();
+    public void sendStation(MessageTemplate template, Map<String, String> map, MessageSendInfo sendInfo) {
         //获取模板内容
         String content = template.getTemplateContent();
         content = this.getContent(content, map);
         sendInfo.setSendContent(content);
         sendInfo.setSendHeader(template.getTemplateHeader());
         sendInfo.setSendType(HookahConstants.MESSAGE_TYPE_STATION);
-        return sendInfo;
     }
 
     // 模板内容替换
@@ -289,21 +271,5 @@ public class RabbitMQMessageListener {
         BigDecimal d100 = new BigDecimal(100);
         BigDecimal fee = totalFee.divide(d100,2,2);//小数点2位
         return fee;
-    }
-
-    /**
-     * 消息失败处理
-     * @param userId
-     * @param addr
-     * @param errorInfo
-     * @return
-     */
-    public MessageSendInfo errorSend(String userId, String addr, String errorInfo) {
-        MessageSendInfo messageSendInfo = new MessageSendInfo();
-        messageSendInfo.setReceiveAddr(addr);
-        messageSendInfo.setReceiveUser(userId);
-        messageSendInfo.setErrorInfo(errorInfo);
-        messageSendInfo.setIsSuccess(HookahConstants.LOCAL_SMS_FAIL);
-        return messageSendInfo;
     }
 }
