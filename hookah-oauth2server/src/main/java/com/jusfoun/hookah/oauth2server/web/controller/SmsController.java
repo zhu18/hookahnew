@@ -5,9 +5,7 @@ import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.domain.MessageCode;
 import com.jusfoun.hookah.core.domain.User;
-import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
-import com.jusfoun.hookah.core.utils.SMSUtilNew;
 import com.jusfoun.hookah.core.utils.StrUtil;
 import com.jusfoun.hookah.rpc.api.MqSenderService;
 import com.jusfoun.hookah.rpc.api.UserService;
@@ -21,8 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author huang lei
@@ -96,15 +92,21 @@ public class SmsController {
             User user = userService.selectById(userId);
             String mobile = user.getMobile();
 
-            Map<String,String> param = new HashMap<>(1);
-            param.put("code",code);
-            param.put("mobile",mobile.substring(mobile.length()-4));
+//            Map<String,String> param = new HashMap<>(1);
+//            param.put("code",code);
+//            param.put("mobile",mobile.substring(mobile.length()-4));
 
-            String vars = JsonUtils.toJson(param);
-            String templateId = HookahConstants.SmsType.values()[type].toString();
-            SMSUtilNew.send(mobile,vars,templateId);
-           // SMSUtil.sendSMS(mobile, content.toString());
-            //logger.info("发送短信，接收方：{}，内容为:{},验证码为:{}",mobile,content,code);
+//            String vars = JsonUtils.toJson(param);
+//            String templateId = HookahConstants.SmsType.values()[type].toString();
+
+
+            MessageCode messageCode = new MessageCode();
+            messageCode.setCode(Integer.valueOf(HookahConstants.SmsTypeNew.values()[type].toString()));
+            messageCode.setMobileNo(mobile);
+            messageCode.setMobileVerfCode(code);
+            //添加短信记录
+            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_NEW_MESSAGE, messageCode);
+//            SMSUtilNew.send(mobile,vars,templateId);
 
             //缓存短信
             redisOperate.set(HookahConstants.REDIS_SMS_CACHE_PREFIX+":"+mobile, code, HookahConstants.SMS_DURATION_MINITE * 60);
