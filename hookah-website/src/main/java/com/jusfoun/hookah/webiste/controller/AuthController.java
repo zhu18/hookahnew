@@ -2,6 +2,7 @@ package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.*;
+import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.*;
@@ -18,9 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * All rights Reserved, Designed By
@@ -243,6 +242,8 @@ public class AuthController extends BaseController {
                 organization.setIsAuth(AUTH_STATUS_SUCCESS);
                 organization.setOrgId(orgId);
                 organizationService.updateByIdSelective(organization);
+                //给注册的供应商orgId赋值
+                user1.setOrgId(orgId);
             }else {
                 organization = organizationService.insert(organization);
                 user1.setOrgId(organization.getOrgId());
@@ -258,7 +259,20 @@ public class AuthController extends BaseController {
                 supplier.setOrgId(user1.getOrgId());
                 supplier.setCheckStatus(Byte.valueOf("0"));
                 supplier.setOrgName(organization.getOrgName());
-                supplierService.insert(supplier);
+               //重新审核 查看是否存在
+                if(!StringUtils.isEmpty(orgId) && !"0".equals(orgId)){
+                    List<Condition> fifters = new ArrayList<>();
+                    fifters.add(Condition.eq("orgId",orgId));
+                    List<Supplier> suppliers = supplierService.selectList(fifters);
+                    if(Objects.nonNull(suppliers) && suppliers.size() > 0){
+                        supplier.setId(suppliers.get(0).getId());
+                        supplierService.updateByIdSelective(supplier);
+                    }else{
+                        supplierService.insert(supplier);
+                    }
+                }else{
+                    supplierService.insert(supplier);
+                }
 
                 //供应商待审核状态
                 user1.setUserType(HookahConstants.UserType.SUPPLIER_CHECK_NO.getCode());
