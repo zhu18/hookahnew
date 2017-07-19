@@ -45,16 +45,6 @@ public class AlipayServiceImpl extends GenericServiceImpl<PayAccountRecord, Stri
         //构造html
         String html = buildRequestParams(userId, orderInfoVo, notify_url, return_url);
         //记账
-        PayAccountRecord payAccountRecord = new PayAccountRecord();
-        payAccountRecord.setPayAccountId(Long.valueOf(userId));
-        payAccountRecord.setUserId(userId);
-        Date date = new Date();
-        payAccountRecord.setTransferDate(date);
-        payAccountRecord.setMoney(orderInfoVo.getOrderAmount());//订单资金总额
-        payAccountRecord.setSerialNumber(orderInfoVo.getOrderSn());//订单号
-        payAccountRecord.setAddTime(date);
-        payAccountRecord.setAddOperator(userId);
-        insertRecord(payAccountRecord);
         return html;
     }
 

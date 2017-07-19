@@ -253,7 +253,7 @@ public class PayController {
         List<Condition> filter = new ArrayList<>();
         filter.add(Condition.eq("orderSn",orderSn));
         OrderInfo orderInfo = orderService.selectOne(filter);
-//        if (payCoreService.verifyAlipay(getRequestParams(request))){
+        if (payCoreService.verifyAlipay(getRequestParams(request))){
             if(tradeStatus.equals("TRADE_FINISHED") || tradeStatus.equals("TRADE_SUCCESS")){
                 //交易成功,插交易中心冻结收入流水，更新交易中心虚拟账户金额
                 PayTradeRecord payTradeRecord = new PayTradeRecord();
@@ -276,6 +276,7 @@ public class PayController {
                 List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
                 for (PayTradeRecord payTradeRecord1 : payTradeRecords){
                     payTradeRecord1.setTradeStatus(HookahConstants.TransferStatus.success.getCode());
+                    payTradeRecordService.updateByIdSelective(payTradeRecord1);
                 }
 
                 //更新订单状态
@@ -291,9 +292,9 @@ public class PayController {
                 }
                 view = new ModelAndView("redirect:/payError.html?orderSn="+orderSn);
             }
-//        }else{
-//            view = new ModelAndView("redirect:/payError.html?orderSn="+orderSn);
-//        }
+        }else{
+            view = new ModelAndView("redirect:/payError.html?orderSn="+orderSn);
+        }
         return view;
     }
 
