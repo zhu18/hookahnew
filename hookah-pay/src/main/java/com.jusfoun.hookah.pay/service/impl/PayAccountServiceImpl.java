@@ -476,7 +476,6 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 
 	public ReturnData userRecharge(Map<String,Object> params){
 		ReturnData returnData = new ReturnData();
-		returnData.setCode(ExceptionConst.Success);
 
 		String userId = "";
 		if(Objects.isNull(params.get("userId"))){
@@ -513,7 +512,7 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 			//insertPayTradeRecord( userId, money, payAccount.getId(), 0, 1);
 			//insertPayAccountRecord( userId, money, payAccount.getId(), 0, 1);
 
-			String html = alipayService.doCharge(userId,(double) moneyObj+"",notifyUrl,returnUrl);
+			String html = alipayService.doCharge(userId,money.toString(),notifyUrl,returnUrl);
 			returnData.setCode(ExceptionConst.Success);
 			returnData.setMessage(html);
 			return ReturnData.success();
