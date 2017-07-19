@@ -123,7 +123,6 @@ function check() {
 					$('.ui-form-error').show().children('p').html('支付密码不符合要求');
 				}
 			} else if(this.value == 2){
-
 				window.location.href= host.website+'/pay/aliPay?'+'orderSn='+$("#orderSn").html();
 				return false;
 			}else{
@@ -135,9 +134,10 @@ function check() {
 }
 function testPayPassword(pwd){
 	$.ajax({
-		url:host.website+'/usercenter/verifyPayPassword',
+		url:host.website+'/pay/balancePay',
 		data:{
-			paymentPassword:pwd
+            passWord:pwd,
+            orderSn:$("#orderSn").html()
 		},
 		type:'get',
 		success:function (data) {

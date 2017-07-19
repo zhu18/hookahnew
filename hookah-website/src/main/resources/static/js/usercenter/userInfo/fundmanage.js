@@ -2,6 +2,14 @@
  * Created by lss on 2017/7/19 0019.
  */
 $(function () {
+
+    render();
+
+
+});
+
+
+function render() {
     $.ajax({
         url:host.website+'/payBankCard/userFunds',
         data:{},
@@ -10,10 +18,32 @@ $(function () {
             $(".account-funds-content-left .money").html("￥"+(data.data.useBalance / 100).toFixed(2));
             $(".freeze").html("￥"+(data.data.freeze / 100).toFixed(2));
             $(".useBalance").html("￥"+(data.data.useBalance / 100).toFixed(2));
-            if(data.data.cardCode){
-                $(".useBalance").html("￥"+(data.data.useBalance / 100).toFixed(2));
+            var html=''
+            if(!data.data.cardCode){
+                html +='<a href="/usercenter/bindBankCard" class="add-card">';
+                html +='<p class="Plus margin-top-20">+</p>';
+                html +='<p>添加银行</p>';
+                html +='</a><p class="margin-left-15 margin-top-20 tip">提示：只能用ie浏览器......</p>';
+            }else {
+                html +='<div class="show-card">';
+                html +='<h4 class="card-name">'+data.data.bankName+'</h4><p>';
+                html +='<span>银行卡号:</span>';
+                html +='<span class="card-number">'+data.data.cardCode+'</span></p><p>';
+                html +='<span>账户名:</span><span class="account-name">'+data.data.cardOwner+'</span></p><a href="javascript:void(0)" class="delete">删除</a></div>';
             }
+            $(".bank-card-content").html(html);
+            $(".bank-card-content .delete").on("click",function () {
+                $.ajax({
+                    url:host.website+'/payBankCard/updateBankInfo',
+                    data:{},
+                    type:'get',
+                    success:function (data) {
+                        if (data.code=="1"){
+
+                        }
+                    }
+                });
+            })
         }
     });
-
-})
+}
