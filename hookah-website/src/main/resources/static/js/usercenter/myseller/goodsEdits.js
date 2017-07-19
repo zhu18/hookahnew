@@ -63,6 +63,7 @@ function initializeGoodsTypeEnd(goodsTypeVal,endTypeVal){
 	$('.edit-all').hide();
 	$('.struct.selects').hide();
 	$('.offline-isShow').hide();
+	$('.isOnLine-info-box').show();
 	if(goodsTypeVal == 100){
 		$('#childrenSelect1').show();
 		endTypeVal = $('#childrenSelect1');
@@ -713,7 +714,7 @@ function submitGoodsPublish(){
 		data.offLineData.timeFrame.endDate = $('#offLine_endDate').val();
 		data.offLineData.dataRows = $('input[name="dataRows"]').val();
 		data.offLineData.dataCapacity = $('input[name="dataCapacity"]').val();
-		data.offLineData.dataFormat = $('input[name="dataFormat"]').val();
+		data.offLineData.dataFormat = $('input[name="dataFormat"]:checked').val();
 		data.offLineData.isOnline = $('select[name="isOnline"]').val();
 		data.offLineData.dataPwd = $('input[name="dataPwd"]').val();
 		if(data.offLineData.isOnline == 0){
@@ -1278,74 +1279,6 @@ function ifGoodsTypeRender(data){ //根据类型渲染商品类型相关的html
 			$('.downloadAddress-isOnLine-box').show(); //下载地址
 		}
 	}
-	// if(goodsTypeVal == 100){
-	// 	$('#childrenSelect1').show();
-	// 	endTypeVal = $('#childrenSelect1');
-	// 	if($(endTypeVal).val() == 0){
-	// 		$('.goodsDesc-box').show(); //商品描述
-	// 		$('.goodsAdvantage-box').show();//商品优势
-	// 		$('.afterSaleService-box').show();//售后服务
-	// 		$('.dataSample-info-box').show(); //数据样例
-	// 		$('.isOffLine-select-box').show(); //交付方式
-	// 		$('.file-info-box').show(); //
-	// 		$('.offline-isOnLine-box').show(); //数据来源
-	// 		goodsTypeId = 0;
-	// 	}else if($(endTypeVal).val() == 1){
-	// 		$('.goodsDesc-box').show(); //商品描述
-	// 		$('.goodsAdvantage-box').show();//商品优势
-	// 		$('.afterSaleService-box').show();//售后服务
-	// 		$('.dataSample-info-box').show(); //数据样例
-	// 		$('.appCase-box').show(); //应用案例
-	// 		$('.api-info-box').show();
-	// 		goodsTypeId = 1;
-	// 	}
-	// }else if(goodsTypeVal == 300){
-	// 	$('#childrenSelect2').show();
-	// 	endTypeVal = $('#childrenSelect2');
-	// 	if($(endTypeVal).val() == 6){
-	// 		$('.afterSaleService-box').show();//售后服务
-	// 		$('.isOffLine-select-box').show(); //交付方式
-	// 		$('.appCase-box').show(); //应用案例
-	// 		$('.app-info-box').show(); //
-	// 		$('.downloadAddress-isOnLine-box').show(); //下载地址
-	// 		goodsTypeId = 6;
-	// 	}else if($(endTypeVal).val() == 7){
-	// 		$('.afterSaleService-box').show();//售后服务
-	// 		$('.isOffLine-select-box').show(); //交付方式
-	// 		$('.appCase-box').show(); //应用案例
-	// 		$('.app-info-box').show(); //
-	// 		$('.app-info-box .app-saas-info').hide(); //技术优势
-	// 		$('.downloadAddress-isOnLine-box').show(); //下载地址
-	// 		goodsTypeId = 7;
-	// 	}
-	// }else if(goodsTypeVal == 400){
-	// 	$('#childrenSelect3').show();
-	// 	endTypeVal = $('#childrenSelect3');
-	// 	if($(endTypeVal).val() == 4){
-	// 		$('.afterSaleService-box').show();//售后服务
-	// 		$('.isOffLine-select-box').show(); //交付方式
-	// 		$('.appCase-box').show(); //应用案例
-	// 		$('.tool-info-box').show(); //
-	// 		$('.visitOnline-isOnLine-box').show(); //下载地址
-	// 		goodsTypeId = 4;
-	// 	}else if($(endTypeVal).val() == 5){
-	// 		$('.afterSaleService-box').show();//售后服务
-	// 		$('.isOffLine-select-box').show(); //交付方式
-	// 		$('.appCase-box').show(); //应用案例
-	// 		$('.tool-info-box').show(); //
-	// 		$('.tool-info-box .app-saas-info').hide(); //技术优势
-	// 		$('.visitOnline-isOnLine-box').show(); //下载地址
-	// 		goodsTypeId = 5;
-	// 	}
-	// }else{
-	// 	$('.goodsDesc-box').show(); //商品描述
-	// 	$('.goodsAdvantage-box').show();//商品优势
-	// 	$('.dataModel-info-box').show();//
-	// 	$('.afterSaleService-box').show();//售后服务
-	// 	$('.isOffLine-select-box').show(); //交付方式
-	// 	$('.dataModel-isOnLine-box').show(); //交付方式
-	// 	goodsTypeId = 2;
-	// }
 }//根据类型渲染商品类型相关的html
 function loadFirstCategory(catId){ //获取首个分类
 	loadCategoryData($('#firstCategory'),0,catId.substring(0,3));
@@ -1723,12 +1656,3 @@ $('#J_submitBtn').click(function(){
 
 	}
 });
-//验证价格是否填写完整
-function valiLastPrice(){
-	var lastChild = $('table[d-type="priceHtml"] tbody tr').last();
-	if ($(lastChild).children('.number-input').find('input').val() && $(lastChild).children('.price-input1').find('input').val() && $(lastChild).children('.price-input2').find('input').val() && $(lastChild).children('.price-input3').find('input').val()) {
-		$.alert('ok',true,function(){});
-	} else {
-		$.alert('请完善本条信息',true,function(){});
-	}
-}
