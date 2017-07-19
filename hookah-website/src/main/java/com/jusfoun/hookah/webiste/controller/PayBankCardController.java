@@ -58,8 +58,8 @@ public class PayBankCardController extends BaseController{
             if(StringUtils.isNotBlank(userId)){
                 filters.add(Condition.eq("userId", userId));
             }
-            map.put("cardOwner",1);
-            map.put("bankAccountType","")
+            map.put("cardOwner","");
+            map.put("bankAccountType",1);
            /* User user = userService.selectOne(filters);
 
             map.put("cardOwner",1);
