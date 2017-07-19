@@ -2,6 +2,8 @@ package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.domain.PayAccount;
 import com.jusfoun.hookah.core.generic.Condition;
+import com.jusfoun.hookah.core.utils.ExceptionConst;
+import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.PayAccountService;
@@ -30,26 +32,26 @@ public class PayAccountController {
 
     @RequestMapping("/userRecharge")
     @ResponseBody
-    public ReturnData userRecharge(String userId,double money){
+    public String userRecharge(String userId,double money){
         Map<String,Object> params = new HashMap<>();
         params.put("userId",userId);
         params.put("money",money);
-
-        return payAccountService.userRecharge(params);
+        ReturnData r=payAccountService.userRecharge(params);
+        return r.getCode().equals(ExceptionConst.Success) ? r.getMessage() : JsonUtils.toJson(r);
     }
 
     @RequestMapping("/rechargeResultSync")
     public String rechargeResultSync(HttpServletRequest request) throws IOException {
         //商户订单号
-        String orderSn = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
+        //String orderSn = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
         //支付宝交易号
-        String tradeNo = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"),"UTF-8");
+        //String tradeNo = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"),"UTF-8");
         //交易状态
         String tradeStatus = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
         String totalFee = new String(request.getParameter("total_fee").getBytes("ISO-8859-1"),"UTF-8");
         String userId = new String(request.getParameter("extra_common_param").getBytes("ISO-8859-1"),"UTF-8");
         Map<String,String> map = new HashMap<>();
-        map.put("tradeNo",tradeNo);
+        //map.put("tradeNo",tradeNo);
         map.put("tradeStatus",tradeStatus);
         map.put("totalFee",totalFee);
         map.put("userId",userId);
