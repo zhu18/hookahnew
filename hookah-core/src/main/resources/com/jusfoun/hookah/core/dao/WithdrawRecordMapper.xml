@@ -56,7 +56,7 @@
     LEFT JOIN organization org ON org.org_id = us.org_id
     WHERE 1 = 1
     <if test="checkStatus != '' and checkStatus != null">
-      wr.check_status = #{checkStatus}
+      AND wr.check_status = #{checkStatus}
     </if>
     <if test="startDate != '' and startDate != null">
       AND wr.add_time &gt;= #{startData}
