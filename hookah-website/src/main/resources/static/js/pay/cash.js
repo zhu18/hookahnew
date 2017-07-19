@@ -139,7 +139,7 @@ function testPayPassword(pwd){
             passWord:pwd,
             orderSn:$("#orderSn").html()
 		},
-		type:'get',
+		type:'post',
 		success:function (data) {
 			if(data.code == 1){
 				$('#form_paypsw').submit();

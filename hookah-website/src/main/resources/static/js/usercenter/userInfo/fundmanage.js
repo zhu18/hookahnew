@@ -4,6 +4,7 @@
 $(function () {
 
     render();
+    bindName();
 
 
 });
@@ -19,7 +20,7 @@ function render() {
             $(".freeze").html("￥"+(data.data.freeze / 100).toFixed(2));
             $(".useBalance").html("￥"+(data.data.useBalance / 100).toFixed(2));
             var html=''
-            if(!data.data.cardCode){
+            if(data.data.bindFlag=="1"){
                 html +='<a href="/usercenter/bindBankCard" class="add-card">';
                 html +='<p class="Plus margin-top-20">+</p>';
                 html +='<p>添加银行</p>';
