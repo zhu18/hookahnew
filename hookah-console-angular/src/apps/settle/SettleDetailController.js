@@ -3,12 +3,6 @@
  */
 class settleDetailController {
   constructor($scope, $rootScope, $state, $http, $stateParams, growl) {
-    var pruDom='<div>内容</div>';
-    var modalInstance = $rootScope.openConfirmDialogModal(pruDom);
-    modalInstance.result.then(function () {
-      alert('asdf')
-    });
-
     var promise = $http({
       method: 'GET',
       url: $rootScope.site.apiServer + "/api/settleOrder/getListBySettleId/",

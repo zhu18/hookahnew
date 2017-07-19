@@ -37,7 +37,7 @@ app.run(function ($rootScope, $state) {
   $rootScope.config.mainNav =[
     {
       "title":"提现审核",
-      "url":"money.list"
+      "url":"money.getMoneyList"
     },
     // {
     //   "title":"新增帮助",
