@@ -25,6 +25,7 @@
     height: 30px;
     padding-left: 10px;
     border: 1px solid #E5E5E5;
+    font-size:12px;
 }
 .fundmanage-box .recharge ul li a{
     display: inline-block;
