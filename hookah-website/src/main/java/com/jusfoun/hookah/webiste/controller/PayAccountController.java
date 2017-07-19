@@ -1,6 +1,9 @@
 package com.jusfoun.hookah.webiste.controller;
 
+import com.jusfoun.hookah.core.domain.PayAccount;
+import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.PayAccountService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,7 +12,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -52,6 +57,7 @@ public class PayAccountController {
         return "success";
     }
 
+
     @RequestMapping("/rechargeResult")
     public String rechargeResultPage(HttpServletRequest request) throws  IOException{
         //交易状态
@@ -64,5 +70,25 @@ public class PayAccountController {
         }
         return "/usercenter/fail";
 
+    }
+
+    @ResponseBody
+    @RequestMapping("/updatePayPassword")
+    public ReturnData updatePayPassword(String userId,String payPassword,String newPayPassword){
+        List<Condition> filters = new ArrayList();
+        if (StringUtils.isNotBlank(userId)) {
+            filters.add(Condition.eq("userId", userId));
+        }
+        PayAccount payAccount = payAccountService.selectOne(filters);
+        if(StringUtils.isNotBlank(payAccount.getPayPassword())){
+            if(payAccount.getPayPassword().equals(payPassword)){
+                payAccount.setPayPassword(newPayPassword);
+                payAccountService.updateByIdSelective(payAccount);
+                return ReturnData.success("修改密码成功");
+            }
+        }else{
+            return ReturnData.error("密码不可为空");
+        }
+        return ReturnData.error("修改密码失败");
     }
 }

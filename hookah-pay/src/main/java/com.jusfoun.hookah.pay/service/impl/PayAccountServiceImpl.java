@@ -269,7 +269,7 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 	public boolean verifyPassword(String payPassword) throws HookahException {
 		String userId = this.getCurrentUser().getUserId();
 		List<Condition> filters = new ArrayList();
-		if (org.apache.commons.lang3.StringUtils.isNotBlank(userId)) {
+		if (StringUtils.isNotBlank(userId)) {
 			filters.add(Condition.eq("userId", userId));
 		}
 		PayAccount payAccount = super.selectOne(filters);
