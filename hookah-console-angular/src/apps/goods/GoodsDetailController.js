@@ -5,7 +5,7 @@ class GoodsDetailController {
 		$scope.packageApiInfo =  $scope.editData.packageApiInfo;
 		$scope.current= "1";
 		$scope.$searchCondition = $stateParams.data.searchCondition;
-		alert("obj:" + $scope.$searchCondition.searchName);
+		// alert("obj:" + $scope.$searchCondition.searchName);
         console.log("obj:" + $scope.$searchCondition.searchName);
 		$scope.setCurrent = function (param) {
 			$scope.current = param;
