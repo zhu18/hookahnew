@@ -20,7 +20,7 @@
     <bean id="cooperationService" class="com.jusfoun.hookah.console.server.service.impl.CooperationServiceImpl"/>
     <bean id="supplierService" class="com.jusfoun.hookah.console.server.service.impl.SupplierServiceImpl"/>
     <bean id="withdrawRecordService" class="com.jusfoun.hookah.console.server.service.impl.WithdrawRecordServiceImpl"/>
-
+    <bean id="payBankCardService" class="com.jusfoun.hookah.console.server.service.impl.PayBankCardServiceImpl"/>
 
     <!-- 具体rpc服务配置，声明实现的接口类。-->
     <motan:service interface="com.jusfoun.hookah.rpc.api.MqSenderService"
@@ -67,5 +67,9 @@
     <!-- 提现 -->
     <motan:service interface="com.jusfoun.hookah.rpc.api.WithdrawRecordService"
                    ref="withdrawRecordService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+    <!--绑定银行卡 -->
+    <motan:service interface="com.jusfoun.hookah.rpc.api.PayBankCardService"
+                   ref="payBankCardService" export="hookah:5001" basicService="serviceBasicConfig">
     </motan:service>
 </beans>
