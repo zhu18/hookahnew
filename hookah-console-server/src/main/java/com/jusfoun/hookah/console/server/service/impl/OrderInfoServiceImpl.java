@@ -738,6 +738,17 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     }
 
     @Override
+    public Pagination<MgGoodsOrder> getMgGoodsOrderList(Integer pageNum, Integer pageSize, List<Condition> filters){
+        Pagination<MgGoodsOrder> pagination = new Pagination<>();
+        List<MgGoodsOrder> list = mgGoodsOrderService.selectList(filters);
+        pagination.setList(list);
+        pagination.setTotalItems(list.size());
+        pagination.setCurrentPage(pageNum);
+        pagination.setPageSize(pageSize);
+        return pagination;
+    }
+
+    @Override
     public Pagination<MgOrderGoods> getGoodsListInPage(Integer pageNum, Integer pageSize, List<Condition> filters, List<OrderBy> orderBys) {
         PageHelper.startPage(pageNum, pageSize);
         Page<MgOrderGoods> page = new Page<>(pageNum,pageSize);

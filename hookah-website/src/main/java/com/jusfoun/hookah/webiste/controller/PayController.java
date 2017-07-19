@@ -129,7 +129,7 @@ public class PayController {
         return "pay/success";
     }
 
-    @RequestMapping(value = "/balancePay", method = RequestMethod.POST)
+    @RequestMapping(value = "/balancePay", method = RequestMethod.GET)
     public String payPassSta(String orderSn, Model model, String passWord) {
         long orderAmount = 0 ; //支付金额
         try {
