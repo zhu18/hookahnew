@@ -32,7 +32,7 @@ public class PayAccountController {
 
     @RequestMapping("/userRecharge")
     @ResponseBody
-    public String userRecharge(String userId,double money){
+    public String userRecharge(String userId,String money){
         Map<String,Object> params = new HashMap<>();
         params.put("userId",userId);
         params.put("money",money);
@@ -50,11 +50,17 @@ public class PayAccountController {
         String tradeStatus = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
         String totalFee = new String(request.getParameter("total_fee").getBytes("ISO-8859-1"),"UTF-8");
         String userId = new String(request.getParameter("extra_common_param").getBytes("ISO-8859-1"),"UTF-8");
+        String statusFlag="2";
+        if(tradeStatus.equals("TRADE_FINISHED") || tradeStatus.equals("TRADE_SUCCESS")){
+            statusFlag="1";
+        }
         Map<String,String> map = new HashMap<>();
         //map.put("tradeNo",tradeNo);
-        map.put("tradeStatus",tradeStatus);
+        map.put("tradeStatus",statusFlag);
         map.put("totalFee",totalFee);
         map.put("userId",userId);
+        //交易平台类型 1：在线充值（入金）
+        map.put("tradeType","1");
         payAccountService.saveRechargeResult(map);
         return "success";
     }
