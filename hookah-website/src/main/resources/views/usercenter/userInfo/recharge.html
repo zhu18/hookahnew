@@ -11,8 +11,7 @@ var htmlPart = {
 <div class="grid-0 backgorund-gray">
     <div class="grid-row clearfix">
         <%include("/usercenter/user-center-menu.html"){} %>
-        <div class="grid-left info-center-box ">
-            <div class="user-center-box grid-right">
+        <div class="grid-right info-center-box ">
                 <div class="header">
                     <h4 class="center-title">充值</h4>
                 </div>
@@ -33,20 +32,13 @@ var htmlPart = {
                                     <a href="">下一步</a>
                                 </li>
                             </ul>
-                            <!--<div class="price-input"><label>请输入您要充值的金额：</label><input type="text">元</div>-->
-                            <!--<div class="operation withdrawals-btn"><a href="javascript:void(0)" onclick="nullFn()" class="btn-full-blue">下一步</a></div>-->
                         </div>
                 </div>
-            </div>
         </div>
     </div>
 </div>
 </div>
-<script>
-    function nullFn(){
-    	$.alert('暂未开放，敬请期待');
-    }
-</script>
+
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>

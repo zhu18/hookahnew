@@ -47,7 +47,7 @@
     margin: 0 5px 4px;
 }
 .capitalRecord .search-criteria li:last-child div input{
-    width: 103px;
+    width: 125px;
     height: 25px;
     padding-left: 5px;
     border: 1px solid #e5e5e5;
@@ -74,11 +74,13 @@
     height: 39px;
     line-height:39px;
     background-color: #F4F4F4;
+    border-bottom:1px solid #E5E5E5;
 }
 .capitalRecord .search-list tr td{
     height: 39px;
     text-align: center;
     line-height:39px;
+    border-bottom:1px dashed #E5E5E5;
 }
 .capitalRecord .search-list tr td.income{
     color: #f17d17;

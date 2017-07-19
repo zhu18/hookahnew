@@ -1,24 +1,59 @@
-.fundmanage-box .withdrawals{
+.withdrawals{
     margin: 12px 0 256px 0px;
-    height: 392px;
     border: 1px solid #E5E5E5;
 }
-.fundmanage-box .withdrawals .withdrawals-content{
+ .withdrawals .withdrawals-content{
     padding-left: 254px;
     margin-top: 32px;
 }
-
-.fundmanage-box .withdrawals .withdrawals-content li label{
+ .withdrawals .withdrawals-content li{
+     margin-bottom: 20px;
+}
+ .withdrawals .withdrawals-content li label{
     text-align: right;
     display: inline-block;
+    margin-left: 5px;
     width: 112px;
     height: 32px;
+    font-size: 14px;
+    color: #666666;
 }
-.fundmanage-box .withdrawals .withdrawals-content .apply-money{
+.withdrawals .withdrawals-content .apply-money{
 
 }
-.fundmanage-box .withdrawals .withdrawals-content .apply-money input{
+.withdrawals .withdrawals-content .apply-money.money{
+   color: #f17d17;
+}
+.withdrawals .withdrawals-content .apply-money.blue{
+   color: #2a80e4;
+}
+.withdrawals .withdrawals-content .apply-money input{
     width: 107px;
     height: 30px;
+    padding-left: 5px;
+    margin-right: 5px;
     border: 1px solid #E5E5E5;
+}
+.withdrawals .withdrawals-content .cash-account .cash-account-card{
+    display: inline-block;
+    width: 296px;
+    height: 173px;
+    border: 1px solid #E5E5E5;
+}
+.withdrawals .withdrawals-content  .trade-password input{
+    width: 291px;
+    height: 30px;
+    padding-left: 5px;
+    border: 1px solid #E5E5E5;
+}
+.withdrawals .withdrawals-content  .payment a{
+    display: inline-block;
+    width: 130px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    color: #ffffff;
+    margin-left: 120px;
+    margin-bottom: 20px;
+    background-color: #4E95F4;
 }

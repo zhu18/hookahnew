@@ -1,8 +1,17 @@
 <%
 var head = {
 %>
+<link rel="stylesheet" href="/static/css/plugins/jedate/jedate.css">
+<script src="/static/js/plugins/jedate/jquery.jedate.min.js"></script>
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/capitalRecord.css">
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
+<script type="text/javascript">
+    var pagePath = host.website+'/fund/pageData';
+    var pageType = 'get';
+    var dataParm = {};
+    dataParm.pageNumber = 1;
+    dataParm.pageSize = 10;
+</script>
 <%};%>
 
 <%
@@ -17,26 +26,26 @@ var htmlPart = {
             </div>
             <div class="capitalRecord">
                 <ul class="search-criteria margin-top-10 ">
-                    <li>
+                    <li class="transaction-status">
                         <span>交易类型</span>
                         <ul class="clearfix">
-                            <li class="active">全部</li>
-                            <li>充值</li>
-                            <li>提现</li>
-                            <li>支付</li>
-                            <li>收入</li>
-                            <li>退款</li>
-                            <li>冲账</li>
-                            <li>其他</li>
+                            <li data-status="" class="active">全部</li>
+                            <li data-status="1">充值</li>
+                            <li data-status="2">提现</li>
+                            <li data-status="4001">支付</li>
+                            <li data-status="3001">收入</li>
+                            <!--<li data-status="">退款</li>-->
+                            <li data-status="8">冲账</li>
+                            <!--<li data-status="">其他</li>-->
                         </ul>
                     </li>
-                    <li>
+                    <li class="status">
                         <span>状态</span>
                         <ul class="clearfix">
-                            <li class="active">全部</li>
-                            <li>已成功</li>
-                            <li>未成功</li>
-                            <li>处理中</li>
+                            <li data-status="" class="active">全部</li>
+                            <li data-status="1">已成功</li>
+                            <li data-status="2">未成功</li>
+                            <li data-status="0">处理中</li>
                         </ul>
                     </li>
                     <li>
@@ -48,9 +57,10 @@ var htmlPart = {
                         </div>
                         <div class="select-month">
                             <a href="javascript:void (0);" class="active">本月</a>
-                            <a href="javascript:void (0);">上个月</a>
-                            <a href="javascript:void (0);">3月</a>
-                            <a href="javascript:void (0);">半年</a>
+                            <div class="font-weight-bold">最近：</div>
+                            <a href="javascript:void (0);">1周</a>
+                            <a href="javascript:void (0);">1个月</a>
+                            <a href="javascript:void (0);">3个月</a>
                         </div>
                     </li>
                 </ul>
@@ -63,19 +73,13 @@ var htmlPart = {
                         <th>交易类型</th>
                         <th>交易金额(元)</th>
                         <th>状态</th>
-
                     </tr>
                     </thead>
                     <tbody class="search-list-content">
-                    <tr>
-                        <td>992737131715</td>
-                        <td>银行卡类别查询</td>
-                        <td>￥50.00</td>
-                        <td>￥50.00</td>
-                        <td>￥50.00</td>
-                    </tr>
+
                     </tbody>
                 </table>
+                <%include("/layout/pageaction.html"){} %>
             </div>
         </div>
     </div>
@@ -86,3 +90,4 @@ var htmlPart = {
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
+<script type="text/javascript" src="/static/js/usercenter/userInfo/capitalRecord.js"></script>
