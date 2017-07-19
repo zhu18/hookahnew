@@ -16,6 +16,7 @@ import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.pay.util.AlipayNotify;
+import com.jusfoun.hookah.pay.util.ChannelType;
 import com.jusfoun.hookah.pay.util.PayConfiguration;
 import com.jusfoun.hookah.pay.util.PayConstants;
 import com.jusfoun.hookah.rpc.api.*;
@@ -526,7 +527,7 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 
 	public void insertPayAccountRecord(String userId,Long money,Long payAccountId,int tradeStatus,int tradeType){
 		PayAccountRecord par = new PayAccountRecord();
-		par.setChannelType("ZFB");
+		par.setChannelType(ChannelType.ZFB);
 		par.setMoney(Math.abs(money));
 		par.setPayAccountId(payAccountId);
 		par.setTransferStatus((byte)tradeStatus);
