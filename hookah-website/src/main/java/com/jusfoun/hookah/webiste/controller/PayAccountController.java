@@ -32,7 +32,7 @@ public class PayAccountController {
 
     @RequestMapping("/userRecharge")
     @ResponseBody
-    public String userRecharge(String userId,String money){
+    public String userRecharge(String userId,double money){
         Map<String,Object> params = new HashMap<>();
         params.put("userId",userId);
         params.put("money",money);
