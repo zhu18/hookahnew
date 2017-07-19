@@ -159,7 +159,7 @@ public class PayController {
         return "pay/success";
     }
 
-    @RequestMapping(value = "/aliPay", method = RequestMethod.POST)
+    @RequestMapping(value = "/aliPay", method = RequestMethod.GET)
     public Object alipay(String orderSn) {
         String reqHtml = null;
         try {
@@ -240,7 +240,7 @@ public class PayController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/alipayRtn",method = RequestMethod.GET)
+    @RequestMapping(value = "/alipay_rtn",method = RequestMethod.GET)
     public ModelAndView returnBack4Alipay(HttpServletRequest request, HttpServletResponse response) throws Exception{
         ModelAndView view = null;
         //商户订单号
@@ -253,7 +253,7 @@ public class PayController {
         List<Condition> filter = new ArrayList<>();
         filter.add(Condition.eq("orderSn",orderSn));
         OrderInfo orderInfo = orderService.selectOne(filter);
-        if (payCoreService.verifyAlipay(getRequestParams(request))){
+//        if (payCoreService.verifyAlipay(getRequestParams(request))){
             if(tradeStatus.equals("TRADE_FINISHED") || tradeStatus.equals("TRADE_SUCCESS")){
                 //交易成功,插交易中心冻结收入流水，更新交易中心虚拟账户金额
                 PayTradeRecord payTradeRecord = new PayTradeRecord();
@@ -291,9 +291,9 @@ public class PayController {
                 }
                 view = new ModelAndView("redirect:/payError.html?orderSn="+orderSn);
             }
-        }else{
-            view = new ModelAndView("redirect:/payError.html?orderSn="+orderSn);
-        }
+//        }else{
+//            view = new ModelAndView("redirect:/payError.html?orderSn="+orderSn);
+//        }
         return view;
     }
 

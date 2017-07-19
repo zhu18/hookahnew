@@ -123,16 +123,8 @@ function check() {
 					$('.ui-form-error').show().children('p').html('支付密码不符合要求');
 				}
 			} else if(this.value == 2){
-                $.ajax({
-                    url:host.website+'/pay/aliPay',
-                    data:{
-                        orderSn:$("#orderSn").html()
-                    },
-                    type:'get',
-                    success:function (data) {
 
-                    }
-                });
+				window.location.href= host.website+'/pay/aliPay?'+'orderSn='+$("#orderSn").html();
 				return false;
 			}else{
 				$.alert('暂不支持该支付方式');

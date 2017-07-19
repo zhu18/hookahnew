@@ -40,7 +40,7 @@ public class AlipayServiceImpl extends GenericServiceImpl<PayAccountRecord, Stri
             return null;
         //根据orderId查询orderInfo
         OrderInfoVo orderInfoVo = mgOrderInfoService.selectById(orderId);
-        if (!orderInfoVo.getOrderStatus().equals(PayCore.PayStatus.unpay))
+        if (!orderInfoVo.getPayStatus().equals(PayCore.PayStatus.unpay.getValue()))
             return null;
         //构造html
         String html = buildRequestParams(userId, orderInfoVo, notify_url, return_url);
