@@ -123,8 +123,6 @@ public class PayBankCardController extends BaseController{
                 long freeze = 0;
                 freeze = payAccount.getBalance() - payAccount.getUseBalance();
                 map.put("freeze",freeze);
-            }else{
-                return ReturnData.error("账户信息为空");
             }
             //银行卡信息
             PayBankCard payBankCard = payBankCardService.selectOne(filters);
@@ -132,8 +130,6 @@ public class PayBankCardController extends BaseController{
                 map.put("bankName",payBankCard.getBankName());
                 map.put("cardCode",payBankCard.getCardCode());
                 map.put("cardOwner",payBankCard.getCardOwner());
-            }else {
-                return ReturnData.error("银行卡信息不可为空");
             }
             return ReturnData.success(map);
         } catch (HookahException e) {
