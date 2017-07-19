@@ -11,7 +11,9 @@ function loadPageData(data){ //渲染页面数据
                     shopFormat = '天';
                 }else if(list[i].shopFormat == 2 ){
                     shopFormat = '年';
-                }
+                }else if(list[i].shopFormat == 3 ){
+					shopFormat = '套';
+				}
                 html += '<li>';
                 html += '<a class="item-top" href="/exchange/details?id='+list[i].goodsId+'">';
                 html += '<p class="goods-img"><img src="'+host.static+'/'+list[i].goodsImg+'" alt=""/></p>';
