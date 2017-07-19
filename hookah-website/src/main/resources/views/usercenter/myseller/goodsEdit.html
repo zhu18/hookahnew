@@ -148,7 +148,7 @@ var htmlPart = {
 									<td class="bar">适用范围：<span class="requireds">*</span></td>
 									<td>
 										<div class="textarea-box">
-											<textarea type="text" name="trialRange" id="trialRange" required="required"></textarea>
+											<textarea type="text" name="trialRange" id="trialRange" required="required" placeholder="您的产品所针对的目标用户及其需求、痛点、适用情况等。"></textarea>
 											<span class="input-count"><strong id="trialRange_s">0</strong>/400</span>
 										</div>
 										<div class="errors">
@@ -224,6 +224,9 @@ var htmlPart = {
 								<tr class="edit-all goodsDesc-box" style="display: none;">
 									<td class="bar">商品描述：<span class="requireds">*</span></td>
 									<td>
+										<div class="block info" style="margin: 0px 0px 3px;">
+											让用户一看就明白——请认真细致填写。
+										</div>
 										<div class="wangEditor-wrapper">
 											<textarea id="textarea1" style="width: 844px;height: 500px; display: none;" name="goodsDescBox" required="required"></textarea>
 										</div>
@@ -232,6 +235,9 @@ var htmlPart = {
 								<tr class="edit-all goodsAdvantage-box" style="display: none;">
 									<td class="bar">商品优势：<span class="requireds">*</span></td>
 									<td>
+										<div class="block info" style="margin: 0px 0px 3px;">
+											您可以从理念、技术、团队、业绩、体验等方面突出商品的优势，让用户一看就想买。
+										</div>
 										<div class="wangEditor-wrapper">
 											<textarea id="textarea2" style="width: 844px;height: 500px; display: none;" name="goodsAdvantage" required="required"></textarea>
 										</div>
@@ -240,6 +246,9 @@ var htmlPart = {
 								<tr class="edit-all afterSaleService-box" style="display: none;">
 									<td class="bar">售后服务：<span class="requireds">*</span></td>
 									<td>
+										<div class="block info" style="margin: 0px 0px 3px;">
+											包括服务承诺、交付提示、使用提示、售后问题反馈和解决方式等。
+										</div>
 										<div class="wangEditor-wrapper">
 											<textarea id="textarea3" style="width: 844px;height: 500px; display: none;" name="afterSaleService" required="required"></textarea>
 										</div>
@@ -259,7 +268,7 @@ var htmlPart = {
 									</td>
 								</tr><!--数据样例-->
 								<tr class="edit-all appCase-box" style="display: none;">
-									<td class="bar">应用案例：<span class="requireds">*</span></td>
+									<td class="bar">应用案例：</td>
 									<td>
 										<div class="wangEditor-wrapper">
 											<textarea id="textarea4" style="width: 844px;height: 500px; display: none;" name="appCase" required="required"></textarea>
@@ -999,7 +1008,7 @@ var htmlPart = {
 												</td>
 											</tr>
 											<tr>
-												<td class="bar">联系邮件：<span class="requireds">*</span></td>
+												<td class="bar">联系邮箱：<span class="requireds">*</span></td>
 												<td>
 													<div class="text-box">
 														<input type="text" name="concatEmail" required="required">

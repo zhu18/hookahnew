@@ -1,7 +1,7 @@
 package com.jusfoun.hookah.pay.service.impl;
 
-import com.apex.etm.qss.client.IFixClient;
-import com.apex.etm.qss.client.fixservice.bean.ResultBean;
+//import com.apex.etm.qss.client.IFixClient;
+//import com.apex.etm.qss.client.fixservice.bean.ResultBean;
 import com.jusfoun.hookah.core.dao.PaySignMapper;
 import com.jusfoun.hookah.core.domain.PaySign;
 import com.jusfoun.hookah.core.domain.mongo.MgPaySign;
@@ -35,7 +35,7 @@ public class PaySignServiceImpl extends GenericServiceImpl<PaySign, String> impl
 	@Resource
 	FixClientUtil fixClientUtil;
 
-	private IFixClient fixClient = fixClientUtil.createClientSSL();
+//	private IFixClient fixClient = fixClientUtil.createClientSSL();
 
 	@Resource
 	MgPaySignService mgPaySignService;
@@ -52,30 +52,30 @@ public class PaySignServiceImpl extends GenericServiceImpl<PaySign, String> impl
 	@Override
 //	@Scheduled(cron = "0 50 17 * * ?")//每天08:05执行定时任务
 	public void sendMarketLogin(){
-		PaySign paySign = new PaySign();
-		String taskDate = DateUtil.getCurrentDate("YYYYMMDD");
-		Map<String, String> paramMap = new HashMap<String,String>();
-		paramMap.put("FID_YWRQ",taskDate);//业务日期
-		paramMap.put("FID_JYS",PayConstants.FID_JYS);//交易所代码
-
-		paySign.setAddTime(new Date());
-		paySign.setSignFlag(PayConstants.Sign.SIGN_IN.getCode());
-		paySign.setTradeMarket(PayConstants.FID_JYS);
-		paySign.setTaskDate(new Date());
-		paySign.setUpdateTime(new Date());
-
-		try {
-			ResultBean<Map<String, String>> resultBean = this.fixClient.sendMarketLogin(paramMap);
-			paySign.setResultCode(resultBean.getCode());
-			paySign.setResultMsg(resultBean.getMsg());
-			mapper.insertAndGetId(paySign);
-			MgPaySign mgPaySign = new MgPaySign();
-			BeanUtils.copyProperties(paySign,mgPaySign);
-			mgPaySignService.insert(mgPaySign);
-		}catch (Exception e){
-			logger.info(e.getMessage());
-			e.printStackTrace();
-		}
+//		PaySign paySign = new PaySign();
+//		String taskDate = DateUtil.getCurrentDate("YYYYMMDD");
+//		Map<String, String> paramMap = new HashMap<String,String>();
+//		paramMap.put("FID_YWRQ",taskDate);//业务日期
+//		paramMap.put("FID_JYS",PayConstants.FID_JYS);//交易所代码
+//
+//		paySign.setAddTime(new Date());
+//		paySign.setSignFlag(PayConstants.Sign.SIGN_IN.getCode());
+//		paySign.setTradeMarket(PayConstants.FID_JYS);
+//		paySign.setTaskDate(new Date());
+//		paySign.setUpdateTime(new Date());
+//
+//		try {
+//			ResultBean<Map<String, String>> resultBean = this.fixClient.sendMarketLogin(paramMap);
+//			paySign.setResultCode(resultBean.getCode());
+//			paySign.setResultMsg(resultBean.getMsg());
+//			mapper.insertAndGetId(paySign);
+//			MgPaySign mgPaySign = new MgPaySign();
+//			BeanUtils.copyProperties(paySign,mgPaySign);
+//			mgPaySignService.insert(mgPaySign);
+//		}catch (Exception e){
+//			logger.info(e.getMessage());
+//			e.printStackTrace();
+//		}
 //		Asser.assertTrue(resultBean.isSuccess());
 	}
 
@@ -83,26 +83,26 @@ public class PaySignServiceImpl extends GenericServiceImpl<PaySign, String> impl
 	@Override
 //	@Scheduled(cron = "0 55 19 * * ?")//每天七点55执行定时任务
 	public void sendMarketLogout(){
-		PaySign paySign = new PaySign();
-		String taskDate = DateUtil.getCurrentDate("YYYYMMDD");
-		Map<String, String> paramMap = new HashMap<String, String>();
-		paramMap.put("FID_YWRQ",taskDate);//业务日期
-		paramMap.put("FID_JYS", PayConstants.FID_JYS);//交易所代码
-
-		paySign.setAddTime(new Date());
-		paySign.setSignFlag(PayConstants.Sign.SIGN_OUT.getCode());
-		paySign.setTradeMarket(PayConstants.FID_JYS);
-		paySign.setTaskDate(new Date());
-		paySign.setUpdateTime(new Date());
-
-		try {
-			ResultBean<Map<String, String>> resultBean = this.fixClient.sendMarketLogout(paramMap);
-			paySign.setResultCode(resultBean.getCode());
-			paySign.setResultMsg(resultBean.getMsg());
-			mapper.insert(paySign);
-		}catch (Exception e){
-			logger.info(e.getMessage());
-		}
+//		PaySign paySign = new PaySign();
+//		String taskDate = DateUtil.getCurrentDate("YYYYMMDD");
+//		Map<String, String> paramMap = new HashMap<String, String>();
+//		paramMap.put("FID_YWRQ",taskDate);//业务日期
+//		paramMap.put("FID_JYS", PayConstants.FID_JYS);//交易所代码
+//
+//		paySign.setAddTime(new Date());
+//		paySign.setSignFlag(PayConstants.Sign.SIGN_OUT.getCode());
+//		paySign.setTradeMarket(PayConstants.FID_JYS);
+//		paySign.setTaskDate(new Date());
+//		paySign.setUpdateTime(new Date());
+//
+//		try {
+//			ResultBean<Map<String, String>> resultBean = this.fixClient.sendMarketLogout(paramMap);
+//			paySign.setResultCode(resultBean.getCode());
+//			paySign.setResultMsg(resultBean.getMsg());
+//			mapper.insert(paySign);
+//		}catch (Exception e){
+//			logger.info(e.getMessage());
+//		}
 
 	}
 

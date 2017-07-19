@@ -1,10 +1,10 @@
 package com.jusfoun.hookah.pay.service.impl;
 
-import com.apex.etm.qss.client.IFixClient;
-import com.apex.etm.qss.client.fixservice.bean.ResultBean;
-import com.apex.fix.AxCallFunc;
-import com.apex.fix.JFixComm;
-import com.apex.fix.JFixSess;
+//import com.apex.etm.qss.client.IFixClient;
+//import com.apex.etm.qss.client.fixservice.bean.ResultBean;
+//import com.apex.fix.AxCallFunc;
+//import com.apex.fix.JFixComm;
+//import com.apex.fix.JFixSess;
 import com.jusfoun.hookah.core.dao.PayBankCardMapper;
 import com.jusfoun.hookah.core.domain.PayAccountRecord;
 import com.jusfoun.hookah.core.domain.PayBankCard;
@@ -34,7 +34,7 @@ public class PayBankCardImpl extends GenericServiceImpl<PayBankCard, String> imp
     @Resource
     FixClientUtil client;
 
-    private IFixClient fixClient = client.createClientSSL();
+//    private IFixClient fixClient = client.createClientSSL();
 
     @Resource
     public void setDao(PayBankCardMapper payBankCardMapper) {
@@ -71,44 +71,44 @@ public class PayBankCardImpl extends GenericServiceImpl<PayBankCard, String> imp
         payBankCard.setCardCode(bankCardNum);
         payBankCard.setAddOperator(userId);
         payBankCard.setAddTime(new Date());
-        // 发起请求
-        ResultBean<Map<String, String>> resultBean = this.fixClient.sendFirmSignOn(paramMap, new AxCallFunc() {
-            public boolean onReply(JFixSess jFixSess, JFixComm jFixComm) {
-                //回调函数处理
-                return signOnReply(jFixSess, jFixComm, payBankCard);
-            }
-        });
-        if (resultBean.isSuccess()) {
-            //TODO 发送成功
-
-        } else {
-            //发送失败
-            return false;
-        }
+//        // 发起请求
+//        ResultBean<Map<String, String>> resultBean = this.fixClient.sendFirmSignOn(paramMap, new AxCallFunc() {
+//            public boolean onReply(JFixSess jFixSess, JFixComm jFixComm) {
+//                //回调函数处理
+//                return signOnReply(jFixSess, jFixComm, payBankCard);
+//            }
+//        });
+//        if (resultBean.isSuccess()) {
+//            //TODO 发送成功
+//
+//        } else {
+//            //发送失败
+//            return false;
+//        }
         return true;
     }
 
-    private boolean signOnReply(JFixSess jFixSess, JFixComm jFixComm, PayBankCard payBankCard) {
-        try {
-            if (jFixSess.getCount() > 0) {
-                jFixSess.go(0);
-                if (jFixSess.getCode() > 0) {
-                    //成功后插入数据
-                    payBankCard.setBindFlag(PayConstants.BankCardStatus.binded.code);
-                    payBankCardMapper.insert(payBankCard);
-                    //插入mongo
-                    mongoTemplate.insert(payBankCard);
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
-            }
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
-    }
+//    private boolean signOnReply(JFixSess jFixSess, JFixComm jFixComm, PayBankCard payBankCard) {
+//        try {
+//            if (jFixSess.getCount() > 0) {
+//                jFixSess.go(0);
+//                if (jFixSess.getCode() > 0) {
+//                    //成功后插入数据
+//                    payBankCard.setBindFlag(PayConstants.BankCardStatus.binded.code);
+//                    payBankCardMapper.insert(payBankCard);
+//                    //插入mongo
+//                    mongoTemplate.insert(payBankCard);
+//                } else {
+//                    return false;
+//                }
+//            } else {
+//                return false;
+//            }
+//        } catch (Exception e) {
+//            return false;
+//        }
+//        return true;
+//    }
 
 
     /**
@@ -123,52 +123,52 @@ public class PayBankCardImpl extends GenericServiceImpl<PayBankCard, String> imp
      */
     @Override
     public boolean bankCardSignOff(Integer id, String userId, String customerNum, String bankCardNum, String bankCardOwner, String ip, String ukey) {
-        // 组装参数
-        Map<String, String> paramMap = buildSignOnParam(customerNum, bankCardNum, bankCardOwner, ip, ukey);
-        paramMap.remove("FID_YHZHMC");
-        paramMap.remove("FID_WDH");
-        paramMap.remove("FID_MOBILE");
-        //构造数据库对象
-        PayBankCard payBankCard = new PayBankCard();
-        payBankCard.setId(id);
-        payBankCard.setBindFlag(PayConstants.BankCardStatus.unbind.code);
-        payBankCard.setUpdateOperator(userId);
-        payBankCard.setUpdateTime(new Date());
-        // 发起请求
-        ResultBean<Map<String, String>> resultBean = this.fixClient.sendFirmSignOff(paramMap, new AxCallFunc() {
-            public boolean onReply(JFixSess jFixSess, JFixComm jFixComm) {
-                //回调函数处理
-                return signOffReply(jFixSess, jFixComm, payBankCard);
-            }
-        });
-        if (resultBean.isSuccess()) {
-            //TODO 发送成功
-
-        } else {
-            //发送失败
-            return false;
-        }
+//        // 组装参数
+//        Map<String, String> paramMap = buildSignOnParam(customerNum, bankCardNum, bankCardOwner, ip, ukey);
+//        paramMap.remove("FID_YHZHMC");
+//        paramMap.remove("FID_WDH");
+//        paramMap.remove("FID_MOBILE");
+//        //构造数据库对象
+//        PayBankCard payBankCard = new PayBankCard();
+//        payBankCard.setId(id);
+//        payBankCard.setBindFlag(PayConstants.BankCardStatus.unbind.code);
+//        payBankCard.setUpdateOperator(userId);
+//        payBankCard.setUpdateTime(new Date());
+//        // 发起请求
+//        ResultBean<Map<String, String>> resultBean = this.fixClient.sendFirmSignOff(paramMap, new AxCallFunc() {
+//            public boolean onReply(JFixSess jFixSess, JFixComm jFixComm) {
+//                //回调函数处理
+//                return signOffReply(jFixSess, jFixComm, payBankCard);
+//            }
+//        });
+//        if (resultBean.isSuccess()) {
+//            //TODO 发送成功
+//
+//        } else {
+//            //发送失败
+//            return false;
+//        }
         return true;
     }
 
-    private boolean signOffReply(JFixSess jFixSess, JFixComm jFixComm, PayBankCard payBankCard) {
-        try {
-            if (jFixSess.getCount() > 0) {
-                jFixSess.go(0);
-                if (jFixSess.getCode() > 0) {
-                    //成功后更新数据
-                    payBankCardMapper.updateByPrimaryKeySelective(payBankCard);
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
-            }
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
-    }
+//    private boolean signOffReply(JFixSess jFixSess, JFixComm jFixComm, PayBankCard payBankCard) {
+//        try {
+//            if (jFixSess.getCount() > 0) {
+//                jFixSess.go(0);
+//                if (jFixSess.getCode() > 0) {
+//                    //成功后更新数据
+//                    payBankCardMapper.updateByPrimaryKeySelective(payBankCard);
+//                } else {
+//                    return false;
+//                }
+//            } else {
+//                return false;
+//            }
+//        } catch (Exception e) {
+//            return false;
+//        }
+//        return true;
+//    }
 
     private Map<String, String> buildSignOnParam(String customerNum, String accountNum, String bankCardOwner, String ip, String ukey) {
         Map<String, String> paramMap = new HashMap<>();

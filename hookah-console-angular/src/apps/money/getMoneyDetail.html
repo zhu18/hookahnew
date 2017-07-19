@@ -1,0 +1,82 @@
+<style type="text/css">
+    .form-control{ display: inline-block; width:200px;}
+    /*.btn-warning{ display: none;}*/
+    .getMoneyTable{ width:400px;}
+    .getMoneyTable tr th{ text-align: right;}
+    .getMoneyTable tr td{ text-align: left;}
+    .getMoneyStatus span{ color:red;}
+    .getMoneyStatus i{ color:green;font-style: normal;}
+</style>
+<div class="row">
+    <div class="grid-left viewDetails margin-bottom-30">
+        <div class="console-title console-title-border clearfix">
+            <div class="pull-left"><h4>提现审核</h4></div>
+            <div class="pull-right">
+                <button class="btn btn-default" ng-click="back()"><span class="glyphicon glyphicon-refresh"></span> 返回
+                </button>
+            </div>
+        </div>
+        <div class="viewContent clearfix" style="color: #949494;font-size: 13px; line-height: 13px;padding:15px 10px;">
+            <div class="leftContent grid-left padding-top-20 text-align-center">
+
+                <table class="table table-hover getMoneyTable"  style="margin-bottom: 20px;">
+                    <thead class="text-center"> <tr>
+                        <th width="115">当前状态:</th>
+                        <td data-ng-bind="order.checkStatus == 0 ? '用户发起提现申请，待审核' : (order.checkStatus == 1 ? '提现申请审核通过' : '提现申请审核未通过')"></td>
+
+                    </tr>
+                    <tr data-ng-show="order.checkStatus == 2">
+                        <th>未通过原因:</th>
+                        <td data-ng-bind="order.checkMsg"></td>
+                    </tr></thead>
+                </table>
+                <h5>提现信息</h5>
+                <table class="table table-hover getMoneyTable"  style="margin-bottom: 20px;">
+                    <thead class="text-center">
+                    <tr class="padding-bottom-10">
+                        <th width="115">流水号：</th>
+                        <td data-ng-bind="order.serialNo"></td>
+                    </tr>
+                    <tr class="padding-bottom-10 getMoneyStatus">
+                        <th>提现状态：</th>
+                        <td>
+                            <span data-ng-show="order.checkStatus == 0 || order.checkStatus == 2 " data-ng-bind="order.checkStatus == 0 ? '待审核' :  '审核未通过'"></span>
+                            <i data-ng-show="order.checkStatus == 1" data-ng-bind="'审核通过'"></i>
+
+                        </td>
+                    </tr>
+                    <tr class="padding-bottom-10">
+                        <th>提现申请时间：</th>
+                        <td data-ng-bind="order.addTime"></td>
+                    </tr>
+                    <tr class="padding-bottom-10">
+                        <th>审核完成时间：</th>
+                        <td data-ng-bind="order.checckTime"></td>
+                    </tr>
+                    <tr class="padding-bottom-10">
+                        <th>申请提现金额：</th>
+                        <td data-ng-bind="order.money + '元'">元</td>
+                    </tr>
+                    <tr class="padding-bottom-10">
+                        <th>账户余额：</th>
+                        <td data-ng-bind="order.useBalance + '元'">元</td>
+                    </tr>
+                    <tr class="padding-bottom-10">
+                        <th>可用金额：</th>
+                        <td data-ng-bind="order.balance+'元'"></td>
+                    </tr>
+                    <tr data-ng-show="order.checkStatus == 0 ">
+                        <td colspan="2">
+                            <button data-ng-click="orderSub(1)">通过</button>
+                            <button data-ng-click="orderSub(2)">不通过</button>
+                        </td>
+                    </tr>
+                    </thead>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
