@@ -160,7 +160,7 @@ public class PayController {
     }
 
     @RequestMapping(value = "/aliPay", method = RequestMethod.POST)
-    public Object alipay(String orderSn, HttpServletRequest request, String passWord) {
+    public Object alipay(String orderSn) {
         String reqHtml = null;
         try {
             Session session = SecurityUtils.getSubject().getSession();
@@ -170,12 +170,7 @@ public class PayController {
             List<Condition> filters = new ArrayList();
             filters.add(Condition.eq("orderSn", orderSn));
             OrderInfo orderinfo  = orderService.selectOne(filters);
-            //验证支付密码
-            boolean flag = payAccountService.verifyPassword(passWord);
-            if (flag){
-                //插流水调支付宝接口
-                reqHtml = payAccountService.payByAli(orderinfo);
-            }
+            reqHtml = payAccountService.payByAli(orderinfo);
         } catch (Exception e) {
             e.printStackTrace();
         }
