@@ -6,11 +6,16 @@ class showUserMoneyDetailController {
     $scope.userBaseInfo=$stateParams.item;
 
     $scope.search = function () {
-/*      var promise = $http({
+      var promise = $http({
         method: 'GET',
-        url: $rootScope.site.apiServer + "/api/withdrawRecord/getOneById",
+        url: $rootScope.site.apiServer + "/api/userFund/userFundDetail",
         params: {
-          id: $stateParams.id
+          tradeType : $scope.tradeType  ? $scope.tradeType  : null,
+          tradeStatus: $scope.tradeStatus == 0 ? '0' : ($scope.tradeStatus ? $scope.tradeStatus : null),//审核状态
+          startDate: $scope.startDate ? format($scope.startDate, 'yyyy-MM-dd HH:mm:ss') : null,
+          endDate: $scope.endDate ? format($scope.endDate, 'yyyy-MM-dd HH:mm:ss') : null,
+          currentPage: $rootScope.pagination.currentPage, //当前页码
+          pageSize: $rootScope.pagination.pageSize
         }
       });
       promise.then(function (res, status, config, headers) {
@@ -25,7 +30,7 @@ class showUserMoneyDetailController {
           $scope.settleList = [];
           $scope.showNoneDataInfoTip = true;
         }
-      });*/
+      });
     };
     $scope.search();
     // 处理日期插件的获取日期的格式
