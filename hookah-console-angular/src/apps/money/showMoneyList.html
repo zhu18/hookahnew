@@ -10,7 +10,7 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="console-title console-title-border clearfix">
-            <div class="pull-left"><h5>提现审核</h5></div>
+            <div class="pull-left"><h5>资金流水记录</h5></div>
             <div class="pull-right">
                 <button class="btn btn-default" data-ng-click="refresh()"><span
                     class="glyphicon glyphicon-refresh"></span> 刷新
@@ -20,21 +20,39 @@
         </div>
         <div class="row margin-top form-inline">
             <div class="col-sm-12">
-                审核状态：
-                <div class="searchSection  btn-group">
-                    <button class="btn btn-default" data-ng-model="checkStatus" uib-btn-radio="" data-ng-click="search()">
-                        全部
-                    </button>
-                    <button class="btn btn-default" data-ng-model="checkStatus" uib-btn-radio="0" data-ng-click="search()">
-                        待审核
-                    </button>
-                    <button class="btn btn-default" data-ng-model="checkStatus" uib-btn-radio="1" data-ng-click="search()">
-                        已通过
-                    </button>
-                    <button class="btn btn-default" data-ng-model="checkStatus" uib-btn-radio="2" data-ng-click="search()">
-                        未通过
-                    </button>
-                </div>
+               <div style="padding-top:15px;">
+                   费用科目：
+                   <div class="searchSection  btn-group">
+                       <button class="btn btn-default" data-ng-model="tradeType" uib-btn-radio="" data-ng-click="search()"> 全部 </button>
+                       <button class="btn btn-default" data-ng-model="tradeType" uib-btn-radio="1" data-ng-click="search()"> 充值 </button>
+                       <button class="btn btn-default" data-ng-model="tradeType" uib-btn-radio="2" data-ng-click="search()"> 提现 </button>
+                       <button class="btn btn-default" data-ng-model="tradeType" uib-btn-radio="6003" data-ng-click="search()"> 冻结划入 </button>
+                       <button class="btn btn-default" data-ng-model="tradeType" uib-btn-radio="6004" data-ng-click="search()"> 释放划出 </button>
+                       <button class="btn btn-default" data-ng-model="tradeType" uib-btn-radio="3007" data-ng-click="search()"> 手续费收入 </button>
+                       <button class="btn btn-default" data-ng-model="tradeType" uib-btn-radio="3001" data-ng-click="search()"> 销售货款收入 </button>
+                       <button class="btn btn-default" data-ng-model="tradeType" uib-btn-radio="4001" data-ng-click="search()"> 销售货款支出 </button>
+                       <!--<button class="btn btn-default" data-ng-model="tradeType" uib-btn-radio="2" data-ng-click="search()"> 退帐 </button>-->
+                       <button class="btn btn-default" data-ng-model="tradeType" uib-btn-radio="8" data-ng-click="search()"> 冲账 </button>
+                       <!--<button class="btn btn-default" data-ng-model="tradeType" uib-btn-radio="2" data-ng-click="search()"> 其他 </button>-->
+                   </div>
+               </div>
+               <div style="padding-top:15px;">
+                   交易状态：
+                   <div class="searchSection  btn-group">
+                       <button class="btn btn-default" data-ng-model="tradeStatus" uib-btn-radio="" data-ng-click="search()">
+                           全部
+                       </button>
+                       <button class="btn btn-default" data-ng-model="tradeStatus" uib-btn-radio="1" data-ng-click="search()">
+                           成功
+                       </button>
+                       <button class="btn btn-default" data-ng-model="tradeStatus" uib-btn-radio="2" data-ng-click="search()">
+                           失败
+                       </button>
+                       <button class="btn btn-default" data-ng-model="tradeStatus" uib-btn-radio="0" data-ng-click="search()">
+                           处理中
+                       </button>
+                   </div>
+               </div>
 
                 <div><label class="control-label">订单时间：</label>
                 <p class="input-group" style="margin-top: 15px">
@@ -59,55 +77,32 @@
                              class="glyphicon glyphicon-calendar"></i></button>
                     </span>
                 </p> &nbsp;&nbsp;
-                <input ng-model="orgName" type="text" class="form-control" placeholder="用户名/单位名称">
-                    &nbsp;&nbsp;
                     <button style="margin-top: 5px" type="submit" class="btn btn-primary" data-ng-click="search()">查询 </button>
                 </div>
             </div>
 
         </div>
-        <!--TODO：把批量给注释了  2017-07-19 -->
-     <!--   <div data-ng-show="status== null||status==0">
-            <label class="btn btn-default"><input type="checkbox" ng-model="master"
-                                                  ng-click="all(master)">全选</label>
-            <button class="btn btn-default" ng-click="MultipleCheck(1)">批量通过</button>
-            <button class="btn btn-default" ng-click="MultipleCheck(2)">批量不通过</button>
-
-        </div>
-        <pre>{{choseArr}}</pre>-->
         <div class="gridSection">
             <div us-spinner ng-show="showSpinner" spinner-start-active="true" spinner-key="showSpinner"></div>
-
             <table class="table table-hover" >
                 <thead>
                 <tr>
-                    <th>
-                        <!--TODO:此处注释的input是批量选择按钮-->
-                        <!--<label><input data-ng-show="item.status==0" type="checkbox" id={{item.commId}} ng-model="x" ng-checked="master" ng-click="chk(item.commId,x)"> 订单编号：</label>
-                        <a href="#" ng-bind="item.orderSn"></a>-->
-                        流水号
-                    </th>
-                    <th style="text-align: center">用户名</th>
-                    <th style="text-align: center">单位名称</th>
-                    <th>可用金额</th>
-                    <th>申请提现金额</th>
-                    <th>申请提现时间</th>
-                    <th>审核时间</th>
+                    <th>流水号</th>
+                    <th style="text-align: center">时间</th>
+                    <th style="text-align: center">记账方</th>
+                    <th>费用科目</th>
+                    <th>金额（元）</th>
                     <th>状态</th>
-                    <th width="155" style="text-align:center;">操作</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr data-ng-repeat="item in getMoneyList">
-                    <td data-ng-bind="item.serialNo"></td>
-                    <td data-ng-bind="item.userName"></td>
-                    <td data-ng-bind="item.orgName"></td>
-                    <td style="text-align: center" data-ng-bind="item.useBalance/100"></td>
-                    <td style="text-align: center" data-ng-bind="item.money/100"></td>
+                <tr data-ng-repeat="item in showMoneyList">
+                    <td data-ng-bind="item.ID"></td>
                     <td data-ng-bind="item.addTime"></td>
-                    <td data-ng-bind="item.checckTime"></td>
-                    <td data-ng-bind="item.checkStatus == 0 ? '待审核' : (item.checkStatus == 1 ? '审核通过' : '审核未通过')"></td>
-                    <td style="text-align: center"><a href="javascript:void (0)" data-ng-click="getMoneyDetail(item.id)" data-ng-bind="item.checkStatus==0  ? '去审核':'查看'"></a></td>
+                    <td data-ng-bind="item.orgName">?????</td>
+                    <td style="text-align: center" data-ng-bind="item.userName"></td>
+                    <td style="text-align: center" data-ng-bind="item.money/100"></td>
+                    <td data-ng-bind="item.tradeStatus == 0 ? '处理中' : (item.tradeStatus == 1 ? '成功' : '失败')"></td>
                 </tr>
                 </tbody>
             </table>

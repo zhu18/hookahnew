@@ -36,9 +36,19 @@ app.run(function ($rootScope, $state) {
   $rootScope.config.title = '资金管理';
   $rootScope.config.mainNav =[
     {
+      "title":"平台资金管理",
+      "url":"money.platformFundManage"
+    },{
+      "title":"用户资金管理",
+      "url":"money.userMoneyManage"
+    },{
+      "title":"资金流水",
+      "url":"money.showMoneyList"
+    },
+    {
       "title":"提现审核",
       "url":"money.getMoneyList"
-    },
+    }
     // {
     //   "title":"新增帮助",
     //   "url":"help.add"

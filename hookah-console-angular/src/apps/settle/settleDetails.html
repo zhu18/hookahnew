@@ -85,14 +85,14 @@
                     <tr>
                         <th style=" padding: 14px 10px; text-align: right;">本次结算金额：</th>
                         <!--<td>{{((supplierAmount+tradeCenterAmount) <= order.noSettleAmount) ? (supplierAmount+tradeCenterAmount) : "输入金额错误")}}￥-->
-                        <td>{{ supplierAmount * 1 + tradeCenterAmount * 1 <= order.noSettleAmount ? (supplierAmount * 1 + tradeCenterAmount * 1)+' ￥' : "请输入金额"}}
+                        <td>{{ supplierAmount * 1 + tradeCenterAmount * 1 <= order.noSettleAmount/100 ? (supplierAmount * 1 + tradeCenterAmount * 1)+' ￥' : "请输入金额"}}
                         </td>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
                         <td></td>
-                        <td><button class="btn"  data-ng-click="orderSub()" data-ng-disabled=" supplierAmount * 1 + tradeCenterAmount * 1 > order.noSettleAmount">结算提交</button></td>
+                        <td><button class="btn"  data-ng-click="orderSub()" data-ng-disabled=" supplierAmount * 1 + tradeCenterAmount * 1 > order.noSettleAmount/100">结算提交</button></td>
                     </tr>
                     </tbody>
                 </table>
