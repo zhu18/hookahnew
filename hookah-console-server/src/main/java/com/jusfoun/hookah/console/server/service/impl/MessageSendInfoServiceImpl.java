@@ -15,9 +15,9 @@ import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.MessageSendInfoService;
 import com.jusfoun.hookah.rpc.api.UserService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +31,6 @@ import java.util.Objects;
  */
 @Service
 public class MessageSendInfoServiceImpl extends GenericServiceImpl<MessageSendInfo,String> implements MessageSendInfoService {
-
     //站内信:2 邮件:1 短信:0
     public static final Byte SEND_TYPE_SYSTEM = 2;
     public static final Byte SEND_TYPE_EMAIL = 1;
@@ -55,6 +54,24 @@ public class MessageSendInfoServiceImpl extends GenericServiceImpl<MessageSendIn
 
     @Override
     public ReturnData findList(String messageType, MessageCritVo messageCritVo) {
+        if(messageCritVo != null) {
+            if (StringUtils.isNotBlank(messageCritVo.getEndTime())) {
+                messageCritVo.setEndTime(messageCritVo.getEndTime().substring(0, 11) + "23:59:59");
+            }
+            if(StringUtils.isNotBlank(messageCritVo.getReceiveUserName())) {
+                List<Condition> fifters = new ArrayList<>();
+                fifters.add(Condition.like("userName", messageCritVo.getReceiveUserName()));
+                fifters.add(Condition.eq("isEnable", 1));
+                List<User> list = userService.selectList(fifters);
+                StringBuffer ids = new StringBuffer();
+                if (list != null && list.size() > 0) {
+                    for (User user : list) {
+                        ids.append(user.getUserId()).append(",");
+                    }
+                    messageCritVo.setUserIds(ids.toString().split(","));
+                }
+            }
+        }
         switch (messageType) {
             case "system":
                 messageCritVo.setSendType(SEND_TYPE_SYSTEM);
@@ -171,7 +188,14 @@ public class MessageSendInfoServiceImpl extends GenericServiceImpl<MessageSendIn
                 filters.add(Condition.eq("isSuccess",messageCritVo.getIsSuccess()));
             }
             if(Objects.nonNull(messageCritVo.getReceiveAddr()) && !(Byte.valueOf("-1")).equals(messageCritVo.getReceiveAddr())){
-                filters.add(Condition.like("receiveAddr",messageCritVo.getReceiveAddr()));
+                filters.add(Condition.like("receiveAddr", messageCritVo.getReceiveAddr()));
+            }
+            if(StringUtils.isNotBlank(messageCritVo.getReceiveUserName())){
+                if (messageCritVo.getUserIds() != null && messageCritVo.getUserIds().length > 0) {
+                    filters.add(Condition.in("receiveUser", messageCritVo.getUserIds()));
+                }else {
+                    filters.add(Condition.eq("receiveUser", ""));
+                }
             }
 
             List<OrderBy> orderBys = new ArrayList<OrderBy>();

@@ -11,6 +11,7 @@ class MessageController {
                     isRead: $scope.messageIsRead,
                     keywords: $scope.keywords,
                     eventType: $scope.eventType,
+                    receiveUserName: $scope.receiveUserName,
                     startTime: $scope.startDate?format($scope.startDate, 'yyyy-MM-dd HH:mm:ss'):null,
                     endTime: $scope.endDate?format($scope.endDate, 'yyyy-MM-dd HH:mm:ss'):null
                 }
