@@ -49,12 +49,6 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 	OrderInfoService orderInfoService;
 
 	@Resource
-	WaitSettleRecordService waitSettleRecordService;
-
-	@Resource
-	MgOrderInfoService mgOrderInfoService;
-
-	@Resource
 	PayTradeRecordMapper payTradeRecordMapper;
 
 	@Resource
@@ -66,8 +60,6 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 
 	@Transactional
 	public int operatorByType(Long payAccountId, Integer operatorType, Long money) {
-
-		Map<String, Object> map = new HashMap<>();
 
 //		入账到可用余额
 //		1：在线充值（入金），
@@ -88,24 +80,29 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 //		扣款冻结账户到可用余额
 //		6004：释放划出-收益账户
 
+		// 账户操作
+		Map<String, Object> map = new HashMap<>();
+
 		// 加钱
-		if(operatorType == PayConstants.TradeType.OnlineRecharge.code ||
-			operatorType == PayConstants.TradeType.ManualRecharge.code ||
-			operatorType == PayConstants.TradeType.CashREverse.code ||
-			operatorType == PayConstants.TradeType.SalesIn.code ||
-			operatorType == PayConstants.TradeType.ChargeIn.code ||
-			operatorType == PayConstants.TradeType.OfflineRecharge.code){
+		if(operatorType.equals(PayConstants.TradeType.OnlineRecharge.code) ||
+				operatorType.equals(PayConstants.TradeType.ManualRecharge.code) ||
+				operatorType.equals(PayConstants.TradeType.CashREverse.code) ||
+				operatorType.equals(PayConstants.TradeType.SalesIn.code) ||
+				operatorType.equals(PayConstants.TradeType.ChargeIn.code) ||
+				operatorType.equals(PayConstants.TradeType.OfflineRecharge.code)){
 			map.put("type", "plus");
 		}else if( // 减钱
-				operatorType == PayConstants.TradeType.OnlineCash.code ||
-				operatorType == PayConstants.TradeType.SalesOut.code ||
-				operatorType == PayConstants.TradeType.ManualDebit.code
+				operatorType.equals(PayConstants.TradeType.OnlineCash.code) ||
+						operatorType.equals(PayConstants.TradeType.SalesOut.code) ||
+						operatorType.equals(PayConstants.TradeType.ManualDebit.code)
 				){
 			map.put("type", "sub");
-		}else if(operatorType == PayConstants.TradeType.FreezaIn.code){
+		}else if(operatorType.equals(PayConstants.TradeType.FreezaIn.code)){ // 冻结转入
 			map.put("type", "FreezaIn");
-		}else if(operatorType == PayConstants.TradeType.releaseDraw.code){
+		}else if(operatorType.equals(PayConstants.TradeType.releaseDraw.code)){ // 释放划出
 			map.put("type", "releaseDraw");
+		}else if(operatorType.equals(PayConstants.TradeType.SettleCut.code)){
+			map.put("type", "SettleCut");
 		}
 		map.put("id", payAccountId);
 		map.put("changeMoney", money);
@@ -140,24 +137,24 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		Map<String, Object> map = new HashMap<>();
 
 		// 加钱
-		if(operatorType == PayConstants.TradeType.OnlineRecharge.code ||
-				operatorType == PayConstants.TradeType.ManualRecharge.code ||
-				operatorType == PayConstants.TradeType.CashREverse.code ||
-				operatorType == PayConstants.TradeType.SalesIn.code ||
-				operatorType == PayConstants.TradeType.ChargeIn.code ||
-				operatorType == PayConstants.TradeType.OfflineRecharge.code){
+		if(operatorType.equals(PayConstants.TradeType.OnlineRecharge.code) ||
+				operatorType.equals(PayConstants.TradeType.ManualRecharge.code) ||
+				operatorType.equals(PayConstants.TradeType.CashREverse.code) ||
+				operatorType.equals(PayConstants.TradeType.SalesIn.code) ||
+				operatorType.equals(PayConstants.TradeType.ChargeIn.code) ||
+				operatorType.equals(PayConstants.TradeType.OfflineRecharge.code)){
 			map.put("type", "plus");
 		}else if( // 减钱
-				operatorType == PayConstants.TradeType.OnlineCash.code ||
-						operatorType == PayConstants.TradeType.SalesOut.code ||
-						operatorType == PayConstants.TradeType.ManualDebit.code
+				operatorType.equals(PayConstants.TradeType.OnlineCash.code) ||
+						operatorType.equals(PayConstants.TradeType.SalesOut.code) ||
+						operatorType.equals(PayConstants.TradeType.ManualDebit.code)
 				){
 			map.put("type", "sub");
-		}else if(operatorType == PayConstants.TradeType.FreezaIn.code){ // 冻结转入
+		}else if(operatorType.equals(PayConstants.TradeType.FreezaIn.code)){ // 冻结转入
 			map.put("type", "FreezaIn");
-		}else if(operatorType == PayConstants.TradeType.releaseDraw.code){ // 释放划出
+		}else if(operatorType.equals(PayConstants.TradeType.releaseDraw.code)){ // 释放划出
 			map.put("type", "releaseDraw");
-		}else if(operatorType == PayConstants.TradeType.SettleCut.code){
+		}else if(operatorType.equals(PayConstants.TradeType.SettleCut.code)){
 			map.put("type", "SettleCut");
 		}
 		map.put("id", payAccountId);
@@ -180,26 +177,31 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 
 		// 添加内部流水记录
 		PayTradeRecord payTradeRecord = payTradeRecordService.initPayTradeRecord(moneyInOutBo, id.toString());
-		Map<String, Object> map = new HashMap<>();
 		Integer operatorType = moneyInOutBo.getOperatorType();
+
+		// 账户操作
+		Map<String, Object> map = new HashMap<>();
+
 		// 加钱
-		if(operatorType == PayConstants.TradeType.OnlineRecharge.code ||
-				operatorType == PayConstants.TradeType.ManualRecharge.code ||
-				operatorType == PayConstants.TradeType.CashREverse.code ||
-				operatorType == PayConstants.TradeType.SalesIn.code ||
-				operatorType == PayConstants.TradeType.ChargeIn.code ||
-				operatorType == PayConstants.TradeType.OfflineRecharge.code){
+		if(operatorType.equals(PayConstants.TradeType.OnlineRecharge.code) ||
+				operatorType.equals(PayConstants.TradeType.ManualRecharge.code) ||
+				operatorType.equals(PayConstants.TradeType.CashREverse.code) ||
+				operatorType.equals(PayConstants.TradeType.SalesIn.code) ||
+				operatorType.equals(PayConstants.TradeType.ChargeIn.code) ||
+				operatorType.equals(PayConstants.TradeType.OfflineRecharge.code)){
 			map.put("type", "plus");
 		}else if( // 减钱
-				operatorType == PayConstants.TradeType.OnlineCash.code ||
-						operatorType == PayConstants.TradeType.SalesOut.code ||
-						operatorType == PayConstants.TradeType.ManualDebit.code
+				operatorType.equals(PayConstants.TradeType.OnlineCash.code) ||
+						operatorType.equals(PayConstants.TradeType.SalesOut.code) ||
+						operatorType.equals(PayConstants.TradeType.ManualDebit.code)
 				){
 			map.put("type", "sub");
-		}else if(operatorType == PayConstants.TradeType.FreezaIn.code){
+		}else if(operatorType.equals(PayConstants.TradeType.FreezaIn.code)){ // 冻结转入
 			map.put("type", "FreezaIn");
-		}else if(operatorType == PayConstants.TradeType.releaseDraw.code){
+		}else if(operatorType.equals(PayConstants.TradeType.releaseDraw.code)){ // 释放划出
 			map.put("type", "releaseDraw");
+		}else if(operatorType.equals(PayConstants.TradeType.SettleCut.code)){
+			map.put("type", "SettleCut");
 		}
 		map.put("id", moneyInOutBo.getPayAccountID());
 		map.put("changeMoney", moneyInOutBo.getMoney());
@@ -261,7 +263,7 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 	public boolean verifyPassword(String payPassword) throws HookahException {
 		String userId = this.getCurrentUser().getUserId();
 		List<Condition> filters = new ArrayList();
-		if (org.apache.commons.lang3.StringUtils.isNotBlank(userId)) {
+		if (StringUtils.isNotBlank(userId)) {
 			filters.add(Condition.eq("userId", userId));
 		}
 		PayAccount payAccount = super.selectOne(filters);
@@ -277,6 +279,10 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 	@Transactional
 	public void payByBalance(OrderInfo orderInfo) throws Exception {
 		//插内部消费流水
+		//先看流水存不存在
+		List<Condition> filter = new ArrayList<>();
+		filter.add(Condition.eq("orderSn",orderInfo.getOrderSn()));
+		payTradeRecordService.selectList(filter);
 		PayTradeRecord payTradeRecord = new PayTradeRecord();
 		payTradeRecord.setUserId(orderInfo.getUserId());
 		payTradeRecord.setMoney(orderInfo.getOrderAmount());
@@ -289,7 +295,7 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		payTradeRecordService.insertAndGetId(payTradeRecord);
 
 		//调余额支付
-		doPayByBalance(orderInfo.getOrderId(), orderInfo.getUserId());
+		doPayByBalance(orderInfo);
 
 	}
 
@@ -318,59 +324,31 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		payTrade.setAddOperator(orderInfo.getUserId());
 		payTrade.setTransferDate(new Date());
 		payTradeRecordService.insertAndGetId(payTrade);
-		//掉支付宝接口
+		//调支付宝接口
 		String html = alipayService.doPay(orderInfo.getUserId(), orderInfo.getOrderId(),
 				PayConfiguration.ALIPAY_NOTIFY_URL, PayConfiguration.ALIPAY_RETURN_URL);
 		return html;
 	}
 
-	public void doPayByBalance(String orderId, String userId) throws Exception {
-		OrderInfo orderinfo = orderInfoService.selectById(orderId);
-		//修改订单支付状态
-		orderinfo.setPayStatus(OrderInfo.PAYSTATUS_PAYED);
-		orderInfoService.updatePayStatus(orderinfo.getOrderSn(), OrderInfo.PAYSTATUS_PAYED,0);
+	public void doPayByBalance(OrderInfo orderinfo) throws Exception {
 		Long orderAmount = orderinfo.getOrderAmount();
 		//减去余额
 		List<Condition> filter = new ArrayList<>();
-		filter.add(Condition.eq("userId", userId));
+		filter.add(Condition.eq("userId", orderinfo.getUserId()));
 		PayAccount payAccount = super.selectOne(filter);
 		operatorByType(payAccount.getId(), HookahConstants.TradeType.SalesOut.getCode(), orderAmount);
 
-//		Long oldBalance = payAccount.getBalance();
-//		Long newBalance = oldBalance-orderAmount;
-//		payAccount.setBalance(newBalance);
-//		payAccountMapper.updateByPrimaryKeySelective(payAccount);
-
+		List<Condition> filters = new ArrayList<>();
+		filters.add(Condition.eq("orderSn",orderinfo.getOrderSn()));
+		List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filters);
+		for(PayTradeRecord payTradeRecord:payTradeRecords){
+			payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.success.getCode());
+		}
 
 		// 支付成功 查询订单 获取订单中商品插入到待清算记录
-		List<Condition> mgfilters = new ArrayList<>();
-		mgfilters.add(Condition.eq("orderSn", orderinfo.getOrderSn()));
-		OrderInfoVo orderInfoVo = mgOrderInfoService.selectOne(mgfilters);
-		if (orderInfoVo != null) {
-			List<MgOrderGoods> mgOrderGoodsList = orderInfoVo.getMgOrderGoodsList();
-			List<WaitSettleRecord> waitSettleRecords = new ArrayList<>();
-			if (mgOrderGoodsList != null && mgOrderGoodsList.size() > 0) {
-				for (MgOrderGoods mgOrderGoods : mgOrderGoodsList) {
-					WaitSettleRecord waitSettleRecord = new WaitSettleRecord();
-					waitSettleRecord.setOrderSn(mgOrderGoods.getOrderSn());
-					waitSettleRecord.setGoodsId(mgOrderGoods.getGoodsId());
-					waitSettleRecord.setOrderId(orderInfoVo.getOrderId());
-					waitSettleRecord.setOrderAmount(mgOrderGoods.getGoodsPrice());
-//					waitSettleRecord.setOrderTime(orderInfoVo.getPayTime());
-					waitSettleRecord.setOrderTime(orderInfoVo.getAddTime());
-					waitSettleRecord.setHasSettleAmount(0L);
-					waitSettleRecord.setNoSettleAmount(mgOrderGoods.getGoodsPrice());
-					waitSettleRecord.setAddTime(new Date());
-					waitSettleRecord.setSettleStatus((byte) 0);
-					waitSettleRecord.setShopName(mgOrderGoods.getAddUser());
-					waitSettleRecord.setGoodsName(mgOrderGoods.getGoodsName());
-					waitSettleRecords.add(waitSettleRecord);
-				}
-
-				int n = waitSettleRecordService.insertBatch(waitSettleRecords);
-				System.out.println(n);
-			}
-		}
+		//修改订单支付状态
+		orderInfoService.updatePayStatus(orderinfo.getOrderSn(), OrderInfo.PAYSTATUS_PAYED,0);
+		orderInfoService.waitSettleRecordInsert(orderinfo.getOrderSn());
 	}
 
 	public void alipayRtn(HttpServletRequest request) throws Exception {
@@ -515,7 +493,7 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 			String html = alipayService.doCharge(userId,money.toString(),notifyUrl,returnUrl);
 			returnData.setCode(ExceptionConst.Success);
 			returnData.setMessage(html);
-			return ReturnData.success();
+			return returnData;
 		}catch (Exception e){
 			returnData.setCode(ExceptionConst.Error);
 			returnData.setMessage(e.toString());
@@ -539,6 +517,8 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		ptr.setUserId(userId);
 		ptr.setTradeStatus((byte)tradeStatus);
 		ptr.setTradeType(tradeType);
+		ptr.setAddOperator(userId);
+		ptr.setAddTime(new Date());
 		ptr.setUpdateOperator(userId);
 		ptr.setUpdateTime(new Date());
 		payTradeRecordMapper.insert(ptr);
@@ -551,6 +531,9 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		par.setPayAccountId(payAccountId);
 		par.setTransferStatus((byte)tradeStatus);
 		par.setTransferType((byte)tradeType);
+		par.setTransferDate(new Date());
+		par.setAddOperator(userId);
+		par.setAddTime(new Date());
 		par.setUpdateOperator(userId);
 		par.setUpdateTime(new Date());
 		par.setUserId(userId);
@@ -567,22 +550,26 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		String userId=params.get("userId");
 		Long money=0l;
 		byte statusFlag=2;
-		List<Condition> filters = new ArrayList();
-		if(StringUtils.isNotBlank(userId)){
-			filters.add(Condition.eq("userId", userId));
+		try{
+			List<Condition> filters = new ArrayList();
+			if(StringUtils.isNotBlank(userId)){
+				filters.add(Condition.eq("userId", userId));
+			}
+			//查询出payAccountId
+			PayAccount payAccount = super.selectOne(filters);
+			if(tradeStatus.equals("TRADE_FINISHED") || tradeStatus.equals("TRADE_SUCCESS")){
+				statusFlag=1;
+				money = Math.round(Double.parseDouble(totalFee)*100);
+				//更新账户金额
+				updatePayAccountMoney(payAccount.getId(),money);
+			}
+			//插入记录表
+			insertPayTradeRecord( userId, money, payAccount.getId(), statusFlag, 1);
+			insertPayAccountRecord( userId, money, payAccount.getId(), statusFlag, 1);
+			//payTradeRecordMapper.updateByPrimaryKeySelective();
+		}catch (Exception e){
+			e.printStackTrace();
 		}
-		//查询出payAccountId
-		PayAccount payAccount = super.selectOne(filters);
-		if(tradeStatus.equals("TRADE_FINISHED") || tradeStatus.equals("TRADE_SUCCESS")){
-			statusFlag=1;
-			money = Math.round(Double.parseDouble(totalFee)*100);
-			//更新账户金额
-			updatePayAccountMoney(payAccount.getId(),money);
-		}
-		//插入记录表
-		insertPayTradeRecord( userId, money, payAccount.getId(), statusFlag, 1);
-		insertPayAccountRecord( userId, money, payAccount.getId(), statusFlag, 1);
-		//payTradeRecordMapper.updateByPrimaryKeySelective();
 	};
 
 }

@@ -130,7 +130,7 @@ public class PayController {
     }
 
     @RequestMapping(value = "/balancePay", method = RequestMethod.POST)
-    public String payPassSta(String orderSn, Model model, HttpServletRequest request,String payMode) {
+    public String payPassSta(String orderSn, Model model, String passWord) {
         long orderAmount = 0 ; //支付金额
         try {
             List<Condition> filters = new ArrayList();
@@ -138,18 +138,21 @@ public class PayController {
             OrderInfo orderinfo  = orderService.selectOne(filters);
             orderAmount= orderinfo.getOrderAmount();
             //验证支付密码和余额
-            List<Condition> filter = new ArrayList();
-            filter.add(Condition.eq("userId", orderinfo.getUserId()));
-            PayAccount payAccount = payAccountService.selectOne(filter);
-            if (payAccount.getUseBalance()<orderAmount){
-                model.addAttribute("message", "余额不足，支付失败!");
-                return "pay/fail";
+            boolean flag = payAccountService.verifyPassword(passWord);
+            if (flag){
+                List<Condition> filter = new ArrayList();
+                filter.add(Condition.eq("userId", orderinfo.getUserId()));
+                PayAccount payAccount = payAccountService.selectOne(filter);
+                if (payAccount.getUseBalance()<orderAmount){
+                    model.addAttribute("message", "余额不足，支付失败!");
+                    return "pay/fail";
+                }
+                //插流水调接口
+                payAccountService.payByBalance(orderinfo);
             }
-            //插流水调接口
-            payAccountService.payByBalance(orderinfo);
         } catch (Exception e) {
             e.printStackTrace();
-            model.addAttribute("message", "支付失败!");
+            model.addAttribute("message", e.getMessage());
             return "pay/fail";
         }
         model.addAttribute("money",orderAmount);
@@ -157,7 +160,7 @@ public class PayController {
     }
 
     @RequestMapping(value = "/aliPay", method = RequestMethod.POST)
-    public Object alipay(String orderSn, HttpServletRequest request) {
+    public Object alipay(String orderSn, HttpServletRequest request, String passWord) {
         String reqHtml = null;
         try {
             Session session = SecurityUtils.getSubject().getSession();
@@ -168,9 +171,11 @@ public class PayController {
             filters.add(Condition.eq("orderSn", orderSn));
             OrderInfo orderinfo  = orderService.selectOne(filters);
             //验证支付密码
-
-            //插流水调支付宝接口
-            reqHtml = payAccountService.payByAli(orderinfo);
+            boolean flag = payAccountService.verifyPassword(passWord);
+            if (flag){
+                //插流水调支付宝接口
+                reqHtml = payAccountService.payByAli(orderinfo);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -280,6 +285,8 @@ public class PayController {
 
                 //更新订单状态
                 orderService.updatePayStatus(orderSn,orderInfo.PAYSTATUS_PAYED,1);
+                // 支付成功 查询订单 获取订单中商品插入到待清算记录
+                orderService.waitSettleRecordInsert(orderSn);
                 view = new ModelAndView("redirect:/paySucess.html?orderSn="+orderSn);
             }else{
                 //交易失败
@@ -295,6 +302,13 @@ public class PayController {
         return view;
     }
 
+    /**
+     * 支付宝异步回调
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value="/alipay_ntf", method = RequestMethod.POST)
     @Transactional
     String notifyBack4Alipay(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -334,6 +348,7 @@ public class PayController {
                 }
                 //更新订单状态
                 orderService.updatePayStatus(orderSn,orderInfo.PAYSTATUS_PAYED,1);
+                orderService.waitSettleRecordInsert(orderSn);
             }else {
                 List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
                 for (PayTradeRecord payTradeRecord1 : payTradeRecords){

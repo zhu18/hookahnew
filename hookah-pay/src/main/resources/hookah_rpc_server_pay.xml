@@ -11,7 +11,7 @@
     <bean id="payAccountService" class="com.jusfoun.hookah.pay.service.impl.PayAccountServiceImpl"/>
     <bean id="payTradeRecordService" class="com.jusfoun.hookah.pay.service.impl.PayTradeRecordServiceImpl"/>
     <bean id="fundRecordService" class="com.jusfoun.hookah.pay.service.impl.FundRecordServiceImpl"/>
-
+    <bean id="payBankCardService" class="com.jusfoun.hookah.pay.service.impl.PayBankCardImpl"/>
     <!-- 具体rpc服务配置，声明实现的接口类。-->
     <motan:service interface="com.jusfoun.hookah.rpc.api.PayAccountRecordService"
                    ref="payAccountRecordService" export="hookah:5008" basicService="serviceBasicConfig">
@@ -27,5 +27,8 @@
 
     <motan:service interface="com.jusfoun.hookah.rpc.api.FundRecordService"
                    ref="fundRecordService" export="hookah:5008" basicService="serviceBasicConfig">
+    </motan:service>
+    <motan:service interface="com.jusfoun.hookah.rpc.api.PayBankCardService"
+                   ref="payBankCardService" export="hookah:5008" basicService="serviceBasicConfig">
     </motan:service>
 </beans>

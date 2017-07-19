@@ -23,7 +23,7 @@ var htmlPart = {
                             <div class="account-funds-content">
                                 <div class="account-funds-content-left">
                                     <div class="title margin-bottom-15">我的可用余额</div>
-                                    <div class="money margin-bottom-15">￥5464546465</div>
+                                    <div class="money margin-bottom-15"></div>
                                     <div class="operation-btn margin-bottom-20">
                                         <a href="/usercenter/recharge" class="btn-full-orange margin-right-20">充值</a>
                                         <a href="/usercenter/withdrawals" class="btn-full-blue">提现</a>
@@ -33,8 +33,8 @@ var htmlPart = {
                                     </div>
                                 </div>
                                 <div class="account-funds-content-right">
-                                    <p class="margin-top-40 margin-bottom-15"><span></span>账户余额：<span>￥4565465.0</span></p>
-                                    <p><span></span>冻结金额：<span>￥4500.0</span></p>
+                                    <p class="margin-top-40 margin-bottom-15"><span></span>账户余额：<span class="useBalance">￥4565465.0</span></p>
+                                    <p><span></span>冻结金额：<span class="freeze">￥4500.0</span></p>
                                 </div>
                             </div>
                         </div>
@@ -46,6 +46,19 @@ var htmlPart = {
                                  <p>添加银行</p>
                                 </a>
                                 <p class="margin-left-15 margin-top-20 tip">提示：只能用ie浏览器......</p>
+
+                                <!--<div class="show-card">-->
+                                    <!--<h4 class="card-name">中国农业银行</h4>-->
+                                    <!--<p>-->
+                                        <!--<span>银行卡号:</span>-->
+                                        <!--<span class="card-number"></span>-->
+                                    <!--</p>-->
+                                    <!--<p>-->
+                                        <!--<span>账户名:</span>-->
+                                        <!--<span class="account-name"></span>-->
+                                    <!--</p>-->
+                                    <!--<a href="">删除</a>-->
+                                <!--</div>-->
                             </div>
                         </div>
                     </div>
@@ -58,3 +71,4 @@ var htmlPart = {
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
+<script type="text/javascript" src="/static/js/usercenter/userInfo/fundmanage.js"></script>

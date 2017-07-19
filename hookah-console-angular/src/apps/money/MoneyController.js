@@ -4,19 +4,15 @@ class MoneyController {
     $scope.choseArr = [];//多选数组
 
     $scope.search = function () {
-      console.log($scope.levelStar);
       var promise = $http({
         method: 'GET',
-        url: $rootScope.site.apiServer + "/api/comment/findCommentsByCondition",
+        url: $rootScope.site.apiServer + "/api/withdrawRecord/getList",
         params: {
-          orderSn: $scope.orderSn ? $scope.orderSn : null,
-          goodsName: $scope.goodsName ? $scope.goodsName : null,
-          startTime: $scope.startDate ? format($scope.startDate, 'yyyy-MM-dd HH:mm:ss') : null,
-          endTime: $scope.endDate ? format($scope.endDate, 'yyyy-MM-dd HH:mm:ss') : null,
-          commentContent: $scope.commentContent ? $scope.commentContent : null,//评价关键字
-          goodsCommentGrade: $scope.goodsCommentGrade ? $scope.goodsCommentGrade : null,//评分等级
-          status: $scope.status == 0 ? '0' : ($scope.status ? $scope.status : null),//审核状态
-          pageNumber: $rootScope.pagination.currentPage, //当前页码
+          orgName : $scope.orgName  ? $scope.orgName  : null,
+          startDate: $scope.startDate ? format($scope.startDate, 'yyyy-MM-dd HH:mm:ss') : null,
+          endDate: $scope.endDate ? format($scope.endDate, 'yyyy-MM-dd HH:mm:ss') : null,
+          checkStatus: $scope.checkStatus == 0 ? '0' : ($scope.checkStatus ? $scope.checkStatus : null),//审核状态
+          currentPage: $rootScope.pagination.currentPage, //当前页码
           pageSize: $rootScope.pagination.pageSize
         }
       });
@@ -25,7 +21,7 @@ class MoneyController {
         console.log(res);
 
         if (res.data.code == '1') {
-          $scope.commentList = res.data.data.list;
+          $scope.getMoneyList = res.data.data.list;
           $rootScope.pagination = res.data.data;
           $scope.showNoneDataInfoTip = false;
           if (res.data.data.totalPage > 1) {
@@ -33,7 +29,7 @@ class MoneyController {
           }
 
         } else {
-          $scope.commentList = [];
+          $scope.getMoneyList = [];
           $scope.showNoneDataInfoTip = true;
 
         }
@@ -43,13 +39,18 @@ class MoneyController {
       });
 
     };
+
+    $scope.getMoneyDetail = function (id) {
+      $state.go('money.getMoneyDetail', {id: id});
+    };
+
     $scope.pageChanged = function () {
       $scope.search();
       console.log('Page changed to: ' + $rootScope.pagination.currentPage);
     };
     $scope.MultipleCheck = function (status) {
       if ($scope.choseArr.length > 0) {
-        $scope.commentCheck($scope.choseArr.join(), status)
+        $scope.commentCheck($scope.choseArr.join(), status);
         console.log($scope.choseArr.join())
       } else {
         alert('请选择多个订单！')

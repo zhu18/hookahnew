@@ -6,6 +6,7 @@ import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.dao.OrderInfoMapper;
 import com.jusfoun.hookah.core.domain.*;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
+import com.jusfoun.hookah.core.domain.mongo.MgGoodsOrder;
 import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
 import com.jusfoun.hookah.core.domain.vo.CartVo;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
@@ -77,6 +78,12 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     OrganizationService organizationService;
 
     @Resource
+    WaitSettleRecordService waitSettleRecordService;
+
+    @Resource
+    MgGoodsOrderService mgGoodsOrderService;
+
+    @Resource
     public void setDao(OrderInfoMapper orderinfoMapper) {
         super.setDao(orderinfoMapper);
     }
@@ -137,7 +144,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     }
 
     /**
-     * 购物车生成订单
+     * 购物车生成mongo订单
      * @param cart
      * @param orderInfo
      * @return
@@ -194,7 +201,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     }
 
     /**
-     * 直接购买生成订单
+     * 直接购买生成mongo订单
      * @param goods
      * @param format
      * @param goodsNumber
@@ -348,6 +355,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             ordergoodsList = new ArrayList<MgOrderGoods>();
             Long goodsAmount = new Long(0);
             OrderInfoVo orderInfoVo = new OrderInfoVo();
+            MgGoodsOrder mgGoodsOrder = new MgGoodsOrder();
             for(CartVo cart:cartList){
                 //验证商品是否下架
                 Goods g = cart.getGoods();
@@ -363,7 +371,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             orderInfo.setGoodsAmount(goodsAmount);
             orderInfo.setOrderAmount(goodsAmount);
 
-            insertOrder(ordergoodsList, orderInfoVo, orderInfo);
+            insertOrder(ordergoodsList, orderInfoVo, orderInfo ,mgGoodsOrder);
 //            if(goodsAmount.compareTo(0L)==0){
 //                updatePayStatus(orderInfo.getOrderSn(),2);
 //            }
@@ -389,6 +397,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         init(orderInfo);
 
         List<MgOrderGoods> ordergoodsList = null;
+        MgGoodsOrder mgGoodsOrder = new MgGoodsOrder();
 
         ordergoodsList = new ArrayList<MgOrderGoods>();
         Long goodsAmount = new Long(0);
@@ -408,7 +417,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         orderInfo.setGoodsAmount(goodsAmount);
         orderInfo.setOrderAmount(goodsAmount);
 
-        insertOrder(ordergoodsList, orderInfoVo, orderInfo);
+        insertOrder(ordergoodsList, orderInfoVo, orderInfo, mgGoodsOrder);
 //        if(goodsAmount.compareTo(0L)==0){
 //            updatePayStatus(orderInfo.getOrderSn(),2);
 //        }
@@ -416,28 +425,46 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         return orderInfo;
     }
 
-    public void insertOrder(List<MgOrderGoods> ordergoodsList, OrderInfoVo orderInfoVo, OrderInfo orderInfo){
+    public void insertOrder(List<MgOrderGoods> ordergoodsList, OrderInfoVo orderInfoVo, OrderInfo orderInfo,
+                            MgGoodsOrder mgGoodsOrder){
         if(ordergoodsList != null && ordergoodsList.size() > 0){
+            //插入到mySql
             orderInfo = super.insert(orderInfo);
             BeanUtils.copyProperties(orderInfo,orderInfoVo);
-            User user = userService.selectById(orderInfoVo.getUserId());
+            BeanUtils.copyProperties(orderInfo,mgGoodsOrder);
+            User user = userService.selectById(orderInfo.getUserId());
             orderInfoVo.setUserName(user.getUserName());
             orderInfoVo.setUserType(user.getUserType());
             orderInfoVo.setSolveStatus(0);
+            mgGoodsOrder.setUserName(user.getUserName());
+            mgGoodsOrder.setUserType(user.getUserType());
+            UserDetail userDetail = null;
+            Organization organization = null;
             for (MgOrderGoods mgOrderGoods:ordergoodsList){
                 if (mgOrderGoods.getSolveStatus()==2){
                     orderInfoVo.setSolveStatus(2);
                 }
+                mgGoodsOrder.setSolveStatus(mgOrderGoods.getSolveStatus());
+                mgGoodsOrder.setMgOrderGoods(mgOrderGoods);
+                if (user.getUserType() == 2){
+                    userDetail = userDetailService.selectById(orderInfo.getUserId());
+                    mgGoodsOrder.setRealName(userDetail.getRealName());
+                }else if (user.getUserType() == 4){
+                    organization = organizationService.selectById(user.getOrgId());
+                    mgGoodsOrder.setRealName(organization.getOrgName());
+                }
+                mgGoodsOrderService.insert(mgGoodsOrder);
             }
             if (user.getUserType() == 2){
-                UserDetail userDetail = userDetailService.selectById(orderInfoVo.getUserId());
+                userDetail = userDetailService.selectById(orderInfo.getUserId());
                 orderInfoVo.setRealName(userDetail.getRealName());
             }else if (user.getUserType() == 4){
-                Organization organization = organizationService.selectById(user.getOrgId());
+                organization = organizationService.selectById(user.getOrgId());
                 orderInfoVo.setRealName(organization.getOrgName());
             }
             orderInfoVo.setMgOrderGoodsList(ordergoodsList);
 
+            //插入到mongo
             mgOrderInfoService.insert(orderInfoVo);
         }
     }
@@ -510,6 +537,38 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         }catch (Exception e){
             e.printStackTrace();
             logger.error("统计商品销量错误"+orderId);
+        }
+    }
+
+    @Override
+    public void waitSettleRecordInsert(String orderSn){
+        List<Condition> mgfilters = new ArrayList<>();
+        mgfilters.add(Condition.eq("orderSn", orderSn));
+        OrderInfoVo orderInfoVo = mgOrderInfoService.selectOne(mgfilters);
+        if (orderInfoVo != null) {
+            List<MgOrderGoods> mgOrderGoodsList = orderInfoVo.getMgOrderGoodsList();
+            List<WaitSettleRecord> waitSettleRecords = new ArrayList<>();
+            if (mgOrderGoodsList != null && mgOrderGoodsList.size() > 0) {
+                for (MgOrderGoods mgOrderGoods : mgOrderGoodsList) {
+                    WaitSettleRecord waitSettleRecord = new WaitSettleRecord();
+                    waitSettleRecord.setOrderSn(mgOrderGoods.getOrderSn());
+                    waitSettleRecord.setGoodsId(mgOrderGoods.getGoodsId());
+                    waitSettleRecord.setOrderId(orderInfoVo.getOrderId());
+                    waitSettleRecord.setOrderAmount(mgOrderGoods.getGoodsPrice());
+//					waitSettleRecord.setOrderTime(orderInfoVo.getPayTime());
+                    waitSettleRecord.setOrderTime(orderInfoVo.getAddTime());
+                    waitSettleRecord.setHasSettleAmount(0L);
+                    waitSettleRecord.setNoSettleAmount(mgOrderGoods.getGoodsPrice());
+                    waitSettleRecord.setAddTime(new Date());
+                    waitSettleRecord.setSettleStatus((byte) 0);
+                    waitSettleRecord.setShopName(mgOrderGoods.getAddUser());
+                    waitSettleRecord.setGoodsName(mgOrderGoods.getGoodsName());
+                    waitSettleRecords.add(waitSettleRecord);
+                }
+
+                int n = waitSettleRecordService.insertBatch(waitSettleRecords);
+                System.out.println(n);
+            }
         }
     }
 
@@ -1020,15 +1079,17 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         return map;
     }
 
-//    @Scheduled()
-//    public void deleteOrderByTime(){
-//
-//        Date date = new Date();
-//
-//        List<OrderInfo> orderInfos = orderinfoMapper.selectAll();
-//        for (OrderInfo orderInfo:orderInfos){
-//            long addTime = orderInfo.getAddTime().getTime();
-//
-//        }
-//    }
+//    @Scheduled(cron = "0 10 10 * * ?")
+    public void deleteOrderByTime(){
+        Date date = new Date();
+        long now = date.getTime();
+        List<OrderInfo> orderInfos = orderinfoMapper.selectAll();
+        for (OrderInfo orderInfo:orderInfos){
+            long addTime = orderInfo.getAddTime().getTime();
+            long time = now - addTime;
+            if (time>24*60*60*1000){
+                deleteByLogic(orderInfo.getOrderId());
+            }
+        }
+    }
 }

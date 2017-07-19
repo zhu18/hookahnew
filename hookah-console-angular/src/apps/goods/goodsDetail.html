@@ -155,6 +155,232 @@
 				<div data-ng-show="current == 2">
 					<!-- 线下数据公共数据 -->
 					<div data-ng-if="editData.isOffline == 1">
+						<div data-ng-if="editData.goodsType == 2">
+							<div class="form-group">
+								<label class="col-sm-2 control-label">模型类型</label>
+								<div class="col-sm-5">
+									<select disabled>
+										<option value="0" ng-selected="editData.dataModel.modelType == 0">分类
+										</option>
+										<option value="1" ng-selected="editData.dataModel.modelType == 1">回归
+										</option>
+										<option value="2" ng-selected="editData.dataModel.modelType == 2">识别
+										</option>
+										<option value="3" ng-selected="editData.dataModel.modelType == 2">预测
+										</option>
+										<option value="4" ng-selected="editData.dataModel.modelType == 4">聚类
+										</option>
+										<option value="5" ng-selected="editData.dataModel.modelType == 5">时间序列化
+										</option>
+										<option value="6" ng-selected="editData.dataModel.modelType == 6">关联将维
+										</option>
+										<option value="7" ng-selected="editData.dataModel.modelType == 7">优化
+										</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">复杂度</label>
+								<div class="col-sm-5">
+									<select disabled>
+										<option value="0" ng-selected="editData.dataModel.complexity == 0">高</option>
+										<option value="1" ng-selected="editData.dataModel.complexity == 1">中</option>
+										<option value="2" ng-selected="editData.dataModel.complexity == 2">低</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">成熟度</label>
+								<div class="col-sm-5">
+									<select disabled>
+										<option value="0" ng-selected="editData.dataModel.maturity== 0">高</option>
+										<option value="1" ng-selected="editData.dataModel.maturity == 1">中</option>
+										<option value="2" ng-selected="editData.dataModel.maturity == 2">低</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">应用经验</label>
+								<p ng-bind-html="editData.dataModel.aexp | trustHtml"></p>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">配套服务</label>
+								<p ng-bind-html="editData.dataModel.relationServ | trustHtml"></p>
+							</div>
+						</div>
+						<div data-ng-if="editData.goodsType == 0">
+							<div class="form-group">
+								<label class="col-sm-2 control-label">时间范围：</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.offLineData.timeFrame}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">数据行数：</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.offLineData.dataRows}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">数据容量：</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" value="{{editData.offLineData.dataCapacity}}" readonly="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">数据格式：</label>
+								<div class="col-sm-5">
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.offLineData.dataFormat == 0" disabled/>xls/xlsx
+									</label>
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.offLineData.dataFormat == 1" disabled/>csv
+									</label>
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.offLineData.dataFormat == 2" disabled/>txt
+									</label>
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.offLineData.dataFormat == 3" disabled/>图片
+									</label>
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.offLineData.dataFormat == 4" disabled/>音频
+									</label>
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.offLineData.dataFormat == 5" disabled/>视频
+									</label>
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.offLineData.dataFormat == 6" disabled/>其他
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">数据来源：</label>
+								<div class="col-sm-5">
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.offLineData.isOnline == 0" disabled/>数据文件
+									</label>
+									<label class="radio-inline">
+										<input type="radio" ng-checked="editData.offLineData.isOnline == 1" disabled/>数据地址
+									</label>
+								</div>
+							</div>
+							</div>
+						<div data-ng-if="editData.goodsType == 4">
+							<div class="form-group">
+								<label class="col-sm-2 control-label">核心功能：</label>
+								<div class="col-sm-5">
+									<p ng-bind-html="editData.atAloneSoftware.coreFunction | trustHtml"></p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">技术优势：</label>
+								<div class="col-sm-5">
+									<p ng-bind-html="editData.atAloneSoftware.technologicalSuperiority | trustHtml"></p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">团队优势：</label>
+								<div class="col-sm-5">
+									<p ng-bind-html="editData.atAloneSoftware.teamAdvantage | trustHtml"></p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">所需环境：</label>
+								<div class="col-sm-5">
+									<p ng-bind-html="editData.atAloneSoftware.desiredEnvironment | trustHtml"></p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">所需数据：</label>
+								<div class="col-sm-5">
+									<p ng-bind-html="editData.atAloneSoftware.dataNeeded | trustHtml"></p>
+								</div>
+							</div>
+						</div>
+						<div data-ng-if="editData.goodsType == 5">
+							<div class="form-group">
+								<label class="col-sm-2 control-label">核心功能：</label>
+								<div class="col-sm-5">
+									<p ng-bind-html="editData.atSaaS.coreFunction| trustHtml"></p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">团队优势：</label>
+								<div class="col-sm-5">
+									<p ng-bind-html="editData.atSaaS.teamAdvantage| trustHtml"></p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">所需环境：</label>
+								<div class="col-sm-5">
+									<p ng-bind-html="editData.atSaaS.desiredEnvironment| trustHtml"></p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">所需数据：</label>
+								<div class="col-sm-5">
+									<p ng-bind-html="editData.atSaaS.dataNeeded| trustHtml"></p>
+								</div>
+							</div>
+						</div>
+						<div data-ng-if="editData.goodsType == 6">
+							<div class="form-group">
+								<label class="col-sm-2 control-label">核心功能：</label>
+								<div class="col-sm-5">
+									<p ng-bind-html="editData.asAloneSoftware.coreFunction| trustHtml"></p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">技术优势：</label>
+								<div class="col-sm-5">
+									<p ng-bind-html="editData.asAloneSoftware.technologicalSuperiority| trustHtml"></p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">团队优势：</label>
+								<div class="col-sm-5">
+									<p ng-bind-html="editData.asAloneSoftware.teamAdvantage| trustHtml"></p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">所需环境：</label>
+								<div class="col-sm-5">
+									<p ng-bind-html="editData.asAloneSoftware.desiredEnvironment| trustHtml"></p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">所需数据：</label>
+								<div class="col-sm-5">
+									<p ng-bind-html="editData.asAloneSoftware.desiredEnvironment| trustHtml"></p>
+								</div>
+							</div>
+						</div>
+						<div data-ng-if="editData.goodsType == 7">
+							<div class="form-group">
+								<label class="col-sm-2 control-label">核心功能：</label>
+								<div class="col-sm-5">
+									<p ng-bind-html="editData.asSaaS.coreFunction| trustHtml"></p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">团队优势：</label>
+								<div class="col-sm-5">
+									<p ng-bind-html="editData.asSaaS.teamAdvantage| trustHtml"></p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">所需环境：</label>
+								<div class="col-sm-5">
+									<p ng-bind-html="editData.asSaaS.desiredEnvironment| trustHtml"></p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">所需数据：</label>
+								<div class="col-sm-5">
+									<p ng-bind-html="editData.asSaaS.dataNeeded| trustHtml"></p>
+								</div>
+							</div>
+						</div>
 						<div class="form-group">
 							<label class="col-sm-2 control-label">联系姓名</label>
 							<div class="col-sm-5">
@@ -498,15 +724,17 @@
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">应用经验：</label>
-								<div class="col-sm-5">
-									<input type="text" class="form-control" value="{{editData.dataModel.aexp}}" readonly="true"/>
-								</div>
+								<!--<div class="col-sm-5">-->
+									<!--<input type="text" class="form-control" value="{{editData.dataModel.aexp}}" readonly="true"/>-->
+								<!--</div>-->
+								<p ng-bind-html="editData.dataModel.aexp | trustHtml"></p>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">配套服务：</label>
-								<div class="col-sm-5">
-									<input type="text" class="form-control" value="{{editData.dataModel.relationServ}}" readonly="true"/>
-								</div>
+								<!--<div class="col-sm-5">-->
+									<!--<input type="text" class="form-control" value="{{editData.dataModel.relationServ}}" readonly="true"/>-->
+								<!--</div>-->
+								<p ng-bind-html="editData.dataModel.relationServ | trustHtml"></p>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">模型规格：</label></br>

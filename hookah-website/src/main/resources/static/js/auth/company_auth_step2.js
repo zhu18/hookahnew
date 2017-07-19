@@ -18,7 +18,10 @@ function loadRegion(id,regionParam) {
     var parentId = '';
     if(regionParam == 100000){
         parentId = 100000;
-    }else{
+    }else if(typeof regionParam == "string"){
+        parentId = parseInt(regionParam);
+    }
+    else {
         parentId = $(regionParam).val();
     }
     $(regionParam).nextAll().html('<option value="-1"></option>')
@@ -39,7 +42,7 @@ function loadRegion(id,regionParam) {
         }
     });
 }
-function renderRegion(id,data){
+function renderRegion(id,data,flog){
     var html = '<option value="">全部</option>';
     data.forEach(function(e){
         html += '<option value="'+e.id+'">'+e.name+'</option>';
@@ -172,7 +175,7 @@ function supplier() {
         }
     })
 }
-
+//认证修改跳转页面，反现值
 if($.getUrlParam("isAuth")== "2" || $.getUrlParam("isAuth")== "3"){
     $.ajax({
         url:host.website+'/regInfo/verifiedInfo',
@@ -182,32 +185,16 @@ if($.getUrlParam("isAuth")== "2" || $.getUrlParam("isAuth")== "3"){
             $("input[name='governmentName']").val(data.data.orgName?data.data.orgName:"");//政府全称
             $("input[name='companyLegal']").val(data.data.lawPersonName?data.data.lawPersonName:"")//企业法人代表
             $("input[name='mainBusiness']").val(data.data.industry?data.data.industry:"")//主营业务
-              var reg=data.data.region.slice(0,2);
+            // 地域
+            var reg=data.data.region.slice(0,2);
             $("#province option").each(function () {
                 var val=$(this).val();
                 if(val.indexOf(reg)==0){
                     $("#province option[value="+val+"]").attr("selected","selected");
-                    $.ajax({
-                        type: "get",
-                        url: "/region/getRegionCodeByPid",
-                        data: {
-                            parentId: val
-                        },
-                        success: function (data) {
-                            if (data.code == 1) {
-                                if(data.data.length > 0){
-                                    renderRegion(id,data.data)
-                                    $("#city option[value="+data.data[0].id+"]").attr("selected","selected");
-
-                                }
-                            }
-                        }
-                    });
+                    loadRegion('city',val);
                 }
 
             })
-
-
             $("input[name='address']").val(data.data.contactAddress?data.data.contactAddress:"")//详细地址
             $("input[name='tel']").val(data.data.orgPhone?data.data.orgPhone:"")//联系电话
             $("input[name='businessLicence']").val(data.data.licenseCode?data.data.licenseCode:"")//营业执照编号
@@ -215,6 +202,12 @@ if($.getUrlParam("isAuth")== "2" || $.getUrlParam("isAuth")== "3"){
             $("input[name='taxPath']").val(data.data.taxCode?data.data.taxCode:"")//税务登记存放路径
             $("input[name='creditCode']").val(data.data.certificateCode?data.data.certificateCode:"")//信用代码
             $("#certifictePath").attr({"src":data.data.certifictePath});//企业代码存放路径
+            $("#taxPath").attr({"src":data.data.taxPath});//企业代码存放路径
+            // 我要成为供应商
+            if(data.data.checkStatus=="1"){
+                $("input[name='fruit']").attr("checked","checked")
+                $(".supplier-info").show()
+            }
         }
     });
 }

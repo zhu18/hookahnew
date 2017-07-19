@@ -59,10 +59,10 @@
       AND wr.check_status = #{checkStatus}
     </if>
     <if test="startDate != '' and startDate != null">
-      AND wr.add_time &gt;= #{startData}
+      AND wr.add_time &gt;= #{startDate}
     </if>
     <if test="endDate != '' and endDate != null">
-      AND wr.add_time &lt;= #{endData}
+      AND wr.add_time &lt;= #{endDate}
     </if>
     <if test="orgName != '' and orgName != null">
       AND org.org_name like '%${orgName}%'

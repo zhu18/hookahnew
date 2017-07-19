@@ -19,5 +19,5 @@
     <motan:basicReferer requestTimeout="30000" accessLog="false"
                         retries="2" group="hookah-rpc" module="hookah-rpc"
                         application="hookah" protocol="motan" registry="registry"
-                        id="HookahRPCClientBasicConfig" throwException="false" check="true"/>
+                        id="HookahRPCClientBasicConfig" throwException="false" check="false"/>
 </beans>
