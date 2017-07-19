@@ -1,12 +1,14 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
 import com.jusfoun.hookah.core.dao.PayBankCardMapper;
+import com.jusfoun.hookah.core.domain.PayBank;
 import com.jusfoun.hookah.core.domain.PayBankCard;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.rpc.api.PayBankCardService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by computer on 2017/7/12.
@@ -30,5 +32,9 @@ public class PayBankCardServiceImpl extends GenericServiceImpl<PayBankCard, Stri
     @Override
     public boolean bankCardSignOff(Integer id, String userId, String customerNum, String bankCardNum, String bankCardOwner, String ip, String ukey) {
         return false;
+    }
+
+    public List<PayBank> selectBankName(){
+        return payBankCardMapper.selectBankName();
     }
 }

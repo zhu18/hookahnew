@@ -541,15 +541,16 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 	}
 
 	/**
-	 * 根据支付宝返回结果，更新账户表并插入记录表
+	 * 更新账户表并插入记录表
 	 * @param params
 	 */
-	public void saveRechargeResult(Map<String,String> params){
+	public ReturnData saveRechargeResult(Map<String,String> params){
+		ReturnData returnData = new ReturnData();
 		String tradeStatus=params.get("tradeStatus");
 		String totalFee=params.get("totalFee");
 		String userId=params.get("userId");
+		String tradeType=params.get("tradeType");
 		Long money=0l;
-		byte statusFlag=2;
 		try{
 			List<Condition> filters = new ArrayList();
 			if(StringUtils.isNotBlank(userId)){
@@ -557,19 +558,24 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 			}
 			//查询出payAccountId
 			PayAccount payAccount = super.selectOne(filters);
-			if(tradeStatus.equals("TRADE_FINISHED") || tradeStatus.equals("TRADE_SUCCESS")){
-				statusFlag=1;
+			if(tradeStatus.equals("1")){
 				money = Math.round(Double.parseDouble(totalFee)*100);
 				//更新账户金额
 				updatePayAccountMoney(payAccount.getId(),money);
 			}
 			//插入记录表
-			insertPayTradeRecord( userId, money, payAccount.getId(), statusFlag, 1);
-			insertPayAccountRecord( userId, money, payAccount.getId(), statusFlag, 1);
+			insertPayTradeRecord( userId, money, payAccount.getId(), new Byte(tradeStatus), new Byte(tradeType));
+			insertPayAccountRecord( userId, money, payAccount.getId(), new Byte(tradeStatus), new Byte(tradeType));
 			//payTradeRecordMapper.updateByPrimaryKeySelective();
+			returnData.setCode(ExceptionConst.Success);
+			returnData.setMessage("操作成功！");
+			return returnData;
 		}catch (Exception e){
+			returnData.setCode(ExceptionConst.Error);
+			returnData.setMessage(e.toString());
 			e.printStackTrace();
 		}
+		return returnData;
 	};
 
 }
