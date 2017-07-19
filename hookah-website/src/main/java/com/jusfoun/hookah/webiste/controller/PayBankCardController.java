@@ -49,7 +49,7 @@ public class PayBankCardController extends BaseController{
      */
     @ResponseBody
     @RequestMapping(value = "/addBankInfo", method = RequestMethod.GET)
-    public ReturnData addBankInfo(String cardCode, String openBank, String phoneNumber, Integer bankId) {
+    public ReturnData addBankInfo(String cardCode, String openBank, String phoneNumber, Integer payBankId) {
         Map<String, Object> map = new HashMap<>(6);
         List<PayBank> banks = payBankCardService.selectBankName();
         map.put("bank",banks);
@@ -78,7 +78,7 @@ public class PayBankCardController extends BaseController{
                 pay.setCardCode(cardCode);
                 pay.setPhoneNumber(phoneNumber);
                 pay.setOpenBank(openBank);
-                pay.setBankId(bankId);
+                pay.setPayBankId(payBankId);
                 PayBankCard insert = payBankCardService.insert(pay);
                 map.put("payBankCard",insert);
                 if(insert == null){
@@ -120,7 +120,7 @@ public class PayBankCardController extends BaseController{
             //银行卡信息
             PayBankCard payBankCard = payBankCardService.selectOne(filters);
             if(payBankCard != null){
-                map.put("bankId",payBankCard.getBankId());
+                map.put("bankId",payBankCard.getPayBankId());
                 map.put("cardCode",payBankCard.getCardCode());
                 map.put("cardOwner",payBankCard.getCardOwner());
             }
