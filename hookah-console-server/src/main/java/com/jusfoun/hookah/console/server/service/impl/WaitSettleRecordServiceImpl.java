@@ -3,7 +3,6 @@ package com.jusfoun.hookah.console.server.service.impl;
 import com.jusfoun.hookah.core.dao.WaitSettleRecordMapper;
 import com.jusfoun.hookah.core.domain.WaitSettleRecord;
 import com.jusfoun.hookah.core.domain.vo.WaitSettleRecordVo;
-import com.jusfoun.hookah.core.domain.vo.WithdrawVo;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.rpc.api.WaitSettleRecordService;
 import org.springframework.stereotype.Service;
@@ -32,8 +31,8 @@ public class WaitSettleRecordServiceImpl extends GenericServiceImpl<WaitSettleRe
     }
 
     @Override
-    public List<WaitSettleRecordVo> getListForPage(String startDate, String endDate, Integer settleStatus, String shopName) {
-        return waitSettleRecordMapper.getListForPage(startDate, endDate, settleStatus, shopName);
+    public List<WaitSettleRecordVo> getListForPage(String startDate, String endDate, Integer settleStatus, String shopName, String orderSn) {
+        return waitSettleRecordMapper.getListForPage(startDate, endDate, settleStatus, shopName, orderSn);
     }
 
     @Override

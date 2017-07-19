@@ -70,7 +70,7 @@ public class SettleController extends BaseController{
             }
 
             PageHelper.startPage(pageNumberNew, pageSizeNew);   //pageNum为第几页，pageSize为每页数量
-            List<WaitSettleRecordVo> list = waitSettleRecordService.getListForPage(vo.getStartDate(), vo.getEndDate(), vo.getSettleStatus(), vo.getShopName());
+            List<WaitSettleRecordVo> list = waitSettleRecordService.getListForPage(vo.getStartDate(), vo.getEndDate(), vo.getSettleStatus(), vo.getShopName(), vo.getOrderSn());
             page = new PageInfo<WaitSettleRecordVo>(list);
 
             pagination.setTotalItems(page.getTotal());

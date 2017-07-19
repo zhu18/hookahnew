@@ -14,7 +14,7 @@ public interface WaitSettleRecordService extends GenericService<WaitSettleRecord
 
     int handleSettleRecord(Long sid, Long settleAmount);
 
-    List<WaitSettleRecordVo> getListForPage(String startDate, String endDate, Integer settleStatus, String shopName);
+    List<WaitSettleRecordVo> getListForPage(String startDate, String endDate, Integer settleStatus, String shopName, String orderSn);
 
     WaitSettleRecordVo selectDetailById(Long id);
 }
