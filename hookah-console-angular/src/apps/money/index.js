@@ -1,5 +1,5 @@
 import '../../common/common';
-import settleRouting from './settle.routing';
+import moneyRouting from './money.routing';
 const MODULE_NAME = 'Hookah';
 let app = angular.module(MODULE_NAME, [
   'Common',
@@ -7,10 +7,10 @@ let app = angular.module(MODULE_NAME, [
   'ui.bootstrap',
   'treeGrid'
 ]);
-app.config(settleRouting);
+app.config(moneyRouting);
 
 app.run(function ($rootScope, $state) {
-  $rootScope.currentProductId = 'settle';
+  $rootScope.currentProductId = 'money';
   $rootScope.config = {
     "navScene": 'main',
     "isSidebarFold": false,
@@ -33,11 +33,11 @@ app.run(function ($rootScope, $state) {
       "folded": false
     }
   };
-  $rootScope.config.title = '结算管理';
+  $rootScope.config.title = '资金管理';
   $rootScope.config.mainNav =[
     {
-      "title":"结算管理",
-      "url":"settle.list"
+      "title":"提现审核",
+      "url":"money.list"
     },
     // {
     //   "title":"新增帮助",

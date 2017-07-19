@@ -86,6 +86,7 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 	 * @throws Exception
 	 */
 	@Override
+	@Transactional
 	public void doPayMoney(String orderSn, String userId) throws Exception{
 
 		List<Condition> filters = new ArrayList();
@@ -93,7 +94,7 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 		OrderInfo orderinfo  = orderService.selectOne(filters);
     	//修改订单支付状态
 		orderinfo.setPayStatus(OrderInfo.PAYSTATUS_PAYED);
-		orderService.updatePayStatus(orderSn,OrderInfo.PAYSTATUS_PAYED);
+		orderService.updatePayStatus(orderSn,OrderInfo.PAYSTATUS_PAYED,0);
         Long orderAmount = orderinfo.getOrderAmount();
         //减去余额
 		User user =  userService.selectById(userId);
@@ -160,7 +161,7 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 	public void updatePayCore(PayCore pay) throws Exception {
 		//更新订单状态
 
-		orderService.updatePayStatus(pay.getOrderSn(), pay.getPayStatus());
+		orderService.updatePayStatus(pay.getOrderSn(), pay.getPayStatus(),0);
 		//更新记账状态、交易号
 		mapper.updatePayStatusAndTradeNo(pay);
 	}

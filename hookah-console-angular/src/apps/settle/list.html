@@ -39,7 +39,7 @@
                     <label class="control-label">订单编号：</label>
                     <input ng-model="orderSn" type="text" class="form-control" placeholder="请输入订单编号">
                     <label class="control-label">供应商：</label>
-                    <input ng-model="shopName" type="text" class="form-control" placeholder="请输入供应商">
+                    <input ng-model="orgName" type="text" class="form-control" placeholder="请输入供应商">
                     <div>
                         <label class="control-label">订单时间：</label>
                         <p class="input-group" style="margin-top: 15px">
@@ -97,16 +97,20 @@
                             <tr data-ng-repeat="item in settleList">
                                 <td data-ng-bind="item.orderSn"></td>
                                 <td><span data-ng-bind="item.goodsName"></span></td>
-                                <td data-ng-bind="item.shopName"></td>
+                                <td data-ng-bind="item.orgName"></td>
                                 <td data-ng-bind="item.orderAmount"></td>
                                 <td data-ng-bind="item.hasSettleAmount"></td>
                                 <td data-ng-bind="item.noSettleAmount"></td>
-                                <td data-ng-bind="item.settleStatus==0?'待结算':'已结算'"> </td>
-                                <td data-ng-bind="item.addTime"></td>
                                 <td data-ng-bind="item.settleStatus==0?'待结算':'已结算'"></td>
+                                <td data-ng-bind="item.orderTime"></td>
+                                <td >
+                                    <a data-ng-show="item.settleStatus==0" data-ng-click="getDetails(item.id)">结算</a>
+                                    <a data-ng-show="item.settleStatus==1" data-ng-click="getDetails(item.id)">查看</a>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
+
                         <table ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">
                             <tr>
                                 <td colspan="9">

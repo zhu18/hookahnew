@@ -92,6 +92,13 @@
               <span class="nav-title">用户中心&nbsp;</span>
             </a>
           </li>
+          <li class="nav-item" ng-class="{'active':currentProductId == 'money'}">
+            <a href="/money/#!/money/list" class="sidebar-trans"
+               sidebar-tooltip="" tooltip-append-to-body="true" tooltip-placement="right" tooltip-animation="true">
+              <div class="nav-icon sidebar-trans"><span class="icon-wo-account"></span></div>
+              <span class="nav-title">资金管理&nbsp;</span>
+            </a>
+          </li>
           <!--<li class="nav-item" ng-class="{'active':currentProductId == 'news'}">-->
           <!--<a href="/news/" class="sidebar-trans"-->
           <!--sidebar-tooltip="" tooltip-append-to-body="true" tooltip-placement="right" tooltip-animation="true">-->
@@ -134,11 +141,11 @@
               <span class="nav-title">供应商管理&nbsp;</span>
             </a>
           </li>
-          <li class="nav-item" ng-class="{'active':currentProductId == 'comment'}">
+          <li class="nav-item" ng-class="{'active':currentProductId == 'settle'}">
             <a href="/settle/#!/settle/list" class="sidebar-trans"
                sidebar-tooltip="" tooltip-append-to-body="true" tooltip-placement="right" tooltip-animation="true">
               <div class="nav-icon sidebar-trans"><span class="icon-help-1"></span></div>
-              <span class="nav-title">评论管理&nbsp;</span>
+              <span class="nav-title">结算管理&nbsp;</span>
             </a>
           </li>
         </ul>

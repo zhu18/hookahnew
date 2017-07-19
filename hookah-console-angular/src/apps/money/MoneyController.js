@@ -1,68 +1,66 @@
-class settleController {
+class MoneyController {
   constructor($scope, $rootScope, $http, $state, $uibModal, usSpinnerService, growl) {
-    $scope.settleList = [];
+    $scope.commentList = [];
     $scope.choseArr = [];//多选数组
 
     $scope.search = function () {
-      // console.log($scope.levelStar);
+      console.log($scope.levelStar);
       var promise = $http({
         method: 'GET',
-        url: $rootScope.site.apiServer + "/api/settleOrder/getList",
+        url: $rootScope.site.apiServer + "/api/comment/findCommentsByCondition",
         params: {
           orderSn: $scope.orderSn ? $scope.orderSn : null,
-          settleStatus: $scope.settleStatus == 0 ? '0' : ($scope.settleStatus ? $scope.settleStatus : null),//审核状态
-          shopName: $scope.orgName ? $scope.orgName : null,
-          startDate: $scope.startDate ? format($scope.startDate, 'yyyy-MM-dd HH:mm:ss') : null,
-          endDate: $scope.endDate ? format($scope.endDate, 'yyyy-MM-dd HH:mm:ss') : null,
-          currentPage: $rootScope.pagination.currentPage, //当前页码
+          goodsName: $scope.goodsName ? $scope.goodsName : null,
+          startTime: $scope.startDate ? format($scope.startDate, 'yyyy-MM-dd HH:mm:ss') : null,
+          endTime: $scope.endDate ? format($scope.endDate, 'yyyy-MM-dd HH:mm:ss') : null,
+          commentContent: $scope.commentContent ? $scope.commentContent : null,//评价关键字
+          goodsCommentGrade: $scope.goodsCommentGrade ? $scope.goodsCommentGrade : null,//评分等级
+          status: $scope.status == 0 ? '0' : ($scope.status ? $scope.status : null),//审核状态
+          pageNumber: $rootScope.pagination.currentPage, //当前页码
           pageSize: $rootScope.pagination.pageSize
         }
-
       });
       promise.then(function (res, status, config, headers) {
         console.log('数据在这里');
         console.log(res);
+
         if (res.data.code == '1') {
-          $scope.settleList = res.data.data.list;
+          $scope.commentList = res.data.data.list;
           $rootScope.pagination = res.data.data;
           $scope.showNoneDataInfoTip = false;
           if (res.data.data.totalPage > 1) {
             $scope.showPageHelpInfo = true;
           }
+
         } else {
-          $scope.settleList = [];
+          $scope.commentList = [];
           $scope.showNoneDataInfoTip = true;
 
         }
+
         $rootScope.loadingState = false;
         growl.addSuccessMessage("订单数据加载完毕。。。");
       });
+
     };
-
-    $scope.getDetails = function (id) {
-      $state.go('settle.settleDetails', {id: id});
-    };
-
-
-
     $scope.pageChanged = function () {
       $scope.search();
       console.log('Page changed to: ' + $rootScope.pagination.currentPage);
     };
     $scope.MultipleCheck = function (status) {
       if ($scope.choseArr.length > 0) {
-        $scope.settleCheck($scope.choseArr.join(), status)
+        $scope.commentCheck($scope.choseArr.join(), status)
         console.log($scope.choseArr.join())
       } else {
         alert('请选择多个订单！')
       }
     };
-    $scope.settleCheck = function (orderSn, status) {
+    $scope.commentCheck = function (orderSn, status) {
       var promise = $http({
         method: 'GET',
-        url: $rootScope.site.apiServer + "/api/settle/checksettles",
+        url: $rootScope.site.apiServer + "/api/comment/checkComments",
         params: {
-          settleIds: orderSn,
+          commentIds: orderSn,
           status: status
         }
       });
@@ -84,14 +82,14 @@ class settleController {
 
     //多选
     var str = "";
-    var len = $scope.settleList.length;
+    var len = $scope.commentList.length;
     var flag = '';//是否点击了全选，是为a
     $scope.x = false;//默认未选中
 
     $scope.all = function (c) { //全选
       var commIdArr = [];
 
-      angular.forEach($scope.settleList, function (value, key) {
+      angular.forEach($scope.commentList, function (value, key) {
 
         if (value.status == 0) {
           commIdArr.push(value.commId)
@@ -218,4 +216,4 @@ class settleController {
   }
 }
 
-export default settleController;
+export default MoneyController;

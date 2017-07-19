@@ -167,6 +167,12 @@ public class MessageSendInfoServiceImpl extends GenericServiceImpl<MessageSendIn
             if(Objects.nonNull(messageCritVo.getIsDelete())){
                 filters.add(Condition.eq("isDelete",messageCritVo.getIsDelete()));
             }
+            if(Objects.nonNull(messageCritVo.getIsSuccess()) && !(Byte.valueOf("-1")).equals(messageCritVo.getIsSuccess())){
+                filters.add(Condition.eq("isSuccess",messageCritVo.getIsSuccess()));
+            }
+            if(Objects.nonNull(messageCritVo.getReceiveAddr()) && !(Byte.valueOf("-1")).equals(messageCritVo.getReceiveAddr())){
+                filters.add(Condition.like("receiveAddr",messageCritVo.getReceiveAddr()));
+            }
 
             List<OrderBy> orderBys = new ArrayList<OrderBy>();
             orderBys.add(OrderBy.desc("sendTime"));

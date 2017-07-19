@@ -26,6 +26,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -452,20 +453,17 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
      */
     @Transactional(readOnly=false)
     @Override
-    public void updatePayStatus(String orderSn, Integer payStatus) throws Exception {
+    public void updatePayStatus(String orderSn, Integer payStatus, Integer payMode) throws Exception {
         logger.info("updatePayStatus status = {}",payStatus);
         List<Condition> filters = new ArrayList<>();
         filters.add(Condition.eq("orderSn",orderSn));
         OrderInfo orderInfo =  selectOne(filters);
 
-        PayCore payCore = payCoreService.selectOne(filters);
         String payName="账户余额";
         String[] payments = {"账户余额","支付宝","银联"};
-        if(payCore!=null){
-            payName = Arrays.asList(payments).get(Integer.parseInt(payCore.getPayMode()));
-            orderInfo.setPayId(payCore.getPayMode());
-            orderInfo.setPayName(payName);
-        }
+        payName = Arrays.asList(payments).get(payMode);
+        orderInfo.setPayId(payMode.toString());
+        orderInfo.setPayName(payName);
 
         orderInfo.setPayTime(new Date());
         orderInfo.setLastmodify(new Date());
@@ -1021,4 +1019,16 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         }
         return map;
     }
+
+//    @Scheduled()
+//    public void deleteOrderByTime(){
+//
+//        Date date = new Date();
+//
+//        List<OrderInfo> orderInfos = orderinfoMapper.selectAll();
+//        for (OrderInfo orderInfo:orderInfos){
+//            long addTime = orderInfo.getAddTime().getTime();
+//
+//        }
+//    }
 }

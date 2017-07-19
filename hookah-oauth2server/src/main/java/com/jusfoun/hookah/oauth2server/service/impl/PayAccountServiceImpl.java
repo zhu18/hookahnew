@@ -2,10 +2,12 @@ package com.jusfoun.hookah.oauth2server.service.impl;
 
 
 import com.jusfoun.hookah.core.dao.PayAccountMapper;
+import com.jusfoun.hookah.core.domain.OrderInfo;
 import com.jusfoun.hookah.core.domain.PayAccount;
 import com.jusfoun.hookah.core.domain.bo.MoneyInOutBo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
+import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.PayAccountService;
 import org.springframework.stereotype.Service;
@@ -89,7 +91,16 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 	}
 
 	@Override
-	public void payOperator(String userId, String orderId, String orderSn, Long money, String payMode) throws Exception {
+	public void payByBalance(OrderInfo orderInfo) throws Exception {
 
 	}
+
+	@Override
+	public String payByAli(OrderInfo orderInfo){
+		return new String();
+	}
+
+	public ReturnData userRecharge(Map<String,Object> params){ return new ReturnData();};
+
+	public void saveRechargeResult(Map<String,String> params){};
 }

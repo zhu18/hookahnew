@@ -19,7 +19,7 @@
   <motan:basicReferer requestTimeout="200" accessLog="false"
                       retries="2" group="hookah-rpc" module="hookah-rpc"
                       application="hookah" protocol="motan" registry="registry"
-                      id="HookahRPCClientBasicConfig" throwException="false" check="true"/>
+                      id="HookahRPCClientBasicConfig" throwException="false" check="false"/>
 
   <!-- 具体referer配置。使用方通过beanid使用服务接口类 -->
   <motan:referer id="roleService"
