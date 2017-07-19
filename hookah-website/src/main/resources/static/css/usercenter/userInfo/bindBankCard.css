@@ -42,6 +42,12 @@
     height: 100%;
     width: 216px;
 }
+.fundmanage-box .bindBankCard .bindBankCard-content .form-item select{
+    border: 1px solid #E5E5E5;
+    padding-left: 10px;
+    height: 100%;
+    width: 228px;
+}
 .fundmanage-box .bindBankCard .bindBankCard-content .btn{
     margin-left: 80px;
     width: 130px;

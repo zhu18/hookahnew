@@ -12,9 +12,11 @@
  .withdrawals .withdrawals-content li label{
     text-align: right;
     display: inline-block;
+    vertical-align: middle;
     margin-left: 5px;
     width: 112px;
     height: 32px;
+     line-height: 32px;
     font-size: 14px;
     color: #666666;
 }
@@ -30,19 +32,32 @@
 .withdrawals .withdrawals-content .apply-money input{
     width: 107px;
     height: 30px;
+    vertical-align: middle;
     padding-left: 5px;
     margin-right: 5px;
     border: 1px solid #E5E5E5;
 }
 .withdrawals .withdrawals-content .cash-account .cash-account-card{
     display: inline-block;
-    width: 296px;
-    height: 173px;
+    vertical-align: middle;
+    width: 256px;
+    height: 133px;
+    padding: 20px;
     border: 1px solid #E5E5E5;
+}
+.withdrawals .withdrawals-content .cash-account .cash-account-card h4{
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.withdrawals .withdrawals-content .cash-account .cash-account-card p{
+    height: 40px;
+    line-height:40px;
 }
 .withdrawals .withdrawals-content  .trade-password input{
     width: 291px;
     height: 30px;
+    vertical-align: middle;
     padding-left: 5px;
     border: 1px solid #E5E5E5;
 }
