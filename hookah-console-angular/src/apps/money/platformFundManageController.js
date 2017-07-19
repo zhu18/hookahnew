@@ -6,28 +6,57 @@ class platformFundManageController {
     $scope.userBaseInfo=$stateParams.item;
 
     $scope.search = function () {
-/*      var promise = $http({
+      var promise = $http({
         method: 'GET',
-        url: $rootScope.site.apiServer + "/api/withdrawRecord/getOneById",
-        params: {
-          id: $stateParams.id
-        }
+        url: $rootScope.site.apiServer + "/api/platform/userFunds",
       });
       promise.then(function (res, status, config, headers) {
         console.log(res);
         if (res.data.code == '1') {
-          $scope.order = res.data.data;
+          $scope.moneyBaseInfo = res.data.data;
           $scope.showNoneDataInfoTip = false;
           if (res.data.data.totalPage > 1) {
             $scope.showPageHelpInfo = true;
           }
         } else {
-          $scope.settleList = [];
+          $scope.moneyBaseInfo = [];
           $scope.showNoneDataInfoTip = true;
         }
-      });*/
+      });
+
+
+
+      var promise2 = $http({
+        method: 'GET',
+        url: $rootScope.site.apiServer + "/api/platform/fundsRecord",
+        params: {
+          tradeType : $scope.tradeType  ? $scope.tradeType  : null,
+          tradeStatus: $scope.tradeStatus == 0 ? '0' : ($scope.tradeStatus ? $scope.tradeStatus : null),//审核状态
+          startDate: $scope.startDate ? format($scope.startDate, 'yyyy-MM-dd HH:mm:ss') : null,
+          endDate: $scope.endDate ? format($scope.endDate, 'yyyy-MM-dd HH:mm:ss') : null,
+          currentPage: $rootScope.pagination.currentPage, //当前页码
+          pageSize: $rootScope.pagination.pageSize
+        }
+      });
+      promise2.then(function (res, status, config, headers) {
+        console.log(res);
+        if (res.data.code == '1') {
+          $scope.userMoneyList = res.data.data.list;
+          $scope.showNoneDataInfoTip = false;
+          if (res.data.data.totalPage > 1) {
+            $scope.showPageHelpInfo = true;
+          }
+        } else {
+          $scope.userMoneyList = [];
+          $scope.showNoneDataInfoTip = true;
+        }
+      });
     };
     $scope.search();
+    $scope.pageChanged = function () {
+      $scope.search();
+      console.log('Page changed to: ' + $rootScope.pagination.currentPage);
+    };
     // 处理日期插件的获取日期的格式
     var format = function (time, format) {
       var t = new Date(time);

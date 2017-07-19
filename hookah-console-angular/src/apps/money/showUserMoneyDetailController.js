@@ -21,17 +21,22 @@ class showUserMoneyDetailController {
       promise.then(function (res, status, config, headers) {
         console.log(res);
         if (res.data.code == '1') {
-          $scope.order = res.data.data;
+          $scope.userMoneyList = res.data.data.list;
           $scope.showNoneDataInfoTip = false;
           if (res.data.data.totalPage > 1) {
             $scope.showPageHelpInfo = true;
           }
         } else {
-          $scope.settleList = [];
+          $scope.userMoneyList = [];
           $scope.showNoneDataInfoTip = true;
         }
       });
     };
+    $scope.pageChanged = function () {
+      $scope.search();
+      console.log('Page changed to: ' + $rootScope.pagination.currentPage);
+    };
+
     $scope.search();
     // 处理日期插件的获取日期的格式
     var format = function (time, format) {
