@@ -17,13 +17,13 @@ $(function () {
                 data.data.checkContent="无"
             }
             if(data.data.isAuth == '3'){
-                html +="<li><label>认证状态</label><p class='position-relative'><span>未通过</span><a href='' class='repeat-revise-btn'>重新修改</a></p></li>";
+                html +="<li><label>认证状态</label><p class='position-relative'><span>未通过</span><a href='/auth/company_auth_init_step2?isAuth=3' class='repeat-revise-btn'>重新修改</a></p></li>";
                 html +="<li><label>审核意见</label><p>"+data.data.checkContent+"</p></li>";
             }else if(data.data.isAuth == '2'){
-                html +="<li><label>认证状态</label><p class='position-relative'><span>已认证</span><a href='' class='revise-btn'>修改</a></p></li>";
+                html +="<li><label>认证状态</label><p class='position-relative'><span>已认证</span><a href='/auth/company_auth_init_step2?isAuth=2' class='revise-btn'>修改</a></p></li>";
                 html +="<li><label>审核意见</label><p>"+data.data.checkContent+"</p></li>";
             }else {
-                html +="<li><label>认证状态</label><p class='position-relative'><span>未认证</span><a href='' class='repeat-revise-btn'>立即认证</a></p></li>";
+                html +="<li><label>认证状态</label><p class='position-relative'><span>未认证</span><a href='/auth/company_auth_init_step2?isAuth=1' class='repeat-revise-btn'>立即认证</a></p></li>";
                 html +="<li><label>审核意见</label><p>"+data.data.checkContent+"</p></li>";
             }
             $('.ul1').html(html);
