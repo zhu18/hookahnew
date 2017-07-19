@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jusfoun.hookah.core.dao.PayBankCardMapper">
+
+    <resultMap id="bankMap" type="com.jusfoun.hookah.core.domain.PayBank" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="selectBankName" resultMap="bankMap" parameterType="com.jusfoun.hookah.core.domain.PayBank">
+       SELECT b.id,b.bank_name FROM pay_bank b LEFT JOIN  pay_bank_card p ON b.id = p.pay_bank_id;
+    </select>
+
+</mapper>

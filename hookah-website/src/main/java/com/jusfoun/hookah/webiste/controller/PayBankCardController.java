@@ -1,18 +1,13 @@
 package com.jusfoun.hookah.webiste.controller;
 
-import com.jusfoun.hookah.core.domain.Organization;
-import com.jusfoun.hookah.core.domain.PayAccount;
-import com.jusfoun.hookah.core.domain.PayBankCard;
-import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.domain.*;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
-import com.jusfoun.hookah.core.utils.FormatCheckUtil;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.OrganizationService;
 import com.jusfoun.hookah.rpc.api.PayAccountService;
 import com.jusfoun.hookah.rpc.api.PayBankCardService;
 import com.jusfoun.hookah.rpc.api.UserService;
-import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,12 +44,15 @@ public class PayBankCardController extends BaseController{
 
     /**
      * 绑定银行卡信息
-     * @param payBankCard
+     * @param
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/addBankInfo", method = RequestMethod.GET)
-    public ReturnData addBankInfo(PayBankCard payBankCard) {
+    public ReturnData addBankInfo(String cardCode, String openBank, String phoneNumber, Integer bankId) {
+        Map<String, Object> map = new HashMap<>(6);
+        List<PayBank> banks = payBankCardService.selectBankName();
+        map.put("bank",banks);
         try {
             String userId = this.getCurrentUser().getUserId();
             List<Condition> filters = new ArrayList<>();
@@ -71,27 +69,21 @@ public class PayBankCardController extends BaseController{
                 pay.setBankAccountType(1);
                 //企业名称
                 pay.setCardOwner(organization.getOrgName());
-                pay.setUserId(user.getUserId());
+                pay.setUserId(userId);
                 pay.setAddTime(new Date());
                 pay.setBindFlag(0);
                 pay.setBankAccountType(1);
                 pay.setPayAccountId(payAccount.getId());
                 pay.setAddOperator(payAccount.getUserName());
-                pay.setCardCode(payBankCard.getCardCode());
-                pay.setPhoneNumber(payBankCard.getPhoneNumber());
-                pay.setBankName(payBankCard.getBankName());
-                /*String reg = "^\\d{8}$";
-                String re = "^\\d{16}$";
-                if(!FormatCheckUtil.checkMobile(payBankCard.getPhoneNumber())&& !payBankCard.getPhoneNumber().matches(reg)){
-                    throw new HookahException("格式错误，请输入正确的手机号");
-                }else if(!payBankCard.getCardCode().matches(re)){
-                    throw new HookahException("请输入正确的银行卡号");
-                }*/
-                payBankCard = payBankCardService.insert(payBankCard);
-                if(payBankCard == null){
+                pay.setCardCode(cardCode);
+                pay.setPhoneNumber(phoneNumber);
+                pay.setOpenBank(openBank);
+                pay.setBankId(bankId);
+                PayBankCard insert = payBankCardService.insert(pay);
+                map.put("payBankCard",insert);
+                if(insert == null){
                     return ReturnData.error("添加失败");
                 }
-                return ReturnData.success(payBankCard);
             }else {
                 return ReturnData.success("企业未认证");
             }
@@ -99,6 +91,7 @@ public class PayBankCardController extends BaseController{
             logger.error("绑定银行卡失败",e);
             return ReturnData.error("绑定银行卡失败");
         }
+        return ReturnData.success(map);
     }
 
     /**
@@ -127,7 +120,7 @@ public class PayBankCardController extends BaseController{
             //银行卡信息
             PayBankCard payBankCard = payBankCardService.selectOne(filters);
             if(payBankCard != null){
-                map.put("bankName",payBankCard.getBankName());
+                map.put("bankId",payBankCard.getBankId());
                 map.put("cardCode",payBankCard.getCardCode());
                 map.put("cardOwner",payBankCard.getCardOwner());
             }

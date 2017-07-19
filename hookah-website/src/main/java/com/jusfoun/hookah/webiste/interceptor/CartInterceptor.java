@@ -58,8 +58,9 @@ public class CartInterceptor implements HandlerInterceptor {
                     filters.add(Condition.eq("userId", user.getUserId()));
                     filters.add(Condition.eq("isDeleted", (byte)0));
                     List<CartVo> cartVos = cartService.selectDetailList(filters);
-
-                    Long size = cartVos.stream().parallel().mapToLong(cart->cart.getGoodsNumber()).sum();
+                    Long size = 0l;
+                    if(cartVos != null && cartVos.size() > 0)
+                        size = cartVos.stream().parallel().mapToLong(cart->cart.getGoodsNumber()).sum();
 
                     model.put("cartList", cartVos);
                     model.put("cartSize", size);
