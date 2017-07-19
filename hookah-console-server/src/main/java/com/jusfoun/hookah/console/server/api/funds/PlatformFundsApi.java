@@ -167,7 +167,7 @@ public class PlatformFundsApi extends BaseController{
             return ReturnData.success(page);
         } catch (Exception e) {
             logger.error("分页查询资金记录错误", e);
-            return ReturnData.error("分页查询错误");
+            return ReturnData.error("查询错误");
         }
     }
 
@@ -224,7 +224,7 @@ public class PlatformFundsApi extends BaseController{
             return ReturnData.success(page);
         } catch (Exception e) {
             logger.error("分页查询资金记录错误", e);
-            return ReturnData.error("分页查询错误");
+            return ReturnData.error("查询错误");
         }
     }
 

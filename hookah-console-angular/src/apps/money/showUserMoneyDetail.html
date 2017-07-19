@@ -43,23 +43,21 @@
                 <div>
                     费用科目：
                     <div class="searchSection  btn-group">
-                        <button class="btn btn-default" data-ng-model="checkStatus" uib-btn-radio="" data-ng-click="search()"> 全部 </button>
-                        <button class="btn btn-default" data-ng-model="checkStatus" uib-btn-radio="0" data-ng-click="search()"> 充值 </button>
-                        <button class="btn btn-default" data-ng-model="checkStatus" uib-btn-radio="1" data-ng-click="search()"> 提现 </button>
-                        <button class="btn btn-default" data-ng-model="checkStatus" uib-btn-radio="2" data-ng-click="search()"> 销售贷款收入 </button>
-                        <button class="btn btn-default" data-ng-model="checkStatus" uib-btn-radio="2" data-ng-click="search()"> 销售贷款支出 </button>
-                        <button class="btn btn-default" data-ng-model="checkStatus" uib-btn-radio="2" data-ng-click="search()"> 退款 </button>
-                        <button class="btn btn-default" data-ng-model="checkStatus" uib-btn-radio="2" data-ng-click="search()"> 冲账 </button>
-                        <button class="btn btn-default" data-ng-model="checkStatus" uib-btn-radio="2" data-ng-click="search()"> 其他 </button>
+                        <button class="btn btn-default" data-ng-model="tradeType" uib-btn-radio="" data-ng-click="search()"> 全部 </button>
+                        <button class="btn btn-default" data-ng-model="tradeType" uib-btn-radio="1" data-ng-click="search()"> 充值 </button>
+                        <button class="btn btn-default" data-ng-model="tradeType" uib-btn-radio="2" data-ng-click="search()"> 提现 </button>
+                        <button class="btn btn-default" data-ng-model="tradeType" uib-btn-radio="3001" data-ng-click="search()"> 销售货款收入 </button>
+                        <button class="btn btn-default" data-ng-model="tradeType" uib-btn-radio="4001" data-ng-click="search()"> 销售货款支出 </button>
+                        <button class="btn btn-default" data-ng-model="tradeType" uib-btn-radio="8" data-ng-click="search()"> 冲账 </button>
                     </div>
                 </div>
                 <div style="padding-top:15px;">
                     状态：
                     <div class="searchSection  btn-group">
-                        <button class="btn btn-default" data-ng-model="checkStatus" uib-btn-radio="" data-ng-click="search()"> 全部 </button>
-                        <button class="btn btn-default" data-ng-model="checkStatus" uib-btn-radio="0" data-ng-click="search()"> 成功 </button>
-                        <button class="btn btn-default" data-ng-model="checkStatus" uib-btn-radio="1" data-ng-click="search()"> 失败 </button>
-                        <button class="btn btn-default" data-ng-model="checkStatus" uib-btn-radio="2" data-ng-click="search()"> 处理中 </button>
+                        <button class="btn btn-default" data-ng-model="tradeStatus" uib-btn-radio="" data-ng-click="search()"> 全部 </button>
+                        <button class="btn btn-default" data-ng-model="tradeStatus" uib-btn-radio="1" data-ng-click="search()"> 成功 </button>
+                        <button class="btn btn-default" data-ng-model="tradeStatus" uib-btn-radio="2" data-ng-click="search()"> 失败 </button>
+                        <button class="btn btn-default" data-ng-model="tradeStatus" uib-btn-radio="0" data-ng-click="search()"> 处理中 </button>
                     </div>
                 </div>
                 <div class="form-inline"><label class="control-label">时间：</label>

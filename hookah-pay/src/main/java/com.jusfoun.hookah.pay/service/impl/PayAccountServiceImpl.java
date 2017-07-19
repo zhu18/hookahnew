@@ -16,6 +16,7 @@ import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.pay.util.AlipayNotify;
+import com.jusfoun.hookah.pay.util.ChannelType;
 import com.jusfoun.hookah.pay.util.PayConfiguration;
 import com.jusfoun.hookah.pay.util.PayConstants;
 import com.jusfoun.hookah.rpc.api.*;
@@ -282,17 +283,19 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		//先看流水存不存在
 		List<Condition> filter = new ArrayList<>();
 		filter.add(Condition.eq("orderSn",orderInfo.getOrderSn()));
-		payTradeRecordService.selectList(filter);
-		PayTradeRecord payTradeRecord = new PayTradeRecord();
-		payTradeRecord.setUserId(orderInfo.getUserId());
-		payTradeRecord.setMoney(orderInfo.getOrderAmount());
-		payTradeRecord.setTradeType(PayConstants.TradeType.SalesOut.getCode());
-		payTradeRecord.setTradeStatus(PayConstants.TransferStatus.handing.getCode());
-		payTradeRecord.setAddTime(new Date());
-		payTradeRecord.setOrderSn(orderInfo.getOrderSn());
-		payTradeRecord.setAddOperator(orderInfo.getUserId());
-		payTradeRecord.setTransferDate(new Date());
-		payTradeRecordService.insertAndGetId(payTradeRecord);
+		List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
+		if (payTradeRecords==null){
+			PayTradeRecord payTradeRecord = new PayTradeRecord();
+			payTradeRecord.setUserId(orderInfo.getUserId());
+			payTradeRecord.setMoney(orderInfo.getOrderAmount());
+			payTradeRecord.setTradeType(PayConstants.TradeType.SalesOut.getCode());
+			payTradeRecord.setTradeStatus(PayConstants.TransferStatus.handing.getCode());
+			payTradeRecord.setAddTime(new Date());
+			payTradeRecord.setOrderSn(orderInfo.getOrderSn());
+			payTradeRecord.setAddOperator(orderInfo.getUserId());
+			payTradeRecord.setTransferDate(new Date());
+			payTradeRecordService.insertAndGetId(payTradeRecord);
+		}
 
 		//调余额支付
 		doPayByBalance(orderInfo);
@@ -302,28 +305,45 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 	@Override
 	@Transactional
 	public String payByAli(OrderInfo orderInfo) {
-		//插内部消费流水
-		PayTradeRecord payTradeRecord = new PayTradeRecord();
-		payTradeRecord.setUserId(orderInfo.getUserId());
-		payTradeRecord.setMoney(orderInfo.getOrderAmount());
-		payTradeRecord.setTradeType(PayConstants.TradeType.SalesOut.getCode());
-		payTradeRecord.setTradeStatus(PayConstants.TransferStatus.handing.getCode());
-		payTradeRecord.setAddTime(new Date());
-		payTradeRecord.setOrderSn(orderInfo.getOrderSn());
-		payTradeRecord.setAddOperator(orderInfo.getUserId());
-		payTradeRecord.setTransferDate(new Date());
-		payTradeRecordService.insertAndGetId(payTradeRecord);
-		//插内部充值流水
-		PayTradeRecord payTrade = new PayTradeRecord();
-		payTrade.setUserId(orderInfo.getUserId());
-		payTrade.setMoney(orderInfo.getOrderAmount());
-		payTrade.setTradeType(PayConstants.TradeType.OnlineRecharge.getCode());
-		payTrade.setTradeStatus(PayConstants.TransferStatus.handing.getCode());
-		payTrade.setAddTime(new Date());
-		payTrade.setOrderSn(orderInfo.getOrderSn());
-		payTrade.setAddOperator(orderInfo.getUserId());
-		payTrade.setTransferDate(new Date());
-		payTradeRecordService.insertAndGetId(payTrade);
+		List<Condition> filter = new ArrayList<>();
+		filter.add(Condition.eq("orderSn",orderInfo.getOrderSn()));
+		List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
+		if (payTradeRecords==null){
+			//插内部消费流水
+			PayTradeRecord payTradeRecord = new PayTradeRecord();
+			payTradeRecord.setUserId(orderInfo.getUserId());
+			payTradeRecord.setMoney(orderInfo.getOrderAmount());
+			payTradeRecord.setTradeType(PayConstants.TradeType.SalesOut.getCode());
+			payTradeRecord.setTradeStatus(PayConstants.TransferStatus.handing.getCode());
+			payTradeRecord.setAddTime(new Date());
+			payTradeRecord.setOrderSn(orderInfo.getOrderSn());
+			payTradeRecord.setAddOperator(orderInfo.getUserId());
+			payTradeRecord.setTransferDate(new Date());
+			payTradeRecordService.insertAndGetId(payTradeRecord);
+			//插内部充值流水
+			PayTradeRecord payTrade = new PayTradeRecord();
+			payTrade.setUserId(orderInfo.getUserId());
+			payTrade.setMoney(orderInfo.getOrderAmount());
+			payTrade.setTradeType(PayConstants.TradeType.OnlineRecharge.getCode());
+			payTrade.setTradeStatus(PayConstants.TransferStatus.handing.getCode());
+			payTrade.setAddTime(new Date());
+			payTrade.setOrderSn(orderInfo.getOrderSn());
+			payTrade.setAddOperator(orderInfo.getUserId());
+			payTrade.setTransferDate(new Date());
+			payTradeRecordService.insertAndGetId(payTrade);
+			//插外部充值流水
+			PayAccountRecord payAccountRecord = new PayAccountRecord();
+			payAccountRecord.setPayAccountId(Long.valueOf(orderInfo.getUserId()));
+			payAccountRecord.setUserId(orderInfo.getUserId());
+			Date date = new Date();
+			payAccountRecord.setTransferDate(date);
+			payAccountRecord.setMoney(orderInfo.getOrderAmount());//订单资金总额
+			payAccountRecord.setSerialNumber(orderInfo.getOrderSn());//订单号
+			payAccountRecord.setTransferType((byte)0);
+			payAccountRecord.setAddTime(date);
+			payAccountRecord.setAddOperator(orderInfo.getUserId());
+			payAccountRecordMapper.insertAndGetId(payAccountRecord);
+		}
 		//调支付宝接口
 		String html = alipayService.doPay(orderInfo.getUserId(), orderInfo.getOrderId(),
 				PayConfiguration.ALIPAY_NOTIFY_URL, PayConfiguration.ALIPAY_RETURN_URL);
@@ -332,17 +352,31 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 
 	public void doPayByBalance(OrderInfo orderinfo) throws Exception {
 		Long orderAmount = orderinfo.getOrderAmount();
-		//减去余额
+		//插交易中心冻结收入流水，
+		PayTradeRecord payTradeRecord = new PayTradeRecord();
+		payTradeRecord.setPayAccountId(HookahConstants.TRADECENTERACCOUNT);
+		payTradeRecord.setMoney(orderAmount);
+		payTradeRecord.setTradeType(HookahConstants.TradeType.FreezaIn.getCode());
+		payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.handing.getCode());
+		payTradeRecord.setAddTime(new Date());
+		payTradeRecord.setOrderSn(orderinfo.getOrderSn());
+		payTradeRecord.setAddOperator(orderinfo.getUserId());
+		payTradeRecord.setTransferDate(new Date());
+		payTradeRecordService.insertAndGetId(payTradeRecord);
+		//用户减去余额，交易中心收入冻结金额
 		List<Condition> filter = new ArrayList<>();
 		filter.add(Condition.eq("userId", orderinfo.getUserId()));
 		PayAccount payAccount = super.selectOne(filter);
 		operatorByType(payAccount.getId(), HookahConstants.TradeType.SalesOut.getCode(), orderAmount);
+		int n = operatorByType(HookahConstants.TRADECENTERACCOUNT,HookahConstants.TradeType.FreezaIn.getCode(),
+				orderAmount);
 
 		List<Condition> filters = new ArrayList<>();
 		filters.add(Condition.eq("orderSn",orderinfo.getOrderSn()));
 		List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filters);
-		for(PayTradeRecord payTradeRecord:payTradeRecords){
-			payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.success.getCode());
+		for(PayTradeRecord payTradeRecord1:payTradeRecords){
+			payTradeRecord1.setTradeStatus(HookahConstants.TransferStatus.success.getCode());
+			payTradeRecordService.updateByIdSelective(payTradeRecord1);
 		}
 
 		// 支付成功 查询订单 获取订单中商品插入到待清算记录
@@ -350,6 +384,7 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		orderInfoService.updatePayStatus(orderinfo.getOrderSn(), OrderInfo.PAYSTATUS_PAYED,0);
 		orderInfoService.waitSettleRecordInsert(orderinfo.getOrderSn());
 	}
+
 
 	public void alipayRtn(HttpServletRequest request) throws Exception {
 		//商户订单号
@@ -526,7 +561,7 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 
 	public void insertPayAccountRecord(String userId,Long money,Long payAccountId,int tradeStatus,int tradeType){
 		PayAccountRecord par = new PayAccountRecord();
-		par.setChannelType("ZFB");
+		par.setChannelType(ChannelType.ZFB);
 		par.setMoney(Math.abs(money));
 		par.setPayAccountId(payAccountId);
 		par.setTransferStatus((byte)tradeStatus);
