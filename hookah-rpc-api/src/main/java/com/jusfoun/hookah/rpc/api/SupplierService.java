@@ -18,5 +18,5 @@ public interface SupplierService extends GenericService<Supplier,String> {
 
     Pagination<Supplier> selectListInCondition(Integer pageNumberNew, Integer pageSizeNew, List<Condition> filters, List<OrderBy> orderBys);
 
-    void checkSupplier(String id, String checkContent, Byte checkStatus, String checkUser);
+    void checkSupplier(String id, String checkContent, Byte checkStatus, String checkUser)throws Exception;
 }

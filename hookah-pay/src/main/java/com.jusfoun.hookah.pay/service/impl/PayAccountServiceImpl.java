@@ -49,12 +49,6 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 	OrderInfoService orderInfoService;
 
 	@Resource
-	WaitSettleRecordService waitSettleRecordService;
-
-	@Resource
-	MgOrderInfoService mgOrderInfoService;
-
-	@Resource
 	PayTradeRecordMapper payTradeRecordMapper;
 
 	@Resource
@@ -285,6 +279,10 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 	@Transactional
 	public void payByBalance(OrderInfo orderInfo) throws Exception {
 		//插内部消费流水
+		//先看流水存不存在
+		List<Condition> filter = new ArrayList<>();
+		filter.add(Condition.eq("orderSn",orderInfo.getOrderSn()));
+		payTradeRecordService.selectList(filter);
 		PayTradeRecord payTradeRecord = new PayTradeRecord();
 		payTradeRecord.setUserId(orderInfo.getUserId());
 		payTradeRecord.setMoney(orderInfo.getOrderAmount());
@@ -297,7 +295,7 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		payTradeRecordService.insertAndGetId(payTradeRecord);
 
 		//调余额支付
-		doPayByBalance(orderInfo.getOrderId(), orderInfo.getUserId());
+		doPayByBalance(orderInfo);
 
 	}
 
@@ -326,59 +324,31 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		payTrade.setAddOperator(orderInfo.getUserId());
 		payTrade.setTransferDate(new Date());
 		payTradeRecordService.insertAndGetId(payTrade);
-		//掉支付宝接口
+		//调支付宝接口
 		String html = alipayService.doPay(orderInfo.getUserId(), orderInfo.getOrderId(),
 				PayConfiguration.ALIPAY_NOTIFY_URL, PayConfiguration.ALIPAY_RETURN_URL);
 		return html;
 	}
 
-	public void doPayByBalance(String orderId, String userId) throws Exception {
-		OrderInfo orderinfo = orderInfoService.selectById(orderId);
-		//修改订单支付状态
-		orderinfo.setPayStatus(OrderInfo.PAYSTATUS_PAYED);
-		orderInfoService.updatePayStatus(orderinfo.getOrderSn(), OrderInfo.PAYSTATUS_PAYED,0);
+	public void doPayByBalance(OrderInfo orderinfo) throws Exception {
 		Long orderAmount = orderinfo.getOrderAmount();
 		//减去余额
 		List<Condition> filter = new ArrayList<>();
-		filter.add(Condition.eq("userId", userId));
+		filter.add(Condition.eq("userId", orderinfo.getUserId()));
 		PayAccount payAccount = super.selectOne(filter);
 		operatorByType(payAccount.getId(), HookahConstants.TradeType.SalesOut.getCode(), orderAmount);
 
-//		Long oldBalance = payAccount.getBalance();
-//		Long newBalance = oldBalance-orderAmount;
-//		payAccount.setBalance(newBalance);
-//		payAccountMapper.updateByPrimaryKeySelective(payAccount);
-
+		List<Condition> filters = new ArrayList<>();
+		filters.add(Condition.eq("orderSn",orderinfo.getOrderSn()));
+		List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filters);
+		for(PayTradeRecord payTradeRecord:payTradeRecords){
+			payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.success.getCode());
+		}
 
 		// 支付成功 查询订单 获取订单中商品插入到待清算记录
-		List<Condition> mgfilters = new ArrayList<>();
-		mgfilters.add(Condition.eq("orderSn", orderinfo.getOrderSn()));
-		OrderInfoVo orderInfoVo = mgOrderInfoService.selectOne(mgfilters);
-		if (orderInfoVo != null) {
-			List<MgOrderGoods> mgOrderGoodsList = orderInfoVo.getMgOrderGoodsList();
-			List<WaitSettleRecord> waitSettleRecords = new ArrayList<>();
-			if (mgOrderGoodsList != null && mgOrderGoodsList.size() > 0) {
-				for (MgOrderGoods mgOrderGoods : mgOrderGoodsList) {
-					WaitSettleRecord waitSettleRecord = new WaitSettleRecord();
-					waitSettleRecord.setOrderSn(mgOrderGoods.getOrderSn());
-					waitSettleRecord.setGoodsId(mgOrderGoods.getGoodsId());
-					waitSettleRecord.setOrderId(orderInfoVo.getOrderId());
-					waitSettleRecord.setOrderAmount(mgOrderGoods.getGoodsPrice());
-//					waitSettleRecord.setOrderTime(orderInfoVo.getPayTime());
-					waitSettleRecord.setOrderTime(orderInfoVo.getAddTime());
-					waitSettleRecord.setHasSettleAmount(0L);
-					waitSettleRecord.setNoSettleAmount(mgOrderGoods.getGoodsPrice());
-					waitSettleRecord.setAddTime(new Date());
-					waitSettleRecord.setSettleStatus((byte) 0);
-					waitSettleRecord.setShopName(mgOrderGoods.getAddUser());
-					waitSettleRecord.setGoodsName(mgOrderGoods.getGoodsName());
-					waitSettleRecords.add(waitSettleRecord);
-				}
-
-				int n = waitSettleRecordService.insertBatch(waitSettleRecords);
-				System.out.println(n);
-			}
-		}
+		//修改订单支付状态
+		orderInfoService.updatePayStatus(orderinfo.getOrderSn(), OrderInfo.PAYSTATUS_PAYED,0);
+		orderInfoService.waitSettleRecordInsert(orderinfo.getOrderSn());
 	}
 
 	public void alipayRtn(HttpServletRequest request) throws Exception {
