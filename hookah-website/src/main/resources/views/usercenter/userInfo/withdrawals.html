@@ -20,14 +20,14 @@ var htmlPart = {
                     <li class="apply-money"><label for="">申请提现金额：</label>
                         <input type="text" >元
                         <span>可用金额</span>
-                        <span class="money">￥555</span>
+                        <span class="money">${userInfo['useBalance']}</span>
                         <a href="" class="blue margin-left-15">全部提现</a>
                     </li>
                     <li class="cash-account"><label for="">提现账号：</label>
                         <div class="cash-account-card">
-                            <h4>中国农业银行</h4>
-                            <p><span>银行卡号：</span>1545454545454545</p>
-                            <p><span>账户名：</span>九次方</p>
+                            <h4>${userInfo['bankName']}</h4>
+                            <p><span>银行卡号：</span>${userInfo['bankCode']}</p>
+                            <p><span>账户名：</span>${userInfo['orgName']}</p>
                         </div>
                     </li>
                     <li class="trade-password"><label for="password">交易密码：</label>
