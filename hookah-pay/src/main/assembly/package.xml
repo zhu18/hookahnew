@@ -26,6 +26,14 @@
       </includes>
     </fileSet>
 
+    <fileSet>
+      <directory>${project.basedir}/src/lib</directory>
+      <outputDirectory>/config</outputDirectory>
+      <includes>
+        <include>**/*.*</include>
+      </includes>
+    </fileSet>
+
     <!-- 把项目的配置文件，打包进压缩文件的config目录 -->
     <fileSet>
       <directory>${project.build.directory}/config</directory>
