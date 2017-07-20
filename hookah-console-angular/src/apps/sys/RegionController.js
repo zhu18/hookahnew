@@ -130,11 +130,7 @@ class RegionController {
     $scope.refresh = function () {
       $scope.search();
     };
-
-
     $scope.search();
-
-
   }
 }
 

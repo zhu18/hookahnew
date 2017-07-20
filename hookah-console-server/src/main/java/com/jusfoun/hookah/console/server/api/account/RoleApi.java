@@ -141,8 +141,6 @@ public class RoleApi extends BaseController {
                 e.printStackTrace();
             }
         }
-
-
         return returnData;
     }
 

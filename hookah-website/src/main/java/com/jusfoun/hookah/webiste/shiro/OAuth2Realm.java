@@ -4,6 +4,7 @@ package com.jusfoun.hookah.webiste.shiro;
 import com.alibaba.fastjson.JSONObject;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.generic.Condition;
+import com.jusfoun.hookah.rpc.api.PermissionService;
 import com.jusfoun.hookah.rpc.api.RoleService;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.oltu.oauth2.client.OAuthClient;
@@ -45,6 +46,9 @@ public class OAuth2Realm extends AuthorizingRealm {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private PermissionService permissionService;
 
     private String clientId;
     private String clientSecret;
@@ -94,6 +98,14 @@ public class OAuth2Realm extends AuthorizingRealm {
 
         Set<String> roleNames = roleService.selectRolesByUserId(user.get("userId"));
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo(roleNames);
+        Set<String> permissions = new HashSet<String>();
+        Iterator it = roleNames.iterator();
+        while(it.hasNext()){
+            String roleName = (String)it.next();
+            Set<String> permSet = permissionService.selectPermissionsByRoleName(roleName);
+            permissions.addAll(permSet);
+        }
+        authorizationInfo.setStringPermissions(permissions);
         return authorizationInfo;
     }
 

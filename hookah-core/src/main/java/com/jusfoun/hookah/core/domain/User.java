@@ -7,7 +7,9 @@ import com.jusfoun.hookah.core.generic.GenericModel;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.util.Date;
+import java.util.List;
 
 public class User extends GenericModel {
     /**
@@ -67,7 +69,7 @@ public class User extends GenericModel {
      *
      * @mbggenerated
      */
-    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date regTime;
 
     /**
@@ -92,7 +94,7 @@ public class User extends GenericModel {
      *
      * @mbggenerated
      */
-    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastLoginTime;
 
     /**
@@ -101,7 +103,7 @@ public class User extends GenericModel {
      *
      * @mbggenerated
      */
-    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addTime;
 
     /**
@@ -132,7 +134,6 @@ public class User extends GenericModel {
     }
 
 
-
     private Long moneyBalance;
 
     //支付密码
@@ -146,6 +147,17 @@ public class User extends GenericModel {
     private String contactPhone;
     private String contactAddress;
     private Integer postCode;
+
+    @Transient
+    private List<Role> roleList;
+
+    public List<Role> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
+    }
 
     public Integer getUserType() {
         return userType;
