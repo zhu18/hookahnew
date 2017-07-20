@@ -1,7 +1,5 @@
 class MessageController {
     constructor($scope, $rootScope, $http, $state, $stateParams, $uibModal, usSpinnerService, growl) {
-		$scope.len = 0;
-		$scope.content = '';
         $scope.systemSearch = function () {
             var promise = $http({
                 method: 'GET',
@@ -96,7 +94,7 @@ class MessageController {
             promise.then(function (res, status, config, headers){
                 $rootScope.loadingState = false;
                 $rootScope.list = res.data.data;
-                console.log(res.data.data);
+                console.log("getinfores:"+res.data);
                 $scope.len = res.data.data.length;
                 console.log("len:"+res.data.data.length);
                 growl.addSuccessMessage("数据加载完毕。。。");
@@ -152,9 +150,9 @@ class MessageController {
             });
             promise.then(function (res, status, config, headers) {
                 $rootScope.loadingState = false;
-                console.log("获取数据:" + res.data);
+                console.log("获取数据add:" + res.data.data);
                 if (res.data.code == 1) {
-                    console.log(res.data.data);
+                    // console.log(res.data.data);
                     $scope.eventTypes = res.data.data;
                     // $scope.eventTypes.unshift({"code":"-1","describle":"全部"});
                     $scope.eventType = $scope.eventTypes[0].code;
@@ -163,7 +161,7 @@ class MessageController {
             });
 
 
-            $scope.flag=false;
+            // $scope.flag=false;
             // $scope.$watch('content',function(newVal,oldVal){
             //     // console.log("typeof:"+typeof newVal);
             //     // console.log("new:"+newVal.charAt(newVal.length-1));
@@ -174,44 +172,125 @@ class MessageController {
             //         $scope.flag=false;
             //     }
             // })
-        }
-		var ds = 0;
-        $scope.keyDownFn = function(e){
-            var lenth = $scope.len;
-            var conTxt = '';
-			var keycode = window.event?e.keyCode:e.which;
-			if(keycode == 219){
-				$scope.getInfo();
-				$scope.flag=true;
-				conTxt = $scope.content;
-            }
-            if(keycode == 40){
-				ds += 1;
-				if (ds > lenth) {
-					ds = lenth;
-				}
-				$('.tipBox li').eq(ds).addClass('active').siblings().removeClass('active')
-            }
-			if(keycode == 38){
-				ds -= 1;
-				if (ds <= 0) {
-					ds = 0;
-				}
-				$('.tipBox li').eq(ds).addClass('active').siblings().removeClass('active')
-			}
-			if(keycode == 13){
-			    $('#text').blur();
-				$('.tipBox li').each(function () {
-					if ($(this).hasClass('active')) {
-						$scope.content += $(this).attr('d-code')+']';
 
-					}
-				});
-				$('#text').focus();
-				$scope.flag=false;
-				ds = 0;
+
+            $scope.numIndex=0;
+            $scope.active=true;
+            $scope.content='';
+            $scope.downLists=[];
+            $scope.change=function(){
+                var length=$scope.content.length;
+                console.log("changelength:"+length);
+                var lastStr=$scope.content.slice(length-1);
+                console.log("lastStr:"+lastStr);
+                if(lastStr=='['){
+                    var promise=$http({
+                        method: 'GET',
+                        url: $rootScope.site.apiServer + "/api/message/constants/all",
+                        params:{}
+                    });
+                    promise.then(function(res,status,config,headers){
+                        var rep = res.data.data;
+                        console.log(rep);
+                        $scope.downLists.length=0;
+                        angular.forEach(rep,function(data,index){
+                            console.log(data);
+                            console.log(data.code);
+                            if(index==0){
+                                var saveData = {
+                                    val:data,
+                                    active:true
+                                };
+                            }else{
+                                var saveData={
+                                    val:data,
+                                    active:false
+                                }
+                            }
+                            $scope.downLists.push(saveData);
+                        });
+                    });
+                }else{
+                    $scope.downLists.length=0;
+                }
+            };
+            console.log($scope.downLists);
+            $scope.keydown=function(e){
+                var length=$scope.downLists.length;
+                console.log("keydownlen:"+length);
+                var keycode=e.keyCode;
+                console.log("keycode:"+keycode);
+                if(keycode==40 && length!=0){
+                    $scope.numIndex+=1;
+                    console.log($scope.numIndex);
+                    if($scope.numIndex>=length){
+                        $scope.numIndex=0;
+                    }
+                    var lists=$scope.downLists;
+                    console.log(lists);
+                    angular.forEach(lists,function(data,index){
+                        $scope.downLists[index].active=false;
+                    });
+                    $scope.downLists[$scope.numIndex].active=true;
+                }else if(keycode==38 && length!=0){
+                    $scope.numIndex-=1;
+                    if($scope.numIndex<0){
+                        $scope.numIndex = length-1;
+                    }
+                    var lists = $scope.downLists;
+                    angular.forEach(lists,function(data,index){
+                        $scope.downLists[index].active=false;
+                    });
+                    $scope.downLists[$scope.numIndex].active=true;
+                }else if(keycode==13 && length!=0){
+                    var index = $scope.numIndex;
+                    $scope.content += $scope.downLists[index].val.code+']';
+                    $scope.downLists.length=0;
+                    $scope.numIndex=0;
+                    e.stopPropagation();
+                    e.preventDefault();
+                }
             }
-        };
+        }
+
+
+        // var ds = 0;
+        // $scope.keyDownFn = function(e){
+        //     var lenth = $scope.len;
+        //     var conTxt = '';
+			// var keycode = window.event?e.keyCode:e.which;
+			// if(keycode == 219){
+			// 	$scope.getInfo();
+			// 	$scope.flag=true;
+			// 	conTxt = $scope.content;
+        //     }
+        //     if(keycode == 40){
+			// 	ds += 1;
+			// 	if (ds > lenth) {
+			// 		ds = lenth;
+			// 	}
+			// 	$('.tipBox li').eq(ds).addClass('active').siblings().removeClass('active')
+        //     }
+			// if(keycode == 38){
+			// 	ds -= 1;
+			// 	if (ds <= 0) {
+			// 		ds = 0;
+			// 	}
+			// 	$('.tipBox li').eq(ds).addClass('active').siblings().removeClass('active')
+			// }
+			// if(keycode == 13){
+			//     $('#text').blur();
+			// 	$('.tipBox li').each(function () {
+			// 		if ($(this).hasClass('active')) {
+			// 			$scope.content += $(this).attr('d-code')+']';
+        //
+			// 		}
+			// 	});
+			// 	$('#text').focus();
+			// 	$scope.flag=false;
+			// 	ds = 0;
+        //     }
+        // };
 
 
         if($state.$current.name == "message.email.search"){

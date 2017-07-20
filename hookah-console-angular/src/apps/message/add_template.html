@@ -23,11 +23,11 @@
 	<div class="col-sm-12">
 		<div class="console-title console-title-border clearfix">
 			<div class="pull-left"><h5>添加消息模板</h5></div>
-			<div class="pull-right">
-				<button class="btn btn-default" data-ng-click="refresh()">
-					<span class="glyphicon glyphicon-refresh"></span> 返回
-				</button>
-			</div>
+			<!--<div class="pull-right">-->
+				<!--<button class="btn btn-default" data-ng-click="refresh()">-->
+					<!--<span class="glyphicon glyphicon-refresh"></span> 返回-->
+				<!--</button>-->
+			<!--</div>-->
 		</div>
 		<form class="form-horizontal" role="form" id="infoForm" name="infoForm" novalidate>
 			<div class="box " style="margin-top:20px;margin-left:20px;">
@@ -63,20 +63,28 @@
 				<div class="form-group">
 					<label class="col-sm-2 control-label">内容:</label>
 					<div class="col-sm-5" style="position: relative">
-						<textarea name="templateContent" id="text" cols="50" rows="8" ng-model="content" ng-keydown="keyDownFn($event)"></textarea>
-						<div class="info" ng-show="flag" style="position: absolute;top: 142px;left: 15px;background: #fff;border: 1px solid #ccc;padding: 10px;z-index: 10;">
+						<textarea ng-keydown="keydown($event)" ng-change="change()" ng-model="content" name="templateContent" id="text" cols="50" rows="5"  ></textarea>
+						<div ng-show="downLists.length>0?true:false" class="info"  style="position: absolute;top: 91px;background: #fff;border: 1px solid #ccc;z-index: 10;">
 							<ul class="tipBox" style="list-style:none;">
-								<li ng-repeat="item in list" style="" d-id="{{item.id}}" d-code="{{item.code}}" ng-class='{active:$first}' 　ng-click="list('{{item.code}}')" style="margin-left:-30px;margin-right:10px;">
-									{{item.describle}}
+								<li ng-repeat="item in downLists" ng-class="{true:'active',false:''}[item.active==true]"  d-id="{{item.id}}" d-code="{{item.code}}"   style="margin-left:-40px;padding:0px 10px;">
+									{{item.val.describle}}
 								</li>
 							</ul>
 						</div>
+						<!--<textarea name="templateContent" id="text" cols="50" rows="8" ng-model="content" ng-keydown="keyDownFn($event)"></textarea>-->
+						<!--<div class="info" ng-show="flag" style="position: absolute;top: 142px;left: 15px;background: #fff;border: 1px solid #ccc;padding: 10px;z-index: 10;">-->
+							<!--<ul class="tipBox" style="list-style:none;">-->
+								<!--<li ng-repeat="item in list" style="" d-id="{{item.id}}" d-code="{{item.code}}" ng-class='{active:$first}' 　ng-click="list('{{item.code}}')" style="margin-left:-30px;margin-right:10px;">-->
+									<!--{{item.describle}}-->
+								<!--</li>-->
+							<!--</ul>-->
+						<!--</div>-->
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">支持变量名:</label>
 					<div class="col-sm-5">
-						<span class="support" style="display: inline-block;">
+						<span class="support" style="display: inline-block;margin-left:-40px;">
 							<ul style="list-style: none;">
 								<li ng-repeat="item in list" style="line-height:25px;margin-right:10px;">[{{item.describle}}]</li>
 							</ul>
