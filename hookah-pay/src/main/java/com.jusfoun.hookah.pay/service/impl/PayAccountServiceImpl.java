@@ -237,6 +237,8 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 			pa.setBalance(0l);
 			pa.setUseBalance(0l);
 			pa.setFrozenBalance(0l);
+			//支付密码状态 数据库默认为 0（未设置）
+			//pa.setPaymentPasswordStatus((byte)0);
 			pa.setAccountFlag((byte) 1);
 			pa.setMerchantId("");
 			pa.setSyncFlag((byte) 0);
