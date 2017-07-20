@@ -306,18 +306,24 @@ function validataFn(){
 			enddDate:'required',
 			priceBoxPrice:{
 				required:true,
-				isPricceData:true,
-				isPricceB:true
+				// isPricceData:true,
+				isPricceB:true,
+				lt:["#maxExp","最大经验值"],
+				gt:["#minExp","最小经验值"]
 			},
 			priceBoxSettlementPrice:{
 				required:true,
-				isPricceData:true,
-				isPricceB:true
+				// isPricceData:true,
+				isPricceB:true,
+				lt:["#maxExp","最大经验值"],
+				gt:["#minExp","最小经验值"]
 			},
 			priceBoxAgencyPrice:{
 				required:true,
-				isPricceData:true,
-				isPricceB:true
+				// isPricceData:true,
+				isPricceB:true,
+				lt:["#maxExp","最大经验值"],
+				gt:["#minExp","最小经验值"]
 			},
 			goodsImges:'required',
 			goodsImges2:'required',
@@ -631,6 +637,14 @@ $.validator.addMethod("isPricceData", function(value, element) {
 	var len = value.replace(/[\u0391-\uFFE5]/g,"aa").length;
 	return this.optional(element) || isPricce;
 }, "小数点不能超过2位");
+//大于
+$.validator.addMethod("gt", function(value, element,param) {
+	return this.optional(element) || value >=0.01;
+}, $.validator.format("输入值必须大于{0.01}!"));
+//小于
+$.validator.addMethod("lt", function(value, element,param) {
+	return this.optional(element) || value <= 9999999.99;
+}, $.validator.format("输入值必须小于{9999999.99}!"));
 function backAddFn(data){
 	Loading.start();
 	$.ajax({
