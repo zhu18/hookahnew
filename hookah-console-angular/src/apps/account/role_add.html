@@ -14,17 +14,22 @@
   <div class="col-sm-12">
     <form class="form-horizontal" role="form" id="roleForm" name="roleForm" novalidate>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="roleName">角色名<span class="must">*</span></label>
+        <label class="col-sm-2 control-label" for="roleName">角色代码<span class="must">*</span></label>
         <div class="col-sm-4">
           <input type="text" id="roleId" name="roleId" ng-model="item.roleId" hidden>
           <input type="text" id="roleName" name="roleName" class="form-control" ng-model="item.roleName" required/>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="roleExplain">说明<span class="must">*</span></label>
+        <label class="col-sm-2 control-label" for="roleExplain">角色中文名<span class="must">*</span></label>
         <div class="col-sm-4">
-            <textarea id="roleExplain" name="roleExplain" class="form-control" ng-model="item.roleExplain" required>
-            </textarea>
+          <input type="text" id="roleExplain" name="roleExplain" class="form-control" ng-model="item.roleExplain" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="enable">是否启用<span class="must">*</span></label>
+        <div class="col-sm-4">
+          <input type="checkbox" id="enable" name="enable" ng-model="a" class="form-control" style="box-shadow:none" ng-change="isEnableChange()" ng-checked="isEnable({{item.isEnable}})" required/>
         </div>
       </div>
       <table class="table table-hover" style="margin-bottom: 57px;">
@@ -137,7 +142,7 @@
       <div class="form-group">
         <div class="col-sm-2"></div>
         <div class="col-sm-4">
-          <button class="btn btn-primary" data-ng-click="save()" ng-disabled="roleForm.$pristine || roleForm.$invalid">
+          <button class="btn btn-primary" data-ng-click="save()">
             <span class="glyphicon glyphicon-refresh"></span> 保存
           </button>
         </div>
