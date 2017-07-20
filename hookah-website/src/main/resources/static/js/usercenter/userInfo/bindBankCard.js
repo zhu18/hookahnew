@@ -15,7 +15,7 @@ $(function () {
             cache:false,
             success:function (data) {
                 if (data.code=="1"){
-                    // window.location.href= host.website+'/usercenter/fundmanage';
+                    window.location.href= host.website+'/usercenter/fundmanage';
 
                 }
             }
