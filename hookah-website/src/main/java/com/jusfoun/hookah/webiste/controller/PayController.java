@@ -3,6 +3,7 @@ package com.jusfoun.hookah.webiste.controller;
 import com.github.miemiedev.mybatis.paginator.domain.Order;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.*;
+import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
@@ -34,7 +35,7 @@ import java.util.*;
  */
 @Controller
 @RequestMapping("/pay")
-public class PayController {
+public class PayController extends BaseController{
     protected final static Logger logger = LoggerFactory.getLogger(PayController.class);
 
     @Resource
@@ -212,7 +213,17 @@ public class PayController {
     @RequestMapping(value = "/cash", method = RequestMethod.GET)
     public String cash(HttpServletRequest request, Model model){
         HttpSession session = request.getSession();
-        model.addAttribute("moneyBalance", session.getAttribute("moneyBalance"));
+        String userId = null;
+        try {
+            userId = this.getCurrentUser().getUserId();
+        } catch (HookahException e) {
+            logger.error(e.getMessage());
+        }
+        List<Condition> filters = new ArrayList();
+        filters.add(Condition.eq("userId", userId));
+        PayAccount payAccount = payAccountService.selectOne(filters);
+        if(payAccount != null)
+            model.addAttribute("moneyBalance", payAccount.getUseBalance());
         model.addAttribute("payments", session.getAttribute("payments"));
         model.addAttribute("orderInfo",session.getAttribute("orderInfo"));
         session.removeAttribute("payments");
