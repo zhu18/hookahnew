@@ -26,6 +26,8 @@ import org.apache.http.HttpException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -40,6 +42,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.counting;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.group;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.match;
 
 /**
  * 订单基本信息
@@ -65,6 +69,12 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
     @Resource
     MongoTemplate mongoTemplate;
+
+    /**
+     * 评论接口
+     */
+    @Resource
+    CommentService commentService;
 
     @Resource
     PayCoreService payCoreService;
@@ -140,6 +150,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         orderinfo.setLastmodify(date);
         orderinfo.setEmail("");
         orderinfo.setIsDeleted((byte)0);
+        orderinfo.setForceDeleted((byte)0);
         orderinfo.setCommentFlag(0);
         return orderinfo;
     }
@@ -271,6 +282,18 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         OrderInfoVo orderInfoVo = new OrderInfoVo();
         orderInfoVo.setOrderId(id);
         orderInfoVo.setIsDeleted((byte)1);
+        mgOrderInfoService.updateByIdSelective(orderInfoVo);
+    }
+
+    @Override
+    public void deleteOrder(String id){
+        OrderInfo order = new OrderInfo();
+        order.setOrderId(id);
+        order.setForceDeleted(new Byte("1"));
+        updateByIdSelective(order);
+        OrderInfoVo orderInfoVo = new OrderInfoVo();
+        orderInfoVo.setOrderId(id);
+        orderInfoVo.setForceDeleted((byte)1);
         mgOrderInfoService.updateByIdSelective(orderInfoVo);
     }
 
@@ -1121,4 +1144,124 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             }
         }
     }
+
+
+    @Override
+    public Map getStatistics(){
+        Map<String,Object> map=new HashMap<String,Object>();
+        map.put("orderNum",getOrderByToday(new Date())); // 订单数
+        map.put("effectiveOrderAmount",getOrderMoneyByPayStatus(new Date(),OrderInfoVo.PAYSTATUS_PAYED)); //有效订单金额
+        map.put("effectiveOrderNum",getOrderNumByPayStatus(new Date(),OrderInfoVo.PAYSTATUS_PAYED)); //有效订单数
+        map.put("commentNum",getCommentNumByStatus(new Date(),1)); //评论数
+        map.put("payEDOrderNum",getOrderNumByPayStatus(new Date(),OrderInfoVo.PAYSTATUS_PAYED)); //已付款订单数
+        map.put("payingOrderNum",getOrderNumByPayStatus(new Date(),OrderInfoVo.PAYSTATUS_PAYING)); //待付款订单数
+        map.put("cancelOrderNum",getOrderNumByToday(new Date(),OrderInfoVo.ORDERSTATUS_CANCEL)); //已取消订单数
+        // map.put("orderAmount",getOrderNumByStatus(new Date(),OrderInfoVo.PAYSTATUS_PAYING)); //已售商品数
+        return map;
+    }
+
+    /**
+     * 获取当日订单数
+     * @return
+     */
+    public int  getOrderByToday(Date stime){
+        List<Condition> filters = new ArrayList();
+        filters.add(Condition.ge("addTime",startTime(stime)));
+        filters.add(Condition.le("addTime",endTime(stime)));
+        List<OrderInfoVo> orderList = mgOrderInfoService.selectList(filters,null);
+        return orderList.size();
+    }
+
+    /**
+     * 根据订单付款状态获取当天订单数 （0：未付款 1：付款中 2：已付款 ）
+     * @return
+     */
+    public int  getOrderNumByPayStatus(Date stime,int payStatus){
+        List<Condition> filters = new ArrayList();
+        filters.add(Condition.ge("addTime",startTime(stime)));
+        filters.add(Condition.le("addTime",endTime(stime)));
+        filters.add(Condition.eq("payStatus",payStatus));
+        List<OrderInfoVo> orderList = mgOrderInfoService.selectList(filters,null);
+        return orderList.size();
+    }
+
+    /**
+     * 根据当天评论数 （0.待审核 1.审核通过，2.审核不通过）
+     * @return
+     */
+    public int  getCommentNumByStatus(Date stime,int commStatus){
+        List<Condition> filters = new ArrayList();
+        filters.add(Condition.ge("addTime",startTime(stime)));
+        filters.add(Condition.le("addTime",endTime(stime)));
+        filters.add(Condition.eq("status",commStatus));
+        List<Comment> list = commentService.selectList(filters);
+        return list.size();
+    }
+
+
+    /**
+     * 根据订单交易状态获取当天订单数 （0未确认,1确认,2已取消,3无效,4退货 ）
+     * @return
+     */
+    public int  getOrderNumByToday(Date stime,int orderStatus){
+        List<Condition> filters = new ArrayList();
+        filters.add(Condition.ge("addTime",startTime(stime)));
+        filters.add(Condition.le("addTime",endTime(stime)));
+        filters.add(Condition.eq("orderStatus",orderStatus));
+        List<OrderInfoVo> orderList = mgOrderInfoService.selectList(filters,null);
+        return orderList.size();
+    }
+
+    /**
+     * 根据状态获取某天的总交易金额
+     * @param stime
+     * @param payStatus （0：未付款 1：付款中 2：已付款 ）
+     * @return
+     */
+    public long getOrderMoneyByPayStatus(Date stime,int payStatus){
+        Long total = 0l;
+        Aggregation aggregation = Aggregation.newAggregation(
+                match(Criteria.where("addTime").gte(startTime(stime)).and("addTime").lte(endTime(stime)).and("payStatus").is(payStatus)),
+                group().sum("orderAmount").as("orderAmount")
+        );
+
+        AggregationResults<OrderInfoVo> ar = mongoTemplate.aggregate(aggregation, "message", OrderInfoVo.class);
+        List<OrderInfoVo> list = ar.getMappedResults();
+        if(list.size() > 0){
+            total = list.get(0).getOrderAmount();
+        }
+        return total;
+    }
+
+
+
+
+    /**
+     * 开始时间
+     * @return
+     */
+    public Date startTime(Date stime){
+        Calendar monEight = Calendar.getInstance();
+        monEight.setTime(stime);
+        monEight.set(Calendar.HOUR_OF_DAY, 0);
+        monEight.set(Calendar.MINUTE, 0);
+        monEight.set(Calendar.SECOND, 0);
+        monEight.set(Calendar.MILLISECOND, 0);
+        return monEight.getTime();
+    }
+
+    /**
+     * 结束时间
+     * @return
+     */
+    public Date endTime(Date stime){
+        Calendar c = Calendar.getInstance();
+        c.setTime(stime);
+        c.set(Calendar.HOUR_OF_DAY, 23);
+        c.set(Calendar.MINUTE, 59);
+        c.set(Calendar.SECOND, 59);
+        c.set(Calendar.MILLISECOND, 999);
+        return c.getTime();
+    }
+
 }

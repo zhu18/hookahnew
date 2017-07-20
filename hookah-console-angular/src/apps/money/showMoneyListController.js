@@ -8,7 +8,7 @@ class showMoneyListController {
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/platform/flowWater",
         params: {
-          tradeType : $scope.tradeType  ? $scope.tradeType  : null,
+          tradeType: $scope.tradeType ? $scope.tradeType : null,
           tradeStatus: $scope.tradeStatus == 0 ? '0' : ($scope.tradeStatus ? $scope.tradeStatus : null),//审核状态
           startDate: $scope.startDate ? format($scope.startDate, 'yyyy-MM-dd HH:mm:ss') : null,
           endDate: $scope.endDate ? format($scope.endDate, 'yyyy-MM-dd HH:mm:ss') : null,
@@ -31,9 +31,7 @@ class showMoneyListController {
         } else {
           $scope.showMoneyList = [];
           $scope.showNoneDataInfoTip = true;
-
         }
-
         $rootScope.loadingState = false;
         growl.addSuccessMessage("订单数据加载完毕。。。");
       });
@@ -212,6 +210,28 @@ class showMoneyListController {
 
       return '';
     }
+
+    $scope.setDate = function (dataFormat, number) {
+      var now = new Date();
+      var date = new Date(now.getTime() - 1);
+      var year = date.getFullYear();
+      var month = date.getMonth() ;
+      var day = date.getDate();
+      if (dataFormat == 'day') {
+        day -= number;
+      } else if (dataFormat == 'week') {
+        day -=  number * 7;
+      } else if (dataFormat == 'month') {
+        month -= number;
+      } else if (dataFormat == 'year') {
+        year -= number;
+      }
+
+      $scope.startDate = new Date(year, month, day);
+      $scope.endDate = new Date();
+
+    }
+
 
     // 日历插件结束
   }

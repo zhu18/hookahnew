@@ -59,5 +59,5 @@ public interface PayAccountService extends GenericService<PayAccount, Long> {
      */
     ReturnData saveRechargeResult(Map<String,String> params);
 
-    boolean verifyPassword (String payPassword) throws HookahException;
+    boolean verifyPassword (String payPassword,String userId);
 }

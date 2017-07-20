@@ -136,6 +136,26 @@ class platformFundManageController {
       return '';
     }
 
+    $scope.setDate = function (dataFormat, number) {
+      var now = new Date();
+      var date = new Date(now.getTime() - 1);
+      var year = date.getFullYear();
+      var month = date.getMonth() ;
+      var day = date.getDate();
+      if (dataFormat == 'day') {
+        day -= number;
+      } else if (dataFormat == 'week') {
+        day -=  number * 7;
+      } else if (dataFormat == 'month') {
+        month -= number;
+      } else if (dataFormat == 'year') {
+        year -= number;
+      }
+
+      $scope.startDate = new Date(year, month, day);
+      $scope.endDate = new Date();
+
+    }
     // 日历插件结束
     $scope.back = function () {
       history.back();
