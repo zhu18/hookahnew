@@ -29,14 +29,14 @@ var htmlPart = {
                     <li class="apply-money"><label for="">申请提现金额：</label>
                         <input type="text" >元
                         <span>可用金额</span>
-                        <span class="money">${userInfo['useBalance']}</span>
+                        <span class="money">${payBankCard.payAccountId}</span>
                         <a href="" class="blue margin-left-15">全部提现</a>
                     </li>
                     <li class="cash-account"><label for="">提现账号：</label>
                         <div class="cash-account-card">
-                            <h4>${userInfo['bankName']}</h4>
-                            <p><span>银行卡号：</span>${userInfo['cardCode']}</p >
-                            <p><span>账户名：</span>${userInfo['cardName']}</p >
+                            <h4>${payBankCard.bankName}</h4>
+                            <p><span>银行卡号：</span>${payBankCard.cardCode}</p >
+                            <p><span>账户名：</span>${payBankCard.cardOwner}</p >
                         </div>
                     </li>
                     <li class="trade-password"><label for="password">交易密码：</label>
