@@ -257,8 +257,7 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 	}
 
 	//验证 支付密码是否正确
-	public boolean verifyPassword(String payPassword) throws HookahException {
-		String userId = this.getCurrentUser().getUserId();
+	public boolean verifyPassword(String payPassword, String userId){
 		List<Condition> filters = new ArrayList();
 		if (StringUtils.isNotBlank(userId)) {
 			filters.add(Condition.eq("userId", userId));

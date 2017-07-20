@@ -141,19 +141,15 @@ public class PayController extends BaseController{
             filters.add(Condition.eq("orderSn", orderSn));
             OrderInfo orderinfo  = orderService.selectOne(filters);
             orderAmount= orderinfo.getOrderAmount();
-            //验证支付密码和余额
-            boolean flag = payAccountService.verifyPassword(passWord);
-            if (flag){
-                List<Condition> filter = new ArrayList();
-                filter.add(Condition.eq("userId", orderinfo.getUserId()));
-                PayAccount payAccount = payAccountService.selectOne(filter);
-                if (payAccount.getUseBalance()<orderAmount){
-                    model.addAttribute("message", "余额不足，支付失败!");
-                    return "pay/fail";
-                }
-                //插流水调接口
-                payAccountService.payByBalance(orderinfo);
+            List<Condition> filter = new ArrayList();
+            filter.add(Condition.eq("userId", orderinfo.getUserId()));
+            PayAccount payAccount = payAccountService.selectOne(filter);
+            if (payAccount.getUseBalance()<orderAmount){
+                model.addAttribute("message", "余额不足，支付失败!");
+                return "pay/fail";
             }
+            //插流水调接口
+            payAccountService.payByBalance(orderinfo);
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("message", e.getMessage());
