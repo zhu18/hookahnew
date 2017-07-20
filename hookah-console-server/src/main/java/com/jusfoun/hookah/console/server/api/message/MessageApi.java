@@ -1,7 +1,6 @@
 package com.jusfoun.hookah.console.server.api.message;
 
 import com.jusfoun.hookah.console.server.controller.BaseController;
-import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.GeneralCodesMapper;
 import com.jusfoun.hookah.core.domain.GeneralCodes;
 import com.jusfoun.hookah.core.domain.MessageTemplate;
@@ -168,6 +167,12 @@ public class MessageApi extends BaseController{
     }
 
 
+    //启/停模板
+    @RequestMapping(value = "/template/stopOrOpen")
+    public ReturnData stopOrOpenTemplate(String tempId){
+        return messageTemplateService.stopOrOpenTemplate(tempId);
+    }
+
     //编辑模板
     @RequestMapping(value = "/template/delete")
     public ReturnData deleteTemplate(String tempId){
@@ -198,5 +203,4 @@ public class MessageApi extends BaseController{
         }
         return returnData;
     }
-
 }

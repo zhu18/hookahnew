@@ -7,13 +7,17 @@ import com.jusfoun.hookah.console.server.controller.BaseController;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.SettleRecord;
+import com.jusfoun.hookah.core.domain.mongo.MgGoodsOrder;
 import com.jusfoun.hookah.core.domain.vo.WaitSettleRecordVo;
 import com.jusfoun.hookah.core.domain.vo.WaitSettleVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
+import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.core.utils.StringUtils;
+import com.jusfoun.hookah.rpc.api.OrderInfoService;
 import com.jusfoun.hookah.rpc.api.OrganizationService;
 import com.jusfoun.hookah.rpc.api.SettleRecordService;
 import com.jusfoun.hookah.rpc.api.WaitSettleRecordService;
@@ -24,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -43,6 +48,9 @@ public class SettleController extends BaseController{
 
     @Resource
     OrganizationService organizationService;
+
+    @Resource
+    OrderInfoService orderInfoService;
 
     /**
      * 获取所有待结算记录
@@ -156,9 +164,46 @@ public class SettleController extends BaseController{
         return returnData;
     }
 
-//    public ReturnData njn(){
-//
-//    }
+    /**
+     * 交易记录查询
+     * @param currentPage
+     * @param pageSize
+     * @param startDate
+     * @param endDate
+     * @param orderSn
+     * @param goodsName
+     * @param addUser
+     * @return
+     */
+    @RequestMapping(value = "/getTradeList", method = RequestMethod.GET )
+    public ReturnData getTradeList(String currentPage, String pageSize,String startDate, String endDate, String orderSn,
+                                   String goodsName, String addUser){
+        Pagination<MgGoodsOrder> page = new Pagination<>();
+        try {
+            Date startTime = null;
+            Date endTime = null;
+            if (StringUtils.isNotBlank(startDate)) {
+                startTime = DateUtils.getDate(startDate,DateUtils.DEFAULT_DATE_TIME_FORMAT);
+            }
+            if (StringUtils.isNotBlank(endDate)) {
+                endTime = DateUtils.getDate(endDate,DateUtils.DEFAULT_DATE_TIME_FORMAT);
+            }
+
+            int pageNumberNew = HookahConstants.PAGE_NUM;
+            if (StringUtils.isNotBlank(currentPage)) {
+                pageNumberNew = Integer.parseInt(currentPage);
+            }
+            int pageSizeNew = HookahConstants.PAGE_SIZE;
+            if (StringUtils.isNotBlank(pageSize)) {
+                pageSizeNew = Integer.parseInt(pageSize);
+            }
+            page = orderInfoService.getMgGoodsOrderList(pageNumberNew, pageSizeNew, orderSn, goodsName, addUser, startTime, endTime);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ReturnData.error("分页查询交易信息错误"+e.getMessage());
+        }
+        return ReturnData.success(page);
+    }
 
 
 }

@@ -52,6 +52,9 @@ public class UserCenterController {
     @Resource
     UserCheckService userCheckService;
 
+    @Resource
+    PayAccountService payAccountService;
+
 //    账户中心
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String userInfo(Model model) {
@@ -240,24 +243,26 @@ public class UserCenterController {
      */
     @RequestMapping(value = "/verifyPayPassword", method = RequestMethod.GET)
     @ResponseBody
-    public ReturnData verifyPayPassword(String paymentPassword,Model model) {
+    public ReturnData verifyPayPassword(String passWord,Model model) {
         ReturnData returnData = new ReturnData();
-        Session session = SecurityUtils.getSubject().getSession();
-        HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
-        User user = userService.selectById(userMap.get("userId"));
-        if(StringUtils.isNotBlank(paymentPassword)){
-            String newPassword = new Md5Hash(paymentPassword).toString();
-
-            String oldPayPassword =  user.getPaymentPassword();
-            if(oldPayPassword.equals(newPassword)){
-                returnData.setMessage("支付密码正确！");
+        try {
+            Session session = SecurityUtils.getSubject().getSession();
+            HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
+            User user = userService.selectById(userMap.get("userId"));
+            if(StringUtils.isNotBlank(passWord)){
+                boolean flag = payAccountService.verifyPassword(passWord,user.getUserId());
+                if(flag){
+                    returnData.setMessage("支付密码正确！");
+                }else{
+                    returnData.setCode(ExceptionConst.Failed);
+                    returnData.setMessage("支付密码错误！");
+                }
             }else{
                 returnData.setCode(ExceptionConst.Failed);
-                returnData.setMessage("支付密码错误！");
+                returnData.setMessage("请输入支付密码！");
             }
-        }else{
-            returnData.setCode(ExceptionConst.Failed);
-            returnData.setMessage("支付密码错误！");
+        }catch (Exception e){
+                e.printStackTrace();
         }
         return  returnData;
     }

@@ -82,5 +82,14 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
 
     void waitSettleRecordInsert(String orderSn);
 
-    Pagination<MgGoodsOrder> getMgGoodsOrderList(Integer pageNum, Integer pageSize, List<Condition> filters);
+    Pagination<MgGoodsOrder> getMgGoodsOrderList(Integer pageNum, Integer pageSize, String orderSn,
+                                                 String goodsName, String addUser, Date startTime, Date endTime);
+
+    /**
+     * 获得订单相关统计信息
+     * @return
+     */
+    public Map getStatistics();
+
+    void deleteOrder(String id);
 }

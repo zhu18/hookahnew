@@ -114,6 +114,19 @@ class MessageController {
             })
         };
 
+        $scope.stopOrOpenTemplate = function(){
+            var promise = $http({
+                method: 'POST',
+                url: $rootScope.site.apiServer + "/api/message/template/stopOrOpen",
+                data: {tempId: item.id}
+            });
+            promise.then(function (res, status, config, headers){
+                $rootScope.loadingState = false;
+                console.log(res.data.data);
+                growl.addSuccessMessage("数据加载完毕。。。");
+            })
+        };
+
         if ($state.$current.name == "message.system.search") {
             //消息是否已读
             $scope.messageIsReads = [{id: -1, name: "全部"}, {id: 0, name: "未读"}, {id: 1, name: "已读"}];
