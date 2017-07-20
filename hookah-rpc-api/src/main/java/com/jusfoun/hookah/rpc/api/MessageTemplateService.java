@@ -1,6 +1,5 @@
 package com.jusfoun.hookah.rpc.api;
 
-import com.jusfoun.hookah.core.domain.MessageSendInfo;
 import com.jusfoun.hookah.core.domain.MessageTemplate;
 import com.jusfoun.hookah.core.domain.vo.TemplateCritVo;
 import com.jusfoun.hookah.core.generic.GenericService;
@@ -15,4 +14,6 @@ public interface MessageTemplateService extends GenericService<MessageTemplate,S
     public ReturnData add(MessageTemplate messageTemplate);
 
     public ReturnData getTempConstantsList();
+
+    ReturnData stopOrOpenTemplate(String tempId);
 }
