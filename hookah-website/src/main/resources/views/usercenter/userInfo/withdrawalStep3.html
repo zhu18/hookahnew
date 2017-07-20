@@ -1,11 +1,8 @@
 <%
 var head = {
 %>
-<link rel="stylesheet" href="/static/css/usercenter/userInfo/withdrawalsStep2.css">
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/recharge.css">
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
-<script type="text/javascript">
-
-</script>
 <%};%>
 
 <%
@@ -16,16 +13,19 @@ var htmlPart = {
         <%include("/usercenter/user-center-menu.html"){} %>
         <div class="grid-right info-center-box ">
             <div class="header">
-                <h4 class="center-title">提现</h4>
+                <h4 class="center-title">充值</h4>
             </div>
-            <div class="withdrawalsStep2">
-
+            <div class="rechargeFailure">
+                <img src="" alt="">
+                <div>充值失败！</div>
+                <a href="">重新支付</a>
             </div>
         </div>
     </div>
 </div>
 </div>
+
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
-<script type="text/javascript" src="/static/js/usercenter/userInfo/withdrawals.js"></script>
+<script type="text/javascript" src="/static/js/usercenter/userInfo/recharge.js"></script>

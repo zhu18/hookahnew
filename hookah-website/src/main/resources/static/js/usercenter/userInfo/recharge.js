@@ -1,5 +1,5 @@
 /**
- * Created by zsj on 2017/7/19 0014.
+ * Created by lss on 2017/7/19 0014.
  */
 
  $(function () {
@@ -16,17 +16,17 @@
  });
 
 $("#J_rechargeBtn").on("click", function () {
-  var data = {};
-  data.money = $('#money').val();
-  console.log(';');
-  $.ajax({
-    url: '/payAccount/userRecharge',
-    data: data,
-    type: 'get',
-    success: function (data) {
-      if (data.code == "1") {
-
-      }
-    }
-  });
+    window.location.href= host.website+'/payAccount/userRecharge?'+'money='+$('#recharge-money').val();
+  // $.ajax({
+  //   url: host.website + '/payAccount/userRecharge',
+  //   data: {
+  //       money :$('#recharge-money').val()
+  //   },
+  //   type: 'get',
+  //   success: function (data) {
+  //     if (data.code == "1") {
+  //
+  //     }
+  //   }
+  // });
 });

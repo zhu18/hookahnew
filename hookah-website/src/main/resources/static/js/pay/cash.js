@@ -73,10 +73,10 @@ var moneyBalance = parseInt($('#moneyBalance').val());
 console.log('商品价格goodsAmount------'+goodsAmount+'账户余额moneyBalance------'+moneyBalance);
 getCheckVal();
 function getCheckVal() {
-	$("input[name=apiCode]:radio").each(function () {
+	$("input[name='apiCode']:radio").each(function () {
 		if (this.checked) {
 			if (this.value == 1) {
-				console.log('======1')
+				console.log('======1');
 				if (goodsAmount > moneyBalance) {
 					$('#J-security').hide();
 					$('#J-rcSubmit').hide();
@@ -114,15 +114,18 @@ function showPayAmount(that) {
 	$(that).siblings('.pay-amount').show();
 }
 function check() {
+
 	$("[name='apiCode']:radio").each(function () {
 		if (this.checked) {
+			// 余额方式提交
 			if (this.value == 1) {
 				if ($('#paymentPassword').val() && $('#paymentPassword').val().length == 6) {
 					testPayPassword($('#paymentPassword').val());
+                    return false;
 				} else {
 					$('.ui-form-error').show().children('p').html('支付密码不符合要求');
 				}
-			} else if(this.value == 2){
+			} else if(this.value == 2){//支付宝方式
 				window.location.href= host.website+'/pay/aliPay?'+'orderSn='+$("#orderSn").html();
 				return false;
 			}else{
@@ -132,16 +135,17 @@ function check() {
 		}
 	});
 }
+// 验证密码
 function testPayPassword(pwd){
-	$.ajax({
-		url:host.website+'/pay/balancePay',
+    $.ajax({
+		url:host.website+'/usercenter/verifyPayPassword',
 		data:{
-            passWord:pwd,
-            orderSn:$("#orderSn").html()
+            passWord:$.md5(pwd)
 		},
 		type:'post',
 		success:function (data) {
 			if(data.code == 1){
+                $("input[name='passWord']").val($.md5($('#paymentPassword').val()));
 				$('#form_paypsw').submit();
 				return true;
 			}else if(data.code == 0){
