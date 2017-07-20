@@ -286,6 +286,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     }
 
     @Override
+    @Transactional
     public void deleteOrder(String id){
         OrderInfo order = new OrderInfo();
         order.setOrderId(id);
@@ -294,10 +295,12 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         OrderInfoVo orderInfoVo = new OrderInfoVo();
         orderInfoVo.setOrderId(id);
         orderInfoVo.setForceDeleted((byte)1);
+        MgGoodsOrder mgGoodsOrder = new MgGoodsOrder();
         mgOrderInfoService.updateByIdSelective(orderInfoVo);
     }
 
     @Override
+    @Transactional
     public void deleteBatchByLogic(String[] ids) {
         OrderInfo order = new OrderInfo();
         order.setIsDeleted(new Byte("1"));
@@ -465,6 +468,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             UserDetail userDetail = null;
             Organization organization = null;
             for (MgOrderGoods mgOrderGoods:ordergoodsList){
+                mgGoodsOrder.setOrderId(UUID.randomUUID().toString().replaceAll("-",""));
                 if (mgOrderGoods.getSolveStatus()==2){
                     orderInfoVo.setSolveStatus(2);
                 }
@@ -477,6 +481,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                     organization = organizationService.selectById(user.getOrgId());
                     mgGoodsOrder.setRealName(organization.getOrgName());
                 }
+                //拆单插入mongo
                 mgGoodsOrderService.insert(mgGoodsOrder);
             }
             if (user.getUserType() == 2){
@@ -700,6 +705,17 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         return pagination;
     }
 
+    /**
+     * 前台已售出商品列表
+     * @param pageNum
+     * @param pageSize
+     * @param filters
+     * @param goodsType
+     * @param startTime
+     * @param endTime
+     * @param userId
+     * @return
+     */
     @Override
     public Pagination<OrderInfoVo> getSoldOrderListInPage(Integer pageNum, Integer pageSize, List<Condition> filters,
                                                           Byte goodsType, Date startTime, Date endTime, String userId){
