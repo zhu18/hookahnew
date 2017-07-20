@@ -16,7 +16,6 @@ class MessageController {
             });
             promise.then(function (res, status, config, headers) {
                 $rootScope.loadingState = false;
-                console.log($rootScope.pagination);
                 growl.addSuccessMessage("数据加载完毕。。。");
             });
         };
@@ -37,7 +36,6 @@ class MessageController {
             });
             promise.then(function (res, status, config, headers) {
                 $rootScope.loadingState = false;
-                console.log($rootScope.pagination);
                 growl.addSuccessMessage("数据加载完毕。。。");
             });
         };
@@ -58,7 +56,6 @@ class MessageController {
             });
             promise.then(function (res, status, config, headers) {
                 $rootScope.loadingState = false;
-                console.log($rootScope.pagination);
                 growl.addSuccessMessage("数据加载完毕。。。");
             });
         };
@@ -80,7 +77,6 @@ class MessageController {
             });
             promise.then(function (res, status, config, headers) {
                 $rootScope.loadingState = false;
-                console.log($rootScope.pagination);
                 growl.addSuccessMessage("数据加载完毕。。。");
             });
         };
@@ -93,9 +89,7 @@ class MessageController {
             });
             promise.then(function (res, status, config, headers) {
                 $rootScope.loadingState = false;
-                console.log("获取数据:" + res.data);
                 if (res.data.code == 1) {
-                    console.log(res.data.data);
                     $scope.eventTypes = res.data.data;
                     // $scope.eventType = $scope.eventTypes[0].code;
                     // $scope.eventTypes.unshift({"code":"-1","describle":"全部"});
@@ -118,9 +112,7 @@ class MessageController {
             promise.then(function (res, status, config, headers){
                 $rootScope.loadingState = false;
                 $rootScope.list = res.data.data;
-                console.log("getinfores:"+res.data);
                 $scope.len = res.data.data.length;
-                console.log("len:"+res.data.data.length);
                 growl.addSuccessMessage("数据加载完毕。。。");
             });
         };
@@ -145,7 +137,6 @@ class MessageController {
 
         //删除模板
         $scope.deleteTemplate = function(item){
-            console.log("模板状态值：" + item.isVaild);
             if (item.isVaild != null && item.isVaild != 1) {
                 var modalInstance = $rootScope.openConfirmDialogModal("确定要删除" + '<span style="font-weight: bold;color: #6b3100">' + item.templateHeader + '</span>' + "模板吗？");
                 modalInstance.result.then(function () {
@@ -156,7 +147,6 @@ class MessageController {
                     });
                     promise.then(function (res, status, config, headers){
                         $rootScope.loadingState = false;
-                        console.log(res.data.data);
                         if (res.data.code == 1) {
                             growl.addSuccessMessage("删除成功。。。");
                             $scope.templateSearch();
@@ -181,7 +171,6 @@ class MessageController {
             });
             promise.then(function (res, status, config, headers){
                 $rootScope.loadingState = false;
-                console.log(res.data.data);
                 if (res.data.code == 1) {
                     growl.addSuccessMessage("保存模板成功。。。");
                     $state.go("message.template.search");
@@ -195,7 +184,6 @@ class MessageController {
         $scope.toEditTemplate = function(item){
             //启用状态下不可编辑
             if (item.isVaild != null && item.isVaild != 1) {
-                console.log("模板数据:" + item.id);
                 $state.go("message.template.edit",{data:item});
             } else {
                 $rootScope.openErrorDialogModal('模板' + '<span style="font-weight: bold;color: #6b3100">' + item.templateHeader + '</span>' + "正在使用中,不能编辑");
@@ -212,7 +200,6 @@ class MessageController {
             });
             promise.then(function (res, status, config, headers){
                 $rootScope.loadingState = false;
-                console.log(res.data.data);
                 if (res.data.code == 1) {
                     growl.addSuccessMessage("操作成功");
                     $scope.templateSearch();
@@ -235,9 +222,7 @@ class MessageController {
             });
             promise.then(function (res, status, config, headers) {
                 $rootScope.loadingState = false;
-                console.log("获取数据:" + res.data);
                 if (res.data.code == 1) {
-                    console.log(res.data.data);
                     $scope.eventTypes = res.data.data;
                     $scope.eventTypes.unshift({"code":"-1","describle":"全部"});
                     // $scope.eventType = $scope.eventTypes[0].code;
@@ -259,21 +244,15 @@ class MessageController {
             });
             promise.then(function (res, status, config, headers) {
                 $rootScope.loadingState = false;
-                console.log("获取数据add:" + res.data.data);
                 if (res.data.code == 1) {
-                    // console.log(res.data.data);
                     $scope.eventTypes = res.data.data;
-                    // $scope.eventTypes.unshift({"code":"-1","describle":"全部"});
                     $scope.eventType = $scope.eventTypes[0].code;
-                    // $scope.eventType = "-1";
                 }
             });
 
 
             $scope.flag=false;
             $scope.$watch('content',function(newVal,oldVal){
-                // console.log("typeof:"+typeof newVal);
-                // console.log("new:"+newVal.charAt(newVal.length-1));
                 if(newVal.charAt(newVal.length-1) == '['){
                     $scope.getInfo();
                     $scope.flag=true;
@@ -289,9 +268,7 @@ class MessageController {
             $scope.downLists=[];
             $scope.change=function(){
                 var length=$scope.content.length;
-                console.log("changelength:"+length);
                 var lastStr=$scope.content.slice(length-1);
-                console.log("lastStr:"+lastStr);
                 if(lastStr=='['){
                     var promise=$http({
                         method: 'GET',
@@ -300,11 +277,8 @@ class MessageController {
                     });
                     promise.then(function(res,status,config,headers){
                         var rep = res.data.data;
-                        console.log(rep);
                         $scope.downLists.length=0;
                         angular.forEach(rep,function(data,index){
-                            console.log(data);
-                            console.log(data.code);
                             if(index==0){
                                 var saveData = {
                                     val:data,
@@ -323,20 +297,15 @@ class MessageController {
                     $scope.downLists.length=0;
                 }
             };
-            console.log($scope.downLists);
             $scope.keydown=function(e){
                 var length=$scope.downLists.length;
-                console.log("keydownlen:"+length);
                 var keycode=e.keyCode;
-                console.log("keycode:"+keycode);
                 if(keycode==40 && length!=0){
                     $scope.numIndex+=1;
-                    console.log($scope.numIndex);
                     if($scope.numIndex>=length){
                         $scope.numIndex=0;
                     }
                     var lists=$scope.downLists;
-                    console.log(lists);
                     angular.forEach(lists,function(data,index){
                         $scope.downLists[index].active=false;
                     });
@@ -407,7 +376,6 @@ class MessageController {
             $scope.template = $stateParams.data;
             $scope.content = $stateParams.data.templateContent;
             $scope.getTempEventTypeSelect($stateParams.data.eventType);
-            console.log("事件类型：" + $stateParams.data.eventType);
             $scope.flag=false;
 
         }
@@ -424,9 +392,7 @@ class MessageController {
             });
             promise.then(function (res, status, config, headers) {
                 $rootScope.loadingState = false;
-                console.log("获取数据:" + res.data);
                 if (res.data.code == 1) {
-                    console.log(res.data.data);
                     $scope.eventTypes = res.data.data;
                     $scope.eventTypes.unshift({"code":"-1","describle":"全部"});
                     // $scope.eventType = $scope.eventTypes[0].code;
@@ -452,9 +418,7 @@ class MessageController {
             });
             promise.then(function (res, status, config, headers) {
                 $rootScope.loadingState = false;
-                console.log("获取数据:" + res.data);
                 if (res.data.code == 1) {
-                    console.log(res.data.data);
                     $scope.eventTypes = res.data.data;
                     $scope.eventTypes.unshift({"code":"-1","describle":"全部"});
                     // $scope.eventType = $scope.eventTypes[0].code;
@@ -482,9 +446,7 @@ class MessageController {
             });
             promise.then(function (res, status, config, headers) {
                 $rootScope.loadingState = false;
-                console.log("获取数据:" + res.data);
                 if (res.data.code == 1) {
-                    console.log(res.data.data);
                     $scope.eventTypes = res.data.data;
                     // $scope.eventType = $scope.eventTypes[0].code;
                     $scope.eventTypes.unshift({"code":"-1","describle":"全部"});
@@ -505,7 +467,6 @@ class MessageController {
             }else if($state.$current.name == "message.template.search"){
                 $scope.templateSearch();
             }
-            console.log('Page changed to: ' + $rootScope.pagination.currentPage);
         };
 
         $scope.refresh = function(){
