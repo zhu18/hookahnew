@@ -102,7 +102,7 @@
                             <tr data-ng-repeat="item in supplierList">
                                 <td>{{$index + 1}}</td>
                                 <td data-ng-bind="item.orgName"></td>
-                                <td data-ng-bind="item.checkUser"></td>
+                                <td data-ng-bind="item.contactName"></td>
                                 <td data-ng-bind="item.contactPhone"></td>
                                 <td>
                                     <span text-length="50" ng-show="item.checkStatus == 2">未通过</span>

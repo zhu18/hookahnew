@@ -6,6 +6,14 @@ class showUserMoneyDetailController {
     $scope.userBaseInfo=$stateParams.item;
 
     $scope.search = function () {
+
+      if ($scope.startDate !== null && $scope.endDate !== null && ($scope.startDate > $scope.endDate)) {
+        //继续
+        alert('开始时间必须大于结束时间！请重新选择日期。');
+        return;
+      }
+
+
       var promise = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/userFund/userFundDetail",
@@ -69,10 +77,18 @@ class showUserMoneyDetailController {
       })
     }
     // 日历插件开始
-    $scope.inlineOptions = {
+    $scope.startDateOptions = {
       customClass: getDayClass,
       minDate: new Date(2000, 5, 22),
+      maxDate: new Date(),
       showWeeks: true
+    };
+    $scope.endDateOptions = {
+      // dateDisabled: disabled,
+      // formatYear: 'yy',
+      maxDate: new Date(),
+      // minDate: new Date(),
+      // startingDay: 1
     };
     $scope.open1 = function () {
       $scope.popup1.opened = true;

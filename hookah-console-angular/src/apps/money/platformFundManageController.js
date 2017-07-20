@@ -3,9 +3,10 @@
  */
 class platformFundManageController {
   constructor($scope, $rootScope, $state, $http, $stateParams, growl) {
-    $scope.userBaseInfo=$stateParams.item;
+    $scope.userBaseInfo = $stateParams.item;
 
-    $scope.search = function () {
+
+    $scope.baseInfo = function () {
       var promise = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/platform/userFunds",
@@ -14,23 +15,26 @@ class platformFundManageController {
         console.log(res);
         if (res.data.code == '1') {
           $scope.moneyBaseInfo = res.data.data;
-          $scope.showNoneDataInfoTip = false;
-          if (res.data.data.totalPage > 1) {
-            $scope.showPageHelpInfo = true;
-          }
         } else {
           $scope.moneyBaseInfo = [];
-          $scope.showNoneDataInfoTip = true;
         }
+        $scope.search();
       });
+    };
+    $scope.baseInfo();
+    $scope.search = function () {
 
-
-
+      if ($scope.startDate !== null && $scope.endDate !== null && ($scope.startDate > $scope.endDate)) {
+        //继续
+        alert('开始时间必须大于结束时间！请重新选择日期。');
+        return;
+      }
+      $rootScope.loadingState = true;
       var promise2 = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/platform/fundsRecord",
         params: {
-          tradeType : $scope.tradeType  ? $scope.tradeType  : null,
+          tradeType: $scope.tradeType ? $scope.tradeType : null,
           tradeStatus: $scope.tradeStatus == 0 ? '0' : ($scope.tradeStatus ? $scope.tradeStatus : null),//审核状态
           startDate: $scope.startDate ? format($scope.startDate, 'yyyy-MM-dd HH:mm:ss') : null,
           endDate: $scope.endDate ? format($scope.endDate, 'yyyy-MM-dd HH:mm:ss') : null,
@@ -50,14 +54,16 @@ class platformFundManageController {
           $scope.userMoneyList = [];
           $scope.showNoneDataInfoTip = true;
         }
+        $rootScope.loadingState = false;
+
       });
     };
-    $scope.search();
     $scope.pageChanged = function () {
       $scope.search();
       console.log('Page changed to: ' + $rootScope.pagination.currentPage);
     };
     // 处理日期插件的获取日期的格式
+
     var format = function (time, format) {
       var t = new Date(time);
       var tf = function (i) {
@@ -85,12 +91,20 @@ class platformFundManageController {
             break;
         }
       })
-    }
+    };
     // 日历插件开始
-    $scope.inlineOptions = {
+    $scope.startDateOptions = {
       customClass: getDayClass,
-      minDate: new Date(2000, 5, 22),
-      showWeeks: true
+      // minDate: new Date(2000, 5, 22),
+      maxDate: new Date(),
+      // showWeeks: true
+    };
+    $scope.endDateOptions = {
+      // dateDisabled: disabled,
+      // formatYear: 'yy',
+      maxDate: new Date(),
+      // minDate: new Date(),
+      // startingDay: 1
     };
     $scope.open1 = function () {
       $scope.popup1.opened = true;
@@ -132,7 +146,6 @@ class platformFundManageController {
           }
         }
       }
-
       return '';
     }
 
@@ -140,12 +153,12 @@ class platformFundManageController {
       var now = new Date();
       var date = new Date(now.getTime() - 1);
       var year = date.getFullYear();
-      var month = date.getMonth() ;
+      var month = date.getMonth();
       var day = date.getDate();
       if (dataFormat == 'day') {
         day -= number;
       } else if (dataFormat == 'week') {
-        day -=  number * 7;
+        day -= number * 7;
       } else if (dataFormat == 'month') {
         month -= number;
       } else if (dataFormat == 'year') {

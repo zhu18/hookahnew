@@ -30,6 +30,8 @@
         </div>
         <div class="viewContent clearfix" style="color: #949494;font-size: 13px; line-height: 13px;padding:15px 10px;">
             <div class="leftContent grid-left padding-top-20 text-align-center">
+                <h5>账户资金</h5>
+
                 <table class="table table-hover getMoneyTable" style="margin-bottom: 20px;">
                     <thead class="text-center">
                     <tr>
@@ -61,7 +63,7 @@
                                 data-ng-click="search()"> 冻结划入
                         </button>
                         <button class="btn btn-default" data-ng-model="tradeType" uib-btn-radio="6004"
-                                data-ng-click="search()"> 释放划入
+                                data-ng-click="search()"> 释放划出
                         </button>
                         <button class="btn btn-default" data-ng-model="tradeType" uib-btn-radio="3007"
                                 data-ng-click="search()"> 手续费收入
@@ -97,7 +99,7 @@
                         <input style="background-color: transparent;" ng-keypress="$event.preventDefault()"
                                ng-paste="$event.preventDefault()" type="text" class="form-control"
                                uib-datepicker-popup="yyyy-MM-dd" type="datetime-local" ng-model="startDate"
-                               is-open="popup1.opened" datepicker-options="dateOptions" close-text="关闭" clear-text="清除"
+                               is-open="popup1.opened" datepicker-options="startDateOptions" close-text="关闭" clear-text="清除"
                                current-text="今天" readonly="true"/>
                         <span class="input-group-btn">
                          <button type="button" class="btn btn-default" ng-click="open1()"><i
@@ -107,8 +109,9 @@
                     <label class="control-label">至</label>
                     <p class="input-group" style="margin-top: 15px">
                         <input style="background-color: transparent;" ng-keypress="$event.preventDefault()"
-                               ng-paste="$event.preventDefault()" type="text" class="form-control" uib-datepicker-popup
-                               ng-model="endDate" is-open="popup2.opened" datepicker-options="dateOptions"
+                               ng-paste="$event.preventDefault()" type="text" class="form-control"
+                               uib-datepicker-popup="yyyy-MM-dd" type="datetime-local" ng-model="endDate"
+                               is-open="popup2.opened" datepicker-options="endDateOptions"
                                close-text="Close" close-text="关闭" clear-text="清除" current-text="今天" readonly="true"/>
                         <span class="input-group-btn">
                          <button type="button" class="btn btn-default" ng-click="open2()"><i
@@ -125,7 +128,7 @@
                     </button>
                 </div>
                 <h5>提现信息</h5>
-                <table class="table table-hover " style="margin-bottom: 20px;">
+                <table class="table table-hover "  data-ng-show="userMoneyList.length>0" style="margin-bottom: 20px;">
                     <thead class="text-center">
                     <th>流水号</th>
                     <th>时间</th>
@@ -152,7 +155,7 @@
                     </tr>
                     </tbody>
                 </table>
-                <table ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">
+                <table data-ng-show="userMoneyList.length>0" ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">
                     <tr>
                         <td colspan="9">
                             <div class="pull-right page-box">
@@ -169,6 +172,14 @@
                         </td>
                     </tr>
                 </table>
+                <div class="simple-grid-none-data-wrap " data-ng-show="userMoneyList.length==0">
+                    <div class="simple-grid-none-data text-center " >
+                        <div class="row-padding row-margin text-center">
+                            <span class="text-size-24 blue icon-info-1" style="vertical-align: middle"></span>
+                            <div class="text-size-18 tip-text inline-block">没有查询到符合条件的记录</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
