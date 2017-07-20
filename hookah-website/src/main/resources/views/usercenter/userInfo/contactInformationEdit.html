@@ -3,6 +3,8 @@ var head = {
 %>
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/contactInformationEdit.css">
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
+<script src="/static/js/plugins/validate/jquery-validate.js"></script>
+<script src="/static/js/plugins/validate/messages_zh.js"></script>
 <%};%>
 
 <%
@@ -16,30 +18,31 @@ var htmlPart = {
                 <div class="header clearfix">
                     <h4 class="grid-left center-title">账号信息</h4>
                 </div>
-                <ul>
-                    <li>
-                        <label for="contactName">联系人 :</label>
-                        <input type="text" id="contactName">
-                    </li>
-                    <li>
-                        <label for="contactPhone">联系电话 :</label>
-                        <input type="text" id="contactPhone">
-                        <span style="color: red" class="contactPhone-msg"></span>
-                    </li>
-                    <li>
-                        <label for="contactAddress">邮寄地址 :</label>
-                        <input type="text" id="contactAddress">
-                    </li>
-                    <li>
-                        <label for="postCode">邮编 :</label>
-                        <input type="text" id="postCode">
-                    </li>
-                    <li>
-                        <a href="javascript:void (0)" class="save">保存</a>
-                        <a href="/usercenter/contactInformation" class="cancel">取消</a>
-                    </li>
-                </ul>
-            </div>
+                <div class="contactInformationEdit">
+                    <form id="ff" >
+                        <div class="item">
+                            <label for="contactName">联系人 :</label>
+                            <input type="text" id="contactName" name="sname" placeholder="设置用户名" autocomplete="off" tip="请输入用户名">
+                        </div>
+                        <div class="item">
+                            <label for="contactPhone">联系电话 :</label>
+                            <input type="text" id="contactPhone" name="sphone" class="item-text" placeholder="输入手机号码" tip="请输入手机号码">
+                        </div>
+                        <div class="item ">
+                            <label for="contactAddress" class="vertical-align-top">邮寄地址 :</label>
+                            <textarea type="text" id="contactAddress" name="saddress" placeholder="输入地址" tip="请输入地址"></textarea>
+                        </div>
+                        <div class="item">
+                            <label for="postCode">邮编 :</label>
+                            <input type="text" id="postCode" name="szip" placeholder="设置邮编" autocomplete="off" tip="请输入邮编">
+                        </div>
+                        <div class="item">
+                            <a href="javascript:void(0)" class="save">保存</a>
+                            <a href="" class="cancel">取消</a>
+                        </div>
+                    </form>
+                </div>
+
 
         </div>
     </div>

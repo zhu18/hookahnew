@@ -6,6 +6,7 @@ $(function () {
         url:host.website+'/regInfo/selectAccountInfo',
         data:{},
         type:'get',
+        cache:false,
         success:function (data) {
             var userName=data.data.user.userName?data.data.user.userName:'';
             var mobile=data.data.user.mobile?data.data.user.mobile:'';
