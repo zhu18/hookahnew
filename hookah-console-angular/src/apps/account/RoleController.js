@@ -131,7 +131,6 @@ class RoleController {
         }
       });
       var data = "";
-      console.log($rootScope.item);
       if (angular.isUndefined($rootScope.item.roleId)) {
         data = "roleName=" + $rootScope.item.roleName + "&roleExplain=" + $rootScope.item.roleExplain + "&enable=" + $rootScope.item.isEnable + "&permissions=" + spCodesTemp;
       } else {
