@@ -2,16 +2,14 @@ package com.jusfoun.hookah.core.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jusfoun.hookah.core.generic.GenericModel;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
 
 public class PayBankCard extends GenericModel {
 
+    @Id
     private Integer id;
 
     private Long payAccountId;

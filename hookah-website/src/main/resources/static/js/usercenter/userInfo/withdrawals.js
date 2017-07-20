@@ -37,7 +37,7 @@ $(function () {
         $.ajax({
             url:host.website+'/withdrawRecord/applyW',
             data:{
-                money:$("#money").val(),
+                money:$("#applyMoney").val(),
                 payPwd:$("#password").val()
             },
             type:'get',

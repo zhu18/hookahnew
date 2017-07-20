@@ -24,6 +24,7 @@
     margin: 0 28px;
 }
 .withdrawalStep2 .withdrawalStep2-middle ul li{
+    position: relative;
     float: left;
     width: 33.33%;
     margin-top: 40px;
@@ -33,7 +34,12 @@
     color: #179d1d;
 }
 .withdrawalStep2 .withdrawalStep2-middle ul li:before{
-    color: #179d1d;
+    content: "";
+    display: inline-block;
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
 }
 .withdrawalStep2 .withdrawalStep2-down{
     width: 100%;
