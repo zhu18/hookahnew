@@ -245,7 +245,7 @@ public class OrderInfoController extends BaseController {
     }
 
     /**
-     * 商家已卖出的商品订单
+     * 供应商已卖出的商品订单
      * @param pageNumber
      * @param pageSize
      * @param startDate

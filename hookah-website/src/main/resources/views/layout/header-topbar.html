@@ -20,10 +20,10 @@
           <div class="userInfos-con">
             <img src="${user.headImg}" alt="">
             <% if(shiro.hasPermission("home")){%>
-            <a href="/admin/articleManage" class="a-hover-blue">个人中心</a>
+            <a href="/admin/articleManage" class="a-hover-blue">用户中心</a>
             <a href="${host.admin}/home" >后台管理</a>
             <%}else{%>
-            <a href="/usercenter/index" class="a-hover-blue">个人中心</a>
+            <a href="/usercenter/index" class="a-hover-blue">用户中心</a>
             <%}%>
           </div>
           <a href="${host.auth}/logout">退出</a>
@@ -32,12 +32,12 @@
       <%}%>
       <li class="display-inline-block">
         <% if(shiro.hasPermission("home")){%>
-        <a href="/admin/articleManage">个人中心</a>
+        <a href="/admin/articleManage">用户中心</a>
       </li>
       <li class="display-inline-block">
         <a href="${host.admin}/home" target="_blank">后台管理</a>
         <%}else{%>
-        <a href="/usercenter/index">个人中心</a>
+        <a href="/usercenter/index">用户中心</a>
         <%}%>
       </li>
       <li class="display-inline-block">|</li>
