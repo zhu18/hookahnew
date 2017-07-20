@@ -6,6 +6,7 @@ package com.jusfoun.hookah.pay.service.impl;
 //import com.apex.fix.JFixComm;
 //import com.apex.fix.JFixSess;
 import com.jusfoun.hookah.core.dao.PayBankCardMapper;
+import com.jusfoun.hookah.core.domain.PayBank;
 import com.jusfoun.hookah.core.domain.PayAccountRecord;
 import com.jusfoun.hookah.core.domain.PayBankCard;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -193,5 +194,9 @@ public class PayBankCardImpl extends GenericServiceImpl<PayBankCard, String> imp
         paramMap.put("FID_CS1", ukey);//预留参数1（k宝返回）*
         paramMap.put("FID_CS2", PayConstants.QDABC_PREFIX + ukey);//预留参数2（BD + k宝返回）*
         return paramMap;
+    }
+
+    public List<PayBank> selectBankName(){
+        return payBankCardMapper.selectBankName();
     }
 }

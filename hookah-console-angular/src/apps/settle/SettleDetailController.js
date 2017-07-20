@@ -3,12 +3,6 @@
  */
 class settleDetailController {
   constructor($scope, $rootScope, $state, $http, $stateParams, growl) {
-    var pruDom='<div>内容</div>';
-    var modalInstance = $rootScope.openConfirmDialogModal(pruDom);
-    modalInstance.result.then(function () {
-      alert('asdf')
-    });
-
     var promise = $http({
       method: 'GET',
       url: $rootScope.site.apiServer + "/api/settleOrder/getListBySettleId/",
@@ -49,7 +43,7 @@ class settleDetailController {
         if (res.data.code == '1') {
           pruDom='<div>本次结算处理成功，平台收入'+$scope.tradeCenterAmount+'元，付供应商'+$scope.supplierAmount+'元。</div>'
         } else {
-          pruDom='<div>本次结算处理失败，请联系技术人员。</div>'
+          pruDom='<div>'+res.data.message+'</div>'
         }
         modalInstance = $rootScope.openConfirmDialogModal(pruDom);
         modalInstance.result.then(function () {

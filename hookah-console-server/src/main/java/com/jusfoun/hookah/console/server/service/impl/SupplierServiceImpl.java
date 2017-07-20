@@ -3,9 +3,12 @@ package com.jusfoun.hookah.console.server.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.jusfoun.hookah.core.common.Pagination;
+import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.dao.OrganizationMapper;
 import com.jusfoun.hookah.core.dao.SupplierMapper;
 import com.jusfoun.hookah.core.dao.UserMapper;
+import com.jusfoun.hookah.core.domain.MessageCode;
 import com.jusfoun.hookah.core.domain.Organization;
 import com.jusfoun.hookah.core.domain.Supplier;
 import com.jusfoun.hookah.core.domain.User;
@@ -15,6 +18,7 @@ import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.FormatCheckUtil;
 import com.jusfoun.hookah.core.utils.JsonUtils;
+import com.jusfoun.hookah.rpc.api.MqSenderService;
 import com.jusfoun.hookah.rpc.api.SupplierService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,6 +42,9 @@ public class SupplierServiceImpl extends GenericServiceImpl<Supplier, String> im
 
     @Resource
     OrganizationMapper organizationMapper;
+
+    @Resource
+    MqSenderService mqSenderService;
 
     @Resource
     public void setDao(SupplierMapper supplierMapper) {
@@ -94,19 +101,27 @@ public class SupplierServiceImpl extends GenericServiceImpl<Supplier, String> im
 
     @Override
     @Transactional
-    public void checkSupplier(String id, String checkContent, Byte checkStatus, String checkUser){
+    public void checkSupplier(String id, String checkContent, Byte checkStatus, String checkUser) throws Exception{
         Supplier supplier = supplierMapper.selectByPrimaryKey(id);
+        if (supplier==null){
+            throw new HookahException("保存失败，请重新操作");
+        }
         supplier.setCheckStatus(checkStatus);
         supplier.setCheckContent(checkContent.replaceAll(" ",""));
         supplier.setCheckUser(checkUser);
+        MessageCode messageCode = new MessageCode();
+        messageCode.setBusinessId(id);
         User user = userMapper.selectByPrimaryKey(supplier.getUserId());
         if (checkStatus.equals("1")){
+            messageCode.setCode(HookahConstants.MESSAGE_401);
             user.setUserType(8);
         }else{
+            messageCode.setCode(HookahConstants.MESSAGE_402);
             user.setUserType(10);
         }
         supplierMapper.updateByPrimaryKeySelective(supplier);
         userMapper.updateByPrimaryKeySelective(user);
+        mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_NEW_MESSAGE, messageCode);
     }
 
 }

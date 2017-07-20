@@ -91,8 +91,10 @@ public class SettleRecordServiceImpl extends GenericServiceImpl<SettleRecord, Lo
 
         // 结算总金额等于剩余待结算金额  修改待结算记录的状态
         if(record.getNoSettleAmount() == (supplierAmount + tradeCenterAmount)){
-            record.setSettleStatus(HookahConstants.HAS_SETTLE_STATUS);
-            waitSettleRecordService.updateById(record);
+            WaitSettleRecord waitSettleRecord = new WaitSettleRecord();
+            waitSettleRecord.setId(record.getId());
+            waitSettleRecord.setSettleStatus(HookahConstants.HAS_SETTLE_STATUS);
+            waitSettleRecordService.updateByIdSelective(waitSettleRecord);
         }
 
         // 添加结算记录

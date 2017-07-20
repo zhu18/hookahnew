@@ -34,6 +34,7 @@ public class Oauth2ServerLauncher {
             "classpath*:spring/authz-context.xml",
             "classpath*:spring/authz-security.xml",
             "classpath*:hookah_auth2server.xml",
+            "classpath*:hookah_rpc_client.xml",
             Oauth2ServerLauncher.class
         }, args);
         MotanSwitcherUtil.setSwitcherValue(MotanConstants.REGISTRY_HEARTBEAT_SWITCHER, true);

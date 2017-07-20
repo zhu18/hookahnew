@@ -15,6 +15,12 @@
     width: 85px;
     float: left;
 }
+.header ul li a.active{
+    color:#247DE8;
+    border-bottom:2px solid #247DE8;
+    height:22px;
+    display: block;
+}
 .info-center-title{
     width: 100px;
     height: 20px;
@@ -34,7 +40,7 @@ table{
 thead{
     height: 36px;
     width: 933px;
-    background-color: #E9E9E9;
+    background-color: #f2f2f2;
     border:1px solid #DDD;
     padding-left:17px;
 }
@@ -54,9 +60,17 @@ thead{
 .list .order thead .sender {
     width:25%;
 }
-.list .order tbody tr {
-    border: 1px solid #DDD;
+.list .order tbody .readEnd{
     color:#247DE8;
+}
+.list .order tbody tr:nth-child(even){
+    background: #f7f7f7;
+}
+.list .order tbody tr:hover{
+    background: #efeeee;
+}
+.list .order tbody tr{
+    border: 1px solid #DDD;
 }
 .list .order tbody tr.active{
     background: #d7e8fa;
@@ -168,3 +182,4 @@ thead{
     /*border: 1px solid #DDD;*/
 /*}*/
 
+.isRead a{color:#247DE8;}

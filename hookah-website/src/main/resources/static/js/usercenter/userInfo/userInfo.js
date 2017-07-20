@@ -14,7 +14,7 @@ function loadPageData(data) {
           html +='<h4>'+list[i].goodsName+'</h4>';
           html +='<p>价格：<span>￥'+list[i].goodsPrice+'</span></p>';
           html +='</div></a></div>';
-          html +='<div class="order-list-down">购买时间: <span class="buy-time">' + list[i].addTime + '</span></div>';
+          html +='<div class="order-list-down">购买时间: <span class="buy-time">' + list[i].payTime + '</span></div>';
           html +='</div>';
         }
         $('.my-order-list-one ').html(html);

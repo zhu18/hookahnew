@@ -1,0 +1,157 @@
+<style type="text/css">
+    /*.form-control{ display: inline-block; width:200px;}*/
+    .form-inline .form-control {
+        width: 110px;
+    }
+    /*.btn-warning{ display: none;}*/
+    /*.getMoneyTable{ width:400px;}*/
+    .getMoneyTable tr th{ text-align: right;}
+    .getMoneyTable tr td{ text-align: left;}
+    .getMoneyStatus span{ color:red;}
+    .getMoneyStatus i{ color:green;font-style: normal;}
+    .input-group a{ font-size:14px;padding-right: 14px;}
+
+</style>
+<div class="row">
+    <div class="grid-left viewDetails margin-bottom-30">
+        <div class="console-title console-title-border clearfix">
+            <div class="pull-left"><h4>用户资金管理</h4></div>
+            <div class="pull-right">
+                <button class="btn btn-default" ng-click="back()"><span class="glyphicon glyphicon-refresh"></span> 返回
+                </button>
+            </div>
+        </div>
+        <div class="viewContent clearfix" style="color: #949494;font-size: 13px; line-height: 13px;padding:15px 10px;">
+            <div class="leftContent grid-left padding-top-20 text-align-center">
+                <table class="table table-hover getMoneyTable"  style="margin-bottom: 20px;">
+                    <thead class="text-center">
+                    <tr>
+                        <th width="115">用户名:</th>
+                        <td data-ng-bind="userBaseInfo.userName"></td>
+                        <th width="115">单位名称:</th>
+                        <td data-ng-bind="userBaseInfo.orgName"></td>
+                        <th width="115">电话:</th>
+                        <td data-ng-bind="userBaseInfo.phone"></td>
+                        <th width="115">用户类型:</th>
+                        <td>
+                            <span data-ng-show="userBaseInfo.userType==0">系统</span>
+                            <span data-ng-show="userBaseInfo.userType==1">未认证</span>
+                            <span data-ng-show="userBaseInfo.userType==2">个人</span>
+                            <span data-ng-show="userBaseInfo.userType==3">个人待审核</span>
+                            <span data-ng-show="userBaseInfo.userType==4">企业</span>
+                            <span data-ng-show="userBaseInfo.userType==5">企业待审核</span>
+                            <span data-ng-show="userBaseInfo.userType==6">个人审核失败</span>
+                            <span data-ng-show="ituserBaseInfoem.userType==7">企业审核失败</span>
+                            <span data-ng-show="userBaseInfo.userType==8">供应商</span>
+                            <span data-ng-show="userBaseInfo.userType==9">供应商待审核</span>
+                            <span data-ng-show="userBaseInfo.userType==10">供应商审核失败</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="115">账户余额:</th>
+                        <td data-ng-bind="userBaseInfo.balance/100"></td>
+                        <th width="115">可用余额:</th>
+                        <td data-ng-bind="userBaseInfo.useBalance/100"></td>
+                        <th width="115">银行卡号:</th>
+                        <td colspan="3">{{userBaseInfo.bankName}} | {{userBaseInfo.cardCode | limitTo:4}} **** **** {{userBaseInfo.cardCode | limitTo:-4}}</td>
+                    </tr>
+                </table>
+                <div>
+                    费用科目：
+                    <div class="searchSection  btn-group">
+                        <button class="btn btn-default" data-ng-model="tradeType" uib-btn-radio="" data-ng-click="search()"> 全部 </button>
+                        <button class="btn btn-default" data-ng-model="tradeType" uib-btn-radio="1" data-ng-click="search()"> 充值 </button>
+                        <button class="btn btn-default" data-ng-model="tradeType" uib-btn-radio="2" data-ng-click="search()"> 提现 </button>
+                        <button class="btn btn-default" data-ng-model="tradeType" uib-btn-radio="3001" data-ng-click="search()"> 销售货款收入 </button>
+                        <button class="btn btn-default" data-ng-model="tradeType" uib-btn-radio="4001" data-ng-click="search()"> 销售货款支出 </button>
+                        <button class="btn btn-default" data-ng-model="tradeType" uib-btn-radio="8" data-ng-click="search()"> 冲账 </button>
+                    </div>
+                    &nbsp;&nbsp;&nbsp;状态：
+                    <div class="searchSection  btn-group">
+                        <button class="btn btn-default" data-ng-model="tradeStatus" uib-btn-radio="" data-ng-click="search()"> 全部 </button>
+                        <button class="btn btn-default" data-ng-model="tradeStatus" uib-btn-radio="1" data-ng-click="search()"> 成功 </button>
+                        <button class="btn btn-default" data-ng-model="tradeStatus" uib-btn-radio="2" data-ng-click="search()"> 失败 </button>
+                        <button class="btn btn-default" data-ng-model="tradeStatus" uib-btn-radio="0" data-ng-click="search()"> 处理中 </button>
+                    </div>
+                </div>
+
+                <div class="form-inline"><label class="control-label">时间：</label>
+                    <p class="input-group" style="margin-top: 15px">
+                        <input style="background-color: transparent;" ng-keypress="$event.preventDefault()"
+                               ng-paste="$event.preventDefault()" type="text" class="form-control"
+                               uib-datepicker-popup="yyyy-MM-dd" type="datetime-local" ng-model="startDate"
+                               is-open="popup1.opened" datepicker-options="dateOptions" close-text="关闭" clear-text="清除"
+                               current-text="今天" readonly="true"/>
+                        <span class="input-group-btn">
+                         <button type="button" class="btn btn-default" ng-click="open1()"><i
+                             class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                    </p>
+                    <label class="control-label">至</label>
+                    <p class="input-group" style="margin-top: 15px">
+                        <input style="background-color: transparent;" ng-keypress="$event.preventDefault()"
+                               ng-paste="$event.preventDefault()" type="text" class="form-control" uib-datepicker-popup
+                               ng-model="endDate" is-open="popup2.opened" datepicker-options="dateOptions"
+                               close-text="Close" close-text="关闭" clear-text="清除" current-text="今天" readonly="true"/>
+                        <span class="input-group-btn">
+                         <button type="button" class="btn btn-default" ng-click="open2()"><i
+                             class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                    </p>  &nbsp;&nbsp;
+                    <div class="input-group">
+                        <a href="javascript:void(0)" data-ng-click="setDate(day,0)">今日</a>| &nbsp;最近：
+                        <a href="javascript:void(0)" data-ng-click="setDate('week',1)">一周</a>
+                        <a href="javascript:void(0)" data-ng-click="setDate('month',1)">一个月</a>
+                        <a href="javascript:void(0)" data-ng-click="setDate('month',3)">3个月</a>
+                    </div>
+                    <button style="margin-top: 5px" type="submit" class="btn btn-primary" data-ng-click="search()">查询 </button>
+                </div>
+                <h5>提现信息</h5>
+                <table class="table table-hover getMoneyTable"  style="margin-bottom: 20px;">
+                    <thead class="text-center">
+                    <th>流水号</th>
+                    <th>时间</th>
+                    <th>费用科目</th>
+                    <th>金额（元）</th>
+                    <th>状态</th>
+                    </thead>
+                    <tbody>
+                    <tr data-ng-repeat="item in userMoneyList">
+                        <td data-ng-bind="item.id"></td>
+                        <td data-ng-bind="item.addTime"></td>
+                        <td>
+                            <span data-ng-show="item.tradeType==1">充值</span>
+                            <span data-ng-show="item.tradeType==2">提现</span>
+                            <span data-ng-show="item.tradeType==6003">冻结划入</span>
+                            <span data-ng-show="item.tradeType==6004">释放划出</span>
+                            <span data-ng-show="item.tradeType==3007">手续费收入</span>
+                            <span data-ng-show="item.tradeType==3001">销售货款收入</span>
+                            <span data-ng-show="item.tradeType==4001">销售货款支出</span>
+                            <span data-ng-show="item.tradeType==8">冲账</span>
+                        </td>
+                        <td data-ng-bind="item.money"></td>
+                        <td data-ng-bind="item.tradeStatus == 0 ? '处理中' : (item.tradeStatus == 1 ? '成功' : '失败')"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">
+                    <tr>
+                        <td colspan="9">
+                            <div class="pull-right page-box">
+                                <div class="pagination-info">
+                                    共有{{pagination.totalItems}}条，每页显示：{{pagination.pageSize}}条
+                                </div>
+                                <ul uib-pagination ng-change="pageChanged()" total-items="pagination.totalItems"
+                                    ng-model="pagination.currentPage" items-per-page="pagination.pageSize"
+                                    max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"
+                                    force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"
+                                    last-text="末页">
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -11,9 +11,7 @@ import javax.persistence.GenerationType;
 import java.util.Date;
 
 public class PayBankCard extends GenericModel {
-    @Id
-    @javax.persistence.Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Integer id;
 
     private Long payAccountId;
@@ -47,6 +45,8 @@ public class PayBankCard extends GenericModel {
     private String phoneNumber;
 
     private Integer bankAccountType;
+
+    private Integer payBankId;
 
     public Integer getId() {
         return id;
@@ -155,4 +155,8 @@ public class PayBankCard extends GenericModel {
     public Integer getBankAccountType() {return bankAccountType;}
 
     public void setBankAccountType(Integer bankAccountType) {this.bankAccountType = bankAccountType;}
+
+    public Integer getPayBankId() {return payBankId;}
+
+    public void setPayBankId(Integer payBankId) {this.payBankId = payBankId;}
 }

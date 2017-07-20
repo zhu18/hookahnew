@@ -2,6 +2,8 @@ package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.domain.PayAccount;
+import com.jusfoun.hookah.core.domain.PayBankCard;
 import com.jusfoun.hookah.core.domain.WithdrawRecord;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -9,34 +11,48 @@ import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
-import com.jusfoun.hookah.rpc.api.WithdrawRecordService;
+import com.jusfoun.hookah.rpc.api.*;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * 提现
  */
 
-@RestController
+@Controller
 @RequestMapping("/withdrawRecord")
 public class WithdrawRecordController extends BaseController{
 
     @Resource
     WithdrawRecordService withdrawRecordService;
 
+    @Resource
+    UserService userService;
+
+    @Resource
+    PayAccountService payAccountService;
+
+    @Resource
+    PayBankCardService payBankCardService;
+
+    @Resource
+    OrganizationService organizationService;
+
 
     /**
      * 发起提现申请
      */
     @RequestMapping("/applyW")
+    @ResponseBody
     public ReturnData apply(WithdrawRecord withdrawRecord) {
 
         ReturnData returnData = new ReturnData<>();
@@ -60,6 +76,7 @@ public class WithdrawRecordController extends BaseController{
      * 查询申请列表
      */
     @RequestMapping("/getList")
+    @ResponseBody
     public ReturnData getList(String startDate, String endDate,
             String currentPage, String pageSize, String checkStatus
     ) {
@@ -113,7 +130,33 @@ public class WithdrawRecordController extends BaseController{
         return returnData;
     }
 
+    /**
+     * 返回个人账户信息
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
+    public String userInfo(Model model) {
 
+        try {
+            Map<String, Object> map = new HashMap();
+
+            List<Condition> bankFilters = new ArrayList();
+            bankFilters.add(Condition.eq("userId", getCurrentUser().getUserId()));
+            PayBankCard payBankCard = payBankCardService.selectOne(bankFilters);
+            List<Condition> filters = new ArrayList();
+            filters.add(Condition.eq("userId", getCurrentUser().getUserId()));
+            PayAccount payAccount = payAccountService.selectOne(filters);
+            if(payAccount != null && payBankCard!= null){
+                payBankCard.setPayAccountId(payAccount.getUseBalance());
+            }
+
+            model.addAttribute("payBankCard", payBankCard);
+        } catch (HookahException e) {
+            e.printStackTrace();
+        }
+        return "/usercenter/userInfo/withdrawals";
+    }
 
     public static void main(String[] args){
 

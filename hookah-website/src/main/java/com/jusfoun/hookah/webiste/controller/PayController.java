@@ -3,6 +3,7 @@ package com.jusfoun.hookah.webiste.controller;
 import com.github.miemiedev.mybatis.paginator.domain.Order;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.*;
+import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
@@ -34,7 +35,7 @@ import java.util.*;
  */
 @Controller
 @RequestMapping("/pay")
-public class PayController {
+public class PayController extends BaseController{
     protected final static Logger logger = LoggerFactory.getLogger(PayController.class);
 
     @Resource
@@ -51,6 +52,9 @@ public class PayController {
 
     @Resource
     PayTradeRecordService payTradeRecordService;
+
+    @Resource
+    PayAccountRecordService payAccountRecordService;
 
     @RequestMapping(value = "/createOrder", method = RequestMethod.GET)
     public String createOrder() {
@@ -130,14 +134,13 @@ public class PayController {
     }
 
     @RequestMapping(value = "/balancePay", method = RequestMethod.POST)
-    public String payPassSta(String orderSn, Model model, HttpServletRequest request,String payMode) {
+    public String payPassSta(String orderSn, Model model, String passWord) {
         long orderAmount = 0 ; //支付金额
         try {
             List<Condition> filters = new ArrayList();
             filters.add(Condition.eq("orderSn", orderSn));
             OrderInfo orderinfo  = orderService.selectOne(filters);
             orderAmount= orderinfo.getOrderAmount();
-            //验证支付密码和余额
             List<Condition> filter = new ArrayList();
             filter.add(Condition.eq("userId", orderinfo.getUserId()));
             PayAccount payAccount = payAccountService.selectOne(filter);
@@ -149,15 +152,15 @@ public class PayController {
             payAccountService.payByBalance(orderinfo);
         } catch (Exception e) {
             e.printStackTrace();
-            model.addAttribute("message", "支付失败!");
+            model.addAttribute("message", e.getMessage());
             return "pay/fail";
         }
         model.addAttribute("money",orderAmount);
         return "pay/success";
     }
 
-    @RequestMapping(value = "/aliPay", method = RequestMethod.POST)
-    public Object alipay(String orderSn, HttpServletRequest request) {
+    @RequestMapping(value = "/aliPay", method = RequestMethod.GET)
+    public Object alipay(String orderSn) {
         String reqHtml = null;
         try {
             Session session = SecurityUtils.getSubject().getSession();
@@ -167,9 +170,6 @@ public class PayController {
             List<Condition> filters = new ArrayList();
             filters.add(Condition.eq("orderSn", orderSn));
             OrderInfo orderinfo  = orderService.selectOne(filters);
-            //验证支付密码
-
-            //插流水调支付宝接口
             reqHtml = payAccountService.payByAli(orderinfo);
         } catch (Exception e) {
             e.printStackTrace();
@@ -209,7 +209,17 @@ public class PayController {
     @RequestMapping(value = "/cash", method = RequestMethod.GET)
     public String cash(HttpServletRequest request, Model model){
         HttpSession session = request.getSession();
-        model.addAttribute("moneyBalance", session.getAttribute("moneyBalance"));
+        String userId = null;
+        try {
+            userId = this.getCurrentUser().getUserId();
+        } catch (HookahException e) {
+            logger.error(e.getMessage());
+        }
+        List<Condition> filters = new ArrayList();
+        filters.add(Condition.eq("userId", userId));
+        PayAccount payAccount = payAccountService.selectOne(filters);
+        if(payAccount != null)
+            model.addAttribute("moneyBalance", payAccount.getUseBalance());
         model.addAttribute("payments", session.getAttribute("payments"));
         model.addAttribute("orderInfo",session.getAttribute("orderInfo"));
         session.removeAttribute("payments");
@@ -240,7 +250,7 @@ public class PayController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/alipayRtn",method = RequestMethod.GET)
+    @RequestMapping(value = "/alipay_rtn",method = RequestMethod.GET)
     public ModelAndView returnBack4Alipay(HttpServletRequest request, HttpServletResponse response) throws Exception{
         ModelAndView view = null;
         //商户订单号
@@ -269,17 +279,21 @@ public class PayController {
                 //更新交易中心虚拟账户金额,更新流水表状态
                 int n = payAccountService.operatorByType(HookahConstants.TRADECENTERACCOUNT,HookahConstants.TradeType.FreezaIn.getCode(),
                         orderInfo.getOrderAmount());
-                payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.success.getCode());
-                payTradeRecordService.updateByIdSelective(payTradeRecord);
 
                 //修改内部流水的状态和外部充值状态
                 List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
                 for (PayTradeRecord payTradeRecord1 : payTradeRecords){
                     payTradeRecord1.setTradeStatus(HookahConstants.TransferStatus.success.getCode());
+                    payTradeRecordService.updateByIdSelective(payTradeRecord1);
                 }
+                PayAccountRecord payAccountRecord = payAccountRecordService.selectOne(filter);
+                payAccountRecord.setTransferStatus(HookahConstants.TransferStatus.success.getCode());
+                payAccountRecordService.updateByIdSelective(payAccountRecord);
 
                 //更新订单状态
                 orderService.updatePayStatus(orderSn,orderInfo.PAYSTATUS_PAYED,1);
+                // 支付成功 查询订单 获取订单中商品插入到待清算记录
+                orderService.waitSettleRecordInsert(orderSn);
                 view = new ModelAndView("redirect:/paySucess.html?orderSn="+orderSn);
             }else{
                 //交易失败
@@ -295,6 +309,13 @@ public class PayController {
         return view;
     }
 
+    /**
+     * 支付宝异步回调
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value="/alipay_ntf", method = RequestMethod.POST)
     @Transactional
     String notifyBack4Alipay(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -324,16 +345,20 @@ public class PayController {
                 //更新交易中心虚拟账户金额,更新流水表状态
                 int n = payAccountService.operatorByType(HookahConstants.TRADECENTERACCOUNT,HookahConstants.TradeType.FreezaIn.getCode(),
                         orderInfo.getOrderAmount());
-                payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.success.getCode());
-                payTradeRecordService.updateByIdSelective(payTradeRecord);
+//                payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.success.getCode());
+//                payTradeRecordService.updateByIdSelective(payTradeRecord);
 
                 //修改内部流水的状态和外部充值状态
                 List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
                 for (PayTradeRecord payTradeRecord1 : payTradeRecords){
                     payTradeRecord1.setTradeStatus(HookahConstants.TransferStatus.success.getCode());
                 }
+                PayAccountRecord payAccountRecord = payAccountRecordService.selectOne(filter);
+                payAccountRecord.setTransferStatus(HookahConstants.TransferStatus.success.getCode());
+                payAccountRecordService.updateByIdSelective(payAccountRecord);
                 //更新订单状态
                 orderService.updatePayStatus(orderSn,orderInfo.PAYSTATUS_PAYED,1);
+                orderService.waitSettleRecordInsert(orderSn);
             }else {
                 List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
                 for (PayTradeRecord payTradeRecord1 : payTradeRecords){

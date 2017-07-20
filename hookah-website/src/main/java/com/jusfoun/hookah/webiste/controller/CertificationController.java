@@ -47,7 +47,7 @@ public class CertificationController extends BaseController{
 
     @Resource
     SupplierService supplierService;
-    
+
     //用户实名认证信息
     @ResponseBody
     @RequestMapping(value = "/verifiedInfo",method = RequestMethod.GET)

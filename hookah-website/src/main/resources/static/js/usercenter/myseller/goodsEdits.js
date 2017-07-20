@@ -10,6 +10,9 @@ var goodsTypeVal = $('#parentSelect').val();
 var categoryHtml = '';
 var ajaxUrl = null;
 var goodsTypeId = null;
+var regex = {  //手机号验证正则
+	mobile: /^0?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8}$/
+};
 E.config.uploadImgUrl = host.static+'/upload/wangeditor';//上传图片
 E.config.uploadImgFileName = 'filename';
 E.config.menuFixed = false;//关闭菜单栏fixed
@@ -195,24 +198,43 @@ function goodsEditFn(){
 	});
 	initializeGoodsType(null);
 	$("input[name='typeId']").val(catId.substring(0,3));
+	rederDateDL()
+	getPriceBox()
+}
+function rederDateDL(){
 	var start = {
 		format: "YYYY-MM-DD hh:mm:ss",
 		isTime: true,
-		choosefun: function (elem, datas) {
+		choosefun: function (elem,val, datas) {
 			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+			$("#offLine_startDate_s").val(val);
+		},
+		okfun:function(elem,val, datas){
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+			$("#offLine_startDate_s").val(val);
+		},
+		clearfun:function(elem, val) {
+			$("#offLine_startDate_s").val();
 		}
 	};
 	var end = {
 		format: "YYYY-MM-DD hh:mm:ss",
 		isTime: true,
-		choosefun: function (elem, datas) {
+		choosefun: function (elem,val, datas) {
 			start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
+			$("#offLine_endDate_s").val(val);
+		},
+		okfun:function(elem,val, datas){
+			start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
+			$("#offLine_endDate_s").val(val);
+		},
+		clearfun:function(elem, val) {
+			$("#offLine_endDate_s").val();
 		}
 	};
 
 	$.jeDate("#offLine_startDate", start);
 	$.jeDate("#offLine_endDate", end);
-	getPriceBox()
 }
 function childrenSelects(that){
 	initializeGoodsType($('#parentSelect').val(),that);
@@ -281,20 +303,27 @@ function validataFn(){
 			goodsImg:'required',
 			priceBoxName:'required',
 			priceBoxNumber:'required',
+			enddDate:'required',
 			priceBoxPrice:{
 				required:true,
-				isPricceData:true,
-				isPricceB:true
+				// isPricceData:true,
+				isPricceB:true,
+				lt:["#maxExp","最大经验值"],
+				gt:["#minExp","最小经验值"]
 			},
 			priceBoxSettlementPrice:{
 				required:true,
-				isPricceData:true,
-				isPricceB:true
+				// isPricceData:true,
+				isPricceB:true,
+				lt:["#maxExp","最大经验值"],
+				gt:["#minExp","最小经验值"]
 			},
 			priceBoxAgencyPrice:{
 				required:true,
-				isPricceData:true,
-				isPricceB:true
+				// isPricceData:true,
+				isPricceB:true,
+				lt:["#maxExp","最大经验值"],
+				gt:["#minExp","最小经验值"]
 			},
 			goodsImges:'required',
 			goodsImges2:'required',
@@ -309,11 +338,11 @@ function validataFn(){
 		messages: {
 			goodsName:  {
 				required: '商品名称不能为空',
-				isGoodsName:'长度为10-60个字符（每个汉字为2个字符）'
+				isGoodsName:'长度为1-60个字符（每个汉字为2个字符）'
 			},
 			goodsBrief:  {
 				required: '商品简介不能为空',
-				isGoodsBrief:'长度为30-400个字符（每个汉字为2个字符）'
+				isGoodsBrief:'长度为1-400个字符（每个汉字为2个字符）'
 			},
 			goodsImges:'图片必须上传',
 			goodsImges2:'文件必须上传',
@@ -569,16 +598,20 @@ $('#relationServ').on('input onporpertychange',function () {
 });
 $.validator.addMethod("isGoodsName", function(value, element) {
 	var len = value.replace(/[\u0391-\uFFE5]/g,"aa").length;
-	return this.optional(element) || (10 <= len && len <= 60);
-}, "长度为10-60个字符（每个汉字为2个字符）");
+	return this.optional(element) || (1 <= len && len <= 60);
+}, "长度为1-60个字符（每个汉字为2个字符）");
 $.validator.addMethod("isGoodsBrief", function(value, element) {
 	var len = value.replace(/[\u0391-\uFFE5]/g,"aa").length;
-	return this.optional(element) || (30 <= len && len <= 400);
-}, "长度为30-400个字符（每个汉字为2个字符）");
+	return this.optional(element) || (1 <= len && len <= 400);
+}, "长度为1-400个字符（每个汉字为2个字符）");
 $.validator.addMethod("isModelTool", function(value, element) {
 	var len = value.replace(/[\u0391-\uFFE5]/g,"aa").length;
-	return this.optional(element) || (0 <= len && len <= 100);
-}, "长度为0-100个字符（每个汉字为2个字符）");
+	return this.optional(element) || (1 <= len && len <= 100);
+}, "长度为1-100个字符（每个汉字为2个字符）");
+$.validator.addMethod("isMobile", function(value, element) {
+	var mobile = regex.mobile.test(value);
+	return this.optional(element) || (mobile);
+}, "请填写有效的手机号");
 $.validator.addMethod("isPricceB", function(value, element) {
 	var isPricce = false;
 	if(value > 0){
@@ -604,6 +637,14 @@ $.validator.addMethod("isPricceData", function(value, element) {
 	var len = value.replace(/[\u0391-\uFFE5]/g,"aa").length;
 	return this.optional(element) || isPricce;
 }, "小数点不能超过2位");
+//大于
+$.validator.addMethod("gt", function(value, element,param) {
+	return this.optional(element) || value >=0.01;
+}, $.validator.format("输入值必须大于{0.01}!"));
+//小于
+$.validator.addMethod("lt", function(value, element,param) {
+	return this.optional(element) || value <= 9999999.99;
+}, $.validator.format("输入值必须小于{9999999.99}!"));
 function backAddFn(data){
 	Loading.start();
 	$.ajax({
@@ -1011,7 +1052,9 @@ function renderData(data){//渲染页面
 				$('.selector_offLine_input').hide();
 			}
 			$('#offLine_startDate').val(data.offLineData.timeFrame.startDate);
+			$('#offLine_startDate_s').val(data.offLineData.timeFrame.startDate);
 			$('#offLine_endDate').val(data.offLineData.timeFrame.endDate);
+			$('#offLine_endDate_s').val(data.offLineData.timeFrame.endDate);
 			$('input[name="dataRows"]').val(data.offLineData.dataRows);
 			$('input[name="dataCapacity"]').val(data.offLineData.dataCapacity);
 			$('.file-info-box input[name="dataFormat"]').each(function(){
@@ -1021,23 +1064,7 @@ function renderData(data){//渲染页面
 					$(this).removeAttr('checked');
 				}
 			});
-			var start = {
-				format: "YYYY-MM-DD hh:mm:ss",
-				isTime: true,
-				choosefun: function (elem, datas) {
-					end.minDate = datas; //开始日选好后，重置结束日的最小日期
-				}
-			};
-			var end = {
-				format: "YYYY-MM-DD hh:mm:ss",
-				isTime: true,
-				choosefun: function (elem, datas) {
-					start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
-				}
-			};
-
-			$.jeDate("#offLine_startDate", start);
-			$.jeDate("#offLine_endDate", end);
+			rederDateDL()
 		} else if (data.goodsType == 1) {
 			renderApiInfo(data.apiInfo);
 		} else if (data.goodsType == 2) {
@@ -1084,7 +1111,9 @@ function renderData(data){//渲染页面
 				$('.selector_offLine_input').hide();
 			}
 			$('#offLine_startDate').val(data.offLineData.timeFrame.startDate);
+			$('#offLine_startDate_s').val(data.offLineData.timeFrame.startDate);
 			$('#offLine_endDate').val(data.offLineData.timeFrame.endDate);
+			$('#offLine_endDate_s').val(data.offLineData.timeFrame.endDate);
 			$('input[name="dataRows"]').val(data.offLineData.dataRows);
 			$('input[name="dataCapacity"]').val(data.offLineData.dataCapacity);
 			$('.file-info-box input[name="dataFormat"]').each(function(){
@@ -1094,23 +1123,7 @@ function renderData(data){//渲染页面
 					$(this).removeAttr('checked');
 				}
 			});
-			var start = {
-				format: "YYYY-MM-DD hh:mm:ss",
-				isTime: true,
-				choosefun: function (elem, datas) {
-					end.minDate = datas; //开始日选好后，重置结束日的最小日期
-				}
-			};
-			var end = {
-				format: "YYYY-MM-DD hh:mm:ss",
-				isTime: true,
-				choosefun: function (elem, datas) {
-					start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
-				}
-			};
-
-			$.jeDate("#offLine_startDate", start);
-			$.jeDate("#offLine_endDate", end);
+			rederDateDL()
 		} else if (data.goodsType == 1) {
 			renderApiInfo(data.apiInfo);
 		} else if (data.goodsType == 2) {
@@ -1564,6 +1577,9 @@ $.jeDate("#indate", {
 	},
 	okfun:function(elem, val, date){
 		$('#indate_s').val(val)
+	},
+	clearfun:function(elem, val) {
+		$('#indate_s').val('');
 	}
 });
 function loadCountry(idCountry,idProvince) {
@@ -1630,29 +1646,72 @@ function initialize() {
 }
 $('#J_submitBtn').click(function(){
 	if($("#goodsModifyForm").valid()){
-		// if($.trim(editor1.$txt.text()).length > 0){
-		// 	if($.trim(editor2.$txt.text()).length > 0){
-		// 		if($.trim(editor3.$txt.text()).length > 0){
-		// 			if($.trim(editor4.$txt.text()).length > 0){
-		// 				backAddFn(submitGoodsPublish())
-		// 			}else{
-		// 				$.alert('应用案例不能为空',true,function () {})
-		// 			}
-		// 		}else{
-		// 			$.alert('售后服务不能为空',true,function () {})
-		// 		}
-		// 	}else{
-		// 		$.alert('商品优势不能为空',true,function () {})
-		// 	}
-		// }else{
-		// 	$.alert('商品描述不能为空',true,function () {})
-		// }
 		var lastChild = $('table[d-type="priceHtml"] tbody tr').last();
 		if ($(lastChild).children('.number-input').find('input').val() && $(lastChild).children('.price-input1').find('input').val() && $(lastChild).children('.price-input2').find('input').val() && $(lastChild).children('.price-input3').find('input').val()) {
-			backAddFn(submitGoodsPublish())
+			if($('[name=isBook]:checked').val() == 1){
+				if(!$('#indate_s').val()){
+					$.alert('上架时间不能为空',true,function(){});
+					return;
+				}
+			}
+			if(goodsTypeId == 0 || goodsTypeId == 1 || goodsTypeId == 2){
+				if($.trim(editor1.$txt.text()).length > 0){
+					if($.trim(editor2.$txt.text()).length > 0){
+						if($.trim(editor3.$txt.text()).length > 0){
+							backAddFn(submitGoodsPublish())
+						}else{
+							$.alert('售后服务不能为空',true,function () {})
+						}
+					}else{
+						$.alert('商品优势不能为空',true,function () {})
+					}
+				}else{
+					$.alert('商品描述不能为空',true,function () {})
+				}
+			}else if(goodsTypeId == 4 || goodsTypeId == 6){
+				if($.trim(editor3.$txt.text()).length > 0){
+					if($.trim(editorAs.$txt.text()).length > 0){
+						if($.trim(editorBs.$txt.text()).length > 0){
+							if($.trim(editorCs.$txt.text()).length > 0){
+								if($.trim(editorDs.$txt.text()).length > 0){
+									backAddFn(submitGoodsPublish())
+								}else{
+									$.alert('所需环境不能为空',true,function () {})
+								}
+							}else{
+								$.alert('团队优势不能为空',true,function () {})
+							}
+						}else{
+							$.alert('技术优势不能为空',true,function () {})
+						}
+					}else{
+						$.alert('核心功能不能为空',true,function () {})
+					}
+				}else{
+					$.alert('售后服务不能为空',true,function () {})
+				}
+			}else if(goodsTypeId == 5 || goodsTypeId == 7){
+				if($.trim(editor3.$txt.text()).length > 0){
+					if($.trim(editorA.$txt.text()).length > 0){
+						if($.trim(editorC.$txt.text()).length > 0){
+							if($.trim(editorD.$txt.text()).length > 0){
+								backAddFn(submitGoodsPublish())
+							}else{
+								$.alert('所需环境不能为空',true,function () {})
+							}
+						}else{
+							$.alert('团队优势不能为空',true,function () {})
+						}
+					}else{
+						$.alert('核心功能不能为空',true,function () {})
+					}
+				}else{
+					$.alert('售后服务不能为空',true,function () {})
+				}
+			}
 		} else {
 			$.alert('请完善价格及规格信息',true,function(){});
 		}
-
 	}
 });
+

@@ -86,13 +86,6 @@ public class SupplierApi extends BaseController {
         try {
             String checkUser = this.getCurrentUser().getUserId();
             supplierService.checkSupplier(id,checkContent,checkStatus,checkUser);
-//            Supplier supplier = supplierService.selectById(id);
-//            if (supplier!=null){
-//                supplier.setCheckStatus(checkStatus);
-//                supplier.setCheckContent(checkContent.replaceAll(" ",""));
-//                supplier.setCheckUser(checkUser);
-//            }
-//            supplierService.updateByIdSelective(supplier);
         }catch (Exception e){
             e.printStackTrace();
             return ReturnData.error(e.getMessage());

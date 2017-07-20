@@ -3,6 +3,7 @@ package com.jusfoun.hookah.rpc.api;
 import com.jusfoun.hookah.core.domain.OrderInfo;
 import com.jusfoun.hookah.core.domain.PayAccount;
 import com.jusfoun.hookah.core.domain.bo.MoneyInOutBo;
+import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.GenericService;
 import com.jusfoun.hookah.core.utils.ReturnData;
 
@@ -51,9 +52,12 @@ public interface PayAccountService extends GenericService<PayAccount, Long> {
      */
     ReturnData userRecharge(Map<String,Object> params);
 
+
     /**
-     * 根据支付宝返回充值结果，更新账户并插入记录
+     * 更新账户并插入记录
      * @param params
      */
-    void saveRechargeResult(Map<String,String> params);
+    ReturnData saveRechargeResult(Map<String,String> params);
+
+    boolean verifyPassword (String payPassword,String userId);
 }

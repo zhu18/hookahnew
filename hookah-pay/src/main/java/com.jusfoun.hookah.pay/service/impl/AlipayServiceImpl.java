@@ -40,21 +40,11 @@ public class AlipayServiceImpl extends GenericServiceImpl<PayAccountRecord, Stri
             return null;
         //根据orderId查询orderInfo
         OrderInfoVo orderInfoVo = mgOrderInfoService.selectById(orderId);
-        if (!orderInfoVo.getOrderStatus().equals(PayCore.PayStatus.unpay))
+        if (!orderInfoVo.getPayStatus().equals(PayCore.PayStatus.unpay.getValue()))
             return null;
         //构造html
         String html = buildRequestParams(userId, orderInfoVo, notify_url, return_url);
         //记账
-        PayAccountRecord payAccountRecord = new PayAccountRecord();
-        payAccountRecord.setPayAccountId(Long.valueOf(userId));
-        payAccountRecord.setUserId(userId);
-        Date date = new Date();
-        payAccountRecord.setTransferDate(date);
-        payAccountRecord.setMoney(orderInfoVo.getOrderAmount());//订单资金总额
-        payAccountRecord.setSerialNumber(orderInfoVo.getOrderSn());//订单号
-        payAccountRecord.setAddTime(date);
-        payAccountRecord.setAddOperator(userId);
-        insertRecord(payAccountRecord);
         return html;
     }
 
@@ -102,16 +92,16 @@ public class AlipayServiceImpl extends GenericServiceImpl<PayAccountRecord, Stri
         map.put("seller_id", AlipayConfig.seller_id);
         map.put("_input_charset", AlipayConfig.input_charset);
         map.put("payment_type", AlipayConfig.payment_type);
-        map.put("notify_url", PayConfiguration.ALIPAY_NOTIFY_URL);
-        map.put("return_url", PayConfiguration.ALIPAY_RETURN_URL);
+        map.put("notify_url", notify_url);
+        map.put("return_url", return_url);
         map.put("anti_phishing_key", AlipayConfig.anti_phishing_key);
         map.put("exter_invoke_ip", AlipayConfig.exter_invoke_ip);
         //订单信息
         map.put("out_trade_no", payVo.getOrderSn());//订单号
         map.put("subject", payVo.getOrderSn());//String(256),商品名称/商品的标题/交易标题/订单标题/订单关键字等
-        map.put("total_fee", String.valueOf(payVo.getOrderAmount() / 100));//该笔订单的资金总额,单位为RMB-Yuan。精确到小数点后两位。
+        map.put("total_fee", String.valueOf((float)payVo.getOrderAmount() / 100));//该笔订单的资金总额,单位为RMB-Yuan。精确到小数点后两位。
         map.put("body", payVo.getOrderSn());//String(1000),对一笔交易的具体描述信息。如果是多种商品，请将商品描述字符串累加传给body。
-        map.put("extra_common_param", payVo.getAccount());//用户在系统中的账号（手机号或者邮箱）
+        map.put("extra_common_param", userId);//用户在系统中的账号（手机号或者邮箱）
 
         Map<String, String> params = FormFactory.paramFilter(map);
         String mysign = buildRequestMysign(params);

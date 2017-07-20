@@ -1,6 +1,5 @@
 .fundmanage-box .bindBankCard{
     margin: 12px 0 205px 0px;
-    height: 443px;
     border: 1px solid #E5E5E5;
 }
 .fundmanage-box .bindBankCard .bindBankCard-title{
@@ -26,7 +25,7 @@
 .fundmanage-box .bindBankCard .bindBankCard-content .form-item label{
     display: inline-block;
     text-align: right;
-    width: 76px;
+    width: 90px;
 }
 .fundmanage-box .bindBankCard .bindBankCard-content .form-item img{
     width: 228px;
@@ -42,12 +41,22 @@
     height: 100%;
     width: 216px;
 }
+.fundmanage-box .bindBankCard .bindBankCard-content .form-item select{
+    border: 1px solid #E5E5E5;
+    padding-left: 10px;
+    height: 100%;
+    width: 228px;
+}
 .fundmanage-box .bindBankCard .bindBankCard-content .btn{
-    margin-left: 80px;
+    margin-left: 95px;
+    margin-bottom: 20px;
     width: 130px;
+    display: inline-block;
     height: 36px;
+    line-height: 36px;
     color: #FFFFFF;
     font-size: 16px;
+    text-align: center;
     border-radius: 5px;
     background-color: #4F95F4;
 }

@@ -114,7 +114,7 @@ function showPayAmount(that) {
 	$(that).siblings('.pay-amount').show();
 }
 function check() {
-	$("[name=apiCode]:radio").each(function () {
+	$("[name='apiCode']:radio").each(function () {
 		if (this.checked) {
 			if (this.value == 1) {
 				if ($('#paymentPassword').val() && $('#paymentPassword').val().length == 6) {
@@ -123,7 +123,7 @@ function check() {
 					$('.ui-form-error').show().children('p').html('支付密码不符合要求');
 				}
 			} else if(this.value == 2){
-				$.alert('暂不支持该支付方式');
+				window.location.href= host.website+'/pay/aliPay?'+'orderSn='+$("#orderSn").html();
 				return false;
 			}else{
 				$.alert('暂不支持该支付方式');
@@ -134,11 +134,12 @@ function check() {
 }
 function testPayPassword(pwd){
 	$.ajax({
-		url:host.website+'/usercenter/verifyPayPassword',
+		url:host.website+'/pay/balancePay',
 		data:{
-			paymentPassword:pwd
+            passWord:pwd,
+            orderSn:$("#orderSn").html()
 		},
-		type:'get',
+		type:'post',
 		success:function (data) {
 			if(data.code == 1){
 				$('#form_paypsw').submit();

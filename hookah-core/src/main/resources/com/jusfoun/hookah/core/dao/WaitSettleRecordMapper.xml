@@ -93,16 +93,19 @@
       LEFT JOIN organization org ON org.org_id = us.org_id
       WHERE 1 = 1
       <if test="startDate != '' and startDate != null">
-        AND wsr.orderTime &gt;= #{startData}
+        AND wsr.order_time &gt;= #{startDate}
       </if>
       <if test="endDate != '' and endDate != null">
-        AND wsr.orderTime &lt;= #{endData}
+        AND wsr.order_time &lt;= #{endDate}
       </if>
       <if test="shopName != '' and shopName != null">
         AND org.org_name like '%${shopName}%'
       </if>
       <if test="settleStatus != '' and settleStatus != null">
         AND wsr.settle_status = #{settleStatus}
+      </if>
+      <if test="orderSn != '' and orderSn != null">
+        AND wsr.order_sn = #{orderSn}
       </if>
   </select>
 

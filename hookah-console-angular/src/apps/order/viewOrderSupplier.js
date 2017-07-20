@@ -60,12 +60,12 @@ class viewOrderSupplier {
                                     "<h5>联系人姓名：<input type='text' id='J_val01' value='" + res.data.data.data.concatInfo.concatName + "'></h5>" +
                                     "<h5>联系人电话：<input type='text' id='J_val02' value='" + res.data.data.data.concatInfo.concatPhone + "'></h5>" +
                                     "<h5>联系人邮箱：<input type='text' id='J_val03' value='" + res.data.data.data.concatInfo.concatEmail + "'></h5>" +
-                                    "<h5>模型文件：<a target='_blank' href='" + res.data.data.data.modelFile + "'>下载</a></h5>" +
-                                    "<h5>模型文件密码：<span>" + res.data.data.data.modelFilePwd + "</span></h5>" +
-                                    "<h5>配置文件：<a target='_blank' href='" + res.data.data.data.configFile + "'>下载</a></h5>" +
-                                    "<h5>配置文件密码：<span>" + res.data.data.data.configFilePwd + "</span></h5>" +
-                                    "<h5>配置参数：<a target='_blank' href='" + res.data.data.data.configParams + "'>下载</a></h5>" +
-                                    "<h5>配置参数密码：<span>" + res.data.data.data.configParamsPwd + "</span></h5>"
+                                    "<h5>模型文件：<a target='_blank' href='" + res.data.data.data.modelFile.fileAddress + "'>下载</a></h5>" +
+                                    "<h5>模型文件密码：<span>" + res.data.data.data.modelFile.filePwd + "</span></h5>" +
+                                    "<h5>配置文件：<a target='_blank' href='" + res.data.data.data.configFile.fileAddress + "'>下载</a></h5>" +
+                                    "<h5>配置文件密码：<span>" + res.data.data.data.configFile.filePwd + "</span></h5>" +
+                                    "<h5>配置参数：<a target='_blank' href='" + res.data.data.data.paramFile.fileAddress + "'>下载</a></h5>" +
+                                    "<h5>配置参数密码：<span>" + res.data.data.data.paramFile.filePwd + "</span></h5>"
                                 ;
                             modalInstance = $rootScope.openConfirmDialogModal(modalDom);
 

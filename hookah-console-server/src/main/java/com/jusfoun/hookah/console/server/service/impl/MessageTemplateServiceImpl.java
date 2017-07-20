@@ -117,6 +117,40 @@ public class MessageTemplateServiceImpl extends GenericServiceImpl<MessageTempla
         return returnData;
     }
 
+    @Override
+    public ReturnData stopOrOpenTemplate(String tempId) {
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        try{
+            //查询原始数据
+            MessageTemplate messageTemplate = messageTemplateMapper.selectByPrimaryKey(tempId);
+            //如果需要停用模板，可直接停用
+            if(messageTemplate.getIsVaild() == HookahConstants.MESSAGE_TEMPLATE_OPEN) {
+                messageTemplate.setIsVaild(HookahConstants.MESSAGE_TEMPLATE_STOP);
+            }else {// 启用模板前，需要查询同一个事件的同一种消息类型是否已经启用，如果已启用，需要先停用之前的模板
+                MessageTemplate obj = new MessageTemplate();
+                obj.setEventType(messageTemplate.getEventType());
+                obj.setTemplateType(messageTemplate.getTemplateType());
+                obj.setIsVaild(HookahConstants.MESSAGE_TEMPLATE_OPEN);
+                List list = messageTemplateMapper.select(obj);
+                if(list != null && list.size() > 0 ) {
+                    returnData.setCode(ExceptionConst.Failed);
+                    returnData.setMessage("模板停用失败，已存在事件类型和模板类型相同的模板，请先停用原有的模板！");
+                    return returnData;
+                }else {
+                    messageTemplate.setIsVaild(HookahConstants.MESSAGE_TEMPLATE_OPEN);
+                }
+            }
+            messageTemplateMapper.updateByPrimaryKeySelective(messageTemplate);
+            returnData.setMessage("操作成功！");
+        }catch (Exception e){
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.getMessage());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
+
     //完善返回的数据
     private List<MessageTemplateVo> copyMessageTemplateData(List<MessageTemplate> messageTemplates){
         List<MessageTemplateVo> list1 = new ArrayList<>();

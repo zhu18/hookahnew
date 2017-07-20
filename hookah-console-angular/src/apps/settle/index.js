@@ -38,20 +38,10 @@ app.run(function ($rootScope, $state) {
     {
       "title":"结算管理",
       "url":"settle.list"
-    },
-    // {
-    //   "title":"新增帮助",
-    //   "url":"help.add"
-    // },
-    /*{
-      "title":"分类查询",
-      "url":"help.category.search"
-    },
-    {
-      "title":"新增一级分类",
-      "url":"help.category.add"
+    },{
+      "title":"交易管理",
+      "url":"settle.transactionManage"
     }
-*/
   ];
 
 });

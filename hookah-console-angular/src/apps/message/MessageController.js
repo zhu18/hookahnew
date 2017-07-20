@@ -11,6 +11,7 @@ class MessageController {
                     isRead: $scope.messageIsRead,
                     keywords: $scope.keywords,
                     eventType: $scope.eventType,
+                    receiveUserName: $scope.receiveUserName,
                     startTime: $scope.startDate?format($scope.startDate, 'yyyy-MM-dd HH:mm:ss'):null,
                     endTime: $scope.endDate?format($scope.endDate, 'yyyy-MM-dd HH:mm:ss'):null
                 }
@@ -107,6 +108,19 @@ class MessageController {
                 method: 'POST',
                 url: $rootScope.site.apiServer + "/api/message/template/add",
                 data: $("#infoForm").serialize()
+            });
+            promise.then(function (res, status, config, headers){
+                $rootScope.loadingState = false;
+                console.log(res.data.data);
+                growl.addSuccessMessage("数据加载完毕。。。");
+            })
+        };
+
+        $scope.stopOrOpenTemplate = function(){
+            var promise = $http({
+                method: 'POST',
+                url: $rootScope.site.apiServer + "/api/message/template/stopOrOpen",
+                data: {tempId: item.id}
             });
             promise.then(function (res, status, config, headers){
                 $rootScope.loadingState = false;

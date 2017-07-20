@@ -6,6 +6,7 @@ import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.dao.OrderInfoMapper;
 import com.jusfoun.hookah.core.domain.*;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
+import com.jusfoun.hookah.core.domain.mongo.MgGoodsOrder;
 import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
 import com.jusfoun.hookah.core.domain.vo.CartVo;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
@@ -23,7 +24,10 @@ import com.jusfoun.hookah.core.utils.FormatCheckUtil;
 import com.jusfoun.hookah.rpc.api.*;
 import org.apache.http.HttpException;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -38,6 +42,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.counting;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.group;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.match;
 
 /**
  * 订单基本信息
@@ -64,6 +70,12 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     @Resource
     MongoTemplate mongoTemplate;
 
+    /**
+     * 评论接口
+     */
+    @Resource
+    CommentService commentService;
+
     @Resource
     PayCoreService payCoreService;
 
@@ -75,6 +87,12 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
     @Resource
     OrganizationService organizationService;
+
+    @Resource
+    WaitSettleRecordService waitSettleRecordService;
+
+    @Resource
+    MgGoodsOrderService mgGoodsOrderService;
 
     @Resource
     public void setDao(OrderInfoMapper orderinfoMapper) {
@@ -132,12 +150,13 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         orderinfo.setLastmodify(date);
         orderinfo.setEmail("");
         orderinfo.setIsDeleted((byte)0);
+        orderinfo.setForceDeleted((byte)0);
         orderinfo.setCommentFlag(0);
         return orderinfo;
     }
 
     /**
-     * 购物车生成订单
+     * 购物车生成mongo订单
      * @param cart
      * @param orderInfo
      * @return
@@ -194,7 +213,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     }
 
     /**
-     * 直接购买生成订单
+     * 直接购买生成mongo订单
      * @param goods
      * @param format
      * @param goodsNumber
@@ -263,6 +282,18 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         OrderInfoVo orderInfoVo = new OrderInfoVo();
         orderInfoVo.setOrderId(id);
         orderInfoVo.setIsDeleted((byte)1);
+        mgOrderInfoService.updateByIdSelective(orderInfoVo);
+    }
+
+    @Override
+    public void deleteOrder(String id){
+        OrderInfo order = new OrderInfo();
+        order.setOrderId(id);
+        order.setForceDeleted(new Byte("1"));
+        updateByIdSelective(order);
+        OrderInfoVo orderInfoVo = new OrderInfoVo();
+        orderInfoVo.setOrderId(id);
+        orderInfoVo.setForceDeleted((byte)1);
         mgOrderInfoService.updateByIdSelective(orderInfoVo);
     }
 
@@ -348,6 +379,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             ordergoodsList = new ArrayList<MgOrderGoods>();
             Long goodsAmount = new Long(0);
             OrderInfoVo orderInfoVo = new OrderInfoVo();
+            MgGoodsOrder mgGoodsOrder = new MgGoodsOrder();
             for(CartVo cart:cartList){
                 //验证商品是否下架
                 Goods g = cart.getGoods();
@@ -363,7 +395,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             orderInfo.setGoodsAmount(goodsAmount);
             orderInfo.setOrderAmount(goodsAmount);
 
-            insertOrder(ordergoodsList, orderInfoVo, orderInfo);
+            insertOrder(ordergoodsList, orderInfoVo, orderInfo ,mgGoodsOrder);
 //            if(goodsAmount.compareTo(0L)==0){
 //                updatePayStatus(orderInfo.getOrderSn(),2);
 //            }
@@ -389,6 +421,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         init(orderInfo);
 
         List<MgOrderGoods> ordergoodsList = null;
+        MgGoodsOrder mgGoodsOrder = new MgGoodsOrder();
 
         ordergoodsList = new ArrayList<MgOrderGoods>();
         Long goodsAmount = new Long(0);
@@ -408,7 +441,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         orderInfo.setGoodsAmount(goodsAmount);
         orderInfo.setOrderAmount(goodsAmount);
 
-        insertOrder(ordergoodsList, orderInfoVo, orderInfo);
+        insertOrder(ordergoodsList, orderInfoVo, orderInfo, mgGoodsOrder);
 //        if(goodsAmount.compareTo(0L)==0){
 //            updatePayStatus(orderInfo.getOrderSn(),2);
 //        }
@@ -416,28 +449,46 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         return orderInfo;
     }
 
-    public void insertOrder(List<MgOrderGoods> ordergoodsList, OrderInfoVo orderInfoVo, OrderInfo orderInfo){
+    public void insertOrder(List<MgOrderGoods> ordergoodsList, OrderInfoVo orderInfoVo, OrderInfo orderInfo,
+                            MgGoodsOrder mgGoodsOrder){
         if(ordergoodsList != null && ordergoodsList.size() > 0){
+            //插入到mySql
             orderInfo = super.insert(orderInfo);
             BeanUtils.copyProperties(orderInfo,orderInfoVo);
-            User user = userService.selectById(orderInfoVo.getUserId());
+            BeanUtils.copyProperties(orderInfo,mgGoodsOrder);
+            User user = userService.selectById(orderInfo.getUserId());
             orderInfoVo.setUserName(user.getUserName());
             orderInfoVo.setUserType(user.getUserType());
             orderInfoVo.setSolveStatus(0);
+            mgGoodsOrder.setUserName(user.getUserName());
+            mgGoodsOrder.setUserType(user.getUserType());
+            UserDetail userDetail = null;
+            Organization organization = null;
             for (MgOrderGoods mgOrderGoods:ordergoodsList){
                 if (mgOrderGoods.getSolveStatus()==2){
                     orderInfoVo.setSolveStatus(2);
                 }
+                mgGoodsOrder.setSolveStatus(mgOrderGoods.getSolveStatus());
+                mgGoodsOrder.setMgOrderGoods(mgOrderGoods);
+                if (user.getUserType() == 2){
+                    userDetail = userDetailService.selectById(orderInfo.getUserId());
+                    mgGoodsOrder.setRealName(userDetail.getRealName());
+                }else if (user.getUserType() == 4){
+                    organization = organizationService.selectById(user.getOrgId());
+                    mgGoodsOrder.setRealName(organization.getOrgName());
+                }
+                mgGoodsOrderService.insert(mgGoodsOrder);
             }
             if (user.getUserType() == 2){
-                UserDetail userDetail = userDetailService.selectById(orderInfoVo.getUserId());
+                userDetail = userDetailService.selectById(orderInfo.getUserId());
                 orderInfoVo.setRealName(userDetail.getRealName());
             }else if (user.getUserType() == 4){
-                Organization organization = organizationService.selectById(user.getOrgId());
+                organization = organizationService.selectById(user.getOrgId());
                 orderInfoVo.setRealName(organization.getOrgName());
             }
             orderInfoVo.setMgOrderGoodsList(ordergoodsList);
 
+            //插入到mongo
             mgOrderInfoService.insert(orderInfoVo);
         }
     }
@@ -483,7 +534,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         //进行商品销量统计
         if(OrderInfo.PAYSTATUS_PAYED == payStatus){
             managePaySuccess(orderInfo);
-//            countSales(orderInfo.getOrderId());
+            countSales(orderInfo.getOrderId());
         }
         //        if(list!=null&&list.size()>0){
         //            mapper.updatePayStatus(orderSn,status);
@@ -510,6 +561,38 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         }catch (Exception e){
             e.printStackTrace();
             logger.error("统计商品销量错误"+orderId);
+        }
+    }
+
+    @Override
+    public void waitSettleRecordInsert(String orderSn){
+        List<Condition> mgfilters = new ArrayList<>();
+        mgfilters.add(Condition.eq("orderSn", orderSn));
+        OrderInfoVo orderInfoVo = mgOrderInfoService.selectOne(mgfilters);
+        if (orderInfoVo != null) {
+            List<MgOrderGoods> mgOrderGoodsList = orderInfoVo.getMgOrderGoodsList();
+            List<WaitSettleRecord> waitSettleRecords = new ArrayList<>();
+            if (mgOrderGoodsList != null && mgOrderGoodsList.size() > 0) {
+                for (MgOrderGoods mgOrderGoods : mgOrderGoodsList) {
+                    WaitSettleRecord waitSettleRecord = new WaitSettleRecord();
+                    waitSettleRecord.setOrderSn(mgOrderGoods.getOrderSn());
+                    waitSettleRecord.setGoodsId(mgOrderGoods.getGoodsId());
+                    waitSettleRecord.setOrderId(orderInfoVo.getOrderId());
+                    waitSettleRecord.setOrderAmount(mgOrderGoods.getGoodsPrice());
+//					waitSettleRecord.setOrderTime(orderInfoVo.getPayTime());
+                    waitSettleRecord.setOrderTime(orderInfoVo.getAddTime());
+                    waitSettleRecord.setHasSettleAmount(0L);
+                    waitSettleRecord.setNoSettleAmount(mgOrderGoods.getGoodsPrice());
+                    waitSettleRecord.setAddTime(new Date());
+                    waitSettleRecord.setSettleStatus((byte) 0);
+                    waitSettleRecord.setShopName(mgOrderGoods.getAddUser());
+                    waitSettleRecord.setGoodsName(mgOrderGoods.getGoodsName());
+                    waitSettleRecords.add(waitSettleRecord);
+                }
+
+                int n = waitSettleRecordService.insertBatch(waitSettleRecords);
+                System.out.println(n);
+            }
         }
     }
 
@@ -675,6 +758,34 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             }
             orderInfoVo.setMgOrderGoodsList(goods);
         }
+        return pagination;
+    }
+
+    @Override
+    public Pagination<MgGoodsOrder> getMgGoodsOrderList(Integer pageNum, Integer pageSize, String orderSn,String goodsName,
+                                                        String addUser, Date startTime, Date endTime){
+        Pagination<MgGoodsOrder> pagination = new Pagination<>();
+        Query query = new Query();
+        if (orderSn!=null)
+            query.addCriteria(Criteria.where("orderSn").is(orderSn));
+        if (goodsName!=null)
+            query.addCriteria(Criteria.where("mgOrderGoods.goodsName").regex(goodsName));
+        if (addUser!=null)
+            query.addCriteria(Criteria.where("mgOrderGoods.addUser").is(addUser));
+        if (startTime!=null && endTime!=null){
+            query.addCriteria(Criteria.where("addTime").gte(startTime).lt(endTime));
+        }else if (startTime==null && endTime!=null){
+            query.addCriteria(Criteria.where("addTime").lt(endTime));
+        }else if (startTime!=null && endTime==null){
+            query.addCriteria(Criteria.where("addTime").gte(startTime));
+        }
+        query.with(new Sort(Sort.Direction.DESC, "addTime"));
+        List<MgGoodsOrder> list = mongoTemplate.find(query,MgGoodsOrder.class);
+        pagination.setList(list);
+        pagination.setTotalItems(list.size());
+        pagination.setCurrentPage(pageNum);
+        pagination.setPageSize(pageSize);
+
         return pagination;
     }
 
@@ -1020,15 +1131,137 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         return map;
     }
 
-//    @Scheduled()
-//    public void deleteOrderByTime(){
-//
-//        Date date = new Date();
-//
-//        List<OrderInfo> orderInfos = orderinfoMapper.selectAll();
-//        for (OrderInfo orderInfo:orderInfos){
-//            long addTime = orderInfo.getAddTime().getTime();
-//
-//        }
-//    }
+//    @Scheduled(cron = "0 10 10 * * ?")
+    public void deleteOrderByTime(){
+        Date date = new Date();
+        long now = date.getTime();
+        List<OrderInfo> orderInfos = orderinfoMapper.selectAll();
+        for (OrderInfo orderInfo:orderInfos){
+            long addTime = orderInfo.getAddTime().getTime();
+            long time = now - addTime;
+            if (time>24*60*60*1000){
+                deleteByLogic(orderInfo.getOrderId());
+            }
+        }
+    }
+
+
+    @Override
+    public Map getStatistics(){
+        Map<String,Object> map=new HashMap<String,Object>();
+        map.put("orderNum",getOrderByToday(new Date())); // 订单数
+        map.put("effectiveOrderAmount",getOrderMoneyByPayStatus(new Date(),OrderInfoVo.PAYSTATUS_PAYED)); //有效订单金额
+        map.put("effectiveOrderNum",getOrderNumByPayStatus(new Date(),OrderInfoVo.PAYSTATUS_PAYED)); //有效订单数
+        map.put("commentNum",getCommentNumByStatus(new Date(),1)); //评论数
+        map.put("payEDOrderNum",getOrderNumByPayStatus(new Date(),OrderInfoVo.PAYSTATUS_PAYED)); //已付款订单数
+        map.put("payingOrderNum",getOrderNumByPayStatus(new Date(),OrderInfoVo.PAYSTATUS_PAYING)); //待付款订单数
+        map.put("cancelOrderNum",getOrderNumByToday(new Date(),OrderInfoVo.ORDERSTATUS_CANCEL)); //已取消订单数
+        // map.put("orderAmount",getOrderNumByStatus(new Date(),OrderInfoVo.PAYSTATUS_PAYING)); //已售商品数
+        return map;
+    }
+
+    /**
+     * 获取当日订单数
+     * @return
+     */
+    public int  getOrderByToday(Date stime){
+        List<Condition> filters = new ArrayList();
+        filters.add(Condition.ge("addTime",startTime(stime)));
+        filters.add(Condition.le("addTime",endTime(stime)));
+        List<OrderInfoVo> orderList = mgOrderInfoService.selectList(filters,null);
+        return orderList.size();
+    }
+
+    /**
+     * 根据订单付款状态获取当天订单数 （0：未付款 1：付款中 2：已付款 ）
+     * @return
+     */
+    public int  getOrderNumByPayStatus(Date stime,int payStatus){
+        List<Condition> filters = new ArrayList();
+        filters.add(Condition.ge("addTime",startTime(stime)));
+        filters.add(Condition.le("addTime",endTime(stime)));
+        filters.add(Condition.eq("payStatus",payStatus));
+        List<OrderInfoVo> orderList = mgOrderInfoService.selectList(filters,null);
+        return orderList.size();
+    }
+
+    /**
+     * 根据当天评论数 （0.待审核 1.审核通过，2.审核不通过）
+     * @return
+     */
+    public int  getCommentNumByStatus(Date stime,int commStatus){
+        List<Condition> filters = new ArrayList();
+        filters.add(Condition.ge("addTime",startTime(stime)));
+        filters.add(Condition.le("addTime",endTime(stime)));
+        filters.add(Condition.eq("status",commStatus));
+        List<Comment> list = commentService.selectList(filters);
+        return list.size();
+    }
+
+
+    /**
+     * 根据订单交易状态获取当天订单数 （0未确认,1确认,2已取消,3无效,4退货 ）
+     * @return
+     */
+    public int  getOrderNumByToday(Date stime,int orderStatus){
+        List<Condition> filters = new ArrayList();
+        filters.add(Condition.ge("addTime",startTime(stime)));
+        filters.add(Condition.le("addTime",endTime(stime)));
+        filters.add(Condition.eq("orderStatus",orderStatus));
+        List<OrderInfoVo> orderList = mgOrderInfoService.selectList(filters,null);
+        return orderList.size();
+    }
+
+    /**
+     * 根据状态获取某天的总交易金额
+     * @param stime
+     * @param payStatus （0：未付款 1：付款中 2：已付款 ）
+     * @return
+     */
+    public long getOrderMoneyByPayStatus(Date stime,int payStatus){
+        Long total = 0l;
+        Aggregation aggregation = Aggregation.newAggregation(
+                match(Criteria.where("addTime").gte(startTime(stime)).and("addTime").lte(endTime(stime)).and("payStatus").is(payStatus)),
+                group().sum("orderAmount").as("orderAmount")
+        );
+
+        AggregationResults<OrderInfoVo> ar = mongoTemplate.aggregate(aggregation, "message", OrderInfoVo.class);
+        List<OrderInfoVo> list = ar.getMappedResults();
+        if(list.size() > 0){
+            total = list.get(0).getOrderAmount();
+        }
+        return total;
+    }
+
+
+
+
+    /**
+     * 开始时间
+     * @return
+     */
+    public Date startTime(Date stime){
+        Calendar monEight = Calendar.getInstance();
+        monEight.setTime(stime);
+        monEight.set(Calendar.HOUR_OF_DAY, 0);
+        monEight.set(Calendar.MINUTE, 0);
+        monEight.set(Calendar.SECOND, 0);
+        monEight.set(Calendar.MILLISECOND, 0);
+        return monEight.getTime();
+    }
+
+    /**
+     * 结束时间
+     * @return
+     */
+    public Date endTime(Date stime){
+        Calendar c = Calendar.getInstance();
+        c.setTime(stime);
+        c.set(Calendar.HOUR_OF_DAY, 23);
+        c.set(Calendar.MINUTE, 59);
+        c.set(Calendar.SECOND, 59);
+        c.set(Calendar.MILLISECOND, 999);
+        return c.getTime();
+    }
+
 }

@@ -2,10 +2,8 @@ package com.jusfoun.hookah.core.domain.vo;
 
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.MessageSendInfo;
-import com.jusfoun.hookah.core.domain.es.EsRange;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Created by ctp on 2017/7/11.
@@ -20,6 +18,8 @@ public class MessageCritVo extends MessageSendInfo implements Serializable {
     private String startTime;
     private String endTime;
     private String keywords;
+    private String receiveUserName;
+    private String[] userIds;
 
     public Integer getPageNumber() {
         return pageNumber;
@@ -75,5 +75,21 @@ public class MessageCritVo extends MessageSendInfo implements Serializable {
 
     public void setKeywords(String keywords) {
         this.keywords = keywords;
+    }
+
+    public String getReceiveUserName() {
+        return receiveUserName;
+    }
+
+    public void setReceiveUserName(String receiveUserName) {
+        this.receiveUserName = receiveUserName;
+    }
+
+    public String[] getUserIds() {
+        return userIds;
+    }
+
+    public void setUserIds(String[] userIds) {
+        this.userIds = userIds;
     }
 }
