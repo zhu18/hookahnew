@@ -1,6 +1,3 @@
-import GoodsController from "./GoodsController";
-import GoodsCheckController from "./GoodsCheckController";
-import ReadyGoodsCheckController from "./ReadyGoodsCheckController";
 import ShelfController from "../shelf/ShelfController";
 import ManageGoodsController from "../shelf/ManageGoodsController";
 import CategoryController from "../category/CategoryController";
@@ -52,49 +49,6 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
 			template: require('./goodsDetail.html'),
 			controller: GoodsDetailController,
 			permission: 'items_goodsDetail'
-		})
-		.state('items.searchByCon', {
-			// params:{'searchName':null, 'searchSn':null, 'searchCheckStatus':null, 'searchOnSaleStatus':null},
-			url: '/items/searchByCon',
-			template: require('./list.html'),
-			controller: GoodsController,
-			permission: 'items_searchByCon'
-		})
-		.state('items.update', {
-			url: '/items/update',
-			template: require('./update.html'),
-			controller: GoodsController,
-			permission: 'items_update'
-		})
-		.state('items.lookDetail', {
-			url: '/items/lookDetail',
-			template: require('./lookDetail.html'),
-			controller: GoodsController,
-			permission: 'items_lookDetail'
-		})
-		.state('items.check2', {
-			url: '/items/check2',
-			template: require('./checkList.html'),
-			controller: ReadyGoodsCheckController,
-			permission: 'items_check2'
-		})
-		.state('items.checkDetail', {
-			url: '/items/checkDetail',
-			template: require('./checkDetail.html'),
-			controller: GoodsCheckController,
-			permission: 'items_checkDetail'
-		})
-		.state('items.checkedList2', {
-			url: '/items/checkedList2',
-			template: require('./goodsCheckedList.html'),
-			controller: GoodsCheckController,
-			permission: 'items_checkedList2'
-		})
-		.state('items.checkGoodsDetail', {
-			url: '/items/checkGoodsDetail',
-			template: require('./goodsDetail.html'),
-			controller: ReadyGoodsCheckController,
-			permission: 'items_checkGoodsDetail'
 		})
 		.state('shelf.search', {
 			url: '/shelf/search',
