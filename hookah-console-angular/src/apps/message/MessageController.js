@@ -109,8 +109,13 @@ class MessageController {
             });
             promise.then(function (res, status, config, headers){
                 $rootScope.loadingState = false;
-                console.log(res.data.data);
-                growl.addSuccessMessage("数据加载完毕。。。");
+                if(res.data.code == 1){
+					$rootScope.openJustShowDialogModal('添加模板成功');
+					$state.go('message.template.search',{});
+                }else{
+
+                }
+
             })
         };
 
