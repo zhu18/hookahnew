@@ -55,10 +55,6 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 	@Resource
 	PayAccountRecordMapper payAccountRecordMapper;
 
-	private String notifyUrl="/payAccount/rechargeResultSync";
-
-	private String returnUrl="/payAccount/rechargeResult";
-
 	@Transactional
 	public int operatorByType(Long payAccountId, Integer operatorType, Long money) {
 
@@ -525,7 +521,8 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 			//insertPayTradeRecord( userId, money, payAccount.getId(), 0, 1);
 			//insertPayAccountRecord( userId, money, payAccount.getId(), 0, 1);
 
-			String html = alipayService.doCharge(userId,money.toString(),notifyUrl,returnUrl);
+			String html = alipayService.doCharge(userId,money.toString(),
+					PayConfiguration.ALIPAY_NOTIFY_URL,PayConfiguration.ALIPAY_RETURN_URL);
 			returnData.setCode(ExceptionConst.Success);
 			returnData.setMessage(html);
 			return returnData;
