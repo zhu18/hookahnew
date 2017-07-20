@@ -52,6 +52,9 @@ public class PayController {
     @Resource
     PayTradeRecordService payTradeRecordService;
 
+    @Resource
+    PayAccountRecordService payAccountRecordService;
+
     @RequestMapping(value = "/createOrder", method = RequestMethod.GET)
     public String createOrder() {
         return "pay/createOrder";
@@ -269,8 +272,6 @@ public class PayController {
                 //更新交易中心虚拟账户金额,更新流水表状态
                 int n = payAccountService.operatorByType(HookahConstants.TRADECENTERACCOUNT,HookahConstants.TradeType.FreezaIn.getCode(),
                         orderInfo.getOrderAmount());
-                payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.success.getCode());
-                payTradeRecordService.updateByIdSelective(payTradeRecord);
 
                 //修改内部流水的状态和外部充值状态
                 List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
@@ -278,6 +279,9 @@ public class PayController {
                     payTradeRecord1.setTradeStatus(HookahConstants.TransferStatus.success.getCode());
                     payTradeRecordService.updateByIdSelective(payTradeRecord1);
                 }
+                PayAccountRecord payAccountRecord = payAccountRecordService.selectOne(filter);
+                payAccountRecord.setTransferStatus(HookahConstants.TransferStatus.success.getCode());
+                payAccountRecordService.updateByIdSelective(payAccountRecord);
 
                 //更新订单状态
                 orderService.updatePayStatus(orderSn,orderInfo.PAYSTATUS_PAYED,1);
@@ -334,14 +338,17 @@ public class PayController {
                 //更新交易中心虚拟账户金额,更新流水表状态
                 int n = payAccountService.operatorByType(HookahConstants.TRADECENTERACCOUNT,HookahConstants.TradeType.FreezaIn.getCode(),
                         orderInfo.getOrderAmount());
-                payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.success.getCode());
-                payTradeRecordService.updateByIdSelective(payTradeRecord);
+//                payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.success.getCode());
+//                payTradeRecordService.updateByIdSelective(payTradeRecord);
 
                 //修改内部流水的状态和外部充值状态
                 List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
                 for (PayTradeRecord payTradeRecord1 : payTradeRecords){
                     payTradeRecord1.setTradeStatus(HookahConstants.TransferStatus.success.getCode());
                 }
+                PayAccountRecord payAccountRecord = payAccountRecordService.selectOne(filter);
+                payAccountRecord.setTransferStatus(HookahConstants.TransferStatus.success.getCode());
+                payAccountRecordService.updateByIdSelective(payAccountRecord);
                 //更新订单状态
                 orderService.updatePayStatus(orderSn,orderInfo.PAYSTATUS_PAYED,1);
                 orderService.waitSettleRecordInsert(orderSn);
