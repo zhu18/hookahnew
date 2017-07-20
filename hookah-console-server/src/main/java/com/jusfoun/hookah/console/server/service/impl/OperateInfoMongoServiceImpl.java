@@ -9,6 +9,7 @@ import com.jusfoun.hookah.core.generic.GenericMongoServiceImpl;
 import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.rpc.api.OperateInfoMongoService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -66,6 +67,7 @@ public class OperateInfoMongoServiceImpl extends GenericMongoServiceImpl<Operate
             criteria = Criteria.where("operateTime").gte(optStartTime);
             query.addCriteria(criteria);
         }
+        query.with(new Sort(Sort.Direction.DESC, "operateTime"));
         List<OperateInfo> list = this.mongoTemplate.find(query, (Class)trueType);
         //设置分页信息
         query.skip((operateVO.getPageNumber()-1)*operateVO.getPageSize());
@@ -76,8 +78,8 @@ public class OperateInfoMongoServiceImpl extends GenericMongoServiceImpl<Operate
         for (OperateInfo operateInfo: page){
             OperateInfo optInfo = new OperateInfo();
             optInfo = operateInfo;
-            optInfo.setOptType(operateInfo.getOptType());
-            optInfo.setLogType(operateInfo.getLogType());
+            optInfo.setOptTypeName(operateInfo.getOptType());
+            optInfo.setLogTypeName(operateInfo.getLogType());
             retrun_page.add(optInfo);
         }
         Pagination<OperateInfo> pagination = new Pagination<OperateInfo>();

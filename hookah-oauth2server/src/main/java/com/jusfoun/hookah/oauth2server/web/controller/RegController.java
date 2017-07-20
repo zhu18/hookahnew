@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.oauth2server.web.controller;
 
 import com.google.code.kaptcha.Constants;
+import com.jusfoun.hookah.core.annotation.Log;
 import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.User;
@@ -69,6 +70,7 @@ public class RegController {
         return "register";
     }
 
+    @Log(platform = "front",logType = "f0001",optType = "insert")
     @RequestMapping(value = "/reg", method = RequestMethod.POST)
     @ResponseBody
     public ReturnData pReg(UserValidVo user, HttpServletRequest request, RedirectAttributes redirectAttributes, Model model) {

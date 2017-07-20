@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface Log {
     //操作平臺
-    String platform() default "操作平臺";
+    String platform() default "";
     //日志类型
     String logType() default "";
     //操作类型
