@@ -1,5 +1,9 @@
 class RoleController {
   constructor($scope, $rootScope, permissions, $http, $state, $uibModal, usSpinnerService, growl) {
+
+    $scope.select = function(data){
+      console.log(data);
+    };
     $scope.search = function () {
       var promise = $http({
         method: 'GET',
@@ -21,10 +25,43 @@ class RoleController {
       $rootScope.item={};
       $rootScope.selectRolePermissions = "";
 
+      var promise = $http({
+        method: 'GET',
+        url: $rootScope.site.apiServer + "/api/permission/tree",
+        // params: {
+        //   currentPage: $rootScope.pagination.currentPage,
+        //   pageSize: $rootScope.pagination.pageSize,
+        //   userName: $scope.userName
+        // }
+      });
+      promise.then(function (res, status, config, headers) {
+        $state.go('account.role.add');
+        console.log("sksks");
+        $rootScope.loadingState = false;
+        $rootScope.tree_data = res.data;
+        growl.addSuccessMessage("数据加载完毕。。。");
+      });
+
     };
     $scope.load = function (event, item) {
       $rootScope.title= "修改角色";
       $rootScope.item = item;
+      var promise1 = $http({
+        method: 'GET',
+        url: $rootScope.site.apiServer + "/api/permission/tree",
+        // params: {
+        //   currentPage: $rootScope.pagination.currentPage,
+        //   pageSize: $rootScope.pagination.pageSize,
+        //   userName: $scope.userName
+        // }
+      });
+      promise1.then(function (res, status, config, headers) {
+        $state.go('account.role.add');
+        console.log("sksks");
+        $rootScope.loadingState = false;
+        $rootScope.tree_data = res.data;
+        growl.addSuccessMessage("数据加载完毕。。。");
+      });
       var promise = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/role/getPermissionsByRoleId",

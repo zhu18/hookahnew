@@ -10,5 +10,7 @@ public interface PermissionMapper extends GenericDao<Permission> {
 
     Set<String> selectPermissionsByRoleId(@Param("roleId") String roleId);
 
+    Set<String> selectPermissionsByRoleName(@Param("roleName") String roleName);
+
     Set<String> selectPermissionsByUserId(@Param("userId") String userId);
 }

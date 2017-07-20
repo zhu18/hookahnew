@@ -7,6 +7,7 @@ import com.jusfoun.hookah.rpc.api.RoleService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -29,5 +30,10 @@ public class RoleServiceImpl extends GenericServiceImpl<Role, String> implements
     public Set<String> selectRolesByUserId(String userId) {
         Set<String> s = roleMapper.selectRolesByUserId(userId);
         return s;
+    }
+
+    public List<Role> selectRoleListByUserId(String userId){
+        List<Role> roles = roleMapper.selectRoleListByUserId(userId);
+        return roles;
     }
 }

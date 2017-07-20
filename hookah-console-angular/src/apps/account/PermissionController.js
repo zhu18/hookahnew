@@ -1,23 +1,66 @@
 class PermissionController {
   constructor($scope, $rootScope, $http, $state, $uibModal, usSpinnerService, growl) {
 
-    $scope.search = function () {
+    $scope.expanding_property = {
+      field: "permissionExplain",
+      displayName: "权限名称"
+    };
+
+    $scope.col_defs = [
+      // {
+      //   field: "permissionId",
+      //   displayName: "权限ID"
+      // },
+      {
+        field: "permissionName",
+        displayName: "权限代码"
+      }
+      // {
+      //   field: "property",
+      //   displayName: "属性"
+      // }
+      // , {
+      //   field: "seq",
+      //   displayName: "顺序"
+      // }
+      , {
+        field: "aa",
+        displayName: "操作",
+        cellTemplate: '<a href="javascript:;" ng-click="cellTemplateScope.delete(row.branch)" target="_blank">删除</a>',
+        cellTemplateScope: {
+          delete: function (data) {
+            $scope.delete(data);
+          }
+        }
+      }
+    ];
+    $scope.permission_tree = {};
+
+    $scope.treehandler = function (branch) {
+      console.log(branch);
+    };
+    $scope.add = function(){
       var promise = $http({
         method: 'GET',
-        url: $rootScope.site.apiServer + "/api/permission/permission_all",
-        params: {
-          currentPage: $rootScope.pagination.currentPage,
-          pageSize: $rootScope.pagination.pageSize,
-          userName: $scope.userName
-        }
+        url: $rootScope.site.apiServer + "/api/permission/group",
       });
       promise.then(function (res, status, config, headers) {
         $rootScope.loadingState = false;
-        $scope.sysAccount = res.data.data;
+        $rootScope.group = res.data;
         growl.addSuccessMessage("数据加载完毕。。。");
       });
     };
-
+    $scope.search = function () {
+      var promise = $http({
+        method: 'GET',
+        url: $rootScope.site.apiServer + "/api/permission/tree",
+      });
+      promise.then(function (res, status, config, headers) {
+        $rootScope.loadingState = false;
+        $scope.tree_data = res.data;
+        growl.addSuccessMessage("数据加载完毕。。。");
+      });
+    };
     $scope.save = function () {
       var promise = $http({
         method: 'POST',
@@ -34,7 +77,7 @@ class PermissionController {
         growl.addSuccessMessage("数据加载完毕。。。");
       });
     };
-    $scope.delete = function (event, item) {
+    $scope.delete = function (item) {
       var confirm = $rootScope.openConfirmDialogModal("确认要删除此&nbsp;<b>" + item.permissionName + "</b>&nbsp;权限吗？");
       confirm.result.then(function () {
         var promise = $http({
@@ -53,13 +96,10 @@ class PermissionController {
       });
 
     };
-
     $scope.pageChanged = function () {
       $scope.search();
     };
-
     $scope.search();
-
   }
 }
 export default PermissionController;
