@@ -511,7 +511,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         //进行商品销量统计
         if(OrderInfo.PAYSTATUS_PAYED == payStatus){
             managePaySuccess(orderInfo);
-//            countSales(orderInfo.getOrderId());
+            countSales(orderInfo.getOrderId());
         }
         //        if(list!=null&&list.size()>0){
         //            mapper.updatePayStatus(orderSn,status);
