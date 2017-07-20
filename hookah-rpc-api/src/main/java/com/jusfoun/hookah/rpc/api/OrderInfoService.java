@@ -90,4 +90,6 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
      * @return
      */
     public Map getStatistics();
+
+    void deleteOrder(String id);
 }

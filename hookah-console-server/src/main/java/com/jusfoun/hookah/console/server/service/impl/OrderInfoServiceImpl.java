@@ -150,6 +150,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         orderinfo.setLastmodify(date);
         orderinfo.setEmail("");
         orderinfo.setIsDeleted((byte)0);
+        orderinfo.setForceDeleted((byte)0);
         orderinfo.setCommentFlag(0);
         return orderinfo;
     }
@@ -281,6 +282,18 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         OrderInfoVo orderInfoVo = new OrderInfoVo();
         orderInfoVo.setOrderId(id);
         orderInfoVo.setIsDeleted((byte)1);
+        mgOrderInfoService.updateByIdSelective(orderInfoVo);
+    }
+
+    @Override
+    public void deleteOrder(String id){
+        OrderInfo order = new OrderInfo();
+        order.setOrderId(id);
+        order.setForceDeleted(new Byte("1"));
+        updateByIdSelective(order);
+        OrderInfoVo orderInfoVo = new OrderInfoVo();
+        orderInfoVo.setOrderId(id);
+        orderInfoVo.setForceDeleted((byte)1);
         mgOrderInfoService.updateByIdSelective(orderInfoVo);
     }
 
