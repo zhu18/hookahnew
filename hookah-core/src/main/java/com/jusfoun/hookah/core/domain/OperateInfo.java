@@ -69,6 +69,10 @@ public class OperateInfo extends GenericModel {
     }
 
     public void setLogType(String logType) {
+        this.logType = logType;
+    }
+
+    public void setLogTypeName(String logType) {
         String result = OperateConstants.Front_OPT.getNameByCode(logType);
         if (logType.equalsIgnoreCase(result))
             result = OperateConstants.Back_OPT.getNameByCode(logType);
@@ -104,6 +108,10 @@ public class OperateInfo extends GenericModel {
     }
 
     public void setOptType(String optType) {
+        this.optType = optType;
+    }
+
+    public void setOptTypeName(String optType) {
         this.optType = OperateConstants.OPT.getNameByCode(optType);
     }
 
