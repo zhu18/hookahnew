@@ -522,7 +522,7 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 			//insertPayAccountRecord( userId, money, payAccount.getId(), 0, 1);
 
 			String html = alipayService.doCharge(userId,money.toString(),
-					PayConfiguration.ALIPAY_NOTIFY_URL,PayConfiguration.ALIPAY_RETURN_URL);
+					PayConfiguration.RECHARGE_NOTIFY_URL,PayConfiguration.RECHARGE_RETURN_URL);
 			returnData.setCode(ExceptionConst.Success);
 			returnData.setMessage(html);
 			return returnData;
