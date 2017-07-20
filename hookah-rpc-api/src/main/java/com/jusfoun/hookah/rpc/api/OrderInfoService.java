@@ -84,4 +84,10 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
 
     Pagination<MgGoodsOrder> getMgGoodsOrderList(Integer pageNum, Integer pageSize, String orderSn,
                                                  String goodsName, String addUser, Date startTime, Date endTime);
+
+    /**
+     * 获得订单相关统计信息
+     * @return
+     */
+    public Map getStatistics();
 }
