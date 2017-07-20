@@ -57,7 +57,7 @@
               </p>
             </div>
             <button type="submit" class="btn btn-primary" data-ng-click="templateSearch()">搜索</button>
-            <button type="submit" class="btn btn-primary" data-ng-click="">添加</button>
+            <button type="submit" class="btn btn-primary" ui-sref="message.template.add" data-ng-click="">添加</button>
           </form>
         </div>
         <div class="gridSection">
@@ -66,10 +66,11 @@
             <thead>
             <tr>
               <th>序号</th>
-              <th>事件类型</th>
               <th>模板标题</th>
-              <th>更新时间</th>
+              <th>模板内容</th>
+              <th>事件类型</th>
               <th>模板类型</th>
+              <th>更新时间</th>
               <th>启用状态</th>
               <th width="200" class="text-center">操作</th>
             </tr>
@@ -82,25 +83,34 @@
               </td>
               <td>
                 <a href="javascript:;" ng-click="lookDetail(item)">
-                  <span class="column-text" ng-bind="item.eventTypeName | limitTo:10"></span>
+                  <span class="column-text" ng-bind="item.templateHeader"></span>
                 </a>
               </td>
               <td>
-                <span class="column-text" ng-bind="item.templateHeader"></span>
+                <span class="column-text" title="{{item.templateContent}}" ng-bind="item.templateContent | limitTo:20"></span>
               </td>
               <td>
-                <span class="column-text" ng-bind="item.updateTime"></span>
+                  <span class="column-text" ng-bind="item.eventTypeName | limitTo:10"></span>
               </td>
               <td>
                 <span class="column-text" ng-bind="item.templateType | templateType"></span>
               </td>
               <td>
-                <span class="column-text" ng-click="stopOrOpenTemplate(item)" ng-bind="item.isVaild | shelvesStatus"></span>
+                <span class="column-text" ng-bind="item.updateTime"></span>
+              </td>
+              <td>
+                <span class="column-text" ng-bind="item.isVaild | shelvesStatus"></span>
               </td>
               <td class="text-center">
-
-                <span><a></a></span>
-                <span><a href="javascript:;" ng-click="deleteTemplate(item)">删除</a></span><span class="text-explode">|</span><span><a href="javascript:;" ng-click="editTemplate(item)">编辑</a></span>
+                <span>
+                  <a href="javascript:;" ng-click="stopOrOpenTemplate(item)">
+                    <span data-ng-if="item.isVaild == 0">启用</span>
+                    <span data-ng-if="item.isVaild == 1">停用</span>
+                  </a>
+                </span>
+                <!--<span data-ng-if="item.isVaild == 1"><a href="javascript:;" ng-click="stopOrOpenTemplate(item)"><span>停用</span></a></span>-->
+                <span class="text-explode">|</span>
+                <span><a href="javascript:;" ng-click="deleteTemplate(item)">删除</a></span><span class="text-explode">|</span><span><a href="javascript:;" ng-click="toEditTemplate(item)">编辑</a></span>
               </td>
             </tr>
             </tbody>

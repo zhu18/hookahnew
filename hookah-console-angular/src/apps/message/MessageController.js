@@ -85,6 +85,30 @@ class MessageController {
             });
         };
 
+        //获取消息事件类型列表
+        $scope.getTempEventTypeSelect = function (eventType) {
+            var promise = $http({
+                method: 'POST',
+                url: $rootScope.site.apiServer + "/api/message/eventType/all",
+            });
+            promise.then(function (res, status, config, headers) {
+                $rootScope.loadingState = false;
+                console.log("获取数据:" + res.data);
+                if (res.data.code == 1) {
+                    console.log(res.data.data);
+                    $scope.eventTypes = res.data.data;
+                    // $scope.eventType = $scope.eventTypes[0].code;
+                    // $scope.eventTypes.unshift({"code":"-1","describle":"全部"});
+                    if(eventType != null && eventType != ""){
+                        $scope.eventType = eventType;
+                    } else {
+                        $scope.eventType = $scope.eventTypes[0].code;
+                    }
+
+                }
+            });
+        };
+
         $scope.getInfo=function(){
             var promise = $http({
                 method: 'GET',
@@ -119,16 +143,83 @@ class MessageController {
             })
         };
 
-        $scope.stopOrOpenTemplate = function(){
+        //删除模板
+        $scope.deleteTemplate = function(item){
+            console.log("模板状态值：" + item.isVaild);
+            if (item.isVaild != null && item.isVaild != 1) {
+                var modalInstance = $rootScope.openConfirmDialogModal("确定要删除" + '<span style="font-weight: bold;color: #6b3100">' + item.templateHeader + '</span>' + "模板吗？");
+                modalInstance.result.then(function () {
+                    var promise = $http({
+                        method: 'POST',
+                        url: $rootScope.site.apiServer + "/api/message/template/delete",
+                        params: {tempId:item.id}
+                    });
+                    promise.then(function (res, status, config, headers){
+                        $rootScope.loadingState = false;
+                        console.log(res.data.data);
+                        if (res.data.code == 1) {
+                            growl.addSuccessMessage("删除成功。。。");
+                            $scope.templateSearch();
+                        } else {
+                            growl.addErrorMessage("删除失败。。。");
+                        }
+                    })
+                }, function () {
+                    // $log.info('Modal dismissed at: ' + new Date());
+                });
+            }else {
+                $rootScope.openErrorDialogModal('模板' + '<span style="font-weight: bold;color: #6b3100">' + item.templateHeader + '</span>' + "正在使用中,不能删除");
+            }
+        };
+
+        //编辑模板
+        $scope.editTemplate = function(){
             var promise = $http({
                 method: 'POST',
-                url: $rootScope.site.apiServer + "/api/message/template/stopOrOpen",
-                data: {tempId: item.id}
+                url: $rootScope.site.apiServer + "/api/message/template/edit",
+                data: $("#infoForm").serialize()
             });
             promise.then(function (res, status, config, headers){
                 $rootScope.loadingState = false;
                 console.log(res.data.data);
-                growl.addSuccessMessage("数据加载完毕。。。");
+                if (res.data.code == 1) {
+                    growl.addSuccessMessage("保存模板成功。。。");
+                    $state.go("message.template.search");
+                } else {
+                    growl.addErrorMessage("保存模板失败。。。");
+                }
+            })
+        };
+
+        //跳转到编辑模板页面
+        $scope.toEditTemplate = function(item){
+            //启用状态下不可编辑
+            if (item.isVaild != null && item.isVaild != 1) {
+                console.log("模板数据:" + item.id);
+                $state.go("message.template.edit",{data:item});
+            } else {
+                $rootScope.openErrorDialogModal('模板' + '<span style="font-weight: bold;color: #6b3100">' + item.templateHeader + '</span>' + "正在使用中,不能编辑");
+            }
+
+        };
+
+        $scope.stopOrOpenTemplate = function(item){
+            // var modalInstance = $rootScope.openConfirmDialogModal("确定要" + '<span style="font-weight: bold;color: #6b3100">' + item.templateHeader + '</span>' + "模板吗？");
+            var promise = $http({
+                method: 'POST',
+                url: $rootScope.site.apiServer + "/api/message/template/stopOrOpen",
+                params: {tempId: item.id}
+            });
+            promise.then(function (res, status, config, headers){
+                $rootScope.loadingState = false;
+                console.log(res.data.data);
+                if (res.data.code == 1) {
+                    growl.addSuccessMessage("操作成功");
+                    $scope.templateSearch();
+                } else {
+                    growl.addErrorMessage("操作失败。。。");
+                    $rootScope.openErrorDialogModal('<span style="font-weight: bold;color: #6b3100">' + res.data.message + '</span>');
+                }
             })
         };
 
@@ -179,17 +270,17 @@ class MessageController {
             });
 
 
-            // $scope.flag=false;
-            // $scope.$watch('content',function(newVal,oldVal){
-            //     // console.log("typeof:"+typeof newVal);
-            //     // console.log("new:"+newVal.charAt(newVal.length-1));
-            //     if(newVal.charAt(newVal.length-1) == '['){
-            //         $scope.getInfo();
-            //         $scope.flag=true;
-            //     }else{
-            //         $scope.flag=false;
-            //     }
-            // })
+            $scope.flag=false;
+            $scope.$watch('content',function(newVal,oldVal){
+                // console.log("typeof:"+typeof newVal);
+                // console.log("new:"+newVal.charAt(newVal.length-1));
+                if(newVal.charAt(newVal.length-1) == '['){
+                    $scope.getInfo();
+                    $scope.flag=true;
+                }else{
+                    $scope.flag=false;
+                }
+            })
 
 
             $scope.numIndex=0;
@@ -272,44 +363,54 @@ class MessageController {
         }
 
 
-        // var ds = 0;
-        // $scope.keyDownFn = function(e){
-        //     var lenth = $scope.len;
-        //     var conTxt = '';
-			// var keycode = window.event?e.keyCode:e.which;
-			// if(keycode == 219){
-			// 	$scope.getInfo();
-			// 	$scope.flag=true;
-			// 	conTxt = $scope.content;
-        //     }
-        //     if(keycode == 40){
-			// 	ds += 1;
-			// 	if (ds > lenth) {
-			// 		ds = lenth;
-			// 	}
-			// 	$('.tipBox li').eq(ds).addClass('active').siblings().removeClass('active')
-        //     }
-			// if(keycode == 38){
-			// 	ds -= 1;
-			// 	if (ds <= 0) {
-			// 		ds = 0;
-			// 	}
-			// 	$('.tipBox li').eq(ds).addClass('active').siblings().removeClass('active')
-			// }
-			// if(keycode == 13){
-			//     $('#text').blur();
-			// 	$('.tipBox li').each(function () {
-			// 		if ($(this).hasClass('active')) {
-			// 			$scope.content += $(this).attr('d-code')+']';
-        //
-			// 		}
-			// 	});
-			// 	$('#text').focus();
-			// 	$scope.flag=false;
-			// 	ds = 0;
-        //     }
-        // };
+        var ds = 0;
+        $scope.keyDownFn = function(e){
+            var lenth = $scope.len;
+            var conTxt = '';
+			var keycode = window.event?e.keyCode:e.which;
+			if(keycode == 219){
+				$scope.getInfo();
+				$scope.flag=true;
+				conTxt = $scope.content;
+            }
+            if(keycode == 40){
+				ds += 1;
+				if (ds > lenth) {
+					ds = lenth;
+				}
+				$('.tipBox li').eq(ds).addClass('active').siblings().removeClass('active')
+            }
+			if(keycode == 38){
+				ds -= 1;
+				if (ds <= 0) {
+					ds = 0;
+				}
+				$('.tipBox li').eq(ds).addClass('active').siblings().removeClass('active')
+			}
+			if(keycode == 13){
+			    $('#text').blur();
+				$('.tipBox li').each(function () {
+					if ($(this).hasClass('active')) {
+						$scope.content += $(this).attr('d-code')+']';
 
+					}
+				});
+				$('#text').focus();
+				$scope.flag=false;
+				ds = 0;
+            }
+        };
+
+        if ($state.$current.name == "message.template.edit") {
+
+            $scope.getInfo();
+            $scope.template = $stateParams.data;
+            $scope.content = $stateParams.data.templateContent;
+            $scope.getTempEventTypeSelect($stateParams.data.eventType);
+            console.log("事件类型：" + $stateParams.data.eventType);
+            $scope.flag=false;
+
+        }
 
         if($state.$current.name == "message.email.search"){
             //消息是否成功
@@ -392,25 +493,6 @@ class MessageController {
             });
 
             $scope.templateSearch();
-        }
-
-        //获取消息事件类型列表
-        $scope.getEventTypeSelect = function () {
-            var promise = $http({
-                method: 'POST',
-                url: $rootScope.site.apiServer + "/api/message/eventType/all",
-            });
-            promise.then(function (res, status, config, headers) {
-                $rootScope.loadingState = false;
-                console.log("获取数据:" + res.data);
-                if (res.data.code == 1) {
-                    console.log(res.data.data);
-                    $scope.eventTypes = res.data.data;
-                    // $scope.eventType = $scope.eventTypes[0].code;
-                    $scope.eventTypes.unshift({"code":"-1","describle":"全部"});
-                    $scope.eventType = "-1";
-                }
-            });
         }
 
         $scope.pageChanged = function () {
