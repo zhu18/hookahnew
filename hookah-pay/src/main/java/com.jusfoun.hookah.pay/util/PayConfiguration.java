@@ -11,6 +11,9 @@ public class PayConfiguration {
     public static String ALIPAY_NOTIFY_URL;
     public static String ALIPAY_RETURN_URL;
 
+	public static String RECHARGE_NOTIFY_URL;
+	public static String RECHARGE_RETURN_URL;
+
     static {
 		InputStream in;
 		try {
@@ -26,6 +29,8 @@ public class PayConfiguration {
     
     // 初始化全局配置
  	public static void initConfig(){
+		RECHARGE_NOTIFY_URL = properties.getProperty("recharge_notify_url");
+		RECHARGE_RETURN_URL = properties.getProperty("recharge_return_url");
  		ALIPAY_NOTIFY_URL = properties.getProperty("alipay_notify_url");
  		ALIPAY_RETURN_URL = properties.getProperty("alipay_return_url");
  	}

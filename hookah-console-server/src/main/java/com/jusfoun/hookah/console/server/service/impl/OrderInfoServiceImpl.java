@@ -24,6 +24,7 @@ import com.jusfoun.hookah.core.utils.FormatCheckUtil;
 import com.jusfoun.hookah.rpc.api.*;
 import org.apache.http.HttpException;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -510,7 +511,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         //进行商品销量统计
         if(OrderInfo.PAYSTATUS_PAYED == payStatus){
             managePaySuccess(orderInfo);
-//            countSales(orderInfo.getOrderId());
+            countSales(orderInfo.getOrderId());
         }
         //        if(list!=null&&list.size()>0){
         //            mapper.updatePayStatus(orderSn,status);
@@ -738,13 +739,30 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     }
 
     @Override
-    public Pagination<MgGoodsOrder> getMgGoodsOrderList(Integer pageNum, Integer pageSize, List<Condition> filters){
+    public Pagination<MgGoodsOrder> getMgGoodsOrderList(Integer pageNum, Integer pageSize, String orderSn,String goodsName,
+                                                        String addUser, Date startTime, Date endTime){
         Pagination<MgGoodsOrder> pagination = new Pagination<>();
-        List<MgGoodsOrder> list = mgGoodsOrderService.selectList(filters);
+        Query query = new Query();
+        if (orderSn!=null)
+            query.addCriteria(Criteria.where("orderSn").is(orderSn));
+        if (goodsName!=null)
+            query.addCriteria(Criteria.where("mgOrderGoods.goodsName").regex(goodsName));
+        if (addUser!=null)
+            query.addCriteria(Criteria.where("mgOrderGoods.addUser").is(addUser));
+        if (startTime!=null && endTime!=null){
+            query.addCriteria(Criteria.where("addTime").gte(startTime).lt(endTime));
+        }else if (startTime==null && endTime!=null){
+            query.addCriteria(Criteria.where("addTime").lt(endTime));
+        }else if (startTime!=null && endTime==null){
+            query.addCriteria(Criteria.where("addTime").gte(startTime));
+        }
+        query.with(new Sort(Sort.Direction.DESC, "addTime"));
+        List<MgGoodsOrder> list = mongoTemplate.find(query,MgGoodsOrder.class);
         pagination.setList(list);
         pagination.setTotalItems(list.size());
         pagination.setCurrentPage(pageNum);
         pagination.setPageSize(pageSize);
+
         return pagination;
     }
 

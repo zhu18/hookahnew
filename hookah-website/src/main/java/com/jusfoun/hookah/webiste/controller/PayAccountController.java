@@ -8,9 +8,11 @@ import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.PayAccountService;
 import com.jusfoun.hookah.rpc.api.PayCoreService;
-import org.json.HTTP;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -34,15 +36,23 @@ public class PayAccountController {
 
     @RequestMapping("/userRecharge")
     @ResponseBody
-    public String userRecharge(String userId,double money){
+    public String userRecharge(double money){
+        Session session = SecurityUtils.getSubject().getSession();
+        HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
         Map<String,Object> params = new HashMap<>();
-        params.put("userId",userId);
+        params.put("userId",userMap.get("userId"));
         params.put("money",money);
         ReturnData r=payAccountService.userRecharge(params);
         return r.getCode().equals(ExceptionConst.Success) ? r.getMessage() : JsonUtils.toJson(r);
     }
 
-    @RequestMapping("/rechargeResultSync")
+    /**
+     * 支付宝异步回调函数
+     * @param request
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "/rechargeResultSync", method = RequestMethod.POST)
     public String rechargeResultSync(HttpServletRequest request) throws IOException {
 
         //商户订单号
@@ -72,7 +82,13 @@ public class PayAccountController {
         }
     }
 
-    @RequestMapping("/rechargeResult")
+    /**
+     * 支付宝同步回调函数
+     * @param request
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "/rechargeResult", method = RequestMethod.GET)
     public String rechargeResultPage(HttpServletRequest request) throws  IOException{
         String tradeStatus = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
         String totalFee = new String(request.getParameter("total_fee").getBytes("ISO-8859-1"),"UTF-8");
@@ -89,11 +105,14 @@ public class PayAccountController {
             map.put("userId",userId);
             //交易平台类型 1：在线充值（入金）
             map.put("tradeType","1");
-            payAccountService.saveRechargeResult(map);
-            request.setAttribute("money",totalFee);
-            return "/usercenter/success";
+            ReturnData returnData=payAccountService.saveRechargeResult(map);
+            if (returnData.getCode().equals(ExceptionConst.Success)){
+                request.setAttribute("money",totalFee);
+                return "/usercenter/userInfo/rechargeSuccess";
+            }
+            return "/usercenter/userInfo/rechargeFailure";
         }else{
-            return "/usercenter/fail";
+            return "/usercenter/userInfo/rechargeFailure";
         }
     }
 

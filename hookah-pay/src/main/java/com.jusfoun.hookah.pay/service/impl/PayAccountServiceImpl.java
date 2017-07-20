@@ -55,10 +55,6 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 	@Resource
 	PayAccountRecordMapper payAccountRecordMapper;
 
-	private String notifyUrl="/payAccount/rechargeResultSync";
-
-	private String returnUrl="/payAccount/rechargeResult";
-
 	@Transactional
 	public int operatorByType(Long payAccountId, Integer operatorType, Long money) {
 
@@ -339,7 +335,7 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 			payAccountRecord.setTransferDate(date);
 			payAccountRecord.setMoney(orderInfo.getOrderAmount());//订单资金总额
 			payAccountRecord.setSerialNumber(orderInfo.getOrderSn());//订单号
-			payAccountRecord.setTransferType((byte)0);
+			payAccountRecord.setTransferType(HookahConstants.TransferStatus.handing.getCode());
 			payAccountRecord.setAddTime(date);
 			payAccountRecord.setAddOperator(orderInfo.getUserId());
 			payAccountRecordMapper.insertAndGetId(payAccountRecord);
@@ -525,7 +521,8 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 			//insertPayTradeRecord( userId, money, payAccount.getId(), 0, 1);
 			//insertPayAccountRecord( userId, money, payAccount.getId(), 0, 1);
 
-			String html = alipayService.doCharge(userId,money.toString(),notifyUrl,returnUrl);
+			String html = alipayService.doCharge(userId,money.toString(),
+					PayConfiguration.RECHARGE_NOTIFY_URL,PayConfiguration.RECHARGE_RETURN_URL);
 			returnData.setCode(ExceptionConst.Success);
 			returnData.setMessage(html);
 			return returnData;
