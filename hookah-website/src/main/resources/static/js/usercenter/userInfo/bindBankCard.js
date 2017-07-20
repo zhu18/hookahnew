@@ -12,29 +12,26 @@ $(function () {
                 payBankId:$('#bindName').val()
             },
             type:'get',
-            cache:false,
             success:function (data) {
                 if (data.code=="1"){
-                    // window.location.href= host.website+'/usercenter/fundmanage';
-
+                    window.location.href= host.website+'/usercenter/fundmanage';
                 }
             }
         });
     });
-
-        $.ajax({
-            url:host.website+'/payBankCard/searchBankInfo',
-            data:{},
-            type:'get',
-            success:function (data) {
-                var list=data.data.bank;
-                var html = '<option value="">全部</option>';
-                for(var i=0;i<list.length;i++){
-                    html += '<option value="'+list[i].id+'">'+list[i].bankName+'</option>';
-                    $('#bindName').html(html);
-                }
-                $("#account-name").html(data.data.cardOwner)
-            }
-        });
+     $.ajax({
+         url:host.website+'/payBankCard/searchBankInfo',
+         data:{},
+         type:'get',
+         success:function (data) {
+             var list=data.data.bank;
+             var html = '<option value="">全部</option>';
+             for(var i=0;i<list.length;i++){
+                 html += '<option value="'+list[i].id+'">'+list[i].bankName+'</option>';
+                 $('#bindName').html(html);
+             }
+             $("#account-name").html(data.data.cardOwner)
+         }
+     });
 
 })
