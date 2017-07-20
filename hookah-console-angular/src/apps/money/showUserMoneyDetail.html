@@ -9,6 +9,8 @@
     .getMoneyTable tr td{ text-align: left;}
     .getMoneyStatus span{ color:red;}
     .getMoneyStatus i{ color:green;font-style: normal;}
+    .input-group a{ font-size:14px;padding-right: 14px;}
+
 </style>
 <div class="row">
     <div class="grid-left viewDetails margin-bottom-30">
@@ -30,6 +32,20 @@
                         <td data-ng-bind="userBaseInfo.orgName"></td>
                         <th width="115">电话:</th>
                         <td data-ng-bind="userBaseInfo.phone"></td>
+                        <th width="115">用户类型:</th>
+                        <td>
+                            <span data-ng-show="userBaseInfo.userType==0">系统</span>
+                            <span data-ng-show="userBaseInfo.userType==1">未认证</span>
+                            <span data-ng-show="userBaseInfo.userType==2">个人</span>
+                            <span data-ng-show="userBaseInfo.userType==3">个人待审核</span>
+                            <span data-ng-show="userBaseInfo.userType==4">企业</span>
+                            <span data-ng-show="userBaseInfo.userType==5">企业待审核</span>
+                            <span data-ng-show="userBaseInfo.userType==6">个人审核失败</span>
+                            <span data-ng-show="ituserBaseInfoem.userType==7">企业审核失败</span>
+                            <span data-ng-show="userBaseInfo.userType==8">供应商</span>
+                            <span data-ng-show="userBaseInfo.userType==9">供应商待审核</span>
+                            <span data-ng-show="userBaseInfo.userType==10">供应商审核失败</span>
+                        </td>
                     </tr>
                     <tr>
                         <th width="115">账户余额:</th>
@@ -37,7 +53,7 @@
                         <th width="115">可用余额:</th>
                         <td data-ng-bind="userBaseInfo.useBalance/100"></td>
                         <th width="115">银行卡号:</th>
-                        <td>{{userBaseInfo.bankName}} | {{userBaseInfo.cardCode | limitTo:4}} **** **** {{userBaseInfo.cardCode | limitTo:-4}}</td>
+                        <td colspan="3">{{userBaseInfo.bankName}} | {{userBaseInfo.cardCode | limitTo:4}} **** **** {{userBaseInfo.cardCode | limitTo:-4}}</td>
                     </tr>
                 </table>
                 <div>
@@ -81,7 +97,13 @@
                          <button type="button" class="btn btn-default" ng-click="open2()"><i
                              class="glyphicon glyphicon-calendar"></i></button>
                     </span>
-                    </p> &nbsp;&nbsp;
+                    </p>  &nbsp;&nbsp;
+                    <div class="input-group">
+                        <a href="javascript:void(0)" data-ng-click="setDate(day,0)">今日</a>| &nbsp;最近：
+                        <a href="javascript:void(0)" data-ng-click="setDate('week',1)">一周</a>
+                        <a href="javascript:void(0)" data-ng-click="setDate('month',1)">一个月</a>
+                        <a href="javascript:void(0)" data-ng-click="setDate('month',3)">3个月</a>
+                    </div>
                     <button style="margin-top: 5px" type="submit" class="btn btn-primary" data-ng-click="search()">查询 </button>
                 </div>
                 <h5>提现信息</h5>
