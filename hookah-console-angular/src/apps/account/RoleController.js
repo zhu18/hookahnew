@@ -1,8 +1,20 @@
 class RoleController {
   constructor($scope, $rootScope, permissions, $http, $state, $uibModal, usSpinnerService, growl) {
 
-    $scope.select = function(data){
-      console.log(data);
+    $scope.select = function (data) {
+    };
+    $scope.a={};
+    $scope.isEnable = function (data) {
+      if (data == 1) {
+        return true
+      } else {
+        return false;
+      }
+    };
+    $scope.isEnableChange = function () {
+
+      $rootScope.item.isEnable = !$rootScope.item.isEnable;
+
     };
     $scope.search = function () {
       var promise = $http({
@@ -21,8 +33,8 @@ class RoleController {
       });
     };
     $scope.add = function () {
-      $rootScope.title= "新增角色";
-      $rootScope.item={};
+      $rootScope.title = "新增角色";
+      $rootScope.item = {};
       $rootScope.selectRolePermissions = "";
 
       var promise = $http({
@@ -44,7 +56,7 @@ class RoleController {
 
     };
     $scope.load = function (event, item) {
-      $rootScope.title= "修改角色";
+      $rootScope.title = "修改角色";
       $rootScope.item = item;
       var promise1 = $http({
         method: 'GET',
@@ -109,7 +121,7 @@ class RoleController {
 
     };
     $scope.save = function () {
-
+      console.log($rootScope.item.isEnable)
       var spCodesTemp = "";
       $('input:checkbox[name=permissions]:checked').each(function (i) {
         if (0 == i) {
@@ -119,11 +131,12 @@ class RoleController {
         }
       });
       var data = "";
+      console.log($rootScope.item);
       if (angular.isUndefined($rootScope.item.roleId)) {
-        data = "roleName=" + $rootScope.item.roleName + "&roleExplain=" + $rootScope.item.roleExplain + "&permissions=" + spCodesTemp;
+        data = "roleName=" + $rootScope.item.roleName + "&roleExplain=" + $rootScope.item.roleExplain + "&enable=" + $rootScope.item.isEnable + "&permissions=" + spCodesTemp;
       } else {
         // data = "roleName=" + $rootScope.item.roleName + "&roleExplain=" + $rootScope.item.roleExplain + "&permissions=" + spCodesTemp;
-        data = "roleId=" + $rootScope.item.roleId + "&roleName=" + $rootScope.item.roleName + "&roleExplain=" + $rootScope.item.roleExplain + "&permissions=" + spCodesTemp;
+        data = "roleId=" + $rootScope.item.roleId + "&roleName=" + $rootScope.item.roleName + "&roleExplain=" + $rootScope.item.roleExplain + "&enable=" + $rootScope.item.isEnable + "&permissions=" + spCodesTemp;
       }
       var promise = $http({
         method: 'POST',
