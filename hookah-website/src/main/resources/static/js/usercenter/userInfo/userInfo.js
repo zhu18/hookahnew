@@ -12,7 +12,7 @@ function loadPageData(data) {
           html +='<img class="grid-left" src="'+list[i].goodsImg+'" alt="">';
           html +='<div class="order-list-top-info grid-left">';
           html +='<h4>'+list[i].goodsName+'</h4>';
-          html +='<p>价格：<span>￥'+list[i].goodsPrice+'</span></p>';
+          html +='<p>价格：<span>￥'+(list[i].goodsPrice / 100 ).toFixed(2)+'</span></p>';
           html +='</div></a></div>';
           html +='<div class="order-list-down">购买时间: <span class="buy-time">' + list[i].payTime + '</span></div>';
           html +='</div>';

@@ -48,7 +48,6 @@ $(function () {
             }
         });
     })
-
     // 类型点击事件
     $(".search-criteria .status li").on("click",function () {
         var status=null;
