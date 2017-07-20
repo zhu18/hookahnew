@@ -56,6 +56,7 @@ public class WebsiteLauncher {
                 "classpath*:hookah_rpc_client_system.xml",
                 WebsiteLauncher.class},args);
         MotanSwitcherUtil.setSwitcherValue(MotanConstants.REGISTRY_HEARTBEAT_SWITCHER, true);
+        System.out.println("--------------> WebSite Start <---------------");
     }
 
     @PostConstruct

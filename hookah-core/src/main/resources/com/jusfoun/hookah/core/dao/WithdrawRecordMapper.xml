@@ -30,11 +30,11 @@
   <insert id="insertAndGetId" useGeneratedKeys="true" keyProperty="id" parameterType="com.jusfoun.hookah.core.domain.WithdrawRecord" >
     insert into withdraw_record (user_id, serial_no,
       money, pay_pwd, add_time, 
-      check_operator, checck_time, check_msg, 
+      check_operator, check_time, check_msg,
       check_status, card_no)
     values (#{userId,jdbcType=VARCHAR}, #{serialNo,jdbcType=VARCHAR},
       #{money,jdbcType=BIGINT}, #{payPwd,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, 
-      #{checkOperator,jdbcType=VARCHAR}, #{checckTime,jdbcType=TIMESTAMP}, #{checkMsg,jdbcType=VARCHAR}, 
+      #{checkOperator,jdbcType=VARCHAR}, #{checkTime,jdbcType=TIMESTAMP}, #{checkMsg,jdbcType=VARCHAR},
       #{checkStatus,jdbcType=TINYINT}, #{cardNo,jdbcType=VARCHAR})
   </insert>
 
@@ -48,7 +48,7 @@
       pa.balance AS balance,
       wr.money AS money,
       wr.add_time AS addTime,
-      wr.checck_time AS checkTime,
+      wr.check_time AS checkTime,
       wr.check_status AS checkStatus
     FROM withdraw_record wr
     LEFT JOIN pay_account pa ON wr.user_id = pa.user_id
@@ -65,7 +65,7 @@
       AND wr.add_time &lt;= #{endDate}
     </if>
     <if test="orgName != '' and orgName != null">
-      AND org.org_name like '%${orgName}%'
+      AND (org.org_name LIKE '%${orgName}%' OR us.user_name LIKE '%${orgName}%')
     </if>
   </select>
 
