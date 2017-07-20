@@ -36,10 +36,10 @@ public class PayAccountController {
 
     @RequestMapping("/userRecharge")
     @ResponseBody
-    public String userRecharge(double money){
+    public String userRecharge(String money){
         Session session = SecurityUtils.getSubject().getSession();
         HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
-        Map<String,Object> params = new HashMap<>();
+        Map<String,String> params = new HashMap<>();
         params.put("userId",userMap.get("userId"));
         params.put("money",money);
         ReturnData r=payAccountService.userRecharge(params);

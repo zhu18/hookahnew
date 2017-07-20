@@ -164,14 +164,14 @@ public class OrderInfoController extends BaseController {
             unpaidFilters.add(Condition.eq("userId", userId));
             unpaidFilters.add(Condition.ne("payStatus", 2));
             unpaidFilters.add(Condition.eq("isDeleted",0));
-            paidFilters.add(Condition.eq("forceDeleted",0));
+            unpaidFilters.add(Condition.eq("forceDeleted",0));
             //已取消的订单
             deletedFilters.add(Condition.eq("userId", userId));
             deletedFilters.add(Condition.eq("isDeleted",1));
-            paidFilters.add(Condition.eq("forceDeleted",0));
+            deletedFilters.add(Condition.eq("forceDeleted",0));
             //用户所有未删除订单
             allFilters.add(Condition.eq("userId",userId));
-            paidFilters.add(Condition.eq("forceDeleted",0));
+            allFilters.add(Condition.eq("forceDeleted",0));
 
             if (StringUtils.isNotBlank(startDate)) {
                 if(payStatus==1){
@@ -217,24 +217,19 @@ public class OrderInfoController extends BaseController {
                 listFilters.add(Condition.like("domainName", "%" + domainName + "%"));
             }
             listFilters.add(Condition.eq("userId", userId));
+            //未被删除的订单
+            listFilters.add(Condition.eq("forceDeleted",0));
 
             //查询列表
             List<OrderBy> orderBys = new ArrayList<>();
             orderBys.add(OrderBy.desc("addTime"));
             Pagination<OrderInfoVo> pOrders = orderInfoService.getDetailListInPage(pageNumber, pageSize, listFilters, orderBys);
             map.put("orders",pOrders);
-//            filters.remove(condition); //移除支付状态条件
-//            //查询数量
-//            filters.add(Condition.eq("payStatus", 2));
 
             unpaid = orderInfoService.count(unpaidFilters);
             deleted = orderInfoService.count(deletedFilters);
             paid = orderInfoService.count(paidFilters);
             total = orderInfoService.count(allFilters);
-
-//
-//            filters.remove(filters.size()-1);
-//            filters.add(Condition.ne("payStatus", 2));
 
             map.put("paidCount",paid);
             map.put("deletedCount",deleted);

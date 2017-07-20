@@ -55,7 +55,7 @@
     LEFT JOIN user us ON wr.user_id = us.user_id
     LEFT JOIN organization org ON org.org_id = us.org_id
     WHERE 1 = 1
-    <if test="checkStatus != '' and checkStatus != null">
+    <if test="checkStatus != null">
       AND wr.check_status = #{checkStatus}
     </if>
     <if test="startDate != '' and startDate != null">

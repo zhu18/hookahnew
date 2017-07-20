@@ -15,15 +15,13 @@ $(function () {
             cache:false,
             success:function (data) {
                 if (data.code=="1"){
-                    window.location.href= host.website+'/usercenter/fundmanage';
+                    // window.location.href= host.website+'/usercenter/fundmanage';
 
                 }
             }
         });
     });
 
-    bindName();
-    function bindName() {
         $.ajax({
             url:host.website+'/payBankCard/searchBankInfo',
             data:{},
@@ -35,7 +33,8 @@ $(function () {
                     html += '<option value="'+list[i].id+'">'+list[i].bankName+'</option>';
                     $('#bindName').html(html);
                 }
+                $("#account-name").html(data.data.cardOwner)
             }
         });
-    }
+
 })

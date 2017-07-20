@@ -241,7 +241,7 @@ public class UserCenterController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/verifyPayPassword", method = RequestMethod.GET)
+    @RequestMapping(value = "/verifyPayPassword", method = RequestMethod.POST)
     @ResponseBody
     public ReturnData verifyPayPassword(String passWord,Model model) {
         ReturnData returnData = new ReturnData();

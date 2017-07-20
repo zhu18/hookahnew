@@ -512,6 +512,9 @@ class MessageController {
 
             return '';
         }
+        $scope.returnPage = function(){
+			$state.go('message.template.search',{});
+        }
 
     }
 }

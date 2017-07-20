@@ -101,7 +101,7 @@
       <if test="shopName != '' and shopName != null">
         AND org.org_name like '%${shopName}%'
       </if>
-      <if test="settleStatus != '' and settleStatus != null">
+      <if test="settleStatus != null">
         AND wsr.settle_status = #{settleStatus}
       </if>
       <if test="orderSn != '' and orderSn != null">

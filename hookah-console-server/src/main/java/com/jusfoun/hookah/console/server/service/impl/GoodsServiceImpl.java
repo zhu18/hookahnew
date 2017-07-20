@@ -397,7 +397,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             filters.add(Condition.like("goodsName", goodsName.trim()));
         }
         Pagination pagination = this.getListInPage(Integer.parseInt(pageNum), Integer.parseInt(pageSize), filters, orderBys);
-        pagination.setList(this.copyGoodsData(pagination.getList()));
+        pagination.setList(this.checkFailedCopyGoodsData(pagination.getList()));
         return pagination;
     }
 
@@ -418,7 +418,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         return pagination;
     }
 
-    private List<GoodsVo> copyGoodsData(List<Goods> list) {
+    private List<GoodsVo> checkFailedCopyGoodsData(List<Goods> list) {
         List<GoodsVo> list1 = new ArrayList<>();
         for(Goods goods : list) {
             GoodsVo goodsVo = new GoodsVo();
@@ -432,9 +432,21 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             List<GoodsCheck> goodsChecks = goodsCheckService.selectList(filters, orderBys);
             if(goodsChecks != null){
                 goodsVo.setCheckReason(goodsChecks.get(0).getCheckContent());
+            }else{
+                goodsVo.setCheckReason("");
             }
-//            goodsVo.setCheckReason(goodsCheckService.selectOneByGoodsId(goods.getGoodsId()) == null
-//                    ? "" : goodsCheckService.selectOneByGoodsId(goods.getGoodsId()).getCheckContent());
+            list1.add(goodsVo);
+        }
+        return list1;
+    }
+    private List<GoodsVo> copyGoodsData(List<Goods> list) {
+        List<GoodsVo> list1 = new ArrayList<>();
+        for(Goods goods : list) {
+            GoodsVo goodsVo = new GoodsVo();
+            BeanUtils.copyProperties(goods, goodsVo);
+            goodsVo.setCatName(DictionaryUtil.getCategoryById(goods.getCatId()) == null ? "" : DictionaryUtil.getCategoryById(goods.getCatId()).getCatName());
+            goodsVo.setCheckReason(goodsCheckService.selectOneByGoodsId(goods.getGoodsId()) == null
+                    ? "" : goodsCheckService.selectOneByGoodsId(goods.getGoodsId()).getCheckContent());
             list1.add(goodsVo);
         }
         return list1;

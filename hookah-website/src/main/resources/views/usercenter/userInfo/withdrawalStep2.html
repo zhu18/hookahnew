@@ -1,16 +1,10 @@
 <%
 var head = {
 %>
-<link rel="stylesheet" href="/static/css/usercenter/userInfo/withdrawals.css">
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/withdrawalStep2.css">
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
-<link rel="stylesheet" href="/static/css/plugins/jedate/jedate.css">
-<script src="/static/js/plugins/jedate/jquery.jedate.min.js"></script>
 <script type="text/javascript">
-    var pagePath = host.website+'/withdrawRecord/getList';
-    var pageType = 'get';
-    var dataParm = {};
-    dataParm.pageNumber = 1;
-    dataParm.pageSize = 10;
+
 </script>
 <%};%>
 
@@ -24,8 +18,30 @@ var htmlPart = {
             <div class="header">
                 <h4 class="center-title">提现</h4>
             </div>
-            <div class="withdrawalsStep2">
-
+            <div class="withdrawalStep2">
+                <div class="withdrawalStep2-top">
+                    <h4> <span></span> 提现申请已提交，等待银行处理</h4>
+                </div>
+                <div class="withdrawalStep2-middle">
+                    <ul class="clearfix">
+                        <li>
+                            <p class="active">提现申请</p>
+                            <p>2017-07-05 18:00</p>
+                        </li>
+                        <li>
+                            <p>银行处理</p>
+                            <p>2017-07-05 18:00</p>
+                        </li>
+                        <li>
+                            <p>提现成功</p>
+                            <p>2017-07-05 18:00</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="withdrawalStep2-down">
+                    <a href="" class="a-color-blue margin-right-40">查看提现记录</a>
+                    <a href="" class="a-color-blue margin-left-40">返回查看余额</a>
+                </div>
             </div>
         </div>
     </div>
@@ -34,4 +50,4 @@ var htmlPart = {
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
-<script type="text/javascript" src="/static/js/usercenter/userInfo/withdrawals.js"></script>
+<script type="text/javascript" src="/static/js/usercenter/userInfo/withdrawalStep2.js"></script>
