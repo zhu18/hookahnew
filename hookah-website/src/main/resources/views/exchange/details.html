@@ -198,7 +198,9 @@ var htmlPart = {
 							<tr>
 								<td>产品描述：</td>
 								<%if(isNotEmpty(goodsDetails.goodsDesc)){%>
-								<td>${goodsDetails.goodsDesc}</td>
+								<td>
+									<div class="goodsDescBox">${goodsDetails.goodsDesc}</div>
+								</td>
 								<%}else{%>
 								<td>${goodsDetails.goodsBriefes}</td>
 								<%}%>
@@ -226,18 +228,18 @@ var htmlPart = {
 								</tr>
 							</table>
 						</div>
-						<div class="table-item">
+						<div class="table-item goodsDescBox">
 							${goodsDetails.goodsAdvantage}
 						</div>
-						<div class="table-item">
+						<div class="table-item goodsDescBox">
 							${goodsDetails.afterSaleService}
 						</div>
 						<%}else if(goodsDetails.goodsType == 1){%>
-						<div class="table-item">${goodsDetails.goodsAdvantage}</div>
+						<div class="table-item goodsDescBox">${goodsDetails.goodsAdvantage}</div>
 						<%if(isNotEmpty(goodsDetails.appCase)){%>
-						<div class="table-item">${goodsDetails.appCase}</div>
+						<div class="table-item goodsDescBox">${goodsDetails.appCase}</div>
 						<%}%>
-						<div class="table-item">${goodsDetails.afterSaleService}</div>
+						<div class="table-item goodsDescBox">${goodsDetails.afterSaleService}</div>
 						<div class="table-item">
 							<!--<h1 class="font-size-14 margin-bottom-10"></h1>-->
 							<table class="tab-one">
@@ -340,43 +342,43 @@ var htmlPart = {
 							${goodsDetails.afterSaleService}
 						</div>
 						<%}else if(goodsDetails.goodsType == 6){%>
-						<div class="table-item">${goodsDetails.asAloneSoftware.coreFunction}</div>
-						<div class="table-item">${goodsDetails.asAloneSoftware.technologicalSuperiority}</div>
-						<div class="table-item">${goodsDetails.asAloneSoftware.teamAdvantage}</div>
-						<div class="table-item">${goodsDetails.asAloneSoftware.desiredEnvironment}</div>
-						<div class="table-item">${goodsDetails.asAloneSoftware.dataNeeded}</div>
+						<div class="table-item goodsDescBox">${goodsDetails.asAloneSoftware.coreFunction}</div>
+						<div class="table-item goodsDescBox">${goodsDetails.asAloneSoftware.technologicalSuperiority}</div>
+						<div class="table-item goodsDescBox">${goodsDetails.asAloneSoftware.teamAdvantage}</div>
+						<div class="table-item goodsDescBox">${goodsDetails.asAloneSoftware.desiredEnvironment}</div>
+						<div class="table-item goodsDescBox">${goodsDetails.asAloneSoftware.dataNeeded}</div>
 						<%if(isNotEmpty(goodsDetails.appCase)){%>
-						<div class="table-item">${goodsDetails.appCase}</div>
+						<div class="table-item goodsDescBox">${goodsDetails.appCase}</div>
 						<%}%>
-						<div class="table-item">${goodsDetails.afterSaleService}</div>
+						<div class="table-item goodsDescBox">${goodsDetails.afterSaleService}</div>
 						<%}else if(goodsDetails.goodsType == 7){%>
-						<div class="table-item">${goodsDetails.asSaaS.coreFunction}</div>
-						<div class="table-item">${goodsDetails.asSaaS.teamAdvantage}</div>
-						<div class="table-item">${goodsDetails.asSaaS.desiredEnvironment}</div>
-						<div class="table-item">${goodsDetails.asSaaS.dataNeeded}</div>
+						<div class="table-item goodsDescBox">${goodsDetails.asSaaS.coreFunction}</div>
+						<div class="table-item goodsDescBox">${goodsDetails.asSaaS.teamAdvantage}</div>
+						<div class="table-item goodsDescBox">${goodsDetails.asSaaS.desiredEnvironment}</div>
+						<div class="table-item goodsDescBox">${goodsDetails.asSaaS.dataNeeded}</div>
 						<%if(isNotEmpty(goodsDetails.appCase)){%>
-						<div class="table-item">${goodsDetails.appCase}</div>
+						<div class="table-item goodsDescBox">${goodsDetails.appCase}</div>
 						<%}%>
-						<div class="table-item">${goodsDetails.afterSaleService}</div>
+						<div class="table-item goodsDescBox">${goodsDetails.afterSaleService}</div>
 						<%}else if(goodsDetails.goodsType == 4){%>
-						<div class="table-item">${goodsDetails.atAloneSoftware.coreFunction}</div>
-						<div class="table-item">${goodsDetails.atAloneSoftware.technologicalSuperiority}</div>
-						<div class="table-item">${goodsDetails.atAloneSoftware.teamAdvantage}</div>
-						<div class="table-item">${goodsDetails.atAloneSoftware.desiredEnvironment}</div>
-						<div class="table-item">${goodsDetails.atAloneSoftware.dataNeeded}</div>
+						<div class="table-item goodsDescBox">${goodsDetails.atAloneSoftware.coreFunction}</div>
+						<div class="table-item goodsDescBox">${goodsDetails.atAloneSoftware.technologicalSuperiority}</div>
+						<div class="table-item goodsDescBox">${goodsDetails.atAloneSoftware.teamAdvantage}</div>
+						<div class="table-item goodsDescBox">${goodsDetails.atAloneSoftware.desiredEnvironment}</div>
+						<div class="table-item goodsDescBox">${goodsDetails.atAloneSoftware.dataNeeded}</div>
 						<%if(isNotEmpty(goodsDetails.appCase)){%>
-						<div class="table-item">${goodsDetails.appCase}</div>
+						<div class="table-item goodsDescBox">${goodsDetails.appCase}</div>
 						<%}%>
 						<div class="table-item">${goodsDetails.afterSaleService}</div>
 						<%}else if(goodsDetails.goodsType ==5){%>
-						<div class="table-item">${goodsDetails.atSaaS.coreFunction}</div>
-						<div class="table-item">${goodsDetails.atSaaS.teamAdvantage}</div>
-						<div class="table-item">${goodsDetails.atSaaS.desiredEnvironment}</div>
-						<div class="table-item">${goodsDetails.atSaaS.dataNeeded}</div>
+						<div class="table-item goodsDescBox">${goodsDetails.atSaaS.coreFunction}</div>
+						<div class="table-item goodsDescBox">${goodsDetails.atSaaS.teamAdvantage}</div>
+						<div class="table-item goodsDescBox">${goodsDetails.atSaaS.desiredEnvironment}</div>
+						<div class="table-item goodsDescBox">${goodsDetails.atSaaS.dataNeeded}</div>
 						<%if(isNotEmpty(goodsDetails.appCase)){%>
-						<div class="table-item">${goodsDetails.appCase}</div>
+						<div class="table-item goodsDescBox">${goodsDetails.appCase}</div>
 						<%}%>
-						<div class="table-item">${goodsDetails.afterSaleService}</div>
+						<div class="table-item goodsDescBox">${goodsDetails.afterSaleService}</div>
 						<%}%>
 					<div class="table-item evaluate">
 						<h1 class="font-size-14 margin-bottom-10" style="display: none">最新评论</h1>

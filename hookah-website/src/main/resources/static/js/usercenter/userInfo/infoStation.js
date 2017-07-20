@@ -9,9 +9,9 @@ function loadPageData(data) {
 			html += '<tr>';
 			html += '<td><input type="checkbox" name="items" value="' + list[i].id + '"></td>';
 			if (list[i].isRead == '1') {
-				html += '<td class="text-align-left isRead"><a href="javascript:void(0);" onclick="getInfo(this,' + listStr + ')">' + list[i].sendHeader + '</a></td>';
-			} else {
 				html += '<td class="text-align-left"><a href="javascript:void(0);" onclick="getInfo(this,' + listStr + ')">' + list[i].sendHeader + '</a></td>';
+			} else {
+				html += '<td class="text-align-left isRead"><a href="javascript:void(0);" onclick="getInfo(this,' + listStr + ')">' + list[i].sendHeader + '</a></td>';
 			}
 			html += '<td>' + list[i].sendTime + '</td>';
 			html += '<td>' + list[i].sendUserName + '</td>';
@@ -122,7 +122,7 @@ function getInfo(that, id) {
 				$.confirm(html, [{close: '关闭'}], function () {
 					this.hide();
 				}, {width: "500"});
-				$(that).css('color', '#247DE8');
+				$(that).css('color', '#666');
 			} else {
 				$.alert('请求失败', true, function () {
 					location.reload();

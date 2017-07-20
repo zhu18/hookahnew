@@ -212,6 +212,9 @@ function rederDateDL(){
 		okfun:function(elem,val, datas){
 			end.minDate = datas; //开始日选好后，重置结束日的最小日期
 			$("#offLine_startDate_s").val(val);
+		},
+		clearfun:function(elem, val) {
+			$("#offLine_startDate_s").val();
 		}
 	};
 	var end = {
@@ -224,6 +227,9 @@ function rederDateDL(){
 		okfun:function(elem,val, datas){
 			start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
 			$("#offLine_endDate_s").val(val);
+		},
+		clearfun:function(elem, val) {
+			$("#offLine_endDate_s").val();
 		}
 	};
 
@@ -1557,6 +1563,9 @@ $.jeDate("#indate", {
 	},
 	okfun:function(elem, val, date){
 		$('#indate_s').val(val)
+	},
+	clearfun:function(elem, val) {
+		$('#indate_s').val('');
 	}
 });
 function loadCountry(idCountry,idProvince) {
@@ -1625,6 +1634,12 @@ $('#J_submitBtn').click(function(){
 	if($("#goodsModifyForm").valid()){
 		var lastChild = $('table[d-type="priceHtml"] tbody tr').last();
 		if ($(lastChild).children('.number-input').find('input').val() && $(lastChild).children('.price-input1').find('input').val() && $(lastChild).children('.price-input2').find('input').val() && $(lastChild).children('.price-input3').find('input').val()) {
+			if($('[name=isBook]:checked').val() == 1){
+				if(!$('#indate_s').val()){
+					$.alert('上架时间不能为空',true,function(){});
+					return;
+				}
+			}
 			if(goodsTypeId == 0 || goodsTypeId == 1 || goodsTypeId == 2){
 				if($.trim(editor1.$txt.text()).length > 0){
 					if($.trim(editor2.$txt.text()).length > 0){
@@ -1641,10 +1656,10 @@ $('#J_submitBtn').click(function(){
 				}
 			}else if(goodsTypeId == 4 || goodsTypeId == 6){
 				if($.trim(editor3.$txt.text()).length > 0){
-					if($.trim(editorA.$txt.text()).length > 0){
-						if($.trim(editorB.$txt.text()).length > 0){
-							if($.trim(editorC.$txt.text()).length > 0){
-								if($.trim(editorD.$txt.text()).length > 0){
+					if($.trim(editorAs.$txt.text()).length > 0){
+						if($.trim(editorBs.$txt.text()).length > 0){
+							if($.trim(editorCs.$txt.text()).length > 0){
+								if($.trim(editorDs.$txt.text()).length > 0){
 									backAddFn(submitGoodsPublish())
 								}else{
 									$.alert('所需环境不能为空',true,function () {})
