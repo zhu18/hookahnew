@@ -8,6 +8,7 @@ import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.PayAccountService;
 import com.jusfoun.hookah.rpc.api.PayCoreService;
+import org.json.HTTP;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -43,21 +44,7 @@ public class PayAccountController {
 
     @RequestMapping("/rechargeResultSync")
     public String rechargeResultSync(HttpServletRequest request) throws IOException {
-        //获取支付宝GET过来反馈信息
-        Map<String,String> params = new HashMap<String,String>();
-        Map requestParams = request.getParameterMap();
-        for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext();) {
-            String name = (String) iter.next();
-            String[] values = (String[]) requestParams.get(name);
-            String valueStr = "";
-            for (int i = 0; i < values.length; i++) {
-                valueStr = (i == values.length - 1) ? valueStr + values[i]
-                        : valueStr + values[i] + ",";
-            }
-            //乱码解决，这段代码在出现乱码时使用。如果mysign和sign不相等也可以使用这段代码转化
-            valueStr = new String(valueStr.getBytes("ISO-8859-1"), "UTF-8");
-            params.put(name, valueStr);
-        }
+
         //商户订单号
         //String orderSn = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
         //支付宝交易号
@@ -67,7 +54,7 @@ public class PayAccountController {
         String totalFee = new String(request.getParameter("total_fee").getBytes("ISO-8859-1"),"UTF-8");
         String userId = new String(request.getParameter("extra_common_param").getBytes("ISO-8859-1"),"UTF-8");
         String statusFlag="2";
-        if(payCoreService.verifyAlipay(params)){
+        if(payCoreService.verifyAlipay(getParams(request))){
             if(tradeStatus.equals("TRADE_FINISHED") || tradeStatus.equals("TRADE_SUCCESS")){
                 statusFlag="1";
             }
@@ -85,19 +72,29 @@ public class PayAccountController {
         }
     }
 
-
     @RequestMapping("/rechargeResult")
     public String rechargeResultPage(HttpServletRequest request) throws  IOException{
-        //交易状态
         String tradeStatus = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
         String totalFee = new String(request.getParameter("total_fee").getBytes("ISO-8859-1"),"UTF-8");
         String userId = new String(request.getParameter("extra_common_param").getBytes("ISO-8859-1"),"UTF-8");
-        request.setAttribute("money",totalFee);
-        if(tradeStatus.equals("TRADE_FINISHED") || tradeStatus.equals("TRADE_SUCCESS")){
+        String statusFlag="2";
+        if(payCoreService.verifyAlipay(getParams(request))){
+            if(tradeStatus.equals("TRADE_FINISHED") || tradeStatus.equals("TRADE_SUCCESS")){
+                statusFlag="1";
+            }
+            Map<String,String> map = new HashMap<>();
+            //map.put("tradeNo",tradeNo);
+            map.put("tradeStatus",statusFlag);
+            map.put("totalFee",totalFee);
+            map.put("userId",userId);
+            //交易平台类型 1：在线充值（入金）
+            map.put("tradeType","1");
+            payAccountService.saveRechargeResult(map);
+            request.setAttribute("money",totalFee);
             return "/usercenter/success";
+        }else{
+            return "/usercenter/fail";
         }
-        return "/usercenter/fail";
-
     }
 
     @ResponseBody
@@ -118,5 +115,24 @@ public class PayAccountController {
             return ReturnData.error("密码不可为空");
         }
         return ReturnData.error("修改密码失败");
+    }
+
+    public Map<String,String> getParams(HttpServletRequest request) throws  IOException{
+        //获取支付宝GET过来反馈信息
+        Map<String,String> params = new HashMap<String,String>();
+        Map requestParams = request.getParameterMap();
+        for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext();) {
+            String name = (String) iter.next();
+            String[] values = (String[]) requestParams.get(name);
+            String valueStr = "";
+            for (int i = 0; i < values.length; i++) {
+                valueStr = (i == values.length - 1) ? valueStr + values[i]
+                        : valueStr + values[i] + ",";
+            }
+            //乱码解决，这段代码在出现乱码时使用。如果mysign和sign不相等也可以使用这段代码转化
+            valueStr = new String(valueStr.getBytes("ISO-8859-1"), "UTF-8");
+            params.put(name, valueStr);
+        }
+        return  params;
     }
 }
