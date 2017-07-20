@@ -3,7 +3,6 @@ package com.jusfoun.hookah.rpc.api;
 import com.jusfoun.hookah.core.domain.OrderInfo;
 import com.jusfoun.hookah.core.domain.PayAccount;
 import com.jusfoun.hookah.core.domain.bo.MoneyInOutBo;
-import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.GenericService;
 import com.jusfoun.hookah.core.utils.ReturnData;
 
@@ -50,7 +49,7 @@ public interface PayAccountService extends GenericService<PayAccount, Long> {
      * @param params
      * @return
      */
-    ReturnData userRecharge(Map<String,Object> params);
+    ReturnData userRecharge(Map<String,String> params);
 
 
     /**
