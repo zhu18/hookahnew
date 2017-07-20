@@ -1,0 +1,118 @@
+<style>
+    .form-inline .form-control {
+        width: 110px;
+    }
+
+    .form-inline label {
+        margin-top: 5px;
+    }
+</style>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="console-title console-title-border clearfix">
+            <div class="pull-left"><h5>用户资金管理</h5></div>
+            <div class="pull-right">
+                <button class="btn btn-default" data-ng-click="refresh()"><span
+                    class="glyphicon glyphicon-refresh"></span> 刷新
+                </button>
+                <!--<a ui-sref="help.add" class="btn btn-primary">新增</a>-->
+            </div>
+        </div>
+        <div class="row margin-top form-inline">
+            <div class="col-sm-12">
+                <div>
+                    <label class="control-label">用户名：</label>
+                    <p class="input-group" style="margin-top: 15px;margin-right: 15px;">
+                        <input ng-model="userName" type="text" class="form-control" placeholder="请输入用户名">
+                    </p>
+                    <label class="control-label">单位名称：</label>
+                    <p class="input-group" style="margin-top: 15px;margin-right: 15px;">
+                        <input ng-model="orgName" type="text" class="form-control" placeholder="请输入单位名称">
+                    </p>
+                    <label class="control-label">电话：</label>
+                    <p class="input-group" style="margin-top: 15px;margin-right: 15px;">
+                        <input ng-model="phone" type="text" class="form-control" placeholder="请输入电话">
+                    </p>
+                    <button style="margin-top: 5px" type="submit" class="btn btn-primary" data-ng-click="search()">查询
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="gridSection">
+            <div us-spinner ng-show="showSpinner" spinner-start-active="true" spinner-key="showSpinner"></div>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>用户名</th>
+                    <th style="text-align: center">单位名称</th>
+                    <th style="text-align: center">用户类型</th>
+                    <th>电话</th>
+                    <th>银行卡</th>
+                    <th>账户余额（元）</th>
+                    <th>可用金额（元）</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-ng-repeat="item in userMoneyManage">
+                    <td data-ng-bind="item.userName"></td>
+                    <td data-ng-bind="item.orgName"></td>
+                    <td>
+                        <span data-ng-show="item.userType==0">系统</span>
+                        <span data-ng-show="item.userType==1">未认证</span>
+                        <span data-ng-show="item.userType==2">个人</span>
+                        <span data-ng-show="item.userType==3">个人待审核</span>
+                        <span data-ng-show="item.userType==4">企业</span>
+                        <span data-ng-show="item.userType==5">企业待审核</span>
+                        <span data-ng-show="item.userType==6">个人审核失败</span>
+                        <span data-ng-show="item.userType==7">企业审核失败</span>
+                        <span data-ng-show="item.userType==8">供应商</span>
+                        <span data-ng-show="item.userType==9">供应商待审核</span>
+                        <span data-ng-show="item.userType==10">供应商审核失败</span>
+                    </td>
+                    <td data-ng-bind="item.phone"></td>
+                    <td>
+                        <span data-ng-show="item.isBind == 0"></span>
+                        <span data-ng-show="item.isBind == 1">{{item.bankName}} | 尾号{{ item.cardCode | limitTo:-4}}</span>
+                    </td>
+                    <td data-ng-bind="item.balance/100"></td>
+                    <td data-ng-bind="item.useBalance/100"></td>
+                    <td>
+                        <span data-ng-show="item.isBind == 0">查看资金记录</span>
+                        <a href="javascript:void(0)" data-ng-click="showUserMoneyDetail(item)" data-ng-show="item.isBind == 1">查看资金记录</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <table ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">
+                <tr>
+                    <td colspan="9">
+                        <div class="pull-right page-box">
+                            <div class="pagination-info">
+                                共有{{pagination.totalItems}}条，每页显示：{{pagination.pageSize}}条
+                            </div>
+                            <ul uib-pagination ng-change="pageChanged()" total-items="pagination.totalItems"
+                                ng-model="pagination.currentPage" items-per-page="pagination.pageSize"
+                                max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"
+                                force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"
+                                last-text="末页">
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+
+        </div>
+        <div class="simple-grid-none-data-wrap">
+            <div class="simple-grid-none-data text-center " ng-if="showNoneDataInfoTip && !loadingState">
+                <div class="row-padding row-margin text-center">
+                    <span class="text-size-24 blue icon-info-1" style="vertical-align: middle"></span>
+                    <div class="text-size-18 tip-text inline-block">没有查询到符合条件的记录</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>

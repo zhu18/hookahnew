@@ -24,7 +24,7 @@ class GoodsListController {
 
         $scope.$on(function(event, data){
         	$scope.searchCondition = data;
-        	alert(data);
+        	// alert(data);
         	console.log("JSON:========="+JSON.stringify(data))
 		})
 

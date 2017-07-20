@@ -7,6 +7,7 @@ import com.jusfoun.hookah.core.domain.PayAccount;
 import com.jusfoun.hookah.core.domain.PayBankCard;
 import com.jusfoun.hookah.core.domain.PayTradeRecord;
 import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.domain.vo.PayTradeRecordVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
@@ -166,7 +167,7 @@ public class PlatformFundsApi extends BaseController{
             return ReturnData.success(page);
         } catch (Exception e) {
             logger.error("分页查询资金记录错误", e);
-            return ReturnData.error("分页查询错误");
+            return ReturnData.error("查询错误");
         }
     }
 
@@ -188,19 +189,20 @@ public class PlatformFundsApi extends BaseController{
 
             //只查询的费用科目 充值  体现 冻结划入  释放划出 销售（货款）收入 手续费收入 销售（货款）支出 冲账 退款
             filters.add(Condition.in("tradeType", new Integer[]{1, 2,6003, 6004, 3001, 3007, 4001, 8}));
-            List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList();
+            /*List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList();
             for (PayTradeRecord pay : payTradeRecords){
                 if(StringUtils.isNotBlank(pay.getUserId())) {
-                    User user = userService.selectOne(filters);
-                    if(user.getUserId().equals(pay.getUserId())){
-                        if (pay.getTradeType() == 1 || pay.getTradeType() == 2 || pay.getTradeType() == 3001 || pay.getTradeType() == 4001) {
-                            filters.add(Condition.eq("userName", user.getUserName() + "账户资金"));
-                        } else {
-                            filters.add(Condition.eq("userName", "平台账户资金"));
-                        }
+                    User user = userService.selectById(pay.getUserId());
+                    if(user != null){
+                            Map<String, Object> map = new HashMap<>(6);
+                            if (pay.getTradeType() == 1 || pay.getTradeType() == 2 || pay.getTradeType() == 3001 || pay.getTradeType() == 4001) {
+                                //map.put("addOperator",user.getUserName() + "账户资金");
+                            } else {
+                                //map.put("addOperator", "平台账户资金");
+                            }
                     }
                 }
-            }
+            }*/
             //费用科目
             if (tradeType != null) {
                 filters.add(Condition.eq("tradeType", tradeType));
@@ -222,7 +224,7 @@ public class PlatformFundsApi extends BaseController{
             return ReturnData.success(page);
         } catch (Exception e) {
             logger.error("分页查询资金记录错误", e);
-            return ReturnData.error("分页查询错误");
+            return ReturnData.error("查询错误");
         }
     }
 

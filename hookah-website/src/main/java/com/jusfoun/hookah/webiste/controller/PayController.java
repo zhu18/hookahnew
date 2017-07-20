@@ -159,8 +159,8 @@ public class PayController {
         return "pay/success";
     }
 
-    @RequestMapping(value = "/aliPay", method = RequestMethod.POST)
-    public Object alipay(String orderSn, HttpServletRequest request, String passWord) {
+    @RequestMapping(value = "/aliPay", method = RequestMethod.GET)
+    public Object alipay(String orderSn) {
         String reqHtml = null;
         try {
             Session session = SecurityUtils.getSubject().getSession();
@@ -170,12 +170,7 @@ public class PayController {
             List<Condition> filters = new ArrayList();
             filters.add(Condition.eq("orderSn", orderSn));
             OrderInfo orderinfo  = orderService.selectOne(filters);
-            //验证支付密码
-            boolean flag = payAccountService.verifyPassword(passWord);
-            if (flag){
-                //插流水调支付宝接口
-                reqHtml = payAccountService.payByAli(orderinfo);
-            }
+            reqHtml = payAccountService.payByAli(orderinfo);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -245,7 +240,7 @@ public class PayController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/alipayRtn",method = RequestMethod.GET)
+    @RequestMapping(value = "/alipay_rtn",method = RequestMethod.GET)
     public ModelAndView returnBack4Alipay(HttpServletRequest request, HttpServletResponse response) throws Exception{
         ModelAndView view = null;
         //商户订单号
@@ -281,6 +276,7 @@ public class PayController {
                 List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
                 for (PayTradeRecord payTradeRecord1 : payTradeRecords){
                     payTradeRecord1.setTradeStatus(HookahConstants.TransferStatus.success.getCode());
+                    payTradeRecordService.updateByIdSelective(payTradeRecord1);
                 }
 
                 //更新订单状态

@@ -1,9 +1,11 @@
 package com.jusfoun.hookah.rpc.api;
 
+import com.jusfoun.hookah.core.domain.PayBank;
 import com.jusfoun.hookah.core.domain.PayBankCard;
-import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.generic.GenericService;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
 
 public interface PayBankCardService extends GenericService<PayBankCard, String> {
 
@@ -30,4 +32,6 @@ public interface PayBankCardService extends GenericService<PayBankCard, String> 
      * @return
      */
     boolean bankCardSignOff(Integer id, String userId, String customerNum, String bankCardNum, String bankCardOwner, String ip, String ukey);
+
+    List<PayBank> selectBankName();
 }

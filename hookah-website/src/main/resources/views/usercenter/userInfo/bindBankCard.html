@@ -19,28 +19,32 @@ var htmlPart = {
                     <div class="bindBankCard">
                         <div class="bindBankCard-title">绑定银行卡</div>
                         <div class="bindBankCard-content">
-                            <form action="">
+                            <form action="/payBankCard/addBankInfo">
+                                <div class="form-item">
+                                    <label for=""><span class="color-red">*</span>银行账户类型：</label>
+                                    <p id=""></p>
+                                </div>
                                 <div class="form-item">
                                     <label for=""><span class="color-red">*</span>账户名称：</label>
-                                    <p></p>
+                                    <p id=""></p>
                                 </div>
                                 <div class="form-item">
                                     <label for=""><span class="color-red">*</span>银行名称：</label>
-                                    <select id="province" name="province" onchange="loadRegion('city', this)">
-                                        <option value="">全部</option>
+                                    <select id="bindName" name="province" >
+
                                     </select>
                                 </div>
                                 <div class="form-item">
                                     <label for=""><span class="color-red">*</span>银行卡号：</label>
-                                    <input type="text">
+                                    <input type="text" id="payBankId">
                                 </div>
                                 <div class="form-item">
                                     <label for="">开户行：</label>
-                                    <input type="text">
+                                    <input type="text" id="openBank">
                                 </div>
                                 <div class="form-item">
                                     <label for=""><span class="color-red">*</span>手机号码：</label>
-                                    <input type="text">
+                                    <input type="text" id="phoneNumber">
                                     <p>请填写该卡在银行预留的手机号码</p>
                                 </div>
                                 <div class="form-item">
@@ -61,3 +65,4 @@ var htmlPart = {
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
+<script type="text/javascript" src="/static/js/usercenter/userInfo/bindBankCard.js"></script>

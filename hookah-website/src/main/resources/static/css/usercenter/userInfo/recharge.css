@@ -1,13 +1,13 @@
 /*充值第一步*/
 .fundmanage-box .recharge{
      margin: 12px 0 393px 0px;
-     height: 255px;
      border: 1px solid #E5E5E5;
  }
 .fundmanage-box .recharge ul{
     display: inline-block;
     padding-left: 280px;
     margin-top: 30px;
+    margin-bottom: 20px;
 }
 
 .fundmanage-box .recharge ul li{
@@ -25,6 +25,7 @@
     height: 30px;
     padding-left: 10px;
     border: 1px solid #E5E5E5;
+    font-size:12px;
 }
 .fundmanage-box .recharge ul li a{
     display: inline-block;
