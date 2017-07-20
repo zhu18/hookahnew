@@ -1,4 +1,4 @@
-class MoneyController {
+class showMoneyListController {
   constructor($scope, $rootScope, $http, $state, $uibModal, usSpinnerService, growl) {
     $scope.commentList = [];
     $scope.choseArr = [];//多选数组
@@ -6,12 +6,12 @@ class MoneyController {
     $scope.search = function () {
       var promise = $http({
         method: 'GET',
-        url: $rootScope.site.apiServer + "/api/withdrawRecord/getList",
+        url: $rootScope.site.apiServer + "/api/platform/flowWater",
         params: {
-          orgName : $scope.orgName  ? $scope.orgName  : null,
+          tradeType : $scope.tradeType  ? $scope.tradeType  : null,
+          tradeStatus: $scope.tradeStatus == 0 ? '0' : ($scope.tradeStatus ? $scope.tradeStatus : null),//审核状态
           startDate: $scope.startDate ? format($scope.startDate, 'yyyy-MM-dd HH:mm:ss') : null,
           endDate: $scope.endDate ? format($scope.endDate, 'yyyy-MM-dd HH:mm:ss') : null,
-          checkStatus: $scope.checkStatus == 0 ? '0' : ($scope.checkStatus ? $scope.checkStatus : null),//审核状态
           currentPage: $rootScope.pagination.currentPage, //当前页码
           pageSize: $rootScope.pagination.pageSize
         }
@@ -21,7 +21,7 @@ class MoneyController {
         console.log(res);
 
         if (res.data.code == '1') {
-          $scope.getMoneyList = res.data.data.list;
+          $scope.showMoneyList = res.data.data.list;
           $rootScope.pagination = res.data.data;
           $scope.showNoneDataInfoTip = false;
           if (res.data.data.totalPage > 1) {
@@ -29,7 +29,7 @@ class MoneyController {
           }
 
         } else {
-          $scope.getMoneyList = [];
+          $scope.showMoneyList = [];
           $scope.showNoneDataInfoTip = true;
 
         }
@@ -217,4 +217,4 @@ class MoneyController {
   }
 }
 
-export default MoneyController;
+export default showMoneyListController;

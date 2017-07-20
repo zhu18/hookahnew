@@ -2,6 +2,7 @@ package com.jusfoun.hookah.rpc.api;
 
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.domain.OrderInfo;
+import com.jusfoun.hookah.core.domain.mongo.MgGoodsOrder;
 import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.domain.vo.PayVo;
@@ -80,4 +81,7 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
     void updateConcatInfo(String orderId,String goodsId,String concatName,String concatPhone,String concatEmail) throws HookahException;
 
     void waitSettleRecordInsert(String orderSn);
+
+    Pagination<MgGoodsOrder> getMgGoodsOrderList(Integer pageNum, Integer pageSize, String orderSn,
+                                                 String goodsName, String addUser, Date startTime, Date endTime);
 }

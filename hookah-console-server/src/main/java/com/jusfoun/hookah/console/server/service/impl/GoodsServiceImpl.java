@@ -8,6 +8,7 @@ import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.dao.GoodsMapper;
 import com.jusfoun.hookah.core.domain.Goods;
+import com.jusfoun.hookah.core.domain.GoodsCheck;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.es.EsGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
@@ -423,8 +424,17 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             GoodsVo goodsVo = new GoodsVo();
             BeanUtils.copyProperties(goods, goodsVo);
             goodsVo.setCatName(DictionaryUtil.getCategoryById(goods.getCatId()) == null ? "" : DictionaryUtil.getCategoryById(goods.getCatId()).getCatName());
-            goodsVo.setCheckReason(goodsCheckService.selectOneByGoodsId(goods.getGoodsId()) == null
-                    ? "" : goodsCheckService.selectOneByGoodsId(goods.getGoodsId()).getCheckContent());
+
+            List<Condition> filters = new ArrayList();
+            filters.add(Condition.eq("goodsId", goods.getGoodsId()));
+            List<OrderBy> orderBys = new ArrayList();
+            orderBys.add(OrderBy.desc("checkTime"));
+            List<GoodsCheck> goodsChecks = goodsCheckService.selectList(filters, orderBys);
+            if(goodsChecks != null){
+                goodsVo.setCheckReason(goodsChecks.get(0).getCheckContent());
+            }
+//            goodsVo.setCheckReason(goodsCheckService.selectOneByGoodsId(goods.getGoodsId()) == null
+//                    ? "" : goodsCheckService.selectOneByGoodsId(goods.getGoodsId()).getCheckContent());
             list1.add(goodsVo);
         }
         return list1;

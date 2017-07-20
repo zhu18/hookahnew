@@ -102,8 +102,8 @@
                     <td data-ng-bind="item.serialNo"></td>
                     <td data-ng-bind="item.userName"></td>
                     <td data-ng-bind="item.orgName"></td>
-                    <td style="text-align: center" data-ng-bind="item.useBalance"></td>
-                    <td style="text-align: center" data-ng-bind="item.money"></td>
+                    <td style="text-align: center" data-ng-bind="item.useBalance/100"></td>
+                    <td style="text-align: center" data-ng-bind="item.money/100"></td>
                     <td data-ng-bind="item.addTime"></td>
                     <td data-ng-bind="item.checckTime"></td>
                     <td data-ng-bind="item.checkStatus == 0 ? '待审核' : (item.checkStatus == 1 ? '审核通过' : '审核未通过')"></td>

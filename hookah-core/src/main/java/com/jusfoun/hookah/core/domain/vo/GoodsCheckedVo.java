@@ -1,6 +1,8 @@
 package com.jusfoun.hookah.core.domain.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jusfoun.hookah.core.domain.Goods;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -11,6 +13,8 @@ public class GoodsCheckedVo extends Goods {
 
     private String checkUser;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date checkTime;
 
     private String orgName;

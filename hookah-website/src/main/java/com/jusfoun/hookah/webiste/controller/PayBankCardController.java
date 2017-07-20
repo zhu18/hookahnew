@@ -41,6 +41,36 @@ public class PayBankCardController extends BaseController{
     @Resource
     OrganizationService organizationService;
 
+    /**
+     * 查询银行信息  银行账户类型 开户行
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/searchBankInfo", method = RequestMethod.GET)
+    public ReturnData searchBankInfo(){
+        try {
+            String userId = this.getCurrentUser().getUserId();
+            Map<String, Object> map = new HashMap<>(6);
+            List<PayBank> banks = payBankCardService.selectBankName();
+            map.put("bank",banks);
+            List<Condition> filters = new ArrayList<>();
+            if(StringUtils.isNotBlank(userId)){
+                filters.add(Condition.eq("userId", userId));
+            }
+            map.put("cardOwner","");
+            map.put("bankAccountType",1);
+           /* User user = userService.selectOne(filters);
+
+            map.put("cardOwner",1);
+            map.put("bankAccountType",payBankCard.getBankAccountType())*/;
+            return ReturnData.success(map);
+        } catch (HookahException e) {
+            logger.error("查询失败",e);
+            return ReturnData.error("查询失败");
+        }
+    }
+
 
     /**
      * 绑定银行卡信息
@@ -50,48 +80,33 @@ public class PayBankCardController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "/addBankInfo", method = RequestMethod.GET)
     public ReturnData addBankInfo(String cardCode, String openBank, String phoneNumber, Integer payBankId) {
-        Map<String, Object> map = new HashMap<>(6);
-        List<PayBank> banks = payBankCardService.selectBankName();
-        map.put("bank",banks);
         try {
             String userId = this.getCurrentUser().getUserId();
             List<Condition> filters = new ArrayList<>();
             if(StringUtils.isNotBlank(userId)){
                 filters.add(Condition.eq("userId", userId));
             }
-            User user = userService.selectOne(filters);
             PayAccount payAccount = payAccountService.selectOne(filters);
-            //查询实名认证的企业名称
-            if(StringUtils.isNotBlank(user.getOrgId())){
-                Organization organization = organizationService.selectById(user.getOrgId());
-                PayBankCard pay= new PayBankCard();
-                //对公银行账户
-                pay.setBankAccountType(1);
-                //企业名称
-                pay.setCardOwner(organization.getOrgName());
-                pay.setUserId(userId);
-                pay.setAddTime(new Date());
-                pay.setBindFlag(0);
-                pay.setBankAccountType(1);
-                pay.setPayAccountId(payAccount.getId());
-                pay.setAddOperator(payAccount.getUserName());
-                pay.setCardCode(cardCode);
-                pay.setPhoneNumber(phoneNumber);
-                pay.setOpenBank(openBank);
-                pay.setPayBankId(payBankId);
-                PayBankCard insert = payBankCardService.insert(pay);
-                map.put("payBankCard",insert);
-                if(insert == null){
-                    return ReturnData.error("添加失败");
-                }
-            }else {
-                return ReturnData.success("企业未认证");
+            PayBankCard pay= new PayBankCard();
+            pay.setUserId(userId);
+            pay.setAddTime(new Date());
+            pay.setBindFlag(0);
+            pay.setBankAccountType(1);
+            pay.setPayAccountId(payAccount.getId());
+            pay.setAddOperator(payAccount.getUserName());
+            pay.setCardCode(cardCode);
+            pay.setPhoneNumber(phoneNumber);
+            pay.setOpenBank(openBank);
+            pay.setPayBankId(payBankId);
+            PayBankCard insert = payBankCardService.insert(pay);
+            if(insert == null){
+                return ReturnData.error("添加失败");
             }
+            return ReturnData.success(insert);
         }catch (Exception e){
             logger.error("绑定银行卡失败",e);
             return ReturnData.error("绑定银行卡失败");
         }
-        return ReturnData.success(map);
     }
 
     /**
@@ -123,6 +138,7 @@ public class PayBankCardController extends BaseController{
                 map.put("bankId",payBankCard.getPayBankId());
                 map.put("cardCode",payBankCard.getCardCode());
                 map.put("cardOwner",payBankCard.getCardOwner());
+                map.put("bindFlag",payBankCard.getBindFlag());
             }
             return ReturnData.success(map);
         } catch (HookahException e) {

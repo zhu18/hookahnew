@@ -48,6 +48,10 @@ public class HookahConstants {
     // message exception
     public static final String MESSAGE_EXCEPTION_NOUSER = "未查询到用户!";
 
+    //消息模板
+    public static final byte MESSAGE_TEMPLATE_STOP = 0;//停用
+    public static final byte MESSAGE_TEMPLATE_OPEN = 1;//启用
+
     public enum SmsTypeNew {
         SMS_USER_REGISTER("101"),  //注册
         SMS_FIND_USER_PWD("102"),   //找回登录密码

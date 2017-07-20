@@ -18,4 +18,7 @@
     <motan:referer id="messageSendInfoService"
                    interface="com.jusfoun.hookah.rpc.api.MessageSendInfoService"
                    connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+    <motan:referer id="operateInfoMongoService"
+                   interface="com.jusfoun.hookah.rpc.api.OperateInfoMongoService"
+                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
 </beans>

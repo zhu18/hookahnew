@@ -55,20 +55,20 @@
                     </tr>
                     <tr class="padding-bottom-10">
                         <th>申请提现金额：</th>
-                        <td data-ng-bind="order.money + '元'">元</td>
+                        <td data-ng-bind="order.money/100 + '元'">元</td>
                     </tr>
                     <tr class="padding-bottom-10">
                         <th>账户余额：</th>
-                        <td data-ng-bind="order.useBalance + '元'">元</td>
+                        <td data-ng-bind="order.useBalance/100 + '元'">元</td>
                     </tr>
                     <tr class="padding-bottom-10">
                         <th>可用金额：</th>
-                        <td data-ng-bind="order.balance+'元'"></td>
+                        <td data-ng-bind="order.balance/100+'元'"></td>
                     </tr>
                     <tr data-ng-show="order.checkStatus == 0 ">
                         <td colspan="2">
-                            <button data-ng-click="orderSub(1)">通过</button>
-                            <button data-ng-click="orderSub(2)">不通过</button>
+                            <button data-ng-click="orderSub(1)" class="btn btn-primary">通过</button> &nbsp; &nbsp; &nbsp;
+                            <button data-ng-click="orderSub(2)" class="btn btn-primary">不通过</button>
                         </td>
                     </tr>
                     </thead>
