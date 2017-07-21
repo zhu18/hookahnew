@@ -1668,7 +1668,7 @@ $('#J_submitBtn').click(function(){
 				}else{
 					$.alert('商品描述不能为空',true,function () {})
 				}
-			}else if(goodsTypeId == 4 || goodsTypeId == 6){
+			}else if(goodsTypeId == 4){
 				if($.trim(editor3.$txt.text()).length > 0){
 					if($.trim(editorAs.$txt.text()).length > 0){
 						if($.trim(editorBs.$txt.text()).length > 0){
@@ -1690,7 +1690,47 @@ $('#J_submitBtn').click(function(){
 				}else{
 					$.alert('售后服务不能为空',true,function () {})
 				}
-			}else if(goodsTypeId == 5 || goodsTypeId == 7){
+			}else if(goodsTypeId == 5){
+				if($.trim(editor3.$txt.text()).length > 0){
+					if($.trim(editorAs.$txt.text()).length > 0){
+						if($.trim(editorCs.$txt.text()).length > 0){
+							if($.trim(editorDs.$txt.text()).length > 0){
+								backAddFn(submitGoodsPublish())
+							}else{
+								$.alert('所需环境不能为空',true,function () {})
+							}
+						}else{
+							$.alert('团队优势不能为空',true,function () {})
+						}
+					}else{
+						$.alert('核心功能不能为空',true,function () {})
+					}
+				}else{
+					$.alert('售后服务不能为空',true,function () {})
+				}
+			}else if(goodsTypeId == 6){
+				if($.trim(editor3.$txt.text()).length > 0){
+					if($.trim(editorA.$txt.text()).length > 0){
+						if($.trim(editorB.$txt.text()).length > 0){
+							if($.trim(editorC.$txt.text()).length > 0){
+								if($.trim(editorD.$txt.text()).length > 0){
+									backAddFn(submitGoodsPublish())
+								}else{
+									$.alert('所需环境不能为空',true,function () {})
+								}
+							}else{
+								$.alert('团队优势不能为空',true,function () {})
+							}
+						}else{
+							$.alert('技术优势不能为空',true,function () {})
+						}
+					}else{
+						$.alert('核心功能不能为空',true,function () {})
+					}
+				}else{
+					$.alert('售后服务不能为空',true,function () {})
+				}
+			}else if(goodsTypeId == 7){
 				if($.trim(editor3.$txt.text()).length > 0){
 					if($.trim(editorA.$txt.text()).length > 0){
 						if($.trim(editorC.$txt.text()).length > 0){
