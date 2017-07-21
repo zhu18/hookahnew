@@ -1,5 +1,5 @@
 <style>
-	.showTable table tr td{
+	p table tr td{
 		border: 1px solid #ccc;
 		min-width: 60px;
 	}
@@ -124,7 +124,7 @@
 					<div class="form-group" data-ng-if="editData.goodsType == 0 || editData.goodsType == 1 || editData.goodsType == 2">
 						<label class="col-sm-2 control-label">商品描述</label>
 						<div class="col-sm-5">
-							<p class="showTable" ng-bind-html="editData.goodsDesc | trustHtml"></p>
+							<p ng-bind-html="editData.goodsDesc | trustHtml"></p>
 						</div>
 					</div>
 					<div class="form-group" data-ng-if="editData.goodsType == 0 || editData.goodsType == 1 || editData.goodsType == 2">
