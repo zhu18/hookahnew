@@ -13,6 +13,7 @@ var head = {
 	var prNm = $.getUrlParam('prNm');
 	var msId = $.getUrlParam('msId');
 	var msNm = $.getUrlParam('msNm');
+	var names = $.getUrlParam('names');
 	var pagePath = '/search/v1/goods';
 	var pageType = 'post';
 	var dataParm = {};
@@ -21,6 +22,7 @@ var head = {
 	dataParm.esGoods = {};
 	dataParm.range = {};
 	dataParm.esGoods.catIds = catId;
+	dataParm.esGoods.names = names;
 </script>
 <%};%>
 <%
