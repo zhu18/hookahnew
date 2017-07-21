@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.webiste.controller;
 
+import com.jusfoun.hookah.core.annotation.Log;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.Goods;
@@ -31,7 +32,7 @@ public class GoodsBackController extends BaseController {
 
     @Resource
     GoodsService goodsService;
-
+    @Log(platform = "front",logType = "f0009",optType = "insert")
     @RequestMapping("/add")
     @ResponseBody
     public ReturnData addGoodsBack(@Valid @RequestBody GoodsVo obj) {
@@ -265,7 +266,7 @@ public class GoodsBackController extends BaseController {
         }
         return returnData;
     }
-
+    @Log(platform = "front",logType = "f0011",optType = "modify")
     @RequestMapping("/update")
     @ResponseBody
     public ReturnData update(@Valid @RequestBody GoodsVo obj) {
@@ -288,6 +289,7 @@ public class GoodsBackController extends BaseController {
      * @param opera
      * @return
      */
+    @Log(platform = "front",logType = "f0010",optType = "modify")
     @RequestMapping("/status/{opera}")
     @ResponseBody
     public ReturnData update(String goodsId, @PathVariable String opera) {

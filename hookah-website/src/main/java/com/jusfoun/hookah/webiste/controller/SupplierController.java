@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.webiste.controller;
 
+import com.jusfoun.hookah.core.annotation.Log;
 import com.jusfoun.hookah.core.domain.Organization;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.utils.FormatCheckUtil;
@@ -33,7 +34,7 @@ public class SupplierController extends BaseController{
 
     @Resource
     SupplierService supplierService;
-
+    @Log(platform = "front",logType = "f0008",optType = "insert")
     @RequestMapping(value = "/toBeSupplier", method = RequestMethod.POST)
     public ReturnData toBeSupplier(String contactName, String contactPhone, String contactAddress){
         try {

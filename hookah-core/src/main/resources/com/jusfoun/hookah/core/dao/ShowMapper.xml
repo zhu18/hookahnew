@@ -47,4 +47,24 @@
   group by a.pid
   </select>
 
+  <select id="getNewUserCount" resultType="java.lang.Integer">
+    SELECT COUNT(user_id) AS newUserCount,DATE_FORMAT(add_time,'%Y%m%d') addTime FROM user GROUP BY addTime DESC LIMIT 1
+  </select>
+
+  <select id="getNewUserSum" resultType="java.lang.Integer">
+    SELECT COUNT(user_name)  FROM user
+  </select>
+
+  <select id="getBuyGoodsCount" resultType="java.lang.Integer">
+    SELECT COUNT(goods_name) AS newUserCount FROM wait_settle_record
+  </select>
+
+  <resultMap id="userType" type="com.jusfoun.hookah.core.domain.User">
+    <id column="user_type"  property="userType"/>
+    <id column="user_id"  property="userId"/>
+  </resultMap>
+
+  <select id="getUserTypeCount" resultMap="userType">
+      select  user_type,count(user_id) AS userId FROM user GROUP BY user_type
+  </select>
 </mapper>

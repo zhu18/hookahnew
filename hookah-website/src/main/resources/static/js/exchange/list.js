@@ -37,9 +37,7 @@ function loadPageData(data){ //渲染页面数据
 		if(data.data2.categoryList.length > 0){
 			renderSelectorO(data.data2.categoryList,'分类','category');
 		}
-		if(data.data2.goodsAttrTypeList.length > 0){
-			renderSelector2(data.data2.goodsAttrTypeList,'属性','attrtype');
-		}
+		
 		// if(data.data2.areaCountryList.length > 0){
 		// 	renderSelector(data.data2.areaCountryList,'国家','country');
 		// }

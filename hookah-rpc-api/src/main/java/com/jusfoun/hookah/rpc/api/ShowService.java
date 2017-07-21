@@ -20,4 +20,13 @@ public interface ShowService extends GenericService<User,String> {
     List<ShowVO> getActiveUserCount();
 
     List<ShowVO> userArea();
+
+    int getNewUserCount();
+
+    int getNewUserSum();
+
+    int getBuyGoodsCount();
+
+    List<User> getUserTypeCount();
+
 }

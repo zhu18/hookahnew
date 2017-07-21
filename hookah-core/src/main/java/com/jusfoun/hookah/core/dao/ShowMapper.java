@@ -20,4 +20,12 @@ public interface ShowMapper  extends GenericDao<User> {
     List<ShowVO> getUnPayAmount();
 
     List<ShowVO> userArea();
+
+    int getNewUserCount();
+
+    int getNewUserSum();
+
+    int getBuyGoodsCount();
+
+    List<User> getUserTypeCount();
 }
