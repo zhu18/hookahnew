@@ -211,6 +211,8 @@ function getDataForin(){
     dataParm.esGoods.catIds = '';
     dataParm.esGoods.attrIds = '';
     dataParm.esGoods.goodsAreas = '';
+	dataParm.esGoods.keywordsArrays = '';
+	dataParm.esGoods.payFormats = '';
 	if($('#J_crimbsNav').attr('category')){
 		dataParm.esGoods.catIds = $('#J_crimbsNav').attr('categoryid');
 	}else{
