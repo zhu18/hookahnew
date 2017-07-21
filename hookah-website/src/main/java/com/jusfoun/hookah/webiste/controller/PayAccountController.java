@@ -1,6 +1,8 @@
 package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.domain.PayAccount;
+import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.JsonUtils;
@@ -26,7 +28,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/payAccount")
-public class PayAccountController {
+public class PayAccountController extends BaseController{
 
     @Resource
     private PayAccountService payAccountService;
@@ -118,22 +120,27 @@ public class PayAccountController {
 
     @ResponseBody
     @RequestMapping("/updatePayPassword")
-    public ReturnData updatePayPassword(String userId,String payPassword,String newPayPassword){
-        List<Condition> filters = new ArrayList();
-        if (StringUtils.isNotBlank(userId)) {
-            filters.add(Condition.eq("userId", userId));
+    public ReturnData updatePayPassword(String payPassword,String newPayPassword){
+        String userId=null;
+        try {
+            userId=getCurrentUser().getUserId();
+        } catch (HookahException e) {
+            return ReturnData.error(e.getMessage());
         }
-        PayAccount payAccount = payAccountService.selectOne(filters);
-        if(StringUtils.isNotBlank(payAccount.getPayPassword())){
-            if(payAccount.getPayPassword().equals(payPassword)){
-                payAccount.setPayPassword(newPayPassword);
-                payAccountService.updateByIdSelective(payAccount);
-                return ReturnData.success("修改密码成功");
+        //验证当前交易密码
+        if(payAccountService.verifyPassword(userId,payPassword)){
+            //验证新老交易密码是否不一致
+            if(!payPassword.equals(newPayPassword)) {
+                if(payAccountService.resetPayPassword(userId, newPayPassword))
+                    return ReturnData.success("修改交易密码成功");
+                else
+                    return ReturnData.error("修改交易密码失败，请联系管理员。");
+            }else{
+                return ReturnData.error("当前交易密码与新交易密码不可一致");
             }
         }else{
-            return ReturnData.error("密码不可为空");
+            return ReturnData.error("当前交易密码有误");
         }
-        return ReturnData.error("修改密码失败");
     }
 
     public Map<String,String> getParams(HttpServletRequest request) throws  IOException{
@@ -153,5 +160,26 @@ public class PayAccountController {
             params.put(name, valueStr);
         }
         return  params;
+    }
+
+    /**
+     * 初次设置交易密码
+     * @param payPassword
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/addPayPassword")
+    public ReturnData addPayPassword(String payPassword){
+        String userId=null;
+        try {
+            userId=getCurrentUser().getUserId();
+        } catch (HookahException e) {
+            return ReturnData.error(e.getMessage());
+        }
+        if(payAccountService.resetPayPassword(userId,payPassword)){
+            return ReturnData.success("设置交易密码成功");
+        }else{
+            return ReturnData.error("设置交易密码失败，请联系管理员。");
+        }
     }
 }
