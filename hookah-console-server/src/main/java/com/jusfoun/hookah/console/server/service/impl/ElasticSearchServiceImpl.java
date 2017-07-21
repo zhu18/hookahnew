@@ -268,7 +268,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             for (Map.Entry<String, List<EsAggResult>> entry : map.entrySet()) {
                 switch (entry.getKey()) {
                     case HookahConstants.GOODS_AGG_CATEGORY:
-                        if(goods != null && StringUtils.isNotBlank(goods.getCatIds()))
+                        if(goods != null  && StringUtils.isBlank(goods.getGoodsName()) && StringUtils.isNotBlank(goods.getCatIds()))
                             this.getCategoryTypes(entry, categoryList);
                         else
                             this.getAllCategoryTypes(entry, categoryList);
@@ -422,9 +422,12 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
 
     public EsTreeVo<Category> transCategory(EsAggResult result) {
         Category category = DictionaryUtil.getCategoryById(result.getId());
-        EsTreeVo<Category> categoryVo = new EsTreeVo(category.getCatId(), category.getCatName(),
-                category.getLevel(), category.getParentId(), result.getCnt());
-        return categoryVo;
+        if(category != null) {
+            EsTreeVo<Category> categoryVo = new EsTreeVo(category.getCatId(), category.getCatName(),
+                    category.getLevel(), category.getParentId(), result.getCnt());
+            return categoryVo;
+        }
+        return null;
     }
 
     /**
