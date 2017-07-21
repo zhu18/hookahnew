@@ -1,0 +1,73 @@
+<style>
+    .form-inline .form-control {
+        width: 110px;
+    }
+
+    .form-inline label {
+        margin-top: 5px;
+    }
+
+    .table thead tr th { color: #333; }
+</style>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="console-title console-title-border clearfix">
+            <div class="pull-left"><h5>网站流量统计分析</h5></div>
+            <div class="pull-right">
+                <button class="btn btn-default" data-ng-click="refresh()"><span
+                    class="glyphicon glyphicon-refresh"></span> 刷新
+                </button>
+                <!--<a ui-sref="help.add" class="btn btn-primary">新增</a>-->
+            </div>
+        </div>
+        <div class="row margin-top form-inline">
+
+            <div class="col-sm-5">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>浏览次数（PV）</th>
+                        <th>独立访客（UV）</th>
+                        <th>访问次数</th>
+                        <th>活跃用户数</th>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td>今日</td>
+                        <td data-ng-bind="dataInfo.PUV.pvdata"></td>
+                        <td data-ng-bind="dataInfo.PUV.uvdata"></td>
+                        <td data-ng-bind="dataInfo.accessCount"></td>
+                        <td data-ng-bind="dataInfo.activeUserCount"></td>
+                    </tr>
+                </table>
+            </div>
+            <p class="row"></p>
+            <div class="col-sm-7">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>新注册会员</th>
+                        <th>注册会员总数</th>
+                        <th>购买过商品会员</th>
+                        <th>已认证会员</th>
+                        <th>待审核会员</th>
+                        <th>未认证会员</th>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td>今日</td>
+                        <td data-ng-bind="dataInfo.newUserCount"></td>
+                        <td data-ng-bind="dataInfo.newUserSum"></td>
+                        <td data-ng-bind="dataInfo.buyGoodsCount"></td>
+                        <td data-ng-bind="dataInfo.attestCount"></td>
+                        <td data-ng-bind="dataInfo.dCheckCount"></td>
+                        <td data-ng-bind="dataInfo.noAttestCount"></td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>

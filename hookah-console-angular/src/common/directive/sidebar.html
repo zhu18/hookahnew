@@ -148,9 +148,15 @@
               <span class="nav-title">结算管理&nbsp;</span>
             </a>
           </li>
+          <li class="nav-item" ng-class="{'active':currentProductId == 'operational'}">
+            <a href="/operational/#!/operational/transaction" class="sidebar-trans"
+               sidebar-tooltip="" tooltip-append-to-body="true" tooltip-placement="right" tooltip-animation="true">
+              <div class="nav-icon sidebar-trans"><span class="icon-help-1"></span></div>
+              <span class="nav-title">数据分析&nbsp;</span>
+            </a>
+          </li>
         </ul>
       </div>
-
       <!--系统管理-->
       <div class="sidebar-nav" ng-class="{'sidebar-nav-fold':navConfig.system.folded}" ng-show="navConfig.system.show">
         <div class="sidebar-title" ng-click="sideBar.toggleFoldStatus($event,navConfig.system)">
