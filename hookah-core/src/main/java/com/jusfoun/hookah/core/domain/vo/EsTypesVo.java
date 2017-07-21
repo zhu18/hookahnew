@@ -16,6 +16,8 @@ public class EsTypesVo implements Serializable {
     private List<EsTreeVo<Region>> areaCountryList;
     private List<EsTreeVo<Region>> areaProvinceList;
     private List<EsTreeVo<Region>> areaCityList;
+    private List<EsTreeVo> keywordsList;
+    private List<EsTreeVo> payFormatList;
 
     public List<EsTreeVo<Category>> getCategoryList() {
         return categoryList;
@@ -55,5 +57,21 @@ public class EsTypesVo implements Serializable {
 
     public void setAreaCityList(List<EsTreeVo<Region>> areaCityList) {
         this.areaCityList = areaCityList;
+    }
+
+    public List<EsTreeVo> getKeywordsList() {
+        return keywordsList;
+    }
+
+    public void setKeywordsList(List<EsTreeVo> keywordsList) {
+        this.keywordsList = keywordsList;
+    }
+
+    public List<EsTreeVo> getPayFormatList() {
+        return payFormatList;
+    }
+
+    public void setPayFormatList(List<EsTreeVo> payFormatList) {
+        this.payFormatList = payFormatList;
     }
 }

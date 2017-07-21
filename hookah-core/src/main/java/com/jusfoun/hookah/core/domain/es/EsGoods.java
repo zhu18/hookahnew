@@ -27,23 +27,17 @@ public class EsGoods implements Serializable {
     private String goodsDesc;
     @EsField
     private String keywords;
+    @Transient
+    @EsField(fielddata = true, analyzeOpt= AnalyzeOpt.ANALYZED, analyzer= Analyzer.WHITESPACE,
+            termVector= TermVector.OFFSETS, isStore = true, searchAnalyzer = Analyzer.WHITESPACE)
+    private String keywordsArrays;
     @EsField
     private String goodsImg;
     @EsField(fielddata = true)
     private String catId;
-    @EsField(analyzeOpt= AnalyzeOpt.ANALYZED, analyzer= Analyzer.WHITESPACE,
+    @EsField(fielddata = true, analyzeOpt= AnalyzeOpt.ANALYZED, analyzer= Analyzer.WHITESPACE,
             termVector= TermVector.OFFSETS, isStore = true, searchAnalyzer = Analyzer.WHITESPACE)
     private String catIds;
-    @Transient
-    @EsField(fielddata = true)
-    private String[] attrId;
-    @Transient
-    @EsField(analyzeOpt= AnalyzeOpt.ANALYZED, analyzer= Analyzer.WHITESPACE,
-            termVector= TermVector.OFFSETS, isStore = true, searchAnalyzer = Analyzer.WHITESPACE)
-    private String attrIds;
-    @EsField(fielddata = true)
-    @Transient
-    private String[] attrTypeId;
     @EsField
     private String goodsArea;
     @EsField(analyzeOpt= AnalyzeOpt.ANALYZED, analyzer= Analyzer.WHITESPACE,
@@ -75,6 +69,10 @@ public class EsGoods implements Serializable {
     private String onsaleStartDate;
     @Transient
     private String onsaleStartDateField = HookahConstants.ONSALE_START_DATE_FILEDNAME;
+    @Transient
+    @EsField(fielddata = true, analyzeOpt= AnalyzeOpt.ANALYZED, analyzer= Analyzer.WHITESPACE,
+            termVector= TermVector.OFFSETS, isStore = true, searchAnalyzer = Analyzer.WHITESPACE)
+    private String payFormats;
 
     public String getGoodsId() {
         return goodsId;
@@ -196,30 +194,6 @@ public class EsGoods implements Serializable {
         this.shopFormat = shopFormat;
     }
 
-    public String[] getAttrTypeId() {
-        return attrTypeId;
-    }
-
-    public void setAttrTypeId(String[] attrTypeId) {
-        this.attrTypeId = attrTypeId;
-    }
-
-    public String getAttrIds() {
-        return attrIds;
-    }
-
-    public void setAttrIds(String attrIds) {
-        this.attrIds = attrIds;
-    }
-
-    public String[] getAttrId() {
-        return attrId;
-    }
-
-    public void setAttrId(String[] attrId) {
-        this.attrId = attrId;
-    }
-
     public String getAreaCountry() {
         return areaCountry;
     }
@@ -268,12 +242,19 @@ public class EsGoods implements Serializable {
         this.lastUpdateTime = lastUpdateTime;
     }
 
-    //    public String getOnsaleStartDateField() {
-//        return onsaleStartDateField;
-//    }
-//
-//    public void setOnsaleStartDateField(String onsaleStartDateField) {
-//        this.onsaleStartDateField = onsaleStartDateField;
-//    }
+    public String getKeywordsArrays() {
+        return keywordsArrays;
+    }
 
+    public void setKeywordsArrays(String keywordsArrays) {
+        this.keywordsArrays = keywordsArrays;
+    }
+
+    public String getPayFormats() {
+        return payFormats;
+    }
+
+    public void setPayFormats(String payFormats) {
+        this.payFormats = payFormats;
+    }
 }

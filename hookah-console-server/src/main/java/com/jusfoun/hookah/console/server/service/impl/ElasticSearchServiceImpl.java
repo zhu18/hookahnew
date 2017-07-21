@@ -13,7 +13,6 @@ import com.jusfoun.hookah.core.domain.Category;
 import com.jusfoun.hookah.core.domain.GoodsAttrType;
 import com.jusfoun.hookah.core.domain.Region;
 import com.jusfoun.hookah.core.domain.es.*;
-import com.jusfoun.hookah.core.domain.mongo.MgCategoryAttrType;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.vo.EsGoodsVo;
 import com.jusfoun.hookah.core.domain.vo.EsTreeVo;
@@ -141,6 +140,9 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             if(region.length == 4)
                 goods.setAreaCity(region[3]);
         }
+        if(StringUtils.isNotBlank(goods.getKeywords())) {
+            goods.setKeywordsArrays(goods.getKeywords().replace(",", " "));
+        }
         if(goods.getAddTime() != null) {
             goods.setAddTime(DateUtils.toDateText(DateUtils.getDate(goods.getAddTime(),
                     DateUtils.DEFAULT_DATE_TIME_FORMAT), DateUtils.DEFAULT_DATE_TIME_FORMAT));
@@ -155,24 +157,12 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             goods.setSuggest(goods.getGoodsName());
             //获取商品属性
             if(mgGoods != null) {
-                List<MgCategoryAttrType.AttrTypeBean> list1 = mgGoods.getAttrTypeList();
-                StringBuffer attrType = new StringBuffer();
-                StringBuffer attr = new StringBuffer();
-                for(MgCategoryAttrType.AttrTypeBean bean : list1) {
-                    attrType.append(bean.getTypeId()).append(" ");
-
-                    if(bean.getAttrList() != null) {
-                        for (MgCategoryAttrType.AttrTypeBean.AttrBean attrBean : bean.getAttrList()) {
-                            attr.append(attrBean.getAttrId()).append(" ");
-                        }
-                    }else {
-                        attrType = new StringBuffer();
-                    }
-                }
-                if(!"".equals(attrType.toString()) && !"".equals(attr.toString())) {
-                    goods.setAttrTypeId(attrType.toString().split(" "));
-                    goods.setAttrId(attr.toString().split(" "));
-                    goods.setAttrIds(attrType.toString() + attr.toString());
+                List<MgGoods.FormatBean> formatList = mgGoods.getFormatList();
+                if(formatList != null && formatList.size() > 0) {
+                    StringBuffer stringBuffer = new StringBuffer();
+                    for(MgGoods.FormatBean obj : formatList)
+                        stringBuffer.append(obj.getFormat()).append(" ");
+                    goods.setPayFormats(stringBuffer.toString());
                 }
             }
         }catch (ConverterNotFoundException | ConversionFailedException e) {
@@ -268,6 +258,8 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         if(goods != null && StringUtils.isNotBlank(goods.getCatIds())) {
             listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_CATEGORY, HookahConstants.GOODS_AGG_CATEGORY_FIELD));
             goods.setCatIds(goods.getCatIds().substring(0, 3));
+        }else {
+            listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_CATEGORY, HookahConstants.GOODS_AGG_CATEGORY_FIELD));
         }
         //按查询条件查询分类集合
         Map<String, List<EsAggResult>> map = esTemplate.getCounts(esTransportClient.getObject(),
@@ -276,7 +268,10 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             for (Map.Entry<String, List<EsAggResult>> entry : map.entrySet()) {
                 switch (entry.getKey()) {
                     case HookahConstants.GOODS_AGG_CATEGORY:
-                        this.getCategoryTypes(entry, categoryList);
+                        if(goods != null && StringUtils.isNotBlank(goods.getCatIds()))
+                            this.getCategoryTypes(entry, categoryList);
+                        else
+                            this.getAllCategoryTypes(entry, categoryList);
                         break;
                 }
             }
@@ -288,27 +283,28 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     public EsTypesVo getTypes(EsGoods goods) throws Exception {
         List<EsAgg> listCnt = new ArrayList<>();
         EsTypesVo esTypesVo = new EsTypesVo();
-        List<EsTreeVo<GoodsAttrType>> goodsAttrTypeList = new ArrayList<>();
         List<EsTreeVo<Region>> areaCountryList = new ArrayList<>();
         List<EsTreeVo<Region>> areaProvinceList = new ArrayList<>();
         List<EsTreeVo<Region>> areaCityList = new ArrayList<>();
+        List<EsTreeVo> keywordsList = new ArrayList<>();
+        List<EsTreeVo> payFormatsList = new ArrayList<>();
 
-        listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_ATTR, HookahConstants.GOODS_AGG_ATTR_FIELD));
-        listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_ATTR_TYPE, HookahConstants.GOODS_AGG_ATTR_TYPE_FIELD));
         listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_AREA_COUNTRY, HookahConstants.GOODS_AGG_AREA_COUNTRY_FIELD));
         listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_AREA_PROVINCE, HookahConstants.GOODS_AGG_AREA_PROVINCE_FIELD));
         listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_AREA_CITY, HookahConstants.GOODS_AGG_AREA_CITY_FIELD));
+        listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_PAY_FORMATS, HookahConstants.GOODS_AGG_PAY_FORMATS_FIELD));
+        listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_KEYWORODS_ARRAYS, HookahConstants.GOODS_AGG_KEYWORODS_ARRAYS_FIELD));
         //按查询条件查询分类集合
         Map<String, List<EsAggResult>> map = esTemplate.getCounts(esTransportClient.getObject(),
                 Constants.GOODS_INDEX, Constants.GOODS_TYPE, goods != null ? AnnotationUtil.convert2Map(goods) : null, listCnt);
         if (map != null && map.size() > 0) {
             for (Map.Entry<String, List<EsAggResult>> entry : map.entrySet()) {
                 switch (entry.getKey()) {
-                    case HookahConstants.GOODS_AGG_ATTR_TYPE:
-                        this.getGoodsAttrType(entry, goodsAttrTypeList);
+                    case HookahConstants.GOODS_AGG_PAY_FORMATS:
+                        this.getPayFormats(entry, payFormatsList);
                         break;
-                    case HookahConstants.GOODS_AGG_ATTR :
-                        this.getGoodsAttr(entry, goodsAttrTypeList);
+                    case HookahConstants.GOODS_AGG_KEYWORODS_ARRAYS:
+                        this.getKeywords(entry, keywordsList);
                         break;
                     case HookahConstants.GOODS_AGG_AREA_COUNTRY :
                         this.getRegions(entry, areaCountryList);
@@ -324,10 +320,11 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             }
         }
         esTypesVo.setCategoryList(getCatTypes(goods));
-        esTypesVo.setGoodsAttrTypeList(goodsAttrTypeList);
         esTypesVo.setAreaCountryList(areaCountryList);
         esTypesVo.setAreaProvinceList(areaProvinceList);
         esTypesVo.setAreaCityList(areaCityList);
+        esTypesVo.setKeywordsList(keywordsList);
+        esTypesVo.setPayFormatList(payFormatsList);
         return esTypesVo;
     }
 
@@ -367,6 +364,58 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
                 categoryList.add(categoryEsTreeVo);
             }
         }
+    }
+
+    private void getAllCategoryTypes(Map.Entry<String, List<EsAggResult>> entry, List<EsTreeVo<Category>> categoryList) {
+        List<EsAggResult> esAggResults = entry.getValue();
+
+        Map<String, EsAggResult> mapLevel1 = new HashMap<>();
+        Map<String, EsAggResult> mapLevel2 = new HashMap<>();
+        Map<String, EsAggResult> mapLevel3 = new HashMap<>();
+        for(EsAggResult result : esAggResults) {
+            if(result.getId().length() == 3 && !mapLevel1.containsKey(result.getId())) {
+                mapLevel1.put(result.getId(), new EsAggResult(result.getId(), (long)0));
+            }else if(result.getId().length() == 6 && !mapLevel2.containsKey(result.getId())) {
+                mapLevel2.put(result.getId(), result);
+                EsTreeVo<Category> tempCategory = this.transCategory(result);
+                if(tempCategory != null && !mapLevel1.containsKey(tempCategory.getParentId())) {
+                    mapLevel1.put(tempCategory.getParentId(), new EsAggResult(tempCategory.getParentId(), (long)0));
+                }
+            }else if(result.getId().length() == 9) {
+                mapLevel3.put(result.getId(), result);
+                EsTreeVo<Category> tempCategory = this.transCategory(result);
+                if(tempCategory != null && !mapLevel2.containsKey(tempCategory.getParentId())) {
+                    mapLevel2.put(tempCategory.getParentId(), new EsAggResult(tempCategory.getParentId(), (long)0));
+                }
+                if(tempCategory != null && !mapLevel1.containsKey(tempCategory.getParentId())) {
+                    mapLevel1.put(tempCategory.getParentId().substring(0, 3),
+                            new EsAggResult(tempCategory.getParentId().substring(0, 3), (long)0));
+                }
+            }
+        }
+        if(mapLevel1 != null) {
+            for (Map.Entry<String, EsAggResult> entry1 : mapLevel1.entrySet()) {
+                EsTreeVo<Category> categoryEsTreeVo = transCategory(entry1.getValue());
+                List<EsTreeVo<Category>> childList = new ArrayList<>();
+                if(mapLevel2 != null) {
+                    for (Map.Entry<String, EsAggResult> entry2 : mapLevel2.entrySet()) {
+                        if(entry1.getKey().equals(entry2.getKey().substring(0, 3))) {
+                            EsTreeVo<Category> categoryEsTreeVo2 = transCategory(entry2.getValue());
+                            List<EsTreeVo<Category>> childList2 = new ArrayList<>();
+                            for (Map.Entry<String, EsAggResult> entry3 : mapLevel3.entrySet()) {
+
+                            }
+                            childList.add(transCategory(entry2.getValue()));
+                        }
+                    }
+                }
+                if(childList != null && childList.size() > 0)
+                    categoryEsTreeVo.setChildren(childList);
+                categoryList.add(categoryEsTreeVo);
+            }
+        }
+
+        System.out.println();
     }
 
     public EsTreeVo<Category> transCategory(EsAggResult result) {
@@ -457,5 +506,33 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         esTemplate.search(esTransportClient.getObject(), Constants.GOODS_CATEGORY_INDEX,
                 Constants.GOODS_CATEGORY_TYPE, map, pagination, null, null, "fullName");
         return pagination.getList();
+    }
+
+    public void getKeywords(Map.Entry<String, List<EsAggResult>> entry, List<EsTreeVo> keywordsList) {
+        List<EsAggResult> esAggResults = entry.getValue();
+        for(EsAggResult result : esAggResults) {
+            EsTreeVo vo = new EsTreeVo();
+            vo.setNodeId(result.getId());
+            vo.setNodeName(result.getId());
+            vo.setCnt(result.getCnt());
+            keywordsList.add(vo);
+        }
+    }
+
+    public void getPayFormats(Map.Entry<String, List<EsAggResult>> entry, List<EsTreeVo> payFormatList) {
+        List<EsAggResult> esAggResults = entry.getValue();
+        for(EsAggResult result : esAggResults) {
+            EsTreeVo vo = new EsTreeVo();
+            vo.setNodeId(result.getId());
+            vo.setNodeName(getPayFormatsName(result.getId()));
+            vo.setCnt(result.getCnt());
+            payFormatList.add(vo);
+        }
+    }
+
+    private String getPayFormatsName(String id) {
+        return HookahConstants.PAY_FORMATS_TIMES.equals(id) ? "按次" :
+                    HookahConstants.PAY_FORMATS_MONTH.equals(id) ? "按月" :
+                        HookahConstants.PAY_FORMATS_YEAR.equals(id) ? "按年" : "按套";
     }
 }
