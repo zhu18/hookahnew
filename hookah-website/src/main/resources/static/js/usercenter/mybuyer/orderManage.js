@@ -78,7 +78,7 @@ function loadPageData(data) {
         html += '<td class="text-align-center" style="width: 280px;">';
         html += '<div class="p-img">';
         html += '<a href="/exchange/details?id=' + goods[ii].goodsId + '" target="_blank">';
-        html += '<img src="http://static.qddata.com.cn/' + goods[ii].goodsImg + '" alt="">';
+        html += '<img src="'+host.static+'/' + goods[ii].goodsImg + '" alt="">';
         html += '</a>';
         html += '</div>';
         html += '<div class="desc margin-top-10 marign-bottom-10" >';
