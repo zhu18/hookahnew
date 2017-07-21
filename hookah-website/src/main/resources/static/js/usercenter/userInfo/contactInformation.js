@@ -1,7 +1,6 @@
 /**
  * Created by lss on 2017/7/13 0013.
  */
-
 $(function () {
     $.ajax({
         url:host.website+'/supplier/getContactInfo',
@@ -17,7 +16,7 @@ $(function () {
             $(".contactPhone").html(contactPhone);
             $(".contactAddress").html(contactAddress);
             $(".postCode").html(postCode);
-            if(!(contactName && contactPhone && contactAddress && postCode)){
+            if(!contactName && !contactPhone && !contactAddress && !postCode){
                 $(".edit").html("新增");
             }else {
                 $(".edit").html("修改");

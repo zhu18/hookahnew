@@ -53,6 +53,7 @@
 }
 .contactInformationEdit form .help-block{
     color: #ff0000;
+    vertical-align: top;
 }
 .contactInformationEdit form .vertical-align-top{
     vertical-align: top;

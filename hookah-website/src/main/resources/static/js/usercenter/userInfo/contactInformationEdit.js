@@ -19,7 +19,10 @@ $(function () {
             $("#postCode").val(postCode);
         }
     });
-
+    var regex = {  //手机号验证正则
+        mobile: /^0?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8}$/,
+        zip:/^[1-9][0-9]{5}$/
+    };
     //让当前表单调用validate方法，实现表单验证功能
     $("#ff").validate({
         debug:true, //调试模式，即使验证成功也不会跳转到目标页面
@@ -29,13 +32,17 @@ $(function () {
                 rangelength:[2,12]
             },
             sphone:{
-                required:true
+                required:true,
+                isMobile:true
             },
             saddress:{
-                required:"",
+                required:true,
                 maxlength:50
             },
-            szip:'required'
+            szip:{
+                required:true,
+                iszip:true
+            }
         },
         messages:{
             sname:{
@@ -44,15 +51,27 @@ $(function () {
                 remote:"*该用户名已存在！"
             },
             sphone:{
-                required:"*请输入手机号"
+                required:"*请输入手机号",
+                isMobile:"*请输入正确格式的手机号"
             },
             address:{
                 required:"*请输入地址",
                 maxlength: $.validator.format("请输入一个长度最多是 {0} 的字符串")
             },
-            szip:"*请填写邮编"
+            szip:{
+                required:"*请输入邮编",
+                isMobile:"*请输入正确格式的邮编"
+            }
         }
     });
+    $.validator.addMethod("isMobile", function(value, element) {
+        var mobile = regex.mobile.test(value);
+        return this.optional(element) || (mobile);
+    }, "*请填写有效的手机号");
+    $.validator.addMethod("iszip", function(value, element) {
+        var mobile = regex.zip.test(value);
+        return this.optional(element) || (mobile);
+    }, "*请填写有效的邮编号码");
     $(".save").on("click",function () {
         if($("#ff").valid()){
             $.ajax({
