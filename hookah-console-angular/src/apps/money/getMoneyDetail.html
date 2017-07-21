@@ -43,14 +43,13 @@
                         <td>
                             <span data-ng-show="order.checkStatus == 0 || order.checkStatus == 2 " data-ng-bind="order.checkStatus == 0 ? '待审核' :  '审核未通过'"></span>
                             <i data-ng-show="order.checkStatus == 1" data-ng-bind="'审核通过'"></i>
-
                         </td>
                     </tr>
                     <tr class="padding-bottom-10">
                         <th>提现申请时间：</th>
                         <td data-ng-bind="order.addTime"></td>
                     </tr>
-                    <tr class="padding-bottom-10">
+                    <tr class="padding-bottom-10" data-ng-show="order.checkStatus !== 0 ">
                         <th>审核完成时间：</th>
                         <td data-ng-bind="order.checckTime"></td>
                     </tr>
