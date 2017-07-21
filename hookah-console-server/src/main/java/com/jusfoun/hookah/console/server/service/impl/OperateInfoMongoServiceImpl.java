@@ -56,7 +56,7 @@ public class OperateInfoMongoServiceImpl extends GenericMongoServiceImpl<Operate
         //设置操作起始时间、结束时间
         Criteria criteria = null;
         Date optStartTime = StringUtils.isNotBlank(operateVO.getOptStartTime())?DateUtils.getDate(operateVO.getOptStartTime(),DateUtils.DEFAULT_DATE_TIME_FORMAT):null;
-        Date optEndTime = StringUtils.isNotBlank(operateVO.getOptEndTime())?DateUtils.getDate(operateVO.getOptStartTime(),DateUtils.DEFAULT_DATE_TIME_FORMAT):null;
+        Date optEndTime = StringUtils.isNotBlank(operateVO.getOptEndTime())?DateUtils.getDate(operateVO.getOptEndTime().substring(0, 11) + "23:59:59",DateUtils.DEFAULT_DATE_TIME_FORMAT):null;
         if (optStartTime!=null && optEndTime!=null){
             criteria = Criteria.where("operateTime").gte(optStartTime).lte(optEndTime);
             query.addCriteria(criteria);
