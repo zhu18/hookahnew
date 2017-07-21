@@ -10,7 +10,6 @@ import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.CategoryMapper;
 import com.jusfoun.hookah.core.dao.GoodsMapper;
 import com.jusfoun.hookah.core.domain.Category;
-import com.jusfoun.hookah.core.domain.GoodsAttrType;
 import com.jusfoun.hookah.core.domain.Region;
 import com.jusfoun.hookah.core.domain.es.*;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
@@ -260,6 +259,9 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             goods.setCatIds(goods.getCatIds().substring(0, 3));
         }else {
             listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_CATEGORY, HookahConstants.GOODS_AGG_CATEGORY_FIELD));
+            if(goods != null && StringUtils.isNotBlank(goods.getCatIds())) {
+                goods.setCatIds(null);
+            }
         }
         //按查询条件查询分类集合
         Map<String, List<EsAggResult>> map = esTemplate.getCounts(esTransportClient.getObject(),
@@ -268,9 +270,10 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             for (Map.Entry<String, List<EsAggResult>> entry : map.entrySet()) {
                 switch (entry.getKey()) {
                     case HookahConstants.GOODS_AGG_CATEGORY:
-                        if(goods != null  && StringUtils.isBlank(goods.getGoodsName()) && StringUtils.isNotBlank(goods.getCatIds()))
+                        if(goods != null  && StringUtils.isBlank(goods.getGoodsName())
+                                && StringUtils.isNotBlank(goods.getCatIds())) //点击分类进入
                             this.getCategoryTypes(entry, categoryList);
-                        else
+                        else //按搜索名字搜索
                             this.getAllCategoryTypes(entry, categoryList);
                         break;
                 }
@@ -428,48 +431,6 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             return categoryVo;
         }
         return null;
-    }
-
-    /**
-     * 获取有效的商品属性分类
-     * @param entry
-     * @param goodsAttrTypeList
-     */
-    private void getGoodsAttrType(Map.Entry<String, List<EsAggResult>> entry, List<EsTreeVo<GoodsAttrType>> goodsAttrTypeList) {
-        List<EsAggResult> esAggResults = entry.getValue();
-        for(EsAggResult result : esAggResults) {
-            GoodsAttrType goodsAttrType = DictionaryUtil.getAttrById(result.getId());
-            if(goodsAttrType != null) {
-                EsTreeVo<GoodsAttrType> esGoodsAttrVo = new EsTreeVo(goodsAttrType.getTypeId(), goodsAttrType.getTypeName(),
-                        goodsAttrType.getLevel(), goodsAttrType.getParentId(), result.getCnt());
-                goodsAttrTypeList.add(esGoodsAttrVo);
-            }
-        }
-    }
-
-    /**
-     * 获取有效的商品属性
-     * @param entry
-     * @param goodsAttrTypeList
-     */
-    private void getGoodsAttr(Map.Entry<String, List<EsAggResult>> entry, List<EsTreeVo<GoodsAttrType>> goodsAttrTypeList) {
-        List<EsAggResult> esAggResults = entry.getValue();
-        if(goodsAttrTypeList != null) {
-            for(EsTreeVo<GoodsAttrType> vo : goodsAttrTypeList) {
-                List<EsTreeVo<GoodsAttrType>> children =  new ArrayList<>();
-                for(EsAggResult result : esAggResults) {
-                    GoodsAttrType goodsAttr = DictionaryUtil.getAttrById(result.getId());
-                    if(goodsAttr != null) {
-                        if(vo.getNodeId().equals(goodsAttr.getParentId())) {
-                            EsTreeVo<GoodsAttrType> esGoodsAttrVo = new EsTreeVo(goodsAttr.getTypeId(), goodsAttr.getTypeName(),
-                                    goodsAttr.getLevel(), goodsAttr.getParentId(), result.getCnt());
-                            children.add(esGoodsAttrVo);
-                        }
-                    }
-                }
-                vo.setChildren(children);
-            }
-        }
     }
 
     /**

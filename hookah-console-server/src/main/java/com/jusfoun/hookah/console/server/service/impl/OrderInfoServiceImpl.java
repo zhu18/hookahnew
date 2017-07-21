@@ -866,6 +866,8 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         Pagination<MgOrderGoods> pagination = new Pagination<MgOrderGoods>();
 
         List<OrderInfoVo> orderList = mgOrderInfoService.selectList(filters,orderBys);
+        //使用方法引用简化lambda,并生成1个Comparator，供下面排序使用
+        Comparator<MgOrderGoods> byPayTime = Comparator.comparing(MgOrderGoods::getPayTime);
         List<MgOrderGoods> goodsList = orderList.stream().parallel()
                 .flatMap(new Function<OrderInfoVo, Stream<MgOrderGoods>>() {
                     @Override
@@ -876,10 +878,12 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                     }
                 })
                 .collect(Collectors.toList());
+
         pagination.setTotalItems(goodsList.size());
         goodsList.stream().parallel()
+                .sorted(byPayTime.reversed())
                 .skip((pageNum-1)*pageSize)
-                .limit(pageSize)
+                .limit(pageSize).collect(Collectors.toList())
                 .forEach(goods->{page.add(goods);});
         pagination.setPageSize(pageSize);
         pagination.setCurrentPage(pageNum);
