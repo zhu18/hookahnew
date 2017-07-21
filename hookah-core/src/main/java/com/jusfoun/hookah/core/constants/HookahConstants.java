@@ -106,6 +106,10 @@ public class HookahConstants {
     public static final String GOODS_AGG_AREA_PROVINCE_FIELD = "areaProvince";
     public static final String GOODS_AGG_AREA_CITY = "cityAgg";
     public static final String GOODS_AGG_AREA_CITY_FIELD = "areaCity";
+    public static final String GOODS_AGG_KEYWORODS_ARRAYS = "keywordsAgg";
+    public static final String GOODS_AGG_KEYWORODS_ARRAYS_FIELD = "keywordsArrays";
+    public static final String GOODS_AGG_PAY_FORMATS = "payFormatAgg";
+    public static final String GOODS_AGG_PAY_FORMATS_FIELD = "payFormats";
 
     /** 缓存 */
     public static final String CACHE_GOODS_CATEGORY = "categoryInfo";//商品分类信息
@@ -160,6 +164,12 @@ public class HookahConstants {
     public static final byte MESSAGE_TYPE_SMS = 0;//短信
     public static final byte MESSAGE_TYPE_MAIL = 1;//邮件
     public static final byte MESSAGE_TYPE_STATION = 2;//站内信
+
+    // 付费方式
+    public static final String PAY_FORMATS_TIMES = "0";//按次
+    public static final String PAY_FORMATS_MONTH = "1";//按月
+    public static final String PAY_FORMATS_YEAR = "2";//按年
+    public static final String PAY_FORMATS_ONE = "3";//按套
 
     public enum AnalyzeOpt {
         ANALYZED("analyzed"),
