@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.webiste.controller;
 
+
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.PayAccount;
@@ -11,12 +12,15 @@ import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
-import com.jusfoun.hookah.rpc.api.*;
+import com.jusfoun.hookah.rpc.api.PayAccountService;
+import com.jusfoun.hookah.rpc.api.PayBankCardService;
+import com.jusfoun.hookah.rpc.api.WithdrawRecordService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -34,9 +38,6 @@ public class WithdrawRecordController extends BaseController{
 
     @Resource
     WithdrawRecordService withdrawRecordService;
-
-    @Resource
-    UserService userService;
 
     @Resource
     PayAccountService payAccountService;
@@ -162,16 +163,13 @@ public class WithdrawRecordController extends BaseController{
      */
     @RequestMapping(value = "/getWithDrawStatus", method = RequestMethod.GET)
     @ResponseBody
-    public ReturnData userInfo(Long id) {
+    public ReturnData userInfo(@RequestParam("id") Long id) {
 
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
 
         try {
-            Map<String, Object> map = new HashMap();
-
             List<Condition> cashFilters = new ArrayList();
-            cashFilters.add(Condition.eq("userId", getCurrentUser().getUserId()));
             cashFilters.add(Condition.eq("id", id));
             WithdrawRecord withdrawRecord = withdrawRecordService.selectOne(cashFilters);
 
@@ -181,14 +179,9 @@ public class WithdrawRecordController extends BaseController{
                 return returnData;
             }
 
-            map.put("checkStatus", withdrawRecord.getCheckStatus());
-            map.put("addTime", withdrawRecord.getAddTime());
-            map.put("backCheckTime", new Date());
-            map.put("checkTime", withdrawRecord.getCheckTime());
+            returnData.setData(withdrawRecord);
 
-
-            returnData.setData(map);
-        } catch (HookahException e) {
+        } catch (Exception e) {
             logger.error(e.getMessage());
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage("系统异常");
