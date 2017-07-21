@@ -8,6 +8,8 @@ import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.OrganizationService;
 import com.jusfoun.hookah.rpc.api.SupplierService;
 import com.jusfoun.hookah.rpc.api.UserService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,8 +40,10 @@ public class SupplierController extends BaseController{
     @RequestMapping(value = "/toBeSupplier", method = RequestMethod.POST)
     public ReturnData toBeSupplier(String contactName, String contactPhone, String contactAddress){
         try {
-            String userId = this.getCurrentUser().getUserId();
-            supplierService.toBeSupplier(contactName,contactPhone,contactAddress,userId);
+            Session session = SecurityUtils.getSubject().getSession();
+            HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
+            User user = userService.selectById(userMap.get("userId"));
+            supplierService.toBeSupplier(contactName,contactPhone,contactAddress,user.getUserId());
         }catch (Exception e){
             return ReturnData.error(e.getMessage());
         }
