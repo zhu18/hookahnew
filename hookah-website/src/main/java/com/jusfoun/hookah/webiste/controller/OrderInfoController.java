@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.webiste.controller;
 
+import com.jusfoun.hookah.core.annotation.Log;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.OrderInfo;
@@ -84,7 +85,7 @@ public class OrderInfoController extends BaseController {
         }
 
     }
-
+    @Log(platform = "front",logType = "f0012",optType = "insert")
     @RequestMapping(value = "/order/directInfo")
     public String orderInfo(String goodsId, Integer formatId,Long goodsNumber,Model model) {
         List<CartVo> list = new ArrayList<>(1);
