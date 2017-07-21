@@ -10,6 +10,7 @@ import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.SupplierService;
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by hhh on 2017/7/11.
@@ -91,5 +93,21 @@ public class SupplierApi extends BaseController {
             return ReturnData.error(e.getMessage());
         }
         return ReturnData.success("保存成功");
+    }
+
+    @RequestMapping(value = "/viewResult",method = RequestMethod.GET)
+    public ReturnData viewResult(String id){
+        Map<String,Object> map = new HashedMap();
+        try {
+            Supplier supplier = supplierService.selectById(id);
+            if (supplier!=null) {
+                map.put("checkContent",supplier.getCheckContent());
+                map.put("checkStatus",supplier.getCheckStatus());
+            }
+        }catch (Exception e){
+            logger.error(e.getMessage());
+            return ReturnData.error(e.getMessage());
+        }
+        return ReturnData.success(map);
     }
 }

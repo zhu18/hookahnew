@@ -5,6 +5,7 @@ import com.jusfoun.hookah.core.domain.Organization;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.utils.FormatCheckUtil;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.OrganizationService;
 import com.jusfoun.hookah.rpc.api.SupplierService;
 import com.jusfoun.hookah.rpc.api.UserService;
@@ -58,13 +59,13 @@ public class SupplierController extends BaseController{
             User user = userService.selectById(userId);
             Organization org = organizationService.selectById(user.getOrgId());
             if (user!=null && org!=null){
-                if (user.getContactPhone()!=null){
+                if (StringUtils.isNotBlank(user.getContactPhone())){
                     map.put("contactPhone",user.getContactPhone());
                 }else {
                     map.put("contactPhone",user.getMobile());
                 }
                 map.put("contactName",user.getContactName());
-                if (user.getContactAddress()!=null){
+                if (StringUtils.isNotBlank(user.getContactAddress())){
                     map.put("contactAddress",user.getContactAddress());
                 }else {
                     map.put("contactAddress",org.getContactAddress());
