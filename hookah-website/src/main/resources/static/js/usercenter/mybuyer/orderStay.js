@@ -64,7 +64,7 @@ function loadPageData(data){
 						html += '<a href="' + host.website + '/order/payOrder?orderSn=' + list[i].orderSn + '"  class="display-inline-block goPay btn btn-full-orange margin-bottom-5 margin-top-5">去支付</a>';
 					}
 					// html += '<a target="_blank" href="/order/viewDetails?orderId=' + list[i].orderId + '&num=2" class="display-block color-blue margin-bottom-5">订单详情</a>';
-					html += '<a href="javascript:confirmDelete(\'' + list[i].orderId + '\');" class="display-block margin-bottom-5">删除</a>';
+					html += '<a href="javascript:confirmDelete(\'' + list[i].orderId + '\');" class="display-block margin-bottom-5">取消订单</a>';
 					html += '</td>';
 				}
 
@@ -131,18 +131,18 @@ $(".searchQuery .search").on("click",function(){
         },
         success: function (data) {
             if (!(data.code == 0)) {
-				$.alert('删除成功', true, function () {
+				$.alert('取消订单成功', true, function () {
 					location.reload()
 				});
             } else {
-                console.log("删除失败！");
+                console.log("取消订单失败！");
             }
         }
     })
 }
 
 function confirmDelete(orderId){
-	$.confirm('确定要删除该订单吗？',null,function(type){
+	$.confirm('确定要取消该订单吗？',null,function(type){
 		if(type == 'yes'){
 			deleteRadio(orderId);
 			this.hide();

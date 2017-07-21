@@ -124,7 +124,7 @@ $(".searchQuery .search").on("click",function(){
 // 删除订单
  function deleteRadio(orderId) {
     $.ajax({
-        url: '/order/delete',
+        url: '/order/forceDelete',
         type: 'get',
         data:{
             orderId:orderId

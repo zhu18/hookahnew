@@ -42,7 +42,6 @@ $(function(){
                 $.alert('数量只能在1-999之间')
                 $(this).val(1);
             }
-
         })
         $(".purchase-quantity .btn-sub").on('click', function () {
             var val = $('.purchase-quantity input').val();
