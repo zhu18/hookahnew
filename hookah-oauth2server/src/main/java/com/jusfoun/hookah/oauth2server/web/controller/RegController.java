@@ -249,7 +249,6 @@ public class RegController {
         return ReturnData.success();
     }
 
-
     @RequestMapping(value = "/findPwd", method = RequestMethod.GET)
     public String findPwd(Integer step,String userId,Model model) {
         if(step==null) step =1;
@@ -267,7 +266,7 @@ public class RegController {
         }
     }
 
-
+    @Log(platform = "front",logType = "f0003",optType = "modify")
     @RequestMapping(value = "/findPwd", method = RequestMethod.POST)
     @ResponseBody
     public Object findPwd(Integer step, UserValidVo userVo, HttpServletRequest request) {

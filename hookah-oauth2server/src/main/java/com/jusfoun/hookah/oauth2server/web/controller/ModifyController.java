@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.oauth2server.web.controller;
 
+import com.jusfoun.hookah.core.annotation.Log;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.exception.UserRegConfirmPwdException;
 import com.jusfoun.hookah.core.exception.UserRegEmptyPwdException;
@@ -81,6 +82,7 @@ public class ModifyController {
      * @param model
      * @return
      */
+    @Log(platform = "front",logType = "f0005",optType = "modify")
     @RequestMapping(value = "/updateLoginPwd", method = RequestMethod.POST)
     @ResponseBody
     public String updateLoginPwd(String  newPwd, String  newPwdRepeat, Model model) {
@@ -137,6 +139,7 @@ public class ModifyController {
         model.addAttribute("title", "设置支付密码");
         return "modify/setPayPassword";
     }
+    @Log(platform = "front",logType = "f0006",optType = "modify")
     @RequestMapping(value = "/setPayPassword", method = RequestMethod.POST)
     public String pSetPayPassword(User userForm,Model model) {
         Session session = SecurityUtils.getSubject().getSession();
@@ -201,7 +204,7 @@ public class ModifyController {
         model.addAttribute("title", "修改手机号");
         return "modify/mobile";
     }
-
+    @Log(platform = "front",logType = "f0004",optType = "modify")
     @RequestMapping(value = "/mobile", method = RequestMethod.POST)
     public String pMobile(User userForm,Model model) {
         Session session = SecurityUtils.getSubject().getSession();
