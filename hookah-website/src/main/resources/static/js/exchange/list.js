@@ -48,9 +48,9 @@ function loadPageData(data){ //渲染页面数据
 		if(data.data2.areaCityList.length > 0){
 			renderSelector(data.data2.areaCityList,'城市','city');
 		}
-		if(data.data2.keywordsList.length > 0){
-			renderSelector(data.data2.keywordsList,'商品标签','keywordsList');
-		}
+		// if(data.data2.keywordsList.length > 0){
+		// 	renderSelector(data.data2.keywordsList,'商品标签','keywordsList');
+		// }
 		if(data.data2.payFormatList.length > 0){
 			renderSelector(data.data2.payFormatList,'付费方式','payFormatList');
 		}
