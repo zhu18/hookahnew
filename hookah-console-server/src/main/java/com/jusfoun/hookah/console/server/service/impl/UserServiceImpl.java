@@ -97,22 +97,22 @@ public class UserServiceImpl extends GenericServiceImpl<User, String> implements
     public Map<String, Object> getPUVCountByDate() {
 
         Map<String, Object> map = new HashedMap();
-        int n = 4;
-        List<Integer> listPv = new ArrayList<>(); //pv数据集合
-        List<Integer> listUv = new ArrayList<>(); //uv数据集合
-        List<String> listDate = new ArrayList<>(); //日期集合
+        //int n = 4;
+        //List<Integer> listPv = new ArrayList<>(); //pv数据集合
+        //List<Integer> listUv = new ArrayList<>(); //uv数据集合
+       // List<String> listDate = new ArrayList<>(); //日期集合
         LocalDate today = LocalDate.now();
-        listDate.add(today.toString());
-        listPv.add(Integer.parseInt(redisOperate.get("pv:" + today.toString())));
-        listUv.add(Integer.parseInt(redisOperate.get("uv:" + today.toString())));
+        //listDate.add(today.toString());
+        //listPv.add(Integer.parseInt(redisOperate.get("pv:" + today.toString())));
+        //listUv.add(Integer.parseInt(redisOperate.get("uv:" + today.toString())));
         /*for(int i = 1; i <= n; i++){
             listDate.add(today.minusDays(i).toString());
             listPv.add(Integer.parseInt(redisOperate.get("pv:" + today.minusDays(i))));
             listUv.add(Integer.parseInt(redisOperate.get("uv:" + today.minusDays(i))));
         }*/
-        map.put("puvdate", listDate);
-        map.put("pvdata", listPv);
-        map.put("uvdata", listUv);
+        //map.put("puvdate", listDate);
+        map.put("pvdata", Integer.parseInt(redisOperate.get("pv:" + today.toString())));
+        map.put("uvdata", Integer.parseInt(redisOperate.get("uv:" + today.toString())));
         return map;
     }
 

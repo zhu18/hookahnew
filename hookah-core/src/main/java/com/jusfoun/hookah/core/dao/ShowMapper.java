@@ -28,4 +28,8 @@ public interface ShowMapper  extends GenericDao<User> {
     int getBuyGoodsCount();
 
     List<User> getUserTypeCount();
+
+    int getActiveUserCou();
+
+    int getAccessCount();
 }

@@ -128,7 +128,7 @@ public class PlatformFundsApi extends BaseController{
             }
         } catch (HookahException e) {
             logger.info(e.getMessage());
-            return ReturnData.error("查询账户资金失败");
+            return ReturnData.error("系统出错，请联系管理员");
         }
         return ReturnData.success(map);
     }
@@ -171,8 +171,8 @@ public class PlatformFundsApi extends BaseController{
             page = payTradeRecordService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
             return ReturnData.success(page);
         } catch (Exception e) {
-            logger.error("分页查询资金记录错误", e);
-            return ReturnData.error("查询错误");
+            logger.error("系统出错，请联系管理员!", e);
+            return ReturnData.error("系统出错，请联系管理员!");
         }
     }
 
@@ -213,9 +213,9 @@ public class PlatformFundsApi extends BaseController{
                     if(x.getTradeType().equals(3007) ||
                             x.getTradeType().equals(6003) ||
                                 x.getTradeType().equals(6004)){
-                        x.setAccountParty("交易中心平台资金");
+                        x.setAccountParty("交易中心账户资金");
                     }else{
-                        x.setAccountParty(x.getUserName() + "平台资金");
+                        x.setAccountParty(x.getUserName() + "账户资金");
                     }
                 });
             }

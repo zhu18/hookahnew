@@ -91,21 +91,26 @@ public class PayBankCardController extends BaseController{
             if(StringUtils.isNotBlank(userId)){
                 filters.add(Condition.eq("userId", userId));
             }
-            PayAccount payAccount = payAccountService.selectOne(filters);
-            PayBankCard pay= new PayBankCard();
-            pay.setUserId(userId);
-            pay.setAddTime(new Date());
-            pay.setCardOwner(cardOwner);
-            pay.setBindFlag(0);
-            pay.setBankAccountType(bankAccountType);
-            pay.setPayAccountId(payAccount.getId());
-            pay.setAddOperator(payAccount.getUserName());
-            pay.setCardCode(cardCode);
-            pay.setPhoneNumber(phoneNumber);
-            pay.setOpenBank(openBank);
-            pay.setPayBankId(payBankId);
-            PayBankCard insert = payBankCardService.insert(pay);
-            return ReturnData.success(insert);
+            boolean exists = payBankCardService.exists(filters);
+            if(exists == true){
+                PayAccount payAccount = payAccountService.selectOne(filters);
+                PayBankCard pay= new PayBankCard();
+                pay.setUserId(userId);
+                pay.setAddTime(new Date());
+                pay.setCardOwner(cardOwner);
+                pay.setBindFlag(0);
+                pay.setBankAccountType(bankAccountType);
+                pay.setPayAccountId(payAccount.getId());
+                pay.setAddOperator(payAccount.getUserName());
+                pay.setCardCode(cardCode);
+                pay.setPhoneNumber(phoneNumber);
+                pay.setOpenBank(openBank);
+                pay.setPayBankId(payBankId);
+                PayBankCard insert = payBankCardService.insert(pay);
+                return ReturnData.success(insert);
+            }else {
+                return ReturnData.error("此用户已绑定银行卡");
+            }
         }catch (Exception e){
             logger.error("绑定银行卡失败",e);
             return ReturnData.error("绑定银行卡失败");

@@ -1,6 +1,7 @@
 import UserController from "./UserController";
 import UserVerifyController from "./UserVerifyController";
 import UserListDetailController from "./UserListDetailController";
+import rechargeController from "./rechargeController";
 userRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function userRouting($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/user/search');
@@ -64,7 +65,8 @@ export default function userRouting($stateProvider, $urlRouterProvider) {
     .state('user.recharge', {
       url: '/user/recharge',
       template: require('./recharge.html'),
-      controller: UserController,
+      params: {'item': null},
+      controller: rechargeController,
       permission: 'user_verify_recharge'
     })
 };
