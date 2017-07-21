@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.webiste.controller;
 
+import com.jusfoun.hookah.core.annotation.Log;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.*;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -224,7 +225,7 @@ public class AuthController extends BaseController {
         }
         return returnData;
     }
-
+    @Log(platform = "front",logType = "f0007",optType = "insert")
     @RequestMapping(value = "/auth/orgAuth", method = RequestMethod.POST)
     @ResponseBody
     public ReturnData orgAuth(Model model, Organization organization) {

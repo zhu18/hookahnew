@@ -11,6 +11,7 @@ import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.OperateInfoMongoService;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.InvalidSessionException;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.WebUtils;
@@ -29,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -58,75 +60,81 @@ public class LogInterceptor {
         //获取用户信息
         String userId = "";
         String userName = "";
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        Map<String,String[]> map = (Map<String,String[]>)request.getParameterMap();
-        Map<String,String> jsonMap = new HashMap<>();
-        String json = "";
-        if (map.size() != 0){
-            for(String name:map.keySet()){
-                String[] values = map.get(name);
-                for (String key:key_content){
-                    if (key.equals(name)){
-                        jsonMap.put(name,Arrays.toString(values));
+        try {
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+            Map<String,String[]> map = (Map<String,String[]>)request.getParameterMap();
+            Map<String,String> jsonMap = new HashMap<>();
+            String json = "";
+            if (map.size() != 0){
+                for(String name:map.keySet()){
+                    String[] values = map.get(name);
+                    for (String key:key_content){
+                        if (key.equals(name)){
+                            jsonMap.put(name,Arrays.toString(values));
+                        }
                     }
+                    if ("userName".equals(name))
+                        userName = values[0];
                 }
-                if ("userName".equals(name))
-                    userName = values[0];
+                ObjectMapper mapper = new ObjectMapper();
+                try {
+                    json = mapper.writeValueAsString(jsonMap);
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
             }
-            ObjectMapper mapper = new ObjectMapper();
+            Session session = SecurityUtils.getSubject().getSession();
+            HashMap<String,String> userMap = (HashMap<String,String>)session.getAttribute("user");
+            if (userMap != null){
+                User user = userService.selectById(userMap.get("userId"));
+                userId = userMap.get("userId");
+                userName = user.getUserName();
+            }
+
+            //获取请求IP
+            String ip = NetUtils.getIpAddr(request);
+            //获取请求uri
+            String uri = request.getRequestURI();
+            Date operateTime = DateUtils.now();
+            //获取注解的参数
+            String targetName = joinPoint.getTarget().getClass().getName();
+            String methodName = joinPoint.getSignature().getName();
+            Object[] arguments = joinPoint.getArgs();
+            Class targetClass = null;
             try {
-                json = mapper.writeValueAsString(jsonMap);
-            } catch (JsonProcessingException e) {
+                targetClass = Class.forName(targetName);
+            } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-        }
-        Session session = SecurityUtils.getSubject().getSession();
-        HashMap<String,String> userMap = (HashMap<String,String>)session.getAttribute("user");
-        if (userMap != null){
-            User user = userService.selectById(userMap.get("userId"));
-            userId = userMap.get("userId");
-            userName = user.getUserName();
-        }
-
-        //获取请求IP
-        String ip = NetUtils.getIpAddr(request);
-        //获取请求uri
-        String uri = request.getRequestURI();
-        Date operateTime = DateUtils.now();
-        //获取注解的参数
-        String targetName = joinPoint.getTarget().getClass().getName();
-        String methodName = joinPoint.getSignature().getName();
-        Object[] arguments = joinPoint.getArgs();
-        Class targetClass = null;
-        try {
-            targetClass = Class.forName(targetName);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        Method[] methods = targetClass.getMethods();
-        String logType = "";
-        String platform = "";
-        String optType = "";
-        for (Method method : methods) {
-            if (method.getName().equals(methodName)) {
-                Class[] clazzs = method.getParameterTypes();
-                if (clazzs.length == arguments.length) {
-                    logType = method.getAnnotation(Log.class).logType();
-                    platform = method.getAnnotation(Log.class).platform();
-                    optType = method.getAnnotation(Log.class).optType();
-                    break;
+            Method[] methods = targetClass.getMethods();
+            String logType = "";
+            String platform = "";
+            String optType = "";
+            for (Method method : methods) {
+                if (method.getName().equals(methodName)) {
+                    Class[] clazzs = method.getParameterTypes();
+                    if (clazzs.length == arguments.length) {
+                        logType = method.getAnnotation(Log.class).logType();
+                        platform = method.getAnnotation(Log.class).platform();
+                        optType = method.getAnnotation(Log.class).optType();
+                        break;
+                    }
                 }
             }
+            operateInfo.setLogType(logType);
+            operateInfo.setOptType(optType);
+            operateInfo.setPlatform(platform);
+            operateInfo.setUserId(userId);
+            operateInfo.setUserName(userName);
+            operateInfo.setOptContent(json);
+            operateInfo.setIP(ip);
+            operateInfo.setUrl(uri);
+            operateInfo.setOperateTime(operateTime);
+            operateInfoMongoService.insert(operateInfo);
+        } catch (InvalidSessionException e) {
+            e.printStackTrace();
+        } catch (SecurityException e) {
+            e.printStackTrace();
         }
-        operateInfo.setLogType(logType);
-        operateInfo.setOptType(optType);
-        operateInfo.setPlatform(platform);
-        operateInfo.setUserId(userId);
-        operateInfo.setUserName(userName);
-        operateInfo.setOptContent(json);
-        operateInfo.setIP(ip);
-        operateInfo.setUrl(uri);
-        operateInfo.setOperateTime(operateTime);
-        operateInfoMongoService.insert(operateInfo);
     }
 }

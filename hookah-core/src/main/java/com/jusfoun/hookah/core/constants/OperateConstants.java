@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public class OperateConstants {
     //关键数据定义
-    public static String[] key_content = {"userName","userId"};
+    public static String[] key_content = {"userName","userId","mobile","orgName"};
 
     public enum Platform{
         FRONT,BACK
@@ -71,7 +71,7 @@ public class OperateConstants {
         LOGIN_PWD_FIND("f0003", "登录密码找回"),
         MODIFY_PHONE("f0004", "修改关联手机号"),
         MODIFY_LOGIN_PWD("f0005", "修改登录密码"),
-        MODIFY_PAY_PWD("f0006", "修改交易密码"),
+        MODIFY_PAY_PWD("f0006", "设置交易密码"),
         COM_AUTH_APPLY("f0007", "单位认证申请"),
         TOBE_SUPPLIER_APPLY("f0008", "成为供应商申请"),
         GOODS_UP("f0009", "商品上架"),
