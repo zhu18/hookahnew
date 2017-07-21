@@ -275,7 +275,7 @@ public class AuthController extends BaseController {
                 }
 
                 //供应商待审核状态
-                user1.setUserType(HookahConstants.UserType.SUPPLIER_CHECK_NO.getCode());
+                user1.setUserType(HookahConstants.UserType.ORGANIZATION_SUPPLIER_CHECK_NO.getCode());
             } else {
                 //企业待审核状态
                 user1.setUserType(HookahConstants.UserType.ORGANIZATION_CHECK_NO.getCode());
