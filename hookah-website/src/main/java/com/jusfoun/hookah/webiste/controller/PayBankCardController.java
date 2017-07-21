@@ -59,13 +59,17 @@ public class PayBankCardController extends BaseController{
             if(StringUtils.isNotBlank(userId)){
                 filters.add(Condition.eq("userId", userId));
             }
-            map.put("cardOwner","");
-            map.put("bankAccountType",1);
-           /* User user = userService.selectOne(filters);
-
-            map.put("cardOwner",1);
-            map.put("bankAccountType",payBankCard.getBankAccountType())*/;
-            return ReturnData.success(map);
+            User user = userService.selectOne(filters);
+            if(StringUtils.isNotBlank(user.getOrgId())){
+                Organization organization = organizationService.selectById(user.getOrgId());
+                if(StringUtils.isNotBlank(organization.getOrgName())){
+                    map.put("cardOwner",organization.getOrgName());
+                    map.put("bankAccountType",1);
+                }
+                return ReturnData.success(map);
+            }else{
+                return ReturnData.error("该用户未认证");
+            }
         } catch (HookahException e) {
             logger.error("查询失败",e);
             return ReturnData.error("查询失败");
@@ -80,7 +84,7 @@ public class PayBankCardController extends BaseController{
      */
     @ResponseBody
     @RequestMapping(value = "/addBankInfo", method = RequestMethod.GET)
-    public ReturnData addBankInfo(String cardCode, String openBank, String phoneNumber, Integer payBankId) {
+    public ReturnData addBankInfo(String cardOwner, String cardCode, String openBank, String phoneNumber, Integer payBankId,Integer bankAccountType) {
         try {
             String userId = this.getCurrentUser().getUserId();
             List<Condition> filters = new ArrayList<>();
@@ -91,8 +95,9 @@ public class PayBankCardController extends BaseController{
             PayBankCard pay= new PayBankCard();
             pay.setUserId(userId);
             pay.setAddTime(new Date());
+            pay.setCardOwner(cardOwner);
             pay.setBindFlag(0);
-            pay.setBankAccountType(1);
+            pay.setBankAccountType(bankAccountType);
             pay.setPayAccountId(payAccount.getId());
             pay.setAddOperator(payAccount.getUserName());
             pay.setCardCode(cardCode);

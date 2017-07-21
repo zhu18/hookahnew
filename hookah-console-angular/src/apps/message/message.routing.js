@@ -52,7 +52,7 @@ export default function categoryRouting($stateProvider, $urlRouterProvider) {
     .state('message.template.edit', {
         url: '/message/template/edit',
         params: {'data': null},
-        template: require('./edit_template.html'),
+        template: require('./add_template.html'),
         controller: MessageController,
     })
 };

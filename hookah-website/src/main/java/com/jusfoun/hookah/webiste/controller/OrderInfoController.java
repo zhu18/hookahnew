@@ -206,9 +206,8 @@ public class OrderInfoController extends BaseController {
                 }else {
                     listFilters.add(Condition.eq("isDeleted",1));
                 }
-            }else {
-                listFilters.add(Condition.eq("isDeleted",0));
             }
+
             if (domainName != null) {
                 if (payStatus==1){
                     paidFilters.add(Condition.like("domainName", "%" + domainName + "%"));

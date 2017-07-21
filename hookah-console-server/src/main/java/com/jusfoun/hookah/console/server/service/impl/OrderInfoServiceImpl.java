@@ -1209,12 +1209,35 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         for (OrderInfo orderInfo:orderInfos){
             long addTime = orderInfo.getAddTime().getTime();
             long time = now - addTime;
-            if (time>24*60*60*1000){
+            if (orderInfo.getPayStatus()==0 && time>24*60*60*1000){
                 deleteByLogic(orderInfo.getOrderId());
             }
         }
     }
-
+//    @Scheduled(cron = "0 55 12 * * ?")
+//    @Transactional
+//    public void reOrderByTime(){
+//        List<Condition> filter = new ArrayList<>();
+//        filter.add(Condition.eq("payStatus",2));
+//        filter.add(Condition.eq("isDeleted",1));
+//        List<OrderInfo> orderInfos = selectList(filter);
+////        List<OrderInfo> orderInfos = orderinfoMapper.selectAll();
+//        for (OrderInfo orderInfo:orderInfos){
+//            orderInfo.setIsDeleted((byte)0);
+//            updateByIdSelective(orderInfo);
+//            OrderInfoVo orderInfoVo = new OrderInfoVo();
+//            orderInfoVo.setOrderId(orderInfo.getOrderId());
+//            orderInfoVo.setIsDeleted((byte)0);
+//            mgOrderInfoService.updateByIdSelective(orderInfoVo);
+//            List<Condition> filters = new ArrayList<>();
+//            filters.add(Condition.eq("orderSn",orderInfo.getOrderSn()));
+//            List<MgGoodsOrder> mgGoodsOrders = mgGoodsOrderService.selectList(filters);
+//            for (MgGoodsOrder mgGoodsOrder:mgGoodsOrders){
+//                mgGoodsOrder.setIsDeleted((byte)0);
+//                mgGoodsOrderService.updateByIdSelective(mgGoodsOrder);
+//            }
+//        }
+//    }
 
     @Override
     public Map getStatistics(){

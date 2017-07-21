@@ -174,7 +174,8 @@ var htmlPart = {
 				url:'${host.auth}/sms/send',
 				type:'post',
 				data:{
-					mobile:$('#J_Mobile').val()
+					mobile:$('#J_Mobile').val(),
+                    type:3
 				},
 				success:function(data){
 					if(data.code == 1){
