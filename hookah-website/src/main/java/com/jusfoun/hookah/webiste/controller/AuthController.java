@@ -260,6 +260,7 @@ public class AuthController extends BaseController {
                 supplier.setOrgId(user1.getOrgId());
                 supplier.setCheckStatus(Byte.valueOf("0"));
                 supplier.setOrgName(organization.getOrgName());
+                supplier.setContactName(user.getContactName());
                //重新审核 查看是否存在
                 if(!StringUtils.isEmpty(orgId) && !"0".equals(orgId)){
                     List<Condition> fifters = new ArrayList<>();

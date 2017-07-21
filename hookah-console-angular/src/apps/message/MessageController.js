@@ -117,6 +117,10 @@ class MessageController {
             });
         };
 
+
+
+
+        //添加模板
         $scope.add = function(){
             var promise = $http({
                 method: 'POST',
@@ -180,6 +184,15 @@ class MessageController {
             })
         };
 
+        //保存模板
+        $scope.saveTemplate = function () {
+            if($state.$current.name == "message.template.add"){
+                $scope.add();
+            }else if($state.$current.name == "message.template.edit"){
+                $scope.editTemplate();
+            }
+        }
+
         //跳转到编辑模板页面
         $scope.toEditTemplate = function(item){
             //启用状态下不可编辑
@@ -235,6 +248,7 @@ class MessageController {
 
         if ($state.$current.name == "message.template.add") {
 
+            $scope.title = "添加模板";
             $scope.getInfo();
 
             //获取消息事件类型列表
@@ -371,10 +385,11 @@ class MessageController {
         };
 
         if ($state.$current.name == "message.template.edit") {
-
+            $scope.title = "修改模板";
             $scope.getInfo();
             $scope.template = $stateParams.data;
             $scope.content = $stateParams.data.templateContent;
+            $scope.templateHeader = $stateParams.data.templateHeader;
             $scope.getTempEventTypeSelect($stateParams.data.eventType);
             $scope.flag=false;
 
