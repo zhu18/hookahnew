@@ -171,7 +171,7 @@ public class PlatformFundsApi extends BaseController{
             page = payTradeRecordService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
             return ReturnData.success(page);
         } catch (Exception e) {
-            logger.error("分页查询资金记录错误", e);
+            logger.error("查询错误", e);
             return ReturnData.error("查询错误");
         }
     }

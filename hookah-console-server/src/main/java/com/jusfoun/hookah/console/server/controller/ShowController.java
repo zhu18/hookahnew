@@ -246,10 +246,10 @@ public class ShowController {
     @RequestMapping("/viewsCount")
     public ReturnData viewsCount(){
         Map<String, Object> map = userService.getPUVCountByDate();
-        System.out.println("日期" + map.get("puvdate"));
+        //System.out.println("日期" + map.get("puvdate"));
         System.out.println("PV" + map.get("pvdata"));
         System.out.println("UV" + map.get("uvdata"));
-        return ReturnData.success();
+        return ReturnData.success(map);
     }
 
     //商品类型交易金额
