@@ -5,7 +5,6 @@ $(function () {
     render();
 });
 function render() {
-
     $.ajax({
         url:host.website+'/payBankCard/searchBankInfo',
         data:{},
@@ -41,16 +40,20 @@ function render() {
                     $(".bank-card-content").html(html);
                     // 删除银行卡
                     $(".bank-card-content .delete").on("click",function () {
-                        $.ajax({
-                            url:host.website+'/payBankCard/updateBankInfo',
-                            data:{},
-                            type:'get',
-                            success:function (data) {
-                                if (data.code=="1"){
-                                    render();
+                        $.alert('确定解绑银行卡？',true,function(){
+                            $.ajax({
+                                url:host.website+'/payBankCard/updateBankInfo',
+                                data:{},
+                                type:'get',
+                                success:function (data) {
+                                    if (data.code=="1"){
+                                        $.alert('解绑银行卡成功！');
+                                         render()
+                                    }
                                 }
-                            }
+                            });
                         });
+
                     })
                 }
             });

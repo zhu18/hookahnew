@@ -36,9 +36,7 @@
             }
 			if($('#priceTo').val()){
 				dataParm.range.priceTo=$('#priceTo').val()*100;
-			}else if($('#priceTo').val()==""){
-                dataParm.range.priceTo=0
-            }else{
+			}else{
 				delete dataParm.range.priceTo;
 			}
             goPage(1);

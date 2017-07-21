@@ -4,6 +4,8 @@ var head = {
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/becomingSupplierStep2.css">
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/common-progress-bar.css">
+<script src="/static/js/plugins/validate/jquery-validate.js"></script>
+<script src="/static/js/plugins/validate/messages_zh.js"></script>
 <%};%>
 
 <%
@@ -22,37 +24,41 @@ var htmlPart = {
                     </ul>
                 </div>
                 <div class="becomingSupplierStep2-info">
-                    <div class="unit-contact">
-                        <h4>单位联系人</h4>
-                        <div>
-                            <label for="contactName">业务联系人：</label>
-                            <input type="text" id="contactName">
+                    <form id="ff">
+                        <div class="unit-contact">
+                            <h4>单位联系人</h4>
+                            <div class="item">
+                                <label for="contactName">业务联系人 :</label>
+                                <input type="text" id="contactName" name="sname" placeholder="设置用户名" autocomplete="off" tip="请输入用户名">
+                            </div>
+                            <div class="item">
+                                <label for="contactPhone">联系人手机 :</label>
+                                <input type="text" id="contactPhone" name="sphone" class="item-text" placeholder="输入手机号码" tip="请输入手机号码">
+                            </div>
+                            <div class="item ">
+                                <label for="contactAddress" class="vertical-align-top">联系地址 :</label>
+                                <textarea type="text" id="contactAddress" name="saddress" placeholder="输入地址" tip="请输入地址" ></textarea>
+                            </div>
                         </div>
-                        <div>
-                            <label for="contactPhone">联系人手机：</label>
-                            <input type="text" id="contactPhone">
+                        <div class="unit-information">
+                            <h4>单位信息</h4>
+                            <div>
+                                <label for="">单位名称：</label>
+                                <span id="orgName"></span>
+                            </div>
+                            <div>
+                                <label for="">法定代表人：</label>
+                                <span id="lawPersonName"></span>
+                            </div>
+                            <div>
+                                <label for="">社会信用代码：</label>
+                                <span id="certificateCode"></span>
+                            </div>
                         </div>
-                        <div>
-                            <label for="contactAddress">联系地址：</label>
-                            <input type="text" id="contactAddress">
-                        </div>
-                    </div>
-                    <div class="unit-information">
-                        <h4>单位信息</h4>
-                        <div>
-                            <label for="">单位名称：</label>
-                            <span id="orgName"></span>
-                        </div>
-                        <div>
-                            <label for="">法定代表人：</label>
-                            <span id="lawPersonName"></span>
-                        </div>
-                        <div>
-                            <label for="">社会信用代码：</label>
-                            <span id="certificateCode"></span>
-                        </div>
-                    </div>
-                    <a href="/usercenter/becomingSupplierStep3" class="btn">下一步</a>
+                        <a href="javascript:void(0)" class="btn">下一步</a>
+                    </form>
+
+
                 </div>
             </div>
         </div>
