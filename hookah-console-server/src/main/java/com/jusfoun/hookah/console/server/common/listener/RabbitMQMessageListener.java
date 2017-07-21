@@ -209,7 +209,9 @@ public class RabbitMQMessageListener {
             case 104:
             case 105:
                 user.setMobile(messageCode.getMobileNo());
-                user = userMapper.selectOne(user);
+                List<User> users = userMapper.select(user);
+                if(users != null && users.size() > 0)
+                    user = users.get(0);
             case 101:
                 map.put("code", messageCode.getMobileVerfCode());
                 map.put("mobile", messageCode.getMobileNo().substring(messageCode.getMobileNo().length() - 4));
