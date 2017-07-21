@@ -80,13 +80,13 @@
                     </tr>
                     <tr>
                         <th style=" padding: 14px 10px; text-align: right;">交易中心收入：</th>
-                        <td><input ng-model="tradeCenterAmount" type="text" class="form-control" placeholder="请输入交易中心金额">￥
+                        <td><input ng-model="tradeCenterAmount" type="text" class="form-control" placeholder="请输入交易中心收入金额">￥
                         </td>
                     </tr>
                     <tr>
                         <th style=" padding: 14px 10px; text-align: right;">本次结算金额：</th>
                         <!--<td>{{((supplierAmount+tradeCenterAmount) <= order.noSettleAmount) ? (supplierAmount+tradeCenterAmount) : "输入金额错误")}}￥-->
-                        <td>{{ supplierAmount * 1 + tradeCenterAmount * 1 <= order.noSettleAmount/100 ? (supplierAmount * 1 + tradeCenterAmount * 1)+' ￥' : "请输入金额"}}
+                        <td>{{ supplierAmount * 1 + tradeCenterAmount * 1 <= order.noSettleAmount/100 ? (supplierAmount * 1 + tradeCenterAmount * 1)+' ￥' : ""}}
                         </td>
                     </tr>
                     </thead>

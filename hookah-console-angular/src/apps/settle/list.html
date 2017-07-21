@@ -20,7 +20,7 @@
         </div>
         <div class="row margin-top form-inline">
             <div class="col-sm-12">
-                审核状态：
+                订单状态：
                 <div class="searchSection  btn-group">
                     <button class="btn btn-default" data-ng-model="settleStatus" uib-btn-radio=""
                             data-ng-click="search()"> 全部
@@ -39,7 +39,7 @@
                     <label class="control-label">订单编号：</label>
                     <input ng-model="orderSn" type="text" class="form-control" placeholder="请输入订单编号">
                     <label class="control-label">供应商：</label>
-                    <input ng-model="orgName" type="text" class="form-control" placeholder="请输入供应商">
+                    <input ng-model="orgName" type="text" class="form-control" placeholder="请输入供应商名字">
                     <div>
                         <label class="control-label">订单时间：</label>
                         <p class="input-group" style="margin-top: 15px">
@@ -71,9 +71,7 @@
                         <button style="margin-top: 5px" type="submit" class="btn btn-primary" data-ng-click="search()">
                             搜索
                         </button>
-
                     </div>
-
                     <!--<pre>{{choseArr}}</pre>-->
                     <div class="gridSection">
                         <div us-spinner ng-show="showSpinner" spinner-start-active="true"
@@ -96,11 +94,11 @@
                             <tbody>
                             <tr data-ng-repeat="item in settleList">
                                 <td data-ng-bind="item.orderSn"></td>
-                                <td><span data-ng-bind="item.goodsName"></span></td>
+                                <td><img src="http://static.qddata.com.cn/{{item.goodsImg}}" alt="" width="50"> &nbsp;<span data-ng-bind="item.goodsName"></span></td>
                                 <td data-ng-bind="item.orgName"></td>
-                                <td data-ng-bind="item.orderAmount/100"></td>
-                                <td data-ng-bind="item.hasSettleAmount/100"></td>
-                                <td data-ng-bind="item.noSettleAmount/100"></td>
+                                <td data-ng-bind="'￥'+item.orderAmount/100"></td>
+                                <td data-ng-bind="'￥'+item.hasSettleAmount/100"></td>
+                                <td data-ng-bind="'￥'+item.noSettleAmount/100"></td>
                                 <td data-ng-bind="item.settleStatus==0?'待结算':'已结算'"></td>
                                 <td data-ng-bind="item.orderTime"></td>
                                 <td >

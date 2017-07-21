@@ -6,6 +6,9 @@
     .form-inline label {
         margin-top: 5px;
     }
+
+    .input-group a { font-size: 14px; padding-right: 14px; }
+
 </style>
 <div class="row">
     <div class="col-sm-12">
@@ -25,16 +28,15 @@
                     <label class="control-label">订单编号：</label>
                     <input ng-model="orderSn" type="text" class="form-control" placeholder="请输入订单编号">
                     <label class="control-label">商品名称：</label>
-                    <input ng-model="orgName" type="text" class="form-control" placeholder="请输入商品名称">
+                    <input ng-model="goodsName" type="text" class="form-control" placeholder="请输入商品名称">
                     <label class="control-label">供应商名称：</label>
-                    <input ng-model="orgName" type="text" class="form-control" placeholder="请输入供应商名称">
-                    <div>
-                        <label class="control-label">订单时间：</label>
+                    <input ng-model="addUser" type="text" class="form-control" placeholder="请输入供应商名称">
+                    <div class="form-inline"><label class="control-label">时间：</label>
                         <p class="input-group" style="margin-top: 15px">
                             <input style="background-color: transparent;" ng-keypress="$event.preventDefault()"
                                    ng-paste="$event.preventDefault()" type="text" class="form-control"
                                    uib-datepicker-popup="yyyy-MM-dd" type="datetime-local" ng-model="startDate"
-                                   is-open="popup1.opened" datepicker-options="dateOptions" close-text="关闭"
+                                   is-open="popup1.opened" datepicker-options="startDateOptions" close-text="关闭"
                                    clear-text="清除"
                                    current-text="今天" readonly="true"/>
                             <span class="input-group-btn">
@@ -42,20 +44,25 @@
                              class="glyphicon glyphicon-calendar"></i></button>
                     </span>
                         </p>
-                        <!--<input ng-model="addTime" type="text" class="form-control" placeholder="起始日期">-->
                         <label class="control-label">至</label>
                         <p class="input-group" style="margin-top: 15px">
                             <input style="background-color: transparent;" ng-keypress="$event.preventDefault()"
                                    ng-paste="$event.preventDefault()" type="text" class="form-control"
-                                   uib-datepicker-popup
-                                   ng-model="endDate" is-open="popup2.opened" datepicker-options="dateOptions"
+                                   uib-datepicker-popup="yyyy-MM-dd" type="datetime-local" ng-model="endDate"
+                                   is-open="popup2.opened" datepicker-options="endDateOptions"
                                    close-text="Close" close-text="关闭" clear-text="清除" current-text="今天"
                                    readonly="true"/>
                             <span class="input-group-btn">
                          <button type="button" class="btn btn-default" ng-click="open2()"><i
                              class="glyphicon glyphicon-calendar"></i></button>
                     </span>
-                        </p>
+                        </p>&nbsp;&nbsp;
+                        <div class="input-group">
+                            <a href="javascript:void(0)" data-ng-click="setDate(day,0)">今日</a>| &nbsp;最近：
+                            <a href="javascript:void(0)" data-ng-click="setDate('week',1)">一周</a>
+                            <a href="javascript:void(0)" data-ng-click="setDate('month',1)">一个月</a>
+                            <a href="javascript:void(0)" data-ng-click="setDate('month',3)">3个月</a>
+                        </div>
                         <button style="margin-top: 5px" type="submit" class="btn btn-primary" data-ng-click="search()">
                             搜索
                         </button>
@@ -70,36 +77,39 @@
                         <table class="table table-hover">
                             <thead>
                             <tr>
-                                <th>订单编号</th>
-                                <th>商品</th>
-                                <th>供应商</th>
-                                <th>订单金额</th>
-                                <th>已结算金额</th>
-                                <th>剩余结算金额</th>
-                                <th>状态</th>
+                                <th>订单号</th>
+                                <th>商品名称</th>
                                 <th>订单时间</th>
-                                <th>操作</th>
+                                <th>支付时间</th>
+                                <th>买家</th>
+                                <th>供应商</th>
+                                <th>交易金额</th>
+                                <th>状态</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr data-ng-repeat="item in settleList">
+                            <tr data-ng-repeat="item in tradeList">
                                 <td data-ng-bind="item.orderSn"></td>
-                                <td><span data-ng-bind="item.goodsName"></span></td>
-                                <td data-ng-bind="item.orgName"></td>
-                                <td data-ng-bind="item.orderAmount"></td>
-                                <td data-ng-bind="item.hasSettleAmount"></td>
-                                <td data-ng-bind="item.noSettleAmount"></td>
-                                <td data-ng-bind="item.settleStatus==0?'待结算':'已结算'"></td>
-                                <td data-ng-bind="item.orderTime"></td>
-                                <td >
-                                    <a data-ng-show="item.settleStatus==0" data-ng-click="getDetails(item.id)">结算</a>
-                                    <a data-ng-show="item.settleStatus==1" data-ng-click="getDetails(item.id)">查看</a>
+                                <td><img src="http://static.qddata.com.cn/{{item.mgOrderGoods.goodsImg}}" alt="" width="50"> &nbsp;
+                                    <span data-ng-bind="item.mgOrderGoods.goodsName"></span></td>
+                                <td data-ng-bind="item.addTime"></td>
+                                <td data-ng-bind="item.payTime"></td>
+                                <td data-ng-bind="item.userName"></td>
+                                <td data-ng-bind="item.mgOrderGoods.addUser"></td>
+                                <td data-ng-bind="'￥'+item.mgOrderGoods.goodsPrice"></td>
+                                <td>
+                                    <span data-ng-show="item.isDeleted==1">已关闭</span>
+                                    <span data-ng-show="item.isDeleted==0">
+                                        <span data-ng-show="item.payStatus==0">未付款</span>
+                                        <span data-ng-show="item.payStatus==1">未付款</span>
+                                        <span data-ng-show="item.payStatus==2">已付款</span>
+                                    </span>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
 
-                        <table ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">
+                        <table data-ng-show="tradeList.length>0">
                             <tr>
                                 <td colspan="9">
                                     <div class="pull-right page-box">
@@ -116,28 +126,9 @@
                                 </td>
                             </tr>
                         </table>
-                        <!--<table class="table table-hover" style="margin-bottom: 57px;">
-                            <thead>
-                            <tr>
-
-                                <th>订单编号：<a href="#">2017071115321624510087</a></th>
-                                <th>评分等级：三个星星</th>
-                                <th>评价时间：2017-07-04</th>
-                                <th >评价人：XXXXX</th>
-                                <th >商品名称：国家重点监控企业污染源监督性监测结果</th>
-                                <th width="155">操作</th>                        </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td colspan="5"><div class="col-sm-1" >评价内容：</div><div class="col-sm-11" style="word-break:break-all;">sasdfasdfasdfasdfkljasdfljasldfjsasdfasdfasdfasdfkljasdfljasldfjsasdfasdfasdfasdfkljasdfljasldfjsasdfasdfasdfasdfkljasdfljasldfj</div></td>
-                                <td><button class="btn btn-default">通过</button> <button class="btn btn-default">不通过</button></td>
-                            </tr>
-                            </tbody>
-                        </table>
-    -->
 
                     </div>
-                    <div class="simple-grid-none-data-wrap">
+                    <div class="simple-grid-none-data-wrap" data-ng-show="tradeList.length==0">
                         <div class="simple-grid-none-data text-center " ng-if="showNoneDataInfoTip && !loadingState">
                             <div class="row-padding row-margin text-center">
                                 <span class="text-size-24 blue icon-info-1" style="vertical-align: middle"></span>
@@ -149,3 +140,4 @@
             </div>
         </div>
     </div>
+</div>
