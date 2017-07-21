@@ -47,15 +47,16 @@ public class WithdrawRecordServiceImpl extends GenericServiceImpl<WithdrawRecord
             return returnData;
         }
 
-        List<Condition> filters = new ArrayList();
-        filters.add(Condition.eq("checkStatus", HookahConstants.WithdrawStatus.waitCheck.code));
-        filters.add(Condition.eq("userId", withdrawRecord.getUserId()));
-        List<WithdrawRecord> list = this.selectList(filters);
-        if(list.size() > 0){
-            returnData.setCode(ExceptionConst.Failed);
-            returnData.setMessage("您还有未处理完成的提现申请！");
-            return returnData;
-        }
+        // 产品未确定 暂时注释
+//        List<Condition> filters = new ArrayList();
+//        filters.add(Condition.eq("checkStatus", HookahConstants.WithdrawStatus.waitCheck.code));
+//        filters.add(Condition.eq("userId", withdrawRecord.getUserId()));
+//        List<WithdrawRecord> list = this.selectList(filters);
+//        if(list.size() > 0){
+//            returnData.setCode(ExceptionConst.Failed);
+//            returnData.setMessage("您还有未处理完成的提现申请！");
+//            return returnData;
+//        }
 
         withdrawRecord.setMoney(withdrawRecord.getMoney() * 100);
         withdrawRecord.setSerialNo(DateUtils.getCurrentTimeFormat(new Date()) + Thread.currentThread().getId());

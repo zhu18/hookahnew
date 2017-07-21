@@ -4,6 +4,7 @@ package com.jusfoun.hookah.pay.service.impl;
 import com.jusfoun.hookah.core.dao.PayTradeRecordMapper;
 import com.jusfoun.hookah.core.domain.PayTradeRecord;
 import com.jusfoun.hookah.core.domain.bo.MoneyInOutBo;
+import com.jusfoun.hookah.core.domain.vo.PayTradeRecordVo;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.pay.util.PayConstants;
 import com.jusfoun.hookah.rpc.api.PayTradeRecordService;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
  * dengxu
@@ -55,5 +57,10 @@ public class PayTradeRecordServiceImpl extends GenericServiceImpl<PayTradeRecord
 	@Override
 	public int insertAndGetId(PayTradeRecord payTradeRecord) {
 		return payTradeRecordMapper.insertAndGetId(payTradeRecord);
+	}
+
+	@Override
+	public List<PayTradeRecordVo> getListForPage(String startDate, String endDate, Integer tradeType, Integer tradeStatus) {
+		return payTradeRecordMapper.getListForPage(startDate, endDate, tradeType, tradeStatus);
 	}
 }
