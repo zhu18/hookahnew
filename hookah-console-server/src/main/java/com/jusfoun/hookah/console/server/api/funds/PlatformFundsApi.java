@@ -1,6 +1,5 @@
 package com.jusfoun.hookah.console.server.api.funds;
 
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jusfoun.hookah.console.server.controller.BaseController;
 import com.jusfoun.hookah.core.common.Pagination;
@@ -128,7 +127,7 @@ public class PlatformFundsApi extends BaseController{
             }
         } catch (HookahException e) {
             logger.info(e.getMessage());
-            return ReturnData.error("系统出错，请联系管理员");
+            return ReturnData.error("查询账户资金失败");
         }
         return ReturnData.success(map);
     }
@@ -171,8 +170,8 @@ public class PlatformFundsApi extends BaseController{
             page = payTradeRecordService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
             return ReturnData.success(page);
         } catch (Exception e) {
-            logger.error("系统出错，请联系管理员!", e);
-            return ReturnData.error("系统出错，请联系管理员!");
+            logger.error("查询错误", e);
+            return ReturnData.error("查询错误");
         }
     }
 
@@ -186,14 +185,6 @@ public class PlatformFundsApi extends BaseController{
         PageInfo<PayTradeRecordVo> page = new PageInfo<>();
         try {
 
-//            Integer[] tradeTypes = new Integer[]{};
-
-//            if(tradeType == null){
-//                tradeTypes = new Integer[]{1, 2,6003, 6004, 3001, 3007, 4001, 8};
-//            }else{
-//                tradeTypes = new Integer[]{tradeType};
-//            }
-
             //参数校验
             int pageNumberNew = HookahConstants.PAGE_NUM;
             if (StringUtils.isNotBlank(currentPage)) {
@@ -204,18 +195,17 @@ public class PlatformFundsApi extends BaseController{
                 pageSizeNew = Integer.parseInt(pageSize);
             }
 
-            PageHelper.startPage(pageNumberNew, pageSizeNew);   //pageNum为第几页，pageSize为每页数量
-            List<PayTradeRecordVo> list = payTradeRecordService.getListForPage(startDate, endDate, tradeType, tradeStatus);
+            List<PayTradeRecordVo> list = payTradeRecordService.getListForPage(pageNumberNew, pageSizeNew, startDate, endDate, tradeType, tradeStatus);
             page = new PageInfo<PayTradeRecordVo>(list);
-            if(page.getList().size() > 0){
+            if(page.getList() != null && page.getList().size() > 0){
                 page.getList().parallelStream().forEach(x -> {
 
                     if(x.getTradeType().equals(3007) ||
                             x.getTradeType().equals(6003) ||
-                                x.getTradeType().equals(6004)){
-                        x.setAccountParty("交易中心账户资金");
+                            x.getTradeType().equals(6004)){
+                        x.setAccountParty("交易中心平台资金");
                     }else{
-                        x.setAccountParty(x.getUserName() + "账户资金");
+                        x.setAccountParty((x.getUserName() == null ? "会员" : x.getUserName()) + "平台资金");
                     }
                 });
             }

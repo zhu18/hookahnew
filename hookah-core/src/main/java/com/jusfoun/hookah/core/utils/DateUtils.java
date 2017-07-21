@@ -108,4 +108,12 @@ public abstract class DateUtils {
         return new SimpleDateFormat("yyyyMMddHHmmss").format(date).toString();
     }
 
+    public static String transferDate(String fromDate){
+        String toDate = null;
+        if(com.jusfoun.hookah.core.utils.StringUtils.isNotBlank(fromDate)){
+            toDate = fromDate.substring(0, 11) + "23:59:59";
+        }
+        return toDate;
+    }
+
 }

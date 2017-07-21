@@ -53,7 +53,7 @@
       us.user_name AS userName
     FROM
         pay_trade_record ptr
-    LEFT JOIN `user` us ON us.user_id = ptr.user_id
+    LEFT JOIN user us ON us.user_id = ptr.user_id
     WHERE 1 = 1
       <if test="startDate != '' and startDate != null">
           AND ptr.add_time &gt;= #{startDate}
@@ -68,12 +68,5 @@
           AND ptr.trade_type = #{tradeType}
       </if>
   </select>
-
-  <!--<if test="tradeTypes != null and tradeTypes.size() > 0">-->
-    <!--AND ptr.trade_type IN-->
-    <!--<foreach item="item" index="index" collection="tradeTypes" open="(" separator="," close=")">-->
-      <!--#{item}-->
-    <!--</foreach>-->
-  <!--</if>-->
 
 </mapper>

@@ -22,4 +22,9 @@ public interface RabbitmqQueue {
 
     /** 新站内信-wangjl */
     public final String CONTRACE_NEW_MESSAGE ="CONTRACE_NEW_MESSAGE";
+
+    /**
+     * 订单支付成功 获取订单编号
+     */
+    public final String WAIT_SETTLE_ORDERS = "CONTRACE_ORDERSN";
 }
