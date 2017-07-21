@@ -108,12 +108,15 @@ public class SupplierServiceImpl extends GenericServiceImpl<Supplier, String> im
         if (supplier==null){
             throw new HookahException("保存失败，请重新操作");
         }
+        User user = userMapper.selectByPrimaryKey(supplier.getUserId());
+        if (user.getUserType()!=4){
+            throw new HookahException("单位会员认证尚未通过，请先认证单位会员");
+        }
         supplier.setCheckStatus(checkStatus);
         supplier.setCheckContent(checkContent.replaceAll(" ",""));
         supplier.setCheckUser(checkUser);
         MessageCode messageCode = new MessageCode();
         messageCode.setBusinessId(id);
-        User user = userMapper.selectByPrimaryKey(supplier.getUserId());
         if (checkStatus.equals("1")){
             messageCode.setCode(HookahConstants.MESSAGE_401);
             user.setUserType(8);
