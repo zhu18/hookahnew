@@ -273,32 +273,57 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         return og;
     }
 
+    /**
+     * 逻辑取消
+     * @param id
+     */
     @Override
+    @Transactional
     public void deleteByLogic(String id) {
-        OrderInfo order = new OrderInfo();
-        order.setOrderId(id);
+        OrderInfo order = selectById(id);
         order.setIsDeleted(new Byte("1"));
         updateByIdSelective(order);
         OrderInfoVo orderInfoVo = new OrderInfoVo();
         orderInfoVo.setOrderId(id);
         orderInfoVo.setIsDeleted((byte)1);
         mgOrderInfoService.updateByIdSelective(orderInfoVo);
+        List<Condition> filter = new ArrayList<>();
+        filter.add(Condition.eq("orderSn",order.getOrderSn()));
+        List<MgGoodsOrder> mgGoodsOrders = mgGoodsOrderService.selectList(filter);
+        for (MgGoodsOrder mgGoodsOrder:mgGoodsOrders){
+            mgGoodsOrder.setIsDeleted((byte)1);
+            mgGoodsOrderService.updateByIdSelective(mgGoodsOrder);
+        }
     }
 
+    /**
+     * 逻辑删除
+     * @param id
+     */
     @Override
     @Transactional
     public void deleteOrder(String id){
-        OrderInfo order = new OrderInfo();
+        OrderInfo order = selectById(id);
         order.setOrderId(id);
         order.setForceDeleted(new Byte("1"));
         updateByIdSelective(order);
         OrderInfoVo orderInfoVo = new OrderInfoVo();
         orderInfoVo.setOrderId(id);
         orderInfoVo.setForceDeleted((byte)1);
-        MgGoodsOrder mgGoodsOrder = new MgGoodsOrder();
         mgOrderInfoService.updateByIdSelective(orderInfoVo);
+        List<Condition> filter = new ArrayList<>();
+        filter.add(Condition.eq("orderSn",order.getOrderSn()));
+        List<MgGoodsOrder> mgGoodsOrders = mgGoodsOrderService.selectList(filter);
+        for (MgGoodsOrder mgGoodsOrder:mgGoodsOrders){
+            mgGoodsOrder.setForceDeleted((byte)1);
+            mgGoodsOrderService.updateByIdSelective(mgGoodsOrder);
+        }
     }
 
+    /**
+     * 批量逻辑取消
+     * @param ids
+     */
     @Override
     @Transactional
     public void deleteBatchByLogic(String[] ids) {
@@ -310,6 +335,14 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         OrderInfoVo orderInfoVo = new OrderInfoVo();
         orderInfoVo.setIsDeleted((byte)1);
         mgOrderInfoService.updateByCondition(orderInfoVo,filters);
+
+        List<Condition> filter = new ArrayList<>();
+        filter.add(Condition.eq("orderSn",order.getOrderSn()));
+        List<MgGoodsOrder> mgGoodsOrders = mgGoodsOrderService.selectList(filter);
+        for (MgGoodsOrder mgGoodsOrder:mgGoodsOrders){
+            mgGoodsOrder.setIsDeleted((byte)1);
+            mgGoodsOrderService.updateByIdSelective(mgGoodsOrder);
+        }
     }
 
     /**
@@ -348,6 +381,12 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         return goodsCount;
     }
 
+    /**
+     * 根据 用户id商品id返回已取消的订单  不知道有什么用
+     * @param userId
+     * @param goodsId
+     * @return
+     */
     @Override
     public MgOrderGoods getGoodsUserBuyed(String userId, String goodsId) {
         Query query = new Query();
@@ -527,13 +566,24 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
         updateByIdSelective(orderInfo);
 
+        //修改mongo
         OrderInfoVo orderInfoVo = mgOrderInfoService.selectById(orderInfo.getOrderId());
         mgOrderInfoService.delete(orderInfo.getOrderId());
-
         orderInfoVo.setPayTime(new Date());
         orderInfoVo.setLastmodify(new Date());
         orderInfoVo.setPayStatus(payStatus);
         mgOrderInfoService.insert(orderInfoVo);
+
+        //修改拆单
+        List<MgGoodsOrder> mgGoodsOrders = mgGoodsOrderService.selectList(filters);
+        for (MgGoodsOrder mgGoodsOrder:mgGoodsOrders){
+            mgGoodsOrderService.delete(mgGoodsOrder.getOrderId());
+            mgGoodsOrder.setPayTime(new Date());
+            mgGoodsOrder.setLastmodify(new Date());
+            mgGoodsOrder.setPayStatus(payStatus);
+            mgGoodsOrderService.insert(mgGoodsOrder);
+        }
+
 
         //支付成功后,API类商品调用api平台接口，启用api调用跟踪
         //进行商品销量统计
@@ -836,7 +886,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
     @Override
     public PayVo getPayParam(String orderId) {
-        OrderInfo orderInfo = orderinfoMapper.selectByPrimaryKey(orderId);
+        OrderInfo orderInfo = selectById(orderId);
         if(orderInfo!=null){
             PayVo payVo = new PayVo();
             payVo.setOrderSn(orderInfo.getOrderSn());
@@ -1148,6 +1198,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     }
 
 //    @Scheduled(cron = "0 10 10 * * ?")
+    @Transactional
     public void deleteOrderByTime(){
         Date date = new Date();
         long now = date.getTime();
