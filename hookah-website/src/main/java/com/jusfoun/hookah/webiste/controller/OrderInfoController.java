@@ -588,7 +588,7 @@ public class OrderInfoController extends BaseController {
 
 
     /**
-     * 删除订单
+     * 批量取消订单
      * @param
      * @return
      */
@@ -631,7 +631,7 @@ public class OrderInfoController extends BaseController {
     public ReturnData forceDelete(@RequestParam String orderId){
         try{
             orderInfoService.deleteOrder(orderId);
-            return ReturnData.success();
+            return ReturnData.success("订单已删除");
         }catch(Exception e){
             logger.error("删除错误",e);
             return ReturnData.error("删除错误");
