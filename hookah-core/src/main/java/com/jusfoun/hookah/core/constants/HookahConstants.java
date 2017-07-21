@@ -291,7 +291,8 @@ public class HookahConstants {
         ORGANIZATION_CHECK_FAIL(7),
         SUPPLIER_CHECK_OK(8),
         SUPPLIER_CHECK_NO(9),
-        SUPPLIER_CHECK_FAIL(10);
+        SUPPLIER_CHECK_FAIL(10),
+        ORGANIZATION_SUPPLIER_CHECK_NO(11);
 
         public Integer code;
 

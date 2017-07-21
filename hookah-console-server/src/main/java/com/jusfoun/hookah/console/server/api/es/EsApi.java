@@ -9,7 +9,6 @@ import com.jusfoun.hookah.core.domain.es.EsCategory;
 import com.jusfoun.hookah.core.domain.es.EsGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgCategoryAttrType;
 import com.jusfoun.hookah.core.domain.vo.EsGoodsVo;
-import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
@@ -17,28 +16,19 @@ import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.ElasticSearchService;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.MgCategoryAttrTypeService;
-import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.aggregations.Aggregation;
-import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.bucket.terms.StringTerms;
-import org.elasticsearch.search.aggregations.bucket.terms.Terms.Bucket;
 import org.elasticsearch.search.sort.SortOrder;
-import org.elasticsearch.search.suggest.Suggest;
-import org.elasticsearch.search.suggest.SuggestBuilder;
-import org.elasticsearch.search.suggest.completion.CompletionSuggestion;
-import org.elasticsearch.search.suggest.completion.CompletionSuggestionBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import static org.elasticsearch.index.query.QueryBuilders.termQuery;
 
@@ -293,20 +283,6 @@ public class EsApi {
             e.printStackTrace();
         }
         return null;
-    }
-
-    @RequestMapping(value = "/v1/goods/types", method = RequestMethod.POST)
-    public ReturnData getTypes (@RequestBody(required = false) EsGoods esGoods) {
-        ReturnData returnData = new ReturnData<>();
-        returnData.setCode(ExceptionConst.Success);
-        try {
-            returnData.setData(elasticSearchService.getTypes(esGoods));
-        } catch (Exception e) {
-            returnData.setCode(ExceptionConst.Failed);
-            returnData.setMessage(e.toString());
-            e.printStackTrace();
-        }
-        return returnData;
     }
 
     @RequestMapping("/findAttr")

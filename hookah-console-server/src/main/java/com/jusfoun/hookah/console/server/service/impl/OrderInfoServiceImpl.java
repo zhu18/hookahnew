@@ -847,7 +847,10 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         }
         query.with(new Sort(Sort.Direction.DESC, "addTime"));
         List<MgGoodsOrder> list = mongoTemplate.find(query,MgGoodsOrder.class);
-        pagination.setList(list);
+        query.skip((pageNum-1)*pageSize);
+        query.limit(pageSize);
+        List<MgGoodsOrder> page = mongoTemplate.find(query,MgGoodsOrder.class);
+        pagination.setList(page);
         pagination.setTotalItems(list.size());
         pagination.setCurrentPage(pageNum);
         pagination.setPageSize(pageSize);
@@ -1197,7 +1200,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         return map;
     }
 
-//    @Scheduled(cron = "0 10 10 * * ?")
+    @Scheduled(cron = "0 0/10 * * * ?")
     @Transactional
     public void deleteOrderByTime(){
         Date date = new Date();

@@ -29,6 +29,8 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.*;
 
+import static com.jusfoun.hookah.core.constants.OperateConstants.key_content;
+
 /**
  * Created by chenhf on 2017/7/18.
  */
@@ -48,6 +50,9 @@ public class LogInterceptor extends BaseController{
     public void advice(JoinPoint joinPoint) {
         logger.info("");
         OperateInfo operateInfo = new OperateInfo();
+        //获取用户信息
+        String userId = "";
+        String userName = "";
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         Map<String,String[]> map = (Map<String,String[]>)request.getParameterMap();
         Map<String,String> jsonMap = new HashMap<>();
@@ -55,7 +60,13 @@ public class LogInterceptor extends BaseController{
         if (map.size() != 0){
             for(String name:map.keySet()){
                 String[] values = map.get(name);
-                jsonMap.put(name,Arrays.toString(values));
+                for (String key:key_content){
+                    if (key.equals(name)){
+                        jsonMap.put(name,Arrays.toString(values));
+                    }
+                }
+                if ("userName".equals(name))
+                    userName = values[0];
             }
             ObjectMapper mapper = new ObjectMapper();
             try {
@@ -64,9 +75,6 @@ public class LogInterceptor extends BaseController{
                 e.printStackTrace();
             }
         }
-        //获取用户信息
-        String userId = "";
-        String userName = "";
         try {
             userId= this.getCurrentUser().getUserId();
             userName = this.getCurrentUser().getUserName();

@@ -9,6 +9,16 @@ public class PayTradeRecordVo extends PayTradeRecord {
 
     private String userName;
 
+    private String accountParty;
+
+    public String getAccountParty() {
+        return accountParty;
+    }
+
+    public void setAccountParty(String accountParty) {
+        this.accountParty = accountParty;
+    }
+
     public String getUserName() {return userName;}
 
     public void setUserName(String userName) {this.userName = userName;}

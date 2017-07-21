@@ -61,7 +61,7 @@ public class SupplierApi extends BaseController {
                 filters.add(Condition.ge("addTime",DateUtils.getDate(startDate)));
             }
             if (StringUtils.isNotBlank(endDate)){
-                filters.add(Condition.le("endTime", DateUtils.getDate(endDate)));
+                filters.add(Condition.le("addTime", DateUtils.getDate(endDate)));
             }
 
             int pageNumberNew = HookahConstants.PAGE_NUM;

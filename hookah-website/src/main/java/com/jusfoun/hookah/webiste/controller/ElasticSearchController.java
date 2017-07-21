@@ -1,7 +1,6 @@
 package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.constants.HookahConstants;
-import com.jusfoun.hookah.core.domain.es.EsGoods;
 import com.jusfoun.hookah.core.domain.vo.EsGoodsVo;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
@@ -65,24 +64,6 @@ public class ElasticSearchController {
         return returnData;
     }
 
-    /**
-     * 查询分类和属性下的数据
-     * @param esGoods
-     * @return
-     */
-    @RequestMapping(value = "/v1/goods/types", method = RequestMethod.POST)
-    public ReturnData getTypes (@RequestBody(required = false) EsGoods esGoods) {
-        ReturnData returnData = new ReturnData<>();
-        returnData.setCode(ExceptionConst.Success);
-        try {
-            returnData.setData(elasticSearchService.getTypes(esGoods));
-        } catch (Exception e) {
-            returnData.setCode(ExceptionConst.Failed);
-            returnData.setMessage(e.toString());
-            e.printStackTrace();
-        }
-        return returnData;
-    }
 
     /**
      * 按分类fullName进行查询

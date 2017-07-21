@@ -1,17 +1,19 @@
 package com.jusfoun.hookah.console.server.api.funds;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.jusfoun.hookah.console.server.controller.BaseController;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.PayAccount;
 import com.jusfoun.hookah.core.domain.PayBankCard;
 import com.jusfoun.hookah.core.domain.PayTradeRecord;
-import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.vo.PayTradeRecordVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.DateUtils;
+import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.PayAccountService;
 import com.jusfoun.hookah.rpc.api.PayBankCardService;
@@ -23,7 +25,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author zhaoshuai
@@ -174,43 +179,21 @@ public class PlatformFundsApi extends BaseController{
     //资金流水记录
     @RequestMapping(value = "/flowWater", method = RequestMethod.GET)
     public ReturnData flowWater(String currentPage, String pageSize, String startDate, String endDate, Integer tradeType, Integer tradeStatus){
-        Pagination<PayTradeRecord> page = new Pagination<>();
+
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        Pagination<PayTradeRecordVo> pagination = new Pagination<>();
+        PageInfo<PayTradeRecordVo> page = new PageInfo<>();
         try {
-            List<Condition> filters = new ArrayList();
-            List<OrderBy> orderBys = new ArrayList();
-            orderBys.add(OrderBy.desc("addTime"));
 
-            if (StringUtils.isNotBlank(startDate)) {
-                filters.add(Condition.ge("addTime", DateUtils.getDate(startDate, DateUtils.DEFAULT_DATE_TIME_FORMAT)));
-            }
-            if (StringUtils.isNotBlank(endDate)) {
-                filters.add(Condition.le("addTime", DateUtils.getDate(endDate, DateUtils.DEFAULT_DATE_TIME_FORMAT)));
-            }
+//            Integer[] tradeTypes = new Integer[]{};
 
-            //只查询的费用科目 充值  体现 冻结划入  释放划出 销售（货款）收入 手续费收入 销售（货款）支出 冲账 退款
-            filters.add(Condition.in("tradeType", new Integer[]{1, 2,6003, 6004, 3001, 3007, 4001, 8}));
-            /*List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList();
-            for (PayTradeRecord pay : payTradeRecords){
-                if(StringUtils.isNotBlank(pay.getUserId())) {
-                    User user = userService.selectById(pay.getUserId());
-                    if(user != null){
-                            Map<String, Object> map = new HashMap<>(6);
-                            if (pay.getTradeType() == 1 || pay.getTradeType() == 2 || pay.getTradeType() == 3001 || pay.getTradeType() == 4001) {
-                                //map.put("addOperator",user.getUserName() + "账户资金");
-                            } else {
-                                //map.put("addOperator", "平台账户资金");
-                            }
-                    }
-                }
-            }*/
-            //费用科目
-            if (tradeType != null) {
-                filters.add(Condition.eq("tradeType", tradeType));
-            }
-            //状态
-            if (tradeStatus != null) {
-                filters.add(Condition.eq("tradeStatus", tradeStatus));
-            }
+//            if(tradeType == null){
+//                tradeTypes = new Integer[]{1, 2,6003, 6004, 3001, 3007, 4001, 8};
+//            }else{
+//                tradeTypes = new Integer[]{tradeType};
+//            }
+
             //参数校验
             int pageNumberNew = HookahConstants.PAGE_NUM;
             if (StringUtils.isNotBlank(currentPage)) {
@@ -220,12 +203,36 @@ public class PlatformFundsApi extends BaseController{
             if (StringUtils.isNotBlank(pageSize)) {
                 pageSizeNew = Integer.parseInt(pageSize);
             }
-            page = payTradeRecordService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
-            return ReturnData.success(page);
+
+            PageHelper.startPage(pageNumberNew, pageSizeNew);   //pageNum为第几页，pageSize为每页数量
+            List<PayTradeRecordVo> list = payTradeRecordService.getListForPage(startDate, endDate, tradeType, tradeStatus);
+            page = new PageInfo<PayTradeRecordVo>(list);
+            if(page.getList().size() > 0){
+                page.getList().parallelStream().forEach(x -> {
+
+                    if(x.getTradeType().equals(3007) ||
+                            x.getTradeType().equals(6003) ||
+                                x.getTradeType().equals(6004)){
+                        x.setAccountParty("交易中心平台资金");
+                    }else{
+                        x.setAccountParty(x.getUserName() + "平台资金");
+                    }
+                });
+            }
+
+            pagination.setTotalItems(page.getTotal());
+            pagination.setPageSize(pageSizeNew);
+            pagination.setCurrentPage(pageNumberNew);
+            pagination.setList(page.getList());
+
+            returnData.setData(pagination);
+
         } catch (Exception e) {
-            logger.error("分页查询资金记录错误", e);
-            return ReturnData.error("查询错误");
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage("系统出错，请联系管理员！");
+            e.printStackTrace();
         }
+        return returnData;
     }
 
 }

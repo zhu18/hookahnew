@@ -42,4 +42,21 @@ public class ShowServiceImpl extends GenericServiceImpl<User, String> implements
     public List<ShowVO> getUnPayAmount(){
         return showMapper.getUnPayAmount();
     }
+
+    public int getNewUserCount(){
+        return showMapper.getNewUserCount();
+    }
+
+    public int getNewUserSum(){
+        return showMapper.getNewUserSum();
+    }
+
+    public int getBuyGoodsCount(){
+        return showMapper.getBuyGoodsCount();
+    }
+
+    public List<User> getUserTypeCount(){
+        return showMapper.getUserTypeCount();
+    }
+
 }
