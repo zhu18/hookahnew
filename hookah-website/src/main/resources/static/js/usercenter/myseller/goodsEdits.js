@@ -1247,7 +1247,7 @@ function ifGoodsTypeRender(data){ //根据类型渲染商品类型相关的html
 		}
 	}else{
 		$('.struct.selects').hide();
-		$('.struct.isOffLine-info-box').show();
+		$('.isOffLine-info-box').show();
 		if(goodsType == 0){
 			$('.goodsDesc-box').show(); //商品描述
 			$('.goodsAdvantage-box').show();//商品优势
@@ -1266,26 +1266,31 @@ function ifGoodsTypeRender(data){ //根据类型渲染商品类型相关的html
 			$('.afterSaleService-box').show();//售后服务
 			$('.isOffLine-select-box').show(); //交付方式
 			$('.dataModel-isOnLine-box').show(); //交付方式
+			$('.dataModel-info-box').show();//
 		}else if(goodsType == 4){
 			$('.afterSaleService-box').show();//售后服务
 			$('.isOffLine-select-box').show(); //交付方式
 			$('.appCase-box').show(); //应用案例
+			$('.tool-info-box').show(); //技术优势
 			$('.visitOnline-isOnLine-box').show(); //下载地址
 		}else if(goodsType == 5){
 			$('.afterSaleService-box').show();//售后服务
 			$('.isOffLine-select-box').show(); //交付方式
 			$('.appCase-box').show(); //应用案例
+			$('.tool-info-box').show(); //技术优势
 			$('.tool-info-box .app-saas-info').hide(); //技术优势
 			$('.visitOnline-isOnLine-box').show(); //下载地址
 		}else if(goodsType == 6){
 			$('.afterSaleService-box').show();//售后服务
 			$('.isOffLine-select-box').show(); //交付方式
 			$('.appCase-box').show(); //应用案例
+			$('.app-info-box').show(); //技术优势
 			$('.downloadAddress-isOnLine-box').show(); //下载地址
 		}else if(goodsType == 7){
 			$('.afterSaleService-box').show();//售后服务
 			$('.isOffLine-select-box').show(); //交付方式
 			$('.appCase-box').show(); //应用案例
+			$('.app-info-box').show(); //技术优势
 			$('.app-info-box .app-saas-info').hide(); //技术优势
 			$('.downloadAddress-isOnLine-box').show(); //下载地址
 		}

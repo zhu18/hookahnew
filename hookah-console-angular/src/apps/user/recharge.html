@@ -13,25 +13,25 @@
       <fieldset>
         <div class="form-group">
           <div class="col-sm-4">
-            <input disabled="disabled" type="hidden" type="text" id="userId" name="userId" class="form-control none-edit" value="{{cuser.userId}}"/>
+            <!--<input disabled="disabled" type="hidden" type="text" id="userId" name="userId" class="form-control none-edit" value="{{cuser.userId}}"/>-->
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="userName">用户名</label>
+          <label class="col-sm-2 control-label">用户名</label>
           <div class="col-sm-4">
-            <input disabled="disabled" type="text" id="userName" name="userName" class="form-control" value="{{cuser.userName}}"/>
+            <input disabled="disabled" type="text" class="form-control" data-ng-model="userBaseInfo.userName"/>
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="moneyBalance">余额</label>
+          <label class="col-sm-2 control-label">余额</label>
           <div class="col-sm-4">
-            <input disabled="disabled" type="text" id="moneyBalance" name="moneyBalance" class="form-control" value="{{cuser.moneyBalance / 100}}"/>
+            <input disabled="disabled" type="text"   class="form-control" value="{{userBaseInfo.moneyBalance /100}}" />
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="recharge">充值金额</label>
           <div class="col-sm-4">
-            <input type="text" id="recharge" name="recharge" class="form-control"/>
+            <input type="number"  data-ng-model="money"  id="recharge" name="recharge" class="form-control"/>
           </div>
         </div>
       </fieldset>

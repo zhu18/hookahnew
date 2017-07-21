@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.pay.service.impl;
 
 
+import com.github.pagehelper.PageHelper;
 import com.jusfoun.hookah.core.dao.PayTradeRecordMapper;
 import com.jusfoun.hookah.core.domain.PayTradeRecord;
 import com.jusfoun.hookah.core.domain.bo.MoneyInOutBo;
@@ -60,7 +61,8 @@ public class PayTradeRecordServiceImpl extends GenericServiceImpl<PayTradeRecord
 	}
 
 	@Override
-	public List<PayTradeRecordVo> getListForPage(String startDate, String endDate, Integer tradeType, Integer tradeStatus) {
+	public List<PayTradeRecordVo> getListForPage(int pageNumberNew, int pageSizeNew, String startDate, String endDate, Integer tradeType, Integer tradeStatus) {
+		PageHelper.startPage(pageNumberNew, pageSizeNew);
 		return payTradeRecordMapper.getListForPage(startDate, endDate, tradeType, tradeStatus);
 	}
 }

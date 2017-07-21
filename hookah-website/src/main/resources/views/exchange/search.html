@@ -16,7 +16,7 @@ var head = {
 	dataParm.pageSize = 20;
 	dataParm.esGoods ={};
 	dataParm.esGoods.goodsName = names;
-
+	dataParm.range = {};
 </script>
 <%};%>
 <%
@@ -24,8 +24,11 @@ var htmlPart = {
 %>
 <div class="grid-0 backgorund-gray clearfix">
 	<div class="grid-row  clearfix" style="position: relative">
-		<div class="exchange-search">
+		<div class="exchange-search search">
 			<%include("/layout/menu.html"){} %>
+			<div class="crumbs-nav margin-top-20 padding-bottom-10" id="J_crimbsNav">分类：<span class="color-blue">全部</span></div>
+			<div class="search-category" id="J_searchCategory"></div>
+			<%include("/exchange/search-conditions.html"){} %>
 			<div class="order-list">
 				<ul>
 					<!--<li>-->

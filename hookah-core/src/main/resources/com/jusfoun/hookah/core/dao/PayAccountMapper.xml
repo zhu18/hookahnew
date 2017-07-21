@@ -74,12 +74,6 @@
 
   </update>
 
-  <update id="resetPayPassword" parameterType="java.util.HashMap">
-
-    update pay_account set pay_password = #{payPassword}
-    where id = #{id}
-
-  </update>
 
   <update id="updatePayAccountMoney" parameterType="java.util.HashMap">
 

@@ -67,4 +67,12 @@
   <select id="getUserTypeCount" resultMap="userType">
       select  user_type,count(user_id) AS userId FROM user GROUP BY user_type
   </select>
+
+  <select id="getActiveUserCou" resultType="java.lang.Integer">
+    SELECT COUNT(login_name) activeUserCou,DATE_FORMAT(add_time,'%Y%m%d') addTime FROM login_log GROUP BY addTime DESC LIMIT 1
+  </select>
+
+  <select id="getAccessCount" resultType="java.lang.Integer">
+    SELECT COUNT(login_name) AS accessCount FROM login_log
+  </select>
 </mapper>

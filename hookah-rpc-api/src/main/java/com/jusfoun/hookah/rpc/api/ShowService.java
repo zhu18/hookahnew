@@ -29,4 +29,8 @@ public interface ShowService extends GenericService<User,String> {
 
     List<User> getUserTypeCount();
 
+    int getActiveUserCou();
+
+    int getAccessCount();
+
 }

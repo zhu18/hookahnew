@@ -5,6 +5,11 @@ class settleController {
 
     $scope.search = function () {
       // console.log($scope.levelStar);
+      if ($scope.startDate !== null && $scope.endDate !== null && ($scope.startDate > $scope.endDate)) {
+        //继续
+        alert('开始时间必须大于结束时间！请重新选择日期。');
+        return;
+      }
       var promise = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/settleOrder/getList",
@@ -213,7 +218,26 @@ class settleController {
 
       return '';
     }
+    $scope.setDate = function (dataFormat, number) {
+      var now = new Date();
+      var date = new Date(now.getTime() - 1);
+      var year = date.getFullYear();
+      var month = date.getMonth();
+      var day = date.getDate();
+      if (dataFormat == 'day') {
+        day -= number;
+      } else if (dataFormat == 'week') {
+        day -= number * 7;
+      } else if (dataFormat == 'month') {
+        month -= number;
+      } else if (dataFormat == 'year') {
+        year -= number;
+      }
 
+      $scope.startDate = new Date(year, month, day);
+      $scope.endDate = new Date();
+
+    }
     // 日历插件结束
   }
 }

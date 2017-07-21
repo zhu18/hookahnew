@@ -3,6 +3,7 @@ package com.jusfoun.hookah.console.server.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.jusfoun.hookah.core.common.Pagination;
+import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.OrderInfoMapper;
 import com.jusfoun.hookah.core.domain.*;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
@@ -1250,6 +1251,33 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         map.put("payingOrderNum",getOrderNumByPayStatus(new Date(),OrderInfoVo.PAYSTATUS_PAYING)); //待付款订单数
         map.put("cancelOrderNum",getOrderNumByToday(new Date(),OrderInfoVo.ORDERSTATUS_CANCEL)); //已取消订单数
         // map.put("orderAmount",getOrderNumByStatus(new Date(),OrderInfoVo.PAYSTATUS_PAYING)); //已售商品数
+
+        map.put("goodsSoldNum",0); //已售商品数
+        map.put("goodsClassification",0); //商品分类数
+        map.put("dataSourceMoney",0); //数据源交易金额
+        map.put("dataModelMoney",0); //数据模型交易金额
+        map.put("visualizationMoney",0); //可视化交易金额
+        map.put("applicationMoney",0); //应用交易金额
+        map.put("acquisitionMoney",0); //采集工具交易金额
+        map.put("cleaningMoney",0); //清洗工具交易金额
+        map.put("analysisMoney",0); //分析平台交易金额
+        map.put("developmentMoney",0); //开发平台交易金额
+        map.put("managementMoney",0); //管理平台交易金额
+        map.put("securityMoney",0); //安全组件交易金额
+
+        map.put("isDeNoGoods",getIsDelNoGoods(new Date())); //已上架商品数
+        map.put("isDeGoods",getIsDeGoods(new Date())); //下架商品数
+        map.put("goodsByDataSource",getGoodsNumByCatId(new Date(),"101")); //数据源上架数
+        map.put("goodsByDataModel",getGoodsNumByCatId(new Date(),"102")); //数据模型上架数
+        map.put("goodsByVisualization",getGoodsNumByCatId(new Date(),"103")); //可视化上架数
+        map.put("goodsByApplication",getGoodsNumByCatId(new Date(),"104")); //应用上架数
+        map.put("goodsByAcquisition",getGoodsNumByCatId(new Date(),"105")); //采集工具上架数
+        map.put("goodsByCleaning",getGoodsNumByCatId(new Date(),"106")); //清洗工具上架数
+        map.put("goodsByAnalysis",getGoodsNumByCatId(new Date(),"107")); //分析平台上架数
+        map.put("goodsByDevelopment",getGoodsNumByCatId(new Date(),"108")); //开发平台上架数
+        map.put("goodsByManagement",getGoodsNumByCatId(new Date(),"109")); //管理平台上架数
+        map.put("goodsBySecurity",getGoodsNumByCatId(new Date(),"110"));//安全组件上架数
+
         return map;
     }
 
@@ -1258,10 +1286,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
      * @return
      */
     public int  getOrderByToday(Date stime){
-        List<Condition> filters = new ArrayList();
-        filters.add(Condition.ge("addTime",startTime(stime)));
-        filters.add(Condition.le("addTime",endTime(stime)));
-        List<OrderInfoVo> orderList = mgOrderInfoService.selectList(filters,null);
+        Query query = new Query();
+        query.addCriteria(Criteria.where("addTime").gte(startTime(stime)).lt(endTime(stime)));
+        List<OrderInfoVo> orderList =mongoTemplate.find(query,OrderInfoVo.class);
         return orderList.size();
     }
 
@@ -1270,11 +1297,12 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
      * @return
      */
     public int  getOrderNumByPayStatus(Date stime,int payStatus){
-        List<Condition> filters = new ArrayList();
-        filters.add(Condition.ge("addTime",startTime(stime)));
-        filters.add(Condition.le("addTime",endTime(stime)));
-        filters.add(Condition.eq("payStatus",payStatus));
-        List<OrderInfoVo> orderList = mgOrderInfoService.selectList(filters,null);
+
+        Query query = new Query();
+        query.addCriteria(Criteria.where("addTime").gte(startTime(stime)).lt(endTime(stime)));
+        query.addCriteria(Criteria.where("payStatus").is(payStatus));
+
+        List<OrderInfoVo> orderList =mongoTemplate.find(query,OrderInfoVo.class);
         return orderList.size();
     }
 
@@ -1289,6 +1317,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         filters.add(Condition.eq("status",commStatus));
         List<Comment> list = commentService.selectList(filters);
         return list.size();
+
     }
 
 
@@ -1297,12 +1326,13 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
      * @return
      */
     public int  getOrderNumByToday(Date stime,int orderStatus){
-        List<Condition> filters = new ArrayList();
-        filters.add(Condition.ge("addTime",startTime(stime)));
-        filters.add(Condition.le("addTime",endTime(stime)));
-        filters.add(Condition.eq("orderStatus",orderStatus));
-        List<OrderInfoVo> orderList = mgOrderInfoService.selectList(filters,null);
+
+        Query query = new Query();
+        query.addCriteria(Criteria.where("addTime").gte(startTime(stime)).lt(endTime(stime)));
+        query.addCriteria(Criteria.where("orderStatus").is(orderStatus));
+        List<OrderInfoVo> orderList =mongoTemplate.find(query,OrderInfoVo.class);
         return orderList.size();
+
     }
 
     /**
@@ -1314,7 +1344,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     public long getOrderMoneyByPayStatus(Date stime,int payStatus){
         Long total = 0l;
         Aggregation aggregation = Aggregation.newAggregation(
-                match(Criteria.where("addTime").gte(startTime(stime)).and("addTime").lte(endTime(stime)).and("payStatus").is(payStatus)),
+                match(Criteria.where("addTime").gte(startTime(stime)).lte(endTime(stime)).and("payStatus").is(payStatus)),
                 group().sum("orderAmount").as("orderAmount")
         );
 
@@ -1325,6 +1355,63 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         }
         return total;
     }
+
+    /**
+     * 获取今日上架商品数量
+     * @param stime
+     * @return
+     */
+    public long getIsDelNoGoods(Date stime){
+        Long total = 0l;
+        //当前已上架商品总数
+        List<Condition> goodsFifters = new ArrayList<Condition>();
+        goodsFifters.add(Condition.eq("isOnsale", Byte.valueOf(HookahConstants.SaleStatus.sale.getCode())));
+        goodsFifters.add(Condition.eq("checkStatus", Byte.valueOf(HookahConstants.CheckStatus.audit_success.getCode())));
+        goodsFifters.add(Condition.ge("onsaleStartDate", startTime(stime)));
+        goodsFifters.add(Condition.lt("onsaleStartDate",endTime(stime)));
+        goodsFifters.add(Condition.eq("isDelete", 1));
+        total = goodsService.count(goodsFifters);
+        return total;
+    }
+
+    /**
+     * 获取今日下架商品数量
+     * @param stime
+     * @return
+     */
+    public long getIsDeGoods(Date stime){
+        Long total = 0l;
+        //当前已下架商品总数
+        List<Condition> goodsFifters= new ArrayList<Condition>();
+        goodsFifters.add(Condition.in("isOnsale", new Byte[]{Byte.valueOf(HookahConstants.SaleStatus.off.getCode()),
+                Byte.valueOf(HookahConstants.SaleStatus.forceOff.getCode())}));
+        goodsFifters.add(Condition.ge("onsaleEndDate", startTime(stime)));
+        goodsFifters.add(Condition.lt("onsaleEndDate",endTime(stime)));
+        goodsService.count(goodsFifters);
+        return total;
+    }
+
+    /**
+     * 根据商品种类字典获取今日上架数量
+     * @param stime
+     * @param catId
+     * @return
+     */
+    public long getGoodsNumByCatId(Date stime,String catId){
+        Long total = 0l;
+        //当前已上架商品总数
+        List<Condition> goodsFifters = new ArrayList<Condition>();
+        goodsFifters.add(Condition.eq("isOnsale", Byte.valueOf(HookahConstants.SaleStatus.sale.getCode())));
+        goodsFifters.add(Condition.eq("checkStatus", Byte.valueOf(HookahConstants.CheckStatus.audit_success.getCode())));
+        goodsFifters.add(Condition.ge("onsaleStartDate", startTime(stime)));
+        goodsFifters.add(Condition.lt("onsaleStartDate",endTime(stime)));
+        goodsFifters.add(Condition.like("catId",catId+"%"));
+        goodsFifters.add(Condition.eq("isDelete", 1));
+        total = goodsService.count(goodsFifters);
+        return total;
+    }
+
+
 
 
 
@@ -1356,5 +1443,4 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         c.set(Calendar.MILLISECOND, 999);
         return c.getTime();
     }
-
 }

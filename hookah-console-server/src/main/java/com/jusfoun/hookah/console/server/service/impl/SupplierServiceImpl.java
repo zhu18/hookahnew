@@ -58,7 +58,7 @@ public class SupplierServiceImpl extends GenericServiceImpl<Supplier, String> im
         Organization organization = organizationMapper.selectByPrimaryKey(user.getOrgId());
         Supplier supplier = new Supplier();
         List<Condition> filter = new ArrayList<>();
-        filter.add(Condition.eq("userId",user));
+        filter.add(Condition.eq("userId",userId));
 
         user.setContactName(contactName);
         if (contactPhone!=null && !FormatCheckUtil.checkMobile(contactPhone)){
@@ -73,6 +73,7 @@ public class SupplierServiceImpl extends GenericServiceImpl<Supplier, String> im
         if (list!=null){
             list.setContactPhone(contactPhone);
             list.setContactName(contactName);
+            list.setAddTime(new Date());
             supplierMapper.updateByPrimaryKeySelective(list);
         }else {
             supplier.setContactPhone(contactPhone);
@@ -108,13 +109,16 @@ public class SupplierServiceImpl extends GenericServiceImpl<Supplier, String> im
         if (supplier==null){
             throw new HookahException("保存失败，请重新操作");
         }
+        User user = userMapper.selectByPrimaryKey(supplier.getUserId());
+        if (user.getUserType()!=4 && user.getUserType()!=9 && user.getUserType()!=10){
+            throw new HookahException("单位会员认证尚未通过，请先认证单位会员");
+        }
         supplier.setCheckStatus(checkStatus);
         supplier.setCheckContent(checkContent.replaceAll(" ",""));
         supplier.setCheckUser(checkUser);
         MessageCode messageCode = new MessageCode();
         messageCode.setBusinessId(id);
-        User user = userMapper.selectByPrimaryKey(supplier.getUserId());
-        if (checkStatus.equals("1")){
+        if (checkStatus.equals((byte)1)){
             messageCode.setCode(HookahConstants.MESSAGE_401);
             user.setUserType(8);
         }else{

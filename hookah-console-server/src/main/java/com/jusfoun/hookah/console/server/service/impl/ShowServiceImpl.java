@@ -55,8 +55,14 @@ public class ShowServiceImpl extends GenericServiceImpl<User, String> implements
         return showMapper.getBuyGoodsCount();
     }
 
-    public List<User> getUserTypeCount(){
-        return showMapper.getUserTypeCount();
+    public List<User> getUserTypeCount(){return showMapper.getUserTypeCount();}
+
+    public int getActiveUserCou(){
+        return showMapper.getActiveUserCou();
+    }
+
+    public int getAccessCount(){
+        return showMapper.getAccessCount();
     }
 
 }

@@ -9,6 +9,7 @@ import com.jusfoun.hookah.core.domain.PayAccount;
 import com.jusfoun.hookah.core.domain.WithdrawRecord;
 import com.jusfoun.hookah.core.domain.vo.WithdrawVo;
 import com.jusfoun.hookah.core.generic.Condition;
+import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
@@ -64,7 +65,7 @@ public class WithdrawRecordController extends BaseController {
             }
 
             PageHelper.startPage(pageNumberNew, pageSizeNew);   //pageNum为第几页，pageSize为每页数量
-            List<WithdrawVo> list = withdrawRecordService.getListForPage(startDate, endDate, checkStatus, orgName);
+            List<WithdrawVo> list = withdrawRecordService.getListForPage(startDate, DateUtils.transferDate(endDate), checkStatus, orgName);
             page = new PageInfo<WithdrawVo>(list);
 
             pagination.setTotalItems(page.getTotal());

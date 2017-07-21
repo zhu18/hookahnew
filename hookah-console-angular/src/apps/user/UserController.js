@@ -23,6 +23,9 @@ class UserController {
     $scope.detail = function (id) {
         $state.go('user.detail', {id:id});
     };
+    $scope.goRecharge = function ($event,item) {
+        $state.go('user.recharge', {item:item});
+    };
     $scope.save = function () {
       var promise = $http({
         method: 'POST',
@@ -38,25 +41,7 @@ class UserController {
     $scope.refresh = function () {
       $scope.search();
     }
-    $scope.recharge = function () {
-      var promise = $http({
-        method: 'POST',
-        url: $rootScope.site.apiServer + "/api/account/recharge",
-        params: {
-          userId: $("#userId").val(),
-          moneyBalance: ($("#moneyBalance").val()) * 100,
-          recharge: $("#recharge").val()
-        }
-      });
-      promise.then(function (res, status, config, headers) {
-        if (res.data.code == "1") {
-          alert(res.data.data);
-          $state.go('user.search');
-        } else {
-          alert(res.data.message);
-        }
-      });
-    };
+
     $scope.back = function () {
       history.back();
     };
