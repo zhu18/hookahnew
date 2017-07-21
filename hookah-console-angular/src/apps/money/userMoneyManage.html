@@ -75,8 +75,8 @@
                         <span data-ng-show="item.isBind == 0"></span>
                         <span data-ng-show="item.isBind == 1">{{item.bankName}} | 尾号{{ item.cardCode | limitTo:-4}}</span>
                     </td>
-                    <td data-ng-bind="item.balance/100"></td>
-                    <td data-ng-bind="item.useBalance/100"></td>
+                    <td data-ng-bind="'￥'+item.balance/100"></td>
+                    <td data-ng-bind="'￥'+item.useBalance/100"></td>
                     <td>
                         <span data-ng-show="item.isBind == 0">查看资金记录</span>
                         <a href="javascript:void(0)" data-ng-click="showUserMoneyDetail(item)" data-ng-show="item.isBind == 1">查看资金记录</a>

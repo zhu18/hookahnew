@@ -5,32 +5,36 @@ class transactionManageController {
 
     $scope.search = function () {
       // console.log($scope.levelStar);
+      if ($scope.startDate !== null && $scope.endDate !== null && ($scope.startDate > $scope.endDate)) {
+        //继续
+        alert('开始时间必须大于结束时间！请重新选择日期。');
+        return;
+      }
       var promise = $http({
         method: 'GET',
-        url: $rootScope.site.apiServer + "/api/settleOrder/getList",
+        url: $rootScope.site.apiServer + "/api/settleOrder/getTradeList",
         params: {
+          goodsName: $scope.goodsName ? $scope.goodsName : null,
           orderSn: $scope.orderSn ? $scope.orderSn : null,
-          settleStatus: $scope.settleStatus == 0 ? '0' : ($scope.settleStatus ? $scope.settleStatus : null),//审核状态
-          shopName: $scope.orgName ? $scope.orgName : null,
+          addUser  : $scope.addUser   ? $scope.addUser : null,
           startDate: $scope.startDate ? format($scope.startDate, 'yyyy-MM-dd HH:mm:ss') : null,
           endDate: $scope.endDate ? format($scope.endDate, 'yyyy-MM-dd HH:mm:ss') : null,
           currentPage: $rootScope.pagination.currentPage, //当前页码
           pageSize: $rootScope.pagination.pageSize
         }
-
       });
       promise.then(function (res, status, config, headers) {
         console.log('数据在这里');
         console.log(res);
         if (res.data.code == '1') {
-          $scope.settleList = res.data.data.list;
+          $scope.tradeList = res.data.data.list;
           $rootScope.pagination = res.data.data;
           $scope.showNoneDataInfoTip = false;
           if (res.data.data.totalPage > 1) {
             $scope.showPageHelpInfo = true;
           }
         } else {
-          $scope.settleList = [];
+          $scope.tradeList = [];
           $scope.showNoneDataInfoTip = true;
 
         }
@@ -82,53 +86,7 @@ class transactionManageController {
       });
     }
 
-    //多选
-    var str = "";
-    var len = $scope.settleList.length;
-    var flag = '';//是否点击了全选，是为a
-    $scope.x = false;//默认未选中
 
-    $scope.all = function (c) { //全选
-      var commIdArr = [];
-
-      angular.forEach($scope.settleList, function (value, key) {
-
-        if (value.status == 0) {
-          commIdArr.push(value.commId)
-        }
-
-      });
-      console.log(commIdArr);
-
-      if (c == true) {
-        $scope.x = true;
-        $scope.choseArr = commIdArr;
-        flag = 'a';
-      } else {
-        $scope.x = false;
-        $scope.choseArr = [];
-        flag = 'b';
-      }
-    };
-
-    $scope.chk = function (z, x) { //单选或者多选
-
-
-      if (x == true) {//选中
-        $scope.choseArr.push(z);
-        flag = 'c'
-        if ($scope.choseArr.length == len) {
-          $scope.master = true
-        }
-      } else {
-        $scope.choseArr.splice($scope.choseArr.indexOf(z), 1);//取消选中
-      }
-
-      if ($scope.choseArr.length == 0) {
-        $scope.master = false
-      }
-    };
-    //多选结束
 
     $scope.refresh = function () {
       $scope.search();
@@ -165,10 +123,18 @@ class transactionManageController {
       })
     }
     // 日历插件开始
-    $scope.inlineOptions = {
+    $scope.startDateOptions = {
       customClass: getDayClass,
-      minDate: new Date(2000, 5, 22),
-      showWeeks: true
+      // minDate: new Date(2000, 5, 22),
+      maxDate: new Date(),
+      // showWeeks: true
+    };
+    $scope.endDateOptions = {
+      // dateDisabled: disabled,
+      // formatYear: 'yy',
+      maxDate: new Date(),
+      // minDate: new Date(),
+      // startingDay: 1
     };
     $scope.open1 = function () {
       $scope.popup1.opened = true;
@@ -213,7 +179,26 @@ class transactionManageController {
 
       return '';
     }
+    $scope.setDate = function (dataFormat, number) {
+      var now = new Date();
+      var date = new Date(now.getTime() - 1);
+      var year = date.getFullYear();
+      var month = date.getMonth();
+      var day = date.getDate();
+      if (dataFormat == 'day') {
+        day -= number;
+      } else if (dataFormat == 'week') {
+        day -= number * 7;
+      } else if (dataFormat == 'month') {
+        month -= number;
+      } else if (dataFormat == 'year') {
+        year -= number;
+      }
 
+      $scope.startDate = new Date(year, month, day);
+      $scope.endDate = new Date();
+
+    }
     // 日历插件结束
   }
 }

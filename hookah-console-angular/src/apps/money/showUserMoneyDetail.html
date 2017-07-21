@@ -21,7 +21,7 @@
                 </button>
             </div>
         </div>
-        <div class="viewContent clearfix" style="color: #949494;font-size: 13px; line-height: 13px;padding:15px 10px;">
+        <div class="viewContent clearfix" style="font-size: 13px; line-height: 13px;padding:15px 10px;">
             <div class="leftContent grid-left padding-top-20 text-align-center">
                 <h5>用户信息</h5>
 
@@ -51,9 +51,9 @@
                     </tr>
                     <tr>
                         <th width="115">账户余额:</th>
-                        <td data-ng-bind="userBaseInfo.balance/100"></td>
+                        <td data-ng-bind="'￥'+userBaseInfo.balance/100"></td>
                         <th width="115">可用余额:</th>
-                        <td data-ng-bind="userBaseInfo.useBalance/100"></td>
+                        <td data-ng-bind="'￥'+userBaseInfo.useBalance/100"></td>
                         <th width="115">银行卡号:</th>
                         <td colspan="3">{{userBaseInfo.bankName}} | {{userBaseInfo.cardCode | limitTo:4}} **** **** {{userBaseInfo.cardCode | limitTo:-4}}</td>
                     </tr>

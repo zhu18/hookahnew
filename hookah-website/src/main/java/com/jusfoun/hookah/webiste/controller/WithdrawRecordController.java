@@ -44,10 +44,6 @@ public class WithdrawRecordController extends BaseController{
     @Resource
     PayBankCardService payBankCardService;
 
-    @Resource
-    OrganizationService organizationService;
-
-
     /**
      * 发起提现申请
      */
@@ -157,6 +153,50 @@ public class WithdrawRecordController extends BaseController{
         }
         return "/usercenter/userInfo/withdrawals";
     }
+
+
+    /**
+     * 查看提现状态
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/getWithDrawStatus", method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnData userInfo(Long id) {
+
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+
+        try {
+            Map<String, Object> map = new HashMap();
+
+            List<Condition> cashFilters = new ArrayList();
+            cashFilters.add(Condition.eq("userId", getCurrentUser().getUserId()));
+            cashFilters.add(Condition.eq("id", id));
+            WithdrawRecord withdrawRecord = withdrawRecordService.selectOne(cashFilters);
+
+            if(withdrawRecord == null){
+                returnData.setCode(ExceptionConst.Failed);
+                returnData.setMessage("未查询到此条记录，如有疑问请联系管理员");
+                return returnData;
+            }
+
+            map.put("checkStatus", withdrawRecord.getCheckStatus());
+            map.put("addTime", withdrawRecord.getAddTime());
+            map.put("backCheckTime", new Date());
+            map.put("checkTime", withdrawRecord.getCheckTime());
+
+
+            returnData.setData(map);
+        } catch (HookahException e) {
+            logger.error(e.getMessage());
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage("系统异常");
+            return returnData;
+        }
+        return returnData;
+    }
+
 
     public static void main(String[] args){
 
