@@ -36,9 +36,9 @@ public interface PayAccountService extends GenericService<PayAccount, Long> {
 
     int operatorByType(MoneyInOutBo moneyInOutBo, Long id);
 
-    void insertPayAccountByUserIdAndName(String userId, String userName);
+    boolean insertPayAccountByUserIdAndName(String userId, String userName);
 
-    void resetPayPassword(Long id, String payPassword);
+    boolean resetPayPassword(String userId, String payPassword);
 
     void payByBalance(OrderInfo orderInfo) throws Exception;
 
@@ -58,5 +58,11 @@ public interface PayAccountService extends GenericService<PayAccount, Long> {
      */
     ReturnData saveRechargeResult(Map<String,String> params);
 
+    /**
+     * 验证支付密码
+     * @param payPassword
+     * @param userId
+     * @return
+     */
     boolean verifyPassword (String payPassword,String userId);
 }
