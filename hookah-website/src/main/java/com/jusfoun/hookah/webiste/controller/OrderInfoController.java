@@ -317,10 +317,10 @@ public class OrderInfoController extends BaseController {
 
             List<Condition> filters = new ArrayList<>();
             if (StringUtils.isNotBlank(startDate)) {
-                filters.add(Condition.ge("addTime", DateUtils.getDate(startDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
+                filters.add(Condition.ge("payTime", DateUtils.getDate(startDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
             }
             if (StringUtils.isNotBlank(endDate)) {
-                filters.add(Condition.le("addTime", DateUtils.getDate(endDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
+                filters.add(Condition.le("payTime", DateUtils.getDate(endDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
             }
             if (commentFlag != null) {
                 filters.add(Condition.eq("commentFlag", commentFlag));
@@ -335,7 +335,7 @@ public class OrderInfoController extends BaseController {
 
 
             List<OrderBy> orderBys = new ArrayList<>();
-            orderBys.add(OrderBy.desc("addTime"));
+            orderBys.add(OrderBy.desc("payTime"));
             Pagination<MgOrderGoods> goodsList = orderInfoService.getGoodsListInPage(pageNumber,pageSize,filters,orderBys);
             return ReturnData.success(goodsList);
         }catch (Exception e){
