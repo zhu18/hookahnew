@@ -195,7 +195,7 @@ public class PlatformFundsApi extends BaseController{
                 pageSizeNew = Integer.parseInt(pageSize);
             }
 
-            List<PayTradeRecordVo> list = payTradeRecordService.getListForPage(pageNumberNew, pageSizeNew, startDate, endDate, tradeType, tradeStatus);
+            List<PayTradeRecordVo> list = payTradeRecordService.getListForPage(pageNumberNew, pageSizeNew, startDate, DateUtils.transferDate(endDate), tradeType, tradeStatus);
             page = new PageInfo<PayTradeRecordVo>(list);
             if(page.getList() != null && page.getList().size() > 0){
                 page.getList().parallelStream().forEach(x -> {
