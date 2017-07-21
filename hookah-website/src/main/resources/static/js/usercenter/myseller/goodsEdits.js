@@ -10,7 +10,6 @@ var goodsTypeVal = $('#parentSelect').val();
 var categoryHtml = '';
 var ajaxUrl = null;
 var goodsTypeId = null;
-isMobile
 E.config.uploadImgUrl = host.static+'/upload/wangeditor';//上传图片
 E.config.uploadImgFileName = 'filename';
 E.config.menuFixed = false;//关闭菜单栏fixed
