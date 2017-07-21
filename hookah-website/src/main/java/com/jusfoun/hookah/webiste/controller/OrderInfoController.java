@@ -155,20 +155,23 @@ public class OrderInfoController extends BaseController {
             List<Condition> listFilters = new ArrayList<>();
             Long paid = 0L,unpaid=0L,deleted=0L,total=0L;
 
-            //未删除的已付款订单
+            //未取消的已付款订单
             paidFilters.add(Condition.eq("userId", userId));
             paidFilters.add(Condition.eq("payStatus", 2));
             paidFilters.add(Condition.eq("isDeleted",0));
-            //未删除的未付款订单
+            paidFilters.add(Condition.eq("forceDeleted",0));
+            //未取消的未付款订单
             unpaidFilters.add(Condition.eq("userId", userId));
             unpaidFilters.add(Condition.ne("payStatus", 2));
             unpaidFilters.add(Condition.eq("isDeleted",0));
-            //已删除的订单
+            unpaidFilters.add(Condition.eq("forceDeleted",0));
+            //已取消的订单
             deletedFilters.add(Condition.eq("userId", userId));
             deletedFilters.add(Condition.eq("isDeleted",1));
+            deletedFilters.add(Condition.eq("forceDeleted",0));
             //用户所有未删除订单
-            allFilters.add(Condition.eq("isDeleted",0));
             allFilters.add(Condition.eq("userId",userId));
+            allFilters.add(Condition.eq("forceDeleted",0));
 
             if (StringUtils.isNotBlank(startDate)) {
                 if(payStatus==1){
@@ -214,24 +217,19 @@ public class OrderInfoController extends BaseController {
                 listFilters.add(Condition.like("domainName", "%" + domainName + "%"));
             }
             listFilters.add(Condition.eq("userId", userId));
+            //未被删除的订单
+            listFilters.add(Condition.eq("forceDeleted",0));
 
             //查询列表
             List<OrderBy> orderBys = new ArrayList<>();
             orderBys.add(OrderBy.desc("addTime"));
             Pagination<OrderInfoVo> pOrders = orderInfoService.getDetailListInPage(pageNumber, pageSize, listFilters, orderBys);
             map.put("orders",pOrders);
-//            filters.remove(condition); //移除支付状态条件
-//            //查询数量
-//            filters.add(Condition.eq("payStatus", 2));
 
             unpaid = orderInfoService.count(unpaidFilters);
             deleted = orderInfoService.count(deletedFilters);
             paid = orderInfoService.count(paidFilters);
             total = orderInfoService.count(allFilters);
-
-//
-//            filters.remove(filters.size()-1);
-//            filters.add(Condition.ne("payStatus", 2));
 
             map.put("paidCount",paid);
             map.put("deletedCount",deleted);
@@ -247,7 +245,7 @@ public class OrderInfoController extends BaseController {
     }
 
     /**
-     * 商家已卖出的商品订单
+     * 供应商已卖出的商品订单
      * @param pageNumber
      * @param pageSize
      * @param startDate
@@ -280,6 +278,7 @@ public class OrderInfoController extends BaseController {
                 listFilters.add(Condition.like("domainName", "%" + domainName + "%"));
             }
             listFilters.add(Condition.eq("isDeleted", 0));
+            listFilters.add(Condition.eq("forceDeleted", 0));
 
             //查询列表
             List<OrderBy> orderBys = new ArrayList<>();
@@ -559,6 +558,7 @@ public class OrderInfoController extends BaseController {
         orderinfo.setLastmodify(date);
         orderinfo.setEmail("");
         orderinfo.setIsDeleted(new Integer(0).byteValue());
+        orderinfo.setForceDeleted((byte)0);
         orderinfo.setCommentFlag(0);
         return orderinfo;
     }
@@ -605,7 +605,7 @@ public class OrderInfoController extends BaseController {
 	}
 
     /**
-     * 删除订单
+     * 取消订单
      * @param
      * @return
      */
@@ -614,6 +614,23 @@ public class OrderInfoController extends BaseController {
     public ReturnData delete(@RequestParam String orderId){
         try{
             orderInfoService.deleteByLogic(orderId);
+            return ReturnData.success();
+        }catch(Exception e){
+            logger.error("取消错误",e);
+            return ReturnData.error("取消错误");
+        }
+    }
+
+    /**
+     * 删除订单
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/order/forceDelete", method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnData forceDelete(@RequestParam String orderId){
+        try{
+            orderInfoService.deleteOrder(orderId);
             return ReturnData.success();
         }catch(Exception e){
             logger.error("删除错误",e);

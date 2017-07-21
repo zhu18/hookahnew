@@ -13,6 +13,17 @@
     </where>
   </select>
 
+  <select id="selectPermissionsByRoleName" resultType="java.lang.String">
+    select a.permission_name from permission a
+    left join role_permission b on a.permission_id = b.permission_id
+    left join role c on b.role_id = c.role_id
+    <where>1=1
+      <if test="roleName !=null and roleName !=''">
+        and c.role_name=#{roleName}
+      </if>
+    </where>
+  </select>
+
   <select id="selectPermissionsByUserId" resultType="java.lang.String">
     select a.permission_name from permission a
     left join role_permission b on a.permission_id = b.permission_id

@@ -5,21 +5,25 @@ import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.PayAccountMapper;
 import com.jusfoun.hookah.core.dao.PayAccountRecordMapper;
 import com.jusfoun.hookah.core.dao.PayTradeRecordMapper;
-import com.jusfoun.hookah.core.domain.*;
+import com.jusfoun.hookah.core.domain.OrderInfo;
+import com.jusfoun.hookah.core.domain.PayAccount;
+import com.jusfoun.hookah.core.domain.PayAccountRecord;
+import com.jusfoun.hookah.core.domain.PayTradeRecord;
 import com.jusfoun.hookah.core.domain.bo.MoneyInOutBo;
-import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
-import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
-import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.core.utils.StrUtil;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.pay.util.AlipayNotify;
 import com.jusfoun.hookah.pay.util.ChannelType;
 import com.jusfoun.hookah.pay.util.PayConfiguration;
 import com.jusfoun.hookah.pay.util.PayConstants;
-import com.jusfoun.hookah.rpc.api.*;
+import com.jusfoun.hookah.rpc.api.AlipayService;
+import com.jusfoun.hookah.rpc.api.OrderInfoService;
+import com.jusfoun.hookah.rpc.api.PayAccountService;
+import com.jusfoun.hookah.rpc.api.PayTradeRecordService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -233,7 +237,8 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 			pa.setBalance(0l);
 			pa.setUseBalance(0l);
 			pa.setFrozenBalance(0l);
-			pa.setPayPassword("00000000");
+			//支付密码状态 数据库默认为 0（未设置）
+			//pa.setPaymentPasswordStatus((byte)0);
 			pa.setAccountFlag((byte) 1);
 			pa.setMerchantId("");
 			pa.setSyncFlag((byte) 0);
@@ -257,8 +262,7 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 	}
 
 	//验证 支付密码是否正确
-	public boolean verifyPassword(String payPassword) throws HookahException {
-		String userId = this.getCurrentUser().getUserId();
+	public boolean verifyPassword(String payPassword, String userId){
 		List<Condition> filters = new ArrayList();
 		if (StringUtils.isNotBlank(userId)) {
 			filters.add(Condition.eq("userId", userId));
@@ -483,25 +487,24 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		return params;
 	}
 
-	public ReturnData userRecharge(Map<String,Object> params){
+	public ReturnData userRecharge(Map<String,String> params){
 		ReturnData returnData = new ReturnData();
 
-		String userId = "";
-		if(Objects.isNull(params.get("userId"))){
+		String userId = params.get("userId");
+		if(StrUtil.isBlank(userId)){
 			returnData.setCode(ExceptionConst.Failed);
 			returnData.setMessage("充值失败：用户ID不能为空！");
 			return returnData;
 		}
-		userId=(String) params.get("userId");
-		Object moneyObj=params.get("money");
-		if(Objects.isNull(moneyObj)){
+		if(StrUtil.isBlank(params.get("money"))){
 			returnData.setCode(ExceptionConst.Failed);
 			returnData.setMessage("充值失败：充值金额不能为空！");
 			return returnData;
 		}
 
+		Double moneyObj=Double.parseDouble(params.get("money"));
 		try {
-			if((double)moneyObj <= 0) {
+			if( moneyObj<= 0) {
 				returnData.setCode(ExceptionConst.Failed);
 				returnData.setMessage("充值失败：充值金额必须大于0！");
 				return returnData;
@@ -512,7 +515,7 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 			}
 			PayAccount payAccount = super.selectOne(filters);
 			//将金额*100转为Long型
-			Long money = Math.round((double)moneyObj*100);
+			Long money = Math.round(moneyObj*100);
 			if (payAccount == null){
 				returnData.setCode(ExceptionConst.Failed);
 				returnData.setMessage("充值失败：账户不存在！");

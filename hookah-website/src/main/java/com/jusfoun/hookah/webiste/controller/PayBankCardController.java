@@ -3,6 +3,7 @@ package com.jusfoun.hookah.webiste.controller;
 import com.jusfoun.hookah.core.domain.*;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
+import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.OrganizationService;
 import com.jusfoun.hookah.rpc.api.PayAccountService;
@@ -99,9 +100,6 @@ public class PayBankCardController extends BaseController{
             pay.setOpenBank(openBank);
             pay.setPayBankId(payBankId);
             PayBankCard insert = payBankCardService.insert(pay);
-            if(insert == null){
-                return ReturnData.error("添加失败");
-            }
             return ReturnData.success(insert);
         }catch (Exception e){
             logger.error("绑定银行卡失败",e);
@@ -155,22 +153,27 @@ public class PayBankCardController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "/updateBankInfo", method = RequestMethod.GET)
     public ReturnData updateBankInfo(){
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
         try {
             String userId = this.getCurrentUser().getUserId();
             List<Condition> filters = new ArrayList();
             filters.add(Condition.eq("userId", userId));
             PayBankCard payBankCard = payBankCardService.selectOne(filters);
-            if(payBankCard != null){
-                payBankCard.setBindFlag(1);
-                payBankCardService.updateByIdSelective(payBankCard);
-            }else {
-                return ReturnData.error("银行卡信息不可为空");
+            payBankCard.setBindFlag(1);
+            int n = payBankCardService.updateByIdSelective(payBankCard);
+            if(n == 1){
+                returnData.setMessage("银行卡信息已解除");
+            }else{
+                returnData.setCode(ExceptionConst.Failed);
+                returnData.setMessage("解除银行卡信息失败！");
             }
+
         } catch (Exception e) {
             logger.info(e.getMessage());
             return ReturnData.error("解除银行卡信息失败");
         }
-        return ReturnData.success("银行卡信息已解除");
+        return returnData;
     }
 
 

@@ -6,6 +6,7 @@ $(function () {
         url:host.website+'/regInfo/selectAccountInfo',
         data:{},
         type:'get',
+        cache:false,
         success:function (data) {
             var userName=data.data.user.userName?data.data.user.userName:'';
             var mobile=data.data.user.mobile?data.data.user.mobile:'';
@@ -14,7 +15,7 @@ $(function () {
             var lastLoginIp=data.data.user.lastLoginIp?data.data.user.lastLoginIp:'';
             var lastLoginTime=data.data.user.lastLoginTime?data.data.user.lastLoginTime:'';
             var html="";
-            html += "<li><span class='info-title'>登录账号:</span><span >"+userName+"</span></li>";
+            html += "<li><span class='info-title'>登录帐号:</span><span >"+userName+"</span></li>";
             html += "<li><span class='info-title'>手机号码:</span><span >"+mobile+"</span></li>";
             html += "<li><span class='info-title'>邮箱:</span><span>"+email+"</span></li>";
             html += "<li><span class='info-title'>注册时间:</span><span>"+addTime+"</span></li>";

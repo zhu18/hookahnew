@@ -3,6 +3,7 @@ var head = {
 %>
 <link rel="stylesheet" href="/static/css/pay/pay.css">
 <script type="text/javascript" src="/static/js/plugins/validate/jquery-validate.js"></script>
+<script type="text/javascript" src="/static/js/plugins/MD5/JQuery.md5.js"></script>
 <%};%>
 <%
 var htmlPart = {
@@ -46,7 +47,7 @@ var htmlPart = {
 				</div>
 			</div>
 			<div class="main-container">
-				<form name="payPassword" id="form_paypsw" action="${host.website}/pay/payment" method="post">
+				<form name="payPassword" id="form_paypsw" action="${host.website}/pay/balancePay" method="post">
 					<div id="J-rcChannels">
 						<div>
 							<input type="hidden" value="${orderInfo.goodsAmount}" id="goodsAmount">
@@ -163,6 +164,7 @@ var htmlPart = {
 							<div class="i-block" data-error="i_error">
 								<div class="i-block six-password">
 									<input class="i-text sixDigitPassword" id="paymentPassword" type="password" autocomplete="off" required="required" value="" name="paymentPassword" data-role="sixDigitPassword" tabindex="" maxlength="6" minlength="6" aria-required="true">
+									<input type="hidden" name="password">
 									<div tabindex="0" class="sixDigitPassword-box" style="width: 182px;">
 										<i style="width: 29px; border-color: transparent;" class=""><b style="visibility: hidden;"></b></i>
 										<i style="width: 29px;"><b style="visibility: hidden;"></b></i>

@@ -15,8 +15,11 @@
     width: 85px;
     float: left;
 }
-.header ul li a{
+.header ul li a.active{
     color:#247DE8;
+    border-bottom:2px solid #247DE8;
+    height:22px;
+    display: block;
 }
 .info-center-title{
     width: 100px;

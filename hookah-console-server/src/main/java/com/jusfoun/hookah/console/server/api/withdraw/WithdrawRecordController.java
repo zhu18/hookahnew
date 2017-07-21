@@ -150,7 +150,7 @@ public class WithdrawRecordController extends BaseController {
             record.setId(id);
             record.setCheckStatus(checkStatus);
             record.setCheckMsg(checkMsg);
-            record.setChecckTime(new Date());
+            record.setCheckTime(new Date());
             record.setCheckOperator(getCurrentUser().getUserName());
             int n = withdrawRecordService.updateByIdSelective(record);
             if(n == 1){

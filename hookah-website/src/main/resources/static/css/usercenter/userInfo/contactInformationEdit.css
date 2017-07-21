@@ -1,32 +1,38 @@
-.contactInformationEdit ul{
+.contactInformationEdit form{
     margin-top: 62px;
     margin-left: 318px;
 }
-.contactInformationEdit ul li{
-    height: 32px;
+.contactInformationEdit form .item{
     color: #666666;
     font-size: 14px;
     margin-bottom: 15px;
 }
-.contactInformationEdit ul li label{
+.contactInformationEdit form .item label{
     width: 64px;
     display: inline-block;
     text-align: right;
     margin-right: 22px;
 }
-.contactInformationEdit ul li input{
+.contactInformationEdit form .item input{
     width: 246px;
-    height: 100%;
+    height: 32px;
     padding-left: 10px;
     border: 1px solid #E5E5E5;
 }
+.contactInformationEdit form .item textarea{
+    width: 246px;
+    padding-left: 10px;
+    outline:none;
+    resize:none;
+    border: 1px solid #E5E5E5;
+}
 
-.contactInformationEdit ul li:last-child{
+.contactInformationEdit form .item:last-child{
     margin-left: 90px;
     margin-top: 30px;
     font-size: 0;
 }
-.contactInformationEdit ul li:last-child a{
+.contactInformationEdit form .item:last-child a{
     display: inline-block;
     width: 110px;
     height: 36px;
@@ -34,14 +40,20 @@
     line-height: 36px;
     text-align: center;
 }
-.contactInformationEdit ul li:last-child a.save{
+.contactInformationEdit form .item:last-child a.save{
     font-size: 14px;
     color: #ffffff;
     margin-right: 28px;
     background-color: #5397F3;
 }
-.contactInformationEdit ul li:last-child a.cancel{
+.contactInformationEdit form .item:last-child a.cancel{
     font-size: 14px;
     color: #333333;
     background-color:#EDEDED;
+}
+.contactInformationEdit form .help-block{
+    color: #ff0000;
+}
+.contactInformationEdit form .vertical-align-top{
+    vertical-align: top;
 }

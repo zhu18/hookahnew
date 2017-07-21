@@ -5,7 +5,9 @@ import com.jusfoun.hookah.core.generic.GenericModel;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.util.Date;
+import java.util.List;
 
 public class Permission extends GenericModel {
     /**
@@ -25,6 +27,9 @@ public class Permission extends GenericModel {
      * @mbggenerated
      */
     private String permissionName;
+
+
+    private String permissionParentId;
 
 
     /**
@@ -52,6 +57,26 @@ public class Permission extends GenericModel {
     private Integer version;
 
     private String permissionExplain;
+
+    @Transient
+    private List<Permission> children;
+
+
+    public String getPermissionParentId() {
+        return permissionParentId;
+    }
+
+    public void setPermissionParentId(String permissionParentId) {
+        this.permissionParentId = permissionParentId;
+    }
+
+    public List<Permission> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Permission> children) {
+        this.children = children;
+    }
 
     public String getPermissionExplain() {
         return permissionExplain;

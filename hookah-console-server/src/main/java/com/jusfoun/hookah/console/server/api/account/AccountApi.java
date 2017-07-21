@@ -10,6 +10,7 @@ import com.jusfoun.hookah.core.domain.vo.UserRoleVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.rpc.api.RoleService;
 import com.jusfoun.hookah.rpc.api.UserRoleService;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.commons.lang3.StringUtils;
@@ -40,6 +41,9 @@ public class AccountApi extends BaseController {
     @Resource
     UserRoleService userRoleService;
 
+    @Resource
+    RoleService roleService;
+
     @RequestMapping(value = "/sys_all", method = RequestMethod.GET)
     public ReturnData getSysAccount(String currentPage, String pageSize, User user) {
         Pagination<User> page = new Pagination<>();
@@ -60,6 +64,13 @@ public class AccountApi extends BaseController {
                 pageSizeNew = Integer.parseInt(pageSize);
             }
             page = userService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
+            List<User> users = page.getList();
+            for(int i=0;i<users.size();i++){
+                User u = users.get(i);
+                List roles = roleService.selectRoleListByUserId(u.getUserId());
+                u.setRoleList(roles);
+            }
+            page.setList(users);
         } catch (Exception e) {
             e.printStackTrace();
         }

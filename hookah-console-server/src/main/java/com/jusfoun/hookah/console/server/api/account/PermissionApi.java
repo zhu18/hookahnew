@@ -107,4 +107,18 @@ public class PermissionApi extends BaseController {
         }
         return ReturnData.success("删除成功");
     }
+
+    @RequestMapping(value = "/tree", method = RequestMethod.GET)
+    public Object getListInPage() {
+        List<Permission> permissionTreeList = permissionService.selectTree();
+        return permissionTreeList;
+    }
+
+    @RequestMapping(value = "/group", method = RequestMethod.GET)
+    public Object getPermissionGroup() {
+        List<Condition> filters = new ArrayList<>();
+        filters.add(Condition.eq("permissionParentId", "0"));
+        List<Permission> permissions= permissionService.selectList(filters);
+        return permissions;
+    }
 }

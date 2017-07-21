@@ -96,31 +96,31 @@
     /*padding-bottom:20px;*/
     /*border-left:1px dashed #e0e0e0;*/
 /*}*/
-/*.auth-introduce .large-btn{*/
-    /*position: relative;*/
-    /*display: inline-block;*/
-    /*width: 136px;*/
-    /*height: 30px;*/
-    /*margin-right:10px;*/
-    /*padding-right: 14px;*/
-    /*border-radius: 3px;*/
-    /*line-height:30px;*/
-    /*font-size:14px;*/
-    /*text-align: center;*/
-    /*background-color: #2eb5fb;*/
-    /*color: #fff;*/
-/*}*/
-/*.auth-introduce .large-btn:hover{*/
-    /*background-color: #0899f6;*/
-    /*cursor: pointer;*/
-/*}*/
-/*.auth-introduce .blue{*/
-    /*color: #2cb2f8;*/
-/*}*/
-/*.auth-introduce .blue:hover{*/
-    /*cursor: pointer;*/
-    /*text-decoration: underline;*/
-/*}*/
+.auth-introduce .large-btn{
+    position: relative;
+    display: inline-block;
+    width: 136px;
+    height: 30px;
+    margin-right:10px;
+    padding-right: 14px;
+    border-radius: 3px;
+    line-height:30px;
+    font-size:14px;
+    text-align: center;
+    background-color: #2eb5fb;
+    color: #fff;
+}
+.auth-introduce .large-btn:hover{
+    background-color: #0899f6;
+    cursor: pointer;
+}
+.auth-introduce .blue{
+    color: #2cb2f8;
+}
+.auth-introduce .blue:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
 
 
 

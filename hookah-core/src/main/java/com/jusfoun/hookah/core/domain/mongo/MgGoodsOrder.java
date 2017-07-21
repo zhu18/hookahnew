@@ -3,7 +3,6 @@ package com.jusfoun.hookah.core.domain.mongo;
 import com.jusfoun.hookah.core.domain.OrderInfo;
 
 import javax.persistence.Transient;
-import java.util.List;
 
 /**
  * 商品订单
@@ -233,5 +232,17 @@ public class MgGoodsOrder extends OrderInfo {
 
 	public void setSolveStatus(Integer solveStatus) {
 		this.solveStatus = solveStatus;
+	}
+
+	public void setOrderStatusName(String orderStatusName) {
+		this.orderStatusName = orderStatusName;
+	}
+
+	public void setShippingStatusName(String shippingStatusName) {
+		this.shippingStatusName = shippingStatusName;
+	}
+
+	public void setPayStatusName(String payStatusName) {
+		this.payStatusName = payStatusName;
 	}
 }

@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.oauth2server.web.controller;
 
+import com.jusfoun.hookah.core.annotation.Log;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.utils.FormatCheckUtil;
 import com.jusfoun.hookah.core.utils.NetUtils;
@@ -48,6 +49,7 @@ public class LoginController {
         return "login";
     }
 
+    @Log(platform = "front",logType = "f0002",optType = "insert")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String postLogin(User user, RedirectAttributes redirectAttributes, HttpServletRequest request, HttpServletResponse response) {
 

@@ -1,12 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.jusfoun.hookah.core.dao.RoleMapper" >
-
+  <resultMap id="result" type="com.jusfoun.hookah.core.domain.Role" >
+    <id column="role_id" property="roleId" jdbcType="VARCHAR" />
+    <result column="guid" property="guid" jdbcType="VARCHAR" />
+    <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    <result column="is_enable" property="isEnable" jdbcType="TINYINT" />
+    <result column="goods_brief" property="version" jdbcType="INTEGER" />
+    <result column="goods_desc" property="roleName" jdbcType="VARCHAR" />
+    <result column="keywords" property="roleExplain" jdbcType="VARCHAR" />
+  </resultMap>
   <select id="selectRolesByUserId" resultType="java.lang.String">
     select r.role_name from role r left join user_role b on r.role_id = b.role_id left join `user` u on u.user_id=b.user_id
     <where>1=1
       <if test="userId !=null and userId !=''">
       and u.user_id=#{userId}
+      </if>
+    </where>
+  </select>
+
+  <select id="selectRoleListByUserId" resultMap="result">
+    select r.* from role r left join user_role b on r.role_id = b.role_id left join `user` u on u.user_id=b.user_id
+    <where>1=1
+      <if test="userId !=null and userId !=''">
+        and u.user_id=#{userId}
       </if>
     </where>
   </select>

@@ -140,25 +140,18 @@ public class WithdrawRecordController extends BaseController{
 
         try {
             Map<String, Object> map = new HashMap();
-            List<Condition> filters = new ArrayList();
-            filters.add(Condition.eq("userId", getCurrentUser().getUserId()));
-            PayAccount payAccount = payAccountService.selectOne(filters);
-            if(payAccount != null){
-                map.put("useBalance", (payAccount.getUseBalance() != null) ? (payAccount.getUseBalance() / 100) : "0.00");
-            }
 
             List<Condition> bankFilters = new ArrayList();
             bankFilters.add(Condition.eq("userId", getCurrentUser().getUserId()));
             PayBankCard payBankCard = payBankCardService.selectOne(bankFilters);
-            if(payBankCard != null){
-                map.put("bankName", payBankCard.getBankName());
-                map.put("cardName", payBankCard.getCardOwner());
-                map.put("cardCode", payBankCard.getCardCode());
+            List<Condition> filters = new ArrayList();
+            filters.add(Condition.eq("userId", getCurrentUser().getUserId()));
+            PayAccount payAccount = payAccountService.selectOne(filters);
+            if(payAccount != null && payBankCard!= null){
+                payBankCard.setPayAccountId(payAccount.getUseBalance());
             }
 
-//            map.put("orgName", organizationService.findOrgByUserId(getCurrentUser().getUserId()).getOrgName());
-
-            model.addAttribute("userInfo", map);
+            model.addAttribute("payBankCard", payBankCard);
         } catch (HookahException e) {
             e.printStackTrace();
         }

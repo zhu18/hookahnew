@@ -1,5 +1,7 @@
 package com.jusfoun.hookah.core.domain.vo;
 
+import java.util.Date;
+
 /**
  * @author huang lei
  * @date 2017/7/7 下午5:31
@@ -11,6 +13,15 @@ public class RolePermissionVo {
     private String roleName;
     private String roleExplain;
     private String permissions;
+    private boolean enable;
+
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
 
     public String getRoleId() {
         return roleId;

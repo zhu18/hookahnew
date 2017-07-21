@@ -98,9 +98,9 @@
                                 <td data-ng-bind="item.orderSn"></td>
                                 <td><span data-ng-bind="item.goodsName"></span></td>
                                 <td data-ng-bind="item.orgName"></td>
-                                <td data-ng-bind="item.orderAmount"></td>
-                                <td data-ng-bind="item.hasSettleAmount"></td>
-                                <td data-ng-bind="item.noSettleAmount"></td>
+                                <td data-ng-bind="item.orderAmount/100"></td>
+                                <td data-ng-bind="item.hasSettleAmount/100"></td>
+                                <td data-ng-bind="item.noSettleAmount/100"></td>
                                 <td data-ng-bind="item.settleStatus==0?'待结算':'已结算'"></td>
                                 <td data-ng-bind="item.orderTime"></td>
                                 <td >

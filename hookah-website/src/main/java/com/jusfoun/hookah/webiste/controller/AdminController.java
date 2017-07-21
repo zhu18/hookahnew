@@ -5,6 +5,7 @@ import com.jusfoun.hookah.core.domain.SysNews;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.rpc.api.SysNewsService;
+import jdk.nashorn.internal.objects.annotations.Property;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;

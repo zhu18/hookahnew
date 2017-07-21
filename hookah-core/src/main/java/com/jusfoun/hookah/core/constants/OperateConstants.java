@@ -11,8 +11,8 @@ import java.util.Map;
  * Created by chenhf on 2017/7/12.
  */
 public class OperateConstants {
-    //将枚举类中的值转化为json
-
+    //关键数据定义
+    public static String[] key_content = {"userName","userId"};
 
     public enum Platform{
         FRONT,BACK
@@ -188,4 +188,7 @@ public class OperateConstants {
             return map;
         }
     }
+
+
+
 }

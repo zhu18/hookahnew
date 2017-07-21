@@ -37,7 +37,7 @@ $(function () {
         $.ajax({
             url:host.website+'/withdrawRecord/applyW',
             data:{
-                money:$("#money").val(),
+                money:$("#applyMoney").val(),
                 payPwd:$("#password").val()
             },
             type:'get',
@@ -48,7 +48,6 @@ $(function () {
             }
         });
     })
-
     // 类型点击事件
     $(".search-criteria .status li").on("click",function () {
         var status=null;

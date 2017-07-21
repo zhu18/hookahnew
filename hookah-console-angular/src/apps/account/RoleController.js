@@ -1,5 +1,21 @@
 class RoleController {
   constructor($scope, $rootScope, permissions, $http, $state, $uibModal, usSpinnerService, growl) {
+
+    $scope.select = function (data) {
+    };
+    $scope.a={};
+    $scope.isEnable = function (data) {
+      if (data == 1) {
+        return true
+      } else {
+        return false;
+      }
+    };
+    $scope.isEnableChange = function () {
+
+      $rootScope.item.isEnable = !$rootScope.item.isEnable;
+
+    };
     $scope.search = function () {
       var promise = $http({
         method: 'GET',
@@ -17,14 +33,47 @@ class RoleController {
       });
     };
     $scope.add = function () {
-      $rootScope.title= "新增角色";
-      $rootScope.item={};
+      $rootScope.title = "新增角色";
+      $rootScope.item = {};
       $rootScope.selectRolePermissions = "";
+
+      var promise = $http({
+        method: 'GET',
+        url: $rootScope.site.apiServer + "/api/permission/tree",
+        // params: {
+        //   currentPage: $rootScope.pagination.currentPage,
+        //   pageSize: $rootScope.pagination.pageSize,
+        //   userName: $scope.userName
+        // }
+      });
+      promise.then(function (res, status, config, headers) {
+        $state.go('account.role.add');
+        console.log("sksks");
+        $rootScope.loadingState = false;
+        $rootScope.tree_data = res.data;
+        growl.addSuccessMessage("数据加载完毕。。。");
+      });
 
     };
     $scope.load = function (event, item) {
-      $rootScope.title= "修改角色";
+      $rootScope.title = "修改角色";
       $rootScope.item = item;
+      var promise1 = $http({
+        method: 'GET',
+        url: $rootScope.site.apiServer + "/api/permission/tree",
+        // params: {
+        //   currentPage: $rootScope.pagination.currentPage,
+        //   pageSize: $rootScope.pagination.pageSize,
+        //   userName: $scope.userName
+        // }
+      });
+      promise1.then(function (res, status, config, headers) {
+        $state.go('account.role.add');
+        console.log("sksks");
+        $rootScope.loadingState = false;
+        $rootScope.tree_data = res.data;
+        growl.addSuccessMessage("数据加载完毕。。。");
+      });
       var promise = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/role/getPermissionsByRoleId",
@@ -72,7 +121,7 @@ class RoleController {
 
     };
     $scope.save = function () {
-
+      console.log($rootScope.item.isEnable)
       var spCodesTemp = "";
       $('input:checkbox[name=permissions]:checked').each(function (i) {
         if (0 == i) {
@@ -83,10 +132,10 @@ class RoleController {
       });
       var data = "";
       if (angular.isUndefined($rootScope.item.roleId)) {
-        data = "roleName=" + $rootScope.item.roleName + "&roleExplain=" + $rootScope.item.roleExplain + "&permissions=" + spCodesTemp;
+        data = "roleName=" + $rootScope.item.roleName + "&roleExplain=" + $rootScope.item.roleExplain + "&enable=" + $rootScope.item.isEnable + "&permissions=" + spCodesTemp;
       } else {
         // data = "roleName=" + $rootScope.item.roleName + "&roleExplain=" + $rootScope.item.roleExplain + "&permissions=" + spCodesTemp;
-        data = "roleId=" + $rootScope.item.roleId + "&roleName=" + $rootScope.item.roleName + "&roleExplain=" + $rootScope.item.roleExplain + "&permissions=" + spCodesTemp;
+        data = "roleId=" + $rootScope.item.roleId + "&roleName=" + $rootScope.item.roleName + "&roleExplain=" + $rootScope.item.roleExplain + "&enable=" + $rootScope.item.isEnable + "&permissions=" + spCodesTemp;
       }
       var promise = $http({
         method: 'POST',

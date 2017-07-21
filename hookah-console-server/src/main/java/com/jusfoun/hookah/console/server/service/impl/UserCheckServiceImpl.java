@@ -2,7 +2,9 @@ package com.jusfoun.hookah.console.server.service.impl;
 
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.dao.UserCheckMapper;
+import com.jusfoun.hookah.core.domain.MessageCode;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.UserCheck;
 import com.jusfoun.hookah.core.domain.vo.UserCheckVo;
@@ -12,6 +14,7 @@ import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.rpc.api.MqSenderService;
 import com.jusfoun.hookah.rpc.api.UserCheckService;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.commons.lang3.StringUtils;
@@ -32,6 +35,9 @@ public class UserCheckServiceImpl extends GenericServiceImpl<UserCheck, String> 
 
     @Resource
     UserService userService;
+
+    @Resource
+    MqSenderService mqSenderService;
 
     //用户类型(0.个人 1.企业)
     public static final String USER_TYPE_PERSON = "0";
@@ -65,8 +71,18 @@ public class UserCheckServiceImpl extends GenericServiceImpl<UserCheck, String> 
             }else if(USER_TYPE_ORG.equals(userCheck.getUserType())){
                 if(userCheck.getCheckStatus().equals((byte)1)){
                     user.setUserType(HookahConstants.UserType.ORGANIZATION_CHECK_OK.getCode());
+                    //发送消息，下发短信/站内信/邮件
+                    MessageCode messageCode = new MessageCode();
+                    messageCode.setCode(HookahConstants.MESSAGE_201);//此处填写相关事件编号
+                    messageCode.setBusinessId(userCheck.getId());//此处填写业务id号（即主键id）
+                    mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_NEW_MESSAGE, messageCode);//将数据添加到队列
                 }else if(userCheck.getCheckStatus().equals((byte)2)){
                     user.setUserType(HookahConstants.UserType.ORGANIZATION_CHECK_FAIL.getCode());
+                    //发送消息，下发短信/站内信/邮件
+                    MessageCode messageCode = new MessageCode();
+                    messageCode.setCode(HookahConstants.MESSAGE_202);//此处填写相关事件编号
+                    messageCode.setBusinessId(userCheck.getId());//此处填写业务id号（即主键id）
+                    mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_NEW_MESSAGE, messageCode);//将数据添加到队列
                 }
             }
             userService.updateByIdSelective(user);

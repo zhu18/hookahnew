@@ -78,7 +78,7 @@ public class RoleApi extends BaseController {
 
 
     @RequestMapping(value = "/getPermissionsByRoleId", method = RequestMethod.GET)
-    public ReturnData getPermissionsByRoleId(String roleId){
+    public ReturnData getPermissionsByRoleId(String roleId) {
         Set<String> permisssions = permissionService.selectPermissionsByRoleId(roleId);
         return ReturnData.success(permisssions);
     }
@@ -89,10 +89,15 @@ public class RoleApi extends BaseController {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         if (StringUtils.isNotBlank(rolePermissionVo.getRoleId()) && StringUtils.isNotBlank(rolePermissionVo.getRoleName()) && StringUtils.isNotBlank(rolePermissionVo.getRoleExplain())) {
-            Role role = new Role();
-            role.setRoleId(rolePermissionVo.getRoleId());
+            Role role = roleService.selectById(rolePermissionVo.getRoleId());
             role.setRoleName(rolePermissionVo.getRoleName());
             role.setRoleExplain(rolePermissionVo.getRoleExplain());
+            if (rolePermissionVo.isEnable()) {
+                role.setIsEnable(Byte.decode("1"));
+            } else {
+                role.setIsEnable(Byte.decode("0"));
+            }
+
             try {
                 roleService.updateById(role);
                 String[] permArray = rolePermissionVo.getPermissions().split(",");
@@ -123,7 +128,11 @@ public class RoleApi extends BaseController {
                     Role role = new Role();
                     role.setRoleName(rolePermissionVo.getRoleName());
                     role.setRoleExplain(rolePermissionVo.getRoleExplain());
-                    role.setIsEnable(Byte.decode("1"));
+                    if (rolePermissionVo.isEnable()) {
+                        role.setIsEnable(Byte.decode("1"));
+                    } else {
+                        role.setIsEnable(Byte.decode("0"));
+                    }
                     role.setAddTime(new Date());
                     Role savedRole = roleService.insert(role);
                     String[] permArray = rolePermissionVo.getPermissions().split(",");
@@ -141,8 +150,6 @@ public class RoleApi extends BaseController {
                 e.printStackTrace();
             }
         }
-
-
         return returnData;
     }
 

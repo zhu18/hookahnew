@@ -27,20 +27,20 @@ var htmlPart = {
 						<div class="user-info-left grid-left">
 							<img width="90" src="${user.headImg}" alt="">
 							<div class="icon-box">
-								<%if(isNotEmpty(userCur.userName)){%>
+								<%if(isNotEmpty(userCur.mobile)){%>
 								<span class="fa fa-mobile-phone font-size-18 color-blue"></span>
 								<%}else{%>
 								<span class="fa fa-mobile-phone font-size-18"></span>
 								<%}%>
-								<%if(isNotEmpty(userCur.mobile)){%>
+								<%if(isNotEmpty(userCur.email)){%>
 								<span class="fa fa-envelope-o font-size-18 color-blue"></span>
 								<%}else{%>
 								<span class="fa fa-envelope-o font-size-18"></span>
 								<%}%>
-								<%if(isNotEmpty(userCur.mobile)){%>
+								<%if(userCur.userType == 1){%>
 								<span class="fa fa-id-card-o font-size-18 "></span>
 								<%}else{%>
-								<span class="fa fa-id-card-o font-size-18"></span>
+								<span class="fa fa-id-card-o font-size-18 color-blue"></span>
 								<%}%>
 							</div>
 						</div>

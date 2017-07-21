@@ -6,7 +6,7 @@
 <div class="row">
   <div class="col-sm-12">
     <div class="console-title console-title-border clearfix">
-      <div class="pull-left"><h5>账号查询</h5></div>
+      <div class="pull-left"><h5>系统用户查询</h5></div>
       <div class="pull-right">
         <button class="btn btn-default" data-ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span> 刷新</button>
         <a ui-sref="account.add" data-ng-click="add()" class="btn btn-primary">新增</a>
@@ -17,7 +17,7 @@
         <div class="searchSection">
           <form class="form-inline">
             <div class="form-group">
-              <label class="control-label" for="form-field-1">账户名</label>
+              <label class="control-label" for="form-field-1">系统用户名</label>
               <input id="form-field-1" name="userName" ng-model="userName" type="text" class="form-control">
               <button type="submit" class="btn btn-primary" data-ng-click="search()">搜索</button>
             </div>
@@ -34,12 +34,13 @@
               <!--</th>-->
               <!--<th class="state-column"></th>-->
               <!--<th>Id</th>-->
-              <th>账户名</th>
+              <th>系统用户名</th>
+              <th>所属角色</th>
               <th class="">邮箱</th>
               <th width="135">电话</th>
               <th width="135">创建时间</th>
               <th width="135">最后登录时间</th>
-              <th width="40">启用</th>
+              <!--<th width="40">启用</th>-->
               <th width="200" class="text-right">操作</th>
             </tr>
             </thead>
@@ -65,6 +66,9 @@
                 </a>
               </td>
               <td>
+                <span class="column-text" data-ng-repeat="role in item.roleList">{{role.roleExplain}}&nbsp;&nbsp;</span>
+              </td>
+              <td>
                 <span class="column-text" ng-bind="item.email"></span>
               </td>
               <td>
@@ -76,9 +80,9 @@
               <td>
                 <span class="" ng-bind="item.lastLoginTime"></span>
               </td>
-              <td>
-                <span class="column-text" ng-bind="item.isEnable | yesNo"></span>
-              </td>
+              <!--<td>-->
+                <!--<span class="column-text" ng-bind="item.isEnable | yesNo"></span>-->
+              <!--</td>-->
               <td class="text-right">
                 <a ui-sref="account.edit" ng-click="load($event,item)">修改</a>
                 <span class="text-explode">|</span>

@@ -19,7 +19,7 @@
           <div class="spacer"></div>
           <div class="userInfos-con">
             <img src="${user.headImg}" alt="">
-            <% if(shiro.hasRole("Admin")){%>
+            <% if(shiro.hasPermission("home")){%>
             <a href="/admin/articleManage" class="a-hover-blue">用户中心</a>
             <a href="${host.admin}/home" >后台管理</a>
             <%}else{%>
@@ -31,7 +31,7 @@
       </li>
       <%}%>
       <li class="display-inline-block">
-        <% if(shiro.hasRole("Admin")){%>
+        <% if(shiro.hasPermission("home")){%>
         <a href="/admin/articleManage">用户中心</a>
       </li>
       <li class="display-inline-block">

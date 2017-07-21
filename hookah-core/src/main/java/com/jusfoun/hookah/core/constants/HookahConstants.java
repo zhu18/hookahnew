@@ -453,4 +453,24 @@ public class HookahConstants {
             return code;
         }
     }
+    /**
+     * 支付密码设置状态
+     * 0    未设置
+     * 1    已设置
+     */
+    public enum PayPassWordStatus {
+
+        isOK((byte)0),
+        isNot((byte)1);
+
+        public byte code;
+
+        PayPassWordStatus(byte code) {
+            this.code = code;
+        }
+
+        public byte getCode() {
+            return code;
+        }
+    }
 }

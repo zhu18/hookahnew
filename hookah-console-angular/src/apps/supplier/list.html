@@ -48,7 +48,7 @@
                     <label class="control-label">联系电话：</label>
                     <input ng-model="contactPhone" type="text" class="form-control" placeholder="请输入联系电话">
                     <div>
-                        <label class="control-label">订单时间：</label>
+                        <label class="control-label">申请日期：</label>
                         <p class="input-group" style="margin-top: 15px">
                             <input style="background-color: transparent;" ng-keypress="$event.preventDefault()"
                                    ng-paste="$event.preventDefault()" type="text" class="form-control"
@@ -102,7 +102,7 @@
                             <tr data-ng-repeat="item in supplierList">
                                 <td>{{$index + 1}}</td>
                                 <td data-ng-bind="item.orgName"></td>
-                                <td data-ng-bind="item.checkUser"></td>
+                                <td data-ng-bind="item.contactName"></td>
                                 <td data-ng-bind="item.contactPhone"></td>
                                 <td>
                                     <span text-length="50" ng-show="item.checkStatus == 2">未通过</span>

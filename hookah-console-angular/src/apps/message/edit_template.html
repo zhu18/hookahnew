@@ -24,12 +24,13 @@
 		<div class="console-title console-title-border clearfix">
 			<div class="pull-left"><h5>添加消息模板</h5></div>
 			<div class="pull-right">
-				<button class="btn btn-default" data-ng-click="returnPage()">
+				<button class="btn btn-default" ui-sref="message.template.search">
 					<span class="glyphicon glyphicon-refresh"></span> 返回
 				</button>
 			</div>
 		</div>
 		<form class="form-horizontal" role="form" id="infoForm" name="infoForm" novalidate>
+			<input type="hidden" name="id" value="{{template.id}}">
 			<div class="box " style="margin-top:20px;margin-left:20px;">
 				<div class="form-group">
 					<label class="col-sm-2 control-label">事件类型:</label>
@@ -42,16 +43,15 @@
 				<div class="form-group">
 					<label class="col-sm-2 control-label">模板类型:</label>
 					<div class="col-sm-5">
-						<label style="font-weight: normal;margin-right: 10px;"><input type="radio" name="templateType" value="2" checked>&nbsp;站内信</label>
-						<label style="font-weight: normal;margin-right: 10px;"><input type="radio" name="templateType" value="0">&nbsp;短信</label>
-						<label style="font-weight: normal;margin-right: 10px;"><input type="radio" name="templateType" value="1">&nbsp;邮件</label>
+						<span><input type="radio" name="templateType" ng-checked="template.templateType == 2" value="2" checked>站内信</span>
+						<span><input type="radio" name="templateType" ng-checked="template.templateType == 0" value="0">短信</span>
+						<span><input type="radio" name="templateType" ng-checked="template.templateType == 1" value="1">邮件</span>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">模板标题:</label>
 					<div class="col-sm-5">
-						<input type="text" style="width:330px;line-height: 25px;border:1px solid #ccc;" name="templateHeader" required data-ng-model="templateHeader" maxlength="40" placeholder="例如：密码找回验证通知"><span style="margin:0 0 0 10px;">{{templateHeader.length < 1 || !templateHeader.length ? '0' :templateHeader.length}}</span>/70
-						<span style="color:red;" data-ng-show="infoForm.templateHeader.$error.required">必填</span>
+						<input type="text" style="width:330px;line-height: 25px;" name="templateHeader" value="{{template.templateHeader}}" placeholder="密码找回验证通知：您正在找回密码。" 　>
 					</div>
 				</div>
 				<div class="form-group">
@@ -64,8 +64,7 @@
 					<!--</div>-->
 					<label class="col-sm-2 control-label">内容:</label>
 					<div class="col-sm-5" style="position: relative">
-						<textarea name="templateContent" id="text" cols="50" rows="8" ng-model="content" maxlength="70" ng-keydown="keyDownFn($event)" required></textarea><span style="margin:0 0 0 10px;">{{content.length < 1 ? '0' : content.length}}</span>/70
-						<span style="color:red;" data-ng-show="infoForm.templateContent.$error.required">必填</span>
+						<textarea name="templateContent" id="text" cols="50" rows="8" ng-model="content" ng-keydown="keyDownFn($event)"></textarea>
 						<div class="info" ng-show="flag" style="position: absolute;top: 142px;left: 15px;background: #fff;border: 1px solid #ccc;padding: 10px;z-index: 10;">
 							<ul class="tipBox" style="list-style:none;">
 								<li ng-repeat="item in list" style="" d-id="{{item.id}}" d-code="{{item.code}}" ng-class='{active:$first}' 　ng-click="list('{{item.code}}')" style="margin-left:-30px;margin-right:10px;">
@@ -86,9 +85,9 @@
 					</div>
 				</div>
 				<div class="form-group flag">
-					<button type="submit" class="btn btn-default" style="margin-left:200px;margin-right:30px;" data-ng-disabled="infoForm.templateHeader.$error.required || infoForm.templateContent.$error.required" data-ng-click="add()">添加
+					<button type="submit" class="btn btn-default" style="margin-left:200px;margin-right:30px;" data-ng-click="editTemplate()">保存
 					</button>
-					<button class="btn btn-default" data-ng-click="returnPage()">取消</button>
+					<button class="btn btn-default">取消</button>
 				</div>
 			</div>
 		</form>

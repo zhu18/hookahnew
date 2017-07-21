@@ -72,9 +72,11 @@ public class SupplierServiceImpl extends GenericServiceImpl<Supplier, String> im
         Supplier list = super.selectOne(filter);
         if (list!=null){
             list.setContactPhone(contactPhone);
+            list.setContactName(contactName);
             supplierMapper.updateByPrimaryKeySelective(list);
         }else {
             supplier.setContactPhone(contactPhone);
+            supplier.setContactName(contactName);
             supplier.setUserId(userId);
             supplier.setAddTime(new Date());
             supplier.setOrgId(organization.getOrgId());

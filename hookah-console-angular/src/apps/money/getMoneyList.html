@@ -36,7 +36,7 @@
                     </button>
                 </div>
 
-                <div><label class="control-label">订单时间：</label>
+                <div><label class="control-label">时间：</label>
                 <p class="input-group" style="margin-top: 15px">
                     <input style="background-color: transparent;" ng-keypress="$event.preventDefault()"
                            ng-paste="$event.preventDefault()" type="text" class="form-control"
@@ -87,14 +87,14 @@
                         <a href="#" ng-bind="item.orderSn"></a>-->
                         流水号
                     </th>
-                    <th style="text-align: center">用户名</th>
-                    <th style="text-align: center">单位名称</th>
+                    <th>用户名</th>
+                    <th>单位名称</th>
                     <th>可用金额</th>
                     <th>申请提现金额</th>
                     <th>申请提现时间</th>
                     <th>审核时间</th>
                     <th>状态</th>
-                    <th width="155" style="text-align:center;">操作</th>
+                    <th width="155" >操作</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -102,12 +102,12 @@
                     <td data-ng-bind="item.serialNo"></td>
                     <td data-ng-bind="item.userName"></td>
                     <td data-ng-bind="item.orgName"></td>
-                    <td style="text-align: center" data-ng-bind="item.useBalance/100"></td>
-                    <td style="text-align: center" data-ng-bind="item.money/100"></td>
+                    <td data-ng-bind="item.useBalance/100"></td>
+                    <td data-ng-bind="item.money/100"></td>
                     <td data-ng-bind="item.addTime"></td>
-                    <td data-ng-bind="item.checckTime"></td>
+                    <td data-ng-bind="item.checkTime"></td>
                     <td data-ng-bind="item.checkStatus == 0 ? '待审核' : (item.checkStatus == 1 ? '审核通过' : '审核未通过')"></td>
-                    <td style="text-align: center"><a href="javascript:void (0)" data-ng-click="getMoneyDetail(item.id)" data-ng-bind="item.checkStatus==0  ? '去审核':'查看'"></a></td>
+                    <td ><a href="javascript:void (0)" data-ng-click="getMoneyDetail(item.id)" data-ng-bind="item.checkStatus==0  ? '去审核':'查看'"></a></td>
                 </tr>
                 </tbody>
             </table>
