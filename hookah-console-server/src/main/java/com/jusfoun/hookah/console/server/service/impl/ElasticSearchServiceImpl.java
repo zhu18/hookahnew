@@ -255,7 +255,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     private List<EsTreeVo<Category>> getCatTypes(EsGoods goods) throws Exception {
         List<EsAgg> listCnt = new ArrayList<>();
         List<EsTreeVo<Category>> categoryList = new ArrayList<>();//添加需要聚合的字段
-        if(goods != null && StringUtils.isNotBlank(goods.getCatIds())) {
+        if(goods != null && StringUtils.isBlank(goods.getGoodsName()) && StringUtils.isNotBlank(goods.getCatIds())) {
             listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_CATEGORY, HookahConstants.GOODS_AGG_CATEGORY_FIELD));
             goods.setCatIds(goods.getCatIds().substring(0, 3));
         }else {
@@ -403,9 +403,13 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
                             EsTreeVo<Category> categoryEsTreeVo2 = transCategory(entry2.getValue());
                             List<EsTreeVo<Category>> childList2 = new ArrayList<>();
                             for (Map.Entry<String, EsAggResult> entry3 : mapLevel3.entrySet()) {
-
+                                if(entry2.getKey().equals(entry3.getKey().substring(0, 6))) {
+                                    childList2.add(transCategory(entry3.getValue()));
+                                }
                             }
-                            childList.add(transCategory(entry2.getValue()));
+                            if(childList2 != null && childList2.size() > 0)
+                                categoryEsTreeVo2.setChildren(childList2);
+                            childList.add(categoryEsTreeVo2);
                         }
                     }
                 }
@@ -414,8 +418,6 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
                 categoryList.add(categoryEsTreeVo);
             }
         }
-
-        System.out.println();
     }
 
     public EsTreeVo<Category> transCategory(EsAggResult result) {
