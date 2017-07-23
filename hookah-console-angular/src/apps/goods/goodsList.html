@@ -30,17 +30,17 @@
 						</div>
 						<div class="form-group" data-ng-if="goodsTypeView == 1">
 							<label class="control-label">审核状态</label>
-							<select ng-model="searchCheckStatus" ng-options="checkStatus.id as checkStatus.name for checkStatus in checkStatuss" style="width: 155px;height: 32px">
+							<select ng-model="queryObj.searchCheckStatus" ng-options="checkStatus.id as checkStatus.name for checkStatus in checkStatuss" style="width: 155px;height: 32px">
 							</select>
 						</div>
 						<div class="form-group" data-ng-if="goodsTypeView == 1">
 							<label class="control-label">上架状态</label>
-							<select ng-model="searchOnSaleStatus" ng-options="onSaleStatus.id as onSaleStatus.name for onSaleStatus in onSaleStatuss" style="width: 155px;height: 32px">
+							<select ng-model="queryObj.searchOnSaleStatus" ng-options="onSaleStatus.id as onSaleStatus.name for onSaleStatus in onSaleStatuss" style="width: 155px;height: 32px">
 							</select>
 						</div>
 						<div class="form-group" data-ng-if="goodsTypeView != 1">
 							<label class="control-label">供应商名称</label>
-							<input ng-model="orgName" type="text" class="form-control">
+							<input ng-model="queryObj.orgName" type="text" class="form-control">
 						</div>
 						<!--<div class="form-group">
 						  <label class="control-label">商品关键字</label>
@@ -50,7 +50,7 @@
 						  <label class="control-label">商品店铺</label>
 						  <input ng-model="searchShop" type="text" class="form-control">
 						</div>-->
-						<button type="submit" class="btn btn-primary" data-ng-click="searchPack()">搜索</button>
+						<button type="submit" class="btn btn-primary" data-ng-click="search()">搜索</button>
 					</form>
 				</div>
 				<div class="gridSection">
