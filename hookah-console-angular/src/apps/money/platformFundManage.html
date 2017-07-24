@@ -146,6 +146,10 @@
                             <span data-ng-show="item.tradeType==3001">+销售货款收入</span>
                             <span data-ng-show="item.tradeType==4001">-销售货款支出</span>
                             <span data-ng-show="item.tradeType==8">冲账</span>
+                            <span data-ng-show="item.tradeType==6003">+冻结划入</span>
+                            <span data-ng-show="item.tradeType==6004">-释放划出</span>
+                            <span data-ng-show="item.tradeType==3007">+手续费收入</span>
+
                         </td>
                         <td data-ng-bind="item.money"></td>
                         <td data-ng-bind="item.tradeStatus == 0 ? '处理中' : (item.tradeStatus == 1 ? '成功' : '失败')"></td>
