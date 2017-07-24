@@ -75,6 +75,8 @@ public class RabbitMQMessageListener {
                             this.sendSMS(t, user.getMobile(), map, messageSendInfo);
                         } else if((user == null || !StringUtils.isNotBlank(user.getUserId()))
                                 && StringUtils.isNotBlank(messageCode.getMobileNo())) {
+                            if(StringUtils.isNotBlank(messageCode.getUserId()))
+                                user.setUserId(messageCode.getUserId());
                             this.sendSMS(t, messageCode.getMobileNo(), map, messageSendInfo);
                         }else {
                             messageSendInfo.setSendType(HookahConstants.MESSAGE_TYPE_SMS);
@@ -113,7 +115,7 @@ public class RabbitMQMessageListener {
                     e.printStackTrace();
                     continue;
                 }
-                if(user != null) {
+                if(user != null && StringUtils.isNotBlank(messageCode.getUserId())) {
                     messageSendInfo.setReceiveUser(user.getUserId());
                 }
                 messageSendInfo.setTemplateId(t.getId());

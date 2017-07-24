@@ -13,6 +13,7 @@ public class MessageCode implements Serializable {
     //手机注册时需要
     private String mobileVerfCode;//手机验证码
     private String mobileNo;//手机号
+    private String userId;
 
     public Integer getCode() {
         return code;
@@ -44,5 +45,13 @@ public class MessageCode implements Serializable {
 
     public void setMobileNo(String mobileNo) {
         this.mobileNo = mobileNo;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

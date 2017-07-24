@@ -7,8 +7,11 @@ import com.jusfoun.hookah.core.domain.MessageCode;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StrUtil;
+import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.MqSenderService;
 import com.jusfoun.hookah.rpc.api.UserService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 
 /**
  * @author huang lei
@@ -47,6 +51,12 @@ public class SmsController {
     @RequestMapping(value = "/sms/send", method = RequestMethod.POST)
     @ResponseBody
     public ReturnData sendSms(@RequestParam String mobile, @RequestParam Integer type, HttpServletRequest request) {
+        Session session = SecurityUtils.getSubject().getSession();
+        HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
+
+        String userId = "";
+        if(userMap != null)
+            userId = userMap.get("userId");
         String code = StrUtil.random(4);
 //        Map<String,String> param = new HashMap<>(1);
 //        param.put("code",code);
@@ -61,6 +71,9 @@ public class SmsController {
             messageCode.setCode(Integer.valueOf(HookahConstants.SmsTypeNew.values()[type].toString()));
             messageCode.setMobileNo(mobile);
             messageCode.setMobileVerfCode(code);
+            if(StringUtils.isNotBlank(userId)) {
+                messageCode.setUserId(userId);
+            }
             //添加短信记录
             mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_NEW_MESSAGE, messageCode);
 
