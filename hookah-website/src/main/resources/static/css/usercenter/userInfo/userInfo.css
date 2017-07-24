@@ -18,8 +18,9 @@
     height: 158px;
     padding: 20px;
 }
-.basic-information-top  .basic-information-top-content .user-info,.basic-information-top  .basic-information-top-content .user-status{
-    width: 49%;
+.basic-information-top  .basic-information-top-content .user-info,.basic-information-top  .basic-information-top-content .user-status,
+.basic-information-top  .basic-information-top-content .user-money{
+    width: 33%;
     display: inline-block;
 }
 .basic-information-top  .basic-information-top-content .user-info{
@@ -65,6 +66,16 @@
 }
 .basic-information-top  .basic-information-top-content .user-info .user-info-right .info span{
     color: #333;
+}
+
+.basic-information-top  .basic-information-top-content .user-money{
+    height: 100%;
+    vertical-align: top;
+    text-align: center;
+    border-right: 1px solid #E5E5E5;
+}
+.basic-information-top  .basic-information-top-content .user-money p{
+    font-size: 16px;
 }
 
 /*用户状态栏*/

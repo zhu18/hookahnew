@@ -77,11 +77,13 @@ var htmlPart = {
 						</div>
 						<!--<a id="enterForum" href="javascript:void(0);"><span class="fa fa-twitch"></span>进入论坛</a>-->
 					</div>
-					<!--<div class="user-money">-->
-						<!--<p>账户余额:<span class="account-balance"></span><a href="">充值</a></p>-->
-						<!--<p>可用余额:<span class="available-balance"></span></p>-->
-						<!--<p>冻结余额:<span class="frozen-balance"></span></p>-->
-					<!--</div>-->
+					<div class="user-money">
+						<p class="margin-top-40">账户余额:</p>
+						<p><span class="account-balance">￥155111.00</span>
+							<a href="">充值</a></p>
+						<p>可用余额:<span class="available-balance">￥11111.00</span></p>
+						<p>冻结余额:<span class="frozen-balance">￥11111.00</span></p>
+					</div>
 					<div class="user-status ">
 						<%if(userCur.userType == 0){%>
 
@@ -117,7 +119,7 @@ var htmlPart = {
 								<span class="font-size-18">您的单位会员认证审核<span class="color-green">已通过</span>！</span>
 							</p>
 							<p class="margin-top-10">
-								<a href="/usercenter/becomingSupplierStep1" class="a-color-blue font-size-18">我要成为供应商</a>
+								<a href="/usercenter/becomingSupplierStep1" class="large-btn font-size-18">我要成为供应商</a>
 							</p>
 						</div>
 						<%}else if(userCur.userType == 5){%>
