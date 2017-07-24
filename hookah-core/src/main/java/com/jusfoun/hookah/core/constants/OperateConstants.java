@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public class OperateConstants {
     //关键数据定义
-    public static String[] key_content = {"userName","userId","mobile","orgName","contactPhone","goodsId","goodsName","goodsSn"};
+    public static String[] key_content = {"userName","userId","mobile","orgName","contactPhone","goodsId","goodsName","goodsSn","commentIds","id"};
 
     public enum Platform{
         FRONT,BACK

@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.console.server.api.message;
 
 import com.jusfoun.hookah.console.server.controller.BaseController;
+import com.jusfoun.hookah.core.annotation.Log;
 import com.jusfoun.hookah.core.dao.GeneralCodesMapper;
 import com.jusfoun.hookah.core.domain.GeneralCodes;
 import com.jusfoun.hookah.core.domain.MessageTemplate;
@@ -121,6 +122,7 @@ public class MessageApi extends BaseController{
     }
 
     //添加模板
+    @Log(platform = "back",logType = "b011",optType = "insert")
     @RequestMapping(value = "/template/add")
     public ReturnData addTemplate(MessageTemplate messageTemplate){
         User user = null;

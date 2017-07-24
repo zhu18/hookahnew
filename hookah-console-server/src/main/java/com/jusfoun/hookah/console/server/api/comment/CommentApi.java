@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.console.server.api.comment;
 
 import com.jusfoun.hookah.console.server.controller.BaseController;
+import com.jusfoun.hookah.core.annotation.Log;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.CommentService;
 import org.slf4j.Logger;
@@ -39,7 +40,7 @@ public class CommentApi extends BaseController {
         return commentService.findByCondition(params);
 
     }
-
+    @Log(platform = "back",logType = "b008",optType = "insert")
     @RequestMapping("/checkComments")
     public ReturnData checkComments(String commentIds,String status){
         Map<String,String> params=new HashMap<>();
