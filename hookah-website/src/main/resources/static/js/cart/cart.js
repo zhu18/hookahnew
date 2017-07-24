@@ -44,7 +44,7 @@ $("#delBtn").click(function () {
 			contentType: 'application/json',
 			success: function (msg) {
 				if (msg.code == 1) {
-					$.alert('删除成功')
+					$.alert('删除成功');
 					$("[name=items]:checkbox:checked").each(function () {
 						$(this).parents('.order-body').remove();
 					});
@@ -156,6 +156,7 @@ function kkdown(that, e) {
 
 }
 function delThis(id,that) {
+    var length=$(".cart-list-content .order-body").length;
 	$.ajax({
 		type: "get",
 		url: '/cart/delete/'+id,
@@ -164,6 +165,9 @@ function delThis(id,that) {
 				$.alert('删除成功');
 				$(that).parents('.order-body').remove();
                 totalAmountFn();
+                if(length== 1){
+                    $('.cart-box').html('<div class="noDataBox">购物车没有商品 >>><a href="/">去购物</a></div>');
+				}
 			} else {
 				$.alert(msg.message);
 			}

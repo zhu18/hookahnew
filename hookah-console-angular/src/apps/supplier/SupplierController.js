@@ -6,7 +6,7 @@ class CommentController {
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/supplier/all",
         params: {
-          checkStatus: $scope.checkStatus ? $scope.checkStatus : null,//审核状态
+          checkStatus: $scope.checkStatus == 0 ? '0' : ($scope.checkStatus ? $scope.checkStatus : null),//审核状态
           contactPhone: $scope.contactPhone ? $scope.contactPhone : null,
           orgName: $scope.orgName ? $scope.orgName : null,
           startDate: $scope.startDate ? format($scope.startDate, 'yyyy-MM-dd HH:mm:ss') : null,
