@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.console.server.api.supplier;
 
 import com.jusfoun.hookah.console.server.controller.BaseController;
+import com.jusfoun.hookah.core.annotation.Log;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.Supplier;
@@ -84,7 +85,7 @@ public class SupplierApi extends BaseController {
         }
         return ReturnData.success(page);
     }
-
+    @Log(platform = "back",logType = "b003",optType = "insert")
     @RequestMapping(value = "/updateInfo", method = RequestMethod.POST)
     public ReturnData updateInfo(String id, String checkContent, Byte checkStatus){
         try {

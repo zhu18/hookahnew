@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.console.server.api.order;
 
 import com.jusfoun.hookah.console.server.controller.BaseController;
+import com.jusfoun.hookah.core.annotation.Log;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.User;
@@ -116,6 +117,7 @@ public class OrderApi extends BaseController{
      * @return
      * @author lt
      */
+    @Log(platform = "back",logType = "b007",optType = "insert")
     @RequestMapping(value = "/updRemark", method = RequestMethod.POST)
     public ReturnData updateRemark(MgOrderGoods mgOrderGoods){
         try {
@@ -137,6 +139,7 @@ public class OrderApi extends BaseController{
      * @return
      * @author lt
      */
+    @Log(platform = "back",logType = "b007",optType = "insert")
     @RequestMapping(value = "/updConcatInfo", method = RequestMethod.POST)
     public ReturnData updateConcatInfo(String orderId,String goodsId,String concatName,String concatPhone,String concatEmail){
         try {

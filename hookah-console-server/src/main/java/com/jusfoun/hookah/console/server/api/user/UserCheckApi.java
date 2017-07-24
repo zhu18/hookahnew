@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.console.server.api.user;
 
 import com.jusfoun.hookah.console.server.controller.BaseController;
+import com.jusfoun.hookah.core.annotation.Log;
 import com.jusfoun.hookah.core.domain.Organization;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.UserCheck;
@@ -46,6 +47,7 @@ public class UserCheckApi extends BaseController{
      * @param userCheck
      * @return
      */
+    @Log(platform = "back",logType = "b002",optType = "insert")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ReturnData goodsCheck(UserCheck userCheck) throws HookahException{
         userCheck.setCheckUser(getCurrentUser().getUserName());
