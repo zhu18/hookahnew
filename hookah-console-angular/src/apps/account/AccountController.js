@@ -111,7 +111,7 @@ class AccountController {
     $scope.editPassword = function (event, item) {
       var promise = $http({
         method: 'POST',
-        url: $rootScope.site.apiServer + "/api/account/upd",
+        url: $rootScope.site.apiServer + "/api/account/editPass",
         data: $("#editPasswordForm").serialize()
       });
       promise.then(function (res, status, config, headers) {
@@ -142,6 +142,9 @@ class AccountController {
         return false;
       }
 
+    }
+    $scope.refresh = function(){
+      $scope.search();
     }
   }
 }
