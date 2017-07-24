@@ -94,6 +94,7 @@ public class SettleRecordServiceImpl extends GenericServiceImpl<SettleRecord, Lo
             WaitSettleRecord waitSettleRecord = new WaitSettleRecord();
             waitSettleRecord.setId(record.getId());
             waitSettleRecord.setSettleStatus(HookahConstants.HAS_SETTLE_STATUS);
+            waitSettleRecord.setUpdateTime(new Date());
             waitSettleRecordService.updateByIdSelective(waitSettleRecord);
         }
 

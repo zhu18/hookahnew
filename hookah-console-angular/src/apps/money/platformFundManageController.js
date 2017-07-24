@@ -5,7 +5,6 @@ class platformFundManageController {
   constructor($scope, $rootScope, $state, $http, $stateParams, growl) {
     $scope.userBaseInfo = $stateParams.item;
 
-
     $scope.baseInfo = function () {
       var promise = $http({
         method: 'GET',
@@ -23,7 +22,6 @@ class platformFundManageController {
     };
     $scope.baseInfo();
     $scope.search = function () {
-
       if ($scope.startDate !== null && $scope.endDate !== null && ($scope.startDate > $scope.endDate)) {
         //继续
         alert('开始时间必须大于结束时间！请重新选择日期。');
@@ -148,7 +146,6 @@ class platformFundManageController {
       }
       return '';
     }
-
     $scope.setDate = function (dataFormat, number) {
       var now = new Date();
       var date = new Date(now.getTime() - 1);
@@ -169,6 +166,7 @@ class platformFundManageController {
       $scope.endDate = new Date();
 
     }
+    $scope.setDate('month',1);
     // 日历插件结束
     $scope.back = function () {
       history.back();

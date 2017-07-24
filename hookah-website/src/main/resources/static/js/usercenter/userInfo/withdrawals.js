@@ -22,7 +22,7 @@ function loadPageData(data){
             html+="<td>"+list[i].addTime+"</td>" ;
             html+="<td>￥"+(list[i].money / 100).toFixed(2)+"</td>" ;
             html+="<td>"+list[i].checkStatus +"</td>" ;
-            html+="<td><a href=''>查看详情</td>" ;
+            html+="<td><a href='javascript:void(0)' onclick='getDetail("+list[i].id+")'>查看详情</td>" ;
             html+="</tr >" ;
         }
         $('.ithdrawals-down-list-content').html(html);
@@ -30,9 +30,12 @@ function loadPageData(data){
         $('.ithdrawals-down-list-content').html('<tr class="no"><td colspan="8">暂无数据</td></tr>');
     }
 }
-
+function getDetail(id) {
+    window.location.href= host.website+'/usercenter/withdrawalStep2?id='+id;
+}
 
 $(function () {
+
     $("#goPay").on("click",function () {
         $.ajax({
             url:host.website+'/withdrawRecord/applyW',

@@ -27,47 +27,115 @@
                     <thead>
                     <tr>
                         <th></th>
-                        <th>浏览次数（PV）</th>
-                        <th>独立访客（UV）</th>
-                        <th>访问次数</th>
-                        <th>活跃用户数</th>
+                        <th>订单数</th>
+                        <th>有效订单金额</th>
+                        <th>有效订单数</th>
+                        <th>评论数</th>
                     </tr>
                     </thead>
                     <tr>
                         <td>今日</td>
-                        <td data-ng-bind="dataInfo.PUV.pvdata"></td>
-                        <td data-ng-bind="dataInfo.PUV.uvdata"></td>
-                        <td data-ng-bind="dataInfo.accessCount"></td>
-                        <td data-ng-bind="dataInfo.activeUserCount"></td>
+                        <td data-ng-bind="dataInfo.orderNum"></td>
+                        <td data-ng-bind="dataInfo.effectiveOrderAmount"></td>
+                        <td data-ng-bind="dataInfo.effectiveOrderNum"></td>
+                        <td data-ng-bind="dataInfo.commentNum"></td>
                     </tr>
                 </table>
             </div>
             <p class="row"></p>
-            <div class="col-sm-7">
+            <div class="col-sm-5">
                 <table class="table">
                     <thead>
                     <tr>
                         <th></th>
-                        <th>新注册会员</th>
-                        <th>注册会员总数</th>
-                        <th>购买过商品会员</th>
-                        <th>已认证会员</th>
-                        <th>待审核会员</th>
-                        <th>未认证会员</th>
+                        <th>已付款订单数</th>
+                        <th>待付款订单数</th>
+                        <th>已取消订单数</th>
+                        <th>已售商品数</th>
                     </tr>
                     </thead>
                     <tr>
                         <td>今日</td>
-                        <td data-ng-bind="dataInfo.newUserCount"></td>
-                        <td data-ng-bind="dataInfo.newUserSum"></td>
-                        <td data-ng-bind="dataInfo.buyGoodsCount"></td>
-                        <td data-ng-bind="dataInfo.attestCount"></td>
-                        <td data-ng-bind="dataInfo.dCheckCount"></td>
-                        <td data-ng-bind="dataInfo.noAttestCount"></td>
+                        <td data-ng-bind="dataInfo.payEDOrderNum"></td>
+                        <td data-ng-bind="dataInfo.payingOrderNum"></td>
+                        <td data-ng-bind="dataInfo.cancelOrderNum"></td>
+                        <td data-ng-bind="dataInfo.goodsSoldNum"></td>
                     </tr>
                 </table>
-
             </div>
+            <p class="row"></p>
+            <div class="col-sm-12">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>商品分类数</th>
+                        <th>数据源交易金额</th>
+                        <th>数据模型交易金额</th>
+                        <th>可视化交易金额</th>
+                        <th>应用交易金额</th>
+                        <th>采集工具交易金额</th>
+                        <th>清洗工具交易金额</th>
+                        <th>分析平台交易金额</th>
+                        <th>开发平台交易金额</th>
+                        <th>管理平台交易金额</th>
+                        <th>安全组件交易金额</th>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td>今日</td>
+                        <td data-ng-bind="dataInfo.goodsClassification"></td>
+                        <td data-ng-bind="dataInfo.dataSourceMoney"></td>
+                        <td data-ng-bind="dataInfo.dataModelMoney"></td>
+                        <td data-ng-bind="dataInfo.visualizationMoney"></td>
+                        <td data-ng-bind="dataInfo.applicationMoney"></td>
+                        <td data-ng-bind="dataInfo.acquisitionMoney"></td>
+                        <td data-ng-bind="dataInfo.cleaningMoney"></td>
+                        <td data-ng-bind="dataInfo.analysisMoney"></td>
+                        <td data-ng-bind="dataInfo.developmentMoney"></td>
+                        <td data-ng-bind="dataInfo.managementMoney"></td>
+                        <td data-ng-bind="dataInfo.securityMoney"></td>
+                    </tr>
+                </table>
+            </div>
+            <p class="row"></p>
+            <div class="col-sm-12">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>已上架商品数</th>
+                        <th>下架商品数</th>
+                        <th>数据源上架数</th>
+                        <th>数据模型上架数</th>
+                        <th>可视化上架数</th>
+                        <th>应用上架数</th>
+                        <th>采集工具上架数</th>
+                        <th>清洗工具上架数</th>
+                        <th>分析平台上架数</th>
+                        <th>开发平台上架数</th>
+                        <th>管理平台上架数</th>
+                        <th>安全组件上架数</th>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td>今日</td>
+                        <td data-ng-bind="dataInfo.isDeNoGoods"></td>
+                        <td data-ng-bind="dataInfo.isDeGoods"></td>
+                        <td data-ng-bind="dataInfo.goodsByDataSource"></td>
+                        <td data-ng-bind="dataInfo.goodsByDataModel"></td>
+                        <td data-ng-bind="dataInfo.goodsByVisualization"></td>
+                        <td data-ng-bind="dataInfo.goodsByApplication"></td>
+                        <td data-ng-bind="dataInfo.goodsByAcquisition"></td>
+                        <td data-ng-bind="dataInfo.goodsByCleaning"></td>
+                        <td data-ng-bind="dataInfo.goodsByAnalysis"></td>
+                        <td data-ng-bind="dataInfo.goodsByDevelopment"></td>
+                        <td data-ng-bind="dataInfo.goodsByManagement"></td>
+                        <td data-ng-bind="dataInfo.goodsBySecurity"></td>
+                    </tr>
+                </table>
+            </div>
+
         </div>
     </div>
 </div>
