@@ -146,7 +146,7 @@ public class User extends GenericModel {
     private String contactName;
     private String contactPhone;
     private String contactAddress;
-    private Integer postCode;
+    private String postCode;
 
     @Transient
     private List<Role> roleList;
@@ -507,11 +507,11 @@ public class User extends GenericModel {
         this.contactAddress = contactAddress;
     }
 
-    public Integer getPostCode() {
+    public String getPostCode() {
         return postCode;
     }
 
-    public void setPostCode(Integer postCode) {
+    public void setPostCode(String postCode) {
         this.postCode = postCode;
     }
 }
