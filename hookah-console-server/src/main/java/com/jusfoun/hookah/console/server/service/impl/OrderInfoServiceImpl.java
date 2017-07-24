@@ -571,6 +571,8 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         //修改mongo
         OrderInfoVo orderInfoVo = mgOrderInfoService.selectById(orderInfo.getOrderId());
         mgOrderInfoService.delete(orderInfo.getOrderId());
+        orderInfoVo.setPayId(payMode.toString());
+        orderInfoVo.setPayName(payName);
         orderInfoVo.setPayTime(new Date());
         orderInfoVo.setLastmodify(new Date());
         orderInfoVo.setPayStatus(payStatus);
@@ -580,6 +582,8 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         List<MgGoodsOrder> mgGoodsOrders = mgGoodsOrderService.selectList(filters);
         for (MgGoodsOrder mgGoodsOrder:mgGoodsOrders){
             mgGoodsOrderService.delete(mgGoodsOrder.getOrderId());
+            mgGoodsOrder.setPayId(payMode.toString());
+            mgGoodsOrder.setPayName(payName);
             mgGoodsOrder.setPayTime(new Date());
             mgGoodsOrder.setLastmodify(new Date());
             mgGoodsOrder.setPayStatus(payStatus);
@@ -687,18 +691,29 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                         param.put("goodsId", goods.getGoodsId());
                         param.put("totalCount", new Long(goods.getGoodsNumber() * goods.getFormatNumber()).toString());
 
-//                        apiParam.put("totalCount", new Long(goods.getGoodsNumber() * goods.getFormatNumber()).toString());
-//                        apiParam.put("userId", orderInfoVo.getUserId());
-//                        apiParam.put("orderSn", orderInfoVo.getOrderSn());
-//                        apiParam.put("goodsSn", goods.getOrderSn());
-//                        apiParam.put("type", goods.getGoodsFormat());
-//                        apiParam.put("url", goods.getApiInfo().getApiUrl());
-                        list.add(param);
+                        apiParam.put("totalCount", new Long(goods.getGoodsNumber() * goods.getFormatNumber()).toString());
+                        apiParam.put("userId", orderInfoVo.getUserId());
+                        apiParam.put("orderSn", orderInfoVo.getOrderSn());
+                        apiParam.put("goodsSn", goods.getOrderSn());
+                        apiParam.put("url", goods.getApiInfo().getApiUrl());
+                        switch (goods.getGoodsFormat()){
+                            case 0:
+                                apiParam.put("type", 1);
+                                break;
+                            case 1:case 2:
+                                apiParam.put("type", 2);
+                                Date startTime = orderInfoVo.getPayTime();
+                                apiParam.put("startTime",startTime);
+                                Date endTime = null;
+                                apiParam.put("endTime",endTime);
+                                break;
+                        }
+                        list.add(apiParam);
                     });
-            Map rs = HttpClientUtil.PostMethod(url, JsonUtils.toJson(list));
-            logger.info("订单{}商品放api平台返回信息：{}", orderInfo.getOrderId(),  JsonUtils.toJson(rs));
-//            Map apiRs = HttpClientUtil.PostMethod(apiUrl,JsonUtils.toJson(list));
-//            logger.info("订单{}API商品插入网管接口：{}", orderInfo.getOrderId(),  JsonUtils.toJson(apiRs));
+//            Map rs = HttpClientUtil.PostMethod(url, JsonUtils.toJson(list));
+//            logger.info("订单{}商品放api平台返回信息：{}", orderInfo.getOrderId(),  JsonUtils.toJson(rs));
+            Map apiRs = HttpClientUtil.PostMethod(apiUrl,JsonUtils.toJson(list));
+            logger.info("订单{}API商品插入网管接口：{}", orderInfo.getOrderId(),  JsonUtils.toJson(apiRs));
         }catch (Exception e){
             e.printStackTrace();
             logger.error("发送商品到api平台发生异常");
