@@ -304,7 +304,7 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		List<Condition> filter = new ArrayList<>();
 		filter.add(Condition.eq("orderSn",orderInfo.getOrderSn()));
 		List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
-		if (payTradeRecords==null){
+		if (payTradeRecords==null || payTradeRecords.size() == 0){
 			PayTradeRecord payTradeRecord = new PayTradeRecord();
 			payTradeRecord.setUserId(orderInfo.getUserId());
 			payTradeRecord.setMoney(orderInfo.getOrderAmount());
@@ -328,7 +328,7 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		List<Condition> filter = new ArrayList<>();
 		filter.add(Condition.eq("orderSn",orderInfo.getOrderSn()));
 		List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
-		if (payTradeRecords==null){
+		if (payTradeRecords==null || payTradeRecords.size() == 0){
 			//插内部消费流水
 			PayTradeRecord payTradeRecord = new PayTradeRecord();
 			payTradeRecord.setUserId(orderInfo.getUserId());
