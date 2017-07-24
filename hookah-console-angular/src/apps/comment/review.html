@@ -90,9 +90,8 @@
                     </p>
                     <button style="margin-top: 5px" type="submit" class="btn btn-primary" data-ng-click="search()">搜索
                     </button>
-
                 </div>
-                <div data-ng-show="status== null||status==0">
+                <div data-ng-show="status== null||status==0 && commentList.length>0" >
                     <label class="btn btn-default"><input type="checkbox" ng-model="master"
                                                           ng-click="all(master)">全选</label>
                     <button class="btn btn-default" ng-click="MultipleCheck(1)">批量通过</button>
@@ -143,7 +142,7 @@
                         </tr>
                         </tbody>
                     </table>
-                    <table ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">
+                    <table data-ng-show="commentList.length!==0">
                         <tr>
                             <td colspan="9">
                                 <div class="pull-right page-box">
@@ -181,8 +180,8 @@
 -->
 
                 </div>
-                <div class="simple-grid-none-data-wrap">
-                    <div class="simple-grid-none-data text-center " ng-if="showNoneDataInfoTip && !loadingState">
+                <div class="simple-grid-none-data-wrap" data-ng-show="commentList.length==0">
+                    <div class="simple-grid-none-data text-center">
                         <div class="row-padding row-margin text-center">
                             <span class="text-size-24 blue icon-info-1" style="vertical-align: middle"></span>
                             <div class="text-size-18 tip-text inline-block">没有查询到符合条件的记录</div>
