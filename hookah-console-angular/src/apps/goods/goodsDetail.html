@@ -151,7 +151,7 @@
 							<p ng-bind-html="editData.appCase | trustHtml"></p>
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="form-group" data-ng-if="editData.goodsType != 1">
 						<label class="col-sm-2 control-label">交付方式：</label>
 						<div class="col-sm-5">
 							<label class="radio-inline">

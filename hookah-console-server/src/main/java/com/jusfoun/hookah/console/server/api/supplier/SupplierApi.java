@@ -63,7 +63,8 @@ public class SupplierApi extends BaseController {
                 filters.add(Condition.ge("addTime",DateUtils.getDate(startDate)));
             }
             if (StringUtils.isNotBlank(endDate)){
-                filters.add(Condition.le("addTime", DateUtils.getDate(endDate)));
+                String endTime = DateUtils.transferDate(endDate);
+                filters.add(Condition.le("addTime", DateUtils.getDate(endTime)));
             }
 
             int pageNumberNew = HookahConstants.PAGE_NUM;
@@ -75,7 +76,8 @@ public class SupplierApi extends BaseController {
             if (StringUtils.isNotBlank(pageSize)) {
                 pageSizeNew = Integer.parseInt(pageSize);
             }
-            page = supplierService.selectListInCondition(pageNumberNew, pageSizeNew, filters, orderBys);
+//            page = supplierService.selectListInCondition(pageNumberNew, pageSizeNew, filters, orderBys);
+            page = supplierService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
         }catch (Exception e){
             e.printStackTrace();
             return ReturnData.error(e.getMessage());

@@ -82,7 +82,7 @@ public class SupplierController extends BaseController{
     }
 
     @RequestMapping(value = "/updateContactInfo", method = RequestMethod.POST)
-    public ReturnData updateContactInfo(String contactName, String contactPhone, String contactAddress, Integer postCode){
+    public ReturnData updateContactInfo(String contactName, String contactPhone, String contactAddress, String postCode){
         try {
             String userId = this.getCurrentUser().getUserId();
             User user = userService.selectById(userId);

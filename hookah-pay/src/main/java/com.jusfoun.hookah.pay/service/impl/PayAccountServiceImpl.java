@@ -304,7 +304,7 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		List<Condition> filter = new ArrayList<>();
 		filter.add(Condition.eq("orderSn",orderInfo.getOrderSn()));
 		List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
-		if (payTradeRecords==null){
+		if (payTradeRecords==null || payTradeRecords.size() == 0){
 			PayTradeRecord payTradeRecord = new PayTradeRecord();
 			payTradeRecord.setUserId(orderInfo.getUserId());
 			payTradeRecord.setMoney(orderInfo.getOrderAmount());
@@ -328,7 +328,7 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		List<Condition> filter = new ArrayList<>();
 		filter.add(Condition.eq("orderSn",orderInfo.getOrderSn()));
 		List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
-		if (payTradeRecords==null){
+		if (payTradeRecords==null || payTradeRecords.size() == 0){
 			//插内部消费流水
 			PayTradeRecord payTradeRecord = new PayTradeRecord();
 			payTradeRecord.setUserId(orderInfo.getUserId());
@@ -631,6 +631,25 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 			e.printStackTrace();
 		}
 		return returnData;
-	};
+	}
+
+    /**
+     * 查询虚拟账户信息
+     * @param userId
+     * @return
+     */
+    @Override
+    public PayAccount findPayAccountByUserId(String userId) {
+        List<Condition> filters = null;
+        if (StringUtils.isNotBlank(userId)) {
+            filters=new ArrayList();
+            filters.add(Condition.eq("userId", userId));
+            PayAccount payAccount=super.selectOne(filters);
+            payAccount.setPayPassword("");
+            return payAccount;
+        }else{
+            return new PayAccount();
+        }
+    }
 
 }
