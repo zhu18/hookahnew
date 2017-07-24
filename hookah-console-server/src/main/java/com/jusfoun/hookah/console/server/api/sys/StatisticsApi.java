@@ -23,7 +23,7 @@ public class StatisticsApi {
     @Resource
     OrderInfoService orderInfoService;
 
-    @RequestMapping(value = "/data", method = RequestMethod.GET)
+    @RequestMapping(value = "/orderData", method = RequestMethod.GET)
     public ReturnData getListInPage(String currentPage, String pageSize,
                                     String goodsName, String goodsSn) {
         Map<String,Object> map=new HashMap<String,Object>();
