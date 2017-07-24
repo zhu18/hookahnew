@@ -92,7 +92,7 @@ public class PayBankCardController extends BaseController{
                 filters.add(Condition.eq("userId", userId));
             }
             boolean exists = payBankCardService.exists(filters);
-            if(exists == true){
+            if(exists == false){
                 PayAccount payAccount = payAccountService.selectOne(filters);
                 PayBankCard pay= new PayBankCard();
                 pay.setUserId(userId);
