@@ -10,6 +10,9 @@ var goodsTypeVal = $('#parentSelect').val();
 var categoryHtml = '';
 var ajaxUrl = null;
 var goodsTypeId = null;
+var regex = {  //手机号验证正则
+	mobile: /^0?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8}$/
+};
 E.config.uploadImgUrl = host.static+'/upload/wangeditor';//上传图片
 E.config.uploadImgFileName = 'filename';
 E.config.menuFixed = false;//关闭菜单栏fixed
