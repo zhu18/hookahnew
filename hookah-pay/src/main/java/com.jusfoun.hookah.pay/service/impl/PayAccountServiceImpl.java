@@ -259,23 +259,24 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 	 * @param payPassword   支付密码
 	 */
 	public boolean resetPayPassword(String userId, String payPassword) {
-		List<Condition> filters = new ArrayList<>();
-		if(StringUtils.isNotBlank(userId)){
-			filters.add(Condition.eq("userId", userId));
-		}
-		//验证userId是否正确
-		PayAccount payAccount = super.selectOne(filters);
-		if (payAccount != null ) {
-			//更改支付密码设置状态
-			payAccount.setPaymentPasswordStatus(HookahConstants.PayPassWordStatus.isOK.getCode());
-			payAccount.setPayPassword(payPassword);
-			if(updateById(payAccount)>0)
-				return true;
-			else
-				return  false;
-		}else{
-			return false;
-		}
+//		List<Condition> filters = new ArrayList<>();
+//		if(StringUtils.isNotBlank(userId)){
+//			filters.add(Condition.eq("userId", userId));
+//		}
+//		//验证userId是否正确
+//		PayAccount payAccount = super.selectOne(filters);
+//		if (payAccount != null ) {
+//			//更改支付密码设置状态
+//			payAccount.setPaymentPasswordStatus(HookahConstants.PayPassWordStatus.isOK.getCode());
+//			payAccount.setPayPassword(payPassword);
+//			if(updateById(payAccount)>0)
+//				return true;
+//			else
+//				return  false;
+//		}else{
+//			return false;
+//		}
+		return false;
 	}
 
     /**
