@@ -1,17 +1,17 @@
 package com.jusfoun.hookah.webiste.controller;
 
-import com.jusfoun.hookah.core.domain.PayAccount;
-import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.exception.HookahException;
-import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
-import com.jusfoun.hookah.core.utils.StringUtils;
+import com.jusfoun.hookah.core.utils.StrUtil;
 import com.jusfoun.hookah.rpc.api.PayAccountService;
 import com.jusfoun.hookah.rpc.api.PayCoreService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,8 +19,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.*;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created by admin on 2017/7/18.
@@ -37,15 +41,20 @@ public class PayAccountController extends BaseController{
     PayCoreService payCoreService;
 
     @RequestMapping("/userRecharge")
-    @ResponseBody
-    public String userRecharge(String money){
+    public Object userRecharge(String money, HttpServletResponse response) throws IOException {
+
         Session session = SecurityUtils.getSubject().getSession();
         HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
         Map<String,String> params = new HashMap<>();
         params.put("userId",userMap.get("userId"));
         params.put("money",money);
         ReturnData r=payAccountService.userRecharge(params);
-        return r.getCode().equals(ExceptionConst.Success) ? r.getMessage() : JsonUtils.toJson(r);
+        if(r.getCode().equals(ExceptionConst.Success) && StrUtil.notBlank(r.getMessage())){
+            return new ResponseEntity<String>(r.getMessage(), HttpStatus.OK);
+
+        }else
+            return "redirect:/404.html";
+       // return r.getCode().equals(ExceptionConst.Success) ? r.getMessage() : JsonUtils.toJson(r);
     }
 
     /**
@@ -156,7 +165,7 @@ public class PayAccountController extends BaseController{
                         : valueStr + values[i] + ",";
             }
             //乱码解决，这段代码在出现乱码时使用。如果mysign和sign不相等也可以使用这段代码转化
-            valueStr = new String(valueStr.getBytes("ISO-8859-1"), "UTF-8");
+            //valueStr = new String(valueStr.getBytes("ISO-8859-1"), "UTF-8");
             params.put(name, valueStr);
         }
         return  params;

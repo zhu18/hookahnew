@@ -175,26 +175,27 @@ public class OrderInfoController extends BaseController {
             allFilters.add(Condition.eq("forceDeleted",0));
 
             if (StringUtils.isNotBlank(startDate)) {
-                if(payStatus==1){
+                if(payStatus != null && payStatus == 1){
                     paidFilters.add(Condition.ge("addTime", DateUtils.getDate(startDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
-                }else{
+                }else if (payStatus != null && payStatus == 0){
                     unpaidFilters.add(Condition.ge("addTime", DateUtils.getDate(startDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
                 }
                 listFilters.add(Condition.ge("addTime", DateUtils.getDate(startDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
             }
             if (StringUtils.isNotBlank(endDate)) {
-                if(payStatus==1){
+                if(payStatus != null && payStatus == 1){
                     paidFilters.add(Condition.le("addTime", DateUtils.getDate(endDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
-                }else{
+                }else if (payStatus != null && payStatus == 0){
                     unpaidFilters.add(Condition.le("addTime", DateUtils.getDate(endDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
                 }
                 listFilters.add(Condition.le("addTime", DateUtils.getDate(endDate,DateUtils.DEFAULT_DATE_TIME_FORMAT)));
             }
             if (commentFlag != null) {
-                if(payStatus==1){
+                if(payStatus != null && payStatus == 1){
                     paidFilters.add(Condition.eq("commentFlag", commentFlag));
                 }
                 listFilters.add(Condition.eq("commentFlag", commentFlag));
+                listFilters.add(Condition.eq("payStatus",2));
             }
             if (payStatus != null) {
                 if(payStatus==1) {
@@ -277,7 +278,7 @@ public class OrderInfoController extends BaseController {
             if (domainName != null) {
                 listFilters.add(Condition.like("domainName", "%" + domainName + "%"));
             }
-            listFilters.add(Condition.eq("isDeleted", 0));
+//            listFilters.add(Condition.eq("isDeleted", 0));
             listFilters.add(Condition.eq("forceDeleted", 0));
 
             //查询列表
@@ -330,7 +331,7 @@ public class OrderInfoController extends BaseController {
                 filters.add(Condition.like("domainName", "%" + domainName + "%"));
             }
             filters.add(Condition.eq("userId", userId));
-            filters.add(Condition.eq("isDeleted", 0));
+//            filters.add(Condition.eq("isDeleted", 0));
             filters.add(Condition.eq("payStatus", OrderInfo.PAYSTATUS_PAYED));
 
 

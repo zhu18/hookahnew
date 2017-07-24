@@ -14,6 +14,7 @@ import com.jusfoun.hookah.rpc.api.RoleService;
 import com.jusfoun.hookah.rpc.api.UserRoleService;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,7 +66,7 @@ public class AccountApi extends BaseController {
             }
             page = userService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
             List<User> users = page.getList();
-            for(int i=0;i<users.size();i++){
+            for (int i = 0; i < users.size(); i++) {
                 User u = users.get(i);
                 List roles = roleService.selectRoleListByUserId(u.getUserId());
                 u.setRoleList(roles);
@@ -118,7 +119,7 @@ public class AccountApi extends BaseController {
             e.printStackTrace();
             return ReturnData.fail("新增失败");
         }
-        return ReturnData.success("修改成功");
+        return ReturnData.success("新增成功");
     }
 
     @RequestMapping(value = "/recharge", method = RequestMethod.POST)
@@ -172,11 +173,13 @@ public class AccountApi extends BaseController {
         List<Condition> filters = new ArrayList();
         filters.add(Condition.eq(("userId"), userRoleVo.getUserId()));
         User user = userService.selectById(userRoleVo.getUserId());
-        if (userRoleVo.getUserName() != user.getUserName()) {
+        if (!userRoleVo.getUserName().equals(user.getUserName())) {
             user.setUserName(userRoleVo.getUserName());
-        } else if (userRoleVo.getEmail() != user.getEmail()) {
+        }
+        if (!userRoleVo.getEmail().equals(user.getEmail())) {
             user.setEmail(userRoleVo.getEmail());
-        } else if (userRoleVo.getMobile() != user.getMobile()) {
+        }
+        if (!userRoleVo.getMobile().equals(user.getMobile())) {
             user.setMobile(userRoleVo.getMobile());
         }
 
@@ -193,6 +196,27 @@ public class AccountApi extends BaseController {
                 userRoleService.insert(userRole);
             }
 
+        } catch (Exception e) {
+            return ReturnData.error("修改失败");
+        }
+        return ReturnData.success("修改成功");
+    }
+
+    @RequestMapping("editPass")
+    @Transactional
+    public ReturnData editPass(UserRoleVo userRoleVo) {
+        List<Condition> filters = new ArrayList();
+        filters.add(Condition.eq(("userId"), userRoleVo.getUserId()));
+        User user = userService.selectById(userRoleVo.getUserId());
+
+
+        if (StringUtils.isNotEmpty(userRoleVo.getPassword()) && StringUtils.isNotEmpty(user.getUserId())) {
+            String encPassword = new Md5Hash(userRoleVo.getPassword()).toString();
+            user.setPassword(encPassword);
+        }
+        try {
+            userService.updateById(user);
+            List<Condition> userRoleConditions = new ArrayList();
         } catch (Exception e) {
             return ReturnData.error("修改失败");
         }

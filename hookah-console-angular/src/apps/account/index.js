@@ -74,10 +74,10 @@ app.run(function ($rootScope, $state) {
           "title": "权限查询",
           "url": "account.permission.search"
         },
-        {
-          "title": "新增权限",
-          "url": "account.permission.add"
-        },
+        // {
+        //   "title": "新增权限",
+        //   "url": "account.permission.add"
+        // },
         // {
         //   "title": "权限设置",
         //   "url": "account.permission.setting"

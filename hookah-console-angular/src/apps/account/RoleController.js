@@ -3,7 +3,7 @@ class RoleController {
 
     $scope.select = function (data) {
     };
-    $scope.a={};
+    $scope.a = {};
     $scope.isEnable = function (data) {
       if (data == 1) {
         return true
@@ -12,7 +12,6 @@ class RoleController {
       }
     };
     $scope.isEnableChange = function () {
-
       $rootScope.item.isEnable = !$rootScope.item.isEnable;
 
     };
@@ -58,6 +57,11 @@ class RoleController {
     $scope.load = function (event, item) {
       $rootScope.title = "修改角色";
       $rootScope.item = item;
+      if (item.isEnable == 1) {
+        $rootScope.item.isEnable = true;
+      } else {
+        $rootScope.item.isEnable = false;
+      }
       var promise1 = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/permission/tree",
@@ -177,4 +181,5 @@ class RoleController {
     $scope.search();
   }
 }
+
 export default RoleController;
