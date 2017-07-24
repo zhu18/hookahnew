@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jusfoun.hookah.console.server.controller.BaseController;
 import com.jusfoun.hookah.console.server.util.DictionaryUtil;
+import com.jusfoun.hookah.core.annotation.Log;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
@@ -308,6 +309,7 @@ public class GoodsApi extends BaseController{
      * @param offReason         下架理由
      * @return
      */
+    @Log(platform = "back",logType = "b005",optType = "insert")
     @RequestMapping(value = "/forceOff", method = RequestMethod.POST)
     public ReturnData forceOff(String goodsId, String offReason) {
         ReturnData returnData = new ReturnData<>();

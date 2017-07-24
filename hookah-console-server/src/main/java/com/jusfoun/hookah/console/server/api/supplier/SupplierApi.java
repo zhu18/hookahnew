@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.console.server.api.supplier;
 
 import com.jusfoun.hookah.console.server.controller.BaseController;
+import com.jusfoun.hookah.core.annotation.Log;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.Supplier;
@@ -63,7 +64,8 @@ public class SupplierApi extends BaseController {
                 filters.add(Condition.ge("addTime",DateUtils.getDate(startDate)));
             }
             if (StringUtils.isNotBlank(endDate)){
-                filters.add(Condition.le("addTime", DateUtils.getDate(endDate)));
+                String endTime = DateUtils.transferDate(endDate);
+                filters.add(Condition.le("addTime", DateUtils.getDate(endTime)));
             }
 
             int pageNumberNew = HookahConstants.PAGE_NUM;
@@ -75,14 +77,15 @@ public class SupplierApi extends BaseController {
             if (StringUtils.isNotBlank(pageSize)) {
                 pageSizeNew = Integer.parseInt(pageSize);
             }
-            page = supplierService.selectListInCondition(pageNumberNew, pageSizeNew, filters, orderBys);
+//            page = supplierService.selectListInCondition(pageNumberNew, pageSizeNew, filters, orderBys);
+            page = supplierService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
         }catch (Exception e){
             e.printStackTrace();
             return ReturnData.error(e.getMessage());
         }
         return ReturnData.success(page);
     }
-
+    @Log(platform = "back",logType = "b003",optType = "insert")
     @RequestMapping(value = "/updateInfo", method = RequestMethod.POST)
     public ReturnData updateInfo(String id, String checkContent, Byte checkStatus){
         try {

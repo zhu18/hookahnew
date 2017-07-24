@@ -2,6 +2,7 @@ package com.jusfoun.hookah.console.server.api.goods;
 
 import com.alibaba.fastjson.JSON;
 import com.jusfoun.hookah.console.server.controller.BaseController;
+import com.jusfoun.hookah.core.annotation.Log;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.GoodsCheck;
@@ -46,6 +47,7 @@ public class GoodsCheckApi extends BaseController{
      * @param goodsCheck
      * @return
      */
+    @Log(platform = "back",logType = "b004",optType = "insert")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ReturnData goodsCheck( HttpServletRequest request) {
         String voStr = request.getParameter("voStr");
@@ -68,6 +70,7 @@ public class GoodsCheckApi extends BaseController{
      * @param request
      * @return
      */
+    @Log(platform = "back",logType = "b004",optType = "insert")
     @RequestMapping(value = "/addApi", method = RequestMethod.POST)
     public ReturnData goodsCheckApi( HttpServletRequest request) {
         String voStr = request.getParameter("voStr");

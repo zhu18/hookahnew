@@ -140,7 +140,7 @@ class MainController {
 		$rootScope.openConfirmDialogModel = function (title,content) {
 			return $uibModal.open({
 				animation: true,
-				template: require('../ConfirmDialogModel.html'),
+				template: require('../confirmDialogModel.html'),
 				controller: function ($scope, $sce, $uibModalInstance,title,content) {
 					$scope.title = $sce.trustAsHtml(title);
 					$scope.content = $sce.trustAsHtml(content);

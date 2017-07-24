@@ -5,13 +5,10 @@ function loadPageData(data) {
   $("#J_cancelOrder").html(data.data.deletedCount);
   if (data.data.orders.list.length > 0) {
     var list = data.data.orders.list;
-    console.log(list)
-
     var html = '';
-
     for (var i = 0; i < list.length; i++) {
       console.log(list[i].payStatus);
-      if(list[i].payStatus == 2){
+      if(list[i].payStatus == 2){//订单已经完成状态
           html += '<table>';
           html += '<thead>';
           html += '<tr>';
@@ -133,6 +130,69 @@ function loadPageData(data) {
           }
           html += '</tbody>';
           html += '</table>';
+      }else if(list[i].payStatus ==0){
+          var wacthNm = 0;
+          html += '<table>';
+          html += '<thead>';
+          html += '<tr>';
+          html += '<th class="" style="width: 280px;">' + '订单号:' + list[i].orderSn + '</th>';
+          html += '<th class="text-align-left">创建时间:' + list[i].addTime + '</th>';
+          html += '<th></th>';
+          html += '<th style="width:180px;">总额:￥' + (list[i].orderAmount / 100).toFixed(2) +'</th>';
+          html += '</tr>';
+          html += '</thead>';
+          html += '<tbody>';
+          var goods = list[i].mgOrderGoodsList;
+          for (var ii = 0; ii < goods.length; ii++) {
+              var mMat = null;
+              switch(goods[ii].goodsFormat){
+                  case(0):
+                      mMat = '次';
+                      break;
+                  case(1):
+                      mMat = '天';
+                      break;
+                  case(2):
+                      mMat = '年';
+                      break;
+                  case(3):
+                      mMat = '套';
+                      break;
+              }
+              if(goods[ii].isOnsale != 1){
+                  wacthNm ++;
+              }
+              html += '<tr class="content border-bottom">';
+              html += '<td class="text-align-center" style="width: 280px;">';
+              html += '<div class="p-img">';
+              html += '<a href="/exchange/details?id=' + goods[ii].goodsId + '" target="_blank">';
+              html += '<img src="'+host.static+'/'+ goods[ii].goodsImg + '" alt="">';
+              html += '</a>';
+              html += '</div>';
+              html += '<div class="desc margin-top-10 marign-bottom-10" >';
+              html += '<a href="/exchange/details?id=' + goods[ii].goodsId + '" target="_blank">' + goods[ii].goodsName + '</a>';
+              html += '</div>';
+              html += '</td>';
+              html += '<td class="text-align-left">x' + goods[ii].goodsNumber +'<br/><br/>'+ '规格:'+ (goods[ii].goodsPrice / 100).toFixed(2) +'/'+ mMat +'</td>';
+              html += '<td class="">金额:￥&nbsp;' + ((goods[ii].goodsPrice / 100) * goods[ii].goodsNumber).toFixed(2) + (wacthNm == 0 ? '' : '<br/><br/><span class="color-red">商品已下架</span>') + '</td>';//订单总金额
+
+              if(ii == 0){
+                  html += '<td rowspan="'+goods.length+'" class="border-left" style="width:190px;">';
+                  html += '<span class="margin-bottom-5">已取消</span><br>';
+                  if(wacthNm == 0){
+                      // html += '<span class="margin-bottom-5 margin-top-5 color-red">此订单不能支付</span>'
+                      html += '<a href="' + host.website + '/order/payOrder?orderSn=' + list[i].orderSn + '"  class="display-inline-block goPay btn btn-full-orange margin-bottom-5 margin-top-5">去支付</a>';
+                  }
+                  // html += '<a target="_blank" href="/order/viewDetails?orderId=' + list[i].orderId + '&num=2" class="display-block color-blue margin-bottom-5">订单详情</a>';
+                  html += '<a href="javascript:confirmDelete(\'' + list[i].orderId + '\');" class="display-block margin-bottom-5">删除</a>';
+                  html += '</td>';
+              }
+
+              html += '</tr>';
+
+          }
+          html += '</tbody>';
+          html += '</table>';
       }else {
           var wacthNm = 0;
           html += '<table>';
@@ -157,6 +217,9 @@ function loadPageData(data) {
                       break;
                   case(2):
                       mMat = '年';
+                      break;
+                  case(3):
+                      mMat = '套';
                       break;
               }
               if(goods[ii].isOnsale != 1){

@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.webiste.controller;
 
+import com.jusfoun.hookah.core.domain.PayAccount;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.UserDetail;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
@@ -62,7 +63,9 @@ public class UserCenterController {
         HashMap<String, String> o = (HashMap<String, String>) session.getAttribute("user");
         String userId = o.get("userId");
         User user = userService.selectById(userId);
+        PayAccount payAccount=payAccountService.findPayAccountByUserId(userId);
         model.addAttribute("userCur",user);
+        model.addAttribute("payAccount",payAccount);
 
         //用户审核信息
         model.addAttribute("userCheckResult",userCheckService.authDetail(user).getData());

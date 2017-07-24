@@ -41,9 +41,9 @@ $(function () {
         },
         messages:{
             sname:{
-                required:"*请输入用户名",
-                rangelength:$.validator.format("*用户名长度为{0}-{1}个字符"),
-                remote:"*该用户名已存在！"
+                required:"*请输入业务联系人",
+                rangelength:$.validator.format("*业务联系人长度为{0}-{1}个字符"),
+                remote:"*该业务联系人已存在！"
             },
             sphone:{
                 required:"*请输入手机号",
@@ -78,9 +78,7 @@ $(function () {
                 },
                 type: 'post',
                 success: function (data) {
-                    $.alert('保存成功', true, function () {
-                        window.location.href = host.website + "/usercenter/becomingSupplierStep3"
-                    });
+                    window.location.href = host.website + "/usercenter/becomingSupplierStep3"
                 }
             });
         }

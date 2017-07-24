@@ -39,6 +39,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -1247,40 +1248,41 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     @Override
     public Map getStatistics(){
         Map<String,Object> map=new HashMap<String,Object>();
-        map.put("orderNum",getOrderByToday(new Date())); // 订单数
-        map.put("effectiveOrderAmount",getOrderMoneyByPayStatus(new Date(),OrderInfoVo.PAYSTATUS_PAYED)); //有效订单金额
-        map.put("effectiveOrderNum",getOrderNumByPayStatus(new Date(),OrderInfoVo.PAYSTATUS_PAYED)); //有效订单数
-        map.put("commentNum",getCommentNumByStatus(new Date(),1)); //评论数
-        map.put("payEDOrderNum",getOrderNumByPayStatus(new Date(),OrderInfoVo.PAYSTATUS_PAYED)); //已付款订单数
-        map.put("payingOrderNum",getOrderNumByPayStatus(new Date(),OrderInfoVo.PAYSTATUS_PAYING)); //待付款订单数
-        map.put("cancelOrderNum",getOrderNumByToday(new Date(),OrderInfoVo.ORDERSTATUS_CANCEL)); //已取消订单数
-        // map.put("orderAmount",getOrderNumByStatus(new Date(),OrderInfoVo.PAYSTATUS_PAYING)); //已售商品数
 
-        map.put("goodsSoldNum",0); //已售商品数
+        Date today = new Date();
+        map.put("orderNum",getOrderByToday(today)); // 订单数
+        map.put("effectiveOrderAmount",getOrderMoneyByPayStatus(today,OrderInfoVo.PAYSTATUS_PAYED)); //有效订单金额
+        map.put("effectiveOrderNum",getOrderNumByPayStatus(today,OrderInfoVo.PAYSTATUS_PAYED)); //有效订单数
+        map.put("commentNum",getCommentNumByStatus(today,1)); //评论数
+        map.put("payEDOrderNum",getOrderNumByPayStatus(today,OrderInfoVo.PAYSTATUS_PAYED)); //已付款订单数
+        map.put("payingOrderNum",getOrderNumByPayStatus(today,OrderInfoVo.PAYSTATUS_PAYING)); //待付款订单数
+        map.put("cancelOrderNum",getOrderNumByToday(today,OrderInfoVo.ORDERSTATUS_CANCEL)); //已取消订单数
+
+        map.put("goodsSoldNum",getGoodsNumByOut(today));  //已售商品数
         map.put("goodsClassification",0); //商品分类数
-        map.put("dataSourceMoney",0); //数据源交易金额
-        map.put("dataModelMoney",0); //数据模型交易金额
-        map.put("visualizationMoney",0); //可视化交易金额
-        map.put("applicationMoney",0); //应用交易金额
-        map.put("acquisitionMoney",0); //采集工具交易金额
-        map.put("cleaningMoney",0); //清洗工具交易金额
-        map.put("analysisMoney",0); //分析平台交易金额
-        map.put("developmentMoney",0); //开发平台交易金额
-        map.put("managementMoney",0); //管理平台交易金额
-        map.put("securityMoney",0); //安全组件交易金额
+        map.put("dataSourceMoney",getGoodsMoneyByPayStatus(today,OrderInfoVo.PAYSTATUS_PAYED,"101"));  //数据源交易金额
+        map.put("dataModelMoney",getGoodsMoneyByPayStatus(today,OrderInfoVo.PAYSTATUS_PAYED,"102"));  //数据模型交易金额
+        map.put("visualizationMoney",getGoodsMoneyByPayStatus(today,OrderInfoVo.PAYSTATUS_PAYED,"103"));  //可视化交易金额
+        map.put("applicationMoney",getGoodsMoneyByPayStatus(today,OrderInfoVo.PAYSTATUS_PAYED,"104"));  //应用交易金额
+        map.put("acquisitionMoney",getGoodsMoneyByPayStatus(today,OrderInfoVo.PAYSTATUS_PAYED,"105"));  //采集工具交易金额
+        map.put("cleaningMoney",getGoodsMoneyByPayStatus(today,OrderInfoVo.PAYSTATUS_PAYED,"106"));  //清洗工具交易金额
+        map.put("analysisMoney",getGoodsMoneyByPayStatus(today,OrderInfoVo.PAYSTATUS_PAYED,"107")); //分析平台交易金额
+        map.put("developmentMoney",getGoodsMoneyByPayStatus(today,OrderInfoVo.PAYSTATUS_PAYED,"108"));  //开发平台交易金额
+        map.put("managementMoney",getGoodsMoneyByPayStatus(today,OrderInfoVo.PAYSTATUS_PAYED,"109"));  //管理平台交易金额
+        map.put("securityMoney",getGoodsMoneyByPayStatus(today,OrderInfoVo.PAYSTATUS_PAYED,"110"));  //安全组件交易金额
 
-        map.put("isDeNoGoods",getIsDelNoGoods(new Date())); //已上架商品数
-        map.put("isDeGoods",getIsDeGoods(new Date())); //下架商品数
-        map.put("goodsByDataSource",getGoodsNumByCatId(new Date(),"101")); //数据源上架数
-        map.put("goodsByDataModel",getGoodsNumByCatId(new Date(),"102")); //数据模型上架数
-        map.put("goodsByVisualization",getGoodsNumByCatId(new Date(),"103")); //可视化上架数
-        map.put("goodsByApplication",getGoodsNumByCatId(new Date(),"104")); //应用上架数
-        map.put("goodsByAcquisition",getGoodsNumByCatId(new Date(),"105")); //采集工具上架数
-        map.put("goodsByCleaning",getGoodsNumByCatId(new Date(),"106")); //清洗工具上架数
-        map.put("goodsByAnalysis",getGoodsNumByCatId(new Date(),"107")); //分析平台上架数
-        map.put("goodsByDevelopment",getGoodsNumByCatId(new Date(),"108")); //开发平台上架数
-        map.put("goodsByManagement",getGoodsNumByCatId(new Date(),"109")); //管理平台上架数
-        map.put("goodsBySecurity",getGoodsNumByCatId(new Date(),"110"));//安全组件上架数
+        map.put("isDeNoGoods",getIsDelNoGoods(today)); //已上架商品数
+        map.put("isDeGoods",getIsDeGoods(today)); //下架商品数
+        map.put("goodsByDataSource",getGoodsNumByCatId(today,"101")); //数据源上架数
+        map.put("goodsByDataModel",getGoodsNumByCatId(today,"102")); //数据模型上架数
+        map.put("goodsByVisualization",getGoodsNumByCatId(today,"103")); //可视化上架数
+        map.put("goodsByApplication",getGoodsNumByCatId(today,"104")); //应用上架数
+        map.put("goodsByAcquisition",getGoodsNumByCatId(today,"105")); //采集工具上架数
+        map.put("goodsByCleaning",getGoodsNumByCatId(today,"106")); //清洗工具上架数
+        map.put("goodsByAnalysis",getGoodsNumByCatId(today,"107")); //分析平台上架数
+        map.put("goodsByDevelopment",getGoodsNumByCatId(today,"108")); //开发平台上架数
+        map.put("goodsByManagement",getGoodsNumByCatId(today,"109")); //管理平台上架数
+        map.put("goodsBySecurity",getGoodsNumByCatId(today,"110"));//安全组件上架数
 
         return map;
     }
@@ -1295,6 +1297,23 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         List<OrderInfoVo> orderList =mongoTemplate.find(query,OrderInfoVo.class);
         return orderList.size();
     }
+
+
+    /**
+     * 已售商品数量
+     * @return
+     */
+    public int  getGoodsNumByOut(Date stime){
+        Query query = new Query();
+        query.addCriteria(Criteria.where("addTime").gte(startTime(stime)).lt(endTime(stime)));
+        query.addCriteria(Criteria.where("payStatus").is(OrderInfoVo.PAYSTATUS_PAYED));
+        List<MgGoodsOrder> list = mongoTemplate.find(query,MgGoodsOrder.class);
+        return list.size();
+
+    }
+
+
+
 
     /**
      * 根据订单付款状态获取当天订单数 （0：未付款 1：付款中 2：已付款 ）
@@ -1354,6 +1373,40 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
         AggregationResults<OrderInfoVo> ar = mongoTemplate.aggregate(aggregation, "message", OrderInfoVo.class);
         List<OrderInfoVo> list = ar.getMappedResults();
+        if(list.size() > 0){
+            total = list.get(0).getOrderAmount();
+        }
+        return total;
+    }
+
+
+    /**
+     * 根据商品分类获取相关类型商品总交易金额
+     * @param stime
+     * @param payStatus （0：未付款 1：付款中 2：已付款 ）
+     * @return
+     */
+    public long getGoodsMoneyByPayStatus(Date stime,int payStatus,String catId){
+        Long total = 0l;
+//左匹配
+        Pattern pattern = Pattern.compile("^"+catId+".*$", Pattern.CASE_INSENSITIVE);
+/*//模糊匹配
+        Pattern pattern = Pattern.compile("^.*王.*$", Pattern.CASE_INSENSITIVE);
+        Query query = Query.query(Criteria.where(fieldName).regex(pattern));
+       //右匹配
+        Pattern pattern = Pattern.compile("^.*"+catId+"$", Pattern.CASE_INSENSITIVE);
+
+
+        */
+
+        Aggregation aggregation = Aggregation.newAggregation(
+                match(Criteria.where("addTime").gte(startTime(stime)).lte(endTime(stime)).and("payStatus").is(payStatus)
+                        .and("mgOrderGoods.catId").regex(pattern)),
+                group().sum("mgOrderGoods.goodsPrice").as("orderAmount")
+        );
+
+        AggregationResults<MgGoodsOrder> ar = mongoTemplate.aggregate(aggregation, "message", MgGoodsOrder.class);
+        List<MgGoodsOrder> list = ar.getMappedResults();
         if(list.size() > 0){
             total = list.get(0).getOrderAmount();
         }

@@ -134,7 +134,7 @@ public class OperateConstants {
         USER_EXAMINE("b002","用户审核"),
         SUPPLIER_EXAMINE("b003","供应商审核"),
         GOODSUP_EXAMINE("b004","商品上架审核"),
-        GOODSOff_EXAMINE("b005","商品下架审核"),
+        GOODSOff_EXAMINE("b005","商品下架"),
         GOOD_MODIFY("b006","商品信息修改"),
         ORDER_DELIVER("b007","订单交付"),
         EVALUATE_EXAMINE("b008","评价审核"),
