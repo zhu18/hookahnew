@@ -694,7 +694,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                         apiParam.put("totalCount", new Long(goods.getGoodsNumber() * goods.getFormatNumber()).toString());
                         apiParam.put("userId", orderInfoVo.getUserId());
                         apiParam.put("orderSn", orderInfoVo.getOrderSn());
-                        apiParam.put("goodsSn", goods.getOrderSn());
+                        apiParam.put("goodsSn", goods.getGoodsSn());
                         apiParam.put("url", goods.getApiInfo().getApiUrl());
                         switch (goods.getGoodsFormat()){
                             case 0:
