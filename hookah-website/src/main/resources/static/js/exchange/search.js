@@ -1,9 +1,10 @@
+var categoryCode = null;
 function loadPageData(data){ //渲染页面数据
 	if(data.data.list.length>0){
-        var list = data.data.list;
-        var html = '';
-        for(var i=0; i<list.length; i++){
-            var shopFormat = '';
+		var list = data.data.list;
+		var html = '';
+		for(var i=0; i<list.length; i++){
+			var shopFormat = '';
 			if(list[i].shopFormat == 0 ){
 				shopFormat = '次';
 			}else if(list[i].shopFormat == 1 ){
@@ -13,34 +14,27 @@ function loadPageData(data){ //渲染页面数据
 			}else if(list[i].shopFormat == 3 ){
 				shopFormat = '套';
 			}
-            html += '<li>';
-            html += '<a class="item-top" target="_blank" href="/exchange/details?id='+list[i].goodsId+'">';
-            html += '<p class="goods-img"><img src="'+host.static+'/'+list[i].goodsImg+'" alt=""/></p>';
-            html += '<p class="goods-name">'+list[i].goodsName+'</p>';
-            html += '<p class="goods-brief">'+(list[i].goodsBrief  ? list[i].goodsBrief : '暂无简介')+'</p>';
-            html += '</a>';
-            html += '<div class="item-down clearfix">';
-            html += '<span class="grid-left goods-price">￥<span>'+Number(list[i].shopPrice)/100+'</span>/'+(list[i].shopNumber == 1 ? '':list[i].shopNumber)+shopFormat+'</span>';
-            html += '<a class="grid-right goods-cart btn btn-full-red padding-5 font-size-12 margin-top-10" target="_blank" href="/exchange/details?id='+list[i].goodsId+'">查看详情</a>';
-            html += '</div>';
-            html += '</li>';
-        }
-        $('.order-list ul').html(html);
-    }else {
-        $('.order-list ul').html('<div class="noData">暂无数据</div>');
-    }
+			html += '<li>';
+			html += '<a class="item-top" target="_blank" href="/exchange/details?id='+list[i].goodsId+'">';
+			html += '<p class="goods-img"><img src="'+host.static+'/'+list[i].goodsImg+'" alt=""/></p>';
+			html += '<p class="goods-name">'+list[i].goodsName+'</p>';
+			html += '<p class="goods-brief">'+(list[i].goodsBrief  ? list[i].goodsBrief : '暂无简介')+'</p>';
+			html += '</a>';
+			html += '<div class="item-down clearfix">';
+			html += '<span class="grid-left goods-price">￥<span>'+Number(list[i].shopPrice)/100+'</span>/'+(list[i].shopNumber == 1 ? '':list[i].shopNumber)+shopFormat+'</span>';
+			html += '<a class="grid-right goods-cart btn btn-full-red padding-5 font-size-12 margin-top-10" target="_blank" href="/exchange/details?id='+list[i].goodsId+'">查看详情</a>';
+			html += '</div>';
+			html += '</li>';
+		}
+		$('.order-list ul').html(html);
+	}else {
+		$('.order-list ul').html('<div class="noData">暂无数据</div>');
+	}
 	if(data.data2){ //渲染分类数据
 		var html = '';
 		html += '<ul class="conditionCon">';
-		// if(data.data2.categoryList.length > 0){
-		// 	renderSelectorO(data.data2.categoryList,'分类','category');
-		// }
-
-		// if(data.data2.areaCountryList.length > 0){
-		// 	renderSelector(data.data2.areaCountryList,'国家','country');
-		// }
 		if(data.data2.categoryList.length > 0){
-			renderSelector(data.data2.categoryList,'分类','category');
+			renderSelectorO(data.data2.categoryList,'分类','category');
 		}
 		if(data.data2.areaProvinceList.length > 0){
 			renderSelector(data.data2.areaProvinceList,'省份','province');
@@ -48,9 +42,6 @@ function loadPageData(data){ //渲染页面数据
 		if(data.data2.areaCityList.length > 0){
 			renderSelector(data.data2.areaCityList,'城市','city');
 		}
-		// if(data.data2.keywordsList.length > 0){
-		// 	renderSelector(data.data2.keywordsList,'商品标签','keywordsList');
-		// }
 		if(data.data2.payFormatList.length > 0){
 			renderSelector(data.data2.payFormatList,'付费方式','payFormatList');
 		}
@@ -105,6 +96,7 @@ function loadPageData(data){ //渲染页面数据
 			}
 			html += '</ol>';
 			html += '</li>';
+
 		}
 
 

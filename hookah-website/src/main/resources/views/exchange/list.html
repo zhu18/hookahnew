@@ -31,77 +31,17 @@ var htmlPart = {
 <div class="grid-0 exchange-list">
 	<div class="grid-row">
 		<div class="search">
-			<div class="bdg-row" style="position: relative">
+			<div class="bdg-row exchange-search" style="position: relative">
 				<!--头部类目展示模块-->
 				<%include("/layout/menu.html"){} %>
 				<div class="search-category" id="J_searchCategory">
-					<!--<div class="panel-title">-->
-					<!--<span>全部结果:</span>-->
-					<!--</div>-->
-					<!--<ul class="conditionCon">-->
-						<!--<li class="parLi category">-->
-							<!--<span>分类：</span>-->
-							<!--<ol style="overflow: hidden">-->
-								<!--<li>-->
-									<!--<ul>-->
-										<!--<li class="op_i category" typeid="101100">-->
-											<!--<a href="javascript:;">互联网</a>-->
-										<!--</li>-->
-										<!--<li class="op_i category" typeid="101101">-->
-											<!--<a href="javascript:;">物联网</a>-->
-										<!--</li>-->
-										<!--<li class="op_i category" typeid="101102">-->
-											<!--<a href="javascript:;">运营商</a>-->
-										<!--</li>-->
-										<!--<li class="op_i category" typeid="101103">-->
-											<!--<a href="javascript:;">行业</a>-->
-										<!--</li>-->
-										<!--<li class="op_i category" typeid="101104">-->
-											<!--<a href="javascript:;">政府</a>-->
-										<!--</li>-->
-										<!--<li class="op_i category" typeid="101105">-->
-											<!--<a href="javascript:;">个人</a>-->
-										<!--</li>-->
-									<!--</ul>-->
-								<!--</li>-->
-								<!--<li>-->
-									<!--<ul>-->
-										<!--<li class="op_i category" typeid="101100">-->
-											<!--<a href="javascript:;">互联网</a>-->
-										<!--</li>-->
-										<!--<li class="op_i category" typeid="101101">-->
-											<!--<a href="javascript:;">物联网</a>-->
-										<!--</li>-->
-										<!--<li class="op_i category" typeid="101102">-->
-											<!--<a href="javascript:;">运营商</a>-->
-										<!--</li>-->
-										<!--<li class="op_i category" typeid="101103">-->
-											<!--<a href="javascript:;">行业</a>-->
-										<!--</li>-->
-										<!--<li class="op_i category" typeid="101104">-->
-											<!--<a href="javascript:;">政府</a>-->
-										<!--</li>-->
-										<!--<li class="op_i category" typeid="101105">-->
-											<!--<a href="javascript:;">个人</a>-->
-										<!--</li>-->
-									<!--</ul>-->
-								<!--</li>-->
-							<!--</ol>-->
-						<!--</li>-->
-						<!--<li class="parLi"><span>付费方式：</span>-->
-							<!--<ul typeid="2">-->
-								<!--<li class="op_i attrtype" typeid="5">-->
-									<!--<a href="javascript:;">按次</a>-->
-								<!--</li>-->
-								<!--<li class="op_i attrtype" typeid="6">-->
-									<!--<a href="javascript:;">按年</a>-->
-								<!--</li>-->
-							<!--</ul>-->
-						<!--</li>-->
-					<!--</ul>-->
 				</div>
 				<!--中间主体列表展示模块-->
 				<%include("/exchange/search-conditions.html"){} %>
+				<div class="order-list">
+					<ul>
+					</ul>
+				</div>
 				<%include("/layout/pageaction.html"){} %>
 			</div>
 		</div>

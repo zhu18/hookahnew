@@ -8,53 +8,34 @@ class GoodsListController {
 		$scope.searchSn = '';
 		$scope.searchKw = '';
 		$scope.searchShop = '';
-		$scope.searchCheckStatus = '';
-		$scope.searchOnSaleStatus = '';
-		$scope.orgName = '';
+		// $scope.searchCheckStatus = '';
+		//$scope.searchOnSaleStatus = '';
+		// $scope.orgName = '';
 
 		$scope.checkStatuss = [{id:-1, name:"全部"}, {id:0, name:"待审核"}, {id:1, name:"已通过"}, {id:2, name:"未通过"}];
 		$scope.searchCheckStatus = -1;
 		$scope.onSaleStatuss = [{id:-1, name:"全部"}, {id:0, name:"已下架"}, {id:1, name:"已上架"}, {id:2, name:"强制下架"}];
-		$scope.searchOnSaleStatus = -1;
-
-
-		// $scope.$searchCondition = $stateParams.data.searchCd;
-		// $scope.$flag = $stateParams.data.flag;
-        $scope.searchCondition = {};
-
-        $scope.$on(function(event, data){
-        	$scope.searchCondition = data;
-        	// alert(data);
-        	console.log("JSON:========="+JSON.stringify(data))
-		})
-
-
-		$scope.searchPack = function(){
-
-            $scope.searchCondition = {
-                currentPage: $rootScope.pagination.currentPage,
-                pageSize: $rootScope.pagination.pageSize,
-                goodsName: $scope.searchName,
-                goodsSn: $scope.searchSn,
-                keywords: $scope.searchKw,
-                shopName: $scope.searchShop,
-                checkStatus: $scope.searchCheckStatus,
-                onSaleStatus: $scope.searchOnSaleStatus,
-                orgName:$scope.orgName
-            };
-
-            if($scope.$flag){
-            	$scope.search($scope.$searchCondition);
-			}else{
-            	$scope.search($scope.searchCondition);
-			}
-            console.log("------------------------" + JSON.stringify($scope.searchCondition));
+		$scope.queryObj={
+            searchOnSaleStatus:-1,
+            searchCheckStatus :-1,
+            orgName: ''
 		};
-		$scope.search = function (searchCondition) {//获取初始数据
+
+		$scope.search = function () {//获取初始数据
 			var promise = $http({
 				method: 'GET',
 				url: $rootScope.site.apiServer + $scope.getUrl,
-				params: searchCondition
+				params: {currentPage: $rootScope.pagination.currentPage,
+                    pageSize: $rootScope.pagination.pageSize,
+                    goodsName: $scope.searchName,
+                    goodsSn: $scope.searchSn,
+                    keywords: $scope.searchKw,
+                    shopName: $scope.searchShop,
+                    checkStatus: $scope.queryObj.searchCheckStatus,
+                    onSaleStatus: $scope.queryObj.searchOnSaleStatus,
+                    orgName:$scope.queryObj.orgName
+
+				}
 			});
 			promise.then(function (res, status, config, headers) {
 				$rootScope.loadingState = false;
@@ -117,8 +98,8 @@ class GoodsListController {
 					$state.go('items.goodsDetail', {
 						data:{
 							data:res.data.data,
-							flag:flag,
-							searchCondition: $scope.searchCondition
+							flag:flag
+							//dition: $scope.searchCondition
 
 						}
 					});
@@ -126,7 +107,7 @@ class GoodsListController {
 			});
 		};//商品详情
 		$scope.pageChanged = function () {//翻页
-			$scope.searchPack();
+			$scope.search();
 			console.log('Page changed to: ' + $rootScope.pagination.currentPage);
 		};//翻页
 		$scope.refresh = function(){ //刷新
@@ -143,17 +124,17 @@ class GoodsListController {
 			$scope.pageTitle = '商品查询';
 			$scope.goodsTypeView = 1;
 			$scope.getUrl = "/api/goods/all";
-			$scope.searchPack();
+			$scope.search();
 		}else if($state.$current.name == "items.check"){
 			$scope.pageTitle = '待审核资源';
 			$scope.goodsTypeView = 2;
 			$scope.getUrl = "/api/goods/allNotCheck";
-			$scope.searchPack();
+			$scope.search();
 		}else if($state.$current.name == "items.checkedList"){
 			$scope.pageTitle = '已审核资源';
 			$scope.goodsTypeView = 3;
 			$scope.getUrl = "/api/goods/checkedList";
-			$scope.searchPack();
+			$scope.search();
 		}//初始化
 
 

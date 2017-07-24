@@ -108,16 +108,6 @@ public class PayTradeRecord extends GenericModel {
         return goodsSn;
     }
 
-    public String serialNum;
-
-    public String getSerialNum() {
-        return serialNum;
-    }
-
-    public void setSerialNum(String serialNum) {
-        this.serialNum = serialNum;
-    }
-
     public void setGoodsSn(String goodsSn) {
         this.goodsSn = goodsSn;
     }

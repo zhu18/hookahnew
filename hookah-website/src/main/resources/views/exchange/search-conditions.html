@@ -17,9 +17,7 @@
             </li>
         </ul>
     </div>
-    <div class="order-list clearfix">
-        <ul class="clearfix"></ul>
-    </div>
+
 </div>
 <script>
     // 价格搜索
@@ -40,6 +38,7 @@
 				delete dataParm.range.priceTo;
 			}
             goPage(1);
+			console.log('12341234123412341234asdfasdfasdfasdfasdf')
         });
         $('.empty').on('click',function () {
             $('#priceFrom').val('');
@@ -47,6 +46,7 @@
             dataParm.range.priceFrom="";
             dataParm.range.priceTo= "";
             goPage(1);
+			console.log('adsadsasdasdasdas')
         });
 
     }
@@ -116,6 +116,7 @@
                 g=null;
             }
             goPage(1);
+            console.log(123123123123123123)
         })
         $("#shopPrice").parent().prevAll().find('a').find('.arrow-box').hide()
     }
