@@ -72,10 +72,16 @@ public class RabbitMqExchangeConfig {
         return queue;
     }
 
-
     @Bean
     Queue queueNewMessage(RabbitAdmin rabbitAdmin) {
         Queue queue = new Queue(RabbitmqQueue.CONTRACE_NEW_MESSAGE, true);
+        rabbitAdmin.declareQueue(queue);
+        return queue;
+    }
+
+    @Bean
+    Queue queueWaitSettleOrder(RabbitAdmin rabbitAdmin) {
+        Queue queue = new Queue(RabbitmqQueue.WAIT_SETTLE_ORDERS, true);
         rabbitAdmin.declareQueue(queue);
         return queue;
     }
@@ -135,6 +141,13 @@ public class RabbitMqExchangeConfig {
     @Bean
     Binding bindingExchangeNewMessage(Queue queueNewMessage, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
         Binding binding = BindingBuilder.bind(queueNewMessage).to(exchange).with(RabbitmqQueue.CONTRACE_NEW_MESSAGE);
+        rabbitAdmin.declareBinding(binding);
+        return binding;
+    }
+
+    @Bean
+    Binding bindingExchangeWaitSettleOrder(Queue queueWaitSettleOrder, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueWaitSettleOrder).to(exchange).with(RabbitmqQueue.WAIT_SETTLE_ORDERS);
         rabbitAdmin.declareBinding(binding);
         return binding;
     }

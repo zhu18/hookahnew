@@ -1,12 +1,12 @@
 package com.jusfoun.hookah.console.server.api.funds;
 
-import com.github.pagehelper.PageInfo;
 import com.jusfoun.hookah.console.server.controller.BaseController;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.PayAccount;
 import com.jusfoun.hookah.core.domain.PayBankCard;
 import com.jusfoun.hookah.core.domain.PayTradeRecord;
+import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.vo.PayTradeRecordVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -19,6 +19,7 @@ import com.jusfoun.hookah.rpc.api.PayBankCardService;
 import com.jusfoun.hookah.rpc.api.PayTradeRecordService;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -182,41 +183,65 @@ public class PlatformFundsApi extends BaseController{
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         Pagination<PayTradeRecordVo> pagination = new Pagination<>();
-        PageInfo<PayTradeRecordVo> page = new PageInfo<>();
+        Pagination<PayTradeRecord> page = new Pagination<>();
         try {
+
+            List<OrderBy> orderBys = new ArrayList();
+            orderBys.add(OrderBy.desc("addTime"));
+
+            List<Condition> filters = new ArrayList();
+
+            if (tradeType != null) {
+                filters.add(Condition.eq("tradeType", tradeType));
+            }
+
+            if (tradeStatus != null) {
+                filters.add(Condition.eq("tradeStatus", tradeStatus));
+            }
+
+            if (StringUtils.isNotBlank(startDate)) {
+                filters.add(Condition.ge("addTime", startDate));
+            }
+            if (StringUtils.isNotBlank(endDate)) {
+                filters.add(Condition.le("addTime", DateUtils.transferDate(endDate)));
+            }
 
             //参数校验
             int pageNumberNew = HookahConstants.PAGE_NUM;
             if (StringUtils.isNotBlank(currentPage)) {
                 pageNumberNew = Integer.parseInt(currentPage);
             }
+
             int pageSizeNew = HookahConstants.PAGE_SIZE;
             if (StringUtils.isNotBlank(pageSize)) {
                 pageSizeNew = Integer.parseInt(pageSize);
             }
 
-            List<PayTradeRecordVo> list = payTradeRecordService.getListForPage(pageNumberNew, pageSizeNew, startDate, DateUtils.transferDate(endDate), tradeType, tradeStatus);
-            page = new PageInfo<PayTradeRecordVo>(list);
+            page = payTradeRecordService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
+            List<PayTradeRecordVo> listVo = new ArrayList<>();
             if(page.getList() != null && page.getList().size() > 0){
+
                 page.getList().parallelStream().forEach(x -> {
+
+                    PayTradeRecordVo vo = new PayTradeRecordVo();
 
                     if(x.getTradeType().equals(3007) ||
                             x.getTradeType().equals(6003) ||
                             x.getTradeType().equals(6004)){
-                        x.setAccountParty("交易中心平台资金");
+                        vo.setAccountParty("交易中心平台资金");
                     }else{
-                        x.setAccountParty((x.getUserName() == null ? "会员" : x.getUserName()) + "平台资金");
+                        User user = userService.selectById(x.getUserId());
+                        vo.setAccountParty((user.getUserName() == null ? "会员" : user.getUserName()) + "平台资金");
                     }
+                    BeanUtils.copyProperties(x, vo);
+                    listVo.add(vo);
                 });
             }
-
-            pagination.setTotalItems(page.getTotal());
+            pagination.setTotalItems(page.getTotalItems());
             pagination.setPageSize(pageSizeNew);
             pagination.setCurrentPage(pageNumberNew);
-            pagination.setList(page.getList());
-
+            pagination.setList(listVo);
             returnData.setData(pagination);
-
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage("系统出错，请联系管理员！");
