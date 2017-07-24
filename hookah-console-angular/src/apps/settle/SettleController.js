@@ -49,7 +49,6 @@ class settleController {
     };
 
 
-
     $scope.pageChanged = function () {
       $scope.search();
       console.log('Page changed to: ' + $rootScope.pagination.currentPage);
@@ -218,26 +217,22 @@ class settleController {
 
       return '';
     }
+
     $scope.setDate = function (dataFormat, number) {
       var now = new Date();
       var date = new Date(now.getTime() - 1);
       var year = date.getFullYear();
       var month = date.getMonth();
-      var day = date.getDate();
-      if (dataFormat == 'day') {
-        day -= number;
-      } else if (dataFormat == 'week') {
-        day -= number * 7;
-      } else if (dataFormat == 'month') {
-        month -= number;
-      } else if (dataFormat == 'year') {
-        year -= number;
+      var day = 1;
+      if (number == 0) {
+        $scope.startDate = new Date(year, month, day);
+        $scope.endDate = new Date();
+      } else {
+        $scope.startDate = new Date(year, month - number, day);
+        $scope.endDate = new Date(year, month , 0);
       }
-
-      $scope.startDate = new Date(year, month, day);
-      $scope.endDate = new Date();
-
     }
+    $scope.setDate('month',0)
     // 日历插件结束
   }
 }

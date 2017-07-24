@@ -44,8 +44,8 @@
                 <thead>
                 <tr>
                     <th>用户名</th>
-                    <th style="text-align: center">单位名称</th>
-                    <th style="text-align: center">用户类型</th>
+                    <th>单位名称</th>
+                    <th>用户类型</th>
                     <th>电话</th>
                     <th>银行卡</th>
                     <th>账户余额（元）</th>
@@ -72,7 +72,7 @@
                     </td>
                     <td data-ng-bind="item.phone"></td>
                     <td>
-                        <span data-ng-show="item.isBind == 0"></span>
+                        <span data-ng-show="item.isBind == 0">未绑定</span>
                         <span data-ng-show="item.isBind == 1">{{item.bankName}} | 尾号{{ item.cardCode | limitTo:-4}}</span>
                     </td>
                     <td data-ng-bind="'￥'+item.balance/100"></td>
@@ -84,7 +84,7 @@
                 </tr>
                 </tbody>
             </table>
-            <table ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">
+            <table data-ng-show="userMoneyManage.length!==0">
                 <tr>
                     <td colspan="9">
                         <div class="pull-right page-box">
@@ -101,11 +101,9 @@
                     </td>
                 </tr>
             </table>
-
-
         </div>
-        <div class="simple-grid-none-data-wrap">
-            <div class="simple-grid-none-data text-center " ng-if="showNoneDataInfoTip && !loadingState">
+        <div class="simple-grid-none-data-wrap" data-ng-show="userMoneyManage.length==0">
+            <div class="simple-grid-none-data text-center ">
                 <div class="row-padding row-margin text-center">
                     <span class="text-size-24 blue icon-info-1" style="vertical-align: middle"></span>
                     <div class="text-size-18 tip-text inline-block">没有查询到符合条件的记录</div>

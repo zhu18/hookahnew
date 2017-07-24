@@ -233,7 +233,7 @@ h1{
     height: 100%;
     text-align: center;
     line-height: 100px;
-    z-index: -1;
+    z-index: 99;
 }
 .multimage-wrap .image-list li .preview .preview-img{
     text-align: center;
