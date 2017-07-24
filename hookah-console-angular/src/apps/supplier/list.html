@@ -111,13 +111,13 @@
                                 </td>
                                 <td data-ng-bind="item.addTime"></td>
                                 <td>
-                                    <button class="btn btn-primary"  ng-show="item.checkStatus == 0" ng-disabled="sonItem.goodsType==1" ng-click="remark(item.id)">
+                                    <button class="btn btn-primary"  ng-show="item.checkStatus == 0" ng-disabled="sonItem.goodsType==1" ng-click="remark(item)">
                                         审核
                                     </button>
-                                    <button class="btn btn-primary"  ng-show="item.checkStatus == 1" ng-disabled="sonItem.goodsType==1" ng-click="remark(item.id)">
+                                    <button class="btn btn-primary-red"  ng-show="item.checkStatus == 1" ng-disabled="sonItem.goodsType==1" ng-click="remark(item)">
                                         查看
                                     </button>
-                                    <button class="btn btn-primary-red"  ng-show="item.checkStatus == 2" ng-disabled="sonItem.goodsType==1" ng-click="remark(item.id)">
+                                    <button class="btn btn-primary-red"  ng-show="item.checkStatus == 2" ng-disabled="sonItem.goodsType==1" ng-click="remark(item)">
                                         查看
                                     </button>
                                 </td>

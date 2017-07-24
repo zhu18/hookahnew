@@ -20,14 +20,23 @@ class CommentController {
         console.log(res);
 
         if (res.data.code == '1') {
-          $scope.supplierList = res.data.data.list;
-          $rootScope.pagination = res.data.data;
-          $scope.showNoneDataInfoTip = false;
-          if (res.data.data.totalPage > 1) {
-            $scope.showPageHelpInfo = true;
-          } else {
-            $scope.showPageHelpInfo = false;
+            $scope.supplierList = res.data.data.list;
+            $rootScope.pagination = res.data.data;
+            $scope.showNoneDataInfoTip = false;
+          if(res.data.data.list.length>0){
+              if (res.data.data.totalPage > 1) {
+                  $scope.showPageHelpInfo = true;
+              } else {
+
+                  $scope.showPageHelpInfo = false;
+
+              }
+          }else {
+              $rootScope.loadingState = false;
+              $scope.showNoneDataInfoTip = true;
           }
+
+
         } else {
           $scope.supplierList = [];
           $scope.showNoneDataInfoTip = true;
@@ -46,33 +55,61 @@ class CommentController {
     $scope.pageChanged = function () {
         $scope.search();
     };
-    $scope.remark = function (id) {
+    $scope.remark = function (item) {
         var modalInstance=null;
         modalInstance = $rootScope.openConfirmDialogModalSupplier();
-        modalInstance.result.then(function () { //模态点提交
-              var promise = null;
-              promise = $http({
-                  method: 'POST',
-                  url: $rootScope.site.apiServer + "/api/supplier/updateInfo",
-                  params: {
-                      id:id,
-                      checkContent:$('#checkContent').val(),
-                      checkStatus:$('input:radio[name="tRadio"]:checked').val()
-                  }
-              });
-              promise.then(function (res, status, config, headers) {
-                  $rootScope.loadingState = false;
-                  if (res.data.code == 1) {
-                      growl.addSuccessMessage("保存成功。。。");
-                      $scope.search();
-                  } else {
-                      growl.addErrorMessage("保存失败。。。");
-                  }
+        console.log(item.id);
+        console.log(item.checkStatus);
+        var promise = null;
+        if(item.checkStatus=="0"){
+            modalInstance.result.then(function () { //模态点提交
+                var promise = null;
+                promise = $http({
+                    method: 'POST',
+                    url: $rootScope.site.apiServer + "/api/supplier/updateInfo",
+                    params: {
+                        id:item.id,
+                        checkContent:$('#checkContent').val(),
+                        checkStatus:$('input:radio[name="tRadio"]:checked').val()
+                    }
+                });
+                promise.then(function (res, status, config, headers) {
+                    $rootScope.loadingState = false;
+                    if (res.data.code == 1) {
+                        growl.addSuccessMessage("保存成功。。。");
+                        $scope.search();
+                    } else {
+                        growl.addErrorMessage("保存失败。。。");
+                    }
 
-              });
-          }, function () {
+                });
+            }, function () {});
+        }else {
+            promise = $http({
+                method: 'get',
+                url: $rootScope.site.apiServer + "/api/supplier/viewResult",
+                params: {
+                    id:item.id
+                }
+            });
+            promise.then(function (res, status, config, headers) {
+                $rootScope.loadingState = false;
+                if (res.data.code == 1) {
+                    $('#checkContent').val(res.data.data.checkContent);
+                    $('input:radio[name="tRadio"]').each(function () {
+                        if($(this).val()==res.data.data.checkStatus){
+                            $(this).attr("checked","checked")
+                        }
+                    });
+                    $("#Submit").attr("disabled","true");
+                } else {
+                }
 
-          });
+            });
+        }
+
+
+
 
       };
     // 处理日期插件的获取日期的格式
