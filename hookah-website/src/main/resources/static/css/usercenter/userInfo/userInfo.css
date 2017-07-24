@@ -71,11 +71,24 @@
 .basic-information-top  .basic-information-top-content .user-money{
     height: 100%;
     vertical-align: top;
-    text-align: center;
     border-right: 1px solid #E5E5E5;
+}
+.basic-information-top  .basic-information-top-content .user-money>div{
+    display: inline-block;
+    padding: 0 30px;
+    width: calc(100% - 60px);
 }
 .basic-information-top  .basic-information-top-content .user-money p{
     font-size: 16px;
+}
+.basic-information-top  .basic-information-top-content .user-money .btn{
+    display: inline-block;
+    width: 50px;
+    height: 25px;
+    text-align: center;
+    line-height: 25px;
+    border-radius: 3px;
+    vertical-align: top;
 }
 
 /*用户状态栏*/
