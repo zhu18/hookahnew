@@ -120,7 +120,7 @@
                 <tr>
                     <th>流水号</th>
                     <th>时间</th>
-                    <!--<th style="text-align: center">记账方</th>-->
+                    <th style="text-align: center">记账方</th>
                     <th>费用科目</th>
                     <th>金额（元）</th>
                     <th>状态</th>
@@ -131,6 +131,7 @@
                     <td data-ng-bind="item.id"></td>
                     <td data-ng-bind="item.addTime"></td>
                     <!--<td style="text-align: center"><span style="color:red;">后台暂时没有传值</span></td>-->
+                    <td style="text-align: center" data-ng-bind="item.accountParty"></td>
                     <td>
                         <span data-ng-show="item.tradeType==1">充值</span>
                         <span data-ng-show="item.tradeType==2">提现</span>

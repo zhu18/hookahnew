@@ -232,6 +232,12 @@ function getDataForin(){
 	if($('#J_crimbsNav').attr('city')){
 		dataParm.esGoods.goodsAreas = $('#J_crimbsNav').attr('cityid');
 	}
+	if($('#J_crimbsNav').attr('keywordsList')){
+		dataParm.esGoods.keywordsArrays = $('#J_crimbsNav').attr('keywordsListid');
+	}
+	if($('#J_crimbsNav').attr('payFormatList')){
+		dataParm.esGoods.payFormats = $('#J_crimbsNav').attr('payFormatListid');
+	}
 	goPage('1')
 }
 if(prId){//渲染分类
