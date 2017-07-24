@@ -29,6 +29,8 @@ public class PayUtil {
         sb.append(channelType);
         sb.append(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
         sb.append(String.format("%05d", (int)(Math.random()*1000)));
+        //追加线程号
+        sb.append(Thread.currentThread().getId());
         return sb.toString();
     }
 

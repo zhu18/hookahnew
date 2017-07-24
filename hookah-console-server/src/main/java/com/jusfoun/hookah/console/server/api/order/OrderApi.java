@@ -52,6 +52,7 @@ public class OrderApi extends BaseController{
                 startTime = DateUtils.getDate(startDate,DateUtils.DEFAULT_DATE_TIME_FORMAT);
             }
             if (StringUtils.isNotBlank(endDate)) {
+                endDate = DateUtils.transferDate(endDate);
                 endTime = DateUtils.getDate(endDate,DateUtils.DEFAULT_DATE_TIME_FORMAT);
             }
             if (StringUtils.isNotBlank(userName)){

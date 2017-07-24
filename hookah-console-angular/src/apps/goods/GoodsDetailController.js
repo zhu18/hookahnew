@@ -4,9 +4,9 @@ class GoodsDetailController {
 		$scope.$flag = $stateParams.data.flag;
 		$scope.packageApiInfo =  $scope.editData.packageApiInfo;
 		$scope.current= "1";
-		$scope.$searchCondition = $stateParams.data.searchCondition;
+		// $scope.$searchCondition = $stateParams.data.searchCondition;
 		// alert("obj:" + $scope.$searchCondition.searchName);
-        console.log("obj:" + $scope.$searchCondition.searchName);
+        // console.log("obj:" + $scope.$searchCondition.searchName);
 		$scope.setCurrent = function (param) {
 			$scope.current = param;
 		};
@@ -62,19 +62,17 @@ class GoodsDetailController {
 
         } //提交审核
 
-        $
-
-        $scope.returnPage = function () { //返回
-
-            // $scope.$item('data',$stateParams.data.searchCondition);
-            $state.go('items.search', {
-                data:{
-                    searchCd:$stateParams.data.searchCondition,
-                    flag:true
-
-                }
-            });
-        } //返回
+        // $scope.returnPage = function () { //返回
+        //
+        //     // $scope.$item('data',$stateParams.data.searchCondition);
+        //     $state.go('items.search', {
+        //         data:{
+        //             searchCd:$stateParams.data.searchCondition,
+        //             flag:true
+        //
+        //         }
+        //     });
+        // } //返回
 	}
 }
 

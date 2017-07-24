@@ -89,20 +89,6 @@ public class SupplierServiceImpl extends GenericServiceImpl<Supplier, String> im
     }
 
     @Override
-    public Pagination<Supplier> selectListInCondition(Integer pageNumberNew, Integer pageSizeNew,
-                                                      List<Condition> filters, List<OrderBy> orderBys){
-        Pagination<Supplier> pagination = new Pagination<>();
-        PageHelper.startPage(pageNumberNew,pageSizeNew);
-        Page<Supplier> page = (Page<Supplier>) super.selectList(filters,orderBys);
-        pagination.setTotalItems(page.getTotal());
-        pagination.setPageSize(pageSizeNew);
-        pagination.setCurrentPage(pageNumberNew);
-        pagination.setList(page);
-        logger.info(JsonUtils.toJson(pagination));
-        return pagination;
-    }
-
-    @Override
     @Transactional
     public void checkSupplier(String id, String checkContent, Byte checkStatus, String checkUser) throws Exception{
         Supplier supplier = supplierMapper.selectByPrimaryKey(id);

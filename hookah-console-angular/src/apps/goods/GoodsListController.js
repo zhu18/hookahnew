@@ -98,8 +98,8 @@ class GoodsListController {
 					$state.go('items.goodsDetail', {
 						data:{
 							data:res.data.data,
-							flag:flag,
-							searchCondition: $scope.searchCondition
+							flag:flag
+							//dition: $scope.searchCondition
 
 						}
 					});
@@ -107,7 +107,7 @@ class GoodsListController {
 			});
 		};//商品详情
 		$scope.pageChanged = function () {//翻页
-			$scope.searchPack();
+			$scope.search();
 			console.log('Page changed to: ' + $rootScope.pagination.currentPage);
 		};//翻页
 		$scope.refresh = function(){ //刷新
