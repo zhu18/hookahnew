@@ -65,4 +65,11 @@ public interface PayAccountService extends GenericService<PayAccount, Long> {
      * @return
      */
     boolean verifyPassword (String payPassword,String userId);
+
+    /**
+     * 查询虚拟账户信息
+     * @param userId
+     * @return
+     */
+    PayAccount findPayAccountByUserId(String userId);
 }
