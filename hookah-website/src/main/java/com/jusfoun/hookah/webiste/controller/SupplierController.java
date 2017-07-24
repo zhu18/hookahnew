@@ -94,7 +94,7 @@ public class SupplierController extends BaseController{
             }
             user.setContactAddress(contactAddress);
             user.setPostCode(postCode);
-            userService.updateById(user);
+            userService.updateByIdSelective(user);
         }catch (Exception e){
             logger.error(e.getMessage());
             return ReturnData.error(e.getMessage());
