@@ -7,6 +7,7 @@
 }
 .category-label .search {
     position: relative;
+    display: block;
 }
 .category-label .search .clean {
     position: absolute;
@@ -38,7 +39,7 @@
     position: absolute;
     text-align: center;
     cursor: pointer;
-    /*top: -10px;*/
+    top: 0;
 }
 .search-list {
     display: none;

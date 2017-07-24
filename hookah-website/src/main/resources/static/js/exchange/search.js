@@ -56,47 +56,63 @@ function loadPageData(data){ //渲染页面数据
 			html += '</li>';
 		}
 		function renderSelectorO(datas,name,fnName){
+			var child2 = null;
+			var child3 = null;
+
 			html += '<li class="parLi category">';
 			html += '<span>'+name+'：</span>';
 			html += '<ol style="overflow: hidden">';
-			html += '<li><ul>';
-			datas.forEach(function(item){
+
+			if(datas){
+				html += '<li><ul>';
 				var categoryIds = null;
-				if(categoryCode.length > 6){
-					categoryIds = categoryCode.substring(0,6);
+				if(categoryCode && categoryCode.length > 3){
+					categoryIds = categoryCode.substring(0,3);
 				}else{
 					categoryIds = categoryCode;
 				}
-				if(categoryIds == item.nodeId){
-					html += '<li class="op_i current '+fnName+'" typeid="'+item.nodeId+'"><a href="javascript:;">'+item.nodeName+'</a></li>';
-				}else {
-					html += '<li class="op_i ' + fnName + '" typeid="' + item.nodeId + '"><a href="javascript:;" onclick="selectCategory(this,' + item.nodeId + ',\'' + fnName + '\',\'' + item.nodeName + '\')">' + item.nodeName + '</a></li>';
-				}
-			});
-			html += '</ul></li>';
-			if(categoryCode.length >= 6){
-				var categoryCodePreChild = null;
 				datas.forEach(function(item){
-					if(item.nodeId == categoryCode.substring(0,6)){
-						categoryCodePreChild = item.children;
+					if(categoryIds == item.nodeId){
+						child2 = item.children;
+						html += '<li class="op_i current '+fnName+'" typeid="'+item.nodeId+'"><a href="javascript:;">'+item.nodeName+'</a></li>';
+					}else {
+						html += '<li class="op_i ' + fnName + '" typeid="' + item.nodeId + '"><a href="javascript:;" onclick="selectCategory(this,\'' + item.nodeId + '\',\'' + fnName + '\',\'' + item.nodeName + '\')">' + item.nodeName + '</a></li>';
 					}
 				});
-				if(categoryCodePreChild && categoryCodePreChild.length > 0){
-					html += '<li><ul>';
-					categoryCodePreChild.forEach(function(item){
-						if(item.nodeId == categoryCode){
-							html += '<li class="op_i current '+fnName+'" typeid="'+item.nodeId+'"><a href="javascript:;">'+item.nodeName+'</a></li>';
-						}else {
-							html += '<li class="op_i ' + fnName + '" typeid="' + item.nodeId + '"><a href="javascript:;" onclick="selectCategory(this,' + item.nodeId + ',\'' + fnName + '\',\'' + item.nodeName + '\')">' + item.nodeName + '</a></li>';
-						}
-					});
-					html += '</ul></li>';
-				}
+				html += '</ul></li>';
+			}
 
+			if(child2){
+				html += '<li><ul>';
+				child2.forEach(function(item){
+					var categoryIds = null;
+					if(categoryCode && categoryCode.length >= 6){
+						categoryIds = categoryCode.substring(0,6);
+					}else{
+						categoryIds = categoryCode;
+					}
+					if(categoryIds == item.nodeId){
+						child3 = item.children;
+						html += '<li class="op_i current '+fnName+'" typeid="'+item.nodeId+'"><a href="javascript:;">'+item.nodeName+'</a></li>';
+					}else {
+						html += '<li class="op_i ' + fnName + '" typeid="' + item.nodeId + '"><a href="javascript:;" onclick="selectCategory(this,\'' + item.nodeId + '\',\'' + fnName + '\',\'' + item.nodeName + '\')">' + item.nodeName + '</a></li>';
+					}
+				});
+				html += '</ul></li>';
+			}
+			if(child3){
+				html += '<li><ul>';
+				child3.forEach(function(item){
+					if(categoryCode == item.nodeId){
+						html += '<li class="op_i current '+fnName+'" typeid="'+item.nodeId+'"><a href="javascript:;">'+item.nodeName+'</a></li>';
+					}else {
+						html += '<li class="op_i ' + fnName + '" typeid="' + item.nodeId + '"><a href="javascript:;" onclick="selectCategory(this,\'' + item.nodeId + '\',\'' + fnName + '\',\'' + item.nodeName + '\')">' + item.nodeName + '</a></li>';
+					}
+				});
+				html += '</ul></li>';
 			}
 			html += '</ol>';
 			html += '</li>';
-
 		}
 
 
@@ -120,6 +136,7 @@ function loadPageData(data){ //渲染页面数据
 }
 function selectCategory(that,id,fnName,name){
 	categoryCode = id;
+	dataParm.esGoods.catIds = id;
 	if($('#J_crimbsNav').attr(fnName) == name){
 		return;
 	}else{
@@ -140,6 +157,7 @@ function getDataForin(){
 	dataParm.esGoods.keywordsArrays = '';
 	dataParm.esGoods.payFormats = '';
 	if($('#J_crimbsNav').attr('category')){
+		categoryCode = $('#J_crimbsNav').attr('categoryid')
 		dataParm.esGoods.catIds = $('#J_crimbsNav').attr('categoryid');
 	}
 	if($('#J_crimbsNav').attr('country')){
@@ -161,7 +179,7 @@ function getDataForin(){
 }
 function removeTag(that){
 	var ats = $(that).parent('.tags').attr('type');
-	console.log(ats);
+	// console.log(ats);
 	$('#J_crimbsNav').removeAttr(ats);
 	$(that).parent('.tags').remove();
 	getDataForin();

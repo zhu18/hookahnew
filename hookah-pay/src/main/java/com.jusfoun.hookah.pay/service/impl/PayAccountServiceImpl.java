@@ -631,6 +631,25 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 			e.printStackTrace();
 		}
 		return returnData;
-	};
+	}
+
+    /**
+     * 查询虚拟账户信息
+     * @param userId
+     * @return
+     */
+    @Override
+    public PayAccount findPayAccountByUserId(String userId) {
+        List<Condition> filters = null;
+        if (StringUtils.isNotBlank(userId)) {
+            filters=new ArrayList();
+            filters.add(Condition.eq("userId", userId));
+            PayAccount payAccount=super.selectOne(filters);
+            payAccount.setPayPassword("");
+            return payAccount;
+        }else{
+            return new PayAccount();
+        }
+    }
 
 }
