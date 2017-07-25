@@ -31,27 +31,26 @@ var htmlPart = {
                                     <p id="account-name"></p>
                                 </div>
                                 <div class="form-item">
-                                    <label for=""><span class="color-red">*</span>银行名称：</label>
-                                    <select id="bindName" name="province" >
+                                    <label for="bindName"><span class="color-red">*</span>银行名称：</label>
+                                    <select id="bindName" name="bindName" >
 
                                     </select>
                                 </div>
                                 <div class="form-item">
-                                    <label for=""><span class="color-red">*</span>银行卡号：</label>
-                                    <input type="text" id="cardCode">
+                                    <label for="cardCode"><span class="color-red">*</span>银行卡号：</label>
+                                    <input type="text" id="cardCode" name="bank" placeholder="输入银行卡号" tip="请输入银行卡号">
                                 </div>
                                 <div class="form-item">
-                                    <label for="">开户行：</label>
-                                    <input type="text" id="openBank">
+                                    <label for="openBank">开户行：</label>
+                                    <input type="text" id="openBank" name="openBank">
                                 </div>
                                 <div class="form-item">
                                     <label for="phoneNumber"><span class="color-red">*</span>手机号码：</label>
-                                    <input type="text" id="phoneNumber" name="sphone"  placeholder="输入手机号码" tip="请输入手机号码">
-                                    <p>请填写该卡在银行预留的手机号码</p>
+                                    <input type="text" id="phoneNumber" name="sphone"  placeholder="请填写该卡在银行预留的手机号码" tip="请填写该卡在银行预留的手机号码">
                                 </div>
                                 <div class="form-item">
-                                    <label for=""><span class="color-red">*</span>验证码：</label>
-                                    <input type="text">
+                                    <label for="verificationCode"><span class="color-red">*</span>验证码：</label>
+                                    <input type="text" id="verificationCode" name="verificationCode">
                                     <a href="javascript:void(0);" class="verification-code">获取验证码</a>
                                 </div>
                                 <a class="btn">提交</a>

@@ -85,8 +85,8 @@ var htmlPart = {
 							<%}else {%>
 							<p><span class="account-balance font-size-18 color-red">￥${payAccount.balance}</span><a href="/usercenter/recharge" class="btn btn-full-orange margin-left-40">充值</a></p>
 							<%}%>
-							<p>可用余额:<span class="available-balance">￥${payAccount.useBalance}</span></p>
-							<p>冻结余额:<span class="frozen-balance">￥${payAccount.frozenBalance}</span></p>
+							<p>可用金额:<span class="available-balance">￥${payAccount.useBalance}</span></p>
+							<p>冻结金额:<span class="frozen-balance">￥${payAccount.frozenBalance}</span></p>
 						</div>
 
 					</div>
@@ -181,6 +181,7 @@ var htmlPart = {
 							<p class="margin-top-10">
 								<a href="/usercenter/becomingSupplierStep1" class="large-btn">供应商申请未通过</a>
 							</p>
+							<span>您提交的申请资料有误，请重新提交。</span>
 						</div>
 						<%}else if(userCur.userType == 11){%>
 						<div class="auth-introduce ">
