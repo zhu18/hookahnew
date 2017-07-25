@@ -103,7 +103,7 @@
                                 <td data-ng-bind="'￥'+item.orderAmount/100"></td>
                                 <td data-ng-bind="'￥'+item.hasSettleAmount/100"></td>
                                 <td data-ng-bind="'￥'+item.noSettleAmount/100"></td>
-                                <td data-ng-bind="item.settleStatus==0?'待结算':'已结算'"></td>
+                                <td data-ng-bind="item.settleStatus==0?'待结算':'已结清'"></td>
                                 <td data-ng-bind="item.orderTime"></td>
                                 <td >
                                     <a data-ng-show="item.settleStatus==0" data-ng-click="getDetails(item.id)">结算</a>
