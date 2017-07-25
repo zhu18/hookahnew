@@ -461,16 +461,16 @@ public class HookahConstants {
      */
     public enum PayPassWordStatus {
 
-        isOK((byte)0),
-        isNot((byte)1);
+        isOK(1),
+        isNot(0);
 
-        public byte code;
+        public Integer code;
 
-        PayPassWordStatus(byte code) {
+        PayPassWordStatus(Integer code) {
             this.code = code;
         }
 
-        public byte getCode() {
+        public Integer getCode() {
             return code;
         }
     }

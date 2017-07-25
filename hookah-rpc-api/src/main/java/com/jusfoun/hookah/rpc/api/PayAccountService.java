@@ -38,6 +38,12 @@ public interface PayAccountService extends GenericService<PayAccount, Long> {
 
     boolean insertPayAccountByUserIdAndName(String userId, String userName);
 
+    /**
+     * 设置支付密码
+     * @param userId
+     * @param payPassword MD5密文
+     * @return
+     */
     boolean resetPayPassword(String userId, String payPassword);
 
     void payByBalance(OrderInfo orderInfo) throws Exception;
