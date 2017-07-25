@@ -253,3 +253,6 @@ payPassword.on('keyup', "input[name='paymentPassword']", function (e) {
 		this.value = _val.replace(/\D/g, '');
 	}
 });
+
+
+
