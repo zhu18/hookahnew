@@ -55,7 +55,8 @@ $(function () {
                 required:true
             },
             verificationCode:{
-                required:true
+                required:true,
+                isVerificationCode:true
             }
         },
         messages:{
@@ -84,7 +85,8 @@ $(function () {
                 required:"*请选择银行名称"
             },
             verificationCode:{
-                required:"*请填写验证码"
+                required:"*请填写验证码",
+                isVerificationCode:"*请填写正确的验证码"
             }
         }
     });
@@ -96,30 +98,64 @@ $(function () {
         var mobile = regex.bank.test(value);
         return this.optional(element) || (mobile);
     }, "*请输入正确的银行卡号");
+    $.validator.addMethod("isVerificationCode", function(value, element) {
+        var mo=false;
+        if(value.length==4){
+            $.ajax({
+                url:host.auth+'/sms/check',
+                type:'post',
+                async:false,
+                data:{
+                    mobile:$('#phoneNumber').val(),
+                    validSms:value
+                },
+                success:function(data){
+                    if(data.code == 1){
+                        mo=true;
+                    }else if(data.code == 0){
+                        // $('.loading_btns').hide();
+                        // $('#J_Phone_Checkcode').parents('.ui-form-item').addClass('ui-form-item-error');
+                        // $('#J_Phone_Checkcode').parents('.checkcode-warp').siblings('.ui-form-explain').show()
+                        return false;
+                    }else{
+                        // $('.loading_btns').hide();
+                        // $.alert(data.message);
+                        return false;
+                    }
+                }
+            });
+        }
+        return mo;
+    }, "*请输入正确的手机验证码！");
     // 表格验证结束
     // 获取手机验证码
     $(".verification-code").on("click",function () {
         var that = $(this);
-        $.ajax({
-            url:host.auth+'/sms/send',
-            type:'post',
-            data:{
-                mobile:$('#phoneNumber').val(),
-                type:3
-            },
-            success:function(data){
-                if(data.code == 1){
-                    $.alert(data.data);
-                    settime(that);
-                }else{
-                    $.alert('获取验证码失败，请重新获取');
+        if($('#phoneNumber').val()){
+            $.ajax({
+                url:host.auth+'/sms/send',
+                type:'post',
+                data:{
+                    mobile:$('#phoneNumber').val(),
+                    type:3
+                },
+                success:function(data){
+                    if(data.code == 1){
+                        $.alert(data.data);
+                        settime(that);
+                    }else{
+                        $.alert('获取验证码失败，请重新获取');
+                    }
+                },
+                error: function() {
+                    console.log(1);
                 }
-            },
-            error: function() {
-                console.log(1);
-            }
-        });
-    })
+            });
+
+        }else {
+            $.alert('请先输入手机号！')
+        }
+    });
     // 提交事件
     $(".btn").on("click",function () {
         if($("#form").valid()){
@@ -147,13 +183,13 @@ $(function () {
         }
 
     });
-    var countdown = 120;
+    var countdown = 60;
     function settime(that) {//获取验证码倒计时
         if (countdown == 0) {
             that.removeAttr("disabled");
             that.html("重新获取验证码");
             that.removeClass('btn-disabled');
-            countdown = 120;
+            countdown = 60;
             return;
         } else {
             that.attr("disabled", true);
