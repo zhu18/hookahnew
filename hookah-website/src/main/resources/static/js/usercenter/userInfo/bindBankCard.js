@@ -103,8 +103,6 @@ $(function () {
         $.ajax({
             url:host.auth+'/sms/send',
             type:'post',
-            dataType:"jsonp",
-            jsonp: "callbackparam",
             data:{
                 mobile:$('#phoneNumber').val(),
                 type:3
