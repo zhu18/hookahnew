@@ -568,10 +568,11 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		return returnData;
 	}
 
-	public void updatePayAccountMoney(Long payAccountId,Long money){
-		Map<String,Long> params=new HashMap<String,Long>();
+	public void updatePayAccountMoney(Long payAccountId,Long money,String userId){
+		Map<String,Object> params=new HashMap<String,Object>();
 		params.put("payAccountId",payAccountId);
 		params.put("money",money);
+		params.put("userId",userId);
 		payAccountMapper.updatePayAccountMoney(params);
 	}
 
@@ -625,8 +626,13 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 			PayAccount payAccount = super.selectOne(filters);
 			if(tradeStatus.equals("1")){
 				money = Math.round(Double.parseDouble(totalFee)*100);
+				if (money<=0){
+					returnData.setCode(ExceptionConst.Failed);
+					returnData.setMessage("充值失败！充值金额必须大于0元！");
+					return returnData;
+				}
 				//更新账户金额
-				updatePayAccountMoney(payAccount.getId(),money);
+				updatePayAccountMoney(payAccount.getId(),money,userId);
 			}
 			//插入记录表
 			insertPayTradeRecord( userId, money, payAccount.getId(), new Byte(tradeStatus), new Byte(tradeType));
