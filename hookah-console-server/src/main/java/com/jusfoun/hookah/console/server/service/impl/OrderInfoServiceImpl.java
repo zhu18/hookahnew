@@ -33,6 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.function.Function;
 import java.util.regex.Pattern;
@@ -679,7 +680,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                     })
                     .forEach(goods -> {
                         Map<String, String> param = new HashMap<>();
-                        Map<String, Object> apiParam = new HashMap<>();
+                        Map<String, String> apiParam = new HashMap<>();
                         param.put("userId", orderInfoVo.getUserId());
                         //param.put("endTime",orderInfo.getUserId());
                         param.put("orderNo", orderInfo.getOrderSn());
@@ -691,23 +692,24 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                         apiParam.put("orderSn", orderInfoVo.getOrderSn());
                         apiParam.put("goodsSn", goods.getGoodsSn());
                         apiParam.put("url", goods.getApiInfo().getApiUrl());
-                        Date startTime = null;
-                        Date endTime = null;
+                        String startTime = null;
+                        String endTime = null;
+                        SimpleDateFormat df = new SimpleDateFormat(DateUtils.DEFAULT_DATE_TIME_FORMAT);
                         switch (goods.getGoodsFormat()){
                             case 0:
-                                apiParam.put("type", 1);
+                                apiParam.put("type", "1");
                                 apiParam.put("totalCount", new Long(goods.getGoodsNumber() * goods.getFormatNumber()).toString());
                                 break;
                             case 1:
-                                apiParam.put("type", 2);
-                                startTime = orderInfoVo.getPayTime();
+                                apiParam.put("type", "2");
+                                startTime = df.format(orderInfoVo.getPayTime());
                                 apiParam.put("startTime",startTime);
                                 endTime = DateUtils.thisTimeNextMonth(startTime,new Long(goods.getGoodsNumber() * goods.getFormatNumber()).intValue());
                                 apiParam.put("endTime",endTime);
                                 break;
                             case 2:
-                                apiParam.put("type", 2);
-                                startTime = orderInfoVo.getPayTime();
+                                apiParam.put("type", "2");
+                                startTime = df.format(orderInfoVo.getPayTime());
                                 apiParam.put("startTime",startTime);
                                 endTime = DateUtils.thisTimeNextYear(startTime,new Long(goods.getGoodsNumber() * goods.getFormatNumber()).intValue());
                                 apiParam.put("endTime",endTime);
