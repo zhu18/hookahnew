@@ -115,7 +115,7 @@ public class ModifyController {
                 return "modify/updateLoginPwd";
             }
 
-            user.setPassword(new Md5Hash(newPwd);
+            user.setPassword(new Md5Hash(newPwd).toString());
             userService.updateById(user);
             return "redirect:/modify/success?type=loginPassword";
         } catch (Exception e) {
