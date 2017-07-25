@@ -146,15 +146,40 @@ public class WithdrawRecordController extends BaseController {
                 returnData.setMessage("提现审核失败，请填写失败原因！");
                 return returnData;
             }
+//            withdrawRecordService.checkOne(id, checkStatus, checkMsg);
 
-            WithdrawRecord record = new WithdrawRecord();
-            record.setId(id);
+            WithdrawRecord record = withdrawRecordService.selectById(id);
+            if(record == null){
+                returnData.setCode(ExceptionConst.Failed);
+                returnData.setMessage("提现信息查询失败！");
+                return returnData;
+            }
+
             record.setCheckStatus(checkStatus);
             record.setCheckMsg(checkMsg);
             record.setCheckTime(new Date());
             record.setCheckOperator(getCurrentUser().getUserName());
+
             int n = withdrawRecordService.updateByIdSelective(record);
             if(n == 1){
+
+                List<Condition> filters = new ArrayList<>();
+                filters.add(Condition.eq("userId", record.getUserId()));
+                PayAccount payAccount = payAccountService.selectOne(filters);
+
+                if(payAccount == null){
+                    returnData.setCode(ExceptionConst.Failed);
+                    returnData.setMessage("审核成功, 客户账户信息查询失败！");
+                    return returnData;
+                }
+
+                // 审核成功 扣客户账
+                payAccountService.operatorByType(payAccount.getId(),
+                                            payAccount.getUserId().toString(),
+                                            HookahConstants.TradeType.OnlineCash.getCode(),
+                                            record.getMoney(), null,
+                                            getCurrentUser().getUserName());
+
                 returnData.setCode(ExceptionConst.Success);
                 returnData.setMessage("审核成功！");
             }else{

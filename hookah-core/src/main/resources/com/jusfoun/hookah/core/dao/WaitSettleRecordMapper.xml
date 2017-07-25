@@ -107,6 +107,7 @@
       <if test="orderSn != '' and orderSn != null">
         AND wsr.order_sn = #{orderSn}
       </if>
+      ORDER BY wsr.order_time DESC
   </select>
 
   <select id="selectDetailById" resultType="com.jusfoun.hookah.core.domain.vo.WaitSettleRecordVo">
