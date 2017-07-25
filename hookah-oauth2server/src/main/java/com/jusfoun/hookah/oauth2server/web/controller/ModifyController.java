@@ -7,6 +7,7 @@ import com.jusfoun.hookah.core.exception.UserRegEmptyPwdException;
 import com.jusfoun.hookah.core.exception.UserRegSimplePwdException;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
+import com.jusfoun.hookah.rpc.api.PayAccountService;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
@@ -36,6 +37,9 @@ public class ModifyController {
 
     @Resource
     UserService userService;
+
+    @Resource
+    PayAccountService payAccountService;
 
     @RequestMapping(value = "/loginPassword", method = RequestMethod.GET)
     public String loginPassword(Model model) {
@@ -110,7 +114,7 @@ public class ModifyController {
                 return "modify/updateLoginPwd";
             }
 
-            user.setPassword(new Md5Hash(newPwd).toString());
+            user.setPassword(new Md5Hash(newPwd);
             userService.updateById(user);
             return "redirect:/modify/success?type=loginPassword";
         } catch (Exception e) {
@@ -146,11 +150,17 @@ public class ModifyController {
         HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
         User user = userService.selectById(userMap.get("userId"));
             if(StringUtils.isNotBlank(userForm.getPaymentPassword())){
-                String othpassword = new Md5Hash(userForm.getPaymentPassword()).toString();
-                user.setPaymentPassword(othpassword);
-                user.setPaymentPasswordStatus(1);
-                userService.updateById(user);
-                return "redirect:/modify/success?type=setPayPassword";
+//                String othpassword = new Md5Hash(userForm.getPaymentPassword()).toString();
+//                user.setPaymentPassword(othpassword);
+                //2017/7/25 支付密码全部改为前端传MD5密文
+                if(payAccountService.resetPayPassword(user.getUserId(),userForm.getPaymentPassword())){
+                    user.setPaymentPasswordStatus(1);
+                    userService.updateById(user);
+                    return "redirect:/modify/success?type=setPayPassword";
+                }else{
+                    model.addAttribute("error","支付密码设置失败，请联系管理员。");
+                    return "modify/setPayPassword";
+                }
             }else{
                 model.addAttribute("error","支付密码为空");
                 return "modify/setPayPassword";
