@@ -224,7 +224,11 @@ h1{
 .multimage-wrap .image-list li .preview .upload-tip {
     color: #a5a3a3;
     font-size: 30px;
-    margin-left:15px;
+    position:absolute;
+    top:0px;
+    left:0px;
+    width:100px;
+    line-height:100px;
 }
 .multimage-wrap .image-list li .preview .preview-img{
     text-align: center;
