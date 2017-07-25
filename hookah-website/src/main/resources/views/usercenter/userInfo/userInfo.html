@@ -81,12 +81,12 @@ var htmlPart = {
 						<div>
 							<p class="margin-top-20">帐户余额:</p>
 							<%if(userCur.userType == 1){%>
-							<p><span class="account-balance font-size-18 color-red">￥155111.00</span></p>
+							<p><span class="account-balance font-size-18 color-red">￥${payAccount.balance}</span></p>
 							<%}else {%>
-							<p><span class="account-balance font-size-18 color-red">￥155111.00</span><a href="/usercenter/recharge" class="btn btn-full-orange margin-left-30">充值</a></p>
+							<p><span class="account-balance font-size-18 color-red">￥${payAccount.balance}</span><a href="/usercenter/recharge" class="btn btn-full-orange margin-left-40">充值</a></p>
 							<%}%>
-							<p>可用余额:<span class="available-balance">￥11111.00</span></p>
-							<p>冻结余额:<span class="frozen-balance">￥11111.00</span></p>
+							<p>可用余额:<span class="available-balance">￥${payAccount.useBalance}</span></p>
+							<p>冻结余额:<span class="frozen-balance">￥${payAccount.frozenBalance}</span></p>
 						</div>
 
 					</div>
@@ -199,7 +199,10 @@ var htmlPart = {
 			<div class="basic-information-down">
 					<div class="header clearfix">
 						<h4 class="grid-left my-order active margin-right-15" data-tab-id="one">我购买的数据</h4>
+						<%if(userCur.userType == 8){%>
 						<h4 class="grid-left my-order" data-tab-id="tow">我上架的商品</h4>
+						<%}%>
+
 					</div>
 					<div class="my-order-list-one clearfix">
 
