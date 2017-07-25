@@ -237,8 +237,6 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 			pa.setBalance(0l);
 			pa.setUseBalance(0l);
 			pa.setFrozenBalance(0l);
-			//支付密码状态 数据库默认为 0（未设置）
-			//pa.setPaymentPasswordStatus((byte)0);
 			pa.setAccountFlag((byte) 1);
 			pa.setMerchantId("");
 			pa.setSyncFlag((byte) 0);
@@ -253,31 +251,28 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		}
 	}
 
-	/**
-	 *  设置支付密码
-	 * @param userId
-	 * @param payPassword   支付密码
-	 */
-	public boolean resetPayPassword(String userId, String payPassword) {
-//		List<Condition> filters = new ArrayList<>();
-//		if(StringUtils.isNotBlank(userId)){
-//			filters.add(Condition.eq("userId", userId));
-//		}
-//		//验证userId是否正确
-//		PayAccount payAccount = super.selectOne(filters);
-//		if (payAccount != null ) {
-//			//更改支付密码设置状态
-//			payAccount.setPaymentPasswordStatus(HookahConstants.PayPassWordStatus.isOK.getCode());
-//			payAccount.setPayPassword(payPassword);
-//			if(updateById(payAccount)>0)
-//				return true;
-//			else
-//				return  false;
-//		}else{
-//			return false;
-//		}
-		return false;
-	}
+    /**
+     *  设置支付密码
+     * @param userId
+     * @param payPassword   MD5密文支付密码
+     */
+    public boolean resetPayPassword(String userId, String payPassword) {
+        List<Condition> filters = new ArrayList<>();
+        if(StringUtils.isNotBlank(userId)){
+            filters.add(Condition.eq("userId", userId));
+        }
+        //验证userId是否正确
+        PayAccount payAccount = super.selectOne(filters);
+        if (payAccount != null ) {
+            payAccount.setPayPassword(payPassword);
+            if(updateById(payAccount)>0)
+                return true;
+            else
+                return  false;
+        }else{
+            return false;
+        }
+    }
 
     /**
      *  验证支付密码
