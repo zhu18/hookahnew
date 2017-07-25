@@ -71,7 +71,7 @@ var htmlPart = {
 							<%}else if(userCur.userType == 11){%>
 							<p class="usertype color-red">单位认证审核中</p>
 							<%}%>
-							<p class="info">用户账号：<span> ${userCur.userName}</span></p>
+							<p class="info">用户帐号：<span> ${userCur.userName}</span></p>
 							<p class="info">手机号码：<span> ${userCur.mobile}</span></p>
 							<p class="info">电子邮箱：<span> ${userCur.email}</span></p>
 						</div>
@@ -79,7 +79,7 @@ var htmlPart = {
 					</div>
 					<div class="user-money">
 						<div>
-							<p class="margin-top-20">账户余额:</p>
+							<p class="margin-top-20">帐户余额:</p>
 							<%if(userCur.userType == 1){%>
 							<p><span class="account-balance font-size-18 color-red">￥155111.00</span></p>
 							<%}else {%>
