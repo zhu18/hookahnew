@@ -2,7 +2,30 @@
  * Created by lss on 2017/7/19 0019.
  */
 $(function () {
+    // 数据回现
+    $.ajax({
+        url:host.website+'/payBankCard/searchBankInfo',
+        data:{},
+        type:'get',
+        success:function (data) {
+            var list=data.data.bank;
+            var html = '<option value="">全部</option>';
+            for(var i=0;i<list.length;i++){
+                html += '<option value="'+list[i].id+'">'+list[i].bankName+'</option>';
+                $('#bindName').html(html);
+            }
+            $("#account-name").html(data.data.cardOwner);
+            if(data.data.bankAccountType==1){
+                data.data.bankAccountType="对公银行账户";
+            }else {
+                data.data.bankAccountType="对私银行账户";
+            }
+            $('#bankAccountType').html(data.data.bankAccountType);
+            $('#bankAccountType').attr("data-flog","1")
 
+        }
+    });
+    // 表格验证开始
     var regex = {  //手机号验证正则
         mobile: /^0?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8}$/,
         zip:/^[1-9][0-9]{5}$/
@@ -56,26 +79,28 @@ $(function () {
         var mobile = regex.zip.test(value);
         return this.optional(element) || (mobile);
     }, "*请填写有效的邮编号码");
+    // 表格验证结束
+    // 获取手机验证码
     $(".verification-code").on("click",function () {
         $.ajax({
-            url:'/sms/send',
+            url:host.auth+'/sms/send',
             type:'post',
             data:{
-                mobile:$('#J_Mobile').val(),
+                mobile:$('#phoneNumber').val(),
                 type:3
             },
             success:function(data){
                 if(data.code == 1){
                     $.alert(data.data);
-                    settime(that);
                 }else{
                     $.alert('获取验证码失败，请重新获取');
                 }
             }
         });
     })
+    // 提交事件
     $(".btn").on("click",function () {
-               $.ajax({
+         $.ajax({
             url:host.website+'/payBankCard/addBankInfo',
             data:{
                 cardCode:$('#cardCode').val(),
@@ -97,28 +122,7 @@ $(function () {
             }
         });
     });
-     $.ajax({
-         url:host.website+'/payBankCard/searchBankInfo',
-         data:{},
-         type:'get',
-         success:function (data) {
-             var list=data.data.bank;
-             var html = '<option value="">全部</option>';
-             for(var i=0;i<list.length;i++){
-                 html += '<option value="'+list[i].id+'">'+list[i].bankName+'</option>';
-                 $('#bindName').html(html);
-             }
-             $("#account-name").html(data.data.cardOwner);
-             if(data.data.bankAccountType==1){
-                 data.data.bankAccountType="对公银行账户";
-             }else {
-                 data.data.bankAccountType="对私银行账户";
-             }
-             $('#bankAccountType').html(data.data.bankAccountType);
-             $('#bankAccountType').attr("data-flog","1")
 
-         }
-     });
 
 
     // function mobileAvailable(mobile){//验证手机号是否可用
