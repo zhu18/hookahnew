@@ -6,39 +6,16 @@ var head = {
 <%
 var htmlPart = {
 %>
-<div class="box backgorund-gray">
-        <div class="trading clearfix grid-row padding-top-10 padding-bottom-30 ">
-            <!--左侧栏-->
-            <% include("/introduction/trading-sidebar.html"){} %>
-            <!--右侧内容-->
-            <div class="trading-content">
-                <div class="cont" id="trading">
-                    <div class="public">
-                        <span></span>
-                        <h3>交易中心简介</h3>
-                    </div>
-                    <div class="line"></div>
-                    <!--<div class="nav-title">-->
-                        <!--<img src="/static/images/pic.png" alt="">-->
-                        <!--<p>山东省大数据交易中心</p>-->
-                        <!--<p>做大数据时代的领跑者</p>-->
-                    <!--</div>-->
-
-                        <!--<div class="nav-title">-->
-                        <!--<img src="/images/trading-center/intro-img.jpg" alt="">-->
-                        <!--</div>-->
-                    <h4>设立背景：</h4>
-                    <p>2015年9月，国务院发布《关于印发促进大数据发展行动纲要的通知》，大数据正式提升为国家战略。2016年10月，山东省政府发布《山东省人民政府关于促进大数据发展的意见》，明确提出大数据要成为提升政府治理能力，推动经济转型升级，塑造山东竞争优势的战略路径，并提出要在青岛设立并争创国家级大数据综合试验区。青岛作为全省的发展龙头、经济中心，具备良好的地理优势和经济基础，科技机构、高校数量和国家重点实验室众多，政务大数据全国领先，工业大数据基础雄厚，海洋大数据特色鲜明。联通、移动在青岛建有北方东部沿海最大的数据中心，电信在青岛建有大规模云计算基地，信息化基础设施完备。突出的区位优势和产业基础，青岛力求打造影响力辐射全球的“中国数都”。随着慧与软件全球大数据应用研究及产业示范基地、清华—青岛大数据工程研究中心、华为、百度、亚马逊等一大批国内外知名大数据企业落户青岛，青岛大数据产业迎来前所未有发展机遇。</p>
-                    <p>为促进大数据产业链及生态圈的建设，实现数据资源流通，青岛西海岸发展集团联合九次方大数据信息集团成立青岛大数据交易中心有限公司。</p>
-                    <h4>功能定位：</h4>
-                    <p>立足青岛、辐射山东，发挥青岛的地理空间、外贸进出口、国家政策、产业规模优势，建设面向全国提供数据交易服务的创新型交易场所。遵循“开放、规范、安全、可控”的原则，采用“政府指导，社会参与、市场化运作”的模式，促进数据流通、规范数据交易行为、维护数据交易市场秩序、保护数据交易各方合法权益，向社会提供完整的数据清洗、交易、结算、应用、安全保障、数据资产管理、运营和融资等综合配套服务，释放数据价值，形成大数据产业链和生态圈。</p>
-                    <h4>发展目标：</h4>
-                    <p>立足国家战略层面，积极融入“一带一路”建设，推动政府大数据共享和公开，带动各行业数据公开和融合，通过大数据产业发展促进创新驱动发展战略的实施，建成省内最大的大数据汇聚、交易及运营中心，争创全球大数据清洗、建模基地。</p>
-                </div>
-            </div>
-        </div>
-</div>
-
+<iframe src="http://192.168.200.116:8080/gywm/index.jhtml" id="iframepage" name="iframepage" frameBorder=0 scrolling=no width="100%" onLoad="iFrameHeight()" ></iframe>
+<script type="text/javascript" language="javascript">
+  function iFrameHeight() {
+    var ifm= document.getElementById("iframepage");
+    var subWeb = document.frames ? document.frames["iframepage"].document : ifm.contentDocument;
+    if(ifm != null && subWeb != null) {
+      ifm.height = subWeb.body.scrollHeight;
+    }
+  }
+</script>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
