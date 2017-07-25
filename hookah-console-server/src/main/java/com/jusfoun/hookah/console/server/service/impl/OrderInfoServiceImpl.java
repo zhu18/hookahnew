@@ -17,11 +17,7 @@ import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.generic.OrderBy;
-import com.jusfoun.hookah.core.utils.HttpClientUtil;
-import com.jusfoun.hookah.core.utils.JsonUtils;
-import com.jusfoun.hookah.core.utils.OrderHelper;
-import com.jusfoun.hookah.core.utils.StringUtils;
-import com.jusfoun.hookah.core.utils.FormatCheckUtil;
+import com.jusfoun.hookah.core.utils.*;
 import com.jusfoun.hookah.rpc.api.*;
 import org.apache.http.HttpException;
 import org.springframework.beans.BeanUtils;
@@ -691,29 +687,38 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                         param.put("goodsId", goods.getGoodsId());
                         param.put("totalCount", new Long(goods.getGoodsNumber() * goods.getFormatNumber()).toString());
 
-                        apiParam.put("totalCount", new Long(goods.getGoodsNumber() * goods.getFormatNumber()).toString());
                         apiParam.put("userId", orderInfoVo.getUserId());
                         apiParam.put("orderSn", orderInfoVo.getOrderSn());
                         apiParam.put("goodsSn", goods.getGoodsSn());
                         apiParam.put("url", goods.getApiInfo().getApiUrl());
+                        Date startTime = null;
+                        Date endTime = null;
                         switch (goods.getGoodsFormat()){
                             case 0:
                                 apiParam.put("type", 1);
+                                apiParam.put("totalCount", new Long(goods.getGoodsNumber() * goods.getFormatNumber()).toString());
                                 break;
-                            case 1:case 2:
+                            case 1:
                                 apiParam.put("type", 2);
-                                Date startTime = orderInfoVo.getPayTime();
+                                startTime = orderInfoVo.getPayTime();
                                 apiParam.put("startTime",startTime);
-                                Date endTime = null;
+                                endTime = DateUtils.thisTimeNextMonth(startTime,new Long(goods.getGoodsNumber() * goods.getFormatNumber()).intValue());
+                                apiParam.put("endTime",endTime);
+                                break;
+                            case 2:
+                                apiParam.put("type", 2);
+                                startTime = orderInfoVo.getPayTime();
+                                apiParam.put("startTime",startTime);
+                                endTime = DateUtils.thisTimeNextYear(startTime,new Long(goods.getGoodsNumber() * goods.getFormatNumber()).intValue());
                                 apiParam.put("endTime",endTime);
                                 break;
                         }
-                        list.add(apiParam);
+                        list.add(param);
                     });
-//            Map rs = HttpClientUtil.PostMethod(url, JsonUtils.toJson(list));
-//            logger.info("订单{}商品放api平台返回信息：{}", orderInfo.getOrderId(),  JsonUtils.toJson(rs));
-            Map apiRs = HttpClientUtil.PostMethod(apiUrl,JsonUtils.toJson(list));
-            logger.info("订单{}API商品插入网管接口：{}", orderInfo.getOrderId(),  JsonUtils.toJson(apiRs));
+            Map rs = HttpClientUtil.PostMethod(url, JsonUtils.toJson(list));
+            logger.info("订单{}商品放api平台返回信息：{}", orderInfo.getOrderId(),  JsonUtils.toJson(rs));
+//            Map apiRs = HttpClientUtil.PostMethod(apiUrl,JsonUtils.toJson(list));
+//            logger.info("订单{}API商品插入网管接口：{}", orderInfo.getOrderId(),  JsonUtils.toJson(apiRs));
         }catch (Exception e){
             e.printStackTrace();
             logger.error("发送商品到api平台发生异常");
