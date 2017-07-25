@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.oauth2server.web.controller;
 
 import com.jusfoun.hookah.core.annotation.Log;
+import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.exception.UserRegConfirmPwdException;
 import com.jusfoun.hookah.core.exception.UserRegEmptyPwdException;
@@ -154,7 +155,8 @@ public class ModifyController {
 //                user.setPaymentPassword(othpassword);
                 //2017/7/25 支付密码全部改为前端传MD5密文
                 if(payAccountService.resetPayPassword(user.getUserId(),userForm.getPaymentPassword())){
-                    user.setPaymentPasswordStatus(1);
+                    //更改支付密码设置状态
+                    user.setPaymentPasswordStatus(HookahConstants.PayPassWordStatus.isOK.getCode());
                     userService.updateById(user);
                     return "redirect:/modify/success?type=setPayPassword";
                 }else{
