@@ -16,7 +16,7 @@ class transactionController {
 
         if (res.data.code == '1') {
           $scope.dataInfo = res.data.data;
-          $rootScope.pagination = res.data.data;
+          // $rootScope.pagination = res.data.data;
           $scope.showNoneDataInfoTip = false;
           if (res.data.data.totalPage > 1) {
             $scope.showPageHelpInfo = true;

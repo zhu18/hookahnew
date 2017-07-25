@@ -29,7 +29,7 @@ class settleController {
         console.log(res);
         if (res.data.code == '1') {
           $scope.settleList = res.data.data.list;
-          $rootScope.pagination = res.data.data;
+          // $rootScope.pagination = res.data.data;
           $scope.showNoneDataInfoTip = false;
           if (res.data.data.totalPage > 1) {
             $scope.showPageHelpInfo = true;

@@ -26,10 +26,9 @@ class showMoneyListController {
       promise.then(function (res, status, config, headers) {
         console.log('数据在这里');
         console.log(res);
-
         if (res.data.code == '1') {
           $scope.showMoneyList = res.data.data.list;
-          $rootScope.pagination = res.data.data;
+          // $rootScope.pagination = res.data.data;
           $scope.showNoneDataInfoTip = false;
           if (res.data.data.totalPage > 1) {
             $scope.showPageHelpInfo = true;
