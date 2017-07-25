@@ -307,6 +307,10 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
 		if (payTradeRecords==null || payTradeRecords.size() == 0){
 			PayTradeRecord payTradeRecord = new PayTradeRecord();
+			List<Condition> filters = new ArrayList<>();
+			filters.add(Condition.eq("userId",orderInfo.getUserId()));
+			PayAccount payAccount = super.selectOne(filters);
+			payTradeRecord.setPayAccountId(payAccount.getId());
 			payTradeRecord.setUserId(orderInfo.getUserId());
 			payTradeRecord.setMoney(orderInfo.getOrderAmount());
 			payTradeRecord.setTradeType(PayConstants.TradeType.SalesOut.getCode());
@@ -332,6 +336,10 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		if (payTradeRecords==null || payTradeRecords.size() == 0){
 			//插内部消费流水
 			PayTradeRecord payTradeRecord = new PayTradeRecord();
+			List<Condition> filters = new ArrayList<>();
+			filters.add(Condition.eq("userId",orderInfo.getUserId()));
+			PayAccount payAccount = super.selectOne(filters);
+			payTradeRecord.setPayAccountId(payAccount.getId());
 			payTradeRecord.setUserId(orderInfo.getUserId());
 			payTradeRecord.setMoney(orderInfo.getOrderAmount());
 			payTradeRecord.setTradeType(PayConstants.TradeType.SalesOut.getCode());
@@ -343,6 +351,7 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 			payTradeRecordService.insertAndGetId(payTradeRecord);
 			//插内部充值流水
 			PayTradeRecord payTrade = new PayTradeRecord();
+			payTrade.setPayAccountId(payAccount.getId());
 			payTrade.setUserId(orderInfo.getUserId());
 			payTrade.setMoney(orderInfo.getOrderAmount());
 			payTrade.setTradeType(PayConstants.TradeType.OnlineRecharge.getCode());
@@ -354,7 +363,7 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 			payTradeRecordService.insertAndGetId(payTrade);
 			//插外部充值流水
 			PayAccountRecord payAccountRecord = new PayAccountRecord();
-			payAccountRecord.setPayAccountId(Long.valueOf(orderInfo.getUserId()));
+			payAccountRecord.setPayAccountId(payAccount.getId());
 			payAccountRecord.setUserId(orderInfo.getUserId());
 			Date date = new Date();
 			payAccountRecord.setTransferDate(date);
