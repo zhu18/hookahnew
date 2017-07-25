@@ -45,6 +45,7 @@
             <!--<li><a href="/usercenter/myGoods"><span class="fa fa-id-card-o margin-right-22"></span>我的商品</a></li>-->
         </ul>
     </div>
+    <%if(userCur.userType == 8){%>
     <div class="one-level-menu">
         <div class="title"><span class="fa fa-caret-down margin-right-25"></span>卖家中心</div>
         <ul>
@@ -53,6 +54,7 @@
             <li><a href="/usercenter/settlementRecord"><span class="fa fa-id-card-o margin-right-22"></span>结算记录</a></li>
         </ul>
     </div>
+    <%}%>
     <!--<ul class="one-level-menu-user">-->
         <!--&lt;!&ndash;<li class="text-align-center"><a href="/usercenter/userProfile"><span class="fa fa-file-text"></span>个人资料</a></li>&ndash;&gt;-->
         <!--<li class="padding-left-30"><a href="/usercenter/index"><span class="fa fa-file-text"></span>账户中心</a></li>-->
