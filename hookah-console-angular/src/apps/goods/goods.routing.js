@@ -44,7 +44,7 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
 			permission: 'items_checkedList'
 		})
 		.state('items.goodsDetail', {
-			url: '/items/goodsDetail',
+			url: '/items/goodsDetail/:id/:isEdit',
 			params: {'data': null},
 			template: require('./goodsDetail.html'),
 			controller: GoodsDetailController,
