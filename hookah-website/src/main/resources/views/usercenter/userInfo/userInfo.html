@@ -62,14 +62,6 @@ var htmlPart = {
 							<p class="usertype color-red">个人认证审核失败</p>
 							<%}else if(userCur.userType == 7){%>
 							<p class="usertype color-red">单位认证审核失败</p>
-							<%}else if(userCur.userType == 8){%>
-							<p class="usertype color-red">单位会员</p>
-							<%}else if(userCur.userType == 9){%>
-							<p class="usertype color-red">单位会员</p>
-							<%}else if(userCur.userType == 10){%>
-							<p class="usertype color-red">单位会员</p>
-							<%}else if(userCur.userType == 11){%>
-							<p class="usertype color-red">单位认证审核中</p>
 							<%}%>
 							<p class="info">用户帐号：<span> ${userCur.userName}</span></p>
 							<p class="info">手机号码：<span> ${userCur.mobile}</span></p>
@@ -91,110 +83,50 @@ var htmlPart = {
 
 					</div>
 					<div class="user-status ">
-						<%if(userCur.userType == 0){%>
-
-						<%}else if(userCur.userType == 1){%>
 						<div class="auth-introduce ">
-							<!--<p>如果您是个人用户，请进行个人会员认证</p>-->
-							<!--<div class="margin-10">-->
-							<!--<a href="/auth/user_auth_init" class="large-btn">个人会员认证</a>-->
-							<!--</div>-->
-							<p>如果您是单位用户，请进行单位会员认证</p>
-							<div class="margin-10">
-								<a href="/auth/company_auth_init" class="large-btn">单位会员认证</a>
+							<div class="auth-introduce-unit">
+								<%if(userCur.userType == 0){%>
+								<%}else if(userCur.userType == 1){%>
+									<!--<p>如果您是个人用户，请进行个人会员认证</p>-->
+									<!--<div class="margin-10">-->
+									<!--<a href="/auth/user_auth_init" class="large-btn">个人会员认证</a>-->
+									<!--</div>-->
+									<p>如果您是单位用户，请进行单位会员认证</p>
+									<a href="/auth/company_auth_init" class="large-btn">单位会员认证</a>
+								<%}else if(userCur.userType == 2){%>
+									<span class="font-size-18">您的个人会员认证审核<span class="color-green">已通过</span>！</span>
+								<%}else if(userCur.userType == 3){%>
+									<span class="font-size-18">您提交的个人会员认证还在<span class="color-orange">审核中</span>！</span>
+									<span class="font-size-14">我们会尽快审核，并将审核结果通过短信或邮件通知您，<br>请及时关注。</span>
+								<%}else if(userCur.userType == 4){%>
+									<span class="font-size-18">您的单位会员认证审核<span class="color-green">已通过</span>！</span>
+								<%}else if(userCur.userType == 5){%>
+									<span class="font-size-18">您提交的单位会员认证还在<span class="color-orange">审核中</span>！</span>
+									<span class="font-size-14">我们会尽快审核，并将审核结果通过短信或邮件通知您，<br>请及时关注。</span>
+								<%}else if(userCur.userType == 6){%>
+									<span class="font-size-18">您提交的个人会员认证审核<span class="color-red">未通过</span>！</span>
+									<a href="/auth/user_auth_init_step5" class="font-size-14 color-red" style="text-decoration: underline">查看原因 >></a>
+								<%}else if(userCur.userType == 7){%>
+									<span class="font-size-18">您提交的单位会员认证审核<span class="color-red">未通过</span>！</span>
+									<a href="/auth/company_auth_init_step5" class="font-size-14 color-red" style="height:18px; display: inline-block; border-bottom: 1px solid #E34F4F">查看原因 >></a>
+								<%}%>
+							</div>
+							<div class="auth-introduce-supplier">
+								<%if(userCur.supplierStatus == 0){%>
+								<span class="font-size-18">供应商申请 <span class="span-yellow font-size-18">审核中</span></span>
+								<%}else if(userCur.supplierStatus == 1){%>
+								<a href="javascript:void (0)" class="large-btn">供应商申请通过</a>
+								<%}else if(userCur.supplierStatus == 2){%>
+								<a href="/usercenter/becomingSupplierStep1" class="large-btn">供应商申请未通过</a>
+								<span>您提交的申请资料有误，请重新提交。</span>
+								<%}else{%>
+								<a href="/usercenter/becomingSupplierStep1" class="large-btn font-size-18">我要成为供应商</a>
+								<%}%>
+							</div>
 							</div>
 						</div>
-						<%}else if(userCur.userType == 2){%>
-						<div class="auth-introduce ">
-							<p>
-								<span class="font-size-18">您的个人会员认证审核<span class="color-green">已通过</span>！</span>
-							</p>
-						</div>
-						<%}else if(userCur.userType == 3){%>
-						<div class="auth-introduce ">
-							<p>
-								<span class="font-size-18">您提交的个人会员认证还在<span class="color-orange">审核中</span>！</span>
-								<br>
-								<br>
-								<span class="font-size-14">我们会尽快审核，并将审核结果通过短信或邮件通知您，<br>请及时关注。</span>
-							</p>
-						</div>
-						<%}else if(userCur.userType == 4){%>
-						<div class="auth-introduce">
-							<p>
-								<span class="font-size-18">您的单位会员认证审核<span class="color-green">已通过</span>！</span>
-							</p>
-							<p class="margin-top-10">
-								<a href="/usercenter/becomingSupplierStep1" class="large-btn font-size-18">我要成为供应商</a>
-							</p>
-						</div>
-						<%}else if(userCur.userType == 5){%>
-						<div class="auth-introduce ">
-							<p>
-								<span class="font-size-18">您提交的单位会员认证还在<span class="color-orange">审核中</span>！</span>
-								<br>
-								<br>
-								<span class="font-size-14">我们会尽快审核，并将审核结果通过短信或邮件通知您，<br>请及时关注。</span>
-							</p>
-						</div>
-						<%}else if(userCur.userType == 6){%>
-						<div class="auth-introduce ">
-							<p>
-								<span class="font-size-18">您提交的个人会员认证审核<span class="color-red">未通过</span>！</span>
-								<br>
-								<br>
-								<a href="/auth/user_auth_init_step5" class="font-size-14 color-red" style="text-decoration: underline">查看原因 >></a>
-							</p>
-						</div>
-						<%}else if(userCur.userType == 7){%>
-						<div class="auth-introduce ">
-							<p>
-								<span class="font-size-18">您提交的单位会员认证审核<span class="color-red">未通过</span>！</span>
-								<br>
-								<br>
-								<a href="/auth/company_auth_init_step5" class="font-size-14 color-red" style="height:18px; display: inline-block; border-bottom: 1px solid #E34F4F">查看原因 >></a>
-							</p>
-						</div>
-						<%}else if(userCur.userType == 8){%>
-						<div class="auth-introduce ">
-							<p>
-								<span class="font-size-18">您的单位会员认证审核<span class="color-green">已通过</span>！</span>
-							</p>
-							<p class="margin-top-10">
-								<a href="javascript:void (0)" class="large-btn">供应商申请通过</a>
-							</p>
-						</div>
-						<%}else if(userCur.userType == 9){%>
-						<div class="auth-introduce ">
-							<p>
-								<span class="font-size-18">您的单位会员认证审核<span class="color-green">已通过</span>！</span>
-							</p>
-							<p>
-								<span class="font-size-18">供应商申请 <span class="span-yellow font-size-18">审核中</span></span>
-							</p>
-						</div>
-						<%}else if(userCur.userType == 10){%>
-						<div class="auth-introduce ">
-							<p>
-								<span class="font-size-18">您的单位会员认证审核<span class="color-green">已通过</span>！</span>
-							</p>
-							<p class="margin-top-10">
-								<a href="/usercenter/becomingSupplierStep1" class="large-btn">供应商申请未通过</a>
-							</p>
-							<span>您提交的申请资料有误，请重新提交。</span>
-						</div>
-						<%}else if(userCur.userType == 11){%>
-						<div class="auth-introduce ">
-							<p>
-								<span class="font-size-18">您提交的单位会员认证还在<span class="color-orange">审核中</span>！</span>
-							</p>
-							<p>
-								<span class="font-size-18">供应商申请 <span class="span-yellow font-size-18">审核中</span></span>
-							</p>
-							<span class="font-size-14">我们会尽快审核，并将审核结果通过短信或邮件通知您，<br>请及时关注。</span>
-						</div>
-						<%}%>
-					</div>
+
+
 				</div>
 			</div>
 			<div class="basic-information-down">
