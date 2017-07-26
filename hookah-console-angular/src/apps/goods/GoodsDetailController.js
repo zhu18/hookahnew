@@ -1,24 +1,37 @@
 class GoodsDetailController {
 	constructor($scope, $rootScope, $http, $state,$stateParams, $uibModal, usSpinnerService, growl) {
-		$scope.editData = $stateParams.data.data; //获取去审核传值-------------
-		$scope.$flag = $stateParams.data.flag;
-		$scope.packageApiInfo =  $scope.editData.packageApiInfo;
+		if($stateParams.isEdit == 'true'){
+			$scope.$flag = true;
+			$scope.detailTitle = '商品审核';
+        }else{
+			$scope.$flag = false;
+			$scope.detailTitle = '商品详情';
+        }
+        if($stateParams.id){   //商品详情
+			var promise = $http({
+				method: 'GET',
+				url: $rootScope.site.apiServer + "/api/goods/getGoodsInfo",
+				params: {goodsId: $stateParams.id}
+			});
+			promise.then(function (res, status, config, headers) {
+				if(res.data.code == "1"){
+					$scope.editData = res.data.data;
+					$scope.packageApiInfo = res.data.data.packageApiInfo;
+				}
+			});
+        }else{
+            alert('此商品错误');
+			$state.go('items.search',{data:null});
+        }
 		$scope.current= "1";
-		// $scope.$searchCondition = $stateParams.data.searchCondition;
-		// alert("obj:" + $scope.$searchCondition.searchName);
-        // console.log("obj:" + $scope.$searchCondition.searchName);
 		$scope.setCurrent = function (param) {
 			$scope.current = param;
 		};
-
-
         $scope.submitCheck = function () { // 提交审核
-
             if ($('input[name="checkStatus"]:checked').val() == '2' && $("#checkContent").val().trim() == '') {
                 $rootScope.openErrorDialogModal('请填写审核意见^_^');
             } else {
                 if($scope.editData.goodsType == 1 && $scope.editData.isOffline == 0 ){
-
                     $scope.addData = {
                         goodsCheck: {
                             goodsId: $scope.editData.goodsId,//商品ID
@@ -40,7 +53,6 @@ class GoodsDetailController {
                         }
                     });
                 }else{
-
                     $scope.dataGoods={};
                     $scope.dataGoods.goodsId = $('#goodsId').val();
                     $scope.dataGoods.goodsSn = $('#goodsSn').val();
