@@ -72,19 +72,15 @@ class GoodsDetailController {
                 }
             }
 
-        } //提交审核
+        }; //提交审核
 
-        // $scope.returnPage = function () { //返回
-        //
-        //     // $scope.$item('data',$stateParams.data.searchCondition);
-        //     $state.go('items.search', {
-        //         data:{
-        //             searchCd:$stateParams.data.searchCondition,
-        //             flag:true
-        //
-        //         }
-        //     });
-        // } //返回
+        $scope.returnPage = function () { //返回
+            $state.go($stateParams.data.url, {
+                data:{
+                	data:$stateParams.data
+                }
+            });
+        }; //返回
 	}
 }
 
