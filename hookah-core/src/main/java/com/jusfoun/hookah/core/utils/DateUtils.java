@@ -116,32 +116,20 @@ public abstract class DateUtils {
         return toDate;
     }
 
-        public static String thisTimeNextMonth(String time, Integer i){
-        SimpleDateFormat df = new SimpleDateFormat(DateUtils.DEFAULT_DATE_TIME_FORMAT);
+    public static Date thisTimeNextMonth(Date time, Integer i){
         Calendar cld = Calendar.getInstance();
-        try {
-            Date d1 = df.parse(time);
-            cld.setTime(d1);
-            cld.add(Calendar.MONTH, i);
-            Date d2 = cld.getTime();
-            return df.format(d2);
-        }catch (ParseException e){
-            throw new IllegalStateException("Parse date from [" + time + "," + DateUtils.DEFAULT_DATE_TIME_FORMAT + "] failed", e);
-        }
+        cld.setTime(time);
+        cld.add(Calendar.MONTH, i);
+        Date d2 = cld.getTime();
+        return d2;
     }
 
-    public static String thisTimeNextYear(String time, Integer i){
-        SimpleDateFormat df = new SimpleDateFormat(DateUtils.DEFAULT_DATE_TIME_FORMAT);
+    public static Date thisTimeNextYear(Date time, Integer i){
         Calendar cld = Calendar.getInstance();
-        try {
-            Date d1 = df.parse(time);
-            cld.setTime(d1);
-            cld.add(Calendar.YEAR, i);
-            Date d2 = cld.getTime();
-            return df.format(d2);
-        }catch (ParseException e){
-            throw new IllegalStateException("Parse date from [" + time + "," + DateUtils.DEFAULT_DATE_TIME_FORMAT + "] failed", e);
-        }
+        cld.setTime(time);
+        cld.add(Calendar.YEAR, i);
+        Date d2 = cld.getTime();
+        return d2;
     }
 
 }

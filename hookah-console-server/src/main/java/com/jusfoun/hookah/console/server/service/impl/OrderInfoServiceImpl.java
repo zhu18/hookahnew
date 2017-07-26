@@ -666,10 +666,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             OrderInfoVo orderInfoVo = findDetailById(orderInfo.getOrderId());
             //支付成功,
             //1、发送api平台
-            String url = "http://open.galaxybigdata.com/shop/insert/userapi";
-            String apiUrl = "192.168.15.90:5555/gateway/insert";
+//            String url = "http://open.galaxybigdata.com/shop/insert/userapi";
+            String apiUrl = "http://192.168.200.116:5555/gateway/insert";
             List<Map> list = new ArrayList();
-            List<Map> apiList = new ArrayList<>();
 
             orderInfoVo.getMgOrderGoodsList().stream()
                     .filter(g -> {
@@ -679,21 +678,21 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                         return g.getGoodsType() == 1 && StringUtils.isNotBlank(g.getSourceId());
                     })
                     .forEach(goods -> {
-                        Map<String, String> param = new HashMap<>();
-                        Map<String, String> apiParam = new HashMap<>();
-                        param.put("userId", orderInfoVo.getUserId());
-                        //param.put("endTime",orderInfo.getUserId());
-                        param.put("orderNo", orderInfo.getOrderSn());
-                        param.put("apiId", goods.getSourceId());
-                        param.put("goodsId", goods.getGoodsId());
-                        param.put("totalCount", new Long(goods.getGoodsNumber() * goods.getFormatNumber()).toString());
+                        Map<String, Object> apiParam = new HashMap<>();
+//                        Map<String, String> param = new HashMap<>();
+//                        param.put("userId", orderInfoVo.getUserId());
+//                        param.put("endTime",orderInfo.getUserId());
+//                        param.put("orderNo", orderInfo.getOrderSn());
+//                        param.put("apiId", goods.getSourceId());
+//                        param.put("goodsId", goods.getGoodsId());
+//                        param.put("totalCount", new Long(goods.getGoodsNumber() * goods.getFormatNumber()).toString());
 
                         apiParam.put("userId", orderInfoVo.getUserId());
                         apiParam.put("orderSn", orderInfoVo.getOrderSn());
                         apiParam.put("goodsSn", goods.getGoodsSn());
                         apiParam.put("url", goods.getApiInfo().getApiUrl());
-                        String startTime = null;
-                        String endTime = null;
+                        Date startTime = null;
+                        Date endTime = null;
                         SimpleDateFormat df = new SimpleDateFormat(DateUtils.DEFAULT_DATE_TIME_FORMAT);
                         switch (goods.getGoodsFormat()){
                             case 0:
@@ -702,25 +701,26 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                                 break;
                             case 1:
                                 apiParam.put("type", "2");
-                                startTime = df.format(orderInfoVo.getPayTime());
+                                startTime = orderInfoVo.getPayTime();
                                 apiParam.put("startTime",startTime);
                                 endTime = DateUtils.thisTimeNextMonth(startTime,new Long(goods.getGoodsNumber() * goods.getFormatNumber()).intValue());
                                 apiParam.put("endTime",endTime);
                                 break;
                             case 2:
                                 apiParam.put("type", "2");
-                                startTime = df.format(orderInfoVo.getPayTime());
+                                startTime = orderInfoVo.getPayTime();
                                 apiParam.put("startTime",startTime);
                                 endTime = DateUtils.thisTimeNextYear(startTime,new Long(goods.getGoodsNumber() * goods.getFormatNumber()).intValue());
                                 apiParam.put("endTime",endTime);
                                 break;
                         }
-                        list.add(param);
+//                        list.add(param);
+                        list.add(apiParam);
                     });
-            Map rs = HttpClientUtil.PostMethod(url, JsonUtils.toJson(list));
-            logger.info("订单{}商品放api平台返回信息：{}", orderInfo.getOrderId(),  JsonUtils.toJson(rs));
-//            Map apiRs = HttpClientUtil.PostMethod(apiUrl,JsonUtils.toJson(list));
-//            logger.info("订单{}API商品插入网管接口：{}", orderInfo.getOrderId(),  JsonUtils.toJson(apiRs));
+//            Map rs = HttpClientUtil.PostMethod(url, JsonUtils.toJson(list));
+//            logger.info("订单{}商品放api平台返回信息：{}", orderInfo.getOrderId(),  JsonUtils.toJson(rs));
+            Map apiRs = HttpClientUtil.PostMethod(apiUrl,JsonUtils.toJson(list));
+            logger.info("订单{}API商品插入网管接口：{}", orderInfo.getOrderId(),  JsonUtils.toJson(apiRs));
         }catch (Exception e){
             e.printStackTrace();
             logger.error("发送商品到api平台发生异常");
