@@ -67,7 +67,7 @@ public class SupplierServiceImpl extends GenericServiceImpl<Supplier, String> im
             user.setContactPhone(contactPhone);
         }
         user.setContactAddress(contactAddress);
-        user.setUserType(9);
+        user.setSupplierStatus(supplier.CHECK_STATUS);
 
         Supplier list = super.selectOne(filter);
         if (list!=null){
@@ -97,7 +97,7 @@ public class SupplierServiceImpl extends GenericServiceImpl<Supplier, String> im
             throw new HookahException("保存失败，请重新操作");
         }
         User user = userMapper.selectByPrimaryKey(supplier.getUserId());
-        if (user.getUserType()!=4 && user.getUserType()!=9 && user.getUserType()!=10){
+        if (user.getUserType()!=4){
             throw new HookahException("单位会员认证尚未通过，请先认证单位会员");
         }
         supplier.setCheckStatus(checkStatus);
@@ -107,10 +107,10 @@ public class SupplierServiceImpl extends GenericServiceImpl<Supplier, String> im
         messageCode.setBusinessId(id);
         if (checkStatus.equals((byte)1)){
             messageCode.setCode(HookahConstants.MESSAGE_401);
-            user.setUserType(8);
+            user.setSupplierStatus(supplier.CHECK_STATUS_SUCCESS);
         }else{
             messageCode.setCode(HookahConstants.MESSAGE_402);
-            user.setUserType(10);
+            user.setSupplierStatus(supplier.CHECK_STATUS_FAILED);
         }
         supplierMapper.updateByPrimaryKeySelective(supplier);
         userMapper.updateByPrimaryKeySelective(user);
