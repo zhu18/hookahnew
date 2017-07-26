@@ -74,6 +74,7 @@ public class SupplierServiceImpl extends GenericServiceImpl<Supplier, String> im
             list.setContactPhone(contactPhone);
             list.setContactName(contactName);
             list.setAddTime(new Date());
+            list.setCheckStatus(supplier.CHECK_STATUS);
             supplierMapper.updateByPrimaryKeySelective(list);
         }else {
             supplier.setContactPhone(contactPhone);

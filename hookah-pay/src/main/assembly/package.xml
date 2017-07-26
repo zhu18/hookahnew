@@ -28,7 +28,7 @@
 
     <fileSet>
       <directory>${project.basedir}/src/lib</directory>
-      <outputDirectory>/config</outputDirectory>
+      <outputDirectory>lib</outputDirectory>
       <includes>
         <include>**/*.*</include>
       </includes>

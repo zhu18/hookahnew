@@ -380,6 +380,7 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		//插交易中心冻结收入流水，
 		PayTradeRecord payTradeRecord = new PayTradeRecord();
 		payTradeRecord.setPayAccountId(HookahConstants.TRADECENTERACCOUNT);
+		payTradeRecord.setUserId(orderinfo.getUserId());
 		payTradeRecord.setMoney(orderAmount);
 		payTradeRecord.setTradeType(HookahConstants.TradeType.FreezaIn.getCode());
 		payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.handing.getCode());

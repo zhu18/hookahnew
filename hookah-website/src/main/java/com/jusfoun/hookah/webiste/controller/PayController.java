@@ -268,6 +268,7 @@ public class PayController extends BaseController{
                 //交易成功,插交易中心冻结收入流水，更新交易中心虚拟账户金额
                 PayTradeRecord payTradeRecord = new PayTradeRecord();
                 payTradeRecord.setPayAccountId(HookahConstants.TRADECENTERACCOUNT);
+                payTradeRecord.setUserId(orderInfo.getUserId());
                 payTradeRecord.setMoney(orderInfo.getOrderAmount());
                 payTradeRecord.setTradeType(HookahConstants.TradeType.FreezaIn.getCode());
                 payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.handing.getCode());
@@ -334,6 +335,7 @@ public class PayController extends BaseController{
                 //交易成功,插交易中心冻结收入流水，
                 PayTradeRecord payTradeRecord = new PayTradeRecord();
                 payTradeRecord.setPayAccountId(HookahConstants.TRADECENTERACCOUNT);//交易中心虚拟账号Id
+                payTradeRecord.setUserId(orderInfo.getUserId());
                 payTradeRecord.setMoney(orderInfo.getOrderAmount());
                 payTradeRecord.setTradeType(HookahConstants.TradeType.FreezaIn.getCode());
                 payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.handing.getCode());
