@@ -190,7 +190,8 @@ public class PlatformFundsApi extends BaseController{
             orderBys.add(OrderBy.desc("addTime"));
 
             List<Condition> filters = new ArrayList();
-
+            //只查询的费用科目
+            filters.add(Condition.in("tradeType", new Integer[]{1, 2, 6003, 6004, 3007, 3001, 4001, 8}));
             if (tradeType != null) {
                 filters.add(Condition.eq("tradeType", tradeType));
             }
