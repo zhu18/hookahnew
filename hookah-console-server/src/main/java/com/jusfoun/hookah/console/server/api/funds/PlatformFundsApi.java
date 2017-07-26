@@ -237,7 +237,7 @@ public class PlatformFundsApi extends BaseController{
                     listVo.add(vo);
                 });
             }
-            pagination.setTotalPage(page.getTotalPage());
+            pagination.setTotalItems(page.getTotalItems());
             pagination.setPageSize(pageSizeNew);
             pagination.setCurrentPage(pageNumberNew);
             pagination.setList(listVo);

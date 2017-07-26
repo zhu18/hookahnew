@@ -1,8 +1,14 @@
 /**
- * Created by lss on 2017/7/4 0004.
+ * Created by Dajun on 2017/7/4 0004.
  */
 class UserListDetailController {
     constructor($scope, $rootScope,$http, $stateParams,growl) {
+      var reg=/[^/]*$/;
+      var userId=reg.exec(window.location.hash)[0];
+      console.log(userId);
+      if(userId){ //保证用户刷新页面也以获取userid
+        $stateParams.id=userId;
+      }
         var promise = $http({
           method: 'GET',
           url: $rootScope.site.apiServer + "/api/user/" + $stateParams.id
