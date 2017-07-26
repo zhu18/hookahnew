@@ -251,6 +251,11 @@ class MessageController {
             $scope.title = "添加模板";
             $scope.getInfo();
 
+            //单选框默认选中
+            $scope.template= {
+                templateType : 2
+            };
+
             //获取消息事件类型列表
             var promise = $http({
                 method: 'POST',
