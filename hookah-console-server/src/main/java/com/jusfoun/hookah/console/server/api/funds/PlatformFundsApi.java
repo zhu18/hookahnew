@@ -231,7 +231,11 @@ public class PlatformFundsApi extends BaseController{
                         vo.setAccountParty("交易中心平台资金");
                     }else{
                         User user = userService.selectById(x.getUserId());
-                        vo.setAccountParty((user.getUserName() == null ? "会员" : user.getUserName()) + "平台资金");
+                        if(user != null){
+                            vo.setAccountParty((user.getUserName() == null ? "会员" : user.getUserName()) + "平台资金");
+                        }else{
+                            vo.setAccountParty("会员平台资金");
+                        }
                     }
                     BeanUtils.copyProperties(x, vo);
                     listVo.add(vo);

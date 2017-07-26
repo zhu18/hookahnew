@@ -2,40 +2,53 @@ class GoodsListController {
 	constructor($scope, $rootScope, $state, $stateParams, $http, $sce, $uibModal, usSpinnerService, growl) {
 		$scope.pageTitle = null; //页面title
 		$scope.getUrl = null;
-		$rootScope.pagination.currentPage = 1;
-
-		$scope.searchName = '';
-		$scope.searchSn = '';
-		$scope.searchKw = '';
-		$scope.searchShop = '';
-		// $scope.searchCheckStatus = '';
-		//$scope.searchOnSaleStatus = '';
-		// $scope.orgName = '';
-
 		$scope.checkStatuss = [{id:-1, name:"全部"}, {id:0, name:"待审核"}, {id:1, name:"已通过"}, {id:2, name:"未通过"}];
-		$scope.searchCheckStatus = -1;
 		$scope.onSaleStatuss = [{id:-1, name:"全部"}, {id:0, name:"已下架"}, {id:1, name:"已上架"}, {id:2, name:"强制下架"}];
-		$scope.queryObj={
-            searchOnSaleStatus:-1,
-            searchCheckStatus :-1,
-            orgName: ''
-		};
+		if($stateParams.data){
+			$rootScope.pagination.currentPage = $stateParams.data.data.Params.currentPage;
+			$rootScope.pagination.pageSize = $stateParams.data.data.Params.pageSize;
+			$scope.searchName = $stateParams.data.data.Params.goodsName;
+			$scope.searchSn = $stateParams.data.data.Params.goodsSn;
+			$scope.searchKw = $stateParams.data.data.Params.keywords;
+			$scope.searchShop = $stateParams.data.data.Params.shopName;
+			$scope.queryObj={
+				searchOnSaleStatus:$stateParams.data.data.Params.onSaleStatus,
+				searchCheckStatus :$stateParams.data.data.Params.checkStatus,
+				orgName: $stateParams.data.data.Params.orgName
+			};
+		}else{
+			$rootScope.pagination.currentPage = 1;
+			$rootScope.pagination.pageSize = 20;
+			$scope.searchName = '';
+			$scope.searchSn = '';
+			$scope.searchKw = '';
+			$scope.searchShop = '';
+			$scope.queryObj={
+				searchOnSaleStatus:-1,
+				searchCheckStatus :-1,
+				orgName: ''
+			};
+		}
 
 		$scope.search = function () {//获取初始数据
+			$scope.dataParams = {
+				url:$state.$current.name,
+				Params : {
+					currentPage:$rootScope.pagination.currentPage,
+					pageSize: $rootScope.pagination.pageSize,
+					goodsName: $scope.searchName,
+					goodsSn: $scope.searchSn,
+					keywords: $scope.searchKw,
+					shopName: $scope.searchShop,
+					checkStatus: $scope.queryObj.searchCheckStatus,
+					onSaleStatus: $scope.queryObj.searchOnSaleStatus,
+					orgName:$scope.queryObj.orgName
+				}
+			};
 			var promise = $http({
 				method: 'GET',
 				url: $rootScope.site.apiServer + $scope.getUrl,
-				params: {currentPage: $rootScope.pagination.currentPage,
-                    pageSize: $rootScope.pagination.pageSize,
-                    goodsName: $scope.searchName,
-                    goodsSn: $scope.searchSn,
-                    keywords: $scope.searchKw,
-                    shopName: $scope.searchShop,
-                    checkStatus: $scope.queryObj.searchCheckStatus,
-                    onSaleStatus: $scope.queryObj.searchOnSaleStatus,
-                    orgName:$scope.queryObj.orgName
-
-				}
+				params: $scope.dataParams.Params
 			});
 			promise.then(function (res, status, config, headers) {
 				$rootScope.loadingState = false;
@@ -87,28 +100,11 @@ class GoodsListController {
 			},function(){
 			});
 		};//商品强制下架
-		$scope.goodsDetail = function (item,flag) {//商品详情
-			var promise = $http({
-				method: 'GET',
-				url: $rootScope.site.apiServer + "/api/goods/getGoodsInfo",
-				params: {goodsId: item.goodsId}
-			});
-			promise.then(function (res, status, config, headers) {
-				if(res.data.code == "1"){
-					$state.go('items.goodsDetail', {
-						data:{
-							data:res.data.data,
-							flag:flag
-							//dition: $scope.searchCondition
-
-						}
-					});
-				}
-			});
-		};//商品详情
 		$scope.pageChanged = function () {//翻页
+			if($stateParams.data){
+				$rootScope.pagination.currentPage = $stateParams.data.data.Params.currentPage;
+			}
 			$scope.search();
-			console.log('Page changed to: ' + $rootScope.pagination.currentPage);
 		};//翻页
 		$scope.refresh = function(){ //刷新
 			$scope.searchName = '';
