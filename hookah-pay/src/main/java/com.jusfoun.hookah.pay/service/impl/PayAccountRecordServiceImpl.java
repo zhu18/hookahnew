@@ -38,10 +38,10 @@ import java.util.*;
 public class PayAccountRecordServiceImpl extends GenericServiceImpl<PayAccountRecord, Integer> implements
 		PayAccountRecordService {
 
-	@Resource
-	FixClientUtil client;
+//	@Resource
+//	FixClientUtil client;
 
-	private IFixClient fixClient = client.createClientSSL();
+	private IFixClient fixClient = FixClientUtil.createClientSSL();
 
 	@Resource
 	private PayAccountRecordMapper payAccountRecordMapper;
