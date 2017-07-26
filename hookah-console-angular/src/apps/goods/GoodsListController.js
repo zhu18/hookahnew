@@ -77,7 +77,7 @@ class GoodsListController {
 			var modalInstance = $rootScope.openConfirmDialogModel(title1,content);
 
 			modalInstance.result.then(function () { //模态点提交
-				if($('#checkContent').val()){
+				if($('#checkContent').val().trim()){
 					var promise = $http({
 						method: 'POST',
 						url: $rootScope.site.apiServer + "/api/goods/forceOff",
