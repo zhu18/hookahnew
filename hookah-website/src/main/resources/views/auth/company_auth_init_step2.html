@@ -67,7 +67,7 @@ var htmlPart = {
 									</li>
 									<li>
 										<label><span>法定代表人证件编号：</span><span class="gs">*</span></label>
-										<div class="inputBoxs"><input type="text" name="companyLegal" placeholder="请输入法定代表人证件编号"/></div>
+										<div class="inputBoxs"><input type="text" name="lawPersonNum" placeholder="请输入法定代表人证件编号"/></div>
 									</li>
 									<li>
 										<label><span>法定代表人证件照：</span><span class="gs">*</span></label>
@@ -79,8 +79,8 @@ var htmlPart = {
 												<input type="file" name="filename" multiple="multiple" class="unloadBtn" accept="image/gif,image/jpeg,image/jpg,image/png"/>
 											</label>
 											<input type="hidden" class="input_hide">
-											<input type="text" name="licensePath" class="input_op">
-											<img src="/static/images/auth/id_0.jpg" alt="" id="licesePath"/>
+											<input type="text" name="lawPersonPositivePath" class="input_op">
+											<img src="/static/images/auth/id_0.jpg" alt="" id="lawPersonPositivePath"/>
 											<span class="upLoad_warp">点击上传图片</span>
 										</div>
 										<div class="upLoad upLoad_d">
@@ -88,8 +88,8 @@ var htmlPart = {
 												<input type="file" name="filename" multiple="multiple" class="unloadBtn" accept="image/gif,image/jpeg,image/jpg,image/png"/>
 											</label>
 											<input type="hidden" class="input_hide">
-											<input type="text" name="licensePath" class="input_op">
-											<img src="/static/images/auth/id_1.jpg" alt="" id="liesePath"/>
+											<input type="text" name="lawPersonNegativePath" class="input_op">
+											<img src="/static/images/auth/id_1.jpg" alt="" id="lawPersonNegativePath"/>
 											<span class="upLoad_warp">点击上传图片</span>
 										</div>
 									</li>
@@ -114,7 +114,7 @@ var htmlPart = {
 											<select id="workCity" name="workCity">
 												<option value="">全部</option>
 											</select>
-											<input class="margin-top-5" type="text" name="address" placeholder="请输入公司办公的详细地址"/>
+											<input class="margin-top-5" type="text" name="workAddress" placeholder="请输入公司办公的详细地址"/>
 										</div>
 									</li>
 									<li>

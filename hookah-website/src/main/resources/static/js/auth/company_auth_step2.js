@@ -94,11 +94,18 @@ function companyAuth(){
             "licensePath":$("input[name='licensePath']").val(),//营业执照存放路径
             "certifictePath":$("input[name='certifictePath']").val(),//企业代码存放路径
             "lawPersonName":$("input[name='companyLegal']").val(),//企业法人代表
-            "region":$('select[name="city"] option:selected').val(),//所在地
-            "contactAddress":$("input[name='address']").val(),//详细地址
+
             "orgPhone":$("input[name='tel']").val(),//联系电话
             "industry":$("input[name='mainBusiness']").val(),//行业
-            "isSupplier":$("input[name='fruit']").is(":checked")?"1":"0",//我要成为供应商
+            "lawPersonCategory":"0",//类别
+            "lawPersonNum":$("input[name='lawPersonNum']").val(),//企业法人代表证件编号
+            "lawPersonPositivePath":$("input[name='lawPersonPositivePath']").val(),//身份证正面
+            "lawPersonNegativePath":$("input[name='lawPersonNegativePath']").val(),//身份证反面
+
+            "region":$('select[name="registerCity"] option:selected').val(),//所在地
+            "contactAddress":$("input[name='address']").val(),//详细地址
+            "regionId":$('select[name="workCity"] option:selected').val(),//所在地
+            "officeAddress":$("input[name='workAddress']").val()//详细地址
         },
         type:"post",
         success : function(data) {
