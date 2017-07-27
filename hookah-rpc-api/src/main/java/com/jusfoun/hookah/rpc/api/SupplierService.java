@@ -2,6 +2,7 @@ package com.jusfoun.hookah.rpc.api;
 
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.domain.Supplier;
+import com.jusfoun.hookah.core.domain.vo.SupplierVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericService;
 import com.jusfoun.hookah.core.generic.OrderBy;
@@ -17,4 +18,6 @@ public interface SupplierService extends GenericService<Supplier,String> {
     void toBeSupplier(String contactName, String contactPhone, String contactAddress, String userId) throws Exception;
 
     void checkSupplier(String id, String checkContent, Byte checkStatus, String checkUser)throws Exception;
+
+    Pagination<SupplierVo> getList(Integer pageNumberNew, Integer pageSizeNew, List<Condition> filters, List<OrderBy> orderBys);
 }
