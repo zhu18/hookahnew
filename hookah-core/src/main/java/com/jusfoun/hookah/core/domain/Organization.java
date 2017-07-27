@@ -253,7 +253,7 @@ public class Organization extends GenericModel {
 
     private String officeAddress;
 
-    private Long regionId;
+    private Long officeRegionId;
 
     public Byte getIsSupplier() {
         return isSupplier;
@@ -311,12 +311,12 @@ public class Organization extends GenericModel {
         this.officeAddress = officeAddress;
     }
 
-    public Long getRegionId() {
-        return regionId;
+    public Long getOfficeRegionId() {
+        return officeRegionId;
     }
 
-    public void setRegionId(Long regionId) {
-        this.regionId = regionId;
+    public void setOfficeRegionId(Long officeRegionId) {
+        this.officeRegionId = officeRegionId;
     }
 
     /**
