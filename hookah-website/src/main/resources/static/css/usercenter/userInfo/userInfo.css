@@ -104,9 +104,9 @@
 .basic-information-top  .basic-information-top-content .user-status  .auth-introduce{
     height: 100%;
 }
-/*.basic-information-top  .basic-information-top-content .user-status  .auth-introduce .span-yellow{*/
-    /*color: #EFC347;*/
-/*}*/
+.basic-information-top  .basic-information-top-content .user-status  .auth-introduce .span-yellow{
+    color: #EFC347;
+}
 .basic-information-top  .basic-information-top-content .user-status  .auth-introduce .auth-introduce-unit{
 }
 .basic-information-top  .basic-information-top-content .user-status  .auth-introduce .auth-introduce-unit p{

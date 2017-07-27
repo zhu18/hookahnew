@@ -21,10 +21,8 @@ $(function () {
                 html +="<li><label>审核意见</label><p>"+data.data.checkContent+"</p></li>";
             }else if(data.data.isAuth == '2'){
                 html +="<li><label>认证状态</label><p class='position-relative'><span>已认证</span></p></li>";
-                html +="<li><label>审核意见</label><p>"+data.data.checkContent+"</p></li>";
             }else {
                 html +="<li><label>认证状态</label><p class='position-relative'><span>未认证</span><a href='/auth/company_auth_init_step2?isAuth=1' class='repeat-revise-btn'>立即认证</a></p></li>";
-                html +="<li><label>审核意见</label><p>"+data.data.checkContent+"</p></li>";
             }
             $('.ul1').html(html);
 
@@ -35,7 +33,6 @@ $(function () {
             }else {
                 data.data.isAuth="未认证"
             }
-
             $('#orgName').html(data.data.orgName?data.data.orgName:"无");
             $('#isAuth').html( data.data.isAuth?data.data.isAuth:"无");
             $('#certificateCode').html( data.data.certificateCode?data.data.certificateCode:"无");
@@ -48,8 +45,6 @@ $(function () {
             $('#orgPhone').html( data.data.orgPhone?data.data.orgPhone:"无");
             $('#certifictePath').attr({"src":data.data.certifictePath});
             $('#licensePath').attr({"src":data.data.licensePath});
-
-
         }
     });
 })

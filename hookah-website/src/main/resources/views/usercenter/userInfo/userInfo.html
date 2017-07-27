@@ -91,7 +91,7 @@ var htmlPart = {
 									<!--<div class="margin-10">-->
 									<!--<a href="/auth/user_auth_init" class="large-btn">个人会员认证</a>-->
 									<!--</div>-->
-									<p>如果您是单位用户，请进行单位会员认证</p>
+									<p class="margin-top-20">如果您是单位用户，请进行单位会员认证</p>
 									<a href="/auth/company_auth_init" class="large-btn">单位会员认证</a>
 								<%}else if(userCur.userType == 2){%>
 									<p class="font-size-18 status">您的个人会员认证审核<span class="color-green">已通过</span>！</p>
@@ -113,7 +113,7 @@ var htmlPart = {
 							</div>
 							<div class="auth-introduce-supplier">
 								<%if(userCur.supplierStatus == 0){%>
-								<p class="font-size-18">供应商申请 <span class="span-yellow font-size-18">审核中</span></p>
+								<p class="font-size-18 margin-top-20">供应商申请 <span class="span-yellow font-size-18">审核中</span></p>
 								<%}else if(userCur.supplierStatus == 1){%>
 								<a href="javascript:void (0)" class="margin-top-20">供应商申请通过</a>
 								<%}else if(userCur.supplierStatus == 2){%>

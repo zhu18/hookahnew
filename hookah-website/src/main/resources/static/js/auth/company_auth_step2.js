@@ -4,7 +4,8 @@
 $(function(){
     //地域加载
     var regionParam = 100000;
-    loadRegion('province', regionParam); //加载地域
+    loadRegion('registerProvince', regionParam); //加载地域
+    loadRegion('workProvince', regionParam); //加载地域
     supplier()
 });
 $('.upLoad').mouseover(function(){
@@ -109,6 +110,7 @@ function companyAuth(){
         }
     });
 }
+// 验证插件开始
 $("#companyForm").validate({
 	rules: {
 		governmentName:'required',
@@ -133,7 +135,7 @@ $("#companyForm").validate({
 		creditCode:'信用代码不能为空',
 		businessLicence:'营业执照不能为空',
 		taxRegCertificate:'不能为空',
-		companyLegal:'法人代表不能为空',
+		companyLegal:'法定代表人不能为空',
 		mainBusiness:'主营业务不能为空',
 		// province:'所在地区不能为空',
 		city:'所在地区不能为空',
@@ -158,6 +160,7 @@ $.validator.addMethod("isMobile", function(value, element) {
 	var tel = value;
 	return this.optional(element) || (reg.test(tel));
 }, "长度为10-60个字符（每个汉字为2个字符）");
+// 验证插件结束
 $('#verifyBtn').click(function(){
 	if($("#companyForm").valid()){
 		companyAuth();
@@ -176,7 +179,7 @@ function supplier() {
     })
 }
 //认证修改跳转页面，反现值
-if($.getUrlParam("isAuth")== "2" || $.getUrlParam("isAuth")== "3"){
+if($.getUrlParam("isAuth")== "3"){
     $.ajax({
         url:host.website+'/regInfo/verifiedInfo',
         data:{},
@@ -193,7 +196,6 @@ if($.getUrlParam("isAuth")== "2" || $.getUrlParam("isAuth")== "3"){
                     $("#province option[value="+val+"]").attr("selected","selected");
                     loadRegion('city',val);
                 }
-
             })
             $("input[name='address']").val(data.data.contactAddress?data.data.contactAddress:"")//详细地址
             $("input[name='tel']").val(data.data.orgPhone?data.data.orgPhone:"")//联系电话
