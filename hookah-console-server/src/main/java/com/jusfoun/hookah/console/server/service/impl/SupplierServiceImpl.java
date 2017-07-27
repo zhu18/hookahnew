@@ -2,6 +2,7 @@ package com.jusfoun.hookah.console.server.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
@@ -12,6 +13,7 @@ import com.jusfoun.hookah.core.domain.MessageCode;
 import com.jusfoun.hookah.core.domain.Organization;
 import com.jusfoun.hookah.core.domain.Supplier;
 import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.domain.vo.SupplierVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
@@ -20,6 +22,8 @@ import com.jusfoun.hookah.core.utils.FormatCheckUtil;
 import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.rpc.api.MqSenderService;
 import com.jusfoun.hookah.rpc.api.SupplierService;
+import com.jusfoun.hookah.rpc.api.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +46,9 @@ public class SupplierServiceImpl extends GenericServiceImpl<Supplier, String> im
 
     @Resource
     OrganizationMapper organizationMapper;
+
+    @Resource
+    UserService userService;
 
     @Resource
     MqSenderService mqSenderService;
@@ -115,6 +122,29 @@ public class SupplierServiceImpl extends GenericServiceImpl<Supplier, String> im
         supplierMapper.updateByPrimaryKeySelective(supplier);
         userMapper.updateByPrimaryKeySelective(user);
         mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_NEW_MESSAGE, messageCode);
+    }
+
+    @Override
+    public Pagination<SupplierVo> getList(Integer pageNumberNew, Integer pageSizeNew, List<Condition> filters,
+                                          List<OrderBy> orderBys){
+        PageHelper.startPage(pageNumberNew, pageSizeNew);
+        Page<Supplier> page = (Page<Supplier>)selectList(filters, orderBys);
+        List<SupplierVo> supplierVos = new ArrayList<>();
+        for (Supplier supplier : page){
+            SupplierVo supplierVo = new SupplierVo();
+            BeanUtils.copyProperties(supplier, supplierVo);
+            String userId = supplier.getUserId();
+            User user = userService.selectById(userId);
+            Integer userType = user.getUserType();
+            supplierVo.setUserType(userType);
+            supplierVos.add(supplierVo);
+        }
+        Pagination<SupplierVo> pagination = new Pagination<>();
+        pagination.setTotalItems(page.getTotal());
+        pagination.setList(supplierVos);
+        pagination.setPageSize(pageSizeNew);
+        pagination.setCurrentPage(pageNumberNew);
+        return pagination;
     }
 
 }

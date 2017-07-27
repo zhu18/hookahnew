@@ -84,6 +84,12 @@ public class CertificationController extends BaseController{
                     map.put("contactAddress", organization.getContactAddress());
                     map.put("orgPhone", organization.getOrgPhone());
                     map.put("taxPath", organization.getTaxPath());
+                    map.put("lawPersonCategory",organization.getLawPersonCategory());
+                    map.put("lawPersonNum",organization.getLawPersonNum());
+                    map.put("lawPersonNegativePath",organization.getLawPersonNegativePath());
+                    map.put("lawPersonPositivePath",organization.getLawPersonPositivePath());
+                    map.put("officeAddress",organization.getOfficeAddress());
+                    map.put("officeRegionId",organization.getOfficeRegionId());
                 }else {
                     return ReturnData.success("未认证");
                 }
