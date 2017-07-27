@@ -332,8 +332,13 @@ var htmlPart = {
 			passwordChange.iconOrColor(".pw-rule-legal", testData.tipIcon.normal, 'pw-icon-ok pw-icon-error', 'pw-icon-normal');
 			passwordChange.iconOrColor(".pw-rule-multi", testData.tipIcon.normal, 'pw-icon-ok pw-icon-error', 'pw-icon-normal');
 			passwordChange.strength('pw-strength-bar-1 pw-strength-bar-2 pw-strength-bar-3', 'pw-strength-bar', '');
-		} else {
-			passwordChange.iconOrColor(".pw-rule-length", testData.tipIcon.error, 'pw-icon-normal pw-icon-ok', 'pw-icon-error');
+		} else{
+		    if(strlen(val) <= 6 && strlen(val) > 0){
+                passwordChange.strength('pw-strength-bar-2 pw-strength-bar-3', 'pw-strength-bar-1', TRLang.pwd_level_low);
+            }else {
+
+			}
+            passwordChange.iconOrColor(".pw-rule-length", testData.tipIcon.error, 'pw-icon-normal pw-icon-ok', 'pw-icon-error');
 			passwordChange.iconOrColor(".pw-rule-multi", testData.tipIcon.error, 'pw-icon-normal pw-icon-ok', 'pw-icon-error');
 			if (testData.passwordIllegal(val)) {
 				passwordChange.iconOrColor(".pw-rule-legal", testData.tipIcon.ok, 'pw-icon-normal pw-icon-error', 'pw-icon-ok');
