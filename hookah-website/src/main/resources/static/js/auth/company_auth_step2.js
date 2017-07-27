@@ -86,26 +86,26 @@ function companyAuth(){
     $.ajax({
         url : "/auth/orgAuth",
         data : {
-            "orgName":$("input[name='governmentName']").val(),//政府全称
-            "taxCode":$("input[name='taxRegCertificate']").val(),//税务登记编号
-            "licenseCode":$("input[name='businessLicence']").val(),//营业执照编号
-            "certificateCode":$("input[name='creditCode']").val(),//信用代码
-            "taxPath":$("input[name='taxPath']").val(),//税务登记存放路径
-            "licensePath":$("input[name='licensePath']").val(),//营业执照存放路径
-            "certifictePath":$("input[name='certifictePath']").val(),//企业代码存放路径
-            "lawPersonName":$("input[name='companyLegal']").val(),//企业法人代表
-
-            "orgPhone":$("input[name='tel']").val(),//联系电话
-            "industry":$("input[name='mainBusiness']").val(),//行业
+            "orgName":$("input[name='governmentName']").val(),//单位名称
+            "creditCode":$("input[name='creditCode']").val(),//统一社会信用代码
+            "industry":$("input[name='mainBusiness']").val(),//经营范围
+            "lawPersonName":$("input[name='companyLegal']").val(),//法定代表人
             "lawPersonCategory":"0",//类别
             "lawPersonNum":$("input[name='lawPersonNum']").val(),//企业法人代表证件编号
             "lawPersonPositivePath":$("input[name='lawPersonPositivePath']").val(),//身份证正面
             "lawPersonNegativePath":$("input[name='lawPersonNegativePath']").val(),//身份证反面
-
             "region":$('select[name="registerCity"] option:selected').val(),//所在地
             "contactAddress":$("input[name='address']").val(),//详细地址
-            "regionId":$('select[name="workCity"] option:selected').val(),//所在地
-            "officeAddress":$("input[name='workAddress']").val()//详细地址
+            "officeRegionId":$('select[name="workCity"] option:selected').val(),//所在地
+            "officeAddress":$("input[name='workAddress']").val(),//详细地址
+            "orgPhone":$("input[name='tel']").val(),//联系电话
+
+            "taxCode":$("input[name='taxRegCertificate']").val(),//税务登记编号
+            "taxPath":$("input[name='taxPath']").val(),//税务登记存放路径
+            "licenseCode":$("input[name='businessLicence']").val(),//营业执照编号
+            "licensePath":$("input[name='licensePath']").val(),//营业执照存放路径
+            "certificateCode":$("input[name='creditCode']").val(),//信用代码
+            "certifictePath":$("input[name='certifictePath']").val(),//企业代码存放路径
         },
         type:"post",
         success : function(data) {
