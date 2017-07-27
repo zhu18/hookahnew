@@ -243,6 +243,18 @@ public class Organization extends GenericModel {
 
     private Byte isSupplier;
 
+    private Byte lawPersonCategory;
+
+    private String lawPersonNum;
+
+    private String lawPersonPositivePath;
+
+    private String lawPersonNegativePath;
+
+    private String officeAddress;
+
+    private Long regionId;
+
     public Byte getIsSupplier() {
         return isSupplier;
     }
@@ -257,6 +269,54 @@ public class Organization extends GenericModel {
 
     public void setIsAuth(Byte isAuth) {
         this.isAuth = isAuth;
+    }
+
+    public Byte getLawPersonCategory() {
+        return lawPersonCategory;
+    }
+
+    public void setLawPersonCategory(Byte lawPersonCategory) {
+        this.lawPersonCategory = lawPersonCategory;
+    }
+
+    public String getLawPersonNum() {
+        return lawPersonNum;
+    }
+
+    public void setLawPersonNum(String lawPersonNum) {
+        this.lawPersonNum = lawPersonNum;
+    }
+
+    public String getLawPersonPositivePath() {
+        return lawPersonPositivePath;
+    }
+
+    public void setLawPersonPositivePath(String lawPersonPositivePath) {
+        this.lawPersonPositivePath = lawPersonPositivePath;
+    }
+
+    public String getLawPersonNegativePath() {
+        return lawPersonNegativePath;
+    }
+
+    public void setLawPersonNegativePath(String lawPersonNegativePath) {
+        this.lawPersonNegativePath = lawPersonNegativePath;
+    }
+
+    public String getOfficeAddress() {
+        return officeAddress;
+    }
+
+    public void setOfficeAddress(String officeAddress) {
+        this.officeAddress = officeAddress;
+    }
+
+    public Long getRegionId() {
+        return regionId;
+    }
+
+    public void setRegionId(Long regionId) {
+        this.regionId = regionId;
     }
 
     /**
