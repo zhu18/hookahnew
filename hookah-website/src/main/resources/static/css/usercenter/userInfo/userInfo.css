@@ -14,13 +14,15 @@
     background-color: #F4F4F4;
 }
 .basic-information-top  .basic-information-top-content{
+    font-size: 0;
     width: calc(100% - 40px );
     height: 158px;
     padding: 20px;
 }
 .basic-information-top  .basic-information-top-content .user-info,.basic-information-top  .basic-information-top-content .user-status,
 .basic-information-top  .basic-information-top-content .user-money{
-    width: 32%;
+    font-size: 14px;
+    width: 33%;
     display: inline-block;
 }
 .basic-information-top  .basic-information-top-content .user-info{
@@ -96,11 +98,27 @@
     text-align: center;
 }
 .basic-information-top  .basic-information-top-content .user-status{
-    margin-top: 60px;
+    height: 100%;
     vertical-align: top;
 }
-.basic-information-top  .basic-information-top-content .user-status  .auth-introduce .span-yellow{
-    color: #EFC347;
+.basic-information-top  .basic-information-top-content .user-status  .auth-introduce{
+    height: 100%;
+}
+/*.basic-information-top  .basic-information-top-content .user-status  .auth-introduce .span-yellow{*/
+    /*color: #EFC347;*/
+/*}*/
+.basic-information-top  .basic-information-top-content .user-status  .auth-introduce .auth-introduce-unit{
+}
+.basic-information-top  .basic-information-top-content .user-status  .auth-introduce .auth-introduce-unit p{
+    height: 40px;
+}
+.basic-information-top  .basic-information-top-content .user-status  .auth-introduce .auth-introduce-unit p.status{
+    height: 80px;
+    line-height: 80px;
+    font-size: 18px;
+}
+.basic-information-top  .basic-information-top-content .user-status  .auth-introduce .auth-introduce-supplier{
+
 }
 
 #enterForum {
@@ -111,15 +129,6 @@
     margin-right: 5px;
 }
 
-/*.basic-information-top .basic-information-top-content .user-status .auth-introduce{*/
-    /*width: 373px;*/
-    /*height: 130px;*/
-    /*background-color: #fff;*/
-    /*padding-top:20px;*/
-    /*padding-left:20px;*/
-    /*padding-bottom:20px;*/
-    /*border-left:1px dashed #e0e0e0;*/
-/*}*/
 .auth-introduce .large-btn{
     position: relative;
     display: inline-block;
