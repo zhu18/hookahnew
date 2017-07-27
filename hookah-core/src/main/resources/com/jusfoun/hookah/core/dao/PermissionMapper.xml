@@ -3,7 +3,7 @@
 <mapper namespace="com.jusfoun.hookah.core.dao.PermissionMapper" >
 
   <select id="selectPermissionsByRoleId" resultType="java.lang.String">
-    select a.permission_name from permission a
+    select a.permission_id from permission a
     left join role_permission b on a.permission_id = b.permission_id
     left join role c on b.role_id = c.role_id
     <where>1=1

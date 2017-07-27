@@ -151,6 +151,15 @@ public class User extends GenericModel {
     private String contactAddress;
     private String postCode;
 
+    //登陆密码安全评分
+    private Integer safetyLandScore;
+    //交易密码安全评分
+    private Integer safetyPayScore;
+    //手机安全评分
+    private Integer safetyPhoneScore;
+    //邮箱安全评分
+    private Integer safetyMailScore;
+
     @Transient
     private List<Role> roleList;
 
@@ -524,5 +533,37 @@ public class User extends GenericModel {
 
     public void setSupplierStatus(Byte supplierStatus) {
         this.supplierStatus = supplierStatus;
+    }
+
+    public Integer getSafetyLandScore() {
+        return safetyLandScore;
+    }
+
+    public void setSafetyLandScore(Integer safetyLandScore) {
+        this.safetyLandScore = safetyLandScore;
+    }
+
+    public Integer getSafetyPayScore() {
+        return safetyPayScore;
+    }
+
+    public void setSafetyPayScore(Integer safetyPayScore) {
+        this.safetyPayScore = safetyPayScore;
+    }
+
+    public Integer getSafetyPhoneScore() {
+        return safetyPhoneScore;
+    }
+
+    public void setSafetyPhoneScore(Integer safetyPhoneScore) {
+        this.safetyPhoneScore = safetyPhoneScore;
+    }
+
+    public Integer getSafetyMailScore() {
+        return safetyMailScore;
+    }
+
+    public void setSafetyMailScore(Integer safetyMailScore) {
+        this.safetyMailScore = safetyMailScore;
     }
 }
