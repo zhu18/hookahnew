@@ -2,7 +2,9 @@ package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.annotation.Log;
 import com.jusfoun.hookah.core.domain.Organization;
+import com.jusfoun.hookah.core.domain.Supplier;
 import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.FormatCheckUtil;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
@@ -18,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -95,6 +99,15 @@ public class SupplierController extends BaseController{
             user.setContactAddress(contactAddress);
             user.setPostCode(postCode);
             userService.updateByIdSelective(user);
+
+            List<Condition> filter = new ArrayList<>();
+            filter.add(Condition.eq("userId",userId));
+            Supplier supplier = supplierService.selectOne(filter);
+            if (supplier!=null){
+                supplier.setContactName(contactName);
+                supplier.setContactPhone(contactPhone);
+                supplierService.updateByIdSelective(supplier);
+            }
         }catch (Exception e){
             logger.error(e.getMessage());
             return ReturnData.error(e.getMessage());
