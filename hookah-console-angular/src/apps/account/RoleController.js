@@ -125,9 +125,21 @@ class RoleController {
 
     };
     $scope.save = function () {
-      console.log($rootScope.item.isEnable)
-      var spCodesTemp = "";
-      $('input:checkbox[name=permissions]:checked').each(function (i) {
+        console.log($rootScope.item.isEnable)
+        if ($rootScope.item.roleName=="" || $rootScope.item.roleName==null){
+            $rootScope.openErrorDialogModal("角色代码不能为空！");
+            return;
+        }
+        if ($rootScope.item.roleExplain=="" || $rootScope.item.roleExplain==null){
+            $rootScope.openErrorDialogModal("角色中文名不能为空！");
+            return;
+        }
+        if ($rootScope.item.isEnable=="" || $rootScope.item.isEnable==null){
+            $rootScope.item.isEnable=false;
+        }
+
+        var spCodesTemp = "";
+        $('input:checkbox[name=permissions]:checked').each(function (i) {
         if (0 == i) {
           spCodesTemp = $(this).val();
         } else {
