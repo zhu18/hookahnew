@@ -58,11 +58,11 @@ public class GoodsCheckServiceImpl extends GenericServiceImpl<GoodsCheck, String
         messageCode.setBusinessId(goodsCheck.getId());
         if(goodsCheck.getCheckStatus() == 1){
 
-            //修改上架时间
+            //审核通过修改上架时间 非预约上架商品
             Goods goods1 = goodsService.selectById(goodsCheck.getGoodsId());
             if(Objects.nonNull(goods1) && HookahConstants.GOODS_IS_BOOK_NO.equals(goods1.getIsBook())){
                 //addTime 待确认
-                goods.setAddTime(new Date());
+                goods.setOnsaleStartDate(new Date());
             }
 
             goods.setCheckStatus(Byte.parseByte(HookahConstants.CheckStatus.audit_success.getCode()));
