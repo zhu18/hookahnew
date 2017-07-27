@@ -30,9 +30,9 @@
     </dependency>
     <!-- weibo motan-->
     <dependency>
-      <groupId>com.weibo</groupId>
-      <artifactId>motan-core</artifactId>
-    </dependency>
+    <groupId>com.weibo</groupId>
+    <artifactId>motan-core</artifactId>
+  </dependency>
     <dependency>
       <groupId>com.weibo</groupId>
       <artifactId>motan-transport-netty</artifactId>
@@ -118,10 +118,10 @@
     <!--</dependency>-->
     <!-- JSON -->
     <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-core</artifactId>
-      <!--<version>${jackson.version}</version>-->
-    </dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-core</artifactId>
+    <!--<version>${jackson.version}</version>-->
+  </dependency>
 
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
