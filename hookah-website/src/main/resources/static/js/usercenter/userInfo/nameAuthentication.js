@@ -41,16 +41,14 @@ $(function () {
             $('#creditCode').html(data.data.creditCode?data.data.creditCode:"无");//统一社会信用代码
             $('#industry').html( data.data.industry?data.data.industry:"无");//经营范围
             $('#lawPersonName').html( data.data.lawPersonName?data.data.lawPersonName:"无");//法定代表人
-            $('#lawPersonCategory').html( data.data.lawPersonCategory?data.data.lawPersonCategory:"无");//法定代表人证件类别
+            $('#lawPersonCategory').html( data.data.lawPersonCategory=="0"?"居民身份证":"无");//法定代表人证件类别
             $('#lawPersonNum').html( data.data.lawPersonNum?data.data.lawPersonNum:"无");//法定代表人证件编号
-            $('#lawPersonPositivePath').html( data.data.lawPersonPositivePath?data.data.lawPersonPositivePath:"无");//法定代表人证件照正
-            $('#lawPersonNegativePath').html( data.data.lawPersonNegativePath?data.data.lawPersonNegativePath:"无");//法定代表人证件照反
+            $('#lawPersonPositivePath').attr({"src":data.data.lawPersonPositivePath});//法定代表人证件照正
+            $('#lawPersonNegativePath').attr({"src":data.data.lawPersonNegativePath});//法定代表人证件照反
              //注册地址
-            $('#region').html( data.data.region?data.data.region:"无");
             $('#contactAddress').html( data.data.contactAddress?data.data.contactAddress:"无");
             // 办公地址
-            $('#region').html( data.data.region?data.data.region:"无");
-            $('#officeAddress').html( data.data.contactAddress?data.data.contactAddress:"无");
+            $('#officeAddress').html( data.data.officeAddress?data.data.officeAddress:"无");
             $('#orgPhone').html( data.data.orgPhone?data.data.orgPhone:"无");//联系电话
 
             $('#certificateCode').html( data.data.certificateCode?data.data.certificateCode:"无");
@@ -59,7 +57,7 @@ $(function () {
             $('#licensePath').attr({"src":data.data.licensePath});
 
             $('#taxCode').html( data.data.taxCode?data.data.taxCode:"无");
-            $('#taxPath').html( data.data.taxPath?data.data.taxPath:"无");
+            $('#taxPath').attr({"src":data.data.taxPath});
 
         }
     });
