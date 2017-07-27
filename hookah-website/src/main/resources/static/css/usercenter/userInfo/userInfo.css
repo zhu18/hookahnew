@@ -30,7 +30,7 @@
     border-right: 1px solid #E5E5E5;
 }
 .basic-information-top  .basic-information-top-content .user-info .user-info-left{
-    width: 148px;
+    width: 136px;
 }
 .basic-information-top  .basic-information-top-content .user-info .user-info-left img{
     margin-left: 20px;
@@ -63,6 +63,7 @@
 }
 .basic-information-top  .basic-information-top-content .user-info .user-info-right .info{
     height: 26px;
+    width: 165px;
     color: #666666;
     line-height: 26px;
 }
