@@ -72,33 +72,39 @@ class GoodsListController {
 			})
 		};//商品下架
 		$scope.forceOffShelf = function(item){//商品强制下架
-			var title1 = '请输入强制下架理由';
-			var content = '<div> <label for="" class="col-sm-3">强制下架理由：</label> <textarea name="" id="checkContent" cols="60" rows="10"></textarea> </div> ';
-			var modalInstance = $rootScope.openConfirmDialogModel(title1,content);
 
-			modalInstance.result.then(function () { //模态点提交
-				if($('#checkContent').val().trim()){
-					var promise = $http({
-						method: 'POST',
-						url: $rootScope.site.apiServer + "/api/goods/forceOff",
-						params: {
-							goodsId: item.goodsId,
-							offReason:$('#checkContent').val()
-						}
-					});
-					promise.then(function (res, status, config, headers) {
-						if (res.data.code == "1") {
-							growl.addSuccessMessage("操作成功");
-							$scope.refresh();
-						}
-					});
+			winds(null)
+			function winds(vals){
+				var title1 = '请输入强制下架理由';
+				if(vals){
+					var content = '<div> <label for="" class="col-sm-3">强制下架理由：</label> <textarea name="" id="checkContent" cols="60" rows="10"></textarea><br><span style="color:red; margin-left: 148px;">强制下架理由不能为空</span></div> ';
 				}else{
-					$rootScope.openErrorDialogModal('强制下架理由不能为空',function(){
-
-					});
+					var content = '<div> <label for="" class="col-sm-3">强制下架理由：</label> <textarea name="" id="checkContent" cols="60" rows="10"></textarea> </div> ';
 				}
-			},function(){
-			});
+				var modalInstance = $rootScope.openConfirmDialogModel(title1,content);
+
+				modalInstance.result.then(function () { //模态点提交
+					if($('#checkContent').val().trim()){
+						var promise = $http({
+							method: 'POST',
+							url: $rootScope.site.apiServer + "/api/goods/forceOff",
+							params: {
+								goodsId: item.goodsId,
+								offReason:$('#checkContent').val()
+							}
+						});
+						promise.then(function (res, status, config, headers) {
+							if (res.data.code == "1") {
+								growl.addSuccessMessage("操作成功");
+								$scope.refresh();
+							}
+						});
+					}else{
+						winds('下架理由不能为空');
+					}
+				},function(){
+				});
+			}
 		};//商品强制下架
 		$scope.pageChanged = function () {//翻页
 			if($stateParams.data){
