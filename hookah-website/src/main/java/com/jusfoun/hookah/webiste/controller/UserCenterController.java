@@ -275,4 +275,22 @@ public class UserCenterController {
         return "/usercenter/question";
     }
 
+    /**
+     * 安全设置
+     *
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/safetyScoreSet", method = RequestMethod.GET)
+    public ReturnData safetyScoreSet(int land,int pay ,int phone ,int mail,Model model) {
+        Session session = SecurityUtils.getSubject().getSession();
+        HashMap<String, String> o = (HashMap<String, String>) session.getAttribute("user");
+        String userId = o.get("userId");
+        User user = userService.selectById(userId);
+        UserDetail userDetail = userDetailService.selectById(userId);
+        model.addAttribute("userCur", user);
+        model.addAttribute("userDetail", userDetail);
+        return null;
+    }
+
 }
