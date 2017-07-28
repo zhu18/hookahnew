@@ -17,6 +17,7 @@ class GoodsDetailController {
 				if(res.data.code == "1"){
 					$scope.editData = res.data.data;
 					$scope.packageApiInfo = res.data.data.packageApiInfo;
+					growl.addSuccessMessage("数据加载完毕。。。");
 				}
 			});
         }else{
