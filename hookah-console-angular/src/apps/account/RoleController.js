@@ -47,13 +47,46 @@ class RoleController {
       });
       promise.then(function (res, status, config, headers) {
         $state.go('account.role.add');
-        console.log("sksks");
+        console.log(res.data);
         $rootScope.loadingState = false;
         $rootScope.tree_data = res.data;
+
         growl.addSuccessMessage("数据加载完毕。。。");
       });
 
     };
+    $scope.changeSelection = function (item, childOrFather, id, isSelect) {
+      console.log(item);
+
+      if (childOrFather == 'father') {
+        if (item.data.selected) {
+          angular.forEach(item.data.children, function (data, index, array) {
+            data.checked = true;
+            data.selected = true;
+          });
+        } else {
+          angular.forEach(item.data.children, function (data, index, array) {
+            data.checked = false;
+            data.selected = false;
+          });
+        }
+      } else {
+        var arr = [];
+        angular.forEach(item.data.children, function (data, index, array) {
+          if (data.selected == true) {
+            arr.push(data.selected)
+          }
+        });
+        if (arr.length > 0) {
+          item.data.selected = true;
+        }else{
+          item.data.selected = false;
+        }
+      }
+
+      $scope.isSelected(id, isSelect)
+    }
+
     $scope.load = function (event, item) {
       $rootScope.title = "修改角色";
       $rootScope.item = item;
@@ -95,33 +128,43 @@ class RoleController {
     $scope.selectAllFlag = false;
     $scope.selectAll = function () {
       var permis = document.getElementsByName("permissions");
+      var permissionsFather = document.getElementsByName("permissionsFather");
       if ($scope.selectAllFlag) {
         for (var i = 0; i < permis.length; i++) {
           permis[i].checked = false;
+        }
+        for (var k = 0; k < permissionsFather.length; k++) {
+          permissionsFather[k].checked = false;
         }
         $scope.selectAllFlag = false;
       } else {
         for (var i = 0; i < permis.length; i++) {
           permis[i].checked = true;
         }
+        for (var k = 0; k < permissionsFather.length; k++) {
+          permissionsFather[k].checked = true;
+        }
         $scope.selectAllFlag = true;
       }
 
     };
-    $scope.isSelected = function (id) {
+    $scope.isSelected = function (id, isChecked) {
       // console.log($rootScope.item);
-      if ($rootScope.selectRolePermissions) {
-        var o = $rootScope.selectRolePermissions.toString();
+      if (isChecked == 'true') {
+        if ($rootScope.selectRolePermissions) {
+          var o = $rootScope.selectRolePermissions.toString();
 
-        if (o.indexOf(id) > -1) {
-          return true;
-        }
-        else {
+          if (o.indexOf(id) > -1) {
+            return true;
+          }
+          else {
+            return false;
+          }
+        } else {
           return false;
         }
-      } else {
-        return false;
       }
+
 
     };
     $scope.save = function () {
@@ -153,20 +196,21 @@ class RoleController {
         // data = "roleName=" + $rootScope.item.roleName + "&roleExplain=" + $rootScope.item.roleExplain + "&permissions=" + spCodesTemp;
         data = "roleId=" + $rootScope.item.roleId + "&roleName=" + $rootScope.item.roleName + "&roleExplain=" + $rootScope.item.roleExplain + "&enable=" + $rootScope.item.isEnable + "&permissions=" + spCodesTemp;
       }
-      var promise = $http({
-        method: 'POST',
-        url: $rootScope.site.apiServer + "/api/role/save",
-        data: data
-      });
-      promise.then(function (res, status, config, headers) {
-        $rootScope.loadingState = false;
-        if (res.data.code == "1") {
-          $state.go('account.role.search');
-        } else {
-          alert(res.data.message);
-        }
-        growl.addSuccessMessage("数据加载完毕。。。");
-      });
+      console.log(spCodesTemp);
+          var promise = $http({
+       method: 'POST',
+       url: $rootScope.site.apiServer + "/api/role/save",
+       data: data
+       });
+       promise.then(function (res, status, config, headers) {
+       $rootScope.loadingState = false;
+       if (res.data.code == "1") {
+       $state.go('account.role.search');
+       } else {
+       alert(res.data.message);
+       }
+       growl.addSuccessMessage("数据加载完毕。。。");
+       });
     };
     $scope.delete = function (event, item) {
       var confirm = $rootScope.openConfirmDialogModal("确认要删除此&nbsp;<b>" + item.roleName + "</b>&nbsp;角色吗？");
