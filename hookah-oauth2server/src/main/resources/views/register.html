@@ -36,6 +36,7 @@ var htmlPart = {
 						</span>
 						<input class="form-text err-input" id="J_Password" type="password" placeholder="设置你的登录密码"
 							   name="password" value="" data-inner_placeholder="r_p_input_enterPassword" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false">
+						<input type="hidden" name="score">
 					</div>
 					<div class="form-item">
 						<span class="form-label tsl" data-phase-id="r_p_confirmPassword"><span class="star">*</span>密码确认</span>
@@ -195,7 +196,7 @@ var htmlPart = {
 			allSame: /^([\s\S])\1*$/,//全部相同
 			upperLetter: /[A-Z]/,//匹配大写
 			lowerLetter: /[a-z]/,//匹配小写
-			number: /\d/,//匹配数字
+			number: /\d/g,//匹配数字
 			character: /[-+=|,!@#$%^&*?_.~+\/\\()|{}\[\]<>]/, //匹配字符
 			mobile: /^1(3|4|5|7|8)\d{9}$/
 		},
@@ -311,12 +312,21 @@ var htmlPart = {
             console.log(b);
             console.log(c);
             console.log(d);
-//            显示字符是正确的
+//         显示字符是正确的
             passwordChange.iconOrColor(".pw-rule-length", testData.tipIcon.ok, 'pw-icon-error pw-icon-normal', 'pw-icon-ok');
 			if ((a && b) || (a && c) || (a && d) || (b && c) || (b && d) || (c && d)) {
 				passwordChange.iconOrColor(".pw-rule-multi", testData.tipIcon.ok, 'pw-icon-normal pw-icon-error', 'pw-icon-ok');
 			}
-
+//        判断强弱规则
+            if (a && b && c && d && (strlen(val) > 7)) {
+                $("input[name='score']").val("30");
+                passwordChange.strength('pw-strength-bar-1 pw-strength-bar-2', 'pw-strength-bar-3', TRLang.pwd_level_high)
+            }else if ((a && b) || (a && c) || (a && d) || (b && c) || (b && d) || (c && d)) {
+                $("input[name='score']").val("20");
+                passwordChange.strength('pw-strength-bar-1 pw-strength-bar-3', 'pw-strength-bar-2', TRLang.pwd_level_medium);
+            }else {
+                passwordChange.strength('pw-strength-bar-2 pw-strength-bar-3', 'pw-strength-bar-1', TRLang.pwd_level_low);
+            }
 		} else if (strlen(val) == 0) {
 			passwordChange.iconOrColor(".pw-rule-length", testData.tipIcon.normal, 'pw-icon-ok pw-icon-error', 'pw-icon-normal');
 			passwordChange.iconOrColor(".pw-rule-legal", testData.tipIcon.normal, 'pw-icon-ok pw-icon-error', 'pw-icon-normal');
@@ -335,11 +345,6 @@ var htmlPart = {
 
             //两种情况处理
 		    if(strlen(val) <= 6 && strlen(val) > 0){
-                console.log(val);
-                console.log(a);
-                console.log(b);
-                console.log(c);
-                console.log(d);
                 passwordChange.strength('pw-strength-bar-2 pw-strength-bar-3', 'pw-strength-bar-1', TRLang.pwd_level_low);
                 if ((a && b) || (a && c) || (a && d) || (b && c) || (b && d) || (c && d)) {
                     passwordChange.iconOrColor(".pw-rule-multi", testData.tipIcon.ok, 'pw-icon-normal pw-icon-error', 'pw-icon-ok');
@@ -351,19 +356,7 @@ var htmlPart = {
 //			passwordChange.iconOrColor(".pw-rule-multi", testData.tipIcon.error, 'pw-icon-normal pw-icon-ok', 'pw-icon-error');
 
 		}
-//        判断强弱规则
-        if (a || b || c || d) {
-            console.log(1);
-            passwordChange.strength('pw-strength-bar-2 pw-strength-bar-3', 'pw-strength-bar-1', TRLang.pwd_level_low);
-        }
-        if ((a && b) || (a && c) || (a && d) || (b && c) || (b && d) || (c && d)) {
-            console.log(2);
-            passwordChange.strength('pw-strength-bar-1 pw-strength-bar-3', 'pw-strength-bar-2', TRLang.pwd_level_medium);
-        }
-        if (a && b && c && d && (strlen(val) > 7)) {
-            console.log(3);
-            passwordChange.strength('pw-strength-bar-1 pw-strength-bar-2', 'pw-strength-bar-3', TRLang.pwd_level_high)
-        }
+
 
 	});
 	$('#J_Password').blur(function () {
