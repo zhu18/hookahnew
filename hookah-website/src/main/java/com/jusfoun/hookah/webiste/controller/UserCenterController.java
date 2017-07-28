@@ -121,7 +121,13 @@ public class UserCenterController {
     }
     //       实名认证
     @RequestMapping(value = "/nameAuthentication", method = RequestMethod.GET)
-    public String nameAuthentication() {
+    public String nameAuthentication(Model model) {
+        Session session = SecurityUtils.getSubject().getSession();
+        HashMap<String, String> o = (HashMap<String, String>) session.getAttribute("user");
+        String userId = o.get("userId");
+        User user = userService.selectById(userId);
+        PayAccount payAccount=payAccountService.findPayAccountByUserId(userId);
+        model.addAttribute("userCur",user);
         return "usercenter/userInfo/nameAuthentication";
     }
     //       联系信息
