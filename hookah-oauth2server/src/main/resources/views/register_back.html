@@ -306,13 +306,16 @@ var htmlPart = {
 			val = val.substring(0,val.length-1);
 			$(this).val(val);
 		}
-		var a = val.replace(/\D/g, '').length>0?true:false,//是不是数字
+		var a = testData.hasNum(val),//是不是数字
 			b = testData.upperLetter(val),//是不是大写字母
 			c = testData.lowerLetter(val),//是不是小写字母
 			d = testData.character(val);//有没有字符
-        var num="";
-
 		if (strlen(val) <= 20 && strlen(val) >= 6) {//规定6-20范围之间
+            console.log(val);
+            console.log(a);
+            console.log(b);
+            console.log(c);
+            console.log(d);
 //         显示字符是正确的
             passwordChange.iconOrColor(".pw-rule-length", testData.tipIcon.ok, 'pw-icon-error pw-icon-normal', 'pw-icon-ok');
 			if ((a && b) || (a && c) || (a && d) || (b && c) || (b && d) || (c && d)) {
@@ -342,16 +345,20 @@ var htmlPart = {
             } else {
                 passwordChange.iconOrColor(".pw-rule-legal", testData.tipIcon.error, 'pw-icon-normal pw-icon-ok', 'pw-icon-error');
             }
-            if ((a && b) || (a && c) || (a && d) || (b && c) || (b && d) || (c && d)) {
-                passwordChange.iconOrColor(".pw-rule-multi", testData.tipIcon.ok, 'pw-icon-normal pw-icon-error', 'pw-icon-ok');
-            }else {
-                passwordChange.iconOrColor(".pw-rule-multi", testData.tipIcon.error, 'pw-icon-normal pw-icon-ok', 'pw-icon-error');
+            passwordChange.iconOrColor(".pw-rule-multi", testData.tipIcon.ok, 'pw-icon-normal pw-icon-error', 'pw-icon-error');
 
-            }
             //两种情况处理
 		    if(strlen(val) <= 6 && strlen(val) > 0){
                 passwordChange.strength('pw-strength-bar-2 pw-strength-bar-3', 'pw-strength-bar-1', TRLang.pwd_level_low);
-            }
+                if ((a && b) || (a && c) || (a && d) || (b && c) || (b && d) || (c && d)) {
+                    passwordChange.iconOrColor(".pw-rule-multi", testData.tipIcon.ok, 'pw-icon-normal pw-icon-error', 'pw-icon-ok');
+                }
+            }else {
+
+			}
+
+//			passwordChange.iconOrColor(".pw-rule-multi", testData.tipIcon.error, 'pw-icon-normal pw-icon-ok', 'pw-icon-error');
+
 		}
 
 
@@ -714,18 +721,6 @@ var htmlPart = {
 				if(data.code == 1){
 					$.post("${host.auth}/reg", $("#J_InfoForm").serialize(), function (data) {
 						if (data.code == 1) {
-                                $.ajax({
-                                    url:'${host.auth}/usercenter/safetyScoreSet',
-                                    type:'get',
-                                    data:{
-                                        land:$("input[name='score']").val(),
-                                        pay :"",
-                                        phone:"20",
-                                        mail:"20"
-                                    },
-                                    success:function(data){
-                                    }
-                                })
 							$.alert("注册成功，马上跳转登录页面");
 							setTimeout(function() {
 								window.location.href = '${host.auth}/login';

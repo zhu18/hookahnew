@@ -5,7 +5,7 @@ import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.UserDetail;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
-import com.jusfoun.hookah.core.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import com.jusfoun.hookah.rpc.api.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
@@ -121,7 +121,13 @@ public class UserCenterController {
     }
     //       实名认证
     @RequestMapping(value = "/nameAuthentication", method = RequestMethod.GET)
-    public String nameAuthentication() {
+    public String nameAuthentication(Model model) {
+        Session session = SecurityUtils.getSubject().getSession();
+        HashMap<String, String> o = (HashMap<String, String>) session.getAttribute("user");
+        String userId = o.get("userId");
+        User user = userService.selectById(userId);
+        PayAccount payAccount=payAccountService.findPayAccountByUserId(userId);
+        model.addAttribute("userCur",user);
         return "usercenter/userInfo/nameAuthentication";
     }
     //       联系信息
@@ -278,19 +284,32 @@ public class UserCenterController {
     /**
      * 安全设置
      *
-     * @param model
+
      * @return
      */
+    @ResponseBody
     @RequestMapping(value = "/safetyScoreSet", method = RequestMethod.GET)
-    public ReturnData safetyScoreSet(int land,int pay ,int phone ,int mail,Model model) {
+    public ReturnData safetyScoreSet(String land,String pay,String  phone,String mail) {
         Session session = SecurityUtils.getSubject().getSession();
         HashMap<String, String> o = (HashMap<String, String>) session.getAttribute("user");
         String userId = o.get("userId");
         User user = userService.selectById(userId);
-        UserDetail userDetail = userDetailService.selectById(userId);
-        model.addAttribute("userCur", user);
-        model.addAttribute("userDetail", userDetail);
-        return null;
+
+        if (StringUtils.isNotBlank(land)) {
+            user.setSafetyLandScore(Integer.parseInt(land));
+        }
+        if (StringUtils.isNotBlank(pay)) {
+            user.setSafetyPayScore(Integer.parseInt(pay));
+        }
+
+        if (StringUtils.isNotBlank(phone)) {
+            user.setSafetyPhoneScore(Integer.parseInt(phone));
+        }
+        if (StringUtils.isNotBlank(mail)) {
+            user.setSafetyMailScore(Integer.parseInt(mail));
+        }
+        userService.updateByIdSelective(user);
+        return ReturnData.success();
     }
 
 }
