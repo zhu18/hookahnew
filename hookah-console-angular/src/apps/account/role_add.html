@@ -51,7 +51,7 @@
           </td>
           <td>
             <div data-ng-repeat="child in item.children">
-              <label><input id="{{child.permissionId}}" name="permissions" data-ng-model="child.selected" type="checkbox" ng-change="changeSelection({data: item},'child', '{{child.permissionId}}', '{{child.checked}}')"  value="{{child.permissionId}}" ng-checked="child.checked">
+              <label><input id="{{child.permissionId}}" name="permissions" data-ng-model="child.selected" type="checkbox" ng-change="changeSelection({data: item},'child', '{{child.permissionId}}', '{{child.checked}}')"  value="{{child.permissionId}}">
               <span>{{child.permissionExplain}}</span></label>
             </div>
           </td>
