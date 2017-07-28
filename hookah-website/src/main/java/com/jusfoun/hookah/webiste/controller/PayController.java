@@ -26,6 +26,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -262,7 +263,9 @@ public class PayController extends BaseController{
 
         Map<String,String> param = getRequestParams(request);
         boolean flag = payAccountService.aliPay(orderSn, tradeStatus, param);
+        BigDecimal money = new BigDecimal(total_fee).multiply((new BigDecimal(100)));
         if (flag){
+            request.setAttribute("money",money);
             return "pay/success";
         }else {
             return "pay/fail";
