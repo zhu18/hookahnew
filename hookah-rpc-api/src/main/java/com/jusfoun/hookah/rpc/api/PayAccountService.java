@@ -78,4 +78,6 @@ public interface PayAccountService extends GenericService<PayAccount, Long> {
      * @return
      */
     PayAccount findPayAccountByUserId(String userId);
+
+    boolean aliPay(String orderSn, String tradeStatus, Map<String,String> param) throws Exception;
 }

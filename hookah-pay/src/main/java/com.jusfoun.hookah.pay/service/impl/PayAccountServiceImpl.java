@@ -20,15 +20,11 @@ import com.jusfoun.hookah.pay.util.AlipayNotify;
 import com.jusfoun.hookah.pay.util.ChannelType;
 import com.jusfoun.hookah.pay.util.PayConfiguration;
 import com.jusfoun.hookah.pay.util.PayConstants;
-import com.jusfoun.hookah.rpc.api.AlipayService;
-import com.jusfoun.hookah.rpc.api.OrderInfoService;
-import com.jusfoun.hookah.rpc.api.PayAccountService;
-import com.jusfoun.hookah.rpc.api.PayTradeRecordService;
+import com.jusfoun.hookah.rpc.api.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -58,6 +54,9 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 
 	@Resource
 	PayAccountRecordMapper payAccountRecordMapper;
+
+	@Resource
+	PayAccountRecordService payAccountRecordService;
 
 	@Transactional
 	public int operatorByType(Long payAccountId, Integer operatorType, Long money) {
@@ -412,22 +411,18 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 	}
 
 
-	public void alipayRtn(HttpServletRequest request) throws Exception {
-		//商户订单号
-		String orderSn = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"), "UTF-8");
-		//支付宝交易号
-		String tradeNo = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"), "UTF-8");
-		//交易状态
-		String tradeStatus = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"), "UTF-8");
-		String total_fee = new String(request.getParameter("total_fee").getBytes("ISO-8859-1"), "UTF-8");
+	@Override
+	public boolean aliPay(String orderSn, String tradeStatus, Map<String,String> param) throws Exception {
+
 		List<Condition> filter = new ArrayList<>();
 		filter.add(Condition.eq("orderSn", orderSn));
 		OrderInfo orderInfo = orderInfoService.selectOne(filter);
-		if (AlipayNotify.verify(getRequestParams(request))) {
-			if (tradeStatus.equals("TRADE_FINISHED") || tradeStatus.equals("TRADE_SUCCESS")) {
+		if (AlipayNotify.verify(param)){
+			if(tradeStatus.equals("TRADE_FINISHED") || tradeStatus.equals("TRADE_SUCCESS")){
 				//交易成功,插交易中心冻结收入流水，更新交易中心虚拟账户金额
 				PayTradeRecord payTradeRecord = new PayTradeRecord();
-				payTradeRecord.setUserId(orderInfo.getUserId());//交易中心Id
+				payTradeRecord.setPayAccountId(HookahConstants.TRADECENTERACCOUNT);
+				payTradeRecord.setUserId(orderInfo.getUserId());
 				payTradeRecord.setMoney(orderInfo.getOrderAmount());
 				payTradeRecord.setTradeType(HookahConstants.TradeType.FreezaIn.getCode());
 				payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.handing.getCode());
@@ -436,81 +431,38 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 				payTradeRecord.setAddOperator(orderInfo.getUserId());
 				payTradeRecord.setTransferDate(new Date());
 				payTradeRecordService.insertAndGetId(payTradeRecord);
-
+				//更新交易中心虚拟账户金额
+				operatorByType(HookahConstants.TRADECENTERACCOUNT,HookahConstants.TradeType.FreezaIn.getCode(),
+						orderInfo.getOrderAmount());
 
 				//修改内部流水的状态和外部充值状态
 				List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
-				for (PayTradeRecord payTradeRecord1 : payTradeRecords) {
-					payTradeRecord1.setTradeStatus((byte) 1);
+				for (PayTradeRecord payTradeRecord1 : payTradeRecords){
+					payTradeRecord1.setTradeStatus(HookahConstants.TransferStatus.success.getCode());
+					payTradeRecordService.updateByIdSelective(payTradeRecord1);
 				}
+				List<Condition> filters = new ArrayList<>();
+				filters.add(Condition.eq("serialNumber",orderSn));
+				PayAccountRecord payAccountRecord = payAccountRecordService.selectOne(filters);
+				payAccountRecord.setTransferStatus(HookahConstants.TransferStatus.success.getCode());
+				payAccountRecordService.updateByIdSelective(payAccountRecord);
 
 				//更新订单状态
-//				orderInfoService.updatePayStatus(orderSn, 2);
-			}
-		}
-	}
-
-	public String alipayNtf(HttpServletRequest request) throws Exception {
-		//商户订单号
-		String orderSn = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
-		//支付宝交易号
-		String tradeNo = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"),"UTF-8");
-		//交易状态
-		String tradeStatus = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
-		List<Condition> filter = new ArrayList<>();
-		filter.add(Condition.eq("orderSn",orderSn));
-		OrderInfo orderInfo = orderInfoService.selectOne(filter);
-		if(AlipayNotify.verify(getRequestParams(request))){
-			if(tradeStatus.equals("TRADE_SUCCESS") || tradeStatus.equals("TRADE_FINISHED")){
-				//交易成功,插交易中心冻结收入流水，更新交易中心虚拟账户金额
-				PayTradeRecord payTradeRecord = new PayTradeRecord();
-				payTradeRecord.setUserId(orderInfo.getUserId());//交易中心Id
-				payTradeRecord.setMoney(orderInfo.getOrderAmount());
-				payTradeRecord.setTradeType(6003);
-				payTradeRecord.setTradeStatus((byte)0);
-				payTradeRecord.setAddTime(new Date());
-				payTradeRecord.setOrderSn(orderSn);
-				payTradeRecord.setAddOperator(orderInfo.getUserId());
-				payTradeRecord.setTransferDate(new Date());
-				payTradeRecordService.insertAndGetId(payTradeRecord);
-				//修改内部流水的状态和外部充值状态
+				orderInfoService.updatePayStatus(orderSn,orderInfo.PAYSTATUS_PAYED,1);
+				// 支付成功 查询订单 获取订单中商品插入到待清算记录
+				orderInfoService.waitSettleRecordInsert(orderSn);
+				return true;
+			}else{
+				//交易失败
 				List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
 				for (PayTradeRecord payTradeRecord1 : payTradeRecords){
-					payTradeRecord1.setTradeStatus((byte)1);
+					payTradeRecord1.setTradeStatus(HookahConstants.TransferStatus.fail.getCode());
 				}
-				//更新订单状态
-//				orderInfoService.updatePayStatus(orderSn,2);
-			}else {
-				List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
-				for (PayTradeRecord payTradeRecord1 : payTradeRecords){
-					payTradeRecord1.setTradeStatus((byte)2);
-				}
+				return false;
 			}
-//            payCoreService.updatePayCore(paied);
-			return "success";
-		}else {
-			return "fail";
+		}else{
+			return false;
 		}
-	}
-
-	@SuppressWarnings("rawtypes")
-	private Map<String,String> getRequestParams(HttpServletRequest request){
-		//处理通知参数
-		Map<String,String> params = new HashMap<String,String>();
-		Map requestParams = request.getParameterMap();
-		for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext();) {
-			String name = (String) iter.next();
-			String[] values = (String[]) requestParams.get(name);
-			String valueStr = "";
-			for (int i = 0; i < values.length; i++) {
-				valueStr = (i == values.length - 1) ? valueStr + values[i]
-						: valueStr + values[i] + ",";
-			}
-			//乱码解决，这段代码在出现乱码时使用。如果mysign和sign不相等也可以使用这段代码转化
-			//valueStr = new String(valueStr.getBytes("ISO-8859-1"), "gbk");
-			params.put(name, valueStr);
-		}
-		return params;
 	}
 
 	public ReturnData userRecharge(Map<String,String> params){
