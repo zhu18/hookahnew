@@ -714,7 +714,8 @@ var htmlPart = {
 				if(data.code == 1){
 					$.post("${host.auth}/reg", $("#J_InfoForm").serialize(), function (data) {
 						if (data.code == 1) {
-                                $.ajax({
+                            console.log(4);
+                            $.ajax({
                                     url:'${host.auth}/usercenter/safetyScoreSet',
                                     type:'get',
                                     data:{
@@ -724,12 +725,14 @@ var htmlPart = {
                                         mail:"20"
                                     },
                                     success:function(data){
+                                        console.log(data);
+                                        $.alert("注册成功，马上跳转登录页面");
                                     }
-                                })
-							$.alert("注册成功，马上跳转登录页面");
-							setTimeout(function() {
-								window.location.href = '${host.auth}/login';
-							}, 2000);
+                                });
+////
+//							setTimeout(function() {
+//								window.location.href = '${host.auth}/login';
+//							}, 2000);
 						} else {
 							$('.loading_btns').hide();
 							$.alert(data.message);
