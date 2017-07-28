@@ -188,4 +188,8 @@ public class UserCheckServiceImpl extends GenericServiceImpl<UserCheck, String> 
         }
         return returnData;
     }
+
+    public UserCheck selectUserCheckInfo(String userId){
+        return userCheckMapper.selectUserCheckInfo(userId);
+    }
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -57,44 +58,22 @@ public class CertificationController extends BaseController{
         User user = userService.selectById(userId);
         List<Condition> filters = new ArrayList();
         filters.add(Condition.eq("userId", userId));
-        Supplier supplier = supplierService.selectOne(filters);
-        if(supplier != null){
-           map.put("checkStatus",supplier.getCheckStatus());
-        }
-        if(StringUtils.isNotBlank(user.getOrgId())) {
-            Organization organization = organizationService.selectById(user.getOrgId());//根据用户查询认证信息
-            //机构中 已认证状态 与 认证不通过状态
-            if (organization.getIsAuth() == 2 || organization.getIsAuth() == 3) {
-                UserCheck userCheck = userCheckService.selectOne(filters);
-                    if(userCheck != null) {
-                        map.put("userType", userCheck.getUserType());
-                        map.put("checkContent", userCheck.getCheckContent());
-                    }
-                    map.put("isAuth", organization.getIsAuth());
-                    //详细信息
-                    map.put("orgName", organization.getOrgName());
-                    map.put("certificateCode", organization.getCertificateCode());
-                    map.put("certifictePath", organization.getCertifictePath());
-                    map.put("licenseCode", organization.getLicenseCode());
-                    map.put("licensePath", organization.getLicensePath());
-                    map.put("taxCode", organization.getTaxCode());
-                    map.put("industry", organization.getIndustry());
-                    map.put("lawPersonName", organization.getLawPersonName());
-                    map.put("region", organization.getRegion());
-                    map.put("contactAddress", organization.getContactAddress());
-                    map.put("orgPhone", organization.getOrgPhone());
-                    map.put("taxPath", organization.getTaxPath());
-                    map.put("lawPersonCategory",organization.getLawPersonCategory());
-                    map.put("lawPersonNum",organization.getLawPersonNum());
-                    map.put("lawPersonNegativePath",organization.getLawPersonNegativePath());
-                    map.put("lawPersonPositivePath",organization.getLawPersonPositivePath());
-                    map.put("officeAddress",organization.getOfficeAddress());
-                    map.put("officeRegionId",organization.getOfficeRegionId());
-                }else {
-                    return ReturnData.success("未认证");
+        UserCheck userCheck = userCheckService.selectUserCheckInfo(userId);
+        if(userCheck != null) {
+            map.put("userType", userCheck.getUserType());
+            map.put("checkContent", userCheck.getCheckContent());
+            map.put("checkStatus",userCheck.getCheckStatus());
+            if(userCheck.getCheckStatus() == 2 || userCheck.getCheckStatus() == 1){
+                if(StringUtils.isNotBlank(user.getOrgId())) {
+                    Organization organization = organizationService.selectById(user.getOrgId());//根据用户查询认证信息
+                     map.put("organization",organization);
                 }
+                return ReturnData.success(map);
+            }else {
+                return ReturnData.success("待审核");
             }
-        return ReturnData.success(map);
+        }
+        return ReturnData.error("未审核");
     }
 
     //修改用户实名认证信息
