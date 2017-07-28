@@ -61,12 +61,10 @@ class RoleController {
       if (childOrFather == 'father') {
         if (item.data.selected) {
           angular.forEach(item.data.children, function (data, index, array) {
-            data.checked = true;
             data.selected = true;
           });
         } else {
           angular.forEach(item.data.children, function (data, index, array) {
-            data.checked = false;
             data.selected = false;
           });
         }
@@ -79,7 +77,7 @@ class RoleController {
         });
         if (arr.length > 0) {
           item.data.selected = true;
-        }else{
+        } else {
           item.data.selected = false;
         }
       }
@@ -126,24 +124,30 @@ class RoleController {
 
     };
     $scope.selectAllFlag = false;
-    $scope.selectAll = function () {
+    $scope.selectAll = function (data) {
       var permis = document.getElementsByName("permissions");
       var permissionsFather = document.getElementsByName("permissionsFather");
       if ($scope.selectAllFlag) {
-        for (var i = 0; i < permis.length; i++) {
-          permis[i].checked = false;
-        }
-        for (var k = 0; k < permissionsFather.length; k++) {
-          permissionsFather[k].checked = false;
-        }
+
+        angular.forEach(data, function (item, index, array) {
+          item.selected = false;
+          angular.forEach(item.children, function (child, index, array) {
+            child.selected =false
+          });
+        });
+
         $scope.selectAllFlag = false;
+
       } else {
-        for (var i = 0; i < permis.length; i++) {
-          permis[i].checked = true;
-        }
-        for (var k = 0; k < permissionsFather.length; k++) {
-          permissionsFather[k].checked = true;
-        }
+        angular.forEach(data, function (item, index, array) {
+          item.selected = true;
+          angular.forEach(item.children, function (child, index, array) {
+            child.selected =true
+          });
+
+        });
+
+
         $scope.selectAllFlag = true;
       }
 
@@ -168,21 +172,21 @@ class RoleController {
 
     };
     $scope.save = function () {
-        console.log($rootScope.item.isEnable)
-        if ($rootScope.item.roleName=="" || $rootScope.item.roleName==null){
-            $rootScope.openErrorDialogModal("角色代码不能为空！");
-            return;
-        }
-        if ($rootScope.item.roleExplain=="" || $rootScope.item.roleExplain==null){
-            $rootScope.openErrorDialogModal("角色中文名不能为空！");
-            return;
-        }
-        if ($rootScope.item.isEnable=="" || $rootScope.item.isEnable==null){
-            $rootScope.item.isEnable=false;
-        }
+      console.log($rootScope.item.isEnable)
+      if ($rootScope.item.roleName == "" || $rootScope.item.roleName == null) {
+        $rootScope.openErrorDialogModal("角色代码不能为空！");
+        return;
+      }
+      if ($rootScope.item.roleExplain == "" || $rootScope.item.roleExplain == null) {
+        $rootScope.openErrorDialogModal("角色中文名不能为空！");
+        return;
+      }
+      if ($rootScope.item.isEnable == "" || $rootScope.item.isEnable == null) {
+        $rootScope.item.isEnable = false;
+      }
 
-        var spCodesTemp = "";
-        $('input:checkbox[name=permissions]:checked').each(function (i) {
+      var spCodesTemp = "";
+      $('input:checkbox[name=permissions]:checked').each(function (i) {
         if (0 == i) {
           spCodesTemp = $(this).val();
         } else {
@@ -197,20 +201,20 @@ class RoleController {
         data = "roleId=" + $rootScope.item.roleId + "&roleName=" + $rootScope.item.roleName + "&roleExplain=" + $rootScope.item.roleExplain + "&enable=" + $rootScope.item.isEnable + "&permissions=" + spCodesTemp;
       }
       console.log(spCodesTemp);
-          var promise = $http({
-       method: 'POST',
-       url: $rootScope.site.apiServer + "/api/role/save",
-       data: data
-       });
-       promise.then(function (res, status, config, headers) {
-       $rootScope.loadingState = false;
-       if (res.data.code == "1") {
-       $state.go('account.role.search');
-       } else {
-       alert(res.data.message);
-       }
-       growl.addSuccessMessage("数据加载完毕。。。");
-       });
+      var promise = $http({
+        method: 'POST',
+        url: $rootScope.site.apiServer + "/api/role/save",
+        data: data
+      });
+      promise.then(function (res, status, config, headers) {
+        $rootScope.loadingState = false;
+        if (res.data.code == "1") {
+          $state.go('account.role.search');
+        } else {
+          alert(res.data.message);
+        }
+        growl.addSuccessMessage("数据加载完毕。。。");
+      });
     };
     $scope.delete = function (event, item) {
       var confirm = $rootScope.openConfirmDialogModal("确认要删除此&nbsp;<b>" + item.roleName + "</b>&nbsp;角色吗？");
