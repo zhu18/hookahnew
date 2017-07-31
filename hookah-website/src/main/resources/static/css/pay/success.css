@@ -38,11 +38,7 @@ a{
 
 }
 
-
-.pay-fail{
-    padding: 200px 370px;
-}
-.pay-fail .error{
+.pay-success-box .error{
     border-radius: 50%;
     color: #ffffff;
     background-color: #D74548;
@@ -54,7 +50,7 @@ a{
     font-weight: bold;
     display: inline-block;
 }
-.pay-fail .pay-btn{
+.pay-success-box .pay-btn{
     display: inline-block;
     width: 86px;
     height: 35px;
