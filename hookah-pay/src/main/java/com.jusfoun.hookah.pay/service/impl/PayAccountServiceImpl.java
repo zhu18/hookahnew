@@ -367,7 +367,8 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 			payAccountRecord.setTransferDate(date);
 			payAccountRecord.setMoney(orderInfo.getOrderAmount());//订单资金总额
 			payAccountRecord.setSerialNumber(orderInfo.getOrderSn());//订单号
-			payAccountRecord.setTransferType(HookahConstants.TransferStatus.handing.getCode());
+			payAccountRecord.setTransferType(PayConstants.TransferType.MONEY_IN.getCode());
+			payAccountRecord.setTransferStatus(HookahConstants.TransferStatus.handing.getCode());
 			payAccountRecord.setAddTime(date);
 			payAccountRecord.setAddOperator(orderInfo.getUserId());
 			payAccountRecordMapper.insertAndGetId(payAccountRecord);
