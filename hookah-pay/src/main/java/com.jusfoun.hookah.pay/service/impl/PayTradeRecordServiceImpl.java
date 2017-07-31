@@ -5,20 +5,18 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jusfoun.hookah.core.common.Pagination;
+import com.jusfoun.hookah.core.constants.PayConstants;
 import com.jusfoun.hookah.core.dao.PayTradeRecordMapper;
 import com.jusfoun.hookah.core.domain.PayTradeRecord;
 import com.jusfoun.hookah.core.domain.bo.MoneyInOutBo;
 import com.jusfoun.hookah.core.domain.vo.PayTradeRecordVo;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
-import com.jusfoun.hookah.core.utils.ReturnData;
-import com.jusfoun.hookah.pay.util.PayConstants;
 import com.jusfoun.hookah.rpc.api.PayTradeRecordService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
-import java.util.List;
 
 /**
  * dengxu

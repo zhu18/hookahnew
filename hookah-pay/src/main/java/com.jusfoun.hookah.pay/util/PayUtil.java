@@ -3,6 +3,7 @@ package com.jusfoun.hookah.pay.util;
 import com.apex.etm.qss.client.IFixClient;
 import com.apex.etm.qss.client.fixservice.FixConstants;
 import com.apex.fix.JFixSess;
+import com.jusfoun.hookah.core.constants.PayConstants;
 
 import java.io.File;
 import java.io.FileOutputStream;

@@ -1,10 +1,6 @@
 package com.jusfoun.hookah.pay.service.impl;
 
-//import com.apex.etm.qss.client.IFixClient;
-//import com.apex.etm.qss.client.fixservice.bean.ResultBean;
-//import com.apex.fix.AxCallFunc;
-//import com.apex.fix.JFixComm;
-//import com.apex.fix.JFixSess;
+import com.jusfoun.hookah.core.constants.PayConstants;
 import com.jusfoun.hookah.core.dao.PayBankCardMapper;
 import com.jusfoun.hookah.core.domain.PayBank;
 import com.jusfoun.hookah.core.domain.PayAccountRecord;
