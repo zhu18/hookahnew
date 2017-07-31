@@ -80,4 +80,13 @@ public interface PayAccountService extends GenericService<PayAccount, Long> {
     PayAccount findPayAccountByUserId(String userId);
 
     boolean aliPay(String orderSn, String tradeStatus, Map<String,String> param) throws Exception;
+
+    /**
+     * 更改交易密码 内含老密码正确性验证
+     * @param oldPayPassWord
+     * @param newPayPassWord
+     * @param userId
+     * @return
+     */
+    boolean updatePayPassWordByUserId(String oldPayPassWord, String newPayPassWord, String userId);
 }

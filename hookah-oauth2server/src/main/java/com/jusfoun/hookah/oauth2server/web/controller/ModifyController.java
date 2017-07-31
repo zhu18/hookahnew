@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -58,19 +59,28 @@ public class ModifyController {
         return "modify/payPassword";
     }
     @RequestMapping(value = "/payPassword", method = RequestMethod.POST)
-    public String pPayPassword(User userForm,Model model) {
+    public ModelAndView pPayPassword(String oldPayPassWord, String newPayPassWord, Integer safetyPayScore ) {
         Session session = SecurityUtils.getSubject().getSession();
         HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
-        User user = userService.selectById(userMap.get("userId"));
-        if(StringUtils.isNotBlank(userForm.getPaymentPassword())){
-            String othpassword = new Md5Hash(userForm.getPaymentPassword()).toString();
-            user.setPaymentPassword(othpassword);
-            userService.updateById(user);
-            return "redirect:/modify/success?type=payPassword";
-        }else{
-            model.addAttribute("error","支付密码为空");
-            return "modify/payPassword";
-        }
+        String userId = userMap.get("userId");
+        return  userService.updatePayPassWord(oldPayPassWord, newPayPassWord, safetyPayScore, userId);
+    }
+
+    /**
+     * 前台采用提交表单方式修改交易密码，故需向前台提供验证原始支付密码接口。建议后期修改此流程。
+     * @param oldPayPassWord
+     * @return
+     */
+    @RequestMapping(value = "/verifyPayPassword", method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnData verifyPayPassword(String oldPayPassWord) {
+        Session session = SecurityUtils.getSubject().getSession();
+        HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
+        String userId = userMap.get("userId");
+        if(payAccountService.verifyPassword(oldPayPassWord,userId))
+            return ReturnData.success();
+        else
+            return ReturnData.error();
     }
 
 
@@ -149,6 +159,11 @@ public class ModifyController {
     public String pSetPayPassword(User userForm,Model model) {
         Session session = SecurityUtils.getSubject().getSession();
         HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
+        String userId = userMap.get("userId");
+        if (!StringUtils.isNotBlank(userId)) {
+            model.addAttribute("title", "请重新登录");
+            return "modify/updateLoginPwd";
+        }
         User user = userService.selectById(userMap.get("userId"));
             if(StringUtils.isNotBlank(userForm.getPaymentPassword())){
 //                String othpassword = new Md5Hash(userForm.getPaymentPassword()).toString();
@@ -157,6 +172,8 @@ public class ModifyController {
                 if(payAccountService.resetPayPassword(user.getUserId(),userForm.getPaymentPassword())){
                     //更改支付密码设置状态
                     user.setPaymentPasswordStatus(HookahConstants.PayPassWordStatus.isOK.getCode());
+                    //安全评分
+                    user.setSafetyPayScore(userForm.getSafetyPayScore());
                     userService.updateById(user);
                     return "redirect:/modify/success?type=setPayPassword";
                 }else{

@@ -14,6 +14,7 @@ import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.time.LocalDate;
@@ -114,6 +115,11 @@ public class UserServiceImpl extends GenericServiceImpl<User, String> implements
         map.put("pvdata", Integer.parseInt(redisOperate.get("pv:" + today.toString())));
         map.put("uvdata", Integer.parseInt(redisOperate.get("uv:" + today.toString())));
         return map;
+    }
+
+    @Override
+    public ModelAndView updatePayPassWord(String oldPayPassWord, String newPayPassWord, Integer safetyPayScore, String userId) {
+        return null;
     }
 
 }

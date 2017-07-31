@@ -44,7 +44,7 @@ public class RabbitMQWaitSettleListener {
                     waitSettleRecord.setOrderSn(mgOrderGoods.getOrderSn());
                     waitSettleRecord.setGoodsId(mgOrderGoods.getGoodsId());
                     waitSettleRecord.setOrderId(orderInfoVo.getOrderId());
-                    waitSettleRecord.setOrderAmount(mgOrderGoods.getGoodsPrice());
+                    waitSettleRecord.setOrderAmount(mgOrderGoods.getGoodsPrice() * mgOrderGoods.getGoodsNumber());
                     waitSettleRecord.setOrderTime(orderInfoVo.getAddTime());
                     waitSettleRecord.setHasSettleAmount(0L);
                     waitSettleRecord.setNoSettleAmount(mgOrderGoods.getGoodsPrice());

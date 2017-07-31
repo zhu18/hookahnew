@@ -69,12 +69,6 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 	UserService userService;
 
 	@Resource
-	MgOrderInfoService mgOrderInfoService;
-
-	@Resource
-	WaitSettleRecordService waitSettleRecordService;
-
-	@Resource
 	MqSenderService mqSenderService;
 
 	@Resource
@@ -107,38 +101,8 @@ public class PayCoreServiceImpl extends GenericServiceImpl<PayCore, String> impl
 		user.setMoneyBalance(newMoneyBalance);
 		userService.updateByIdSelective(user);
 
-		mqSenderService.sendDirect(RabbitmqQueue.WAIT_SETTLE_ORDERS, orderSn);
-
 		// 支付成功 查询订单 获取订单中商品插入到待清算记录
-//		List<Condition> mgfilters = new ArrayList<>();
-//		mgfilters.add(Condition.eq("orderSn", orderSn));
-//		OrderInfoVo orderInfoVo = mgOrderInfoService.selectOne(mgfilters);
-//		if(orderInfoVo != null){
-//			List<MgOrderGoods> mgOrderGoodsList = orderInfoVo.getMgOrderGoodsList();
-//			List<WaitSettleRecord> waitSettleRecords = new ArrayList<>();
-//			if(mgOrderGoodsList != null && mgOrderGoodsList.size() > 0){
-//				for(MgOrderGoods mgOrderGoods : mgOrderGoodsList){
-//					WaitSettleRecord waitSettleRecord = new WaitSettleRecord();
-//					waitSettleRecord.setOrderSn(mgOrderGoods.getOrderSn());
-//					waitSettleRecord.setGoodsId(mgOrderGoods.getGoodsId());
-//					waitSettleRecord.setOrderId(orderInfoVo.getOrderId());
-//					waitSettleRecord.setOrderAmount(mgOrderGoods.getGoodsPrice());
-////					waitSettleRecord.setOrderTime(orderInfoVo.getPayTime());
-//					waitSettleRecord.setOrderTime(orderInfoVo.getAddTime());
-//					waitSettleRecord.setHasSettleAmount(0L);
-//					waitSettleRecord.setNoSettleAmount(mgOrderGoods.getGoodsPrice());
-//					waitSettleRecord.setAddTime(new Date());
-//					waitSettleRecord.setSettleStatus((byte)0);
-//					waitSettleRecord.setShopName(mgOrderGoods.getAddUser());
-//					waitSettleRecord.setGoodsName(mgOrderGoods.getGoodsName());
-//					waitSettleRecords.add(waitSettleRecord);
-//				}
-//
-//				int n = waitSettleRecordService.insertBatch(waitSettleRecords);
-//				System.out.println(n);
-//			}
-//		}
-
+		mqSenderService.sendDirect(RabbitmqQueue.WAIT_SETTLE_ORDERS, orderSn);
 	}
 
 	@Override
