@@ -1,7 +1,7 @@
 package com.jusfoun.hookah.pay.util;
 
 /**
- * Created by computer on 2017/7/7.
+ * Created by zhaoshuai on 2017/7/7.
  */
 public class SyncCustomerInfoFlag {
     //客户同步信息

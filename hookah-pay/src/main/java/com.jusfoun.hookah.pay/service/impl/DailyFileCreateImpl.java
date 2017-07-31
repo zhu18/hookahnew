@@ -1,10 +1,10 @@
 package com.jusfoun.hookah.pay.service.impl;
 
+import com.jusfoun.hookah.core.constants.PayConstants;
 import com.jusfoun.hookah.core.domain.PayAccount;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.FileUtils;
 import com.jusfoun.hookah.pay.util.DateUtil;
-import com.jusfoun.hookah.pay.util.PayConstants;
 import com.jusfoun.hookah.rpc.api.PayAccountRecordService;
 import com.jusfoun.hookah.rpc.api.PayAccountService;
 import org.springframework.stereotype.Service;

@@ -2,9 +2,9 @@ package com.jusfoun.hookah.pay.service.impl;
 
 import com.apex.etm.qss.client.IFixClient;
 import com.apex.etm.qss.client.fixservice.bean.ResultBean;
+import com.jusfoun.hookah.core.constants.PayConstants;
 import com.jusfoun.hookah.pay.util.DateUtil;
 import com.jusfoun.hookah.pay.util.FixClientUtil;
-import com.jusfoun.hookah.pay.util.PayConstants;
 import com.jusfoun.hookah.rpc.api.DailyFundFileUploadedNoticeService;
 import com.jusfoun.hookah.rpc.api.MgDailyFileCheckService;
 import org.springframework.stereotype.Service;

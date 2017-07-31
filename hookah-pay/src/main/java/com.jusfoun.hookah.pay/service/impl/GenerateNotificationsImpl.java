@@ -4,21 +4,16 @@ package com.jusfoun.hookah.pay.service.impl;
  * Created by ndf on 2017/7/5.
  */
 
-//import com.apex.etm.qss.client.IFixClient;
-//import com.apex.etm.qss.client.fixservice.FixConstants;
-//import com.apex.fix.AxSvcFunc;
-//import com.apex.fix.JFixComm;
-//import com.apex.fix.JFixSess;
 
 import com.apex.etm.qss.client.IFixClient;
 import com.apex.etm.qss.client.fixservice.FixConstants;
 import com.apex.fix.AxSvcFunc;
 import com.apex.fix.JFixComm;
 import com.apex.fix.JFixSess;
+import com.jusfoun.hookah.core.constants.PayConstants;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.pay.util.FixClientUtil;
-import com.jusfoun.hookah.pay.util.PayConstants;
 import com.jusfoun.hookah.pay.util.PayUtil;
 import com.jusfoun.hookah.rpc.api.GenerateNotificationsService;
 import org.slf4j.Logger;
