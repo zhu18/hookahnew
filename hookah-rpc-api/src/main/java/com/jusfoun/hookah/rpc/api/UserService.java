@@ -2,7 +2,7 @@ package com.jusfoun.hookah.rpc.api;
 
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.generic.GenericService;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.ui.Model;
 
 import java.util.Map;
 
@@ -23,6 +23,6 @@ public interface UserService extends GenericService<User, String> {
 
     Map<String, Object> getPUVCountByDate();
 
-    ModelAndView updatePayPassWord(String oldPayPassWord, String newPayPassWord, Integer safetyPayScore, String userId);
+    String updatePayPassWord(String oldPayPassWord, String newPayPassWord, Integer safetyPayScore, String userId, Model model);
 
 }

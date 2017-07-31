@@ -16,13 +16,11 @@ import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.ui.Model;
 
 import javax.annotation.Resource;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -123,22 +121,18 @@ public class UserServiceImpl extends GenericServiceImpl<User, String> implements
     }
 
     @Override
-    public ModelAndView updatePayPassWord(String oldPayPassWord, String newPayPassWord,Integer safetyPayScore, String userId) {
-        ModelAndView modelAndView=new ModelAndView();
+    public String updatePayPassWord(String oldPayPassWord, String newPayPassWord, Integer safetyPayScore, String userId, Model model) {
         if (!StringUtils.isNotBlank(userId)) {
-            modelAndView.addObject("title", "请重新登录");
-            modelAndView.setViewName("modify/updateLoginPwd");
-            return modelAndView;
+            model.addAttribute("title", "请重新登录");
+            return "modify/updateLoginPwd";
         }
         if(StringUtils.stringsIsEmpty(oldPayPassWord,newPayPassWord)){
-            modelAndView.addObject("error","原始交易密码与新交易密码不可为空");
-            modelAndView.setViewName("modify/payPassword");
-            return modelAndView;
+            model.addAttribute("error","原始交易密码与新交易密码不可为空");
+            return  "modify/payPassword";
         }
         if(oldPayPassWord.equals(newPayPassWord)){
-            modelAndView.addObject("error","原始交易密码不可与新交易密码一致");
-            modelAndView.setViewName("modify/payPassword");
-            return modelAndView;
+            model.addAttribute("error","原始交易密码不可与新交易密码一致");
+            return "modify/payPassword";
         }
 
         if(payAccountService.updatePayPassWordByUserId(oldPayPassWord, newPayPassWord, userId)){
@@ -151,12 +145,10 @@ public class UserServiceImpl extends GenericServiceImpl<User, String> implements
             user.setSafetyPayScore(safetyPayScore);
             if(updateById(user) == 0)
                 logger.error("更新用户信息失败");
-            modelAndView.setViewName("redirect:/modify/success?type=payPassword");
-            return modelAndView;
+            return "redirect:/modify/success?type=payPassword";
         }else{
-            modelAndView.addObject("error","修改交易密码失败，请联系管理员。");
-            modelAndView.setViewName("modify/payPassword");
-            return modelAndView;
+            model.addAttribute("error","修改交易密码失败，请联系管理员。");
+            return "modify/payPassword";
         }
     }
 }
