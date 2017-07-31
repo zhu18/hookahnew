@@ -67,6 +67,11 @@ public class PayController extends BaseController{
         return "pay/success";
     }
 
+    @RequestMapping(value = "/fail", method = RequestMethod.GET)
+    public String fail() {
+        return "pay/fail";
+    }
+
     /**
      * 订单支付
      * @param model

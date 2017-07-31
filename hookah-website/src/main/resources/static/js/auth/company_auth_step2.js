@@ -99,7 +99,6 @@ function companyAuth(){
             "officeRegionId":$('select[name="workCity"] option:selected').val(),//所在地
             "officeAddress":$("input[name='workAddress']").val(),//详细地址
             "orgPhone":$("input[name='tel']").val(),//联系电话
-
             "taxCode":$("input[name='taxRegCertificate']").val(),//税务登记编号
             "taxPath":$("input[name='taxPath']").val(),//税务登记存放路径
             "licenseCode":$("input[name='businessLicence']").val(),//营业执照编号
