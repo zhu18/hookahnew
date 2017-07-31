@@ -3,9 +3,6 @@ package com.jusfoun.hookah.oauth2server.web.controller;
 import com.jusfoun.hookah.core.annotation.Log;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.User;
-import com.jusfoun.hookah.core.exception.UserRegConfirmPwdException;
-import com.jusfoun.hookah.core.exception.UserRegEmptyPwdException;
-import com.jusfoun.hookah.core.exception.UserRegSimplePwdException;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.PayAccountService;
@@ -20,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -59,11 +55,11 @@ public class ModifyController {
         return "modify/payPassword";
     }
     @RequestMapping(value = "/payPassword", method = RequestMethod.POST)
-    public ModelAndView pPayPassword(String oldPayPassWord, String newPayPassWord, Integer safetyPayScore ) {
+    public String pPayPassword(String oldPayPassWord, String newPayPassWord, Integer safetyPayScore, Model model) {
         Session session = SecurityUtils.getSubject().getSession();
         HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
         String userId = userMap.get("userId");
-        return  userService.updatePayPassWord(oldPayPassWord, newPayPassWord, safetyPayScore, userId);
+        return  userService.updatePayPassWord(oldPayPassWord, newPayPassWord, safetyPayScore, userId,model);
     }
 
     /**
@@ -166,6 +162,10 @@ public class ModifyController {
             return "modify/updateLoginPwd";
         }
         User user = userService.selectById(userMap.get("userId"));
+        if(user.getPaymentPasswordStatus() == HookahConstants.PayPassWordStatus.isOK.getCode()){
+            model.addAttribute("error", "您已设置过交易密码");
+            return "modify/updateLoginPwd";
+        }
             if(StringUtils.isNotBlank(userForm.getPaymentPassword())){
 //                String othpassword = new Md5Hash(userForm.getPaymentPassword()).toString();
 //                user.setPaymentPassword(othpassword);

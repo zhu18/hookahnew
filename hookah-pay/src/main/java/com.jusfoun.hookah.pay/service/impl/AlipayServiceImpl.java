@@ -2,8 +2,10 @@ package com.jusfoun.hookah.pay.service.impl;
 
 
 import com.jusfoun.hookah.core.dao.PayAccountRecordMapper;
+import com.jusfoun.hookah.core.dao.PayTradeRecordMapper;
 import com.jusfoun.hookah.core.domain.PayAccountRecord;
 import com.jusfoun.hookah.core.domain.PayCore;
+import com.jusfoun.hookah.core.domain.PayTradeRecord;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.OrderHelper;
@@ -30,6 +32,9 @@ public class AlipayServiceImpl extends GenericServiceImpl<PayAccountRecord, Stri
     private PayAccountRecordMapper payAccountRecordMapper;
 
     @Resource
+    PayTradeRecordMapper payTradeRecordMapper;
+
+    @Resource
     public void setDao(PayAccountRecordMapper payAccountRecordMapper) {
         super.setDao(payAccountRecordMapper);
     }
@@ -49,27 +54,54 @@ public class AlipayServiceImpl extends GenericServiceImpl<PayAccountRecord, Stri
     }
 
     @Override
-    public String doCharge(String userId, String money, String notify_url, String return_url) {
+    public String doCharge(String userId, Long payAccountId,String money, String notify_url, String return_url) {
         if (!StringUtils.isNotBlank(userId) || !StringUtils.isNotBlank(money))
             return null;
         OrderInfoVo orderInfoVo = new OrderInfoVo();
-        orderInfoVo.setOrderSn(OrderHelper.genOrderSn());
+        String orderSn = OrderHelper.genOrderSn();
+        orderInfoVo.setOrderSn(orderSn);
         orderInfoVo.setOrderAmount(Long.valueOf(money));
         orderInfoVo.setAccount(userId);
         //构造html
         String html = buildRequestParams(userId, orderInfoVo, notify_url, return_url);
-        //记账
-      /*  PayAccountRecord payAccountRecord = new PayAccountRecord();
-        payAccountRecord.setPayAccountId(Long.valueOf(userId));
-        payAccountRecord.setUserId(userId);
-        Date date = new Date();
-        payAccountRecord.setTransferDate(date);
-        payAccountRecord.setMoney(orderInfoVo.getOrderAmount());//订单资金总额
-        payAccountRecord.setSerialNumber(orderInfoVo.getOrderSn());//订单号
-        payAccountRecord.setAddTime(date);
-        payAccountRecord.setAddOperator(userId);
-        insertRecord(payAccountRecord);*/
+
+        //插入记录表
+        insertPayTradeRecord( userId, Long.valueOf(money), payAccountId, orderSn,  0,  1);
+        insertPayAccountRecord( userId, Long.valueOf(money), payAccountId, orderSn, 0,  1);
         return html;
+    }
+    public void insertPayTradeRecord(String userId,Long money,Long payAccountId,String orderSn,int tradeStatus,int tradeType){
+        PayTradeRecord ptr=new PayTradeRecord();
+        ptr.setMoney(Math.abs(money));
+        ptr.setPayAccountId(payAccountId);
+        ptr.setOrderSn(orderSn);
+        ptr.setUserId(userId);
+        ptr.setTradeStatus((byte)tradeStatus);
+        ptr.setTradeType(tradeType);
+        ptr.setAddOperator(userId);
+        Date now=new Date();
+        ptr.setTransferDate(now);
+        ptr.setAddTime(now);
+        ptr.setUpdateOperator(userId);
+        ptr.setUpdateTime(now);
+        payTradeRecordMapper.insert(ptr);
+    }
+
+    public void insertPayAccountRecord(String userId,Long money,Long payAccountId,String orderSn,int tradeStatus,int tradeType){
+        PayAccountRecord par = new PayAccountRecord();
+        par.setChannelType(ChannelType.ZFB);
+        par.setMoney(money);
+        par.setSerialNumber(orderSn);//订单号
+        par.setPayAccountId(payAccountId);
+        par.setTransferStatus((byte)tradeStatus);
+        par.setTransferType((byte)tradeType);
+        par.setTransferDate(new Date());
+        par.setAddOperator(userId);
+        par.setAddTime(new Date());
+        par.setUpdateOperator(userId);
+        par.setUpdateTime(new Date());
+        par.setUserId(userId);
+        payAccountRecordMapper.insert(par);
     }
 
     @Override

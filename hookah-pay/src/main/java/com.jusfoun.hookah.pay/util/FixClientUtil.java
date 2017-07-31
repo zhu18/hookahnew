@@ -1,12 +1,10 @@
 package com.jusfoun.hookah.pay.util;
 
-//import com.apex.etm.qss.client.FixClientImpl;
-//import com.apex.etm.qss.client.IFixClient;
-//import com.apex.etm.qss.client.fixservice.FixCommInfoBean;
 
 import com.apex.etm.qss.client.FixClientImpl;
 import com.apex.etm.qss.client.IFixClient;
 import com.apex.etm.qss.client.fixservice.FixCommInfoBean;
+import com.jusfoun.hookah.core.constants.PayConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

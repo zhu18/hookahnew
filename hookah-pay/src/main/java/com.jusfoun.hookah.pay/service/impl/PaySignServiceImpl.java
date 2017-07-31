@@ -4,13 +4,13 @@ import com.apex.etm.qss.client.IFixClient;
 import com.apex.etm.qss.client.fixservice.bean.ResultBean;
 
 import com.apex.etm.qss.client.fixservice.bean.ResultBean;
+import com.jusfoun.hookah.core.constants.PayConstants;
 import com.jusfoun.hookah.core.dao.PaySignMapper;
 import com.jusfoun.hookah.core.domain.PaySign;
 import com.jusfoun.hookah.core.domain.mongo.MgPaySign;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.pay.util.DateUtil;
 import com.jusfoun.hookah.pay.util.FixClientUtil;
-import com.jusfoun.hookah.pay.util.PayConstants;
 import com.jusfoun.hookah.rpc.api.MgPaySignService;
 import com.jusfoun.hookah.rpc.api.PaySignService;
 import org.springframework.beans.BeanUtils;
@@ -51,7 +51,7 @@ public class PaySignServiceImpl extends GenericServiceImpl<PaySign, String> impl
 			String taskDate = DateUtil.dateCurrentForYMD();
 			Map<String, String> paramMap = new HashMap<String,String>();
 			paramMap.put("FID_YWRQ",taskDate);//业务日期
-			paramMap.put("FID_JYS",PayConstants.FID_JYS);//交易所代码
+			paramMap.put("FID_JYS", PayConstants.FID_JYS);//交易所代码
 
 			paySign.setAddTime(new Date());
 			paySign.setSignFlag(signFlag);

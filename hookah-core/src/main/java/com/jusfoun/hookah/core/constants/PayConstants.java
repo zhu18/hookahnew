@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.pay.util;
+package com.jusfoun.hookah.core.constants;
 
 /**
  * @Author dengxu

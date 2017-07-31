@@ -14,13 +14,11 @@ import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.ui.Model;
 
 import javax.annotation.Resource;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -118,7 +116,7 @@ public class UserServiceImpl extends GenericServiceImpl<User, String> implements
     }
 
     @Override
-    public ModelAndView updatePayPassWord(String oldPayPassWord, String newPayPassWord, Integer safetyPayScore, String userId) {
+    public String updatePayPassWord(String oldPayPassWord, String newPayPassWord, Integer safetyPayScore, String userId, Model model) {
         return null;
     }
 
