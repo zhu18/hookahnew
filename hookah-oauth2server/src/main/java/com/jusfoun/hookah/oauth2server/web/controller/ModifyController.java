@@ -100,7 +100,7 @@ public class ModifyController {
     @Log(platform = "front",logType = "f0005",optType = "modify")
     @RequestMapping(value = "/updateLoginPwd", method = RequestMethod.POST)
     @ResponseBody
-    public String updateLoginPwd(String  newPwd, String  newPwdRepeat, Model model) {
+    public String updateLoginPwd(String  newPwd, String  newPwdRepeat,Integer safetyLandScore, Model model) {
         try {
 
             Session session = SecurityUtils.getSubject().getSession();
@@ -124,7 +124,8 @@ public class ModifyController {
                 model.addAttribute("title", "密码过于简单");
                 return "modify/updateLoginPwd";
             }
-
+            //更新安全分值
+            user.setSafetyLandScore(safetyLandScore);
             user.setPassword(new Md5Hash(newPwd).toString());
             userService.updateById(user);
             return "redirect:/modify/success?type=loginPassword";

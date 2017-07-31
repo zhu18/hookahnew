@@ -146,9 +146,11 @@ public class UserServiceImpl extends GenericServiceImpl<User, String> implements
             //判断支付密码设置状态
             if(user.getPaymentPasswordStatus() != HookahConstants.PayPassWordStatus.isOK.getCode()){
                 user.setPaymentPasswordStatus(HookahConstants.PayPassWordStatus.isOK.getCode());
-                if(updateById(user) == 0)
-                    logger.error("更新用户信息失败");
             }
+            //更新安全分值
+            user.setSafetyPayScore(safetyPayScore);
+            if(updateById(user) == 0)
+                logger.error("更新用户信息失败");
             modelAndView.setViewName("redirect:/modify/success?type=payPassword");
             return modelAndView;
         }else{
