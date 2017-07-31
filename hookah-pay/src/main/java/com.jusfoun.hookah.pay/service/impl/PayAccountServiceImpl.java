@@ -506,10 +506,8 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 				returnData.setMessage("充值失败：账户不存在！");
 				return returnData;
 			}
-			//insertPayTradeRecord( userId, money, payAccount.getId(), 0, 1);
-			//insertPayAccountRecord( userId, money, payAccount.getId(), 0, 1);
 
-			String html = alipayService.doCharge(userId,money.toString(),
+			String html = alipayService.doCharge(userId,payAccount.getId(),money.toString(),
 					PayConfiguration.RECHARGE_NOTIFY_URL,PayConfiguration.RECHARGE_RETURN_URL);
 			returnData.setCode(ExceptionConst.Success);
 			returnData.setMessage(html);
@@ -531,35 +529,6 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		payAccountMapper.updatePayAccountMoney(params);
 	}
 
-	public void insertPayTradeRecord(String userId,Long money,Long payAccountId,int tradeStatus,int tradeType){
-		PayTradeRecord ptr=new PayTradeRecord();
-		ptr.setMoney(Math.abs(money));
-		ptr.setPayAccountId(payAccountId);
-		ptr.setUserId(userId);
-		ptr.setTradeStatus((byte)tradeStatus);
-		ptr.setTradeType(tradeType);
-		ptr.setAddOperator(userId);
-		ptr.setAddTime(new Date());
-		ptr.setUpdateOperator(userId);
-		ptr.setUpdateTime(new Date());
-		payTradeRecordMapper.insert(ptr);
-	}
-
-	public void insertPayAccountRecord(String userId,Long money,Long payAccountId,int tradeStatus,int tradeType){
-		PayAccountRecord par = new PayAccountRecord();
-		par.setChannelType(ChannelType.ZFB);
-		par.setMoney(Math.abs(money));
-		par.setPayAccountId(payAccountId);
-		par.setTransferStatus((byte)tradeStatus);
-		par.setTransferType((byte)tradeType);
-		par.setTransferDate(new Date());
-		par.setAddOperator(userId);
-		par.setAddTime(new Date());
-		par.setUpdateOperator(userId);
-		par.setUpdateTime(new Date());
-		par.setUserId(userId);
-		payAccountRecordMapper.insert(par);
-	}
 
 	/**
 	 * 更新账户表并插入记录表
@@ -589,10 +558,10 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 				//更新账户金额
 				updatePayAccountMoney(payAccount.getId(),money,userId);
 			}
-			//插入记录表
-			insertPayTradeRecord( userId, money, payAccount.getId(), new Byte(tradeStatus), new Byte(tradeType));
-			insertPayAccountRecord( userId, money, payAccount.getId(), new Byte(tradeStatus), new Byte(tradeType));
-			//payTradeRecordMapper.updateByPrimaryKeySelective();
+			//更新记录表
+			payTradeRecordMapper.updatePayTradeRecordStatusByOrderSn(params);
+			payAccountRecordMapper.updatePayAccountRecordStatusByOrderSn(params);
+
 			returnData.setCode(ExceptionConst.Success);
 			returnData.setMessage("操作成功！");
 			return returnData;

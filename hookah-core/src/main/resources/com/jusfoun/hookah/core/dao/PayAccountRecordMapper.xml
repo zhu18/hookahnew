@@ -57,5 +57,11 @@
       #{transferCode,jdbcType=VARCHAR}, #{transferMessage,jdbcType=VARCHAR}, #{transferResult,jdbcType=VARCHAR}, 
       #{transferDesc,jdbcType=VARCHAR}, #{sendMsg,jdbcType=VARCHAR})
   </insert>
+  <update id="updatePayAccountRecordStatusByOrderSn" parameterType="java.util.HashMap">
+
+    update pay_account_record set transfer_status = #{tradeStatus},transfer_code = #{tradeNo}
+    where serial_number = #{orderSn}
+
+  </update>
 
 </mapper>

@@ -90,4 +90,7 @@ public class PayTradeRecordServiceImpl extends GenericServiceImpl<PayTradeRecord
 		return pagination;
 	}
 
+	public int selectStatusByOrderSn(String orderSn){
+		return payTradeRecordMapper.selectStatusByOrderSn(orderSn);
+	}
 }

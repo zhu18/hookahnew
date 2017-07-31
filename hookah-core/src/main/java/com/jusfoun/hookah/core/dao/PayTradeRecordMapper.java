@@ -6,6 +6,7 @@ import com.jusfoun.hookah.core.generic.GenericDao;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface PayTradeRecordMapper extends GenericDao<PayTradeRecord> {
 
@@ -16,4 +17,8 @@ public interface PayTradeRecordMapper extends GenericDao<PayTradeRecord> {
                                 @Param("endDate") String endDate,
                                 @Param("tradeType") Integer tradeType,
                                 @Param("tradeStatus") Integer tradeStatus);
+
+    void updatePayTradeRecordStatusByOrderSn(Map<String, String> params);
+
+    int selectStatusByOrderSn(String orderSn);
 }
