@@ -36,7 +36,7 @@ var htmlPart = {
 						</span>
 						<input class="form-text err-input" id="J_Password" type="password" placeholder="设置你的登录密码"
 							   name="password" value="" data-inner_placeholder="r_p_input_enterPassword" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false">
-						<input type="hidden" name="score">
+						<input type="hidden" name="safetyLandScore">
 					</div>
 					<div class="form-item">
 						<span class="form-label tsl" data-phase-id="r_p_confirmPassword"><span class="star">*</span>密码确认</span>
@@ -57,6 +57,7 @@ var htmlPart = {
 							<input type="hidden" name="mobile_area" value="1">
 							<input class="form-text mobile-text-input" maxlength="20" name="mobile" id="J_Mobile"
 								   data-pattern="^(86){0,1}1\d{10}$" type="text" value="" placeholder="请输入手机号码">
+							<input type="hidden" name="safetyPhoneScore" value="20">
 						</div>
 					</div>
 
@@ -320,10 +321,10 @@ var htmlPart = {
 			}
 //        判断强弱规则
             if (a && b && c && d && (strlen(val) > 7)) {
-                $("input[name='score']").val("30");
+                $("input[name='safetyLandScore']").val("30");
                 passwordChange.strength('pw-strength-bar-1 pw-strength-bar-2', 'pw-strength-bar-3', TRLang.pwd_level_high)
             }else if ((a && b) || (a && c) || (a && d) || (b && c) || (b && d) || (c && d)) {
-                $("input[name='score']").val("20");
+                $("input[name='safetyLandScore']").val("20");
                 passwordChange.strength('pw-strength-bar-1 pw-strength-bar-3', 'pw-strength-bar-2', TRLang.pwd_level_medium);
             }else {
                 passwordChange.strength('pw-strength-bar-2 pw-strength-bar-3', 'pw-strength-bar-1', TRLang.pwd_level_low);
@@ -658,6 +659,8 @@ var htmlPart = {
 							if (testData.mobile(mobile)) {
 								if(validSms){
 									if(isTrue){
+                                        $("input[name='safetyLandScore']").val();
+                                        $("input[name='safetyPhoneScore']").val();
 										mobileNumIsTrue(mobile,validSms)
 									}else{
 										$.alert('注册信息不完整');
@@ -715,24 +718,11 @@ var htmlPart = {
 					$.post("${host.auth}/reg", $("#J_InfoForm").serialize(), function (data) {
 						if (data.code == 1) {
                             console.log(4);
-                            $.ajax({
-                                    url:'${host.auth}/usercenter/safetyScoreSet',
-                                    type:'get',
-                                    data:{
-                                        land:$("input[name='score']").val(),
-                                        pay :"",
-                                        phone:"20",
-                                        mail:"20"
-                                    },
-                                    success:function(data){
-                                        console.log(data);
-                                        $.alert("注册成功，马上跳转登录页面");
-                                    }
-                                });
-////
-//							setTimeout(function() {
-//								window.location.href = '${host.auth}/login';
-//							}, 2000);
+
+                            $.alert("注册成功，马上跳转登录页面");
+							setTimeout(function() {
+								window.location.href = '${host.auth}/login';
+							}, 2000);
 						} else {
 							$('.loading_btns').hide();
 							$.alert(data.message);

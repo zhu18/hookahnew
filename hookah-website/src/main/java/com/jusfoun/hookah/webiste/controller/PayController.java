@@ -162,7 +162,7 @@ public class PayController extends BaseController{
             return "pay/fail";
         }
         model.addAttribute("money",orderAmount);
-        return "pay/success";
+        return "pay/fail";
     }
 
     @RequestMapping(value = "/aliPay", method = RequestMethod.GET)

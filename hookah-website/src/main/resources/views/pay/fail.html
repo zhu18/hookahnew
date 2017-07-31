@@ -7,14 +7,17 @@ var head = {
 var htmlPart = {
 %>
 <div class="grid-0 backgorund-gray">
-    <div class="grid-row ">
-        <div class="pay-fail margin-top-10 margin-bottom-30">
-            <div class="error vertical-align-middle">×</div>
-            <span class="vertical-align-middle font-size-18 margin-left-20">充值失败！</span>
-            <a href="/usercenter/recharge" class="pay-btn btn-full-orange">重新支付</a>
+    <div class="grid-row">
+        <div class="pay-success margin-top-10 margin-bottom-30">
+            <div class="pay-success-box">
+                <div>
+                    <div class="error vertical-align-middle">×</div>
+                    <span class="vertical-align-middle font-size-18 margin-left-20">充值失败！</span>
+                </div>
+                <a href="" class="pay-btn btn-full-orange">重新支付</a>
+            </div>
         </div>
     </div>
-</div>
 </div>
 <%};
 include("/layout/other-base.html",{headSection:head,htmlSection:htmlPart}){}
