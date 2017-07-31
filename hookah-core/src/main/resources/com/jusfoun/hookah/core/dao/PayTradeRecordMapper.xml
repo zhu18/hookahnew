@@ -34,11 +34,11 @@
     insert into pay_trade_record (pay_account_id, user_id,
       money, trade_type, trade_status, 
       order_sn, add_time, add_operator, 
-      update_time, update_operator)
+      update_time, update_operator, transfer_date)
     values (#{payAccountId,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR},
       #{money,jdbcType=BIGINT}, #{tradeType,jdbcType=TINYINT}, #{tradeStatus,jdbcType=TINYINT}, 
       #{orderSn,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, #{addOperator,jdbcType=VARCHAR}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{updateOperator,jdbcType=VARCHAR})
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateOperator,jdbcType=VARCHAR}, #{transferDate,jdbcType=DATE})
   </insert>
 
 
