@@ -219,7 +219,7 @@ public class RegController {
      */
     @RequestMapping(value = "/reg/updatePwd", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnData updatePwd(String  newPwd, String  newPwdRepeat, Model model) {
+    public ReturnData updatePwd(String  newPwd, String  newPwdRepeat,Integer safetyLandScore,  Model model) {
         try {
 
             Session session = SecurityUtils.getSubject().getSession();
@@ -239,7 +239,8 @@ public class RegController {
             if (newPwd.length() < 6) {
                 throw new UserRegSimplePwdException("密码过于简单");
             }
-
+            //更新安全分值
+            user.setSafetyLandScore(safetyLandScore);
             user.setPassword(new Md5Hash(newPwd).toString());
             userService.updateById(user);
         } catch (Exception e) {
