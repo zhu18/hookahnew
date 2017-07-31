@@ -7,13 +7,16 @@ import com.jusfoun.hookah.core.domain.CashRecord;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.DateUtils;
+import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.CashRecordService;
+import com.jusfoun.hookah.rpc.api.PayAccountService;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.time.LocalDate;
@@ -43,6 +46,9 @@ public class UserServiceImpl extends GenericServiceImpl<User, String> implements
 
     @Resource
     CashRecordService cashRecordService;
+
+    @Resource
+    PayAccountService payAccountService;
 
     public User insert(User user) {
         String encPassword = new Md5Hash(user.getPassword()).toString();
@@ -114,5 +120,41 @@ public class UserServiceImpl extends GenericServiceImpl<User, String> implements
         map.put("pvdata", Integer.parseInt(redisOperate.get("pv:" + today.toString())));
         map.put("uvdata", Integer.parseInt(redisOperate.get("uv:" + today.toString())));
         return map;
+    }
+
+    @Override
+    public ModelAndView updatePayPassWord(String oldPayPassWord, String newPayPassWord,Integer safetyPayScore, String userId) {
+        ModelAndView modelAndView=new ModelAndView();
+        if (!StringUtils.isNotBlank(userId)) {
+            modelAndView.addObject("title", "请重新登录");
+            modelAndView.setViewName("modify/updateLoginPwd");
+            return modelAndView;
+        }
+        if(StringUtils.stringsIsEmpty(oldPayPassWord,newPayPassWord)){
+            modelAndView.addObject("error","原始交易密码与新交易密码不可为空");
+            modelAndView.setViewName("modify/payPassword");
+            return modelAndView;
+        }
+        if(oldPayPassWord.equals(newPayPassWord)){
+            modelAndView.addObject("error","原始交易密码不可与新交易密码一致");
+            modelAndView.setViewName("modify/payPassword");
+            return modelAndView;
+        }
+
+        if(payAccountService.updatePayPassWordByUserId(oldPayPassWord, newPayPassWord, userId)){
+            User user=selectById(userId);
+            //判断支付密码设置状态
+            if(user.getPaymentPasswordStatus() != HookahConstants.PayPassWordStatus.isOK.getCode()){
+                user.setPaymentPasswordStatus(HookahConstants.PayPassWordStatus.isOK.getCode());
+                if(updateById(user) == 0)
+                    logger.error("更新用户信息失败");
+            }
+            modelAndView.setViewName("redirect:/modify/success?type=payPassword");
+            return modelAndView;
+        }else{
+            modelAndView.addObject("error","修改交易密码失败，请联系管理员。");
+            modelAndView.setViewName("modify/payPassword");
+            return modelAndView;
+        }
     }
 }

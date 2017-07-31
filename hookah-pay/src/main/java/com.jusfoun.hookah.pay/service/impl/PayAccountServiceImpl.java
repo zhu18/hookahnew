@@ -616,11 +616,36 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
             filters=new ArrayList();
             filters.add(Condition.eq("userId", userId));
             PayAccount payAccount=super.selectOne(filters);
+			//不提供交易密码
             payAccount.setPayPassword("");
             return payAccount;
         }else{
-            return new PayAccount();
+            return null;
         }
     }
+	/**
+	 * 修改交易密码
+	 * @param oldPayPassWord
+	 * @param newPayPassWord
+	 * @param userId
+	 * @return
+	 */
+	@Override
+	public boolean updatePayPassWordByUserId(String oldPayPassWord, String newPayPassWord, String userId) {
+		if(StringUtils.isNotBlank(userId) && !oldPayPassWord.equals(newPayPassWord)){
+			List<Condition> filters = new ArrayList();
+			filters.add(Condition.eq("userId", userId));
+			PayAccount payAccount=super.selectOne(filters);
+			//判断UserId是否正确及原始交易密码是否正确
+			if(null == payAccount || !oldPayPassWord.equals(payAccount.getPayPassword()))
+				return false;
+			payAccount.setPayPassword(newPayPassWord);
+			if(updateById(payAccount)>0)
+				return true;
+			else
+				return false;
+		}
+		return false;
+	}
 
 }
