@@ -12,18 +12,18 @@ $(function () {
      })
     if(totle<60){
         $(".progress-bar").css({
-            "background":"red"
-        })
+            "background":"#F3220C"
+        });
         $(".degree").html("差")
     }else if(totle>=60 && totle<=80){
         $(".progress-bar").css({
-            "background":"#efefef"
-        })
+            "background":"#FAC300"
+        });
         $(".degree").html("中")
     }else {
         $(".progress-bar").css({
-            "background":"red"
-        })
+            "background":"#33D810"
+        });
         $(".degree").html("高")
     }
 });
