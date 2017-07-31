@@ -106,6 +106,7 @@ function companyAuth(){
             "licensePath":$("input[name='licensePath']").val(),//营业执照存放路径
             "certificateCode":$("input[name='creditCode']").val(),//信用代码
             "certifictePath":$("input[name='certifictePath']").val(),//企业代码存放路径
+            "isSupplier":$("input[name='fruit']:checked").val()?$("input[name='fruit']:checked").val():"0"//是否成功供应商
         },
         type:"post",
         success : function(data) {
@@ -214,7 +215,7 @@ if($.getUrlParam("isAuth")== "3"){
             $("#taxPath").attr({"src":data.data.taxPath});//企业代码存放路径
             // 我要成为供应商
             if(data.data.checkStatus=="1"){
-                $("input[name='fruit']").attr("checked","checked")
+                $("input[name='fruit']").attr("checked","checked");
                 $(".supplier-info").show()
             }
         }

@@ -99,7 +99,7 @@ var htmlPart = {
 									<p class="font-size-18 margin-top-20">您提交的个人会员认证还在<span class="color-orange">审核中</span>！</p>
 									<p class="font-size-14">我们会尽快审核，并将审核结果通过短信或邮件通知您,请及时关注。</p>
 								<%}else if(userCur.userType == 4){%>
-									<p class="font-size-18 margin-top-30 margin-bottom-30">您的单位会员认证审核<span class="color-green">已通过</span>！</p>
+									<p class="font-size-18 margin-top-20 margin-bottom-10">您的单位会员认证审核<span class="color-green">已通过</span>！</p>
 								<%}else if(userCur.userType == 5){%>
 									<p class="font-size-18 margin-top-20">您提交的单位会员认证还在<span class="color-orange">审核中</span>！</p>
 									<p class="font-size-14">我们会尽快审核，并将审核结果通过短信或邮件通知您，请及时关注。</p>
@@ -117,7 +117,7 @@ var htmlPart = {
 								<%}else if(userCur.supplierStatus == 1){%>
 								<a href="javascript:void (0)" class="margin-top-20">供应商申请通过</a>
 								<%}else if(userCur.supplierStatus == 2){%>
-								<a href="/usercenter/becomingSupplierStep1" class="large-btn margin-top-10">供应商申请未通过</a>
+								<a href="/usercenter/becomingSupplierStep1" class="large-btn">供应商申请未通过</a>
 								<p>您提交的申请资料有误，请重新提交。</p>
 								<%}else{%>
 								<a href="/usercenter/becomingSupplierStep1" class="large-btn font-size-18 margin-top-20">我要成为供应商</a>
