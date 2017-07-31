@@ -61,6 +61,8 @@ public class Permission extends GenericModel {
     @Transient
     private List<Permission> children;
 
+    @Transient
+    private Boolean selected;
 
     public String getPermissionParentId() {
         return permissionParentId;
@@ -194,5 +196,13 @@ public class Permission extends GenericModel {
      */
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    public Boolean getSelected() {
+        return selected;
+    }
+
+    public void setSelected(Boolean selected) {
+        this.selected = selected;
     }
 }

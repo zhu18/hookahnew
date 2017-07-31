@@ -95,7 +95,10 @@ class RoleController {
       }
       var promise1 = $http({
         method: 'GET',
-        url: $rootScope.site.apiServer + "/api/permission/tree",
+        url: $rootScope.site.apiServer + "/api/permission/initCheckedTree",
+        params: {
+            roleId: item.roleId
+        }
         // params: {
         //   currentPage: $rootScope.pagination.currentPage,
         //   pageSize: $rootScope.pagination.pageSize,

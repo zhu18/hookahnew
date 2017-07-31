@@ -114,6 +114,26 @@ public class PermissionApi extends BaseController {
         return permissionTreeList;
     }
 
+    @RequestMapping(value = "/initCheckedTree", method = RequestMethod.GET)
+    public Object initCheckedTree(String roleId) {
+        List<Permission> permissionTreeList = permissionService.selectTree();
+        Set<String> permisssions = permissionService.selectPermissionsByRoleId(roleId);
+        Boolean isFatherSelected=false;
+        if (permisssions.size()>0) {
+            for (Permission p : permissionTreeList) {
+                isFatherSelected = false;
+                for (Permission child : p.getChildren()) {
+                    if (permisssions.contains(child.getPermissionId())) {
+                        isFatherSelected = true;  // 如果有子级被选中，那么父级也选中
+                        child.setSelected(true);
+                    }
+                }
+                p.setSelected(isFatherSelected);
+            }
+        }
+        return permissionTreeList;
+    }
+
     @RequestMapping(value = "/group", method = RequestMethod.GET)
     public Object getPermissionGroup() {
         List<Condition> filters = new ArrayList<>();
