@@ -146,6 +146,10 @@ public class PayController extends BaseController{
             List<Condition> filters = new ArrayList();
             filters.add(Condition.eq("orderSn", orderSn));
             OrderInfo orderinfo  = orderService.selectOne(filters);
+            if (orderinfo.getPayStatus() == 2){
+                model.addAttribute("message", "订单已支付");
+                return "pay/fail";
+            }
             orderAmount= orderinfo.getOrderAmount();
             List<Condition> filter = new ArrayList();
             filter.add(Condition.eq("userId", orderinfo.getUserId()));
@@ -166,7 +170,7 @@ public class PayController extends BaseController{
     }
 
     @RequestMapping(value = "/aliPay", method = RequestMethod.GET)
-    public Object alipay(String orderSn) {
+    public Object alipay(String orderSn, Model model) {
         String reqHtml = null;
         try {
             Session session = SecurityUtils.getSubject().getSession();
@@ -176,6 +180,10 @@ public class PayController extends BaseController{
             List<Condition> filters = new ArrayList();
             filters.add(Condition.eq("orderSn", orderSn));
             OrderInfo orderinfo  = orderService.selectOne(filters);
+            if (orderinfo.getPayStatus() == 2){
+                model.addAttribute("message", "订单已支付");
+                return "pay/fail";
+            }
             reqHtml = payAccountService.payByAli(orderinfo);
         } catch (Exception e) {
             e.printStackTrace();
