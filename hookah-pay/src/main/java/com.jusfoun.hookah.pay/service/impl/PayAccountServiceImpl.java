@@ -2,6 +2,7 @@ package com.jusfoun.hookah.pay.service.impl;
 
 
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.dao.PayAccountMapper;
 import com.jusfoun.hookah.core.dao.PayAccountRecordMapper;
 import com.jusfoun.hookah.core.dao.PayTradeRecordMapper;
@@ -57,6 +58,9 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 
 	@Resource
 	PayAccountRecordService payAccountRecordService;
+
+	@Resource
+	MqSenderService mqSenderService;
 
 	@Transactional
 	public int operatorByType(Long payAccountId, Integer operatorType, Long money) {
@@ -404,10 +408,11 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 			payTradeRecordService.updateByIdSelective(payTradeRecord1);
 		}
 
-		// 支付成功 查询订单 获取订单中商品插入到待清算记录
 		//修改订单支付状态
 		orderInfoService.updatePayStatus(orderinfo.getOrderSn(), OrderInfo.PAYSTATUS_PAYED,0);
-		orderInfoService.waitSettleRecordInsert(orderinfo.getOrderSn());
+
+		// 支付成功 查询订单 获取订单中商品插入到待清算记录
+		mqSenderService.sendDirect(RabbitmqQueue.WAIT_SETTLE_ORDERS, orderinfo.getOrderSn());
 	}
 
 
@@ -449,8 +454,10 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 
 				//更新订单状态
 				orderInfoService.updatePayStatus(orderSn,orderInfo.PAYSTATUS_PAYED,1);
+
 				// 支付成功 查询订单 获取订单中商品插入到待清算记录
-				orderInfoService.waitSettleRecordInsert(orderSn);
+				mqSenderService.sendDirect(RabbitmqQueue.WAIT_SETTLE_ORDERS, orderSn);
+				
 				return true;
 			}else{
 				//交易失败
