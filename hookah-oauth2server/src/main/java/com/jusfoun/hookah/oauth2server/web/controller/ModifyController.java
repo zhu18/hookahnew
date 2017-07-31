@@ -162,6 +162,10 @@ public class ModifyController {
             return "modify/updateLoginPwd";
         }
         User user = userService.selectById(userMap.get("userId"));
+        if(user.getPaymentPasswordStatus() == HookahConstants.PayPassWordStatus.isOK.getCode()){
+            model.addAttribute("error", "您已设置过交易密码");
+            return "modify/updateLoginPwd";
+        }
             if(StringUtils.isNotBlank(userForm.getPaymentPassword())){
 //                String othpassword = new Md5Hash(userForm.getPaymentPassword()).toString();
 //                user.setPaymentPassword(othpassword);
