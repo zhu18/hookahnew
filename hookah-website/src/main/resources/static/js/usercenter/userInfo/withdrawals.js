@@ -96,7 +96,6 @@ $(function () {
         return this.optional(element) || (mobile);
     }, "*请输入正确格式的金额");
     $.validator.addMethod("isPassword", function(value, element) {
-
         if(value.length==6){
             var mo=false;
             $.ajax({
@@ -125,7 +124,7 @@ $(function () {
         var status=null;
         $(this).addClass("active").siblings().removeClass("active");
         status=$(this).attr("data-status");
-        dataParm.tradeStatus=status || null;
+        dataParm.checkStatus=status || null;
         goPage(1);
     });
     // 日历input事件
