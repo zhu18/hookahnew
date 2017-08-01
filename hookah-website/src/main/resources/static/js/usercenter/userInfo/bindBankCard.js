@@ -131,7 +131,8 @@ $(function () {
     // 获取手机验证码
     $(".verification-code").on("click",function () {
         var that = $(this);
-        if($('#phoneNumber').val()){
+        var phone=$('#phoneNumber').val();
+        if(regex.bank.test(phone)){
             $.ajax({
                 url:host.auth+'/sms/send',
                 type:'post',
@@ -153,7 +154,7 @@ $(function () {
             });
 
         }else {
-            $.alert('请先输入手机号！')
+            $.alert('请先输入正确的手机号！')
         }
     });
     // 提交事件
