@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.common.Pagination;
+import com.jusfoun.hookah.core.domain.PayAccount;
 import com.jusfoun.hookah.core.domain.PayTradeRecord;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
@@ -8,6 +9,7 @@ import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.FundRecordService;
+import com.jusfoun.hookah.rpc.api.PayAccountService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +28,9 @@ public class FundRecordController extends BaseController {
 
     @Resource
     private FundRecordService fundRecordService;
+
+    @Resource
+    PayAccountService payAccountService;
 
     @RequestMapping(value = "/fund/pageData", method = RequestMethod.GET)
     @ResponseBody
@@ -50,7 +55,15 @@ public class FundRecordController extends BaseController {
             if (tradeStatus != null) {
                 listFilters.add(Condition.eq("tradeStatus", tradeStatus));
             }
-            listFilters.add(Condition.eq("userId", userId));
+
+            List<Condition> filters = new ArrayList<>();
+            filters.add(Condition.eq("userId", userId));
+            PayAccount payAccount = payAccountService.selectOne(filters);
+            if(payAccount == null){
+                logger.error("获取资金账户信息有误");
+                return ReturnData.error("获取资金账户信息有误");
+            }
+            listFilters.add(Condition.eq("payAccountId", payAccount.getId()));
 
             //查询列表
             List<OrderBy> orderBys = new ArrayList<>();

@@ -161,7 +161,14 @@ public class WithdrawRecordController extends BaseController {
             record.setCheckOperator(getCurrentUser().getUserName());
 
             int n = withdrawRecordService.updateByIdSelective(record);
-            if(n == 1){
+
+            if(n != 1){
+                returnData.setCode(ExceptionConst.Failed);
+                returnData.setMessage("后台审核失败！");
+                return returnData;
+            }
+
+            if(n == 1 && checkStatus == HookahConstants.WithdrawStatus.CheckSuccess.code){
 
                 List<Condition> filters = new ArrayList<>();
                 filters.add(Condition.eq("userId", record.getUserId()));
@@ -181,10 +188,10 @@ public class WithdrawRecordController extends BaseController {
                                             getCurrentUser().getUserName());
 
                 returnData.setCode(ExceptionConst.Success);
-                returnData.setMessage("审核成功！");
+                returnData.setMessage("审核成功，已扣除客户账！");
             }else{
                 returnData.setCode(ExceptionConst.Failed);
-                returnData.setMessage("审核失败！");
+                returnData.setMessage("审核成功，扣除客户账失败！");
             }
 
         } catch (Exception e) {
