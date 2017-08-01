@@ -96,7 +96,7 @@
                                 <td data-ng-bind="item.payTime"></td>
                                 <td data-ng-bind="item.userName"></td>
                                 <td data-ng-bind="item.mgOrderGoods.addUser"></td>
-                                <td data-ng-bind="'￥'+item.mgOrderGoods.goodsPrice"></td>
+                                <td data-ng-bind="'￥'+(item.mgOrderGoods.goodsPrice * item.mgOrderGoods.goodsNumber)/100"></td>
                                 <td>
                                     <span data-ng-show="item.isDeleted==1">已关闭</span>
                                     <span data-ng-show="item.isDeleted==0">
