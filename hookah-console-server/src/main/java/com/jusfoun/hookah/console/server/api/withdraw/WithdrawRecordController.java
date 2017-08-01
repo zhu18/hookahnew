@@ -9,10 +9,7 @@ import com.jusfoun.hookah.core.domain.PayAccount;
 import com.jusfoun.hookah.core.domain.WithdrawRecord;
 import com.jusfoun.hookah.core.domain.vo.WithdrawVo;
 import com.jusfoun.hookah.core.generic.Condition;
-import com.jusfoun.hookah.core.utils.DateUtils;
-import com.jusfoun.hookah.core.utils.ExceptionConst;
-import com.jusfoun.hookah.core.utils.ReturnData;
-import com.jusfoun.hookah.core.utils.StringUtils;
+import com.jusfoun.hookah.core.utils.*;
 import com.jusfoun.hookah.rpc.api.PayAccountService;
 import com.jusfoun.hookah.rpc.api.WithdrawRecordService;
 import org.springframework.beans.BeanUtils;
@@ -168,6 +165,8 @@ public class WithdrawRecordController extends BaseController {
                 return returnData;
             }
 
+            returnData.setMessage("后台审核完成！");
+
             if(n == 1 && checkStatus == HookahConstants.WithdrawStatus.CheckSuccess.code){
 
                 List<Condition> filters = new ArrayList<>();
@@ -184,14 +183,11 @@ public class WithdrawRecordController extends BaseController {
                 payAccountService.operatorByType(payAccount.getId(),
                                             payAccount.getUserId().toString(),
                                             HookahConstants.TradeType.OnlineCash.getCode(),
-                                            record.getMoney(), null,
+                                            record.getMoney(), OrderHelper.genOrderSn(),
                                             getCurrentUser().getUserName());
 
                 returnData.setCode(ExceptionConst.Success);
                 returnData.setMessage("审核成功，已扣除客户账！");
-            }else{
-                returnData.setCode(ExceptionConst.Failed);
-                returnData.setMessage("审核成功，扣除客户账失败！");
             }
 
         } catch (Exception e) {
