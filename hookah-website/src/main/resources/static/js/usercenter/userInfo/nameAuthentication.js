@@ -19,6 +19,7 @@ $(function () {
                     html +="<li><label>审核意见</label><p>"+data.data.checkContent?data.data.checkContent:"无"+"</p></li>";
                 }else if(data.data.checkStatus == '1'){
                     html +="<li><label>认证状态</label><p class='position-relative'><span>已认证</span></p></li>";
+                    html +="<li><label>审核意见</label><p>"+data.data.checkContent?data.data.checkContent:"无"+"</p></li>";
                 }else if(data.data.checkStatus == '0'){
                     html +="<li><label>认证状态</label><p class='position-relative'><span>认证中</span></p></li>";
                 }else {
