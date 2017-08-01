@@ -400,6 +400,72 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         return null;
     }
 
+    /**
+     * 购物车生成订单前验证
+     * @param userId
+     * @param cartIdArray
+     */
+    @Override
+    public void checkOrderExist(String userId, String[] cartIdArray) throws Exception{
+        List<Condition> filters = new ArrayList<>();
+        filters.add(Condition.in("recId",cartIdArray));
+        List<CartVo> cartList = cartService.selectDetailList(filters);
+        if (cartList!=null && cartList.size()>0){
+            //先查看是否有相同的订单
+            List<Condition> filter = new ArrayList<>();
+            filter.add(Condition.eq("userId", userId));
+            filter.add(Condition.ne("payStatus", 2));
+            filter.add(Condition.eq("isDeleted",0));
+            filter.add(Condition.eq("forceDeleted",0));
+            List<OrderInfo> orderInfos = selectList(filter);
+            for (OrderInfo orderInfo1 : orderInfos){
+                OrderInfoVo mgOrder = mgOrderInfoService.selectById(orderInfo1.getOrderId());
+                List<MgOrderGoods> mgOrderGoodss = mgOrder.getMgOrderGoodsList();
+                int count = 0;
+                if (cartList.size() == mgOrderGoodss.size()){
+                    for (MgOrderGoods mgOrderGoods : mgOrderGoodss){
+                        for (CartVo cart:cartList){
+                            Goods g = cart.getGoods();
+                            if (mgOrderGoods.getGoodsId().equals(g.getGoodsId()) &&
+                                    mgOrderGoods.getGoodsNumber()==cart.getGoodsNumber().intValue()){
+                                count++;
+                            }
+                        }
+                    }
+                }
+                if (count == cartList.size()){
+                    throw new HookahException("已存在相同订单，请先支付或取消");
+                }
+            }
+        }
+    }
+
+    /**
+     * 直接生成订单前验证
+     * @param userId
+     * @param goodsId
+     * @param goodsNumber
+     */
+    @Override
+    public void checkOrderExist(String userId, String goodsId, Long goodsNumber) throws Exception{
+        //先查看是否有相同的订单
+        List<Condition> filter = new ArrayList<>();
+        filter.add(Condition.eq("userId", userId));
+        filter.add(Condition.ne("payStatus", 2));
+        filter.add(Condition.eq("isDeleted",0));
+        filter.add(Condition.eq("forceDeleted",0));
+        List<OrderInfo> orderInfos = selectList(filter);
+        for (OrderInfo orderInfo1:orderInfos){
+            OrderInfoVo mgOrder = mgOrderInfoService.selectById(orderInfo1.getOrderId());
+            List<MgOrderGoods> mgOrderGoodss = mgOrder.getMgOrderGoodsList();
+            if (mgOrderGoodss.size() == 1){
+                MgOrderGoods mgOrderGoods = mgOrderGoodss.get(0);
+                if (mgOrderGoods.getGoodsId().equals(goodsId) && mgOrderGoods.getGoodsNumber() == goodsNumber.intValue()){
+                    throw new HookahException("已存在相同订单，请先支付或取消");
+                }
+            }
+        }
+    }
 
     /**
      * 购物车生成订单
@@ -416,11 +482,12 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         filters.add(Condition.in("recId",cartIdArray));
         List<CartVo> cartList = cartService.selectDetailList(filters);
         List<MgOrderGoods> ordergoodsList = null;
-        if(cartList!=null&&cartList.size()>0){
+        if(cartList!=null && cartList.size()>0){
             ordergoodsList = new ArrayList<MgOrderGoods>();
             Long goodsAmount = new Long(0);
             OrderInfoVo orderInfoVo = new OrderInfoVo();
             MgGoodsOrder mgGoodsOrder = new MgGoodsOrder();
+
             for(CartVo cart:cartList){
                 //验证商品是否下架
                 Goods g = cart.getGoods();
@@ -463,7 +530,6 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
         List<MgOrderGoods> ordergoodsList = null;
         MgGoodsOrder mgGoodsOrder = new MgGoodsOrder();
-
         ordergoodsList = new ArrayList<MgOrderGoods>();
         Long goodsAmount = new Long(0);
 
