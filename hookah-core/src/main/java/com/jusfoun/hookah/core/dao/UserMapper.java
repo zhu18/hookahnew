@@ -7,6 +7,7 @@ import com.jusfoun.hookah.core.generic.GenericDao;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface UserMapper extends GenericDao<User> {
@@ -17,4 +18,8 @@ public interface UserMapper extends GenericDao<User> {
     User getOrgUser(String orgId);
 
     List<UserFundVo> selectUserFundList(UserFundCritVo userFundCritVo);
+
+    List<User> selectUsersByCondition(HashMap<String, Object> params);
+
+    int selectCountByCondition(HashMap<String, Object> params);
 }

@@ -100,6 +100,14 @@ public class PayAccountController extends BaseController{
             }
             return "success";
         }else{
+            map.put("tradeStatus",statusFlag);
+            //查询pay_trade_record表中的trade_status状态是否为0（交易状态 0处理中 1成功 2失败），
+            //如果等于0，说明同步方法未进行业务处理，则需在此进行业务处理
+            //如果不等于0，说明同步方法已进行业务处理
+            int status = payTradeRecordService.selectStatusByOrderSn(orderSn);
+            if (status==0){
+                payAccountService.saveRechargeResult(map);
+            }
             return "fail";
         }
     }
@@ -136,8 +144,14 @@ public class PayAccountController extends BaseController{
                 request.setAttribute("money",totalFee);
                 return "/usercenter/userInfo/rechargeSuccess";
             }
+            request.setAttribute("returnData",returnData);
             return "/usercenter/userInfo/rechargeFailure";
         }else{
+            map.put("tradeStatus",statusFlag);
+            ReturnData returnData=payAccountService.saveRechargeResult(map);
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage("支付宝请求验证失败！");
+            request.setAttribute("returnData",returnData);
             return "/usercenter/userInfo/rechargeFailure";
         }
     }

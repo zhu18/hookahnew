@@ -1,10 +1,13 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
+import com.jusfoun.hookah.console.server.util.SensitiveWdFilter.WordFilter;
+import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.UserMapper;
 import com.jusfoun.hookah.core.domain.CashRecord;
 import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.domain.vo.CommentVo;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.rpc.api.CashRecordService;
@@ -19,6 +22,8 @@ import org.springframework.ui.Model;
 import javax.annotation.Resource;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -118,6 +123,22 @@ public class UserServiceImpl extends GenericServiceImpl<User, String> implements
     @Override
     public String updatePayPassWord(String oldPayPassWord, String newPayPassWord, Integer safetyPayScore, String userId, Model model) {
         return null;
+    }
+
+    @Override
+    public Pagination getUsersInPage(HashMap<String, Object> params) {
+        int pageSize=(Integer) params.get("pageSize");
+        int pageNumber=(Integer) params.get("pageNumber");
+        int startIndex= (pageNumber-1)*pageSize;
+        params.put("startIndex",startIndex);
+        int total=userMapper.selectCountByCondition(params);
+        List<User> list=userMapper.selectUsersByCondition(params);
+        Pagination<User> pagination = new Pagination<User>();
+        pagination.setTotalItems(total);
+        pagination.setPageSize(pageSize);
+        pagination.setCurrentPage(pageNumber);
+        pagination.setList(list);
+        return pagination;
     }
 
 }

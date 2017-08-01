@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.oauth2server.service.impl;
 
+import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.UserMapper;
@@ -21,6 +22,7 @@ import org.springframework.ui.Model;
 import javax.annotation.Resource;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -150,5 +152,10 @@ public class UserServiceImpl extends GenericServiceImpl<User, String> implements
             model.addAttribute("error","修改交易密码失败，请联系管理员。");
             return "modify/payPassword";
         }
+    }
+
+    @Override
+    public Pagination getUsersInPage(HashMap<String, Object> params) {
+        return null;
     }
 }
