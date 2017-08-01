@@ -1,9 +1,11 @@
 package com.jusfoun.hookah.rpc.api;
 
+import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.generic.GenericService;
 import org.springframework.ui.Model;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -24,5 +26,7 @@ public interface UserService extends GenericService<User, String> {
     Map<String, Object> getPUVCountByDate();
 
     String updatePayPassWord(String oldPayPassWord, String newPayPassWord, Integer safetyPayScore, String userId, Model model);
+
+    Pagination getUsersInPage( HashMap<String,Object> params);
 
 }

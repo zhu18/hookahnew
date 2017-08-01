@@ -30,9 +30,6 @@
         <result column="isBind" property="isBind" jdbcType="TINYINT" />
     </resultMap>
 
-
-
-
     <!--&lt;!&ndash; 批量插入 &ndash;&gt;
     <insert id="insertBatch" parameterType="java.util.List">
         insert into cart
@@ -95,6 +92,42 @@
         </if>
     </select>
 
+    <sql id="SelectConditions">
+
+        FROM  user u LEFT JOIN pay_account pa  ON  pa.user_id = u.user_id
+        WHERE  u.user_type  <![CDATA[ <> ]]> 1
+
+        <if test="userName != '' and userName != null">
+            AND u.user_name like CONCAT('%', #{userName}, '%')
+        </if>
+
+        <if test="mobile != '' and mobile != null">
+            AND u.mobile like CONCAT('%', #{mobile}, '%')
+        </if>
+        <if test="email != '' and email != null">
+            AND u.user_name like CONCAT('%', #{email}, '%')
+        </if>
+        <if test="userType != '' and userType != null">
+            AND u.user_type = #{userType}
+        </if>
+
+    </sql>
+    <select id="selectCountByCondition" resultType="java.lang.Integer" >
+
+        SELECT COUNT(u.user_id) <include refid="SelectConditions"/>
+
+    </select>
+
+    <select id="selectUsersByCondition" parameterType="java.util.HashMap" resultType="com.jusfoun.hookah.core.domain.User">
+
+        SELECT u.user_id AS userId ,u.user_name AS userName,pa.balance AS moneyBalance,u.mobile AS mobile,
+        u.user_type AS userType, u.add_time AS addTime ,u.last_login_time AS lastLoginTime,u.reg_time AS regTime
+
+        <include refid="SelectConditions"/>
+
+        ORDER BY u.add_time DESC   limit #{startIndex},#{pageSize}
+
+    </select>
 
 
 </mapper>
