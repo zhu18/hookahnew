@@ -36,7 +36,7 @@
                     <thead class="text-center">
                     <tr>
                         <th width="115">账户余额:</th>
-                        <td data-ng-bind="'￥ ' + moneyBaseInfo.balance/100"></td>
+                        <td data-ng-bind="'￥ ' + (moneyBaseInfo.useBalance + moneyBaseInfo.balance) /100"></td>
                     </tr>
                     <tr>
                         <th width="115">可用金额:</th>
