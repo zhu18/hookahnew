@@ -123,7 +123,7 @@
 							<td class="text-center" data-ng-if="item.isDelete == 1">
 								<span data-ng-if="item.isOnsale == '1' && item.checkStatus == '0'">
 								  	<!--<a href="javascript:void(0);" ng-click="goodsDetail(item,true,isSearch)">去审核</a>-->
-								  	<a  ui-sref="items.goodsDetail({id:item.goodsId,isEdit:true})">去审核</a>
+								  	<a  ui-sref="items.goodsDetail({id:item.goodsId,isEdit:true,data:dataParams})">去审核</a>
 								</span>
 								<span data-ng-if="item.isOnsale == '1' && item.checkStatus == '1'">
 								  	<a href="javascript:void(0);" ng-click="forceOffShelf(item)">强制下架</a>
