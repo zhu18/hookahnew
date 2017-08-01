@@ -25,9 +25,13 @@ var htmlPart = {
                                     <div class="title margin-bottom-15">我的可用余额</div>
                                     <div class="money margin-bottom-15"></div>
                                     <div class="operation-btn margin-bottom-20">
+                                        <%if(userCur.userType == 4){%>
                                         <a href="/usercenter/recharge" class="btn-full-orange margin-right-20">充值</a>
                                         <a href="javascript:void(0);"  class="btn-full-blue withdrawals-btn">提现</a>
-
+                                        <%}else{%>
+                                        <a href="javascript:void(0);" class="margin-right-20 disable">充值</a>
+                                        <a href="javascript:void(0);"  class=" disable">提现</a>
+                                        <%}%>
                                     </div>
                                     <div class="tip">
                                         提示：请在08:30-19:30之间进行充值、提现、绑定银行卡、解绑银行卡操作
