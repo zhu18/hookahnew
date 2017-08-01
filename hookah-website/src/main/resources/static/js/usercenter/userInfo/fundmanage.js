@@ -8,6 +8,7 @@ function render() {
     $.ajax({
         url:host.website+'/payBankCard/searchBankInfo',
         data:{},
+        cache:false,
         type:'get',
         success:function (data) {
             var list=data.data.bank;

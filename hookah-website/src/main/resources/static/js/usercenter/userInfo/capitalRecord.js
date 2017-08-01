@@ -70,8 +70,7 @@ $(function () {
     $(".search-criteria .select-month a").on("click",function () {
         $(this).addClass("active").siblings().removeClass("active");
         var html=$(this).html();
-        var now = new Date();
-        var date = new Date(now.getTime() - 1);
+        var date = new Date();
         var year = date.getFullYear();
         var month = date.getMonth() +1;
         var day = date.getDate();
@@ -80,10 +79,12 @@ $(function () {
         var second = date.getSeconds();
         $("#endDate").val(year + '-' + month + '-' + day  + ' ' + hour + ':' + minute + ':' + second)
         if(html=="本月"){
-            month = now.getMonth()+1;
+            month = date.getMonth()+1;
             day="1";
         } else if(html=="1周"){
-            day = date.getDate()-7;
+            var data = new Date(date.getTime()-7*24*3600*1000);
+            day = data.getDate();
+            month = data.getMonth()+1 ;
         } else if(html=="1个月"){
             month = date.getMonth() ;
         } else if(html=="3个月"){

@@ -33,24 +33,109 @@ function loadPageData(data){
 function getDetail(id) {
     window.location.href= host.website+'/usercenter/withdrawalStep2?id='+id;
 }
+function testPayPassword(pwd){
+    $.ajax({
+        url:host.website+'/usercenter/verifyPayPassword',
+        data:{
+            passWord:$.md5(pwd)
+        },
+        type:'post',
+        success:function (data) {
+            if(data.code == 1){
+                $("input[name='passWord']").val($.md5($('#paymentPassword').val()));
+                $('#form_paypsw').submit();
+                return true;
+            }else if(data.code == 0){
+                $('.ui-form-error').show().children('p').html('支付密码不正确');
+
+                return false;
+            }else{
+                $.alert(data.message);
+                return false;
+            }
+        }
+    });
+}
+
 
 $(function () {
 
     $("#goPay").on("click",function () {
-        $.ajax({
-            url:host.website+'/withdrawRecord/applyW',
-            data:{
-                money:$("#applyMoney").val(),
-                payPwd:$("#password").val()
-            },
-            type:'get',
-            success:function (data) {
-                if(data.code=="1"){
-                    window.location.href= host.website+'/usercenter/withdrawalStep2';
+        var money=parseInt($("#money").val());
+        if(money==0){
+            $.alert("金额能为0!");
+        }else if(money>parseInt($(".apply-money .money").val())){
+            $.alert("金额不可大于余额！");
+        }else {
+            $.ajax({
+                url:host.website+'/withdrawRecord/applyW',
+                data:{
+                    money:$("#money").val(),
+                    payPwd:$("#password").val()
+                },
+                type:'get',
+                success:function (data) {
+                    if(data.code=="1"){
+                        window.location.href= host.website+'/usercenter/withdrawalStep2';
+                    }
                 }
-            }
-        });
+            });
+        }
+
     })
+    // 表格验证开始
+    var regex = {  //手机号验证正则
+        money: /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/,
+    };
+    //让当前表单调用validate方法，实现表单验证功能
+    $("#form").validate({
+        rules:{     //配置验证规则，key就是被验证的dom对象，value就是调用验证的方法(也是json格式)
+            money:{
+                required:true,
+                isMoney:true
+            },
+            password:{
+                required:true,
+                maxlength:6
+            }
+        },
+        messages:{
+            money:{
+                required:"*请输入金额",
+                isMoney:"*请输入正确格式的金额"
+            },
+            password:{
+                required:"*请输入交易密码",
+                isPassword:"*请输入正确的交易密码"
+            }
+        }
+    });
+    $.validator.addMethod("isMoney", function(value, element) {
+        var mobile = regex.money.test(value);
+        return this.optional(element) || (mobile);
+    }, "*请输入正确格式的金额");
+    $.validator.addMethod("isPassword", function(value, element) {
+        var mo=false;
+        if(value.length==6){
+            $.ajax({
+                url:host.website+'/usercenter/verifyPayPassword',
+                data:{
+                    passWord:$.md5(value)
+                },
+                type:'post',
+                success:function (data) {
+                    if(data.code == 1){
+                        mo=true;
+                    }else if(data.code == 0){
+                        return false;
+                    }else{
+                        return false;
+                    }
+                }
+            });
+        }
+        return mo;
+    }, "*请输入正确的交易密码");
     // 类型点击事件
     $(".search-criteria .status li").on("click",function () {
         var status=null;

@@ -12,7 +12,7 @@ $(function () {
             if (data.code=="1"){
                 $("#present-application").html(data.data.addTime);
                 $("#background-audit").html(data.data.addTime);
-                $("#audit-completed").html(data.data.checkTime)
+                $("#audit-completed").html(data.data.checkTime);
                 if(data.data.checkStatus=="0"){
                     $(".withdrawalStep2-top h4").append("提现申请已提交，后台审核中。")
                 }else if(data.data.checkStatus=="1"){

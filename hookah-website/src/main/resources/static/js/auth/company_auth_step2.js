@@ -85,6 +85,7 @@ $('.unloadBtn').fileupload({
 function companyAuth(){
     $.ajax({
         url : "/auth/orgAuth",
+        cache:false,
         data : {
             "orgName":$("input[name='governmentName']").val(),//单位名称
             "creditCode":$("input[name='creditCode']").val(),//统一社会信用代码
