@@ -132,7 +132,7 @@ $(function () {
     $(".verification-code").on("click",function () {
         var that = $(this);
         var phone=$('#phoneNumber').val();
-        if(regex.bank.test(phone)){
+        if(regex.mobile.test(phone)){
             $.ajax({
                 url:host.auth+'/sms/send',
                 type:'post',
