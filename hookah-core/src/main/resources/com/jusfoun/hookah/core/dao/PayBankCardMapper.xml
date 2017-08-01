@@ -8,7 +8,6 @@
     </resultMap>
 
     <select id="selectBankName" resultMap="bankMap" parameterType="com.jusfoun.hookah.core.domain.PayBank">
-       SELECT b.id,b.bank_name FROM pay_bank b LEFT JOIN  pay_bank_card p ON b.id = p.pay_bank_id;
+      SELECT b.id,b.bank_name FROM pay_bank b
     </select>
-
 </mapper>
