@@ -91,7 +91,7 @@ public class WithdrawRecordController extends BaseController{
 
             filters.add(Condition.eq("userId", getCurrentUser().getUserId()));
 
-            if(checkStatus != null){
+            if(StringUtils.isNoneBlank(checkStatus)){
                 filters.add(Condition.eq("checkStatus", checkStatus));
             }
 
