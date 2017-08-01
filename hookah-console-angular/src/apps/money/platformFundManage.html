@@ -159,7 +159,7 @@
                             <span data-ng-show="item.tradeType==3007">+</span>
                             <span data-ng-show="item.tradeType==3001">+</span>
                             <span data-ng-show="item.tradeType==4001">-</span>
-                            <span data-ng-bind="item.money"></span>
+                            <span data-ng-bind="item.money/100 | number:2"></span>
                         </td>
                         <td data-ng-bind="item.tradeStatus == 0 ? '处理中' : (item.tradeStatus == 1 ? '成功' : '失败')"></td>
                     </tr>
