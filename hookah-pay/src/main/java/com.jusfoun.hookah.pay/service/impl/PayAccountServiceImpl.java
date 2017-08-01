@@ -329,7 +329,7 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 			payTradeRecord1.setOrderSn(orderInfo.getOrderSn());
 			payTradeRecord1.setAddOperator(orderInfo.getUserId());
 			payTradeRecord1.setTransferDate(new Date());
-			payTradeRecordService.insertAndGetId(payTradeRecord);
+			payTradeRecordService.insertAndGetId(payTradeRecord1);
 		}
 
 		//调余额支付

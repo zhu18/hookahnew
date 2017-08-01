@@ -37,10 +37,10 @@ var htmlPart = {
 								<%}else{%>
 								<span class="fa fa-envelope-o font-size-18"></span>
 								<%}%>
-								<%if(userCur.userType == 1){%>
-								<span class="fa fa-id-card-o font-size-18 "></span>
-								<%}else{%>
+								<%if(userCur.userType == 4){%>
 								<span class="fa fa-id-card-o font-size-18 color-blue"></span>
+								<%}else{%>
+								<span class="fa fa-id-card-o font-size-18 "></span>
 								<%}%>
 							</div>
 						</div>
@@ -120,7 +120,7 @@ var htmlPart = {
 								<a href="/usercenter/becomingSupplierStep1" class="large-btn">供应商申请未通过</a>
 								<p>您提交的申请资料有误，请重新提交。</p>
 								<%}else{%>
-								<a href="/usercenter/becomingSupplierStep1" class="large-btn font-size-18 margin-top-20">我要成为供应商</a>
+
 								<%}%>
 							</div>
 							</div>
