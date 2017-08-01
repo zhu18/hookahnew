@@ -33,31 +33,6 @@ function loadPageData(data){
 function getDetail(id) {
     window.location.href= host.website+'/usercenter/withdrawalStep2?id='+id;
 }
-function testPayPassword(pwd){
-    $.ajax({
-        url:host.website+'/usercenter/verifyPayPassword',
-        data:{
-            passWord:$.md5(pwd)
-        },
-        type:'post',
-        success:function (data) {
-            if(data.code == 1){
-                $("input[name='passWord']").val($.md5($('#paymentPassword').val()));
-                $('#form_paypsw').submit();
-                return true;
-            }else if(data.code == 0){
-                $('.ui-form-error').show().children('p').html('支付密码不正确');
-
-                return false;
-            }else{
-                $.alert(data.message);
-                return false;
-            }
-        }
-    });
-}
-
-
 $(function () {
 
     $("#goPay").on("click",function () {
@@ -67,19 +42,23 @@ $(function () {
         }else if(money>parseInt($(".apply-money .money").html())){
             $.alert("金额不可大于余额！");
         }else {
-            $.ajax({
-                url:host.website+'/withdrawRecord/applyW',
-                data:{
-                    money:$("#money").val(),
-                    payPwd:$("#password").val()
-                },
-                type:'get',
-                success:function (data) {
-                    if(data.code=="1"){
-                        window.location.href= host.website+'/usercenter/withdrawalStep2';
+            if($("#form").valid()){
+                $.ajax({
+                    url:host.website+'/withdrawRecord/applyW',
+                    data:{
+                        money:$("#money").val(),
+                        payPwd:$("#password").val(),
+
+                    },
+                    type:'get',
+                    success:function (data) {
+                        if(data.code=="1"){
+                            window.location.href= host.website+'/usercenter/withdrawalStep2';
+                        }
                     }
-                }
-            });
+                });
+            }
+
         }
 
     })
@@ -96,7 +75,7 @@ $(function () {
             },
             password:{
                 required:true,
-                maxlength:6
+                isPassword:true
             }
         },
         messages:{
@@ -115,14 +94,16 @@ $(function () {
         return this.optional(element) || (mobile);
     }, "*请输入正确格式的金额");
     $.validator.addMethod("isPassword", function(value, element) {
-        var mo=false;
+
         if(value.length==6){
+            var mo=false;
             $.ajax({
                 url:host.website+'/usercenter/verifyPayPassword',
                 data:{
                     passWord:$.md5(value)
                 },
                 type:'post',
+                async:false,
                 success:function (data) {
                     if(data.code == 1){
                         mo=true;
@@ -133,6 +114,7 @@ $(function () {
                     }
                 }
             });
+
         }
         return mo;
     }, "*请输入正确的交易密码");
