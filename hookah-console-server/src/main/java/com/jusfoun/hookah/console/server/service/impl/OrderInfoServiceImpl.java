@@ -177,6 +177,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         String addUser = cart.getGoods().getAddUser();
         User user = userService.selectById(addUser);
         og.setAddUser(user.getUserName());
+        og.setGoodsUserId(addUser);
         Organization organization = organizationService.selectById(user.getOrgId());
         og.setSupplier(organization.getOrgName());
         og.setFormatId(cart.getFormatId());
@@ -231,6 +232,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         String addUser = goods.getAddUser();
         User user = userService.selectById(addUser);
         og.setAddUser(user.getUserName());
+        og.setGoodsUserId(addUser);
         Organization organization = organizationService.selectById(user.getOrgId());
         og.setSupplier(organization.getOrgName());
         og.setIsOnsale(goods.getIsOnsale());
