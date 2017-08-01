@@ -64,7 +64,7 @@ $(function () {
         var money=parseInt($("#money").val());
         if(money==0){
             $.alert("金额能为0!");
-        }else if(money>parseInt($(".apply-money .money").val())){
+        }else if(money>parseInt($(".apply-money .money").html())){
             $.alert("金额不可大于余额！");
         }else {
             $.ajax({
