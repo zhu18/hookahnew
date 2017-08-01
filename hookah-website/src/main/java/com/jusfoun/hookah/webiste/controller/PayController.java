@@ -148,6 +148,8 @@ public class PayController extends BaseController{
             OrderInfo orderinfo  = orderService.selectOne(filters);
             if (orderinfo.getPayStatus() == 2){
                 model.addAttribute("message", "订单已支付");
+                model.addAttribute("code", 9);
+                model.addAttribute("orderSn", orderSn);
                 return "pay/fail";
             }
             orderAmount= orderinfo.getOrderAmount();
@@ -156,6 +158,8 @@ public class PayController extends BaseController{
             PayAccount payAccount = payAccountService.selectOne(filter);
             if (payAccount.getUseBalance()<orderAmount){
                 model.addAttribute("message", "余额不足，支付失败!");
+                model.addAttribute("code", 9);
+                model.addAttribute("orderSn", orderSn);
                 return "pay/fail";
             }
             //插流水调接口
@@ -163,6 +167,7 @@ public class PayController extends BaseController{
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("message", e.getMessage());
+            model.addAttribute("orderSn", orderSn);
             return "pay/fail";
         }
         model.addAttribute("money",orderAmount);
@@ -182,6 +187,8 @@ public class PayController extends BaseController{
             OrderInfo orderinfo  = orderService.selectOne(filters);
             if (orderinfo.getPayStatus() == 2){
                 model.addAttribute("message", "订单已支付");
+                model.addAttribute("code", 9);
+                model.addAttribute("orderSn", orderSn);
                 return "pay/fail";
             }
             reqHtml = payAccountService.payByAli(orderinfo);
@@ -189,36 +196,12 @@ public class PayController extends BaseController{
             e.printStackTrace();
         }
         if(StringUtils.isEmpty(reqHtml)){
-            return "redirect:/404.html";
+            model.addAttribute("orderSn", orderSn);
+            model.addAttribute("message", "订单支付失败");
+            return "pay/fail";
         }else
             return new ResponseEntity<String>(reqHtml, HttpStatus.OK);
     }
-
- /*   @RequestMapping(value = "/payment", method = RequestMethod.GET)
-    public String payPassSta(String orderSn,Model model) {
-
-        long orderAmount = 0 ; //支付金额
-        try {
-            Session session = SecurityUtils.getSubject().getSession();
-            HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
-            User user = userService.selectById(userMap.get("userId"));
-                //支付操作
-                payCoreService.doPayMoney(orderSn,user.getUserId());
-                //根据订单编号获得支付金额
-                List<Condition> filters = new ArrayList();
-                filters.add(Condition.eq("orderSn", orderSn));
-                OrderInfo orderinfo  = orderService.selectOne(filters);
-                orderAmount= orderinfo.getOrderAmount();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            model.addAttribute("message", "支付失败!");
-            return "pay/fail";
-        }
-        model.addAttribute("money",orderAmount);
-        return "pay/success";
-    }*/
-
 
     @RequestMapping(value = "/cash", method = RequestMethod.GET)
     public String cash(HttpServletRequest request, Model model){
@@ -281,6 +264,7 @@ public class PayController extends BaseController{
             request.setAttribute("money",money);
             return "pay/success";
         }else {
+            request.setAttribute("orderSn",orderSn);
             return "pay/fail";
         }
     }
