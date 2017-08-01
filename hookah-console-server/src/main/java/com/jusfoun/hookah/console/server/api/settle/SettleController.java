@@ -145,14 +145,26 @@ public class SettleController extends BaseController{
     @RequestMapping(value = "/settleOrderBy", method = RequestMethod.GET)
     public ReturnData orderSettleHandle(
             @RequestParam(value="sid", required = true ) Long sid,
-            @RequestParam(value="supplierAmount", required = true ) Long supplierAmount,
-            @RequestParam(value="tradeCenterAmount", required = true ) Long tradeCenterAmount) {
+            @RequestParam(value="supplierAmount", required = true ) Double supplierAmount,
+            @RequestParam(value="tradeCenterAmount", required = true ) Double tradeCenterAmount) {
 
         ReturnData returnData = new ReturnData<>();
         try {
 
+            Long supplierAmountl = 0L;
+
+            Long tradeCenterAmountl = 0L;
+
+            if(supplierAmount != null){
+                supplierAmountl = new Double(supplierAmount * 100).longValue();
+            }
+
+            if(tradeCenterAmount != null){
+                tradeCenterAmountl = new Double(tradeCenterAmount * 100).longValue();
+            }
+
             // 金额进入后台处理需要 x100
-            returnData = settleRecordService.handleSettle(sid, supplierAmount * 100, tradeCenterAmount * 100, getCurrentUser().getUserId());
+            returnData = settleRecordService.handleSettle(sid, supplierAmountl, tradeCenterAmountl, getCurrentUser().getUserId());
         } catch (HookahException e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.getMessage());
@@ -205,6 +217,5 @@ public class SettleController extends BaseController{
         }
         return ReturnData.success(page);
     }
-
 
 }
