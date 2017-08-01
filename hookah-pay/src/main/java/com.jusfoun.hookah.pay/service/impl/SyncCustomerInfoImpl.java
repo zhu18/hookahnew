@@ -19,7 +19,6 @@ import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.pay.util.FixClientUtil;
-import com.jusfoun.hookah.pay.util.SyncCustomerInfoFlag;
 import com.jusfoun.hookah.rpc.api.OrganizationService;
 import com.jusfoun.hookah.rpc.api.PayAccountService;
 import com.jusfoun.hookah.rpc.api.SyncCustomerInfoService;
@@ -150,20 +149,20 @@ public class SyncCustomerInfoImpl extends GenericServiceImpl<PayAccount, Integer
                             }
                             payAccount.setUpdateOperator("SYSTEM");
                             payAccount.setUpdateTime(new Date());
-                            payAccount.setSyncFlag(SyncCustomerInfoFlag.SYNCHRONIZED);
+                            payAccount.setSyncFlag(PayConstants.SyncCustomerInfoFlag.SYNCHRONIZED.getCode());
                         }else{
                             String errorMsg = String.format("[fix async error][%s]%s",jFixSess.getItem(FixConstants.FID_CODE), jFixSess.getItem(FixConstants.FID_MESSAGE));
                             //todo 失败后处理
                             payAccount.setUpdateOperator("SYSTEM");
                             payAccount.setUpdateTime(new Date());
-                            payAccount.setSyncFlag(SyncCustomerInfoFlag.NOT_SYNCHRONIZED);
+                            payAccount.setSyncFlag(PayConstants.SyncCustomerInfoFlag.NOT_SYNCHRONIZED.getCode());
                         }
                     }else{
                         String errorMsg = String.format("[fix async error][%s]%s",jFixSess.getItem(FixConstants.FID_CODE), jFixSess.getItem(FixConstants.FID_MESSAGE));
                         //todo 失败后处理
                         payAccount.setUpdateTime(new Date());
                         payAccount.setUpdateOperator("SYSTEM");
-                        payAccount.setSyncFlag(SyncCustomerInfoFlag.NOT_SYNCHRONIZED);
+                        payAccount.setSyncFlag(PayConstants.SyncCustomerInfoFlag.NOT_SYNCHRONIZED.getCode());
                     }
                     int i = payAccountService.updateByCondition(payAccount,filters);
                     logger.info("业务处理--->payAccount修改" + (i > 0 ? "客户信息同步完成" : "客户信息同步未完成") + "-->操作时间：" + LocalDateTime.now());
@@ -182,7 +181,7 @@ public class SyncCustomerInfoImpl extends GenericServiceImpl<PayAccount, Integer
             //todo 发送成功处理
             payAccount.setUpdateTime(new Date());
             payAccount.setUpdateOperator("SYSTEM");
-            payAccount.setSyncFlag(SyncCustomerInfoFlag.SYNCHRONIZATION);
+            payAccount.setSyncFlag(PayConstants.SyncCustomerInfoFlag.SYNCHRONIZATION.getCode());
             payAccountService.updateByIdSelective(payAccount);
             logger.info("客户信息同步完成中  ---->操作时间：" + LocalDateTime.now());
         } else{
@@ -191,7 +190,7 @@ public class SyncCustomerInfoImpl extends GenericServiceImpl<PayAccount, Integer
             //todo 发送失败处理
             payAccount.setUpdateTime(new Date());
             payAccount.setUpdateOperator("SYSTEM");
-            payAccount.setSyncFlag(SyncCustomerInfoFlag.NOT_SYNCHRONIZED);
+            payAccount.setSyncFlag(PayConstants.SyncCustomerInfoFlag.NOT_SYNCHRONIZED.getCode());
             payAccountService.updateByIdSelective(payAccount);
             logger.info("客户信息同步未完成  ---->操作时间：" + LocalDateTime.now());
         }
