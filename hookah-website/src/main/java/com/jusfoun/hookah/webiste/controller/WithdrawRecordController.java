@@ -140,6 +140,7 @@ public class WithdrawRecordController extends BaseController{
 
             List<Condition> bankFilters = new ArrayList();
             bankFilters.add(Condition.eq("userId", getCurrentUser().getUserId()));
+            bankFilters.add(Condition.eq("bindlag", 0));
             PayBankCard payBankCard = payBankCardService.selectOne(bankFilters);
             List<Condition> filters = new ArrayList();
             filters.add(Condition.eq("userId", getCurrentUser().getUserId()));
