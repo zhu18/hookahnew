@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author zhaoshuai
@@ -176,7 +177,7 @@ public class PlatformFundsApi extends BaseController{
         }
     }
 
-    //资金流水记录
+    //资金流水记录  写的太费劲了，有时间了重写
     @RequestMapping(value = "/flowWater", method = RequestMethod.GET)
     public ReturnData flowWater(String currentPage, String pageSize, String startDate, String endDate, Integer tradeType, Integer tradeStatus){
 
@@ -223,7 +224,6 @@ public class PlatformFundsApi extends BaseController{
             if(page.getList() != null && page.getList().size() > 0){
 
                 page.getList().parallelStream().forEach(x -> {
-
                     PayTradeRecordVo vo = new PayTradeRecordVo();
 
                     if(x.getTradeType().equals(3007) ||
@@ -245,7 +245,7 @@ public class PlatformFundsApi extends BaseController{
             pagination.setTotalItems(page.getTotalItems());
             pagination.setPageSize(pageSizeNew);
             pagination.setCurrentPage(pageNumberNew);
-            pagination.setList(listVo);
+            pagination.setList(listVo.stream().sorted((x, y) -> y.getAddTime().compareTo(x.getAddTime())).collect(Collectors.toList()));
             returnData.setData(pagination);
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
