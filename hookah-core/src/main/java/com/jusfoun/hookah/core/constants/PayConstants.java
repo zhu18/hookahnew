@@ -224,4 +224,28 @@ public class PayConstants {
         }
     }
 
+    /**
+     * 客户基本信息同步(719001)
+     * 未同步  0
+     * 同步中  1
+     * 已同步  2
+     */
+    public enum SyncCustomerInfoFlag {
+
+        NOT_SYNCHRONIZED((byte)0),
+        SYNCHRONIZATION((byte)1),
+        SYNCHRONIZED((byte)2);
+
+        public byte code;
+
+        SyncCustomerInfoFlag(byte code) {
+            this.code = code;
+        }
+
+        public byte getCode() {
+            return code;
+        }
+
+    }
+
 }
