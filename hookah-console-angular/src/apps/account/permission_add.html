@@ -24,10 +24,11 @@
       <div class="form-group">
         <label class="col-sm-2 control-label" for="permissionName">权限代码<span class="must">*</span></label>
         <div class="col-sm-4">
-          <input type="text" id="permissionName" name="permissionName" class="form-control" maxlength="255"  ng-model="permissionName"  required/>
+          <input type="text" id="permissionName" name="permissionName"  onKeyUp="value=value.replace(/[^a-zA-Z]/g,'')"
+                 oninput="value=value.replace(/[^a-zA-Z]/g,'')"  class="form-control" maxlength="32"  ng-model="permissionName"  required/>
         </div>
         <div class="col-sm-4 control-label" style="text-align: left;">
-          英文字符，最大长度255
+          英文字符，最大长度32
         </div>
       </div>
       <div class="form-group">
