@@ -8,7 +8,6 @@
              data: {},
              type: 'get',
              success: function (data) {
-                  console.log(data);
                   $("#J_useBalance").html("￥" + (data.data.useBalance / 100).toFixed(2));
                   $("#J_cardCode").html(data.data.useBalance);
              }
