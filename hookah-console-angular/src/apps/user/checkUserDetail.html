@@ -108,15 +108,9 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="email">信用代码:</label>
+          <label class="col-sm-2 control-label" for="email">统一社会信用代码:</label>
           <div class="col-sm-4">
-            <input type="text" disabled="disabled"  name="certificateCode" value="{{cuserd.certificateCode}}" class="form-control none-edit" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="email">信用代码扫描件:</label>
-          <div class="col-sm-4">
-            <img src="{{'http://static.qddata.com.cn/'+cuserd.certifictePath}}" style="max-width: 450px; max-height: 600px">
+            <input type="text" disabled="disabled"  name="creditCode" value="{{cuserd.creditCode}}" class="form-control none-edit" />
           </div>
         </div>
         <div class="form-group">
@@ -150,19 +144,44 @@
           </div>
         </div>
         <div class="form-group">
+          <label class="col-sm-2 control-label" for="email">法定代表人证件类别:</label>
+          <div class="col-sm-4">
+            <input type="text" disabled="disabled"  name="certificateCode" value="{{cuserd.lawPersonCategory}}" class="form-control none-edit" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="email">法定代表人证件编号:</label>
+          <div class="col-sm-4">
+            <input type="text" disabled="disabled"  name="certificateCode" value="{{cuserd.lawPersonNum}}" class="form-control none-edit" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="lastLoginTime">法定代表人证件正面照:</label>
+          <div class="col-sm-4">
+            <img ng-click="showBigImg(cuserd.taxPath)" src="http://static.qddata.com.cn/{{cuserd.lawPersonPositivePath}}" style="max-width: 450px; max-height: 600px">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="lastLoginTime">法定代表人证件反面照:</label>
+          <div class="col-sm-4">
+            <img ng-click="showBigImg(cuserd.taxPath)" src="http://static.qddata.com.cn/{{cuserd.lawPersonNegativePath}}" style="max-width: 450px; max-height: 600px">
+          </div>
+        </div>
+
+        <div class="form-group">
           <label class="col-sm-2 control-label" for="gender">主营业务:</label>
           <div class="col-sm-4">
             <input disabled="disabled" type="text"  name="industry" class="form-control none-edit" value="{{cuserd.industry}}"/>
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="birthday">所在地:</label>
+          <label class="col-sm-2 control-label" for="birthday">注册地址:</label>
           <div class="col-sm-4">
             <input disabled="disabled" type="text"  name="region" class="form-control none-edit" value="{{cuserd.region}}"/>
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="address">详细地址:</label>
+          <label class="col-sm-2 control-label" for="address">注册详细地址:</label>
           <div class="col-sm-4">
             <input disabled="disabled" type="text" name="contactAddress" class="form-control none-edit" value="{{cuserd.contactAddress}}"/>
           </div>
@@ -171,6 +190,30 @@
           <label class="col-sm-2 control-label" for="cardNum">联系电话:</label>
           <div class="col-sm-4">
             <input disabled="disabled" type="text" name="orgPhone" class="form-control none-edit" value="{{cuserd.orgPhone}}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="realName">组织机构编号:</label>
+          <div class="col-sm-4">
+            <input disabled="disabled" type="text" name="certificateCode" class="form-control none-edit" value="{{cuserd.certificateCode}}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="lastLoginTime">组织机构扫描件:</label>
+          <div class="col-sm-4">
+            <img ng-click="showBigImg(cuserd.certifictePath)" src="http://static.qddata.com.cn/{{cuserd.certifictePath}}" style="max-width: 450px; max-height: 600px">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="realName">办公地址:</label>
+          <div class="col-sm-4">
+            <input disabled="disabled" type="text" name="certificateCode" class="form-control none-edit" value="{{cuserd.officeRegionId}}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="realName">办公详细地址:</label>
+          <div class="col-sm-4">
+            <input disabled="disabled" type="text" name="certificateCode" class="form-control none-edit" value="{{cuserd.officeAddress}}"/>
           </div>
         </div>
       </fieldset>
