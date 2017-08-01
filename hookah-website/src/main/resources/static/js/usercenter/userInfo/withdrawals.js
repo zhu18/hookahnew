@@ -34,7 +34,9 @@ function getDetail(id) {
     window.location.href= host.website+'/usercenter/withdrawalStep2?id='+id;
 }
 $(function () {
-
+    $("#withdrawals-btn").on("click",function () {
+        $("#money").val($(".apply-money .money").html())
+    })
     $("#goPay").on("click",function () {
         var money=parseInt($("#money").val());
         if(money==0){
