@@ -82,21 +82,4 @@
     where id = #{payAccountId}
 
   </update>
-
-  <select id="selectBalance" resultType="java.lang.Long">
-    SELECT sum(b.balance) from pay_trade_record a, pay_account b WHERE a.pay_account_id = b.id AND a.trade_type in (6003,6004,3007,2);
-  </select>
-
-  <select id="selectUseBalance" resultType="java.lang.Long">
-      SELECT sum(b.use_balance) from pay_trade_record a, pay_account b WHERE a.pay_account_id = b.id AND a.trade_type in (6003,6004,3007,2);
-  </select>
-
-  <select id="selectPreDeposit" resultType="java.lang.Long">
-    SELECT sum(b.balance) from pay_trade_record a, pay_account b WHERE a.pay_account_id = b.id AND a.trade_type in (3001,4001,1,2);
-  </select>
-
-  <select id="selectFee" resultType="java.lang.Long">
-    SELECT sum(a.money) from pay_trade_record a, pay_account b WHERE a.pay_account_id = b.id AND a.trade_type = 3007;
-  </select>
-
 </mapper>

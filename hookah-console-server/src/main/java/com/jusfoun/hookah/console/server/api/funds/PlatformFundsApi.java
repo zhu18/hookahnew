@@ -99,23 +99,23 @@ public class PlatformFundsApi extends BaseController{
     @RequestMapping(value = "/userFunds", method = RequestMethod.GET)
     public ReturnData userFunds(){
         Map<String, Object> map = new HashMap<>(6);
-        //客户预存款
-        long preDeposit = payAccountService.selectPreDeposit();
-
-        //手续费的收入
-        long fee = payAccountService.selectFee();
-        //账户余额
-        long balance = payAccountService.selectBalance();
-        balance += fee;
-        //可用金额
-        long useBalance = payAccountService.selectUseBalance();
-        useBalance += fee;
-        //冻结金额 = 账户余额 -  可用金额
-        long freeze = balance - useBalance;
-
+        long balance = 0;
+        long useBalance = 0;
+        long frozenBalance = 0;
+        long preDeposit = 0;
+        List<PayAccount> payAccounts = payAccountService.selectList();
+        for(PayAccount pay : payAccounts){
+            if(pay.getId() == HookahConstants.TRADECENTERACCOUNT){
+                balance = pay.getBalance();
+                useBalance = pay.getUseBalance();
+                frozenBalance = pay.getFrozenBalance();
+            }else{
+                preDeposit += pay.getBalance();
+            }
+        }
         map.put("balance",balance);
         map.put("useBalance",useBalance);
-        map.put("freeze",freeze);
+        map.put("freeze",frozenBalance);
         map.put("preDeposit",preDeposit);
         return ReturnData.success(map);
     }
