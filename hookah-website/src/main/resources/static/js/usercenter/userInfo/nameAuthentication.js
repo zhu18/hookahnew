@@ -9,6 +9,7 @@ $(function () {
         success:function (data) {
             if(data.code == 1 && data.data){
                 var html="";
+                var content=data.data.checkContent?data.data.checkContent:"无";
                 if (data.data.userType =="0"){
                     html +="<li><label>用户类型</label><p>个人会员</p></li>";
                 }else {
@@ -16,10 +17,10 @@ $(function () {
                 }
                 if(data.data.checkStatus == '2'){
                     html +="<li><label>认证状态</label><p class='position-relative'><span>未通过</span><a href='/auth/company_auth_init_step2?isAuth=3' class='repeat-revise-btn'>重新修改</a></p></li>";
-                    html +="<li><label>审核意见</label><p>"+data.data.checkContent?data.data.checkContent:"无"+"</p></li>";
+                    html +="<li><label>审核意见</label><p>"+content+"</p></li>";
                 }else if(data.data.checkStatus == '1'){
                     html +="<li><label>认证状态</label><p class='position-relative'><span>已认证</span></p></li>";
-                    html +="<li><label>审核意见</label><p>"+data.data.checkContent?data.data.checkContent:"无"+"</p></li>";
+                    html +="<li><label>审核意见</label><p>"+content+"</p></li>";
                 }else if(data.data.checkStatus == '0'){
                     html +="<li><label>认证状态</label><p class='position-relative'><span>认证中</span></p></li>";
                 }else {
@@ -33,8 +34,8 @@ $(function () {
                     $('#lawPersonName').html( data.data.organization.lawPersonName?data.data.organization.lawPersonName:"无");//法定代表人
                     $('#lawPersonCategory').html( data.data.organization.lawPersonCategory=="0"?"居民身份证":"无");//法定代表人证件类别
                     $('#lawPersonNum').html( data.data.organization.lawPersonNum?data.data.organization.lawPersonNum:"无");//法定代表人证件编号
-                    $('#lawPersonPositivePath').attr({"src":data.data.organization.lawPersonPositivePath});//法定代表人证件照正
-                    $('#lawPersonNegativePath').attr({"src":data.data.organization.lawPersonNegativePath});//法定代表人证件照反
+                    $('#lawPersonPositivePath').attr({"src":host.static+'/' + data.data.organization.lawPersonPositivePath});//法定代表人证件照正
+                    $('#lawPersonNegativePath').attr({"src":host.static+'/' + data.data.organization.lawPersonNegativePath});//法定代表人证件照反
                     //注册地址
                     $('#contactAddress').html( data.data.organization.contactAddress?data.data.organization.contactAddress:"无");
                     // 办公地址
@@ -42,12 +43,12 @@ $(function () {
                     $('#orgPhone').html( data.data.organization.orgPhone?data.data.organization.orgPhone:"无");//联系电话
 
                     $('#certificateCode').html( data.data.organization.certificateCode?data.data.organization.certificateCode:"无");
-                    $('#certifictePath').attr({"src":data.data.organization.certifictePath});
+                    $('#certifictePath').attr({"src":host.static+'/' + data.data.organization.certifictePath});
                     $('#licenseCode').html( data.data.organization.licenseCode?data.data.organization.licenseCode:"无");
-                    $('#licensePath').attr({"src":data.data.organization.licensePath});
+                    $('#licensePath').attr({"src":host.static+'/' + data.data.organization.licensePath});
 
                     $('#taxCode').html( data.data.organization.taxCode?data.data.organization.taxCode:"无");
-                    $('#taxPath').attr({"src":data.data.organization.taxPath});
+                    $('#taxPath').attr({"src":host.static+'/' + data.data.organization.taxPath});
                 }
             }else {
 
