@@ -9,11 +9,13 @@ import com.jusfoun.hookah.core.domain.UserDetail;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.core.utils.StrUtil;
 import com.jusfoun.hookah.rpc.api.OrganizationService;
 import com.jusfoun.hookah.rpc.api.UserCheckService;
 import com.jusfoun.hookah.rpc.api.UserDetailService;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -91,6 +93,22 @@ public class UserCheckApi extends BaseController{
                         returnData.setData(map);
                     }else if("1".equals(userCheck.getUserType()) && user.getOrgId() != null){// 企业
                         Organization organization = organizationService.selectById(user.getOrgId());
+                        String region= organizationService.selectRegion(user.getOrgId());
+                        String officeRegion = organizationService.selectOfficeRegion(user.getOrgId());
+                        String regionProvince= organizationService.selectRegionProvince(user.getOrgId());
+                        String officeRegionProvince = organizationService.selectOfficeRegionProvince(user.getOrgId());
+                        if(StringUtils.isNotBlank(region)){
+                            map.put("region",region);
+                        }
+                        if(StringUtils.isNotBlank(regionProvince)){
+                            map.put("regionProvince",regionProvince);
+                        }
+                        if(StringUtils.isNotBlank(officeRegion)){
+                            map.put("officeRegion",officeRegion);
+                        }
+                        if(StringUtils.isNotBlank(officeRegionProvince)){
+                            map.put("officeRegionProvince",officeRegionProvince);
+                        }
                         map.put("user", user);
                         map.put("userCheck", userCheck);
                         map.put("organization", organization);

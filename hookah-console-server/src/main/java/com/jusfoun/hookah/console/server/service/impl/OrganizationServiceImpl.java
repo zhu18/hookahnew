@@ -41,4 +41,21 @@ public class OrganizationServiceImpl extends GenericServiceImpl<Organization, St
         }
         return null;
     }
+
+    public String selectRegion(String orgId){
+        return organizationMapper.selectRegion(orgId);
+    }
+
+    public String selectOfficeRegion(String orgId){
+        return organizationMapper.selectOfficeRegion(orgId);
+    }
+
+    public String selectRegionProvince(String orgId){
+        return organizationMapper.selectRegionProvince(orgId);
+
+    }
+
+    public String selectOfficeRegionProvince(String orgId){
+        return organizationMapper.selectOfficeRegionProvince(orgId);
+    }
 }

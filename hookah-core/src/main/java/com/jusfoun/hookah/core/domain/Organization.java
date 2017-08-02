@@ -253,7 +253,7 @@ public class Organization extends GenericModel {
 
     private String officeAddress;
 
-    private Long officeRegionId;
+    private String officeRegionId;
 
     private String creditCode;
 
@@ -299,11 +299,9 @@ public class Organization extends GenericModel {
 
     public void setOfficeAddress(String officeAddress) {this.officeAddress = officeAddress;}
 
-    public Long getOfficeRegionId() {return officeRegionId;}
+    public String getOfficeRegionId() {return officeRegionId;}
 
-    public void setOfficeRegionId(Long officeRegionId) {
-        this.officeRegionId = officeRegionId;
-    }
+    public void setOfficeRegionId(String officeRegionId) {this.officeRegionId = officeRegionId;}
 
     public String getCreditCode() {return creditCode; }
 

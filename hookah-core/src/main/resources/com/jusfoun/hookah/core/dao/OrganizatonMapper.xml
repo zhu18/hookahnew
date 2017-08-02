@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jusfoun.hookah.core.dao.OrganizationMapper">
+
+    <select id="selectRegion" resultType="java.lang.String">
+      SELECT r.`name` FROM organization o LEFT JOIN region r ON o.region = r.id WHERE o.org_id = #{orgId};
+    </select>
+
+    <select id="selectOfficeRegion" resultType="java.lang.String">
+        SELECT r.`name` FROM organization o LEFT JOIN region r ON o.office_region_id = r.id WHERE o.org_id = #{orgId};
+    </select>
+
+    <select id="selectRegionProvince" resultType="java.lang.String">
+      SELECT name FROM region where id = (SELECT pid FROM region WHERE id = (SELECT o.region FROM organization o LEFT JOIN region r ON o.region = r.id WHERE o.org_id = #{orgId}));
+    </select>
+
+    <select id="selectOfficeRegionProvince" resultType="java.lang.String">
+      SELECT name FROM region where id = (SELECT pid FROM region WHERE id = (SELECT o.office_region_id FROM organization o LEFT JOIN region r ON o.office_region_id = r.id WHERE o.org_id = #{orgId}));
+    </select>
+
+</mapper>
