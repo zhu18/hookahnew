@@ -97,29 +97,6 @@ class UserVerifyController {
           $rootScope.cuserd = res.data.data;
           $state.go("user.verify.checkUserDetail");
           growl.addSuccessMessage("数据加载完毕。。。");
-
-
-
-
-
-          var adressPro = $http({
-            method: 'GET',
-            url: $rootScope.site.websiteServer + "/region/getRegionCodeByPid?parentId=100000"
-          });
-          adressPro.then(function (res, status, config, headers) {
-            $rootScope.loadingState = false;
-            $rootScope.cuserd = res.data.data;
-            $state.go("user.verify.checkUserDetail");
-            growl.addSuccessMessage("数据加载完毕。。。");
-          });
-
-
-
-
-
-
-
-
         });
       } else {
         $rootScope.openErrorDialogModal("数据有误！");
@@ -161,6 +138,7 @@ class UserVerifyController {
           $rootScope.user = res.data.data.user;
 
         } else if (item.userType == 1) {//企业用户
+          $rootScope.addressInfo = res.data.data;
           $rootScope.user = res.data.data.user;
           $rootScope.cuserd = res.data.data.organization;
         }

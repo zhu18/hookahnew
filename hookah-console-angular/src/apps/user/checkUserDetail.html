@@ -177,7 +177,7 @@
         <div class="form-group">
           <label class="col-sm-2 control-label" for="birthday">注册地址:</label>
           <div class="col-sm-4">
-            <input disabled="disabled" type="text"  name="region" class="form-control none-edit" value="{{cuserd.region}}"/>
+            <input disabled="disabled" type="text"  name="region" class="form-control none-edit" value="{{addressInfo.regionProvince+addressInfo.region}}"/>
           </div>
         </div>
         <div class="form-group">
@@ -207,7 +207,7 @@
         <div class="form-group">
           <label class="col-sm-2 control-label" for="realName">办公地址:</label>
           <div class="col-sm-4">
-            <input disabled="disabled" type="text" name="certificateCode" class="form-control none-edit" value="{{cuserd.officeRegionId}}"/>
+            <input disabled="disabled" type="text" name="certificateCode" class="form-control none-edit" value="{{addressInfo.officeRegionProvince + addressInfo.officeRegion}}"/>
           </div>
         </div>
         <div class="form-group">
