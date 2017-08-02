@@ -99,38 +99,24 @@ public class PlatformFundsApi extends BaseController{
     @RequestMapping(value = "/userFunds", method = RequestMethod.GET)
     public ReturnData userFunds(){
         Map<String, Object> map = new HashMap<>(6);
-        try {
-            String userId = this.getCurrentUser().getUserId();
-            List<Condition> filters = new ArrayList();
-            filters.add(Condition.eq("userId", userId));
-            PayAccount payAccount = payAccountService.selectOne(filters);
-            if(payAccount != null){
-                //账户余额
-                map.put("balance",payAccount.getBalance());
-                //可用金额
-                map.put("useBalance",payAccount.getUseBalance());
-                //冻结金额 = 账户余额 -  可用金额
-                long freeze = 0;
-                freeze = payAccount.getBalance() - payAccount.getUseBalance();
-                map.put("freeze",freeze);
-                //客户预存款
-                List<PayAccount> payAccounts = payAccountService.selectList();
-                long preDeposit = 0;
-                for (PayAccount pay:payAccounts){
-                    if(pay.getUseBalance() != null){
-                        preDeposit += pay.getUseBalance();
-                    }else {
-                        continue;
-                    }
-                }
-                map.put("preDeposit",preDeposit);
-            }else{
-                return ReturnData.error("账户信息为空");
-            }
-        } catch (HookahException e) {
-            logger.info(e.getMessage());
-            return ReturnData.error("查询账户资金失败");
-        }
+        //客户预存款
+        long preDeposit = payAccountService.selectPreDeposit();
+
+        //手续费的收入
+        long fee = payAccountService.selectFee();
+        //账户余额
+        long balance = payAccountService.selectBalance();
+        balance += fee;
+        //可用金额
+        long useBalance = payAccountService.selectUseBalance();
+        useBalance += fee;
+        //冻结金额 = 账户余额 -  可用金额
+        long freeze = balance - useBalance;
+
+        map.put("balance",balance);
+        map.put("useBalance",useBalance);
+        map.put("freeze",freeze);
+        map.put("preDeposit",preDeposit);
         return ReturnData.success(map);
     }
 
@@ -150,8 +136,8 @@ public class PlatformFundsApi extends BaseController{
                 filters.add(Condition.le("addTime", DateUtils.getDate(endDate, DateUtils.DEFAULT_DATE_TIME_FORMAT)));
             }
 
-            //只查询的费用科目 冻结划入  释放划出  手续费收入 退款
-            filters.add(Condition.in("tradeType", new Integer[]{6003, 6004, 3007, 8}));
+            //只查询的费用科目 冻结划入  释放划出  手续费收入 退款 提现
+            filters.add(Condition.in("tradeType", new Integer[]{6003, 6004, 3007, 8, 2}));
             //费用科目
             if (tradeType != null) {
                 filters.add(Condition.eq("tradeType", tradeType));

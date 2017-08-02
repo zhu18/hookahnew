@@ -617,4 +617,36 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		return false;
 	}
 
+	/**
+	 * 平台余额
+	 * @return
+	 */
+	public  long selectBalance(){
+		return payAccountMapper.selectBalance();
+	}
+
+	/**
+	 * 可用金额
+	 * @return
+	 */
+	public long selectUseBalance(){
+		return payAccountMapper.selectUseBalance();
+	}
+
+	/**
+	 * 冻结余额
+	 * @return
+	 */
+	public long selectPreDeposit(){
+		return payAccountMapper.selectPreDeposit();
+	}
+
+	/**
+	 * 手续费收入
+	 * @return
+	 */
+	public long selectFee(){
+		return payAccountMapper.selectFee();
+	}
+
 }

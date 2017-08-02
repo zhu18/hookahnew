@@ -129,7 +129,7 @@ public class PayBankCardController extends BaseController{
             if(StringUtils.isNotBlank(userId))
                 filters.add(Condition.eq("userId", userId));
             User user = userService.selectOne(filters);
-            if(user!=null)
+            if(user != null)
                 map.put("userName",user.getUserName());
             PayAccount payAccount = payAccountService.selectOne(filters);
             if(payAccount != null){
