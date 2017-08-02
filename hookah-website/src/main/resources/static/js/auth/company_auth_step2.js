@@ -29,6 +29,7 @@ function loadRegion(id, regionParam) {
   $.ajax({
     type: "get",
     url: "/region/getRegionCodeByPid",
+    async:false,
     data: {
       parentId: parentId
     },
@@ -187,6 +188,24 @@ function supplier() {
     }
   })
 }
+
+function showRegion(dataID,province,city) {// 返现的地域值
+    var dataID=dataID?dataID:"";
+    var province=province?province:"";
+    var city=city?city:"";
+    if(dataID && province && city && (typeof dataID == "string")&&(typeof province == "string")&&(typeof city == "string")){
+        var reg=dataID.slice(0,2);
+        $("#registerProvince option").each(function () {
+            var val=$(this).val();
+            if(val.indexOf(reg)==0){
+                $("#"+province+" option[value="+val+"]").attr("selected","selected");
+                loadRegion(city,val);
+                $("#"+city+" option[value="+parseInt(dataID)+"]").attr("selected","selected");
+            }
+        })
+    }
+
+}
 //认证修改跳转页面，反现值
 if ($.getUrlParam("isAuth") == "3") {
   $.ajax({
@@ -201,16 +220,11 @@ if ($.getUrlParam("isAuth") == "3") {
         $("input[name='lawPersonNum']").val(data.data.organization.lawPersonNum?data.data.organization.lawPersonNum:"")//法定代表人证件编号
         $('#lawPersonPositivePath').attr({"src":host.static+'/' + data.data.organization.lawPersonPositivePath});//法定代表人证件照正
         $('#lawPersonNegativePath').attr({"src":host.static+'/' + data.data.organization.lawPersonNegativePath});//法定代表人证件照反
-        // //地域
-        // var reg=data.data.organization.region.slice(0,2);
-        // $("#province option").each(function () {
-        //     var val=$(this).val();
-        //     if(val.indexOf(reg)==0){
-        //         $("#province option[value="+val+"]").attr("selected","selected");
-        //         loadRegion('city',val);
-        //     }
-        // })
+        //地域
+        showRegion(data.data.organization.region,"registerProvince","registerCity");
+        showRegion(data.data.organization.officeRegionId,"workProvince","workCity");
         $("input[name='address']").val(data.data.organization.contactAddress?data.data.organization.contactAddress:"");//详细地址
+        $("input[name='workAddress']").val(data.data.organization.officeAddress?data.data.organization.officeAddress:"");//详细地址
         $("input[name='tel']").val(data.data.organization.orgPhone?data.data.organization.orgPhone:"")//联系电话
 
         //营业执照编号
