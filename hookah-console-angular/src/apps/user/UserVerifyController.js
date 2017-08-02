@@ -92,17 +92,16 @@ class UserVerifyController {
           url: $rootScope.site.apiServer + "/api/user/org/" + item.orgId
         });
         promise.then(function (res, status, config, headers) {
-          console.log(res);
+          console.log(res)
           $rootScope.addressInfo = res.data.data;
           $rootScope.loadingState = false;
-          $rootScope.cuserd = res.data.data;
+          $rootScope.cuserd = res.data.data.organization;
           $state.go("user.verify.checkUserDetail");
           growl.addSuccessMessage("数据加载完毕。。。");
         });
       } else {
         $rootScope.openErrorDialogModal("数据有误！");
       }
-
 
     };
 
