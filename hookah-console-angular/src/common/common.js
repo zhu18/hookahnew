@@ -125,7 +125,8 @@ export default angular.module('Common', [
       hasPermission: function (permission) {
         if (permission) {
           if (typeof(permission) == "string") {
-            if (config.permissionList.indexOf(permission) > -1) {
+            // 判断是否有权限，或者是超级管理员（userId=1）
+            if ((config.permissionList.indexOf(permission) > -1) || $rootScope.user.userId =="1") {
               return true;
             }
           }
@@ -370,8 +371,8 @@ export default angular.module('Common', [
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
       var permission = toState.permission;
       if (!permissions.hasPermission(permission)) {
-        //event.preventDefault();
-        //var dialogModal = $rootScope.openErrorDialogModal("您没有权限使用该功能，需要开通请联系管理员！！！");
+        event.preventDefault();
+        var dialogModal = $rootScope.openErrorDialogModal("您没有权限使用该功能，需要开通请联系管理员！！！");
       }
     });
   });
