@@ -1,12 +1,11 @@
 package com.jusfoun.hookah.oauth2server.web.controller;
 
 import com.jusfoun.hookah.core.annotation.Log;
+import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.User;
-import com.jusfoun.hookah.core.exception.UserRegConfirmPwdException;
-import com.jusfoun.hookah.core.exception.UserRegEmptyPwdException;
-import com.jusfoun.hookah.core.exception.UserRegSimplePwdException;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
+import com.jusfoun.hookah.rpc.api.PayAccountService;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
@@ -37,6 +36,9 @@ public class ModifyController {
     @Resource
     UserService userService;
 
+    @Resource
+    PayAccountService payAccountService;
+
     @RequestMapping(value = "/loginPassword", method = RequestMethod.GET)
     public String loginPassword(Model model) {
         model.addAttribute("title", "修改登录密码");
@@ -53,19 +55,28 @@ public class ModifyController {
         return "modify/payPassword";
     }
     @RequestMapping(value = "/payPassword", method = RequestMethod.POST)
-    public String pPayPassword(User userForm,Model model) {
+    public String pPayPassword(String oldPayPassWord, String newPayPassWord, Integer safetyPayScore, Model model) {
         Session session = SecurityUtils.getSubject().getSession();
         HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
-        User user = userService.selectById(userMap.get("userId"));
-        if(StringUtils.isNotBlank(userForm.getPaymentPassword())){
-            String othpassword = new Md5Hash(userForm.getPaymentPassword()).toString();
-            user.setPaymentPassword(othpassword);
-            userService.updateById(user);
-            return "redirect:/modify/success?type=payPassword";
-        }else{
-            model.addAttribute("error","支付密码为空");
-            return "modify/payPassword";
-        }
+        String userId = userMap.get("userId");
+        return  userService.updatePayPassWord(oldPayPassWord, newPayPassWord, safetyPayScore, userId,model);
+    }
+
+    /**
+     * 前台采用提交表单方式修改交易密码，故需向前台提供验证原始支付密码接口。建议后期修改此流程。
+     * @param oldPayPassWord
+     * @return
+     */
+    @RequestMapping(value = "/verifyPayPassword", method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnData verifyPayPassword(String oldPayPassWord) {
+        Session session = SecurityUtils.getSubject().getSession();
+        HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
+        String userId = userMap.get("userId");
+        if(payAccountService.verifyPassword(oldPayPassWord,userId))
+            return ReturnData.success();
+        else
+            return ReturnData.error();
     }
 
 
@@ -85,7 +96,7 @@ public class ModifyController {
     @Log(platform = "front",logType = "f0005",optType = "modify")
     @RequestMapping(value = "/updateLoginPwd", method = RequestMethod.POST)
     @ResponseBody
-    public String updateLoginPwd(String  newPwd, String  newPwdRepeat, Model model) {
+    public String updateLoginPwd(String  newPwd, String  newPwdRepeat,Integer safetyLandScore, Model model) {
         try {
 
             Session session = SecurityUtils.getSubject().getSession();
@@ -109,7 +120,8 @@ public class ModifyController {
                 model.addAttribute("title", "密码过于简单");
                 return "modify/updateLoginPwd";
             }
-
+            //更新安全分值
+            user.setSafetyLandScore(safetyLandScore);
             user.setPassword(new Md5Hash(newPwd).toString());
             userService.updateById(user);
             return "redirect:/modify/success?type=loginPassword";
@@ -144,13 +156,31 @@ public class ModifyController {
     public String pSetPayPassword(User userForm,Model model) {
         Session session = SecurityUtils.getSubject().getSession();
         HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
+        String userId = userMap.get("userId");
+        if (!StringUtils.isNotBlank(userId)) {
+            model.addAttribute("title", "请重新登录");
+            return "modify/updateLoginPwd";
+        }
         User user = userService.selectById(userMap.get("userId"));
+        if(user.getPaymentPasswordStatus() == HookahConstants.PayPassWordStatus.isOK.getCode()){
+            model.addAttribute("error", "您已设置过交易密码");
+            return "modify/updateLoginPwd";
+        }
             if(StringUtils.isNotBlank(userForm.getPaymentPassword())){
-                String othpassword = new Md5Hash(userForm.getPaymentPassword()).toString();
-                user.setPaymentPassword(othpassword);
-                user.setPaymentPasswordStatus(1);
-                userService.updateById(user);
-                return "redirect:/modify/success?type=setPayPassword";
+//                String othpassword = new Md5Hash(userForm.getPaymentPassword()).toString();
+//                user.setPaymentPassword(othpassword);
+                //2017/7/25 支付密码全部改为前端传MD5密文
+                if(payAccountService.resetPayPassword(user.getUserId(),userForm.getPaymentPassword())){
+                    //更改支付密码设置状态
+                    user.setPaymentPasswordStatus(HookahConstants.PayPassWordStatus.isOK.getCode());
+                    //安全评分
+                    user.setSafetyPayScore(userForm.getSafetyPayScore());
+                    userService.updateById(user);
+                    return "redirect:/modify/success?type=setPayPassword";
+                }else{
+                    model.addAttribute("error","支付密码设置失败，请联系管理员。");
+                    return "modify/setPayPassword";
+                }
             }else{
                 model.addAttribute("error","支付密码为空");
                 return "modify/setPayPassword";

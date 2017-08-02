@@ -59,7 +59,7 @@
 .auth-info .typeBox li>label{
     padding-right:10px;
     float: left;
-    width:120px;
+    width:150px;
     text-align: right;
 }
 .auth-info .typeBox li>label span{
@@ -71,7 +71,17 @@
 }
 .auth-info li .inputBoxs{
     float: left;
-    width: 530px;
+    width: 490px;
+}
+.auth-info li .inputBoxs select{
+    height: 34px;
+    line-height: 34px;
+    margin-bottom: 5px;
+    width: 370px;
+    border: 1px solid #e5e5e5;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    text-indent: 10px;
 }
 .auth-info li .inputBoxs.tips_box{
     line-height: 20px;
@@ -129,7 +139,6 @@
 }
 .auth-info .linkage {
     width: 370px;
-    height: 40px;
     display: inline-block;
 }
 
@@ -151,6 +160,12 @@
 .auth-info .upLoad.upLoad_dk{
     width:270px
 }
+.auth-info .upLoad.upLoad_d{
+    width: 242px;
+    display: inline-block;
+    height: 159px;
+    margin-left: 0px;
+}
 .auth-info .upLoad.upLoad_dk label{
     width:270px
 }
@@ -161,6 +176,7 @@
 }
 .auth-info .upLoad img {
     width:100%;
+    height: 100%;
     display: inline-block;
     position: absolute;
     z-index:8;

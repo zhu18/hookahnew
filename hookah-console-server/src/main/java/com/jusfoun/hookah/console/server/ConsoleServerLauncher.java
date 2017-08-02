@@ -64,7 +64,7 @@ public class ConsoleServerLauncher {
             ConsoleServerLauncher.class
         }, args);
         MotanSwitcherUtil.setSwitcherValue(MotanConstants.REGISTRY_HEARTBEAT_SWITCHER, true);
-        System.out.println("console-server start...");
+        System.out.println("--------------> Console-Server Start <---------------");
     }
 
     @PostConstruct

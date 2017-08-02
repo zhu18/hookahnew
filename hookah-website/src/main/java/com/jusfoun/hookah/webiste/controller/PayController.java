@@ -26,6 +26,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -60,13 +61,18 @@ public class PayController extends BaseController{
     public String createOrder() {
         return "pay/createOrder";
     }
-    
+
     @RequestMapping(value = "/success", method = RequestMethod.GET)
     public String success() {
         return "pay/success";
     }
 
-/**
+    @RequestMapping(value = "/fail", method = RequestMethod.GET)
+    public String fail() {
+        return "pay/fail";
+    }
+
+    /**
      * 订单支付
      * @param model
      * @return
@@ -140,12 +146,20 @@ public class PayController extends BaseController{
             List<Condition> filters = new ArrayList();
             filters.add(Condition.eq("orderSn", orderSn));
             OrderInfo orderinfo  = orderService.selectOne(filters);
+            if (orderinfo.getPayStatus() == 2){
+                model.addAttribute("message", "订单已支付");
+                model.addAttribute("code", 9);
+                model.addAttribute("orderSn", orderSn);
+                return "pay/fail";
+            }
             orderAmount= orderinfo.getOrderAmount();
             List<Condition> filter = new ArrayList();
             filter.add(Condition.eq("userId", orderinfo.getUserId()));
             PayAccount payAccount = payAccountService.selectOne(filter);
             if (payAccount.getUseBalance()<orderAmount){
                 model.addAttribute("message", "余额不足，支付失败!");
+                model.addAttribute("code", 9);
+                model.addAttribute("orderSn", orderSn);
                 return "pay/fail";
             }
             //插流水调接口
@@ -153,6 +167,7 @@ public class PayController extends BaseController{
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("message", e.getMessage());
+            model.addAttribute("orderSn", orderSn);
             return "pay/fail";
         }
         model.addAttribute("money",orderAmount);
@@ -160,7 +175,7 @@ public class PayController extends BaseController{
     }
 
     @RequestMapping(value = "/aliPay", method = RequestMethod.GET)
-    public Object alipay(String orderSn) {
+    public Object alipay(String orderSn, Model model) {
         String reqHtml = null;
         try {
             Session session = SecurityUtils.getSubject().getSession();
@@ -170,41 +185,23 @@ public class PayController extends BaseController{
             List<Condition> filters = new ArrayList();
             filters.add(Condition.eq("orderSn", orderSn));
             OrderInfo orderinfo  = orderService.selectOne(filters);
+            if (orderinfo.getPayStatus() == 2){
+                model.addAttribute("message", "订单已支付");
+                model.addAttribute("code", 9);
+                model.addAttribute("orderSn", orderSn);
+                return "pay/fail";
+            }
             reqHtml = payAccountService.payByAli(orderinfo);
         } catch (Exception e) {
             e.printStackTrace();
         }
         if(StringUtils.isEmpty(reqHtml)){
-            return "redirect:/404.html";
+            model.addAttribute("orderSn", orderSn);
+            model.addAttribute("message", "订单支付失败");
+            return "pay/fail";
         }else
             return new ResponseEntity<String>(reqHtml, HttpStatus.OK);
     }
-
- /*   @RequestMapping(value = "/payment", method = RequestMethod.GET)
-    public String payPassSta(String orderSn,Model model) {
-
-        long orderAmount = 0 ; //支付金额
-        try {
-            Session session = SecurityUtils.getSubject().getSession();
-            HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
-            User user = userService.selectById(userMap.get("userId"));
-                //支付操作
-                payCoreService.doPayMoney(orderSn,user.getUserId());
-                //根据订单编号获得支付金额
-                List<Condition> filters = new ArrayList();
-                filters.add(Condition.eq("orderSn", orderSn));
-                OrderInfo orderinfo  = orderService.selectOne(filters);
-                orderAmount= orderinfo.getOrderAmount();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            model.addAttribute("message", "支付失败!");
-            return "pay/fail";
-        }
-        model.addAttribute("money",orderAmount);
-        return "pay/success";
-    }*/
-
 
     @RequestMapping(value = "/cash", method = RequestMethod.GET)
     public String cash(HttpServletRequest request, Model model){
@@ -251,8 +248,7 @@ public class PayController extends BaseController{
      * @throws Exception
      */
     @RequestMapping(value = "/alipay_rtn",method = RequestMethod.GET)
-    public ModelAndView returnBack4Alipay(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        ModelAndView view = null;
+    public String returnBack4Alipay(HttpServletRequest request, HttpServletResponse response) throws Exception{
         //商户订单号
         String orderSn = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
         //支付宝交易号
@@ -260,53 +256,17 @@ public class PayController extends BaseController{
         //交易状态
         String tradeStatus = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
         String total_fee = new String(request.getParameter("total_fee").getBytes("ISO-8859-1"),"UTF-8");
-        List<Condition> filter = new ArrayList<>();
-        filter.add(Condition.eq("orderSn",orderSn));
-        OrderInfo orderInfo = orderService.selectOne(filter);
-        if (payCoreService.verifyAlipay(getRequestParams(request))){
-            if(tradeStatus.equals("TRADE_FINISHED") || tradeStatus.equals("TRADE_SUCCESS")){
-                //交易成功,插交易中心冻结收入流水，更新交易中心虚拟账户金额
-                PayTradeRecord payTradeRecord = new PayTradeRecord();
-                payTradeRecord.setPayAccountId(HookahConstants.TRADECENTERACCOUNT);
-                payTradeRecord.setMoney(orderInfo.getOrderAmount());
-                payTradeRecord.setTradeType(HookahConstants.TradeType.FreezaIn.getCode());
-                payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.handing.getCode());
-                payTradeRecord.setAddTime(new Date());
-                payTradeRecord.setOrderSn(orderSn);
-                payTradeRecord.setAddOperator(orderInfo.getUserId());
-                payTradeRecord.setTransferDate(new Date());
-                payTradeRecordService.insertAndGetId(payTradeRecord);
-                //更新交易中心虚拟账户金额,更新流水表状态
-                int n = payAccountService.operatorByType(HookahConstants.TRADECENTERACCOUNT,HookahConstants.TradeType.FreezaIn.getCode(),
-                        orderInfo.getOrderAmount());
 
-                //修改内部流水的状态和外部充值状态
-                List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
-                for (PayTradeRecord payTradeRecord1 : payTradeRecords){
-                    payTradeRecord1.setTradeStatus(HookahConstants.TransferStatus.success.getCode());
-                    payTradeRecordService.updateByIdSelective(payTradeRecord1);
-                }
-                PayAccountRecord payAccountRecord = payAccountRecordService.selectOne(filter);
-                payAccountRecord.setTransferStatus(HookahConstants.TransferStatus.success.getCode());
-                payAccountRecordService.updateByIdSelective(payAccountRecord);
-
-                //更新订单状态
-                orderService.updatePayStatus(orderSn,orderInfo.PAYSTATUS_PAYED,1);
-                // 支付成功 查询订单 获取订单中商品插入到待清算记录
-                orderService.waitSettleRecordInsert(orderSn);
-                view = new ModelAndView("redirect:/paySucess.html?orderSn="+orderSn);
-            }else{
-                //交易失败
-                List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
-                for (PayTradeRecord payTradeRecord1 : payTradeRecords){
-                    payTradeRecord1.setTradeStatus(HookahConstants.TransferStatus.fail.getCode());
-                }
-                view = new ModelAndView("redirect:/payError.html?orderSn="+orderSn);
-            }
-        }else{
-            view = new ModelAndView("redirect:/payError.html?orderSn="+orderSn);
+        Map<String,String> param = getRequestParams(request);
+        boolean flag = payAccountService.aliPay(orderSn, tradeStatus, param);
+        BigDecimal money = new BigDecimal(total_fee).multiply((new BigDecimal(100)));
+        if (flag){
+            request.setAttribute("money",money);
+            return "pay/success";
+        }else {
+            request.setAttribute("orderSn",orderSn);
+            return "pay/fail";
         }
-        return view;
     }
 
     /**
@@ -325,46 +285,11 @@ public class PayController extends BaseController{
         String tradeNo = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"),"UTF-8");
         //交易状态
         String tradeStatus = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
-        List<Condition> filter = new ArrayList<>();
-        filter.add(Condition.eq("orderSn",orderSn));
-        OrderInfo orderInfo = orderService.selectOne(filter);
-        Date date = new Date();
-        if(payCoreService.verifyAlipay(getRequestParams(request))){
-            if(tradeStatus.equals("TRADE_SUCCESS") || tradeStatus.equals("TRADE_FINISHED")){
-                //交易成功,插交易中心冻结收入流水，
-                PayTradeRecord payTradeRecord = new PayTradeRecord();
-                payTradeRecord.setPayAccountId(HookahConstants.TRADECENTERACCOUNT);//交易中心虚拟账号Id
-                payTradeRecord.setMoney(orderInfo.getOrderAmount());
-                payTradeRecord.setTradeType(HookahConstants.TradeType.FreezaIn.getCode());
-                payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.handing.getCode());
-                payTradeRecord.setAddTime(date);
-                payTradeRecord.setOrderSn(orderSn);
-                payTradeRecord.setAddOperator(orderInfo.getUserId());
-                payTradeRecord.setTransferDate(date);
-                payTradeRecordService.insertAndGetId(payTradeRecord);
-                //更新交易中心虚拟账户金额,更新流水表状态
-                int n = payAccountService.operatorByType(HookahConstants.TRADECENTERACCOUNT,HookahConstants.TradeType.FreezaIn.getCode(),
-                        orderInfo.getOrderAmount());
-//                payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.success.getCode());
-//                payTradeRecordService.updateByIdSelective(payTradeRecord);
+        String total_fee = new String(request.getParameter("total_fee").getBytes("ISO-8859-1"),"UTF-8");
 
-                //修改内部流水的状态和外部充值状态
-                List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
-                for (PayTradeRecord payTradeRecord1 : payTradeRecords){
-                    payTradeRecord1.setTradeStatus(HookahConstants.TransferStatus.success.getCode());
-                }
-                PayAccountRecord payAccountRecord = payAccountRecordService.selectOne(filter);
-                payAccountRecord.setTransferStatus(HookahConstants.TransferStatus.success.getCode());
-                payAccountRecordService.updateByIdSelective(payAccountRecord);
-                //更新订单状态
-                orderService.updatePayStatus(orderSn,orderInfo.PAYSTATUS_PAYED,1);
-                orderService.waitSettleRecordInsert(orderSn);
-            }else {
-                List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
-                for (PayTradeRecord payTradeRecord1 : payTradeRecords){
-                    payTradeRecord1.setTradeStatus(HookahConstants.TransferStatus.fail.getCode());
-                }
-            }
+        Map<String,String> param = getRequestParams(request);
+        boolean flag = payAccountService.aliPay(orderSn, tradeStatus, param);
+        if (flag){
             return "success";
         }else {
             return "fail";

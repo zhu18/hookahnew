@@ -138,6 +138,10 @@
     text-align: center;
     line-height: 26px;
 }
+.fundmanage-box .fundmanage-bd .account-funds .account-funds-content-left .operation-btn a.disable{
+   background-color: #e5e5e5;
+    cursor: no-drop;
+}
 .fundmanage-box .fundmanage-bd .account-funds .account-funds-content-left .operation-btn a.color-red{
    color: #E34F4F;
    text-decoration: underline;

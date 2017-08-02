@@ -17,17 +17,17 @@
         <label class="col-sm-2 control-label" for="roleName">角色代码<span class="must">*</span></label>
         <div class="col-sm-4">
           <input type="text" id="roleId" name="roleId" ng-model="item.roleId" hidden>
-          <input type="text" id="roleName" name="roleName" class="form-control" ng-model="item.roleName" required/>
+          <input type="text" id="roleName" name="roleName" class="form-control" ng-model="item.roleName"  maxlength="200" required/>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="roleExplain">角色中文名<span class="must">*</span></label>
         <div class="col-sm-4">
-          <input type="text" id="roleExplain" name="roleExplain" class="form-control" ng-model="item.roleExplain" required/>
+          <input type="text" id="roleExplain" name="roleExplain" class="form-control" ng-model="item.roleExplain" maxlength="200" required/>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="enable">是否启用<span class="must">*</span></label>
+        <label class="col-sm-2 control-label" for="enable">是否启用</label>
         <div class="col-sm-4">
           <input type="checkbox" id="enable" name="enable" ng-model="a" class="form-control" style="box-shadow:none" ng-click="isEnableChange()" ng-checked="isEnable({{item.isEnable}})" required/>
         </div>
@@ -36,24 +36,23 @@
         <thead>
         <tr>
           <th width="10">
-            <input type="checkbox" ng-click="selectAll()" aria-label="全选">
           </th>
-          <th width="300">一级</th>
+          <th width="300"><label><input type="checkbox" ng-click="selectAll(tree_data)" aria-label="全选"> 一级</label></th>
           <th>二级</th>
         </tr>
         </thead>
         <tbody>
         <tr data-ng-if="!loadingState" data-ng-repeat="item in tree_data" class="">
           <td width="10">
-            <input type="checkbox" data-ng-model="item.selected" ng-change="changeSelection({data: item})">
           </td>
           <td>
-            <span ng-bind="item.permissionExplain"></span>
+            <label><input type="checkbox" name="permissionsFather" data-ng-model="item.selected" ng-checked="item.selected" ng-change="changeSelection({data: item},'father')">
+            <span ng-bind="item.permissionExplain"></span></label>
           </td>
           <td>
             <div data-ng-repeat="child in item.children">
-              <input id="{{child.permissionId}}" name="permissions" type="checkbox" value="{{child.permissionId}}" ng-checked="isSelected('{{child.permissionId}}')">
-              <span>{{child.permissionExplain}}</span>
+              <label><input id="{{child.permissionId}}" name="permissions" data-ng-model="child.selected" type="checkbox" ng-change="changeSelection({data: item},'child', '{{child.permissionId}}', '{{child.checked}}')"  value="{{child.permissionId}}">
+              <span>{{child.permissionExplain}}</span></label>
             </div>
           </td>
         </tr>

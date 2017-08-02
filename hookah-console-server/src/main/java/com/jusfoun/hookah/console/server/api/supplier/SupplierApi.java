@@ -5,6 +5,7 @@ import com.jusfoun.hookah.core.annotation.Log;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.Supplier;
+import com.jusfoun.hookah.core.domain.vo.SupplierVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.DateUtils;
@@ -45,7 +46,7 @@ public class SupplierApi extends BaseController {
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ReturnData getListInPage(String checkStatus, String contactPhone, String orgName, String startDate,
                                     String endDate, String currentPage, String pageSize){
-        Pagination<Supplier> page = new Pagination<>();
+        Pagination<SupplierVo> page = new Pagination<>();
         try {
             List<Condition> filters = new ArrayList();
             List<OrderBy> orderBys = new ArrayList();
@@ -77,7 +78,7 @@ public class SupplierApi extends BaseController {
             if (StringUtils.isNotBlank(pageSize)) {
                 pageSizeNew = Integer.parseInt(pageSize);
             }
-            page = supplierService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
+            page = supplierService.getList(pageNumberNew, pageSizeNew, filters, orderBys);
         }catch (Exception e){
             e.printStackTrace();
             return ReturnData.error(e.getMessage());

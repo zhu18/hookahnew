@@ -421,11 +421,11 @@ function getKey(goodsId, sourceId, orderId, goodsType, isOffline) {
               "<h5>联系人电话：<span>" + data.data.data.concatInfo.concatPhone + "</span></h5>" +
               "<h5>联系人邮箱：<span>" + data.data.data.concatInfo.concatEmail + "</span></h5>" +
               "<h5>模型文件：<span><a style='color:blue; text-decoration: underline' target='_blank' href='" + data.data.data.modelFile + "'>下载</a></span></h5>" +
-              "<h5>模型文件密码：<span>" + data.data.data.modelFilePwd + "</span></h5>" +
+              "<h5>模型文件密码：<span>" + data.data.data.modelFilePwd?data.data.data.modelFilePwd:"" + "</span></h5>" +
               "<h5>配置文件：<span><a style='color:blue; text-decoration: underline' target='_blank' href='" + data.data.data.configFile + "'>下载</a></span></h5>" +
-              "<h5>配置文件密码：<span>" + data.data.data.configFilePwd + "</span></h5>" +
+              "<h5>配置文件密码：<span>" + data.data.data.configFilePwd?data.data.data.configFilePwd:"" + "</span></h5>" +
               "<h5>配置参数：<span><a style='color:blue; text-decoration: underline' target='_blank' href='" + data.data.data.configParams + "'>下载</a></span></h5>" +
-              "<h5>配置参数密码：<span>" + data.data.data.configParamsPwd + "</span></h5></div>"
+              "<h5>配置参数密码：<span>" + data.data.data.configParamsPwd?data.data.data.configParamsPwd:"" + "</span></h5></div>"
             ;
 
           } else if (goodsType == 4 || goodsType == 6) { //独立软件 手动填写数据

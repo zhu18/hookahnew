@@ -15,7 +15,7 @@ class rechargeController {
         url: $rootScope.site.apiServer + "/api/payAccountBg/rechargeByHand",
         params: {
           userId: $scope.userBaseInfo.userId  ,
-          money:  $scope.money  * 100,
+          money:  $scope.money ,
         }
       });
       promise.then(function (res, status, config, headers) {

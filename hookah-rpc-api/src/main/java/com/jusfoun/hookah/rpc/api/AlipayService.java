@@ -25,7 +25,7 @@ public interface AlipayService extends GenericService<PayAccountRecord, String> 
      * @param return_url 同步返回地址
      * @return 表单
      */
-    String doCharge(String userId, String money, String notify_url, String return_url);
+    String doCharge(String userId,Long payAccountId, String money, String notify_url, String return_url);
 
     /**
      * 记账

@@ -43,6 +43,10 @@ public class HookahConstants {
     public static final byte LOCAL_SMS_SUCCESS = 1;
     public static final byte LOCAL_SMS_FAIL = 0;
 
+    //是否预约：1 预约；0 立即上架
+    public static final Byte GOODS_IS_BOOK_YES = 1;
+    public static final Byte GOODS_IS_BOOK_NO  = 0;
+
     public static final String TIME_FORMAT = "yyyy年MM月dd日HH时mm分ss秒";
 
     // message exception
@@ -305,6 +309,23 @@ public class HookahConstants {
         }
     }
 
+    public  enum SupplierStatus{
+        //供应商状态  0审核中 1审核通过  2审核失败
+        CHECK_STATUS(Byte.parseByte("0")),
+        CHECK_STATUS_SUCCESS(Byte.parseByte("1")),
+        CHECK_STATUS_FAILED(Byte.parseByte("2"));
+
+        public Byte code;
+
+        SupplierStatus(Byte code) {
+            this.code = code;
+        }
+
+        public Byte getCode() {
+            return code;
+        }
+    }
+
     /**
      * 流水状态
      * 0    处理中
@@ -461,16 +482,16 @@ public class HookahConstants {
      */
     public enum PayPassWordStatus {
 
-        isOK((byte)0),
-        isNot((byte)1);
+        isOK(1),
+        isNot(0);
 
-        public byte code;
+        public Integer code;
 
-        PayPassWordStatus(byte code) {
+        PayPassWordStatus(Integer code) {
             this.code = code;
         }
 
-        public byte getCode() {
+        public Integer getCode() {
             return code;
         }
     }

@@ -18,4 +18,6 @@ public interface UserCheckService extends GenericService<UserCheck, String> {
 
     public ReturnData authDetail(User user);
 
+    public UserCheck selectUserCheckInfo(String userId);
+
 }

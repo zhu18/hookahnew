@@ -58,6 +58,7 @@
     font-size: 16px;
     text-align: center;
     border-radius: 5px;
+    cursor: pointer;
     background-color: #4F95F4;
 }
 .fundmanage-box .bindBankCard .bindBankCard-content .verification-code{
@@ -68,6 +69,20 @@
     text-align: center;
     line-height: 26px;
     background-color: #F8A23A;
+}
+.fundmanage-box .bindBankCard .bindBankCard-content .verification-code {
+    background:#F9A13C;
+    color: #ffffff;
+    font-size: 12px;
+    cursor: pointer;
+    width: 95px;
+    height: 36px;
+    border: 1px solid #ddd;
+    border-left: none;
+}
+.fundmanage-box .bindBankCard .bindBankCard-content .verification-code.btn-disabled{
+    color: #ccc;
+    cursor: no-drop;
 }
 .fundmanage-box .bindBankCard .bindBankCard-content .color-red{
     color: #F53839;

@@ -116,4 +116,20 @@ public abstract class DateUtils {
         return toDate;
     }
 
+    public static Date thisTimeNextMonth(Date time, Integer i){
+        Calendar cld = Calendar.getInstance();
+        cld.setTime(time);
+        cld.add(Calendar.MONTH, i);
+        Date d2 = cld.getTime();
+        return d2;
+    }
+
+    public static Date thisTimeNextYear(Date time, Integer i){
+        Calendar cld = Calendar.getInstance();
+        cld.setTime(time);
+        cld.add(Calendar.YEAR, i);
+        Date d2 = cld.getTime();
+        return d2;
+    }
+
 }

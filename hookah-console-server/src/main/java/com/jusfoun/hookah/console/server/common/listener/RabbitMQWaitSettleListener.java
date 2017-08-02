@@ -31,6 +31,8 @@ public class RabbitMQWaitSettleListener {
     @RabbitListener(queues = RabbitmqQueue.WAIT_SETTLE_ORDERS)
     public void handleWaitSettleOrders(String orderSn) {
 
+        logger.info("Wait_Settle_Orders_QUEUE待处理已支付订单-->订单编码{}", orderSn);
+
         // 支付成功 查询订单 获取订单中商品插入到待清算记录
         List<Condition> mgfilters = new ArrayList<>();
         mgfilters.add(Condition.eq("orderSn", orderSn));
@@ -44,13 +46,13 @@ public class RabbitMQWaitSettleListener {
                     waitSettleRecord.setOrderSn(mgOrderGoods.getOrderSn());
                     waitSettleRecord.setGoodsId(mgOrderGoods.getGoodsId());
                     waitSettleRecord.setOrderId(orderInfoVo.getOrderId());
-                    waitSettleRecord.setOrderAmount(mgOrderGoods.getGoodsPrice());
+                    waitSettleRecord.setOrderAmount(mgOrderGoods.getGoodsPrice() * mgOrderGoods.getGoodsNumber());
                     waitSettleRecord.setOrderTime(orderInfoVo.getAddTime());
                     waitSettleRecord.setHasSettleAmount(0L);
-                    waitSettleRecord.setNoSettleAmount(mgOrderGoods.getGoodsPrice());
+                    waitSettleRecord.setNoSettleAmount(mgOrderGoods.getGoodsPrice() * mgOrderGoods.getGoodsNumber());
                     waitSettleRecord.setAddTime(new Date());
                     waitSettleRecord.setSettleStatus((byte)0);
-                    waitSettleRecord.setShopName(mgOrderGoods.getAddUser());
+                    waitSettleRecord.setShopName(mgOrderGoods.getGoodsUserId());
                     waitSettleRecord.setGoodsName(mgOrderGoods.getGoodsName());
                     waitSettleRecords.add(waitSettleRecord);
                 }

@@ -123,8 +123,11 @@ public class User extends GenericModel {
     private String creatorName;
 
     //0系统,1未认证,2个人,3个人待审核,4企业,5企业待审核,6个人审核失败,
-    // 7企业审核失败,8供应商,9供应商待审核,10供应商审核失败
+    // 7企业审核失败
     private Integer userType;
+
+    //成为供应商状态  0审核中 1审核通过 2审核失败
+    private Byte supplierStatus;
 
 
     //账户余额
@@ -147,6 +150,15 @@ public class User extends GenericModel {
     private String contactPhone;
     private String contactAddress;
     private String postCode;
+
+    //登陆密码安全评分
+    private Integer safetyLandScore;
+    //交易密码安全评分
+    private Integer safetyPayScore;
+    //手机安全评分
+    private Integer safetyPhoneScore;
+    //邮箱安全评分
+    private Integer safetyMailScore;
 
     @Transient
     private List<Role> roleList;
@@ -513,5 +525,45 @@ public class User extends GenericModel {
 
     public void setPostCode(String postCode) {
         this.postCode = postCode;
+    }
+
+    public Byte getSupplierStatus() {
+        return supplierStatus;
+    }
+
+    public void setSupplierStatus(Byte supplierStatus) {
+        this.supplierStatus = supplierStatus;
+    }
+
+    public Integer getSafetyLandScore() {
+        return safetyLandScore;
+    }
+
+    public void setSafetyLandScore(Integer safetyLandScore) {
+        this.safetyLandScore = safetyLandScore;
+    }
+
+    public Integer getSafetyPayScore() {
+        return safetyPayScore;
+    }
+
+    public void setSafetyPayScore(Integer safetyPayScore) {
+        this.safetyPayScore = safetyPayScore;
+    }
+
+    public Integer getSafetyPhoneScore() {
+        return safetyPhoneScore;
+    }
+
+    public void setSafetyPhoneScore(Integer safetyPhoneScore) {
+        this.safetyPhoneScore = safetyPhoneScore;
+    }
+
+    public Integer getSafetyMailScore() {
+        return safetyMailScore;
+    }
+
+    public void setSafetyMailScore(Integer safetyMailScore) {
+        this.safetyMailScore = safetyMailScore;
     }
 }

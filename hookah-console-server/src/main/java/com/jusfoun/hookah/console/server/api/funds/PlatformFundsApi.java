@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author zhaoshuai
@@ -98,38 +99,24 @@ public class PlatformFundsApi extends BaseController{
     @RequestMapping(value = "/userFunds", method = RequestMethod.GET)
     public ReturnData userFunds(){
         Map<String, Object> map = new HashMap<>(6);
-        try {
-            String userId = this.getCurrentUser().getUserId();
-            List<Condition> filters = new ArrayList();
-            filters.add(Condition.eq("userId", userId));
-            PayAccount payAccount = payAccountService.selectOne(filters);
-            if(payAccount != null){
-                //账户余额
-                map.put("balance",payAccount.getBalance());
-                //可用金额
-                map.put("useBalance",payAccount.getUseBalance());
-                //冻结金额 = 账户余额 -  可用金额
-                long freeze = 0;
-                freeze = payAccount.getBalance() - payAccount.getUseBalance();
-                map.put("freeze",freeze);
-                //客户预存款
-                List<PayAccount> payAccounts = payAccountService.selectList();
-                long preDeposit = 0;
-                for (PayAccount pay:payAccounts){
-                    if(pay.getUseBalance() != null){
-                        preDeposit += pay.getUseBalance();
-                    }else {
-                        continue;
-                    }
-                }
-                map.put("preDeposit",preDeposit);
-            }else{
-                return ReturnData.error("账户信息为空");
-            }
-        } catch (HookahException e) {
-            logger.info(e.getMessage());
-            return ReturnData.error("查询账户资金失败");
-        }
+        //客户预存款
+        long preDeposit = payAccountService.selectPreDeposit();
+
+        //手续费的收入
+        long fee = payAccountService.selectFee();
+        //账户余额
+        long balance = payAccountService.selectBalance();
+        balance += fee;
+        //可用金额
+        long useBalance = payAccountService.selectUseBalance();
+        useBalance += fee;
+        //冻结金额 = 账户余额 -  可用金额
+        long freeze = balance - useBalance;
+
+        map.put("balance",balance);
+        map.put("useBalance",useBalance);
+        map.put("freeze",freeze);
+        map.put("preDeposit",preDeposit);
         return ReturnData.success(map);
     }
 
@@ -149,8 +136,8 @@ public class PlatformFundsApi extends BaseController{
                 filters.add(Condition.le("addTime", DateUtils.getDate(endDate, DateUtils.DEFAULT_DATE_TIME_FORMAT)));
             }
 
-            //只查询的费用科目 冻结划入  释放划出  手续费收入 退款
-            filters.add(Condition.in("tradeType", new Integer[]{6003, 6004, 3007, 8}));
+            //只查询的费用科目 冻结划入  释放划出  手续费收入 退款 提现
+            filters.add(Condition.in("tradeType", new Integer[]{6003, 6004, 3007, 8, 2}));
             //费用科目
             if (tradeType != null) {
                 filters.add(Condition.eq("tradeType", tradeType));
@@ -176,7 +163,7 @@ public class PlatformFundsApi extends BaseController{
         }
     }
 
-    //资金流水记录
+    //资金流水记录  写的太费劲了，有时间了重写
     @RequestMapping(value = "/flowWater", method = RequestMethod.GET)
     public ReturnData flowWater(String currentPage, String pageSize, String startDate, String endDate, Integer tradeType, Integer tradeStatus){
 
@@ -190,7 +177,8 @@ public class PlatformFundsApi extends BaseController{
             orderBys.add(OrderBy.desc("addTime"));
 
             List<Condition> filters = new ArrayList();
-
+            //只查询的费用科目
+            filters.add(Condition.in("tradeType", new Integer[]{1, 2, 6003, 6004, 3007, 3001, 4001, 8}));
             if (tradeType != null) {
                 filters.add(Condition.eq("tradeType", tradeType));
             }
@@ -222,7 +210,6 @@ public class PlatformFundsApi extends BaseController{
             if(page.getList() != null && page.getList().size() > 0){
 
                 page.getList().parallelStream().forEach(x -> {
-
                     PayTradeRecordVo vo = new PayTradeRecordVo();
 
                     if(x.getTradeType().equals(3007) ||
@@ -231,7 +218,11 @@ public class PlatformFundsApi extends BaseController{
                         vo.setAccountParty("交易中心平台资金");
                     }else{
                         User user = userService.selectById(x.getUserId());
-                        vo.setAccountParty((user.getUserName() == null ? "会员" : user.getUserName()) + "平台资金");
+                        if(user != null){
+                            vo.setAccountParty((user.getUserName() == null ? "会员" : user.getUserName()) + "平台资金");
+                        }else{
+                            vo.setAccountParty("会员平台资金");
+                        }
                     }
                     BeanUtils.copyProperties(x, vo);
                     listVo.add(vo);
@@ -240,7 +231,7 @@ public class PlatformFundsApi extends BaseController{
             pagination.setTotalItems(page.getTotalItems());
             pagination.setPageSize(pageSizeNew);
             pagination.setCurrentPage(pageNumberNew);
-            pagination.setList(listVo);
+            pagination.setList(listVo.stream().sorted((x, y) -> y.getAddTime().compareTo(x.getAddTime())).collect(Collectors.toList()));
             returnData.setData(pagination);
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);

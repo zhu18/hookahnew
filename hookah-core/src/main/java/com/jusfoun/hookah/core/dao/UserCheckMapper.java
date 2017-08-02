@@ -5,4 +5,5 @@ import com.jusfoun.hookah.core.generic.GenericDao;
 
 public interface UserCheckMapper extends GenericDao<UserCheck> {
 
+    public UserCheck selectUserCheckInfo(String userId);
 }

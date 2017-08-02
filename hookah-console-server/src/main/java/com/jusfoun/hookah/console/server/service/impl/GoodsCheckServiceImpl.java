@@ -17,7 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by admin on 2017/4/7/0007.
@@ -55,6 +57,14 @@ public class GoodsCheckServiceImpl extends GenericServiceImpl<GoodsCheck, String
         MessageCode messageCode = new MessageCode();
         messageCode.setBusinessId(goodsCheck.getId());
         if(goodsCheck.getCheckStatus() == 1){
+
+            //审核通过修改上架时间 非预约上架商品
+            Goods goods1 = goodsService.selectById(goodsCheck.getGoodsId());
+            if(Objects.nonNull(goods1) && HookahConstants.GOODS_IS_BOOK_NO.equals(goods1.getIsBook())){
+                //addTime 待确认
+                goods.setOnsaleStartDate(new Date());
+            }
+
             goods.setCheckStatus(Byte.parseByte(HookahConstants.CheckStatus.audit_success.getCode()));
             goodsService.updateByIdSelective(goods);
             messageCode.setCode(HookahConstants.MESSAGE_501);

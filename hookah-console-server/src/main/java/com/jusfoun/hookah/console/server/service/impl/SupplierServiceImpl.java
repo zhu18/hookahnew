@@ -2,6 +2,7 @@ package com.jusfoun.hookah.console.server.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
@@ -12,6 +13,7 @@ import com.jusfoun.hookah.core.domain.MessageCode;
 import com.jusfoun.hookah.core.domain.Organization;
 import com.jusfoun.hookah.core.domain.Supplier;
 import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.domain.vo.SupplierVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
@@ -20,6 +22,8 @@ import com.jusfoun.hookah.core.utils.FormatCheckUtil;
 import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.rpc.api.MqSenderService;
 import com.jusfoun.hookah.rpc.api.SupplierService;
+import com.jusfoun.hookah.rpc.api.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +46,9 @@ public class SupplierServiceImpl extends GenericServiceImpl<Supplier, String> im
 
     @Resource
     OrganizationMapper organizationMapper;
+
+    @Resource
+    UserService userService;
 
     @Resource
     MqSenderService mqSenderService;
@@ -67,13 +74,14 @@ public class SupplierServiceImpl extends GenericServiceImpl<Supplier, String> im
             user.setContactPhone(contactPhone);
         }
         user.setContactAddress(contactAddress);
-        user.setUserType(9);
+        user.setSupplierStatus(supplier.CHECK_STATUS);
 
         Supplier list = super.selectOne(filter);
         if (list!=null){
             list.setContactPhone(contactPhone);
             list.setContactName(contactName);
             list.setAddTime(new Date());
+            list.setCheckStatus(supplier.CHECK_STATUS);
             supplierMapper.updateByPrimaryKeySelective(list);
         }else {
             supplier.setContactPhone(contactPhone);
@@ -96,7 +104,7 @@ public class SupplierServiceImpl extends GenericServiceImpl<Supplier, String> im
             throw new HookahException("保存失败，请重新操作");
         }
         User user = userMapper.selectByPrimaryKey(supplier.getUserId());
-        if (user.getUserType()!=4 && user.getUserType()!=9 && user.getUserType()!=10){
+        if (user.getUserType()!=4){
             throw new HookahException("单位会员认证尚未通过，请先认证单位会员");
         }
         supplier.setCheckStatus(checkStatus);
@@ -106,14 +114,37 @@ public class SupplierServiceImpl extends GenericServiceImpl<Supplier, String> im
         messageCode.setBusinessId(id);
         if (checkStatus.equals((byte)1)){
             messageCode.setCode(HookahConstants.MESSAGE_401);
-            user.setUserType(8);
+            user.setSupplierStatus(supplier.CHECK_STATUS_SUCCESS);
         }else{
             messageCode.setCode(HookahConstants.MESSAGE_402);
-            user.setUserType(10);
+            user.setSupplierStatus(supplier.CHECK_STATUS_FAILED);
         }
         supplierMapper.updateByPrimaryKeySelective(supplier);
         userMapper.updateByPrimaryKeySelective(user);
         mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_NEW_MESSAGE, messageCode);
+    }
+
+    @Override
+    public Pagination<SupplierVo> getList(Integer pageNumberNew, Integer pageSizeNew, List<Condition> filters,
+                                          List<OrderBy> orderBys){
+        PageHelper.startPage(pageNumberNew, pageSizeNew);
+        Page<Supplier> page = (Page<Supplier>)selectList(filters, orderBys);
+        List<SupplierVo> supplierVos = new ArrayList<>();
+        for (Supplier supplier : page){
+            SupplierVo supplierVo = new SupplierVo();
+            BeanUtils.copyProperties(supplier, supplierVo);
+            String userId = supplier.getUserId();
+            User user = userService.selectById(userId);
+            Integer userType = user.getUserType();
+            supplierVo.setUserType(userType);
+            supplierVos.add(supplierVo);
+        }
+        Pagination<SupplierVo> pagination = new Pagination<>();
+        pagination.setTotalItems(page.getTotal());
+        pagination.setList(supplierVos);
+        pagination.setPageSize(pageSizeNew);
+        pagination.setCurrentPage(pageNumberNew);
+        return pagination;
     }
 
 }

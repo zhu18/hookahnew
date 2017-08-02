@@ -7,27 +7,22 @@ var head = {
 <%
 var htmlPart = {
 %>
-<div class="innovation-center ">
-    <div class="innovation-bd grid-row clearfix innovation-padding">
-        <%include("/exposition/exposition_template.html"){}%>
-        <div class="innovation-content grid-right ">
-            <div class="public">
-                <span></span>
-                <h3>博览会</h3>
-            </div>
-            <div class="innovation-info">
-                <p class="info-text">青岛大数据交易中心博览会介绍</p>
-                <br>
-                <p class="info-text">青岛大数据交易中心作为山东省首个大数据主题博览会秉承“国际化、专业化、高端化、可持续化、产业化”的核心理念，旨在为全球范围大数据领域专业人士和企业提供大数据交易行情、大数据资讯、合作交流平台，促进大数据行业的技术发展和应用。</p>
-                <br>
-                <p class="info-text">青岛大数据交易中心博览会将聚焦大数据的探索与应用，展示大数据最新的技术创新与成就，成为中国最具国际化和产业化的高端专业平台。届时将举办“交易博览、大数据供应商见面会、系列活动”等相关活动。</p>
-                <br>
-                <p><img src="/static/images/exposition/1qwerqwe.png" alt=""></p>
-                <p><img src="/static/images/exposition/1werqw.png" alt=""></p>
-            </div>
-        </div>
-    </div>
-</div>
+<iframe src="http://192.168.200.116:8080/yyfa/index.jhtml" id="iframepage" name="iframepage" frameBorder=0 scrolling=no width="100%" ></iframe>
+<script type="text/javascript">
+    /*  function iFrameHeight() {
+     var ifm= document.getElementById("iframepage");
+     var subWeb = document.frames ? document.frames["iframepage"].document : ifm.contentDocument;
+     if(ifm != null && subWeb != null) {
+     ifm.height = subWeb.body.scrollHeight;
+     }
+     }*/
+    var ifm= document.getElementById("iframepage");
+    window.addEventListener('message', function(event) {
+        ifm.height = event.data;
+        window.document.body.scrollTop = 0;
+    })
+</script>
+
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>

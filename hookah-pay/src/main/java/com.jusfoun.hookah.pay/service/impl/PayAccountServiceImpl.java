@@ -2,6 +2,8 @@ package com.jusfoun.hookah.pay.service.impl;
 
 
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.constants.PayConstants;
+import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.dao.PayAccountMapper;
 import com.jusfoun.hookah.core.dao.PayAccountRecordMapper;
 import com.jusfoun.hookah.core.dao.PayTradeRecordMapper;
@@ -19,16 +21,11 @@ import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.pay.util.AlipayNotify;
 import com.jusfoun.hookah.pay.util.ChannelType;
 import com.jusfoun.hookah.pay.util.PayConfiguration;
-import com.jusfoun.hookah.pay.util.PayConstants;
-import com.jusfoun.hookah.rpc.api.AlipayService;
-import com.jusfoun.hookah.rpc.api.OrderInfoService;
-import com.jusfoun.hookah.rpc.api.PayAccountService;
-import com.jusfoun.hookah.rpc.api.PayTradeRecordService;
+import com.jusfoun.hookah.rpc.api.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -58,6 +55,12 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 
 	@Resource
 	PayAccountRecordMapper payAccountRecordMapper;
+
+	@Resource
+	PayAccountRecordService payAccountRecordService;
+
+	@Resource
+	MqSenderService mqSenderService;
 
 	@Transactional
 	public int operatorByType(Long payAccountId, Integer operatorType, Long money) {
@@ -237,8 +240,6 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 			pa.setBalance(0l);
 			pa.setUseBalance(0l);
 			pa.setFrozenBalance(0l);
-			//支付密码状态 数据库默认为 0（未设置）
-			//pa.setPaymentPasswordStatus((byte)0);
 			pa.setAccountFlag((byte) 1);
 			pa.setMerchantId("");
 			pa.setSyncFlag((byte) 0);
@@ -253,31 +254,28 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		}
 	}
 
-	/**
-	 *  设置支付密码
-	 * @param userId
-	 * @param payPassword   支付密码
-	 */
-	public boolean resetPayPassword(String userId, String payPassword) {
-//		List<Condition> filters = new ArrayList<>();
-//		if(StringUtils.isNotBlank(userId)){
-//			filters.add(Condition.eq("userId", userId));
-//		}
-//		//验证userId是否正确
-//		PayAccount payAccount = super.selectOne(filters);
-//		if (payAccount != null ) {
-//			//更改支付密码设置状态
-//			payAccount.setPaymentPasswordStatus(HookahConstants.PayPassWordStatus.isOK.getCode());
-//			payAccount.setPayPassword(payPassword);
-//			if(updateById(payAccount)>0)
-//				return true;
-//			else
-//				return  false;
-//		}else{
-//			return false;
-//		}
-		return false;
-	}
+    /**
+     *  设置支付密码
+     * @param userId
+     * @param payPassword   MD5密文支付密码
+     */
+    public boolean resetPayPassword(String userId, String payPassword) {
+        List<Condition> filters = new ArrayList<>();
+        if(StringUtils.isNotBlank(userId)){
+            filters.add(Condition.eq("userId", userId));
+        }
+        //验证userId是否正确
+        PayAccount payAccount = super.selectOne(filters);
+        if (payAccount != null ) {
+            payAccount.setPayPassword(payPassword);
+            if(updateById(payAccount)>0)
+                return true;
+            else
+                return  false;
+        }else{
+            return false;
+        }
+    }
 
     /**
      *  验证支付密码
@@ -300,13 +298,17 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 	@Override
 	@Transactional
 	public void payByBalance(OrderInfo orderInfo) throws Exception {
-		//插内部消费流水
 		//先看流水存不存在
 		List<Condition> filter = new ArrayList<>();
 		filter.add(Condition.eq("orderSn",orderInfo.getOrderSn()));
 		List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
 		if (payTradeRecords==null || payTradeRecords.size() == 0){
+			//插内部消费流水
 			PayTradeRecord payTradeRecord = new PayTradeRecord();
+			List<Condition> filters = new ArrayList<>();
+			filters.add(Condition.eq("userId",orderInfo.getUserId()));
+			PayAccount payAccount = super.selectOne(filters);
+			payTradeRecord.setPayAccountId(payAccount.getId());
 			payTradeRecord.setUserId(orderInfo.getUserId());
 			payTradeRecord.setMoney(orderInfo.getOrderAmount());
 			payTradeRecord.setTradeType(PayConstants.TradeType.SalesOut.getCode());
@@ -316,11 +318,47 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 			payTradeRecord.setAddOperator(orderInfo.getUserId());
 			payTradeRecord.setTransferDate(new Date());
 			payTradeRecordService.insertAndGetId(payTradeRecord);
+			//插交易中心冻结收入流水，
+			PayTradeRecord payTradeRecord1 = new PayTradeRecord();
+			payTradeRecord1.setPayAccountId(HookahConstants.TRADECENTERACCOUNT);
+			payTradeRecord1.setUserId(orderInfo.getUserId());
+			payTradeRecord1.setMoney(orderInfo.getOrderAmount());
+			payTradeRecord1.setTradeType(HookahConstants.TradeType.FreezaIn.getCode());
+			payTradeRecord1.setTradeStatus(HookahConstants.TransferStatus.handing.getCode());
+			payTradeRecord1.setAddTime(new Date());
+			payTradeRecord1.setOrderSn(orderInfo.getOrderSn());
+			payTradeRecord1.setAddOperator(orderInfo.getUserId());
+			payTradeRecord1.setTransferDate(new Date());
+			payTradeRecordService.insertAndGetId(payTradeRecord1);
 		}
 
 		//调余额支付
 		doPayByBalance(orderInfo);
 
+	}
+
+	public void doPayByBalance(OrderInfo orderinfo) throws Exception {
+		//用户减去余额，交易中心收入冻结金额
+		List<Condition> filter = new ArrayList<>();
+		filter.add(Condition.eq("userId", orderinfo.getUserId()));
+		PayAccount payAccount = super.selectOne(filter);
+		operatorByType(payAccount.getId(), HookahConstants.TradeType.SalesOut.getCode(), orderinfo.getOrderAmount());
+		operatorByType(HookahConstants.TRADECENTERACCOUNT,HookahConstants.TradeType.FreezaIn.getCode(),
+				orderinfo.getOrderAmount());
+
+		List<Condition> filters = new ArrayList<>();
+		filters.add(Condition.eq("orderSn",orderinfo.getOrderSn()));
+		List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filters);
+		for(PayTradeRecord payTradeRecord:payTradeRecords){
+			payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.success.getCode());
+			payTradeRecordService.updateByIdSelective(payTradeRecord);
+		}
+
+		//修改订单支付状态
+		orderInfoService.updatePayStatus(orderinfo.getOrderSn(), OrderInfo.PAYSTATUS_PAYED,0);
+
+		// 支付成功 查询订单 获取订单中商品插入到待清算记录
+		mqSenderService.sendDirect(RabbitmqQueue.WAIT_SETTLE_ORDERS, orderinfo.getOrderSn());
 	}
 
 	@Override
@@ -332,6 +370,10 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		if (payTradeRecords==null || payTradeRecords.size() == 0){
 			//插内部消费流水
 			PayTradeRecord payTradeRecord = new PayTradeRecord();
+			List<Condition> filters = new ArrayList<>();
+			filters.add(Condition.eq("userId",orderInfo.getUserId()));
+			PayAccount payAccount = super.selectOne(filters);
+			payTradeRecord.setPayAccountId(payAccount.getId());
 			payTradeRecord.setUserId(orderInfo.getUserId());
 			payTradeRecord.setMoney(orderInfo.getOrderAmount());
 			payTradeRecord.setTradeType(PayConstants.TradeType.SalesOut.getCode());
@@ -343,6 +385,7 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 			payTradeRecordService.insertAndGetId(payTradeRecord);
 			//插内部充值流水
 			PayTradeRecord payTrade = new PayTradeRecord();
+			payTrade.setPayAccountId(payAccount.getId());
 			payTrade.setUserId(orderInfo.getUserId());
 			payTrade.setMoney(orderInfo.getOrderAmount());
 			payTrade.setTradeType(PayConstants.TradeType.OnlineRecharge.getCode());
@@ -354,13 +397,14 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 			payTradeRecordService.insertAndGetId(payTrade);
 			//插外部充值流水
 			PayAccountRecord payAccountRecord = new PayAccountRecord();
-			payAccountRecord.setPayAccountId(Long.valueOf(orderInfo.getUserId()));
+			payAccountRecord.setPayAccountId(payAccount.getId());
 			payAccountRecord.setUserId(orderInfo.getUserId());
 			Date date = new Date();
 			payAccountRecord.setTransferDate(date);
 			payAccountRecord.setMoney(orderInfo.getOrderAmount());//订单资金总额
 			payAccountRecord.setSerialNumber(orderInfo.getOrderSn());//订单号
-			payAccountRecord.setTransferType(HookahConstants.TransferStatus.handing.getCode());
+			payAccountRecord.setTransferType(PayConstants.TransferType.MONEY_IN.getCode());
+			payAccountRecord.setTransferStatus(HookahConstants.TransferStatus.handing.getCode());
 			payAccountRecord.setAddTime(date);
 			payAccountRecord.setAddOperator(orderInfo.getUserId());
 			payAccountRecordMapper.insertAndGetId(payAccountRecord);
@@ -371,58 +415,19 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		return html;
 	}
 
-	public void doPayByBalance(OrderInfo orderinfo) throws Exception {
-		Long orderAmount = orderinfo.getOrderAmount();
-		//插交易中心冻结收入流水，
-		PayTradeRecord payTradeRecord = new PayTradeRecord();
-		payTradeRecord.setPayAccountId(HookahConstants.TRADECENTERACCOUNT);
-		payTradeRecord.setMoney(orderAmount);
-		payTradeRecord.setTradeType(HookahConstants.TradeType.FreezaIn.getCode());
-		payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.handing.getCode());
-		payTradeRecord.setAddTime(new Date());
-		payTradeRecord.setOrderSn(orderinfo.getOrderSn());
-		payTradeRecord.setAddOperator(orderinfo.getUserId());
-		payTradeRecord.setTransferDate(new Date());
-		payTradeRecordService.insertAndGetId(payTradeRecord);
-		//用户减去余额，交易中心收入冻结金额
-		List<Condition> filter = new ArrayList<>();
-		filter.add(Condition.eq("userId", orderinfo.getUserId()));
-		PayAccount payAccount = super.selectOne(filter);
-		operatorByType(payAccount.getId(), HookahConstants.TradeType.SalesOut.getCode(), orderAmount);
-		int n = operatorByType(HookahConstants.TRADECENTERACCOUNT,HookahConstants.TradeType.FreezaIn.getCode(),
-				orderAmount);
+	@Override
+	@Transactional
+	public boolean aliPay(String orderSn, String tradeStatus, Map<String,String> param) throws Exception {
 
-		List<Condition> filters = new ArrayList<>();
-		filters.add(Condition.eq("orderSn",orderinfo.getOrderSn()));
-		List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filters);
-		for(PayTradeRecord payTradeRecord1:payTradeRecords){
-			payTradeRecord1.setTradeStatus(HookahConstants.TransferStatus.success.getCode());
-			payTradeRecordService.updateByIdSelective(payTradeRecord1);
-		}
-
-		// 支付成功 查询订单 获取订单中商品插入到待清算记录
-		//修改订单支付状态
-		orderInfoService.updatePayStatus(orderinfo.getOrderSn(), OrderInfo.PAYSTATUS_PAYED,0);
-		orderInfoService.waitSettleRecordInsert(orderinfo.getOrderSn());
-	}
-
-
-	public void alipayRtn(HttpServletRequest request) throws Exception {
-		//商户订单号
-		String orderSn = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"), "UTF-8");
-		//支付宝交易号
-		String tradeNo = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"), "UTF-8");
-		//交易状态
-		String tradeStatus = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"), "UTF-8");
-		String total_fee = new String(request.getParameter("total_fee").getBytes("ISO-8859-1"), "UTF-8");
 		List<Condition> filter = new ArrayList<>();
 		filter.add(Condition.eq("orderSn", orderSn));
 		OrderInfo orderInfo = orderInfoService.selectOne(filter);
-		if (AlipayNotify.verify(getRequestParams(request))) {
-			if (tradeStatus.equals("TRADE_FINISHED") || tradeStatus.equals("TRADE_SUCCESS")) {
+		if (AlipayNotify.verify(param)){
+			if(tradeStatus.equals("TRADE_FINISHED") || tradeStatus.equals("TRADE_SUCCESS")){
 				//交易成功,插交易中心冻结收入流水，更新交易中心虚拟账户金额
 				PayTradeRecord payTradeRecord = new PayTradeRecord();
-				payTradeRecord.setUserId(orderInfo.getUserId());//交易中心Id
+				payTradeRecord.setPayAccountId(HookahConstants.TRADECENTERACCOUNT);
+				payTradeRecord.setUserId(orderInfo.getUserId());
 				payTradeRecord.setMoney(orderInfo.getOrderAmount());
 				payTradeRecord.setTradeType(HookahConstants.TradeType.FreezaIn.getCode());
 				payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.handing.getCode());
@@ -431,81 +436,40 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 				payTradeRecord.setAddOperator(orderInfo.getUserId());
 				payTradeRecord.setTransferDate(new Date());
 				payTradeRecordService.insertAndGetId(payTradeRecord);
-
+				//更新交易中心虚拟账户金额
+				operatorByType(HookahConstants.TRADECENTERACCOUNT,HookahConstants.TradeType.FreezaIn.getCode(),
+						orderInfo.getOrderAmount());
 
 				//修改内部流水的状态和外部充值状态
 				List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
-				for (PayTradeRecord payTradeRecord1 : payTradeRecords) {
-					payTradeRecord1.setTradeStatus((byte) 1);
+				for (PayTradeRecord payTradeRecord1 : payTradeRecords){
+					payTradeRecord1.setTradeStatus(HookahConstants.TransferStatus.success.getCode());
+					payTradeRecordService.updateByIdSelective(payTradeRecord1);
 				}
+				List<Condition> filters = new ArrayList<>();
+				filters.add(Condition.eq("serialNumber",orderSn));
+				PayAccountRecord payAccountRecord = payAccountRecordService.selectOne(filters);
+				payAccountRecord.setTransferStatus(HookahConstants.TransferStatus.success.getCode());
+				payAccountRecordService.updateByIdSelective(payAccountRecord);
 
 				//更新订单状态
-//				orderInfoService.updatePayStatus(orderSn, 2);
-			}
-		}
-	}
+				orderInfoService.updatePayStatus(orderSn,orderInfo.PAYSTATUS_PAYED,1);
 
-	public String alipayNtf(HttpServletRequest request) throws Exception {
-		//商户订单号
-		String orderSn = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
-		//支付宝交易号
-		String tradeNo = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"),"UTF-8");
-		//交易状态
-		String tradeStatus = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
-		List<Condition> filter = new ArrayList<>();
-		filter.add(Condition.eq("orderSn",orderSn));
-		OrderInfo orderInfo = orderInfoService.selectOne(filter);
-		if(AlipayNotify.verify(getRequestParams(request))){
-			if(tradeStatus.equals("TRADE_SUCCESS") || tradeStatus.equals("TRADE_FINISHED")){
-				//交易成功,插交易中心冻结收入流水，更新交易中心虚拟账户金额
-				PayTradeRecord payTradeRecord = new PayTradeRecord();
-				payTradeRecord.setUserId(orderInfo.getUserId());//交易中心Id
-				payTradeRecord.setMoney(orderInfo.getOrderAmount());
-				payTradeRecord.setTradeType(6003);
-				payTradeRecord.setTradeStatus((byte)0);
-				payTradeRecord.setAddTime(new Date());
-				payTradeRecord.setOrderSn(orderSn);
-				payTradeRecord.setAddOperator(orderInfo.getUserId());
-				payTradeRecord.setTransferDate(new Date());
-				payTradeRecordService.insertAndGetId(payTradeRecord);
-				//修改内部流水的状态和外部充值状态
+				// 支付成功 查询订单 获取订单中商品插入到待清算记录
+				mqSenderService.sendDirect(RabbitmqQueue.WAIT_SETTLE_ORDERS, orderSn);
+				
+				return true;
+			}else{
+				//交易失败
 				List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
 				for (PayTradeRecord payTradeRecord1 : payTradeRecords){
-					payTradeRecord1.setTradeStatus((byte)1);
+					payTradeRecord1.setTradeStatus(HookahConstants.TransferStatus.fail.getCode());
 				}
-				//更新订单状态
-//				orderInfoService.updatePayStatus(orderSn,2);
-			}else {
-				List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
-				for (PayTradeRecord payTradeRecord1 : payTradeRecords){
-					payTradeRecord1.setTradeStatus((byte)2);
-				}
+				return false;
 			}
-//            payCoreService.updatePayCore(paied);
-			return "success";
-		}else {
-			return "fail";
+		}else{
+			return false;
 		}
-	}
-
-	@SuppressWarnings("rawtypes")
-	private Map<String,String> getRequestParams(HttpServletRequest request){
-		//处理通知参数
-		Map<String,String> params = new HashMap<String,String>();
-		Map requestParams = request.getParameterMap();
-		for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext();) {
-			String name = (String) iter.next();
-			String[] values = (String[]) requestParams.get(name);
-			String valueStr = "";
-			for (int i = 0; i < values.length; i++) {
-				valueStr = (i == values.length - 1) ? valueStr + values[i]
-						: valueStr + values[i] + ",";
-			}
-			//乱码解决，这段代码在出现乱码时使用。如果mysign和sign不相等也可以使用这段代码转化
-			//valueStr = new String(valueStr.getBytes("ISO-8859-1"), "gbk");
-			params.put(name, valueStr);
-		}
-		return params;
 	}
 
 	public ReturnData userRecharge(Map<String,String> params){
@@ -542,10 +506,8 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 				returnData.setMessage("充值失败：账户不存在！");
 				return returnData;
 			}
-			//insertPayTradeRecord( userId, money, payAccount.getId(), 0, 1);
-			//insertPayAccountRecord( userId, money, payAccount.getId(), 0, 1);
 
-			String html = alipayService.doCharge(userId,money.toString(),
+			String html = alipayService.doCharge(userId,payAccount.getId(),money.toString(),
 					PayConfiguration.RECHARGE_NOTIFY_URL,PayConfiguration.RECHARGE_RETURN_URL);
 			returnData.setCode(ExceptionConst.Success);
 			returnData.setMessage(html);
@@ -559,42 +521,14 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		return returnData;
 	}
 
-	public void updatePayAccountMoney(Long payAccountId,Long money){
-		Map<String,Long> params=new HashMap<String,Long>();
+	public void updatePayAccountMoney(Long payAccountId,Long money,String userId){
+		Map<String,Object> params=new HashMap<String,Object>();
 		params.put("payAccountId",payAccountId);
 		params.put("money",money);
+		params.put("userId",userId);
 		payAccountMapper.updatePayAccountMoney(params);
 	}
 
-	public void insertPayTradeRecord(String userId,Long money,Long payAccountId,int tradeStatus,int tradeType){
-		PayTradeRecord ptr=new PayTradeRecord();
-		ptr.setMoney(Math.abs(money));
-		ptr.setPayAccountId(payAccountId);
-		ptr.setUserId(userId);
-		ptr.setTradeStatus((byte)tradeStatus);
-		ptr.setTradeType(tradeType);
-		ptr.setAddOperator(userId);
-		ptr.setAddTime(new Date());
-		ptr.setUpdateOperator(userId);
-		ptr.setUpdateTime(new Date());
-		payTradeRecordMapper.insert(ptr);
-	}
-
-	public void insertPayAccountRecord(String userId,Long money,Long payAccountId,int tradeStatus,int tradeType){
-		PayAccountRecord par = new PayAccountRecord();
-		par.setChannelType(ChannelType.ZFB);
-		par.setMoney(Math.abs(money));
-		par.setPayAccountId(payAccountId);
-		par.setTransferStatus((byte)tradeStatus);
-		par.setTransferType((byte)tradeType);
-		par.setTransferDate(new Date());
-		par.setAddOperator(userId);
-		par.setAddTime(new Date());
-		par.setUpdateOperator(userId);
-		par.setUpdateTime(new Date());
-		par.setUserId(userId);
-		payAccountRecordMapper.insert(par);
-	}
 
 	/**
 	 * 更新账户表并插入记录表
@@ -616,13 +550,18 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 			PayAccount payAccount = super.selectOne(filters);
 			if(tradeStatus.equals("1")){
 				money = Math.round(Double.parseDouble(totalFee)*100);
+				if (money<=0){
+					returnData.setCode(ExceptionConst.Failed);
+					returnData.setMessage("充值失败！充值金额必须大于0元！");
+					return returnData;
+				}
 				//更新账户金额
-				updatePayAccountMoney(payAccount.getId(),money);
+				updatePayAccountMoney(payAccount.getId(),money,userId);
 			}
-			//插入记录表
-			insertPayTradeRecord( userId, money, payAccount.getId(), new Byte(tradeStatus), new Byte(tradeType));
-			insertPayAccountRecord( userId, money, payAccount.getId(), new Byte(tradeStatus), new Byte(tradeType));
-			//payTradeRecordMapper.updateByPrimaryKeySelective();
+			//更新记录表
+			payTradeRecordMapper.updatePayTradeRecordStatusByOrderSn(params);
+			payAccountRecordMapper.updatePayAccountRecordStatusByOrderSn(params);
+
 			returnData.setCode(ExceptionConst.Success);
 			returnData.setMessage("操作成功！");
 			return returnData;
@@ -646,11 +585,68 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
             filters=new ArrayList();
             filters.add(Condition.eq("userId", userId));
             PayAccount payAccount=super.selectOne(filters);
+			//不提供交易密码
             payAccount.setPayPassword("");
             return payAccount;
         }else{
-            return new PayAccount();
+            return null;
         }
     }
+	/**
+	 * 修改交易密码
+	 * @param oldPayPassWord
+	 * @param newPayPassWord
+	 * @param userId
+	 * @return
+	 */
+	@Override
+	public boolean updatePayPassWordByUserId(String oldPayPassWord, String newPayPassWord, String userId) {
+		if(StringUtils.isNotBlank(userId) && !oldPayPassWord.equals(newPayPassWord)){
+			List<Condition> filters = new ArrayList();
+			filters.add(Condition.eq("userId", userId));
+			PayAccount payAccount=super.selectOne(filters);
+			//判断UserId是否正确及原始交易密码是否正确
+			if(null == payAccount || !oldPayPassWord.equals(payAccount.getPayPassword()))
+				return false;
+			payAccount.setPayPassword(newPayPassWord);
+			if(updateById(payAccount)>0)
+				return true;
+			else
+				return false;
+		}
+		return false;
+	}
+
+	/**
+	 * 平台余额
+	 * @return
+	 */
+	public  long selectBalance(){
+		return payAccountMapper.selectBalance();
+	}
+
+	/**
+	 * 可用金额
+	 * @return
+	 */
+	public long selectUseBalance(){
+		return payAccountMapper.selectUseBalance();
+	}
+
+	/**
+	 * 冻结余额
+	 * @return
+	 */
+	public long selectPreDeposit(){
+		return payAccountMapper.selectPreDeposit();
+	}
+
+	/**
+	 * 手续费收入
+	 * @return
+	 */
+	public long selectFee(){
+		return payAccountMapper.selectFee();
+	}
 
 }

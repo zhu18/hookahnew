@@ -26,6 +26,10 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
 
     public OrderInfo insert(OrderInfo orderInfo, String goodsId, Integer formatId,Long goodsNumber) throws Exception;
 
+    void checkOrderExist(String userId, String[] cartIdArray) throws Exception;
+
+    void checkOrderExist(String userId, String goodsId, Long goodsNumber) throws Exception;
+
     public void updatePayStatus(String orderSn, Integer payStatus, Integer payMode) throws Exception;
 
     public Pagination<OrderInfoVo> getDetailListInPage(Integer pageNum, Integer pageSize, List<Condition> filters,

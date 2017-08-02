@@ -18,75 +18,22 @@ var head = {
 <%
 var htmlPart = {
 %>
-<div class="box backgorund-gray">
-    <div class="information clearfix grid-row padding-top-10">
-        <div class="content overflow">
-            <!--左侧栏-->
-            <div class="leftSide margin-right-10">
-                <!--中心动态-->
-                <div class="top margin-bottom-10">
-                    <ul>
-                        <li onclick="renderChange(this,1)" id="one">
-                            <a href="javascript:;">
-                                <i class="iconfont icon-iconquan04"></i>
-                                <span class="page-title">中心动态</span>
-                            </a>
-                        </li>
-                        <li onclick="renderChange(this,2)" id="two">
-                            <a href="javascript:;">
-                                <i class="iconfont icon-iconfontcolor34"></i>
-                                <span class="page-title">行业资讯</span>
-                            </a>
-                        </li>
-                        <li onclick="renderChange(this,3)" id="three">
-                            <a href="javascript:;">
-                                <i class="iconfont icon-zixun"></i>
-                                <span class="page-title">中心公告</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <!--资讯热文-->
-                <!--<div class="bot padding-left-10 padding-right-10">-->
-                    <!--<div class="hot margin-left-10">-->
-                        <!--<span class="margin-right-10"></span>-->
-                        <!--<h4>-->
-                            <!--资讯热文-->
-                        <!--</h4>-->
-                    <!--</div>-->
-                    <!--<div class="line"></div>-->
-                    <!--<a href="javascript:;">-->
-                        <!--<img src="/static/images/zhuangti.png" alt="" class="margin-bottom-10 margin-top-10">-->
-                    <!--</a>-->
-                    <!--<a href="javascript:;">-->
-                        <!--<div class="description margin-bottom-10">-->
-                            <!--<p>深入贯彻落实中央经济工作会议精神，总结我省2016年经济工作，研究部署2017年经济工作。</p>-->
-                        <!--</div>-->
-                    <!--</a>-->
-                    <!--<div class="line"></div>-->
-                    <!--<a href="javascript:;">-->
-                        <!--<img src="/static/images/jujiao.png" alt="" class=" margin-top-10">-->
-                    <!--</a>-->
-                    <!--<a href="javascript:;">-->
-                        <!--<div class="description margin-bottom-10">-->
-                            <!--<p>山东省第十二届人民代表大会第六次会议6日上午9时在济南开幕，山东省委书记、省人大常委会主任姜异康主持会议，省长郭树清代表山东省人民政府向大会作《政府工作报告》。</p>-->
-                        <!--</div>-->
-                    <!--</a>-->
-                <!--</div>-->
-            </div>
-            <!--右侧内容-->
-            <div class="rightCenter padding-left-20 padding-right-30">
-                <div class="title">
-                    <span class="margin-right-10"></span>
-                    <h3 id="J_pageTitle">中心动态</h3>
-                </div>
-                <div class="line"></div>
-                <div class="public-box"></div>
-            </div>
-            <%include("/layout/pageaction.html"){} %>
-        </div>
-    </div>
-</div>
+
+<iframe src="http://192.168.200.116:8080/xyzx/index.jhtml" id="iframepage" name="iframepage" frameBorder=0 scrolling=no width="100%" ></iframe>
+<script type="text/javascript">
+    /*  function iFrameHeight() {
+     var ifm= document.getElementById("iframepage");
+     var subWeb = document.frames ? document.frames["iframepage"].document : ifm.contentDocument;
+     if(ifm != null && subWeb != null) {
+     ifm.height = subWeb.body.scrollHeight;
+     }
+     }*/
+    var ifm= document.getElementById("iframepage");
+    window.addEventListener('message', function(event) {
+        ifm.height = event.data;
+        window.document.body.scrollTop = 0;
+    })
+</script>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>

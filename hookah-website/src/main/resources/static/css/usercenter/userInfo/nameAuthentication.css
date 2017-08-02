@@ -19,6 +19,7 @@
     width: 156px;
     padding-right: 34px;
     text-align: right;
+    vertical-align: top;
     background-color: #F4F4F4;
 }
 .nameAuthentication ul li p{
@@ -34,9 +35,8 @@
     line-height: 115px;
 }
 .nameAuthentication ul li.img-box img{
-    height: 107px;
-    vertical-align: middle;
-    margin-left: 115px;
+    height: 105px;
+    margin: 5px 0px 5px 115px;
 }
 .nameAuthentication ul li .revise-btn{
     position: absolute;

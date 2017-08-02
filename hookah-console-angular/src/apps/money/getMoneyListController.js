@@ -22,7 +22,7 @@ class getMoneyListController {
 
         if (res.data.code == '1') {
           $scope.getMoneyList = res.data.data.list;
-          $rootScope.pagination = res.data.data;
+          // $rootScope.pagination = res.data.data;
           $scope.showNoneDataInfoTip = false;
           if (res.data.data.totalPage > 1) {
             $scope.showPageHelpInfo = true;

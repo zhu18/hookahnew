@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.webiste.controller;
 
+import com.jusfoun.hookah.core.constants.PayConstants;
 import com.jusfoun.hookah.core.domain.*;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -91,26 +92,23 @@ public class PayBankCardController extends BaseController{
             if(StringUtils.isNotBlank(userId)){
                 filters.add(Condition.eq("userId", userId));
             }
-            boolean exists = payBankCardService.exists(filters);
-            if(exists == false){
-                PayAccount payAccount = payAccountService.selectOne(filters);
-                PayBankCard pay= new PayBankCard();
-                pay.setUserId(userId);
-                pay.setAddTime(new Date());
-                pay.setCardOwner(cardOwner);
-                pay.setBindFlag(0);
-                pay.setBankAccountType(bankAccountType);
+            PayAccount payAccount = payAccountService.selectOne(filters);
+            PayBankCard pay= new PayBankCard();
+            pay.setUserId(userId);
+            pay.setAddTime(new Date());
+            pay.setCardOwner(cardOwner);
+            pay.setBindFlag(PayConstants.BankCardStatus.binded.getCode());
+            pay.setBankAccountType(bankAccountType);
+            if(payAccount != null){
                 pay.setPayAccountId(payAccount.getId());
                 pay.setAddOperator(payAccount.getUserName());
-                pay.setCardCode(cardCode);
-                pay.setPhoneNumber(phoneNumber);
-                pay.setOpenBank(openBank);
-                pay.setPayBankId(payBankId);
-                PayBankCard insert = payBankCardService.insert(pay);
-                return ReturnData.success(insert);
-            }else {
-                return ReturnData.error("此用户已绑定银行卡");
             }
+            pay.setCardCode(cardCode);
+            pay.setPhoneNumber(phoneNumber);
+            pay.setOpenBank(openBank);
+            pay.setPayBankId(payBankId);
+            PayBankCard insert = payBankCardService.insert(pay);
+            return ReturnData.success(insert);
         }catch (Exception e){
             logger.error("绑定银行卡失败",e);
             return ReturnData.error("绑定银行卡失败");
@@ -128,7 +126,11 @@ public class PayBankCardController extends BaseController{
         try {
             String userId = this.getCurrentUser().getUserId();
             List<Condition> filters = new ArrayList();
-            filters.add(Condition.eq("userId", userId));
+            if(StringUtils.isNotBlank(userId))
+                filters.add(Condition.eq("userId", userId));
+            User user = userService.selectOne(filters);
+            if(user != null)
+                map.put("userName",user.getUserName());
             PayAccount payAccount = payAccountService.selectOne(filters);
             if(payAccount != null){
                 //账户余额
@@ -141,6 +143,7 @@ public class PayBankCardController extends BaseController{
                 map.put("freeze",freeze);
             }
             //银行卡信息
+            filters.add(Condition.eq("bindFlag", PayConstants.BankCardStatus.binded.getCode()));
             PayBankCard payBankCard = payBankCardService.selectOne(filters);
             if(payBankCard != null){
                 map.put("bankId",payBankCard.getPayBankId());
@@ -169,8 +172,10 @@ public class PayBankCardController extends BaseController{
             String userId = this.getCurrentUser().getUserId();
             List<Condition> filters = new ArrayList();
             filters.add(Condition.eq("userId", userId));
+            //银行卡状态  正常
+            filters.add(Condition.eq("bindFlag",PayConstants.BankCardStatus.binded.getCode()));
             PayBankCard payBankCard = payBankCardService.selectOne(filters);
-            payBankCard.setBindFlag(1);
+            payBankCard.setBindFlag(PayConstants.BankCardStatus.unbind.getCode());
             int n = payBankCardService.updateByIdSelective(payBankCard);
             if(n == 1){
                 returnData.setMessage("银行卡信息已解除");

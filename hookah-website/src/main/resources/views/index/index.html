@@ -1,49 +1,23 @@
+<iframe src="http://192.168.200.116:8080/" id="iframepage" name="iframepage" frameBorder=0 scrolling=no width="100%"></iframe>
+<script type="text/javascript">
+/*  function iFrameHeight() {
+    var ifm= document.getElementById("iframepage");
+    var subWeb = document.frames ? document.frames["iframepage"].document : ifm.contentDocument;
+    if(ifm != null && subWeb != null) {
+      ifm.height = subWeb.body.scrollHeight;
+    }
+  }*/
+  var ifm= document.getElementById("iframepage");
+  window.addEventListener('message', function(event) {
+      ifm.height = event.data;
+      window.document.body.scrollTop = 0;
+  })
+</script>
+
+<!--
 <div class="grid-0 index-banner">
-    <%include("/layout/index_top_banner.html"){} %>
+    <    %include("/layout/index_top_banner.html"){} %>
 </div>
-<!--<div class="grif-0 index-exchange-brief">-->
-    <!--<div class="grid-row">-->
-        <!--<div class="top-title">-->
-            <!--<span class=" display-inline-block title-left"></span>-->
-            <!--<h3 class=" display-inline-block">交易中心介绍</h3>-->
-            <!--<span class=" display-inline-block title-right"></span>-->
-        <!--</div>-->
-        <!--<div class="top-info text-align-center margin-top-10">-->
-            <!--<p class="display-inline-block">山东大数据交易中心整合了全球所有顶尖的大数据开发平台、技术工具、模型算法、应用组件等下游用户创业创新。打造中国大数据产业的"App-->
-                <!--Store"。借助大数据技术完成数据集成、融合。</p>-->
-        <!--</div>-->
-        <!--<div class="list-data text-align-center">-->
-            <!--<div class="data-item display-inline-block ">-->
-                <!--<a class="data-item-inner display-inline-block " href="javascript:void(0)">-->
-                    <!--<div class="item-icon"><img src="/static/images/test-icon.jpg" alt=""></div>-->
-                    <!--<h3 class="item-h3">资源种类</h3>-->
-                    <!--<p class="item-info">快速复制阿里巴巴互联网架构，一站式提供分布式</p>-->
-                <!--</a>-->
-            <!--</div>-->
-            <!--<div class="data-item display-inline-block ">-->
-                <!--<a class="data-item-inner display-inline-block " href="javascript:void(0)">-->
-                    <!--<div class="item-icon"><img src="/static/images/test-icon.jpg" alt=""></div>-->
-                    <!--<h3 class="item-h3">会员须知</h3>-->
-                    <!--<p class="item-info">快速复制阿里巴巴互联网架构，一站式提供分布式</p>-->
-                <!--</a>-->
-            <!--</div>-->
-            <!--<div class="data-item display-inline-block ">-->
-                <!--<a class="data-item-inner display-inline-block " href="javascript:void(0)">-->
-                    <!--<div class="item-icon"><img src="/static/images/test-icon.jpg" alt=""></div>-->
-                    <!--<h3 class="item-h3">隐私条款</h3>-->
-                    <!--<p class="item-info">快速复制阿里巴巴互联网架构，一站式提供分布式</p>-->
-                <!--</a>-->
-            <!--</div>-->
-            <!--<div class="data-item display-inline-block ">-->
-                <!--<a class="data-item-inner display-inline-block " href="javascript:void(0)">-->
-                    <!--<div class="item-icon"><img src="/static/images/test-icon.jpg" alt=""></div>-->
-                    <!--<h3 class="item-h3">常见问题</h3>-->
-                    <!--<p class="item-info">快速复制阿里巴巴互联网架构，一站式提供分布式</p>-->
-                <!--</a>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
 <div class="grif-0 index-trade-resources">
     <div class="grid-row">
         <div class="list-data text-align-center">
@@ -139,7 +113,7 @@
                     <a href="javascript:void(0)" target="_blank">
                         <img id="dataL_img" src="" alt="">
                         <div class="color-gray-6">
-                            <!--<span class="grid-left">admin</span>-->
+                            &lt;!&ndash;<span class="grid-left">admin</span>&ndash;&gt;
                             <span id="dataL_dataTime" class="grid-right">2017-03-28</span>
                         </div>
                         <h3 id="dataL_dataTitle"></h3>
@@ -157,35 +131,20 @@
             <div class="box-title border-bottom margin-bottom-10">
                 <span class="grid-left "></span>
                 <h3 class="grid-left">公告</h3>
-                <!--<a href="javascript:void(0)" class="grid-right">更多 <span class="fa fa-angle-double-right"></span></a>-->
+                &lt;!&ndash;<a href="javascript:void(0)" class="grid-right">更多 <span class="fa fa-angle-double-right"></span></a>&ndash;&gt;
             </div>
             <div class="notice-center">
                 <ul id="J_dataRR">
-                    <!--<li><span class="serial"></span><a href="javascript:void(0)">暂无公告</a><span class="grid-right"></span></li>-->
-                    <!--<li><span class="serial">1.</span><a target="_blank" href="/exposition/exchange_rule">交易规则</a><span class="grid-right">2017-05-12</span></li>-->
-                    <!--<li><span class="serial">4.</span><a href="javascript:void(0)">山东设立500亿元新兴产业</a><span class="grid-right">2017-03-30</span></li>-->
-                    <!--<li><span class="serial">5.</span><a href="javascript:void(0)">山东设立500亿元新兴产业</a><span class="grid-right">2017-03-30</span></li>-->
-                    <!--<li><span class="serial">6.</span><a href="javascript:void(0)">山东设立500亿元新兴产业</a><span class="grid-right">2017-03-30</span></li>-->
-                    <!--<li><span class="serial">7.</span><a href="javascript:void(0)">山东设立500亿元新兴产业</a><span class="grid-right">2017-03-30</span></li>-->
-                    <!--<li><span class="serial">8.</span><a href="javascript:void(0)">山东设立500亿元新兴产业</a><span class="grid-right">2017-03-30</span></li>-->
-                    <!--<li><span class="serial">9.</span><a href="javascript:void(0)">山东设立500亿元新兴产业</a><span class="grid-right">2017-03-30</span></li>-->
-                    <!--<li><span class="serial">10.</span><a href="javascript:void(0)">山东设立500亿元新兴产业</a><span class="grid-right">2017-03-30</span></li>-->
                 </ul>
             </div>
         </div>
     </div>
 </div>
-<!--合作伙伴-->
+&lt;!&ndash;合作伙伴&ndash;&gt;
 <div class="grid-0 co-organization">
     <div class="grid-row">
         <h3>合作机构</h3>
         <ul>
-            <!--<li class="grid-left "><a class="logo1" target="_blank" href="http://www.gbdex.com/"></a></li>-->
-            <!--<li class="grid-left "><a class="logo2" target="_blank" href="http://finance.qq.com/bigdata/index.htm"></a></li>-->
-            <!--<li class="grid-left "><a class="logo3" target="_blank" href="https://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=0&rsv_idx=1&tn=baidu&wd=%E8%B7%AF%E9%80%8F%E4%B8%AD%E6%96%87%E7%BD%91&rsv_pq=cfd904f4000097c2&rsv_t=e6c6R4mbDWPsPlvdAM4f5daczSFci3C5Jdd9x6PctlzE%2BwRxvk6i2dkJCPY&rsv_enter=1&rsv_sug3=15&rsv_sug1=8&qq-pf-to=pcqq.c2c"></a></li>-->
-            <!--<li class="grid-left "><a class="logo4" target="_blank" href="http://www.standardandpoors.com/en_US/web/guest/home"></a></li>-->
-            <!--<li class="grid-left "><a class="logo5" target="_blank" href="http://www.imjuxin.com/"></a></li>-->
-            <!--<li class="grid-left "><a class="logo6" target="_blank" href="http://www.citicbank.com/"></a></li>-->
             <li class="grid-left ">
                 <a target="_blank" href="http://www.qingdao.gov.cn" title="青岛市政府网站">
                     <img src="/static/images/index/logo_01.jpg" alt="">
@@ -217,36 +176,7 @@
                 </a>
             </li>
         </ul>
-		<!--<li class="grid-left ">-->
-			<!--<a target="_blank" href="http://www.qingdao.gov.cn" title="青岛市政府网站">-->
-				<!--<img src="/static/images/index/logo1.jpg" alt="">-->
-			<!--</a>-->
-		<!--</li>-->
-		<!--<li class="grid-left ">-->
-			<!--<a target="_blank" href="http://www.gbdex.com/website/" title="贵阳大数据交易所">-->
-				<!--<img src="/static/images/index/logo1.jpg" alt="">-->
-			<!--</a>-->
-		<!--</li>-->
-		<!--<li class="grid-left ">-->
-			<!--<a target="_blank" href="http://www.xhafz.com/" title="西发展官网">-->
-				<!--<img src="/static/images/index/logo1.jpg" alt="">-->
-			<!--</a>-->
-		<!--</li>-->
-		<!--<li class="grid-left ">-->
-			<!--<a target="_blank" href="http://www.jusfoun.com/#homePage" title="九次方官网">-->
-				<!--<img src="/static/images/index/logo1.jpg" alt="">-->
-			<!--</a>-->
-		<!--</li>-->
-		<!--<li class="grid-left ">-->
-			<!--<a target="_blank" href="http://finance.qq.com/bigdata/index.htm" title="腾讯大数据">-->
-				<!--<img src="/static/images/index/logo1.jpg" alt="">-->
-			<!--</a>-->
-		<!--</li>-->
-		<!--<li class="grid-left ">-->
-			<!--<a target="_blank" href="http://www.citicbank.com/" title="中信银行">-->
-				<!--<img src="/static/images/index/logo1.jpg" alt="">-->
-			<!--</a>-->
-		<!--</li>-->
+
     </div>
 </div>
-<script src="/static/js/index/index.js"></script>
+<script src="/static/js/index/index.js"></script>-->

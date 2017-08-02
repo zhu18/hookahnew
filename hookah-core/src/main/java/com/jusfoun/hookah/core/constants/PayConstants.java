@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.pay.util;
+package com.jusfoun.hookah.core.constants;
 
 /**
  * @Author dengxu
@@ -104,7 +104,7 @@ public class PayConstants {
     /**
      * 下载文件存储地址
      */
-    public static final String FILE_PATH = "D:\\\\apex\\\\download";
+    public static final String FILE_PATH = "D:\\\\download";
 
     /**
      * transfer 类型 2出金 1入金 和 payTradeRecord 同步 3入金4出金
@@ -222,6 +222,30 @@ public class PayConstants {
         public String getCode() {
             return code;
         }
+    }
+
+    /**
+     * 客户基本信息同步(719001)
+     * 未同步  0
+     * 同步中  1
+     * 已同步  2
+     */
+    public enum SyncCustomerInfoFlag {
+
+        NOT_SYNCHRONIZED((byte)0),
+        SYNCHRONIZATION((byte)1),
+        SYNCHRONIZED((byte)2);
+
+        public byte code;
+
+        SyncCustomerInfoFlag(byte code) {
+            this.code = code;
+        }
+
+        public byte getCode() {
+            return code;
+        }
+
     }
 
 }

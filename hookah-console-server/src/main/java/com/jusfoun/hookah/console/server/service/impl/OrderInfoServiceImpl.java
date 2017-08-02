@@ -17,11 +17,7 @@ import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.generic.OrderBy;
-import com.jusfoun.hookah.core.utils.HttpClientUtil;
-import com.jusfoun.hookah.core.utils.JsonUtils;
-import com.jusfoun.hookah.core.utils.OrderHelper;
-import com.jusfoun.hookah.core.utils.StringUtils;
-import com.jusfoun.hookah.core.utils.FormatCheckUtil;
+import com.jusfoun.hookah.core.utils.*;
 import com.jusfoun.hookah.rpc.api.*;
 import org.apache.http.HttpException;
 import org.springframework.beans.BeanUtils;
@@ -37,6 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.function.Function;
 import java.util.regex.Pattern;
@@ -180,6 +177,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         String addUser = cart.getGoods().getAddUser();
         User user = userService.selectById(addUser);
         og.setAddUser(user.getUserName());
+        og.setGoodsUserId(addUser);
         Organization organization = organizationService.selectById(user.getOrgId());
         og.setSupplier(organization.getOrgName());
         og.setFormatId(cart.getFormatId());
@@ -234,6 +232,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         String addUser = goods.getAddUser();
         User user = userService.selectById(addUser);
         og.setAddUser(user.getUserName());
+        og.setGoodsUserId(addUser);
         Organization organization = organizationService.selectById(user.getOrgId());
         og.setSupplier(organization.getOrgName());
         og.setIsOnsale(goods.getIsOnsale());
@@ -403,6 +402,72 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         return null;
     }
 
+    /**
+     * 购物车生成订单前验证
+     * @param userId
+     * @param cartIdArray
+     */
+    @Override
+    public void checkOrderExist(String userId, String[] cartIdArray) throws Exception{
+        List<Condition> filters = new ArrayList<>();
+        filters.add(Condition.in("recId",cartIdArray));
+        List<CartVo> cartList = cartService.selectDetailList(filters);
+        if (cartList!=null && cartList.size()>0){
+            //先查看是否有相同的订单
+            List<Condition> filter = new ArrayList<>();
+            filter.add(Condition.eq("userId", userId));
+            filter.add(Condition.ne("payStatus", 2));
+            filter.add(Condition.eq("isDeleted",0));
+            filter.add(Condition.eq("forceDeleted",0));
+            List<OrderInfo> orderInfos = selectList(filter);
+            for (OrderInfo orderInfo1 : orderInfos){
+                OrderInfoVo mgOrder = mgOrderInfoService.selectById(orderInfo1.getOrderId());
+                List<MgOrderGoods> mgOrderGoodss = mgOrder.getMgOrderGoodsList();
+                int count = 0;
+                if (cartList.size() == mgOrderGoodss.size()){
+                    for (MgOrderGoods mgOrderGoods : mgOrderGoodss){
+                        for (CartVo cart:cartList){
+                            Goods g = cart.getGoods();
+                            if (mgOrderGoods.getGoodsId().equals(g.getGoodsId()) &&
+                                    mgOrderGoods.getGoodsNumber()==cart.getGoodsNumber().intValue()){
+                                count++;
+                            }
+                        }
+                    }
+                }
+                if (count == cartList.size()){
+                    throw new HookahException("已存在相同订单，请先支付或取消");
+                }
+            }
+        }
+    }
+
+    /**
+     * 直接生成订单前验证
+     * @param userId
+     * @param goodsId
+     * @param goodsNumber
+     */
+    @Override
+    public void checkOrderExist(String userId, String goodsId, Long goodsNumber) throws Exception{
+        //先查看是否有相同的订单
+        List<Condition> filter = new ArrayList<>();
+        filter.add(Condition.eq("userId", userId));
+        filter.add(Condition.ne("payStatus", 2));
+        filter.add(Condition.eq("isDeleted",0));
+        filter.add(Condition.eq("forceDeleted",0));
+        List<OrderInfo> orderInfos = selectList(filter);
+        for (OrderInfo orderInfo1:orderInfos){
+            OrderInfoVo mgOrder = mgOrderInfoService.selectById(orderInfo1.getOrderId());
+            List<MgOrderGoods> mgOrderGoodss = mgOrder.getMgOrderGoodsList();
+            if (mgOrderGoodss.size() == 1){
+                MgOrderGoods mgOrderGoods = mgOrderGoodss.get(0);
+                if (mgOrderGoods.getGoodsId().equals(goodsId) && mgOrderGoods.getGoodsNumber() == goodsNumber.intValue()){
+                    throw new HookahException("已存在相同订单，请先支付或取消");
+                }
+            }
+        }
+    }
 
     /**
      * 购物车生成订单
@@ -419,11 +484,12 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         filters.add(Condition.in("recId",cartIdArray));
         List<CartVo> cartList = cartService.selectDetailList(filters);
         List<MgOrderGoods> ordergoodsList = null;
-        if(cartList!=null&&cartList.size()>0){
+        if(cartList!=null && cartList.size()>0){
             ordergoodsList = new ArrayList<MgOrderGoods>();
             Long goodsAmount = new Long(0);
             OrderInfoVo orderInfoVo = new OrderInfoVo();
             MgGoodsOrder mgGoodsOrder = new MgGoodsOrder();
+
             for(CartVo cart:cartList){
                 //验证商品是否下架
                 Goods g = cart.getGoods();
@@ -466,7 +532,6 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
         List<MgOrderGoods> ordergoodsList = null;
         MgGoodsOrder mgGoodsOrder = new MgGoodsOrder();
-
         ordergoodsList = new ArrayList<MgOrderGoods>();
         Long goodsAmount = new Long(0);
 
@@ -669,10 +734,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             OrderInfoVo orderInfoVo = findDetailById(orderInfo.getOrderId());
             //支付成功,
             //1、发送api平台
-            String url = "http://open.galaxybigdata.com/shop/insert/userapi";
-            String apiUrl = "192.168.15.90:5555/gateway/insert";
+//            String url = "http://open.galaxybigdata.com/shop/insert/userapi";
+            String apiUrl = "http://192.168.200.116:5555/gateway/insert";
             List<Map> list = new ArrayList();
-            List<Map> apiList = new ArrayList<>();
 
             orderInfoVo.getMgOrderGoodsList().stream()
                     .filter(g -> {
@@ -682,32 +746,43 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                         return g.getGoodsType() == 1 && StringUtils.isNotBlank(g.getSourceId());
                     })
                     .forEach(goods -> {
-                        Map<String, String> param = new HashMap<>();
                         Map<String, Object> apiParam = new HashMap<>();
-                        param.put("userId", orderInfoVo.getUserId());
-                        //param.put("endTime",orderInfo.getUserId());
-                        param.put("orderNo", orderInfo.getOrderSn());
-                        param.put("apiId", goods.getSourceId());
-                        param.put("goodsId", goods.getGoodsId());
-                        param.put("totalCount", new Long(goods.getGoodsNumber() * goods.getFormatNumber()).toString());
+//                        Map<String, String> param = new HashMap<>();
+//                        param.put("userId", orderInfoVo.getUserId());
+//                        param.put("endTime",orderInfo.getUserId());
+//                        param.put("orderNo", orderInfo.getOrderSn());
+//                        param.put("apiId", goods.getSourceId());
+//                        param.put("goodsId", goods.getGoodsId());
+//                        param.put("totalCount", new Long(goods.getGoodsNumber() * goods.getFormatNumber()).toString());
 
-                        apiParam.put("totalCount", new Long(goods.getGoodsNumber() * goods.getFormatNumber()).toString());
                         apiParam.put("userId", orderInfoVo.getUserId());
                         apiParam.put("orderSn", orderInfoVo.getOrderSn());
                         apiParam.put("goodsSn", goods.getGoodsSn());
                         apiParam.put("url", goods.getApiInfo().getApiUrl());
+                        Date startTime = null;
+                        Date endTime = null;
+                        SimpleDateFormat df = new SimpleDateFormat(DateUtils.DEFAULT_DATE_TIME_FORMAT);
                         switch (goods.getGoodsFormat()){
                             case 0:
-                                apiParam.put("type", 1);
+                                apiParam.put("type", "1");
+                                apiParam.put("totalCount", new Long(goods.getGoodsNumber() * goods.getFormatNumber()).toString());
                                 break;
-                            case 1:case 2:
-                                apiParam.put("type", 2);
-                                Date startTime = orderInfoVo.getPayTime();
+                            case 1:
+                                apiParam.put("type", "2");
+                                startTime = orderInfoVo.getPayTime();
                                 apiParam.put("startTime",startTime);
-                                Date endTime = null;
+                                endTime = DateUtils.thisTimeNextMonth(startTime,new Long(goods.getGoodsNumber() * goods.getFormatNumber()).intValue());
+                                apiParam.put("endTime",endTime);
+                                break;
+                            case 2:
+                                apiParam.put("type", "2");
+                                startTime = orderInfoVo.getPayTime();
+                                apiParam.put("startTime",startTime);
+                                endTime = DateUtils.thisTimeNextYear(startTime,new Long(goods.getGoodsNumber() * goods.getFormatNumber()).intValue());
                                 apiParam.put("endTime",endTime);
                                 break;
                         }
+//                        list.add(param);
                         list.add(apiParam);
                     });
 //            Map rs = HttpClientUtil.PostMethod(url, JsonUtils.toJson(list));
@@ -1274,7 +1349,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         map.put("cancelOrderNum",getOrderNumByToday(today,OrderInfoVo.ORDERSTATUS_CANCEL)); //已取消订单数
 
         map.put("goodsSoldNum",getGoodsNumByOut(today));  //已售商品数
-        map.put("goodsClassification",0); //商品分类数
+        map.put("goodsClassification",6); //商品分类数
         map.put("dataSourceMoney",getGoodsMoneyByPayStatus(today,OrderInfoVo.PAYSTATUS_PAYED,"101"));  //数据源交易金额
         map.put("dataModelMoney",getGoodsMoneyByPayStatus(today,OrderInfoVo.PAYSTATUS_PAYED,"102"));  //数据模型交易金额
         map.put("visualizationMoney",getGoodsMoneyByPayStatus(today,OrderInfoVo.PAYSTATUS_PAYED,"103"));  //可视化交易金额

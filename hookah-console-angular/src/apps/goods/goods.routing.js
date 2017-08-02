@@ -27,24 +27,27 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
 		})
 		.state('items.search', {
 			url: '/items/search',
+			params: {'data': null},
 			template: require('./goodsList.html'),
 			controller: GoodsListController,
 			permission: 'items_search'
 		})
 		.state('items.check', {
 			url: '/items/check',
+			params: {'data': null},
 			template: require('./goodsList.html'),
 			controller: GoodsListController,
 			permission: 'items_check'
 		})
 		.state('items.checkedList', {
 			url: '/items/checkedList',
+			params: {'data': null},
 			template: require('./goodsList.html'),
 			controller: GoodsListController,
 			permission: 'items_checkedList'
 		})
 		.state('items.goodsDetail', {
-			url: '/items/goodsDetail',
+			url: '/items/goodsDetail/:id/:isEdit',
 			params: {'data': null},
 			template: require('./goodsDetail.html'),
 			controller: GoodsDetailController,

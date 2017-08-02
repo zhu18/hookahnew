@@ -15,7 +15,7 @@ function loadPageData(data) {
                 html +='<h4>'+list[i].goodsName+'</h4>';
                 html +='<p>价格：<span>￥'+(list[i].shopPrice / 100 ).toFixed(2)+'</span></p>';
                 html +='</div></a></div>';
-                html +='<div class="order-list-down">上架时间: <span class="buy-time">' + list[i].addTime + '</span></div>';
+                html +='<div class="order-list-down">上架时间: <span class="buy-time">' + list[i].onsaleStartDate + '</span></div>';
                 html +='</div>';
             }
             $('.my-order-list-two ').html(html);

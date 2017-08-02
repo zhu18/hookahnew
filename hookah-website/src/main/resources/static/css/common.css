@@ -222,6 +222,18 @@ ul li {
 .margin-top-40 {
     margin-top: 40px !important;
 }
+.margin-left-50 {
+    margin-left: 50px !important;
+}
+.margin-right-50 {
+    margin-right: 50px !important;
+}
+.margin-bottom-50 {
+    margin-bottom: 50px !important;
+}
+.margin-top-50 {
+    margin-top: 50px !important;
+}
 .margin-off {
     margin: 0 !important;
 }

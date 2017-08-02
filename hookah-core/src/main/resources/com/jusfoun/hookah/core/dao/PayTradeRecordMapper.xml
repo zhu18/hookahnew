@@ -34,11 +34,11 @@
     insert into pay_trade_record (pay_account_id, user_id,
       money, trade_type, trade_status, 
       order_sn, add_time, add_operator, 
-      update_time, update_operator)
+      update_time, update_operator, transfer_date)
     values (#{payAccountId,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR},
       #{money,jdbcType=BIGINT}, #{tradeType,jdbcType=TINYINT}, #{tradeStatus,jdbcType=TINYINT}, 
       #{orderSn,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, #{addOperator,jdbcType=VARCHAR}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{updateOperator,jdbcType=VARCHAR})
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateOperator,jdbcType=VARCHAR}, #{transferDate,jdbcType=DATE})
   </insert>
 
 
@@ -68,4 +68,14 @@
       </if>
   </select>
 
+  <update id="updatePayTradeRecordStatusByOrderSn" parameterType="java.util.HashMap">
+    UPDATE pay_trade_record SET trade_status = #{tradeStatus}
+    WHERE  order_sn = #{orderSn}
+  </update>
+
+  <select id="selectStatusByOrderSn" parameterType="java.lang.String">
+
+    SELECT trade_status FROM pay_trade_record WHERE order_sn = #{orderSn}
+
+  </select>
 </mapper>

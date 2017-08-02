@@ -169,7 +169,7 @@ public class DateUtil {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String dateCurrentForYMD() throws Exception{
+	public static String dateCurrentForYMD() {
 		Calendar calendar = Calendar.getInstance();
 		Date date = calendar.getTime();
 		return new SimpleDateFormat("yyyyMMdd").format(date);

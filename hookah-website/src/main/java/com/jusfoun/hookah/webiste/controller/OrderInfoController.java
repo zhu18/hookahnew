@@ -443,6 +443,21 @@ public class OrderInfoController extends BaseController {
         }
     }
 
+    @RequestMapping(value = "/order/checkOrderExist", method = RequestMethod.GET)
+    public void checkOrderExist(OrderInfo orderinfo, String[] cartIdArray,String goodsId, Integer formatId,Long goodsNumber,HttpServletRequest request){
+        try {
+            String userId = getCurrentUser().getUserId();
+            if(cartIdArray[0].equals("-1")){
+                orderInfoService.checkOrderExist(userId, goodsId, goodsNumber);
+            }else{
+                orderInfoService.checkOrderExist(userId, cartIdArray);
+            }
+        }catch (Exception e){
+            logger.error("验证错误", e);
+//            return
+        }
+    }
+
     @RequestMapping(value = "/order/payOrder", method = RequestMethod.GET)
     public String payOrder(String orderSn,HttpServletRequest request) {
         try {

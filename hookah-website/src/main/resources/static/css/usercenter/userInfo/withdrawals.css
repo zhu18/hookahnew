@@ -6,10 +6,10 @@
     padding-left: 254px;
     margin-top: 32px;
 }
- .withdrawals-top .withdrawals-content li{
+ .withdrawals-top .withdrawals-content .form-item{
      margin-bottom: 20px;
 }
- .withdrawals-top .withdrawals-content li label{
+ .withdrawals-top .withdrawals-content .form-item label{
     text-align: right;
     display: inline-block;
     vertical-align: middle;
@@ -68,9 +68,13 @@
     line-height: 36px;
     text-align: center;
     color: #ffffff;
+    cursor: pointer;
     margin-left: 120px;
     margin-bottom: 20px;
     background-color: #4E95F4;
+}
+.withdrawals-top .help-block{
+   color:#ff0000 !important ;
 }
 
 .withdrawals-down{

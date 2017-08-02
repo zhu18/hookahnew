@@ -2,9 +2,55 @@ class settleController {
   constructor($scope, $rootScope, $http, $state, $uibModal, usSpinnerService, growl) {
     $scope.settleList = [];
     $scope.choseArr = [];//多选数组
+    $scope.setDate = function (dataFormat, number) {
+      var now = new Date();
+      var date = new Date(now.getTime() - 1);
+      var year = date.getFullYear();
+      var month = date.getMonth();
+      var day = 1;
+      if (number == 0) {
+        $scope.startDate = new Date(year, month, day);
+        $scope.endDate = new Date();
+      } else {
+        $scope.startDate = new Date(year, month - number, day);
+        $scope.endDate = new Date(year, month, 0);
+      }
+    }
+    var format = function (time, format) {
+      var t = new Date(time);
+      var tf = function (i) {
+        return (i < 10 ? '0' : "") + i
+      };
+      return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
+        switch (a) {
+          case 'yyyy':
+            return tf(t.getFullYear());
+            break;
+          case 'MM':
+            return tf(t.getMonth() + 1);
+            break;
+          case 'mm':
+            return tf(t.getMinutes());
+            break;
+          case 'dd':
+            return tf(t.getDate());
+            break;
+          case 'HH':
+            return tf(t.getHours());
+            break;
+          case 'ss':
+            return tf(t.getSeconds());
+            break;
+        }
+      })
+    }
+
+    ;
+    $scope.setDate('month', 0);
 
     $scope.search = function () {
       // console.log($scope.levelStar);
+
       if ($scope.startDate !== null && $scope.endDate !== null && ($scope.startDate > $scope.endDate)) {
         //继续
         alert('开始时间必须大于结束时间！请重新选择日期。');
@@ -29,7 +75,7 @@ class settleController {
         console.log(res);
         if (res.data.code == '1') {
           $scope.settleList = res.data.data.list;
-          $rootScope.pagination = res.data.data;
+          // $rootScope.pagination = res.data.data;
           $scope.showNoneDataInfoTip = false;
           if (res.data.data.totalPage > 1) {
             $scope.showPageHelpInfo = true;
@@ -140,34 +186,7 @@ class settleController {
     $scope.search();
 
     // 处理日期插件的获取日期的格式
-    var format = function (time, format) {
-      var t = new Date(time);
-      var tf = function (i) {
-        return (i < 10 ? '0' : "") + i
-      };
-      return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
-        switch (a) {
-          case 'yyyy':
-            return tf(t.getFullYear());
-            break;
-          case 'MM':
-            return tf(t.getMonth() + 1);
-            break;
-          case 'mm':
-            return tf(t.getMinutes());
-            break;
-          case 'dd':
-            return tf(t.getDate());
-            break;
-          case 'HH':
-            return tf(t.getHours());
-            break;
-          case 'ss':
-            return tf(t.getSeconds());
-            break;
-        }
-      })
-    }
+
     // 日历插件开始
     $scope.inlineOptions = {
       customClass: getDayClass,
@@ -218,21 +237,6 @@ class settleController {
       return '';
     }
 
-    $scope.setDate = function (dataFormat, number) {
-      var now = new Date();
-      var date = new Date(now.getTime() - 1);
-      var year = date.getFullYear();
-      var month = date.getMonth();
-      var day = 1;
-      if (number == 0) {
-        $scope.startDate = new Date(year, month, day);
-        $scope.endDate = new Date();
-      } else {
-        $scope.startDate = new Date(year, month - number, day);
-        $scope.endDate = new Date(year, month , 0);
-      }
-    }
-    $scope.setDate('month',0)
     // 日历插件结束
   }
 }

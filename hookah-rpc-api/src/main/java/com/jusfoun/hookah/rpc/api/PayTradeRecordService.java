@@ -16,4 +16,6 @@ public interface PayTradeRecordService extends GenericService<PayTradeRecord, In
     int insertAndGetId(PayTradeRecord payTradeRecord);
 
     Pagination<PayTradeRecordVo> getListForPage(int pageNumberNew, int pageSizeNew, String startDate, String endDate, Integer tradeType, Integer tradeStatus);
+
+    int selectStatusByOrderSn(String orderSn);
 }

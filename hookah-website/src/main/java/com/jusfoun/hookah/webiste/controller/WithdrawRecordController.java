@@ -91,7 +91,7 @@ public class WithdrawRecordController extends BaseController{
 
             filters.add(Condition.eq("userId", getCurrentUser().getUserId()));
 
-            if(checkStatus != null){
+            if(StringUtils.isNoneBlank(checkStatus)){
                 filters.add(Condition.eq("checkStatus", checkStatus));
             }
 
@@ -140,6 +140,7 @@ public class WithdrawRecordController extends BaseController{
 
             List<Condition> bankFilters = new ArrayList();
             bankFilters.add(Condition.eq("userId", getCurrentUser().getUserId()));
+            bankFilters.add(Condition.eq("bindFlag", 0));
             PayBankCard payBankCard = payBankCardService.selectOne(bankFilters);
             List<Condition> filters = new ArrayList();
             filters.add(Condition.eq("userId", getCurrentUser().getUserId()));

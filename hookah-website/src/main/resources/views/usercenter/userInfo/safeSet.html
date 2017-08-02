@@ -22,6 +22,10 @@ var htmlPart = {
 							<div class="progress-bar"></div>
 						</div>
 						<p class="grid-left">安全级别:<span class="degree">中</span> 继续努力</p>
+						<input type="hidden" name="safetyLandScore" value="${userCur.safetyLandScore}">
+						<input type="hidden" name="safetyPayScore" value="${userCur.safetyPayScore}">
+						<input type="hidden" name="safetyPhoneScore" value="${userCur.safetyPhoneScore}">
+						<input type="hidden" name="safetyMailScore" value="${userCur.safetyMailScore}">
 					</div>
 					<div class="login-info-box clearfix">
 						<p class="grid-left pwd">登录密码</p>
@@ -130,3 +134,4 @@ var htmlPart = {
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
+<script type="text/javascript" src="/static/js/usercenter/userInfo/safeSet.js"></script>

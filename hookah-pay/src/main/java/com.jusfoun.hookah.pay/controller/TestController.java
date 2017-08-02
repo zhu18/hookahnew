@@ -2,6 +2,7 @@ package com.jusfoun.hookah.pay.controller;
 
 import com.jusfoun.hookah.core.domain.bo.MoneyInOutBo;
 import com.jusfoun.hookah.core.domain.bo.SettleBo;
+import com.jusfoun.hookah.rpc.api.DailyFundFileUploadedNoticeService;
 import com.jusfoun.hookah.rpc.api.PayAccountRecordService;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,9 @@ public class TestController {
 
     @Resource
     PayAccountRecordService payAccountRecordService;
+
+    @Resource
+    DailyFundFileUploadedNoticeService dailyFundFileUploadedNoticeService;
 
     @RequestMapping("/test")
     public String test(){
@@ -62,7 +66,10 @@ public class TestController {
         bo.setStartDate(startTime);
         bo.setEndDate(endTime);
         bo.setSettleStatus(settleStatus);
+    }
 
-
+    @RequestMapping("/notice")
+    public void uploadFileNotice(String noticeType){
+        dailyFundFileUploadedNoticeService.dailyFundFileUploadedNotice(noticeType);
     }
 }

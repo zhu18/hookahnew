@@ -26,7 +26,7 @@ class PermissionController {
       , {
         field: "aa",
         displayName: "操作",
-        cellTemplate: '<a href="javascript:;" ng-click="cellTemplateScope.delete(row.branch)" target="_blank">删除</a>',
+        cellTemplate: '<a href="javascript:;" ng-click="cellTemplateScope.delete(row.branch)">删除</a>',
         cellTemplateScope: {
           delete: function (data) {
             $scope.delete(data);

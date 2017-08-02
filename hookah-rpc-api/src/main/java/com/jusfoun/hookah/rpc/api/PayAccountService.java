@@ -38,6 +38,12 @@ public interface PayAccountService extends GenericService<PayAccount, Long> {
 
     boolean insertPayAccountByUserIdAndName(String userId, String userName);
 
+    /**
+     * 设置支付密码
+     * @param userId
+     * @param payPassword MD5密文
+     * @return
+     */
     boolean resetPayPassword(String userId, String payPassword);
 
     void payByBalance(OrderInfo orderInfo) throws Exception;
@@ -72,4 +78,36 @@ public interface PayAccountService extends GenericService<PayAccount, Long> {
      * @return
      */
     PayAccount findPayAccountByUserId(String userId);
+
+    boolean aliPay(String orderSn, String tradeStatus, Map<String,String> param) throws Exception;
+
+    /**
+     * 更改交易密码 内含老密码正确性验证
+     * @param oldPayPassWord
+     * @param newPayPassWord
+     * @param userId
+     * @return
+     */
+    boolean updatePayPassWordByUserId(String oldPayPassWord, String newPayPassWord, String userId);
+
+    /**
+     * 平台余额
+     * @return
+     */
+    long selectBalance();
+    /**
+     * 可用金额
+     * @return
+     */
+    long selectUseBalance();
+    /**
+     * 冻结余额
+     * @return
+     */
+    long selectPreDeposit();
+    /**
+     * 手续费收入
+     * @return
+     */
+    long selectFee();
 }

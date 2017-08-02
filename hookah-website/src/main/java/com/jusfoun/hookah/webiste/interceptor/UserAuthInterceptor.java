@@ -47,10 +47,20 @@ public class UserAuthInterceptor implements HandlerInterceptor {
                         !HookahConstants.UserType.SUPPLIER_CHECK_NO.getCode().equals(userType) &&
                         !HookahConstants.UserType.SUPPLIER_CHECK_FAIL.getCode().equals(userType) &&
                         !HookahConstants.UserType.SUPPLIER_CHECK_OK.getCode().equals(userType)){
+                    //待审核
+                    if(HookahConstants.UserType.ORGANIZATION_CHECK_NO.getCode().equals(userType) ||
+                            HookahConstants.UserType.PERSON_CHECK_NO.getCode().equals(userType)){
+//                        String uri = httpServletRequest.getRequestURI();
+//                        httpServletResponse.getWriter().write("您当前信息正在审核中，审核通过后才能购买!");
+                        httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/usercenter/index");
+                    }
+
 //                    httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/auth/index");
                     httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + PropertiesManager.getInstance().getProperty("no.auth.url"));
                     return false;
                 }
+
+
 
             }
         }catch (Exception e) {
@@ -61,6 +71,8 @@ public class UserAuthInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
+
+
 //        boolean ajax = "XMLHttpRequest".equals(httpServletRequest.getHeader("X-Requested-With"));
 //
 //        if(!ajax && null != modelAndView){
@@ -76,9 +88,16 @@ public class UserAuthInterceptor implements HandlerInterceptor {
 //                   user = userService.selectById(user.getUserId());
 //
 //                   Integer userType = user.getUserType();
-//                   if(!HookahConstants.UserType.ORGANIZATION_CHECK_OK.equals(userType) && !HookahConstants.UserType.PERSON_CHECK_OK.equals(userType)){
-//                      modelAndView.setViewName("/auth/index");
-//                      return;
+////                   if(!HookahConstants.UserType.ORGANIZATION_CHECK_OK.equals(userType) && !HookahConstants.UserType.PERSON_CHECK_OK.equals(userType)){
+////                      modelAndView.setViewName("/auth/index");
+////                      return;
+////                   }
+//                   if(HookahConstants.UserType.ORGANIZATION_CHECK_NO.getCode().equals(userType)){
+//                       Map<String,Object> modelMap = modelAndView.getModel();
+//                       modelMap.put("code","0001");
+//                       modelMap.put("message","");
+//                       modelAndView.setViewName("/auth/index");
+//                       return;
 //                   }
 //
 //               }

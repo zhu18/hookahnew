@@ -47,13 +47,44 @@ class RoleController {
       });
       promise.then(function (res, status, config, headers) {
         $state.go('account.role.add');
-        console.log("sksks");
+        console.log(res.data);
         $rootScope.loadingState = false;
         $rootScope.tree_data = res.data;
+
         growl.addSuccessMessage("数据加载完毕。。。");
       });
 
     };
+    $scope.changeSelection = function (item, childOrFather, id, isSelect) {
+      console.log(item);
+
+      if (childOrFather == 'father') {
+        if (item.data.selected) {
+          angular.forEach(item.data.children, function (data, index, array) {
+            data.selected = true;
+          });
+        } else {
+          angular.forEach(item.data.children, function (data, index, array) {
+            data.selected = false;
+          });
+        }
+      } else {
+        var arr = [];
+        angular.forEach(item.data.children, function (data, index, array) {
+          if (data.selected == true) {
+            arr.push(data.selected)
+          }
+        });
+        if (arr.length > 0) {
+          item.data.selected = true;
+        } else {
+          item.data.selected = false;
+        }
+      }
+
+      $scope.isSelected(id, isSelect)
+    }
+
     $scope.load = function (event, item) {
       $rootScope.title = "修改角色";
       $rootScope.item = item;
@@ -64,7 +95,10 @@ class RoleController {
       }
       var promise1 = $http({
         method: 'GET',
-        url: $rootScope.site.apiServer + "/api/permission/tree",
+        url: $rootScope.site.apiServer + "/api/permission/initCheckedTree",
+        params: {
+            roleId: item.roleId
+        }
         // params: {
         //   currentPage: $rootScope.pagination.currentPage,
         //   pageSize: $rootScope.pagination.pageSize,
@@ -93,39 +127,67 @@ class RoleController {
 
     };
     $scope.selectAllFlag = false;
-    $scope.selectAll = function () {
+    $scope.selectAll = function (data) {
       var permis = document.getElementsByName("permissions");
+      var permissionsFather = document.getElementsByName("permissionsFather");
       if ($scope.selectAllFlag) {
-        for (var i = 0; i < permis.length; i++) {
-          permis[i].checked = false;
-        }
+
+        angular.forEach(data, function (item, index, array) {
+          item.selected = false;
+          angular.forEach(item.children, function (child, index, array) {
+            child.selected =false
+          });
+        });
+
         $scope.selectAllFlag = false;
+
       } else {
-        for (var i = 0; i < permis.length; i++) {
-          permis[i].checked = true;
-        }
+        angular.forEach(data, function (item, index, array) {
+          item.selected = true;
+          angular.forEach(item.children, function (child, index, array) {
+            child.selected =true
+          });
+
+        });
+
+
         $scope.selectAllFlag = true;
       }
 
     };
-    $scope.isSelected = function (id) {
+    $scope.isSelected = function (id, isChecked) {
       // console.log($rootScope.item);
-      if ($rootScope.selectRolePermissions) {
-        var o = $rootScope.selectRolePermissions.toString();
+      if (isChecked == 'true') {
+        if ($rootScope.selectRolePermissions) {
+          var o = $rootScope.selectRolePermissions.toString();
 
-        if (o.indexOf(id) > -1) {
-          return true;
-        }
-        else {
+          if (o.indexOf(id) > -1) {
+            return true;
+          }
+          else {
+            return false;
+          }
+        } else {
           return false;
         }
-      } else {
-        return false;
       }
+
 
     };
     $scope.save = function () {
       console.log($rootScope.item.isEnable)
+      if ($rootScope.item.roleName == "" || $rootScope.item.roleName == null) {
+        $rootScope.openErrorDialogModal("角色代码不能为空！");
+        return;
+      }
+      if ($rootScope.item.roleExplain == "" || $rootScope.item.roleExplain == null) {
+        $rootScope.openErrorDialogModal("角色中文名不能为空！");
+        return;
+      }
+      if ($rootScope.item.isEnable == "" || $rootScope.item.isEnable == null) {
+        $rootScope.item.isEnable = false;
+      }
+
       var spCodesTemp = "";
       $('input:checkbox[name=permissions]:checked').each(function (i) {
         if (0 == i) {
@@ -141,6 +203,7 @@ class RoleController {
         // data = "roleName=" + $rootScope.item.roleName + "&roleExplain=" + $rootScope.item.roleExplain + "&permissions=" + spCodesTemp;
         data = "roleId=" + $rootScope.item.roleId + "&roleName=" + $rootScope.item.roleName + "&roleExplain=" + $rootScope.item.roleExplain + "&enable=" + $rootScope.item.isEnable + "&permissions=" + spCodesTemp;
       }
+      console.log(spCodesTemp);
       var promise = $http({
         method: 'POST',
         url: $rootScope.site.apiServer + "/api/role/save",

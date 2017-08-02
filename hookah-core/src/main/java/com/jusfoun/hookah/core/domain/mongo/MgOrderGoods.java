@@ -2,11 +2,9 @@ package com.jusfoun.hookah.core.domain.mongo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
-import com.jusfoun.hookah.core.generic.GenericModel;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
-import java.util.List;
 
 public class MgOrderGoods extends GoodsVo {
     /**
@@ -76,10 +74,17 @@ public class MgOrderGoods extends GoodsVo {
 
     private Integer solveStatus;//处理状态 0无需处理，1已处理，2未处理
 
+    private String goodsUserId; // 商品发布者的user_id
 
+    public String getGoodsUserId() {
+        return goodsUserId;
+    }
 
+    public void setGoodsUserId(String goodsUserId) {
+        this.goodsUserId = goodsUserId;
+    }
 
-//    private List<MgCategoryAttrType.AttrTypeBean> attrTypeList;
+    //    private List<MgCategoryAttrType.AttrTypeBean> attrTypeList;
 //    private List<MgGoods.FormatBean> formatList;
 //    private List<MgGoods.ImgBean> imgList;
 //    private MgGoods.ApiInfoBean apiInfo;

@@ -8,6 +8,7 @@ $(function () {
         url:host.website+'/supplier/getContactInfo',
         data:{},
         type:'get',
+        cache:false,
         success:function (data) {
             var contactName=data.data.contactName?data.data.contactName:"";
             var contactPhone=data.data.contactPhone?data.data.contactPhone:"";

@@ -25,6 +25,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,25 +54,30 @@ public class UserApi {
     public ReturnData getAllUser(String currentPage, String pageSize, HttpServletRequest request,
                                  String userName, String mobile, String email, String userType) {
         Pagination<User> page = new Pagination<>();
+        HashMap<String,Object> params = new HashMap<>();
         try {
-            List<Condition> filters = new ArrayList();
+           /* List<Condition> filters = new ArrayList();
             List<OrderBy> orderBys = new ArrayList();
-            orderBys.add(OrderBy.desc("addTime"));
+            orderBys.add(OrderBy.desc("addTime"));*/
             //只查询组织ID不为0的用户
-            filters.add(Condition.ne("userType", 0));
+            //filters.add(Condition.ne("userType", 0));
 
             if(StringUtils.isNotBlank(userName)){
-                filters.add(Condition.like("userName", userName));
+                //filters.add(Condition.like("userName", userName));
+                params.put("userName",userName);
             }
             if(StringUtils.isNotBlank(mobile)){
-                filters.add(Condition.like("mobile", mobile));
+                //filters.add(Condition.like("mobile", mobile));
+                params.put("mobile",mobile);
             }
             if(StringUtils.isNotBlank(email)){
-                filters.add(Condition.like("email", email));
+                //filters.add(Condition.like("email", email));
+                params.put("email",email);
             }
 
             if(StringUtils.isNotBlank(userType) && !"-1".equals(userType)){
-                filters.add(Condition.like("userType", Byte.valueOf(userType)));
+                //filters.add(Condition.like("userType", Byte.valueOf(userType)));
+                params.put("userType",userType);
             }
             //参数校验
             int pageNumberNew = HookahConstants.PAGE_NUM;
@@ -79,11 +85,14 @@ public class UserApi {
             if (StringUtils.isNotBlank(currentPage)) {
                 pageNumberNew = Integer.parseInt(currentPage);
             }
+            params.put("pageNumber",pageNumberNew);
             int pageSizeNew = HookahConstants.PAGE_SIZE;
             if (StringUtils.isNotBlank(pageSize)) {
                 pageSizeNew = Integer.parseInt(pageSize);
             }
-            page = userService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
+            params.put("pageSize",pageSizeNew);
+            page = userService.getUsersInPage(params);
+            //page = userService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
 
         } catch (Exception e) {
             e.printStackTrace();

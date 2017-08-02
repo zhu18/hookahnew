@@ -44,5 +44,9 @@ public class IndexController {
         userService.setPVCountByDate();
         return "index";
     }
+    @RequestMapping(value = "/height.html", method = RequestMethod.GET)
+    public String iframeHeight() {
+        return "/height";
+    }
 
 }

@@ -24,16 +24,17 @@
       <div class="form-group">
         <label class="col-sm-2 control-label" for="permissionName">权限代码<span class="must">*</span></label>
         <div class="col-sm-4">
-          <input type="text" id="permissionName" name="permissionName" class="form-control"  ng-model="permissionName"  required/>
+          <input type="text" id="permissionName" name="permissionName"  onKeyUp="value=value.replace(/[^a-zA-Z]/g,'')"
+                 oninput="value=value.replace(/[^a-zA-Z]/g,'')"  class="form-control" maxlength="32"  ng-model="permissionName"  required/>
         </div>
         <div class="col-sm-4 control-label" style="text-align: left;">
-          英文字符，最大长度255
+          英文字符，最大长度32
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="permissionExplain">权限中文名<span class="must">*</span></label>
         <div class="col-sm-4">
-          <input type="text" id="permissionExplain" name="permissionExplain" class="form-control"  ng-model="permissionExplain"  required/>
+          <input type="text" id="permissionExplain" name="permissionExplain" class="form-control" maxlength="120"  ng-model="permissionExplain"  required/>
         </div>
         <div class="col-sm-4 control-label" style="text-align: left;">
         最大长度为120个汉字
@@ -42,7 +43,7 @@
       <div class="form-group">
         <div class="col-sm-2"></div>
         <div class="col-sm-4">
-          <button class="btn btn-primary" data-ng-click="save()" ng-disabled="roleForm.$pristine || roleForm.$invalid">
+          <button class="btn btn-primary" data-ng-click="save()" ng-disabled="permissionForm.$pristine || permissionForm.$invalid">
             <span class="glyphicon glyphicon-refresh"></span> 保存
           </button>
         </div>
