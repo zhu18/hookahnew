@@ -115,7 +115,7 @@ public class RabbitMQMessageListener {
                     e.printStackTrace();
                     continue;
                 }
-                if(user != null && StringUtils.isNotBlank(messageCode.getUserId())) {
+                if(user != null && StringUtils.isNotBlank(user.getUserId())) {
                     messageSendInfo.setReceiveUser(user.getUserId());
                 }
                 messageSendInfo.setTemplateId(t.getId());
