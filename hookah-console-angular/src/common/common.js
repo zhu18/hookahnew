@@ -370,9 +370,8 @@ export default angular.module('Common', [
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
       var permission = toState.permission;
       if (!permissions.hasPermission(permission)) {
-        event.preventDefault();
-
-        var dialogModal = $rootScope.openErrorDialogModal("您没有权限使用该功能，需要开通请联系管理员！！！");
+        //event.preventDefault();
+        //var dialogModal = $rootScope.openErrorDialogModal("您没有权限使用该功能，需要开通请联系管理员！！！");
       }
     });
   });
