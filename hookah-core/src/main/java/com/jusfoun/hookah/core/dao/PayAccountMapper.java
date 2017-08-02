@@ -13,4 +13,11 @@ public interface PayAccountMapper extends GenericDao<PayAccount> {
 
     void updatePayAccountMoney(Map<String, Object> map);
 
+    long selectBalance();
+
+    long selectUseBalance();
+
+    long selectPreDeposit();
+
+    long selectFee();
 }
