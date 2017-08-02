@@ -1,8 +1,5 @@
 package com.jusfoun.hookah.webiste.util;
 
-import com.hitrust.trustpay.client.IFunctionID;
-import com.hitrust.trustpay.client.market.IMarketTagName;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.Calendar;
 
@@ -18,7 +15,7 @@ public class ABCKBaoUtil {
 
     public void setParam(HttpServletRequest request){
 
-        request.setAttribute("sign_merchantid",IMarketTagName.MARKET_SIGN_MERCHANTID);
+      /*  request.setAttribute("sign_merchantid",IMarketTagName.MARKET_SIGN_MERCHANTID);
         request.setAttribute("sign_merchantid_desc",IMarketTagName.MARKET_SIGN_MERCHANTID_DESC);
         request.setAttribute("sign_merchanttrxno",IMarketTagName.MARKET_SIGN_TRXNO);
         request.setAttribute("sign_merchanttrxno_desc",IMarketTagName.MARKET_SIGN_TRXNO_DESC);
@@ -33,7 +30,7 @@ public class ABCKBaoUtil {
         request.setAttribute("merchantID",merchantID);
         request.setAttribute("merchantName",merchantName);
         request.setAttribute("sign_up", IFunctionID.MARKET_SIGNUP);
-        request.setAttribute("requestID", getRequestID());
+        request.setAttribute("requestID", getRequestID());*/
     }
 
     /**

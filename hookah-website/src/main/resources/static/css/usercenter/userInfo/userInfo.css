@@ -66,6 +66,9 @@
     width: 165px;
     color: #666666;
     line-height: 26px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .basic-information-top  .basic-information-top-content .user-info .user-info-right .info span{
     color: #333;
