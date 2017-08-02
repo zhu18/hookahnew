@@ -194,31 +194,40 @@ if ($.getUrlParam("isAuth") == "3") {
     data: {},
     type: 'get',
     success: function (data) {
-      $("input[name='governmentName']").val(data.data.orgName ? data.data.orgName : "");//政府全称
-      $("input[name='companyLegal']").val(data.data.lawPersonName ? data.data.lawPersonName : "")//企业法人代表
-      $("input[name='mainBusiness']").val(data.data.industry ? data.data.industry : "")//主营业务
-      // 地域
-      var reg = data.data.region.slice(0, 2);
-      $("#province option").each(function () {
-        var val = $(this).val();
-        if (val.indexOf(reg) == 0) {
-          $("#province option[value=" + val + "]").attr("selected", "selected");
-          loadRegion('city', val);
+        $("input[name='governmentName']").val(data.data.organization.orgName?data.data.organization.orgName:"");//单位名称
+        $("input[name='creditCode']").val(data.data.organization.creditCode?data.data.organization.creditCode:"");//统一社会信用代码
+        $("input[name='mainBusiness']").val(data.data.organization.industry?data.data.organization.industry:"")//主营业务
+        $("input[name='companyLegal']").val(data.data.organization.lawPersonName?data.data.organization.lawPersonName:"")//企业法人代表
+        $("input[name='lawPersonNum']").val(data.data.organization.lawPersonNum?data.data.organization.lawPersonNum:"")//法定代表人证件编号
+        $('#lawPersonPositivePath').attr({"src":host.static+'/' + data.data.organization.lawPersonPositivePath});//法定代表人证件照正
+        $('#lawPersonNegativePath').attr({"src":host.static+'/' + data.data.organization.lawPersonNegativePath});//法定代表人证件照反
+        // //地域
+        // var reg=data.data.organization.region.slice(0,2);
+        // $("#province option").each(function () {
+        //     var val=$(this).val();
+        //     if(val.indexOf(reg)==0){
+        //         $("#province option[value="+val+"]").attr("selected","selected");
+        //         loadRegion('city',val);
+        //     }
+        // })
+        $("input[name='address']").val(data.data.organization.contactAddress?data.data.organization.contactAddress:"");//详细地址
+        $("input[name='tel']").val(data.data.organization.orgPhone?data.data.organization.orgPhone:"")//联系电话
+
+        //营业执照编号
+        $("input[name='businessLicence']").val(data.data.organization.licenseCode?data.data.organization.licenseCode:"");
+        $("#licensePath").attr({"src":host.static+'/' +data.data.organization.licensePath});//企业代码存放路径
+        //税务
+        $("input[name='taxRegCertificate']").val(data.data.organization.taxCode?data.data.organization.taxCode:"");
+        $("#taxPath").attr({"src":host.static+'/' +data.data.organization.taxPath});
+        //组织代码
+        $("input[name='creditCode']").val(data.data.organization.certificateCode?data.data.organization.certificateCode:"");
+        $("#certifictePath").attr({"src":host.static+'/' +data.data.organization.certifictePath});
+
+        // 我要成为供应商
+        if(data.data.organization.checkStatus=="1"){
+            $("input[name='fruit']").attr("checked","checked");
+            $(".supplier-info").show()
         }
-      })
-      $("input[name='address']").val(data.data.contactAddress ? data.data.contactAddress : "")//详细地址
-      $("input[name='tel']").val(data.data.orgPhone ? data.data.orgPhone : "")//联系电话
-      $("input[name='businessLicence']").val(data.data.licenseCode ? data.data.licenseCode : "")//营业执照编号
-      $("#licensePath").attr({"src": data.data.licensePath});//企业代码存放路径
-      $("input[name='taxPath']").val(data.data.taxCode ? data.data.taxCode : "")//税务登记存放路径
-      $("input[name='creditCode']").val(data.data.certificateCode ? data.data.certificateCode : "")//信用代码
-      $("#certifictePath").attr({"src": data.data.certifictePath});//企业代码存放路径
-      $("#taxPath").attr({"src": data.data.taxPath});//企业代码存放路径
-      // 我要成为供应商
-      if (data.data.checkStatus == "1") {
-        $("input[name='fruit']").attr("checked", "checked");
-        $(".supplier-info").show()
-      }
     }
   });
 }
