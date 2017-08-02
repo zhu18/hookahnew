@@ -25,7 +25,7 @@ function loadRegion(id, regionParam) {
   else {
     parentId = $(regionParam).val();
   }
-  $(regionParam).nextAll().html('<option value="-1"></option>')
+  $(regionParam).nextAll().html('<option value="-1"></option>');
   $.ajax({
     type: "get",
     url: "/region/getRegionCodeByPid",
