@@ -105,7 +105,7 @@ function companyAuth() {
    "taxPath":$("input[name='taxPath']").val(),//税务登记存放路径
    "licenseCode":$("input[name='businessLicence']").val(),//营业执照编号
    "licensePath":$("input[name='licensePath']").val(),//营业执照存放路径
-   "certificateCode":$("input[name='creditCode']").val(),//信用代码
+   "certificateCode":$("input[name='certificateCode']").val(),//信用代码
    "certifictePath":$("input[name='certifictePath']").val(),//企业代码存放路径
    "isSupplier":$("input[name='fruit']:checked").val()?$("input[name='fruit']:checked").val():"0"//是否成功供应商
    },
@@ -220,12 +220,13 @@ if ($.getUrlParam("isAuth") == "3") {
         $("input[name='taxRegCertificate']").val(data.data.organization.taxCode?data.data.organization.taxCode:"");
         $("#taxPath").attr({"src":host.static+'/' +data.data.organization.taxPath});
         //组织代码
-        $("input[name='creditCode']").val(data.data.organization.certificateCode?data.data.organization.certificateCode:"");
+        $("input[name='certificateCode']").val(data.data.organization.certificateCode?data.data.organization.certificateCode:"");
         $("#certifictePath").attr({"src":host.static+'/' +data.data.organization.certifictePath});
 
         // 我要成为供应商
-        if(data.data.organization.checkStatus=="1"){
+        if(data.data.organization.isSupplier=="1"){
             $("input[name='fruit']").attr("checked","checked");
+            $("input[name='fruit']").attr("disabled","disabled");
             $(".supplier-info").show()
         }
     }
