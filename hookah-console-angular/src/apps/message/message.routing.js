@@ -28,26 +28,37 @@ export default function categoryRouting($stateProvider, $urlRouterProvider) {
       url: '/message/system/search',
       template: require('./list_system.html'),
       controller: MessageController,
+      permission: 'listSystem'
+
     })
     .state('message.sms.search', {
       url: '/message/sms/search',
       template: require('./list_sms.html'),
       controller: MessageController,
+      permission: 'listSms'
+
+
     })
     .state('message.email.search', {
       url: '/message/email/search',
         template: require('./list_email.html'),
       controller: MessageController,
+      permission: 'listEmail'
+
     })
     .state('message.template.add', {
         url: '/message/template/add',
         template: require('./add_template.html'),
         controller: MessageController,
+      permission: 'addTemplate'
+
     })
     .state('message.template.search', {
       url: '/message/template/search',
       template: require('./list_template.html'),
       controller: MessageController,
+      permission: 'listTemplate'
+
     })
     .state('message.template.edit', {
         url: '/message/template/edit',
