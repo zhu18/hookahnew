@@ -207,7 +207,7 @@
     </dependency>
 
     <!-- K宝相关jar包 -->
-    <dependency>
+  <!--  <dependency>
       <groupId>commons-codec-1.3</groupId>
       <artifactId>commons-codec-1.3</artifactId>
       <version>1.3</version>
@@ -241,7 +241,7 @@
       <version>3.6.0</version>
       <scope>system</scope>
       <systemPath>${basedir}/src/lib/jsse.jar</systemPath>
-    </dependency>
+    </dependency>-->
   </dependencies>
   <build>
     <resources>
