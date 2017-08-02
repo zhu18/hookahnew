@@ -52,7 +52,6 @@ class UserVerifyController {
       promise.then(function (res, status, config, headers) {
         $rootScope.loadingState = false;
         growl.addSuccessMessage("数据加载完毕。。。");
-
         // $rootScope.loadingState = false;
         // $rootScope.pagination.store = res.data.data.list;
         // $rootScope.pagination.currentPage = res.data.data.currentPage;
@@ -93,6 +92,8 @@ class UserVerifyController {
           url: $rootScope.site.apiServer + "/api/user/org/" + item.orgId
         });
         promise.then(function (res, status, config, headers) {
+          console.log(res);
+          $rootScope.addressInfo = res.data.data;
           $rootScope.loadingState = false;
           $rootScope.cuserd = res.data.data;
           $state.go("user.verify.checkUserDetail");

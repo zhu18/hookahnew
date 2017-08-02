@@ -29,6 +29,8 @@ export default function shelfRouting($stateProvider, $urlRouterProvider) {
       url: '/order/viewOrderPending',
       template: require('./viewOrderPending.html'),
       controller: OrderController,
+      permission: 'viewOrderPending'
+
     })
     .state('order.viewOrderSupplier', {//订单页面列表页面
       url: '/order/viewOrderSupplier',
