@@ -97,6 +97,29 @@ class UserVerifyController {
           $rootScope.cuserd = res.data.data;
           $state.go("user.verify.checkUserDetail");
           growl.addSuccessMessage("数据加载完毕。。。");
+
+
+
+
+
+          var adressPro = $http({
+            method: 'GET',
+            url: $rootScope.site.websiteServer + "/region/getRegionCodeByPid?parentId=100000"
+          });
+          adressPro.then(function (res, status, config, headers) {
+            $rootScope.loadingState = false;
+            $rootScope.cuserd = res.data.data;
+            $state.go("user.verify.checkUserDetail");
+            growl.addSuccessMessage("数据加载完毕。。。");
+          });
+
+
+
+
+
+
+
+
         });
       } else {
         $rootScope.openErrorDialogModal("数据有误！");
