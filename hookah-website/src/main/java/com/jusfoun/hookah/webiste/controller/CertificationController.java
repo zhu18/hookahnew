@@ -56,13 +56,12 @@ public class CertificationController extends BaseController{
         String userId = this.getCurrentUser().getUserId();
         Map<String, Object> map = new HashMap<>(6);
         User user = userService.selectById(userId);
+        map.put("userType", user.getUserType());
         List<Condition> filters = new ArrayList();
         filters.add(Condition.eq("userId", userId));
         UserCheck userCheck = userCheckService.selectUserCheckInfo(userId);
         if(userCheck != null) {
-            map.put("userType", userCheck.getUserType());
             map.put("checkContent", userCheck.getCheckContent());
-            map.put("checkStatus",userCheck.getCheckStatus());
             if(userCheck.getCheckStatus() == 2 || userCheck.getCheckStatus() == 1){
                 if(StringUtils.isNotBlank(user.getOrgId())) {
                     Organization organization = organizationService.selectById(user.getOrgId());//根据用户查询认证信息

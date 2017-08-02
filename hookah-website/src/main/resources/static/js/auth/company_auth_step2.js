@@ -85,7 +85,7 @@ $('.unloadBtn').fileupload({
 });
 function companyAuth() {
 
-    $.ajax({
+$.ajax({
    url : "/auth/orgAuth",
    cache:false,
    data : {
@@ -211,6 +211,7 @@ if ($.getUrlParam("isAuth") == "3") {
   $.ajax({
     url: host.website + '/regInfo/verifiedInfo',
     data: {},
+    cache:false,
     type: 'get',
     success: function (data) {
         $("input[name='governmentName']").val(data.data.organization.orgName?data.data.organization.orgName:"");//单位名称
