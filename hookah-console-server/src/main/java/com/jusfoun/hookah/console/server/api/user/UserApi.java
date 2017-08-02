@@ -150,6 +150,22 @@ public class UserApi {
                     returnData.setData(map);
                 }else if(user.getUserType() == 4 && user.getOrgId() != null){
                     Organization organization = organizationService.selectById(user.getOrgId());
+                    String region= organizationService.selectRegion(user.getOrgId());
+                    String officeRegion = organizationService.selectOfficeRegion(user.getOrgId());
+                    String regionProvince= organizationService.selectRegionProvince(user.getOrgId());
+                    String officeRegionProvince = organizationService.selectOfficeRegionProvince(user.getOrgId());
+                    if(StringUtils.isNotBlank(region)){
+                        map.put("region",region);
+                    }
+                    if(StringUtils.isNotBlank(regionProvince)){
+                        map.put("regionProvince",regionProvince);
+                    }
+                    if(StringUtils.isNotBlank(officeRegion)){
+                        map.put("officeRegion",officeRegion);
+                    }
+                    if(StringUtils.isNotBlank(officeRegionProvince)){
+                        map.put("officeRegionProvince",officeRegionProvince);
+                    }
                     map.put("user", user);
                     map.put("organization", organization);
                     returnData.setData(map);
