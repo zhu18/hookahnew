@@ -12,6 +12,6 @@ export default function commentRouting($stateProvider, $urlRouterProvider) {
       url: '/comment/review',
       template: require('./review.html'),
       controller: CommentController,
-      permission: 'comment_search'
+      permission: 'commentSearch'
     })
 };

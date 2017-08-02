@@ -13,12 +13,12 @@ export default function operationalRouting($stateProvider, $urlRouterProvider) {
       url: '/operational/website',
       template: require('./website.html'),
       controller: websiteController,
-      permission: 'operational_search'
+      permission: 'operational_website'
     })
     .state('operational.transaction', {
       url: '/operational/transaction',
       template: require('./transaction.html'),
       controller: transactionController,
-      permission: 'operational_search'
+      permission: 'operationalTransaction'
     })
 };

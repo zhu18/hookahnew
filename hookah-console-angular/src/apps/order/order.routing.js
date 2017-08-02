@@ -36,5 +36,7 @@ export default function shelfRouting($stateProvider, $urlRouterProvider) {
       url: '/order/viewOrderSupplier',
       template: require('./viewOrderSupplier.html'),
       controller: viewOrderSupplier,
+      permission: 'viewOrderSupplier'
+
     })
 };
