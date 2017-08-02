@@ -5,7 +5,7 @@ var config = {
   site: {
     adminServer: "http://admin.qddata.com.cn",
     apiServer: "http://console.qddata.com.cn",
-    websiteServer: "http://www.qddata.com.cn",
+    websiteServer: "http://trade.qddata.com.cn",
     authServer: "http://auth.qddata.com.cn",
     staticServer: "http://static.qddata.com.cn"
   },

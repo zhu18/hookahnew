@@ -35,12 +35,12 @@
     <tr class="padding-bottom-10" data-ng-if="!loadingState" data-ng-repeat="goods in order.mgOrderGoodsList" class="" style="font-size: 14px;line-height: 14px;">
       <td class="text-left" style="padding-left: 40px;width: 200px;">
         <div class="p-img">
-          <a target='_blank' href="http://www.qddata.com.cn/exchange/details?id={{goods.goodsId}}">
+          <a target='_blank' href="http://trade.qddata.com.cn/exchange/details?id={{goods.goodsId}}">
             <img src="http://static.qddata.com.cn/{{goods.goodsImg}}" alt="" style="width:70px;height:70px;border:0;">
           </a>
         </div>
         <div class="margin-top-10 marign-bottom-10" >
-          <a target='_blank' href="http://www.qddata.com.cn/exchange/details?id={{goods.goodsId}}">
+          <a target='_blank' href="http://trade.qddata.com.cn/exchange/details?id={{goods.goodsId}}">
             <span ng-bind="goods.goodsName | limitTo:10"></span>
           </a>
         </div>
