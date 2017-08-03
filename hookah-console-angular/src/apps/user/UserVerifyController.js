@@ -52,7 +52,6 @@ class UserVerifyController {
       promise.then(function (res, status, config, headers) {
         $rootScope.loadingState = false;
         growl.addSuccessMessage("数据加载完毕。。。");
-
         // $rootScope.loadingState = false;
         // $rootScope.pagination.store = res.data.data.list;
         // $rootScope.pagination.currentPage = res.data.data.currentPage;
@@ -93,15 +92,16 @@ class UserVerifyController {
           url: $rootScope.site.apiServer + "/api/user/org/" + item.orgId
         });
         promise.then(function (res, status, config, headers) {
+          console.log(res)
+          $rootScope.addressInfo = res.data.data;
           $rootScope.loadingState = false;
-          $rootScope.cuserd = res.data.data;
+          $rootScope.cuserd = res.data.data.organization;
           $state.go("user.verify.checkUserDetail");
           growl.addSuccessMessage("数据加载完毕。。。");
         });
       } else {
         $rootScope.openErrorDialogModal("数据有误！");
       }
-
 
     };
 
@@ -135,10 +135,11 @@ class UserVerifyController {
         if (item.userType == 0) {//个人用户
 
           $rootScope.userDetail = res.data.data.userDetail;
-          $rootScope.user = res.data.data.user;
+          //$rootScope.user = res.data.data.user;
 
         } else if (item.userType == 1) {//企业用户
-          $rootScope.user = res.data.data.user;
+          $rootScope.addressInfo = res.data.data;
+          //$rootScope.user = res.data.data.user;
           $rootScope.cuserd = res.data.data.organization;
         }
         $rootScope.userCheck = res.data.data.userCheck;

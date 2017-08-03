@@ -146,7 +146,8 @@
         <div class="form-group">
           <label class="col-sm-2 control-label" for="email">法定代表人证件类别:</label>
           <div class="col-sm-4">
-            <input type="text" disabled="disabled"  name="certificateCode" value="{{cuserd.lawPersonCategory}}" class="form-control none-edit" />
+            <!--<input type="text" disabled="disabled"  name="certificateCode" value="{{cuserd.lawPersonCategory}}" class="form-control none-edit" />-->
+            <input type="text" disabled="disabled"  name="certificateCode" value="身份证" class="form-control none-edit" />
           </div>
         </div>
         <div class="form-group">
@@ -177,7 +178,7 @@
         <div class="form-group">
           <label class="col-sm-2 control-label" for="birthday">注册地址:</label>
           <div class="col-sm-4">
-            <input disabled="disabled" type="text"  name="region" class="form-control none-edit" value="{{cuserd.region}}"/>
+            <input disabled="disabled" type="text"  name="region" class="form-control none-edit" value="{{addressInfo.regionProvince+addressInfo.region}}"/>
           </div>
         </div>
         <div class="form-group">
@@ -207,7 +208,7 @@
         <div class="form-group">
           <label class="col-sm-2 control-label" for="realName">办公地址:</label>
           <div class="col-sm-4">
-            <input disabled="disabled" type="text" name="certificateCode" class="form-control none-edit" value="{{cuserd.officeRegionId}}"/>
+            <input disabled="disabled" type="text" name="certificateCode" class="form-control none-edit" value="{{addressInfo.officeRegionProvince + addressInfo.officeRegion}}"/>
           </div>
         </div>
         <div class="form-group">

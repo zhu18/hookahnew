@@ -12,6 +12,6 @@ export default function supplierRouting($stateProvider, $urlRouterProvider) {
       url: '/supplier/list',
       template: require('./list.html'),
       controller: SupplierController,
-      permission: 'supplier_search'
+      permission: 'supplierList'
     })
 };

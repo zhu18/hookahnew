@@ -3,6 +3,9 @@ var head = {
 %>
 <link type="text/css" rel="stylesheet" href="/static/css/register.css">
 <link type="text/css" rel="stylesheet" href="/static/css/dialog/dialog.css">
+<script src="/static/vendor/validate/jquery-validate.js"></script>
+<script src="/static/vendor/validate/messages_zh.js"></script>
+
 <%};%>
 
 <%
@@ -240,7 +243,113 @@ var htmlPart = {
 		}
 
 	};
-
+//    // 表格验证开始
+//    var regex = {  //手机号验证正则
+//        mobile: /^0?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8}$/,
+//		userName:,
+//		password:,
+//    };
+//    //让当前表单调用validate方法，实现表单验证功能
+//    $("#form").validate({
+//        debug:true, //调试模式，即使验证成功也不会跳转到目标页面
+//        rules:{     //配置验证规则，key就是被验证的dom对象，value就是调用验证的方法(也是json格式)
+//            userName:{
+//                required:true,  //必填。如果验证方法不需要参数，则配置为true
+//                isUserName:true
+//            },
+//            sphone:{
+//                required:true,
+//                isMobile:true
+//            },
+//            saddress:{
+//                required:true,
+//                maxlength:50
+//            },
+//            bank:{
+//                required:true,
+//                isBank:true
+//            },
+//            bindName:{
+//                required:true
+//            },
+//            verificationCode:{
+//                required:true,
+//                isVerificationCode:true
+//            }
+//        },
+//        messages:{
+//            userName:{
+//                required:"*请输入用户名",
+//                isUserName:"*请输入合法的用户名"
+//            },
+//            sphone:{
+//                required:"*请输入手机号",
+//                isMobile:"*请输入正确格式的手机号"
+//            },
+//            address:{
+//                required:"*请输入地址",
+//                maxlength: $.validator.format("请输入一个长度最多是 {0} 的字符串")
+//            },
+//            szip:{
+//                required:"*请输入邮编",
+//                isMobile:"*请输入正确格式的邮编"
+//            },
+//            bank:{
+//                required:"*请输入银行卡号",
+//                isBank:"*请输入正确的银行卡号"
+//            },
+//            bindName:{
+//                required:"*请选择银行名称"
+//            },
+//            verificationCode:{
+//                required:"*请填写验证码",
+//                isVerificationCode:"*请填写正确的验证码"
+//            }
+//        }
+//    });
+//    $.validator.addMethod("isUserName", function(value, element) {
+//        var mobile = regex.mobile.test(value);
+//
+//        return this.optional(element) || (mobile);
+//    },
+//    $.validator.addMethod("isMobile", function(value, element) {
+//        var mobile = regex.mobile.test(value);
+//        return this.optional(element) || (mobile);
+//    }, "*请填写有效的手机号");
+//    $.validator.addMethod("isBank", function(value, element) {
+//        var mobile = regex.bank.test(value);
+//        return this.optional(element) || (mobile);
+//    }, "*请输入正确的银行卡号");
+//    $.validator.addMethod("isVerificationCode", function(value, element) {
+//        var mo=false;
+//        if(value.length==4){
+//            $.ajax({
+//                url:host.auth+'/sms/check',
+//                type:'post',
+//                async:false,
+//                data:{
+//                    mobile:$('#phoneNumber').val(),
+//                    validSms:value
+//                },
+//                success:function(data){
+//                    if(data.code == 1){
+//                        mo=true;
+//                    }else if(data.code == 0){
+//                        // $('.loading_btns').hide();
+//                        // $('#J_Phone_Checkcode').parents('.ui-form-item').addClass('ui-form-item-error');
+//                        // $('#J_Phone_Checkcode').parents('.checkcode-warp').siblings('.ui-form-explain').show()
+//                        return false;
+//                    }else{
+//                        // $('.loading_btns').hide();
+//                        // $.alert(data.message);
+//                        return false;
+//                    }
+//                }
+//            });
+//        }
+//        return mo;
+//    }, "*请输入正确的手机验证码！");
+    // 表格验证结束
 	var nickTest = function (val) { //用户名验证
 		if (testData.allNumber(val)) {
 			nickErrorInfo(TRLang.ERROR_GENERAL_NICK_ALL_NUM);
@@ -298,7 +407,7 @@ var htmlPart = {
 			$('#J_PwdTip .pw-strength').children('.pw-strength-bar').removeClass(clsNm_1).addClass(clsNm_2).children('em').html(html);
 		}
 	};
-	$('#J_Password').bind('input propertychange', function () {
+	$('#J_Password').bind('input propertychange', function () {//监听密码框事件
 		var val = $(this).val();
 		var endT = val.substr(val.length-1,1);
 //		console.log(endT);
@@ -327,6 +436,7 @@ var htmlPart = {
                 $("input[name='safetyLandScore']").val("20");
                 passwordChange.strength('pw-strength-bar-1 pw-strength-bar-3', 'pw-strength-bar-2', TRLang.pwd_level_medium);
             }else {
+                $("input[name='safetyLandScore']").val("0");
                 passwordChange.strength('pw-strength-bar-2 pw-strength-bar-3', 'pw-strength-bar-1', TRLang.pwd_level_low);
             }
 		} else if (strlen(val) == 0) {
@@ -654,7 +764,7 @@ var htmlPart = {
 				d = testData.character(nick);
 			if (strlen(nick) <= 25 && strlen(nick) >= 5 && !testData.allNumber(nick)) {
 				if (!testData.nickIllegal(nick)) {
-					if (strlen(password) <= 20 && strlen(password) >= 6) {
+					if (strlen(password) <= 20 && strlen(password) >= 6 && $("input[name='safetyLandScore']").val() != "0") {
 						if (rePassword == password) {
 							if (testData.mobile(mobile)) {
 								if(validSms){
@@ -717,8 +827,6 @@ var htmlPart = {
 				if(data.code == 1){
 					$.post("${host.auth}/reg", $("#J_InfoForm").serialize(), function (data) {
 						if (data.code == 1) {
-                            console.log(4);
-
                             $.alert("注册成功，马上跳转登录页面");
 							setTimeout(function() {
 								window.location.href = '${host.auth}/login';

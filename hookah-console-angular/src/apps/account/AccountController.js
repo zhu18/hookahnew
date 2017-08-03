@@ -55,7 +55,9 @@ class AccountController {
       var promiseRoles = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/role/role_all",
-        data: ""
+        params: {
+            pageSize: 1000
+        }
       });
       promiseRoles.then(function (res, status, config, headers) {
         $rootScope.roles = res.data.data.list;
@@ -84,7 +86,9 @@ class AccountController {
       var promise = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/role/role_all",
-        data: ""
+        params: {
+            pageSize: 1000
+        }
       });
       promise.then(function (res, status, config, headers) {
         $rootScope.roles = res.data.data.list;

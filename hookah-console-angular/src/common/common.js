@@ -5,7 +5,7 @@ var config = {
   site: {
     adminServer: "http://admin.qddata.com.cn",
     apiServer: "http://console.qddata.com.cn",
-    websiteServer: "http://www.qddata.com.cn",
+    websiteServer: "http://trade.qddata.com.cn",
     authServer: "http://auth.qddata.com.cn",
     staticServer: "http://static.qddata.com.cn"
   },
@@ -125,7 +125,8 @@ export default angular.module('Common', [
       hasPermission: function (permission) {
         if (permission) {
           if (typeof(permission) == "string") {
-            if (config.permissionList.indexOf(permission) > -1) {
+            // 判断是否有权限，或者是超级管理员（userId=1）
+            if ((config.permissionList.indexOf(permission) > -1) || $rootScope.user.userId =="1") {
               return true;
             }
           }
@@ -370,10 +371,8 @@ export default angular.module('Common', [
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
       var permission = toState.permission;
       if (!permissions.hasPermission(permission)) {
-        // event.preventDefault();
-        // $state.transitionTo("home");
-        // $window.location.href = "/home";
-        // var dialogModal = $rootScope.openErrorDialogModal("您没有权限使用该功能，需要开通请联系管理员！！！");
+        event.preventDefault();
+        var dialogModal = $rootScope.openErrorDialogModal("您没有权限使用该功能，需要开通请联系管理员！！！");
       }
     });
   });

@@ -150,6 +150,22 @@ public class UserApi {
                     returnData.setData(map);
                 }else if(user.getUserType() == 4 && user.getOrgId() != null){
                     Organization organization = organizationService.selectById(user.getOrgId());
+                    String region= organizationService.selectRegion(user.getOrgId());
+                    String officeRegion = organizationService.selectOfficeRegion(user.getOrgId());
+                    String regionProvince= organizationService.selectRegionProvince(user.getOrgId());
+                    String officeRegionProvince = organizationService.selectOfficeRegionProvince(user.getOrgId());
+                    if(StringUtils.isNotBlank(region)){
+                        map.put("region",region);
+                    }
+                    if(StringUtils.isNotBlank(regionProvince)){
+                        map.put("regionProvince",regionProvince);
+                    }
+                    if(StringUtils.isNotBlank(officeRegion)){
+                        map.put("officeRegion",officeRegion);
+                    }
+                    if(StringUtils.isNotBlank(officeRegionProvince)){
+                        map.put("officeRegionProvince",officeRegionProvince);
+                    }
                     map.put("user", user);
                     map.put("organization", organization);
                     returnData.setData(map);
@@ -174,8 +190,26 @@ public class UserApi {
 //        List<Condition> fifters = new ArrayList<Condition>();
 //        fifters.add(Condition.eq("userId",id));
 //        Organization organization = organizationService.selectOne(fifters);
+        Map<String, Object> map = new HashedMap();
         Organization organization = organizationService.selectById(id);
-        return ReturnData.success(organization);
+        map.put("organization",organization);
+        String region= organizationService.selectRegion(id);
+        String officeRegion = organizationService.selectOfficeRegion(id);
+        String regionProvince= organizationService.selectRegionProvince(id);
+        String officeRegionProvince = organizationService.selectOfficeRegionProvince(id);
+        if(StringUtils.isNotBlank(region)){
+            map.put("region",region);
+        }
+        if(StringUtils.isNotBlank(regionProvince)){
+            map.put("regionProvince",regionProvince);
+        }
+        if(StringUtils.isNotBlank(officeRegion)){
+            map.put("officeRegion",officeRegion);
+        }
+        if(StringUtils.isNotBlank(officeRegionProvince)){
+            map.put("officeRegionProvince",officeRegionProvince);
+        }
+        return ReturnData.success(map);
     }
 
     @RequestMapping(value = "/verify/all", method = RequestMethod.GET)

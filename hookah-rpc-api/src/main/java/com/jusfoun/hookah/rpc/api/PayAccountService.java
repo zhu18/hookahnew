@@ -89,25 +89,4 @@ public interface PayAccountService extends GenericService<PayAccount, Long> {
      * @return
      */
     boolean updatePayPassWordByUserId(String oldPayPassWord, String newPayPassWord, String userId);
-
-    /**
-     * 平台余额
-     * @return
-     */
-    long selectBalance();
-    /**
-     * 可用金额
-     * @return
-     */
-    long selectUseBalance();
-    /**
-     * 冻结余额
-     * @return
-     */
-    long selectPreDeposit();
-    /**
-     * 手续费收入
-     * @return
-     */
-    long selectFee();
 }

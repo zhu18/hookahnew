@@ -29,6 +29,7 @@ function loadRegion(id, regionParam) {
   $.ajax({
     type: "get",
     url: "/region/getRegionCodeByPid",
+    async:false,
     data: {
       parentId: parentId
     },
@@ -84,7 +85,7 @@ $('.unloadBtn').fileupload({
 });
 function companyAuth() {
 
-    $.ajax({
+$.ajax({
    url : "/auth/orgAuth",
    cache:false,
    data : {
@@ -105,7 +106,7 @@ function companyAuth() {
    "taxPath":$("input[name='taxPath']").val(),//税务登记存放路径
    "licenseCode":$("input[name='businessLicence']").val(),//营业执照编号
    "licensePath":$("input[name='licensePath']").val(),//营业执照存放路径
-   "certificateCode":$("input[name='creditCode']").val(),//信用代码
+   "certificateCode":$("input[name='certificateCode']").val(),//信用代码
    "certifictePath":$("input[name='certifictePath']").val(),//企业代码存放路径
    "isSupplier":$("input[name='fruit']:checked").val()?$("input[name='fruit']:checked").val():"0"//是否成功供应商
    },
@@ -187,11 +188,30 @@ function supplier() {
     }
   })
 }
+
+function showRegion(dataID,province,city) {// 返现的地域值
+    var dataID=dataID?dataID:"";
+    var province=province?province:"";
+    var city=city?city:"";
+    if(dataID && province && city && (typeof dataID == "string")&&(typeof province == "string")&&(typeof city == "string")){
+        var reg=dataID.slice(0,2);
+        $("#registerProvince option").each(function () {
+            var val=$(this).val();
+            if(val.indexOf(reg)==0){
+                $("#"+province+" option[value="+val+"]").attr("selected","selected");
+                loadRegion(city,val);
+                $("#"+city+" option[value="+parseInt(dataID)+"]").attr("selected","selected");
+            }
+        })
+    }
+
+}
 //认证修改跳转页面，反现值
 if ($.getUrlParam("isAuth") == "3") {
   $.ajax({
     url: host.website + '/regInfo/verifiedInfo',
     data: {},
+    cache:false,
     type: 'get',
     success: function (data) {
         $("input[name='governmentName']").val(data.data.organization.orgName?data.data.organization.orgName:"");//单位名称
@@ -201,16 +221,11 @@ if ($.getUrlParam("isAuth") == "3") {
         $("input[name='lawPersonNum']").val(data.data.organization.lawPersonNum?data.data.organization.lawPersonNum:"")//法定代表人证件编号
         $('#lawPersonPositivePath').attr({"src":host.static+'/' + data.data.organization.lawPersonPositivePath});//法定代表人证件照正
         $('#lawPersonNegativePath').attr({"src":host.static+'/' + data.data.organization.lawPersonNegativePath});//法定代表人证件照反
-        // //地域
-        // var reg=data.data.organization.region.slice(0,2);
-        // $("#province option").each(function () {
-        //     var val=$(this).val();
-        //     if(val.indexOf(reg)==0){
-        //         $("#province option[value="+val+"]").attr("selected","selected");
-        //         loadRegion('city',val);
-        //     }
-        // })
+        //地域
+        showRegion(data.data.organization.region,"registerProvince","registerCity");
+        showRegion(data.data.organization.officeRegionId,"workProvince","workCity");
         $("input[name='address']").val(data.data.organization.contactAddress?data.data.organization.contactAddress:"");//详细地址
+        $("input[name='workAddress']").val(data.data.organization.officeAddress?data.data.organization.officeAddress:"");//详细地址
         $("input[name='tel']").val(data.data.organization.orgPhone?data.data.organization.orgPhone:"")//联系电话
 
         //营业执照编号
@@ -220,12 +235,13 @@ if ($.getUrlParam("isAuth") == "3") {
         $("input[name='taxRegCertificate']").val(data.data.organization.taxCode?data.data.organization.taxCode:"");
         $("#taxPath").attr({"src":host.static+'/' +data.data.organization.taxPath});
         //组织代码
-        $("input[name='creditCode']").val(data.data.organization.certificateCode?data.data.organization.certificateCode:"");
+        $("input[name='certificateCode']").val(data.data.organization.certificateCode?data.data.organization.certificateCode:"");
         $("#certifictePath").attr({"src":host.static+'/' +data.data.organization.certifictePath});
 
         // 我要成为供应商
-        if(data.data.organization.checkStatus=="1"){
+        if(data.data.organization.isSupplier=="1"){
             $("input[name='fruit']").attr("checked","checked");
+            $("input[name='fruit']").attr("disabled","disabled");
             $(".supplier-info").show()
         }
     }
