@@ -155,6 +155,7 @@
 .withdrawals-down .withdrawals-down-list{
     margin-top: 15px;
     width: 100%;
+    border: 1px solid #e5e5e5;
 }
 .withdrawals-down .withdrawals-down-list tr th{
     font-size: 14px;

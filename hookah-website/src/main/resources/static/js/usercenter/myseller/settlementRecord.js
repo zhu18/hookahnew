@@ -34,7 +34,7 @@ function loadPageData(data){
 
 }
 
-goPage(1);
+// goPage(1);
 $(function () {
      // 状态按钮点击事件
     $(".query-condition .btn-box a").on("click",function () {
@@ -72,26 +72,24 @@ $(function () {
         dataParm.startDate=$("#startDate").val() || null;
         dataParm.endDate=$("#endDate").val() || null;
         goPage(1);
-    })
-    // 日历input事件
-    $("#endDate").click(function () {
-        console.log(1);
-        var idInt = setTimeout(function(){
+    });
+    // 日历插件开始
+    var start = {
+        format: "YYYY-MM-DD hh:mm:ss", //设置日历显示格式
+        isTime: true,//是不是要选择时分秒
+        maxDate: $.nowDate(0),
+        choosefun: function (elem, datas) {
+            end.minDate = datas; //开始日选好后，重置结束日的最小日期
             if($("#endDate").val() && $("#startDate").val()){
                 dataParm.startDate=$("#startDate").val() || null;
                 dataParm.endDate=$("#endDate").val() || null;
                 goPage(1);
-                clearInterval(idInt);
             }
-        },1500);
-    });
-    // 日历插件开始
-    var start = {
-        format: "YYYY-MM-DD hh:mm:ss",
-        isTime: true,
-        maxDate: $.nowDate(0),
-        choosefun: function (elem, datas) {
-            end.minDate = datas; //开始日选好后，重置结束日的最小日期
+        },
+        clearfun:function(val) {
+            dataParm.startDate=$("#startDate").val() || null;
+            dataParm.endDate=$("#endDate").val() || null;
+            goPage(1);
         }
     };
     var end = {
@@ -100,6 +98,16 @@ $(function () {
         maxDate: $.nowDate(0),
         choosefun: function (elem, datas) {
             start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
+            if($("#endDate").val() && $("#startDate").val()){
+                dataParm.startDate=$("#startDate").val() || null;
+                dataParm.endDate=$("#endDate").val() || null;
+                goPage(1);
+            }
+        },
+        clearfun:function(val) {
+            dataParm.startDate=$("#startDate").val() || null;
+            dataParm.endDate=$("#endDate").val() || null;
+            goPage(1);
         }
     };
     $.jeDate("#startDate", start);

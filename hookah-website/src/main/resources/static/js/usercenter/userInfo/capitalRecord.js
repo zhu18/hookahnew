@@ -97,24 +97,23 @@ $(function () {
         dataParm.endDate=$("#endDate").val() || null;
         goPage(1);
     });
-    // 日历input事件
-    $("#endDate").click(function () {
-        var idInt = setTimeout(function(){
-            if($("#endDate").val() && $("#startDate").val()){
-                dataParm.startDate=$("#startDate").val() || null;
-                dataParm.endDate=$("#endDate").val() || null;
-                goPage(1);
-                clearInterval(idInt);
-            }
-        },1500);
-    });
     // 日历插件开始
     var start = {
         format: "YYYY-MM-DD hh:mm:ss",
         isTime: true,
         maxDate: $.nowDate(0),
-        choosefun: function (elem, datas) {
+        choosefun: function (elem, datas) { //日历选择完毕回调函数
             end.minDate = datas; //开始日选好后，重置结束日的最小日期
+            if($("#endDate").val() && $("#startDate").val()){
+                dataParm.startDate=$("#startDate").val() || null;
+                dataParm.endDate=$("#endDate").val() || null;
+                goPage(1);
+            }
+        },
+        clearfun:function(val) {  //清除日历按钮完毕回调函数
+            dataParm.startDate=$("#startDate").val() || null;
+            dataParm.endDate=$("#endDate").val() || null;
+            goPage(1);
         }
     };
     var end = {
@@ -123,6 +122,16 @@ $(function () {
         maxDate: $.nowDate(0),
         choosefun: function (elem, datas) {
             start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
+            if($("#endDate").val() && $("#startDate").val()){
+                dataParm.startDate=$("#startDate").val() || null;
+                dataParm.endDate=$("#endDate").val() || null;
+                goPage(1);
+            }
+        },
+        clearfun:function(val) {
+            dataParm.startDate=$("#startDate").val() || null;
+            dataParm.endDate=$("#endDate").val() || null;
+            goPage(1);
         }
     };
     $.jeDate("#startDate", start);
