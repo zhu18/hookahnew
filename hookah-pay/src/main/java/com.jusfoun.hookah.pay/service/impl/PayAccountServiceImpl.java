@@ -87,25 +87,33 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		// 账户操作
 		Map<String, Object> map = new HashMap<>();
 
-		// 加钱
-		if(operatorType.equals(PayConstants.TradeType.OnlineRecharge.code) ||
-				operatorType.equals(PayConstants.TradeType.ManualRecharge.code) ||
-				operatorType.equals(PayConstants.TradeType.CashREverse.code) ||
-				operatorType.equals(PayConstants.TradeType.SalesIn.code) ||
-				operatorType.equals(PayConstants.TradeType.ChargeIn.code) ||
-				operatorType.equals(PayConstants.TradeType.OfflineRecharge.code)){
+		// todo 加钱 这几种类型操作 balance&use_balance 同时增加
+		if(operatorType.equals(HookahConstants.TradeType.OnlineRecharge.code) ||
+				operatorType.equals(HookahConstants.TradeType.ManualRecharge.code) ||
+				operatorType.equals(HookahConstants.TradeType.CashREverse.code) ||
+				operatorType.equals(HookahConstants.TradeType.SalesIn.code) ||
+				operatorType.equals(HookahConstants.TradeType.ChargeIn.code) ||
+				operatorType.equals(HookahConstants.TradeType.OfflineRecharge.code)){
 			map.put("type", "plus");
-		}else if( // 减钱
-				operatorType.equals(PayConstants.TradeType.OnlineCash.code) ||
-						operatorType.equals(PayConstants.TradeType.SalesOut.code) ||
-						operatorType.equals(PayConstants.TradeType.ManualDebit.code)
+		}else if( // todo 提现 申请之后先冻结待提现的金额 use_balance扣除金额 frozen_balance增加金额
+				operatorType.equals(HookahConstants.TradeType.CashFreeza.code)
+				){
+			map.put("type", "cash");
+		}else if( // todo 减钱 这几种类型操作 balance&use_balance 同时扣款
+					operatorType.equals(HookahConstants.TradeType.SalesOut.code) ||
+					operatorType.equals(HookahConstants.TradeType.ManualDebit.code)
 				){
 			map.put("type", "sub");
-		}else if(operatorType.equals(PayConstants.TradeType.FreezaIn.code)){ // 冻结转入
+		}else if(operatorType.equals(HookahConstants.TradeType.FreezaIn.code)){
+				// todo 冻结转入 balance&frozen_balance增加金额
 			map.put("type", "FreezaIn");
-		}else if(operatorType.equals(PayConstants.TradeType.releaseDraw.code)){ // 释放划出
+		}else if(operatorType.equals(HookahConstants.TradeType.releaseDraw.code)){
+			// todo 释放划出 frozen_balance扣除金额 balance增加金额
 			map.put("type", "releaseDraw");
-		}else if(operatorType.equals(PayConstants.TradeType.SettleCut.code)){
+		}else if( // todo 清算或者提现审核  balance&frozen_balance扣除金额
+				operatorType.equals(HookahConstants.TradeType.SettleCut.code) ||
+				operatorType.equals(HookahConstants.TradeType.OnlineCash.code)
+				){
 			map.put("type", "SettleCut");
 		}
 		map.put("id", payAccountId);
@@ -140,25 +148,33 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		// 账户操作
 		Map<String, Object> map = new HashMap<>();
 
-		// 加钱
-		if(operatorType.equals(PayConstants.TradeType.OnlineRecharge.code) ||
-				operatorType.equals(PayConstants.TradeType.ManualRecharge.code) ||
-				operatorType.equals(PayConstants.TradeType.CashREverse.code) ||
-				operatorType.equals(PayConstants.TradeType.SalesIn.code) ||
-				operatorType.equals(PayConstants.TradeType.ChargeIn.code) ||
-				operatorType.equals(PayConstants.TradeType.OfflineRecharge.code)){
+		// todo 加钱 这几种类型操作 balance&use_balance 同时增加
+		if(operatorType.equals(HookahConstants.TradeType.OnlineRecharge.code) ||
+				operatorType.equals(HookahConstants.TradeType.ManualRecharge.code) ||
+				operatorType.equals(HookahConstants.TradeType.CashREverse.code) ||
+				operatorType.equals(HookahConstants.TradeType.SalesIn.code) ||
+				operatorType.equals(HookahConstants.TradeType.ChargeIn.code) ||
+				operatorType.equals(HookahConstants.TradeType.OfflineRecharge.code)){
 			map.put("type", "plus");
-		}else if( // 减钱
-				operatorType.equals(PayConstants.TradeType.OnlineCash.code) ||
-						operatorType.equals(PayConstants.TradeType.SalesOut.code) ||
-						operatorType.equals(PayConstants.TradeType.ManualDebit.code)
+		}else if( // todo 提现 申请之后先冻结待提现的金额 use_balance扣除金额 frozen_balance增加金额
+				operatorType.equals(HookahConstants.TradeType.CashFreeza.code)
+				){
+			map.put("type", "cash");
+		}else if( // todo 减钱 这几种类型操作 balance&use_balance 同时扣款
+				operatorType.equals(HookahConstants.TradeType.SalesOut.code) ||
+						operatorType.equals(HookahConstants.TradeType.ManualDebit.code)
 				){
 			map.put("type", "sub");
-		}else if(operatorType.equals(PayConstants.TradeType.FreezaIn.code)){ // 冻结转入
+		}else if(operatorType.equals(HookahConstants.TradeType.FreezaIn.code)){
+			// todo 冻结转入 balance&frozen_balance增加金额
 			map.put("type", "FreezaIn");
-		}else if(operatorType.equals(PayConstants.TradeType.releaseDraw.code)){ // 释放划出
+		}else if(operatorType.equals(HookahConstants.TradeType.releaseDraw.code)){
+			// todo 释放划出 frozen_balance扣除金额 balance增加金额
 			map.put("type", "releaseDraw");
-		}else if(operatorType.equals(PayConstants.TradeType.SettleCut.code)){
+		}else if( // todo 清算或者提现审核  balance&frozen_balance扣除金额
+				operatorType.equals(HookahConstants.TradeType.SettleCut.code) ||
+						operatorType.equals(HookahConstants.TradeType.OnlineCash.code)
+				){
 			map.put("type", "SettleCut");
 		}
 		map.put("id", payAccountId);

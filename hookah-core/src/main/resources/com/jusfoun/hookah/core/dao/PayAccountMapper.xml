@@ -66,6 +66,10 @@
         use_balance = use_balance + #{changeMoney},
         frozen_balance = frozen_balance - #{changeMoney}
       </if>
+      <if test="type == 'cash'">
+        use_balance = use_balance - #{changeMoney},
+        frozen_balance = frozen_balance + #{changeMoney}
+      </if>
       <if test="type == 'SettleCut'">
         balance = balance - #{changeMoney},
         frozen_balance = frozen_balance - #{changeMoney}
