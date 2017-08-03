@@ -49,13 +49,15 @@ function getDetail(id) {
                     url:host.website+'/withdrawRecord/applyW',
                     data:{
                         money:$("#money").val(),
-                        payPwd:$("#password").val(),
-                        cardNo:$("#cardNo").val()
+                        payPwd:$.md5($("#password").val()),
+                        cardNo:$("#cardNo").html()
                     },
                     type:'get',
                     success:function (data) {
                         if(data.code=="1"){
                             window.location.href= host.website+'/usercenter/withdrawalStep2';
+                        }else {
+                            $.alert(data.message)
                         }
                     }
                 });
@@ -96,7 +98,6 @@ function getDetail(id) {
         return this.optional(element) || (mobile);
     }, "*请输入正确格式的金额");
     $.validator.addMethod("isPassword", function(value, element) {
-        if(value.length==6){
             var mo=false;
             $.ajax({
                 url:host.website+'/usercenter/verifyPayPassword',
@@ -115,8 +116,6 @@ function getDetail(id) {
                     }
                 }
             });
-
-        }
         return mo;
     }, "*请输入正确的交易密码");
     // 类型点击事件

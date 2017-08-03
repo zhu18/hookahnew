@@ -49,10 +49,11 @@ $(function () {
             },
             bank:{
                 required:true,
-                isBank:true
+                rangelength:[16,19]
             },
             bindName:{
-                required:true
+                required:true,
+
             },
             verificationCode:{
                 required:true,
@@ -79,7 +80,7 @@ $(function () {
             },
             bank:{
                 required:"*请输入银行卡号",
-                isBank:"*请输入正确的银行卡号"
+                rangelength:$.validator.format("*银行卡号长度为{0}-{1}个字符"),
             },
             bindName:{
                 required:"*请选择银行名称"
@@ -94,10 +95,10 @@ $(function () {
         var mobile = regex.mobile.test(value);
         return this.optional(element) || (mobile);
     }, "*请填写有效的手机号");
-    $.validator.addMethod("isBank", function(value, element) {
-        var mobile = regex.bank.test(value);
-        return this.optional(element) || (mobile);
-    }, "*请输入正确的银行卡号");
+    // $.validator.addMethod("isBank", function(value, element) {
+    //     var mobile = regex.bank.test(value);
+    //     return this.optional(element) || (mobile);
+    // }, "*请输入正确的银行卡号");
     $.validator.addMethod("isVerificationCode", function(value, element) {
         var mo=false;
         if(value.length==4){

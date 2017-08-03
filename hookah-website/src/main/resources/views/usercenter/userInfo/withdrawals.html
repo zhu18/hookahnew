@@ -40,13 +40,13 @@ var htmlPart = {
                         <label for=""><span class="color-red">*</span>提现账号：</label>
                         <div class="cash-account-card">
                            <h4>${payBankCard.bankName}</h4>
-                           <p><span id="cardNo">银行卡号：</span>${payBankCard.cardCode}</p >
+                           <p><span >银行卡号：</span><span id="cardNo">${payBankCard.cardCode}</span></p >
                            <p><span>账户名：</span>${payBankCard.cardOwner}</p >
                         </div>
                     </div>
                     <div class="trade-password form-item">
                         <label for="password"><span class="color-red">*</span>交易密码：</label>
-                        <input type="password"  id="password" name=" password"maxlength="6" placeholder="输入交易密码"  autocomplete="off">
+                        <input type="password"  id="password" name="password" maxlength="6" placeholder="输入交易密码"  autocomplete="off">
                     </div>
                     <div class="form-item payment">
                         <a class="btn" id="goPay" >去支付</a>
