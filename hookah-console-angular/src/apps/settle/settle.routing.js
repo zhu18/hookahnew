@@ -20,6 +20,8 @@ export default function settleRouting($stateProvider, $urlRouterProvider) {
       url: '/settle/settleDetails/:id',
       template: require('./settleDetails.html'),
       controller: SettleDetailController,
+      permission: 'settleDetails'
+
     })
     .state('settle.transactionManage', {  //单条订单详情页
       url: '/settle/transactionManage/',
