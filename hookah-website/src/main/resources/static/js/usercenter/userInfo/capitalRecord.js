@@ -34,6 +34,9 @@ function loadPageData(data){
                 case(8):
                     list[i].tradeType = '冲账';
                     break;
+                case(6):
+                    list[i].tradeType = '冻结';
+                    break;
             }
             html+="<tr >" ;
             html+="<td>"+list[i].orderSn+"</td>" ;
