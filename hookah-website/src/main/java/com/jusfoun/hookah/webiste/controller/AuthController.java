@@ -7,10 +7,12 @@ import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.*;
+import com.jusfoun.hookah.webiste.config.MyProps;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -40,6 +42,8 @@ import java.util.*;
 public class AuthController extends BaseController {
 
     private static Logger logger = LoggerFactory.getLogger(AuthController.class);
+    @Autowired
+    MyProps myProps;
 
     @Resource
     UserDetailService userDetailService;
@@ -108,7 +112,7 @@ public class AuthController extends BaseController {
     public String logout(Model model) throws Exception {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
-        return "redirect:http://localhost:9900/logout";
+        return "redirect:" + myProps.getHost().get("website") + "/exchange/index";
     }
 
     /**
