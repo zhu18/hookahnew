@@ -312,7 +312,6 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 	}
 
 	@Override
-	@Transactional
 	public void payByBalance(OrderInfo orderInfo) throws Exception {
 		//先看流水存不存在
 		List<Condition> filter = new ArrayList<>();

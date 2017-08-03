@@ -613,7 +613,6 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
      * @param  payStatus
      * @throws HookahException
      */
-    @Transactional(readOnly=false)
     @Override
     public void updatePayStatus(String orderSn, Integer payStatus, Integer payMode) throws Exception {
         logger.info("updatePayStatus status = {}",payStatus);
@@ -659,7 +658,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         //支付成功后,API类商品调用api平台接口，启用api调用跟踪
         //进行商品销量统计
         if(OrderInfo.PAYSTATUS_PAYED == payStatus){
-            managePaySuccess(orderInfo);
+//            managePaySuccess(orderInfo);
             countSales(orderInfo.getOrderId());
         }
         //        if(list!=null&&list.size()>0){
