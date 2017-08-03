@@ -23,6 +23,8 @@ export default function moneyRouting($stateProvider, $urlRouterProvider) {
       url: '/money/getMoneyDetail/:id',
       template: require('./getMoneyDetail.html'),
       controller: getMoneyDetailController,
+      permission: 'getMoneyDetail'
+
     })
     .state('money.showMoneyList', {//资金流水
       url: '/money/showMoneyList',
