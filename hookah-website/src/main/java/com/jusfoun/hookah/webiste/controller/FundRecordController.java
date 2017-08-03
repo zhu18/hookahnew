@@ -35,7 +35,6 @@ public class FundRecordController extends BaseController {
     @RequestMapping(value = "/fund/pageData", method = RequestMethod.GET)
     @ResponseBody
     public ReturnData findByPage(Integer pageNumber, Integer pageSize, Integer tradeType, Integer tradeStatus, String startDate, String endDate) {
-        Map map = new HashMap<>();
         try {
             String userId = this.getCurrentUser().getUserId();
 
@@ -69,10 +68,9 @@ public class FundRecordController extends BaseController {
             List<OrderBy> orderBys = new ArrayList<>();
             orderBys.add(OrderBy.desc("addTime"));
             Pagination<PayTradeRecord> records = fundRecordService.getDetailListInPage(pageNumber, pageSize, listFilters, orderBys);
-            map.put("records", records);
 
-            logger.info(JsonUtils.toJson(map));
-            return ReturnData.success(map);
+            logger.info(JsonUtils.toJson(records));
+            return ReturnData.success(records);
         } catch (Exception e) {
             logger.error("分页查询资金记录错误", e);
             return ReturnData.error("分页查询错误");
