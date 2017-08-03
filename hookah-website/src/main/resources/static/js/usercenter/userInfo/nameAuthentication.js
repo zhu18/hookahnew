@@ -20,10 +20,8 @@ $(function () {
                     html +="<li><label>审核意见</label><p>"+content+"</p></li>";
                 }else if(data.data.userType == '5'){
                     html +="<li><label>认证状态</label><p class='position-relative'><span>认证中</span></p></li>";
-                    $('.ul2').hide()
                 }else if(data.data.userType == '1'){
                     html +="<li><label>认证状态</label><p class='position-relative'><span>未认证</span><a href='/auth/company_auth_init_step2?isAuth=1' class='repeat-revise-btn'>立即认证</a></p></li>";
-                    $('.ul2').hide()
                 }
                 $('.ul1').html(html);
                 if(data.data.organization){

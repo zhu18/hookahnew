@@ -38,10 +38,10 @@ function getDetail(id) {
         $("#money").val($(".apply-money .money").html())
     })
     $("#goPay").on("click",function () {
-        var money=parseInt($("#money").val());
+        var money=parseFloat($("#money").val());
         if(money==0){
-            $.alert("金额能为0!");
-        }else if(money>parseInt($(".apply-money .money").html())){
+            $.alert("金额不能为0!");
+        }else if(money>parseFloat($(".apply-money .money").html())){
             $.alert("金额不可大于余额！");
         }else {
             if($("#form").valid()){
