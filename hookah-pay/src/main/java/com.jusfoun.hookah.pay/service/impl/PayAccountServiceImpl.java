@@ -585,8 +585,10 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
             filters=new ArrayList();
             filters.add(Condition.eq("userId", userId));
             PayAccount payAccount=super.selectOne(filters);
-			//不提供交易密码
-            payAccount.setPayPassword("");
+			if(null != payAccount) {
+				//不提供交易密码
+				payAccount.setPayPassword("");
+			}
             return payAccount;
         }else{
             return null;
