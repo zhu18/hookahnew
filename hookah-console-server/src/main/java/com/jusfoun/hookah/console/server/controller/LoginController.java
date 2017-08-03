@@ -20,7 +20,7 @@ public class LoginController {
         if (!StringUtils.isEmpty(backurl)) {
             return "redirect:" + backurl;
         } else {
-            return "redirect:trade.qddata.com.cn";
+            return "redirect:/exchange/index";
         }
 
     }
