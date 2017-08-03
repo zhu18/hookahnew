@@ -282,8 +282,7 @@
         <if test="orgName != '' and orgName != null">
             AND org.org_name like '%${orgName}%'
         </if>
-        GROUP BY goods.goods_sn
-        ORDER BY goodsCheck.check_time DESC
+
     </select>
 
 </mapper>
