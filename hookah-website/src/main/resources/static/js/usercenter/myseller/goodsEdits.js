@@ -323,7 +323,7 @@ function validataFn(){
 				// isPricceData:true,
 				// isPricceB:true,
 				lt:["#maxExp","最大经验值"],
-				gt:["#minExp","最小经验值"]
+				gts:["#minExp","最小经验值"]
 			},
 			goodsImges:'required',
 			goodsImges2:'required',
@@ -641,6 +641,9 @@ $.validator.addMethod("isPricceData", function(value, element) {
 $.validator.addMethod("gt", function(value, element,param) {
 	return this.optional(element) || value >=0.01;
 }, $.validator.format("输入值必须大于{0.01}!"));
+$.validator.addMethod("gts", function(value, element,param) {
+	return this.optional(element) || value >=0;
+}, $.validator.format("输入值必须大于0!"));
 //小于
 $.validator.addMethod("lt", function(value, element,param) {
 	return this.optional(element) || value <= 9999999.99;
