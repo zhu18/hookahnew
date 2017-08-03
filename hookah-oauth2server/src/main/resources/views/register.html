@@ -327,6 +327,7 @@ var htmlPart = {
                 $("input[name='safetyLandScore']").val("20");
                 passwordChange.strength('pw-strength-bar-1 pw-strength-bar-3', 'pw-strength-bar-2', TRLang.pwd_level_medium);
             }else {
+                $("input[name='safetyLandScore']").val("0");
                 passwordChange.strength('pw-strength-bar-2 pw-strength-bar-3', 'pw-strength-bar-1', TRLang.pwd_level_low);
             }
 		} else if (strlen(val) == 0) {
@@ -654,7 +655,7 @@ var htmlPart = {
 				d = testData.character(nick);
 			if (strlen(nick) <= 25 && strlen(nick) >= 5 && !testData.allNumber(nick)) {
 				if (!testData.nickIllegal(nick)) {
-					if (strlen(password) <= 20 && strlen(password) >= 6) {
+					if (strlen(password) <= 20 && strlen(password) >= 6 && $("input[name='safetyLandScore']").val() != "0") {
 						if (rePassword == password) {
 							if (testData.mobile(mobile)) {
 								if(validSms){
@@ -717,8 +718,6 @@ var htmlPart = {
 				if(data.code == 1){
 					$.post("${host.auth}/reg", $("#J_InfoForm").serialize(), function (data) {
 						if (data.code == 1) {
-                            console.log(4);
-
                             $.alert("注册成功，马上跳转登录页面");
 							setTimeout(function() {
 								window.location.href = '${host.auth}/login';
