@@ -50,6 +50,7 @@ function getDetail(id) {
                     data:{
                         money:$("#money").val(),
                         payPwd:$("#password").val(),
+                        cardNo:$("#cardNo").val()
                     },
                     type:'get',
                     success:function (data) {
