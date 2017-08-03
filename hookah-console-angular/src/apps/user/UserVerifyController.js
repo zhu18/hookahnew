@@ -17,18 +17,6 @@ class UserVerifyController {
         $rootScope.loadingState = false;
         growl.addSuccessMessage("数据加载完毕。。。");
 
-        // $rootScope.loadingState = false;
-        // $rootScope.pagination.store = res.data.data.list;
-        // $rootScope.pagination.currentPage = res.data.data.currentPage;
-        // $rootScope.pagination.totalItems = res.data.data.totalItems;
-        // if (res.data.data.totalItems == 0) {
-        //   $rootScope.showNoneDataInfoTip = true;
-        //   $rootScope.showPageHelpInfo = false;
-        // } else {
-        //   $rootScope.showNoneDataInfoTip = false;
-        //   $rootScope.showPageHelpInfo = true;
-        // }
-        // growl.addSuccessMessage("数据加载完毕。。。");
       });
     };
 
@@ -135,11 +123,11 @@ class UserVerifyController {
         if (item.userType == 0) {//个人用户
 
           $rootScope.userDetail = res.data.data.userDetail;
-          //$rootScope.user = res.data.data.user;
+          $rootScope.userOtherInfo = res.data.data.user;
 
         } else if (item.userType == 1) {//企业用户
           $rootScope.addressInfo = res.data.data;
-          //$rootScope.user = res.data.data.user;
+          $rootScope.userOtherInfo = res.data.data.user;
           $rootScope.cuserd = res.data.data.organization;
         }
         $rootScope.userCheck = res.data.data.userCheck;

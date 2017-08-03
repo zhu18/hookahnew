@@ -11,7 +11,7 @@
     <div class="console-title console-title-border clearfix">
       <div class="pull-left"><h5>用户详情</h5></div>
       <div class="pull-right">
-        <button class="btn btn-default" ui-sref="user.verify.resultAll" data-ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span> 返回</button>
+        <button class="btn btn-default" ui-sref="user.verify.resultAll" ><span class="glyphicon glyphicon-refresh"></span> 返回</button>
       </div>
     </div>
   </div>
@@ -28,37 +28,37 @@
         <div class="form-group">
           <label class="col-sm-2 control-label" for="email">邮箱:</label>
           <div class="col-sm-4">
-            <input type="text" disabled="disabled" id="email" name="email" value="{{user.email}}" class="form-control none-edit" />
+            <input type="text" disabled="disabled" id="email" name="email" value="{{userOtherInfo.email}}" class="form-control none-edit" />
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="mobile">手机:</label>
           <div class="col-sm-4">
-            <input type="text" disabled="disabled" value="{{user.mobile}}" id="mobile" name="mobile" class="form-control none-edit" />
+            <input type="text" disabled="disabled" value="{{userOtherInfo.mobile}}" id="mobile" name="mobile" class="form-control none-edit" />
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="regTime">注册时间:</label>
           <div class="col-sm-4">
-            <input type="text" disabled="disabled" value="{{user.regTime}}" id="regTime" name="regTime" class="form-control none-edit" />
+            <input type="text" disabled="disabled" value="{{userOtherInfo.regTime}}" id="regTime" name="regTime" class="form-control none-edit" />
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="regTime">账户余额:</label>
           <div class="col-sm-4">
-            <input type="text" disabled="disabled" value="{{user.moneyBalance}}元" id="moneyBalance" name="moneyBalance" class="form-control none-edit" />
+            <input type="text" disabled="disabled" value="{{userOtherInfo.moneyBalance}}元" id="moneyBalance" name="moneyBalance" class="form-control none-edit" />
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="lastLoginIp">最后登录IP:</label>
           <div class="col-sm-4">
-            <input type="text" disabled="disabled" value="{{user.lastLoginIp}}" id="lastLoginIp" name="lastLoginIp" class="form-control none-edit" />
+            <input type="text" disabled="disabled" value="{{userOtherInfo.lastLoginIp}}" id="lastLoginIp" name="lastLoginIp" class="form-control none-edit" />
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="lastLoginTime">最后登录时间:</label>
           <div class="col-sm-4">
-            <input type="text" disabled="disabled" value="{{user.lastLoginTime}}" id="lastLoginTime" name="lastLoginTime" class="form-control none-edit" />
+            <input type="text" disabled="disabled" value="{{userOtherInfo.lastLoginTime}}" id="lastLoginTime" name="lastLoginTime" class="form-control none-edit" />
           </div>
         </div>
       </fieldset>

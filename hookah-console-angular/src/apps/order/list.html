@@ -84,7 +84,7 @@
             <tr data-ng-if="!loadingState" data-ng-repeat="item in pagination.store" class="" >
               <td>{{ $index + 1 }}</td>
               <td>
-                <a   ng-click="getDetails($event,item.orderId)" >
+                <a ng-click="getDetails($event,item.orderId)" >
                   <span text-length="50" ng-bind="item.orderSn"></span>
                 </a>
               </td>

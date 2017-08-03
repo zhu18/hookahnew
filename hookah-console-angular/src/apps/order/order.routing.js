@@ -19,6 +19,8 @@ export default function shelfRouting($stateProvider, $urlRouterProvider) {
       url: '/order/viewOrderDetails/:id',
       template: require('./orderDetail.html'),
       controller: OrderDetailController,
+      permission: 'viewOrderDetails'
+
     })
     .state('order.viewGoodDetail', {
       url: '/order/viewGoodDetail',
