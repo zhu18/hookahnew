@@ -20,7 +20,7 @@ public class LoginController {
         if (!StringUtils.isEmpty(backurl)) {
             return "redirect:" + backurl;
         } else {
-            return "redirect:/exchange/index";
+            return "redirect:/";
         }
 
     }
