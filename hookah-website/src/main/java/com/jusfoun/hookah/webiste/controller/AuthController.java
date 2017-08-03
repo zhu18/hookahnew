@@ -71,7 +71,7 @@ public class AuthController extends BaseController {
             return "redirect:" + redirect_uri;
         } else {
             userService.setUVCountByDate();
-            return "redirect:/";
+            return "redirect:/exchange/index";
         }
     }
 
