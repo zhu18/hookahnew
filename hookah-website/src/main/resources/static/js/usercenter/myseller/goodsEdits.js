@@ -321,7 +321,7 @@ function validataFn(){
 			priceBoxAgencyPrice:{
 				required:true,
 				// isPricceData:true,
-				isPricceB:true,
+				// isPricceB:true,
 				lt:["#maxExp","最大经验值"],
 				gt:["#minExp","最小经验值"]
 			},
