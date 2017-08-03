@@ -2,7 +2,7 @@
  * Created by lss on 2017/7/18 0018.
  */
 function loadPageData(data){
-    var list = data.data.records.list;
+    var list = data.data.list;
     if(list.length > 0){
         var html = '';
         for(var i=0; i<list.length; i++){
