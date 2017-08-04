@@ -24,8 +24,7 @@
       <div class="form-group">
         <label class="col-sm-2 control-label" for="permissionName">权限代码<span class="must">*</span></label>
         <div class="col-sm-4">
-          <input type="text" id="permissionName" name="permissionName"  onKeyUp="value=value.replace(/[^a-z_A-Z]/g,'')"
-                 oninput="value=value.replace(/[^a-z_A-Z]/g,'')"  class="form-control" maxlength="32"  ng-model="permissionName"  required/>
+          <input type="text" id="permissionName" name="permissionName"   class="form-control" maxlength="32"  ng-model="permissionName"  required/>
         </div>
         <div class="col-sm-4 control-label" style="text-align: left;">
           英文字符、下划线，最大长度32
@@ -43,7 +42,7 @@
       <div class="form-group">
         <div class="col-sm-2"></div>
         <div class="col-sm-4">
-          <button class="btn btn-primary" data-ng-click="save()" ng-disabled="permissionForm.$pristine || permissionForm.$invalid">
+          <button class="btn btn-primary" data-ng-click="save()" >
             <span class="glyphicon glyphicon-refresh"></span> 保存
           </button>
         </div>

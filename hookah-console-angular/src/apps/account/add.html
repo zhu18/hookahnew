@@ -16,19 +16,19 @@
         <div class="form-group">
           <label class="col-sm-2 control-label" for="userName">系统用户名<span class="must">*</span></label>
           <div class="col-sm-4">
-            <input type="text" id="userName" name="userName"  ng-maxlength="120" class="form-control" ng-model="userName" required/>
+            <input type="text" id="userName" name="userName"  ng-maxlength="50" class="form-control" ng-model="userName" required/>
           </div>
           <div class="col-sm-4 control-label" style="text-align: left;">
-            系统用户名不能为空，且最大长度为120
+            系统用户名不能为空，且最大长度为50
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="password">密码<span class="must">*</span></label>
           <div class="col-sm-4">
-            <input type="password" id="password" name="password" ng-minlength="6" ng-maxlength="120" class="form-control" ng-model="password" required/>
+            <input type="password" id="password" name="password" ng-minlength="6" ng-maxlength="30" class="form-control" ng-model="password" required/>
           </div>
           <div class="col-sm-4 control-label" style="text-align: left;">
-            密码不能为空，且长度为6~120之间
+            密码不能为空，且长度为6~30之间
           </div>
           <!--<div class="col-sm-4">-->
           <!--默认密码为:huanglei-->

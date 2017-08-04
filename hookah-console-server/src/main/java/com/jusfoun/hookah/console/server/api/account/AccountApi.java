@@ -108,11 +108,13 @@ public class AccountApi extends BaseController {
                 user.setEmail(userRoleVo.getEmail());
                 user.setMobile(userRoleVo.getMobile());
                 User savedUser = userService.insert(user);
-                for (int i = 0; i < userRoleVo.getRoles().size(); i++) {
-                    UserRole userRole = new UserRole();
-                    userRole.setUserId(savedUser.getUserId());
-                    userRole.setRoleId((String) userRoleVo.getRoles().get(i));
-                    userRoleService.insert(userRole);
+                if (userRoleVo.getRoles()!=null){
+                    for (int i = 0; i < userRoleVo.getRoles().size(); i++) {
+                        UserRole userRole = new UserRole();
+                        userRole.setUserId(savedUser.getUserId());
+                        userRole.setRoleId((String) userRoleVo.getRoles().get(i));
+                        userRoleService.insert(userRole);
+                    }
                 }
             }
         } catch (Exception e) {

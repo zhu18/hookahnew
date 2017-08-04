@@ -62,6 +62,28 @@ class PermissionController {
       });
     };
     $scope.save = function () {
+        var patt = /^[A-Za-z_]+$/;
+        if (!$scope.permissionName ) {
+            $rootScope.openErrorDialogModal("权限代码不能为空！");
+            return;
+        }
+
+        if ($scope.permissionName.length >= 32) {
+            $rootScope.openErrorDialogModal("权限代码长度不能超过32个字符！");
+            return;
+        }
+        if (!patt.test($scope.permissionName)){
+            $rootScope.openErrorDialogModal("权限代码只能是英文字符、下划线！");
+            return;
+        }
+        if ($scope.permissionExplain == "" || $scope.permissionExplain == null) {
+            $rootScope.openErrorDialogModal("权限中文名不能为空！");
+            return;
+        }
+        if ($scope.permissionExplain.length >= 30) {
+            $rootScope.openErrorDialogModal("权限中文名长度不能超过30个字符！");
+            return;
+        }
       var promise = $http({
         method: 'POST',
         url: $rootScope.site.apiServer + "/api/permission/save",
