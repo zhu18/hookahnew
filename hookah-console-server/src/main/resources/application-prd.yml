@@ -99,4 +99,6 @@ myconf:
     accessTokenUrl: http://auth.qddata.com.cn/oauth/accessToken
     userInfoUrl: http://auth.qddata.com.cn/userInfo
     redirectUrl: http://auth.qddata.com.cn/login
+  api:
+    url: http://202.106.10.250:5555/gateway/insert
 debug: true
