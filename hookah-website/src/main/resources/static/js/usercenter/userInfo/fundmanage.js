@@ -17,7 +17,7 @@ function render() {
                 data:{},
                 type:'get',
                 success:function (data) {
-                    $(".account-funds-content-left .money").html("￥"+(data.data.useBalance / 100).toFixed(2));
+                    $(".account-funds-content-left .money").html("￥"+(data.data.balance / 100).toFixed(2));
                     $(".freeze").html("￥"+(data.data.freeze / 100).toFixed(2));
                     $(".useBalance").html("￥"+(data.data.useBalance / 100).toFixed(2));
                     for(var i=0;i<list.length;i++){

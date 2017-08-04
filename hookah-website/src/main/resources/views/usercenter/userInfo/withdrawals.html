@@ -1,6 +1,9 @@
 <%
 var head = {
 %>
+<meta http-equiv= "Pragma" content= "no-cache" />
+<meta http-equiv= "Cache-Control" content= "no-cache" />
+<meta http-equiv= "Expires" content= "0" />
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/withdrawals.css">
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
 <link rel="stylesheet" href="/static/css/plugins/jedate/jedate.css">
@@ -31,7 +34,7 @@ var htmlPart = {
                 <form id="form" action="" class="withdrawals-content" autocomplete="off">
                     <div class="apply-money form-item">
                         <label for="money">申请提现金额：</label>
-                        <input type="text" id="money" name="money"  autocomplete="new-password">元
+                        <input type="text" id="money" name="money" autocomplete="off">元
                         <span>可用金额</span>
                         ￥<span class="money color-orange font-size-16">${payBankCard.payAccountId / 100}</span>
                         <a href="javascript:void(0)" id="withdrawals-btn" class="blue margin-left-15 color-blue ">全部提现</a>
@@ -46,7 +49,7 @@ var htmlPart = {
                     </div>
                     <div class="trade-password form-item">
                         <label for="password"><span class="color-red">*</span>交易密码：</label>
-                        <input type="password"  id="password" name="password" maxlength="6" placeholder="输入交易密码"  autocomplete="off">
+                        <input type="password"  id="password" name="password" maxlength="6" placeholder="输入交易密码"  autocomplete="off" data-inner_placeholder="r_p_input_enterPassword" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false">
                     </div>
                     <div class="form-item payment">
                         <a class="btn" id="goPay" >去支付</a>
