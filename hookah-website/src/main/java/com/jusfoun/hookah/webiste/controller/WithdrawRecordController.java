@@ -50,11 +50,20 @@ public class WithdrawRecordController extends BaseController{
      */
     @RequestMapping("/applyW")
     @ResponseBody
-    public ReturnData apply(WithdrawRecord withdrawRecord) {
+    public ReturnData apply(
+            @RequestParam(value="money", required = true ) Double  money,
+            @RequestParam(value="payPwd", required = true ) String payPwd,
+            @RequestParam(value="cardNo", required = true ) String cardNo
+    ) {
 
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
+
+            WithdrawRecord withdrawRecord = new WithdrawRecord();
+            withdrawRecord.setMoney(new Double(money * 100).longValue());
+            withdrawRecord.setPayPwd(payPwd);
+            withdrawRecord.setCardNo(cardNo);
             withdrawRecord.setUserId(getCurrentUser().getUserId());
             returnData = withdrawRecordService.applyWithdraw(withdrawRecord);
 
@@ -63,7 +72,7 @@ public class WithdrawRecordController extends BaseController{
             returnData.setMessage(e.getMessage());
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
-            returnData.setMessage("系统出错，请联系管理员！");
+            returnData.setMessage("系统繁忙，请稍后再试！");
             e.printStackTrace();
         }
         return returnData;
@@ -121,7 +130,7 @@ public class WithdrawRecordController extends BaseController{
             returnData.setMessage(e.getMessage());
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
-            returnData.setMessage("系统出错，请联系管理员！");
+            returnData.setMessage("系统繁忙，请稍后再试！");
             e.printStackTrace();
         }
         return returnData;
@@ -185,7 +194,7 @@ public class WithdrawRecordController extends BaseController{
         } catch (Exception e) {
             logger.error(e.getMessage());
             returnData.setCode(ExceptionConst.Failed);
-            returnData.setMessage("系统异常");
+            returnData.setMessage("系统繁忙，请稍后再试");
             return returnData;
         }
         return returnData;

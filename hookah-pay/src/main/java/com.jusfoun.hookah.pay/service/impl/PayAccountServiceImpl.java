@@ -107,8 +107,11 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		}else if(operatorType.equals(HookahConstants.TradeType.FreezaIn.code)){
 				// todo 冻结转入 balance&frozen_balance增加金额
 			map.put("type", "FreezaIn");
-		}else if(operatorType.equals(HookahConstants.TradeType.releaseDraw.code)){
-			// todo 释放划出 frozen_balance扣除金额 balance增加金额
+		}else if(
+				operatorType.equals(HookahConstants.TradeType.releaseDraw.code) ||
+						operatorType.equals(HookahConstants.TradeType.CashRelease.code)
+				){
+			// todo 释放划出 frozen_balance扣除金额 use_balance增加金额
 			map.put("type", "releaseDraw");
 		}else if( // todo 清算或者提现审核  balance&frozen_balance扣除金额
 				operatorType.equals(HookahConstants.TradeType.SettleCut.code) ||
@@ -168,8 +171,11 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		}else if(operatorType.equals(HookahConstants.TradeType.FreezaIn.code)){
 			// todo 冻结转入 balance&frozen_balance增加金额
 			map.put("type", "FreezaIn");
-		}else if(operatorType.equals(HookahConstants.TradeType.releaseDraw.code)){
-			// todo 释放划出 frozen_balance扣除金额 balance增加金额
+		}else if(
+				operatorType.equals(HookahConstants.TradeType.releaseDraw.code) ||
+				operatorType.equals(HookahConstants.TradeType.CashRelease.code)
+				){
+			// todo 释放划出 frozen_balance扣除金额 use_balance增加金额
 			map.put("type", "releaseDraw");
 		}else if( // todo 清算或者提现审核  balance&frozen_balance扣除金额
 				operatorType.equals(HookahConstants.TradeType.SettleCut.code) ||

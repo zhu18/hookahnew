@@ -57,22 +57,22 @@ public class CertificationController extends BaseController{
         Map<String, Object> map = new HashMap<>(6);
         User user = userService.selectById(userId);
         map.put("userType", user.getUserType());
-        List<Condition> filters = new ArrayList();
-        filters.add(Condition.eq("userId", userId));
         UserCheck userCheck = userCheckService.selectUserCheckInfo(userId);
         if(userCheck != null) {
             map.put("checkContent", userCheck.getCheckContent());
-            if(userCheck.getCheckStatus() == 2 || userCheck.getCheckStatus() == 1){
+        }
+        if(user!=null){
+            if(user.getUserType() == 4 || user.getUserType() == 5|| user.getUserType() == 7){
                 if(StringUtils.isNotBlank(user.getOrgId())) {
                     Organization organization = organizationService.selectById(user.getOrgId());//根据用户查询认证信息
-                     map.put("organization",organization);
+                    map.put("organization",organization);
                 }
                 return ReturnData.success(map);
             }else {
-                return ReturnData.success("待审核");
+                return ReturnData.success("未认证");
             }
         }
-        return ReturnData.error("未审核");
+        return ReturnData.error("用户信息不可为空");
     }
 
     //修改用户实名认证信息

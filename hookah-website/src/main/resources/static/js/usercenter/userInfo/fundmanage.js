@@ -17,7 +17,7 @@ function render() {
                 data:{},
                 type:'get',
                 success:function (data) {
-                    $(".account-funds-content-left .money").html("￥"+(data.data.useBalance / 100).toFixed(2));
+                    $(".account-funds-content-left .money").html("￥"+(data.data.balance / 100).toFixed(2));
                     $(".freeze").html("￥"+(data.data.freeze / 100).toFixed(2));
                     $(".useBalance").html("￥"+(data.data.useBalance / 100).toFixed(2));
                     for(var i=0;i<list.length;i++){
@@ -32,13 +32,10 @@ function render() {
                         html +='<span>银行卡号:</span>';
                         html +='<span class="card-number">'+data.data.cardCode+'</span></p><p>';
                         html +='<span>账户名:</span><span class="account-name">'+data.data.cardOwner+'</span></p><a href="javascript:void(0)" class="delete">删除</a></div>';
-
-
                     }else {
                         html +='<a href="/usercenter/bindBankCard" class="add-card">';
                         html +='<p class="Plus margin-top-20">+</p>';
                         html +='<p>添加银行</p>';
-                        html +='</a><p class="margin-left-15 margin-top-20 tip">提示：只能用ie浏览器......</p>';
                         $(".operation-btn").append('<span class="color-red margin-left-10">您还未绑定银行卡，<a href="/usercenter/bindBankCard" class="color-red">立即绑定</a></span>');
 
                     }

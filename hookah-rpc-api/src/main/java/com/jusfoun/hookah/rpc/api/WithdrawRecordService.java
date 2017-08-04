@@ -18,4 +18,6 @@ public interface WithdrawRecordService extends GenericService<WithdrawRecord, Lo
     ReturnData applyWithdraw(WithdrawRecord withdrawRecord);
 
     List<WithdrawVo> getListForPage(String startDate, String endDate, String checkStatus, String orgName);
+
+    ReturnData checkOneApply(Long id, byte checkStatus, String checkMsg, String userName);
 }
