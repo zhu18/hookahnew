@@ -1773,6 +1773,11 @@ $('#J_submitBtn').click(function(){
 		} else {
 			$.alert('请完善价格及规格信息',true,function(){});
 		}
+	}else{
+		return false;
 	}
 });
 
+function checkOut(){ //取消form表单默认事件
+	return false;
+}

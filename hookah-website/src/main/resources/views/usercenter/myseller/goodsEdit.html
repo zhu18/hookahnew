@@ -21,7 +21,7 @@ var htmlPart = {
 	<div class="grid-row clearfix">
 		<%include("/usercenter/user-center-menu.html"){} %>
 		<div class="grid-right margin-top-10 info-center-box">
-			<form action="" id="goodsModifyForm">
+			<form action="" id="goodsModifyForm" onsubmit="return checkOut()">
 				<input type="hidden" name="userId" value="${user.userId}">
 				<input type="hidden" name="typeId">
 				<input type="hidden" name="ver" id="J-ver"/>
