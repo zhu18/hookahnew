@@ -37,6 +37,9 @@ function loadPageData(data){
                 case(10):
                     list[i].tradeType = '冻结';
                     break;
+                case(11):
+                    list[i].tradeType = '解冻';
+                    break;
             }
             html+="<tr >" ;
             html+="<td>"+list[i].orderSn+"</td>" ;
