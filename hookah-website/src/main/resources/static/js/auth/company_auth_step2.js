@@ -220,7 +220,10 @@ if ($.getUrlParam("isAuth") == "3") {
         $("input[name='companyLegal']").val(data.data.organization.lawPersonName?data.data.organization.lawPersonName:"")//企业法人代表
         $("input[name='lawPersonNum']").val(data.data.organization.lawPersonNum?data.data.organization.lawPersonNum:"")//法定代表人证件编号
         $('#lawPersonPositivePath').attr({"src":host.static+'/' + data.data.organization.lawPersonPositivePath});//法定代表人证件照正
+        $("input[name='lawPersonPositivePath']").val(data.data.organization.lawPersonPositivePath);//法定代表人证件照正
         $('#lawPersonNegativePath').attr({"src":host.static+'/' + data.data.organization.lawPersonNegativePath});//法定代表人证件照反
+        $("input[name='lawPersonNegativePath']").val(data.data.organization.lawPersonNegativePath);//法定代表人证件照正
+
         //地域
         showRegion(data.data.organization.region,"registerProvince","registerCity");
         showRegion(data.data.organization.officeRegionId,"workProvince","workCity");
