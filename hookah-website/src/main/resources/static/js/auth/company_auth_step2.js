@@ -233,13 +233,17 @@ if ($.getUrlParam("isAuth") == "3") {
 
         //营业执照编号
         $("input[name='businessLicence']").val(data.data.organization.licenseCode?data.data.organization.licenseCode:"");
+
         $("#licensePath").attr({"src":host.static+'/' +data.data.organization.licensePath});//企业代码存放路径
+        $("#licensePathSrc").val(data.data.organization.licensePath);//企业代码存放路径
         //税务
         $("input[name='taxRegCertificate']").val(data.data.organization.taxCode?data.data.organization.taxCode:"");
         $("#taxPath").attr({"src":host.static+'/' +data.data.organization.taxPath});
+        $("#taxPathSrc").val(data.data.organization.taxPath);
         //组织代码
         $("input[name='certificateCode']").val(data.data.organization.certificateCode?data.data.organization.certificateCode:"");
         $("#certifictePath").attr({"src":host.static+'/' +data.data.organization.certifictePath});
+        $("#certifictePathSrc").val(data.data.organization.certifictePath);
 
         // 我要成为供应商
         if(data.data.organization.isSupplier=="1"){
