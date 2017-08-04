@@ -74,7 +74,7 @@ public class WithdrawRecordController extends BaseController {
 
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
-            returnData.setMessage("系统出错，请联系管理员！");
+            returnData.setMessage("系统繁忙，请稍后再试！");
             e.printStackTrace();
         }
         return returnData;
@@ -116,7 +116,7 @@ public class WithdrawRecordController extends BaseController {
 
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
-            returnData.setMessage("系统出错，请联系管理员！");
+            returnData.setMessage("系统繁忙，请稍后再试！");
             e.printStackTrace();
         }
         return returnData;
@@ -192,7 +192,7 @@ public class WithdrawRecordController extends BaseController {
 
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
-            returnData.setMessage("系统出错，请联系管理员！");
+            returnData.setMessage("系统繁忙，请稍后再试！");
             e.printStackTrace();
         }
         return returnData;

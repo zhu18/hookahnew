@@ -43,11 +43,26 @@ public class WithdrawRecordServiceImpl extends GenericServiceImpl<WithdrawRecord
     @Transactional
     public ReturnData applyWithdraw(WithdrawRecord withdrawRecord) {
 
-        ReturnData returnData = new ReturnData<>();
         if(!StringUtils.isNotBlank(withdrawRecord.getPayPwd())){
-            returnData.setCode(ExceptionConst.Failed);
-            returnData.setMessage("请输入交易密码！");
-            return returnData;
+            return ReturnData.error("请输入交易密码！");
+        }
+
+        // todo 添加提现记录之后  冻结用户账户金额
+        List<Condition> filters = new ArrayList<>();
+        filters.add(Condition.eq("userId", withdrawRecord.getUserId()));
+        PayAccount payAccount = payAccountService.selectOne(filters);
+        if(payAccount == null){
+            return ReturnData.error("未查询到账户信息！");
+        }
+
+        if(!StringUtils.isNotBlank(withdrawRecord.getPayPwd()) ||
+                !withdrawRecord.getPayPwd().equals(payAccount.getPayPassword())
+                ){
+            return ReturnData.error("交易密码不匹配！");
+        }
+
+        if(withdrawRecord.getMoney() > payAccount.getUseBalance()){
+            return ReturnData.error("可用余额不足！");
         }
 
         // 产品未确定 暂时注释
@@ -61,28 +76,14 @@ public class WithdrawRecordServiceImpl extends GenericServiceImpl<WithdrawRecord
 //            return returnData;
 //        }
 
-        withdrawRecord.setMoney(withdrawRecord.getMoney() * 100);
         withdrawRecord.setSerialNo(DateUtils.getCurrentTimeFormat(new Date()) + Thread.currentThread().getId());
         withdrawRecord.setAddTime(new Date());
         withdrawRecord.setCheckStatus(HookahConstants.WithdrawStatus.waitCheck.code);
         int n = insertRecord(withdrawRecord);
         if(n == 1){
-            returnData.setCode(ExceptionConst.Success);
-            returnData.setMessage("提现申请成功，等待系统审核！");
+            ReturnData.success("提现申请成功，等待系统审核！");
         }else{
-            returnData.setCode(ExceptionConst.Failed);
-            returnData.setMessage("提现申请失败，请重新申请或联系管理员！");
-        }
-
-        // todo 添加提现记录之后  冻结用户账户金额
-        List<Condition> filters = new ArrayList<>();
-        filters.add(Condition.eq("userId", withdrawRecord.getUserId()));
-        PayAccount payAccount = payAccountService.selectOne(filters);
-
-        if(payAccount == null){
-            returnData.setCode(ExceptionConst.Failed);
-            returnData.setMessage("审核成功, 客户账户信息查询失败！");
-            return returnData;
+            ReturnData.error("提现申请失败，系统繁忙或稍后再试！");
         }
 
         payAccountService.operatorByType(payAccount.getId(),
@@ -91,10 +92,7 @@ public class WithdrawRecordServiceImpl extends GenericServiceImpl<WithdrawRecord
                 withdrawRecord.getMoney(), OrderHelper.genOrderSn(),
                 payAccount.getUserName());
 
-        returnData.setCode(ExceptionConst.Success);
-        returnData.setMessage("审核成功，已扣除客户账！");
-
-        return returnData;
+        return ReturnData.success("审核成功，已扣除客户账！");
     }
 
     @Override
