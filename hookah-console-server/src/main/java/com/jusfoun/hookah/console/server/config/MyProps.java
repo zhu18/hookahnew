@@ -29,6 +29,8 @@ public class MyProps {
 
     private Map<String, String> host = new HashMap<>();
 
+    private Map<String, String> api = new HashMap<>();
+
     public Map<String, String> getBeetl() {
         return beetl;
     }
@@ -43,5 +45,13 @@ public class MyProps {
 
     public void setHost(Map<String, String> host) {
         this.host = host;
+    }
+
+    public Map<String, String> getApi() {
+        return api;
+    }
+
+    public void setApi(Map<String, String> api) {
+        this.api = api;
     }
 }

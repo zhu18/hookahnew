@@ -2,6 +2,7 @@ package com.jusfoun.hookah.console.server.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.jusfoun.hookah.console.server.config.MyProps;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.OrderInfoMapper;
@@ -68,6 +69,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
     @Resource
     MongoTemplate mongoTemplate;
+
+    @Resource
+    MyProps myProps;
 
     /**
      * 评论接口
@@ -658,7 +662,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         //支付成功后,API类商品调用api平台接口，启用api调用跟踪
         //进行商品销量统计
         if(OrderInfo.PAYSTATUS_PAYED == payStatus){
-//            managePaySuccess(orderInfo);
+            managePaySuccess(orderInfo);
             countSales(orderInfo.getOrderId());
         }
         //        if(list!=null&&list.size()>0){
@@ -734,7 +738,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             //支付成功,
             //1、发送api平台
 //            String url = "http://open.galaxybigdata.com/shop/insert/userapi";
-            String apiUrl = "http://192.168.200.116:5555/gateway/insert";
+            String apiUrl = myProps.getApi().get("url");
             List<Map> list = new ArrayList();
 
             orderInfoVo.getMgOrderGoodsList().stream()

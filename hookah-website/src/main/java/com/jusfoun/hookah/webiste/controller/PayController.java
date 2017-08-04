@@ -141,23 +141,13 @@ public class PayController extends BaseController{
 
     @RequestMapping(value = "/balancePay", method = RequestMethod.POST)
     public String payPassSta(String orderSn, Model model, String passWord) {
-        long orderAmount = 0 ; //支付金额
+        OrderInfo orderinfo = new OrderInfo();
         try {
             List<Condition> filters = new ArrayList();
             filters.add(Condition.eq("orderSn", orderSn));
-            OrderInfo orderinfo  = orderService.selectOne(filters);
+            orderinfo  = orderService.selectOne(filters);
             if (orderinfo.getPayStatus() == 2){
                 model.addAttribute("message", "订单已支付");
-                model.addAttribute("code", 9);
-                model.addAttribute("orderSn", orderSn);
-                return "pay/fail";
-            }
-            orderAmount= orderinfo.getOrderAmount();
-            List<Condition> filter = new ArrayList();
-            filter.add(Condition.eq("userId", orderinfo.getUserId()));
-            PayAccount payAccount = payAccountService.selectOne(filter);
-            if (payAccount.getUseBalance()<orderAmount){
-                model.addAttribute("message", "余额不足，支付失败!");
                 model.addAttribute("code", 9);
                 model.addAttribute("orderSn", orderSn);
                 return "pay/fail";
@@ -170,7 +160,7 @@ public class PayController extends BaseController{
             model.addAttribute("orderSn", orderSn);
             return "pay/fail";
         }
-        model.addAttribute("money",orderAmount);
+        model.addAttribute("money",orderinfo.getOrderAmount());
         return "pay/success";
     }
 
