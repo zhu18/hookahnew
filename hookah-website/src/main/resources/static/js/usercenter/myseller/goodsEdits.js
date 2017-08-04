@@ -983,41 +983,54 @@ function renderData(data){//渲染页面
 	$('.showcontentes').html(getLength(data.goodsBrief));//商品名称长度
 	$('#trialRange').val(data.trialRange);//使用范围
 	$('#trialRange_s').html(getLength(data.trialRange));//使用范围
+
+
 	$('select[name="parentSelect"] option').each(function(){
 		if(data.goodsType == 0 || data.goodsType == 1){
 			$('#childrenSelect1').show();
-			if($(this).attr('value') == 100){
-				$(this).attr('selected','true')
-			}
-			$('select[name="childrenSelect1"] option').each(function(){
-				if($(this).attr('value') == data.goodsType){
-					$(this).attr('selected','true')
-				}
-			})
+			// if($(this).attr('value') == 100){
+			// 	$(this).attr('selected','true')
+			// }
+			$('select[name="parentSelect"]').val(100).attr('selected','true');
+			// $('select[name="childrenSelect1"] option').each(function(){
+			// 	if($(this).attr('value') == data.goodsType){
+			// 		$(this).attr('selected','true')
+			// 	}
+			// })
+			$('select[name="childrenSelect1"]').val(data.goodsType).attr('selected','true');
+			console.log('000000000&&&&&&111111111')
 		}else if(data.goodsType == 2){
-			if($(this).attr('value') == 2){
-				$(this).attr('selected','true')
-			}
+			// if($(this).attr('value') == 2){
+			// 	$(this).attr('selected','true')
+			// }
+			$('select[name="parentSelect"]').val(data.goodsType).attr('selected','true');
+			console.log('222222222222')
 		}else if(data.goodsType == 4 || data.goodsType == 5){
 			$('#childrenSelect3').show();
-			if($(this).attr('value') == 400){
-				$(this).attr('selected','true')
-			}
-			$('select[name="childrenSelect3"] option').each(function(){
-				if($(this).attr('value') == data.goodsType){
-					$(this).attr('selected','true')
-				}
-			})
+			// if($(this).attr('value') == 400){
+			// 	$(this).attr('selected','true')
+			// }
+			// $('select[name="childrenSelect3"] option').each(function(){
+			// 	if($(this).attr('value') == data.goodsType){
+			// 		$(this).attr('selected','true')
+			// 	}
+			// })
+			$('select[name="parentSelect"]').val(400).attr('selected','true');
+			$('select[name="childrenSelect3"]').val(data.goodsType).attr('selected','true');
+			console.log('44444444&&&&&&55555555')
 		}else if(data.goodsType == 6 || data.goodsType == 7){
 			$('#childrenSelect2').show();
-			if($(this).attr('value') == 300){
-				$(this).attr('selected','true')
-			}
-			$('select[name="childrenSelect2"] option').each(function(){
-				if($(this).attr('value') == data.goodsType){
-					$(this).attr('selected','true')
-				}
-			})
+			// if($(this).attr('value') == 300){
+			// 	$(this).attr('selected','true')
+			// }
+			// $('select[name="childrenSelect2"] option').each(function(){
+			// 	if($(this).attr('value') == data.goodsType){
+			// 		$(this).attr('selected','true')
+			// 	}
+			// })
+			$('select[name="parentSelect"]').val(300).attr('selected','true');
+			$('select[name="childrenSelect2"]').val(data.goodsType).attr('selected','true');
+			console.log('66666666&&&&&&77777777')
 		}
 	});
 	var goodsTypeVal = $('#parentSelect').val();
