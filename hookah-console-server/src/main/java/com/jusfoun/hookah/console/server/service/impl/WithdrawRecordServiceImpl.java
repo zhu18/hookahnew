@@ -99,4 +99,67 @@ public class WithdrawRecordServiceImpl extends GenericServiceImpl<WithdrawRecord
     public List<WithdrawVo> getListForPage(String startDate, String endDate, String checkStatus, String orgName) {
         return withdrawRecordMapper.getListForPage(startDate, endDate, checkStatus, orgName);
     }
+
+    @Transactional
+    public ReturnData checkOneApply(Long id, byte checkStatus, String checkMsg, String userName) {
+
+        ReturnData returnData = new ReturnData();
+
+        if(checkStatus == HookahConstants.WithdrawStatus.checkFail.code && !StringUtils.isNotBlank(checkMsg)){
+            return returnData.error("提现审核失败，请填写失败原因！");
+        }
+
+        // todo 查询提现申请
+        WithdrawRecord record = this.selectById(id);
+        if(record == null){
+            return returnData.error("未获取到有效的提现申请记录！");
+        }
+
+        if(record.getCheckStatus() != HookahConstants.WithdrawStatus.waitCheck.code){
+            return returnData.error("该申请已审批，请勿重复审批！");
+        }
+
+        // todo 根据提现申请中的user_id查询用户的资金账户
+        List<Condition> filters = new ArrayList<>();
+        filters.add(Condition.eq("userId", record.getUserId()));
+        PayAccount payAccount = payAccountService.selectOne(filters);
+
+        if(payAccount == null){
+            return returnData.error("未获取到用户的资金账户！");
+        }
+
+        // todo 修改提现申请记录状态
+        record.setCheckStatus(checkStatus);
+        record.setCheckMsg(checkMsg);
+        record.setCheckTime(new Date());
+        record.setCheckOperator(userName);
+        int n = this.updateByIdSelective(record);
+
+        // todo 修改成功并且审核状态为通过
+        if(n == 1 && checkStatus == HookahConstants.WithdrawStatus.CheckSuccess.code){
+
+            // todo 账户总金额- 冻结金额-
+            payAccountService.operatorByType(payAccount.getId(),
+                    payAccount.getUserId().toString(),
+                    HookahConstants.TradeType.OnlineCash.getCode(),
+                    record.getMoney(), OrderHelper.genOrderSn(),
+                    userName);
+
+            returnData.success("审核通过，已扣除客户账！");
+        }else if(n == 1 && checkStatus == HookahConstants.WithdrawStatus.checkFail.code){
+
+            // todo 修改成功并且审核状态为不通过 该笔提现的冻结金额- 可用余额+
+            payAccountService.operatorByType(payAccount.getId(),
+                    payAccount.getUserId().toString(),
+                    HookahConstants.TradeType.CashRelease.getCode(),
+                    record.getMoney(), OrderHelper.genOrderSn(),
+                    userName);
+
+            returnData.success("审核不通过，资金已退回可用余额！");
+        }else{
+            returnData.error("系统繁忙审核失败，请稍后再试！");
+        }
+
+        return returnData;
+    }
 }

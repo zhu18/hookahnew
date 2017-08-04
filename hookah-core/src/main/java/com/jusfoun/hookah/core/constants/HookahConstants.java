@@ -397,6 +397,7 @@ public class HookahConstants {
      8：提现冲账
      9: 结算扣款  从冻结部分和总金额部分 同时减去欲结算的金额
      10: 冻结金额 从可用余额到冻结金额
+     11: 解冻金额 从冻结金额到可用余额
      清算中心类型
      3001：销售（货款）收入
      3007：交易交收手续费-收入
@@ -414,6 +415,7 @@ public class HookahConstants {
         CashREverse(8),
         SettleCut(9),
         CashFreeza(10),
+        CashRelease(11),
         SalesIn(3001),
         SalesOut(4001),
         ChargeIn(3007),
