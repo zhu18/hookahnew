@@ -820,7 +820,7 @@ function submitGoodsPublish(){
 		data.goodsAdvantage = $('#textarea2').val(); //商品优势
 		data.afterSaleService = $('#textarea3').val(); //售后服务
 		data.dataModel = {};
-		data.dataModel.modelType = $('select[name="modelType"]').val();
+		// data.dataModel.modelType = $('select[name="modelType"]').val();
 		data.dataModel.complexity = $('select[name="complexity"]').val();
 		data.dataModel.maturity = $('select[name="maturity"]').val();
 		data.dataModel.aexp = $('textarea[name="aexp"]').val();
@@ -1480,7 +1480,7 @@ function renderApiInfo(apiInfo){ //渲染API ----- 1
 }
 function renderDataModel(dataModel){ //渲染数据模型---2
 	console.log(JSON.stringify(dataModel));
-	$('.dataModel-info-box select[name="modelType"]').val(dataModel.modelType); //模型类型
+	// $('.dataModel-info-box select[name="modelType"]').val(dataModel.modelType); //模型类型
 	$('.dataModel-info-box select[name="complexity"]').val(dataModel.complexity);//复杂度
 	$('.dataModel-info-box select[name="maturity"]').val(dataModel.maturity);//成熟度
 	$('.dataModel-info-box textarea[name="aexp"]').val(dataModel.aexp);//应用经验
