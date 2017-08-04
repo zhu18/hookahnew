@@ -1676,9 +1676,9 @@ $('#J_submitBtn').click(function(){
 				}
 			}
 			if(goodsTypeId == 0 || goodsTypeId == 1 || goodsTypeId == 2){
-				if($.trim(editor1.$txt.text()).length > 0){
-					if($.trim(editor2.$txt.text()).length > 0){
-						if($.trim(editor3.$txt.text()).length > 0){
+				if($.trim(editor1.$txt.html()) != "<p><br></p>"){
+					if($.trim(editor2.$txt.html()) != "<p><br></p>"){
+						if($.trim(editor3.$txt.html()) != "<p><br></p>"){
 							backAddFn(submitGoodsPublish())
 						}else{
 							$.alert('售后服务不能为空',true,function () {})
@@ -1690,11 +1690,11 @@ $('#J_submitBtn').click(function(){
 					$.alert('商品描述不能为空',true,function () {})
 				}
 			}else if(goodsTypeId == 4){
-				if($.trim(editor3.$txt.text()).length > 0){
-					if($.trim(editorAs.$txt.text()).length > 0){
-						if($.trim(editorBs.$txt.text()).length > 0){
-							if($.trim(editorCs.$txt.text()).length > 0){
-								if($.trim(editorDs.$txt.text()).length > 0){
+				if($.trim(editor3.$txt.html()) != "<p><br></p>"){
+					if($.trim(editorAs.$txt.html()) != "<p><br></p>"){
+						if($.trim(editorBs.$txt.html()) != "<p><br></p>"){
+							if($.trim(editorCs.$txt.html()) != "<p><br></p>"){
+								if($.trim(editorDs.$txt.html()) != "<p><br></p>"){
 									backAddFn(submitGoodsPublish())
 								}else{
 									$.alert('所需环境不能为空',true,function () {})
@@ -1712,10 +1712,10 @@ $('#J_submitBtn').click(function(){
 					$.alert('售后服务不能为空',true,function () {})
 				}
 			}else if(goodsTypeId == 5){
-				if($.trim(editor3.$txt.text()).length > 0){
-					if($.trim(editorAs.$txt.text()).length > 0){
-						if($.trim(editorCs.$txt.text()).length > 0){
-							if($.trim(editorDs.$txt.text()).length > 0){
+				if($.trim(editor3.$txt.html()) != "<p><br></p>"){
+					if($.trim(editorAs.$txt.html()) != "<p><br></p>"){
+						if($.trim(editorCs.$txt.html()) != "<p><br></p>"){
+							if($.trim(editorDs.$txt.html()) != "<p><br></p>"){
 								backAddFn(submitGoodsPublish())
 							}else{
 								$.alert('所需环境不能为空',true,function () {})
@@ -1730,11 +1730,11 @@ $('#J_submitBtn').click(function(){
 					$.alert('售后服务不能为空',true,function () {})
 				}
 			}else if(goodsTypeId == 6){
-				if($.trim(editor3.$txt.text()).length > 0){
-					if($.trim(editorA.$txt.text()).length > 0){
-						if($.trim(editorB.$txt.text()).length > 0){
-							if($.trim(editorC.$txt.text()).length > 0){
-								if($.trim(editorD.$txt.text()).length > 0){
+				if($.trim(editor3.$txt.html()) != "<p><br></p>"){
+					if($.trim(editorA.$txt.html()) != "<p><br></p>"){
+						if($.trim(editorB.$txt.html()) != "<p><br></p>"){
+							if($.trim(editorC.$txt.html()) != "<p><br></p>"){
+								if($.trim(editorD.$txt.html()) != "<p><br></p>"){
 									backAddFn(submitGoodsPublish())
 								}else{
 									$.alert('所需环境不能为空',true,function () {})
@@ -1752,10 +1752,10 @@ $('#J_submitBtn').click(function(){
 					$.alert('售后服务不能为空',true,function () {})
 				}
 			}else if(goodsTypeId == 7){
-				if($.trim(editor3.$txt.text()).length > 0){
-					if($.trim(editorA.$txt.text()).length > 0){
-						if($.trim(editorC.$txt.text()).length > 0){
-							if($.trim(editorD.$txt.text()).length > 0){
+				if($.trim(editor3.$txt.html()) != "<p><br></p>"){
+					if($.trim(editorA.$txt.html()) != "<p><br></p>"){
+						if($.trim(editorC.$txt.html()) != "<p><br></p>"){
+							if($.trim(editorD.$txt.html()) != "<p><br></p>"){
 								backAddFn(submitGoodsPublish())
 							}else{
 								$.alert('所需环境不能为空',true,function () {})
