@@ -48,8 +48,10 @@ $(function () {
                     $('#taxPath').attr({"src":host.static+'/' + data.data.organization.taxPath});
                 }
             }else {
-
-
+                var html="";
+                html +="<li><label>用户类型</label><p>单位会员</p></li>";
+                html +="<li><label>认证状态</label><p class='position-relative'><span>未认证</span><a href='/auth/company_auth_init_step2?isAuth=1' class='repeat-revise-btn'>立即认证</a></p></li>"
+                $('.ul1').html(html);
             }
         }
     });
