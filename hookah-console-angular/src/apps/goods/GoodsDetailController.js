@@ -46,7 +46,7 @@ class GoodsDetailController {
                     var promise = $http({
                         method: 'post',
                         url: $rootScope.site.apiServer + "/api/goodsCheck/addApi",
-                        data: "voStr="+JSON.stringify($scope.addData)
+                        data: "voStr="+encodeURIComponent(JSON.stringify($scope.addData))
                     });
                     promise.then(function (res, status, config, headers) {
                         if (res.data.code == "1") {
@@ -63,7 +63,7 @@ class GoodsDetailController {
                     var promise = $http({
                         method: 'post',
                         url: $rootScope.site.apiServer + "/api/goodsCheck/add",
-                        data: "voStr="+JSON.stringify($scope.dataGoods)
+                        data: "voStr="+encodeURIComponent(JSON.stringify($scope.dataGoods))
                     });
                     promise.then(function (res, status, config, headers) {
                         if (res.data.code == "1") {
