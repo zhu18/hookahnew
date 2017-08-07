@@ -12,7 +12,7 @@ $(function () {
             $("#contactAddress").val(data.data.contactAddress);
             $("#lawPersonName").html(data.data.lawPersonName);
             $("#orgName").html(data.data.orgName);
-            $("#certificateCode").html(data.data.certificateCode);
+            $("#creditCode").html(data.data.creditCode);
         }
     });
     var regex = {  //手机号验证正则
