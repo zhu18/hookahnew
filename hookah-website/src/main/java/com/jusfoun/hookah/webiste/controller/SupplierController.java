@@ -76,7 +76,7 @@ public class SupplierController extends BaseController{
                 }
                 map.put("lawPersonName",org.getLawPersonName());
                 map.put("orgName",org.getOrgName());
-                map.put("certificateCode",org.getCertificateCode());
+                map.put("creditCode",org.getCreditCode());
             }
         }catch (Exception e){
             logger.error("查询用户信息错误", e);
