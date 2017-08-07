@@ -643,11 +643,11 @@ $.validator.addMethod("gt", function(value, element,param) {
 }, $.validator.format("输入值必须大于{0.01}!"));
 $.validator.addMethod("gts", function(value, element,param) {
 	return this.optional(element) || value >=0;
-}, $.validator.format("输入值必须大于0!"));
+}, $.validator.format("输入值必须大于等于0!"));
 //小于
 $.validator.addMethod("lt", function(value, element,param) {
-	return this.optional(element) || value <= 9999999.99;
-}, $.validator.format("输入值必须小于{9999999.99}!"));
+	return this.optional(element) || value <= 100000000.00;
+}, $.validator.format("输入值必须小于{100000000.00}!"));
 function backAddFn(data){
 	Loading.start();
 	$.ajax({
