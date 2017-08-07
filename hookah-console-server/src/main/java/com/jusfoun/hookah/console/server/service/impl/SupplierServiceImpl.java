@@ -135,6 +135,9 @@ public class SupplierServiceImpl extends GenericServiceImpl<Supplier, String> im
             BeanUtils.copyProperties(supplier, supplierVo);
             String userId = supplier.getUserId();
             User user = userService.selectById(userId);
+            if (user == null){
+                continue;
+            }
             Integer userType = user.getUserType();
             supplierVo.setUserType(userType);
             supplierVos.add(supplierVo);
