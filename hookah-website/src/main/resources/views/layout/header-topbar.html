@@ -3,43 +3,58 @@
     <ul class="text-align-right">
       <!--<li class="display-inline-block" style="float:left"><a href="/" class="a-hover-blue">首页</a></li>-->
       <%if(isEmpty(user)){%>
-      <li class="display-inline-block">
-        <a href="${oauth2.loginUrl}"><span class="fa fa-user-o margin-right-5"></span>登录</a>
-      </li>
-      <li class="display-inline-block"><a href="${oauth2.regUrl}" class="color-orange">免费注册</a></li>
+        <li class="display-inline-block">
+          <a href="${oauth2.loginUrl}"><span class="fa fa-user-o margin-right-5"></span>登录</a>
+        </li>
+        <li class="display-inline-block"><a href="${oauth2.regUrl}" class="color-orange">免费注册</a></li>
       <%}else{%>
-      <li class="display-inline-block userInfos">
+        <li class="display-inline-block userInfos">
 
-        <a href="javascript:void(0)" class="login">
-          欢迎，
-          <!--<span class="fa fa-user-o margin-right-5"></span>-->
-          ${user.userName}
-        </a>
-        <div class="userInfos-box">
-          <div class="spacer"></div>
-          <div class="userInfos-con">
-            <img src="${user.headImg}" alt="">
-            <% if(shiro.hasPermission("home")){%>
-            <a href="/admin/articleManage" class="a-hover-blue">用户中心</a>
-            <a href="${host.admin}/home" >后台管理</a>
-            <%}else{%>
-            <a href="/usercenter/index" class="a-hover-blue">用户中心</a>
-            <%}%>
+          <a href="javascript:void(0)" class="login">
+            欢迎，
+            <!--<span class="fa fa-user-o margin-right-5"></span>-->
+            ${user.userName}
+          </a>
+          <div class="userInfos-box">
+            <div class="spacer"></div>
+            <a href="${host.auth}/logout">退出</a>
+            <div class="userInfos-con">
+              <img src="${user.headImg}" alt="">
+              <% if(user.userType==0){%>
+                <% if(shiro.hasPermission("home")){%>
+                    <a href="/admin/articleManage" class="a-hover-blue">用户中心</a>
+                <%}%>
+
+                   <a href="${host.admin}/home" >后台管理</a>
+              <%}else{%>
+                <a href="/usercenter/index" class="a-hover-blue">用户中心</a>
+              <%}%>
+            </div>
           </div>
-          <a href="${host.auth}/logout">退出</a>
-        </div>
-      </li>
+        </li>
       <%}%>
-      <li class="display-inline-block">
-        <% if(shiro.hasPermission("home")){%>
-        <a href="/admin/articleManage">用户中心</a>
-      </li>
-      <li class="display-inline-block">
-        <a href="${host.admin}/home" target="_blank">后台管理</a>
+      <!--<li class="display-inline-block">
+        <% if(user.userType==0){%>
+
+          <a href="/admin/articleManage">用户中心</a>
+          <% if(shiro.hasPermission("home")){%>
+          </li>
+          <li class="display-inline-block">
+            <a href="${host.admin}/home" target="_blank">后台管理</a>
+          <%}%>
         <%}else{%>
         <a href="/usercenter/index">用户中心</a>
         <%}%>
-      </li>
+      </li>-->
+      <% if(user.userType==0){%>
+            <% if(shiro.hasPermission("home")){%>
+              <li class="display-inline-block"><a href="/admin/articleManage">用户中心</a> </li>
+            <%}%>
+            <li class="display-inline-block"><a href="${host.admin}/home" target="_blank">后台管理</a></li>
+      <%}else{%>
+            <li class="display-inline-block"><a href="/usercenter/index">用户中心</a></li>
+      <%}%>
+
       <li class="display-inline-block">|</li>
       <li class="display-inline-block">
         <a href="/help/question" class="a-hover-blue">
