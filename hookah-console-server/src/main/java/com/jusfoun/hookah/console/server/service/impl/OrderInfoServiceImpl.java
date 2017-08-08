@@ -104,7 +104,6 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
     private OrderInfo init(OrderInfo orderinfo) {
         Date date = new Date();
-        orderinfo.setOrderSn(OrderHelper.genOrderSn());
         orderinfo.setOrderStatus(OrderInfo.ORDERSTATUS_CONFIRM);
         orderinfo.setShippingStatus(0);
         orderinfo.setShippingId("");
@@ -341,13 +340,13 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         orderInfoVo.setIsDeleted((byte)1);
         mgOrderInfoService.updateByCondition(orderInfoVo,filters);
 
-        List<Condition> filter = new ArrayList<>();
-        filter.add(Condition.eq("orderSn",order.getOrderSn()));
-        List<MgGoodsOrder> mgGoodsOrders = mgGoodsOrderService.selectList(filter);
-        for (MgGoodsOrder mgGoodsOrder:mgGoodsOrders){
-            mgGoodsOrder.setIsDeleted((byte)1);
-            mgGoodsOrderService.updateByIdSelective(mgGoodsOrder);
-        }
+//        List<Condition> filter = new ArrayList<>();
+//        filter.add(Condition.eq("orderSn",order.getOrderSn()));
+//        List<MgGoodsOrder> mgGoodsOrders = mgGoodsOrderService.selectList(filter);
+//        for (MgGoodsOrder mgGoodsOrder:mgGoodsOrders){
+//            mgGoodsOrder.setIsDeleted((byte)1);
+//            mgGoodsOrderService.updateByIdSelective(mgGoodsOrder);
+//        }
     }
 
     /**

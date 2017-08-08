@@ -15,7 +15,6 @@ import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.JsonUtils;
-import com.jusfoun.hookah.core.utils.OrderHelper;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.CartService;
 import com.jusfoun.hookah.rpc.api.GoodsService;
@@ -525,7 +524,14 @@ public class OrderInfoController extends BaseController {
         String userId = getCurrentUser().getUserId();
         orderinfo.setUserId(userId);
         Date date = new Date();
-        orderinfo.setOrderSn(OrderHelper.genOrderSn());
+
+        String now = DateUtils.toDateText(date, "yyMMdd");
+        List<Condition> filter = new ArrayList<>();
+        filter.add(Condition.ge("addTime", DateUtils.toDateText(new Date(),"yyyy-MM-dd 00:00:00")));
+        long count = orderInfoService.count(filter)+1;
+        String number = "000000" + count;
+        String orderSn = userService.selectById(userId).getUserSn()+ now + number.substring(number.length()-6);
+        orderinfo.setOrderSn(orderSn);
         orderinfo.setOrderStatus(OrderInfo.ORDERSTATUS_CONFIRM);
         orderinfo.setShippingStatus(0);
         orderinfo.setShippingId("");
