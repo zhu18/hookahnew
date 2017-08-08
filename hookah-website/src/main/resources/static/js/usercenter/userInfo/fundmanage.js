@@ -29,9 +29,9 @@ function render() {
                     if(data.data.bindFlag=="0"){
                         html +='<div class="show-card">';
                         html +='<h4 class="card-name">'+data.data.bankId+'</h4><p>';
-                        html +='<span>银行卡号:</span>';
+                        html +='<span class="margin-right-5">银行卡号:</span>';
                         html +='<span class="card-number">'+data.data.cardCode+'</span></p><p>';
-                        html +='<span>账户名:</span><span class="account-name">'+data.data.cardOwner+'</span></p><a href="javascript:void(0)" class="delete">删除</a></div>';
+                        html +='<span class="margin-right-5">账户名:</span><span class="account-name">'+data.data.cardOwner+'</span></p><a href="javascript:void(0)" class="delete">删除</a></div>';
                     }else {
                         html +='<a href="/usercenter/bindBankCard" class="add-card">';
                         html +='<p class="Plus margin-top-20">+</p>';
