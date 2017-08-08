@@ -75,20 +75,20 @@ ${htmlSection}
 	html+= '</div>' ;
 	html+= '</div>' ;
 
-var htmlC = '<iframe frameborder=0 width=100% marginheight=0 marginwidth=0 id="tradeFooter" scrolling=no src=http://www.qddata.com.cn/yj/index.jhtml></iframe>';
+var htmlC = '<iframe frameborder=0 width=100% height=287 marginheight=0 marginwidth=0 id="tradeFooter" scrolling=no src=http://www.qddata.com.cn/yj/index.jhtml></iframe>';
 	if (tradeHost == 'trade.qddata.com.cn') {
         $('body').append(htmlC)
 	}
-	var iframe = $('#tradeFooter');
-	if (iframe.attachEvent) {
-		iframe.attachEvent("onload", function() {
-			iframe.height(this.contentWindow.document.body.offsetHeight)
-		});
-	} else {
-		iframe.load(function(){
-			iframe.height(this.contentWindow.document.body.offsetHeight)
-		});
-	}
+	// var iframe = $('#tradeFooter'); //实现iframe高度自适应
+	// if (iframe.attachEvent) {
+	// 	iframe.attachEvent("onload", function() {
+	// 		iframe.height(this.contentWindow.document.body.offsetHeight)
+	// 	});
+	// } else {
+	// 	iframe.load(function(){
+	// 		iframe.height(this.contentWindow.document.body.offsetHeight)
+	// 	});
+	// }
 
 
 
