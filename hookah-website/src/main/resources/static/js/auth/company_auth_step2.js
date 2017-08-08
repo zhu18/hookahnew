@@ -146,7 +146,7 @@ $("#companyForm").validate({
     businessLicence: '营业执照不能为空',
     taxRegCertificate: '不能为空',
     companyLegal: '法定代表人不能为空',
-    mainBusiness: '主营业务不能为空',
+    mainBusiness: '经营范围不能为空',
     // province:'所在地区不能为空',
     city: '所在地区不能为空',
     address: '详细地址不能为空',
