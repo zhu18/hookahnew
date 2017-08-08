@@ -187,7 +187,11 @@ class RoleController {
       if ($rootScope.item.isEnable == "" || $rootScope.item.isEnable == null) {
         $rootScope.item.isEnable = false;
       }
-
+      var checkedPermissions=$("input[name='permissions']:checked");
+      if (checkedPermissions.length<=0){
+          $rootScope.openErrorDialogModal("请勾选至少一个权限！");
+          return;
+      }
       var spCodesTemp = "";
       $('input:checkbox[name=permissions]:checked').each(function (i) {
         if (0 == i) {

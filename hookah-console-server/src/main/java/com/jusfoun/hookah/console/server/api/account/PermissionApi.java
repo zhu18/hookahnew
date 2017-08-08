@@ -98,6 +98,9 @@ public class PermissionApi extends BaseController {
     public ReturnData deletePermission(String permissionId) {
         try {
             if (StringUtils.isNotBlank(permissionId)) {
+                List<Condition> filters = new ArrayList<>();
+                filters.add(Condition.eq("permissionParentId",permissionId));
+                permissionService.deleteByCondtion(filters);
                 permissionService.delete(permissionId);
             } else {
                 return ReturnData.error("删除失败");

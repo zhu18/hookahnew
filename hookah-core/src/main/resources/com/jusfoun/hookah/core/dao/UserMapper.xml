@@ -95,7 +95,7 @@
     <sql id="SelectConditions">
 
         FROM  user u LEFT JOIN pay_account pa  ON  pa.user_id = u.user_id
-        WHERE  u.user_type  <![CDATA[ <> ]]> 1
+        WHERE  u.user_type  <![CDATA[ <> ]]> 0
 
         <if test="userName != '' and userName != null">
             AND u.user_name like CONCAT('%', #{userName}, '%')
