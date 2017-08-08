@@ -214,37 +214,50 @@ if ($.getUrlParam("isAuth") == "3") {
     cache:false,
     type: 'get',
     success: function (data) {
+
         $("input[name='governmentName']").val(data.data.organization.orgName?data.data.organization.orgName:"");//单位名称
         $("input[name='creditCode']").val(data.data.organization.creditCode?data.data.organization.creditCode:"");//统一社会信用代码
         $("input[name='mainBusiness']").val(data.data.organization.industry?data.data.organization.industry:"")//主营业务
         $("input[name='companyLegal']").val(data.data.organization.lawPersonName?data.data.organization.lawPersonName:"")//企业法人代表
         $("input[name='lawPersonNum']").val(data.data.organization.lawPersonNum?data.data.organization.lawPersonNum:"")//法定代表人证件编号
-        $('#lawPersonPositivePath').attr({"src":host.static+'/' + data.data.organization.lawPersonPositivePath});//法定代表人证件照正
-        $("input[name='lawPersonPositivePath']").val(data.data.organization.lawPersonPositivePath);//法定代表人证件照正
-        $('#lawPersonNegativePath').attr({"src":host.static+'/' + data.data.organization.lawPersonNegativePath});//法定代表人证件照反
-        $("input[name='lawPersonNegativePath']").val(data.data.organization.lawPersonNegativePath);//法定代表人证件照正
+        if(data.data.organization.lawPersonPositivePath){
+            $('#lawPersonPositivePath').attr({"src":host.static+'/' + data.data.organization.lawPersonPositivePath});//法定代表人证件照正
+            $("input[name='lawPersonPositivePath']").val(data.data.organization.lawPersonPositivePath);//法定代表人证件照正
+        }
+        if(data.data.organization.lawPersonNegativePath){
+            $('#lawPersonNegativePath').attr({"src":host.static+'/' + data.data.organization.lawPersonNegativePath});//法定代表人证件照反
+            $("input[name='lawPersonNegativePath']").val(data.data.organization.lawPersonNegativePath);//法定代表人证件照正
+        }
+
+
 
         //地域
         showRegion(data.data.organization.region,"registerProvince","registerCity");
         showRegion(data.data.organization.officeRegionId,"workProvince","workCity");
         $("input[name='address']").val(data.data.organization.contactAddress?data.data.organization.contactAddress:"");//详细地址
         $("input[name='workAddress']").val(data.data.organization.officeAddress?data.data.organization.officeAddress:"");//详细地址
-        $("input[name='tel']").val(data.data.organization.orgPhone?data.data.organization.orgPhone:"")//联系电话
+        $("input[name='tel']").val(data.data.organization.orgPhone)//联系电话
 
         //营业执照编号
         $("input[name='businessLicence']").val(data.data.organization.licenseCode?data.data.organization.licenseCode:"");
+        if(data.data.organization.licensePath){
+            $("#licensePath").attr({"src":host.static+'/' +data.data.organization.licensePath});//企业代码存放路径
+            $("#licensePathSrc").val(data.data.organization.licensePath);//企业代码存放路径
+        }
 
-        $("#licensePath").attr({"src":host.static+'/' +data.data.organization.licensePath});//企业代码存放路径
-        $("#licensePathSrc").val(data.data.organization.licensePath);//企业代码存放路径
         //税务
         $("input[name='taxRegCertificate']").val(data.data.organization.taxCode?data.data.organization.taxCode:"");
-        $("#taxPath").attr({"src":host.static+'/' +data.data.organization.taxPath});
-        $("#taxPathSrc").val(data.data.organization.taxPath);
+        if(data.data.organization.taxPath){
+            $("#taxPath").attr({"src":host.static+'/' +data.data.organization.taxPath});
+            $("#taxPathSrc").val(data.data.organization.taxPath);
+        }
+
         //组织代码
         $("input[name='certificateCode']").val(data.data.organization.certificateCode?data.data.organization.certificateCode:"");
-        $("#certifictePath").attr({"src":host.static+'/' +data.data.organization.certifictePath});
-        $("#certifictePathSrc").val(data.data.organization.certifictePath);
-
+        if(data.data.organization.certifictePath){
+            $("#certifictePath").attr({"src":host.static+'/' +data.data.organization.certifictePath});
+            $("#certifictePathSrc").val(data.data.organization.certifictePath)
+        }
         // 我要成为供应商
         if(data.data.organization.isSupplier=="1"){
             $("input[name='fruit']").attr("checked","checked");

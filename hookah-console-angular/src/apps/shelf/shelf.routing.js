@@ -22,12 +22,17 @@ export default function shelfRouting($stateProvider, $urlRouterProvider) {
       url: '/shelf/update',
       template: require('./update.html'),
       controller: ShelfController,
+      permission: 'updateShelf'
+
     })
     .state('shelf.manageGoods', {
       params:{'data':null},
       url: '/shelf/manageGoods',
       template: require('./manageGoods.html'),
       controller: ManageGoodsController,
+      permission: 'shelf_manageGoods'
+
+
     })
     .state('shelf.category', {
       url: '/shelf/category',

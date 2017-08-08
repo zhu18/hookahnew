@@ -66,6 +66,14 @@ public class CertificationController extends BaseController{
                 if(StringUtils.isNotBlank(user.getOrgId())) {
                     Organization organization = organizationService.selectById(user.getOrgId());//根据用户查询认证信息
                     map.put("organization",organization);
+                    String region= organizationService.selectRegion(user.getOrgId());
+                    String officeRegion = organizationService.selectOfficeRegion(user.getOrgId());
+                    String regionProvince= organizationService.selectRegionProvince(user.getOrgId());
+                    String officeRegionProvince = organizationService.selectOfficeRegionProvince(user.getOrgId());
+                    map.put("region",region);
+                    map.put("regionProvince",regionProvince);
+                    map.put("officeRegion",officeRegion);
+                    map.put("officeRegionProvince",officeRegionProvince);
                 }
                 return ReturnData.success(map);
             }else {

@@ -34,9 +34,15 @@ $(function () {
                     $('#lawPersonPositivePath').attr({"src":host.static+'/' + data.data.organization.lawPersonPositivePath});//法定代表人证件照正
                     $('#lawPersonNegativePath').attr({"src":host.static+'/' + data.data.organization.lawPersonNegativePath});//法定代表人证件照反
                     //注册地址
-                    $('#contactAddress').html( data.data.organization.contactAddress?data.data.organization.contactAddress:"无");
+                    var contactAddress=data.data.organization.contactAddress?data.data.organization.contactAddress:"无";
+                    var regionProvince=data.data.regionProvince?data.data.regionProvince:"";
+                    var region=data.data.region?data.data.region:"";
+                    $('#contactAddress').html(regionProvince+region+contactAddress);
                     // 办公地址
-                    $('#officeAddress').html( data.data.organization.officeAddress?data.data.organization.officeAddress:"无");
+                    var officeAddress=data.data.organization.officeAddress?data.data.organization.officeAddress:"无";
+                    var officeRegionProvince=data.data.officeRegionProvince?data.data.officeRegionProvince:"";
+                    var officeRegion=data.data.officeRegion?data.data.officeRegion:"";
+                    $('#officeAddress').html(officeRegionProvince+ officeRegion+officeAddress);
                     $('#orgPhone').html( data.data.organization.orgPhone?data.data.organization.orgPhone:"无");//联系电话
 
                     $('#certificateCode').html( data.data.organization.certificateCode?data.data.organization.certificateCode:"无");
