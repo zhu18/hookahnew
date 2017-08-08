@@ -166,7 +166,7 @@ $("#companyForm").validate({
   }
 });
 $.validator.addMethod("isMobile", function (value, element) {
-  var reg = /(^\d{3,4}-)?\d{7,8}/;
+  var reg = /^((0\d{2,3})-)(\d{7,8})(-(\d{3,}))?$/;
   var tel = value;
   return this.optional(element) || (reg.test(tel));
 }, "长度为10-60个字符（每个汉字为2个字符）");
