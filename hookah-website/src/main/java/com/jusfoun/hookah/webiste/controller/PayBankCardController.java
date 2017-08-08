@@ -129,18 +129,18 @@ public class PayBankCardController extends BaseController{
             if(StringUtils.isNotBlank(userId))
                 filters.add(Condition.eq("userId", userId));
             User user = userService.selectOne(filters);
-            if(user != null)
-                map.put("userName",user.getUserName());
+            if(user != null) {
+                map.put("userName", user.getUserName());
+                map.put("userType",user.getUserType());
+            }
             PayAccount payAccount = payAccountService.selectOne(filters);
             if(payAccount != null){
                 //账户余额
                 map.put("balance",payAccount.getBalance());
                 //可用金额
                 map.put("useBalance",payAccount.getUseBalance());
-                //冻结金额 = 账户余额 -  可用金额
-                long freeze = 0;
-                freeze = payAccount.getBalance() - payAccount.getUseBalance();
-                map.put("freeze",freeze);
+                //冻结金额
+                map.put("frozenBalance", payAccount.getFrozenBalance());
             }
             //银行卡信息
             filters.add(Condition.eq("bindFlag", PayConstants.BankCardStatus.binded.getCode()));
