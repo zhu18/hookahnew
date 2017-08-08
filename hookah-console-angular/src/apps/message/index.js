@@ -34,7 +34,7 @@ app.run(function ($rootScope, $state) {
       "folded": false
     }
   };
-  $rootScope.config.title = '消息平台管理';
+  $rootScope.config.title = '平台消息管理';
   $rootScope.config.mainNav =[
     {
       "title":"站内信记录",
