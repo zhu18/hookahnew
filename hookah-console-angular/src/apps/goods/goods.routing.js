@@ -76,7 +76,7 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
 			url: '/shelf/manageGoods',
 			template: require('../shelf/manageGoods.html'),
 			controller: ManageGoodsController,
-			permission: 'shelf_manageGoods'
+			permission: 'goodsGOshelfManageGoods'
 		})
 		.state('category.search', {
 			url: '/category/search',
