@@ -16,6 +16,7 @@ function render() {
                 $.ajax({
                     url:host.website+'/payBankCard/userFunds',
                     data:{},
+                    cache:false,
                     type:'get',
                     success:function (data) {
                         $(".account-funds-content-left .money").html("￥"+(data.data.useBalance / 100).toFixed(2));
@@ -58,6 +59,7 @@ function render() {
                                         data:{
 
                                         },
+                                        cache:false,
                                         type:'get',
                                         success:function (data) {
                                             if (data.code=="1"){
