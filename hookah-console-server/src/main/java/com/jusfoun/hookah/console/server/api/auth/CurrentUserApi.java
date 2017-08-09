@@ -42,7 +42,7 @@ public class CurrentUserApi extends BaseController{
     public ReturnData isAdmin(){
         try {
             User user=getCurrentUser();
-            if(null != user && user.getUserId()== HookahConstants.TRADECENTERUSERID)
+            if(null != user && HookahConstants.TRADECENTERUSERID.equals(user.getUserId()) )
                 return ReturnData.success();
             else
                 return ReturnData.error("非管理员");
