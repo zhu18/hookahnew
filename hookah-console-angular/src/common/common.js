@@ -15,6 +15,8 @@ var config = {
     uploadEditor: "http://static.qddata.com.cn/upload/wangeditor",
   }
 };
+
+var permissionFlag = false;
 angular.element(document).ready(function () {
   $.ajaxSetup({
     xhrFields: {
@@ -52,6 +54,22 @@ angular.element(document).ready(function () {
       }
     }
   });
+
+    $.ajax({
+        type: "GET",
+        url: config.site.apiServer + "/api/auth/isAdmin",
+        async: false,
+        success: function (data) {
+            if (data.code=="1"){
+                permissionFlag=true;
+            }else {
+                permissionFlag = false;
+            }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("系统错误！");
+        }
+    })
 });
 import TopBarDirective from "./directive/TopBarDirective";
 import SideBarDirective from "./directive/SideBarDirective";
@@ -119,6 +137,7 @@ export default angular.module('Common', [
       }
     };
   })
+
   //权限控制
   .factory('permissions', function ($rootScope) {
     return {
@@ -126,7 +145,7 @@ export default angular.module('Common', [
         if (permission) {
           if (typeof(permission) == "string") {
             // 判断是否有权限，或者是超级管理员（userId=1）
-            if ((config.permissionList.indexOf(permission) > -1) || $rootScope.user.userId =="1") {
+            if ((config.permissionList.indexOf(permission) > -1) || permissionFlag) {
               return true;
             }
           }
