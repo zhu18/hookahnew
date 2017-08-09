@@ -117,15 +117,15 @@ $(document).ready(function () {
 	$('.search-sug').hover(function () {
 		$(this).toggleClass('active');
 	});
-	$('img').each(function () {
-		var img = $(this);
-		// img.on('load',function(){
-		// 	console.log('111111---------'+img.attr('src'))
-		// })
-		img.on('error', function () {
-			img.attr('src', '/static/images/timg.jpeg')
-		})
-	});
+	// $('img').each(function () { //替换加载异常图片
+	// 	var img = $(this);
+	// 	// img.on('load',function(){
+	// 	// 	console.log('111111---------'+img.attr('src'))
+	// 	// })
+	// 	img.on('error', function () {
+	// 		img.attr('src', '/static/images/timg.jpeg')
+	// 	})
+	// });
 	// 兼容性placeholder
 	compatibilityPL();
 	shoppingCart();
