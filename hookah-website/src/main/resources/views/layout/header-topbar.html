@@ -33,26 +33,16 @@
           </div>
         </li>
       <%}%>
-      <!--<li class="display-inline-block">
-        <% if(user.userType==0){%>
 
-          <a href="/admin/articleManage">用户中心</a>
-          <% if(shiro.hasPermission("home")){%>
-          </li>
-          <li class="display-inline-block">
-            <a href="${host.admin}/home" target="_blank">后台管理</a>
-          <%}%>
+      <%if(!isEmpty(user)){%>
+        <% if(user.userType==0){%>
+              <% if(shiro.hasPermission("home")){%>
+                <li class="display-inline-block"><a href="/admin/articleManage">用户中心</a> </li>
+              <%}%>
+              <li class="display-inline-block"><a href="${host.admin}/home" target="_blank">后台管理</a></li>
         <%}else{%>
-        <a href="/usercenter/index">用户中心</a>
+              <li class="display-inline-block"><a href="/usercenter/index">用户中心</a></li>
         <%}%>
-      </li>-->
-      <% if(user.userType==0){%>
-            <% if(shiro.hasPermission("home")){%>
-              <li class="display-inline-block"><a href="/admin/articleManage">用户中心</a> </li>
-            <%}%>
-            <li class="display-inline-block"><a href="${host.admin}/home" target="_blank">后台管理</a></li>
-      <%}else{%>
-            <li class="display-inline-block"><a href="/usercenter/index">用户中心</a></li>
       <%}%>
 
       <li class="display-inline-block">|</li>
