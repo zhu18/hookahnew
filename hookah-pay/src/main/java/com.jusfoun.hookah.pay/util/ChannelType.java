@@ -13,4 +13,7 @@ public class ChannelType {
 	//支付宝
 	public static final String ZFB = "ZFB";
 
+	//提现
+	public static final String TX = "提现";
+
 }
