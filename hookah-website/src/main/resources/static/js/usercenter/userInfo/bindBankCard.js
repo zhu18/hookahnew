@@ -79,8 +79,8 @@ $(function () {
                 isMobile:"*请输入正确格式的邮编"
             },
             bank:{
-                required:"*请输入银行卡号",
-                rangelength:$.validator.format("*银行卡号长度为{0}-{1}个字符"),
+                required:"*请输入银行账户",
+                rangelength:$.validator.format("*银行账户长度为{0}-{1}个字符"),
             },
             bindName:{
                 required:"*请选择银行名称"
@@ -174,11 +174,11 @@ $(function () {
                 type:'get',
                 success:function (data) {
                     if (data.code=="1"){
-                        $.alert('绑定银行卡成功',true,function(){
+                        $.alert('绑定银行账户成功',true,function(){
                             window.location.href= host.website+'/usercenter/fundmanage';
                         });
                     }else {
-                        $.alert('绑定银行卡失败')
+                        $.alert('绑定银行账户失败')
                     }
                 }
             });
