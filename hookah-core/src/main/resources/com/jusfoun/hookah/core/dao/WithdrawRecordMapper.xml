@@ -67,7 +67,7 @@
     <if test="orgName != '' and orgName != null">
       AND (org.org_name LIKE '%${orgName}%' OR us.user_name LIKE '%${orgName}%')
     </if>
-    ORDER  BY wr.check_time DESC
+    ORDER  BY wr.add_time DESC
   </select>
 
 </mapper>

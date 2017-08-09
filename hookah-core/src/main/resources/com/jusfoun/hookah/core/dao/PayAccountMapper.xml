@@ -86,4 +86,13 @@
     where id = #{payAccountId}
 
   </update>
+
+  <update id="updatePayAccountAllMoney" parameterType="java.util.HashMap">
+
+    update pay_account set balance = balance + #{balance},use_balance = use_balance + #{useBalance},
+    frozen_balance = frozen_balance + #{frozenBalance},
+    update_time = now(),update_operator = #{userId}
+    where id = #{payAccountId}
+
+  </update>
 </mapper>

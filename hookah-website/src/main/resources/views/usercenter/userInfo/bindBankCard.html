@@ -15,11 +15,11 @@ var htmlPart = {
         <%include("/usercenter/user-center-menu.html"){} %>
         <div class="grid-right info-center-box ">
                 <div class="header">
-                    <h4 class="center-title">资金管理/绑定银行卡</h4>
+                    <h4 class="center-title">资金管理/绑定银行账户</h4>
                 </div>
                 <div class="fundmanage-box">
                     <div class="bindBankCard">
-                        <div class="bindBankCard-title">绑定银行卡</div>
+                        <div class="bindBankCard-title">绑定银行账户</div>
                         <div class="bindBankCard-content">
                             <form id="form" action="">
                                 <div class="form-item">
@@ -27,7 +27,7 @@ var htmlPart = {
                                     <p id="bankAccountType"></p>
                                 </div>
                                 <div class="form-item">
-                                    <label for=""><span class="color-red">*</span>账户名称：</label>
+                                    <label for=""><span class="color-red">*</span>银行账户：</label>
                                     <p id="account-name"></p>
                                 </div>
                                 <div class="form-item">
@@ -46,7 +46,7 @@ var htmlPart = {
                                 </div>
                                 <div class="form-item">
                                     <label for="phoneNumber"><span class="color-red">*</span>手机号码：</label>
-                                    <input type="text" id="phoneNumber" name="sphone"  placeholder="请填写该卡在银行预留的手机号码" tip="请填写该卡在银行预留的手机号码">
+                                    <input type="text" id="phoneNumber" name="sphone"  placeholder="请填写该银行账户预留的手机号码" tip="请填写该银行账户预留的手机号码">
                                 </div>
                                 <div class="form-item">
                                     <label for="verificationCode"><span class="color-red">*</span>验证码：</label>

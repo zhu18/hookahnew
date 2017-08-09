@@ -1,8 +1,10 @@
 package com.jusfoun.hookah.webiste.controller;
 
+import com.jusfoun.hookah.core.domain.Organization;
 import com.jusfoun.hookah.core.domain.PayAccount;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.UserDetail;
+import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import org.apache.commons.lang3.StringUtils;
@@ -56,6 +58,9 @@ public class UserCenterController {
     @Resource
     PayAccountService payAccountService;
 
+    @Resource
+    OrganizationService organizationService;
+
 //    账户中心
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String userInfo(Model model) {
@@ -64,6 +69,9 @@ public class UserCenterController {
         String userId = o.get("userId");
         User user = userService.selectById(userId);
         PayAccount payAccount=payAccountService.findPayAccountByUserId(userId);
+        Organization organization = organizationService.selectById(user.getOrgId());
+        if(organization != null)
+            model.addAttribute("orgName",organization.getOrgName());
         model.addAttribute("userCur",user);
         model.addAttribute("payAccount",payAccount);
 
