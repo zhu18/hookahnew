@@ -63,6 +63,8 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
     RedisOperate redisOperate;
 
     @Resource
+    UserService userService;
+    @Resource
     public void setDao(GoodsMapper goodsMapper) {
         super.setDao(goodsMapper);
     }
@@ -83,6 +85,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         obj.setLastUpdateTime(date);
         obj.setGoodsSn(generateSn(obj, currentUser));
         obj.setAddUser(currentUser.getUserId());
+
         obj = (GoodsVo)super.insert(obj);
         if(obj == null)
             throw new HookahException("操作失败");
@@ -123,7 +126,9 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
                 currentUser.getOrgId() != null &&
                 PropertiesManager.getInstance().getProperty("jusfounOrgId").equals(currentUser.getOrgId() + "")
                 ){
-            goodsSn.append(PropertiesManager.getInstance().getProperty("jusfounCode"));
+
+            User user = userService.selectById(currentUser.getUserId());
+            goodsSn.append(user.getUserSn());
 
             // 分类
             goodsSn.append(categoryService.selectById(obj.getCatId().substring(0, 3)).getCode());
