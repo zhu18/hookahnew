@@ -49,6 +49,7 @@ $(function () {
             },
             bank:{
                 required:true,
+                digits:true,
                 rangelength:[16,19]
             },
             bindName:{
@@ -80,6 +81,7 @@ $(function () {
             },
             bank:{
                 required:"*请输入银行账户",
+                digits:"*请输入数字",
                 rangelength:$.validator.format("*银行账户长度为{0}-{1}个字符"),
             },
             bindName:{
