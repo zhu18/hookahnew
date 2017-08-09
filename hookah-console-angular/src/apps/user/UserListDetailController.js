@@ -6,7 +6,7 @@ class UserListDetailController {
       var reg=/[^/]*$/;
       var userId=reg.exec(window.location.hash)[0];
       console.log(userId);
-      if(userId){ //保证用户刷新页面也以获取userid
+      if(userId && userId!=="search"){ //保证用户刷新页面也以获取userid
         $stateParams.id=userId;
       }
         var promise = $http({
