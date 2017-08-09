@@ -9,7 +9,7 @@ $(function () {
         type:'get',
         success:function (data) {
             var list=data.data.bank;
-            var html = '<option value="">全部</option>';
+            var html = '<option value="">请选择银行名称</option>';
             for(var i=0;i<list.length;i++){
                 html += '<option value="'+list[i].id+'">'+list[i].bankName+'</option>';
                 $('#bindName').html(html);
