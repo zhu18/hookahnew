@@ -69,11 +69,19 @@ function render() {
                                 });
 
                             })
-                        }else {$(".bank-card").hide()}
+                        }else {
+                            $(".account-funds-content-left .money").html("￥0.00");
+                            $(".freeze").html("￥0.00");
+                            $(".useBalance").html("￥0.00");
+                            $(".bank-card").hide()
+                        }
 
                     }
                 });
             }else {
+                $(".account-funds-content-left .money").html("￥0.00");
+                $(".freeze").html("￥0.00");
+                $(".useBalance").html("￥0.00");
                 $(".bank-card").hide()
             }
         }
