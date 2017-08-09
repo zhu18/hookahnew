@@ -4,7 +4,10 @@ import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.domain.PayTradeRecord;
 import com.jusfoun.hookah.core.domain.bo.MoneyInOutBo;
 import com.jusfoun.hookah.core.domain.vo.PayTradeRecordVo;
+import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericService;
+import com.jusfoun.hookah.core.generic.OrderBy;
+import java.util.List;
 
 /**
  * dx
@@ -18,4 +21,7 @@ public interface PayTradeRecordService extends GenericService<PayTradeRecord, In
     Pagination<PayTradeRecordVo> getListForPage(int pageNumberNew, int pageSizeNew, String startDate, String endDate, Integer tradeType, Integer tradeStatus);
 
     int selectStatusByOrderSn(String orderSn);
+
+    Pagination<PayTradeRecordVo> getFlowListInPage(Integer pageNum, Integer pageSize,  List<Condition> filters,
+                                                   List<OrderBy> orderBys);
 }

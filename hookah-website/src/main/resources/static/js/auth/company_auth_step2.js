@@ -103,11 +103,11 @@ $.ajax({
    "officeAddress":$("input[name='workAddress']").val(),//详细地址
    "orgPhone":$("input[name='tel']").val(),//联系电话
    "taxCode":$("input[name='taxRegCertificate']").val(),//税务登记编号
-   "taxPath":$("input[name='taxPath']").val(),//税务登记存放路径
+   "taxPath":$("#taxPathSrc").val(),//税务登记存放路径
    "licenseCode":$("input[name='businessLicence']").val(),//营业执照编号
-   "licensePath":$("input[name='licensePath']").val(),//营业执照存放路径
+   "licensePath": $("#licensePathSrc").val(),//营业执照存放路径
    "certificateCode":$("input[name='certificateCode']").val(),//信用代码
-   "certifictePath":$("input[name='certifictePath']").val(),//企业代码存放路径
+   "certifictePath":$("#certifictePathSrc").val(),//企业代码存放路径
    "isSupplier":$("input[name='fruit']:checked").val()?$("input[name='fruit']:checked").val():"0"//是否成功供应商
    },
    type:"post",
@@ -129,9 +129,11 @@ $("#companyForm").validate({
     // taxRegCertificate:'required',
     companyLegal: 'required',
     mainBusiness: 'required',
+    lawPersonNum:'required',
     // province:'required',
     city: 'required',
     address: 'required',
+      workAddress: 'required',
     // licensePath:'required',
     // taxPath:'required',
     // certifictePath:'required',
@@ -150,6 +152,8 @@ $("#companyForm").validate({
     // province:'所在地区不能为空',
     city: '所在地区不能为空',
     address: '详细地址不能为空',
+    workAddress: '办公地址不能为空',
+    lawPersonNum:'法定代表人证件编号不能为空',
     licensePath: '营业执照必须上传',
     taxPath: '税务登记证必须上传',
     certifictePath: '企业代码证必须上传',

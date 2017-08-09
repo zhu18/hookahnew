@@ -163,26 +163,21 @@ public class PlatformFundsApi extends BaseController{
         }
     }
 
-    //资金流水记录  写的太费劲了，有时间了重写
+    //资金流水记录
     @RequestMapping(value = "/flowWater", method = RequestMethod.GET)
     public ReturnData flowWater(String currentPage, String pageSize, String startDate, String endDate, Integer tradeType, Integer tradeStatus){
-
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
-        Pagination<PayTradeRecordVo> pagination = new Pagination<>();
-        Pagination<PayTradeRecord> page = new Pagination<>();
+        Pagination<PayTradeRecordVo> page = new Pagination<>();
         try {
-
             List<OrderBy> orderBys = new ArrayList();
             orderBys.add(OrderBy.desc("addTime"));
-
             List<Condition> filters = new ArrayList();
             //只查询的费用科目
             filters.add(Condition.in("tradeType", new Integer[]{1, 2, 6003, 6004, 3007, 3001, 4001, 8}));
             if (tradeType != null) {
                 filters.add(Condition.eq("tradeType", tradeType));
             }
-
             if (tradeStatus != null) {
                 filters.add(Condition.eq("tradeStatus", tradeStatus));
             }
@@ -204,35 +199,8 @@ public class PlatformFundsApi extends BaseController{
             if (StringUtils.isNotBlank(pageSize)) {
                 pageSizeNew = Integer.parseInt(pageSize);
             }
-
-            page = payTradeRecordService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
-            List<PayTradeRecordVo> listVo = new ArrayList<>();
-            if(page.getList() != null && page.getList().size() > 0){
-
-                page.getList().parallelStream().forEach(x -> {
-                    PayTradeRecordVo vo = new PayTradeRecordVo();
-
-                    if(x.getTradeType().equals(3007) ||
-                            x.getTradeType().equals(6003) ||
-                            x.getTradeType().equals(6004)){
-                        vo.setAccountParty("交易中心平台资金");
-                    }else{
-                        User user = userService.selectById(x.getUserId());
-                        if(user != null){
-                            vo.setAccountParty((user.getUserName() == null ? "会员" : user.getUserName()) + "平台资金");
-                        }else{
-                            vo.setAccountParty("会员平台资金");
-                        }
-                    }
-                    BeanUtils.copyProperties(x, vo);
-                    listVo.add(vo);
-                });
-            }
-            pagination.setTotalItems(page.getTotalItems());
-            pagination.setPageSize(pageSizeNew);
-            pagination.setCurrentPage(pageNumberNew);
-            pagination.setList(listVo.stream().sorted((x, y) -> y.getAddTime().compareTo(x.getAddTime())).collect(Collectors.toList()));
-            returnData.setData(pagination);
+            page = payTradeRecordService.getFlowListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
+            returnData.setData(page);
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage("系统出错，请联系管理员！");

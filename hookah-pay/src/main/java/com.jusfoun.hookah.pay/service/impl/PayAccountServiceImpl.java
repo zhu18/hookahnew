@@ -262,7 +262,7 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 			pa.setBalance(0l);
 			pa.setUseBalance(0l);
 			pa.setFrozenBalance(0l);
-			pa.setAccountFlag((byte) 1);
+			pa.setAccountFlag((byte) 0);
 			pa.setMerchantId("");
 			pa.setSyncFlag((byte) 0);
 			pa.setAddTime(new Date());

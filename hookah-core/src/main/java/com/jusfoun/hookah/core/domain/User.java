@@ -160,6 +160,8 @@ public class User extends GenericModel {
     //邮箱安全评分
     private Integer safetyMailScore;
 
+    private String userSn;
+
     @Transient
     private List<Role> roleList;
 
@@ -565,5 +567,13 @@ public class User extends GenericModel {
 
     public void setSafetyMailScore(Integer safetyMailScore) {
         this.safetyMailScore = safetyMailScore;
+    }
+
+    public String getUserSn() {
+        return userSn;
+    }
+
+    public void setUserSn(String userSn) {
+        this.userSn = userSn;
     }
 }

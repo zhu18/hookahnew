@@ -8,7 +8,7 @@ $(function () {
         cache:false,
         type:'get',
         success:function (data) {
-            if(data.code == 1 && data.data){
+            if(data.code == "1" && typeof data.data =="object"){
                 var html="";
                 var content=data.data.checkContent?data.data.checkContent:"无";
                 html +="<li><label>用户类型</label><p>单位会员</p></li>";

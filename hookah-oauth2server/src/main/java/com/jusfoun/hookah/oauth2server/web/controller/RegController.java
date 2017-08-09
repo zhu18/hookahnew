@@ -15,6 +15,7 @@ import com.jusfoun.hookah.core.exception.UserRegInvalidCaptchaException;
 import com.jusfoun.hookah.core.exception.UserRegInvalidSmsException;
 import com.jusfoun.hookah.core.exception.UserRegSimplePwdException;
 import com.jusfoun.hookah.core.generic.Condition;
+import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.FormatCheckUtil;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.oauth2server.config.MyProps;
@@ -146,6 +147,15 @@ public class RegController {
         user.setRegTime(new Date());
         user.setIsEnable((byte) 1);
         user.setHeadImg(site.get("user-default-img"));
+
+        String date = DateUtils.toDateText(new Date(), "yyMM");
+        List<Condition> filter = new ArrayList<>();
+        filter.clear();
+        long count = userService.count(filter)+1;
+        String number = "000000" + count;
+        String key = "QD" + date + number.substring(number.length()-6);
+        user.setUserSn(key);
+
         User regUser = userService.insert((User) user);
         //redirectAttributes.addAttribute(regUser);
         payAccountService.insertPayAccountByUserIdAndName(regUser.getUserId(),regUser.getUserName());
