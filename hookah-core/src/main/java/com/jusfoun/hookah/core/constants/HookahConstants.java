@@ -4,8 +4,10 @@ package com.jusfoun.hookah.core.constants;
  * Created by wangjl on 2017-3-22.
  */
 public class HookahConstants {
-    /*交易中心Id*/
+    /*交易中心虚拟账户Id*/
     public static final Long TRADECENTERACCOUNT = 8L;
+    /*交易中心userId*/
+    public static final String TRADECENTERUSERID = "1";
     /** 网站地址  */
     public static final String SITE_URL = "http://localhost:9000";
     /** 第几页 */

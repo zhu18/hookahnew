@@ -126,7 +126,7 @@ public class SettleRecordServiceImpl extends GenericServiceImpl<SettleRecord, Lo
 
         // 1.先从交易中心账户扣除 欲结算的金额
         payAccountService.operatorByType(
-                Long.parseLong(PropertiesManager.getInstance().getProperty("tradeCenterAccount")),
+                HookahConstants.TRADECENTERACCOUNT,
                 PropertiesManager.getInstance().getProperty("jusfounOrgId"),
                 HookahConstants.TradeType.SettleCut.code,
                 (tradeCenterAmount + supplierAmount),
@@ -135,7 +135,7 @@ public class SettleRecordServiceImpl extends GenericServiceImpl<SettleRecord, Lo
 
         // 2.交易中心可获得手续费收入
         payAccountService.operatorByType(
-                Long.parseLong(PropertiesManager.getInstance().getProperty("tradeCenterAccount")),
+                HookahConstants.TRADECENTERACCOUNT,
                 PropertiesManager.getInstance().getProperty("jusfounOrgId"),
                 HookahConstants.TradeType.ChargeIn.code,
                 tradeCenterAmount,
