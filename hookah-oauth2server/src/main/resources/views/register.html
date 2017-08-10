@@ -817,7 +817,7 @@ var htmlPart = {
 	}
 	function mobileNumIsTrue(mobile,validSms){ //验证手机验证码是否正确
 		$('.loading_btns').show();
-		$.ajax({
+		<!--$.ajax({
 			url:'${host.auth}/sms/check',
 			type:'post',
 			data:{
@@ -825,7 +825,7 @@ var htmlPart = {
 				validSms:validSms
 			},
 			success:function(data){
-				if(data.code == 1){
+				if(data.code == 1){-->
 					$.post("${host.auth}/reg", $("#J_InfoForm").serialize(), function (data) {
 						if (data.code == 1) {
                             $.alert("注册成功，马上跳转登录页面");
@@ -837,7 +837,7 @@ var htmlPart = {
 							$.alert(data.message);
 						}
 					});
-				}else if(data.code == 0){
+				<!--}else if(data.code == 0){
 					$('.loading_btns').hide();
 					$('#J_MobileSms').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_IMAGECHECKCODE_INVALID).siblings('.iconfont').html('󰅕');
 				}else{
@@ -845,7 +845,7 @@ var htmlPart = {
 					$.alert(data.message);
 				}
 			}
-		});
+		});-->
 	}
 $('#J_Agreement').change(function(){
 	if($(this).is(':checked')){

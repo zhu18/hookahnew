@@ -90,14 +90,14 @@ public class RegController {
             //2、校验短信验证码
             //获取库里缓存的验证码
 
-            String cacheSms = redisOperate.get(HookahConstants.REDIS_SMS_CACHE_PREFIX + ":" + user.getMobile());  //从 redis 获取缓存
-            if (cacheSms == null) { //验证码已过期
-                throw new UserRegExpiredSmsException("短信验证码验证未通过,短信验证码已过期");
-            } else {
-                if (!cacheSms.equalsIgnoreCase(user.getValidSms())) {
-                    throw new UserRegInvalidSmsException("短信验证码验证未通过,短信验证码错误");
-                }
-            }
+//            String cacheSms = redisOperate.get(HookahConstants.REDIS_SMS_CACHE_PREFIX + ":" + user.getMobile());  //从 redis 获取缓存
+//            if (cacheSms == null) { //验证码已过期
+//                throw new UserRegExpiredSmsException("短信验证码验证未通过,短信验证码已过期");
+//            } else {
+//                if (!cacheSms.equalsIgnoreCase(user.getValidSms())) {
+//                    throw new UserRegInvalidSmsException("短信验证码验证未通过,短信验证码错误");
+//                }
+//            }
             redisOperate.del(user.getMobile());  //删除缓存
 
             //3、校验密码一致
