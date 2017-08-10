@@ -101,7 +101,13 @@
                 <!--<a ui-sref="user.detail" ng-click="detail($event,item)">查看</a>
                 <span class="text-explode">|</span>
                 <i class="link-space"></i>-->
-                <a href="javascript:void(0)" ng-click="goRecharge($event,item)">充值</a>
+                <a href="javascript:void(0)" data-ng-show="item.userType==2 || item.userType==4" ng-click="goRecharge($event,item)">充值</a>
+
+
+
+
+
+
               </td>
             </tr>
             </tbody>
