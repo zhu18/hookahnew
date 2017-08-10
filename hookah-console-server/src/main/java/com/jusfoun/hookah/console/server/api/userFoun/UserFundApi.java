@@ -47,7 +47,7 @@ public class UserFundApi extends BaseController{
      * @return
      */
     @RequestMapping(value = "/userFundDetail")
-    public ReturnData searchUserFundDetail(String currentPage, String pageSize,String startDate, String endDate,Integer tradeType, Integer tradeStatus){
+    public ReturnData searchUserFundDetail(String userId,String currentPage, String pageSize,String startDate, String endDate,Integer tradeType, Integer tradeStatus){
         Pagination<PayTradeRecord> page = new Pagination<>();
         try {
             List<Condition> filters = new ArrayList();
@@ -59,6 +59,9 @@ public class UserFundApi extends BaseController{
             }
             if (StringUtils.isNotBlank(endDate)) {
                 filters.add(Condition.le("addTime", DateUtils.getDate(endDate, DateUtils.DEFAULT_DATE_TIME_FORMAT)));
+            }
+            if(StringUtils.isNotBlank(userId)){
+                filters.add(Condition.eq("userId",userId));
             }
 
             //只查询的费用科目 充值  提现  销售（货款）收入 销售（货款）支出  冲账 退款 其他

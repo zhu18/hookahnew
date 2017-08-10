@@ -61,11 +61,11 @@
         pa.use_balance,
         pa.balance,
         u.mobile as phone,
-        pbc.bank_name,
         pbc.bank_code,
         pbc.card_owner,
         pbc.card_code,
         pbc.bind_flag,
+        pb.bank_name,
         (
         CASE
         WHEN (pbc.bind_flag IS NULL) THEN
@@ -81,6 +81,7 @@
         `user` u
         LEFT JOIN pay_account pa on pa.user_id = u.user_id
         LEFT JOIN pay_bank_card pbc on pbc.pay_account_id = pa.id and pbc.bind_flag = 0
+        LEFT JOIN pay_bank pb on pb.id = pbc.pay_bank_id
         LEFT JOIN organization org on org.org_id = u.org_id
         WHERE
         u.user_type IN (4, 8)
