@@ -67,17 +67,17 @@
         pbc.bind_flag,
         (
         CASE
-        WHEN (pbc.bank_code IS NULL) THEN
+        WHEN (pbc.bind_flag IS NULL) THEN
         0
         ELSE
-        1
+        bind_flag
         END
         ) isBind
 
         FROM
         `user` u
         LEFT JOIN pay_account pa on pa.user_id = u.user_id
-        LEFT JOIN pay_bank_card pbc on pbc.pay_account_id = pa.id
+        LEFT JOIN pay_bank_card pbc on pbc.pay_account_id = pa.id and pbc.bind_flag = 0
         LEFT JOIN organization org on org.org_id = u.org_id
         WHERE
         u.user_type IN (4, 8)
