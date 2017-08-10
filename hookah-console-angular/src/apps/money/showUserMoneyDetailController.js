@@ -18,6 +18,7 @@ class showUserMoneyDetailController {
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/userFund/userFundDetail",
         params: {
+          userId : $scope.userBaseInfo.userId,
           tradeType : $scope.tradeType  ? $scope.tradeType  : null,
           tradeStatus: $scope.tradeStatus == 0 ? '0' : ($scope.tradeStatus ? $scope.tradeStatus : null),//审核状态
           startDate: $scope.startDate ? format($scope.startDate, 'yyyy-MM-dd HH:mm:ss') : null,
