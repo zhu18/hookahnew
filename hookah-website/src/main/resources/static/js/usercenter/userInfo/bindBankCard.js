@@ -40,7 +40,7 @@ $(function () {
                 rangelength:[2,12]
             },
             sphone:{
-                required:true,
+                /*required:true,*/
                 isMobile:true
             },
             saddress:{
@@ -57,7 +57,7 @@ $(function () {
 
             },
             verificationCode:{
-                required:true,
+                /*required:true,*/
                 isVerificationCode:true
             }
         },
@@ -68,7 +68,7 @@ $(function () {
                 remote:"*该用户名已存在！"
             },
             sphone:{
-                required:"*请输入手机号",
+                /*required:"*请输入手机号",*/
                 isMobile:"*请输入正确格式的手机号"
             },
             address:{
@@ -88,7 +88,7 @@ $(function () {
                 required:"*请选择银行名称"
             },
             verificationCode:{
-                required:"*请填写验证码",
+                /*required:"*请填写验证码",*/
                 isVerificationCode:"*请填写正确的验证码"
             }
         }
@@ -127,6 +127,11 @@ $(function () {
                     }
                 }
             });
+        }
+        /*非必填*/
+        if(!$("#phoneNumber").val()){
+            mo=true;
+            console.log(1);
         }
         return mo;
     }, "*请输入正确的手机验证码！");
