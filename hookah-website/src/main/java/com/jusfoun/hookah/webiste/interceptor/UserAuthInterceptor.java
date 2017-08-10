@@ -49,7 +49,9 @@ public class UserAuthInterceptor implements HandlerInterceptor {
                         !HookahConstants.UserType.SUPPLIER_CHECK_OK.getCode().equals(userType)){
                     //待审核
                     if(HookahConstants.UserType.ORGANIZATION_CHECK_NO.getCode().equals(userType) ||
-                            HookahConstants.UserType.PERSON_CHECK_NO.getCode().equals(userType)){
+                            HookahConstants.UserType.PERSON_CHECK_NO.getCode().equals(userType) ||
+                            HookahConstants.UserType.PERSON_CHECK_FAIL.getCode().equals(userType) ||
+                            HookahConstants.UserType.ORGANIZATION_CHECK_FAIL.getCode().equals(userType)){
 //                        String uri = httpServletRequest.getRequestURI();
 //                        httpServletResponse.getWriter().write("您当前信息正在审核中，审核通过后才能购买!");
                         httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/usercenter/index");
