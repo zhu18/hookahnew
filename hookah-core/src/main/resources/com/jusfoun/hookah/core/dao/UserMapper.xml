@@ -54,6 +54,7 @@
     <select id="selectUserFundList" parameterType="com.jusfoun.hookah.core.domain.vo.UserFundCritVo" resultMap="userFundMap">
 
         SELECT
+        u.user_id,
         u.user_name,
         u.user_type,
         org.org_name,
@@ -69,8 +70,10 @@
         CASE
         WHEN (pbc.bind_flag IS NULL) THEN
         0
-        ELSE
-        bind_flag
+        WHEN (pbc.bind_flag = 0) THEN
+        1
+        WHEN (pbc.bind_flag = 1) THEN
+        0
         END
         ) isBind
 
