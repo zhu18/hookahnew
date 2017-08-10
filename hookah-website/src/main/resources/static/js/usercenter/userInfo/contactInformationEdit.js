@@ -47,9 +47,9 @@ $(function () {
         },
         messages:{
             sname:{
-                required:"*请输入用户名",
+                required:"*请输入联系人",
                 rangelength:$.validator.format("*用户名长度为{0}-{1}个字符"),
-                remote:"*该用户名已存在！"
+                remote:"*该联系人已存在！"
             },
             sphone:{
                 required:"*请输入手机号",
