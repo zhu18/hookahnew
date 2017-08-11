@@ -86,7 +86,7 @@
                     <tr>
                         <th style=" padding: 14px 10px; text-align: right;">本次结算金额：</th>
                         <!--<td>{{((supplierAmount+tradeCenterAmount) <= order.noSettleAmount) ? (supplierAmount+tradeCenterAmount) : "输入金额错误")}}￥-->
-                        <td>{{ supplierAmount * 1 + tradeCenterAmount * 1 <= order.noSettleAmount/100 ? (supplierAmount * 1 + tradeCenterAmount * 1)+' ￥' : ""}}
+                        <td>{{ supplierAmount * 100 + tradeCenterAmount * 100 <= order.noSettleAmount ? (supplierAmount * 100 + tradeCenterAmount * 100)/100+' ￥' : ""}}
                         </td>
                     </tr>
                     </thead>
