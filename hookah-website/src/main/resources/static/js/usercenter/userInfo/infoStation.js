@@ -110,13 +110,18 @@ function getInfo(that, id) {
 		type: 'get',
 		success: function (data) {
 			if (data.code == 1) {
+			    var sendUser = data.data.sendUser;
+			    console.log(sendUser);
+			    if(sendUser =='sys'){
+			        sendUser = '系统管理员';
+			    }
 				var html = '';
 				html += '<div class="confirmKey"><h4>消息：</h4>';
 				html += '<div>';
 				html += '<h5>&nbsp;&nbsp;标题：<span>' + data.data.sendHeader + '</span></h5>';
 				html += '<h5>&nbsp;&nbsp;内容：<span>' + data.data.sendContent + '</span></h5>';
 				html += '<h5>&nbsp;&nbsp;时间：<span>' + data.data.sendTime + '</span></h5>';
-				html += '<h5>&nbsp;&nbsp;发送人：<span>' + data.data.sendUser + '</span></h5>';
+				html += '<h5>&nbsp;&nbsp;发送人：<span>' + sendUser + '</span></h5>';
 				html += '</div></div>';
 				num();
 				$.confirm(html, [{close: '关闭'}], function () {

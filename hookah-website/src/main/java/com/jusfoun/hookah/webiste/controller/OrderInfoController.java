@@ -485,9 +485,9 @@ public class OrderInfoController extends BaseController {
     private List<Map> initPaymentList(HttpSession session){
         Map userMap = (Map)session.getAttribute("user");
         User user = userService.selectById((String)userMap.get("userId"));
-        Object[][] payments = {{"账户余额",user.getMoneyBalance()},{"支付宝",user.getMobile()},{"银联","6*** ***6  3*** 9**1"}};
-        List<Map> list = new ArrayList<>(3);
-        for(int i=0;i<3;i++){
+        Object[][] payments = {{"账户余额",user.getMoneyBalance()},{"支付宝",user.getMobile()}};
+        List<Map> list = new ArrayList<>(2);
+        for(int i=0;i<2;i++){
             Map pay = new HashMap();
             pay.put("payCode",i+1);
             pay.put("payName",payments[i][0]);

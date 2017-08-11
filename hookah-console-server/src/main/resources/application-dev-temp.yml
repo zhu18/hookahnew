@@ -91,4 +91,5 @@ myconf:
     redirectUrl: http://auth.qddata.com.cn/login
   api:
     url: http://192.168.200.116:5555/gateway/insert
+    tokenUrl: http://192.168.200.116:5555/gateway/getToken
 debug: true

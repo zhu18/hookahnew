@@ -1226,15 +1226,22 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                             map.put("data",mgOrderGood.getOffLineInfo());
                         }
                         break;
-//                    case 1:  //API
-//                        if (mgOrderGood.getIsOffline() == 0){
-//                            String localUrl = mgOrderGood.getOffLineData().getLocalUrl();
-//                            mgOrderGood.getOffLineData().setLocalUrl("http://static.qddata.com.cn/" + localUrl);
-//                            map.put("data",mgOrderGood.getOffLineData());
-//                        }else {
-//                            map.put("data",mgOrderGood.getOffLineInfo());
-//                        }
-//                        break;
+                    case 1:  //API
+                        String tokenUrl = myProps.getApi().get("tokenUrl");
+                        List<Map> list = new ArrayList();
+                        Map<String, String> tokenMap = new HashMap<>();
+                        tokenMap.put("userId",orderInfoVo.getUserId());
+                        tokenMap.put("orderSn",orderInfoVo.getOrderSn());
+                        tokenMap.put("goodsSn",mgOrderGood.getGoodsSn());
+                        list.add(tokenMap);
+                        try {
+                            map = HttpClientUtil.PostMethod(tokenUrl,JsonUtils.toJson(list));
+                            logger.info("获取API商品"+mgOrderGood.getGoodsSn()+"token！", orderInfoVo.getOrderSn(), JsonUtils.toJson(map));
+                        }catch (Exception e){
+                            e.printStackTrace();
+                            logger.error("获取API商品token失败！"+"订单号:"+orderInfoVo.getOrderSn()+"商品编号:"+mgOrderGood.getGoodsSn());
+                        }
+                        break;
                     case 2:  //数据模型
                         if (mgOrderGood.getIsOffline() == 0){
                             String configFile = mgOrderGood.getDataModel().getConfigFile().getFileAddress();
