@@ -12,7 +12,7 @@ function loadPageData(data) {
 			html += '</td>';
 			html += '<td class="text-align-center">' + list[i].catName + '</td>';
 			html += '<td class="text-right">' + (list[i].shopPrice / 100).toFixed(2) + '</td>';
-			html += '<td class="text-center">' + list[i].addTime + '</td>';
+			html += '<td class="text-center">' + list[i].onsaleStartDate + '</td>';
 			// if (list[i].checkStatus == 0) {
 			// 	html += '<td class="text-center">审核中</td>';
 			// } else if (list[i].checkStatus == 1) {

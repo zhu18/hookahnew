@@ -135,7 +135,11 @@ var htmlPart = {
 								<!--<span class="collect" onclick="Attention.add('${item[i].goodsId}')"><i class="iconfont icon-jushoucanggift collect-item"></i>关注</span>-->
 							</div>
 							<div class="down-box-tow">
+								<%if(item[i].shopPrice >= 1000000){%>
+								<span class="money"><i class="money-i-item" >￥</i>${trunc(item[i].shopPrice / 1000000,2)}w</span>
+								<%}else{%>
 								<span class="money"><i class="money-i-item" >￥</i>${item[i].shopPrice / 100}</span>
+								<%}%>
 								<a class="detail btn-hover-red" href="${host.website}/exchange/details?id=${item[i].goodsId}" target="_blank" >查看详情</a>
 							</div>
 						</div>

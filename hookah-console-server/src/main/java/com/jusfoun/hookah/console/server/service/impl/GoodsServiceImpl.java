@@ -337,7 +337,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
     public Pagination saleList(String pageNum, String pageSize, String goodsName, String userId) {
         List<Condition> filters = new ArrayList();
         List<OrderBy> orderBys = new ArrayList();
-        orderBys.add(OrderBy.desc("lastUpdateTime"));
+        orderBys.add(OrderBy.desc("onsaleStartDate"));
         filters.add(Condition.eq("isDelete", HookahConstants.GOODS_STATUS_UNDELETE));
         filters.add(Condition.eq("isOnsale", HookahConstants.GOODS_STATUS_ONSALE));
         filters.add(Condition.le("onsaleStartDate", DateUtils.now()));
@@ -378,7 +378,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
     public Pagination offsaleList(String pageNum, String pageSize, String goodsName, String userId) {
         List<Condition> filters = new ArrayList();
         List<OrderBy> orderBys = new ArrayList();
-        orderBys.add(OrderBy.desc("lastUpdateTime"));
+        orderBys.add(OrderBy.desc("onsaleEndDate"));
         filters.add(Condition.eq("isDelete", HookahConstants.GOODS_STATUS_UNDELETE));
         filters.add(Condition.eq("isOnsale", HookahConstants.GOODS_STATUS_OFFSALE));
         filters.add(Condition.eq("addUser", userId));
