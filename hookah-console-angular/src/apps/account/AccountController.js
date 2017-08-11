@@ -17,6 +17,11 @@ class AccountController {
       });
     };
     $scope.edit = function (event, item) {
+      var checkedRoles=$("input[name='roles']:checked");
+      if (checkedRoles.length<=0){
+          $rootScope.openErrorDialogModal("请勾选至少一个角色！");
+          return;
+      };
       var promise = $http({
         method: 'POST',
         url: $rootScope.site.apiServer + "/api/account/upd",
