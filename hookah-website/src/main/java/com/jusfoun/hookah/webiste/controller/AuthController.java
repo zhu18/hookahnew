@@ -176,6 +176,10 @@ public class AuthController extends BaseController {
 
     @RequestMapping(value = "/auth/company_auth_init_step2", method = RequestMethod.GET)
     public String companyAuth2(Model model) throws Exception {
+        model.addAttribute("address",HookahConstants.PROTOCOL_ADDRESS);
+        model.addAttribute("email",HookahConstants.PROTOCOL_EMAIL);
+        model.addAttribute("name",HookahConstants.PROTOCOL_NAME);
+        model.addAttribute("phone",HookahConstants.PROTOCOL_PHONE);
         return "/auth/company_auth_init_step2";
     }
 
@@ -295,5 +299,4 @@ public class AuthController extends BaseController {
         }
         return returnData;
     }
-
 }
