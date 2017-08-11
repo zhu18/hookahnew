@@ -101,4 +101,5 @@ myconf:
     redirectUrl: http://auth.qddata.com.cn/login
   api:
     url: http://202.106.10.250:5555/gateway/insert
+    tokenUrl: http://202.106.10.250:5555/gateway/getToken
 debug: true
