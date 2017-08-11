@@ -58,14 +58,6 @@ public class HookahConstants {
     public static final byte MESSAGE_TEMPLATE_STOP = 0;//停用
     public static final byte MESSAGE_TEMPLATE_OPEN = 1;//启用
 
-
-    //下载协议提示
-    public static final String PROTOCOL_ADDRESS = "山东省青岛市黄岛区滨海大道1777号青岛大数据交易中心有限公司";//收件地址
-    public static final String PROTOCOL_EMAIL = "266400";//邮编
-    public static final String PROTOCOL_NAME= "王晓然";//收件人
-    public static final String PROTOCOL_PHONE = "15192641070";//手机号
-
-
     public enum SmsTypeNew {
         SMS_USER_REGISTER("101"),  //注册
         SMS_FIND_USER_PWD("102"),   //找回登录密码
