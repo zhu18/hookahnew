@@ -1,9 +1,11 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
-import com.jusfoun.hookah.console.server.util.PropertiesManager;
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.constants.PayConstants;
+import com.jusfoun.hookah.core.dao.PayTradeRecordMapper;
 import com.jusfoun.hookah.core.dao.SettleRecordMapper;
 import com.jusfoun.hookah.core.domain.PayAccount;
+import com.jusfoun.hookah.core.domain.PayTradeRecord;
 import com.jusfoun.hookah.core.domain.SettleRecord;
 import com.jusfoun.hookah.core.domain.WaitSettleRecord;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -42,6 +44,9 @@ public class SettleRecordServiceImpl extends GenericServiceImpl<SettleRecord, Lo
 
     @Resource
     PayAccountService payAccountService;
+
+    @Resource
+    PayTradeRecordMapper payTradeRecordMapper;
 
     @Transactional
     public synchronized ReturnData handleSettle(Long sid, Long supplierAmount, Long tradeCenterAmount, String userId) {
@@ -124,7 +129,59 @@ public class SettleRecordServiceImpl extends GenericServiceImpl<SettleRecord, Lo
             throw new RuntimeException("无法获取用户的账户信息");
         }
 
-        // 1.先从交易中心账户扣除 欲结算的金额
+
+
+        // 请使用以下代码替换SettleRecordServiceImpl.java类中的127行至143行
+        // 1.释放手续费 添加释放划出流水
+        payAccountService.operatorByType(
+                HookahConstants.TRADECENTERACCOUNT,
+                HookahConstants.TRADECENTERUSERID,
+                HookahConstants.TradeType.releaseDraw.code,
+                tradeCenterAmount,
+                record.getOrderSn(),
+                userId.toString());
+
+        // 2.添加手续费流水
+        PayTradeRecord payTradeRecord = new PayTradeRecord();
+        payTradeRecord.setPayAccountId( HookahConstants.TRADECENTERACCOUNT);
+        payTradeRecord.setUserId(HookahConstants.TRADECENTERUSERID);
+        payTradeRecord.setMoney(tradeCenterAmount);
+        payTradeRecord.setTradeType(HookahConstants.TradeType.ChargeIn.code);
+        payTradeRecord.setTradeStatus(PayConstants.TransferStatus.success.getCode());
+        payTradeRecord.setAddTime(new Date());
+        payTradeRecord.setOrderSn(record.getOrderSn());
+        payTradeRecord.setAddOperator(userId.toString());
+        payTradeRecord.setTransferDate(new Date());
+
+        int l = payTradeRecordMapper.insert(payTradeRecord);
+        if(l != 1){
+            throw new RuntimeException();
+        }
+
+        // 3.释放供应商结算金额
+        payAccountService.operatorByType(
+                HookahConstants.TRADECENTERACCOUNT,
+                HookahConstants.TradeType.SettleCut.code,
+                supplierAmount);
+
+
+        // 4.添加释放流水
+        PayTradeRecord ptr = new PayTradeRecord();
+        ptr.setPayAccountId( HookahConstants.TRADECENTERACCOUNT);
+        ptr.setUserId(HookahConstants.TRADECENTERUSERID);
+        ptr.setMoney(supplierAmount);
+        ptr.setTradeType(HookahConstants.TradeType.releaseDraw.code);
+        ptr.setTradeStatus(PayConstants.TransferStatus.success.getCode());
+        ptr.setAddTime(new Date());
+        ptr.setOrderSn(record.getOrderSn());
+        ptr.setAddOperator(userId.toString());
+        ptr.setTransferDate(new Date());
+        int p = payTradeRecordMapper.insert(ptr);
+        if(p != 1){
+            throw new RuntimeException();
+        }
+
+      /*  // 1.先从交易中心账户扣除 欲结算的金额
         payAccountService.operatorByType(
                 HookahConstants.TRADECENTERACCOUNT,
                 PropertiesManager.getInstance().getProperty("jusfounOrgId"),
@@ -141,7 +198,7 @@ public class SettleRecordServiceImpl extends GenericServiceImpl<SettleRecord, Lo
                 tradeCenterAmount,
                 record.getOrderSn(),
                 userId.toString());
-
+*/
         // 3.向供应商账户增加所得金额
         payAccountService.operatorByType(
                 payAccount.getId(),
