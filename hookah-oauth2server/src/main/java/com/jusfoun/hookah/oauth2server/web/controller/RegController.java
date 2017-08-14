@@ -277,7 +277,7 @@ public class RegController {
         }
     }
 
-    @Log(platform = "front",logType = "f0003",optType = "modify")
+//    @Log(platform = "front",logType = "f0003",optType = "modify")
     @RequestMapping(value = "/findPwd", method = RequestMethod.POST)
     @ResponseBody
     public Object findPwd(Integer step, UserValidVo userVo, HttpServletRequest request) {
