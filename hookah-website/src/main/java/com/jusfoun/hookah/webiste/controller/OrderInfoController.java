@@ -674,4 +674,14 @@ public class OrderInfoController extends BaseController {
         }
         return ReturnData.success(map);
     }
+
+    @RequestMapping(value = "/order/reCreateToken", method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnData reCreateToken(MgOrderGoods mgOrderGoods){
+        Map map = new HashMap();
+        if (StringUtils.isNotBlank(mgOrderGoods.getOrderId()) && StringUtils.isNotBlank(mgOrderGoods.getGoodsId())){
+            map = orderInfoService.reCreateToken(mgOrderGoods);
+        }
+        return ReturnData.success(map);
+    }
 }

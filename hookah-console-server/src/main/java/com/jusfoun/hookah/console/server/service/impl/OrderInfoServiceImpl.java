@@ -1301,6 +1301,31 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         return map;
     }
 
+    @Override
+    public Map reCreateToken(MgOrderGoods mgOrderGoods){
+        String reCreateTokenUrl = myProps.getApi().get("changeUrl");
+        List<Map> list = new ArrayList();
+        OrderInfoVo orderInfoVo = mgOrderInfoService.selectById(mgOrderGoods.getOrderId());
+        List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
+        Map resultMap = new HashMap();
+        for (MgOrderGoods mgOrderGood:goodsList) {
+            if (mgOrderGood.getGoodsId().equals(mgOrderGoods.getGoodsId())){
+                Map<String, String> map = new HashMap<>();
+                map.put("userId", mgOrderGood.getUserId());
+                map.put("orderSn", mgOrderGood.getOrderSn());
+                map.put("goodsSn", mgOrderGood.getGoodsSn());
+                list.add(map);
+                try {
+                    resultMap = HttpClientUtil.PostMethod(reCreateTokenUrl,JsonUtils.toJson(list));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    logger.error("重新生成Token错误订单号:"+orderInfoVo.getOrderSn()+"商品编号:"+mgOrderGood.getGoodsSn());
+                }
+            }
+        }
+        return resultMap;
+    }
+
     @Scheduled(cron = "0 0/10 * * * ?")
     @Transactional
     public void deleteOrderByTime(){

@@ -92,4 +92,5 @@ myconf:
   api:
     url: http://192.168.200.116:5555/gateway/insert
     tokenUrl: http://192.168.200.116:5555/gateway/getToken
+    changeUrl: http://192.168.200.116:5555/gateway/changeToken
 debug: true

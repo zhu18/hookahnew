@@ -96,4 +96,6 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
     public Map getStatistics();
 
     void deleteOrder(String id);
+
+    Map reCreateToken(MgOrderGoods mgOrderGoods);
 }
