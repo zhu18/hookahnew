@@ -56,6 +56,7 @@
         <result column="upload_url" jdbcType="VARCHAR" property="uploadUrl" />
         <result column="source_id" jdbcType="VARCHAR" property="sourceId" />
         <result column="source_type" jdbcType="VARCHAR" property="sourceType" />
+        <result column="is_discuss_price" jdbcType="TINYINT" property="isDiscussPrice" />
     </resultMap>
 
     <resultMap id="GCResult" type="com.jusfoun.hookah.core.domain.vo.GoodsCheckedVo" >
@@ -229,7 +230,8 @@
         is_onsale,
         is_book,
         version,
-        upload_url
+        upload_url,
+        is_discuss_price
         FROM
         goods
         <include refid="waitSelect"></include>
