@@ -17,7 +17,7 @@
 $("#J_rechargeBtn").on("click", function () {
     var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
     var money=$('#recharge-money').val();
-    if(reg.test(money)){
+    if(reg.test(money) && parseFloat(money)>0){
         window.location.href= host.website+'/payAccount/userRecharge?'+'money='+$('#recharge-money').val();
     }else if(!money){
         $.alert('充值金额不能为空!')
