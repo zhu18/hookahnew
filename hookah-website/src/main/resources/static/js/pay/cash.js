@@ -126,6 +126,7 @@ function check() {
 					$('.ui-form-error').show().children('p').html('支付密码不符合要求');
 				}
 			} else if(this.value == 2){//支付宝方式
+                Loading.start();
 				window.location.href= host.website+'/pay/aliPay?'+'orderSn='+$("#orderSn").html();
 				return false;
 			}else{
@@ -147,6 +148,7 @@ function testPayPassword(pwd){
 			if(data.code == 1){
                 $("input[name='passWord']").val($.md5($('#paymentPassword').val()));
 				$('#form_paypsw').submit();
+                Loading.start();
 				return true;
 			}else if(data.code == 0){
                 $('.ui-form-error').show().children('p').html('支付密码不正确');
