@@ -18,6 +18,7 @@
         <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
         <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
         <result column="onsale_start_date" jdbcType="TIMESTAMP" property="onsaleStartDate" />
+        <result column="is_discuss_price" jdbcType="TINYINT" property="isDiscussPrice" />
     </resultMap>
     <resultMap id="BaseResultMap" type="com.jusfoun.hookah.core.domain.Goods" >
         <id column="goods_id" property="goodsId" jdbcType="VARCHAR" />
@@ -55,6 +56,7 @@
         <result column="upload_url" jdbcType="VARCHAR" property="uploadUrl" />
         <result column="source_id" jdbcType="VARCHAR" property="sourceId" />
         <result column="source_type" jdbcType="VARCHAR" property="sourceType" />
+        <result column="is_discuss_price" jdbcType="TINYINT" property="isDiscussPrice" />
     </resultMap>
 
     <resultMap id="GCResult" type="com.jusfoun.hookah.core.domain.vo.GoodsCheckedVo" >
@@ -115,7 +117,8 @@
             getRegionParentList(goods_area) goods_areas,
             add_time,
             last_update_time,
-            onsale_start_date
+            onsale_start_date,
+            is_discuss_price
         from
             goods
         where is_delete = 1
@@ -140,7 +143,8 @@
         getRegionParentList(goods_area) goods_areas,
         add_time,
         last_update_time,
-        onsale_start_date
+        onsale_start_date,
+        is_discuss_price
         from
         goods
         where is_delete = 1
@@ -165,7 +169,8 @@
         goods_area goods_area,
         getRegionParentList(goods_area) goods_areas,
         add_time,
-        last_update_time
+        last_update_time,
+        is_discuss_price
         from
         goods
         where goods_id = #{id}
@@ -225,7 +230,8 @@
         is_onsale,
         is_book,
         version,
-        upload_url
+        upload_url,
+        is_discuss_price
         FROM
         goods
         <include refid="waitSelect"></include>

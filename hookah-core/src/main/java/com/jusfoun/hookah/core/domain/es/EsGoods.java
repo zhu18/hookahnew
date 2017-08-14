@@ -74,6 +74,9 @@ public class EsGoods implements Serializable {
             termVector= TermVector.OFFSETS, isStore = true, searchAnalyzer = Analyzer.WHITESPACE)
     private String payFormats;
 
+    @EsField(type = Type.BYTE)
+    private Byte isDiscussPrice;
+
     public String getGoodsId() {
         return goodsId;
     }
@@ -256,5 +259,13 @@ public class EsGoods implements Serializable {
 
     public void setPayFormats(String payFormats) {
         this.payFormats = payFormats;
+    }
+
+    public Byte getIsDiscussPrice() {
+        return isDiscussPrice;
+    }
+
+    public void setIsDiscussPrice(Byte isDiscussPrice) {
+        this.isDiscussPrice = isDiscussPrice;
     }
 }
