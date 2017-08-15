@@ -263,3 +263,17 @@ $.getUrlParam = function (key) { //获取url参数值  使用方法var id = $.ge
 	var result = window.location.search.substr(1).match(reg);
 	return result ? decodeURIComponent(result[2]) : null;
 };
+// 转换金额形式
+function splitK(num) {
+    var decimal = String(num).split('.')[1] || '';//小数部分
+    var tempArr = [];
+    var revNumArr = String(num).split('.')[0].split("").reverse();//倒序
+    for (i in revNumArr){
+        tempArr.push(revNumArr[i]);
+        if((i+1)%3 === 0 && i != revNumArr.length-1){
+            tempArr.push(',');
+        }
+    }
+    var zs = tempArr.reverse().join('');//整数部分
+    return decimal?zs+'.'+decimal:zs;
+}

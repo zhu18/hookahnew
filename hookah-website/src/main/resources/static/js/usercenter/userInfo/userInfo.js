@@ -58,4 +58,10 @@ $(".basic-information-down .header h4").on("click",function () {
         pagePath = host.website + '/goods/back/sale/list';
         goPage("1");
     }
-})
+});
+
+
+
+$(".account-balance").html(splitK($(".account-balance").html()));
+$(".available-balance").html(splitK($(".available-balance").html()));
+$(".frozen-balance").html(splitK($(".frozen-balance").html()));
