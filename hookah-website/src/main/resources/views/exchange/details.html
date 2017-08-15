@@ -442,7 +442,16 @@ var htmlPart = {
 							<img src="${host.static}/${item.goodsImg}" alt="">
 							<div class="img-info">
 								<p class="title">${item.goodsName}</p>
-								<p class="color-orange">￥${item.shopPrice /100}/${item.shopNumber == 1 ? '' : item.shopNumber}${decode(item.shopFormat,0,'次',1,'月',2,'年',3,'套','未知')}</p>
+								<%if(item.isDiscussPrice == 1){%>
+								<p class="color-orange">面议</p>
+								<%}else{%>
+									<%if(item.shopPrice >= 1000000){%>
+									<p class="color-orange">￥${trunc(item.shopPrice / 1000000,2)}万/${item.shopNumber == 1 ? '' : item.shopNumber}${decode(item.shopFormat,0,'次',1,'月',2,'年',3,'套','未知')}</p>
+									<%}else{%>
+									<p class="color-orange">￥${item.shopPrice /100}/${item.shopNumber == 1 ? '' : item.shopNumber}${decode(item.shopFormat,0,'次',1,'月',2,'年',3,'套','未知')}</p>
+									<%}%>
+								<%}%>
+
 							</div>
 						</a>
 					</li>
