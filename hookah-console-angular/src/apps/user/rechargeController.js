@@ -7,7 +7,7 @@ class rechargeController {
     console.log($scope.userBaseInfo);
 
     $scope.recharge = function () {
-      if ($scope.money <= 0) {
+      if (Number($scope.money) <= 0 || isNaN(Number($scope.money))) {
         alert("充值金额必须大于 0 ！");
         return;
       }
