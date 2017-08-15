@@ -15,6 +15,7 @@ class UserController {
         }
       });
       promise.then(function (res, status, config, headers) {
+        console.log(res);
         $rootScope.loadingState = false;
         growl.addSuccessMessage("数据加载完毕。。。");
       });

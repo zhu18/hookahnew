@@ -256,5 +256,8 @@ payPassword.on('keyup', "input[name='paymentPassword']", function (e) {
 	}
 });
 
+$(function () {
+    $(".channel-label .money-balance").html(splitK($(".channel-label .money-balance").html()))
 
+})
 

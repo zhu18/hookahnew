@@ -113,9 +113,9 @@ $.ajax({
    type:"post",
    success : function(data) {
    if (data.code == 1) {
-   window.location.href = './company_auth_init_step3.html';
+      window.location.href = './company_auth_init_step3.html';
    } else {
-   alert(data.errMsg);
+      alert(data.message);
    }
    }
    });

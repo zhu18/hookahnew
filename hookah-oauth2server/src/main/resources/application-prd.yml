@@ -47,6 +47,10 @@ spring:
     password: password
     publisher-confirms: true
     virtual-host: /
+    listener:
+      retry:
+        enabled: true
+        max-attempts: 2
   mail:
     host: smtp.qiye.163.com
     port: 25

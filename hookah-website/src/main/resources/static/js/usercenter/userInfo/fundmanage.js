@@ -19,9 +19,9 @@ function render() {
                     cache:false,
                     type:'get',
                     success:function (data) {
-                        $(".account-funds-content-left .money").html("￥"+(data.data.useBalance / 100).toFixed(2));
-                        $(".freeze").html("￥"+(data.data.frozenBalance / 100).toFixed(2));
-                        $(".useBalance").html("￥"+(data.data.balance / 100).toFixed(2));
+                        $(".account-funds-content-left .money").html("￥"+splitK((data.data.useBalance / 100).toFixed(2)));
+                        $(".freeze").html("￥"+splitK((data.data.frozenBalance / 100).toFixed(2)));
+                        $(".useBalance").html("￥"+splitK((data.data.balance / 100).toFixed(2)));
 
                         if(data.data.userType == 4){
                             for(var i=0;i<list.length;i++){

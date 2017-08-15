@@ -125,7 +125,8 @@
     <select id="selectUsersByCondition" parameterType="java.util.HashMap" resultType="com.jusfoun.hookah.core.domain.User">
 
         SELECT u.user_id AS userId ,u.user_name AS userName,pa.balance AS moneyBalance,u.mobile AS mobile,
-        u.user_type AS userType, u.add_time AS addTime ,u.last_login_time AS lastLoginTime,u.reg_time AS regTime
+        u.user_type AS userType, u.add_time AS addTime ,u.last_login_time AS lastLoginTime,u.reg_time AS regTime,
+        u.user_Sn AS userSn
 
         <include refid="SelectConditions"/>
 
