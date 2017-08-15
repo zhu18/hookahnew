@@ -124,7 +124,7 @@ $(function(){
 // };
 
 var priceT = (JshopPrice / 100).toFixed(2)
-$('#J_goodsPrice').html(priceT);
+$('.J_goodsPrice').html(priceT);
 
 var id = $.getUrlParam('id');
 var format = $.getUrlParam('format');
@@ -201,13 +201,13 @@ function addCart(goodsId) {
 			type: 'post',
 			data: {
 				goodsId: goodsId,
-				formatId: $('#J_goodsPrice').attr('formatid'),
+				formatId: $('.J_goodsPrice').attr('formatid'),
 				goodsNumber: $('#J_buyNumber').val()
 			},
 			success: function (data) {
 				// return JSON.stringify(data);
 				if (data.code == "1") {
-					window.location.href = "/exchange/addToCart?goodsId=" + goodsId + "&number=" + $('#J_buyNumber').val() + '&fmt=' +formatname+'&gm='+$('#J_goodsPrice').html();
+					window.location.href = "/exchange/addToCart?goodsId=" + goodsId + "&number=" + $('#J_buyNumber').val() + '&fmt=' +formatname+'&gm='+$('.J_goodsPrice').html();
 				} else {
 					console.log(data);
 					$.alert(data.message);
@@ -217,8 +217,8 @@ function addCart(goodsId) {
 				if(e.status == 401){
 					window.location.href = host.loginUrl
                         + encodeURIComponent(host.website + '/cart/addToCartByGet?goodsId=' + goodsId
-                            + '&goodsNumber=' + $('#J_buyNumber').val() + '&formatId=' + $('#J_goodsPrice').attr('formatid')
-                            + "&number=" + $('#J_buyNumber').val() + '&fmt=' + formatname + '&gm=' + $('#J_goodsPrice').html());
+                            + '&goodsNumber=' + $('#J_buyNumber').val() + '&formatId=' + $('.J_goodsPrice').attr('formatid')
+                            + "&number=" + $('#J_buyNumber').val() + '&fmt=' + formatname + '&gm=' + $('.J_goodsPrice').html());
 				}
 			}
 		});
@@ -228,7 +228,7 @@ function addCart(goodsId) {
 }
 function editPrice(that,price,formatId){
     $(that).addClass('active').siblings('a').removeClass('active');
-    $('#J_goodsPrice').html((Number(price) / 100).toFixed(2)).attr('formatid',formatId);
+    $('.J_goodsPrice').html((Number(price) / 100).toFixed(2)).attr('formatid',formatId);
 	$('#J_formatId').val(formatId);
 }
 

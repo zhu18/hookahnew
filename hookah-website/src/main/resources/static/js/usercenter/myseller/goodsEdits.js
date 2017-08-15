@@ -201,6 +201,15 @@ function goodsEditFn(){
 	$("input[name='typeId']").val(catId.substring(0,3));
 	rederDateDL()
 	getPriceBox()
+	$('#isDiscuss').click(function () {
+		if($(this).prop('checked')){
+			$('.isNotDiscuss').hide();
+			$('.isDiscuss').show();
+		}else{
+			$('.isNotDiscuss').show();
+			$('.isDiscuss').hide();
+		}
+	})
 }
 function rederDateDL(){
 	var start = {
@@ -709,21 +718,37 @@ function submitGoodsPublish(){
 	data.goodsImg = $("input[name='goodsImges']").val();
 	data.dataSample = $("input[name='dataSample_s']").val();
 	data.trialRange = $('textarea[name="trialRange"]').val();
-	data.formatList = [];
-	$('table[d-type="priceHtml"] tbody tr').each(function () {
+	if($('#isDiscuss').prop('checked')){
+		data.isDiscussPrice = 1;
+		data.formatList = [];
 		var listData = {};
-		listData.formatId = $(this).index();
-		listData.formatName = $(this).find('input[datatype="name"]').val();
-		listData.number = $(this).find('input[datatype="number"]').val();
-		listData.format = $(this).find('select[name="format"]').val();
-		listData.settlementPrice = ($(this).find('input[datatype="settlementPrice"]').val()) * 100;
-		listData.agencyPrice = ($(this).find('input[datatype="agencyPrice"]').val()) * 100;
-		listData.price = ($(this).find('input[datatype="price"]').val()) * 100;
+		listData.formatId = 0;
+		listData.formatName = $('.isDiscuss').find('input[datatype="name"]').val();
+		listData.number = 1;
+		listData.format = -1;
+		listData.price = ($('.isDiscuss').find('input[datatype="price"]').val()) * 100;
 		data.formatList.push(listData);
-	});
-	data.shopNumber = data.formatList[0].number;
-	data.shopFormat = data.formatList[0].format;
-	data.shopPrice = data.formatList[0].price;
+		data.shopNumber = data.formatList[0].number;
+		data.shopFormat = data.formatList[0].format;
+		data.shopPrice = data.formatList[0].price;
+	}else{
+		data.isDiscussPrice = 0;
+		data.formatList = [];
+		$('table[d-type="priceHtml"] tbody tr').each(function () {
+			var listData = {};
+			listData.formatId = $(this).index();
+			listData.formatName = $(this).find('input[datatype="name"]').val();
+			listData.number = $(this).find('input[datatype="number"]').val();
+			listData.format = $(this).find('select[name="format"]').val();
+			listData.settlementPrice = ($(this).find('input[datatype="settlementPrice"]').val()) * 100;
+			listData.agencyPrice = ($(this).find('input[datatype="agencyPrice"]').val()) * 100;
+			listData.price = ($(this).find('input[datatype="price"]').val()) * 100;
+			data.formatList.push(listData);
+		});
+		data.shopNumber = data.formatList[0].number;
+		data.shopFormat = data.formatList[0].format;
+		data.shopPrice = data.formatList[0].price;
+	}
 	if($('select[name="parentSelect"]').val() == '100'){//------------------------
 		data.goodsType = $('select[name="childrenSelect1"]').val();
 	}else if($('select[name="parentSelect"]').val() == '2'){
@@ -996,49 +1021,18 @@ function renderData(data){//渲染页面
 	$('select[name="parentSelect"] option').each(function(){
 		if(data.goodsType == 0 || data.goodsType == 1){
 			$('#childrenSelect1').show();
-			// if($(this).attr('value') == 100){
-			// 	$(this).attr('selected','true')
-			// }
 			$('select[name="parentSelect"]').val(100).attr('selected','true');
-			// $('select[name="childrenSelect1"] option').each(function(){
-			// 	if($(this).attr('value') == data.goodsType){
-			// 		$(this).attr('selected','true')
-			// 	}
-			// })
 			$('select[name="childrenSelect1"]').val(data.goodsType).attr('selected','true');
-			console.log('000000000&&&&&&111111111')
 		}else if(data.goodsType == 2){
-			// if($(this).attr('value') == 2){
-			// 	$(this).attr('selected','true')
-			// }
 			$('select[name="parentSelect"]').val(data.goodsType).attr('selected','true');
-			console.log('222222222222')
 		}else if(data.goodsType == 4 || data.goodsType == 5){
 			$('#childrenSelect3').show();
-			// if($(this).attr('value') == 400){
-			// 	$(this).attr('selected','true')
-			// }
-			// $('select[name="childrenSelect3"] option').each(function(){
-			// 	if($(this).attr('value') == data.goodsType){
-			// 		$(this).attr('selected','true')
-			// 	}
-			// })
 			$('select[name="parentSelect"]').val(400).attr('selected','true');
 			$('select[name="childrenSelect3"]').val(data.goodsType).attr('selected','true');
-			console.log('44444444&&&&&&55555555')
 		}else if(data.goodsType == 6 || data.goodsType == 7){
 			$('#childrenSelect2').show();
-			// if($(this).attr('value') == 300){
-			// 	$(this).attr('selected','true')
-			// }
-			// $('select[name="childrenSelect2"] option').each(function(){
-			// 	if($(this).attr('value') == data.goodsType){
-			// 		$(this).attr('selected','true')
-			// 	}
-			// })
 			$('select[name="parentSelect"]').val(300).attr('selected','true');
 			$('select[name="childrenSelect2"]').val(data.goodsType).attr('selected','true');
-			console.log('66666666&&&&&&77777777')
 		}
 	});
 	var goodsTypeVal = $('#parentSelect').val();
@@ -1189,7 +1183,17 @@ function renderData(data){//渲染页面
 	$('input[name="dataSample_s"]').val(data.dataSample);
 	$('#dataSample').val(data.dataSample);
 	if(data.formatList && data.formatList.length > 0){
-		renderFormatList(data.formatList);//渲染价格
+		if(data.isDiscussPrice == 1){
+			$('#isDiscuss').prop('checked',true);
+			$('.isDiscuss').show();
+			$('.isNotDiscuss').hide();
+			renderFormatListDiscuss(data.formatList);//渲染价格
+		}else{
+			$('#isDiscuss').prop('checked',false);
+			$('.isDiscuss').hide();
+			$('.isNotDiscuss').show();
+			renderFormatList(data.formatList);//渲染价格
+		}
 	}
 	initializeGoodsTypeEnd(goodsTypeVal,null);
 	renderGoodsDeac(data);
@@ -1213,6 +1217,15 @@ function renderData(data){//渲染页面
 	uploadGoodsImg();
 	validataFn();
 	ifGoodsTypeRender(data);
+	$('#isDiscuss').click(function () {
+		if($(this).prop('checked')){
+			$('.isNotDiscuss').hide();
+			$('.isDiscuss').show();
+		}else{
+			$('.isNotDiscuss').show();
+			$('.isDiscuss').hide();
+		}
+	})
 }
 function ifGoodsTypeRender(data){ //根据类型渲染商品类型相关的html
 	$('.edit-all').hide();
@@ -1581,7 +1594,17 @@ function renderFormatList(formatList){
 
 		html += '</tr>';
 	});
-	$('table[d-type="priceHtml"] tbody').html(html);
+	$('.isNotDiscuss table[d-type="priceHtml"] tbody').html(html);
+}
+function renderFormatListDiscuss(formatList){
+	var html = '';
+	$.each(formatList,function(index,data){
+		html += '<tr class="parent-tr">';
+		html += '<td class="name-input"><div class="inputbox"><input type="text" datatype="name" value="'+data.formatName+'" placeholder="请输入名称"></div></td>';
+		html += '<td class="price-input price-input3"><div class="inputbox"><input class="price-inputs number " min="0" datatype="price" value="'+data.price / 100+'" type="text" placeholder="请输入建议价"></div></td>';
+		html += '</tr>';
+	});
+	$('.isDiscuss table tbody').html(html);
 }
 function renderGoodsDeac(data){
 	$('#textarea1').val(data.goodsDesc);
@@ -1675,53 +1698,49 @@ function initialize() {
 }
 $('#J_submitBtn').click(function(){
 	if($("#goodsModifyForm").valid()){
-		var lastChild = $('table[d-type="priceHtml"] tbody tr').last();
-		if ($(lastChild).children('.number-input').find('input').val() && $(lastChild).children('.price-input1').find('input').val() && $(lastChild).children('.price-input2').find('input').val() && $(lastChild).children('.price-input3').find('input').val()) {
-			if($('[name=isBook]:checked').val() == 1){
-				if(!$('#indate_s').val()){
-					$.alert('上架时间不能为空',true,function(){});
-					return;
-				}
+		var lastChild = $('.isNotDiscuss table[d-type="priceHtml"] tbody tr').last();
+		if($('#isDiscuss').prop('checked')){
+			if ($('.isDiscuss .price-inputs').val()) {
+				textEditor()
+			} else {
+				$.alert('请完善价格信息',true,function(){});
 			}
-			if(goodsTypeId == 0 || goodsTypeId == 1 || goodsTypeId == 2){
-				if($.trim(editor1.$txt.html()) != "<p><br></p>"){
-					if($.trim(editor2.$txt.html()) != "<p><br></p>"){
-						if($.trim(editor3.$txt.html()) != "<p><br></p>"){
-							backAddFn(submitGoodsPublish())
-						}else{
-							$.alert('售后服务不能为空',true,function () {})
-						}
+		}else{
+			if ($(lastChild).children('.number-input').find('input').val() && $(lastChild).children('.price-input1').find('input').val() && $(lastChild).children('.price-input2').find('input').val() && $(lastChild).children('.price-input3').find('input').val()) {
+				textEditor()
+			} else {
+				$.alert('请完善价格及规格信息',true,function(){});
+			}
+		}
+
+	}else{
+		return false;
+	}
+	function textEditor(){
+		if($('[name=isBook]:checked').val() == 1){
+			if(!$('#indate_s').val()){
+				$.alert('上架时间不能为空',true,function(){});
+				return;
+			}
+		}
+		if(goodsTypeId == 0 || goodsTypeId == 1 || goodsTypeId == 2){
+			if($.trim(editor1.$txt.html()) != "<p><br></p>"){
+				if($.trim(editor2.$txt.html()) != "<p><br></p>"){
+					if($.trim(editor3.$txt.html()) != "<p><br></p>"){
+						backAddFn(submitGoodsPublish())
 					}else{
-						$.alert('商品优势不能为空',true,function () {})
+						$.alert('售后服务不能为空',true,function () {})
 					}
 				}else{
-					$.alert('商品描述不能为空',true,function () {})
+					$.alert('商品优势不能为空',true,function () {})
 				}
-			}else if(goodsTypeId == 4){
-				if($.trim(editor3.$txt.html()) != "<p><br></p>"){
-					if($.trim(editorAs.$txt.html()) != "<p><br></p>"){
-						if($.trim(editorBs.$txt.html()) != "<p><br></p>"){
-							if($.trim(editorCs.$txt.html()) != "<p><br></p>"){
-								if($.trim(editorDs.$txt.html()) != "<p><br></p>"){
-									backAddFn(submitGoodsPublish())
-								}else{
-									$.alert('所需环境不能为空',true,function () {})
-								}
-							}else{
-								$.alert('团队优势不能为空',true,function () {})
-							}
-						}else{
-							$.alert('技术优势不能为空',true,function () {})
-						}
-					}else{
-						$.alert('核心功能不能为空',true,function () {})
-					}
-				}else{
-					$.alert('售后服务不能为空',true,function () {})
-				}
-			}else if(goodsTypeId == 5){
-				if($.trim(editor3.$txt.html()) != "<p><br></p>"){
-					if($.trim(editorAs.$txt.html()) != "<p><br></p>"){
+			}else{
+				$.alert('商品描述不能为空',true,function () {})
+			}
+		}else if(goodsTypeId == 4){
+			if($.trim(editor3.$txt.html()) != "<p><br></p>"){
+				if($.trim(editorAs.$txt.html()) != "<p><br></p>"){
+					if($.trim(editorBs.$txt.html()) != "<p><br></p>"){
 						if($.trim(editorCs.$txt.html()) != "<p><br></p>"){
 							if($.trim(editorDs.$txt.html()) != "<p><br></p>"){
 								backAddFn(submitGoodsPublish())
@@ -1732,36 +1751,36 @@ $('#J_submitBtn').click(function(){
 							$.alert('团队优势不能为空',true,function () {})
 						}
 					}else{
-						$.alert('核心功能不能为空',true,function () {})
+						$.alert('技术优势不能为空',true,function () {})
 					}
 				}else{
-					$.alert('售后服务不能为空',true,function () {})
+					$.alert('核心功能不能为空',true,function () {})
 				}
-			}else if(goodsTypeId == 6){
-				if($.trim(editor3.$txt.html()) != "<p><br></p>"){
-					if($.trim(editorA.$txt.html()) != "<p><br></p>"){
-						if($.trim(editorB.$txt.html()) != "<p><br></p>"){
-							if($.trim(editorC.$txt.html()) != "<p><br></p>"){
-								if($.trim(editorD.$txt.html()) != "<p><br></p>"){
-									backAddFn(submitGoodsPublish())
-								}else{
-									$.alert('所需环境不能为空',true,function () {})
-								}
-							}else{
-								$.alert('团队优势不能为空',true,function () {})
-							}
+			}else{
+				$.alert('售后服务不能为空',true,function () {})
+			}
+		}else if(goodsTypeId == 5){
+			if($.trim(editor3.$txt.html()) != "<p><br></p>"){
+				if($.trim(editorAs.$txt.html()) != "<p><br></p>"){
+					if($.trim(editorCs.$txt.html()) != "<p><br></p>"){
+						if($.trim(editorDs.$txt.html()) != "<p><br></p>"){
+							backAddFn(submitGoodsPublish())
 						}else{
-							$.alert('技术优势不能为空',true,function () {})
+							$.alert('所需环境不能为空',true,function () {})
 						}
 					}else{
-						$.alert('核心功能不能为空',true,function () {})
+						$.alert('团队优势不能为空',true,function () {})
 					}
 				}else{
-					$.alert('售后服务不能为空',true,function () {})
+					$.alert('核心功能不能为空',true,function () {})
 				}
-			}else if(goodsTypeId == 7){
-				if($.trim(editor3.$txt.html()) != "<p><br></p>"){
-					if($.trim(editorA.$txt.html()) != "<p><br></p>"){
+			}else{
+				$.alert('售后服务不能为空',true,function () {})
+			}
+		}else if(goodsTypeId == 6){
+			if($.trim(editor3.$txt.html()) != "<p><br></p>"){
+				if($.trim(editorA.$txt.html()) != "<p><br></p>"){
+					if($.trim(editorB.$txt.html()) != "<p><br></p>"){
 						if($.trim(editorC.$txt.html()) != "<p><br></p>"){
 							if($.trim(editorD.$txt.html()) != "<p><br></p>"){
 								backAddFn(submitGoodsPublish())
@@ -1772,17 +1791,33 @@ $('#J_submitBtn').click(function(){
 							$.alert('团队优势不能为空',true,function () {})
 						}
 					}else{
-						$.alert('核心功能不能为空',true,function () {})
+						$.alert('技术优势不能为空',true,function () {})
 					}
 				}else{
-					$.alert('售后服务不能为空',true,function () {})
+					$.alert('核心功能不能为空',true,function () {})
 				}
+			}else{
+				$.alert('售后服务不能为空',true,function () {})
 			}
-		} else {
-			$.alert('请完善价格及规格信息',true,function(){});
+		}else if(goodsTypeId == 7){
+			if($.trim(editor3.$txt.html()) != "<p><br></p>"){
+				if($.trim(editorA.$txt.html()) != "<p><br></p>"){
+					if($.trim(editorC.$txt.html()) != "<p><br></p>"){
+						if($.trim(editorD.$txt.html()) != "<p><br></p>"){
+							backAddFn(submitGoodsPublish())
+						}else{
+							$.alert('所需环境不能为空',true,function () {})
+						}
+					}else{
+						$.alert('团队优势不能为空',true,function () {})
+					}
+				}else{
+					$.alert('核心功能不能为空',true,function () {})
+				}
+			}else{
+				$.alert('售后服务不能为空',true,function () {})
+			}
 		}
-	}else{
-		return false;
 	}
 });
 

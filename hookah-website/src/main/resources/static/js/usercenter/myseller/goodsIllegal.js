@@ -11,7 +11,11 @@ function loadPageData(data) {
 			html += '</a>';
 			html += '</td>';
 			html += '<td class="text-align-center">' + list[i].catName + '</td>';
-			html += '<td class="text-right">' + (list[i].shopPrice / 100).toFixed(2) + '</td>';
+			if(list[i].isDiscussPrice == 1){
+				html += '<td class="text-right" style="color:#F17D17;">面议（参考价' + (list[i].shopPrice / 100).toFixed(2) + '元）</td>';
+			}else{
+				html += '<td class="text-right">' + (list[i].shopPrice / 100).toFixed(2) + '</td>';
+			}
 			html += '<td class="text-center">' + list[i].lastUpdateTime + '</td>';
 			html += '<td class="text-center" style="width:180px; word-break: break-all">' + list[i].offReason + '</td>';
 			html += '<td>';
