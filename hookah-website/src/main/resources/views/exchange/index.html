@@ -136,7 +136,7 @@ var htmlPart = {
 							</div>
 							<div class="down-box-tow">
 								<%if(item[i].shopPrice >= 1000000){%>
-								<span class="money"><i class="money-i-item" >￥</i>${trunc(item[i].shopPrice / 1000000,2)}w</span>
+								<span class="money"><i class="money-i-item" >￥</i>${trunc(item[i].shopPrice / 1000000,2)}万</span>
 								<%}else{%>
 								<span class="money"><i class="money-i-item" >￥</i>${item[i].shopPrice / 100}</span>
 								<%}%>
@@ -208,7 +208,11 @@ var htmlPart = {
 					<tr>
 						<td class="td-one"><img src="${host.static}/${res_item[i].goodsImg}" alt=""></td>
 						<td class="td-two">${res_item[i].goodsName}</td>
+						<%if(res_item[i].shopPrice >= 1000000){%>
+						<td class="td-three"><span class="td-three-money">${trunc(res_item[i].shopPrice / 1000000,2)}万</span></td>
+						<%}else{%>
 						<td class="td-three"><span class="td-three-money">${res_item[i].shopPrice / 100}</span></td><!--<span>元/次</span>-->
+						<%}%>
 						<td class="td-four">
 							<a href="${host.website}/exchange/details?id=${res_item[i].goodsId}" class="a-hover-blue" target="_blank" >查看详情</a>
 							<!--<span>免</span>-->
@@ -236,8 +240,15 @@ var htmlPart = {
 						<div class="infoBox grid-right">
 							<a href="${host.website}/exchange/details?id=${hot_sellItem[i].goodsId}" target="_blank" ><p class="title">
 								${hot_sellItem[i].goodsName}</p></a>
+							<%if(hot_sellItem[i].shopPrice >= 1000000){%>
+							<a href="${host.website}/exchange/details?id=${hot_sellItem[i].goodsId}" target="_blank" >
+								<p class="p-none ">
+								￥${trunc(hot_sellItem[i].shopPrice / 1000000,2)}万
+							</p></a>
+							<%}else{%>
 							<a href="${host.website}/exchange/details?id=${hot_sellItem[i].goodsId}" target="_blank" ><p class="p-none ">
 								￥${hot_sellItem[i].shopPrice / 100}</p></a>
+							<%}%>
 						</div>
 					</li>
 					<%}%>
@@ -332,7 +343,11 @@ var htmlPart = {
 									<a href="${host.website}/exchange/details?id=${item.goodsId}" target="_blank" class="color-red">
 										<p>${item.goodsName}</p>
 										<p class="color-red">
-											￥<span class="font-weight-bold font-size-18 color-red">${item.shopPrice/100}</span>
+											<%if(item.shopPrice >= 1000000){%>
+												￥<span class="font-weight-bold font-size-18 color-red">${trunc(item.shopPrice / 1000000,2)}万</span>
+											<%}else{%>
+												￥<span class="font-weight-bold font-size-18 color-red">${item.shopPrice/100}</span>
+											<%}%>
 										</p>
 									</a>
 								</div>
@@ -354,7 +369,11 @@ var htmlPart = {
 									<a href="${host.website}/exchange/details?id=${item.goodsId}" target="_blank" class="color-red">
 										<p>${item.goodsName}</p>
 										<p class="color-red">
+											<%if(item.shopPrice >= 1000000){%>
+											￥<span class="font-weight-bold font-size-18 color-red">${trunc(item.shopPrice / 1000000,2)}万</span>
+											<%}else{%>
 											￥<span class="font-weight-bold font-size-18 color-red">${item.shopPrice/100}</span>
+											<%}%>
 										</p>
 									</a>
 								</div>
@@ -376,7 +395,11 @@ var htmlPart = {
 									<a href="${host.website}/exchange/details?id=${item.goodsId}" target="_blank" class="color-red">
 										<p>${item.goodsName}</p>
 										<p class="color-red">
+											<%if(item.shopPrice >= 1000000){%>
+											￥<span class="font-weight-bold font-size-18 color-red">${trunc(item.shopPrice / 1000000,2)}万</span>
+											<%}else{%>
 											￥<span class="font-weight-bold font-size-18 color-red">${item.shopPrice/100}</span>
+											<%}%>
 										</p>
 									</a>
 								</div>
@@ -398,7 +421,11 @@ var htmlPart = {
 									<a href="${host.website}/exchange/details?id=${item.goodsId}" target="_blank" class="color-red">
 										<p>${item.goodsName}</p>
 										<p class="color-red">
+											<%if(item.shopPrice >= 1000000){%>
+											￥<span class="font-weight-bold font-size-18 color-red">${trunc(item.shopPrice / 1000000,2)}万</span>
+											<%}else{%>
 											￥<span class="font-weight-bold font-size-18 color-red">${item.shopPrice/100}</span>
+											<%}%>
 										</p>
 									</a>
 								</div>
@@ -480,7 +507,11 @@ var htmlPart = {
 								</p>
 								<p>
 									<i class="money-symbol color-red">￥</i>
+									<%if(model_item[i].shopPrice >= 1000000){%>
+									<span class="color-red">${trunc(model_item[i].shopPrice / 1000000,2)}万</span>
+									<%}else{%>
 									<span class="color-red">${model_item[i].shopPrice / 100}</span>
+									<%}%>
 								</p>
 							</a>
 						</li>
@@ -527,7 +558,11 @@ var htmlPart = {
 								</p>
 								<p>
 									<i class="money-symbol color-red">￥</i>
+									<%if(scene_item[i].shopPrice >= 1000000){%>
+									<span class="color-red">${trunc(scene_item[i].shopPrice / 1000000,2)}万</span>
+									<%}else{%>
 									<span class="color-red">${scene_item[i].shopPrice / 100}</span>
+									<%}%>
 								</p>
 							</a>
 						</li>
@@ -574,7 +609,11 @@ var htmlPart = {
 								</p>
 								<p>
 									<i class="money-symbol color-red">￥</i>
+									<%if(plat_item[i].shopPrice >= 1000000){%>
+									<span class="color-red">${trunc(plat_item[i].shopPrice / 1000000,2)}万</span>
+									<%}else{%>
 									<span class="color-red">${plat_item[i].shopPrice / 100}</span>
+									<%}%>
 								</p>
 							</a>
 						</li>
@@ -621,7 +660,11 @@ var htmlPart = {
 								</p>
 								<p>
 									<i class="money-symbol color-red">￥</i>
+									<%if(tools_item[i].shopPrice >= 1000000){%>
+									<span class="color-red">${trunc(tools_item[i].shopPrice / 1000000,2)}万</span>
+									<%}else{%>
 									<span class="color-red">${tools_item[i].shopPrice / 100}</span>
+									<%}%>
 								</p>
 							</a>
 						</li>

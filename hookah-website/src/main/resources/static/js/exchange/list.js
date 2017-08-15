@@ -17,7 +17,7 @@ function loadPageData(data){ //渲染页面数据
 			}
 			var shopPrice = null;
 			if(Number(list[i].shopPrice) >= 1000000){
-				shopPrice = (Number(list[i].shopPrice) / 1000000)+'w';
+				shopPrice = (Number(list[i].shopPrice) / 1000000)+'万';
 			}else{
 				shopPrice = Number(list[i].shopPrice) / 100
 			}
@@ -28,7 +28,11 @@ function loadPageData(data){ //渲染页面数据
 			html += '<p class="goods-brief">'+(list[i].goodsBrief  ? list[i].goodsBrief : '暂无简介')+'</p>';
 			html += '</a>';
 			html += '<div class="item-down clearfix">';
-			html += '<span class="grid-left goods-price">￥<span>'+shopPrice+'</span>/'+(list[i].shopNumber == 1 ? '':list[i].shopNumber)+shopFormat+'</span>';
+			if(list[i].isDiscussPrice == 1){
+				html += '<span class="grid-left goods-price">面议参考价￥<span>'+shopPrice+'</span></span>';
+			}else{
+				html += '<span class="grid-left goods-price">￥<span>'+shopPrice+'</span>/'+(list[i].shopNumber == 1 ? '':list[i].shopNumber)+shopFormat+'</span>';
+			}
 			html += '<a class="grid-right goods-cart btn btn-full-red padding-5" href="/exchange/details?id='+list[i].goodsId+'" target="_blank">查看详情</a>';
 			html += '</div>';
 			html += '</li>';

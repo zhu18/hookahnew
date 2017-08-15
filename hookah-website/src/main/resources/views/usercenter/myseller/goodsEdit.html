@@ -160,9 +160,10 @@ var htmlPart = {
 									<td class="bar">规格及价格：<span class="requireds">*</span></td>
 									<td>
 										<div class="block info" style="margin: 0px 0px 3px;">
-											第一行为默认数据。
+											<span id="priceInfo">第一行为默认数据。</span>
+											<label style="color:#333;"><input type="checkbox" id="isDiscuss" name="isDiscuss">价格面议</label>
 										</div>
-										<div class="table-box">
+										<div class="table-box isNotDiscuss">
 											<table class="price-table table-plus" d-type="priceHtml">
 												<thead>
 												<tr>
@@ -214,6 +215,30 @@ var htmlPart = {
 													</td>
 													<td>
 														<span class="table-plus-btn" onclick="tablePlus(this)">+</span>
+													</td>
+												</tr>
+												</tbody>
+											</table>
+										</div>
+										<div class="table-box isDiscuss" style="display: none;">
+											<table class="price-table table-plus" d-type="priceHtml">
+												<thead>
+												<tr>
+													<th>名称</th>
+													<th>建议价（元）</th>
+												</tr>
+												</thead>
+												<tbody>
+												<tr class="parent-tr">
+													<td class="name-input">
+														<div class="inputbox">
+															<input type="text" datatype="name" placeholder="请输入名称" required="required">
+														</div>
+													</td>
+													<td class="price-input price-input3">
+														<div class="inputbox">
+															<input class="price-inputs number" datatype="price" type="text" placeholder="请输入零售价" required="required">
+														</div>
 													</td>
 												</tr>
 												</tbody>
