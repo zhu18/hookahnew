@@ -14,10 +14,7 @@ import com.jusfoun.hookah.core.domain.PayTradeRecord;
 import com.jusfoun.hookah.core.domain.bo.MoneyInOutBo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
-import com.jusfoun.hookah.core.utils.ExceptionConst;
-import com.jusfoun.hookah.core.utils.ReturnData;
-import com.jusfoun.hookah.core.utils.StrUtil;
-import com.jusfoun.hookah.core.utils.StringUtils;
+import com.jusfoun.hookah.core.utils.*;
 import com.jusfoun.hookah.pay.util.AlipayNotify;
 import com.jusfoun.hookah.pay.util.ChannelType;
 import com.jusfoun.hookah.pay.util.PayConfiguration;
@@ -638,5 +635,85 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 				return false;
 		}
 		return false;
+	}
+
+
+	/**
+	 * 更新账户表并插入记录表
+	 * @param params
+	 */
+	@Transactional
+	public ReturnData rechargeByHand(Map<String,String> params){
+		ReturnData returnData = new ReturnData();
+		String tradeStatus=params.get("tradeStatus");
+		String totalFee=params.get("totalFee");
+		String userId=params.get("userId");
+		String tradeType=params.get("tradeType");
+		Long money=0l;
+		try{
+			List<Condition> filters = new ArrayList();
+			if(StringUtils.isNotBlank(userId)){
+				filters.add(Condition.eq("userId", userId));
+			}
+			//查询出payAccountId
+			PayAccount payAccount = super.selectOne(filters);
+			if(tradeStatus.equals("1")){
+				money = Math.round(Double.parseDouble(totalFee)*100);
+				if (money<=0){
+					returnData.setCode(ExceptionConst.Failed);
+					returnData.setMessage("充值失败！充值金额必须大于0元！");
+					return returnData;
+				}
+				//更新账户金额
+				updatePayAccountMoney(payAccount.getId(),money,userId);
+			}
+			//插入记录表
+			String orderSn = OrderHelper.genOrderSn();
+			insertPayTradeRecord( userId, Long.valueOf(money), payAccount.getId(), orderSn,  Integer.parseInt(tradeStatus),  Integer.parseInt(tradeType));
+			insertPayAccountRecord( userId, Long.valueOf(money), payAccount.getId(), orderSn, Integer.parseInt(tradeStatus),  Integer.parseInt(tradeType));
+
+			returnData.setCode(ExceptionConst.Success);
+			returnData.setMessage("操作成功！");
+			return returnData;
+		}catch (Exception e){
+			returnData.setCode(ExceptionConst.Error);
+			returnData.setMessage(e.toString());
+			e.printStackTrace();
+		}
+		return returnData;
+	}
+
+	public void insertPayTradeRecord(String userId,Long money,Long payAccountId,String orderSn,int tradeStatus,int tradeType){
+		PayTradeRecord ptr=new PayTradeRecord();
+		ptr.setMoney(Math.abs(money));
+		ptr.setPayAccountId(payAccountId);
+		ptr.setOrderSn(orderSn);
+		ptr.setUserId(userId);
+		ptr.setTradeStatus((byte)tradeStatus);
+		ptr.setTradeType(tradeType);
+		ptr.setAddOperator(userId);
+		Date now=new Date();
+		ptr.setTransferDate(now);
+		ptr.setAddTime(now);
+		ptr.setUpdateOperator(userId);
+		ptr.setUpdateTime(now);
+		payTradeRecordMapper.insert(ptr);
+	}
+
+	public void insertPayAccountRecord(String userId,Long money,Long payAccountId,String orderSn,int tradeStatus,int tradeType){
+		PayAccountRecord par = new PayAccountRecord();
+		par.setChannelType(ChannelType.SGCZ);
+		par.setMoney(money);
+		par.setSerialNumber(orderSn);//订单号
+		par.setPayAccountId(payAccountId);
+		par.setTransferStatus((byte)tradeStatus);
+		par.setTransferType((byte)tradeType);
+		par.setTransferDate(new Date());
+		par.setAddOperator(userId);
+		par.setAddTime(new Date());
+		par.setUpdateOperator(userId);
+		par.setUpdateTime(new Date());
+		par.setUserId(userId);
+		payAccountRecordMapper.insert(par);
 	}
 }

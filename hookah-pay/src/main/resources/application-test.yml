@@ -43,6 +43,10 @@ spring:
       password: password
       publisher-confirms: true
       virtual-host: /
+      listener:
+        retry:
+          enabled: true
+          max-attempts: 2
 redis:
   ip: 192.168.15.90
   port: 6379

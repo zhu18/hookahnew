@@ -31,7 +31,7 @@ public class PayAccountApi {
         //交易平台类型 5：手工充值
         map.put("tradeType","5");
 
-        return payAccountService.saveRechargeResult(map);
+        return payAccountService.rechargeByHand(map);
     }
 
 }

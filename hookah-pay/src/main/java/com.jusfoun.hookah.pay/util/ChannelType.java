@@ -16,4 +16,7 @@ public class ChannelType {
 	//提现
 	public static final String TX = "提现";
 
+	//手工充值
+	public static final String SGCZ = "手工充值";
+
 }

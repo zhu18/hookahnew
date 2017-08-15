@@ -65,6 +65,12 @@ public interface PayAccountService extends GenericService<PayAccount, Long> {
     ReturnData saveRechargeResult(Map<String,String> params);
 
     /**
+     * 手工充值
+     * @param params
+     */
+    ReturnData rechargeByHand(Map<String,String> params);
+
+    /**
      * 验证支付密码
      * @param payPassword
      * @param userId
