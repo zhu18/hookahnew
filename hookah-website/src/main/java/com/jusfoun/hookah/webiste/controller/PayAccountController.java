@@ -39,6 +39,7 @@ public class PayAccountController extends BaseController{
     @Resource
     private PayAccountService payAccountService;
 
+    @Resource
     private PayTradeRecordService payTradeRecordService;
 
     @Resource
