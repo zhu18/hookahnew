@@ -151,7 +151,8 @@ class UserVerifyController {
 
     if ($state.$current.name == "user.verify.all") {
       $scope.title = '用户审核';
-      $scope.userTypes = [{id: -1, name: "全部"}, {id: 3, name: "个人认证"}, {id: 5, name: "企业认证"}];
+      // $scope.userTypes = [{id: -1, name: "全部"}, {id: 3, name: "个人认证"}, {id: 5, name: "企业认证"}];
+      $scope.userTypes = [{id: -1, name: "全部"},{id: 5, name: "企业认证"}];
       $scope.userType = -1;
       $scope.search();
     }
@@ -159,7 +160,8 @@ class UserVerifyController {
     if ($state.$current.name == "user.verify.resultAll") {
       $scope.title = '审核记录';
       $scope.searchCheckResult();
-      $scope.userTypes = [{id: -1, name: "全部"}, {id: 0, name: "个人"}, {id: 1, name: "企业"}];
+      // $scope.userTypes = [{id: -1, name: "全部"}, {id: 0, name: "个人"}, {id: 1, name: "企业"}];
+      $scope.userTypes = [{id: -1, name: "全部"}, {id: 1, name: "企业"}];
       $scope.userType = -1;
     }
 
