@@ -13,10 +13,19 @@ function loadPageData(data) {
                 html +='<img class="grid-left" src="'+host.static+'/'+list[i].goodsImg+'" alt="">';
                 html +='<div class="order-list-top-info grid-left">';
                 html +='<h4>'+list[i].goodsName+'</h4>';
-                if(list[i].isDiscussPrice == 1){
-                    html +='<p class="text-align-center color-red">价格面议</span></p>';
+                if(list[i].isDiscussPrice==1){
+                    html +='<p>价格面议</span></p>';
+
                 }else {
-                    html +='<p>价格：<span>￥'+(list[i].goodsPrice / 100 ).toFixed(2)+'</span></p>';
+                    if( parseInt(list[i].shopPrice /100) >10000){
+                        var shopPrice=list[i].shopPrice.toString().slice(0,-6);
+                        html +='<p>价格：<span>￥'+parseInt(shopPrice)+'万</span></p>';
+
+                    }else {
+                        html +='<p>价格：<span>￥'+(list[i].shopPrice / 100 ).toFixed(2)+'</span></p>';
+                    }
+
+
                 }
                 html +='</div></a></div>';
                 html +='<div class="order-list-down">上架时间: <span class="buy-time">' + list[i].onsaleStartDate + '</span></div>';
@@ -32,10 +41,17 @@ function loadPageData(data) {
                 html +='<img class="grid-left" src="'+host.static+'/'+list[i].goodsImg+'" alt="">';
                 html +='<div class="order-list-top-info grid-left">';
                 html +='<h4>'+list[i].goodsName+'</h4>';
-                if(list[i].isDiscussPrice == 1){
-                    html +='<p class="text-align-center color-red">价格面议</span></p>';
+                if(list[i].isDiscussPrice==1){
+                    html +='<p>价格面议</span></p>';
+
                 }else {
-                    html +='<p>价格：<span>￥'+(list[i].goodsPrice / 100 ).toFixed(2)+'</span></p>';
+                    if( parseInt(list[i].goodsPrice /100) >10000){
+                        var goodsPrice=list[i].goodsPrice.toString().slice(0,-6);
+                        html +='<p>价格：<span>￥'+parseInt(goodsPrice)+'万</span></p>';
+
+                    }else {
+                        html +='<p>价格：<span>￥'+(list[i].goodsPrice / 100 ).toFixed(2)+'</span></p>';
+                    }
                 }
                 html +='</div></a></div>';
                 html +='<div class="order-list-down">购买时间: <span class="buy-time">' + list[i].payTime + '</span></div>';
@@ -68,8 +84,20 @@ $(".basic-information-down .header h4").on("click",function () {
     }
 });
 
-
+function splitK(num) {
+    var decimal = String(num).split('.')[1] || '';//小数部分
+    var tempArr = [];
+    var revNumArr = String(num).split('.')[0].split("").reverse();//倒序
+    for (i in revNumArr){
+        tempArr.push(revNumArr[i]);
+        if((i+1)%3 === 0 && i != revNumArr.length-1){
+            tempArr.push(',');
+        }
+    }
+    var zs = tempArr.reverse().join('');//整数部分
+    return decimal?zs+'.'+decimal:zs;
+}
 
 $(".account-balance").html(splitK($(".account-balance").html()));
 $(".available-balance").html(splitK($(".available-balance").html()));
-$(".frozen-balance").html(splitK($(".frozen-balance").html()));
+$(".frozen-balance").html(splitK($(".account-balance").html()));
