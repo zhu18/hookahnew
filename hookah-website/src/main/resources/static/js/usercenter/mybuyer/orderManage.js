@@ -85,8 +85,11 @@ function loadPageData(data) {
         html += '<a href="/exchange/details?id=' + goods[ii].goodsId + '" target="_blank">' + goods[ii].goodsName + '</a>';
         html += '</div>';
         html += '</td>';
-        html += '<td class="text-align-left">x' + goods[ii].goodsNumber +
-          '<br/>' + '规格:' + (goods[ii].goodsPrice / 100).toFixed(2) + '/' + mMat + '<br />'+ goodsTypeInfo+ '<br />'+ isOfflineInfo+'</td>';
+        if(goods[ii].isDiscussPrice == 1){
+            html += '<td class="text-align-left">x' + goods[ii].goodsNumber + '<br/>' + '面议参考价:'+ (goods[ii].goodsPrice / 100).toFixed(2) +'元<br />'+ goodsTypeInfo+ '<br />'+ isOfflineInfo+'</td>';
+        }else {
+            html += '<td class="text-align-left">x' + goods[ii].goodsNumber + '<br/>' + '规格:' + (goods[ii].goodsPrice / 100).toFixed(2) + '/' + mMat + '<br />'+ goodsTypeInfo+ '<br />'+ isOfflineInfo+'</td>';
+        }
         // html += '<td><a href="/exchange/orderEndDetails?id='+goods[ii].goodsId+'&orderSn='+list[i].orderSn+'">下载<br/><span class="fa fa-download font-size-18"></span></a></td>';
         /*
          if (catidS == '104') {
