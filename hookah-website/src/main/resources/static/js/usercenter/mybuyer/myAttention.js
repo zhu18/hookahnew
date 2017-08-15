@@ -28,7 +28,8 @@ function loadPageData(data){
             if(list[i].isDiscussPrice == 1){
                 html += '<div class="goods-name">'+list[i].goodsName+'<div class="goods-price text-align-center color-red font-size-16">价格面议</div></div>';
             }else {
-                html += '<div class="goods-name">'+list[i].goodsName+'<div class="goods-price">价格：<span>￥'+Number(list[i].shopPrice/100)+'/'+mMat+'</span></div></div>';
+                var d=Transformation(list[i].shopPrice,"10000")
+                html += '<div class="goods-name">'+list[i].goodsName+'<div class="goods-price">价格：<span>￥'+d+'/'+mMat+'</span></div></div>';
             }
 
 			// html += '<p class="goods-brief">'+list[i].goodsBrief+'</p>';
