@@ -1304,22 +1304,20 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     @Override
     public Map reCreateToken(MgOrderGoods mgOrderGoods){
         String reCreateTokenUrl = myProps.getApi().get("changeUrl");
-        List<Map> list = new ArrayList();
         OrderInfoVo orderInfoVo = mgOrderInfoService.selectById(mgOrderGoods.getOrderId());
         List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
         Map resultMap = new HashMap();
         for (MgOrderGoods mgOrderGood:goodsList) {
             if (mgOrderGood.getGoodsId().equals(mgOrderGoods.getGoodsId())){
                 Map<String, String> map = new HashMap<>();
-                map.put("userId", mgOrderGood.getUserId());
-                map.put("orderSn", mgOrderGood.getOrderSn());
+                map.put("userId", orderInfoVo.getUserId());
+                map.put("orderSn", orderInfoVo.getOrderSn());
                 map.put("goodsSn", mgOrderGood.getGoodsSn());
-                list.add(map);
                 try {
-                    resultMap = HttpClientUtil.PostMethod(reCreateTokenUrl,JsonUtils.toJson(list));
+                    resultMap = HttpClientUtil.PostMethod(reCreateTokenUrl,map);
                 } catch (IOException e) {
                     e.printStackTrace();
-                    logger.error("重新生成Token错误订单号:"+orderInfoVo.getOrderSn()+"商品编号:"+mgOrderGood.getGoodsSn());
+                    logger.error("重新生成Token错误!订单号:"+orderInfoVo.getOrderSn()+"商品编号:"+mgOrderGood.getGoodsSn());
                 }
             }
         }
