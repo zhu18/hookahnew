@@ -13,7 +13,11 @@ function loadPageData(data) {
                 html +='<img class="grid-left" src="'+host.static+'/'+list[i].goodsImg+'" alt="">';
                 html +='<div class="order-list-top-info grid-left">';
                 html +='<h4>'+list[i].goodsName+'</h4>';
-                html +='<p>价格：<span>￥'+(list[i].shopPrice / 100 ).toFixed(2)+'</span></p>';
+                if(list[i].isDiscussPrice == 1){
+                    html +='<p class="text-align-center color-red">价格面议</span></p>';
+                }else {
+                    html +='<p>价格：<span>￥'+(list[i].goodsPrice / 100 ).toFixed(2)+'</span></p>';
+                }
                 html +='</div></a></div>';
                 html +='<div class="order-list-down">上架时间: <span class="buy-time">' + list[i].onsaleStartDate + '</span></div>';
                 html +='</div>';
@@ -28,7 +32,11 @@ function loadPageData(data) {
                 html +='<img class="grid-left" src="'+host.static+'/'+list[i].goodsImg+'" alt="">';
                 html +='<div class="order-list-top-info grid-left">';
                 html +='<h4>'+list[i].goodsName+'</h4>';
-                html +='<p>价格：<span>￥'+(list[i].goodsPrice / 100 ).toFixed(2)+'</span></p>';
+                if(list[i].isDiscussPrice == 1){
+                    html +='<p class="text-align-center color-red">价格面议</span></p>';
+                }else {
+                    html +='<p>价格：<span>￥'+(list[i].goodsPrice / 100 ).toFixed(2)+'</span></p>';
+                }
                 html +='</div></a></div>';
                 html +='<div class="order-list-down">购买时间: <span class="buy-time">' + list[i].payTime + '</span></div>';
                 html +='</div>';
