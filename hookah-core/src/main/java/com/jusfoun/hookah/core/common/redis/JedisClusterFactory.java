@@ -3,6 +3,7 @@ package com.jusfoun.hookah.core.common.redis;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Value;
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.JedisCluster;
 
@@ -24,18 +25,22 @@ public class JedisClusterFactory implements FactoryBean<JedisCluster>, Initializ
     private int connectionTimeout = 2000;
     private int soTimeout = 3000;
     private int maxRedirections = 5;
-    //redis结点列表 spring注入
-    private Set<String> jedisClusterNodes;
+
+    @Value("${myconf.redis.ipPort}")
+    private String jedisClusterNodes;
 
     @Override
     public void afterPropertiesSet() throws Exception {
         //判断地址是否为空
-        if (jedisClusterNodes == null || jedisClusterNodes.size() == 0) {
+        if (jedisClusterNodes == null || jedisClusterNodes.length() == 0) {
             throw new NullPointerException("jedisClusterNodes is null.");
         }
         //构造结点
         Set<HostAndPort> haps = new HashSet<HostAndPort>();
-        for (String node : jedisClusterNodes) {
+
+        String[] serverPortArray = jedisClusterNodes.split(",");
+
+        for (String node : serverPortArray) {
             String[] arr = node.split(":");
             if (arr.length != 2) {
                 throw new ParseException("node address error!", node.length() - 1);
@@ -104,11 +109,11 @@ public class JedisClusterFactory implements FactoryBean<JedisCluster>, Initializ
         this.maxRedirections = maxRedirections;
     }
 
-    public Set<String> getJedisClusterNodes() {
+    public String getJedisClusterNodes() {
         return jedisClusterNodes;
     }
 
-    public void setJedisClusterNodes(Set<String> jedisClusterNodes) {
+    public void setJedisClusterNodes(String jedisClusterNodes) {
         this.jedisClusterNodes = jedisClusterNodes;
     }
 }

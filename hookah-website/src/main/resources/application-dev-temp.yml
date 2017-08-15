@@ -30,6 +30,10 @@ myconf:
     accessTokenUrl: http://auth.qddata.com.cn/oauth/accessToken
     userInfoUrl: http://auth.qddata.com.cn/userInfo
     redirectUrl: http://auth.qddata.com.cn/login
+  redis:
+    ipPort: 192.168.15.90:7000,192.168.15.90:7001,192.168.15.90:7002
+  consul:
+    ipPort: 127.0.0.1:8500
 debug: true
 spring:
   data:
