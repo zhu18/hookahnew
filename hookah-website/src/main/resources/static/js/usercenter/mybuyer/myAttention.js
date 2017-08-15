@@ -26,7 +26,7 @@ function loadPageData(data){
                  <img src="http://static.qddata.com.cn/'+list[i].goodsImg+'" alt="">\
                 </div>';
             if(list[i].isDiscussPrice == 1){
-                html += '<div class="goods-name">'+list[i].goodsName+'<div class="goods-price">面议参考价：<span>￥'+Number(list[i].shopPrice/100)+'元</span></div></div>';
+                html += '<div class="goods-name">'+list[i].goodsName+'<div class="goods-price text-align-center color-red font-size-16">价格面议</div></div>';
             }else {
                 html += '<div class="goods-name">'+list[i].goodsName+'<div class="goods-price">价格：<span>￥'+Number(list[i].shopPrice/100)+'/'+mMat+'</span></div></div>';
             }
