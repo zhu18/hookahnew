@@ -63,6 +63,7 @@ var htmlPart = {
 							<%}else if(userCur.userType == 7){%>
 							<p class="usertype color-red">单位认证审核失败</p>
 							<%}%>
+							<p class="info">用户编码：<span title="${userCur.userSn}"> ${userCur.userSn}</span></p>
 							<p class="info">用户帐号：<span title="${userCur.userName}"> ${userCur.userName}</span></p>
 							<p class="info">手机号码：<span title="${userCur.mobile}"> ${userCur.mobile}</span></p>
 							<p class="info">电子邮箱：<span title="${userCur.email}"> ${userCur.email}</span></p>
