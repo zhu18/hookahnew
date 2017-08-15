@@ -84,13 +84,13 @@ var htmlPart = {
 						<div>
 							<span>价格：</span>
 							<i class="fa fa-jpy font-size-14 color-orange" aria-hidden="true"></i>
-							<span class="font-size-24 color-orange" class="J_goodsPrice" formatid="<%for(item in goodsDetails.formatList){%><%if(itemLP.first){%>${item.formatId}<%}%><%}%>">${goodsDetails.shopPrice / 100}</span>
+							<span class="font-size-24 color-orange J_goodsPrice" formatid="<%for(item in goodsDetails.formatList){%><%if(itemLP.first){%>${item.formatId}<%}%><%}%>">${goodsDetails.shopPrice / 100}</span>
 							<!--<span class="convert color-orange" id="J_goodsNumber">折合0.0001元/次</span>-->
 						</div>
 						<%}else{%>
 						<div>
 							<span>价格：</span>
-							<span class="font-size-24 color-orange" class="J_goodsPrice" formatid="<%for(item in goodsDetails.formatList){%><%if(itemLP.first){%>${item.formatId}<%}%><%}%>">面议<span style="font-size:12px;">(参考价格${goodsDetails.shopPrice / 100}元)</span></span>
+							<span class="font-size-24 color-orange J_goodsPrice" formatid="<%for(item in goodsDetails.formatList){%><%if(itemLP.first){%>${item.formatId}<%}%><%}%>">面议<span style="font-size:12px;">(参考价格${goodsDetails.shopPrice / 100}元)</span></span>
 							<!--<span class="convert color-orange" id="J_goodsNumber">折合0.0001元/次</span>-->
 						</div>
 						<%}%>
@@ -136,7 +136,7 @@ var htmlPart = {
 							<button class="vertical-align-middle btn btn-full-orange margin-left-10 padding-5 padding-left-20 padding-right-20" onclick="return check()" style="cursor: pointer">
 								立即购买
 							</button>
-							<a id="J_addCart" href="javascript:addCart('${goodsDetails.goodsId}');" class="vertical-align-middle btn btn-full-blue margin-left-10">加入购物车</a>
+							<a id="J_addCart" href="javascript:addCart('${goodsDetails.goodsId}','${goodsDetails.isDiscussPrice}');" class="vertical-align-middle btn btn-full-blue margin-left-10">加入购物车</a>
 						</form>
 					</div>
 				</div>

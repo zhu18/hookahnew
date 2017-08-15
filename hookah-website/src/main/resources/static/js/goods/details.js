@@ -188,43 +188,46 @@ function renderDetails() {
     });
 }
 // 加入购物车
-function addCart(goodsId) {
+function addCart(goodsId,isDiscussPrice) {
+
     var formatname = null;
     $('.money-standard a').each(function(){
         if($(this).hasClass('active')){
 			formatname = $(this).html();
         }
     });
-    if(formatname){
-		$.ajax({
-			url: '/cart/add',
-			type: 'post',
-			data: {
-				goodsId: goodsId,
-				formatId: $('.J_goodsPrice').attr('formatid'),
-				goodsNumber: $('#J_buyNumber').val()
-			},
-			success: function (data) {
-				// return JSON.stringify(data);
-				if (data.code == "1") {
-					window.location.href = "/exchange/addToCart?goodsId=" + goodsId + "&number=" + $('#J_buyNumber').val() + '&fmt=' +formatname+'&gm='+$('.J_goodsPrice').html();
-				} else {
-					console.log(data);
-					$.alert(data.message);
-				}
-			},
-			error:function(e){
-				if(e.status == 401){
-					window.location.href = host.loginUrl
-                        + encodeURIComponent(host.website + '/cart/addToCartByGet?goodsId=' + goodsId
-                            + '&goodsNumber=' + $('#J_buyNumber').val() + '&formatId=' + $('.J_goodsPrice').attr('formatid')
-                            + "&number=" + $('#J_buyNumber').val() + '&fmt=' + formatname + '&gm=' + $('.J_goodsPrice').html());
-				}
+	if(isDiscussPrice == 0){
+		if(!formatname){
+			return $.alert('数据有误');
+		}
+	}
+
+	$.ajax({
+		url: '/cart/add',
+		type: 'post',
+		data: {
+			goodsId: goodsId,
+			formatId: $('.J_goodsPrice').attr('formatid'),
+			goodsNumber: $('#J_buyNumber').val()
+		},
+		success: function (data) {
+			// return JSON.stringify(data);
+			if (data.code == "1") {
+				window.location.href = "/exchange/addToCart?goodsId=" + goodsId + "&number=" + $('#J_buyNumber').val() + '&fmt=' +formatname+'&gm='+$('.J_goodsPrice').html();
+			} else {
+				console.log(data);
+				$.alert(data.message);
 			}
-		});
-    }else{
-        $.alert('数据有误');
-    }
+		},
+		error:function(e){
+			if(e.status == 401){
+				window.location.href = host.loginUrl
+					+ encodeURIComponent(host.website + '/cart/addToCartByGet?goodsId=' + goodsId
+						+ '&goodsNumber=' + $('#J_buyNumber').val() + '&formatId=' + $('.J_goodsPrice').attr('formatid')
+						+ "&number=" + $('#J_buyNumber').val() + '&fmt=' + formatname + '&gm=' + $('.J_goodsPrice').html());
+			}
+		}
+	});
 }
 function editPrice(that,price,formatId){
     $(that).addClass('active').siblings('a').removeClass('active');
