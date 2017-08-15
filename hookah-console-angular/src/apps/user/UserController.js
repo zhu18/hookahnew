@@ -21,10 +21,10 @@ class UserController {
     };
     //  用户信息详情
     $scope.detail = function (id) {
-        $state.go('user.detail', {id:id});
+      $state.go('user.detail', {id: id});
     };
-    $scope.goRecharge = function ($event,item) {
-        $state.go('user.recharge', {item:item});
+    $scope.goRecharge = function ($event, item) {
+      $state.go('user.recharge', {item: item});
     };
     $scope.save = function () {
       var promise = $http({
@@ -36,11 +36,10 @@ class UserController {
         $rootScope.loadingState = false;
         growl.addSuccessMessage("数据加载完毕。。。");
       });
-
     };
     $scope.refresh = function () {
       $scope.search();
-    }
+    };
 
     $scope.back = function () {
       history.back();
@@ -49,11 +48,13 @@ class UserController {
       $scope.search();
     };
     $scope.search();
-
     if ($state.$current.name == "user.search") {
       $scope.title = '用户查询';
-      $scope.userTypes = [{id: -1, name: "全部"}, {id: 1, name: "未认证"}, {id: 2, name: "个人"}, {id: 3, name: "个人待审核"},
-        {id: 4, name: "企业"}, {id: 5, name: "企业待审核"}, {id: 6, name: "个人审核失败"}, {id: 7, name: "企业审核失败"}];
+      $scope.userTypes = [
+        // {id: -1, name: "全部"}, {id: 1, name: "未认证"}, {id: 2, name: "个人"}, {id: 3, name: "个人待审核"},
+        {id: -1, name: "全部"}, {id: 1, name: "未认证"},
+        // {id: 4, name: "企业"}, {id: 5, name: "企业待审核"}, {id: 6, name: "个人审核失败"}, {id: 7, name: "企业审核失败"}];
+        {id: 4, name: "企业"}, {id: 5, name: "企业待审核"},  {id: 7, name: "企业审核失败"}];
       $scope.userType = -1;
       $scope.search();
     }
