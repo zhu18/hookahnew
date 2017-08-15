@@ -20,20 +20,20 @@ class CommentController {
         console.log(res);
 
         if (res.data.code == '1') {
-            $scope.supplierList = res.data.data.list;
-            // $rootScope.pagination = res.data.data;
-            $scope.showNoneDataInfoTip = false;
-          if(res.data.data.list.length>0){
-              if (res.data.data.totalPage > 1) {
-                  $scope.showPageHelpInfo = true;
-              } else {
+          $scope.supplierList = res.data.data.list;
+          // $rootScope.pagination = res.data.data;
+          $scope.showNoneDataInfoTip = false;
+          if (res.data.data.list.length > 0) {
+            if (res.data.data.totalPage > 1) {
+              $scope.showPageHelpInfo = true;
+            } else {
 
-                  $scope.showPageHelpInfo = false;
+              $scope.showPageHelpInfo = false;
 
-              }
-          }else {
-              $rootScope.loadingState = false;
-              $scope.showNoneDataInfoTip = true;
+            }
+          } else {
+            $rootScope.loadingState = false;
+            $scope.showNoneDataInfoTip = true;
           }
 
 
@@ -53,65 +53,62 @@ class CommentController {
       $scope.search();
     };
     $scope.pageChanged = function () {
-        $scope.search();
+      $scope.search();
     };
     $scope.remark = function (item) {
-        var modalInstance=null;
+      console.log(item.id);
+      console.log(item.checkStatus);
+      var promise = null;
+      if (item.checkStatus == "0") {
+        var modalInstance = null;
         modalInstance = $rootScope.openConfirmDialogModalSupplier();
-        console.log(item.id);
-        console.log(item.checkStatus);
-        var promise = null;
-        if(item.checkStatus=="0"){
-            modalInstance.result.then(function () { //模态点提交
-                var promise = null;
-                promise = $http({
-                    method: 'POST',
-                    url: $rootScope.site.apiServer + "/api/supplier/updateInfo",
-                    params: {
-                        id:item.id,
-                        checkContent:$('#checkContent').val(),
-                        checkStatus:$('input:radio[name="tRadio"]:checked').val()
-                    }
-                });
-                promise.then(function (res, status, config, headers) {
-                    $rootScope.loadingState = false;
-                    if (res.data.code == 1) {
-                        growl.addSuccessMessage("保存成功。。。");
-                        $scope.search();
-                    } else {
-                        growl.addErrorMessage("保存失败。。。");
-                    }
+        modalInstance.result.then(function () { //模态点提交
+          var promise = null;
+          promise = $http({
+            method: 'POST',
+            url: $rootScope.site.apiServer + "/api/supplier/updateInfo",
+            params: {
+              id: item.id,
+              checkContent: $('#checkContent').val(),
+              checkStatus: $('input:radio[name="tRadio"]:checked').val()
+            }
+          });
+          promise.then(function (res, status, config, headers) {
+            $rootScope.loadingState = false;
+            if (res.data.code == 1) {
+              growl.addSuccessMessage("保存成功。。。");
+              $scope.search();
+            } else {
+              growl.addErrorMessage("保存失败。。。");
+            }
 
-                });
-            }, function () {});
-        }else {
-            promise = $http({
-                method: 'get',
-                url: $rootScope.site.apiServer + "/api/supplier/viewResult",
-                params: {
-                    id:item.id
-                }
-            });
-            promise.then(function (res, status, config, headers) {
-                $rootScope.loadingState = false;
-                if (res.data.code == 1) {
-                    $('#checkContent').val(res.data.data.checkContent);
-                    $('input:radio[name="tRadio"]').each(function () {
-                        if($(this).val()==res.data.data.checkStatus){
-                            $(this).attr("checked","checked")
-                        }
-                    });
-                    $("#Submit").attr("disabled","true");
-                } else {
-                }
+          });
+        }, function () {
+        });
+      } else {
+        promise = $http({
+          method: 'get',
+          url: $rootScope.site.apiServer + "/api/supplier/viewResult",
+          params: {
+            id: item.id
+          }
+        });
+        promise.then(function (res, status, config, headers) {
+          $rootScope.loadingState = false;
+          var tempVal = '审核意见：' + res.data.data.checkContent + '<br><br>审核结果：';
 
-            });
-        }
-
-
-
-
-      };
+          if (res.data.code == 1) {
+            if (res.data.data.checkStatus == 1) {
+              tempVal += '审核通过';
+            } else if (res.data.data.checkStatus == 2) {
+              tempVal += '审核不通过';
+            }
+            $rootScope.openJustShowDialogModal(tempVal);
+          } else {
+          }
+        });
+      }
+    };
     // 处理日期插件的获取日期的格式
     var format = function (time, format) {
       var t = new Date(time);
