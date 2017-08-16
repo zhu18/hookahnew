@@ -481,7 +481,7 @@ function tablePlus(that) {
 	priceHtml += '<td class="price-input price-input1"><div class="inputbox"><input type="text" class="price-inputs number" datatype="settlementPrice" placeholder="请输入结算价" isPricceData="true"></div></td>';
 	priceHtml += '<td class="price-input price-input2"><div class="inputbox"><input type="text" class="price-inputs number" datatype="agencyPrice" placeholder="请输入代理价" isPricceData="true"></div></td>';
 	priceHtml += '<td class="price-input price-input3"><div class="inputbox"><input type="text" class="price-inputs number" datatype="price" placeholder="请输入零售价" isPricceData="true"></div></td>';
-	priceHtml += '<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
+	priceHtml += '<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span><span class="table-plus-btn" onclick="tableDelete(this)">-</span></td>';
 	priceHtml += '</tr>';
 	var requestHtml = '';//请求接口
 	requestHtml += '<tr class="parent-tr">';
@@ -523,14 +523,23 @@ function tablePlus(that) {
 		}
 	}
 	function addItem(that) {
-		$(that).text('-').attr('onclick', 'tableDelete(this)');
+		if($(that).parents('.table-plus').attr('d-type') == 'priceHtml'){
+			if($(that).parent().parent().index() == 0){
+				$(that).text('-').attr('onclick', 'tableDelete(this)');
+			}else{
+				$(that).remove()
+			}
+		}else{
+			$(that).text('-').attr('onclick', 'tableDelete(this)');
+		}
+
 	}
 	floorPrice();
 	renderLastFormatFn(goodsTypeId)
 }
 function renderLastFormatFn(goodsTypeId){
 	if(goodsTypeId == 0 || goodsTypeId == 2 || goodsTypeId == 4 || goodsTypeId == 6){
-		$('table[d-type="priceHtml"] tbody tr:last select[name="format"] option').each(function(){
+		$('.isNotDiscuss table[d-type="priceHtml"] tbody tr:last select[name="format"] option').each(function(){
 			if($(this).val() == 3){
 				$(this).attr('selected','selected')
 			}else{
@@ -543,7 +552,7 @@ function renderLastFormatFn(goodsTypeId){
 			}
 		})
 	}else if(goodsTypeId == 1){
-		$('table[d-type="priceHtml"] tbody tr:last select[name="format"] option').each(function() {
+		$('.isNotDiscuss table[d-type="priceHtml"] tbody tr:last select[name="format"] option').each(function() {
 			if ($(this).val() == 3) {
 				$(this).attr('disabled', 'disabled')
 			}else{
@@ -556,7 +565,7 @@ function renderLastFormatFn(goodsTypeId){
 			}
 		})
 	}else if(goodsTypeId == 5 || goodsTypeId == 7){
-		$('table[d-type="priceHtml"] tbody tr:last select[name="format"] option').each(function() {
+		$('.isNotDiscuss table[d-type="priceHtml"] tbody tr:last select[name="format"] option').each(function() {
 			if ($(this).val() == 0 || $(this).val() == 3) {
 				$(this).attr('disabled', 'disabled');
 			}else{
@@ -580,11 +589,21 @@ function floorPrice(){ //监控价格输入为“.”时转换为“0.”
 	});
 }
 function tableDelete(that) { //删除规格及价格
+	var len = null;
+	if($(that).parents('.table-plus').attr('d-type') == 'priceHtml'){
+		if($(that).parent().parent().parent('tbody').children('.parent-tr').length == 2){
+			$('.isNotDiscuss table[d-type="priceHtml"] tbody >:first').find('.table-plus-btn').text('+').attr('onclick', 'tablePlus(this)');
+		}
+		len = $(that).parent().parent().parent('tbody').children('.parent-tr').length;
+		if(len >= 3){
+			$(that).parent().parent().parent('tbody').children('.parent-tr').eq(len-2).find('.table-plus-btn').before('<span class="table-plus-btn" onclick="tablePlus(this)">+</span>');
+		}
+	}
 	$(that).parents('.parent-tr').remove();
 	getPriceBox()
 }
 function getPriceBox(){
-	var priceBox = $('table[d-type="priceHtml"] tbody >:first');
+	var priceBox = $('.isNotDiscuss table[d-type="priceHtml"] tbody >:first');
 	priceBox.find('input[datatype="name"]').attr('name','priceBoxName');
 	priceBox.find('input[datatype="number"]').attr('name','priceBoxNumber');
 	priceBox.find('input[datatype="price"]').attr('name','priceBoxPrice');
