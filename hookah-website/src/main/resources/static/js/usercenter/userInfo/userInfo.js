@@ -88,4 +88,4 @@ function splitK(num) {
 
 $(".account-balance").html(splitK($(".account-balance").html()));
 $(".available-balance").html(splitK($(".available-balance").html()));
-$(".frozen-balance").html(splitK($(".account-balance").html()));
+$(".frozen-balance").html(splitK($(".frozen-balance").html()));
