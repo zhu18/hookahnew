@@ -734,7 +734,7 @@ function submitGoodsPublish(){
 	}else{
 		data.isDiscussPrice = 0;
 		data.formatList = [];
-		$('table[d-type="priceHtml"] tbody tr').each(function () {
+		$('.isNotDiscuss table[d-type="priceHtml"] tbody tr').each(function () {
 			var listData = {};
 			listData.formatId = $(this).index();
 			listData.formatName = $(this).find('input[datatype="name"]').val();
