@@ -1,66 +1,99 @@
 server:
-  port: 9000
-  http:
-    protocal: http://
+  port: 9898
   session:
     cookie:
       domain: qddata.com.cn
       name: hookah_sid
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.15.90:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
+    username: root
+    password: jusfoun2017
+    initialize: true
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 连接池配置
+    # 初始化大小，最小，最大
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    # 配置获取连接等待超时的时间
+    maxWait: 60000
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 60000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    # 打开PSCache，并且指定每个连接上PSCache的大小
+    poolPreparedStatements: false
+    maxPoolPreparedStatementPerConnectionSize: 20
+    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall,slf4j
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  data:
+    mongodb:
+      uri:  mongodb://192.168.15.90:27017/hookah_pay
+  rabbitmq:
+    addresses: 192.168.15.90:5672
+    username: root
+    password: password
+    publisher-confirms: true
+    virtual-host: /
+    listener:
+        retry:
+          enabled: true
+          max-attempts: 2
+  mail:
+      host: smtp.qiye.163.com
+      port: 25
+      username: gbd@jusfoun.com
+      password: 1QAZ2wsx
+      properties:
+        mail:
+          smtp:
+            auth: true
+            starttls:
+              enable: true
+            socketFactory:
+              fallback: false
+#  jpa:
+#    database: MYSQL
+#    show-sql: true
+##    hibernate:
+##      ddl-auto: create-drop
+#    properties:
+#      hibernate:
+#        dialect : org.hibernate.dialect.MySQL5Dialect
+  mvc:
+    static-path-pattern: /static/**
 myconf:
   beetl:
     templatesPath: views/
     contentType: text/html;charset:UTF-8
-    prefix: /
+    prefix:
     suffix: .html
     cache: false
-
   host:
     domain: qddata.com.cn
     website: ${server.http.protocal}trade.qddata.com.cn
     static: ${server.http.protocal}static.qddata.com.cn
     auth: ${server.http.protocal}auth.qddata.com.cn
     console: ${server.http.protocal}console.qddata.com.cn
-    admin: ${server.http.protocal}admin.qddata.com.cn
   oauth2:
-    clientId: website
+    clientId: admin
     clientSecret: Yqn2ht4DYkMHlDvTY7CV
     regUrl: http://auth.qddata.com.cn/reg
-    loginUrl: http://auth.qddata.com.cn/oauth/authorize?client_id=website&response_type=code&redirect_uri=
+    loginUrl: http://auth.qddata.com.cn/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://admin.qddata.com.cn/home
     logoutUrl: http://auth.qddata.com.cn/logout?redirect_uri=http://trade.qddata.com.cn/login
     accessTokenUrl: http://auth.qddata.com.cn/oauth/accessToken
     userInfoUrl: http://auth.qddata.com.cn/userInfo
     redirectUrl: http://auth.qddata.com.cn/login
-  redis:
+   redis:
     ipPort: 192.168.15.90:7000,192.168.15.90:7001,192.168.15.90:7002
-  consul:
+   consul:
     ipPort: 192.168.15.90:8500
 debug: true
-spring:
-  data:
-    mongodb:
-      uri:  mongodb://192.168.15.90:27017/hookah
-  mvc:
-      static-path-pattern: /static/**
-  rabbitmq:
-      addresses: 192.168.200.116:5672
-      username: root
-      password: password
-      publisher-confirms: true
-      virtual-host: /
-      listener:
-        retry:
-          enabled: true
-          max-attempts: 2
-redis:
-  ip: 192.168.15.90
-  port: 6379
-  password: Yqn2ht4DYkMHlDvTY7CV
-  pool:
-    #最大分配的对象数
-    maxTotal: 1024
-    #最大能够保持idel状态的对象数
-    maxIdle: 200
-    #当调用borrow Object方法时，是否进行有效性检查
-    testOnBorrow: false
-
-

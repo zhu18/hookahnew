@@ -8,12 +8,12 @@ server:
       name: hookah_sid
 spring:
   datasource:
-    url: jdbc:log4jdbc:mysql://192.168.15.90:3306/hookah?characterEncoding=utf8&useSSL=false&autoReconnect=true&failOverReadOnly=false&autoReconnectForPools=true
+    url: jdbc:log4jdbc:mysql://172.16.201.43:3306/hookah?characterEncoding=utf8&useSSL=false&autoReconnect=true&failOverReadOnly=false&autoReconnectForPools=true
     driverClassName: net.sf.log4jdbc.DriverSpy
     #driverClassName: com.mysql.jdbc.Driver
     #url: jdbc:mysql://192.168.15.90:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
     username: root
-    password: password
+    password: jusfoun2017
     initialize: true
     type: com.alibaba.druid.pool.DruidDataSource
     # 连接池配置
@@ -40,28 +40,25 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
   data:
     mongodb:
-      uri:  mongodb://192.168.15.90:27017/hookah
+      uri:  mongodb://172.16.201.42:27017/hookah
   rabbitmq:
-    addresses: 192.168.200.116:5672
+    addresses: 172.16.201.41:5672
     username: root
     password: password
     publisher-confirms: true
     virtual-host: /
-    listener:
-      retry:
-        enabled: true
-        max-attempts: 2
   mail:
-    host: smtp.qiye.163.com
-    port: 25
-    username: gbd@jusfoun.com
-    password: 1QAZ2wsx
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
+      host: smtp.qddata.com.cn
+      username: service@qddata.com.cn
+      password: Bigdata8661101
+      transport:
+        protocol: smtp
+      properties:
+        mail:
+          smtp:
+            auth: true
+            starttls:
+              enable: true
             socketFactory:
               fallback: false
 #  jpa:
@@ -74,17 +71,6 @@ spring:
 #        dialect : org.hibernate.dialect.MySQL5Dialect
   mvc:
     static-path-pattern: /static/**
-redis:
-  ip: 192.168.15.90
-  port: 6379
-  password: Yqn2ht4DYkMHlDvTY7CV
-  pool:
-    #最大分配的对象数
-    maxTotal: 1024
-    #最大能够保持idel状态的对象数
-    maxIdle: 200
-    #当调用borrow Object方法时，是否进行有效性检查
-    testOnBorrow: false
 myconf:
   beetl:
     templatesPath: views/
