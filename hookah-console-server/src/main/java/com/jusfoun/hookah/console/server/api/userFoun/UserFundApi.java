@@ -65,7 +65,7 @@ public class UserFundApi extends BaseController{
             }
 
             //只查询的费用科目 充值  提现  销售（货款）收入 销售（货款）支出  冲账 退款 其他
-            filters.add(Condition.in("tradeType", new Integer[]{1, 2, 3001, 4001, 8}));
+            filters.add(Condition.in("tradeType", new Integer[]{1, 2, 5, 3001, 4001, 8}));
             //费用科目
             if (tradeType != null) {
                 filters.add(Condition.eq("tradeType", tradeType));
