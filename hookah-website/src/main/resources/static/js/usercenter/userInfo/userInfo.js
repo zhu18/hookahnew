@@ -17,15 +17,8 @@ function loadPageData(data) {
                     html +='<p>价格面议</span></p>';
 
                 }else {
-                    if( parseInt(list[i].shopPrice /100) >10000){
-                        var shopPrice=list[i].shopPrice.toString().slice(0,-6);
-                        html +='<p>价格：<span>￥'+parseInt(shopPrice)+'万</span></p>';
-
-                    }else {
-                        html +='<p>价格：<span>￥'+(list[i].shopPrice / 100 ).toFixed(2)+'</span></p>';
-                    }
-
-
+                    var d=Transformation(list[i].shopPrice,"10000")
+                    html +='<p>价格：<span>￥'+d+'</span></p>';
                 }
                 html +='</div></a></div>';
                 html +='<div class="order-list-down">上架时间: <span class="buy-time">' + list[i].onsaleStartDate + '</span></div>';
@@ -45,13 +38,8 @@ function loadPageData(data) {
                     html +='<p>价格面议</span></p>';
 
                 }else {
-                    if( parseInt(list[i].goodsPrice /100) >10000){
-                        var goodsPrice=list[i].goodsPrice.toString().slice(0,-6);
-                        html +='<p>价格：<span>￥'+parseInt(goodsPrice)+'万</span></p>';
-
-                    }else {
-                        html +='<p>价格：<span>￥'+(list[i].goodsPrice / 100 ).toFixed(2)+'</span></p>';
-                    }
+                    var d=Transformation(list[i].goodsPrice,"10000")
+                    html +='<p>价格：<span>￥'+d+'</span></p>';
                 }
                 html +='</div></a></div>';
                 html +='<div class="order-list-down">购买时间: <span class="buy-time">' + list[i].payTime + '</span></div>';

@@ -277,3 +277,12 @@ function splitK(num) {
     var zs = tempArr.reverse().join('');//整数部分
     return decimal?zs+'.'+decimal:zs;
 }
+
+function Transformation(price,quotaPrice) {
+    if( (parseInt(price) /100) >parseInt(quotaPrice)){
+        var price=price.toString().slice(0,-6);
+        return parseInt(price)+'万';
+    }else {
+        return (price / 100 ).toFixed(2);
+    }
+}

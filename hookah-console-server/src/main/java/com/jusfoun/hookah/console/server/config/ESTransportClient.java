@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.net.InetAddress;
@@ -24,6 +25,9 @@ public class ESTransportClient implements FactoryBean<TransportClient>, Initiali
     private Properties properties;
     static final String COLON = ":";
     static final String COMMA = ",";
+
+    @Value("${myconf.es.ipPort}")
+    private String esIpPort;
 
     @Override
     public void destroy() throws Exception {
@@ -59,7 +63,7 @@ public class ESTransportClient implements FactoryBean<TransportClient>, Initiali
 
     protected void buildClient() throws Exception {
         client = new PreBuiltTransportClient(settings());
-        for (String clusterNode : split(PropertiesManager.getInstance().getProperty("es.ip"), COMMA)) {
+        for (String clusterNode : split(esIpPort, COMMA)) {
             String hostName = substringBeforeLast(clusterNode, COLON);
             String port = substringAfterLast(clusterNode, COLON);
             client.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(hostName), Integer.valueOf(port)));

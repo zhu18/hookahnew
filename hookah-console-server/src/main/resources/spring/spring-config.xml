@@ -85,13 +85,13 @@
     <property name="soTimeout" value="3000"/>
     <property name="maxRedirections" value="5"/>
     <property name="genericObjectPoolConfig" ref="genericObjectPoolConfig"/>
-    <property name="jedisClusterNodes">
-      <set>
-        <value>192.168.15.90:7000</value>
-        <value>192.168.15.90:7001</value>
-        <value>192.168.15.90:7002</value>
-      </set>
-    </property>
+    <!--<property name="jedisClusterNodes">-->
+      <!--<set>-->
+        <!--<value>192.168.15.90:7000</value>-->
+        <!--<value>192.168.15.90:7001</value>-->
+        <!--<value>192.168.15.90:7002</value>-->
+      <!--</set>-->
+    <!--</property>-->
   </bean>
   <!-- 真正的redis操作类，具体连接方式由jedisClient的ref属性决定
          可选项为jedisClusterClient、jedisClient
