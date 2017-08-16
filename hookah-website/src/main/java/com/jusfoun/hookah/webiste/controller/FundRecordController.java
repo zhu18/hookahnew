@@ -50,11 +50,12 @@ public class FundRecordController extends BaseController {
             }
             if (tradeType != null) {
                 listFilters.add(Condition.eq("tradeType", tradeType));
+            }else{
+                listFilters.add(Condition.in("tradeType", new Integer[]{1, 2, 8, 3001, 4001, 5}));
             }
             if (tradeStatus != null) {
                 listFilters.add(Condition.eq("tradeStatus", tradeStatus));
             }
-
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.eq("userId", userId));
             PayAccount payAccount = payAccountService.selectOne(filters);

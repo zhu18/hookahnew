@@ -136,11 +136,12 @@ public class PlatformFundsApi extends BaseController{
                 filters.add(Condition.le("addTime", DateUtils.getDate(endDate, DateUtils.DEFAULT_DATE_TIME_FORMAT)));
             }
 
-            //只查询的费用科目 冻结划入  释放划出  手续费收入 退款 提现
-            filters.add(Condition.in("tradeType", new Integer[]{6003, 6004, 3007, 8, 2, 5}));
             //费用科目
             if (tradeType != null) {
                 filters.add(Condition.eq("tradeType", tradeType));
+            }else {
+                //只查询的费用科目 冻结划入  释放划出  手续费收入 退款 提现
+                filters.add(Condition.in("tradeType", new Integer[]{6003, 6004, 3007, 8, 2, 5}));
             }
             //状态
             if (tradeStatus != null) {
@@ -173,10 +174,12 @@ public class PlatformFundsApi extends BaseController{
             List<OrderBy> orderBys = new ArrayList();
             orderBys.add(OrderBy.desc("addTime"));
             List<Condition> filters = new ArrayList();
-            //只查询的费用科目
-            filters.add(Condition.in("tradeType", new Integer[]{1, 2, 5, 6003, 6004, 3007, 3001, 4001, 8}));
+
             if (tradeType != null) {
                 filters.add(Condition.eq("tradeType", tradeType));
+            }else {
+                //只查询的费用科目
+                filters.add(Condition.in("tradeType", new Integer[]{1, 2, 5, 6003, 6004, 3007, 3001, 4001, 8}));
             }
             if (tradeStatus != null) {
                 filters.add(Condition.eq("tradeStatus", tradeStatus));
