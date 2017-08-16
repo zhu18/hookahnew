@@ -13,7 +13,6 @@ myconf:
     prefix: /
     suffix: .html
     cache: false
-
   host:
     domain: qddata.com.cn
     website: ${server.http.protocal}trade.qddata.com.cn
