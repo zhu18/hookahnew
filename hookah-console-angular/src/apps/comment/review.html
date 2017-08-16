@@ -3,9 +3,6 @@
         width: 110px;
     }
 
-    .form-inline label {
-        margin-top: 5px;
-    }
 </style>
 <div class="row">
     <div class="col-sm-12">
@@ -92,8 +89,7 @@
                     </button>
                 </div>
                 <div data-ng-show="status== null||status==0 && commentList.length>0" >
-                    <label class="btn btn-default"><input type="checkbox" ng-model="master"
-                                                          ng-click="all(master)">全选</label>
+                    <label class="checkbox-inline"><input type="checkbox" ng-model="master" ng-click="all(master)">全选</label>&nbsp;&nbsp;&nbsp;
                     <button class="btn btn-default" ng-click="MultipleCheck(1)">批量通过</button>
                     <button class="btn btn-default" ng-click="MultipleCheck(2)">批量不通过</button>
 
