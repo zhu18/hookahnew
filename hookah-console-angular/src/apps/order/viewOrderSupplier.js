@@ -50,37 +50,37 @@ class viewOrderSupplier {
                                 tempUrl = res.data.data.data.onlineUrl;
                             }
                             var pruDom = "<h4>商品交付信息：</h4>" +
-                                "<h5>离线数据包下载地址：<a target='_blank' style='text-decoration: underline;color:blue; ' href='" + tempUrl + "'>下载</a></h5>" +
-                                "<h5>数据包解压密码：<span>" + res.data.data.data.dataPwd + "</span></h5>"; //离线数据包
+                                "<table><tr><th class='text-right'><h5>离线数据包下载地址：</h5></th><td><a target='_blank' style='text-decoration: underline;color:blue; ' href='" + tempUrl + "'>下载</a></td></tr>" +
+                                "<tr><th class='text-right'><h5>数据包解压密码：</h5></th><td><span>" + res.data.data.data.dataPwd + "</span></td></tr></table>"; //离线数据包
                             modalInstance = $rootScope.openConfirmDialogModal(pruDom);
                         } else if (goodsType == 1) { //API
                             return false;
                         } else if (goodsType == 2) { //模型
                             var modalDom = "<h4>模型压缩包下载地址：</h4>" +
-                                    "<h5>联系人姓名：<input type='text' id='J_val01' value='" + res.data.data.data.concatInfo.concatName + "'></h5>" +
-                                    "<h5>联系人电话：<input type='text' id='J_val02' value='" + res.data.data.data.concatInfo.concatPhone + "'></h5>" +
-                                    "<h5>联系人邮箱：<input type='text' id='J_val03' value='" + res.data.data.data.concatInfo.concatEmail + "'></h5>" +
-                                    "<h5>模型文件：<a target='_blank' href='" + res.data.data.data.modelFile.fileAddress + "'>下载</a></h5>" +
-                                    "<h5>模型文件密码：<span>" + res.data.data.data.modelFile.filePwd + "</span></h5>" +
-                                    "<h5>配置文件：<a target='_blank' href='" + res.data.data.data.configFile.fileAddress + "'>下载</a></h5>" +
-                                    "<h5>配置文件密码：<span>" + res.data.data.data.configFile.filePwd + "</span></h5>" +
-                                    "<h5>配置参数：<a target='_blank' href='" + res.data.data.data.paramFile.fileAddress + "'>下载</a></h5>" +
-                                    "<h5>配置参数密码：<span>" + res.data.data.data.paramFile.filePwd + "</span></h5>"
+                                    "<table><tr><th class='text-right'><h5>联系人姓名：</h5></th><td><input type='text' id='J_val01' value='" + res.data.data.data.concatInfo.concatName + "'></td></tr>" +
+                                    "<tr><th class='text-right'><h5>联系人电话：</h5></th><td><input type='text' id='J_val02' value='" + res.data.data.data.concatInfo.concatPhone + "'></td></tr>" +
+                                    "<tr><th class='text-right'><h5>联系人邮箱：</h5></th><td><input type='text' id='J_val03' value='" + res.data.data.data.concatInfo.concatEmail + "'></td></tr>" +
+                                    "<tr><th class='text-right'><h5>模型文件：</h5></th><td><a target='_blank' href='" + res.data.data.data.modelFile.fileAddress + "'>下载</a></td></tr>" +
+                                    "<tr><th class='text-right'><h5>模型文件密码：</h5></th><td><span>" + res.data.data.data.modelFile.filePwd + "</span></td></tr>" +
+                                    "<tr><th class='text-right'><h5>配置文件：</h5></th><td><a target='_blank' href='" + res.data.data.data.configFile.fileAddress + "'>下载</a></td></tr>" +
+                                    "<tr><th class='text-right'><h5>配置文件密码：</h5></th><td><span>" + res.data.data.data.configFile.filePwd + "</span></td></tr>" +
+                                    "<tr><th class='text-right'><h5>配置参数：</h5></th><td><a target='_blank' href='" + res.data.data.data.paramFile.fileAddress + "'>下载</a></td></tr>" +
+                                    "<tr><th class='text-right'><h5>配置参数密码：</h5></th><td><span>" + res.data.data.data.paramFile.filePwd + "</span></td></tr></table>"
                                 ;
                             modalInstance = $rootScope.openConfirmDialogModal(modalDom);
 
                         } else if (goodsType == 4 || goodsType == 6) { //独立软件 手动填写数据
                             var proSoftDom = "<h4>商品交付信息：</h4>" +
-                                "<h5>安装包下载地址：<span>" + res.data.data.url.dataAddress + "</span></h5>" +
-                                "<h5>序列号：<input type='text' id='J_val01' value='" + res.data.data.payInfoSerialNumber + "'></h5>" +
-                                "<h5>许可文件获取地址：<input type='text' id='J_val02' value='" + res.data.data.payInfoFileUrl + "'></h5>";
+                                "<table><tr><th class='text-right'><h5>安装包下载地址：</h5></th><td><span>" + res.data.data.url.dataAddress + "</span></td></tr>" +
+                                "<tr><th class='text-right'><h5>序列号：</h5></th><td><input type='text' id='J_val01' value='" + res.data.data.payInfoSerialNumber + "'></td></tr>" +
+                                "<tr><th class='text-right'><h5>许可文件获取地址：</h5></th><td><input type='text' id='J_val02' value='" + res.data.data.payInfoFileUrl + "'></td></tr></table>";
                             modalInstance = $rootScope.openConfirmDialogModal(proSoftDom);
 
                         } else if (goodsType == 5 || goodsType == 7) { //SaaS  手动填写数据
                             var sassDom = "<h4>商品交付信息：</h4>" +
-                                "<h5>在线访问地址：<span>" + res.data.data.url.dataAddress + "</span></h5>" +
-                                "<h5>用户名：<input type='text' id='J_val01' value='" + res.data.data.payInfoUserName + "'></h5>" +
-                                "<h5>密码：<input type='text' id='J_val02' value='" + res.data.data.payInfoPassword + "'></h5>";//sass
+                                "<table><tr><th class='text-right'><h5>在线访问地址：</h5></th><td><span>" + res.data.data.url.dataAddress + "</span></td></tr>" +
+                                "<tr><th class='text-right'><h5>用户名：</h5></th><td><input type='text' id='J_val01' value='" + res.data.data.payInfoUserName + "'></td></tr>" +
+                                "<tr><th class='text-right'><h5>密码：</h5></th><td><input type='text' id='J_val02' value='" + res.data.data.payInfoPassword + "'></td></tr></table>";//sass
                             modalInstance = $rootScope.openConfirmDialogModal(sassDom);
                         }
                     } else {
@@ -88,9 +88,9 @@ class viewOrderSupplier {
                     }
                 } else { //线下
                     var offlineDom = "<h4>线下交付联系方式：</h4>" +
-                        "<h5>联系人姓名：<input type='text' id='J_concatName' value='" + res.data.data.data.concatName + "'></h5>" +
-                        "<h5>联系人电话：<input type='text' id='J_concatPhone' value='" + res.data.data.data.concatPhone + "'></h5>" +
-                        "<h5>联系人邮箱：<input type='text' id='J_concatEmail' value='" + res.data.data.data.concatEmail + "'></h5>";
+                        "<table><tr><th class='text-right'><h5>联系人姓名：</h5></th><td><input type='text' id='J_concatName' value='" + res.data.data.data.concatName + "'></td></tr>" +
+                        "<tr><th class='text-right'><h5>联系人电话：</h5></th><td><input type='text' id='J_concatPhone' value='" + res.data.data.data.concatPhone + "'></td></tr>" +
+                        "<tr><th class='text-right'><h5>联系人邮箱：</h5></th><td><input type='text' id='J_concatEmail' value='" + res.data.data.data.concatEmail + "'></td></tr></table>";
                     modalInstance = $rootScope.openConfirmDialogModal(offlineDom);
 
                 }
