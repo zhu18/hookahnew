@@ -72,10 +72,8 @@
                                 data-ng-click="search()"> 提现
                         </button>
                         <!--<button class="btn btn-default" data-ng-model="tradeType" uib-btn-radio="2" data-ng-click="search()"> 退款 </button>-->
-                        <button class="btn btn-default" data-ng-model="tradeType" uib-btn-radio="8"
-                                data-ng-click="search()"> 冲账
-                        </button>
-                        <!--<button class="btn btn-default" data-ng-model="tradeType" uib-btn-radio="2" data-ng-click="search()"> 其他 </button>-->
+                        <button class="btn btn-default" data-ng-model="tradeType" uib-btn-radio="8" data-ng-click="search()"> 冲账 </button>
+                        <button class="btn btn-default" data-ng-model="tradeType" uib-btn-radio="5" data-ng-click="search()"> 其他 </button>
                     </div>
 
                     &nbsp;&nbsp;&nbsp;&nbsp;状态：
@@ -142,6 +140,7 @@
                         <td>
                             <span data-ng-show="item.tradeType==1">充值</span>
                             <span data-ng-show="item.tradeType==2">提现</span>
+                            <span data-ng-show="item.tradeType==5">手动充值</span>
                             <span data-ng-show="item.tradeType==3001">销售货款收入</span>
                             <span data-ng-show="item.tradeType==4001">销售货款支出</span>
                             <span data-ng-show="item.tradeType==8">冲账</span>
@@ -153,6 +152,7 @@
                         <td >
                             <span data-ng-show="item.tradeType==1">+</span>
                             <span data-ng-show="item.tradeType==2">-</span>
+                            <span data-ng-show="item.tradeType==5">+</span>
                             <span data-ng-show="item.tradeType==6003">+</span>
                             <span data-ng-show="item.tradeType==6004">-</span>
                             <span data-ng-show="item.tradeType==3007">+</span>
