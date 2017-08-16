@@ -25,6 +25,9 @@ function loadPageData(data){
                 case(2):
                     list[i].tradeType = '提现';
                     break;
+                case(5):
+                    list[i].tradeType = '手动充值';
+                    break;
                 case(4001):
                     list[i].tradeType = '支付';
                     break;
