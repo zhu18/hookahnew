@@ -65,12 +65,12 @@
                              class="glyphicon glyphicon-calendar"></i></button>
                     </span>
                         </p>&nbsp;&nbsp;
-                        <div class="input-group">
+                        <div class="input-group set-date-style">
 
-                            <a href="javascript:void(0)" data-ng-click="setDate('month',0)">本月</a> &nbsp;|&nbsp;
-                            <a href="javascript:void(0)" data-ng-click="setDate('month',1)">上个月</a>
-                            <a href="javascript:void(0)" data-ng-click="setDate('month',3)">上三个月</a>
-                            <a href="javascript:void(0)" data-ng-click="setDate('month',6)">上六个月</a>
+                            <a href="javascript:void(0)" data-ng-class="{'active':currentIndex==0}" data-ng-click="setDate('month',0,0)">本月</a> &nbsp;|&nbsp;
+                            <a href="javascript:void(0)" data-ng-class="{'active':currentIndex==1}" data-ng-click="setDate('month',1,1)">上个月</a>
+                            <a href="javascript:void(0)" data-ng-class="{'active':currentIndex==2}" data-ng-click="setDate('month',3,2)">上三个月</a>
+                            <a href="javascript:void(0)" data-ng-class="{'active':currentIndex==3}" data-ng-click="setDate('month',6,3)">上六个月</a>
                         </div>
                         <button style="margin-top: 5px" type="submit" class="btn btn-primary" data-ng-click="search()">
                             搜索

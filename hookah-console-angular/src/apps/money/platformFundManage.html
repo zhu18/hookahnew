@@ -116,11 +116,11 @@
                              class="glyphicon glyphicon-calendar"></i></button>
                     </span>
                     </p>&nbsp;&nbsp;
-                    <div class="input-group">
-                        <a href="javascript:void(0)" data-ng-click="setDate(day,0)">今日</a>| &nbsp;最近：
-                        <a href="javascript:void(0)" data-ng-click="setDate('week',1)">一周</a>
-                        <a href="javascript:void(0)" data-ng-click="setDate('month',1)">一个月</a>
-                        <a href="javascript:void(0)" data-ng-click="setDate('month',3)">3个月</a>
+                    <div class="input-group set-date-style">
+                        <a href="javascript:void(0)" data-ng-class="{'active':currentIndex==0}" data-ng-click="setDate(day,0,0)">今日</a>| &nbsp;最近：
+                        <a href="javascript:void(0)" data-ng-class="{'active':currentIndex==1}" data-ng-click="setDate('week',1,1)">一周</a>
+                        <a href="javascript:void(0)" data-ng-class="{'active':currentIndex==2}" data-ng-click="setDate('month',1,2)">一个月</a>
+                        <a href="javascript:void(0)" data-ng-class="{'active':currentIndex==3}" data-ng-click="setDate('month',3,3)">3个月</a>
                     </div>
                     <button style="margin-top: 5px" type="submit" class="btn btn-primary" data-ng-click="search()">查询
                     </button>

@@ -176,10 +176,11 @@ class transactionManageController {
           }
         }
       }
-
       return '';
     }
-    $scope.setDate = function (dataFormat, number) {
+    $scope.currentIndex=null;//初始化日历插件默认选择项
+    $scope.setDate = function (dataFormat, number,aIndex) {
+
       var now = new Date();
       var date = new Date(now.getTime() - 1);
       var year = date.getFullYear();
@@ -194,10 +195,9 @@ class transactionManageController {
       } else if (dataFormat == 'year') {
         year -= number;
       }
-
       $scope.startDate = new Date(year, month, day);
       $scope.endDate = new Date();
-
+      $scope.currentIndex=aIndex;
     }
     // 日历插件结束
   }

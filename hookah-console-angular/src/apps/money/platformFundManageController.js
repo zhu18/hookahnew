@@ -3,6 +3,8 @@
  */
 class platformFundManageController {
   constructor($scope, $rootScope, $state, $http, $stateParams, growl) {
+    $scope.currentIndex = null;//初始化日历插件默认选择项
+
     $scope.userBaseInfo = $stateParams.item;
 
     $scope.baseInfo = function () {
@@ -56,6 +58,7 @@ class platformFundManageController {
 
       });
     };
+
     $scope.pageChanged = function () {
       $scope.search();
       console.log('Page changed to: ' + $rootScope.pagination.currentPage);
@@ -91,6 +94,7 @@ class platformFundManageController {
       })
     };
     // 日历插件开始
+
     $scope.startDateOptions = {
       customClass: getDayClass,
       // minDate: new Date(2000, 5, 22),
@@ -146,7 +150,7 @@ class platformFundManageController {
       }
       return '';
     }
-    $scope.setDate = function (dataFormat, number) {
+    $scope.setDate = function (dataFormat, number,aIndex) {
       var now = new Date();
       var date = new Date(now.getTime() - 1);
       var year = date.getFullYear();
@@ -164,13 +168,13 @@ class platformFundManageController {
 
       $scope.startDate = new Date(year, month, day);
       $scope.endDate = new Date();
-
-    }
-    $scope.setDate('month',1);
+      $scope.currentIndex=aIndex;
+    };
+    $scope.setDate('month',1,2);
     // 日历插件结束
     $scope.back = function () {
       history.back();
     };
   }
-}
+};
 export default platformFundManageController;

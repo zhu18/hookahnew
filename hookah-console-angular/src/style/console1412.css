@@ -9424,3 +9424,6 @@ input[type="radio"], input[type="checkbox"] {
 .console-step .step-active:before {
   border-color: #00a0c7
 }
+/*时间选择 快捷选择激活*/
+.set-date-style a{ color:#737373}
+.set-date-style a.active{ color:#06C; text-decoration: underline;}
