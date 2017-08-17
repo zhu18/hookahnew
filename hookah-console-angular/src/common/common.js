@@ -65,9 +65,6 @@ angular.element(document).ready(function () {
             }else {
                 permissionFlag = false;
             }
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-            alert("系统错误！");
         }
     })
 });
@@ -448,13 +445,12 @@ function HttpInterceptor($q, $rootScope, $location, $window) {
         // ...
       } else if (401 === err.status) {
         let currUrl = $location.absUrl();
-        $window.location.href = $rootScope.loginUrl + currUrl;
+        $window.location.href = config.url.loginUrl + currUrl;
         // $location.absUrl("http://auth.ziroot.app/oauth/authorize?client_id=test&amp;response_type=code&amp;redirect_uri="+currUrl);
         // $rootScope.openErrorDialogModal("未登录请,<a href=''>重新登录</a>");
       } else if (403 === err.status) {
         $rootScope.openErrorDialogModal("无权限执行此操作");
-      }
-      else if (408 === err.status) {
+      } else if (408 === err.status) {
         $rootScope.openErrorDialogModal("请求超时");
       } else if (419 === err.status) {
         $rootScope.openErrorDialogModal("session过期");
