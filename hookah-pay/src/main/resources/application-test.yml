@@ -1,5 +1,7 @@
 server:
   port: 9898
+  http:
+    protocal: http://
   session:
     cookie:
       domain: qddata.com.cn
@@ -9,7 +11,7 @@ spring:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://192.168.15.90:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
     username: root
-    password: jusfoun2017
+    password: password
     initialize: true
     type: com.alibaba.druid.pool.DruidDataSource
     # 连接池配置
@@ -38,15 +40,15 @@ spring:
     mongodb:
       uri:  mongodb://192.168.15.90:27017/hookah_pay
   rabbitmq:
-    addresses: 192.168.15.90:5672
+    addresses: 192.168.200.116:5672
     username: root
     password: password
     publisher-confirms: true
     virtual-host: /
     listener:
-        retry:
-          enabled: true
-          max-attempts: 2
+      retry:
+        enabled: true
+        max-attempts: 2
   mail:
       host: smtp.qiye.163.com
       port: 25
@@ -92,8 +94,8 @@ myconf:
     accessTokenUrl: http://auth.qddata.com.cn/oauth/accessToken
     userInfoUrl: http://auth.qddata.com.cn/userInfo
     redirectUrl: http://auth.qddata.com.cn/login
-   redis:
+  redis:
     ipPort: 192.168.15.90:7000,192.168.15.90:7001,192.168.15.90:7002
-   consul:
+  consul:
     ipPort: 192.168.15.90:8500
 debug: true
