@@ -1,5 +1,7 @@
 server:
   port: 9100
+  http:
+    protocal: http://
   session:
     cookie:
       domain: qddata.com.cn
