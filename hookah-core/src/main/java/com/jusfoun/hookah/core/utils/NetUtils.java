@@ -18,7 +18,8 @@ public class NetUtils {
      * @return
      */
     public static String getIpAddr(HttpServletRequest request) {
-        String ipAddress = request.getHeader("x-forwarded-for");
+//        String ipAddress = request.getHeader("x-forwarded-for");
+        String ipAddress = request.getHeader("X-real-ip");
         if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
             ipAddress = request.getHeader("Proxy-Client-IP");
         }

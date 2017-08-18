@@ -38,7 +38,7 @@ public class Oauth2ServerLauncher {
             Oauth2ServerLauncher.class
         }, args);
         MotanSwitcherUtil.setSwitcherValue(MotanConstants.REGISTRY_HEARTBEAT_SWITCHER, true);
-        System.out.println("server start...");
+        System.out.println("Oauth2server Start, Please begin your performance...");
     }
 
     @PostConstruct
