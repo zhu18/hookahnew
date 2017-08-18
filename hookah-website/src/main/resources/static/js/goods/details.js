@@ -249,7 +249,7 @@ function check() {
 				var goodsNumber = $('#J_buyNumber').val();
 				var formatId = $('#J_formatId').val();
 				if (goodsId && goodsNumber && formatId) {
-					return true;
+					$("#J_goodsDetail").submit();
 				} else {
 					$.alert('');
 					return false;
