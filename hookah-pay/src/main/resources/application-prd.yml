@@ -94,8 +94,8 @@ myconf:
     accessTokenUrl: http://auth.qddata.com.cn/oauth/accessToken
     userInfoUrl: http://auth.qddata.com.cn/userInfo
     redirectUrl: http://auth.qddata.com.cn/login
-   redis:
+  redis:
     ipPort: 172.16.201.41:7000,172.16.201.41:7001,172.16.201.41:7002
-   consul:
+  consul:
     ipPort: 172.16.201.41:8500
 debug: true
