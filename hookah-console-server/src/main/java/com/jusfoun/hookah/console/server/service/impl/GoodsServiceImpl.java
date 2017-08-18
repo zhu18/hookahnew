@@ -81,6 +81,10 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         if(obj.getOnsaleStartDate() == null) {
             obj.setOnsaleStartDate(date);
         }
+        User user = userService.selectById(currentUser.getUserId());
+        if(user != null && user.getUserSn() != null){
+            obj.setDomainId(user.getUserSn());
+        }
         obj.setAddTime(date);
         obj.setLastUpdateTime(date);
         obj.setGoodsSn(generateSn(obj, currentUser));
@@ -122,13 +126,16 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
 
         // 前缀
         if(currentUser.getUserType() != null &&
-                currentUser.getUserType() == HookahConstants.UserType.ORGANIZATION_CHECK_OK.getCode() &&
-                currentUser.getOrgId() != null &&
-                PropertiesManager.getInstance().getProperty("jusfounOrgId").equals(currentUser.getOrgId() + "")
-                ){
+                currentUser.getUserType() == HookahConstants.UserType.ORGANIZATION_CHECK_OK.getCode()){
 
             User user = userService.selectById(currentUser.getUserId());
-            goodsSn.append(StringUtils.isNotBlank(user.getUserSn()) ? user.getUserSn() : PropertiesManager.getInstance().getProperty("platformCode"));
+            if(user != null){
+
+                goodsSn.append(StringUtils.isNotBlank(user.getUserSn()) ? user.getUserSn() : PropertiesManager.getInstance().getProperty("platformCode"));
+            }else {
+                goodsSn.append(PropertiesManager.getInstance().getProperty("platformCode"));
+
+            }
 
             // 分类
             goodsSn.append(obj.getCatId().substring(0, 3));
