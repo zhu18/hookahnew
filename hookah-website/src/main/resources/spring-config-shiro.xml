@@ -133,6 +133,7 @@
         /static/** = anon
         /show = anon
         / = anon
+        /home = anon
         /help** = anon
         /help/** = anon
         /error/** = anon

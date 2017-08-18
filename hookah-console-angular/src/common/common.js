@@ -29,6 +29,10 @@ angular.element(document).ready(function () {
     url: config.site.apiServer + "/api/auth/current_user",
     success: function (data) {
       config.user = data.data;
+      // 如果不是后台管理员，直接让其跳转到登录页面
+      if(config.user=="" || config.user.userType!=0){
+        window.location.href=config.site.authServer+"/oauth/authorize?client_id=website&response_type=code&redirect_uri=";
+      }
       //加载用户权限列表
       $.ajax({
         type: "GET",
