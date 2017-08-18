@@ -760,7 +760,10 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                         apiParam.put("userId", orderInfoVo.getUserId());
                         apiParam.put("orderSn", orderInfoVo.getOrderSn());
                         apiParam.put("goodsSn", goods.getGoodsSn());
-                        apiParam.put("url", goods.getApiInfo().getApiUrl());
+                        //截取URL
+                        String urlstr = goods.getApiInfo().getApiUrl().replace("http://","");
+                        urlstr=urlstr.substring(urlstr.indexOf("/"));
+                        apiParam.put("url", urlstr);
                         Date startTime = null;
                         Date endTime = null;
                         SimpleDateFormat df = new SimpleDateFormat(DateUtils.DEFAULT_DATE_TIME_FORMAT);
@@ -1232,7 +1235,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                                 "&goodsSn="+mgOrderGood.getGoodsSn();
                         try {
                             map = HttpClientUtil.GetMethod(tokenUrl);
-                            logger.info("获取API商品"+mgOrderGood.getGoodsSn()+"token！", orderInfoVo.getOrderSn(), JsonUtils.toJson(map));
+                            logger.info("获取API商品{}token！{} {}", mgOrderGood.getGoodsSn(), orderInfoVo.getOrderSn(), JsonUtils.toJson(map));
                         }catch (Exception e){
                             e.printStackTrace();
                             logger.error("获取API商品token失败!订单号:"+orderInfoVo.getOrderSn()+"商品编号:"+mgOrderGood.getGoodsSn());
