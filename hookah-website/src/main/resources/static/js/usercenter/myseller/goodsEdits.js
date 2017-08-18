@@ -12,7 +12,7 @@ var ajaxUrl = null;
 var goodsTypeId = null;
 var regex = {  //手机号验证正则
 	mobile: /^0?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8}$/,
-	keyWords:/^[\u4E00-\u9FA5A-Za-z\,]+$/
+	keyWords:/^[\u4E00-\u9FA5A-Za-z0-9\,]+$/
 };
 E.config.uploadImgUrl = host.static+'/upload/wangeditor';//上传图片
 E.config.uploadImgFileName = 'filename';
@@ -647,7 +647,7 @@ $.validator.addMethod("isMobile", function(value, element) {
 $.validator.addMethod("isKeyWords", function(value, element) {
 	var keyWords = regex.keyWords.test(value);
 	return this.optional(element) || (keyWords);
-}, "只能填写中文或英文，使用英文‘,’分割");
+}, "只能填写中文、英文、数字，使用英文‘,’分割");
 $.validator.addMethod("isPricceB", function(value, element) {
 	var isPricce = false;
 	if(value > 0){
