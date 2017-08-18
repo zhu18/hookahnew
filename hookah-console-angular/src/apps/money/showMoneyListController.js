@@ -4,7 +4,6 @@ class showMoneyListController {
     $scope.choseArr = [];//多选数组
 
 
-
     $scope.search = function () {
       if ($scope.startDate !== null && $scope.endDate !== null && ($scope.startDate > $scope.endDate)) {
         //继续
@@ -224,17 +223,17 @@ class showMoneyListController {
 
       return '';
     }
-
-    $scope.setDate = function (dataFormat, number) {
+    $scope.currentIndex=null;//初始化日历插件默认选择项
+    $scope.setDate = function (dataFormat, number, aIndex) {
       var now = new Date();
       var date = new Date(now.getTime() - 1);
       var year = date.getFullYear();
-      var month = date.getMonth() ;
+      var month = date.getMonth();
       var day = date.getDate();
       if (dataFormat == 'day') {
         day -= number;
       } else if (dataFormat == 'week') {
-        day -=  number * 7;
+        day -= number * 7;
       } else if (dataFormat == 'month') {
         month -= number;
       } else if (dataFormat == 'year') {
@@ -243,6 +242,8 @@ class showMoneyListController {
 
       $scope.startDate = new Date(year, month, day);
       $scope.endDate = new Date();
+      $scope.currentIndex=aIndex;
+
 
     }
 

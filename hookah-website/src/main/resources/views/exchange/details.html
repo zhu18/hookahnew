@@ -138,9 +138,9 @@ var htmlPart = {
 							</div>
 							<input type="hidden" name="goodsId" id="J_goodsId" value="${goodsDetails.goodsId}">
 							<input type="hidden" name="formatId" id="J_formatId" value="${goodsDetails.formatList[0].formatId}">
-							<button class="vertical-align-middle btn btn-full-orange margin-left-10 padding-5 padding-left-20 padding-right-20" onclick="return check()" style="cursor: pointer">
+							<a class="vertical-align-middle btn btn-full-orange margin-left-10 " href="javascript:check()" style="cursor: pointer">
 								立即购买
-							</button>
+							</a>
 							<a id="J_addCart" href="javascript:addCart('${goodsDetails.goodsId}','${goodsDetails.isDiscussPrice}');" class="vertical-align-middle btn btn-full-blue margin-left-10">加入购物车</a>
 						</form>
 					</div>

@@ -97,7 +97,7 @@ var htmlPart = {
 							<div id="J_CnAgreement">
 								<p class="tsl" data-phase-id="r_ui_aliyun_iagree">创建网站账号的同时，我同意：</p>
 								<p class="tsl" data-phase-id="r_ui_aliyun_agreement"><a
-									href="${host.website}/help/agreement" target="_blank">《青岛大数据交易中心会员注册协议》</a>，并且我同意本网站按照网站服务条款第6.8条使用个人信息，并随时有权撤回该等同意。
+									href="http://www.qddata.com.cn/zcxy/index.jhtml" target="_blank">《青岛大数据交易中心会员注册协议》</a>，并且我同意本网站按照网站服务条款第6.8条使用个人信息，并随时有权撤回该等同意。
 								</p>
 								<p class="tsl" data-phase-id="r_ui_aliyun_agree_receive_mail">同意本网站可通过电话 (包括语音通
 									话、短信、或传真)
@@ -817,7 +817,7 @@ var htmlPart = {
 	}
 	function mobileNumIsTrue(mobile,validSms){ //验证手机验证码是否正确
 		$('.loading_btns').show();
-		/*$.ajax({
+		$.ajax({
 			url:'${host.auth}/sms/check',
 			type:'post',
 			data:{
@@ -825,7 +825,7 @@ var htmlPart = {
 				validSms:validSms
 			},
 			success:function(data){
-				if(data.code == 1){*/
+				if(data.code == 1){
 					$.post("${host.auth}/reg", $("#J_InfoForm").serialize(), function (data) {
 						if (data.code == 1) {
                             $.alert("注册成功，马上跳转登录页面");
@@ -837,7 +837,7 @@ var htmlPart = {
 							$.alert(data.message);
 						}
 					});
-				/*}else if(data.code == 0){
+				}else if(data.code == 0){
 					$('.loading_btns').hide();
 					$('#J_MobileSms').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_IMAGECHECKCODE_INVALID).siblings('.iconfont').html('󰅕');
 				}else{
@@ -845,7 +845,7 @@ var htmlPart = {
 					$.alert(data.message);
 				}
 			}
-		});*/
+		});
 	}
 $('#J_Agreement').change(function(){
 	if($(this).is(':checked')){

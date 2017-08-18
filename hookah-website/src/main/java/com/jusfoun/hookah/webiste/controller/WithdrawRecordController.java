@@ -15,6 +15,7 @@ import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.PayAccountService;
 import com.jusfoun.hookah.rpc.api.PayBankCardService;
 import com.jusfoun.hookah.rpc.api.WithdrawRecordService;
+import com.jusfoun.hookah.webiste.config.MyProps;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -44,6 +46,9 @@ public class WithdrawRecordController extends BaseController{
 
     @Resource
     PayBankCardService payBankCardService;
+
+    @Resource
+    MyProps myProps;
 
     /**
      * 发起提现申请
@@ -142,7 +147,7 @@ public class WithdrawRecordController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
-    public String userInfo(Model model) {
+    public String userInfo(Model model, HttpServletRequest request) {
 
         try {
             Map<String, Object> map = new HashMap();
@@ -160,7 +165,13 @@ public class WithdrawRecordController extends BaseController{
 
             model.addAttribute("payBankCard", payBankCard);
         } catch (HookahException e) {
-            e.printStackTrace();
+            logger.error("提现需要重新登录");
+            return "redirect:" + myProps.getOauth2().get("loginUrl")
+                        + myProps.getHost().get("website")
+                            + request.getContextPath()
+                                + request.getServletPath()
+                                    + (request.getQueryString() != null ? ("?" + (request.getQueryString())) : "");
+//                    "?" + (request.getQueryString());
         }
         return "/usercenter/userInfo/withdrawals";
     }

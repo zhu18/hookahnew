@@ -2,7 +2,9 @@ class settleController {
   constructor($scope, $rootScope, $http, $state, $uibModal, usSpinnerService, growl) {
     $scope.settleList = [];
     $scope.choseArr = [];//多选数组
-    $scope.setDate = function (dataFormat, number) {
+    $scope.currentIndex=null; //初始化日历插件默认选择项
+
+    $scope.setDate = function (dataFormat, number, aIndex) {
       var now = new Date();
       var date = new Date(now.getTime() - 1);
       var year = date.getFullYear();
@@ -15,38 +17,40 @@ class settleController {
         $scope.startDate = new Date(year, month - number, day);
         $scope.endDate = new Date(year, month, 0);
       }
+      $scope.currentIndex = aIndex;
+
     }
     var format = function (time, format) {
-      var t = new Date(time);
-      var tf = function (i) {
-        return (i < 10 ? '0' : "") + i
-      };
-      return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
-        switch (a) {
-          case 'yyyy':
-            return tf(t.getFullYear());
-            break;
-          case 'MM':
-            return tf(t.getMonth() + 1);
-            break;
-          case 'mm':
-            return tf(t.getMinutes());
-            break;
-          case 'dd':
-            return tf(t.getDate());
-            break;
-          case 'HH':
-            return tf(t.getHours());
-            break;
-          case 'ss':
-            return tf(t.getSeconds());
-            break;
-        }
-      })
-    }
+        var t = new Date(time);
+        var tf = function (i) {
+          return (i < 10 ? '0' : "") + i
+        };
+        return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
+          switch (a) {
+            case 'yyyy':
+              return tf(t.getFullYear());
+              break;
+            case 'MM':
+              return tf(t.getMonth() + 1);
+              break;
+            case 'mm':
+              return tf(t.getMinutes());
+              break;
+            case 'dd':
+              return tf(t.getDate());
+              break;
+            case 'HH':
+              return tf(t.getHours());
+              break;
+            case 'ss':
+              return tf(t.getSeconds());
+              break;
+          }
+        })
+      }
 
     ;
-    $scope.setDate('month', 0);
+    $scope.setDate('month', 0, 0);
 
     $scope.search = function () {
       // console.log($scope.levelStar);
@@ -90,10 +94,10 @@ class settleController {
       });
     };
 
+
     $scope.getDetails = function (id) {
       $state.go('settle.settleDetails', {id: id});
     };
-
 
     $scope.pageChanged = function () {
       $scope.search();
@@ -130,7 +134,7 @@ class settleController {
         $rootScope.loadingState = false;
         growl.addSuccessMessage("订单数据加载完毕。。。");
       });
-    }
+    };
 
     //多选
     var str = "";
@@ -149,7 +153,6 @@ class settleController {
 
       });
       console.log(commIdArr);
-
       if (c == true) {
         $scope.x = true;
         $scope.choseArr = commIdArr;
@@ -160,9 +163,7 @@ class settleController {
         flag = 'b';
       }
     };
-
     $scope.chk = function (z, x) { //单选或者多选
-
 
       if (x == true) {//选中
         $scope.choseArr.push(z);
@@ -180,6 +181,7 @@ class settleController {
     };
     //多选结束
 
+
     $scope.refresh = function () {
       $scope.search();
     };
@@ -188,6 +190,7 @@ class settleController {
     // 处理日期插件的获取日期的格式
 
     // 日历插件开始
+
     $scope.inlineOptions = {
       customClass: getDayClass,
       minDate: new Date(2000, 5, 22),

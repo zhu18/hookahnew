@@ -28,9 +28,7 @@
 			"admin": "${host.admin}",
 			"loginUrl": "${oauth2.loginUrl}"
 		}
-		var user = {
-				'userType' : ${user.userType}
-			}
+
 
 	</script>
 	${headSection}
@@ -106,9 +104,6 @@ var _hmt = _hmt || [];
   var s = document.getElementsByTagName("script")[0];
   s.parentNode.insertBefore(hm, s);
 
-	if(user.userType === 0){ //限制超级管理员录入商品
-		$('.pushGoodsBtn').hide();
-	}
 })();
 </script>
 </body>
