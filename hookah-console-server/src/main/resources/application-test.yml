@@ -103,6 +103,10 @@ myconf:
     accessTokenUrl: http://auth.qddata.com.cn/oauth/accessToken
     userInfoUrl: http://auth.qddata.com.cn/userInfo
     redirectUrl: http://auth.qddata.com.cn/login
+  api:
+    url: http://192.168.200.116:5555/gateway/insert
+    tokenUrl: http://192.168.200.116:5555/gateway/getToken
+    changeUrl: http://192.168.200.116:5555/gateway/changeToken
   redis:
     ipPort: 192.168.15.90:7000,192.168.15.90:7001,192.168.15.90:7002
   consul:

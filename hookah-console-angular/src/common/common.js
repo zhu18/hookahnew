@@ -145,6 +145,9 @@ export default angular.module('Common', [
       hasPermission: function (permission) {
         if (permission) {
           if (typeof(permission) == "string") {
+            if(permission=="home"){  //欢迎页无需权限
+                return true;
+            }
             // 判断是否有权限，或者是超级管理员（userId=1）
             if ((config.permissionList.indexOf(permission) > -1) || permissionFlag) {
               return true;
