@@ -317,7 +317,7 @@ function getKey(goodsId, sourceId, orderId, goodsType, isOffline) {
              var apiObj=JSON.parse(data.data.result);
              tempHtml = "<div class='confirmKey'><h4>提取密钥：</h4>" +
                         "<h5>您购买的API商品token为：</h5>" +
-                        "<h5><input id='token' readonly='readonly' style='width: 260px;margin-left: 15px;border: 0;' value='"+apiObj.data.token+"'/><a style='color: blue;margin-left: 20px;' href=\"javascript:copyText();\">复制token</a><a style='color: blue;margin-left: 10px;' href=\"javascript:resetToken('"+goodsId+"','"+orderId+"');\">重置token</a></h5>" +
+                        "<h5><input id='token' readonly='readonly' style='width: 270px;margin-left: 15px;border: 0;' value='"+apiObj.data.token+"'/><a style='color: blue;margin-left: 10px;' href=\"javascript:copyText();\">复制token</a><a style='color: blue;margin-left: 10px;' href=\"javascript:resetToken('"+goodsId+"','"+orderId+"');\">重置token</a></h5>" +
                         "<h5>当前API状态：</h5>" +
                         "<h5><span style='margin-left: 15px;'> 已调用次数："+(apiObj.data.totalCount-apiObj.data.hasCount)+"</span><span style='margin-left: 15px;'> 剩余次数："+apiObj.data.hasCount+"</span><a style='color:blue;margin-left: 20px;' href='"+apiWordUrl+"'>详情下载</a></h5></div>";
               Loading.stop();
