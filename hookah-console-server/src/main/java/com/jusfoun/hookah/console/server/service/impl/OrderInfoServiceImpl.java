@@ -741,12 +741,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             List<Map> list = new ArrayList();
 
             orderInfoVo.getMgOrderGoodsList().stream()
-                    .filter(g -> {
-                        if (g.getGoodsType() == 1 && !StringUtils.isNotBlank(g.getSourceId())) {
-                            logger.info("指定商品id{} 的sourceId为空", g.getGoodsId());
-                        }
-                        return g.getGoodsType() == 1 && StringUtils.isNotBlank(g.getSourceId());
-                    })
+                    .filter(g -> g.getGoodsType() == 1)
                     .forEach(goods -> {
                         Map<String, Object> apiParam = new HashMap<>();
 //                        Map<String, String> param = new HashMap<>();
