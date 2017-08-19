@@ -7,6 +7,7 @@ import com.jusfoun.hookah.core.domain.UserDetail;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.webiste.util.PropertiesManager;
 import org.apache.commons.lang3.StringUtils;
 import com.jusfoun.hookah.rpc.api.*;
 import org.apache.shiro.SecurityUtils;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 
 /**
@@ -114,7 +116,13 @@ public class UserCenterController {
     }
     //       我要成为供应商第一步
     @RequestMapping(value = "/becomingSupplierStep1", method = RequestMethod.GET)
-    public String becomingSupplierStep1() {
+    public String becomingSupplierStep1(Model model) throws UnsupportedEncodingException {
+        String address = PropertiesManager.getInstance().getProperty("protocol.address");
+        model.addAttribute("address", new String(address.getBytes("ISO-8859-1"),"UTF-8"));
+        model.addAttribute("email",PropertiesManager.getInstance().getProperty("protocol.email"));
+        String name = PropertiesManager.getInstance().getProperty("protocol.name");
+        model.addAttribute("name",new String(name.getBytes("ISO-8859-1"),"UTF-8"));
+        model.addAttribute("phone",PropertiesManager.getInstance().getProperty("protocol.phone"));
         return "usercenter/userInfo/becomingSupplierStep1";
     }
     //       我要成为供应商第二步
