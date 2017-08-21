@@ -100,9 +100,9 @@ myconf:
     auth: ${server.http.protocal}auth.qddata.com.cn
     console: ${server.http.protocal}console.qddata.com.cn
   site:
-      user-default-img: /static/images/user-safe-head.png
+    user-default-img: /static/images/user-safe-head.png
   redis:
-      ipPort: 192.168.15.90:7000,192.168.15.90:7001,192.168.15.90:7002
+    ipPort: 192.168.15.90:7000,192.168.15.90:7001,192.168.15.90:7002
   consul:
-      ipPort: 192.168.15.90:8500
+    ipPort: 192.168.15.90:8500
 debug: true

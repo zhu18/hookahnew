@@ -1,5 +1,7 @@
 server:
   port: 9898
+  http:
+    protocal: http://
   session:
     cookie:
       domain: qddata.com.cn
@@ -44,9 +46,9 @@ spring:
     publisher-confirms: true
     virtual-host: /
     listener:
-        retry:
-          enabled: true
-          max-attempts: 2
+      retry:
+        enabled: true
+        max-attempts: 2
   mail:
       host: smtp.qiye.163.com
       port: 25
@@ -92,8 +94,8 @@ myconf:
     accessTokenUrl: http://auth.qddata.com.cn/oauth/accessToken
     userInfoUrl: http://auth.qddata.com.cn/userInfo
     redirectUrl: http://auth.qddata.com.cn/login
-   redis:
+  redis:
     ipPort: 172.16.201.41:7000,172.16.201.41:7001,172.16.201.41:7002
-   consul:
+  consul:
     ipPort: 172.16.201.41:8500
 debug: true
