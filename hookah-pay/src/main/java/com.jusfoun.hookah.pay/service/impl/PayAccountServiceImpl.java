@@ -443,7 +443,7 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		if (AlipayNotify.verify(param)){
 			if(tradeStatus.equals("TRADE_FINISHED") || tradeStatus.equals("TRADE_SUCCESS")){
 				filter.add(Condition.eq("tradeType",HookahConstants.TradeType.FreezaIn.getCode()));
-				if (payTradeRecordService.selectList(filter) == null){
+				if (payTradeRecordService.selectOne(filter) == null){
 					//交易成功,插交易中心冻结收入流水，更新交易中心虚拟账户金额
 					PayTradeRecord payTradeRecord = new PayTradeRecord();
 					payTradeRecord.setPayAccountId(HookahConstants.TRADECENTERACCOUNT);
