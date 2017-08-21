@@ -1,12 +1,12 @@
 class ShelfController {
   constructor($scope, $rootScope, $http, $state, $uibModal, usSpinnerService, growl) {
-    $scope.search = function () {
+    $scope.search = function (initCurrentPage) {
       console.log("货架查询。。。。");
         var promise = $http({
             method: 'GET',
             url: $rootScope.site.apiServer + "/api/shelf/all",
             params: {
-                currentPage: $rootScope.pagination.currentPage,
+                currentPage:initCurrentPage == 'true' ? 1 :  $rootScope.pagination.currentPage,
                 pageSize: $rootScope.pagination.pageSize,
                 shelfName: $scope.shelfName
             }
@@ -51,7 +51,7 @@ class ShelfController {
           console.log('Page changed to: ' + $rootScope.pagination.currentPage);
     };
 
-    $scope.search();
+    $scope.search('true');
 
     $scope.updateStatus = function (item, flag) {
           console.log(item.shelvesId, item.shelvesStatus);
