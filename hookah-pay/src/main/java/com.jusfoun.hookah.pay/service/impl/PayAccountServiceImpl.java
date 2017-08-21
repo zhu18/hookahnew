@@ -442,40 +442,45 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		OrderInfo orderInfo = orderInfoService.selectOne(filter);
 		if (AlipayNotify.verify(param)){
 			if(tradeStatus.equals("TRADE_FINISHED") || tradeStatus.equals("TRADE_SUCCESS")){
-				//交易成功,插交易中心冻结收入流水，更新交易中心虚拟账户金额
-				PayTradeRecord payTradeRecord = new PayTradeRecord();
-				payTradeRecord.setPayAccountId(HookahConstants.TRADECENTERACCOUNT);
-				payTradeRecord.setUserId(orderInfo.getUserId());
-				payTradeRecord.setMoney(orderInfo.getOrderAmount());
-				payTradeRecord.setTradeType(HookahConstants.TradeType.FreezaIn.getCode());
-				payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.handing.getCode());
-				payTradeRecord.setAddTime(new Date());
-				payTradeRecord.setOrderSn(orderSn);
-				payTradeRecord.setAddOperator(orderInfo.getUserId());
-				payTradeRecord.setTransferDate(new Date());
-				payTradeRecordService.insertAndGetId(payTradeRecord);
-				//更新交易中心虚拟账户金额
-				operatorByType(HookahConstants.TRADECENTERACCOUNT,HookahConstants.TradeType.FreezaIn.getCode(),
-						orderInfo.getOrderAmount());
+				filter.add(Condition.eq("tradeType",HookahConstants.TradeType.FreezaIn.getCode()));
+				if (payTradeRecordService.selectList(filter) == null){
+					//交易成功,插交易中心冻结收入流水，更新交易中心虚拟账户金额
+					PayTradeRecord payTradeRecord = new PayTradeRecord();
+					payTradeRecord.setPayAccountId(HookahConstants.TRADECENTERACCOUNT);
+					payTradeRecord.setUserId(orderInfo.getUserId());
+					payTradeRecord.setMoney(orderInfo.getOrderAmount());
+					payTradeRecord.setTradeType(HookahConstants.TradeType.FreezaIn.getCode());
+					payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.handing.getCode());
+					payTradeRecord.setAddTime(new Date());
+					payTradeRecord.setOrderSn(orderSn);
+					payTradeRecord.setAddOperator(orderInfo.getUserId());
+					payTradeRecord.setTransferDate(new Date());
+					payTradeRecordService.insertAndGetId(payTradeRecord);
+					//更新交易中心虚拟账户金额
+					operatorByType(HookahConstants.TRADECENTERACCOUNT,HookahConstants.TradeType.FreezaIn.getCode(),
+							orderInfo.getOrderAmount());
 
-				//修改内部流水的状态和外部充值状态
-				List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
-				for (PayTradeRecord payTradeRecord1 : payTradeRecords){
-					payTradeRecord1.setTradeStatus(HookahConstants.TransferStatus.success.getCode());
-					payTradeRecordService.updateByIdSelective(payTradeRecord1);
+					//修改内部流水的状态和外部充值状态
+					filter.clear();
+					filter.add(Condition.eq("orderSn", orderSn));
+					List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
+					for (PayTradeRecord payTradeRecord1 : payTradeRecords){
+						payTradeRecord1.setTradeStatus(HookahConstants.TransferStatus.success.getCode());
+						payTradeRecordService.updateByIdSelective(payTradeRecord1);
+					}
+					List<Condition> filters = new ArrayList<>();
+					filters.add(Condition.eq("serialNumber",orderSn));
+					PayAccountRecord payAccountRecord = payAccountRecordService.selectOne(filters);
+					payAccountRecord.setTransferStatus(HookahConstants.TransferStatus.success.getCode());
+					payAccountRecordService.updateByIdSelective(payAccountRecord);
+
+					//更新订单状态
+					orderInfoService.updatePayStatus(orderSn,orderInfo.PAYSTATUS_PAYED,1);
+
+					// 支付成功 查询订单 获取订单中商品插入到待清算记录
+					mqSenderService.sendDirect(RabbitmqQueue.WAIT_SETTLE_ORDERS, orderSn);
 				}
-				List<Condition> filters = new ArrayList<>();
-				filters.add(Condition.eq("serialNumber",orderSn));
-				PayAccountRecord payAccountRecord = payAccountRecordService.selectOne(filters);
-				payAccountRecord.setTransferStatus(HookahConstants.TransferStatus.success.getCode());
-				payAccountRecordService.updateByIdSelective(payAccountRecord);
-
-				//更新订单状态
-				orderInfoService.updatePayStatus(orderSn,orderInfo.PAYSTATUS_PAYED,1);
-
-				// 支付成功 查询订单 获取订单中商品插入到待清算记录
-				mqSenderService.sendDirect(RabbitmqQueue.WAIT_SETTLE_ORDERS, orderSn);
-				
+				logger.info("支付宝支付成功"+orderSn);
 				return true;
 			}else{
 				//交易失败
@@ -483,9 +488,11 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 				for (PayTradeRecord payTradeRecord1 : payTradeRecords){
 					payTradeRecord1.setTradeStatus(HookahConstants.TransferStatus.fail.getCode());
 				}
+				logger.error("支付宝交易失败"+orderSn);
 				return false;
 			}
 		}else{
+			logger.error("支付宝回调验证失败"+orderSn);
 			return false;
 		}
 	}

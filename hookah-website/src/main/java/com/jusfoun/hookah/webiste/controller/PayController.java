@@ -153,13 +153,16 @@ public class PayController extends BaseController{
                 return "pay/fail";
             }
             //插流水调接口
+            logger.info("调用余额支付"+orderSn);
             payAccountService.payByBalance(orderinfo);
         } catch (Exception e) {
             e.printStackTrace();
+            logger.info("余额支付失败"+orderSn);
             model.addAttribute("message", e.getMessage());
             model.addAttribute("orderSn", orderSn);
             return "pay/fail";
         }
+        logger.info("余额支付成功"+orderSn);
         model.addAttribute("money",orderinfo.getOrderAmount());
         return "pay/success";
     }
@@ -181,6 +184,7 @@ public class PayController extends BaseController{
                 model.addAttribute("orderSn", orderSn);
                 return "pay/fail";
             }
+            logger.info("使用支付宝支付"+orderSn);
             reqHtml = payAccountService.payByAli(orderinfo);
         } catch (Exception e) {
             e.printStackTrace();
@@ -248,6 +252,7 @@ public class PayController extends BaseController{
         String total_fee = new String(request.getParameter("total_fee").getBytes("ISO-8859-1"),"UTF-8");
 
         Map<String,String> param = getRequestParams(request);
+        logger.info("支付宝同步回调"+orderSn);
         boolean flag = payAccountService.aliPay(orderSn, tradeStatus, param);
         BigDecimal money = new BigDecimal(total_fee).multiply((new BigDecimal(100)));
         if (flag){
@@ -278,6 +283,7 @@ public class PayController extends BaseController{
         String total_fee = new String(request.getParameter("total_fee").getBytes("ISO-8859-1"),"UTF-8");
 
         Map<String,String> param = getRequestParams(request);
+        logger.info("支付宝异步回调"+orderSn);
         boolean flag = payAccountService.aliPay(orderSn, tradeStatus, param);
         if (flag){
             return "success";
