@@ -288,8 +288,10 @@ public class PayController extends BaseController{
         filter.add(Condition.eq("orderSn",orderSn));
         OrderInfo orderInfo = orderService.selectOne(filter);
         boolean flag = false;
-        if (orderInfo != null && orderInfo.getPayStatus() == orderInfo.PAYSTATUS_PAYED){
+        if (orderInfo != null && orderInfo.getPayStatus() != orderInfo.PAYSTATUS_PAYED){
             flag = payAccountService.aliPay(orderSn, tradeStatus, param);
+        }else if (orderInfo != null && orderInfo.getPayStatus() == orderInfo.PAYSTATUS_PAYED){
+            return "success";
         }
         if (flag){
             return "success";
