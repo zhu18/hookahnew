@@ -483,11 +483,18 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 				logger.info("支付宝支付成功"+orderSn);
 				return true;
 			}else{
-				//交易失败
+				//支付宝交易失败
 				List<PayTradeRecord> payTradeRecords = payTradeRecordService.selectList(filter);
-				for (PayTradeRecord payTradeRecord1 : payTradeRecords){
-					payTradeRecord1.setTradeStatus(HookahConstants.TransferStatus.fail.getCode());
+				for (PayTradeRecord payTradeRecord : payTradeRecords){
+					payTradeRecord.setTradeStatus(HookahConstants.TransferStatus.fail.getCode());
+					payTradeRecordService.updateByIdSelective(payTradeRecord);
 				}
+				List<Condition> filters = new ArrayList<>();
+				filters.add(Condition.eq("serialNumber",orderSn));
+				PayAccountRecord payAccountRecord = payAccountRecordService.selectOne(filters);
+				payAccountRecord.setTransferStatus(HookahConstants.TransferStatus.fail.getCode());
+				payAccountRecordService.updateByIdSelective(payAccountRecord);
+				orderInfoService.updatePayStatus(orderSn,orderInfo.PAYSTATUS_UNPAID,1);
 				logger.error("支付宝交易失败"+orderSn);
 				return false;
 			}

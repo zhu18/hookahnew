@@ -272,7 +272,7 @@ public class PayController extends BaseController{
      * @throws Exception
      */
     @RequestMapping(value="/alipay_ntf", method = RequestMethod.POST)
-    @Transactional
+    @ResponseBody
     String notifyBack4Alipay(HttpServletRequest request, HttpServletResponse response) throws Exception{
         //商户订单号
         String orderSn = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
