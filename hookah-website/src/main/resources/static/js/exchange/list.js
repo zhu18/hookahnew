@@ -29,7 +29,8 @@ function loadPageData(data){ //渲染页面数据
 			html += '</a>';
 			html += '<div class="item-down clearfix">';
 			if(list[i].isDiscussPrice == 1){
-				html += '<span class="grid-left goods-price">面议参考价￥<span>'+shopPrice+'</span></span>';
+				// html += '<span class="grid-left goods-price">面议参考价￥<span>'+shopPrice+'</span></span>';
+				html += '<span class="grid-left goods-price">价格：<span>面议</span></span>';
 			}else{
 				html += '<span class="grid-left goods-price">￥<span>'+shopPrice+'</span>/'+(list[i].shopNumber == 1 ? '':list[i].shopNumber)+shopFormat+'</span>';
 			}
