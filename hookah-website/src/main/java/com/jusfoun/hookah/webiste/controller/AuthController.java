@@ -183,6 +183,7 @@ public class AuthController extends BaseController {
         String name = PropertiesManager.getInstance().getProperty("protocol.name");
         model.addAttribute("name",new String(name.getBytes("ISO-8859-1"),"UTF-8"));
         model.addAttribute("phone",PropertiesManager.getInstance().getProperty("protocol.phone"));
+        model.addAttribute("mobile",PropertiesManager.getInstance().getProperty("protocol.mobile"));
         return "/auth/company_auth_init_step2";
     }
 
