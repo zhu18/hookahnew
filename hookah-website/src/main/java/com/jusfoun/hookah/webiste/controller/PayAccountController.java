@@ -69,6 +69,7 @@ public class PayAccountController extends BaseController{
      * @throws IOException
      */
     @RequestMapping(value = "/rechargeSync", method = RequestMethod.POST)
+    @ResponseBody
     public String rechargeResultSync(HttpServletRequest request) throws IOException {
 
         //商户订单号
@@ -87,6 +88,9 @@ public class PayAccountController extends BaseController{
         map.put("userId",userId);
         //交易平台类型 1：在线充值（入金）
         map.put("tradeType","1");
+        Map<String,String> paramMap = new HashMap<>();
+        paramMap.put("orderSn",orderSn);
+        paramMap.put("userId",userId);
         if(payCoreService.verifyAlipay(getParams(request))){
             if(tradeStatus.equals("TRADE_FINISHED") || tradeStatus.equals("TRADE_SUCCESS")){
                 statusFlag="1";
@@ -95,20 +99,12 @@ public class PayAccountController extends BaseController{
             //查询pay_trade_record表中的trade_status状态是否为0（交易状态 0处理中 1成功 2失败），
             //如果等于0，说明同步方法未进行业务处理，则需在此进行业务处理
             //如果不等于0，说明同步方法已进行业务处理
-            int status = payTradeRecordService.selectStatusByOrderSn(orderSn);
+            int status = payTradeRecordService.selectStatusByOrderSn(paramMap);
             if (status==0){
                 payAccountService.saveRechargeResult(map);
             }
             return "success";
         }else{
-            map.put("tradeStatus",statusFlag);
-            //查询pay_trade_record表中的trade_status状态是否为0（交易状态 0处理中 1成功 2失败），
-            //如果等于0，说明同步方法未进行业务处理，则需在此进行业务处理
-            //如果不等于0，说明同步方法已进行业务处理
-            int status = payTradeRecordService.selectStatusByOrderSn(orderSn);
-            if (status==0){
-                payAccountService.saveRechargeResult(map);
-            }
             return "fail";
         }
     }

@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * dengxu
@@ -96,8 +97,8 @@ public class PayTradeRecordServiceImpl extends GenericServiceImpl<PayTradeRecord
 		return pagination;
 	}
 
-	public int selectStatusByOrderSn(String orderSn){
-		return payTradeRecordMapper.selectStatusByOrderSn(orderSn);
+	public int selectStatusByOrderSn(Map<String,String> paramMap){
+		return payTradeRecordMapper.selectStatusByOrderSn(paramMap);
 	}
 
 

@@ -73,9 +73,9 @@
     WHERE  order_sn = #{orderSn}
   </update>
 
-  <select id="selectStatusByOrderSn" parameterType="java.lang.String">
+  <select id="selectStatusByOrderSn" parameterType="java.util.HashMap" resultType="java.lang.Integer">
 
-    SELECT trade_status FROM pay_trade_record WHERE order_sn = #{orderSn}
+    SELECT trade_status FROM pay_trade_record WHERE order_sn = #{orderSn} AND  user_id = #{userId}
 
   </select>
 </mapper>

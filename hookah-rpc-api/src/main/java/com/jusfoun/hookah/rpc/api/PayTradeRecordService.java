@@ -8,6 +8,7 @@ import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericService;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import java.util.List;
+import java.util.Map;
 
 /**
  * dx
@@ -20,7 +21,7 @@ public interface PayTradeRecordService extends GenericService<PayTradeRecord, In
 
     Pagination<PayTradeRecordVo> getListForPage(int pageNumberNew, int pageSizeNew, String startDate, String endDate, Integer tradeType, Integer tradeStatus);
 
-    int selectStatusByOrderSn(String orderSn);
+    int selectStatusByOrderSn(Map<String,String> paramMap);
 
     Pagination<PayTradeRecordVo> getFlowListInPage(Integer pageNum, Integer pageSize,  List<Condition> filters,
                                                    List<OrderBy> orderBys);

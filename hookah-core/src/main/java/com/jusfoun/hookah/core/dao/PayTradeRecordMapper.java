@@ -20,5 +20,5 @@ public interface PayTradeRecordMapper extends GenericDao<PayTradeRecord> {
 
     void updatePayTradeRecordStatusByOrderSn(Map<String, String> params);
 
-    int selectStatusByOrderSn(String orderSn);
+    int selectStatusByOrderSn(Map<String,String> paramMap);
 }
