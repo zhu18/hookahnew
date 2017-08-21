@@ -1,12 +1,12 @@
 class AccountController {
   constructor($scope, $rootScope, $http, $state, $uibModal, usSpinnerService, growl) {
-    $scope.search = function () {
+    $scope.search = function (initCurrentPage) {
       var promise = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/account/sys_all",
         params: {
           currentPage: $rootScope.pagination.currentPage,
-          pageSize: $rootScope.pagination.pageSize,
+          pageSize:initCurrentPage == 'true' ? 1 : $rootScope.pagination.pageSize,
           userName: $scope.userName
         }
       });
@@ -141,7 +141,7 @@ class AccountController {
     $scope.pageChanged = function () {
       $scope.search();
     };
-    $scope.search();
+    $scope.search('true');
     $scope.isEnable = function (id) {
       if (id == 1) {
         return true;

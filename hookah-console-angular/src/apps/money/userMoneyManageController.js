@@ -3,7 +3,7 @@ class userMoneyManageController {
     $scope.commentList = [];
     $scope.choseArr = [];//多选数组
 
-    $scope.search = function () {
+    $scope.search = function (initCurrentPage) {
       var promise = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/userFund/all",
@@ -11,7 +11,7 @@ class userMoneyManageController {
           userName: $scope.userName ? $scope.userName : null,
           orgName: $scope.orgName ? $scope.orgName : null,
           phone: $scope.phone ? $scope.phone : null,
-          pageNumber: $rootScope.pagination.currentPage, //当前页码
+          pageNumber:initCurrentPage == 'true' ? 1 :  $rootScope.pagination.currentPage, //当前页码
           pageSize: $rootScope.pagination.pageSize
         }
       });
@@ -135,7 +135,7 @@ class userMoneyManageController {
     $scope.refresh = function () {
       $scope.search();
     };
-    $scope.search();
+    $scope.search('true');
 
     // 处理日期插件的获取日期的格式
     var format = function (time, format) {

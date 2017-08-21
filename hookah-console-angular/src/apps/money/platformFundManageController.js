@@ -19,11 +19,11 @@ class platformFundManageController {
         } else {
           $scope.moneyBaseInfo = [];
         }
-        $scope.search();
+        $scope.search('true');
       });
     };
     $scope.baseInfo();
-    $scope.search = function () {
+    $scope.search = function (initCurrentPage) {
       if ($scope.startDate !== null && $scope.endDate !== null && ($scope.startDate > $scope.endDate)) {
         //继续
         alert('开始时间必须大于结束时间！请重新选择日期。');
@@ -38,7 +38,7 @@ class platformFundManageController {
           tradeStatus: $scope.tradeStatus == 0 ? '0' : ($scope.tradeStatus ? $scope.tradeStatus : null),//审核状态
           startDate: $scope.startDate ? format($scope.startDate, 'yyyy-MM-dd HH:mm:ss') : null,
           endDate: $scope.endDate ? format($scope.endDate, 'yyyy-MM-dd HH:mm:ss') : null,
-          currentPage: $rootScope.pagination.currentPage, //当前页码
+          currentPage: initCurrentPage == 'true' ? 1 : $rootScope.pagination.currentPage, //当前页码
           pageSize: $rootScope.pagination.pageSize
         }
       });
@@ -150,7 +150,8 @@ class platformFundManageController {
       }
       return '';
     }
-    $scope.setDate = function (dataFormat, number,aIndex) {
+
+    $scope.setDate = function (dataFormat, number, aIndex) {
       var now = new Date();
       var date = new Date(now.getTime() - 1);
       var year = date.getFullYear();
@@ -168,13 +169,14 @@ class platformFundManageController {
 
       $scope.startDate = new Date(year, month, day);
       $scope.endDate = new Date();
-      $scope.currentIndex=aIndex;
+      $scope.currentIndex = aIndex;
     };
-    $scope.setDate('month',1,2);
+    $scope.setDate('month', 1, 2);
     // 日历插件结束
     $scope.back = function () {
       history.back();
     };
   }
-};
+}
+;
 export default platformFundManageController;

@@ -5,7 +5,7 @@ class showUserMoneyDetailController {
   constructor($scope, $rootScope, $state, $http, $stateParams, growl) {
     $scope.userBaseInfo=$stateParams.item;
 
-    $scope.search = function () {
+    $scope.search = function (initCurrentPage) {
 
       if ($scope.startDate !== null && $scope.endDate !== null && ($scope.startDate > $scope.endDate)) {
         //继续
@@ -23,7 +23,7 @@ class showUserMoneyDetailController {
           tradeStatus: $scope.tradeStatus == 0 ? '0' : ($scope.tradeStatus ? $scope.tradeStatus : null),//审核状态
           startDate: $scope.startDate ? format($scope.startDate, 'yyyy-MM-dd HH:mm:ss') : null,
           endDate: $scope.endDate ? format($scope.endDate, 'yyyy-MM-dd HH:mm:ss') : null,
-          currentPage: $rootScope.pagination.currentPage, //当前页码
+          currentPage:initCurrentPage == 'true' ? 1 : $rootScope.pagination.currentPage, //当前页码
           pageSize: $rootScope.pagination.pageSize
         }
       });

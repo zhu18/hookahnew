@@ -3,7 +3,7 @@ class getMoneyListController {
     $scope.commentList = [];
     $scope.choseArr = [];//多选数组
 
-    $scope.search = function () {
+    $scope.search = function (initCurrentPage) {
       var promise = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/withdrawRecord/getList",
@@ -12,7 +12,7 @@ class getMoneyListController {
           startDate: $scope.startDate ? format($scope.startDate, 'yyyy-MM-dd HH:mm:ss') : null,
           endDate: $scope.endDate ? format($scope.endDate, 'yyyy-MM-dd HH:mm:ss') : null,
           checkStatus: $scope.checkStatus == 0 ? '0' : ($scope.checkStatus ? $scope.checkStatus : null),//审核状态
-          currentPage: $rootScope.pagination.currentPage, //当前页码
+          currentPage: initCurrentPage == 'true' ? 1 :$rootScope.pagination.currentPage, //当前页码
           pageSize: $rootScope.pagination.pageSize
         }
       });
@@ -130,7 +130,7 @@ class getMoneyListController {
     $scope.refresh = function () {
       $scope.search();
     };
-    $scope.search();
+    $scope.search('true');
 
     // 处理日期插件的获取日期的格式
     var format = function (time, format) {

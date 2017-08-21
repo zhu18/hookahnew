@@ -1,10 +1,13 @@
 class HelpCategoryController {
   constructor($scope, $rootScope, $http, $state, $uibModal, usSpinnerService, growl) {
-    $scope.search = function () {
+    $scope.search = function (initCurrentPage) {
       var promise = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/help/category/category",
-        params: {currentPage: $rootScope.pagination.currentPage, pageSize: $rootScope.pagination.pageSize,name:$scope.name}
+        params: {
+          currentPage:initCurrentPage == 'true' ? 1 : $rootScope.pagination.currentPage,
+          pageSize: $rootScope.pagination.pageSize,
+          name:$scope.name}
       });
       promise.then(function (res, status, config, headers) {
         $rootScope.loadingState = false;
@@ -78,7 +81,7 @@ class HelpCategoryController {
       $scope.search();
       console.log('Page changed to: ' + $rootScope.pagination.currentPage);
     };
-    $scope.search();
+    $scope.search('true');
   }
 }
 

@@ -1,10 +1,11 @@
 class MessageController {
     constructor($scope, $rootScope, $http, $state, $stateParams, $uibModal, usSpinnerService, growl) {
-        $scope.systemSearch = function () {
+        $scope.systemSearch = function (initCurrentPage) {
             var promise = $http({
                 method: 'GET',
                 url: $rootScope.site.apiServer + "/api/message/system/all",
-                params: {pageNumber: $rootScope.pagination.currentPage,
+                params: {
+                    pageNumber: initCurrentPage == 'true' ? 1 :$rootScope.pagination.currentPage,
                     pageSize: $rootScope.pagination.pageSize,
                     isRead: $scope.messageIsRead,
                     keywords: $scope.keywords,
@@ -491,13 +492,13 @@ class MessageController {
 
         $scope.refresh = function(){
             if($state.$current.name == "message.sms.search"){
-                $scope.smsSearch();
+                $scope.smsSearch('true');
             }else if($state.$current.name == "message.email.search"){
-                $scope.emailSearch();
+                $scope.emailSearch('true');
             }else if($state.$current.name == "message.system.search"){
-                $scope.systemSearch();
+                $scope.systemSearch('true');
             }else if($state.$current.name == "message.template.search"){
-                $scope.templateSearch();
+                $scope.templateSearch('true');
             }
         }
 

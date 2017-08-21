@@ -1,10 +1,12 @@
 class ShopController {
   constructor($scope, $rootScope,$http, $uibModal, usSpinnerService,growl) {
-    $scope.search = function(){
+    $scope.search = function(initCurrentPage){
       var promise = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/shop/all",
-        params: {currentPage: $rootScope.pagination.currentPage, pageSize: $rootScope.pagination.pageSize}
+        params: {
+          currentPage: initCurrentPage == 'true' ? 1 :$rootScope.pagination.currentPage,
+          pageSize: $rootScope.pagination.pageSize}
       });
       promise.then(function (res, status, config, headers) {
         $rootScope.loadingState = false;
@@ -31,7 +33,7 @@ class ShopController {
 
     };
 
-    $scope.search();
+    $scope.search('true');
   }
 }
 

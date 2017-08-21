@@ -15,12 +15,12 @@ class RoleController {
       $rootScope.item.isEnable = !$rootScope.item.isEnable;
 
     };
-    $scope.search = function () {
+    $scope.search = function (initCurrentPage) {
       var promise = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/role/role_all",
         params: {
-          currentPage: $rootScope.pagination.currentPage,
+          currentPage:initCurrentPage == 'true' ? 1 : $rootScope.pagination.currentPage,
           pageSize: $rootScope.pagination.pageSize,
           userName: $scope.userName
         }
@@ -245,7 +245,7 @@ class RoleController {
     $scope.pageChanged = function () {
       $scope.search();
     };
-    $scope.search();
+    $scope.search('true');
   }
 }
 

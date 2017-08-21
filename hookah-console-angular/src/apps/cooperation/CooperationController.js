@@ -1,10 +1,11 @@
 class CooperationController {
     constructor($scope, $rootScope, $http, $state, $uibModal, usSpinnerService, growl) {
-        $scope.search = function () {
+        $scope.search = function (initCurrentPage) {
             var promise = $http({
                 method: 'GET',
                 url: $rootScope.site.apiServer + "/coo/search",
-                params: {currentPage: $rootScope.pagination.currentPage,
+                params: {
+                    currentPage:initCurrentPage == 'true' ? 1 : $rootScope.pagination.currentPage,
                     pageSize: $rootScope.pagination.pageSize,
                     cooName: $scope.cooName
                 }
@@ -133,7 +134,7 @@ class CooperationController {
         $scope.refresh = function () {
             $scope.search();
         };
-        $scope.search();
+        $scope.search('true');
     }
 }
 

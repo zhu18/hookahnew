@@ -3,7 +3,7 @@ class CommentController {
     $scope.commentList = [];
     $scope.choseArr = [];//多选数组
 
-    $scope.search = function () {
+    $scope.search = function (initCurrentPage) {
       console.log($scope.levelStar);
       var promise = $http({
         method: 'GET',
@@ -16,7 +16,7 @@ class CommentController {
           commentContent: $scope.commentContent ? $scope.commentContent : null,//评价关键字
           goodsCommentGrade: $scope.goodsCommentGrade ? $scope.goodsCommentGrade : null,//评分等级
           status: $scope.status == 0 ? '0' : ($scope.status ? $scope.status : null),//审核状态
-          pageNumber: $rootScope.pagination.currentPage, //当前页码
+          pageNumber: initCurrentPage == 'true' ? 1 :$rootScope.pagination.currentPage, //当前页码
           pageSize: $rootScope.pagination.pageSize
         }
       });
@@ -131,7 +131,7 @@ class CommentController {
     $scope.refresh = function () {
       $scope.search();
     };
-    $scope.search();
+    $scope.search('true');
 
     // 处理日期插件的获取日期的格式
     var format = function (time, format) {

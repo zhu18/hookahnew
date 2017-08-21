@@ -1,10 +1,11 @@
 class SysNoticController {
     constructor($scope, $rootScope, $state, $http, $uibModal, usSpinnerService, growl) {
-        $scope.search = function () {
+        $scope.search = function (initCurrentPage) {
             var promise = $http({
                 method: 'GET',
                 url: $rootScope.site.apiServer + "/sysnotice/search",
-                params: {currentPage: $rootScope.pagination.currentPage,
+                params: {
+                    currentPage: initCurrentPage == 'true' ? 1 :$rootScope.pagination.currentPage,
                     pageSize: $rootScope.pagination.pageSize,
                     noticeTitle: $scope.noticeTitle
                 }
@@ -105,7 +106,7 @@ class SysNoticController {
         $scope.pageChanged = function () {
             $scope.search();
         };
-        $scope.search();
+        $scope.search('true');
     }
 }
 export default SysNoticController;

@@ -1,6 +1,6 @@
 class CommentController {
   constructor($scope, $rootScope, $http, $state, $uibModal, usSpinnerService, growl) {
-    $scope.search = function () {
+    $scope.search = function (initCurrentPage) {
       console.log($scope.levelStar);
       var promise = $http({
         method: 'GET',
@@ -11,7 +11,7 @@ class CommentController {
           orgName: $scope.orgName ? $scope.orgName : null,
           startDate: $scope.startDate ? format($scope.startDate, 'yyyy-MM-dd HH:mm:ss') : null,
           endDate: $scope.endDate ? format($scope.endDate, 'yyyy-MM-dd HH:mm:ss') : null,
-          currentPage: $rootScope.pagination.currentPage, //当前页码
+          currentPage: initCurrentPage == 'true' ? 1 :$rootScope.pagination.currentPage, //当前页码
           pageSize: $rootScope.pagination.pageSize,
         }
       });
@@ -48,7 +48,7 @@ class CommentController {
       });
 
     };
-    $scope.search();
+    $scope.search('true');
     $scope.refresh = function () {
       $scope.search();
     };

@@ -3,12 +3,12 @@ class ShelfController {
     if($location.path()=="/order/viewOrderPending"){
         $scope.solveStatus="2"
     }
-    $scope.search = function () {
+    $scope.search = function (initCurrentPage) {
           var promise = $http({
               method: 'GET',
               url: $rootScope.site.apiServer + "/api/order/all",
               params: {
-                  currentPage: $rootScope.pagination.currentPage,
+                  currentPage: initCurrentPage == 'true' ? 1 :$rootScope.pagination.currentPage,
                   pageSize: $rootScope.pagination.pageSize,
                   orderSn: $scope.orderSn?$scope.orderSn:null,
                   userName:$scope.userName?$scope.userName:null,
@@ -25,7 +25,7 @@ class ShelfController {
           });
       };
 
-    $scope.search();
+    $scope.search('true');
     $scope.getDetails = function (event, orderId) {
         $state.go('order.viewOrderDetails', {id: orderId});
     };

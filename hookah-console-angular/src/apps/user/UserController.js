@@ -1,12 +1,12 @@
 class UserController {
   constructor($scope, $rootScope, $state, $http, $uibModal, usSpinnerService, growl) {
     $scope.title = '用户查询';
-    $scope.search = function () {
+    $scope.search = function (initCurrentPage) {
       var promise = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/user/all",
         params: {
-          currentPage: $rootScope.pagination.currentPage,
+          currentPage: initCurrentPage == 'true' ? 1 :$rootScope.pagination.currentPage,
           pageSize: $rootScope.pagination.pageSize,
           userName: $scope.userName,
           mobile: $scope.mobile,
@@ -48,7 +48,7 @@ class UserController {
     $scope.pageChanged = function () {
       $scope.search();
     };
-    $scope.search();
+    $scope.search('true');
     if ($state.$current.name == "user.search") {
       $scope.title = '用户查询';
       $scope.userTypes = [

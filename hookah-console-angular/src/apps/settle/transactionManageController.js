@@ -3,7 +3,7 @@ class transactionManageController {
     $scope.settleList = [];
     $scope.choseArr = [];//多选数组
 
-    $scope.search = function () {
+    $scope.search = function (initCurrentPage) {
       // console.log($scope.levelStar);
       if ($scope.startDate !== null && $scope.endDate !== null && ($scope.startDate > $scope.endDate)) {
         //继续
@@ -19,7 +19,7 @@ class transactionManageController {
           addUser  : $scope.addUser   ? $scope.addUser : null,
           startDate: $scope.startDate ? format($scope.startDate, 'yyyy-MM-dd HH:mm:ss') : null,
           endDate: $scope.endDate ? format($scope.endDate, 'yyyy-MM-dd HH:mm:ss') : null,
-          currentPage: $rootScope.pagination.currentPage, //当前页码
+          currentPage:initCurrentPage == 'true' ? 1 : $rootScope.pagination.currentPage, //当前页码
           pageSize: $rootScope.pagination.pageSize
         }
       });
@@ -91,7 +91,7 @@ class transactionManageController {
     $scope.refresh = function () {
       $scope.search();
     };
-    $scope.search();
+    $scope.search('true');
 
     // 处理日期插件的获取日期的格式
     var format = function (time, format) {

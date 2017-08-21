@@ -4,7 +4,7 @@ class showMoneyListController {
     $scope.choseArr = [];//多选数组
 
 
-    $scope.search = function () {
+    $scope.search = function (initCurrentPage) {
       if ($scope.startDate !== null && $scope.endDate !== null && ($scope.startDate > $scope.endDate)) {
         //继续
         alert('开始时间必须大于结束时间！请重新选择日期。');
@@ -18,7 +18,7 @@ class showMoneyListController {
           tradeStatus: $scope.tradeStatus == 0 ? '0' : ($scope.tradeStatus ? $scope.tradeStatus : null),//审核状态
           startDate: $scope.startDate ? format($scope.startDate, 'yyyy-MM-dd HH:mm:ss') : null,
           endDate: $scope.endDate ? format($scope.endDate, 'yyyy-MM-dd HH:mm:ss') : null,
-          currentPage: $rootScope.pagination.currentPage, //当前页码
+          currentPage: initCurrentPage == 'true' ? 1 : $rootScope.pagination.currentPage, //当前页码
           pageSize: $rootScope.pagination.pageSize
         }
       });
@@ -135,7 +135,7 @@ class showMoneyListController {
     $scope.refresh = function () {
       $scope.search();
     };
-    $scope.search();
+    $scope.search('true');
 
     // 处理日期插件的获取日期的格式
     var format = function (time, format) {

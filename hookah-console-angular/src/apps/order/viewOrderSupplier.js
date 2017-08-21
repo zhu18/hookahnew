@@ -3,12 +3,12 @@
  */
 class viewOrderSupplier {
     constructor($scope, $rootScope, $state, $http, $uibModal, uibDateParser, usSpinnerService, growl) {
-        $scope.search = function () {
+        $scope.search = function (initCurrentPage) {
             var promise = $http({
                 method: 'GET',
                 url: $rootScope.site.apiServer + "/api/order/soldOrder",
                 params: {
-                    currentPage: $rootScope.pagination.currentPage,
+                    currentPage:initCurrentPage == 'true' ? 1 : $rootScope.pagination.currentPage,
                     pageSize: $rootScope.pagination.pageSize,
                     orderSn: $scope.orderSn?$scope.orderSn:null,
                     userName:$scope.userName?$scope.userName:null,
@@ -22,7 +22,7 @@ class viewOrderSupplier {
                 $scope.supplierList=res.data.data.list
             });
         };
-        $scope.search()
+        $scope.search('true')
         $scope.pageChanged = function () {
             $scope.search();
         };

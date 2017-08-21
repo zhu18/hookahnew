@@ -5,11 +5,12 @@ class EsController {
 
       $scope.ess = [{no:'1',index:'qingdao-goods-v1',type:'goods'},{no:'2',index:'qingdao-category-v1',type:'category'} ];
 
-    $scope.search = function () {
+    $scope.search = function (initCurrentPage) {
       var promise = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/es/v1/goods",
-        params: {currentPage: $rootScope.pagination.currentPage,
+        params: {
+          currentPage:initCurrentPage == 'true' ? 1 : $rootScope.pagination.currentPage,
                     pageSize: $rootScope.pagination.pageSize,
                     goodsName: $scope.searchName,
         //             goodsSn: $scope.searchSn,
@@ -95,7 +96,7 @@ class EsController {
 
 
     if ($state.$current.name == "elastic.delGoods") {
-        $scope.search();
+        $scope.search('true');
     }
 
   }

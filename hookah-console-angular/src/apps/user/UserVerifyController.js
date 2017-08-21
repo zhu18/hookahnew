@@ -26,12 +26,12 @@ class UserVerifyController {
       $scope.refresh1 = function () {
         $scope.searchCheckResult();
       }
-    $scope.searchCheckResult = function () {
+    $scope.searchCheckResult = function (initCurrentPage) {
       var promise = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/userCheck/all",
         params: {
-          currentPage: $rootScope.pagination.currentPage,
+          currentPage:initCurrentPage == 'true' ? 1 : $rootScope.pagination.currentPage,
           pageSize: $rootScope.pagination.pageSize,
           userName: $scope.userName,
           userType: $scope.userType
@@ -145,7 +145,7 @@ class UserVerifyController {
       }
 
       if ($state.$current.name == "user.verify.resultAll") {
-        $scope.searchCheckResult();
+        $scope.searchCheckResult('true');
       }
     };
 
@@ -159,7 +159,7 @@ class UserVerifyController {
 
     if ($state.$current.name == "user.verify.resultAll") {
       $scope.title = '审核记录';
-      $scope.searchCheckResult();
+      $scope.searchCheckResult('true');
       // $scope.userTypes = [{id: -1, name: "全部"}, {id: 0, name: "个人"}, {id: 1, name: "企业"}];
       $scope.userTypes = [{id: -1, name: "全部"}, {id: 1, name: "企业"}];
       $scope.userType = -1;
