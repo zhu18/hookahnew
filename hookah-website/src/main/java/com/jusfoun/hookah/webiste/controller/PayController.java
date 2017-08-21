@@ -284,7 +284,13 @@ public class PayController extends BaseController{
 
         Map<String,String> param = getRequestParams(request);
         logger.info("支付宝异步回调"+orderSn);
-        boolean flag = payAccountService.aliPay(orderSn, tradeStatus, param);
+        List<Condition> filter = new ArrayList<>();
+        filter.add(Condition.eq("orderSn",orderSn));
+        OrderInfo orderInfo = orderService.selectOne(filter);
+        boolean flag = false;
+        if (orderInfo != null && orderInfo.getPayStatus() == orderInfo.PAYSTATUS_PAYED){
+            flag = payAccountService.aliPay(orderSn, tradeStatus, param);
+        }
         if (flag){
             return "success";
         }else {
