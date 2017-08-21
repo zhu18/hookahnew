@@ -62,7 +62,7 @@
 							<th>名称</th>
 							<th data-ng-if="goodsTypeView != 1">价格</th>
 							<th>所属地域</th>
-							<th data-ng-if="goodsTypeView != 1">分类</th>
+							<!--<th data-ng-if="goodsTypeView != 1">分类</th>-->
 							<th>类型</th>
 							<th>供应商</th>
 							<th data-ng-if="goodsTypeView != 2">审核状态</th><!--13-->
@@ -94,7 +94,7 @@
 							<td>
 								<span class="column-text" ng-bind="item.goodsArea"></span>
 							</td>
-							<td data-ng-if="goodsTypeView != 1"><span ng-bind="item.catName"></span></td>
+							<!--<td data-ng-if="goodsTypeView != 1"><span ng-bind="item.catName"></span></td>-->
 							<td>
 								<span class="column-text" ng-bind="item.goodsType | goodsType"></span>
 							</td>

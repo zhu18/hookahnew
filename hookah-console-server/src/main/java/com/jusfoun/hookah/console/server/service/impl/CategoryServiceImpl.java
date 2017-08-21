@@ -53,12 +53,12 @@ public class CategoryServiceImpl extends GenericServiceImpl<Category, String> im
     public List<CategoryVo> getCatTree() {
         List<CategoryVo> vo = new ArrayList<>();
         List<Condition> filters = new ArrayList<>();
-        filters.add(Condition.eq("catSign", 1));
+        filters.add(Condition.eq("isShow", Byte.valueOf("1")));
         filters.add(Condition.eq("parentId", "0"));
         List<Category> list = super.selectList(filters);
         if(list != null && list.size() > 0) {
             for(Category cat : list) {
-                vo.add(getChild(cat.getCatId(),1));
+                vo.add(getChild(cat.getCatId(),Byte.valueOf("1")));
             }
         }
         return vo;
@@ -80,10 +80,10 @@ public class CategoryServiceImpl extends GenericServiceImpl<Category, String> im
 
 
 
-    private CategoryVo getChild(String pid,Integer catSign) {
+    private CategoryVo getChild(String pid,Byte isShow) {
         List<Condition> filters1 = new ArrayList<>();
-        if(Objects.nonNull(catSign)){
-            filters1.add(Condition.eq("catSign", catSign));
+        if(Objects.nonNull(isShow)){
+            filters1.add(Condition.eq("isShow", isShow));
         }
         filters1.add(Condition.eq("catId", pid));
         Category treeNode = super.selectOne(filters1);
@@ -96,18 +96,18 @@ public class CategoryServiceImpl extends GenericServiceImpl<Category, String> im
         //end*/
 
         List<Condition> filters = new ArrayList<>();
-        if(Objects.nonNull(catSign)){
-            filters.add(Condition.eq("catSign", catSign));
+        if(Objects.nonNull(isShow)){
+            filters.add(Condition.eq("isShow", isShow));
         }
         filters.add(Condition.eq("parentId", pid));
         List<Category> childList = super.selectList(filters);
         if(childList != null && childList.size() > 0) {
             for(Category cat : childList){
                 Category n;
-                if(Objects.nonNull(catSign)){
+                if(Objects.nonNull(isShow)){
                     n = getChild(cat.getCatId(),null); //递归
                 }else{
-                    n = getChild(cat.getCatId(),catSign); //递归
+                    n = getChild(cat.getCatId(),isShow); //递归
                 }
 
                 CategoryVo nodeVo2 = new CategoryVo();

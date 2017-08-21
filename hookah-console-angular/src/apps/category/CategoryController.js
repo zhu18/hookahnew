@@ -31,13 +31,16 @@ class CategoryController {
             {
                 field: "goodsTypeName",
                 displayName:"程序模板"
-            },{
-                field: "catId",
-                displayName: "分类编码"
-            },{
-                field: "goodsCode",
-                displayName: "商品代码"
-            }, {
+            },
+            // {
+            //     field: "catId",
+            //     displayName: "分类编码"
+            // },
+            // {
+            //     field: "goodsCode",
+            //     displayName: "商品代码"
+            // }
+             {
                 field: "isShow",
                 displayName: "是否启用",
                 cellTemplate:'<span>{{ row.branch[col.field] | Status }}</span>'
@@ -47,8 +50,9 @@ class CategoryController {
                 displayName: "操作",
                 cellTemplate: '<a ng-click="cellTemplateScope.edit(row.branch)">修改</a> <span class="text-explode">|</span> <i class="link-space"></i> ' +
                                '<a href="javascript:;" ng-click="cellTemplateScope.delete(row.branch)" target="_blank">删除</a> <span class="text-explode">|</span> <i class="link-space"></i> ' +
-                               '<a href="javascript:;" ng-click="cellTemplateScope.addChild(row.branch)" target="_blank">增加子分类</a><span class="text-explode">|</span> <i class="link-space"></i>' +
-                               '<a href="javascript:;" ng-show="row.branch[\'level\'] == 1" ng-click="cellTemplateScope.manageAttrType(row.branch)" target="_blank">管理属性</a>',
+                               '<a href="javascript:;" ng-click="cellTemplateScope.addChild(row.branch)" target="_blank">增加子分类</a><span class="text-explode">|</span> <i class="link-space"></i>'
+                               // '<a href="javascript:;" ng-show="row.branch[\'level\'] == 1" ng-click="cellTemplateScope.manageAttrType(row.branch)" target="_blank">管理属性</a>'
+                ,
                 cellTemplateScope: {
                     edit: function (data) {
                         $scope.edit(data);
