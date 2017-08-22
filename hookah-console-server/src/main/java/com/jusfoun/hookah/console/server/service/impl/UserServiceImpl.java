@@ -118,8 +118,8 @@ public class UserServiceImpl extends GenericServiceImpl<User, String> implements
         listUv.add(Integer.parseInt(redisOperate.get("uv:" + today.toString()) == null ? "0" : redisOperate.get("uv:" + today.toString())));
         for(int i = 1; i <= n; i++){
             listDate.add(today.minusDays(i).toString().substring(6,10).replace("-","/"));
-            listPv.add(Integer.parseInt(redisOperate.get("pv:" + today.toString()) == null ? "0" : redisOperate.get("pv:" + today.toString())));
-            listUv.add(Integer.parseInt(redisOperate.get("uv:" + today.toString()) == null ? "0" : redisOperate.get("uv:" + today.toString())));
+            listPv.add(Integer.parseInt(redisOperate.get("pv:" + today.minusDays(i).toString()) == null ? "0" : redisOperate.get("pv:" + today.minusDays(i).toString())));
+            listUv.add(Integer.parseInt(redisOperate.get("uv:" + today.minusDays(i).toString()) == null ? "0" : redisOperate.get("uv:" + today.minusDays(i).toString())));
         }
         map.put("x", listDate);
         map.put("listPv",listPv);
