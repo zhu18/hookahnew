@@ -34,6 +34,10 @@ public class ShowVO implements Serializable {
     //登录名称
     private String loginName;
 
+    private Long value1;
+
+    private Long value2;
+
     public String getUserId() { return userId;}
 
     public void setUserId(String userId) {this.userId = userId;}
@@ -97,4 +101,12 @@ public class ShowVO implements Serializable {
     public void setCount(Long count) {
         this.count = count;
     }
+
+    public Long getValue1() {return value1;}
+
+    public void setValue1(Long value1) {this.value1 = value1;}
+
+    public Long getValue2() {return value2;}
+
+    public void setValue2(Long value2) {this.value2 = value2;}
 }

@@ -21,9 +21,7 @@ import org.springframework.ui.Model;
 
 import javax.annotation.Resource;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author huang lei
@@ -99,26 +97,33 @@ public class UserServiceImpl extends GenericServiceImpl<User, String> implements
         redisOperate.incr(pvKey);
     }
 
-    @Override
-    public Map<String, Object> getPUVCountByDate() {
-
+    public Map<String, Object> getPUVCount(){
         Map<String, Object> map = new HashedMap();
-        //int n = 4;
-        //List<Integer> listPv = new ArrayList<>(); //pv数据集合
-        //List<Integer> listUv = new ArrayList<>(); //uv数据集合
-        //List<String> listDate = new ArrayList<>(); //日期集合
         LocalDate today = LocalDate.now();
-        //listDate.add(today.toString());
-        //listPv.add(Integer.parseInt(redisOperate.get("pv:" + today.toString())));
-        //listUv.add(Integer.parseInt(redisOperate.get("uv:" + today.toString())));
-        /*for(int i = 1; i <= n; i++){
-            listDate.add(today.minusDays(i).toString());
-            listPv.add(Integer.parseInt(redisOperate.get("pv:" + today.minusDays(i))));
-            listUv.add(Integer.parseInt(redisOperate.get("uv:" + today.minusDays(i))));
-        }*/
-        //map.put("puvdate", listDate);
         map.put("pvdata", Integer.parseInt(redisOperate.get("pv:" + today.toString())));
         map.put("uvdata", Integer.parseInt(redisOperate.get("uv:" + today.toString())));
+        return map;
+    }
+    @Override
+    public Map<String, Object> getPUVCountByDate() {
+        Map<String, Object> map = new HashedMap();
+        int n = 4;
+        List<Integer> listPv = new ArrayList<>(); //pv数据集合
+        List<Integer> listUv = new ArrayList<>(); //uv数据集合
+        List<String> listDate = new ArrayList<>(); //日期集合
+
+        LocalDate today = LocalDate.now();
+        listDate.add(today.toString().substring(6,10).replace("-","/"));
+        listPv.add(Integer.parseInt(redisOperate.get("pv:" + today.toString()) == null ? "0" : redisOperate.get("pv:" + today.toString())));
+        listUv.add(Integer.parseInt(redisOperate.get("uv:" + today.toString()) == null ? "0" : redisOperate.get("uv:" + today.toString())));
+        for(int i = 1; i <= n; i++){
+            listDate.add(today.minusDays(i).toString().substring(6,10).replace("-","/"));
+            listPv.add(Integer.parseInt(redisOperate.get("pv:" + today.toString()) == null ? "0" : redisOperate.get("pv:" + today.toString())));
+            listUv.add(Integer.parseInt(redisOperate.get("uv:" + today.toString()) == null ? "0" : redisOperate.get("uv:" + today.toString())));
+        }
+        map.put("x", listDate);
+        map.put("listPv",listPv);
+        map.put("listUv",listUv);
         return map;
     }
 

@@ -1,22 +1,21 @@
 package com.jusfoun.hookah.webiste.controller;
 
+import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.constants.HookahConstants;
-import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.OrderInfo;
 import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
+import com.jusfoun.hookah.core.domain.vo.ShowVO;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ReturnData;
-import com.jusfoun.hookah.rpc.api.GoodsService;
-import com.jusfoun.hookah.rpc.api.MgOrderInfoService;
-import com.jusfoun.hookah.rpc.api.OrderInfoService;
-import com.jusfoun.hookah.rpc.api.UserService;
+import com.jusfoun.hookah.rpc.api.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -27,6 +26,10 @@ import java.util.stream.Stream;
  */
 @Controller
 public class ShowController {
+
+    @Resource
+    ShowService showService;
+
     @Resource
     GoodsService goodsService;
 
@@ -39,6 +42,9 @@ public class ShowController {
     @Resource
     OrderInfoService orderInfoService;
 
+    @Resource
+    RedisOperate redisOperate;
+
     //商品未删除
     public static final Byte IS_DEL_NO = 1;
 
@@ -48,7 +54,7 @@ public class ShowController {
     }
 
 
-    //上架商品数量
+    //2 上架商品数量
     @ResponseBody
     @RequestMapping(value = "/show/goodsCount", method = RequestMethod.GET)
     public ReturnData goodsCount(){
@@ -157,7 +163,7 @@ public class ShowController {
         return ReturnData.success(list1);
     }
 
-    //用户注册数
+    //1 用户注册数
     @ResponseBody
     @RequestMapping(value = "/show/userCountList", method = RequestMethod.GET)
     public ReturnData userCount(String userId){
@@ -203,11 +209,10 @@ public class ShowController {
         return ReturnData.success(list1);
     }
 
-    //订单数量
+    //3 订单数量
     @ResponseBody
     @RequestMapping(value = "/show/orderInfoCount", method = RequestMethod.GET)
     public ReturnData orderInfoCount(){
-        Map map = new HashMap<>(5);
         List<Condition> orderSumFilters = new ArrayList<>();
         List<Condition> paidFilters = new ArrayList<>();
         List<Condition> unpaidFilters = new ArrayList<>();
@@ -264,5 +269,284 @@ public class ShowController {
         list1.add(list);
         list1.add(amountList);
         return ReturnData.success(list1);
+    }
+
+    /**
+     * 4
+     * 日注册用户
+     * 日活跃用户
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/show/userAnalysis", method = RequestMethod.GET)
+    public ReturnData userAnalysis(){
+        Map map = new HashMap<>(5);
+        map.put("registerUser", registerUser().getData());
+        map.put("activeUser", activeUser().getData());
+        List<ShowVO> registerUserCount = showService.getRegisterUserCount();
+        List<ShowVO> activeUserCount = showService.getActiveUserCount();
+        List couList = new ArrayList<>();
+        for(ShowVO show : registerUserCount){
+            couList.add(show.getCount());
+        }
+        for(ShowVO show : activeUserCount){
+            couList.add(Long.parseLong(show.getLoginName()));
+        }
+        Comparable max = Collections.max(couList);
+        map.put("max", max);
+        return ReturnData.success(map);
+    }
+    //日注册用户
+    public ReturnData registerUser(){
+        List<ShowVO> registerUserCount = showService.getRegisterUserCount();
+        Map map = new HashMap<>(5);
+        List list = new ArrayList<>();
+        List couList = new ArrayList<>();
+        for(ShowVO show : registerUserCount){
+            SimpleDateFormat sdf=new SimpleDateFormat("MM/dd");
+            String format = sdf.format(show.getAddTime());
+            list.add(format);
+            couList.add(show.getCount());
+        }
+        map.put("x",list);
+        map.put("count",couList);
+        return ReturnData.success(map);
+    }
+
+    //日活跃用户
+    public ReturnData activeUser(){
+        List<ShowVO> activeUserCount = showService.getActiveUserCount();
+        Map map = new HashMap<>(5);
+        List couList = new ArrayList<>();
+        for(ShowVO show : activeUserCount){
+            couList.add(show.getLoginName());
+        }
+        map.put("count",couList);
+        return ReturnData.success(map);
+    }
+
+    /**5 pu vu趋势分析
+     * pu页面浏览量  uv独立访问量
+     */
+    @ResponseBody
+    @RequestMapping(value = "/show/viewsCount", method = RequestMethod.GET)
+    public ReturnData viewsCount(){
+        Map<String, Object> map = userService.getPUVCountByDate();
+        return ReturnData.success(map);
+    }
+
+    //7 商品类型交易金额
+    @ResponseBody
+    @RequestMapping(value = "/show/typeAmount", method = RequestMethod.GET)
+    public ReturnData typeAmount(){
+        List list = new ArrayList();
+        list.add(offType().getData());
+        list.add(apiType().getData());
+        list.add(modelType().getData());
+        list.add(toolType().getData());
+        list.add(toolSaasType().getData());
+        list.add(scenesType().getData());
+        list.add(scenesSaasType().getData());
+        return ReturnData.success(list);
+    }
+
+    //离线商品类型交易金额
+    public ReturnData offType(){
+        Map map = new HashMap<>(5);
+        List<Condition> filters = new ArrayList<Condition>();
+        filters.add(Condition.eq("isDeleted",0));
+        filters.add(Condition.eq("payStatus", OrderInfo.PAYSTATUS_PAYED));
+        List<OrderInfoVo> orderList = mgOrderInfoService.selectList(filters);
+        long price = 0;
+        for (OrderInfoVo order:orderList) {
+            List<MgOrderGoods> mgOrderGoodsList = order.getMgOrderGoodsList();
+            for (MgOrderGoods mgOrder: mgOrderGoodsList){
+                if(mgOrder.getGoodsType() == 0){
+                    price +=  mgOrder.getGoodsPrice();
+                }
+            }
+        }
+        map.put("value",price);
+        map.put("name","离线商品");
+        return ReturnData.success(map);
+    }
+
+    //API商品类型交易金额
+    public ReturnData apiType(){
+        Map map = new HashMap<>(5);
+        List<Condition> filters = new ArrayList<Condition>();
+        filters.add(Condition.eq("isDeleted",0));
+        filters.add(Condition.eq("payStatus", OrderInfo.PAYSTATUS_PAYED));
+        List<OrderInfoVo> orderList = mgOrderInfoService.selectList(filters);
+        long price = 0;
+        for (OrderInfoVo order:orderList) {
+            List<MgOrderGoods> mgOrderGoodsList = order.getMgOrderGoodsList();
+            for (MgOrderGoods mgOrder: mgOrderGoodsList){
+                if(mgOrder.getGoodsType() ==1){
+                    price +=  mgOrder.getGoodsPrice();
+                }
+            }
+        }
+        map.put("value",price);
+        map.put("name","api商品");
+        return ReturnData.success(map);
+    }
+
+    //数据模型商品类型交易金额
+    public ReturnData modelType(){
+        Map map = new HashMap<>(5);
+        List<Condition> filters = new ArrayList<Condition>();
+        filters.add(Condition.eq("isDeleted",0));
+        filters.add(Condition.eq("payStatus", OrderInfo.PAYSTATUS_PAYED));
+        List<OrderInfoVo> orderList = mgOrderInfoService.selectList(filters);
+        long price = 0;
+        for (OrderInfoVo order:orderList) {
+            List<MgOrderGoods> mgOrderGoodsList = order.getMgOrderGoodsList();
+            for (MgOrderGoods mgOrder: mgOrderGoodsList){
+                if(mgOrder.getGoodsType() ==2){
+                    price +=  mgOrder.getGoodsPrice();
+                }
+            }
+        }
+        map.put("value",price);
+        map.put("name","数据模型商品");
+
+        return ReturnData.success(map);
+    }
+
+    //分析工具商品类型交易金额
+    public ReturnData toolType(){
+        Map map = new HashMap<>(5);
+        List<Condition> filters = new ArrayList<Condition>();
+        filters.add(Condition.eq("isDeleted",0));
+        filters.add(Condition.eq("payStatus", OrderInfo.PAYSTATUS_PAYED));
+        List<OrderInfoVo> orderList = mgOrderInfoService.selectList(filters);
+        long price = 0;
+        for (OrderInfoVo order:orderList) {
+            List<MgOrderGoods> mgOrderGoodsList = order.getMgOrderGoodsList();
+            for (MgOrderGoods mgOrder: mgOrderGoodsList){
+                if(mgOrder.getGoodsType() ==4){
+                    price +=  mgOrder.getGoodsPrice();
+                }
+            }
+        }
+        map.put("value",price);
+        map.put("name","分析工具商品");
+        return ReturnData.success(map);
+    }
+
+    //分析工具-SaaS商品类型交易金额
+    public ReturnData toolSaasType(){
+        Map map = new HashMap<>(5);
+        List<Condition> filters = new ArrayList<Condition>();
+        filters.add(Condition.eq("isDeleted",0));
+        filters.add(Condition.eq("payStatus", OrderInfo.PAYSTATUS_PAYED));
+        List<OrderInfoVo> orderList = mgOrderInfoService.selectList(filters);
+        long price = 0;
+        for (OrderInfoVo order:orderList) {
+            List<MgOrderGoods> mgOrderGoodsList = order.getMgOrderGoodsList();
+            for (MgOrderGoods mgOrder: mgOrderGoodsList){
+                if(mgOrder.getGoodsType() ==5){
+                    price +=  mgOrder.getGoodsPrice();
+                }
+            }
+        }
+        map.put("value",price);
+        map.put("name","分析工具-SaaS商品");
+        return ReturnData.success(map);
+    }
+
+    //应用场景--独立软件商品类型交易金额
+    public ReturnData scenesType(){
+        Map map = new HashMap<>(5);
+        List<Condition> filters = new ArrayList<Condition>();
+        filters.add(Condition.eq("isDeleted",0));
+        filters.add(Condition.eq("payStatus", OrderInfo.PAYSTATUS_PAYED));
+        List<OrderInfoVo> orderList = mgOrderInfoService.selectList(filters);
+        long price = 0;
+        for (OrderInfoVo order:orderList) {
+            List<MgOrderGoods> mgOrderGoodsList = order.getMgOrderGoodsList();
+            for (MgOrderGoods mgOrder: mgOrderGoodsList){
+                if(mgOrder.getGoodsType() == 6){
+                    price +=  mgOrder.getGoodsPrice();
+                }
+            }
+        }
+        map.put("value",price);
+        map.put("name","应用场景--独立软件商品");
+        return ReturnData.success(map);
+    }
+
+    //应用场景--SaaS商品类型交易金额
+    public ReturnData scenesSaasType(){
+        Map map = new HashMap<>(5);
+        List<Condition> filters = new ArrayList<Condition>();
+        filters.add(Condition.eq("isDeleted",0));
+        filters.add(Condition.eq("payStatus", OrderInfo.PAYSTATUS_PAYED));
+        List<OrderInfoVo> orderList = mgOrderInfoService.selectList(filters);
+        long price = 0;
+        for (OrderInfoVo order:orderList) {
+            List<MgOrderGoods> mgOrderGoodsList = order.getMgOrderGoodsList();
+            for (MgOrderGoods mgOrder: mgOrderGoodsList){
+                if(mgOrder.getGoodsType() == 7){
+                    price +=  mgOrder.getGoodsPrice();
+                }
+            }
+        }
+        map.put("value",price);
+        map.put("name","应用场景--SaaS商品");
+        return ReturnData.success(map);
+    }
+
+
+    //8 注册用户地域分布
+    @ResponseBody
+    @RequestMapping(value = "/show/userArea", method = RequestMethod.GET)
+    public ReturnData userArea(){
+        List<ShowVO> area = showService.userArea();
+        for(ShowVO show :area){
+            show.setValue1(show.getCount());
+            show.setValue2(show.getCount());
+        }
+        return ReturnData.success(area);
+    }
+
+    //6日交易交易金额分析
+    @ResponseBody
+    @RequestMapping(value = "/show/transactionMoney", method = RequestMethod.GET)
+    public ReturnData transactionMoney() {
+        Map map = new HashMap<>(5);
+        map.put("transactionAmount", transactionAmount().getData());
+        map.put("unTransactionAmount", unTransactionAmount().getData());
+        return ReturnData.success(map);
+    }
+
+    //日交易金额
+    public ReturnData transactionAmount(){
+        List<ShowVO> amount = showService.getPayAmount();
+        Map map = new HashMap<>(5);
+        List list = new ArrayList<>();
+        List couList = new ArrayList<>();
+        for(ShowVO show : amount){
+            SimpleDateFormat sdf=new SimpleDateFormat("MM/dd");
+            String format = sdf.format(show.getAddTime());
+            list.add(format);
+            couList.add(show.getOrderAmount());
+        }
+        map.put("x",list);
+        map.put("count",couList);
+        return ReturnData.success(map);
+    }
+
+    //待支付金额
+    public ReturnData unTransactionAmount(){
+        List<ShowVO> amount = showService.getUnPayAmount();
+        Map map = new HashMap<>(5);
+        List couList = new ArrayList<>();
+        for(ShowVO show : amount){
+            couList.add(show.getOrderAmount());
+        }
+        map.put("count",couList);
+        return ReturnData.success(map);
     }
 }

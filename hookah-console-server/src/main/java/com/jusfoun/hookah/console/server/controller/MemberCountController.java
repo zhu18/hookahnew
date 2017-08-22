@@ -92,8 +92,7 @@ public class MemberCountController {
         //访问次数
         int accessCount = showService.getAccessCount();
         //pu浏览次数  uv独立访客
-        Map<String, Object> PUV = userService.getPUVCountByDate();
-
+        Map<String, Object> PUV = userService.getPUVCount();
         map.put("PUV",PUV);
         map.put("activeUserCount",activeUserCount);
         map.put("accessCount",accessCount);

@@ -64,5 +64,5 @@ public class ShowServiceImpl extends GenericServiceImpl<User, String> implements
     public int getAccessCount(){
         return showMapper.getAccessCount();
     }
-
+    
 }

@@ -25,6 +25,8 @@ public interface UserService extends GenericService<User, String> {
 
     Map<String, Object> getPUVCountByDate();
 
+    Map<String, Object> getPUVCount();
+
     String updatePayPassWord(String oldPayPassWord, String newPayPassWord, Integer safetyPayScore, String userId, Model model);
 
     Pagination getUsersInPage( HashMap<String,Object> params);

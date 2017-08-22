@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jusfoun.hookah.core.dao.ShowMapper">
   <resultMap id="ListUserMap" type="com.jusfoun.hookah.core.domain.vo.ShowVO">
+    <id column="count"  property="count"/>
     <id column="userId"  property="userId"/>
     <id column="addTime"  property="addTime"/>
   </resultMap>
@@ -24,20 +25,20 @@
   </resultMap>
 
   <select id="getRegisterUserCount" resultMap="ListUserMap">
-    SELECT COUNT(DISTINCT(user_id)) AS userId,
-    DATE_FORMAT(add_time,'%Y%m%d') addTime FROM user GROUP BY addTime DESC
+    SELECT COUNT(user_id) AS count,
+    DATE_FORMAT(add_time,'%y%m%d') addTime FROM user GROUP BY addTime DESC limit 5
   </select>
 
   <select id="getActiveUserCount" resultMap="activeUserMap">
-   SELECT COUNT(login_name) loginName,DATE_FORMAT(add_time,'%Y%m%d') addTime FROM login_log GROUP BY addTime DESC
+   SELECT COUNT(login_name) loginName,DATE_FORMAT(add_time,'%y%m%d') addTime FROM login_log GROUP BY addTime DESC limit 5
   </select>
 
   <select id="getPayAmount" resultMap="ListAmountMap">
-     SELECT sum(order_amount) orderAmount,DATE_FORMAT(add_time,'%Y%m%d') addTime FROM order_info WHERE pay_status=2 GROUP BY addTime DESC
+     SELECT sum(order_amount) orderAmount,DATE_FORMAT(add_time,'%y%m%d') addTime FROM order_info WHERE pay_status=2 GROUP BY addTime DESC limit 5
   </select>
 
   <select id="getUnPayAmount" resultMap="ListAmountMap">
-    SELECT sum(order_amount) orderAmount,DATE_FORMAT(add_time,'%Y%m%d') addTime FROM order_info WHERE pay_status=1 GROUP BY addTime DESC
+    SELECT sum(order_amount) orderAmount,DATE_FORMAT(add_time,'%y%m%d') addTime FROM order_info WHERE pay_status=1 GROUP BY addTime DESC limit 5
   </select>
 
   <!--注册用户地域分布-->
