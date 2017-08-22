@@ -95,7 +95,7 @@ var htmlPart = {
 						<%}else{%>
 						<div>
 							<span>价格</span>
-							<span class="font-size-24 color-orange J_goodsPrice" formatid="<%for(item in goodsDetails.formatList){%><%if(itemLP.first){%>${item.formatId}<%}%><%}%>">面议<span style="font-size:12px;">(参考价格${goodsDetails.shopPrice / 100}元)</span></span>
+							<span class="font-size-24 color-orange J_goodsPrice" formatid="<%for(item in goodsDetails.formatList){%><%if(itemLP.first){%>${item.formatId}<%}%><%}%>">面议<span style="font-size:12px;">(参考价格${goodsDetails.shopPrice / 100}元，详情请咨询客服。)</span></span>
 							<!--<span class="convert color-orange" id="J_goodsNumber">折合111111111元/次</span>-->
 						</div>
 						<%}%>

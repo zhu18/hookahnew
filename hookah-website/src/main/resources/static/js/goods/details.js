@@ -127,7 +127,7 @@ var priceT = (JshopPrice / 100).toFixed(2)
 if(isDiscussPrice == 0){
 	$('.J_goodsPrice').html(priceT);
 }else{
-	$('.J_goodsPrice').html('面议<span style="font-size:12px;">(参考价格￥'+priceT+')</span>');
+	$('.J_goodsPrice').html('面议<span style="font-size:12px;">(参考价格￥'+priceT+'，详情请咨询客服。)</span>');
 }
 
 var id = $.getUrlParam('id');
