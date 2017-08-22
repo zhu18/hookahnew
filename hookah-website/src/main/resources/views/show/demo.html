@@ -640,509 +640,586 @@
   }
   threeOptionFn();
 
-  var fourOption = {
-    tooltip: {
-      trigger: 'axis'
+  function fourOptionFn() {
+    $.ajax({
+      type: "GET",
+      url: "http://trade.qddata.com.cn/show/userAnalysis",
+      dataType: "json",
+      success: function (data) {
+        console.log(data);
+
+        var yMax=data.data.max;
+        var xAxisData=data.data.registerUser.x;
+        var registerCount=data.data.registerUser.count;
+        var activeUser=data.data.activeUser.count;
+
+
+        var fourOption = {
+          tooltip: {
+            trigger: 'axis'
 //            formatter: "{a}: {c}"
-    },
-    grid: {
-      show: false,
-      x: '10%',
-      y: '28%',
-      width: '60%',
-      height: '58%'
-    },
-    xAxis: [
-      {
-        type: 'category',
-        boundaryGap: false,
-        axisLine: {
-          lineStyle: {
-            color: '#88C6FF'
-          }
-        },
+          },
+          grid: {
+            show: false,
+            x: '10%',
+            y: '28%',
+            width: '60%',
+            height: '58%'
+          },
+          xAxis: [
+            {
+              type: 'category',
+              boundaryGap: false,
+              axisLine: {
+                lineStyle: {
+                  color: '#88C6FF'
+                }
+              },
 //                data : ['2017/5/30','2017/5/30','2017/5/30','2017/5/30','2017/5/30']
-        data: ['6/5', '6/6', '6/7', '6/8', '6/9']
-      }
-    ],
-    yAxis: [
-      {
-        gridIndex: 0,
-        min: 0,
-        max: 18,
-        axisLine: {
-          lineStyle: {
-            color: '#88C6FF'
-          }
-        },
-        splitLine: {//不显示基线
-          "show": false
-        }
-      }
+              data: xAxisData
+            }
+          ],
+          yAxis: [
+            {
+              gridIndex: 0,
+              min: 0,
+              max: yMax,
+              axisLine: {
+                lineStyle: {
+                  color: '#88C6FF'
+                }
+              },
+              splitLine: {//不显示基线
+                "show": false
+              }
+            }
 //            { type: 'value'}
-    ],
-    color: ["#88C6FF", "#DEE499"],
-    legend: {
-      orient: 'vertical',
-      icon: 'pin',
-      itemWidth: 14,
-      itemHeight: 5,
-      itemGap: 13,
-      data: ['日注册用户', '日活跃用户'],
-      top: "20%",
-      right: '2%',
-      textStyle: {
-        fontSize: 12,
-        color: '#88C6FF'
-      }
-    },
-    series: [
-      {
-        name: "日注册用户",
-        type: 'line',
-        smooth: true,
+          ],
+          color: ["#88C6FF", "#DEE499"],
+          legend: {
+            orient: 'vertical',
+            icon: 'pin',
+            itemWidth: 14,
+            itemHeight: 5,
+            itemGap: 13,
+            data: ['日注册用户', '日活跃用户'],
+            top: "20%",
+            right: '2%',
+            textStyle: {
+              fontSize: 12,
+              color: '#88C6FF'
+            }
+          },
+          series: [
+            {
+              name: "日注册用户",
+              type: 'line',
+              smooth: true,
 //                showSymbol: true,//不显示圆点
-        lineStyle: {
-          normal: {
-            color: "#DEE499"
-          }
-        },
-        data: [3, 2, 1, 3, 2]
-      },
-      {
-        name: "日活跃用户",
-        type: 'line',
-        smooth: true,
+              lineStyle: {
+                normal: {
+                  color: "#DEE499"
+                }
+              },
+              data: registerCount
+            },
+            {
+              name: "日活跃用户",
+              type: 'line',
+              smooth: true,
 //                showSymbol: false,
-        lineStyle: {
-          normal: {
-            color: "#62D3EF"
-          }
-        },
-        data: [3, 4, 5, 5, 7]
-      }
-    ]
+              lineStyle: {
+                normal: {
+                  color: "#62D3EF"
+                }
+              },
+              data: activeUser
+            }
+          ]
 
+        }
+
+        fourChart.setOption(fourOption, true);
+
+
+      }
+    });
   }
-  var fiveOption = {
-    tooltip: {
-      trigger: 'axis'
+  fourOptionFn();
+
+  function fiveOptionFn() {
+    $.ajax({
+      type: "GET",
+      url: "http://trade.qddata.com.cn/show/viewsCount",
+      dataType: "json",
+      success: function (data) {
+        console.log(data);
+
+        var xAxisData=data.data.x;
+        var listUv=data.data.listUv;
+        var listPv=data.data.listPv;
+
+        var fiveOption = {
+          tooltip: {
+            trigger: 'axis'
 //            formatter: "{a}: {c}"
-    },
-    grid: {
-      show: false,
-      x: '10%',
-      y: '28%',
-      width: '60%',
-      height: '58%'
-    },
-    xAxis: [
-      {
-        type: 'category',
-        boundaryGap: false,
-        splitNumber: 5,
-        axisLine: {
-          lineStyle: {
-            color: '#88C6FF'
-          }
-        },
+          },
+          grid: {
+            show: false,
+            x: '10%',
+            y: '28%',
+            width: '60%',
+            height: '58%'
+          },
+          xAxis: [
+            {
+              type: 'category',
+              boundaryGap: false,
+              splitNumber: 5,
+              axisLine: {
+                lineStyle: {
+                  color: '#88C6FF'
+                }
+              },
 //                data : ['2017/5/30','2017/5/30','2017/5/30','2017/5/30','2017/5/30']
-        data: ['6/5', '6/6', '6/7', '6/8', '6/9']
-      }
-    ],
-    yAxis: [
-      {
-        gridIndex: 0,
-        min: 0,
-        max: 5000,
-        axisLine: {
-          lineStyle: {
-            color: '#88C6FF'
-          }
-        },
-        splitLine: {
-          "show": false
-        }
-      }
+              data:xAxisData
+            }
+          ],
+          yAxis: [
+            {
+              gridIndex: 0,
+              min: 0,
+              max: 5000,
+              axisLine: {
+                lineStyle: {
+                  color: '#88C6FF'
+                }
+              },
+              splitLine: {
+                "show": false
+              }
+            }
 //            { type: 'value'}
-    ],
-    color: ["#88C6FF", "#DEE499"],//图例的颜色
-    legend: {
-      orient: 'vertical',
-      icon: 'rect',
-      itemWidth: 14,
-      itemHeight: 5,
-      itemGap: 13,
-      data: ['PV(页面浏览量)', 'UV(独立访问量)'],
-      top: "20%",
-      right: '2%',
-      textStyle: {
-        fontSize: 12,
-        color: '#88C6FF'
-      }
-    },
-    markLine: {
-      show: false
-    },
-    series: [
-      {
-        name: "PV(页面浏览量)",
-        type: 'line',
-        smooth: true,
+          ],
+          color: ["#88C6FF", "#DEE499"],//图例的颜色
+          legend: {
+            orient: 'vertical',
+            icon: 'rect',
+            itemWidth: 14,
+            itemHeight: 5,
+            itemGap: 13,
+            data: ['PV(页面浏览量)', 'UV(独立访问量)'],
+            top: "20%",
+            right: '2%',
+            textStyle: {
+              fontSize: 12,
+              color: '#88C6FF'
+            }
+          },
+          markLine: {
+            show: false
+          },
+          series: [
+            {
+              name: "PV(页面浏览量)",
+              type: 'line',
+              smooth: true,
 //                showSymbol: false,
-        lineStyle: {
-          normal: {
-            color: "#DEE499"
-          }
-        },
-        data: [2898, 2804, 3208, 3390, 1928]
-      },
-      {
-        name: "UV(独立访问量)",
-        type: 'line',
-        smooth: true,
+              lineStyle: {
+                normal: {
+                  color: "#DEE499"
+                }
+              },
+              data: listPv
+            },
+            {
+              name: "UV(独立访问量)",
+              type: 'line',
+              smooth: true,
 //                showSymbol: false,
-        lineStyle: {
-          normal: {
-            color: "#62D3EF"
-          }
-        },
-        data: [296, 289, 325, 380, 202]
-      }
-    ]
+              lineStyle: {
+                normal: {
+                  color: "#62D3EF"
+                }
+              },
+              data: listUv
+            }
+          ]
 
-  }
-  var sixOption = {
-    tooltip: {
-      trigger: 'axis'
-    },
-    grid: {
-      show: false,
-      x: '10%',
-      y: '28%',
-      width: '60%',
-      height: '58%'
-    },
-    barGap: "0",
-    legend: {
-      orient: 'vertical',
-      top: "20%",
-      right: '2%',
-      data: ['日交易金额', '待支付金额'],
-      textStyle: {
-        fontSize: 12,
-        color: '#88C6FF'
-      }
-    },
-    calculable: false,
-    xAxis: [
-      {
-        type: 'category',
-        boundaryGap: true,
-        axisLine: {
-          lineStyle: {
-            color: '#88C6FF'
-          }
-        },
-        data: ['6/5', '6/6', '6/7', '6/8', '6/9']
-      }
-    ],
-    yAxis: [
-      {
-        type: 'value',
-        axisLine: {
-          lineStyle: {
-            color: '#88C6FF'
-          }
-
-        },
-        splitLine: {
-          "show": false
         }
+
+        fiveChart.setOption(fiveOption, true);
+
+
+      }
+    });
+  }
+  fiveOptionFn();
+
+  function sixOptionFn() {
+    $.ajax({
+      type: "GET",
+      url: "http://trade.qddata.com.cn/show/transactionMoney",
+      dataType: "json",
+      success: function (data) {
+        console.log(data);
+
+        var xAxisData=data.data.transactionAmount.x;
+        var transactionAmount=data.data.transactionAmount.count;
+        var unTransactionAmount=data.data.unTransactionAmount.count;
+        var sixOption = {
+          tooltip: {
+            trigger: 'axis'
+          },
+          grid: {
+            show: false,
+            x: '10%',
+            y: '28%',
+            width: '60%',
+            height: '58%'
+          },
+          barGap: "0",
+          legend: {
+            orient: 'vertical',
+            top: "20%",
+            right: '2%',
+            data: ['日交易金额', '待支付金额'],
+            textStyle: {
+              fontSize: 12,
+              color: '#88C6FF'
+            }
+          },
+          calculable: false,
+          xAxis: [
+            {
+              type: 'category',
+              boundaryGap: true,
+              axisLine: {
+                lineStyle: {
+                  color: '#88C6FF'
+                }
+              },
+              data: xAxisData
+            }
+          ],
+          yAxis: [
+            {
+              type: 'value',
+              axisLine: {
+                lineStyle: {
+                  color: '#88C6FF'
+                }
+
+              },
+              splitLine: {
+                "show": false
+              }
 //                data : ['0','50','100','150','200',"250",'300','350','400']
-      }
-    ],
-    series: [
-      {
-        name: '日交易金额',
-        type: 'bar',
-        barWidth: '20%',//设置圆柱的宽度
-        data: [0, 0, 9000, 810, 0],
-        itemStyle: {
-          normal: {
-            color: "#04A9E9",
-            barBorderRadius: [10, 10, 0, 0] //设置圆角
-          }
+            }
+          ],
+          series: [
+            {
+              name: '日交易金额',
+              type: 'bar',
+              barWidth: '20%',//设置圆柱的宽度
+              data: transactionAmount,
+              itemStyle: {
+                normal: {
+                  color: "#04A9E9",
+                  barBorderRadius: [10, 10, 0, 0] //设置圆角
+                }
+              }
+
+            },
+            {
+              name: '待支付金额',
+              type: 'bar',
+              barWidth: '20%',
+              data: unTransactionAmount,
+              itemStyle: {
+                normal: {
+                  color: "#C8BC20",
+                  barBorderRadius: [10, 10, 0, 0] //设置圆角
+                }
+              }
+
+            }
+          ]
         }
 
-      },
-      {
-        name: '待支付金额',
-        type: 'bar',
-        barWidth: '20%',
-        data: [6000, 2500, 13000, 3100, 2800],
-        itemStyle: {
-          normal: {
-            color: "#C8BC20",
-            barBorderRadius: [10, 10, 0, 0] //设置圆角
-          }
-        }
+
+        sixChart.setOption(sixOption, true);
+
+
 
       }
-    ]
+    });
   }
-  var sevenOption = {
-    tooltip: {
-      trigger: 'item',
-      formatter: "{b}: {c}"
-    },
-    legend: {
-      orient: 'vertical',
-      left: '68%',
-      top: "20%",
-      itemHeight: 8,
-      itemWidth: 10,
-      textStyle: {
-        fontSize: 12,
-        color: '#88C6FF'
-      },
-      data: ['数据分析', '数据模型', '应用场景', '可视化引擎', '采集爬取', '清洗脱敏', '数据源', '数据开发', '数据管理', '数据安全']
-    },
-    series: [{
-      type: 'pie',
-      radius: [30, '55%'],
-      center: ['40%', '65%'],
-      roseType: 'radius',
-      color: ['#0699F4', '#07D0F5', '#D08465', '#09DEEA', '#21C893', '#C1DF55', '#CEB347', '#CE9C4F', '#07A6F4'],
-      data: [
-        {value: 9020, name: '数据源'},
-        {value: 0, name: '应用场景'},
-        {value: 790, name: '数据模型'},
-        {value: 0, name: '可视化引擎'},
-        {value: 0, name: '采集爬取'},
-        {value: 0, name: '清洗脱敏'},
-        {value: 0, name: '数据分析'},
-        {value: 0, name: '数据开发'},
-        {value: 0, name: '数据管理'},
-        {value: 0, name: '数据安全'}
-      ],
-      label: {
-        normal: {
+  sixOptionFn();
+
+  function sevenOptionFn() {
+    $.ajax({
+      type: "GET",
+      url: "http://trade.qddata.com.cn/show/typeAmount",
+      dataType: "json",
+      success: function (data) {
+        console.log(data);
+        var listData = data.data;
+        var nameListArr = [];
+        for (var key in data.data) {
+          nameListArr.push(data.data[key].name)
+          console.log(data.data[key].name)
+        }
+        var sevenOption = {
+          tooltip: {
+            trigger: 'item',
+            formatter: "{b}: {c}"
+          },
+          legend: {
+            orient: 'vertical',
+            left: '68%',
+            top: "20%",
+            itemHeight: 8,
+            itemWidth: 10,
+            textStyle: {
+              fontSize: 12,
+              color: '#88C6FF'
+            },
+            data: nameListArr
+          },
+          series: [{
+            type: 'pie',
+            radius: [30, '55%'],
+            center: ['40%', '65%'],
+            roseType: 'radius',
+            color: ['#0699F4', '#07D0F5', '#D08465', '#09DEEA', '#21C893', '#C1DF55', '#CEB347', '#CE9C4F', '#07A6F4'],
+            data: listData,
+            label: {
+              normal: {
 //                    show:function(){
 //                        if (value == 0.00)
 //                        { return false; }
 //                    }(),
-          textStyle: {
-            fontSize: 14
-          },
-          formatter: function (param) {
-            return param.name
-          }
-        }
-      },
-      labelLine: {
-        normal: {
+                textStyle: {
+                  fontSize: 14
+                },
+                formatter: function (param) {
+                  return param.name
+                }
+              }
+            },
+            labelLine: {
+              normal: {
 //                    show:function(value){
 //                        if(value == 0) return false;
 //                    }(),
-          smooth: true,
-          lineStyle: {
-            width: 1
-          }
-        }
-      },
-      itemStyle: {
-        normal: {
-          shadowBlur: 30,
-          shadowColor: 'rgba(0, 0, 0, 0.4)'
-        }
-      },
-      animationType: 'scale',
-      animationEasing: 'elasticOut'
-    }]
-  }
-  function randomData() {
-    return Math.round(Math.random() * 1000);
-  }
-  var data = [{
-    name: '北京',
-    value1: 3,
-    value2: 3
-  }, {
-    name: '四川',
-    value1: 2,
-    value2: 2
-  }, {
-    name: '贵州',
-    value1: 4,
-    value2: 4
-  }, {
-    name: '山东',
-    value1: 1,
-    value2: 1
-  }];
-  var resultdata0 = [];
-  var sum0 = 0;
-  var titledata = [];
-  for (var i = 0; i < data.length; i++) {
-    var d0 = {
-      name: data[i].name,
-      value: data[i].value1 + data[i].value2
-    };
-    titledata.push(data[i].name);
-    resultdata0.push(d0);
-    sum0 += data[i].value1 + data[i].value2;
-  }
-  function NumDescSort(a, b) {
-    return a.value - b.value;
-  }
-  resultdata0.sort(NumDescSort);
-  var eightOption = {
-    tooltip: {
-      trigger: 'item',
-      formatter: function (item) {
-        if (isNaN(item.value)) {
-          return item.name
-        } else {
-          return item.name + ":" + item.value
+                smooth: true,
+                lineStyle: {
+                  width: 1
+                }
+              }
+            },
+            itemStyle: {
+              normal: {
+                shadowBlur: 30,
+                shadowColor: 'rgba(0, 0, 0, 0.4)'
+              }
+            },
+            animationType: 'scale',
+            animationEasing: 'elasticOut'
+          }]
         }
 
+        sevenChart.setOption(sevenOption, true);
+
+
       }
-    },
-    geo: {
-      map: 'china',
-      top: "20%",
-      left: "15%",
-      label: {
-        normal: {
-          show: false
-        },
-        emphasis: {
-          show: false
+    });
+  }
+  sevenOptionFn();
+
+  function eightOptionFn() {
+    $.ajax({
+      type: "GET",
+      url: "http://trade.qddata.com.cn/show/userArea",
+      dataType: "json",
+      success: function (data) {
+        console.log(data);
+        data = data.data;
+
+
+        var resultdata0 = [];
+        var sum0 = 0;
+        var titledata = [];
+        for (var i = 0; i < data.length; i++) {
+          var d0 = {
+            name: data[i].name,
+            value: data[i].value1 + data[i].value2
+          };
+          titledata.push(data[i].name);
+          resultdata0.push(d0);
+          sum0 += data[i].value1 + data[i].value2;
+        }
+        function NumDescSort(a, b) {
+          return a.value - b.value;
         }
 
-      },
-      itemStyle: {//每块区域的颜色样式
-        normal: {
-          areaColor: {
-            type: 'radial',
-            x: 0.9,
-            y: 1,
-            r: 1.5,
-            colorStops: [{
-              offset: 0, color: '#195DC5 ' // 0% 处的颜色
-            }, {
-              offset: 1, color: '#2089E0' // 100% 处的颜色
-            }],
-            globalCoord: false // 缺省为 false
+        resultdata0.sort(NumDescSort);
+        var eightOption = {
+          tooltip: {
+            trigger: 'item',
+            formatter: function (item) {
+              if (isNaN(item.value)) {
+                return item.name
+              } else {
+                return item.name + ":" + item.value
+              }
+
+            }
           },
-          borderWidth: .5,//区域边框宽度
-          borderColor: '#009fe8'//区域边框颜色
-        },
-        emphasis: {
-          areaColor: {
-            type: 'radial',
-            x: 0.5,
-            y: 0.5,
-            r: 0.5,
-            colorStops: [{
-              offset: 0, color: '#F9DF2C ' // 0% 处的颜色
-            }, {
-              offset: 1, color: '#D2C45D' // 100% 处的颜色
-            }],
-            globalCoord: false // 缺省为 false
+          geo: {
+            map: 'china',
+            top: "20%",
+            left: "15%",
+            label: {
+              normal: {
+                show: false
+              },
+              emphasis: {
+                show: false
+              }
+
+            },
+            itemStyle: {//每块区域的颜色样式
+              normal: {
+                areaColor: {
+                  type: 'radial',
+                  x: 0.9,
+                  y: 1,
+                  r: 1.5,
+                  colorStops: [{
+                    offset: 0, color: '#195DC5 ' // 0% 处的颜色
+                  }, {
+                    offset: 1, color: '#2089E0' // 100% 处的颜色
+                  }],
+                  globalCoord: false // 缺省为 false
+                },
+                borderWidth: .5,//区域边框宽度
+                borderColor: '#009fe8'//区域边框颜色
+              },
+              emphasis: {
+                areaColor: {
+                  type: 'radial',
+                  x: 0.5,
+                  y: 0.5,
+                  r: 0.5,
+                  colorStops: [{
+                    offset: 0, color: '#F9DF2C ' // 0% 处的颜色
+                  }, {
+                    offset: 1, color: '#D2C45D' // 100% 处的颜色
+                  }],
+                  globalCoord: false // 缺省为 false
+                },
+                borderWidth: .5,
+                borderColor: '#4b0082'
+              }
+            }
           },
-          borderWidth: .5,
-          borderColor: '#4b0082'
-        }
-      }
-    },
-    grid: {
-      right: "5%",
-      bottom: 15,
-      height: "70%",
-      width: '30%'
-    },
-    xAxis: [{
-      position: 'top',
-      type: 'value',
-      boundaryGap: false,
-      splitLine: {
-        show: false
-      },
-      axisLine: {
-        lineStyle: {
-          color: '#88C6FF'
-        }
-      },
-      axisTick: {
-        show: false
-      }
-    }],
-    yAxis: [{
-      type: 'category',
-      data: titledata,
-      axisLine: {
-        lineStyle: {
-          color: '#88C6FF'
-        }
-      },
-      axisTick: {
-        alignWithLabel: true
-      }
-    }],
-    series: [{
-      z: 1,
-      type: 'map',
-      geoIndex: 0,
-      left: '10',
-      top: 100,
-      bottom: "35%",
-      zoom: 0.75,
-      label: {
-        normal: {
-          show: true
-        },
-        emphasis: {
-          show: true
-        }
-      },
-      //roam: true,
-      data: resultdata0
-    }, {
-      z: 2,
-      type: 'bar',
-      label: {
+          grid: {
+            right: "5%",
+            bottom: 15,
+            height: "70%",
+            width: '30%'
+          },
+          xAxis: [{
+            position: 'top',
+            type: 'value',
+            boundaryGap: false,
+            splitLine: {
+              show: false
+            },
+            axisLine: {
+              lineStyle: {
+                color: '#88C6FF'
+              }
+            },
+            axisTick: {
+              show: false
+            }
+          }],
+          yAxis: [{
+            type: 'category',
+            data: titledata,
+            axisLine: {
+              lineStyle: {
+                color: '#88C6FF'
+              }
+            },
+            axisTick: {
+              alignWithLabel: true
+            }
+          }],
+          series: [{
+            z: 1,
+            type: 'map',
+            geoIndex: 0,
+            left: '10',
+            top: 100,
+            bottom: "35%",
+            zoom: 0.75,
+            label: {
+              normal: {
+                show: true
+              },
+              emphasis: {
+                show: true
+              }
+            },
+            //roam: true,
+            data: resultdata0
+          }, {
+            z: 2,
+            type: 'bar',
+            label: {
 //                normal: {
 //                    show: true
 //                },
-        emphasis: {
-          show: true
+              emphasis: {
+                show: true
+              }
+            },
+            itemStyle: {
+              normal: {
+                color: {
+                  type: 'linear',
+                  x: 0.9,
+                  y: 1,
+                  r: 1.5,
+                  colorStops: [{
+                    offset: 0.1, color: '#07A6F8' // 100% 处的颜色
+                  }, {
+                    offset: 1, color: '#EDE039' // 100% 处的颜色
+                  }],
+                  globalCoord: false // 缺省为 false
+                },
+                barBorderRadius: [0, 10, 10, 0] //设置圆角
+              },
+              emphasis: {
+                color: "#04A9E9"
+              }
+            },
+            data: resultdata0
+          }]
         }
-      },
-      itemStyle: {
-        normal: {
-          color: {
-            type: 'linear',
-            x: 0.9,
-            y: 1,
-            r: 1.5,
-            colorStops: [{
-              offset: 0.1, color: '#07A6F8' // 100% 处的颜色
-            }, {
-              offset: 1, color: '#EDE039' // 100% 处的颜色
-            }],
-            globalCoord: false // 缺省为 false
-          },
-          barBorderRadius: [0, 10, 10, 0] //设置圆角
-        },
-        emphasis: {
-          color: "#04A9E9"
-        }
-      },
-      data: resultdata0
-    }]
+
+        eightChart.setOption(eightOption, true);
+
+      }
+    })
   }
+
+  eightOptionFn();
+
   window.onresize = function () {
     oneChart.resize();
     twoChart.resize();
@@ -1156,10 +1233,10 @@
   //  oneChart.setOption(oneOption, true);
   //  twoChart.setOption(twoOption, true);
   //  threeChart.setOption(threeOption, true);
-  fourChart.setOption(fourOption, true);
-  fiveChart.setOption(fiveOption, true);
-  sixChart.setOption(sixOption, true);
-  sevenChart.setOption(sevenOption, true);
-  eightChart.setOption(eightOption, true);
+//  fourChart.setOption(fourOption, true);
+//  fiveChart.setOption(fiveOption, true);
+//  sixChart.setOption(sixOption, true);
+//  sevenChart.setOption(sevenOption, true);
+  //  eightChart.setOption(eightOption, true);
 </script>
 </html>
