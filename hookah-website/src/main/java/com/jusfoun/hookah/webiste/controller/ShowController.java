@@ -13,9 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import sun.security.pkcs11.wrapper.CK_SSL3_KEY_MAT_OUT;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -300,15 +302,25 @@ public class ShowController {
     public ReturnData registerUser(){
         List<ShowVO> registerUserCount = showService.getRegisterUserCount();
         Map map = new HashMap<>(5);
-        List list = new ArrayList<>();
         List couList = new ArrayList<>();
-        for(ShowVO show : registerUserCount){
-            SimpleDateFormat sdf=new SimpleDateFormat("MM/dd");
-            String format = sdf.format(show.getAddTime());
-            list.add(format);
-            couList.add(show.getCount());
+        List<String> listDate = new ArrayList<>(); //日期集合
+        LocalDate today = LocalDate.now();
+        int n = 4;
+        for(int i = 0; i <= n; i++) {
+            String time = today.minusDays(i).toString().substring(5, 10).replace("-", "/");
+            listDate.add(time);
+            long cou = 0;
+            for(ShowVO show : registerUserCount){
+                SimpleDateFormat sdf=new SimpleDateFormat("MM/dd");
+                String format = sdf.format(show.getAddTime());
+                if (format.equals(time)) {
+                    cou = Long.parseLong(show.getLoginName());
+                    break;
+                }
+            }
+            couList.add(cou);
         }
-        map.put("x",list);
+        map.put("x",listDate);
         map.put("count",couList);
         return ReturnData.success(map);
     }
@@ -318,8 +330,22 @@ public class ShowController {
         List<ShowVO> activeUserCount = showService.getActiveUserCount();
         Map map = new HashMap<>(5);
         List couList = new ArrayList<>();
-        for(ShowVO show : activeUserCount){
-            couList.add(show.getLoginName());
+        List<String> listDate = new ArrayList<>(); //日期集合
+        LocalDate today = LocalDate.now();
+        int n = 4;
+        for(int i = 0; i <= n; i++) {
+            String time = today.minusDays(i).toString().substring(5, 10).replace("-", "/");
+            listDate.add(time);
+            long cou = 0;
+            for(ShowVO show : activeUserCount) {
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd");
+                String format = sdf.format(show.getAddTime());
+                if (format.equals(time)) {
+                    cou = Long.parseLong(show.getLoginName());
+                    break;
+                }
+            }
+            couList.add(cou);
         }
         map.put("count",couList);
         return ReturnData.success(map);
@@ -525,15 +551,25 @@ public class ShowController {
     public ReturnData transactionAmount(){
         List<ShowVO> amount = showService.getPayAmount();
         Map map = new HashMap<>(5);
-        List list = new ArrayList<>();
         List couList = new ArrayList<>();
-        for(ShowVO show : amount){
-            SimpleDateFormat sdf=new SimpleDateFormat("MM/dd");
-            String format = sdf.format(show.getAddTime());
-            list.add(format);
-            couList.add(show.getOrderAmount());
+        List<String> listDate = new ArrayList<>(); //日期集合
+        LocalDate today = LocalDate.now();
+        int n = 4;
+        for(int i = 0; i <= n; i++) {
+            String time = today.minusDays(i).toString().substring(5, 10).replace("-", "/");
+            listDate.add(time);
+            long cou = 0;
+            for (ShowVO show : amount) {
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd");
+                String format = sdf.format(show.getAddTime());
+                if (format.equals(time)) {
+                    cou = show.getOrderAmount();
+                    break;
+                }
+            }
+            couList.add(cou);
         }
-        map.put("x",list);
+        map.put("x",listDate);
         map.put("count",couList);
         return ReturnData.success(map);
     }
@@ -543,8 +579,22 @@ public class ShowController {
         List<ShowVO> amount = showService.getUnPayAmount();
         Map map = new HashMap<>(5);
         List couList = new ArrayList<>();
-        for(ShowVO show : amount){
-            couList.add(show.getOrderAmount());
+        List<String> listDate = new ArrayList<>(); //日期集合
+        LocalDate today = LocalDate.now();
+        int n = 4;
+        for(int i = 0; i <= n; i++) {
+            String time = today.minusDays(i).toString().substring(5, 10).replace("-", "/");
+            listDate.add(time);
+            long cou = 0;
+            for (ShowVO show : amount) {
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd");
+                String format = sdf.format(show.getAddTime());
+                if (format.equals(time)) {
+                    cou = show.getOrderAmount();
+                    break;
+                }
+            }
+            couList.add(cou);
         }
         map.put("count",couList);
         return ReturnData.success(map);

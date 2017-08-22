@@ -113,11 +113,11 @@ public class UserServiceImpl extends GenericServiceImpl<User, String> implements
         List<String> listDate = new ArrayList<>(); //日期集合
 
         LocalDate today = LocalDate.now();
-        listDate.add(today.toString().substring(6,10).replace("-","/"));
+        listDate.add(today.toString().substring(5,10).replace("-","/"));
         listPv.add(Integer.parseInt(redisOperate.get("pv:" + today.toString()) == null ? "0" : redisOperate.get("pv:" + today.toString())));
         listUv.add(Integer.parseInt(redisOperate.get("uv:" + today.toString()) == null ? "0" : redisOperate.get("uv:" + today.toString())));
         for(int i = 1; i <= n; i++){
-            listDate.add(today.minusDays(i).toString().substring(6,10).replace("-","/"));
+            listDate.add(today.minusDays(i).toString().substring(5,10).replace("-","/"));
             listPv.add(Integer.parseInt(redisOperate.get("pv:" + today.minusDays(i).toString()) == null ? "0" : redisOperate.get("pv:" + today.minusDays(i).toString())));
             listUv.add(Integer.parseInt(redisOperate.get("uv:" + today.minusDays(i).toString()) == null ? "0" : redisOperate.get("uv:" + today.minusDays(i).toString())));
         }
