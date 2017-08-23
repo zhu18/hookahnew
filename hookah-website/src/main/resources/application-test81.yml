@@ -1,0 +1,51 @@
+server:
+  port: 9000
+  http:
+    protocal: http://
+  session:
+    cookie:
+      domain: test.com.cn:81
+      name: hookah_sid
+myconf:
+  beetl:
+    templatesPath: views/
+    contentType: text/html;charset:UTF-8
+    prefix: /
+    suffix: .html
+    cache: false
+
+  host:
+    domain: test.com.cn:81
+    website: ${server.http.protocal}trade.test.com.cn:81
+    static: ${server.http.protocal}static.qddata.com.cn
+    auth: ${server.http.protocal}auth.test.com.cn:81
+    console: ${server.http.protocal}console.test.com.cn:81
+    admin: ${server.http.protocal}admin.test.com.cn:81
+  oauth2:
+    clientId: website
+    clientSecret: Yqn2ht4DYkMHlDvTY7CV
+    regUrl: http://auth.test.com.cn:81/reg
+    loginUrl: http://auth.test.com.cn:81/oauth/authorize?client_id=website&response_type=code&redirect_uri=
+    logoutUrl: http://auth.test.com.cn:81/logout?redirect_uri=http://trade.test.com.cn:81/login
+    accessTokenUrl: http://auth.test.com.cn:81/oauth/accessToken
+    userInfoUrl: http://auth.test.com.cn:81/userInfo
+    redirectUrl: http://auth.test.com.cn:81/login
+  redis:
+    ipPort: 192.168.15.90:7000,192.168.15.90:7001,192.168.15.90:7002
+  consul:
+    ipPort: 192.168.200.116:8500
+debug: true
+spring:
+  data:
+    mongodb:
+      uri:  mongodb://192.168.15.90:27017/hookah_test
+  mvc:
+      static-path-pattern: /static/**
+  rabbitmq:
+      addresses: 192.168.200.116:5672
+      username: root
+      password: password
+      publisher-confirms: true
+      virtual-host: /
+
+

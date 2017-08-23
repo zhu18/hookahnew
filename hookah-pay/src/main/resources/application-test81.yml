@@ -1,0 +1,101 @@
+server:
+  port: 9898
+  http:
+    protocal: http://
+  session:
+    cookie:
+      domain: test.com.cn:81
+      name: hookah_sid
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.15.90:3306/hookah_test?&characterEncoding=utf8&autoReconnect=true&useSSL=false
+    username: root
+    password: password
+    initialize: true
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 连接池配置
+    # 初始化大小，最小，最大
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    # 配置获取连接等待超时的时间
+    maxWait: 60000
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 60000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    # 打开PSCache，并且指定每个连接上PSCache的大小
+    poolPreparedStatements: false
+    maxPoolPreparedStatementPerConnectionSize: 20
+    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall,slf4j
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  data:
+    mongodb:
+      uri:  mongodb://192.168.15.90:27017/hookah_test
+  rabbitmq:
+    addresses: 192.168.200.116:5672
+    username: root
+    password: password
+    publisher-confirms: true
+    virtual-host: /
+    listener:
+      retry:
+        enabled: true
+        max-attempts: 2
+  mail:
+      host: smtp.qiye.163.com
+      port: 25
+      username: gbd@jusfoun.com
+      password: 1QAZ2wsx
+      properties:
+        mail:
+          smtp:
+            auth: true
+            starttls:
+              enable: true
+            socketFactory:
+              fallback: false
+#  jpa:
+#    database: MYSQL
+#    show-sql: true
+##    hibernate:
+##      ddl-auto: create-drop
+#    properties:
+#      hibernate:
+#        dialect : org.hibernate.dialect.MySQL5Dialect
+  mvc:
+    static-path-pattern: /static/**
+myconf:
+  beetl:
+    templatesPath: views/
+    contentType: text/html;charset:UTF-8
+    prefix:
+    suffix: .html
+    cache: false
+  host:
+    domain: test.com.cn:81
+    website: ${server.http.protocal}trade.test.com.cn:81
+    static: ${server.http.protocal}static.qddata.com.cn
+    auth: ${server.http.protocal}auth.test.com.cn:81
+    console: ${server.http.protocal}console.test.com.cn:81
+  oauth2:
+    clientId: admin
+    clientSecret: Yqn2ht4DYkMHlDvTY7CV
+    regUrl: http://auth.test.com.cn:81/reg
+    loginUrl: http://auth.test.com.cn:81/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://admin.test.com.cn:81/home
+    logoutUrl: http://auth.test.com.cn:81/logout?redirect_uri=http://trade.test.com.cn:81/login
+    accessTokenUrl: http://auth.test.com.cn:81/oauth/accessToken
+    userInfoUrl: http://auth.test.com.cn:81/userInfo
+    redirectUrl: http://auth.test.com.cn:81/login
+  redis:
+    ipPort: 192.168.15.90:7000,192.168.15.90:7001,192.168.15.90:7002
+  consul:
+    ipPort: 192.168.200.116:8500
+debug: true
