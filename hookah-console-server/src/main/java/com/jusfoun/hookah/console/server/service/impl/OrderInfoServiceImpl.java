@@ -1375,7 +1375,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         map.put("cancelOrderNum",getOrderNumByToday(today,OrderInfoVo.ORDERSTATUS_CANCEL)); //已取消订单数
 
         map.put("goodsSoldNum",getGoodsNumByOut(today));  //已售商品数
-        map.put("goodsClassification",6); //商品分类数
+        map.put("goodsClassification",10); //商品分类数
         map.put("dataSourceMoney",getGoodsMoneyByPayStatus(today,OrderInfoVo.PAYSTATUS_PAYED,"101"));  //数据源交易金额
         map.put("dataModelMoney",getGoodsMoneyByPayStatus(today,OrderInfoVo.PAYSTATUS_PAYED,"102"));  //数据模型交易金额
         map.put("visualizationMoney",getGoodsMoneyByPayStatus(today,OrderInfoVo.PAYSTATUS_PAYED,"103"));  //可视化交易金额
