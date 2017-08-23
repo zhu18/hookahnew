@@ -168,13 +168,13 @@ public class ShowController {
     //1 用户注册数
     @ResponseBody
     @RequestMapping(value = "/show/userCountList", method = RequestMethod.GET)
-    public ReturnData userCount(String userId){
+    public ReturnData userCount(){
         List<Condition> userFilters = new ArrayList<>();
         List<Condition> companyAuthFilters = new ArrayList<>();
         List<Condition> authFilters = new ArrayList<>();
         List<Condition> noFilters = new ArrayList<>();
         //用户注册数
-        userFilters.add(Condition.eq("userId",userId));
+        userFilters.add(Condition.in("userType",new Integer[]{1, 4, 5, 7}));
         //企业认证数
         companyAuthFilters.add(Condition.eq("userType", 4));
         //个人认证数---暂不展示
@@ -194,7 +194,7 @@ public class ShowController {
         map2.put("value",companyAuth);
         map2.put("name","企业认证用户");
         Map map3 = new HashMap<>(5);
-        map3.put("value",auth);
+        map3.put("value",0);
         map3.put("name","个人认证用户");
         Map map4 = new HashMap<>(5);
         map4.put("value",no);
