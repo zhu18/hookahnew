@@ -2,6 +2,7 @@ package com.jusfoun.hookah.core.generic;
 
 
 import com.jusfoun.hookah.core.common.Pagination;
+import org.springframework.data.domain.Sort;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -176,4 +177,7 @@ public interface GenericService<Model extends GenericModel, ID extends Serializa
 
 //    Pagination<Model> getUserListInPage(Integer pageNum, Integer pageSize, List<Condition> filters,
 //                                        List<OrderBy> orderBys, Date startTime, Date endTime);
+
+    Pagination<Model> getListInPageFromMongo(Integer pageNum, Integer pageSize, List<Condition> filters, List<Sort> Sorts,
+                                             Date startTime, Date endTime);
 }

@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.FatalBeanException;
+import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import tk.mybatis.mapper.entity.Example;
@@ -557,6 +558,12 @@ public class GenericServiceImpl<Model extends GenericModel, ID extends Serializa
     @Override
     public Pagination<Model> getSoldOrderList(Integer pageNum, Integer pageSize, List<Condition> filters,
                                               Date startTime, Date endTime){
+        return new Pagination<Model>();
+    }
+
+    @Override
+    public Pagination<Model> getListInPageFromMongo(Integer pageNum, Integer pageSize, List<Condition> filters,
+                                                    List<Sort> Sorts, Date startTime, Date endTime){
         return new Pagination<Model>();
     }
 

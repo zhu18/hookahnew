@@ -869,7 +869,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         if (goodsType != null){
             filters.add(Condition.eq("orderGoodsList.goodsType", goodsType));
         }
-        Pagination<OrderInfoVo> pagination = mgOrderInfoService.getSoldOrderList(pageNum, pageSize, filters, startTime, endTime);
+        List<Sort> sorts = new ArrayList<>();
+        sorts.add(new Sort(Sort.Direction.DESC,"addTime"));
+        Pagination<OrderInfoVo> pagination = mgOrderInfoService.getListInPageFromMongo(pageNum, pageSize, filters, sorts, startTime, endTime);
         List<OrderInfoVo> orderInfoVos = pagination.getList();
         for (OrderInfoVo orderInfoVo:orderInfoVos){
             if (!userId.equals("1")){
@@ -902,7 +904,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     @Override
     public Pagination<OrderInfoVo> getSoldOrderListByCondition(Integer pageNum, Integer pageSize, List<Condition> filters,
                                                          Date startTime, Date endTime, String addUser){
-        Pagination<OrderInfoVo> pagination = mgOrderInfoService.getSoldOrderList(pageNum, pageSize, filters, startTime, endTime);
+        List<Sort> sorts = new ArrayList<>();
+        sorts.add(new Sort(Sort.Direction.DESC,"addTime"));
+        Pagination<OrderInfoVo> pagination = mgOrderInfoService.getListInPageFromMongo(pageNum, pageSize, filters, sorts, startTime, endTime);
         List<OrderInfoVo> orderInfoVos = pagination.getList();
         for (OrderInfoVo orderInfoVo:orderInfoVos) {
             List<MgOrderGoods> goodsList = orderInfoVo.getMgOrderGoodsList();
@@ -922,31 +926,16 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     @Override
     public Pagination<MgGoodsOrder> getMgGoodsOrderList(Integer pageNum, Integer pageSize, String orderSn,String goodsName,
                                                         String addUser, Date startTime, Date endTime){
-        Pagination<MgGoodsOrder> pagination = new Pagination<>();
-        Query query = new Query();
+        List<Condition> filter = new ArrayList<>();
         if (orderSn!=null)
-            query.addCriteria(Criteria.where("orderSn").is(orderSn));
+            filter.add(Condition.eq("orderSn",orderSn));
         if (goodsName!=null)
-            query.addCriteria(Criteria.where("mgOrderGoods.goodsName").regex(goodsName));
+            filter.add(Condition.like("mgOrderGoods.goodsName",goodsName));
         if (addUser!=null)
-            query.addCriteria(Criteria.where("mgOrderGoods.addUser").is(addUser));
-        if (startTime!=null && endTime!=null){
-            query.addCriteria(Criteria.where("addTime").gte(startTime).lt(endTime));
-        }else if (startTime==null && endTime!=null){
-            query.addCriteria(Criteria.where("addTime").lt(endTime));
-        }else if (startTime!=null && endTime==null){
-            query.addCriteria(Criteria.where("addTime").gte(startTime));
-        }
-        query.with(new Sort(Sort.Direction.DESC, "addTime"));
-        List<MgGoodsOrder> list = mongoTemplate.find(query,MgGoodsOrder.class);
-        query.skip((pageNum-1)*pageSize);
-        query.limit(pageSize);
-        List<MgGoodsOrder> page = mongoTemplate.find(query,MgGoodsOrder.class);
-        pagination.setList(page);
-        pagination.setTotalItems(list.size());
-        pagination.setCurrentPage(pageNum);
-        pagination.setPageSize(pageSize);
-
+            filter.add(Condition.eq("mgOrderGoods.addUser",addUser));
+        List<Sort> sorts = new ArrayList<>();
+        sorts.add(new Sort(Sort.Direction.DESC,"addTime"));
+        Pagination<MgGoodsOrder> pagination = mgGoodsOrderService.getListInPageFromMongo(pageNum,pageSize,filter,sorts,startTime,endTime);
         return pagination;
     }
 
@@ -1083,7 +1072,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 //        pagination.setCurrentPage(pageNum);
 //        pagination.setList(page);
 //        logger.info(JsonUtils.toJson(pagination));
-        Pagination<OrderInfoVo> pagination = mgOrderInfoService.getSoldOrderList(pageNum, pageSize, filters, startTime, endTime);
+        List<Sort> sorts = new ArrayList<>();
+        sorts.add(new Sort(Sort.Direction.DESC,"addTime"));
+        Pagination<OrderInfoVo> pagination = mgOrderInfoService.getListInPageFromMongo(pageNum, pageSize, filters,sorts, startTime, endTime);
 
         return pagination;
     }

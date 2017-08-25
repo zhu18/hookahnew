@@ -204,19 +204,39 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
     }
 
     @Override
-    public Pagination<Model> getListInPage(Integer pageNum, Integer pageSize, List<Condition> filters, List<OrderBy> orderBys) {
+    public Pagination<Model> getListInPage(Integer pageNum, Integer pageSize, List<Condition> filters, List<OrderBy> orderBys){
+        return new Pagination<Model>();
+    }
+
+    @Override
+    public Pagination<Model> getListInPageFromMongo(Integer pageNum, Integer pageSize, List<Condition> filters,
+                                                    List<Sort> sorts, Date startTime, Date endTime) {
         Type type = getClass().getGenericSuperclass();
         Type trueType = ((ParameterizedType) type).getActualTypeArguments()[0];
 
-        PageHelper.startPage(pageNum, pageSize);
         Query query = this.convertFilter2Query(filters);
-        List<Model> list = this.mongoTemplate.find(query, (Class)trueType);
-        query.skip(pageNum);
+        Criteria criteria = null;
+        if (startTime!=null && endTime!=null){
+            criteria = Criteria.where("addTime").gte(startTime).lt(endTime);
+            query.addCriteria(criteria);
+        }else if (startTime==null && endTime!=null){
+            criteria = Criteria.where("addTime").lt(endTime);
+            query.addCriteria(criteria);
+        }else if (startTime!=null && endTime==null){
+            criteria = Criteria.where("addTime").gte(startTime);
+            query.addCriteria(criteria);
+        }
+        long list = this.mongoTemplate.count(query, (Class)trueType);
+        if (sorts!=null&&sorts.size()!=0)
+            for (Sort sort:sorts){
+                query.with(sort);
+            };
+        query.skip((pageNum-1)*pageSize);
         query.limit(pageSize);
         logger.info("[Mongo Dao ]queryPage:{}({},{})" , query,pageNum,pageSize );
         List<Model> page = this.mongoTemplate.find(query, (Class)trueType);
         Pagination<Model> pagination = new Pagination<Model>();
-        pagination.setTotalItems(list.size());
+        pagination.setTotalItems(list);
         pagination.setPageSize(pageSize);
         pagination.setCurrentPage(pageNum);
         pagination.setList(page);
@@ -242,14 +262,14 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
             criteria = Criteria.where("addTime").gte(startTime);
             query.addCriteria(criteria);
         }
+        long list = this.mongoTemplate.count(query, (Class)trueType);
         query.with(new Sort(Sort.Direction.DESC, "addTime"));
-        List<Model> list = this.mongoTemplate.find(query, (Class)trueType);
         query.skip((pageNum-1)*pageSize);
         query.limit(pageSize);
         logger.info("[Mongo Dao ]queryPage:{}({},{})" , query,pageNum,pageSize );
         List<Model> page = this.mongoTemplate.find(query, (Class)trueType);
         Pagination<Model> pagination = new Pagination<Model>();
-        pagination.setTotalItems(list.size());
+        pagination.setTotalItems(list);
         pagination.setPageSize(pageSize);
         pagination.setCurrentPage(pageNum);
         pagination.setList(page);

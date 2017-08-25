@@ -57,7 +57,7 @@ public class OrderApi extends BaseController{
                 endTime = DateUtils.getDate(endDate,DateUtils.DEFAULT_DATE_TIME_FORMAT);
             }
             if (StringUtils.isNotBlank(userName)){
-                filters.add(Condition.eq("userName", userName));
+                filters.add(Condition.like("userName", userName));
             }
             if (userType != null){
                 filters.add(Condition.eq("userType", userType));
@@ -70,7 +70,7 @@ public class OrderApi extends BaseController{
             }
 
             if(StringUtils.isNotBlank(orderSn)){
-                filters.add(Condition.like("orderSn", orderSn));
+                filters.add(Condition.eq("orderSn", orderSn));
             }
             //参数校验
             int pageNumberNew = HookahConstants.PAGE_NUM;
