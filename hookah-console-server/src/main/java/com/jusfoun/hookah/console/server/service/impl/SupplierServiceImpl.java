@@ -105,7 +105,7 @@ public class SupplierServiceImpl extends GenericServiceImpl<Supplier, String> im
         }
         User user = userMapper.selectByPrimaryKey(supplier.getUserId());
         if (user.getUserType()!=4){
-            throw new HookahException("单位会员认证尚未通过，请先认证单位会员");
+            throw new HookahException("单位用户认证尚未通过，请先认证单位用户");
         }
         supplier.setCheckStatus(checkStatus);
         supplier.setCheckContent(checkContent.replaceAll(" ",""));

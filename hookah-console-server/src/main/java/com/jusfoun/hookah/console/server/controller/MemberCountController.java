@@ -35,16 +35,16 @@ public class MemberCountController {
     @RequestMapping("/count")
     public ReturnData newUserCount(){
         Map<String, Object> map = new HashMap<>(6);
-        //新注册会员
+        //新注册用户
         int newUserCount = showService.getNewUserCount();
-        //注册会员总数
+        //注册用户总数
         int newUserSum = showService.getNewUserSum();
-        //购买过商品会员数量
+        //购买过商品用户数量
         int buyGoodsSum = showService.getBuyGoodsCount();
         /**
-         * 已认证会员数量
-         * 待审核会员数量
-         * 未认证会员数量
+         * 已认证用户数量
+         * 待审核用户数量
+         * 未认证用户数量
          */
         List<User> userTypeCount = showService.getUserTypeCount();
         int count1 = 0;

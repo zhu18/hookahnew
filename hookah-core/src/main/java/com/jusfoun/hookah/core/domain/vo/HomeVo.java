@@ -7,9 +7,9 @@ import java.io.Serializable;
  */
 public class HomeVo implements Serializable {
 
-    private Long userCount;//会员总数
-    private Long pendCheckUserCount;//待审核会员
-    private Long realUserCount;//实名会员
+    private Long userCount;//用户总数
+    private Long pendCheckUserCount;//待审核用户
+    private Long realUserCount;//实名用户
     private Long addedGoodsCount;//上架商品
     private Long offGoodsCount;//下架商品
     private Long goodsOneCategoryCount;//商品一级分类

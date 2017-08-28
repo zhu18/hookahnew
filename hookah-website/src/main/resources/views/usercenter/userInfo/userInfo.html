@@ -51,11 +51,11 @@ var htmlPart = {
 							<%}else if(userCur.userType == 1){%>
 							<p class="usertype color-orange">未认证</p>
 							<%}else if(userCur.userType == 2){%>
-							<p class="usertype color-green">个人会员</p>
+							<p class="usertype color-green">个人用户</p>
 							<%}else if(userCur.userType == 3){%>
 							<p class="usertype color-orange">个人认证审核中</p>
 							<%}else if(userCur.userType == 4){%>
-							<p class="usertype color-green info">单位会员：<span title="${orgName}"> ${orgName}</span></p>
+							<p class="usertype color-green info">单位用户：<span title="${orgName}"> ${orgName}</span></p>
 							<%}else if(userCur.userType == 5){%>
 							<p class="usertype color-orange">单位认证审核中</p>
 							<%}else if(userCur.userType == 6){%>
@@ -88,28 +88,28 @@ var htmlPart = {
 							<div class="auth-introduce-unit">
 								<%if(userCur.userType == 0){%>
 								<%}else if(userCur.userType == 1){%>
-									<!--<p>如果您是个人用户，请进行个人会员认证</p>-->
+									<!--<p>如果您是个人用户，请进行个人用户认证</p>-->
 									<!--<div class="margin-10">-->
-									<!--<a href="/auth/user_auth_init" class="large-btn">个人会员认证</a>-->
+									<!--<a href="/auth/user_auth_init" class="large-btn">个人用户认证</a>-->
 									<!--</div>-->
-									<p class="margin-top-20">如果您是单位用户，请进行单位会员认证</p>
-									<a href="/auth/company_auth_init" class="large-btn">单位会员认证</a>
+									<p class="margin-top-20">如果您是单位用户，请进行单位用户认证</p>
+									<a href="/auth/company_auth_init" class="large-btn">单位用户认证</a>
 								<%}else if(userCur.userType == 2){%>
-									<p class="font-size-18 status">您的个人会员认证审核<span class="color-green">已通过</span>！</p>
+									<p class="font-size-18 status">您的个人用户认证审核<span class="color-green">已通过</span>！</p>
 								<%}else if(userCur.userType == 3){%>
-									<p class="font-size-18 margin-top-20">您提交的个人会员认证还在<span class="color-orange">审核中</span>！</p>
+									<p class="font-size-18 margin-top-20">您提交的个人用户认证还在<span class="color-orange">审核中</span>！</p>
 									<p class="font-size-14">我们会尽快审核，并将审核结果通过短信或邮件通知您,请及时关注。</p>
 								<%}else if(userCur.userType == 4){%>
-									<p class="font-size-18 margin-top-20 margin-bottom-10">您的单位会员认证审核<span class="color-green">已通过</span>！</p>
+									<p class="font-size-18 margin-top-20 margin-bottom-10">您的单位用户认证审核<span class="color-green">已通过</span>！</p>
 
 								<%}else if(userCur.userType == 5){%>
-									<p class="font-size-18 margin-top-20">您提交的单位会员认证还在<span class="color-orange">审核中</span>！</p>
+									<p class="font-size-18 margin-top-20">您提交的单位用户认证还在<span class="color-orange">审核中</span>！</p>
 									<p class="font-size-14">我们会尽快审核，并将审核结果通过短信或邮件通知您，请及时关注。</p>
 								<%}else if(userCur.userType == 6){%>
-									<p class="font-size-18 margin-top-20">您提交的个人会员认证审核<span class="color-red">未通过</span>！</p>
+									<p class="font-size-18 margin-top-20">您提交的个人用户认证审核<span class="color-red">未通过</span>！</p>
 									<a href="/auth/user_auth_init_step5" class="font-size-14 color-red" style="text-decoration: underline">查看原因 >></a>
 								<%}else if(userCur.userType == 7){%>
-									<p class="font-size-18 margin-top-20">您提交的单位会员认证审核<span class="color-red">未通过</span>！</p>
+									<p class="font-size-18 margin-top-20">您提交的单位用户认证审核<span class="color-red">未通过</span>！</p>
 									<a href="/auth/company_auth_init_step5" class="font-size-14 color-red" style="height:18px; display: inline-block; border-bottom: 1px solid #E34F4F">查看原因 >></a>
 								<%}%>
 							</div>

@@ -74,7 +74,7 @@ public class SyncCustomerInfoImpl extends GenericServiceImpl<PayAccount, Integer
         Map<String, String> paramMap = new HashMap<String, String>();
         /**
          * FID_JYS 交易市场*
-         * FID_HYDM 会员代码
+         * FID_HYDM 用户代码
          * FID_KHH 市场端客户号*
          * FID_KHXM 客户姓名
          * FID_KHQC 客户全称*

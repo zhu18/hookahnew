@@ -84,7 +84,7 @@ public class PayTradeRecordServiceImpl extends GenericServiceImpl<PayTradeRecord
 						x.getTradeType().equals(6004)){
 					x.setAccountParty("交易中心平台资金");
 				}else{
-					x.setAccountParty((x.getUserName() == null ? "会员" : x.getUserName()) + "平台资金");
+					x.setAccountParty((x.getUserName() == null ? "用户" : x.getUserName()) + "平台资金");
 				}
 			});
 		}
@@ -119,7 +119,7 @@ public class PayTradeRecordServiceImpl extends GenericServiceImpl<PayTradeRecord
 				if(user != null){
 					payTradeRecordVo.setAccountParty(user.getUserName() + "账户资金");
 				}else{
-					payTradeRecordVo.setAccountParty("会员账户资金");
+					payTradeRecordVo.setAccountParty("用户账户资金");
 				}
 			}
 			page.add(payTradeRecordVo);

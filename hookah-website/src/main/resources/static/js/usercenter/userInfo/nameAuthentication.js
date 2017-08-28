@@ -11,7 +11,7 @@ $(function () {
             if(data.code == "1" && typeof data.data =="object"){
                 var html="";
                 var content=data.data.checkContent?data.data.checkContent:"无";
-                html +="<li><label>用户类型</label><p>单位会员</p></li>";
+                html +="<li><label>用户类型</label><p>单位用户</p></li>";
                 if(data.data.userType == '7'){
                     html +="<li><label>认证状态</label><p class='position-relative'><span>未通过</span><a href='/auth/company_auth_init_step2?isAuth=3' class='repeat-revise-btn'>重新修改</a></p></li>";
                     html +="<li><label>审核意见</label><p>"+content+"</p></li>";
@@ -55,7 +55,7 @@ $(function () {
                 }
             }else {
                 var html="";
-                html +="<li><label>用户类型</label><p>单位会员</p></li>";
+                html +="<li><label>用户类型</label><p>单位用户</p></li>";
                 html +="<li><label>认证状态</label><p class='position-relative'><span>未认证</span><a href='/auth/company_auth_init_step2?isAuth=1' class='repeat-revise-btn'>立即认证</a></p></li>"
                 $('.ul1').html(html);
             }

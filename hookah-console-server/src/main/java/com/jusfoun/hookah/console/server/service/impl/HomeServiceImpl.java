@@ -43,15 +43,15 @@ public class HomeServiceImpl implements HomeService {
         returnData.setCode(ExceptionConst.Success);
         HomeVo homeVo = new HomeVo();
         try {
-            //已注册会员数量
+            //已注册用户数量
             List<Condition> userFifters = new ArrayList<Condition>();
             homeVo.setUserCount(userService.count(userFifters));
 
-            //已注册未审核会员数量
+            //已注册未审核用户数量
             userFifters.add(Condition.in("userType",new Integer[]{3,5}));
             homeVo.setPendCheckUserCount(userService.count(userFifters));
 
-            //已认证的会员数量
+            //已认证的用户数量
             List<Condition> userFifters1 = new ArrayList<Condition>();
             userFifters1.add(Condition.in("userType",new Integer[]{2,4}));
             homeVo.setRealUserCount(userService.count(userFifters1));
