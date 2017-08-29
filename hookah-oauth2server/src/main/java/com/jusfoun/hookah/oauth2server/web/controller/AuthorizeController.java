@@ -3,11 +3,13 @@ package com.jusfoun.hookah.oauth2server.web.controller;
 
 import com.jusfoun.hookah.core.domain.OauthClient;
 import com.jusfoun.hookah.core.utils.FormatCheckUtil;
+import com.jusfoun.hookah.core.utils.NetUtils;
+import com.jusfoun.hookah.oauth2server.config.Constants;
 import com.jusfoun.hookah.oauth2server.security.UsernameAndPasswordToken;
+import com.jusfoun.hookah.oauth2server.web.OAuthAuthxRequest;
+import com.jusfoun.hookah.rpc.api.LoginLogService;
 import com.jusfoun.hookah.rpc.api.oauth2.OAuthClientService;
 import com.jusfoun.hookah.rpc.api.oauth2.OAuthService;
-import com.jusfoun.hookah.oauth2server.config.Constants;
-import com.jusfoun.hookah.oauth2server.web.OAuthAuthxRequest;
 import org.apache.oltu.oauth2.as.issuer.MD5Generator;
 import org.apache.oltu.oauth2.as.issuer.OAuthIssuerImpl;
 import org.apache.oltu.oauth2.as.response.OAuthASResponse;
@@ -56,6 +58,9 @@ public class AuthorizeController {
 
     @Resource
     private OAuthClientService clientService;
+
+    @Resource
+    LoginLogService loginLogService;
 
     @RequestMapping("authorize")
     public Object authorize(Model model, HttpServletRequest request, HttpServletResponse response) throws OAuthSystemException, URISyntaxException, ServletException, IOException {
@@ -181,6 +186,13 @@ public class AuthorizeController {
 
         try {
             subject.login(token);
+
+            if (subject.isAuthenticated()) {
+                //TODO...登录日志
+                loginLogService.addLoginLog(username, NetUtils.getIpAddr(request));
+                logger.info("用户[" + username + "]登录认证通过【authorize方法】");
+            }
+
             return true;
         } catch (UnknownAccountException uae) {
             logger.info("对用户[" + username + "]进行登录验证..验证未通过,未知账户");
