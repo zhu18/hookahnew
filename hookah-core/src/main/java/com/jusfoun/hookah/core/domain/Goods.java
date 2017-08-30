@@ -317,6 +317,16 @@ public class Goods extends GenericModel {
 
     private Byte isPush;//是否推送
 
+    private Byte isLocal;//是否是本地商品
+
+    public Byte getIsLocal() {
+        return isLocal;
+    }
+
+    public void setIsLocal(Byte isLocal) {
+        this.isLocal = isLocal;
+    }
+
     public Byte getIsPush() {
         return isPush;
     }
