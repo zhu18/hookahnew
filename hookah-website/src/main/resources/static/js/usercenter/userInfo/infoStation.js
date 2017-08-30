@@ -1,3 +1,5 @@
+
+$(function(){
 function loadPageData(data) {
 	var ids = [];
 	if (data.data.list.length > 0) {
@@ -91,8 +93,8 @@ function loadPageData(data) {
 	});
 }
 // 消息数量
-num();
-function num() {
+    num();
+    function num() {
 	$.ajax({
 		url: '/message/countMessageNumber',
 		type: 'get',
@@ -104,6 +106,7 @@ function num() {
 		}
 	})
 }
+
 function getInfo(that, id) {
 	$.ajax({
 		url: '/message/detail/' + id,
@@ -145,5 +148,8 @@ $("[name='checkall']:checkbox").click(function () {
 		$('#flag').hide();
 	}
 });
+})
+
+
 
 
