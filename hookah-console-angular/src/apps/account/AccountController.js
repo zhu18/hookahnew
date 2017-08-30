@@ -6,7 +6,7 @@ class AccountController {
         url: $rootScope.site.apiServer + "/api/account/sys_all",
         params: {
           currentPage: $rootScope.pagination.currentPage,
-          pageSize:initCurrentPage == 'true' ? 1 : $rootScope.pagination.pageSize,
+          pageSize:initCurrentPage == 'true' ? 10 : $rootScope.pagination.pageSize,
           userName: $scope.userName
         }
       });
