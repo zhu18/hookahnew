@@ -515,6 +515,7 @@ function copyText(){
  function resetToken(goodsId,orderId){
      $.ajax({
        url: host.website + '/order/reCreateToken',
+         cache:false,
        type: 'get',
        data: {
          goodsId: goodsId,
