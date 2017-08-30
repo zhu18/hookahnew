@@ -1785,8 +1785,8 @@ dl {
 	word-break: break-all;
 }
 .goods-table .table-content .table-item table .goodsDescBox p,.goods-table .table-content .table-item.goodsDescBox p{
-	line-height: 22px;
-	padding: 7px 0;
+	line-height: 1.8;
+	margin: 10px 0;
 }
 .goods-table .table-content .table-item:last-child ol .comment-title {
 	background-color: #F1F1F1;

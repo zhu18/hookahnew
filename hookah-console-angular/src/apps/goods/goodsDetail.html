@@ -3,6 +3,7 @@
 		border: 1px solid #ccc;
 		min-width: 60px;
 	}
+	.goodsEditor p{line-height: 1.8;margin:10px 0; }
 </style>
 <div class="row" xmlns="http://www.w3.org/1999/html">
 	<div class="col-sm-12">
@@ -124,19 +125,19 @@
 					<div class="form-group" data-ng-if="editData.goodsType == 0 || editData.goodsType == 1 || editData.goodsType == 2">
 						<label class="col-sm-2 control-label">商品描述</label>
 						<div class="col-sm-5">
-							<p ng-bind-html="editData.goodsDesc | trustHtml"></p>
+							<p class="goodsEditor" ng-bind-html="editData.goodsDesc | trustHtml"></p>
 						</div>
 					</div>
 					<div class="form-group" data-ng-if="editData.goodsType == 0 || editData.goodsType == 1 || editData.goodsType == 2">
 						<label class="col-sm-2 control-label">商品优势</label>
 						<div class="col-sm-5">
-							<p ng-bind-html="editData.goodsAdvantage | trustHtml"></p>
+							<p class="goodsEditor" ng-bind-html="editData.goodsAdvantage | trustHtml"></p>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label">售后服务</label>
 						<div class="col-sm-5">
-							<p ng-bind-html="editData.afterSaleService | trustHtml"></p>
+							<p class="goodsEditor" ng-bind-html="editData.afterSaleService | trustHtml"></p>
 						</div>
 					</div>
 					<div class="form-group" data-ng-if="editData.goodsType == 0 || editData.goodsType == 1">
@@ -148,7 +149,7 @@
 					<div class="form-group" data-ng-if="editData.goodsType == 1 || editData.goodsType == 4 || editData.goodsType == 5 || editData.goodsType == 6 || editData.goodsType == 7">
 						<label class="col-sm-2 control-label">应用案例</label>
 						<div class="col-sm-5">
-							<p ng-bind-html="editData.appCase | trustHtml"></p>
+							<p class="goodsEditor" ng-bind-html="editData.appCase | trustHtml"></p>
 						</div>
 					</div>
 					<div class="form-group" data-ng-if="editData.goodsType != 1">
@@ -219,11 +220,11 @@
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">应用经验</label>
-								<p ng-bind-html="editData.dataModel.aexp | trustHtml"></p>
+								<p class="goodsEditor" ng-bind-html="editData.dataModel.aexp | trustHtml"></p>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">配套服务</label>
-								<p ng-bind-html="editData.dataModel.relationServ | trustHtml"></p>
+								<p class="goodsEditor" ng-bind-html="editData.dataModel.relationServ | trustHtml"></p>
 							</div>
 						</div>
 						<div data-ng-if="editData.goodsType == 0">
@@ -287,31 +288,31 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">核心功能：</label>
 								<div class="col-sm-5">
-									<p ng-bind-html="editData.atAloneSoftware.coreFunction | trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.atAloneSoftware.coreFunction | trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">技术优势：</label>
 								<div class="col-sm-5">
-									<p ng-bind-html="editData.atAloneSoftware.technologicalSuperiority | trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.atAloneSoftware.technologicalSuperiority | trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">团队优势：</label>
 								<div class="col-sm-5">
-									<p ng-bind-html="editData.atAloneSoftware.teamAdvantage | trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.atAloneSoftware.teamAdvantage | trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">所需环境：</label>
 								<div class="col-sm-5">
-									<p ng-bind-html="editData.atAloneSoftware.desiredEnvironment | trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.atAloneSoftware.desiredEnvironment | trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">所需数据：</label>
 								<div class="col-sm-5">
-									<p ng-bind-html="editData.atAloneSoftware.dataNeeded | trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.atAloneSoftware.dataNeeded | trustHtml"></p>
 								</div>
 							</div>
 						</div>
@@ -319,25 +320,25 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">核心功能：</label>
 								<div class="col-sm-5">
-									<p ng-bind-html="editData.atSaaS.coreFunction| trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.atSaaS.coreFunction| trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">团队优势：</label>
 								<div class="col-sm-5">
-									<p ng-bind-html="editData.atSaaS.teamAdvantage| trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.atSaaS.teamAdvantage| trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">所需环境：</label>
 								<div class="col-sm-5">
-									<p ng-bind-html="editData.atSaaS.desiredEnvironment| trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.atSaaS.desiredEnvironment| trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">所需数据：</label>
 								<div class="col-sm-5">
-									<p ng-bind-html="editData.atSaaS.dataNeeded| trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.atSaaS.dataNeeded| trustHtml"></p>
 								</div>
 							</div>
 						</div>
@@ -345,31 +346,31 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">核心功能：</label>
 								<div class="col-sm-5">
-									<p ng-bind-html="editData.asAloneSoftware.coreFunction| trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.asAloneSoftware.coreFunction| trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">技术优势：</label>
 								<div class="col-sm-5">
-									<p ng-bind-html="editData.asAloneSoftware.technologicalSuperiority| trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.asAloneSoftware.technologicalSuperiority| trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">团队优势：</label>
 								<div class="col-sm-5">
-									<p ng-bind-html="editData.asAloneSoftware.teamAdvantage| trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.asAloneSoftware.teamAdvantage| trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">所需环境：</label>
 								<div class="col-sm-5">
-									<p ng-bind-html="editData.asAloneSoftware.desiredEnvironment| trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.asAloneSoftware.desiredEnvironment| trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">所需数据：</label>
 								<div class="col-sm-5">
-									<p ng-bind-html="editData.asAloneSoftware.desiredEnvironment| trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.asAloneSoftware.desiredEnvironment| trustHtml"></p>
 								</div>
 							</div>
 						</div>
@@ -377,25 +378,25 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">核心功能：</label>
 								<div class="col-sm-5">
-									<p ng-bind-html="editData.asSaaS.coreFunction| trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.asSaaS.coreFunction| trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">团队优势：</label>
 								<div class="col-sm-5">
-									<p ng-bind-html="editData.asSaaS.teamAdvantage| trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.asSaaS.teamAdvantage| trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">所需环境：</label>
 								<div class="col-sm-5">
-									<p ng-bind-html="editData.asSaaS.desiredEnvironment| trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.asSaaS.desiredEnvironment| trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">所需数据：</label>
 								<div class="col-sm-5">
-									<p ng-bind-html="editData.asSaaS.dataNeeded| trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.asSaaS.dataNeeded| trustHtml"></p>
 								</div>
 							</div>
 						</div>
@@ -745,14 +746,14 @@
 								<!--<div class="col-sm-5">-->
 									<!--<input type="text" class="form-control" value="{{editData.dataModel.aexp}}" readonly="true"/>-->
 								<!--</div>-->
-								<p ng-bind-html="editData.dataModel.aexp | trustHtml"></p>
+								<p class="goodsEditor" ng-bind-html="editData.dataModel.aexp | trustHtml"></p>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">配套服务：</label>
 								<!--<div class="col-sm-5">-->
 									<!--<input type="text" class="form-control" value="{{editData.dataModel.relationServ}}" readonly="true"/>-->
 								<!--</div>-->
-								<p ng-bind-html="editData.dataModel.relationServ | trustHtml"></p>
+								<p class="goodsEditor" ng-bind-html="editData.dataModel.relationServ | trustHtml"></p>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">模型规格：</label></br>
@@ -776,35 +777,35 @@
 								<label class="col-sm-2 control-label">核心功能：</label>
 								<div class="col-sm-5">
 									<!--<input type="text" class="form-control" value="{{editData.atAloneSoftware.coreFunction}}" readonly="true"/>-->
-									<p ng-bind-html="editData.atAloneSoftware.coreFunction | trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.atAloneSoftware.coreFunction | trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">技术优势：</label>
 								<div class="col-sm-5">
 									<!--<input type="text" class="form-control" value="{{editData.atAloneSoftware.technologicalSuperiority}}" readonly="true"/>-->
-									<p ng-bind-html="editData.atAloneSoftware.technologicalSuperiority | trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.atAloneSoftware.technologicalSuperiority | trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">团队优势：</label>
 								<div class="col-sm-5">
 									<!--<input type="text" class="form-control" value="{{editData.atAloneSoftware.teamAdvantage}}" readonly="true"/>-->
-									<p ng-bind-html="editData.atAloneSoftware.teamAdvantage | trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.atAloneSoftware.teamAdvantage | trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">所需环境：</label>
 								<div class="col-sm-5">
 									<!--<input type="text" class="form-control" value="{{editData.atAloneSoftware.desiredEnvironment}}" readonly="true"/>-->
-									<p ng-bind-html="editData.atAloneSoftware.desiredEnvironment | trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.atAloneSoftware.desiredEnvironment | trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">所需数据：</label>
 								<div class="col-sm-5">
 									<!--<input type="text" class="form-control" value="{{editData.atAloneSoftware.dataNeeded}}" readonly="true"/>-->
-									<p ng-bind-html="editData.atAloneSoftware.dataNeeded | trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.atAloneSoftware.dataNeeded | trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
@@ -819,28 +820,28 @@
 								<label class="col-sm-2 control-label">核心功能：</label>
 								<div class="col-sm-5">
 									<!--<input type="text" class="form-control" value="{{editData.atSaaS.coreFunction}}" readonly="true"/>-->
-									<p ng-bind-html="editData.atSaaS.coreFunction| trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.atSaaS.coreFunction| trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">团队优势：</label>
 								<div class="col-sm-5">
 									<!--<input type="text" class="form-control" value="{{editData.atSaaS.teamAdvantage}}" readonly="true"/>-->
-									<p ng-bind-html="editData.atSaaS.teamAdvantage| trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.atSaaS.teamAdvantage| trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">所需环境：</label>
 								<div class="col-sm-5">
 									<!--<input type="text" class="form-control" value="{{editData.atSaaS.desiredEnvironment}}" readonly="true"/>-->
-									<p ng-bind-html="editData.atSaaS.desiredEnvironment| trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.atSaaS.desiredEnvironment| trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">所需数据：</label>
 								<div class="col-sm-5">
 									<!--<input type="text" class="form-control" value="{{editData.atSaaS.dataNeeded}}" readonly="true"/>-->
-									<p ng-bind-html="editData.atSaaS.dataNeeded| trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.atSaaS.dataNeeded| trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
@@ -855,35 +856,35 @@
 								<label class="col-sm-2 control-label">核心功能：</label>
 								<div class="col-sm-5">
 									<!--<input type="text" class="form-control" value="{{editData.asAloneSoftware.coreFunction}}" readonly="true"/>-->
-									<p ng-bind-html="editData.asAloneSoftware.coreFunction| trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.asAloneSoftware.coreFunction| trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">技术优势：</label>
 								<div class="col-sm-5">
 									<!--<input type="text" class="form-control" value="{{editData.asAloneSoftware.technologicalSuperiority}}" readonly="true"/>-->
-									<p ng-bind-html="editData.asAloneSoftware.technologicalSuperiority| trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.asAloneSoftware.technologicalSuperiority| trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">团队优势：</label>
 								<div class="col-sm-5">
 									<!--<input type="text" class="form-control" value="{{editData.asAloneSoftware.teamAdvantage}}" readonly="true"/>-->
-									<p ng-bind-html="editData.asAloneSoftware.teamAdvantage| trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.asAloneSoftware.teamAdvantage| trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">所需环境：</label>
 								<div class="col-sm-5">
 									<!--<input type="text" class="form-control" value="{{editData.asAloneSoftware.desiredEnvironment}}" readonly="true"/>-->
-									<p ng-bind-html="editData.asAloneSoftware.desiredEnvironment| trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.asAloneSoftware.desiredEnvironment| trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">所需数据：</label>
 								<div class="col-sm-5">
 									<!--<input type="text" class="form-control" value="{{editData.asAloneSoftware.dataNeeded}}" readonly="true"/>-->
-									<p ng-bind-html="editData.asAloneSoftware.desiredEnvironment| trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.asAloneSoftware.desiredEnvironment| trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
@@ -898,28 +899,28 @@
 								<label class="col-sm-2 control-label">核心功能：</label>
 								<div class="col-sm-5">
 									<!--<input type="text" class="form-control" value="{{editData.asSaaS.coreFunction}}" readonly="true"/>-->
-									<p ng-bind-html="editData.asSaaS.coreFunction| trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.asSaaS.coreFunction| trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">团队优势：</label>
 								<div class="col-sm-5">
 									<!--<input type="text" class="form-control" value="{{editData.asSaaS.teamAdvantage}}" readonly="true"/>-->
-									<p ng-bind-html="editData.asSaaS.teamAdvantage| trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.asSaaS.teamAdvantage| trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">所需环境：</label>
 								<div class="col-sm-5">
 									<!--<input type="text" class="form-control" value="{{editData.asSaaS.desiredEnvironment}}" readonly="true"/>-->
-									<p ng-bind-html="editData.asSaaS.desiredEnvironment| trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.asSaaS.desiredEnvironment| trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">所需数据：</label>
 								<div class="col-sm-5">
 									<!--<input type="text" class="form-control" value="{{editData.asSaaS.dataNeeded}}" readonly="true"/>-->
-									<p ng-bind-html="editData.asSaaS.dataNeeded| trustHtml"></p>
+									<p class="goodsEditor" ng-bind-html="editData.asSaaS.dataNeeded| trustHtml"></p>
 								</div>
 							</div>
 							<div class="form-group">
