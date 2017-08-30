@@ -84,6 +84,7 @@ $(function(){
     function evaluate(goodsId){
         $.ajax({
             url:host.website+'/comment/serachByGoodsId',
+            cache:false,
             type:'get',
             data:{
                 goodsId:goodsId
