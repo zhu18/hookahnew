@@ -1,0 +1,98 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/usercenter/buyer/mybuyer.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="grid-left info-center-box ">
+            <div class="user-center-box grid-right">
+                <div class="wrapper">
+                    <div class="wrapper-tab clearfix">
+                        <ul class="wrapper-tab-box">
+                            <li class="first active"><a href="/usercenter/invoice">发票索取</a></li>
+                            <li class=""><a href="/usercenter/invoiceList">发票列表</a></li>
+                            <li class=""><a href="/usercenter/invoiceInfo">发票信息</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="invoice-content">
+                    <div class="left grid-left">
+                        <div class="selected-total-money">已选择总金额：<span>￥0.00</span></div>
+                        <div class="can-total-money">(可开票总金额：￥<span>462.00</span>)</div>
+                    </div>
+                    <div class="right grid-left">
+                        <div class="wait-Print-money">待开票金额：<span>￥0.00</span></div>
+                    </div>
+                    <button class="take-btn grid-right">索取发票</button>
+                </div>
+                <div class="invoice-list">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th width="10">
+                                <input type="checkbox" class="ng-pristine ng-valid checkbox-title" ></th>
+                            <th>订单编号</th>
+                            <th>产品名称</th>
+                            <th>类型</th>
+                            <th class="text-right">订单实付金额</th>
+                            <th class="text-right">可开票金额</th>
+                            <th>订单支付时间</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="ng-scope">
+                            <td width="10"><input type="checkbox" class="ng-pristine ng-valid checkbox" name="checkbox"></td>
+                            <td><span bo-text="item.outBizId">200520574370494</span></td>
+                            <td><span bo-text="item.remark">银行卡类型查询</span></td>
+                            <td><span bo-text="item.bizType | orderBizTypeFilter">订单</span></td>
+                            <td class="text-right"><span style="color: #000;" class="ng-binding">￥6.00</span></td>
+                            <td class="text-right"><span style="color: #f68300;" class="ng-binding">￥6.00</span>
+                            </td>
+                            <td><span bo-text="item.bizTime|date:'yyyy-MM-dd'">2017-02-13</span></td>
+                        </tr>
+                        <tr class="ng-scope">
+                            <td width="10"><input type="checkbox" class="ng-pristine ng-valid checkbox" name="checkbox"></td>
+                            <td><span bo-text="item.outBizId">D20165A1AC208207</span></td>
+                            <td><span bo-text="item.remark">银行卡类型查询</span></td>
+                            <td><span bo-text="item.bizType | orderBizTypeFilter">订单</span></td>
+                            <td class="text-right"><span style="color: #000;" class="ng-binding">￥70.00</span></td>
+                            <td class="text-right"><span style="color: #f68300;" class="ng-binding">￥70.00</span>
+                            </td>
+                            <td><span bo-text="item.bizTime|date:'yyyy-MM-dd'">2016-07-08</span></td>
+                        </tr>
+                        <tr class="ng-scope">
+                            <td width="10"><input type="checkbox" class="ng-pristine ng-valid checkbox" name="checkbox"></td>
+                            <td><span bo-text="item.outBizId">D20165A1AA808185</span></td>
+                            <td><span bo-text="item.remark">银行卡类型查询</span></td>
+                            <td><span bo-text="item.bizType | orderBizTypeFilter">订单</span></td>
+                            <td class="text-right"><span style="color: #000;" class="ng-binding">￥120.00</span></td>
+                            <td class="text-right"><span style="color: #f68300;" class="ng-binding">￥120.00</span>
+                            </td>
+                            <td><span bo-text="item.bizTime|date:'yyyy-MM-dd'">2016-07-08</span></td>
+                        </tr>
+                        <tr class="ng-scope">
+                            <td width="10"><input type="checkbox" class="ng-pristine ng-valid checkbox" name="checkbox"></td>
+                            <td><span bo-text="item.outBizId">D20163O0SWN00286</span></td>
+                            <td><span bo-text="item.remark">银行卡类型查询</span></td>
+                            <td><span bo-text="item.bizType | orderBizTypeFilter">订单</span></td>
+                            <td class="text-right"><span style="color: #000;" class="ng-binding">￥60.00</span></td>
+                            <td class="text-right"><span style="color: #f68300;" class="ng-binding">￥60.00</span>
+                            </td>
+                            <td><span bo-text="item.bizTime|date:'yyyy-MM-dd'">2016-05-11</span></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/static/js/usercenter/mybuyer/invoice.js"></script>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:motan="http://api.weibo.com/schema/motan"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://api.weibo.com/schema/motan http://api.weibo.com/schema/motan.xsd">
+
+    <!-- 注册中心配置 使用不同注册中心需要依赖对应的jar包。-->
+    <!--<motan:registry regProtocol="local" name="registry"/>-->
+    <!--<motan:registry regProtocol="consul" name="registry" address="192.168.15.90:8500"/>-->
+    <motan:registry regProtocol="consul" name="registry" address="${myconf.consul.ipPort}"/>
+    <!--<motan:registry regProtocol="zookeeper" name="registry" address="127.0.0.1:2181" connectTimeout="2000"/>-->
+
+    <!-- motan协议配置 -->
+    <motan:protocol default="true" name="motan" haStrategy="failover"
+                    loadbalance="roundrobin" maxClientConnection="10" minClientConnection="2"/>
+
+    <!-- 通用referer基础配置 -->
+    <motan:basicReferer requestTimeout="30000" accessLog="false"
+                        retries="2" group="hookah-rpc" module="hookah-rpc"
+                        application="hookah" protocol="motan" registry="registry"
+                        id="HookahRPCClientBasicConfig" throwException="false" check="false"/>
+</beans>

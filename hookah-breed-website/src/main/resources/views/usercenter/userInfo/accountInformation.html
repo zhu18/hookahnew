@@ -1,0 +1,51 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/accountInformation.css">
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="grid-right info-center-box ">
+            <div class="accountInformation">
+                 <div class="accountInformation-top">
+                     <div class="header clearfix">
+                         <h4 class="grid-left center-title">帐号信息</h4>
+                     </div>
+                     <ul class="accountInformation-top-list">
+
+                     </ul>
+                 </div>
+                 <div class="accountInformation-down">
+                     <div class="header clearfix">
+                         <h4 class="grid-left center-title">登录日志</h4>
+                     </div>
+                     <table>
+                         <thead>
+                             <tr>
+                                 <th>登录时间</th>
+                                 <th>登录IP</th>
+                                 <th>备注</th>
+                             </tr>
+                         </thead>
+                          <tbody>
+
+                          </tbody>
+                     </table>
+                 </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+<script type="text/javascript" src="/static/js/usercenter/userInfo/accountInformation.js"></script>
+

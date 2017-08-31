@@ -1,0 +1,128 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/innovation/index.css">
+<link rel="stylesheet" href="/static/css/font/innovation/iconfont.css">
+<%};%>
+<%
+var htmlPart = {
+%>
+<div class="box">
+    <div class="information grid-row padding-top-10">
+        <div class="content clearfix">
+            <!--左侧栏-->
+            <div class="leftSide margin-right-10">
+                <!--中心动态-->
+                <div class="top margin-bottom-10">
+                    <ul>
+                        <!--<li class="active" onclick="renderChange(this)">-->
+                            <!--<a href="javascript:;">-->
+                                <!--<i class="iconfont icon-huodong"></i>-->
+                                <!--<span class="page-title">数据众包</span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <li onclick="renderChange(this)" class="active">
+                            <a href="javascript:;">
+                                <i class="iconfont icon-huodong"></i>
+                                <span class="page-title">孵化器</span>
+                            </a>
+                        </li>
+                        <li onclick="renderChange(this)">
+                            <a href="javascript:;">
+                                <i class="iconfont icon-huodong"></i>
+                                <span class="page-title">基础开发平台</span>
+                            </a>
+                        </li>
+                        <!--<li onclick="renderChange(this)">-->
+                            <!--<a href="javascript:;">-->
+                                <!--<i class="iconfont icon-huodong"></i>-->
+                                <!--<span class="page-title">股权众筹</span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li onclick="renderChange(this)">-->
+                            <!--<a href="javascript:;">-->
+                                <!--<i class="iconfont icon-huodong"></i>-->
+                                <!--<span class="page-title">优秀团队</span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <li onclick="renderChange(this)">
+                            <a href="javascript:;">
+                                <i class="iconfont icon-huodong"></i>
+                                <span class="page-title">大数据产业基金</span>
+                            </a>
+                        </li>
+                        <li onclick="renderChange(this)">
+                            <a href="javascript:;">
+                                <i class="iconfont icon-huodong"></i>
+                                <span class="page-title">活动</span>
+                            </a>
+                        </li>
+                        <li onclick="renderChange(this)">
+                            <a href="javascript:;">
+                                <i class="iconfont icon-huodong"></i>
+                                <span class="page-title">创客大赛</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--右侧内容-->
+            <div class="rightCenter padding-left-20 padding-right-30 margin-bottom-30">
+                <div class="title">
+                    <span class="margin-right-10"></span>
+                    <h3 id="J_pageTitle">孵化器</h3>
+                </div>
+                <!--<div class="img-box">-->
+                    <!--<a href="javascript:void(0)"><img src="/static/images/innovation/u4639.png" alt=""></a>-->
+                <!--</div>-->
+                <!--<div class="detail">-->
+                    <!--<div class="header">-->
+                        <!--<h4 class="center-title">创客中心介绍</h4>-->
+                    <!--</div>-->
+                    <!--<div class="content">-->
+                        <!--<p>-->
+                            <!--2015年9月，国务院发布《关于印发促进大数据发展行动纲要的通知》，大数据正式提升为国家战略。2016年10月，山东省政府发布《山东省人民政府关于促进大数据发展的意见》，明确提出大数据要成为提升政府治理能力，推动经济转型升级，塑造山东竞争优势的战略路径，并提出要在青岛设立并争创国家级大数据综合试验区。-->
+
+                            <!--青岛作为全省的发展龙头、经济中心，具备良好的地理优势和经济基础，科技机构、高校数量和国家重点实验室众多，政务大数据全国领先，工业大数据基础雄厚，海洋大数据特色鲜明。联通、移动在青岛建有北方东部沿海最大的数据中心，电信在青岛建有大规模云计算基地，信息化基础设施完备。突出的区位优势和产业基础，青岛力求打造影响力辐射全球的“中国数都”。随着慧与软件全球大数据应用研究及产业示范基地、清华—青岛大数据工程研究中心、华为、百度、亚马逊等一大批国内外知名大数据企业落户青岛，青岛大数据产业迎来前所未有发展机遇。今后还会引进更多国内外创新资源和创新企业来青设立创新空间，推动创新资源的集聚和开放，特别是依托互联网和云计算技术，将创新技术向中小企业和创客开放，推动“双创”战略在青岛的实践发展。-->
+
+                            <!--数字经济是一种平台经济，它提倡一种联通、融合、分享概念。发展数字经济的最终目标是要惠民、便民。青岛已经开展了智慧医疗、交通这样的样板便民应用，接下来会继续推动智慧应用在政府管理、民生服务中的广泛应用，推动大数据产业发展，加快培育经济发展的新经济、新动力、新模式。-->
+                        <!--</p>-->
+                        <!--&lt;!&ndash;<div class="adress">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<h5 class="subtitle">大赛组委会秘书处</h5>&ndash;&gt;-->
+
+                            <!--&lt;!&ndash;<p>联系人:<span>王海宽</span></p>&ndash;&gt;-->
+
+                            <!--&lt;!&ndash;<p>电话: <span>010-6666666</span></p>&ndash;&gt;-->
+
+                            <!--&lt;!&ndash;<p>电子邮箱: <span>cnmaker@miit.gov.cn</span><br/>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&ndash;&gt;-->
+                                <!--&lt;!&ndash;&nbsp; &nbsp; <span>cnmaker@miit.gov.cn</span>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</p>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="list-innovation">
+                    <div class="data-item active">
+                        <%include("/innovation/incubator.html"){}%>
+                    </div>
+                    <div class="data-item">
+                        <%include("/innovation/base_development_platform.html"){}%>
+                    </div>
+                    <div class="data-item">
+                        <%include("/innovation/bigdata_industry.html"){}%>
+                    </div>
+                    <div class="data-item">
+                        <%include("/innovation/activity.html"){}%>
+                    </div>
+                    <div class="data-item">
+                        <%include("/innovation/guest_competition.html"){}%>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+<script type="text/javascript" src="/static/js/innovation/index.js"></script>

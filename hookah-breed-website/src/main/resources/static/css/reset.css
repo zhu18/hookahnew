@@ -1,0 +1,59 @@
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td {
+	margin: 0;
+	padding: 0;
+	list-style: none
+}
+body, button, input, select, textarea {
+	font: 12px/1.5 "\5FAE\8F6F\96C5\9ED1", "Microsoft Yahei", "Hiragino Sans GB", tahoma, arial, "\5B8B\4F53";
+	-webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-size: 100%;
+	color: #333;
+}
+small {
+	font-size: 12px;
+}
+ul, ol {
+	list-style: none;
+}
+a{
+	text-decoration: none;
+	color: #666;
+	-webkit-transition:color .3s linear;
+	transition:color .3s linear
+}
+a:hover {
+	/*color: #078cfc;*/
+	text-decoration: none;
+	outline: none;
+}
+sup {
+	vertical-align: top;
+}
+sub {
+	vertical-align: bottom;
+}
+legend {
+	color: #000;
+}
+fieldset, img {
+	border: 0;
+}
+
+button, input, select, textarea {
+	font-size: 100%;
+	outline: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+p {
+	color: #666;
+}
+.QRcode-box img{
+	width: 124px;
+	height: 124px;
+}
+iframe{display: inherit;}

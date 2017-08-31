@@ -1,0 +1,89 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/usercenter/myseller/myseller.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="grid-left info-center-box ">
+            <div class="user-center-box grid-right">
+                <div class="rate-manage">
+                    <div class="wrapper-tab clearfix">
+                        <ul class="wrapper-tab-box">
+                            <li class="first "><a href="/usercenter/trade">已出售商品</a></li>
+                            <li class="active"><a href="/usercenter/tradeRate">评价管理</a></li>
+                        </ul>
+                    </div>
+                    <div class="rate-box">
+                        <table>
+                            <tr>
+                                <th>评价级别</th>
+                                <th>评价内容</th>
+                                <th>评价人</th>
+                                <th>商品信息</th>
+                                <th>操作</th>
+                                <!--<th>评价级别<th/>-->
+                                <!--<th>评价内容</th>-->
+                                <!--<th>评价人</th>-->
+                                <!--<th>商品信息</th>-->
+                                <!--<th>操作</th>-->
+                            </tr>
+                            <tr>
+                                <td>好评</td>
+                                <td>接口好用，速度快，信息量大</td>
+                                <td>前端怪蜀黍</td>
+                                <td>
+                                    <a class="goods-info" href="javascript:void(0)">
+                                        <h3>身份证实名认证</h3>
+                                        <p>借贷机构可用于查询申请人互联网申请借款</p>
+                                    </a>
+                                    <span>￥800.00</span>
+                                </td>
+                                <td><a href="javascript:void(0)">修改评价</a></td>
+                            </tr>
+                            <tr>
+                                <td>好评</td>
+                                <td>接口好用，速度快，信息量大</td>
+                                <td>前端怪蜀黍</td>
+                                <td>
+                                    <a class="goods-info" href="javascript:void(0)">
+                                        <h3>身份证实名认证</h3>
+                                        <p>借贷机构可用于查询申请人互联网申请借款借贷机构可用于查询申请人互联网申请借款</p>
+                                    </a>
+                                    <span>￥800.00</span>
+                                </td>
+                                <td><a href="javascript:void(0)">修改评价</a></td>
+                            </tr>
+                            <tr>
+                                <td>好评</td>
+                                <td>接口好用，速度快，信息量大</td>
+                                <td>前端怪蜀黍</td>
+                                <td>
+                                    <a class="goods-info" href="javascript:void(0)">
+                                        <h3>身份证实名认证</h3>
+                                        <p>借贷机构可用于查询申请人互联网申请借款</p>
+                                    </a>
+                                    <span>￥800.00</span>
+                                </td>
+                                <td><a href="javascript:void(0)">修改评价</a></td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+
+
+

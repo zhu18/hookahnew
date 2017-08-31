@@ -1,0 +1,33 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/introduction/index.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="box backgorund-gray">
+    <div class="strategy clearfix grid-row padding-top-10 padding-bottom-30">
+        <!--左侧栏-->
+        <% include("/introduction/trading-sidebar.html"){} %>
+
+        <!--右侧内容-->
+        <div class="strategy-content">
+            <div class="cont" id="strategy">
+                <div class="public">
+                    <span></span>
+                    <h3>战略布局</h3>
+                </div>
+                <div class="line"></div>
+                <p><strong>核心战略：三轴一源一平台一中心一生态</strong></p>
+                <div class="round">
+                    <img src="/static/images/zlbj-img01.jpg" alt="" >
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>

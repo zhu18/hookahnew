@@ -1,0 +1,62 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/fundmanage.css">
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="grid-right info-center-box ">
+            <div class="user-center-box grid-right">
+                <div class="header">
+                    <h4 class="center-title">资金管理</h4>
+                </div>
+                <div class="fundmanage-box">
+                    <div class="fundmanage-bd">
+                        <div class="account-funds margin-top-10">
+                            <div class="account-funds-title">账户资金</div>
+                            <div class="account-funds-content">
+                                <div class="account-funds-content-left">
+                                    <div class="balance-title margin-bottom-15">我的可用余额</div>
+                                    <div class="money margin-bottom-15"></div>
+                                    <div class="operation-btn margin-bottom-20">
+                                        <%if(userCur.userType == 4){%>
+                                        <a href="/usercenter/recharge" class="btn-full-orange margin-right-20">充值</a>
+                                        <a href="javascript:void(0);"  class="btn-full-blue withdrawals-btn">提现</a>
+                                        <%}else{%>
+                                        <a href="javascript:void(0);" class="margin-right-20 disable">充值</a>
+                                        <a href="javascript:void(0);"  class=" disable">提现</a>
+                                        <span class="color-red margin-left-10">您还未进行实名认证，<a href="/usercenter/nameAuthentication" class="color-red">立即去认证</a></span>
+                                        <%}%>
+                                    </div>
+                                    <div class="tip">
+                                        提示：请在08:30-19:30之间进行充值、提现、绑定银行卡、解绑银行卡操作
+                                    </div>
+                                </div>
+                                <div class="account-funds-content-right">
+                                    <p class="margin-top-40 margin-bottom-15"><span></span>账户余额：<span class="useBalance"></span></p>
+                                    <p><span></span>冻结金额：<span class="freeze"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bank-card  margin-top-10">
+                            <div class="bank-card-title">我的银行账户</div>
+                            <div class="bank-card-content margin-bottom-30">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+<script type="text/javascript" src="/static/js/usercenter/userInfo/fundmanage.js"></script>

@@ -1,0 +1,98 @@
+
+/*左侧栏*/
+
+.trading-sidebar {
+    width: 235px;
+    margin-right: 10px;
+    float: left;
+}
+
+.trading-sidebar .topList {
+    /*height: 230px;*/
+    background: #fff;
+    margin-bottom: 10px;
+}
+
+.trading-sidebar .topList ul {
+    font-size: 15px;
+}
+
+.trading-sidebar .topList ul .active {
+    background: #E1EFFF;
+    color: #247DE8;
+    border-left: 2px solid #247DE8;
+}
+
+.trading-sidebar .topList ul .active a {
+    color: #247DE8;
+}
+
+.trading-sidebar .topList ul li {
+    line-height: 45px;
+    padding-left: 30px;
+    border-bottom: 1px solid #E9E9E9;
+    position: relative;
+    color: #999;
+}
+
+.trading-sidebar .topList ul li:hover {
+    cursor: pointer;
+}
+
+.trading-sidebar .topList ul li:nth-child(5) {
+    border-bottom: none;
+}
+
+.trading-sidebar .topList ul li a {
+    text-decoration: none;
+    color: #333;
+    padding:13px 72px 13px 9px;
+}
+
+.trading-sidebar .topList ul li span {
+    margin-right: 15px;
+}
+
+/*右侧内容*/
+.innovation-center {
+    background: #F8F8F8;
+}
+.innovation-center .innovation-padding {
+    padding:10px 0px 30px 0px;
+}
+
+.innovation-content  {
+    width: 955px;
+    background: #fff;
+    box-sizing: border-box;
+    padding: 10px 40px;
+}
+.innovation-content .public span {
+    border-left: 2px solid #237DE7;
+    margin-right: 10px;
+}
+.innovation-content .public h3 {
+    display: inline;
+    line-height: 25px;
+    font-size: 15px;
+}
+.innovation-content .public {
+    border-bottom: 1px solid #F0F0F0;
+    padding-bottom: 10px;
+    margin-bottom:20px;
+}
+.innovation-content .innovation-info .info-title {
+    font-size: 12px;
+    padding:5px 0px;
+}
+.innovation-content .innovation-info .info-text{
+    text-indent: 20px;
+}
+.expositionContent img  {
+    width: 95%;
+}
+.crowdsourc img {
+    margin-left: 35px;
+    margin-bottom: 10px;
+}
+

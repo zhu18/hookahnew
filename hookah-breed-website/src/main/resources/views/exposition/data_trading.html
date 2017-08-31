@@ -1,0 +1,30 @@
+<%
+var head = {
+%>
+<link type="text/css" rel="stylesheet" href="/static/css/exposition/expos.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="innovation-center ">
+    <div class="innovation-bd grid-row clearfix innovation-padding">
+        <%include("/exposition/exposition_template.html"){}%>
+        <div class="innovation-content grid-right ">
+            <div class="public">
+                <span></span>
+                <h3>数据交易</h3>
+            </div>
+            <div class="expositionContent">
+                <p class="info-text">青岛大数据交易中心作为山东省信息产业大数据交易平台，通过撮合交易模式采集/接入数据源，进行清洗、过滤、脱敏处理后再交易，满足企业对数据分析、数据运营及精准营销等各方面的需求。</p>
+                <br>
+                <p class="info-text">数据供应商及需求方通过青岛大数据交易中心平台，可帮助需求方快速完成数据采购、定制。同时形成新的大数据开发应用进行再次交易，提升企业盈利及极大提升行业数据利用率。</p>
+                <br>
+                <p class="info-text">数据交易流程：注册，需求对接，数据交付，财务清算 在数据交易的过程中，首先须进行用户注册。所有意向用户均需在线填写用户申请信息，并提交所需申请材料，通过审核之后获取用户账号。 在需求对接部分，对于数据供应方而言，需要在数据标签库中选取可以提供的可供应标签数据产品，添加主体信息、维度主键、标签赋值、供应限度、时间约束、价格约束等要素对应的数据属性描述，形成挂牌后的可供应数据产品。数据需求方可在交易大厅中查询所有数据供应方已挂牌的可供应产品，并根据自身需求将所需产品加入购物车，系统将自动生成针对各数据供应方的购买订单请求。经过供应方密封递价进行竞价，需求方择优选定之后，生成数据商品订单。 生成订单后，就进入了数据交付环节。这一环节中，交易系统根据数据交易双方确认的订单内容，生成配置文件并将其部署至交易双方的专用服务器。此时，由专用服务器组成的数据配送子系统即可根据需求为供需双方，提供数据的实时交付。 最后，在账务清算方面，系统会自动记录所有交易的过程，在结算周期内生成结算单与清算单，并在后续的结算清算环节中，向各成员定期发送结算清算结果。</p>
+            </div>
+        </div>
+    </div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>

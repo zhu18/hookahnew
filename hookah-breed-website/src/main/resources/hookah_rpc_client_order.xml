@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:motan="http://api.weibo.com/schema/motan"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://api.weibo.com/schema/motan http://api.weibo.com/schema/motan.xsd">
+
+    <!-- 具体referer配置。使用方通过beanid使用服务接口类 -->
+    <motan:referer id="cartService"
+                   interface="com.jusfoun.hookah.rpc.api.CartService"
+                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+    <motan:referer id="orderInfoService"
+                   interface="com.jusfoun.hookah.rpc.api.OrderInfoService"
+                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+    <motan:referer id="mgOrderInfoService"
+                   interface="com.jusfoun.hookah.rpc.api.MgOrderInfoService"
+                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+    <motan:referer id="invoiceService"
+                   interface="com.jusfoun.hookah.rpc.api.InvoiceService"
+                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+    <motan:referer id="payCordeService"
+                   interface="com.jusfoun.hookah.rpc.api.PayCoreService"
+                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+    <motan:referer id="accNoTokenService"
+                   interface="com.jusfoun.hookah.rpc.api.AccNoTokenService"
+                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+    <motan:referer id="waitSettleRecordService"
+                   interface="com.jusfoun.hookah.rpc.api.WaitSettleRecordService"
+                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+    <motan:referer id="settleRecordService"
+                   interface="com.jusfoun.hookah.rpc.api.SettleRecordService"
+                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+    <motan:referer id="fundRecordService"
+                   interface="com.jusfoun.hookah.rpc.api.FundRecordService"
+                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+</beans>

@@ -1,0 +1,36 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/information/index.css">
+<%};%>
+<%
+var htmlPart = {
+%>
+<div class="box">
+	<div class="information grid-row padding-top-10">
+		<div class="content clearfix">
+			<!--左侧栏-->
+			<div class="leftSide margin-right-10">
+				<!--中心动态-->
+				<div class="top margin-bottom-10">
+					<ul>
+						<%for(list in result.helpList){%>
+						<li class="">
+							<a href="${host.website}/help/${list.helpId}.html">
+								<span class="page-title">${list.name}</span>
+							</a>
+						</li>
+						<%}%>
+					</ul>
+				</div>
+			</div>
+			<!--右侧内容-->
+			<div class="rightCenter padding-left-20 padding-right-30">
+				${result.help.content}
+			</div>
+		</div>
+	</div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>

@@ -1,0 +1,98 @@
+.info-center-box{
+    width: 950px;
+    height: 900px;
+    border:1px solid #EDEDED;
+    background-color: #fff;
+    margin:10px 10px 30px 10px;
+    padding:0 15px;
+}
+.info-center-box .header{
+    height: 31px;
+    padding-top:10px;
+    border-bottom: 1px solid #EDEDED;
+}
+.info-center-title{
+    width: 100px;
+    height: 20px;
+    font:14px/20px "microsoft yahei";
+    padding-left:10px;
+    border-left:2px solid #237DE7;
+}
+.bottom{
+    padding-top:10px;
+}
+table{
+    width: 950px;
+}
+thead{
+    height: 36px;
+    width: 933px;
+    background-color: #E9E9E9;
+    border:1px solid #DDD;
+    padding-left:17px;
+}
+thead .list1{
+    width: 300px;
+    height: 36px;
+    padding-left:17px;
+}
+.checkbox-title{
+    margin-right:10px;
+    margin-left:30px;
+}
+tbody{
+    width: 933px;
+    background-color: #fff;
+    border:1px solid #DDD;
+    padding-left:17px;
+}
+tbody .item{
+    height: 36px;
+    border:1px solid #DDD;
+    border-top:none;
+}
+tbody .list1{
+    padding-left:17px;
+}
+.checkbox{
+    margin-right:10px;
+    margin-left:30px;
+}
+.round{
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background-color: #037aff;
+    -webkit-border-radius:50%;
+    -moz-border-radius:50%;
+    border-radius:50%;
+    margin-right:10px;
+}
+.active{
+    color: #808080;
+}
+.operate{
+    height: 40px;
+    width: 917px;
+    background-color: #fff;
+    border:1px solid #DDD;
+    border-top:none;
+    padding-left:31px;
+    line-height:40px;
+}
+.check-all{
+    margin-right:20px;
+}
+.button{
+    padding:0 10px;
+    margin-right:10px;
+}
+.no-info{
+    width: 100%;
+    height: 100px;
+    line-height:100px;
+    text-align: center;
+    font-size:18px;
+    color: #ffa800;
+    border: 1px solid #DDD;
+}

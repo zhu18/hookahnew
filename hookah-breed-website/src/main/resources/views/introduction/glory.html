@@ -1,0 +1,40 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/introduction/index.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="box backgorund-gray">
+    <div class="glory clearfix grid-row padding-top-10 padding-bottom-30">
+        <!--左侧栏-->
+        <% include("/introduction/trading-sidebar.html"){} %>
+        <!--右侧内容-->
+        <div class="glory-content">
+            <div class="cont" id="glory">
+                <div class="public">
+                    <span></span>
+                    <h3>企业荣耀</h3>
+                </div>
+                <div class="line"></div>
+                <ul>
+                    <li><span>国家规划</span>参与起草编制《大数据产业“十三五”发展规划》</li>
+                    <li><span>国家标准</span>参与制定国家大数据交易标准及政府数据技术、安全、应用标准</li>
+                    <li><span>产业制高点</span>全球第一家大数据交易所-贵阳大数据交易所的发起股东</li>
+                    <li><span>产业链基础</span>目前已经与300多家大数据产业相关公司达成战略合作及技术整合协议</li>
+                    <li><span>《福布斯》</span>2015年福布斯《中国互联网金融50强》，主要为互联网金融提供风控大数据</li>
+                    <li><span>《创业邦》</span>2014年《创业邦》两岸四地创业创新大赛第一名</li>
+                    <li><span>《互联网周刊》</span>《互联网周刊》2015年大数据排行榜金融大数据第一名</li>
+                    <li><span>院士工作站</span>国家网络安全审查小组组长，国家信息安全委员会主任沈昌祥院士执行单位</li>
+                    <li><span>协会认可</span>全国大数据交易商联盟发起单位</li>
+                    <li><span>社会认可</span>王叁寿为国家互联网金融安全技术专委会特聘委员，中国青年企业家协会会员</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>

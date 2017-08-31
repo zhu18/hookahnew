@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+  <!-- 缓存管理器 -->
+  <!--<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">-->
+  <!--<property name="cacheManagerConfigFile" value="classpath:ehcache/ehcache.xml"/>-->
+  <!--</bean>-->
+
+  <!-- Realm实现 -->
+  <bean id="oAuth2Realm" class="com.jusfoun.hookah.webiste.shiro.OAuth2Realm">
+    <property name="cachingEnabled" value="true"/>
+    <property name="authenticationCachingEnabled" value="true"/>
+    <property name="authorizationCacheName" value="authorizationCache"/>
+    <property name="clientId" value="${myconf.oauth2.clientId}"/>
+    <property name="clientSecret" value="${myconf.oauth2.clientSecret}"/>
+    <property name="accessTokenUrl" value="${myconf.oauth2.accessTokenUrl}"/>
+    <property name="userInfoUrl" value="${myconf.oauth2.userInfoUrl}"/>
+    <property name="redirectUrl" value="${myconf.oauth2.redirectUrl}"/>
+  </bean>
+
+  <!-- 会话ID生成器 -->
+  <bean id="sessionIdGenerator" class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator"/>
+
+  <!-- 会话Cookie模板 -->
+  <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+    <constructor-arg value="${server.session.cookie.name}"/>
+    <property name="domain" value="${server.session.cookie.domain}"/>
+    <property name="httpOnly" value="true"/>
+    <property name="maxAge" value="-1"/>
+  </bean>
+
+  <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+    <constructor-arg value="rememberMe"/>
+    <property name="httpOnly" value="true"/>
+    <property name="maxAge" value="2592000"/><!-- 30天 -->
+  </bean>
+
+  <!-- rememberMe管理器 -->
+  <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+    <!-- rememberMe cookie加密的密钥 建议每个项目都不一样 默认AES算法 密钥长度（128 256 512 位）-->
+    <property name="cipherKey"
+              value="#{T(org.apache.shiro.codec.Base64).decode('4AvVhmFLUs0KTA3Kprsdag==')}"/>
+    <property name="cookie" ref="rememberMeCookie"/>
+  </bean>
+
+  <!-- redis 集群连接方案 -->
+  <bean name="genericObjectPoolConfig" class="org.apache.commons.pool2.impl.GenericObjectPoolConfig">
+    <property name="maxWaitMillis" value="-1"/>
+    <property name="maxTotal" value="8"/>
+    <property name="minIdle" value="0"/>
+    <property name="maxIdle" value="8"/>
+  </bean>
+  <bean id="jedisCluster" class="com.jusfoun.hookah.core.common.redis.JedisClusterFactory">
+    <property name="connectionTimeout" value="3000"/>
+    <property name="soTimeout" value="3000"/>
+    <property name="maxRedirections" value="5"/>
+    <property name="genericObjectPoolConfig" ref="genericObjectPoolConfig"/>
+    <!--<property name="jedisClusterNodes">-->
+    <!--<set>-->
+    <!--<value>192.168.15.90:7000</value>-->
+    <!--<value>192.168.15.90:7001</value>-->
+    <!--<value>192.168.15.90:7002</value>-->
+    <!--</set>-->
+    <!--</property>-->
+  </bean>
+  <!-- 真正的redis操作类，具体连接方式由jedisClient的ref属性决定
+         可选项为jedisClusterClient、jedisClient
+     -->
+  <bean id="jedisClusterClient" class="com.jusfoun.hookah.core.common.redis.JedisClusterClient"/>
+
+  <bean name="redisOperate" class="com.jusfoun.hookah.core.common.redis.RedisOperate">
+    <property name="jedisClient" ref="jedisClusterClient"/>
+  </bean>
+  <!-- 会话DAO -->
+  <bean id="sessionDAO" class="com.jusfoun.hookah.webiste.config.SessionRedisDao">
+    <property name="activeSessionsCacheName" value="shiro-activeSessionCache"/>
+    <property name="sessionIdGenerator" ref="sessionIdGenerator"/>
+  </bean>
+
+  <!-- 会话验证调度器 -->
+  <bean id="sessionValidationScheduler" class="org.apache.shiro.session.mgt.quartz.QuartzSessionValidationScheduler">
+    <property name="sessionValidationInterval" value="1800000"/>
+    <property name="sessionManager" ref="sessionManager"/>
+  </bean>
+  <bean id="mySessionListener" class="com.jusfoun.hookah.webiste.shiro.MySessionListener"/>
+  <!-- 会话管理器 -->
+  <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+    <property name="sessionIdUrlRewritingEnabled" value="false"/>
+    <property name="globalSessionTimeout" value="1800000"/>
+    <property name="deleteInvalidSessions" value="true"/>
+    <property name="sessionValidationSchedulerEnabled" value="true"/>
+    <!--<property name="sessionValidationScheduler" ref="sessionValidationScheduler"/>-->
+    <property name="sessionDAO" ref="sessionDAO"/>
+    <property name="sessionIdCookieEnabled" value="true"/>
+    <property name="sessionIdCookie" ref="sessionIdCookie"/>
+    <property name="sessionListeners" ref="mySessionListener"/>
+  </bean>
+
+  <!-- 安全管理器 -->
+  <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+    <property name="realm" ref="oAuth2Realm"/>
+    <property name="sessionManager" ref="sessionManager"/>
+    <!--<property name="cacheManager" ref="cacheManager"/>-->
+    <property name="rememberMeManager" ref="rememberMeManager"/>
+  </bean>
+
+  <!-- OAuth2身份验证过滤器 -->
+  <bean id="oAuth2AuthenticationFilter" class="com.jusfoun.hookah.webiste.shiro.OAuth2AuthenticationFilter">
+    <property name="authcCodeParam" value="code"/>
+    <property name="failureUrl" value="/error/oauth2Failure"/>
+  </bean>
+  <bean id="logout" class="com.jusfoun.hookah.webiste.filter.SystemLogoutFilter">
+    <property name="redirectUrl" value="${myconf.oauth2.logoutUrl}"/>
+  </bean>
+
+  <!-- Shiro的Web过滤器 -->
+  <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+    <property name="securityManager" ref="securityManager"/>
+    <property name="loginUrl"
+              value="${myconf.oauth2.loginUrl}"/>
+    <property name="successUrl" value="/"/>
+    <property name="filters">
+      <util:map>
+        <entry key="oauth2Authc" value-ref="oAuth2AuthenticationFilter"/>
+      </util:map>
+    </property>
+    <property name="filterChainDefinitions">
+      <value>
+        /static/** = anon
+        /show = anon
+        / = anon
+        /help** = anon
+        /help/** = anon
+        /error/** = anon
+        /login** = oauth2Authc
+        /auth* = oauth2Authc
+        /auth/** = oauth2Authc
+        /myseller* = oauth2Authc
+        /myseller/** = oauth2Authc
+        /usercenter* = oauth2Authc
+        /usercenter/** = oauth2Authc
+        /mybuyer* = oauth2Authc
+        /mybuyer/** = oauth2Authc
+        /cart* = oauth2Authc
+        /cart/** = oauth2Authc
+        /goodsFavorite/** = oauth2Authc
+        /order* = oauth2Authc
+        /order/** = oauth2Authc
+        <!--/pay* = oauth2Authc
+        /pay/** = oauth2Authc-->
+        /logout = logout
+        /admin** = roles["Admin"]
+        /admin/** = roles["Admin"]
+        <!--/** = user-->
+      </value>
+    </property>
+  </bean>
+
+  <!-- Shiro生命周期处理器-->
+  <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+</beans>
