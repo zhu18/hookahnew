@@ -1,21 +1,37 @@
 class localResourcesController {
     constructor($scope, $rootScope, $http, $state, $stateParams, $uibModal, usSpinnerService, growl) {
-        console.log("参数获取");
-        $scope.goodsStatuss = [{id:-1,name:'全部'},{id:0,name:'已上架'},{id:1,name:'未上架'}];
-        $scope.goodsStatus = $scope.goodsStatuss[0].id;
+
+
+        $scope.goodsStatuss = [{id:-1,name:'全部'},{id:0,name:'未上架'},{id:1,name:'已上架'}];
+        $scope.onSaleStatus = $scope.goodsStatuss[0].id;
         $scope.search = function () {
             $rootScope.tree_data = [];
             var promise = $http({
                 method: 'GET',
-                url: $rootScope.site.apiServer + "/api/category/allTree"
+                url: $rootScope.site.apiServer + "/api/pushGoods/all",
+                params:{
+                        currentPage: $rootScope.pagination.currentPage,
+                        pageSize: $rootScope.pagination.pageSize,
+                        goodsName: $scope.goodsName?$scope.goodsName:null,
+                        goodsSn:$scope.goodsSn?$scope.goodsSn:null,
+                        keywords:$scope.keywords?$scope.keywords:null,
+                        onSaleStatus:$scope.onSaleStatus
+                }
             });
             promise.then(function (res, status, config, headers) {
                 $rootScope.loadingState = false;
-                $scope.tree_data = res.data.data;
+                $scope.pushData = res.data.data;
+                console.log(res.data.data);
                 growl.addSuccessMessage("数据加载完毕。。。");
             });
         };
 
+        $scope.search();
+
+
+        $scope.pageChanged = function () {//翻页
+        		$scope.search();
+        };//翻页
     }
 }
 
