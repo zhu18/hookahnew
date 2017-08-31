@@ -1,4 +1,6 @@
-function loadPageData(data) {
+
+$(function(){
+    function loadPageData(data) {
 	var ids = [];
 	if (data.data.list.length > 0) {
 		var list = data.data.list;
@@ -91,20 +93,22 @@ function loadPageData(data) {
 	});
 }
 // 消息数量
-num();
-function num() {
-	$.ajax({
-		url: '/message/countMessageNumber',
-		type: 'get',
-		success: function (data) {
-			if (data.code == 1) {
-				$("#infoOne").html(data.data.allMessage);
-				$("#infoTwo").html(data.data.noReadMessage)
-			}
-		}
-	})
-}
-function getInfo(that, id) {
+    num();
+    function num() {
+        $.ajax({
+            url: '/message/countMessageNumber',
+            type: 'get',
+            cache:false,
+            success: function (data) {
+                if (data.code == 1) {
+                    $("#infoOne").html(data.data.allMessage);
+                    $("#infoTwo").html(data.data.noReadMessage)
+                }
+            }
+        })
+    }
+
+    function getInfo(that, id) {
 	$.ajax({
 		url: '/message/detail/' + id,
 		type: 'get',
@@ -136,7 +140,7 @@ function getInfo(that, id) {
 		}
 	})
 }
-$("[name='checkall']:checkbox").click(function () {
+    $("[name='checkall']:checkbox").click(function () {
 	$("[name='items']:checkbox").prop("checked", this.checked);
 	$("[name='checkall']:checkbox").prop("checked", this.checked);
 	if(this.checked){
@@ -145,5 +149,8 @@ $("[name='checkall']:checkbox").click(function () {
 		$('#flag').hide();
 	}
 });
+})
+
+
 
 

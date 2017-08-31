@@ -1,0 +1,157 @@
+<style>
+  .control-label {
+    width: 70px;
+  }
+  .margin-left-20 {
+      margin-left:20px;
+  }
+  table tr th , table tr td {text-align:center};
+  .ro-switch{
+        display:inline-block;
+        cursor:pointer;
+        -webkit-tap-highlight-color:rgba(0,0,0,0);
+  }
+  .ro-switch>input{
+        display:none;
+  }
+  .slider{
+        padding: 2px 25px 2px 2px;
+        background:#cccccc;
+        transition:padding 0.2s ease-in-out,background 0.2s ease-in-out;border-radius:11px;
+  }
+  .slider-thumb{
+        width:18px;
+        height:18px;
+        background:#FFF;
+        border-radius:50%;
+  }
+  .ro-switch>input:checked+.slider{
+        background:#2196F3;
+        padding:2px 2px 2px 25px;
+  }
+</style>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="console-title console-title-border clearfix">
+      <div class="pull-left"><h5>地方渠道资源管理</h5></div>
+      <div class="pull-right">
+        <button class="btn btn-default" data-ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span> 刷新
+        </button>
+        <!--<a ui-sref="sys.dict.add" target="_blank" href="#" class="btn btn-primary">新增</a>-->
+      </div>
+    </div>
+    <div class="row margin-top">
+      <div class="col-sm-12">
+        <div class="searchSection">
+          <form class="form-inline">
+            <div class="form-group">
+              <label class="control-label margin-left-20">商品名称</label>
+              <input ng-model="goodsName" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+              <label class="control-label margin-left-20">商品编码</label>
+              <input ng-model="goodsSn" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+              <label class="control-label margin-left-20">商品关键字</label>
+              <input ng-model="keywords" type="text" class="form-control">
+            </div>
+            <div class="form-group" >
+              <label class="control-label margin-left-20">状态</label>
+              <select ng-model="onSaleStatus" ng-options="goodsStatus.id as goodsStatus.name for goodsStatus in goodsStatuss" style="width: 155px;height: 32px">
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary margin-left-20" data-ng-click="search()">搜索</button>
+          </form>
+        </div>
+        <div class="gridSection">
+          <div us-spinner ng-show="showSpinner" spinner-start-active="true" spinner-key="showSpinner"></div>
+          <table class="table table-hover" style="margin-bottom: 57px;">
+            <thead>
+            <tr>
+              <th>商品编号</th>
+              <th>商品名称</th>
+              <th>状态</th>
+              <th>代理价/零售价</th>
+              <th>所属地域</th>
+              <th>商品类型</th>
+              <th>所属供应商</th>
+              <th>资源失效时间</th>
+              <th>审核人</th>
+              <th width="200" class="text-center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-if="!loadingState" data-ng-repeat="item in pagination.store" class="">
+              <td>
+                <span text-length="50" ng-bind="item.goodsSn"></span>
+              </td>
+              <td>
+                  <span class="column-text" ng-bind="item.goodsName | limitTo:10"></span>
+              </td>
+              <td>
+                <span class="column-text" ng-if="item.isOnsale == 0" style="color:red;">下架</span>
+                <span class="column-text" ng-if="item.isOnsale == 1" style="color:green;">上架</span>
+
+              </td>
+              <td>
+                <span class="column-text" ng-bind=" "></span>
+                <span class="column-text" ng-bind=" "></span>
+              </td>
+              <td>
+                <span class="column-text" ng-bind="item.goodsArea"></span>
+              </td>
+              <td>
+                <span class="column-text" ng-bind="item.goodsType | goodsType "></span>
+              </td>
+              <td>
+                <span class="column-text" ng-bind="item.orgName | limitTo:10"></span>
+              </td>
+              <td >
+                          <span class="column-text" ng-bind="item.onsaleEndDate"></span>
+              </td>
+              <td>
+                        <span class="column-text" ng-bind="item.sourceValidPeriod"></span>
+              </td>
+              <td>
+                <label class="ro-switch">
+                          <input type="checkbox" ng-model="status" ng-click="checkSwitch(item,status)" ng-checked="item.isShow == 1">
+                          <div class="slider">
+                                    <div class="slider-thumb"></div>
+                          </div>
+                </label>
+
+              </td>
+            </tr>
+            </tbody>
+            <tfoot ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">
+            <tr>
+              <td colspan="9">
+                <div class="pull-right page-box">
+                  <div class="pagination-info">
+                    共有{{pagination.totalItems}}条，每页显示：{{pagination.pageSize}}条
+                  </div>
+                  <ul uib-pagination ng-change="pageChanged()" total-items="pagination.totalItems"
+                      ng-model="pagination.currentPage" items-per-page="pagination.pageSize"
+                      max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"
+                      force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"
+                      last-text="末页">
+                  </ul>
+                </div>
+              </td>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="simple-grid-none-data-wrap">
+          <div class="simple-grid-none-data text-center " ng-if="showNoneDataInfoTip && !loadingState">
+            <div class="row-padding row-margin text-center">
+              <span class="text-size-24 blue icon-info-1" style="vertical-align: middle"></span>
+              <div class="text-size-18 tip-text inline-block">没有查询到符合条件的记录</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

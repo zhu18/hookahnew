@@ -710,6 +710,8 @@ function backAddFn(data){
 		}
 	});
 }
+
+
 function submitGoodsPublish(){
 	var data = {};
 	if(urlPath == '/usercenter/goodsModify'){ //修改商品
@@ -719,6 +721,7 @@ function submitGoodsPublish(){
 	data.goodsName = $('input[name="goodsName"]').val();
 	data.goodsBrief = $('textarea[name="goodsBrief"]').val();
 	data.keywords = $('input[name="keywords"]').val();
+
 	data.attrTypeList = [];
 	$('.chosen-select').each(function () {
 		var attrTypeList = {};
@@ -737,6 +740,15 @@ function submitGoodsPublish(){
 	data.goodsImg = $("input[name='goodsImges']").val();
 	data.dataSample = $("input[name='dataSample_s']").val();
 	data.trialRange = $('textarea[name="trialRange"]').val();
+	if($("#isPush").prop('checked')){
+	        $('#isLocal').val('1');
+            $('#isPush').val('1');
+	}else{
+	        $('#isLocal').val('0');
+            $('#isPush').val('0');
+	}
+	data.isPush = $('input[name="isPush"]').val();
+    data.isLocal = $('input[name="isLocal"]').val();
 	if($('#isDiscuss').prop('checked')){
 		data.isDiscussPrice = 1;
 		data.formatList = [];
