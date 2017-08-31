@@ -211,11 +211,11 @@ public class PayController extends BaseController{
         PayAccount payAccount = payAccountService.selectOne(filters);
         if(payAccount != null)
             model.addAttribute("moneyBalance", payAccount.getUseBalance());
-        model.addAttribute("payments", session.getAttribute("payments"));
-        model.addAttribute("orderInfo",session.getAttribute("orderInfo"));
-        session.removeAttribute("payments");
-        session.removeAttribute("orderInfo");
-        session.removeAttribute("moneyBalance");
+            model.addAttribute("payments", session.getAttribute("payments"));
+            model.addAttribute("orderInfo",session.getAttribute("orderInfo"));
+//            session.removeAttribute("payments");
+//            session.removeAttribute("orderInfo");
+//            session.removeAttribute("moneyBalance");
         return "pay/cash";
     }
 
