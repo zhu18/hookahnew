@@ -24,6 +24,10 @@ public class ErrorController {
     public String error500() {
         return "/error/500";
     }
+    @RequestMapping(value = "confirmOrderError", method = RequestMethod.GET)
+    public String errorConfirmOrderError() {
+        return "/error/confirmOrderError";
+    }
 
     @RequestMapping(value = "oauth2Failure",method = RequestMethod.GET)
     public String oauth2Failure(HttpServletRequest request){
