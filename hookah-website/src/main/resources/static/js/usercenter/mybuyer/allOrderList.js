@@ -63,7 +63,7 @@ function loadPageData(data) {
                   html += '<span class="margin-bottom-5">已取消</span><br>';
                   if(wacthNm == 0){
                       // html += '<span class="margin-bottom-5 margin-top-5 color-red">此订单不能支付</span>'
-                      html += '<a href="' + host.website + '/order/payOrder?orderSn=' + list[i].orderSn + '"  class="display-inline-block goPay btn btn-full-orange margin-bottom-5 margin-top-5">去支付</a>';
+                    html += '<a href="/exchange/details?id=' + goods[ii].goodsId + '" class="display-inline-block goPay btn btn-full-orange margin-top-5 margin-bottom-5">再次购买</a>';
                   }
                   // html += '<a target="_blank" href="/order/viewDetails?orderId=' + list[i].orderId + '&num=2" class="display-block color-blue margin-bottom-5">订单详情</a>';
                   html += '<a href="javascript:confirmDelete(\'' + list[i].orderId + '\');" class="display-block margin-bottom-5">删除</a>';
