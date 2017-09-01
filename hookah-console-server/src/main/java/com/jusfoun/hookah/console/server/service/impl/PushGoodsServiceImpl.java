@@ -15,4 +15,6 @@ import javax.annotation.Resource;
 public class PushGoodsServiceImpl extends GenericServiceImpl<Goods, String> implements PushGoodsService {
     @Resource
     private GoodsMapper goodsMapper;
+
+
 }

@@ -4,17 +4,18 @@ import com.jusfoun.hookah.console.server.controller.BaseController;
 import com.jusfoun.hookah.console.server.util.DictionaryUtil;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.domain.Goods;
+import com.jusfoun.hookah.core.domain.GoodsCheck;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ReturnData;
-import com.jusfoun.hookah.rpc.api.GoodsCheckService;
-import com.jusfoun.hookah.rpc.api.GoodsService;
-import com.jusfoun.hookah.rpc.api.MgGoodsService;
-import com.jusfoun.hookah.rpc.api.OrganizationService;
+import com.jusfoun.hookah.rpc.api.*;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.BeanUtils;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,6 +41,10 @@ public class PushGoodsApi extends BaseController {
 
     @Resource
     MgGoodsService mgGoodsService;
+
+
+    @Resource
+    MqSenderService mqSenderService;
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ReturnData getListInPage(String currentPage, String pageSize,
@@ -112,4 +117,21 @@ public class PushGoodsApi extends BaseController {
         }
         return list1;
     }
+
+    @RequestMapping("edit")
+    @Transactional
+    public ReturnData updByConditionSelective(Goods goods){
+        List<Condition> filters = new ArrayList();
+        filters.add(Condition.eq(("goodsId"),goods.getGoodsId()));
+        try {
+            goodsService.updateByConditionSelective(goods,filters);
+            //添加商品到ES
+            GoodsCheck goodsCheck = new GoodsCheck();
+            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_GOODS_ID, goodsCheck.getGoodsId());
+        }catch (Exception e){
+            return ReturnData.error("修改失败");
+        }
+        return ReturnData.success("修改成功");
+    }
+
 }
