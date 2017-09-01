@@ -9,7 +9,9 @@ import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.rpc.api.GoodsCheckService;
 import com.jusfoun.hookah.rpc.api.GoodsService;
+import com.jusfoun.hookah.rpc.api.MgGoodsService;
 import com.jusfoun.hookah.rpc.api.OrganizationService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -32,6 +34,12 @@ public class PushGoodsApi extends BaseController {
 
     @Resource
     OrganizationService organizationService;
+
+    @Resource
+    GoodsCheckService goodsCheckService;
+
+    @Resource
+    MgGoodsService mgGoodsService;
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ReturnData getListInPage(String currentPage, String pageSize,
@@ -96,7 +104,11 @@ public class PushGoodsApi extends BaseController {
             goodsVo.setGoodsArea((goods.getGoodsArea() == null || "".equals(goods.getGoodsArea())) ? "全部" : DictionaryUtil.getRegionById(goods.getGoodsArea()).getMergerName());
             goodsVo.setCatName(DictionaryUtil.getCategoryById(goods.getCatId()) == null ? "" : DictionaryUtil.getCategoryById(goods.getCatId()).getCatName());
             goodsVo.setOrgName(organizationService.findOrgByUserId(goods.getAddUser())==null?"":organizationService.findOrgByUserId(goods.getAddUser()).getOrgName());
+            goodsVo.setCheckUser(goodsCheckService.selectOneByGoodsId(goods.getGoodsId())==null?"":goodsCheckService.selectOneByGoodsId(goods.getGoodsId()).getCheckUser());
+            goodsVo.setAgencyPrice(mgGoodsService.selectById(goods.getGoodsId())==null?null:mgGoodsService.selectById(goods.getGoodsId()).getFormatList().get(0).getAgencyPrice());
+            goodsVo.setSettlementPrice(mgGoodsService.selectById(goods.getGoodsId())==null?null:mgGoodsService.selectById(goods.getGoodsId()).getFormatList().get(0).getSettlementPrice());
             list1.add(goodsVo);
+
         }
         return list1;
     }
