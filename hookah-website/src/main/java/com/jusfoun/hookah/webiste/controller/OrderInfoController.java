@@ -2,6 +2,7 @@ package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.annotation.Log;
 import com.jusfoun.hookah.core.common.Pagination;
+import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.OrderInfo;
 import com.jusfoun.hookah.core.domain.User;
@@ -22,6 +23,7 @@ import com.jusfoun.hookah.rpc.api.OrderInfoService;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -51,6 +53,9 @@ public class OrderInfoController extends BaseController {
 
     @Autowired
     private GoodsService goodsService;
+
+    @Autowired
+    private RedisOperate redisOperate;
 
 
     @RequestMapping(value = "/order/orderInfo", method = RequestMethod.POST)
@@ -526,11 +531,11 @@ public class OrderInfoController extends BaseController {
         Date date = new Date();
 
         String now = DateUtils.toDateText(date, "yyMMdd");
-        List<Condition> filter = new ArrayList<>();
-        filter.add(Condition.ge("addTime", DateUtils.toDateText(new Date(),"yyyy-MM-dd 00:00:00")));
-        long count = orderInfoService.count(filter)+1;
-        String number = "000000" + count;
-        String orderSn = userService.selectById(userId).getUserSn()+ now + number.substring(number.length()-6);
+//        List<Condition> filter = new ArrayList<>();
+//        filter.add(Condition.ge("addTime", DateUtils.toDateText(new Date(),"yyyy-MM-dd 00:00:00")));
+//        long count = new AtomicLong(orderInfoService.count(filter)).getAndIncrement();
+        String number = String.format("%06d",Integer.parseInt(redisOperate.incr("orderNumPerDay")));
+        String orderSn = userService.selectById(userId).getUserSn()+ now + number;
         orderinfo.setOrderSn(orderSn);
         orderinfo.setOrderStatus(OrderInfo.ORDERSTATUS_CONFIRM);
         orderinfo.setShippingStatus(0);
@@ -583,6 +588,11 @@ public class OrderInfoController extends BaseController {
         orderinfo.setForceDeleted((byte)0);
         orderinfo.setCommentFlag(0);
         return orderinfo;
+    }
+
+    @Scheduled(cron = "0 0 0 * * ?")
+    public void cleanOrderNum(){
+        redisOperate.del("orderNumPerDay");
     }
 
     /**
