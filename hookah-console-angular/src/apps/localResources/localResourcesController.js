@@ -42,10 +42,18 @@ class localResourcesController {
                }
                var promise = $http({
                         method:'post',
+                        headers: {'Content-type': 'application/x-www-form-urlencoded'},
                         url:$rootScope.site.apiServer + "/api/pushGoods/edit",
-                        params:{
+                        data:{
                             isOnsale:isOnsale,
                             goodsId:item.goodsId
+                        },
+                        transformRequest: function(obj) {
+                                var str = [];
+                                for (var p in obj) {
+                                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                                }
+                                return str.join("&");
                         }
                });
                promise.then(function(res, status, config, headers){
