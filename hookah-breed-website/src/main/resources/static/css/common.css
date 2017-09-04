@@ -64,10 +64,14 @@
 /* Background
 =================================================================== */
 .backgorund-gray{
-    /**background-color:#f5f5f5 ;*/
-    background:url("../images/bg.png") no-repeat;
-    background-size:100% 100%;
+    background-color:#f5f5f5 ;
 }
+
+.bgi{
+   background:url("../images/bg.png") no-repeat;
+   background-size:100% 100%;
+}
+
 .backgorund-white{
     background-color:#ffffff;
 }
@@ -497,6 +501,11 @@ ul li {
 }
 .font-size-18{
     font-size: 18px;
+}
+
+.font-size-14{
+    font-size: 14px;
+    margin-top:70px!important;
 }
 
 .font-size-25{

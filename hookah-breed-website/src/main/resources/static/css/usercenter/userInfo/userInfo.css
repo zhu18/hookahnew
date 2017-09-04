@@ -30,8 +30,9 @@
     display: inline-block;
 }
 .basic-information-top  .basic-information-top-content .user-info{
-    height: 100%;
+    height: 170px;
     border-right: 1px solid #E5E5E5;
+    margin-top:10px;
 }
 .basic-information-top  .basic-information-top-content .user-info .user-info-left{
     width: 136px;
@@ -78,9 +79,10 @@
 }
 
 .basic-information-top  .basic-information-top-content .user-money{
-    height: 100%;
+    height: 170px;
     vertical-align: top;
     border-right: 1px solid #E5E5E5;
+    margin-top:10px;
 }
 .basic-information-top  .basic-information-top-content .user-money>div{
     display: inline-block;
@@ -202,7 +204,7 @@
 .basic-information-down {
     width: calc(100% - 28px - 2px);
     margin-top: 14px;
-    border: 1px solid #EDEDED;
+    /**border: 1px solid #EDEDED;*/
     background-color: #fff;
     padding: 0 14px;
 }
@@ -214,13 +216,15 @@
     cursor: pointer;
     height: 30px;
     line-height: 30px;
-    width: 84px;
+    /**width: 84px;*/
+    width:96px;
 }
 .header .my-order{
     width: 100px;
     height: 20px;
-    font:14px/20px "microsoft yahei";
-
+   /** font:14px/20px "microsoft yahei";*/
+   font:16px "microsoft yahei";
+   font-weight:700;
 }
 .header .my-order.active{
     color:#247de8 ;
@@ -228,8 +232,16 @@
 }
 .my-order-list-one,.my-order-list-two{
     padding-top:26px;
-    margin-right: -12px;
+    margin-left: 21px;
 }
+
+.my-order-list-one-pos{
+       margin-left: 19px;
+       margin-top: 19px;
+       margin-bottom: 6px;
+       padding: 0;
+}
+
 .order-list-item{
     width: 191px;
     height: 110px;
@@ -285,7 +297,7 @@
 }
 
 .frozen-pos{
-     margin-top:17px;
+     margin-top:5px;
 }
 
 .balance-font{
@@ -298,8 +310,22 @@
 }
 
 .user-money-width,.user-status-width{
-  width:31%!important;
+  width:30%!important;
 }
+
+.pageaction{
+  margin:0!important;
+}
+
+.info-center-box-1{
+      padding:0 14px!important;
+      opacity:0.965!important;
+}
+
+ .header-1{
+    padding-top:0!important;
+ }
+
 /*.forum-hot{*/
     /*width: 214px;*/
     /*height: 170px;*/
