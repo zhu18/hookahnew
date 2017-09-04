@@ -17,13 +17,18 @@ var htmlPart = {
 <div class="grid-0 backgorund-gray">
 	<div class="grid-row clearfix">
 		<%include("/usercenter/user-center-menu.html"){} %>
+
+
 		<div class="info-center-box grid-right">
 			<div class="basic-information-top ">
 				<div class="basic-information-top-title">
 					基本信息
+					<img src="../../static/images/shz/titleP.png" style="position:relative;top:12px;left:10px;"/>
 				</div>
+
 				<div class="basic-information-top-content">
-					<div class="user-info ">
+					<div style="background:#fff;height:188px;">
+					<div class="user-info user-info-width">
 						<div class="user-info-left grid-left">
 							<img width="90" src="${user.headImg}" alt="">
 							<div class="icon-box">
@@ -44,7 +49,7 @@ var htmlPart = {
 								<%}%>
 							</div>
 						</div>
-						<div class="user-info-right grid-left">
+						<div class="user-info-right grid-left" style="margin-left:10px;">
 							<!--<p>Hi,<span id="userName">${user.userName}</span></p>-->
 							<%if(userCur.userType == 0){%>
 							<p class="usertype">管理员</p>
@@ -70,47 +75,47 @@ var htmlPart = {
 						</div>
 						<!--<a id="enterForum" href="javascript:void(0);"><span class="fa fa-twitch"></span>进入论坛</a>-->
 					</div>
-					<div class="user-money">
+					<div class="user-money user-money-width">
 						<div>
 							<p class="margin-top-20">账户余额:</p>
 							<%if(userCur.userType == 4){%>
-							<p>￥<span class="account-balance font-size-18 color-red">${payAccount.balance / 100}</span><a href="/usercenter/recharge" class="btn btn-full-orange margin-left-40">充值</a></p>
+							<p><i style="color:#f53839;font-style:normal;font-size:16px;margin-left:-3px;font-weight:700;">￥</i><span class="account-balance font-size-25 color-25-red balance-pos">${payAccount.balance / 100}</span><a href="/usercenter/recharge" class="btn btn-full-orange margin-left-40">充值</a></p>
 							<%}else {%>
 							<p>￥<span class="account-balance font-size-18 color-red" >${payAccount.balance / 100}</span></p>
 							<%}%>
-							<p>可用金额:￥<span class="available-balance">${payAccount.useBalance / 100}</span></p>
-							<p>冻结金额:￥<span class="frozen-balance">${payAccount.frozenBalance / 100}</span></p>
+							<p class="available-pos">可用金额:￥<span class="available-balance balance-font">${payAccount.useBalance / 100}</span></p>
+							<p class="frozen-pos">冻结金额:￥<span class="frozen-balance balance-font">${payAccount.frozenBalance / 100}</span></p>
 						</div>
 
 					</div>
-					<div class="user-status ">
+					<div class="user-status user-status-width">
 						<div class="auth-introduce ">
 							<div class="auth-introduce-unit">
 								<%if(userCur.userType == 0){%>
 								<%}else if(userCur.userType == 1){%>
-									<!--<p>如果您是个人用户，请进行个人用户认证</p>-->
-									<!--<div class="margin-10">-->
-									<!--<a href="/auth/user_auth_init" class="large-btn">个人用户认证</a>-->
-									<!--</div>-->
-									<p class="margin-top-20">如果您是单位用户，请进行单位用户认证</p>
-									<a href="/auth/company_auth_init" class="large-btn">单位用户认证</a>
+								<!--<p>如果您是个人用户，请进行个人用户认证</p>-->
+								<!--<div class="margin-10">-->
+								<!--<a href="/auth/user_auth_init" class="large-btn">个人用户认证</a>-->
+								<!--</div>-->
+								<p class="margin-top-20">如果您是单位用户，请进行单位用户认证</p>
+								<a href="/auth/company_auth_init" class="large-btn">单位用户认证</a>
 								<%}else if(userCur.userType == 2){%>
-									<p class="font-size-18 status">您的个人用户认证审核<span class="color-green">已通过</span>！</p>
+								<p class="font-size-18 status">您的个人用户认证审核<span class="color-green">已通过</span>！</p>
 								<%}else if(userCur.userType == 3){%>
-									<p class="font-size-18 margin-top-20">您提交的个人用户认证还在<span class="color-orange">审核中</span>！</p>
-									<p class="font-size-14">我们会尽快审核，并将审核结果通过短信或邮件通知您,请及时关注。</p>
+								<p class="font-size-18 margin-top-20">您提交的个人用户认证还在<span class="color-orange">审核中</span>！</p>
+								<p class="font-size-14">我们会尽快审核，并将审核结果通过短信或邮件通知您,请及时关注。</p>
 								<%}else if(userCur.userType == 4){%>
-									<p class="font-size-18 margin-top-20 margin-bottom-10">您的单位用户认证审核<span class="color-green">已通过</span>！</p>
+								<p class="font-size-18 margin-top-20 margin-bottom-10">您的单位用户认证审核<span class="color-green">已通过</span>！</p>
 
 								<%}else if(userCur.userType == 5){%>
-									<p class="font-size-18 margin-top-20">您提交的单位用户认证还在<span class="color-orange">审核中</span>！</p>
-									<p class="font-size-14">我们会尽快审核，并将审核结果通过短信或邮件通知您，请及时关注。</p>
+								<p class="font-size-18 margin-top-20">您提交的单位用户认证还在<span class="color-orange">审核中</span>！</p>
+								<p class="font-size-14">我们会尽快审核，并将审核结果通过短信或邮件通知您，请及时关注。</p>
 								<%}else if(userCur.userType == 6){%>
-									<p class="font-size-18 margin-top-20">您提交的个人用户认证审核<span class="color-red">未通过</span>！</p>
-									<a href="/auth/user_auth_init_step5" class="font-size-14 color-red" style="text-decoration: underline">查看原因 >></a>
+								<p class="font-size-18 margin-top-20">您提交的个人用户认证审核<span class="color-red">未通过</span>！</p>
+								<a href="/auth/user_auth_init_step5" class="font-size-14 color-red" style="text-decoration: underline">查看原因 >></a>
 								<%}else if(userCur.userType == 7){%>
-									<p class="font-size-18 margin-top-20">您提交的单位用户认证审核<span class="color-red">未通过</span>！</p>
-									<a href="/auth/company_auth_init_step5" class="font-size-14 color-red" style="height:18px; display: inline-block; border-bottom: 1px solid #E34F4F">查看原因 >></a>
+								<p class="font-size-18 margin-top-20">您提交的单位用户认证审核<span class="color-red">未通过</span>！</p>
+								<a href="/auth/company_auth_init_step5" class="font-size-14 color-red" style="height:18px; display: inline-block; border-bottom: 1px solid #E34F4F">查看原因 >></a>
 								<%}%>
 							</div>
 							<div class="auth-introduce-supplier">
@@ -125,39 +130,42 @@ var htmlPart = {
 								<a href="/usercenter/becomingSupplierStep1" class="large-btn">供应商申请</a>
 								<%}%>
 							</div>
-							</div>
 						</div>
+					</div>
+					</div>
 				</div>
 			</div>
+			</div>
+
+		<div class="info-center-box grid-right">
 			<div class="basic-information-down">
-					<div class="header clearfix">
-						<h4 class="grid-left my-order active margin-right-15" data-tab-id="one">我购买的数据</h4>
-						<%if(userCur.supplierStatus == 1){%>
-						<h4 class="grid-left my-order" data-tab-id="tow">我上架的商品</h4>
-						<%}%>
+				<div class="header clearfix">
+					<h4 class="grid-left my-order active margin-right-15" data-tab-id="one">我购买的数据</h4>
+					<%if(userCur.supplierStatus == 1){%>
+					<h4 class="grid-left my-order" data-tab-id="tow">我上架的商品</h4>
+					<%}%>
 
-					</div>
-					<div class="my-order-list-one clearfix">
-
-					</div>
-					<div class="my-order-list-two clearfix">
-						<!--<div class="order-list-item grid-left">-->
-							<!--<div class="order-list-top clearfix">-->
-
-									<!--<img class="grid-left" src="/static/images/list01.png" alt="">-->
-									<!--<div class="order-list-top-info grid-left">-->
-										<!--<h4>银行卡类别查询</h4>-->
-										<!--<p>价格：<span>￥200</span></p>-->
-									<!--</div>-->
-
-							<!--</div>-->
-							<!--<div class="order-list-down">购买时间: <span class="buy-time">2013-09-01 16:12:00 </span></div>-->
-						<!--</div>-->
-					</div>
-					<%include("/layout/pageaction.html"){} %>
 				</div>
-		</div>
+				<div class="my-order-list-one clearfix">
 
+				</div>
+				<div class="my-order-list-two clearfix">
+					<!--<div class="order-list-item grid-left">-->
+					<!--<div class="order-list-top clearfix">-->
+
+					<!--<img class="grid-left" src="/static/images/list01.png" alt="">-->
+					<!--<div class="order-list-top-info grid-left">-->
+					<!--<h4>银行卡类别查询</h4>-->
+					<!--<p>价格：<span>￥200</span></p>-->
+					<!--</div>-->
+
+					<!--</div>-->
+					<!--<div class="order-list-down">购买时间: <span class="buy-time">2013-09-01 16:12:00 </span></div>-->
+					<!--</div>-->
+				</div>
+				<%include("/layout/pageaction.html"){} %>
+			</div>
+			</div>
 		<!--以下代码暂时不要-->
 		<!--<div class="grid-right forum-hot">-->
 		<!--<div class="header">-->

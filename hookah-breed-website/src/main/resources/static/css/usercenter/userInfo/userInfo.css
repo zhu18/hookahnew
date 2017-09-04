@@ -1,23 +1,27 @@
 
 .basic-information-top {
     width:100%;
-    border: 1px solid #E5E5E5;
+    margin-left:-14px;
+    /**border: 1px solid #E5E5E5;*/
 }
 .basic-information-top  .basic-information-top-title{
     width: calc(100% - 14px );
     height: 39px;
-    font-size: 14px;
+    font-size: 16px;
+    font-weight:bold;
     color:#333333;
     line-height: 39px;
     padding-left: 14px;
-    border-bottom: 1px solid #E5E5E5;
-    background-color: #F4F4F4;
+    /**border-bottom: 1px solid #E5E5E5;*/
+    /**background-color: #F4F4F4;*/
 }
 .basic-information-top  .basic-information-top-content{
     font-size: 0;
-    width: calc(100% - 40px );
-    height: 158px;
+    /**width: calc(100% - 40px );*/
+    width:970px;
+    height: 188px;
     padding: 20px;
+     background-image:linear-gradient(to right,#ebedef,#ebf1f8);
 }
 .basic-information-top  .basic-information-top-content .user-info,.basic-information-top  .basic-information-top-content .user-status,
 .basic-information-top  .basic-information-top-content .user-money{
@@ -33,14 +37,14 @@
     width: 136px;
 }
 .basic-information-top  .basic-information-top-content .user-info .user-info-left img{
-    margin-left: 20px;
-    margin-top: 10px;
+    margin-left: 28px;
+    margin-top: 20px;
     border-radius: 50%;
 }
 .basic-information-top  .basic-information-top-content .user-info .user-info-left .icon-box{
     font-size: 0;
     margin-top: 20px;
-    margin-left: 8px;
+    margin-left: 16px;
 }
 .basic-information-top  .basic-information-top-content .user-info .user-info-left span{
     width: 30px;
@@ -84,16 +88,17 @@
     width: calc(100% - 60px);
 }
 .basic-information-top  .basic-information-top-content .user-money p{
-    font-size: 16px;
+    font-size: 14px;
 }
 .basic-information-top  .basic-information-top-content .user-money .btn{
     display: inline-block;
     width: 50px;
     height: 25px;
     text-align: center;
-    line-height: 25px;
+    line-height: 24px;
+    font-size:14.34px;
     border-radius: 3px;
-    vertical-align: top;
+    vertical-align: text-bottom;
 }
 
 /*用户状态栏*/
@@ -269,6 +274,32 @@
    color: #666666;
 }
 
+.balance-pos{
+    display:inline-block;
+    margin-top:18px;
+    font-weight:700;
+}
+
+.available-pos{
+    margin-top:23px;
+}
+
+.frozen-pos{
+     margin-top:17px;
+}
+
+.balance-font{
+  color:#333;
+  font-weight:700;
+}
+
+.user-info-width{
+  width:38%!important;
+}
+
+.user-money-width,.user-status-width{
+  width:31%!important;
+}
 /*.forum-hot{*/
     /*width: 214px;*/
     /*height: 170px;*/
