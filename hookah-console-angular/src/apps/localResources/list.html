@@ -95,8 +95,10 @@
 
               </td>
               <td>
-                <span class="column-text" ng-bind=" "></span>
-                <span class="column-text" ng-bind=" "></span>
+                <span class="column-text" ng-bind=" item.agencyPrice/100 | currency:'￥'  "  style="color:red;"></span>
+                <span style="color:red;">/</span>
+                <span class="column-text" ng-bind=" item.settlementPrice/100 | currency:'￥' "  style="color:red;"></span>
+
               </td>
               <td>
                 <span class="column-text" ng-bind="item.goodsArea"></span>
@@ -111,11 +113,11 @@
                           <span class="column-text" ng-bind="item.onsaleEndDate"></span>
               </td>
               <td>
-                        <span class="column-text" ng-bind="item.sourceValidPeriod"></span>
+                        <span class="column-text" ng-bind="item.checkUser=='' ?'管理员': item.checkUser "></span>
               </td>
               <td>
                 <label class="ro-switch">
-                          <input type="checkbox" ng-model="status" ng-click="checkSwitch(item,status)" ng-checked="item.isShow == 1">
+                          <input type="checkbox" ng-model="status" ng-click="checkSwitch(item,status)" ng-checked="item.isOnsale == 1">
                           <div class="slider">
                                     <div class="slider-thumb"></div>
                           </div>

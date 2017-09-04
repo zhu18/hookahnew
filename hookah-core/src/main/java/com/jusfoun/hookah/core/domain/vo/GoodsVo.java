@@ -40,6 +40,33 @@ public class GoodsVo extends Goods implements Serializable {
     private Double goodsGrades;//商品分数
     private String orgName;//供应商名称
     private String goodsAreaFullName;//地区全称
+    private String checkUser;//审核人
+    private Long settlementPrice;//结算价
+    private Long agencyPrice;//代理价
+
+    public Long getSettlementPrice() {
+        return settlementPrice;
+    }
+
+    public void setSettlementPrice(Long settlementPrice) {
+        this.settlementPrice = settlementPrice;
+    }
+
+    public Long getAgencyPrice() {
+        return agencyPrice;
+    }
+
+    public void setAgencyPrice(Long agencyPrice) {
+        this.agencyPrice = agencyPrice;
+    }
+
+    public String getCheckUser() {
+        return checkUser;
+    }
+
+    public void setCheckUser(String checkUser) {
+        this.checkUser = checkUser;
+    }
 
     public List<MgCategoryAttrType.AttrTypeBean> getAttrTypeList() {
         return attrTypeList;
