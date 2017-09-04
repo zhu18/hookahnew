@@ -36,5 +36,7 @@
     <motan:referer id="commentService"
                    interface="com.jusfoun.hookah.rpc.api.CommentService"
                    connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
-
+    <motan:referer id="channelService"
+                   interface="com.jusfoun.hookah.rpc.api.ChannelService"
+                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
 </beans>

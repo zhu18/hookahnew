@@ -27,4 +27,7 @@ public interface RabbitmqQueue {
      * 订单支付成功 获取订单编号
      */
     public final String WAIT_SETTLE_ORDERS = "CONTRACE_WAIT_SETTLE_ORDERS";
+
+    /** 渠道推送 */
+    public final String CONTRACE_CENTER_CHANNEL ="CONTRACE_CENTER_CHANNEL";
 }

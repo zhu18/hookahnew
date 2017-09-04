@@ -630,4 +630,48 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         }
         mongoTemplate.save(mgGoods);
     }
+
+    /**
+     * 查询商品详情
+     * @return
+     */
+    @Override
+    public GoodsVo findGoodsByIdChannel(String goodsId) {
+        Goods goods = super.selectById(goodsId);
+        if (goods == null || goods.getGoodsId() == null) {
+            return null;
+        }
+        GoodsVo goodsVo = new GoodsVo();
+        BeanUtils.copyProperties(goods, goodsVo);
+        EsGoods goodsVo1 = goodsMapper.getNeedGoodsById(goodsId);
+        if(goodsVo1 != null) {
+            if(goodsVo1.getGoodsAreas() != null) {
+                String[] region = goodsVo1.getGoodsAreas().split(" ");
+                if(region.length >= 2)
+                    goodsVo.setAreaCountry(region[1]);
+                if(region.length >= 3)
+                    goodsVo.setAreaProvince(region[2]);
+                if(region.length == 4)
+                    goodsVo.setAreaCity(region[3]);
+            }
+        }
+        MgGoods mgGoods = mgGoodsService.selectById(goodsId);
+        if (mgGoods != null) {
+            goodsVo.setFormatList(mgGoods.getFormatList());
+            goodsVo.setImgList(mgGoods.getImgList());
+            goodsVo.setApiInfo(mgGoods.getApiInfo());
+//            goodsVo.setPackageApiInfo(mgGoods.getPackageApiInfo());
+            goodsVo.setAsAloneSoftware(mgGoods.getAsAloneSoftware());
+            goodsVo.setAsSaaS(mgGoods.getAsSaaS());
+            goodsVo.setAtAloneSoftware(mgGoods.getAtAloneSoftware());
+            goodsVo.setAtSaaS(mgGoods.getAtSaaS());
+            goodsVo.setDataModel(mgGoods.getDataModel());
+            goodsVo.setClickRate(mgGoods.getClickRate());
+            goodsVo.setOffLineData(mgGoods.getOffLineData());
+            goodsVo.setOffLineInfo(mgGoods.getOffLineInfo());
+            goodsVo.setSales(mgGoods.getSales());
+        }
+        return goodsVo;
+    }
+
 }

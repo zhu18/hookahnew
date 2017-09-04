@@ -48,4 +48,6 @@ public interface GoodsService extends GenericService<Goods,String> {
     List<GoodsCheckedVo> getListForChecked(String goodsName, String goodsSn,String orgName);
 
     void changeConcatInfo(String goodsId, Byte isOffline, Byte goodsType, MgGoods.OffLineInfoBean concatInfo);
+
+    public GoodsVo findGoodsByIdChannel(String goodsId);
 }

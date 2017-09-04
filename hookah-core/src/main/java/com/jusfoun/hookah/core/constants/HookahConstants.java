@@ -58,6 +58,10 @@ public class HookahConstants {
     public static final byte MESSAGE_TEMPLATE_STOP = 0;//停用
     public static final byte MESSAGE_TEMPLATE_OPEN = 1;//启用
 
+    //是否是本地商品 0本地商品 1 推送商品
+    public static final Byte IS_LOCAL_YES = 0;
+    public static final Byte IS_LOCAL_NO = 1;
+
     public enum SmsTypeNew {
         SMS_USER_REGISTER("101"),  //注册
         SMS_FIND_USER_PWD("102"),   //找回登录密码
@@ -176,6 +180,15 @@ public class HookahConstants {
     public static final String PAY_FORMATS_MONTH = "1";//按月
     public static final String PAY_FORMATS_YEAR = "2";//按年
     public static final String PAY_FORMATS_ONE = "3";//按套
+
+    public static final int CHANNEL_PUSH_OPER_CANCEL = 0;//撤回
+    public static final int CHANNEL_PUSH_OPER_PUSH = 1;//推送
+
+    //'是否推送商品0 不推送 1 推送'
+    public static final Byte GOODS_IS_PUSH_NO = 0;//不推送
+    public static final Byte GOODS_IS_PUSH_YES = 1;//推送
+
+    public static final String CHANNEL_KEY = "*jusfoun@";//推送密钥串
 
     public enum AnalyzeOpt {
         ANALYZED("analyzed"),

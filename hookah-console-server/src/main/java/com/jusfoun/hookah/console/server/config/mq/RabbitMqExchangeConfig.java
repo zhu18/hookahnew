@@ -86,6 +86,13 @@ public class RabbitMqExchangeConfig {
         return queue;
     }
 
+    @Bean
+    Queue queueChannel(RabbitAdmin rabbitAdmin) {
+        Queue queue = new Queue(RabbitmqQueue.CONTRACE_CENTER_CHANNEL, true);
+        rabbitAdmin.declareQueue(queue);
+        return queue;
+    }
+
     /*************   开始  将 queue 绑定到 指定交换机   *******************/
 
 
@@ -151,4 +158,20 @@ public class RabbitMqExchangeConfig {
         rabbitAdmin.declareBinding(binding);
         return binding;
     }
+
+    @Bean
+    Binding bindingExchangeChannel(Queue queueChannel, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueChannel).to(exchange).with(RabbitmqQueue.CONTRACE_CENTER_CHANNEL);
+        rabbitAdmin.declareBinding(binding);
+        return binding;
+    }
+
+    @Bean
+    Binding bindingExchangeChannel(Queue queueChannel, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueChannel).to(exchange).with(RabbitmqQueue.CONTRACE_CENTER_CHANNEL);
+        rabbitAdmin.declareBinding(binding);
+        return binding;
+    }
+
+
 }
