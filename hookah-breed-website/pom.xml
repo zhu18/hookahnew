@@ -273,11 +273,11 @@
             </resource>
             <!--提交时注释下面的resource-->
 
-            <resource>
+            <!--<resource>
                 <targetPath>${project.build.directory}/classes</targetPath>
                 <directory>src/main/resources</directory>
                 <filtering>false</filtering>
-            </resource>
+            </resource>-->
 
         </resources>
         <pluginManagement>
