@@ -18,7 +18,6 @@
 }
 .header ul li a.active{
     color:#247DE8;
-    border-bottom:2px solid #247DE8;
     height:22px;
     display: block;
 }
@@ -114,6 +113,16 @@ thead{
 .confirmKey h5 span{
     font-weight:normal;
     word-break: break-all;
+}
+
+.center-left-title{
+    height: 20px;
+    font: 16px/20px "microsoft yahei" ;
+    font-weight: bold;
+    padding-left: 2px;
+    border-left: 0;
+    border-bottom: 3px solid #3e557b;
+    padding-bottom: 5px;
 }
 /*thead .list1{*/
     /*width: 300px;*/
