@@ -1,6 +1,6 @@
 .nameAuthentication{}
 .nameAuthentication ul {
-   margin-top: 20px;
+   background-color: #fff;  padding: 20px;
 }
 .nameAuthentication ul li{
     height: 39px;
@@ -60,4 +60,11 @@
 }
 .repeat-revise-btn-cov{
     border-radius: 15px !important;
+}
+.center-ul-box{
+    padding: 14px;
+    background-color: #ebedef;
+}
+.center-ul-box .ul2{
+    padding-top: 0px !important;
 }

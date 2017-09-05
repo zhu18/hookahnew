@@ -10,16 +10,18 @@ var head = {
 <%
 var htmlPart = {
 %>
-<div class="grid-0 backgorund-gray">
+<div class="grid-0 backgorund-gray bgi">
     <div class="grid-row clearfix">
         <%include("/usercenter/user-center-menu.html"){} %>
-        <div class="grid-right info-center-box ">
-                <div class="header">
-                    <h4 class="center-title">资金管理/绑定银行账户</h4>
+        <div class="grid-right info-center-box info-center-box-cov">
+                <div class="header header-cov">
+                    <!--<h4 class="center-title">资金管理/绑定银行账户</h4>-->
+                    <h4 class="grid-left center-title center-left-title">资金管理/绑定银行账户</h4>
+                    <img src="../../static/images/shz/titleP.png" style="position:relative;left:10px;width: 770px;">
                 </div>
                 <div class="fundmanage-box">
-                    <div class="bindBankCard">
-                        <div class="bindBankCard-title">绑定银行账户</div>
+                    <div class="bindBankCard bindBankCard-cov">
+                        <!--<div class="bindBankCard-title">绑定银行账户</div>-->
                         <div class="bindBankCard-content">
                             <form id="form" action="">
                                 <div class="form-item">

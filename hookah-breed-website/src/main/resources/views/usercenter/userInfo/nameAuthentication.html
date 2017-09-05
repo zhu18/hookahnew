@@ -8,19 +8,20 @@ var head = {
 <%
 var htmlPart = {
 %>
-<div class="grid-0 backgorund-gray">
+<div class="grid-0 backgorund-gray bgi">
     <div class="grid-row clearfix">
         <%include("/usercenter/user-center-menu.html"){} %>
-        <div class="grid-right info-center-box ">
+        <div class="grid-right info-center-box info-center-box-cov">
             <div class="nameAuthentication">
-                <div class="header clearfix">
+                <div class="header clearfix header-cov">
                     <h4 class="grid-left center-title center-left-title">实名认证</h4>
                     <img src="../../static/images/shz/titleP.png" style="position:relative;left:10px;">
                 </div>
-                <ul class="ul1">
+                <div class="center-ul-box">
+                    <ul class="ul1">
 
-                </ul>
-                <ul class="ul2">
+                    </ul>
+                    <ul class="ul2">
                     <li>
                         <label for="orgName">单位名称</label>
                         <p id="orgName"></p>
@@ -87,6 +88,7 @@ var htmlPart = {
                         <p id="orgPhone">无</p>
                     </li>
                 </ul>
+                </div>
             </div>
         </div>
     </div>
