@@ -64,11 +64,9 @@ thead{
 .list .order tbody .readEnd{
     color:#247DE8;
 }
-.list .order tbody tr:nth-child(even){
-    background: #f7f7f7;
-}
+
 .list .order tbody tr:hover{
-    background: #efeeee;
+    background: rgb(215,232,250);
 }
 .list .order tbody tr{
     border: 1px solid #DDD;
