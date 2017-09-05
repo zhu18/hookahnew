@@ -49,8 +49,8 @@ class CategoryController {
                 field: "aa",
                 displayName: "操作",
                 cellTemplate: '<a ng-click="cellTemplateScope.edit(row.branch)">修改</a> <span class="text-explode">|</span> <i class="link-space"></i> ' +
-                               '<a href="javascript:;" ng-click="cellTemplateScope.delete(row.branch)" target="_blank">删除</a> <span class="text-explode">|</span> <i class="link-space"></i> ' +
-                               '<a href="javascript:;" ng-click="cellTemplateScope.addChild(row.branch)" target="_blank">增加子分类</a><span class="text-explode">|</span> <i class="link-space"></i>'
+                               '<a href="javascript:;" ng-click="cellTemplateScope.delete(row.branch)" >删除</a> <span class="text-explode">|</span> <i class="link-space"></i> ' +
+                               '<a href="javascript:;" ng-click="cellTemplateScope.addChild(row.branch)" >增加子分类</a><span class="text-explode">|</span> <i class="link-space"></i>'
                                // '<a href="javascript:;" ng-show="row.branch[\'level\'] == 1" ng-click="cellTemplateScope.manageAttrType(row.branch)" target="_blank">管理属性</a>'
                 ,
                 cellTemplateScope: {
