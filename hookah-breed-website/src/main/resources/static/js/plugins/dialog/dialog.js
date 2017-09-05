@@ -25,7 +25,8 @@
     $.Dialog = function(settings) {
         if (settings.type === "alert") {
             var alert = new Dialog();
-            var html = '<div class="ui-alert-title">' + settings.content + '</div>';
+            var html = '<div class="ui-alert-header">提示</div>';
+                html += '<div class="ui-alert-title">' + settings.content + '</div>';
             var action = '';
             var className = 'ui-alert';
             if (settings.button) {
@@ -63,7 +64,8 @@
         }
         if (settings.type === "confirm") {
             var dialog = new Dialog();
-            var html = '<div class="ui-confirm-title">' + settings.content + '</div>';
+            var html = '<div class="ui-alert-header">提示</div>';
+                html += '<div class="ui-confirm-title">' + settings.content + '</div>';
             var action = '';
             if (!settings.buttons) {
                 settings.buttons = [{
