@@ -7,15 +7,16 @@ var head = {
 <%
 var htmlPart = {
 %>
-<div class="grid-0 backgorund-gray">
+<div class="grid-0 backgorund-gray bgi">
     <div class="grid-row clearfix">
         <%include("/usercenter/user-center-menu.html"){} %>
-        <div class="grid-right info-center-box ">
+        <div class="grid-right info-center-box info-center-box-cov">
             <div class="contactInformation">
-                <div class="header clearfix">
+                <div class="header clearfix header-cov">
                     <h4 class="grid-left center-title center-left-title">联系信息</h4>
                     <img src="../../static/images/shz/titleP.png" style="position:relative;left:10px;">
                 </div>
+                <div class="center-ul-box">
                  <ul>
                      <li>
                          <label>联系人 :</label>
@@ -37,6 +38,7 @@ var htmlPart = {
                          <a href="/usercenter/contactInformationEdit" class="edit">修改</a>
                      </li>
                  </ul>
+                </div>
             </div>
 
         </div>

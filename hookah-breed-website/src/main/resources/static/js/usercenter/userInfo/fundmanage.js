@@ -53,22 +53,44 @@ function render() {
                             })
                             // 删除银行卡
                             $(".bank-card-content .delete").on("click",function () {
-                                $.alert('您确定要删除已绑定的银行账户吗？',true,function(){
-                                    $.ajax({
-                                        url:host.website+'/payBankCard/updateBankInfo',
-                                        data:{
+                                $.confirm('您确定要删除已绑定的银行账户吗？ ',null,function(type){
+                                    if(type == 'yes'){
+                                        this.hide();
+                                        $.ajax({
+                                            url:host.website+'/payBankCard/updateBankInfo',
+                                            data:{
 
-                                        },
-                                        cache:false,
-                                        type:'get',
-                                        success:function (data) {
-                                            if (data.code=="1"){
-                                                $.alert('解绑银行账户成功！');
-                                                render()
+                                            },
+                                            cache:false,
+                                            type:'get',
+                                            success:function (data) {
+                                                if (data.code=="1"){
+                                                    $.alert('解绑银行账户成功！');
+                                                    render()
+                                                }
                                             }
-                                        }
-                                    });
+                                        });
+                                    }else{
+                                        this.hide();
+                                    }
                                 });
+
+                                // $.alert('您确定要删除已绑定的银行账户吗？',true,function(){
+                                //     $.ajax({
+                                //         url:host.website+'/payBankCard/updateBankInfo',
+                                //         data:{
+                                //
+                                //         },
+                                //         cache:false,
+                                //         type:'get',
+                                //         success:function (data) {
+                                //             if (data.code=="1"){
+                                //                 $.alert('解绑银行账户成功！');
+                                //                 render()
+                                //             }
+                                //         }
+                                //     });
+                                // });
 
                             })
                         }else {
