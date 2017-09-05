@@ -222,3 +222,53 @@
     display: block;
     text-align: right;
 }
+.account-funds-title-cov{
+    display: inline-block;
+    font-weight: bold;
+    font-size: 14px;
+    background-color: #fff !important;
+    border-bottom: none !important;
+    border-left: 2px solid #227de7;
+    margin-left: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 95% !important;
+    padding-left: 15px;
+}
+.bank-card-title-cov{
+    display: inline-block;
+    font-weight: bold;
+    font-size: 14px;
+    background-color: #fff !important;
+    border-bottom: none !important;
+    border-left: 2px solid #227de7;
+    margin-left: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 95% !important;
+    padding-left: 15px;
+}
+.useBalance-icon{
+    margin-right: 5px;
+    display: inline-block;
+    width: 15px;
+    height: 17px;
+    background:url(../../../images/shz/balance.png) no-repeat;
+    vertical-align: sub;
+}
+.freeze-icon{
+    margin-right: 5px;
+    display: inline-block;
+    width:14px;
+    height: 17px;
+    background:url(../../../images/shz/freeamount.png) no-repeat;
+    vertical-align: sub;
+}
+.tip-icon{
+    margin-right: 5px;
+    display: inline-block;
+    width:15px;
+    height: 14px;
+    background:url(../../../images/shz/prompt.png) no-repeat;
+    vertical-align: sub;
+}
