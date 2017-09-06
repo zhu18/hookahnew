@@ -726,7 +726,8 @@ public class ESTemplate {
                 }else if(range.getPriceFrom() == null && range.getPriceTo() != null) {
                     queryString = QueryBuilders.rangeQuery("shopPrice").to(range.getPriceTo());
                 }
-                boolQueryBuilder.must(queryString);
+                if(queryString != null)
+                    boolQueryBuilder.must(queryString);
             }
         }else if((filterMap == null || filterMap.size() == 0) && range != null) {
             if(range.getPriceFrom() != null && range.getPriceTo() != null) {
