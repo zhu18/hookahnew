@@ -20,7 +20,8 @@
     font-size: 14px;
     color: #333333;
     width: 118px;
-    background-color: #F6F6F6;
+    /**background-color: #F6F6F6;*/
+    background-color: #f9f9f9;
 }
 .capitalRecord .search-criteria li ul{
     float: left;
@@ -73,7 +74,8 @@
 .capitalRecord .search-list tr th{
     height: 39px;
     line-height:39px;
-    background-color: #F4F4F4;
+    /**background-color: #F4F4F4;*/
+    background-color: #f9f9f9;
     border-bottom:1px solid #E5E5E5;
 }
 .capitalRecord .search-list tr td{
@@ -87,4 +89,52 @@
 }
 .capitalRecord .search-list tr td.pay{
     color: #2282e7;
+}
+
+/** 改版样式 */
+.capitalRecorddiv{
+ width:1010px;
+height:100%;
+ margin-left:-14px;
+ margin-top:-21px;
+background-image:linear-gradient(to right,#ebedef,#ebf1f8);
+}
+
+.header-n{
+    border-bottom:0!important;
+}
+
+.search-criteria-n{
+       width: 980px!important;
+       margin-left: 13px;
+       margin-top:20px!important;
+       background: #fff;
+       display: inline-block;
+}
+
+.search-list-n{
+      width: 980px!important;
+      background: #fff;
+      border:0!important;
+}
+
+.center-title-n{
+   border-left-width:0!important;
+   width:146px;
+   border-bottom:3px solid #31557b;
+   font-size:16px!important;
+   padding-left:0!important;
+   margin-top:-13px;
+}
+
+.info-center-box-n{
+ padding:14px 14px 0!important;
+     opacity: 0.965;
+}
+
+.search-list-div{
+      background: #fff;
+      width: 980px;
+      margin-left: 13px;
+  }
 }
