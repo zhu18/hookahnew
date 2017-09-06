@@ -46,11 +46,20 @@ function offSale(id) {
 				},
 				success: function (data) {
 					if (data.code == 1) {
-						$.alert('操作成功', true, function () {
-							location.reload();
-						});
+						// $.alert('操作成功', true, function () {
+						// 	location.reload();
+						// });
+                        $.alert({
+                            content:'操作成功',
+							button:true,
+							callback:function () {
+                                location.reload();
+                            }
+                        })
 					} else {
-						$.alert(data.message)
+						$.alert({
+							content:data.message
+						})
 					}
 				}
 			})

@@ -248,7 +248,9 @@ function loadRegion(id,regionParam) {
 					renderRegion(id,data.data)
 				}
 			} else {
-				$.alert(data.message)
+				$.alert({
+					content:data.message
+				})
 			}
 		}
 	});
@@ -267,7 +269,10 @@ $('#fileupload').fileupload({   //图片上传
 		var filesize = data.files[0].size;
 		if(Math.ceil(filesize / 1024) > 1024*5){
 			console.log('文件过大'+filesize);
-			$.alert('文件过大');
+			$.alert({
+				content:'文件过大'
+			});
+
 			return;
 		}
 		data.submit();
@@ -278,7 +283,9 @@ $('#fileupload').fileupload({   //图片上传
 			$("#preview-img").attr("src", obj.absPath);
 			$('input[name="goodsImges"]').val(obj.filePath);
 		}else{
-			$.alert(data.result.message)
+			$.alert({
+				content:data.result.message
+			})
 		}
 	},
 	progressall: function (e, data) {
@@ -302,7 +309,9 @@ $('#fileupload2').fileupload({ //文件上传
 			$('.fileUploads span').html(data.files[0].name);
 			$('input[name="goodsImges2"]').val(obj.filePath);
 		}else{
-			$.alert(data.result.message)
+			$.alert({
+				content:data.result.message
+			})
 		}
 
 	},
@@ -320,7 +329,9 @@ $('#fileupload11').fileupload({ //文件上传
 			$('.fileUploads_j span').html(data.files[0].name);
 			$('input[name="dataSample_s"]').val(obj.filePath);
 		}else{
-			$.alert(data.result.message)
+			$.alert({
+				content:data.result.message
+			})
 		}
 
 	},
@@ -339,7 +350,10 @@ function loadData() {
 			if (msg.code == 1) {
 				renderselect(msg.data)//渲染商品属性
 			} else {
-				$.alert(msg.message)
+				// $.alert(msg.message)
+                $.alert({
+                    content:msg.message
+                })
 			}
 		}
 	});
@@ -401,21 +415,33 @@ function tablePlus(that) {
 			$(that).parents('.table-plus tbody').append(priceHtml);
 			addItem(that)
 		} else {
-			$.alert('请完善本条信息',true,function(){});
+			// $.alert('请完善本条信息',true,function(){});
+            $.alert({
+                content:'请完善本条信息',
+				button:true
+            })
 		}
 	} else if ($(that).parents('.table-plus').attr('d-type') == 'requestHtml') {
 		if ($(that).parent().siblings('.name-input').find('input').val() && $(that).parent().siblings('.type-input').find('input').val()) {
 			$(that).parents('.table-plus tbody').append(requestHtml);
 			addItem(that)
 		} else {
-			$.alert('请完善本条信息',true,function(){});
+			// $.alert('请完善本条信息',true,function(){});
+            $.alert({
+                content:'请完善本条信息',
+                button:true
+            })
 		}
 	} else if ($(that).parents('.table-plus').attr('d-type') == 'returnHtml') {
 		if ($(that).parent().siblings('.errorNum-input').find('input').val()) {
 			$(that).parents('.table-plus tbody').append(returnHtml);
 			addItem(that)
 		} else {
-			$.alert('请完善本条信息',true,function(){});
+			// $.alert('请完善本条信息',true,function(){});
+            $.alert({
+                content:'请完善本条信息',
+                button:true
+            })
 		}
 	}
 	function addItem(that) {
@@ -484,16 +510,33 @@ $('#J_submitBtn').click(function(){
 					if($.trim(editor4.$txt.text()).length > 0){
 						backAddFn(submitGoodsPublish())
 					}else{
-						$.alert('商品描述不能为空',true,function () {})
+						// $.alert('商品描述不能为空',true,function () {})
+                        $.alert({
+                            content:'商品描述不能为空',
+                            button:true
+                        })
 					}
 				}else{
-					$.alert('商品优势不能为空',true,function () {})
+					// $.alert('商品优势不能为空',true,function () {})
+                    $.alert({
+                        content:'商品优势不能为空',
+                        button:true
+                    })
 				}
 			}else{
-				$.alert('售后服务不能为空',true,function () {})
+				// $.alert('售后服务不能为空',true,function () {})
+                $.alert({
+                    content:'售后服务不能为空',
+                    button:true
+                })
+
 			}
 		}else{
-			$.alert('应用案例不能为空',true,function () {})
+			// $.alert('应用案例不能为空',true,function () {})
+            $.alert({
+                content:'应用案例不能为空',
+                button:true
+            })
 		}
 	}
 });
@@ -518,7 +561,12 @@ function backAddFn(data){
 				});
 			} else {
 				Loading.stop()
-				$.alert(data.message, true);
+				// $.alert(data.message, true);
+                $.alert({
+                    content:data.message,
+                    button:true
+                })
+
 			}
 		}
 	});
@@ -735,7 +783,10 @@ $('.fileUploadBtn').fileupload({
 			$(this).siblings('span').html('替换文件');
 			$(this).parent('.uploadFiles').siblings('.fileEndInputs').val(data.files[0].name);
 		}else{
-			$.alert(data.result.message)
+			// $.alert(data.result.message)
+            $.alert({
+                content:data.result.message
+            })
 		}
 	},
 	progressall: function (e, data) {
