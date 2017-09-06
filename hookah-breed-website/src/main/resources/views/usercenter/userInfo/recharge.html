@@ -8,14 +8,17 @@ var head = {
 <%
 var htmlPart = {
 %>
-<div class="grid-0 backgorund-gray">
+<div class="grid-0 backgorund-gray bgi">
     <div class="grid-row clearfix">
         <%include("/usercenter/user-center-menu.html"){} %>
-        <div class="grid-right info-center-box ">
-                <div class="header">
-                    <h4 class="center-title">充值</h4>
+        <div class="grid-right info-center-box" style="padding:0 14px;opacity:0.965;">
+                <div class="header header-n">
+                    <h4 class="center-title center-title-n ">充值</h4>
+                    <img src="../../static/images/shz/titleP.png" style="position:relative;top:-25px;left:76px;" />
                 </div>
                 <div class="fundmanage-box">
+                    <div class="rechargediv">
+
                         <div class="recharge">
                             <ul class="recharge-content">
                                 <li>
@@ -37,6 +40,10 @@ var htmlPart = {
                                 </li>
                             </ul>
                         </div>
+
+                    </div>
+
+
                 </div>
         </div>
     </div>

@@ -1,9 +1,13 @@
 .contactInformation{
-    padding-bottom: 300px;
+    /*padding-bottom: 300px;*/
 }
 .contactInformation ul{
-  margin-top: 62px;
-  margin-left: 318px;
+/*  margin-top: 62px;
+  margin-left: 318px;*/
+    background-color: #fff;
+    padding-top: 62px;
+    padding-left: 318px;
+    padding-bottom: 213px;
 }
 .contactInformation ul li{
 
@@ -47,4 +51,8 @@
     font-size: 14px;
     color: #ffffff;
     background-color: #5397F3;
+}
+.center-ul-box{
+    padding: 14px;
+    background-color: #ebedef;
 }

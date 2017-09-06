@@ -1,8 +1,7 @@
 .withdrawalStep2{
-    height: 431px;
-    width: 100%;
-    margin-top: 15px;
     border: 1px solid #e5e5e5;
+    padding:14px;
+    background-image:linear-gradient(to right,#ebedef,#ebf1f8);
 }
 .withdrawalStep2 .withdrawalStep2-top{
     display: inline-block;
@@ -12,11 +11,17 @@
     line-height: 130px;
     text-align: center;
     width: 100%;
-    border-bottom: 1px solid #e5e5e5;
-    background: #F4F4F4;
+    background: white;
+    padding:14px;
+    box-sizing:border-box;
 }
 .withdrawalStep2 .withdrawalStep2-middle{
     border-bottom: 1px dashed #e5e5e5;
+    width:982px;
+    display:table-cell;
+    vertical-align:middle;
+    text-align:center;
+    background:white;
 }
 .withdrawalStep2 .withdrawalStep2-middle ul{
     width:calc(100% - 56px );
@@ -31,7 +36,7 @@
     text-align: center;
 }
 .withdrawalStep2 .withdrawalStep2-middle ul li p.active{
-    color: #179d1d;
+    color: #2d6ad0;
 }
 .withdrawalStep2 .withdrawalStep2-middle ul li:before{
     content: "";
@@ -47,4 +52,5 @@
     line-height: 110px;
     text-align: center;
     border-bottom: 1px dashed #e5e5e5;
+    background:white;
 }

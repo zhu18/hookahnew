@@ -22,8 +22,8 @@ var htmlPart = {
 		<div class="info-center-box info-center-box-1 grid-right">
 			<div class="basic-information-top ">
 				<div class="basic-information-top-title">
-					基本信息
-					<img src="../../static/images/shz/titleP.png" style="position:relative;top:12px;left:10px;"/>
+					<h4 class="grid-left my-order margin-right-15 comtitle">基本信息</h4>
+					<img src="../../static/images/shz/titleP.png" style="position:relative;top:-20px;left:97px;"/>
 				</div>
 
 				<div class="basic-information-top-content">
@@ -79,7 +79,7 @@ var htmlPart = {
 						<div>
 							<p class="margin-top-20">账户余额:</p>
 							<%if(userCur.userType == 4){%>
-							<p><i style="color:#f53839;font-style:normal;font-size:16px;margin-left:-3px;font-weight:700;">￥</i><span class="account-balance font-size-25 color-25-red balance-pos">${payAccount.balance / 100}</span><a href="/usercenter/recharge" class="btn btn-full-orange margin-left-40">充值</a></p>
+							<p><i style="color:#f53839;font-style:normal;font-size:16px;margin-left:-3px;font-weight:700;">￥</i><span class="account-balance font-size-25 color-25-red balance-pos">${payAccount.balance / 100}</span><a href="javascript:void(0)" class="btn btn-full-orange margin-left-40 recharge">充值</a></p>
 							<%}else {%>
 							<p>￥<span class="account-balance font-size-18 color-red" >${payAccount.balance / 100}</span></p>
 							<%}%>
@@ -140,7 +140,7 @@ var htmlPart = {
 		<div class="info-center-box info-center-box-1 grid-right" style="margin-top:27px;">
 			<div class="basic-information-down">
 				<div class="header header-1 clearfix">
-					<h4 class="grid-left my-order active margin-right-15" style="margin-left:-19px;" data-tab-id="one">我购买的数据</h4>
+					<h4 class="grid-left my-order active col margin-right-15" style="margin-left:-19px;" data-tab-id="one">我购买的数据</h4>
 					<%if(userCur.supplierStatus == 1){%>
 					<h4 class="grid-left my-order" data-tab-id="tow">我上架的商品</h4>
 					<%}%>

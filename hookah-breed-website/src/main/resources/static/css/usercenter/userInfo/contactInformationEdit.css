@@ -1,10 +1,14 @@
 .contactInformationEdit{
-    padding-bottom: 300px;
+    /*padding-bottom: 300px;*/
 }
 
 .contactInformationEdit form{
-    margin-top: 62px;
-    margin-left: 318px;
+    /*margin-top: 62px;
+    margin-left: 318px;*/
+    padding-top: 62px;
+    padding-left: 318px;
+    background-color: #fff;
+    padding-bottom: 250px;
 }
 .contactInformationEdit form .item{
     color: #666666;
@@ -61,4 +65,8 @@
 }
 .contactInformationEdit form .vertical-align-top{
     vertical-align: top;
+}
+.contactInformationEditBox{
+    background: #ebedef;
+    padding: 14px;
 }

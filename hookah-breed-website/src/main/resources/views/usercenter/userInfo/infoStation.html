@@ -2,6 +2,7 @@
 var head = {
 %>
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/infoStation.css">
+
 <script type="text/javascript">
 	var pagePath = '/message/findByUserId';
 	var pageType = 'get';
@@ -13,12 +14,12 @@ var head = {
 <%
 var htmlPart = {
 %>
-<div class="grid-0 backgorund-gray">
+<div class="grid-0  bgi">
 	<div class="grid-row clearfix">
 		<%include("/usercenter/user-center-menu.html"){} %>
 		<div class="grid-left info-center-box ">
 			<div class="header clearfix">
-				<h4 class="grid-left info-center-title">我的消息</h4>
+				<h4 class="grid-left info-center-title center-left-title">我的消息</h4>
 				<ul class="grid-left all">
 					<li class="active">
 						<a href="javascript:void(0);" class="active">全部消息
@@ -30,9 +31,14 @@ var htmlPart = {
 						<span id="infoTwo"></span>
 					</a>
 					</li>
+					<li style="width:676px;overflow:hidden;">
+						<img src="../../static/images/shz/titleP.png" style="position:relative;left:10px;">
+					</li>
 				</ul>
+
 			</div>
-			<div class="list">
+			<div style="width:950px;background-image:linear-gradient(to right,#ebedef,#ebf1f8);padding:15px 15px 15px 15px;">
+					<div class="list " >
 				<div class="order">
 					<table>
 						<thead>
@@ -53,7 +59,7 @@ var htmlPart = {
 									<lable><input type="checkbox" class="checkall" name="checkall">&nbsp;全选</lable>
 								</td>
 								<td class="text-align-left">
-									<span id="delete" style="color:#247DE8;cursor: pointer">删除所选</span>
+									<span id="delete" style="color:red;cursor: pointer">删除所选</span>
 									<span id="flag" style="color:#247DE8; cursor: pointer;display:none;" class="margin-left-20">标记为已读</span>
 								</td>
 								<td></td>
@@ -67,8 +73,11 @@ var htmlPart = {
 					<!--<span id="delete">删除所有</span>-->
 					<!--<span id="flag">标记为已读</span>-->
 				<!--</div>-->
+						<%include("/layout/pageaction.html"){} %>
 			</div>
-			<%include("/layout/pageaction.html"){} %>
+
+			</div>
+
 		</div>
 	</div>
 </div>

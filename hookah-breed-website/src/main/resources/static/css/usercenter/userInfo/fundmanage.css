@@ -92,10 +92,13 @@
 
 .fundmanage-box .fundmanage-bd{
     overflow: hidden;
+    background-color: #ebedef;
+    padding: 14px;
 }
 /*账户资金*/
 .fundmanage-box .fundmanage-bd .account-funds{
-  border: 1px solid #E9E9E9;
+    /*border: 1px solid #E9E9E9;*/
+    background-color: #fff;
 }
 .fundmanage-box .fundmanage-bd .account-funds .account-funds-title{
     display: inline-block;
@@ -163,6 +166,8 @@
 .fundmanage-box .fundmanage-bd .bank-card{
     height: 340px;
     border: 1px solid #E9E9E9;
+    background-color: #fff;
+
 }
 .fundmanage-box .fundmanage-bd .bank-card .bank-card-title{
     display: inline-block;
@@ -206,6 +211,7 @@
     padding: 20px;
     border: 1px solid #e5e5e5;
     margin: 15px 0px 0px 15px;
+    border-radius: 5px;
 }
 .fundmanage-box .fundmanage-bd .bank-card .bank-card-content .show-card .card-name{
 
@@ -271,4 +277,7 @@
     height: 14px;
     background:url(../../../images/shz/prompt.png) no-repeat;
     vertical-align: sub;
+}
+.fundmanage-container{
+    width:100%;
 }
