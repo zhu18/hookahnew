@@ -1,15 +1,12 @@
 .info-center-box{
-    width: 950px;
-    height: 900px;
+    width: 980px;
     border:1px solid #EDEDED;
     background-color: #fff;
-    margin:10px 10px 30px 10px;
-    padding:0 15px;
+    margin:10px 0px 0px 10px;
+
 }
 .info-center-box .header{
-    height: 31px;
-    padding-top:10px;
-    border-bottom: 1px solid #EDEDED;
+    padding:14px 0 0 14px;
 }
 .header ul li {
     width: 85px;
@@ -44,7 +41,13 @@ thead{
     border:1px solid #DDD;
     padding-left:17px;
 }
-
+.pageaction {
+    padding-bottom:20px;
+}
+.list {
+    background:white;
+    margin-bottom:-30px;
+}
 .list .order thead .check {
     width:10%;
 }
@@ -121,6 +124,7 @@ thead{
     font-weight: bold;
     padding-left: 2px;
     border-left: 0;
+    width:80px;
     border-bottom: 3px solid #3e557b;
     padding-bottom: 5px;
 }
