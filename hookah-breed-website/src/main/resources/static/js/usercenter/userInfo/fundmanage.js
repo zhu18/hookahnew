@@ -49,8 +49,7 @@ function render() {
                                     window.location.href= host.website+'/withdrawRecord/getUserInfo';
                                 }else {
                                     $.alert({
-                                        content:"请先绑定银行账户！",
-                                        header:"提示"
+                                        content:"请先绑定银行账户！"
                                     })
                                 }
                             })
@@ -58,7 +57,6 @@ function render() {
                             $(".bank-card-content .delete").on("click",function () {
                                 $.confirm({
                                     content:'您确定要删除已绑定的银行账户吗',
-                                    header:'提示',
                                     callback:function (type) {
                                         if(type == 'yes'){
                                             this.hide();
