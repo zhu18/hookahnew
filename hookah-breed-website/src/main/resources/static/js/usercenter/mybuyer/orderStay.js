@@ -136,17 +136,9 @@ $(".searchQuery .search").on("click",function(){
         },
         success: function (data) {
             if (!(data.code == 0)) {
-				// $.alert('取消订单成功', true, function () {
-				// 	location.reload()
-				// });
-
-                $.alert({
-                    content:'取消订单成功',
-					button:true,
-					callback:function () {
-                        location.reload()
-                    }
-                });
+				$.alert('取消订单成功', true, function () {
+					location.reload()
+				});
             } else {
                 console.log("取消订单失败！");
             }
@@ -177,10 +169,7 @@ function getDataPackage(goodsId){
                 // window.location.href = data.data;
                 window.location.href = data.data;
             }else{
-                // $.alert(data.message)
-                $.alert({
-                    content:data.message
-                });
+                $.alert(data.message)
                 // $.alert('下载失败')
             }
         }

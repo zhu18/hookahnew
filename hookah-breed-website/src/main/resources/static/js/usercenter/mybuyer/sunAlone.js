@@ -92,15 +92,10 @@ function check(orderId){
         contentType:'application/json ',
         success: function(msg) {
             if (msg.code == 1) {
-                $.alert({
-                    content:'提交成功'
-                });
-
+                $.alert('提交成功');
                 window.location.href="/usercenter/buyer/orderManagement";
             } else {
-                $.alert({
-                    content:msg.message
-                });
+                $.alert(msg.message);
             }
         }
     })

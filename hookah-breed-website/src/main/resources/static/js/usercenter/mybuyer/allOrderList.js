@@ -320,12 +320,8 @@ function deleteRadio(orderId) {
     },
     success: function (data) {
       if (!(data.code == 0)) {
-        // $.alert('删除成功', true, function () {
-        //   location.reload()
-        // });
-        $.alert({
-            content:'删除成功',
-            button:true
+        $.alert('删除成功', true, function () {
+          location.reload()
         });
       } else {
         console.log("删除失败！");
@@ -355,16 +351,12 @@ function getDataPackage(goodsId) {
         // window.location.href = data.data;
         window.location.href = data.data;
       } else {
-          $.alert({
-              content:data.message
-          });
+        $.alert(data.message)
         // $.alert('下载失败')
       }
     },
     error: function (data) {
-        $.alert({
-            content:data.message
-        });
+      $.alert(data.message);
     }
   });
 }
@@ -383,9 +375,7 @@ function getDataPackageD(goodsId, sourceId, orderSn) {
         // window.location.href = data.data;
         window.location.href = data.data;
       } else {
-          $.alert({
-              content:data.message
-          });
+        $.alert(data.message)
         // $.alert('下载失败')
       }
     }
@@ -452,9 +442,7 @@ function getKey(goodsId, sourceId, orderId, goodsType, isOffline) {
                     if (data.code == 1) {
                         apiWordUrl=data.data;
                     } else {
-                        $.alert({
-                            content:data.message
-                        });
+                      $.alert(data.message)
                     }
                   }
                 });
@@ -537,10 +525,7 @@ function copyText(){
          if (data.code == 1) {
            $("#token").val(JSON.parse(data.data.result).data);
          } else {
-           // $.alert(data1.message);
-             $.alert({
-                 content:data1.message
-             });
+           $.alert(data1.message);
          }
        }
      });
