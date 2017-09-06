@@ -8,20 +8,23 @@ var head = {
 <%
 var htmlPart = {
 %>
-<div class="grid-0 backgorund-gray">
+<div class="grid-0 backgorund-gray bgi">
     <div class="grid-row clearfix">
         <%include("/usercenter/user-center-menu.html"){} %>
-        <div class="grid-right info-center-box ">
+        <div class="grid-right info-center-box info-center-box-n">
             <div class="header">
-                <h4 class="center-title">充值</h4>
+                <h4 class="center-title center-title-n">充值</h4>
+                <img src="../../static/images/shz/titleP.png" style="position:relative;top:-24px;left:60px;"/>
             </div>
-            <div class="rechargeSuccess">
+            <div class="failure-div">
+            <div class="rechargeSuccess rechargeFailure-n">
                 <div class="tick">√</div>
-                <ul class="margin-left-10 font-size-18">
+                <ul class="margin-left-10 font-size-16">
                     <li>充值成功</li>
                     <li>充值金额: <span class="color-red">￥${money}</span></li>
                 </ul>
-                <a href="/usercenter/fundmanage" class="pay-btn btn-full-blue">查看余额</a>
+                <a href="/usercenter/fundmanage" class="pay-btn btn-full-blue pay-btn-n">查看余额</a>
+            </div>
             </div>
         </div>
     </div>

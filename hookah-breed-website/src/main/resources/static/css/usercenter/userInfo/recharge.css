@@ -139,3 +139,42 @@
       border:0;
       margin:12px 0 0 10px!important;
 }
+
+/** 改版充值失败样式 */
+.info-center-box-n{
+  padding:0 14px!important;
+  opacity:0.965;
+}
+
+.failure-div{
+  width:1010px;
+  margin-left:-14px;
+  margin-top: -8px;
+ background-image: linear-gradient(to right,#ebedef,#ebf1f8);
+
+}
+
+.rechargeFailure-n{
+       background: #fff;
+       width: 240px;
+       margin:15px;
+       display: inline-block;
+}
+
+.rechargeFailure .pay-btn-n,.rechargeSuccess .pay-btn-n{
+     width: 123px;
+     height: 30px;
+     line-height: 30px;
+}
+
+.rechargeFailure .pay-btn-n{
+    margin-left: 63px;
+}
+
+.rechargeSuccess .pay-btn-n{
+     margin-left: 53px
+}
+
+.btn-full-orange-n{
+      background: #f17d17;
+}

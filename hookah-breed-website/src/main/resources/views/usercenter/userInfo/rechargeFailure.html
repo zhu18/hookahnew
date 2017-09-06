@@ -8,18 +8,21 @@ var head = {
 <%
 var htmlPart = {
 %>
-<div class="grid-0 backgorund-gray">
+<div class="grid-0 backgorund-gray bgi">
     <div class="grid-row clearfix">
         <%include("/usercenter/user-center-menu.html"){} %>
-        <div class="grid-right info-center-box ">
-            <div class="header">
-                <h4 class="center-title">充值</h4>
+        <div class="grid-right info-center-box info-center-box-n">
+            <div class="header header-n">
+                <h4 class="center-title center-title-n">充值</h4>
+                <img src="../../static/images/shz/titleP.png" style="position:relative;top:-24px;left:60px;"/>
             </div>
-            <div class="rechargeFailure">
+            <div class="failure-div">
+            <div class="rechargeFailure rechargeFailure-n">
                 <div class="error vertical-align-middle">×</div>
                 <span class="vertical-align-middle font-size-18 margin-left-20">充值失败！</span>
                 <div></div>
-                <a href="/usercenter/recharge" class="pay-btn btn-full-orange">重新支付</a>
+                <a href="/usercenter/recharge" class="pay-btn btn-full-orange pay-btn-n btn-full-orange-n">重新支付</a>
+            </div>
             </div>
         </div>
     </div>

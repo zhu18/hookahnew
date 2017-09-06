@@ -70,7 +70,7 @@ function render() {
                                     nowTime:data.getHours()+':'+data.getMinutes(),
                                     info:"请在指定的时间段充值！",
                                     callback:function () {
-                                      window.location.href='/withdrawRecord/getUserInfo'
+                                      window.location.href='/usercenter/recharge'
                                     }
                                 });
                             });

@@ -59,8 +59,10 @@ $(".user-money .recharge").click(function () {
         beginTime:'08:30',
         endTime:'19:30',
         nowTime:data.getHours()+':'+data.getMinutes(),
-        url:'/usercenter/recharge',
-        info:"请在指定的时间段充值！"
+        info:"请在指定的时间段充值！",
+        callback:function () {
+                 window.location.href='/usercenter/recharge'
+          }
     });
 });
 $(".my-order-list-two").hide();
