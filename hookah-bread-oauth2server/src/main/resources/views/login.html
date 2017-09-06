@@ -1,0 +1,310 @@
+<%
+var head = {
+%>
+<link type="text/css" rel="stylesheet" href="/static/css/loginform.css">
+<style>
+	#header.transparent {
+		position: relative;
+		z-index: 2;
+		background: transparent
+	}
+	.content {
+		position: relative;
+		/*margin-top: 95px;*/
+		min-height: 420px;
+		vertical-align: middle;
+		*padding-top: 100px;
+		background-color: #00082a;
+		/*background:linear-gradient(to right, #2096B2 0%, #2F9FBA 25%,#32A1BC 50%,#1F97B2 75%,#1A97B3 100%);;*/
+
+	}
+	.content #login-banner {
+		float: right;
+		margin-right: 628px
+	}
+	.content #login-banner img {
+		width: 100%;
+		height: 100%
+	}
+	.content .bg-wrap {
+		width: 100%;
+		position: fixed;
+		left: 0px;
+		top: 0px;
+		z-index: 1;
+		background-color: #e3e6f0
+	}
+	.content .bg-wrap .bg-img {
+		position: relative;
+		max-width: 1600px;
+		min-width: 1000px;
+		margin: auto;
+		height: 800px;
+		background-position: 50% 50%
+	}
+	.content #login-module {
+		position: absolute;
+		border: 1px solid #D4D4D4;
+		padding-top: 20px;
+		top: 25px;
+		right: 215px;
+		margin-bottom: 10px;
+		background-color: #fff;
+		min-width: 292px;
+		min-height: 320px;
+		*min-height: 340px;
+		/*background: rgba(255, 255, 255, 0.3);*/
+		z-index: 2
+	}
+	.content #login-module #alibaba-login-iframe {
+		position: relative;
+		padding: 10px 20px;
+		overflow: hidden
+	}
+	.content #login-module #alibaba-login-iframe #alibaba-login-iframe-loading {
+		display: none
+	}
+	.content #login-module .agreement {
+		/*position: absolute;*/
+		width: 260px;
+		/*bottom: 19px;*/
+		/*left: 20px*/
+		margin: 10px 0 10px 20px;
+	}
+	.content #login-module .agreement input {
+		height: 13px;
+		vertical-align: middle;
+		margin-top: 2px;
+		margin-right: 5px;
+		margin-top: -10px \9;
+		margin-top: 2px \9 \0
+	}
+	.copyright-100.transparent {
+		position: relative;
+		background: transparent;
+		z-index: 2
+	}
+</style>
+<%};%>
+<%
+var htmlPart = {
+%>
+<div class="content">
+	<div style="margin-left: 240px;float: left;">
+		<img src="/static/img/login.png" alt="" >
+	</div>
+	<div class="login-module" id="login-module">
+		<div class="iframe-show iframe-loaded">
+			<form id="login-form" name="user" method="post" onsubmit="return check(this)"
+				  class="form clr style-type-vertical lang-zh_CN vertical-zh_CN ">
+				<div id="login-title" style="font-size:12px;font-weight:normal;">
+					使用用户名登录
+				</div>
+				<%if(!isEmpty(error)){%>
+				<div id="loginEnd-error" class="form-error notice notice-error" style="display: block;">
+					<span class="icon-notice icon-error"></span>
+					<span class="notice-descript">${error}</span>
+				</div>
+				<%}%>
+				<div id="login-loading" class="loading-mask">
+					<div class="loading-icon"></div>
+					<div class="loading-mask-body"></div>
+				</div>
+				<div id="login-error" class="form-error notice notice-error">
+					<span class="icon-notice icon-error"></span>
+					<span class="notice-descript"></span>
+				</div>
+				<div id="login-content" class="form clr">
+					<dl>
+						<dt class="fm-label">
+						<div class="fm-label-wrap clr">
+              <span id="login-id-label-extra" class="fm-label-extra">
+				  <!--<a  href="#" target="_blank" data-spm-protocol="i">忘记登录名？</a>-->
+			  </span>
+							<label for="fm-login-id"> 登录名 :</label>
+						</div>
+						</dt>
+						<dd id="fm-login-id-wrap" class="fm-field">
+							<div class="fm-field-wrap ">
+								<div id="account-check-loading" class="loading-mask">
+									<div class="loading-icon"></div>
+									<div class="loading-mask-body"></div>
+								</div>
+								<input id="fm-login-id" class="fm-text" name="userName" tabindex="1" placeholder="用户名" value=""
+									   autocorrect="off" autocapitalize="off"  >
+							</div>
+						</dd>
+					</dl>
+					<dl>
+						<dt class="fm-label">
+						<div class="fm-label-wrap clr">
+            <span class="fm-label-extra">
+              <a id="forgot-password-link" href="/findPwd" target="_blank">忘记登录密码？</a>
+            </span>
+							<label for="fm-login-password">登录密码:</label>
+						</div>
+						</dt>
+						<dd id="fm-login-password-wrap" class="fm-field">
+							<div class="fm-field-wrap">
+								<input id="fm-login-password" class="fm-text" type="password" name="password" tabindex="2"
+									   placeholder="登录密码" autocorrect="off" autocapitalize="off" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false">
+							</div>
+						</dd>
+					</dl>
+					<dl class="fm-login-checkcode-nc">
+						<dt id="fm-login-checkcode-title" class="about-checkcode fm-label">
+							<label>验证码:</label>
+						</dt>
+						<dd id="fm-login-checkcode-wrap" class="about-checkcode fm-field">
+							<div id="nocaptcha" class="nc-container tb-login" data-nc-idx="1">
+								<div id="nc_1_wrapper" class="nc_wrapper">
+									<div id="nc_1_n1t" class="nc_scale">
+										<div id="nc_1__bg" class="nc_bg"></div>
+										<span id="nc_1_n1z" class="nc_iconfont btn_slide"></span>
+										<div id="nc_1__scale_text" class="scale_text slidetounlock"><span class="nc-lang-cnt"
+																										  data-nc-lang="_startTEXT">请按住滑块，拖动到最右边</span>
+										</div>
+										<div id="nc_1_clickCaptcha" class="clickCaptcha">
+											<div class="clickCaptcha_text">
+												<b id="nc_1__captcha_text" class="nc_captch_text"></b>
+												<i id="nc_1__btn_2" class="nc_iconfont nc_btn_2 btn_refresh"></i>
+											</div>
+											<div class="clickCaptcha_img"></div>
+											<div class="clickCaptcha_btn"></div>
+										</div>
+										<div id="nc_1_imgCaptcha" class="imgCaptcha">
+											<div class="imgCaptcha_text">
+												<input id="nc_1_captcha_input" maxlength="6" type="text"
+													   style="ime-mode:disabled"></div>
+											<div class="imgCaptcha_img" id="nc_1__imgCaptcha_img"></div>
+											<i id="nc_1__btn_1" class="nc_iconfont nc_btn_1 btn_refresh"
+											   onclick="document.getElementById('nc_1__imgCaptcha_img').children[0].click()"></i>
+											<div class="imgCaptcha_btn">
+												<div id="nc_1__captcha_img_text" class="nc_captcha_img_text"></div>
+												<div id="nc_1_scale_submit" class="nc_scale_submit"></div>
+											</div>
+										</div>
+										<div id="nc_1_cc" class="nc-cc"></div>
+										<i id="nc_1__voicebtn" tabindex="0" role="button" class="nc_voicebtn nc_iconfont"
+										   style="display:none"></i>
+										<b id="nc_1__helpbtn" class="nc_helpbtn"><span class="nc-lang-cnt"
+																					   data-nc-lang="_learning">了解新功能</span></b>
+									</div>
+									<div id="nc_1__voice" class="nc_voice"></div>
+								</div>
+							</div>
+						</dd>
+					</dl>
+				</div>
+				<div id="login-submit">
+					<input type="hidden" name="event_submit_do_login" value="submit">
+					<input id="fm-login-submit" value="登录" class="fm-button fm-submit" type="submit" tabindex="4"
+						   name="submit-btn">
+				</div>
+				<div id="login-other">
+					<div class="login-login-links">
+					</div>
+					<div class="register">
+						<a href="/reg" class="register" target=" _blank"
+						   data-spm-protocol="i">免费注册</a>
+					</div>
+				</div>
+				<input id="fm-app-name" name="appName" value="aliyun" type="hidden">
+				<input id="fm-app-entrance" name="appEntrance" value="aliyun" type="hidden">
+				<input id="fm-csrf-tk" name="_csrf_token" value="JAiTsLaM0j6iQmMSmewjz3" type="hidden">
+				<input id="fm-rds-tk" name="rdsToken" value="" type="hidden">
+				<input id="fm-cid" name="cid" value="213d1d35-3165-4f2d-a4b1-01919c4914dc" type="hidden">
+				<input id="fm-umid-token" name="umidToken" value="75712e5d58a242127526b017b10e7148d1bdfb74" type="hidden">
+				<input id="fm-lang" name="lang" value="zh_CN" type="hidden">
+				<input id="fm-hsid" name="hsid" value="1797ec43cfd8f79a39c47d5c3c167dbc" type="hidden">
+				<input id="fm-is-rds-ready" name="isRDSReady" value="false" type="hidden">
+				<input id="fm-is-umid-ready" name="isUMIDReady" value="false" type="hidden">
+				<input id="fm-umid-getstatus" name="umidGetStatusVal" type="hidden">
+				<input id="fm-is-requires-has-timeout" name="isRequiresHasTimeout" value="false" type="hidden">
+				<input id="login-host" name="loginHost" value="" type="hidden">
+				<input id="fm-scene" name="scene" value="" type="hidden">
+				<input id="fm-isMobile" name="isMobile" value="false" type="hidden">
+				<input id="fm-modulus" name="modulus" value="" type="hidden">
+				<input id="fm-exponent" name="exponent" value="10001" type="hidden">
+				<input type="hidden" name="ua" id="UA_InputId" value=""></form>
+		</div>
+		<div class="agreement">
+			<!--<input type="checkbox" checked="checked" id="J_Agreement"><label> 我同意并已阅读 <a href="${host.website}/help/agreement" target="_blank"> 《青岛大数据交易网站服务协议》</a></label>-->
+		</div>
+	</div>
+</div>
+<script>
+	//  $('#fm-login-password').keydown(function(e){
+	//      if(e && e.keyCode==13){
+	//          validate()
+	//      }
+	//  })
+	//  function validate(){
+	//      var name = $('#fm-login-id').val();
+	//      var password = $('#fm-login-password').val();
+	//
+	//      if(!name){
+	//          $('#login-error').show().children('.notice-descript').html('用户名不能为空');
+	//      }else{
+	//          $('#login-error').hide();
+	//          if(!password){
+	//              $('#login-error').show().children('.notice-descript').html('密码不能为空');
+	//          }else{
+	//              $('#login-error').hide();
+	//              $.post("/login",$("#login-form").serialize(),function(data){
+	//                  console.log(data);
+	//              });
+	//          }
+	//      }
+	//  }
+
+	$('#fm-login-id').on('focus',function () {
+		$('#loginEnd-error').hide();
+	})
+
+	$('#fm-login-id').blur(function () {
+		if ($(this).val()) {
+			$('#login-error').hide();
+		} else {
+			$('#login-error').show().children('.notice-descript').html('用户名不能为空');
+		}
+	})
+	$('#fm-login-password').on('input propertychange',function () {
+		if ($('#fm-login-id').val()) {
+			if ($(this).val()) {
+				$('#login-error').hide();
+			} else {
+				$('#login-error').show().children('.notice-descript').html('密码不能为空');
+			}
+		}else{
+			return
+		}
+	})
+
+	function check(form) {
+
+		if (form.userName.value == '') {
+			$('#login-error').show().children('.notice-descript').html('用户名不能为空');
+			form.userName.focus();
+			return false;
+		}
+		if (form.password.value == '') {
+			$('#login-error').show().children('.notice-descript').html('密码不能为空');
+			form.password.focus();
+			return false;
+		}
+		$('#login-loading').show();
+		return true;
+	}
+	$('#J_Agreement').change(function(){
+		if($(this).is(':checked')){
+			$('#fm-login-submit').removeAttr('disabled').css({'background':'#008fb2','cursor':'pointer'});
+		}else{
+			$('#fm-login-submit').attr('disabled','disabled').css({'background':'#ccc','cursor':'no-drop'});
+		}
+	})
+</script>
+
+<%};
+include("layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>

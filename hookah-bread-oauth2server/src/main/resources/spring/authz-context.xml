@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+    <!--
+        事务配置
+    -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--
+        启用事务的 相关注解 @Transactional
+    -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+
+    <!--transaction-->
+    <!--
+        事务的 AOP 配置
+    -->
+    <aop:config>
+        <aop:advisor advice-ref="applicationAdvisor" pointcut="execution(* com.jusfoun.hookah.oauth2server.service.impl.*.*(..))"/>
+    </aop:config>
+
+    <!--advisor-->
+    <tx:advice id="applicationAdvisor" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="*" propagation="REQUIRED"/>
+            <tx:method name="load*" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="is*" propagation="REQUIRED" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+
+
+    <!--
+        使用MD5 OAuthIssuer, 生成随机值,如 access_token, refresh_token
+        可根据需要扩展使用其他的实现
+    -->
+    <bean id="oAuthIssuer" class="org.apache.oltu.oauth2.as.issuer.OAuthIssuerImpl">
+        <constructor-arg>
+            <bean class="org.apache.oltu.oauth2.as.issuer.MD5Generator"/>
+        </constructor-arg>
+    </bean>
+
+    <!--more bean configuration in here-->
+    <!-- redis 集群连接方案 -->
+    <bean name="genericObjectPoolConfig" class="org.apache.commons.pool2.impl.GenericObjectPoolConfig">
+        <property name="maxWaitMillis" value="-1"/>
+        <property name="maxTotal" value="8"/>
+        <property name="minIdle" value="0"/>
+        <property name="maxIdle" value="8"/>
+    </bean>
+    <bean id="jedisCluster" class="com.jusfoun.hookah.core.common.redis.JedisClusterFactory">
+        <property name="connectionTimeout" value="3000"/>
+        <property name="soTimeout" value="3000"/>
+        <property name="maxRedirections" value="5"/>
+        <property name="genericObjectPoolConfig" ref="genericObjectPoolConfig"/>
+        <!--<property name="jedisClusterNodes">-->
+            <!--<set>-->
+                <!--<value>192.168.15.90:7000</value>-->
+                <!--<value>192.168.15.90:7001</value>-->
+                <!--<value>192.168.15.90:7002</value>-->
+            <!--</set>-->
+        <!--</property>-->
+    </bean>
+    <!-- 真正的redis操作类，具体连接方式由jedisClient的ref属性决定
+           可选项为jedisClusterClient、jedisClient
+       -->
+    <bean id="jedisClusterClient" class="com.jusfoun.hookah.core.common.redis.JedisClusterClient"/>
+
+    <bean name="redisOperate" class="com.jusfoun.hookah.core.common.redis.RedisOperate">
+        <property name="jedisClient" ref="jedisClusterClient"/>
+    </bean>
+
+</beans>

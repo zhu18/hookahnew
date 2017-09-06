@@ -17,6 +17,7 @@
     <module>hookah-static-server</module>
     <module>hookah-pay</module>
     <module>hookah-breed-website</module>
+    <module> hookah-bread-oauth2server</module>
   </modules>
 
   <properties>
