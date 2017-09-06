@@ -264,9 +264,7 @@ var htmlPart = {
 					isTrue = false;
 					nickErrorInfo(TRLang.ERROR_DUP_NICK_NAME);
 				}else{
-					$.alert({
-					    content:data.message
-					});
+					$.alert(data.message);
 					isTrue = false;
 				}
 			}
@@ -304,9 +302,7 @@ var htmlPart = {
 		var endT = val.substr(val.length-1,1);
 //		console.log(endT);
 		if(endT == ' '){
-			$.alert({
-			    content:'不能有空格'
-			});
+			$.alert('不能有空格');
 			val = val.substring(0,val.length-1);
 			$(this).val(val);
 		}
@@ -466,14 +462,10 @@ var htmlPart = {
 			},
 			success:function(data){
 				if(data.code == 1){
-					$.alert({
-					    content:data.data
-					});
+					$.alert(data.data);
 					settime(that);
 				}else{
-					$.alert({
-					    content:'获取验证码失败，请重新获取'
-					});
+					$.alert('获取验证码失败，请重新获取');
 				}
 			}
 		});
@@ -675,9 +667,7 @@ var htmlPart = {
 									if(isTrue){
 										mobileNumIsTrue(mobile,validSms)
 									}else{
-										$.alert({
-										    content:'注册信息不完整'
-										});
+										$.alert('注册信息不完整');
 									}
 								}else{
 									$('#J_MobileSms').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_GENERAL_IMAGECHECKCODE_NOT_NULL).siblings('.iconfont').html('󰅕');
@@ -713,9 +703,7 @@ var htmlPart = {
 				}else if(data.code == 0){
 					$('#J_MsgMobile').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_MOBILE_IN_BLACK).siblings('.iconfont').html('󰅕');
 				}else{
-					$.alert({
-                        content:data.message
-					});
+					$.alert(data.message);
 				}
 			}
 		});
@@ -733,17 +721,13 @@ var htmlPart = {
 				if(data.code == 1){
 					$.post("${host.auth}/reg", $("#J_InfoForm").serialize(), function (data) {
 						if (data.code == 1) {
-							$.alert({
-							    content:"注册成功，马上跳转登录页面"
-							});
+							$.alert("注册成功，马上跳转登录页面");
 							setTimeout(function() {
 								window.location.href = '${host.auth}/login';
 							}, 2000);
 						} else {
 							$('.loading_btns').hide();
-                            $.alert({
-                                content:data.message
-                            });
+							$.alert(data.message);
 						}
 					});
 				}else if(data.code == 0){
@@ -751,9 +735,7 @@ var htmlPart = {
 					$('#J_MobileSms').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_IMAGECHECKCODE_INVALID).siblings('.iconfont').html('󰅕');
 				}else{
 					$('.loading_btns').hide();
-					$.alert({
-					    content:data.message
-					});
+					$.alert(data.message);
 				}
 			}
 		});

@@ -278,7 +278,7 @@ function splitK(num) {
     return decimal?zs+'.'+decimal:zs;
 }
 
-function Transformation(price,quotaPrice) {
+function Transformation(price,quotaPrice) { //判断时间范围
     if( (parseInt(price) /100) >parseInt(quotaPrice)){
         var price=price.toString().slice(0,-6);
         return parseInt(price)+'万';
@@ -287,7 +287,7 @@ function Transformation(price,quotaPrice) {
     }
 }
 
-function judgeTime(obj) {//判断时间范围
+function judgeTime(obj) {
 
     var strb = obj.beginTime.split (":");
     if (strb.length != 2) {

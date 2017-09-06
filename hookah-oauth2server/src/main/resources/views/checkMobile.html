@@ -79,14 +79,10 @@ include("layout/base.html",{headSection:head,htmlSection:htmlPart}){}
                 },
                 success: function (data) {
                     if (data.code == 1) {
-                        $.alert({
-                            content:data.data
-                        });
+                        $.alert(data.data);
                         settime(that);
                     } else {
-                        $.alert({
-                            content:'获取验证码失败，请重新获取'
-                        });
+                        $.alert('获取验证码失败，请重新获取');
                     }
                 }
             });
