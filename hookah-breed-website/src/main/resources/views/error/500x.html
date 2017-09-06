@@ -76,10 +76,7 @@
                 log('Sent: ' + message);
                 ws.send(message);
             } else {
-                alert({
-                    content:'connection not established, please connect.'
-                });
-
+                alert('connection not established, please connect.');
             }
         }
         function updateUrl(urlPath) {
