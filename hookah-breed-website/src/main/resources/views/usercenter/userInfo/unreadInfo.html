@@ -33,39 +33,41 @@ var htmlPart = {
                     </li>
                 </ul>
             </div>
-            <div class="list">
-                <div class="order">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th class="check">
-                                <lable><input type="checkbox" class="checkall" name="checkall">&nbsp;全选</lable>
-                            </th>
-                            <th class="title text-align-left">标题</th>
-                            <th class="timer">时间</th>
-                            <th class="sender">发送人</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                        <tfoot>
-                        <tr>
-                            <td>
-                                <lable><input type="checkbox" class="checkall" name="checkall">&nbsp;全选</lable>
-                            </td>
-                            <td class="text-align-left">
-                                <span id="delete" style="color:#247DE8;cursor: pointer">删除所选</span>
-                                <span id="flag" style="color:#247DE8; cursor: pointer;display:none;" class="margin-left-20">标记为已读</span>
-                            </td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        </tfoot>
-                    </table>
+            <div style="width:950px;background:#ebedef;padding:15px 15px 0 15px;">
+                <div class="list">
+                    <div class="order">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th class="check">
+                                    <lable><input type="checkbox" class="checkall" name="checkall">&nbsp;全选</lable>
+                                </th>
+                                <th class="title text-align-left">标题</th>
+                                <th class="timer">时间</th>
+                                <th class="sender">发送人</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td>
+                                    <lable><input type="checkbox" class="checkall" name="checkall">&nbsp;全选</lable>
+                                </td>
+                                <td class="text-align-left">
+                                    <span id="delete" style="color:#247DE8;cursor: pointer">删除所选</span>
+                                    <span id="flag" style="color:#247DE8; cursor: pointer;display:none;" class="margin-left-20">标记为已读</span>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <%include("/layout/pageaction.html"){} %>
                 </div>
 
-            </div>
-            <%include("/layout/pageaction.html"){} %>
+             </div>
         </div>
     </div>
 </div>
