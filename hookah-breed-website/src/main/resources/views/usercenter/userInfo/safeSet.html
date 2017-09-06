@@ -7,15 +7,18 @@ var head = {
 <%
 var htmlPart = {
 %>
-<div class="grid-0 backgorund-gray">
+<div class="grid-0 bgi">
 	<div class="grid-row clearfix">
 		<%include("/usercenter/user-center-menu.html"){} %>
-		<div class="grid-right info-center-box">
-			<div class="safeSet">
-				<div class="header clearfix">
-					<h4 class="grid-left center-title">安全设置</h4>
+		<div class="safe">
+		<div class="grid-right info-center-boxs" >
+
+				<div class="header clearfix" style="padding:15px 15px 0 15px;position:relative;">
+					<h4 class="grid-left  center-left-title" >安全设置</h4>
+					<img src="../../static/images/shz/titleP.png" style="position:absolute;top:14px;left:114px;">
 				</div>
-				<div class="bottom">
+			<div class="safeSet">
+					<div class="bottom">
 					<div class="safe-degree clearfix">
 						<div class="grid-left">您当前账号的安全程度</div>
 						<div class="grid-left safe-bar">
@@ -127,6 +130,7 @@ var htmlPart = {
 				<!--</div>-->
 			<!--</div>-->
 
+		</div>
 		</div>
 	</div>
 </div>

@@ -1,3 +1,17 @@
+.info-center-boxs{
+    width: 1000px;
+    margin-top: 10px;
+    background:#fff;
+}
+
+.safeSet {
+    padding:15px;
+    background-image:linear-gradient(to right,#ebedef,#ebf1f8);
+}
+.safeSet .bottom{
+    padding:15px;
+    background:white;
+}
 .safe-set-box{
     width: 950px;
     height: 900px;
@@ -53,7 +67,7 @@
 }
 .safe-degree{
     height: 54px;
-    padding-top:41px;
+    padding-top:20px;
     border-bottom:1px solid #EDEDED;
 }
 .safe-degree div{

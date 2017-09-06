@@ -17,16 +17,18 @@ var head = {
 <%
 var htmlPart = {
 %>
-<div class="grid-0 backgorund-gray bgi">
+<div class="grid-0 bgi">
     <div class="grid-row clearfix">
         <%include("/usercenter/user-center-menu.html"){} %>
         <div class="grid-right info-center-box ">
             <div class="settlementRecord">
                 <div class="settlementRecord-top">
-                    <div class="header clearfix">
-                        <h4 class="grid-left center-title">结算记录</h4>
+                    <div class="header clearfix" style="border-bottom:none;padding-left:15px;">
+                        <h4 class="grid-left  center-left-title" >结算记录</h4>
+                        <img src="../../static/images/shz/titleP.png" >
                     </div>
-                    <ul class="query-condition ">
+                    <div class="settlementBg">
+                            <ul class="query-condition ">
                         <li>
                             <label for="">状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态 :</label>
                             <div class="btn-box">
@@ -55,6 +57,7 @@ var htmlPart = {
                             <a href="javascript:void (0);" class="search-btn">查询</a>
                         </li>
                     </ul>
+                    </div>
                 </div>
                 <div class="settlementRecord-down">
                     <table class="settlementRecord-down-list">
@@ -77,6 +80,7 @@ var htmlPart = {
                     </table>
                     <%include("/layout/pageaction.html"){} %>
                 </div>
+
             </div>
         </div>
     </div>

@@ -7,11 +7,15 @@
 
 .settlementRecord-top{
    margin-bottom: 10px;
-   padding: 0px 14px 30px;
    background-color: #ffffff;
 }
 .settlementRecord-top .query-condition{
-   margin-top: 27px;
+    background:white;
+    padding:10px;
+}
+.settlementBg {
+    padding:15px;
+    background-image:linear-gradient(to right,#ebedef,#ebf1f8);
 }
 .settlementRecord-top .query-condition li{
     height: 30px;
@@ -96,10 +100,11 @@
 
 .settlementRecord-down{
     padding: 14px;
-    background-color: #ffffff;
+    background-image:linear-gradient(to right,#ebedef,#ebf1f8);
 }
 .settlementRecord-down table{
     width: 100%;
+    background:white;
 }
 .settlementRecord-down table tr{
     height: 39px;
@@ -122,40 +127,8 @@
 .settlementRecord-down table tr td{
     text-align: center;
 }
-
-/*换肤*/
-.settlementRecord-top{
-    background-color: #E6E9EB;
-    padding-bottom: 15px;
-}
-.info-center-box .header{
-    margin-left: -15px;
-    margin-right: -15px;
-    height: 40px !important;
-    padding-top: 0 !important;
-    background-color: #fff !important;
-}
-.center-title{
-    height: 40px !important;
-    line-height: 40px !important;
-    border-left-color: transparent !important;
-    border-bottom: 2px solid #3E557B;
-}
-.settlementRecord-top .query-condition{
-    background-color: #fff;
-    margin-top: 13px;
-    height: 150px;
-    padding: 20px 10px;
-}
-.settlementRecord-down{
-    background-color: #E6E9EB;
-}
-.settlementRecord-down table{
-    background-color: #fff;
-}
-.settlementRecord-down-list tr  td:last-child a{
-    color:#4490F6;
-}
-.settlementRecord-down-list tr  td:nth-child(3){
-    color:#ff0000;
+.pageaction {
+    margin:0px 0!important;
+    padding:15px 0;
+    background:white;
 }
