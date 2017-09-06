@@ -187,7 +187,7 @@ $(function () {
                     if (data.code=="1"){
                         $.alert({
                             content:'绑定银行账户成功！',
-                            button:true,
+                            buttons:true,
                             callback:function () {
                                 window.location.href= host.website+'/usercenter/fundmanage';
                             }

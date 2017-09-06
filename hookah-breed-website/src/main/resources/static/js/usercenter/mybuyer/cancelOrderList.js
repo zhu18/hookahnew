@@ -136,12 +136,8 @@ $(".searchQuery .search").on("click",function(){
         },
         success: function (data) {
             if (!(data.code == 0)) {
-				$.alert({
-					content:'删除成功',
-                    button:true,
-					callback:function () {
-                        location.reload()
-                    }
+				$.alert('删除成功', true, function () {
+					location.reload()
 				});
             } else {
                 console.log("删除失败！");
@@ -151,17 +147,13 @@ $(".searchQuery .search").on("click",function(){
 }
 
 function confirmDelete(orderId){
-	$.confirm({
-		content:'确定要删除该订单吗？',
-		buttons:null,
-		callback:function (type) {
-            if(type == 'yes'){
-                deleteRadio(orderId);
-                this.hide();
-            }else{
-                this.hide();
-            }
-        }
+	$.confirm('确定要删除该订单吗？',null,function(type){
+		if(type == 'yes'){
+			deleteRadio(orderId);
+			this.hide();
+		}else{
+			this.hide();
+		}
 	});
 }
 
@@ -177,9 +169,7 @@ function getDataPackage(goodsId){
                 // window.location.href = data.data;
                 window.location.href = data.data;
             }else{
-                $.alert({
-                	content:data.message
-				});
+                $.alert(data.message)
                 // $.alert('下载失败')
             }
         }

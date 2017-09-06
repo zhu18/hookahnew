@@ -122,24 +122,17 @@ function getInfo(that, id) {
 				html += '<h5>&nbsp;&nbsp;发送人：<span>' + sendUser + '</span></h5>';
 				html += '</div></div>';
 				num();
-				$.confirm({
-				    content:html,
-                    button:[{close: '确定'}],
-                    callback:function () {
+				$.confirm(html, [{close: '确定'}], function () {
                         this.hide();
-                    },
-                    settings:{width: "500"}
-                });
+                    }, {width: "500"},"消息"
+                );
 
 				$(that).css('color', '#666');
 			} else {
-				$.alert({
-				    content:'请求失败',
-                    button:true,
-                    callback:function () {
+				$.alert('请求失败', true, function () {
                         location.reload();
                     }
-                });
+                );
 			}
 		}
 	})
