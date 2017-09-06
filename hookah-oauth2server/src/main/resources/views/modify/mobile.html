@@ -119,7 +119,9 @@ var htmlPart = {
 					return false;
 				}else{
 					$('.loading_btns').hide();
-					$.alert(data.message);
+					$.alert({
+					    content:data.message
+					});
 					return false;
 				}
 			}
@@ -161,7 +163,9 @@ var htmlPart = {
 					$('.mobile-form-item').addClass('ui-form-item-error').children('.ui-form-explain').show().children('span').html('此号码已经被占用，请换其他号码');
 				}else{
 					$('#J_GetCode').attr("disabled",true).addClass('btn-disabled');
-					$.alert(data.message);
+                    $.alert({
+                        content:data.message
+                    });
 				}
 			}
 		});
@@ -179,10 +183,14 @@ var htmlPart = {
 				},
 				success:function(data){
 					if(data.code == 1){
-						$.alert(data.data);
+                        $.alert({
+                            content:data.data
+                        });
 						settime(that);
 					}else{
-						$.alert('获取验证码失败，请重新获取');
+                        $.alert({
+                            content:'获取验证码失败，请重新获取'
+                        });
 					}
 				}
 			});
