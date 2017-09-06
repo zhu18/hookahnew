@@ -123,6 +123,7 @@ function getInfo(that, id) {
 				html += '</div></div>';
 				num();
 				$.confirm({
+				    header:'消息',
 				    content:html,
                     button:[{close: '确定'}],
                     callback:function () {
