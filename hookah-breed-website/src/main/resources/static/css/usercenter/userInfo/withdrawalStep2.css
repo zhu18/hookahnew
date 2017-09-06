@@ -1,7 +1,7 @@
 .withdrawalStep2{
     border: 1px solid #e5e5e5;
     padding:14px;
-    background-color:#ebedef;
+    background-image:linear-gradient(to right,#ebedef,#ebf1f8);
 }
 .withdrawalStep2 .withdrawalStep2-top{
     display: inline-block;
