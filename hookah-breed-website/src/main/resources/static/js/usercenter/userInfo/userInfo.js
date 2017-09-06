@@ -53,8 +53,15 @@ function loadPageData(data) {
     }
 
 }
-$(".recharge").click(function () {
-    window.location.href = '/usercenter/recharge';
+$(".user-money .recharge").click(function () {
+    var data=new Date();
+    judgeTime({
+        beginTime:'08:30',
+        endTime:'19:30',
+        nowTime:data.getHours()+':'+data.getMinutes(),
+        url:'/usercenter/recharge',
+        info:"请在指定的时间段充值！"
+    });
 });
 $(".my-order-list-two").hide();
 $(".basic-information-down .header h4").on("click",function () {

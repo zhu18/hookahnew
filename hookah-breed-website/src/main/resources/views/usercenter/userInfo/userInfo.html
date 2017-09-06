@@ -79,7 +79,7 @@ var htmlPart = {
 						<div>
 							<p class="margin-top-20">账户余额:</p>
 							<%if(userCur.userType == 4){%>
-							<p><i style="color:#f53839;font-style:normal;font-size:16px;margin-left:-3px;font-weight:700;">￥</i><span class="account-balance font-size-25 color-25-red balance-pos">${payAccount.balance / 100}</span><a href="/usercenter/recharge" class="btn btn-full-orange margin-left-40">充值</a></p>
+							<p><i style="color:#f53839;font-style:normal;font-size:16px;margin-left:-3px;font-weight:700;">￥</i><span class="account-balance font-size-25 color-25-red balance-pos">${payAccount.balance / 100}</span><a href="javascript:void(0)" class="btn btn-full-orange margin-left-40 recharge">充值</a></p>
 							<%}else {%>
 							<p>￥<span class="account-balance font-size-18 color-red" >${payAccount.balance / 100}</span></p>
 							<%}%>
