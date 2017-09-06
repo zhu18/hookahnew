@@ -17,6 +17,10 @@
 }
 .withdrawalStep2 .withdrawalStep2-middle{
     border-bottom: 1px dashed #e5e5e5;
+    width:982px;
+    display:table-cell;
+    vertical-align:middle;
+    text-align:center;
 }
 .withdrawalStep2 .withdrawalStep2-middle ul{
     width:calc(100% - 56px );
@@ -31,7 +35,7 @@
     text-align: center;
 }
 .withdrawalStep2 .withdrawalStep2-middle ul li p.active{
-    color: #179d1d;
+    color: #2d6ad0;
 }
 .withdrawalStep2 .withdrawalStep2-middle ul li:before{
     content: "";
