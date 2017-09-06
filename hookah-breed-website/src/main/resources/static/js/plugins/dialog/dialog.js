@@ -25,7 +25,7 @@
     $.Dialog = function(settings) {
         if (settings.type === "alert") {
             var alert = new Dialog();
-            var html = '<div class="ui-alert-header">提示</div>';
+            var html = '<div class="ui-alert-header">' + settings.header + '</div>';
                 html += '<div class="ui-alert-title">' + settings.content + '</div>';
             var action = '';
             var className = 'ui-alert';
@@ -64,8 +64,8 @@
         }
         if (settings.type === "confirm") {
             var dialog = new Dialog();
-            var html = '<div class="ui-alert-header">提示</div>';
-                html += '<div class="ui-confirm-title">' + settings.content + '</div>';
+            var html = '<div class="ui-alert-header">' + settings.header + '</div>';
+            html += '<div class="ui-confirm-title">' + settings.content + '</div>';
             var action = '';
             if (!settings.buttons) {
                 settings.buttons = [{
@@ -118,47 +118,52 @@
             dialog.init(options);
         }
     };
-    /*alert*/
-    $.alert = function(content, button, callback, timer, settings) {
+    /*alert content, button, callback, timer, settings*/
+    $.alert = function(object) {
         var options = {};
         var defaults = {
             zIndex: 10001,
-            type: 'alert'
+            type: 'alert',
+            header:'提示'
         };
-        if (typeof content == 'object') {
-            options = $.extend(defaults, content);
+        if (typeof object.content == 'object') {
+            options = $.extend(defaults, object.content);
         } else {
             options = $.extend(defaults, {
-                content: content,
-                button: button,
-                timer: timer,
-                callback: callback,
+                content: object.content,
+                button: object.button,
+                timer: object.timer,
+                header: object.header,
+                callback: object.callback,
                 width: 283,
                 height: 'auto'
             });
         }
-        $.Dialog($.extend(options, settings));
+        $.Dialog($.extend(options, object.settings));
     }
     /*
      buttons :[{yes:"确定"},{no:'取消'},{close:'关闭'}]
+     content, buttons, callback, settings
      */
-    $.confirm = function(content, buttons, callback, settings) {
+    $.confirm = function(object) {
         var options = {};
         var defaults = {
             zIndex: 100,
-            type: 'confirm'
+            type: 'confirm',
+            header:'提示'
         };
-        if (typeof content == 'object') {
-            options = $.extend(defaults, content);
+        if (typeof object.content == 'object') {
+            options = $.extend(defaults, object.content);
         } else {
             options = $.extend(defaults, {
-                content: content,
-                buttons: buttons,
+                content: object.content,
+                buttons: object.buttons,
+                header: object.header,
                 width: 283,
-                callback: callback
+                callback: object.callback
             });
         }
-        $.Dialog($.extend(options, settings));
+        $.Dialog($.extend(options, object.settings));
     }
     var Dialog = function() {
         var rnd = Math.random().toString().replace('.', '');
