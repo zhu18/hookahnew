@@ -21,10 +21,7 @@ function getGoodsDetails(){
 				renderData(data);
 				loadFirstCategory(data.catId); //获取第一个分类
 			}else{
-				// $.alert(data.message);
-                $.alert({
-                    content:data.message
-                })
+				$.alert(data.message);
 			}
 		}
 	})
@@ -67,10 +64,7 @@ function loadCategoryData(that,pid,currentPid){
 					categoryHtml = '';
 				}
 			}else{
-				// $.alert(data.message)
-                $.alert({
-                    content:data.message
-                })
+				$.alert(data.message)
 			}
 		}
 	});
@@ -345,10 +339,7 @@ function loadCountry(idCountry,idProvince) {
 					renderOneRegion(idProvince,data.data)
 				}
 			} else {
-				// $.alert(data.message)
-                $.alert({
-                    content:data.message
-                })
+				$.alert(data.message)
 			}
 		}
 	});
@@ -377,10 +368,7 @@ function loadCity(idProvince,idCity) {
 					renderTwoRegion(idCity,data.data)
 				}
 			} else {
-				// $.alert(data.message)
-                $.alert({
-                    content:data.message
-                })
+				$.alert(data.message)
 			}
 		}
 	});
@@ -489,10 +477,7 @@ function getAttrFn(catId){ //获取商品属性
 				// alert(JSON.stringify(data.data))
 				renderselect(data.data);//渲染商品属性
 			} else {
-				// $.alert(data.message)
-                $.alert({
-                    content:data.message
-                })
+				$.alert(data.message)
 			}
 		}
 	});
@@ -548,10 +533,7 @@ function loadRegion(id,regionParam) {
 					renderRegion(id,data.data)
 				}
 			} else {
-				// $.alert(data.message)
-                $.alert({
-                    content:data.message
-                })
+				$.alert(data.message)
 			}
 		}
 	});
@@ -576,10 +558,7 @@ $('#fileupload').fileupload({
 		var filesize = data.files[0].size;
 		if(Math.ceil(filesize / 1024) > 1024*5){
 			console.log('文件过大'+filesize);
-			// $.alert('文件过大');
-            $.alert({
-                content:'文件过大'
-            })
+			$.alert('文件过大');
 			return;
 		}
 		data.submit();
@@ -591,10 +570,7 @@ $('#fileupload').fileupload({
 			$('input[name="goodsImg"]').val(obj.filePath);
 			imgSrc = obj.absPath;
 		}else{
-			$.alert({
-				content:data.result.message
-			})
-
+			$.alert(data.result.message)
 		}
 	},
 	progressall: function (e, data) {
@@ -819,12 +795,7 @@ function backAddFn(data){
 				});
 			} else {
 				Loading.stop()
-				// $.alert(data.message, true);
-
-                $.alert({
-                    content:data.message,
-                    button:true
-                })
+				$.alert(data.message, true);
 			}
 		}
 	});
@@ -1161,9 +1132,7 @@ $('#fileupload2').fileupload({ //文件上传
 			$('.fileUploads span').html(data.files[0].name);
 			$('input[name="goodsImges2"]').val(obj.absPath);
 		}else{
-            $.alert({
-                content:data.result.message
-            })
+			$.alert(data.result.message)
 		}
 
 	},
@@ -1181,10 +1150,7 @@ $('.fileUploadBtn').fileupload({
 			$(this).siblings('span').html('替换文件');
 			$(this).parent('.uploadFiles').siblings('.fileEndInputs').val(data.files[0].name);
 		}else{
-			// $.alert(data.result.message)
-            $.alert({
-                content:data.result.message
-            })
+			$.alert(data.result.message)
 		}
 
 	},

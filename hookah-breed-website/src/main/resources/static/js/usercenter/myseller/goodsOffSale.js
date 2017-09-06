@@ -48,19 +48,11 @@ function deleteGoods(id) {
 				},
 				success: function (data) {
 					if (data.code == 1) {
-                        $.alert({
-                            content:'删除成功',
-                            button:true,
-                            callback:function () {
-                                location.reload();
-                            }
-                        })
+						$.alert('删除成功',true,function(){
+							location.reload();
+						});
 					} else {
-						// $.alert(data.message)
-
-                        $.alert({
-                            content:data.message
-                        })
+						$.alert(data.message)
 					}
 				}
 			})
@@ -138,21 +130,11 @@ function onsale(id,dateTime) {
 				},
 				success: function (data) {
 					if (data.code == 1) {
-						// $.alert('操作成功',true,function(){
-						// 	location.reload();
-						// });
-
-                        $.alert({
-                            content:'操作成功',
-                            button:true,
-                            callback:function () {
-                                location.reload();
-                            }
-                        })
+						$.alert('操作成功',true,function(){
+							location.reload();
+						});
 					} else {
-                        $.alert({
-                            content:data.message
-                        })
+						$.alert(data.message)
 					}
 				}
 			});
