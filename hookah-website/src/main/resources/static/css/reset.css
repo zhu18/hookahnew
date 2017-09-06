@@ -53,7 +53,6 @@ p {
 	color: #666;
 }
 .QRcode-box img{
-	width: 124px;
-	height: 124px;
+	width: 150px;
 }
 iframe{display: inherit;}

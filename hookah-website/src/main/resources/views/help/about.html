@@ -1,0 +1,33 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/usercenter/question.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="backgorund-gray padding-bottom-30 padding-top-10">
+	<div class="grid-row backgorund-white  ">
+		<div class="question">
+			<br>
+			<h2 class="text-align-center padding-top-10">关于我们</h2>
+			<br>
+			<h3 style="border-bottom:1px solid #ccc;">数据星河大数据交易平台</h3>
+			<br>
+			<h4 style="text-indent: 2em;">数据星河大数据交易平台整合了全球顶尖的大数据开发平台、技术工具、模型算法、应用组件等，未来将支持10万家大数据公司、下游用户创业创新。打造中国大数据产业的“Apple Store”。</h4>
+			<br>
+			<img src="/static/images/help/img-about-1.png" alt="">
+			<br>
+			<br>
+			<h3 style="border-bottom:1px solid #ccc;">交易平台全球服务办公室</h3>
+			<br>
+			<img src="/static/images/help/img-about-2.png" alt="">
+		</div>
+	</div>
+</div>
+
+
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
