@@ -1,7 +1,7 @@
 
 .settlementRecordDetails-top{
-    margin-top: 10px;
     border: 1px solid #E5E5E5;
+    background:white;
 }
 
 .settlementRecordDetails-top .settlementRecordDetails-top-title{
@@ -40,6 +40,7 @@
 }
 .settlementRecordDetails-list {
     width: 100%;
+     background:white;
     border: 1px solid #e5e5e5;
 }
 .settlementRecordDetails-list tr{
@@ -62,4 +63,14 @@
 }
 .settlementRecordDetails-list tr td:first-child{
     color: #333;
+}
+
+.info-center-boxs{
+    width: 1000px;
+    margin-top: 10px;
+    background:white;
+}
+.settlementRecordDetails .bdg{
+    padding:15px;
+    background-image:linear-gradient(to right,#ebedef,#ebf1f8);
 }
