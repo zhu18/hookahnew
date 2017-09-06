@@ -24,6 +24,19 @@ $(document).ready(function () {
 			$('.header-bottom-bar ul li:nth-child(6)').addClass('active');
 		}
 	});
+	$('#navList li').each(function () {
+		if(pathname.indexOf('/exchange/index') >= 0){
+			$('#navList li:nth-child(1)').addClass('active');
+		}
+		if(pathname.indexOf('/exchange/list') >= 0 || pathname.indexOf('/exchange/details') >= 0){
+			$('#navList li:nth-child(2)').addClass('active');
+		}
+		if(pathname.indexOf('/usercenter/buyer/allOrderList') >= 0 || pathname.indexOf('/usercenter/buyer/orderManagement') >= 0 || pathname.indexOf('/usercenter/buyer/orderStay') >= 0 || pathname.indexOf('/usercenter/buyer/cancelOrderList') >= 0){
+			$('#navList li:nth-child(3)').addClass('active');
+		}else if(pathname.indexOf('/usercenter') >= 0){
+			$('#navList li:nth-child(4)').addClass('active');
+		}
+	});
 
 	$("#J_searchInput").on("input propertychange", function () {
 		if ($(this).val() == "") {

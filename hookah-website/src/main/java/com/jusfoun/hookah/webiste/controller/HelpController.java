@@ -6,7 +6,6 @@ import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
-import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.HelpService;
 import com.jusfoun.hookah.rpc.api.MgOrderInfoService;
@@ -81,6 +80,11 @@ public class HelpController extends BaseController{
     @RequestMapping(value = "/agreement", method = RequestMethod.GET)
     public String agreement() {
         return "/help/service_agreement";
+    }
+
+    @RequestMapping(value = "/about", method = RequestMethod.GET)
+    public String about() {
+        return "/help/about";
     }
 
     @ResponseBody

@@ -468,7 +468,11 @@ ul li {
     color:#fff;
     background: #0667B3;
 }
-
+.btn-full-right-red{
+    background: red;
+    color:#fff;
+    border:none;
+}
 .btn-full-red{
     background: #e34f4f;
     color:#fff;
