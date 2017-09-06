@@ -33,7 +33,10 @@ function addCart(goodsId,formatId,goodsNumber) {
             if (data.code == "1") {
                 window.location.href = "/exchange/addToCart?goodsId=" + goodsId + "&number=" + goodsNumber;
             } else {
-                $.alert(data.message);
+                $.alert({
+                    content:data.message
+                });
+
             }
         }
     });
