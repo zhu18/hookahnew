@@ -554,3 +554,43 @@ td{
     height: 40px;
 }
 
+/*换肤追加*/
+.user-center-box  .wrapper-tab .active{
+    border-bottom-color: #3E557B;
+}
+.user-center-box  .wrapper-tab .active a{
+    color:#333;
+}
+.info-center-box .user-center-box{
+    background-color: #EBEDEF;
+}
+.user-center-box .wrapper-tab{
+    background-color: #fff;
+    margin-left: -15px;
+    margin-right: -15px;
+    margin-top: -20px;
+    height: 40px;
+    line-height: 40px;
+}
+.user-center-box  .wrapper-tab .active{
+    height: 40px;
+    line-height: 40px;
+}
+.trade-wrapper .searchQuery{
+    width: 955px;
+    padding-top: 20px !important;
+    background-color: #fff;
+    margin-left: -15px;
+    margin-right: -15px;
+}
+.trade-box{
+    margin-top: 10px;
+    background-color: #fff;
+}
+.trade-box table tr td:last-child span{
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 3px;
+    color:#4490F6;
+    border:1px solid #4490F6;
+}
