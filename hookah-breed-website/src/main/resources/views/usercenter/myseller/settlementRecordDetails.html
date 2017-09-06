@@ -8,35 +8,38 @@ var head = {
 <%
 var htmlPart = {
 %>
-<div class="grid-0 backgorund-gray">
+<div class="grid-0 bgi">
     <div class="grid-row clearfix">
         <%include("/usercenter/user-center-menu.html"){} %>
-        <div class="grid-right info-center-box ">
+        <div class="grid-right info-center-boxs " >
             <div class="settlementRecordDetails">
-                <div class="header clearfix">
-                    <h4 class="grid-left center-title">结算记录</h4>
+                <div class="header clearfix" style="border-bottom:none;padding-left:15px;padding-top:10px;">
+                    <h4 class="grid-left  center-left-title">结算记录</h4>
+                    <img src="../../static/images/shz/titleP.png" >
                 </div>
-                <div class="settlementRecordDetails-top">
-                          <div class="settlementRecordDetails-top-title">订单信息</div>
-                          <table>
+                <div class="bdg">
+                    <div class="settlementRecordDetails-top">
+                        <div class="settlementRecordDetails-top-title">订单信息</div>
+                        <table>
 
-                          </table>
-                          <p><span></span>结算政策：结算政策结算政策结算政策结算政策结算政策结算政策</p>
-                </div>
-                <table class="settlementRecordDetails-list margin-top-10">
-                    <thead>
-                           <tr>
-                               <th>序列</th>
-                               <th>结算时间</th>
-                               <th>结算金额</th>
-                               <th>结算收入</th>
-                               <th>退款</th>
-                           </tr>
-                    </thead>
-                    <tbody>
+                        </table>
+                        <p><span><img src="../../static/images/shz/prompt.png" alt="" style="padding:0 8px;"></span>结算政策：结算政策结算政策结算政策结算政策结算政策结算政策</p>
+                    </div>
+                    <table class="settlementRecordDetails-list margin-top-10">
+                        <thead>
+                        <tr>
+                            <th>序列</th>
+                            <th>结算时间</th>
+                            <th>结算金额</th>
+                            <th>结算收入</th>
+                            <th>退款</th>
+                        </tr>
+                        </thead>
+                        <tbody>
 
-                    </tbody>
+                        </tbody>
                     </table>
+                </div>
                 </div>
         </div>
     </div>

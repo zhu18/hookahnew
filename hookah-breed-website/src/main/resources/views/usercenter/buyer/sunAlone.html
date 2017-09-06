@@ -10,14 +10,15 @@ var head = {
 <%
 var htmlPart = {
 %>
-<div class="grid-0 backgorund-gray ">
+<div class="grid-0 bgi ">
 	<div class="grid-row clearfix">
 		<%include("/usercenter/user-center-menu.html"){} %>
 		<div class="sunAlone grid-left margin-bottom-30">
 			<div class="sun">
-				<h3 class="details">评价订单</h3>
+				<h3 class="details center-left-title" >评价订单</h3>
 			</div>
-			<form action="" id="sunContentForm">
+			<div class="bdg">
+					<form action="" id="sunContentForm">
 				<% for(list in order.mgOrderGoodsList){ %>
 				<div class="sunContent item-${listLP.index} clearfix">
 					<div class="lcontent grid-left padding-top-20 text-align-center">
@@ -61,6 +62,7 @@ var htmlPart = {
 				</div>
 				<!--onclick="check('${order.orderId}')"-->
 			</form>
+			</div>
 		</div>
 	</div>
 </div>

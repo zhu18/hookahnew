@@ -15,37 +15,41 @@ var head = {
 <%
 var htmlPart = {
 %>
-<div class="grid-0 backgorund-gray">
+<div class="grid-0 bgi">
     <div class="grid-row clearfix ">
         <%include("/usercenter/user-center-menu.html"){} %>
         <div class="grid-right myAttention margin-bottom-30 ">
             <div class="atten">
-                <h3 class="myeval">我的关注</h3>
+                <h3 class="myeval center-left-title">我的关注</h3>
+                <img src="../../static/images/shz/titleP.png" style="position:relative;top:-25px;left:97px;">
             </div>
             <div class="order-list">
-                <ul>
-                    <!--<li>-->
+                <div class="order-inner">
+                    <ul>
+                        <!--<li>-->
                         <!--<a class="item-top" href="/exchange/details?id=3c615b22210111e796c56a3b07101c5a">-->
-                            <!--<p class="goods-img">-->
-                                <!--<img src="http://static.qddata.com.cn/20170414/1851337921dcd56e2c413cba36a2515248549e.png" alt="">-->
-                            <!--</p>-->
-                            <!--<p class="goods-name">测试商品标题&#45;&#45;api测试商品标题&#45;&#45;api</p>-->
-                            <!--<p class="goods-brief">测试商品标题&#45;&#45;api测试商品标题&#45;&#45;api测试商品标题&#45;&#45;api测试商品标题&#45;&#45;api测试商品标题&#45;&#45;api测试商品标题&#45;&#45;api测试商品标题&#45;&#45;api测试商品标题&#45;&#45;api测试商品标题&#45;&#45;api测试商品标题&#45;&#45;api</p>-->
+                        <!--<p class="goods-img">-->
+                        <!--<img src="http://static.qddata.com.cn/20170414/1851337921dcd56e2c413cba36a2515248549e.png" alt="">-->
+                        <!--</p>-->
+                        <!--<p class="goods-name">测试商品标题&#45;&#45;api测试商品标题&#45;&#45;api</p>-->
+                        <!--<p class="goods-brief">测试商品标题&#45;&#45;api测试商品标题&#45;&#45;api测试商品标题&#45;&#45;api测试商品标题&#45;&#45;api测试商品标题&#45;&#45;api测试商品标题&#45;&#45;api测试商品标题&#45;&#45;api测试商品标题&#45;&#45;api测试商品标题&#45;&#45;api测试商品标题&#45;&#45;api</p>-->
                         <!--</a>-->
                         <!--<div class="item-down">-->
-                            <!--<span class="grid-left goods-price">-->
-                                <!--￥<span>10</span>/次-->
-                            <!--</span>-->
-                            <!--<a class="grid-right" href="javascript:void(0)">加入购物车</a>-->
+                        <!--<span class="grid-left goods-price">-->
+                        <!--￥<span>10</span>/次-->
+                        <!--</span>-->
+                        <!--<a class="grid-right" href="javascript:void(0)">加入购物车</a>-->
                         <!--</div>-->
                         <!--<div class="cancel">-->
-                            <!--<a href="">取消关注</a>-->
+                        <!--<a href="">取消关注</a>-->
                         <!--</div>-->
-                    <!--</li>-->
+                        <!--</li>-->
 
-                </ul>
+                    </ul>
+                    <%include("/layout/pageaction.html"){} %>
+                </div>
             </div>
-            <%include("/layout/pageaction.html"){} %>
+
         </div>
     </div>
 </div>

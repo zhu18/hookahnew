@@ -19,11 +19,11 @@ var head = {
 <%
 var htmlPart = {
 %>
-<div class="grid-0 backgorund-gray ">
+<div class="grid-0 bgi ">
     <div class="grid-row clearfix">
         <%include("/usercenter/user-center-menu.html"){} %>
-        <div class="orderManagement margin-left-10 margin-top-10 grid-right padding-bottom-20 margin-bottom-30">
-            <div class="title clearfix margin-bottom-15">
+        <div class="orderManagement margin-left-10 margin-top-10 grid-right  margin-bottom-30">
+            <div class="title clearfix ">
                 <ul class="grid-left all">
                     <li><a href="/usercenter/buyer/allOrderList" >全部订单
                         <span id="J_allOrder"></span>
@@ -45,18 +45,20 @@ var htmlPart = {
                 <!--<span class="fa fa-search"></span>-->
                 <!--</div>-->
             </div>
-            <div class="searchQuery padding-top-10 clearfix" id="noPaySearch">
-                <div class="date clearfix grid-left">
-                    <label for="startDate" class="start-date grid-left">
-                        开始时间：<input id="startDate" type="text"  placeholder="请选择开始时间"  readonly="">
-                    </label>
-                    <label for="endDate" class="end-date grid-left">
-                        结束时间：<input id="endDate" type="text"  placeholder="请选择结束时间"  readonly="">
-                    </label>
-                </div>
-                <button class="search grid-right">查询</button>
-            </div>
-            <div class="list">
+            <div class="order-border" >
+                <div class="bgw" style="background:white;">
+                    <div class="searchQuery padding-top-10 clearfix" id="noPaySearch">
+                        <div class="date clearfix grid-left">
+                            <label for="startDate" class="start-date grid-left">
+                                开始时间：<input id="startDate" type="text"  placeholder="请选择开始时间"  readonly="">
+                            </label>
+                            <label for="endDate" class="end-date grid-left">
+                                结束时间：<input id="endDate" type="text"  placeholder="请选择结束时间"  readonly="">
+                            </label>
+                        </div>
+                        <button class="search grid-right">查询</button>
+                    </div>
+                    <div class="list">
                 <div class="order">
                     <!--<table>
                         <thead>
@@ -96,6 +98,8 @@ var htmlPart = {
                 </div>
                 <!--由于原分页的逻辑中通过data.data.totalPage是取不到数据的，所以更改为pageaction1.html-->
                 <%include("/layout/pageaction1.html"){} %>
+            </div>
+                 </div>
             </div>
         </div>
     </div>

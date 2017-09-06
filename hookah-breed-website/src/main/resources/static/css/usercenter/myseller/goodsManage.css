@@ -120,3 +120,58 @@
     birder:1px solid #ccc;
 }
 /*搜索条件样式结束*/
+
+/*换肤追加样式*/
+.info-center-box-cov{
+    width: 995px;
+}
+.wrapper-tab .active{
+    border-bottom-color:#3E557B ;
+}
+.wrapper-tab .active a{
+    color: #333333;
+}
+.searchQuery{
+    background-color: #fff;
+    padding-left: 30px;
+    margin-bottom: 15px;
+}
+.info-center-box{
+    width: 966px;
+    background-color: #E6E9EC !important;
+}
+.wrapper-tab{
+    height: 40px;
+    line-height: 40px;
+    background-color: #fff;
+}
+.wrapper-tab li{
+    height: 40px;
+    width: 10%;
+    line-height: 40px;
+    border-right: 1px solid #E9E9E9;
+}
+.wrapper-tab .active{
+    height: 40px;
+    line-height: 40px;
+}
+.pushGoodsBtn{
+    position: relative;
+    right: 15px;
+    background-color: #4490F6;
+}
+.btn-full-orange:hover{
+    background-color: #4490F6;
+}
+.trade-box{
+    background-color: #fff;
+}
+.trade-box tr td:last-child a{
+    color: #4490F6;
+}
+.searchQuery .search{
+    float: left !important;
+    margin-left: 10px;
+    background-color: #F17D17;
+    color:#fff;
+}
