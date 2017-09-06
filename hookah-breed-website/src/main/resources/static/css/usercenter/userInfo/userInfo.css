@@ -227,8 +227,9 @@
    font-weight:700;
 }
 .header .my-order.active{
-    color:#247de8 ;
-    border-bottom: 1px solid #247de8;
+    /**color:#247de8 ;*/
+    /**border-bottom: 1px solid #247de8;*/
+     border-bottom: 3px solid #31557b;
 }
 .my-order-list-one,.my-order-list-two{
     padding-top:26px;
@@ -325,6 +326,15 @@
  .header-1{
     padding-top:0!important;
  }
+
+.comtitle{
+  width:80px;
+  height:30px;
+  line-height:30px;
+  border-bottom: 3px solid #31557b;
+  position:relative;
+  top:7px;
+}
 
 /*.forum-hot{*/
     /*width: 214px;*/
