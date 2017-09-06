@@ -109,3 +109,33 @@
     margin-top: 31px;
     margin-left: 34px;
 }
+
+/** 改版充值样式 */
+.header-n{
+  border-bottom-width:0!important;
+}
+
+.center-title-n{
+   border-left-width:0!important;
+   width:45px;
+   border-bottom:3px solid #31557b;
+   font-size:16px!important;
+   padding-left:0!important;
+}
+
+.rechargediv{
+    width:1010px;
+    height:500px;
+    margin-left:-14px;
+    margin-top:-8px;
+    background-image: linear-gradient(to right,#ebedef,#ebf1f8);
+}
+
+.recharge{
+      display: inline-block;
+      width: 990px;
+      height: 475px;
+      background:#fff;
+      border:0;
+      margin:12px 0 0 10px!important;
+}

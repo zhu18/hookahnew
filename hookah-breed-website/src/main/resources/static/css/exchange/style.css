@@ -1990,3 +1990,46 @@ dl {
 .crumbs-nav .tags a{
 	margin-left:2px;
 }
+
+/** 改版购物车样式 */
+.success-cont{
+   display:inline-block;
+   width:1175px;
+   height:212px;
+   margin-left: 15px;
+   margin-top: 15px;
+   background:#fff;
+}
+
+.cartdiv{
+   width:1206px;
+   height:240px;
+       margin-top: 20px;
+       margin-bottom:20px;
+       opacity:0.965;
+  background-image: linear-gradient(to right,#ebedef,#ebf1f8);
+}
+
+.margin-right-10-n{
+  margin-left:18px!important;
+  padding-top: 2px;
+}
+
+.btn-tobback-n{
+      border: 1px solid #b12c32!important;
+      color:#b12c32
+}
+
+.p-extra > span{
+  display:block;
+  line-height:20px;
+}
+
+.p-extra > span span{
+ color:#b12c32;
+}
+
+.success-ad-n{
+      margin-top: 154px;
+      margin-right: 20px;
+}

@@ -234,5 +234,20 @@
     overflow: hidden;
 }
 
+/** 改版样式 */
+.auth-info-n{
+  border-top:0!important;
+}
+
+.auto-box-div{
+    background: #fff;
+    margin:15px;
+}
+
+.auth-box-n{
+ background-image:linear-gradient(to right,#ebedef,#ebf1f8);
+ min-width:1210px;
+}
+
 
 
