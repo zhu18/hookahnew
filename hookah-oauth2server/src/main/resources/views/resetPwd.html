@@ -110,14 +110,10 @@ include("layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 				},
 				success:function(data){
 					if(data.code==1){
-                        $.alert({
-                            content:'密码重置成功!'
-                        });
+						$.alert("密码重置成功!")
 						window.location.href="/findPwd?step=4";
 					}else{
-                        $.alert({
-                            content:data.message
-                        });
+						$.alert(data.message);
 					}
 				}
 			})
@@ -354,10 +350,7 @@ include("layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 		var endT = val.substr(val.length-1,1);
 //		console.log(endT);
 		if(endT == ' '){
-			$.alert({
-			    content:'不能有空格'
-            });
-
+			$.alert('不能有空格');
 			val = val.substring(0,val.length-1);
 			$(this).val(val);
 		}

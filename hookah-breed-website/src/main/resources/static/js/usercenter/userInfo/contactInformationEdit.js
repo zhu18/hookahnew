@@ -86,13 +86,8 @@ $(function () {
                 type:'post',
                 success:function (data) {
                     if(data.code == "1"){
-                        $.alert({
-                            content:'保存成功',
-                            button:true,
-                            callback:function () {
-                                window.location.href= host.website+"/usercenter/contactInformation"
-
-                            }
+                        $.alert('保存成功',true,function(){
+                            window.location.href= host.website+"/usercenter/contactInformation"
                         });
                     }
                 }

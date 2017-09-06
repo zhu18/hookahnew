@@ -59,9 +59,7 @@ $('#filename').fileupload({
 		var filesize = data.files[0].size;
 		if(Math.ceil(filesize / 1024) > 1024*5){
 			console.log('文件过大'+filesize);
-            $.alert({
-                content:'文件过大'
-            });
+			$.alert('文件过大');
 			return;
 		}
 		data.submit();
@@ -73,9 +71,7 @@ $('#filename').fileupload({
             imgSrc = obj.absPath;
 			getImg = obj.absPath;
         } else {
-            $.alert({
-                content:data.result.message
-            })
+            $.alert(data.result.message);
         }
     },
     progressall: function (e, data) {
@@ -120,16 +116,12 @@ function published() {
         $('#newsTitle').focus();
         return;
     } else if (data.content == "") {
-        $.alert({
-            content:'请输入文章内容！',
-            button:true
-        })
+        $.alert('请输入文章内容！', true, function () {
+        });
         return;
     } else if (data.pictureUrl == "") {
-        $.alert({
-            content:'请上传图片！',
-            button:true
-        })
+        $.alert('请上传图片！', true, function () {
+        });
         return;
     } else {
         $.ajax({
@@ -138,14 +130,10 @@ function published() {
             data: data,
             success: function (msg) {
                 if (msg.code == 1) {
-                    $.alert({
-                        content:'提交成功'
-                    });
+                    $.alert('提交成功');
                     window.location.href="/admin/articleManage";
                 } else {
-                    $.alert({
-                        content:msg.message
-                    });
+                    $.alert(msg.message);
                 }
             }
         });
@@ -165,11 +153,8 @@ $('#preview-content').click(function () {
     html += '</div>';
     html += '</div>';
     if (content == "") {
-        $.alert({
-            content:'请输入文章内容！',
-            button:true
+        $.alert('请输入文章内容！', true, function () {
         })
-
     } else {
         $('body').append(html);
     }
@@ -271,10 +256,10 @@ $('#submit-article').click(function () {
 		if($('#content').val() && $('#content').val() != '<p><br></p>'){
 			published()
 		}else{
-            $.alert({
-                content:'文章描述不能为空!',
-                button:true
-            })
+			$.alert('文章描述不能为空',true,function () {
+
+			})
+
 		}
 	}
 });

@@ -63,9 +63,7 @@ function loadData(url,pid){
                     isTrue = false;
                 }
             }else{
-                $.alert({
-                    content:msg.message
-                })
+                $.alert(msg.message)
             }
             showBtn(isTrue)
         }

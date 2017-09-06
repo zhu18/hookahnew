@@ -101,7 +101,7 @@ function loadPageData(data) {
           html += '<td><a href="javascript:getDataPackageD(\'' + goods[ii].goodsId + '\' , \'' + goods[ii].sourceId + '\',\'' + list[i].orderSn + '\');">交付信息<br/><span class="fa fa-download font-size-18"></span></a></td>';
 
         }else{*/
-          html += '<td><a href="javascript:getKey(\'' + goods[ii].goodsId + '\' , \'' + goods[ii].sourceId + '\',\'' + list[i].orderId + '\',\'' + goods[ii].goodsType + '\',\'' + goods[ii].isOffline + '\');">交付信息<br/><span class="fa fa-download font-size-18"></span></a></td>';
+          html += '<td><a style="color:#3e557b"  href="javascript:getKey(\'' + goods[ii].goodsId + '\' , \'' + goods[ii].sourceId + '\',\'' + list[i].orderId + '\',\'' + goods[ii].goodsType + '\',\'' + goods[ii].isOffline + '\');">交付信息<br/><span  style="color:#3e557b" class="fa fa-download font-size-18"></span></a></td>';
 
         //}
 
@@ -188,15 +188,8 @@ function deleteRadio(orderId) {
     },
     success: function (data) {
       if (!(data.code == 0)) {
-        // $.alert('删除成功', true, function () {
-        //   location.reload()
-        // });
-        $.alert({
-          content:'删除成功',
-          button:true,
-          callback:function () {
-              location.reload()
-          }
+        $.alert('删除成功', true, function () {
+          location.reload()
         });
       } else {
         console.log("删除失败！");
@@ -226,18 +219,12 @@ function getDataPackage(goodsId) {
         // window.location.href = data.data;
         window.location.href = data.data;
       } else {
-        // $.alert(data.message)
-          $.alert({
-              content:data.message
-          });
+        $.alert(data.message)
         // $.alert('下载失败')
       }
     },
     error: function (data) {
-      // $.alert(data.message);
-        $.alert({
-            content:data.message
-        });
+      $.alert(data.message);
     }
   });
 }
@@ -256,10 +243,7 @@ function getDataPackageD(goodsId, sourceId, orderSn) {
         // window.location.href = data.data;
         window.location.href = data.data;
       } else {
-        // $.alert(data.message)
-          $.alert({
-              content:data.message
-          });
+        $.alert(data.message)
         // $.alert('下载失败')
       }
     }
@@ -326,10 +310,7 @@ function getKey(goodsId, sourceId, orderId, goodsType, isOffline) {
                     if (data.code == 1) {
                         apiWordUrl=data.data;
                     } else {
-                      // $.alert(data.message)
-                        $.alert({
-                            content:data.message
-                        });
+                      $.alert(data.message)
                     }
                   }
                 });
@@ -412,10 +393,7 @@ function resetToken(goodsId,orderId){
         if (data.code == 1) {
           $("#token").val(JSON.parse(data.data.result).data);
         } else {
-          // $.alert(data1.message);
-            $.alert({
-                content:data1.message
-            });
+          $.alert(data1.message);
         }
       }
     });
