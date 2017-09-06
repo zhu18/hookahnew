@@ -119,11 +119,18 @@
 }
 .exchange-recommend-resource .recommend-resource-down ul li {
 	width: 278px;
-	background-color: #FAFAFA;
+	height:214px;
+	background-color: #fff;
 	float: left;
 	padding: 5px;
 	margin-top: 10px;
 	margin-right: 16px;
+}
+
+.exchange-recommend-resource .recommend-resource-down ul li:hover {
+	background:#fff url("../../images/exchange/hover-border03.png")  0 0 no-repeat;
+	
+	
 }
 
 .exchange-recommend-resource .recommend-resource-down ul li .li-item-top {
