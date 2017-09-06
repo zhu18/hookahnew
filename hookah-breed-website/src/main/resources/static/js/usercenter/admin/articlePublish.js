@@ -54,10 +54,17 @@ function ajaxFun(url,data) {
 		data: data,
 		success: function (msg) {
 			if (msg.code == 1) {
-				$.alert('提交成功');
+				// $.alert('提交成功');
+				$.alert({
+					content:'提交成功'
+				});
+
 				window.location.href = "/admin/articleManage";
 			} else {
-				$.alert(msg.message)
+				// $.alert(msg.message)
+				$.alert({
+					content:msg.message
+				})
 			}
 		}
 	});
@@ -76,7 +83,11 @@ $('#preview-content').click(function () {
 	html += '</div>';
 	html += '</div>';
 	if (content == "") {
-		$.alert('请输入文章内容！', true, function () {
+		// $.alert('请输入文章内容！', true, function () {
+		// })
+		$.alert({
+			content:'请输入文章内容！',
+			button:true
 		})
 	} else {
 		$('body').append(html);
@@ -150,8 +161,12 @@ $('#submit-article').click(function () {
 		if ($.trim(editor.$txt.text()).length>0) {
 			published()
 		} else {
-			$.alert('文章描述不能为空', true, function () {
-                // $('#content').focus()
+			// $.alert('文章描述不能为空', true, function () {
+             //    // $('#content').focus()
+			// })
+			$.alert({
+				content:'文章描述不能为空',
+				button:true
 			})
 
 		}
@@ -178,7 +193,10 @@ $('#filename').fileupload({
 		var filesize = data.files[0].size;
 		if(Math.ceil(filesize / 1024) > 1024*5){
 			console.log('文件过大'+filesize);
-			$.alert('文件过大');
+			// $.alert('文件过大');
+			$.alert({
+				content:'文件过大'
+			});
 			return;
 		}
 		data.submit();
@@ -190,7 +208,9 @@ $('#filename').fileupload({
 			$('input[name="goodsImges"]').val(obj.absPath);
 			imgSrc = obj.absPath;
 		} else {
-			$.alert(data.result.message)
+            $.alert({
+                content:data.result.message
+            });
 		}
 
 	},

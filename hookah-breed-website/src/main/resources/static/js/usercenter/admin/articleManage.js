@@ -170,9 +170,13 @@ function deleteLoad(id){
             if(data.code == "1") {
 				data.newsGroup = $("#newsGroup").val();
 				changes(data.newsGroup);
-                $.alert('删除成功', true, function () {
-					location.reload()
-				});
+                $.alert({
+                    content:'删除成功',
+                    button:true,
+                    callback:function () {
+                        location.reload()
+                    }
+                });
 
             }
         },
