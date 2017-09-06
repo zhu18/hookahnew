@@ -2089,3 +2089,12 @@ dl {
   display: inline-table;
   margin: 20px 0px;
 }
+
+.btn-full-c{
+ background:#f17d17;
+ border-radius:4px;
+}
+
+.btn-full-ra{
+ border-radius:4px;
+}
