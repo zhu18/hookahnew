@@ -10,26 +10,31 @@
 	font-size: 14px;
 }
 .header-centerbar {
-	height: 108px;
+	width: 100%;
+	height: 75px;
+	min-width: 1230px;
+	border-bottom: 1px solid rgb(81, 1, 15);
+	border-image: initial;
+	background: url("/static/images/top-header.png") center top no-repeat rgb(15, 16, 55);
 }
 .header-centerbar .grid-row {
 	height: 80px;
 }
 .header-centerbar .logo {
-	width: 377px;
-	margin-top: 21px;
+	width: 150px;
+	margin: 12px 0;
 }
 .header-centerbar .logo a {
 	display: inline-block;
-	width: 360px;
+	width: 150px;
 }
 .header-centerbar .logo a img {
 	width: 100%;
 }
 .header-centerbar .search {
-	margin-left: 76px;
+	/*margin-left: 76px;*/
 	position: relative;
-	margin-top: 35px;
+	margin-top: 19px;
 }
 .header-centerbar .search .fa {
 	position: absolute;
@@ -39,17 +44,21 @@
 	height: 38px;
 	line-height: 38px;
 	font-size: 20px;
-	color: #0063B1;
+	color: rgb(142, 164, 185);
 }
 .header-centerbar .search input {
-	width: 440px;
+	width: 331px;
 	height: 36px;
-	border: 1px solid #C7C7C7;
-	background: #fff;
 	padding-left: 32px;
 	font-size: 13px;
 	color: #666;
 	line-height: 36px;
+
+	border-width: 1px;
+	border-style: solid;
+	border-color: rgb(134, 1, 11);
+	border-image: initial;
+	background: url("/static/images/hover-border5.png")
 }
 .header-centerbar .search button {
 	position: absolute;
@@ -261,11 +270,12 @@
 }
 /************/
 .footer-bar {
-	padding: 50px 0;
+	padding: 10px 0;
 	background: #081739;
 	box-shadow: 0px -3px 10px -5px #081735;
 	overflow: hidden;
 	color: #fff;
+	background: url("/static/images/footer_bg.png") center center no-repeat;
 }
 .footer-bar a {
 	color: #959595;
@@ -293,9 +303,18 @@
 .footer-bar dl dd {
 	padding-left: 30px;
 	font-size: 14px;
-	line-height: 30px;
+	line-height: 28px;
+}
+.footer-bar .footer_bottom{
+	width:100%;
+	text-align: center;
+	padding-top: 10px;
+	color: rgb(107, 107, 107);
+	border-top: 1px solid rgb(81, 80, 97);
+	overflow: hidden;
 }
 .footer-bar .QRcode-box {
+	margin-top:40px ;
 	width: 130px;
 	text-align: center;
 }
@@ -305,6 +324,11 @@
 }
 .userInfos {
 	position: relative;
+}
+.topbar-user li a{
+	font-size: 14px;
+	color:#8ea4b9;
+	font-weight:bold;
 }
 .userInfos .userInfos-box {
 	position: absolute;
@@ -327,9 +351,9 @@
 	height: 29px;
 	z-index: 5;
 }
-.userInfos:hover .login {
-	border-bottom: 2px solid #fff;
-}
+/*.userInfos:hover .login {*/
+	/*border-bottom: 2px solid #fff;*/
+/*}*/
 .userInfos .userInfos-box {
 	position: absolute;
 	width: 260px;
@@ -439,4 +463,40 @@
 input:focus, select:focus, textarea:focus {
 	outline: none;
 	border: 1px solid #69c5dd;
+}
+#navList {
+	font-size: 16px;
+	height: 60px;
+	margin-top: 16px;
+	margin-bottom: 0px;
+	margin-left: 105px;
+	list-style: none;
+	padding: 0px;
+}
+#navList li.active {
+	border-bottom: 2px solid rgb(225, 0, 0);
+}
+#navList li {
+	float: left;
+	width: 100px;
+	text-align: center;
+	color: rgb(142, 164, 185);
+	height: 57px;
+	line-height: 57px;
+}
+#navList li a {
+	display: block;
+	text-decoration: none;
+}
+#navList li.active .text {
+	color: rgb(225, 0, 0);
+}
+#navList li a .text {
+	display: block;
+	line-height: 56px;
+	text-align: center;
+	color: rgb(142, 164, 185);
+	white-space: nowrap;
+	overflow: hidden;
+	font-weight: bold;
 }
