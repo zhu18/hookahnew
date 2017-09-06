@@ -30,6 +30,9 @@ public class ElasticSearchController {
             if(vo == null) {
                 vo = new EsGoodsVo();
             }
+            if("000".equals(vo.getEsGoods().getCatIds())) {
+                vo.getEsGoods().setCatIds(null);
+            }
             returnData.setData(elasticSearchService.search(vo));
             returnData.setData2(elasticSearchService.getTypes(vo.getEsGoods()));
         } catch (Exception e) {
