@@ -80,7 +80,7 @@
 /*----------------------------推荐模块-----------------------------*/
 /*推荐的标签*/
 .exchange-index .exchange-recommend-resource {
-	background-color: #F0F0F0;
+	/*background-color: #F0F0F0;*/
 }
 .exchange-recommend-resource .recommend-resource-top {
 	height: 66px;
@@ -95,15 +95,16 @@
 	display: inline-block;
 	padding-top: 24px;
 	padding-left: 10px;
+	color:#fff;
 }
 .exchange-recommend-resource .recommend-resource-top .recommend-resource-top-left i:nth-child(1) {
 	font-size: 25px;
 }
 .exchange-recommend-resource .recommend-resource-top .recommend-resource-top-left span:last-child {
 	font-size: 16px;
-	color: #333333;
+	color: #C5C9D4;
 	padding-left: 5px;
-	border-left: 2px solid #333333;
+	border-left: 2px solid #C5C9D4;
 }
 .exchange-recommend-resource .recommend-resource-top .recommend-resource-top-right a {
 	display: inline-block;
@@ -369,6 +370,9 @@
 .exchange-hot-resource .hot-resource-down .hot-down-table table tr .td-four > span:nth-child(2) {
 	background-color: #6193B9;
 	margin: 0;
+}
+.exchange-hot-resource .hot-resource-down .hot-down-table table tr:hover{
+	border:1px solid #ff0000;
 }
 /*热门榜 */
 .exchange-hot-resource .hot-resource-down .hot-down-rank {
