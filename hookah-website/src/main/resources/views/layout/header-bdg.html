@@ -3,9 +3,31 @@
 		<div class="logo grid-left"><a href="${host.website}/exchange/index"><img src="/static/images/brand_logo.png" alt=""></a></div>
 		<ul id="navList" class="grid-left">
 			<li class="index"><a href="${host.website}/exchange/index"><span class="text">数据星河</span></a></li>
-			<li class="bdg-cate"><a href="${host.website}/exchange/list?catId=101&prId=101&prNm=%E6%95%B0%E6%8D%AE%E6%BA%90"><span class="text">星河分类</span></a></li>
+			<li class="bdg-cate"><a href="${host.website}/exchange/list?catId=000&prId=101&prNm=%e5%85%a8%e9%83%a8"><span class="text">星河分类</span></a></li>
 			<li class="bdg-projects"><a href="${host.website}/usercenter/buyer/allOrderList"><span class="text">购买记录</span></a></li>
 			<li class="bdg-mine"><a href="${host.website}/usercenter/index"><span class="text">我的BDG</span></a></li>
+		</ul>
+		<ul class="text-align-right topbar-user grid-right margin-left-30" style="margin-top:28px;" >
+			<!--<li class="display-inline-block" style="float:left"><a href="/" class="a-hover-blue">首页</a></li>-->
+			<%if(isEmpty(user)){%>
+			<li class="display-inline-block">
+				<a href="${oauth2.loginUrl}">登录</a>
+			</li>
+			<li class="display-inline-block margin-left-10"><a href="${oauth2.regUrl}" class="color-orange">注册</a></li>
+			<%}else{%>
+			<!--<li class="display-inline-block userInfos">-->
+
+				<!--<a href="javascript:void(0)" class="login">-->
+					<!--欢迎，-->
+					<!--&lt;!&ndash;<span class="fa fa-user-o margin-right-5"></span>&ndash;&gt;-->
+					<!--${user.userName}-->
+				<!--</a>-->
+
+			<!--</li>-->
+			<li class="display-inline-block margin-left-10"><a href="${host.auth}/logout">退出</a></li>
+			<%}%>
+
+
 		</ul>
 		<div class="search grid-right">
 			<div class="search-input">
@@ -71,26 +93,5 @@
 		<!--</div>-->
 		<!--</div>-->
 	</div>
-	<ul class="text-align-right topbar-user" style="position: absolute;right:30px;top:26px;">
-		<!--<li class="display-inline-block" style="float:left"><a href="/" class="a-hover-blue">首页</a></li>-->
-		<%if(isEmpty(user)){%>
-		<li class="display-inline-block">
-			<a href="${oauth2.loginUrl}">登录</a>
-		</li>
-		<li class="display-inline-block margin-left-10"><a href="${oauth2.regUrl}" class="color-orange">注册</a></li>
-		<%}else{%>
-		<li class="display-inline-block userInfos">
 
-			<a href="javascript:void(0)" class="login">
-				欢迎，
-				<!--<span class="fa fa-user-o margin-right-5"></span>-->
-				${user.userName}
-			</a>
-
-		</li>
-		<li class="display-inline-block margin-left-10"><a href="${host.auth}/logout">退出</a></li>
-		<%}%>
-
-
-	</ul>
 </div>

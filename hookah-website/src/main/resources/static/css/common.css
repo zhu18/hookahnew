@@ -57,6 +57,9 @@
 .color-red{
     color: #E34F4F;
 }
+.color-red-bdg{
+    color: #f5622e;
+}
 .color-green{
     color: #0eca33;
 }
@@ -64,7 +67,7 @@
 /* Background
 =================================================================== */
 .backgorund-gray{
-    background-color:#f5f5f5 ;
+    background-color:#eaedf0 ;
 }
 .backgorund-white{
     background-color:#ffffff;

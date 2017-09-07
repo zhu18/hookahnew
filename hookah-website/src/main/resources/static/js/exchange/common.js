@@ -30,21 +30,16 @@ $(function () {
         $(".exchange-index-menu .menu-list .menu-item").hover(function () {
             $(this).children('.menu-son-list').show().end().siblings().children('.menu-son-list').hide();
             // $(this).siblings().children('.menu-son-list').hide();
-            $(this).css({'backgroundColor': '#fff', 'color': '#3E557B', 'border-left': '1px solid #3E557B'}).siblings().css({'backgroundColor': '#0063b2', 'color': '#fff', 'border-left': 'none'})
+            $(this).addClass('active').siblings().removeClass('active');
         });
         $(".exchange-index-menu .menu-list").mouseleave(function(){
             $(".exchange-index-menu .menu-son-list").css('display', 'none');
-            $(".exchange-index-menu .menu-list .menu-item").css({
-                'backgroundColor': '#0063b2',
-                'color': 'white'
-            })
+            $(".exchange-index-menu .menu-list .menu-item").removeClass('active');
+
         })
         $(".exchange-index-menu").mouseleave(function () {
             $(".exchange-index-menu .menu-son-list").css('display', 'none');
-            $(".exchange-index-menu .menu-list .menu-item").css({
-                'backgroundColor': '#0063b2',
-                'color': 'white'
-            })
+
         });
     }
     menuList();
