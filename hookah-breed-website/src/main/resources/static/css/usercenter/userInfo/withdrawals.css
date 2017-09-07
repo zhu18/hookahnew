@@ -1,6 +1,29 @@
-.withdrawals-top{
-    margin: 12px 0 20px 0px;
-    border: 1px solid #E5E5E5;
+.info-center-boxs {
+        width: 982px;
+        margin-top: 10px;
+}
+.withdraw-title {
+    padding:15px 0 0 15px;
+    border-bottom:none;
+    position:relative;
+    background:white;
+}
+.withdrawInner , .withdrawalsDown  {
+    margin-bottom:15px;
+    padding:15px;
+    background-image:linear-gradient(to right,#ebedef,#ebf1f8);
+}
+.withdrawals-top,.withdrawals-down{
+    padding:15px;
+    background:white;
+}
+#btn {
+    width:80px;
+    height:25px;
+    color:#4f95f4;
+    outline:none;
+    border:1px solid #4f95f4;
+    background:white;
 }
  .withdrawals-top .withdrawals-content{
     padding-left: 254px;
@@ -77,15 +100,17 @@
    color:#ff0000 !important ;
 }
 
-.withdrawals-down{
-    margin-top: 30px;
+.withdrawals-down {
+    position:relative;
 }
+
+
 .withdrawals-down h4{
+    width:100px;
     height: 20px;
     font: 14px/20px "microsoft yahei";
     font-weight: bold;
     padding-left: 10px;
-    border-left: 2px solid #237DE7;
 }
 .withdrawals-down .search-criteria{
     width: 100%;

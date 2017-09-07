@@ -122,10 +122,19 @@ function getInfo(that, id) {
 				html += '<h5>&nbsp;&nbsp;发送人：<span>' + sendUser + '</span></h5>';
 				html += '</div></div>';
 				num();
-				$.confirm(html, [{close: '确定'}], function () {
-                        this.hide();
-                    }, {width: "500"},"消息"
-                );
+				$.confirm({
+				    header:'消息',
+				    content:html,
+				    button:[{close:'确定'}],
+				    callback:function(){
+				        this.hide();
+				    },
+				    settings:{width:"500"}
+				});
+//				$.confirm(html, [{close: '确定'}], function () {
+//                        this.hide();
+//                    }, {width: "500"},"消息"
+//                );
 
 				$(that).css('color', '#666');
 			} else {

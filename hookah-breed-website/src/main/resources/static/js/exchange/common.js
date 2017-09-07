@@ -30,20 +30,20 @@ $(function () {
         $(".exchange-index-menu .menu-list .menu-item").hover(function () {
             $(this).children('.menu-son-list').show().end().siblings().children('.menu-son-list').hide();
             // $(this).siblings().children('.menu-son-list').hide();
-            $(this).css({'backgroundColor': '#fff', 'color': '#3E557B', 'border-left': '1px solid #3E557B'}).siblings().css({'backgroundColor': '#0063b2', 'color': '#fff', 'border-left': 'none'})
+            $(this).css({'backgroundColor': '#F39800', 'color': '#FFF', 'border-left': 'none'}).siblings().css({'backgroundColor': '#031128', 'color': '#fff', 'border-left': 'none'})
         });
         $(".exchange-index-menu .menu-list").mouseleave(function(){
             $(".exchange-index-menu .menu-son-list").css('display', 'none');
             $(".exchange-index-menu .menu-list .menu-item").css({
-                'backgroundColor': '#0063b2',
-                'color': 'white'
+                'backgroundColor': '#031128',
+                'color': '#fff'
             })
         })
         $(".exchange-index-menu").mouseleave(function () {
             $(".exchange-index-menu .menu-son-list").css('display', 'none');
             $(".exchange-index-menu .menu-list .menu-item").css({
-                'backgroundColor': '#0063b2',
-                'color': 'white'
+                'backgroundColor': '#031128',
+                'color': '#fff'
             })
         });
     }

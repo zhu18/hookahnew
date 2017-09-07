@@ -26,8 +26,8 @@ import javax.annotation.PostConstruct;
 @EnableAutoConfiguration
 @EntityScan("com.jusfoun.hookah.core.domain")
 @EnableAsync
-public class Oauth2ServerLauncher {
-    private static final Logger logger = LoggerFactory.getLogger(Oauth2ServerLauncher.class);
+public class BreedOauth2ServerLauncher {
+    private static final Logger logger = LoggerFactory.getLogger(BreedOauth2ServerLauncher.class);
     public static void main(String[] args) throws InterruptedException {
 
         ApplicationContext ctx = SpringApplication.run(new Object[]{
@@ -35,7 +35,7 @@ public class Oauth2ServerLauncher {
             "classpath*:spring/authz-security.xml",
             "classpath*:hookah_auth2server.xml",
             "classpath*:hookah_rpc_client.xml",
-            Oauth2ServerLauncher.class
+            BreedOauth2ServerLauncher.class
         }, args);
         MotanSwitcherUtil.setSwitcherValue(MotanConstants.REGISTRY_HEARTBEAT_SWITCHER, true);
         System.out.println("Oauth2server Start, Please begin your performance...");

@@ -1047,6 +1047,13 @@ function renderData(data){//渲染页面
 	$('.showcontentes').html(getLength(data.goodsBrief));//商品名称长度
 	$('#trialRange').val(data.trialRange);//使用范围
 	$('#trialRange_s').html(getLength(data.trialRange));//使用范围
+	$('#isPush').val(data.isPush);//是否推送商品
+	$('#isLocal').val(data.isLocal);//是否推送商品
+    console.log(data.isPush);
+    if(data.isPush==1){
+        $('#isPush').attr('checked','checked');
+        $('#isLocal').attr('checked','checked');
+    }
 
 
 	$('select[name="parentSelect"] option').each(function(){
