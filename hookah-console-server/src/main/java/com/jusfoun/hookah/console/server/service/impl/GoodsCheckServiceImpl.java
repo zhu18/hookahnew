@@ -6,6 +6,7 @@ import com.jusfoun.hookah.core.dao.GoodsCheckMapper;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.GoodsCheck;
 import com.jusfoun.hookah.core.domain.MessageCode;
+import com.jusfoun.hookah.core.domain.vo.ChannelDataVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
@@ -69,6 +70,14 @@ public class GoodsCheckServiceImpl extends GenericServiceImpl<GoodsCheck, String
             goodsService.updateByIdSelective(goods);
             messageCode.setCode(HookahConstants.MESSAGE_501);
             try {
+                //推送商品
+                if(Objects.nonNull(goods1) && HookahConstants.GOODS_IS_PUSH_YES.equals(goods1.getIsPush())){
+                    ChannelDataVo channelDataVo = new ChannelDataVo();
+                    channelDataVo.setGoodsId(goods1.getGoodsId());
+                    channelDataVo.setOpera(HookahConstants.CHANNEL_PUSH_OPER_PUSH);
+                    mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_CENTER_CHANNEL, channelDataVo);
+                }
+
                 //添加商品到ES
                 mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_GOODS_ID, goodsCheck.getGoodsId());
                 //发送消息，下发短信/站内信/邮件
