@@ -3,16 +3,16 @@ var config = {
   permissionList: "",
   permissionArray:"",
   site: {
-    adminServer: "http://admin.qddata.com.cn",
-    apiServer: "http://console.qddata.com.cn",
-    websiteServer: "http://trade.qddata.com.cn",
-    authServer: "http://auth.qddata.com.cn",
-    staticServer: "http://static.qddata.com.cn"
+    adminServer: "http://admin.galaxy.com.cn",
+    apiServer: "http://console.galaxy.com.cn",
+    websiteServer: "http://www.galaxy.com.cn",
+    authServer: "http://auth.galaxy.com.cn",
+    staticServer: "http://static.galaxy.com.cn"
   },
   url: {
-    loginUrl: "http://auth.qddata.com.cn/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://console.qddata.com.cn/login&backurl=",
-    uploadUrl: "http://static.qddata.com.cn/upload/fileUpload",
-    uploadEditor: "http://static.qddata.com.cn/upload/wangeditor",
+    loginUrl: "http://auth.galaxy.com.cn/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://console.galaxy.com.cn/login&backurl=",
+    uploadUrl: "http://static.galaxy.com.cn/upload/fileUpload",
+    uploadEditor: "http://static.galaxy.com.cn/upload/wangeditor",
   }
 };
 
@@ -87,7 +87,7 @@ export default angular.module('Common', [
   'angular-growl',
   'angularSpinner',
 ])
-  .constant('loginUrl', "http://auth.qddata.com.cn/oauth/authorize?client_id=test&response_type=code&redirect_uri=")
+  .constant('loginUrl', "http://auth.galaxy.com.cn/oauth/authorize?client_id=test&response_type=code&redirect_uri=")
   .config(['growlProvider', function (growlProvider) {
     /**
      * 配置消息提示
