@@ -1,12 +1,12 @@
 .info-center-box .header{
     border: none !important;
 }
-.accountInformation{}
+.accountInformation{background:#fff;}
 .accountInformation .accountInformation-top{
     margin-bottom: 15px;
 }
 .accountInformation .accountInformation-top ul{
-    margin-left: 157px;
+    margin-left: 280px;
     margin-top: 10px;
     width: 332px;
 }
@@ -43,4 +43,44 @@
 .accountInformation .accountInformation-down table td{
     height: 34px;
     text-align: center;
+}
+
+/** 改版样式 */
+.info-center-box-n{
+  background:transparent!important;
+      opacity: 0.965;
+}
+
+.top-div{
+      background-image:linear-gradient(to right,#ebedef,#ebf1f8);
+      margin-top: -5px;
+}
+
+.top-div-c{
+  width: 973px;
+      background: #fff;
+      margin-top: 12px;
+      display: inline-block;
+      margin-left: 10px;
+      margin-bottom: 12px;
+}
+
+.center-title-n{
+       border-left-width: 0!important;
+       width: 70px;
+       border-bottom: 3px solid #31557b;
+       font-size: 16px!important;
+       padding-left: 0!important;
+       margin-left: 10px;
+       margin-top: 2px;
+}
+
+.top-div-c table{
+      display: inline-table;
+      margin: 0!important;
+      width: 974px!important;
+}
+
+.accountInformation .top-div-c table th{
+    background-color: #f9f9f9;
 }
