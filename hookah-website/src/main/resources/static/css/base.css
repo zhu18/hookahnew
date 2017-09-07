@@ -283,6 +283,9 @@
 .footer-bar a {
 	color: #959595;
 }
+.footer-bar a:hover{
+	color:red;
+}
 .footer-bar h3, .footer-bar p {
 	color: #fff;
 }
