@@ -23,11 +23,11 @@ var head = {
 <%
 var htmlPart = {
 %>
-<div class="grid-0 backgorund-gray clearfix">
+<div class="grid-0 backgorund-gray clearfix bgi">
 	<div class="grid-row  clearfix" style="position: relative">
 		<div class="exchange-search search">
 			<%include("/layout/menu.html"){} %>
-			<div class="crumbs-nav margin-top-20 padding-bottom-10" id="J_crimbsNav">分类：<span class="color-blue">全部</span></div>
+			<div class="crumbs-nav margin-top-20 padding-bottom-10" id="J_crimbsNav" style="padding-top: 20px;margin-top:0 !important;color: #fff;">分类：<!--<span class="color-blue">全部</span>--></div>
 			<div class="search-category" id="J_searchCategory"></div>
 			<%include("/exchange/search-conditions.html"){} %>
 			<div class="order-list">
