@@ -14,9 +14,7 @@ import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
-import com.jusfoun.hookah.core.utils.DESUtils;
-import com.jusfoun.hookah.core.utils.HttpClientUtil;
-import com.jusfoun.hookah.core.utils.SHAUtils;
+import com.jusfoun.hookah.core.utils.*;
 import com.jusfoun.hookah.rpc.api.ChannelService;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.MgOrderInfoService;
@@ -66,24 +64,42 @@ public class RabbitMQChannelListener {
            //判断商品是否属于推送商品
            if(HookahConstants.GOODS_IS_PUSH_YES.equals(isPush)){
                ChannelTransData channelTransData = encryptionData(goodVos,opera);
-               Map<String, String> params = new HashedMap();
-               params.put("transData",channelTransData.getTransData());
-               params.put("checkCode",channelTransData.getCheckCode());
-               params.put("timestamp",String.valueOf(channelTransData.getTimestamp()));
+//               Map<String, String> params = new HashedMap();
+//               params.put("transData",channelTransData.getTransData());
+//               params.put("checkCode",channelTransData.getCheckCode());
+//               params.put("timestamp",String.valueOf(channelTransData.getTimestamp()));
                //推送商品
                if(HookahConstants.CHANNEL_PUSH_OPER_PUSH == opera){
-//                   String params = JSON.toJSONString(encryptionData(goods,opera));
-                   HttpClientUtil.PostMethod(PropertiesManager.getInstance().getProperty("center.system.url"),params);
-               //撤销商品
+                   String params = JSON.toJSONString(encryptionData(goodVos,opera));
+                   Map<String,String> resultMap = HttpClientUtil.PostMethod(PropertiesManager.getInstance().getProperty("center.system.url"),params);
+                   if(resultMap!=null){
+//                       resMap.put("result", method.getResponseBodyAsString());
+//                       resMap.put("resultCode", String.valueOf(method.getStatusCode()));
+                       String result = resultMap.get("result");
+                       String resultCode = resultMap.get("resultCode");
+                       logger.info("推送返回数据：",resultMap);
+                       if(StringUtils.isNotBlank(resultCode) && "200".equals(resultCode)){
+                           logger.info("推送",result);
+                           ReturnData returnData = JSON.parseObject(result, ReturnData.class);
+                           if(ExceptionConst.Success.equals(returnData.getCode())){
+                               logger.info("商品[" + goodVos.getGoodsName() + "][id:" + goodsId +"]推送成功。" ,result);
+                           } else {
+                               logger.error("商品[" + goodVos.getGoodsName() + "][id:" + goodsId +"]推送失败。原因：" + returnData.getMessage());
+                           }
+                       } else {
+                           logger.error("商品[" + goodVos.getGoodsName() + "][id:" + goodsId +"]推送失败。原因：" + result);
+                       }
+                   }
+                   //撤销商品
                } else if(HookahConstants.CHANNEL_PUSH_OPER_CANCEL == opera){
-//                   String params = JSON.toJSONString(encryptionData(goods,opera));
+                   String params = JSON.toJSONString(encryptionData(goodVos,opera));
                    HttpClientUtil.PostMethod(PropertiesManager.getInstance().getProperty("center.system.url"),params);
                }
            } else {
-               logger.info("该商品不可推送。");
+               logger.info("商品[" + goodVos.getGoodsName() + "][id:" + goodsId +"]不可推送。");
            }
         } else {
-            logger.info("推送商品不存在。");
+            logger.info("推送商品[id:" + goodsId +"]不存在。");
         }
     }
 
