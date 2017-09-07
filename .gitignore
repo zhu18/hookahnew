@@ -136,7 +136,7 @@ local.properties
 /hookah-website/src/main/resources/application-dev.yml
 /npm-debug.log
 /*.ipr
-/hookah-console-webapi/src/main/resources/application-dev.yml
+/hookah-pay/src/main/resources/application-dev.yml
 /hookah-console-server/src/main/resources/application-dev.yml
 /hookah-oauth2server/src/main/resources/application-dev.yml
 /hookah-console-angular/package-lock.json
