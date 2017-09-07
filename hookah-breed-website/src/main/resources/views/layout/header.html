@@ -1,5 +1,5 @@
 
-<div class="header" style="height: 101px;">
+<header style="height: 101px;">
     <div class="header-container">
         <a class="logo" href="http://www.qddata.com.cn"><img src="/static/images/logo4.png" alt="logo"></a>
         <ul class="nav">
@@ -11,8 +11,22 @@
         </ul>
         <div class="operation">
             <ul class="operation-item">
+                <%if(isEmpty(user)){%>
                 <li><a class="btn" href="${oauth2.loginUrl}">登录</a></li>
                 <li><a class="btn" href="${oauth2.regUrl}">注册</a></li>
+                <%}else{%>
+                <li>欢迎，${user.userName}，<a href="${host.auth}/logout">退出</a></li>
+                <li>
+                    <% if(user.userType==0){%>
+                    <% if(shiro.hasPermission("home")){%>
+                    <a href="/admin/articleManage" class="a-hover-blue">用户中心</a>
+                    <%}%>
+                    <a href="${host.admin}/home" >后台管理</a>
+                    <%}else{%>
+                    <a href="/usercenter/index" class="a-hover-blue">用户中心</a>
+                    <%}%>
+                </li>
+                <%}%>
                 <li><span style="padding:0 10px;">|</span></li>
                 <li><a class="btn" href="http://www.qddata.com.cn/cjwt/index.jhtml">常见问题</a></li>
                 <li><a class="btn" href="http://www.qddata.com.cn/gywm/index.jhtml">联系我们</a></li>
@@ -24,4 +38,4 @@
             </div>
         </div>
     </div>
-</div>
+</header>
