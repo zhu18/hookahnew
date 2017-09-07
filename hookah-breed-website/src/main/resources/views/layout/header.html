@@ -1,3 +1,27 @@
-<%include("/layout/header-topbar.html"){} %>
-<%include("/layout/header-centerbar.html"){} %>
-<%include("/layout/header-bottombar.html"){} %>
+
+<div class="header" style="height: 101px;">
+    <div class="header-container">
+        <a class="logo" href="http://www.qddata.com.cn"><img src="/static/images/logo4.png" alt="logo"></a>
+        <ul class="nav">
+            <li class="nav-item" style="width: 65px;padding: 0 10px;"><a href="http://www.qddata.com.cn/">首页</a></li>
+            <li class="nav-item "><a href="http://trade.qddata.com.cn/exchange/index">交易中心</a></li>
+            <li class="nav-item "><a href="http://www.qddata.com.cn/yyfa/index.jhtml">应用方案</a></li>
+            <li class="nav-item "><a href="http://www.qddata.com.cn/xyzx/index.jhtml">行业资讯</a></li>
+            <li class="nav-item "><a href="http://www.qddata.com.cn/gywm/index.jhtml">关于我们</a></li>
+        </ul>
+        <div class="operation">
+            <ul class="operation-item">
+                <li><a class="btn" href="${oauth2.loginUrl}">登录</a></li>
+                <li><a class="btn" href="${oauth2.regUrl}">注册</a></li>
+                <li><span style="padding:0 10px;">|</span></li>
+                <li><a class="btn" href="http://www.qddata.com.cn/cjwt/index.jhtml">常见问题</a></li>
+                <li><a class="btn" href="http://www.qddata.com.cn/gywm/index.jhtml">联系我们</a></li>
+            </ul>
+            <div class="srch-cart">
+                <input type="text" placeholder="搜索" id="J_searchInput"  maxLength="20">
+                <span class="fa fa-search" id="J_searchBtn"></span>
+                <a href="/cart"><span class="fa fa-shopping-cart" title="购物车"><span class="cart-num">${cartSize!"0"}</span></span></a>
+            </div>
+        </div>
+    </div>
+</div>

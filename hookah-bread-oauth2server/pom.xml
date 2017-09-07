@@ -265,7 +265,7 @@
           <archive>
             <addMavenDescriptor>true</addMavenDescriptor>
             <manifest>
-              <mainClass>com.jusfoun.hookah.oauth2server.Oauth2ServerLauncher</mainClass>
+              <mainClass>com.jusfoun.hookah.oauth2server.BreedOauth2ServerLauncher</mainClass>
               <addClasspath>true</addClasspath>
               <classpathPrefix>lib/</classpathPrefix>
             </manifest>
