@@ -2,7 +2,6 @@ package com.jusfoun.hookah.console.server.service.impl;
 
 import com.jusfoun.hookah.console.server.util.DictionaryUtil;
 import com.jusfoun.hookah.core.common.Pagination;
-import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.GoodsMapper;
 import com.jusfoun.hookah.core.dao.GoodsShelvesMapper;
 import com.jusfoun.hookah.core.domain.Goods;
@@ -13,20 +12,17 @@ import com.jusfoun.hookah.core.domain.mongo.MgShelvesGoods;
 import com.jusfoun.hookah.core.domain.vo.GoodsCritVo;
 import com.jusfoun.hookah.core.domain.vo.GoodsShelvesVo;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
-import com.jusfoun.hookah.core.domain.vo.OptionalShelves;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
-import com.jusfoun.hookah.core.utils.StrUtil;
 import com.jusfoun.hookah.rpc.api.CommentService;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.GoodsShelvesService;
 import com.jusfoun.hookah.rpc.api.MgGoodsShelvesGoodsService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -237,7 +233,8 @@ public class GoodsShelvesServiceImpl extends GenericServiceImpl<GoodsShelves, St
                                     ? "" : DictionaryUtil.getCategoryById(item).getCatName()).append("->");
                         }
                         goodsVo.setCatFullName(stringBuffer.substring(0, stringBuffer.length() - 2));
-                        goodsVo.setCatName(DictionaryUtil.getCategoryById(catIds[0]).getCatName());
+                        goodsVo.setCatName(DictionaryUtil.getCategoryById(catIds[0]) == null ? ""
+                                : DictionaryUtil.getCategoryById(catIds[0]).getCatName());
                     }
                 }
 
