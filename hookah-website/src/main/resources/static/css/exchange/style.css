@@ -1606,6 +1606,7 @@ dl {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	padding: 0 30px 0 20px;
+	font-weight: bold;
 }
 .exchange-search .order-list ul li .item-top .goods-brief {
 	padding: 0 10px 3px;
@@ -1615,6 +1616,7 @@ dl {
 	overflow: hidden;
 	width: calc(100% - 20px);
 	height: 52px;
+	word-wrap: break-word;
 }
 .exchange-search .order-list ul li .item-down {
 	border-top: 1px solid #E5E5E5;
