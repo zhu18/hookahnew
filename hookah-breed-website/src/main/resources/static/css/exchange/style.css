@@ -371,9 +371,7 @@
 	background-color: #6193B9;
 	margin: 0;
 }
-.exchange-hot-resource .hot-resource-down .hot-down-table table tr:hover{
-	border:1px solid #ff0000;
-}
+
 /*热门榜 */
 .exchange-hot-resource .hot-resource-down .hot-down-rank {
 	float: right;
