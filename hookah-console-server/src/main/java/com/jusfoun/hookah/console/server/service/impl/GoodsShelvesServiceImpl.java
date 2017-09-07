@@ -1,10 +1,13 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
+import com.jusfoun.hookah.console.server.util.DictionaryUtil;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.dao.GoodsMapper;
 import com.jusfoun.hookah.core.dao.GoodsShelvesMapper;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.GoodsShelves;
+import com.jusfoun.hookah.core.domain.es.EsGoods;
 import com.jusfoun.hookah.core.domain.es.EsRange;
 import com.jusfoun.hookah.core.domain.mongo.MgShelvesGoods;
 import com.jusfoun.hookah.core.domain.vo.GoodsCritVo;
@@ -43,6 +46,9 @@ public class GoodsShelvesServiceImpl extends GenericServiceImpl<GoodsShelves, St
 
     @Resource
     private CommentService commentService;
+
+    @Resource
+    private GoodsMapper goodsMapper;
 
     @Resource
     public void setDao(GoodsShelvesMapper goodsShelvesMapper) {
@@ -215,9 +221,26 @@ public class GoodsShelvesServiceImpl extends GenericServiceImpl<GoodsShelves, St
     private List<GoodsVo> bulidGoodsVoList(List<Goods> goodsList) {
         List<GoodsVo> goodsVoList = new ArrayList<GoodsVo>();
         if(null != goodsList && goodsList.size() > 0){
+
             for (Goods goods1 : goodsList) {
                 GoodsVo goodsVo = new GoodsVo();
                 BeanUtils.copyProperties(goods1, goodsVo);
+
+                // 查询所有区域信息
+                EsGoods esGoods = goodsMapper.getNeedGoodsById(goods1.getGoodsId());
+                if(esGoods.getCatIds() != null) {
+                    String[] catIds = esGoods.getCatIds().split(" ");
+                    StringBuffer stringBuffer = new StringBuffer();
+                    if(null != catIds && catIds.length > 0){
+                        for(String item : catIds) {
+                            stringBuffer.append(DictionaryUtil.getCategoryById(item) == null
+                                    ? "" : DictionaryUtil.getCategoryById(item).getCatName()).append("->");
+                        }
+                        goodsVo.setCatFullName(stringBuffer.substring(0, stringBuffer.length() - 2));
+                        goodsVo.setCatName(DictionaryUtil.getCategoryById(catIds[0]).getCatName());
+                    }
+                }
+
                 //获取当前商品分数
                 Double goodsGrades = (Double) commentService.countGoodsGradesByGoodsId(goods1.getGoodsId()).getData();
                 goodsVo.setGoodsGrades(goodsGrades);
