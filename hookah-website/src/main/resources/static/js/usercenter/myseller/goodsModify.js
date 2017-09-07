@@ -82,8 +82,15 @@ function renderData(data){//渲染页面
 	$('#J-goodsName').val(data.goodsName);//商品名称
 	$('#J-goodsBrief').val(data.goodsBrief);//简介
 	$('#keywords').val(data.keywords);//标签
+	$('#isPush').val(data.isPush);//是否推送商品
+	$('#isLocal').val(data.isLocal);//是否推送商品
     $('#showcontent').html(jmz.GetLength(data.goodsName));//商品名称长度
     $('#showcontent2').html(jmz.GetLength(data.goodsBrief));//商品名称长度
+    console.log(data.isPush);
+    if(data.isPush==1){
+        $('#isPush').attr('checked','checked');
+        $('#isLocal').attr('checked','checked');
+    }
 	$('select[name="parentSelect"] option').each(function(){
 		if(data.goodsType == 0 || data.goodsType == 1){
 			$('#childrenSelect1').show();
