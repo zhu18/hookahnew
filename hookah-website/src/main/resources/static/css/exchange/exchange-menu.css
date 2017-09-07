@@ -63,9 +63,8 @@
 }
 .exchange-index-menu .menu-son-list,.exchange-index-menu-item {
     display: none;
-    width: 1200px;
+    width: 1198px;
     top: 127px;
-    padding:0 10px;
     left: 0;
     position: absolute;
     background-color: white;
