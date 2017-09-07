@@ -99,13 +99,17 @@
    color:#ff0000 !important ;
 }
 
+.withdrawals-down {
+    position:relative;
+}
+
 
 .withdrawals-down h4{
+    width:100px;
     height: 20px;
     font: 14px/20px "microsoft yahei";
     font-weight: bold;
     padding-left: 10px;
-    border-left: 2px solid #237DE7;
 }
 .withdrawals-down .search-criteria{
     width: 100%;
