@@ -12,11 +12,11 @@ var head = {
 <%
 var htmlPart = {
 %>
-<div class="grid-0 goodsDetails bdg-row ">
+<div class="grid-0 goodsDetails bdg-row  bgi">
 	<div class="grid-row" style="position: relative">
 		<%include("/layout/menu.html"){} %>
 		<div class="crumbs-nav padding-top-20 padding-bottom-10" id="J_crimbsNav">
-			分类：
+			<span class="color-blue">分类：</span>
 			<%
 			var arrs = null;
 			var catId = goodsDetails.catId;
@@ -30,7 +30,7 @@ var htmlPart = {
 			<%for(as in arrs){%>
 				<a class="color-blue" href="/exchange/list?catId=${strutil.subStringTo(catId,0,iii * 3)}&prId=${strutil.subStringTo(catId,0,3)}&prNm=${arrs[0]}">${as}</a>
 				<%if(!asLP.last){%>
-					<span>&nbsp;>&nbsp;</span>
+					<span>&nbsp;<span class="color-blue">></span>&nbsp;</span>
 				<%}%>
 			<%
 			iii++;
@@ -41,16 +41,16 @@ var htmlPart = {
 		<div class="grid-left goods-left bdg-row">
 			<div class="goods-details clearfix">
 				<div class="goods-details-img grid-left bdg-row">
-					<div class="img-box">
+					<div class="img-box" style="border:0;">
 						<img src="${host.static}/${goodsDetails.goodsImg}" alt="" id="J_goodsImg">
 					</div>
-					<div class="collect-box margin-top-20">
-						<p class="display-inline-block" title="浏览量">
+					<div class="collect-box" style="margin-left:34px;margin-top:0;">
+						<p class="" title="浏览量">
 							<i class="iconfont icon-liulan-copy" aria-hidden="true"></i>
-							<span></span>
+							<span>浏览:</span>
 							<span>${goodsDetails.clickRate}</span>
 						</p>
-						<p class="display-inline-block margin-left-20" title="点击关注">
+						<p class="" title="点击关注">
 							<span class="attention">
 								<%if(goodsDetails.orNotFavorite){%>
 								<i class="iconfont icon-jushoucanggift color-red"></i>
@@ -61,9 +61,9 @@ var htmlPart = {
 								<%}%><span id="J_atonNum">${goodsDetails.followNum}</span>
 							</span>
 						</p>
-						<p class="display-inline-block margin-left-20" title="销量">
-							<i class="fa fa-line-chart" aria-hidden="true"></i>
-							<span></span>
+						<p class="" title="销量">
+							&nbsp;<i class="fa fa-line-chart" aria-hidden="true"></i>
+							<span>销量:</span>
 							<span>${goodsDetails.sales}</span>
 						</p>
 					</div>
@@ -88,7 +88,7 @@ var htmlPart = {
 						<%if(goodsDetails.IsDiscussPrice == 0){%>
 						<div>
 							<span>价格：</span>
-							<i class="fa fa-jpy font-size-14 color-orange" aria-hidden="true"></i>
+							<i class="fa fa-jpy color-orange" aria-hidden="true"></i>
 							<span class="font-size-24 color-orange J_goodsPrice" formatid="<%for(item in goodsDetails.formatList){%><%if(itemLP.first){%>${item.formatId}<%}%><%}%>">${goodsDetails.shopPrice / 100}</span>
 							<!--<span class="convert color-orange" id="J_goodsNumber">折合0000000000元/次</span>-->
 						</div>
@@ -138,17 +138,17 @@ var htmlPart = {
 							</div>
 							<input type="hidden" name="goodsId" id="J_goodsId" value="${goodsDetails.goodsId}">
 							<input type="hidden" name="formatId" id="J_formatId" value="${goodsDetails.formatList[0].formatId}">
-							<a class="vertical-align-middle btn btn-full-orange margin-left-10 " href="javascript:check()" style="cursor: pointer">
+							<a id="J_addCart" href="javascript:addCart('${goodsDetails.goodsId}','${goodsDetails.isDiscussPrice}');" class="vertical-align-middle btn btn-full-blue margin-left-10 btn-full-ra">加入购物车</a>
+							<a class="vertical-align-middle btn btn-full-orange margin-left-10 btn-full-c " href="javascript:check()" style="cursor: pointer">
 								立即购买
 							</a>
-							<a id="J_addCart" href="javascript:addCart('${goodsDetails.goodsId}','${goodsDetails.isDiscussPrice}');" class="vertical-align-middle btn btn-full-blue margin-left-10">加入购物车</a>
 						</form>
 					</div>
 				</div>
 			</div>
 			<!--table切换-->
-			<div class="goods-table margin-top-20 margin-bottom-10">
-				<div class="table-title">
+			<div class="goods-table goods-table-n margin-top-20 margin-bottom-10">
+				<div class="table-title table-title-n">
 					<ul>
 						<li class="grid-left active">详情介绍</li>
 							<%if(goodsDetails.goodsType == 0){%>
@@ -195,7 +195,7 @@ var htmlPart = {
 						<li class="grid-left evaluate">评价</li>
 					</ul>
 				</div>
-				<div class="table-content">
+				<div class="table-content table-content-n">
 					<div class="table-item active detail margin-bottom-10" id="">
 						<table class="tab-one">
 							<tr>
@@ -395,8 +395,8 @@ var htmlPart = {
 						<%}%>
 						<div class="table-item goodsDescBox">${goodsDetails.afterSaleService}</div>
 						<%}%>
-					<div class="table-item evaluate">
-						<h1 class="font-size-14 margin-bottom-10" style="display: none">最新评论</h1>
+					<div class="table-item evaluate" style="">
+						<h1 style="display: none;font-size:14px;margin-top:10px;">最新评论</h1>
 						<ol>
 							<!--<li>-->
 								<!--<div class="comment-title margin-bottom-10">-->
@@ -437,8 +437,11 @@ var htmlPart = {
 			</div>
 		</div>
 		<div class="grid-right goods-right margin-bottom-30">
-			<div class="recommend-one">
-				<div class="recommend-title font-weight-bold">${reCommData.shelvesName}</div>
+			<div class="recommend-one recommend-one-n">
+				<div class="recommend-title font-weight-bold center-title-n">${reCommData.shelvesName}
+					<img src="../../static/images/shz/titleP-s.png" style="position:absolute;margin-top:-18px;margin-left:70px;" width="135"/>
+				</div>
+				<div class="recommenddiv">
 				<ul class="padding-top-5">
 					<%for(item in reCommData.goods){%>
 					<li>
@@ -461,6 +464,7 @@ var htmlPart = {
 					</li>
 					<%}%>
 				</ul>
+                  </div>
 			</div>
 			<!--<div class="recommend-two margin-top-20">-->
 			<!--<div class="recommend-title font-weight-bold">活动推荐</div>-->

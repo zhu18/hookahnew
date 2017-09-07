@@ -46,7 +46,8 @@
     color: #ffa800;
 }
 .color-blue{
-    color: #078cfc;
+    /**color: #078cfc;*/
+    color:#fff;
 }
 .color-bright-blue{
     color:#0667B3;
