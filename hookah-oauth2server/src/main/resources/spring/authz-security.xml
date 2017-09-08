@@ -79,7 +79,7 @@
   <bean class="org.apache.shiro.spring.web.ShiroFilterFactoryBean" id="shiroFilter">
     <property name="securityManager" ref="securityManager"/>
     <property name="loginUrl" value="/login"/>
-    <property name="successUrl" value="http://www.galaxy.com.cn/login"/>
+    <property name="successUrl" value="http://www.galaxybigdata.com/login"/>
     <property name="unauthorizedUrl" value="/unauthorized"/>
     <property name="filterChainDefinitions">
       <value>

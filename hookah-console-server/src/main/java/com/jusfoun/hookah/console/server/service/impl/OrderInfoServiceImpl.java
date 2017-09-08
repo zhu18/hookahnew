@@ -1208,7 +1208,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                             if (mgOrderGood.getOffLineData().getIsOnline().equals("0") &&
                                     !mgOrderGood.getOffLineData().getLocalUrl().contains("http")){
                                 String localUrl = mgOrderGood.getOffLineData().getLocalUrl();
-                                mgOrderGood.getOffLineData().setLocalUrl("http://static.galaxy.com.cn/" + localUrl);
+                                mgOrderGood.getOffLineData().setLocalUrl("http://static.galaxybigdata.com/" + localUrl);
                             }
                             map.put("data",mgOrderGood.getOffLineData());
                         }else {
@@ -1232,7 +1232,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                             String configFile = mgOrderGood.getDataModel().getConfigFile().getFileAddress();
                             String configParams = mgOrderGood.getDataModel().getParamFile().getFileAddress();
                             String modelFile = mgOrderGood.getDataModel().getModelFile().getFileAddress();
-                            String prefix = "http://static.galaxy.com.cn/";
+                            String prefix = "http://static.galaxybigdata.com/";
                             configFile = prefix + configFile;
                             mgOrderGood.getDataModel().getConfigFile().setFileAddress(configFile);
                             configParams = prefix + configParams;

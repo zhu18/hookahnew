@@ -23,7 +23,7 @@ function loadPageData(data){
             html += '<li>';
 			html += '<a target="_blank" title="'+list[i].goodsName+'" class="item-top" href="/exchange/details?id='+list[i].goodsId+'">';
 			html += '<div class="goods-img">\
-                 <img src="http://static.galaxy.com.cn/'+list[i].goodsImg+'" alt="">\
+                 <img src="http://static.galaxybigdata.com/'+list[i].goodsImg+'" alt="">\
                 </div>';
             if(list[i].isDiscussPrice == 1){
                 html += '<div class="goods-name">'+list[i].goodsName+'<div class="goods-price text-align-center color-red font-size-16">价格面议</div></div>';

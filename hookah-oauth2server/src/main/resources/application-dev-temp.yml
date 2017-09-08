@@ -4,7 +4,7 @@ server:
       protocal: http://
   session:
     cookie:
-      domain: galaxy.com.cn
+      domain: galaxybigdata.com
       name: hookah_sid
 spring:
   datasource:
@@ -48,7 +48,7 @@ spring:
     publisher-confirms: true
     virtual-host: /
   mail:
-      host: smtp.galaxy.com.cn
+      host: smtp.galaxybigdata.com
       username: service@qddata.com.cn
       password: Bigdata8661101
       transport:
@@ -79,12 +79,12 @@ myconf:
     suffix: .html
     cache: false
   host:
-    domain: galaxy.com.cn
-    cms: ${server.http.protocal}www.galaxy.com.cn
-    website: ${server.http.protocal}www.galaxy.com.cn
-    static: ${server.http.protocal}static.galaxy.com.cn
-    auth: ${server.http.protocal}auth.galaxy.com.cn
-    console: ${server.http.protocal}console.galaxy.com.cn
+    domain: galaxybigdata.com
+    cms: ${server.http.protocal}www.galaxybigdata.com
+    website: ${server.http.protocal}www.galaxybigdata.com
+    static: ${server.http.protocal}static.galaxybigdata.com
+    auth: ${server.http.protocal}auth.galaxybigdata.com
+    console: ${server.http.protocal}console.galaxybigdata.com
   site:
       user-default-img: /static/images/user-safe-head.png
   redis:
