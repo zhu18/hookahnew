@@ -759,7 +759,7 @@
 	float: left;
 	margin: 30px 0 0 15px;
 }
-.exchange-index  .list-box ul li .summary .star-box{ font-size: 0}
+.exchange-index  .list-box ul li .summary .star-box { font-size: 12px}
 
 .exchange-index .exchange-category-down .category-left .category-item .list-box ul li a .title{
 	width: 110px;
