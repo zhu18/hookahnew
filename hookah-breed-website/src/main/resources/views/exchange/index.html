@@ -56,25 +56,28 @@ var htmlPart = {
 	<!--</ul>-->
 	<!--</div>-->
 	<!--推荐资讯-->
-	<div class="bgi">
+	<div  style='background:url("../../static/images/bg.png") no-repeat;background-size:cover;'>
 	<%
 	if(goodsShelvesVoInfo.recomm_data != '')
 	var recomm_data = goodsShelvesVoInfo.recomm_data;
 	{%>
 	<div class="exchange-recommend-resource padding-bottom-30">
 		<div class="grid-row">
-			<div class="recommend-resource-top" style="">
-				<div class="recommend-resource-top-left grid-left">
-					<div class="d">
-						<i class="iconfont icon-zanxiao color-gray-blue" aria-hidden="true"></i>
-						<span class="font-weight-bold" style="color: #fff;">${recomm_data.shelvesName}</span>
-						<span class="color-gray-6" style="color:#C5C9D4;">${recomm_data.shelvesDesc}</span>
-					</div>
-				</div>
-				<div class="recommend-resource-top-right grid-right">
-					<a href="${host.website}/exchange/shelves?id=${recomm_data.shelvesId}" target="_blank" style="color:#fff;">更多>></a>
-				</div>
+			<div class="resource-top">
+				<img src="../../static/images/exchange/tui.png" alt="">
 			</div>
+			<!--<div class="recommend-resource-top" style="">-->
+				<!--<div class="recommend-resource-top-left grid-left">-->
+					<!--<div class="d">-->
+						<!--<i class="iconfont icon-zanxiao color-gray-blue" aria-hidden="true"></i>-->
+						<!--<span class="font-weight-bold" style="color: #fff;">${recomm_data.shelvesName}</span>-->
+						<!--<span class="color-gray-6" style="color:#C5C9D4;">${recomm_data.shelvesDesc}</span>-->
+					<!--</div>-->
+				<!--</div>-->
+				<!--<div class="recommend-resource-top-right grid-right">-->
+					<!--<a href="${host.website}/exchange/shelves?id=${recomm_data.shelvesId}" target="_blank" style="color:#fff;">更多>></a>-->
+				<!--</div>-->
+			<!--</div>-->
 			<div class="recommend-resource-down clearfix">
 				<ul>
 					<%
@@ -167,33 +170,40 @@ var htmlPart = {
 	var hot_res_data = goodsShelvesVoInfo.hot_res_data;
 	%>
 	<div class="exchange-hot-resource grid-row">
-		<div class="hot-resource-top" style="">
-			<div class="hot-resource-top-left grid-left">
-				<div class="d">
-					<i class="iconfont icon-fire2 color-red"></i>
-					<span class="font-weight-bold" style="color: #fff;">${hot_res_data.shelvesName}</span>
-					<span class="color-gray-6" style="color:#C5C9D4;">${hot_res_data.shelvesDesc}</span>
-				</div>
-			</div>
-			<div class="hot-resource-top-right grid-right">
-				<a href="${host.website}/exchange/shelves?id=${hot_res_data.shelvesId}" style="color:#fff;" target="_blank" >更多>></a>
-			</div>
-		</div>
+		<!--<div class="hot-resource-top" style="">-->
+			<!--<div class="hot-resource-top-left grid-left">-->
+				<!--<div class="d">-->
+					<!--<i class="iconfont icon-fire2 color-red"></i>-->
+					<!--<span class="font-weight-bold" style="color: #fff;">${hot_res_data.shelvesName}</span>-->
+					<!--<span class="color-gray-6" style="color:#C5C9D4;">${hot_res_data.shelvesDesc}</span>-->
+				<!--</div>-->
+			<!--</div>-->
+			<!--<div class="hot-resource-top-right grid-right">-->
+				<!--<a href="${host.website}/exchange/shelves?id=${hot_res_data.shelvesId}" style="color:#fff;" target="_blank" >更多>></a>-->
+			<!--</div>-->
+		<!--</div>-->
 		<div class="hot-resource-down clearfix">
-			<div class="hot-down-left ">
-				<div class="headline-box">
-					<p class="main-headline">${hot_res_data.shelvesName}</p>
-					<p class="sub-headline">${hot_res_data.shelvesDesc}</p>
-				</div>
-				<div class="label-box">
-					<a target="_blank" href="/exchange/search?names=金融">金融</a>
-					<a target="_blank" href="/exchange/search?names=银行">银行</a>
-					<a target="_blank" href="/exchange/search?names=信用">信用</a>
-					<a target="_blank" href="/exchange/search?names=企业信息">企业信息</a>
-				</div>
-				<span class="iconfont icon-toutiao bg-img"></span>
-			</div>
-			<div class="hot-down-table ">
+				<div class="hot-top">
+					<div class="hot-top-resource">
+						<span class="center-left-titles">热门资源</span>
+						<img src="../../static/images/shz/titleP.png" style="position:relative;left:4px;top:13px;width:860px;">
+						<a href="${host.website}/exchange/shelves?id=${hot_res_data.shelvesId}"  target="_blank" >更多>></a>
+					</div>
+					<div class="bd">
+						<div class="hot-down-left ">
+							<div class="headline-box">
+								<p class="main-headline">${hot_res_data.shelvesName}</p>
+								<p class="sub-headline">${hot_res_data.shelvesDesc}</p>
+							</div>
+							<div class="label-box">
+								<a target="_blank" href="/exchange/search?names=金融">金融</a>
+								<a target="_blank" href="/exchange/search?names=银行">银行</a>
+								<a target="_blank" href="/exchange/search?names=信用">信用</a>
+								<a target="_blank" href="/exchange/search?names=企业信息">企业信息</a>
+							</div>
+							<span class="iconfont icon-toutiao bg-img"></span>
+						</div>
+						<div class="hot-down-table ">
 				<table>
 					<tr>
 						<th>资源标识</th>
@@ -233,6 +243,9 @@ var htmlPart = {
 					<%}%>
 				</table>
 			</div>
+					</div>
+			</div>
+
 			<div class="hot-down-rank display-inline-block">
 				<div class="h-title"><i></i><span>热销榜</span></div>
 				<ul>
@@ -286,19 +299,22 @@ var htmlPart = {
 	var ind_res_data_4 = goodsShelvesVoInfo.ind_res_data_4;
 	%>
 	<div class="exchange-industry-resource grid-row">
-		<div class="industry-resource-top ">
-			<div class="industry-resource-top-left grid-left">
-				<div class="d">
-					<i class="iconfont icon-hangye color-gray-blue" aria-hidden="true"></i>
-					<span class="font-weight-bold" style="color: #fff;">${ind_res_data.shelvesName}</span>
-					<span class="color-gray-6"  style="color: #C5C9D4;">${ind_res_data.shelvesDesc}</span>
-				</div>
-			</div>
-			<div class="industry-resource-top-right grid-right">
-				<!--<a href="" class="a-hover-blue"-->
-				   <!--target="_blank">更多>></a>-->
-			</div>
+		<div class="resource-top">
+			<img src="../../static/images/exchange/exhang.png" alt="">
 		</div>
+		<!--<div class="industry-resource-top ">-->
+			<!--<div class="industry-resource-top-left grid-left">-->
+				<!--<div class="d">-->
+					<!--<i class="iconfont icon-hangye color-gray-blue" aria-hidden="true"></i>-->
+					<!--<span class="font-weight-bold" style="color: #fff;">${ind_res_data.shelvesName}</span>-->
+					<!--<span class="color-gray-6"  style="color: #C5C9D4;">${ind_res_data.shelvesDesc}</span>-->
+				<!--</div>-->
+			<!--</div>-->
+			<!--<div class="industry-resource-top-right grid-right">-->
+				<!--&lt;!&ndash;<a href="" class="a-hover-blue"&ndash;&gt;-->
+				   <!--&lt;!&ndash;target="_blank">更多>></a>&ndash;&gt;-->
+			<!--</div>-->
+		<!--</div>-->
 		<div class="industry-resource-down ">
 			<div class="carousel-box">
 				<!--<div id="arr">-->
@@ -512,9 +528,9 @@ var htmlPart = {
 					<div class="label-box">
 						<!--<span>资源汇总</span>-->
 						<!--<span>资源汇总</span>-->
-						<a class="more a-hover-blue" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.model_data.shelvesId}" target="_blank" >更多>></a>
+						<a class="more a-hover-blue" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.model_data.shelvesId}" target="_blank" >查看更多>></a>
 					</div>
-					<span class="iconfont icon-productfeatures bg-img"></span>
+					<!--<span class="iconfont icon-productfeatures bg-img"></span>-->
 				</div>
 				<div class="grid-right list-box">
 					<ul>
@@ -567,10 +583,10 @@ var htmlPart = {
 					<div class="label-box">
 						<!--<span>资源汇总</span>-->
 						<!--<span>资源汇总</span>-->
-						<a class="more a-hover-blue" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.scene_data.shelvesId}"  target="_blank" >更多>></a>
+						<a class="more a-hover-blue" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.scene_data.shelvesId}"  target="_blank" >查看更多>></a>
 
 					</div>
-					<span class="iconfont icon-productfeatures bg-img"></span>
+					<!--<span class="iconfont icon-productfeatures bg-img"></span>-->
 				</div>
 				<div class="grid-right list-box">
 					<ul>
@@ -623,9 +639,9 @@ var htmlPart = {
 					<div class="label-box">
 						<!--<span>资源汇总</span>-->
 						<!--<span>资源汇总</span>-->
-						<a class="more a-hover-blue" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.plat_data.shelvesId}" target="_blank" >更多>></a>
+						<a class="more a-hover-blue" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.plat_data.shelvesId}" target="_blank" >查看更多>></a>
 					</div>
-					<span class="iconfont icon-productfeatures bg-img"></span>
+					<!--<span class="iconfont icon-productfeatures bg-img"></span>-->
 
 				</div>
 				<div class="grid-right list-box">
@@ -679,9 +695,9 @@ var htmlPart = {
 					<div class="label-box">
 						<!--<span>资源汇总</span>-->
 						<!--<span>资源汇总</span>-->
-						<a class="more a-hover-blue" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.tools_data.shelvesId}"  target="_blank" >更多>></a>
+						<a class="more a-hover-blue" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.tools_data.shelvesId}"  target="_blank" >查看更多>></a>
 					</div>
-					<span class="iconfont icon-productfeatures bg-img"></span>
+					<!--<span class="iconfont icon-productfeatures bg-img"></span>-->
 
 				</div>
 				<div class="grid-right list-box">
