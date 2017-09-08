@@ -48,7 +48,7 @@ var htmlPart = {
 						<p class="" title="浏览量">
 							<i class="iconfont icon-liulan-copy" aria-hidden="true"></i>
 							<span>浏览:</span>
-							<span>${goodsDetails.clickRate}</span>
+							<span style="color:#ffa800;">${goodsDetails.clickRate}</span>
 						</p>
 						<p class="" title="点击关注">
 							<span class="attention">
@@ -58,7 +58,7 @@ var htmlPart = {
 								<%}else{%>
 								<i class="iconfont icon-jushoucanggift" style="cursor:pointer;" id="J_attenBtn" onclick="Attention.add('${goodsDetails.goodsId}')"></i>
 								<span class="eval">关注:</span>
-								<%}%><span id="J_atonNum">${goodsDetails.followNum}</span>
+								<%}%><span id="J_atonNum" style="color:#078cfc;">${goodsDetails.followNum}</span>
 							</span>
 						</p>
 						<p class="" title="销量">
@@ -196,7 +196,7 @@ var htmlPart = {
 					</ul>
 				</div>
 				<div class="table-content table-content-n">
-					<div class="table-item active detail margin-bottom-10" id="">
+					<div class="table-item active detail" id="">
 						<table class="tab-one">
 							<tr>
 								<td>商品编码：</td>
@@ -224,7 +224,7 @@ var htmlPart = {
 					</div>
 						<%if(goodsDetails.goodsType == 0){%>
 						<div class="table-item">
-							<table class="tab-one margin-bottom-10">
+							<table class="tab-one">
 								<tr>
 									<td>时间：</td>
 									<td>${goodsDetails.offLineData.timeFrame.startDate}&nbsp;至&nbsp;${goodsDetails.offLineData.timeFrame.endDate}</td>
@@ -310,7 +310,7 @@ var htmlPart = {
 							</table>
 						</div>
 						<!--返回参数-->
-						<div class="table-item margin-bottom-10" >
+						<div class="table-item" >
 							<table>
 								<caption><h3>返回参数</h3></caption>
 								<tr>

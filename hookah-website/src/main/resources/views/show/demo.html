@@ -789,7 +789,7 @@
             {
               gridIndex: 0,
               min: 0,
-              max: 5000,
+              max: 100,
               axisLine: {
                 lineStyle: {
                   color: '#88C6FF'
@@ -1054,11 +1054,11 @@
         for (var i = 0; i < data.length; i++) {
           var d0 = {
             name: data[i].name,
-            value: data[i].value1 + data[i].value2
+            value: data[i].value1
           };
           titledata.push(data[i].name);
           resultdata0.push(d0);
-          sum0 += data[i].value1 + data[i].value2;
+          sum0 += data[i].value1;
         }
         function NumDescSort(a, b) {
           return a.value - b.value;

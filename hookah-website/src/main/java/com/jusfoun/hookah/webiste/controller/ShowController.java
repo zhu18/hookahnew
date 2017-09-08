@@ -124,7 +124,7 @@ public class ShowController {
         list.add(offMap);
 
         Map apiMap = new HashMap<>(5);
-        apiMap.put("name","api数据");
+        apiMap.put("name","API数据");
         apiMap.put("value",api);
         list.add(apiMap);
 
@@ -174,7 +174,7 @@ public class ShowController {
         List<Condition> authFilters = new ArrayList<>();
         List<Condition> noFilters = new ArrayList<>();
         //用户注册数
-        userFilters.add(Condition.in("userType",new Integer[]{1, 4, 5, 7}));
+        userFilters.add(Condition.in("userType",new Integer[]{1, 4}));
         //企业认证数
         companyAuthFilters.add(Condition.eq("userType", 4));
         //个人认证数---暂不展示
@@ -314,7 +314,7 @@ public class ShowController {
                 SimpleDateFormat sdf=new SimpleDateFormat("MM/dd");
                 String format = sdf.format(show.getAddTime());
                 if (format.equals(time)) {
-                    cou = Long.parseLong(show.getLoginName());
+                    cou = show.getCount();
                     break;
                 }
             }
@@ -414,7 +414,7 @@ public class ShowController {
             }
         }
         map.put("value",price);
-        map.put("name","api商品");
+        map.put("name","API商品");
         return ReturnData.success(map);
     }
 
