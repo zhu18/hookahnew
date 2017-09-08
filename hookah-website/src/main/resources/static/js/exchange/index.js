@@ -18,7 +18,7 @@ $(function () {
         $('.hot-resource-down .hot-down-rank ul li').hover(function () {
             $(this).addClass('active').siblings().removeClass('active');})
     }
-    // 交易中心轮播图--勿删
+    // BDGStore轮播图--勿删
     // function carousel() {
     //     var box = $(".exchange-industry-resource .industry-resource-down");
     //     var screen = $(".screen");
