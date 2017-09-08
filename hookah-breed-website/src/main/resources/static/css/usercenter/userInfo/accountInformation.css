@@ -65,20 +65,20 @@
       margin-bottom: 12px;
 }
 
-.center-title-n{
-       border-left-width: 0!important;
+.header .center-title-n{
+       border-left-width: 0;
        width: 70px;
        border-bottom: 3px solid #31557b;
-       font-size: 16px!important;
-       padding-left: 0!important;
+       font-size: 16px;
+       padding-left: 0;
        margin-left: 10px;
        margin-top: 2px;
 }
 
-.top-div-c table{
+.accountInformation .accountInformation-down .top-div-c table{
       display: inline-table;
-      margin: 0!important;
-      width: 974px!important;
+      margin: 0;
+      width: 974px;
 }
 
 .accountInformation .top-div-c table th{
