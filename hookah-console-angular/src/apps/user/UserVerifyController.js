@@ -136,7 +136,7 @@ class UserVerifyController {
       });
     };
     $scope.showBigImg=function (imgUrl) {
-      var pruDom='<div><img width="100%" src="http://static.qddata.com.cn/'+imgUrl+'" alt=""></div>';
+      var pruDom='<div><img width="100%" src="http://static.galaxy.com.cn/'+imgUrl+'" alt=""></div>';
       var modalInstance = $rootScope.openJustShowDialogModal(pruDom);
     };
     $scope.pageChanged = function () {
