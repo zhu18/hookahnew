@@ -8,6 +8,32 @@
 /*}*/
 /*线 --#DCDDDD*/
 /*交易中心-start*/
+.hot-top  .bd{
+    width:946px!important;
+    height:344px;
+    padding:15px;
+    background-image:linear-gradient(to right, #ebedef, #ebf1f8);
+}
+.hot-top-resource {
+    width:976px;
+    background:white;
+    padding-bottom:10px;
+    position:relative;
+}
+.hot-top-resource a{
+    position:absolute;
+    width:60px;
+    right:-2px;
+    top:8px;
+}
+.resource-top {
+       display:table-cell;
+       width:1200px;
+       height:60px;
+       text-align:center;
+       vertical-align:middle;
+       padding-top:50px;
+}
 .exchange-index {
 	font-size: 14px;
 	background-color: #F6F6F6;
@@ -113,7 +139,6 @@
 }
 /*推荐的内容*/
 .exchange-recommend-resource .recommend-resource-down {
-	border-top: 1px solid #DCDDDD;
 	padding-top: 10px;
 }
 .exchange-recommend-resource .recommend-resource-down ul li {
@@ -250,43 +275,43 @@
 /*hot-modular-top-----end*/
 /*hot-modular-down-----start*/
 .exchange-hot-resource .hot-resource-down {
-    border-top: 1px solid #DCDDDD;
-    padding-top: 10px;
+    padding-top: 40px;
+    position:relative;
 }
 /*hot-modular-down-left*/
 .exchange-hot-resource .hot-resource-down .hot-down-left {
 	float: left;
-	width: 192px;
-	height: 374px;
+	width: 177px;
+	height: 344px;
 	overflow: hidden;
-	background-color: #FDE9EB;
+	background-color: #D9EFFF;
 	display: inline-block;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-left .headline-box {
 	margin: 40px 20px 0px 20px;
 	padding-bottom: 10px;
-	border-bottom: 1px solid #A61615;
+	border-bottom: 1px solid #0D9BFF;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-left .headline-box .main-headline {
 	font-size: 32px;
 	font-weight: bold;
-	color: #A61615;
+	color: #0D9BFF;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-left .headline-box .sub-headline {
 	font-size: 18px;
-	color: #A61615;
+	color: #0D9BFF;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-left .label-box {
 	margin: 20px 20px 0px 20px;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-left .label-box a {
-    width: 70px;
+    width: 62px;
     height: 29px;
     text-align: center;
     line-height: 29px;
     display: inline-block;
     color: white;
-    background-color: #D27877;
+    background-color: #0D9BFF;
 	margin-bottom:8px;
 	margin-right:3px;
 }
@@ -305,14 +330,14 @@
 /*表格*/
 .exchange-hot-resource .hot-resource-down .hot-down-table {
 	float: left;
-	width: 784px;
-	height: 374px;
+	width: 769px;
+	height: 344px;
 	background-color: #F9F9FD;
 	display: inline-block;
 	text-align: center;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-table table {
-	width: 784px;
+	width: 769px;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-table table tr:first-child+tr {
 	background-color: white;
@@ -373,12 +398,27 @@
 }
 
 /*热门榜 */
+.center-left-titles{
+    margin-left:10px;
+    height: 20px;
+    font: 16px/20px "microsoft yahei" ;
+    font-weight: bold;
+    border-left: 0;
+    border-bottom: 3px solid #3e557b;
+    padding-right: 20px;
+    padding-bottom: 5px;
+}
+
 .exchange-hot-resource .hot-resource-down .hot-down-rank {
 	float: right;
-	width: 198px;
-	height: 374px;
-	background-color: white;
+	width: 188px;
+	height: 384px;
+	background-image: linear-gradient(to right, #ebedef, #ebf1f8);
 	border: 1px solid #ECECEC;
+	position:absolute;
+	top:40px;
+	right:-2px;
+	padding:15px;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-rank .h-title{
 	margin: 12px 10px 12px 10px;
@@ -420,6 +460,7 @@
 }
 .exchange-hot-resource .hot-resource-down .hot-down-rank > ul li.active{
 	height: 80px;
+	background:white;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-rank > ul li.active img{
 	display: block;
@@ -610,12 +651,14 @@
 	padding: 5px 0;
 }
 .exchange-industry-resource .industry-resource-down ul .slide-item:hover{
-	-moz-transform:scale(1.1,1.1);
+	/*-moz-transform:scale(1.1,1.1);
 	-webkit-transform:scale(1.1,1.1);
 	z-index: 10000;
 	-o-transform:scale(1.1,1.1);
 	/*border: 1px solid #4e4b4b;*/
 	/*box-shadow: none;*/
+	/*background:blue;*/
+	background:url("../../images/exchange/hangbr.png") no-repeat;
 }
 .exchange-industry-resource .industry-resource-down ul .slide-item:hover .hover-bg{
 	background-color: #6886B4;
@@ -1009,21 +1052,21 @@
 	overflow: hidden;
 	margin: 16px 10px 16px 16px;
 	display: inline-block;
-	background-color: #C7E5FD;
+	background-color: #F7B550;
 }
 .exchange-index .exchange-category-down .category-left .resource-two .headline-box {
 	margin: 40px 20px 0px 20px;
 	padding-bottom: 10px;
-	border-bottom: 1px solid #3B7AB0;
+	border-bottom: 1px solid #F6850C;
 }
 .exchange-index .exchange-category-down .category-left .resource-two .headline-box .main-headline {
 	font-size: 32px;
 	font-weight: bold;
-	color: #3B7AB0;
+	color: #F6850C;
 }
 .exchange-index .exchange-category-down .category-left .resource-two .headline-box .sub-headline {
 	font-size: 18px;
-	color: #3B7AB0;
+	color: #F6850C;
 }
 .exchange-index .exchange-category-down .category-left .resource-two .label-box {
 	margin: 20px 20px 0px 20px;
@@ -1040,7 +1083,7 @@
 .exchange-index .exchange-category-down .category-left .resource-two .label-box .more {
 	display: inline-block;
 	margin-top: 20px;
-	color: #3B7AB0;
+	color: #F6850C;
 }
 .exchange-index .exchange-category-down .category-left .resource-two .bg-img {
 	font-size: 200px;
