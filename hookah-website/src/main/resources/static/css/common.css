@@ -108,8 +108,12 @@
 .grid-right{
     float: right !important;
 }
+
 /* clear float
 =================================================================== */
+.clearfix{
+    clear: both;
+}
 .clearfix:after {
     visibility: hidden;
     clear: both;

@@ -1,5 +1,4 @@
 
-$(function(){
     function loadPageData(data) {
 	var ids = [];
 	if (data.data.list.length > 0) {
@@ -149,7 +148,7 @@ $(function(){
 		$('#flag').hide();
 	}
 });
-})
+
 
 
 
