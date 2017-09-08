@@ -421,7 +421,11 @@
 	padding:15px;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-rank .h-title{
-	margin: 12px 10px 12px 10px;
+	background:white;
+	margin-left:-15px;
+	width:219px;
+	margin-top:-15px;
+	margin-bottom:15px;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-rank .h-title i{
 	display: inline-block;
@@ -434,6 +438,7 @@
 .exchange-hot-resource .hot-resource-down .hot-down-rank .h-title span {
 	display: inline-block;
 	font-size: 16px;
+	margin-top:15px;
 }
 .exchange-hot-resource .hot-resource-down .hot-down-rank > ul li {
 	height: 40px;
