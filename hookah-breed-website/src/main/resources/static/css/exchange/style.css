@@ -2100,3 +2100,7 @@ dl {
 .btn-full-ra{
  border-radius:4px;
 }
+
+.goodsDetails .goods-right .recommend-one-n ul li{
+  padding:6px 0;
+}
