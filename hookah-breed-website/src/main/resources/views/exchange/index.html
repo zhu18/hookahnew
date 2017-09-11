@@ -91,17 +91,18 @@ var htmlPart = {
 					for(var i=0;i< index;i++){
 					%>
 					<li>
-						<!--<div class="li-item-top">-->
+						<!--<div class="">-->
 							<!--<a href="${host.website}/exchange/details?id=${item[i].goodsId}">-->
 								<!--<img src="${item[i].goodsImg}" alt="">-->
 							<!--</a>-->
 							<!--<div class="padding-left-5 top-box">-->
 								<!--<a href="${host.website}/exchange/details?id=${item[i].goodsId}">-->
 									<!--<p class="title">${item[i].goodsName}</p></a>-->
-								<!--<a href="${host.website}/exchange/details?id=${item[i].goodsId}">-->
+								<!--<a href="${host.website}/exchange/detailsli-item-top?id=${item[i].goodsId}">-->
 									<!--<p class="subtitle">${item[i].goodsBrief}</p></a>-->
 							<!--</div>-->
 						<!--</div>-->
+					<div class="container">
 						<div class="li-item-top">
 							<a target="_blank" href="${host.website}/exchange/details?id=${item[i].goodsId}" class="top-box">
 								<img src="${host.static}/${item[i].goodsImg}" class="top-box-img" alt="">
@@ -129,12 +130,12 @@ var htmlPart = {
 										<%}%>
 									</span>
 									<!--<span class="grade-star">-->
-                                          <!--<i class="iconfont icon-shoucang star-i-item"></i>-->
-                                          <!--<i class="iconfont icon-shoucang star-i-item"></i>-->
-                                          <!--<i class="iconfont icon-shoucang star-i-item"></i>-->
-                                          <!--<i class="iconfont icon-shoucang star-i-item"></i>-->
-                                          <!--<i class="iconfont icon-shoucang star-i-item"></i>-->
-                                      <!--</span>-->
+									<!--<i class="iconfont icon-shoucang star-i-item"></i>-->
+									<!--<i class="iconfont icon-shoucang star-i-item"></i>-->
+									<!--<i class="iconfont icon-shoucang star-i-item"></i>-->
+									<!--<i class="iconfont icon-shoucang star-i-item"></i>-->
+									<!--<i class="iconfont icon-shoucang star-i-item"></i>-->
+									<!--</span>-->
 								</div>
 								<!--<span class="collect" onclick="Attention.add('${item[i].goodsId}')"><i class="iconfont icon-jushoucanggift collect-item"></i>关注</span>-->
 							</div>
@@ -142,18 +143,22 @@ var htmlPart = {
 								<%if(item[i].isDiscussPrice == 1){%>
 								<span class="money" style="font-size: 20px;"><span style="font-size: 14px;">价格:</span>面议</span>
 								<%}else{%>
-									<%if(item[i].shopPrice >= 1000000){%>
-									<span class="money"><i class="money-i-item" >￥</i>${trunc(item[i].shopPrice / 1000000,2)}万</span>
-									<%}else{%>
-									<span class="money"><i class="money-i-item" >￥</i>${item[i].shopPrice / 100}</span>
-									<%}%>
+								<%if(item[i].shopPrice >= 1000000){%>
+								<span class="money"><i class="money-i-item" >￥</i>${trunc(item[i].shopPrice / 1000000,2)}万</span>
+								<%}else{%>
+								<span class="money"><i class="money-i-item" >￥</i>${item[i].shopPrice / 100}</span>
+								<%}%>
 								<%}%>
 
-								<a class="detail btn-hover-red" href="${host.website}/exchange/details?id=${item[i].goodsId}" target="_blank" >查看详情</a>
+
+							</div>
+							<div class="down-btn">
+								<a class="down-btn-a  detail btn-hover-or" href="${host.website}/exchange/details?id=${item[i].goodsId}" target="_blank" >查看详情</a>
 							</div>
 						</div>
 						<div class="li-hover">
 						</div>
+					</div>
 					</li>
 					<%}%>
 				</ul>
@@ -454,7 +459,7 @@ var htmlPart = {
 								<%}%>
 							</div>
 						</li>
-						<li class="slide-item">
+						<li class="slide-item  slide-four ">
 							<div class="slide-item-top">
 								<img src="${host.static}/${ind_res_data_4.backImgPath}" alt="" class="bg">
 								<a href="javascript:void(0);" class="hover-bg">

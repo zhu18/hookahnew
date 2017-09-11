@@ -141,37 +141,52 @@
 .exchange-recommend-resource .recommend-resource-down {
 	padding-top: 10px;
 }
+.exchange-recommend-resource .recommend-resource-down ul li  .container{
+  background-color: #FAFAFA;
+}
 .exchange-recommend-resource .recommend-resource-down ul li {
-	width: 288px;
-	background-color: #FAFAFA;
+	width: 264px;
+	height:210px;
 	float: left;
-	margin-top: 10px;
-	margin-right: 16px;
+	margin-top: 20px;
+	padding:18px;
+}
+
+.exchange-recommend-resource .recommend-resource-down ul li:hover {
+    background:url("../../images/exchange/exborder.png") no-repeat center;
+    background-size:100% 100%;
+}
+.exchange-recommend-resource .recommend-resource-down ul li:hover .btn-hover-or{
+    color:white;
+    border:1px solid #fff;
+    background-image:linear-gradient(to right,#fe9402,#f8b615);
+    margin-left:25px;
 }
 
 .exchange-recommend-resource .recommend-resource-down ul li .li-item-top {
-	width: 248px;
-	padding: 20px 20px;
 	background-color: white;
+	width:270px;
+	padding-top:15px;
+	padding-left:3px;
 }
 .exchange-recommend-resource .recommend-resource-down ul li .li-item-top .top-box{
 	display: inline-block;
 }
 .exchange-recommend-resource .recommend-resource-down ul li .li-item-top .top-box-img {
-	width: 68px;
-	height: 68px;
+	width: 55px;
+	height: 55px;
 	display: inline-block;
 	vertical-align: middle;
+	padding-left:10px;
 }
 .exchange-recommend-resource .recommend-resource-down ul li .li-item-top .top-box-info {
-	width: 160px;
+	width: 190px;
 	display: inline-block;
 	vertical-align: middle;
 	color: #333333;
-	font-size: 12px;
 }
 .exchange-recommend-resource .recommend-resource-down ul li .li-item-top .top-box-info p.title {
-	font-size: 16px;
+	font-size: 14px;
 	font-weight: bold;
 	color: black;
 	white-space: nowrap;
@@ -184,17 +199,19 @@
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 2;
 	overflow: hidden;
-	height: 38px;
+	height: 42px;
 }
 .exchange-recommend-resource .recommend-resource-down ul li .li-item-down {
-	padding: 20px 23px;
+	/*padding: 20px 23px;*/
 	background-color: #FAFAFA;
 	font-size: 14px;
+	width:273px;
 }
 .exchange-recommend-resource .recommend-resource-down ul li .li-item-down .down-box-one > .grade {
 	display: inline-block;
-	font-size: 12px;
 	color: #333;
+	margin-top:20px;
+	padding-left:20px;
 }
 .exchange-recommend-resource .recommend-resource-down ul li .li-item-down .down-box-one .grade .grade-star .star-i-item {
 	color: #FFA800;
@@ -214,6 +231,7 @@
 .exchange-recommend-resource .recommend-resource-down ul li .li-item-down .down-box-tow .money {
 	font-size: 23px;
 	color: #e34f4f;
+	padding-left:20px;
 }
 .exchange-recommend-resource .recommend-resource-down ul li .li-item-down .down-box-tow .money .money-i-item {
 	font-size: 14px;
@@ -602,15 +620,27 @@
 	float: left;
 	position: relative;
 	top: 20px;;
-	width:  calc(25% - 3px);
+	width:  calc(22% - 3px);
 	height: 360px;
 	/*box-shadow: 0px 0px 1px #4e4b4b;*/
-	border: 1px solid #e2e2e2;
+	/*border: 1px solid #e2e2e2;*/
 	/*outline: 1px solid red;*/
+	margin-right:30px;
+	padding:10px;
+
 }
+.exchange-industry-resource .industry-resource-down ul .slide-item:hover{
+        background:url("../../images/exchange/hangbr.png") no-repeat center;
+        background-size:100% 100%;
+}
+.exchange-industry-resource .industry-resource-down ul  .slide-four{
+    margin-right:-25px;
+}
+
 .exchange-industry-resource .industry-resource-down ul .slide-item .slide-item-top{
-	height: 50%;
+	height: 46%;
 	background-color: #00a2c9;
+	margin-top:7px;
 }
 .exchange-industry-resource .industry-resource-down ul .slide-item .slide-item-top a{
 	width: 100%;
@@ -622,12 +652,12 @@
 }
 .exchange-industry-resource .industry-resource-down ul .slide-item .slide-item-top .bg{
 	position: absolute;
-	top: 0;
-	width: 100%;
-	left: 0;
+	top: 17px;
+	width: 93%;
+	left: 10px;
 	right: 0;
 	bottom: 0;
-	height: 50%;
+	height: 43%;
 	background: rgba(0,0,0,0.5);
 }
 
@@ -663,7 +693,7 @@
 	/*border: 1px solid #4e4b4b;*/
 	/*box-shadow: none;*/
 	/*background:blue;*/
-	background:url("../../images/exchange/hangbr.png") no-repeat;
+
 }
 .exchange-industry-resource .industry-resource-down ul .slide-item:hover .hover-bg{
 	background-color: #6886B4;
@@ -2151,4 +2181,18 @@ dl {
 
 .goodsDetails .goods-right .recommend-one-n ul li{
   padding:6px 0;
+}
+
+.down-btn-a {
+        display:block;
+        width:220px;
+        height:30px;
+        text-align:center;
+        margin-left:25px;
+        background:#f2f2f2;
+}
+
+.down-btn {
+    line-height:30px;
+    padding:7px 0px;
 }
