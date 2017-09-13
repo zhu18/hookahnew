@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.webiste.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.jusfoun.hookah.core.domain.ChannelTransData;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.ChannelService;
@@ -24,7 +25,8 @@ public class ChannelController {
     ChannelService channelService;
 
     @RequestMapping(value = "/push/goods")
-    public ReturnData pushGoods(@RequestBody ChannelTransData channelTransData){
-        return channelService.acceptGoods(channelTransData);
+    public ReturnData pushGoods(@RequestBody String channelTransData){
+        ChannelTransData channelTransData1 = JSON.parseObject(channelTransData, ChannelTransData.class);
+        return channelService.acceptGoods(channelTransData1);
     }
 }

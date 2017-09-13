@@ -13,6 +13,7 @@ import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.es.EsGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgGoodsHistory;
+import com.jusfoun.hookah.core.domain.vo.ChannelDataVo;
 import com.jusfoun.hookah.core.domain.vo.GoodsCheckedVo;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.exception.HookahException;
@@ -311,16 +312,32 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
                 i = super.updateByIdSelective(goods);
                 if(i > 0) {
                     mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_GOODS_ID, goodsId);
+                    //属于推送资源需要推送中央通知地方下架
+                    operaChannelGoods(goodsId);
                 }
                 break;
             case "offSale":
                 i = goodsMapper.updateOffSale(goodsId);
                 if(i > 0) {
                     mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_GOODS_ID, goodsId);
+                    //属于推送资源需要推送中央通知地方下架
+                    operaChannelGoods(goodsId);
                 }
                 break;
         }
         return i;
+    }
+
+    //属于推送资源需要推送中央通知地方下架
+    private void operaChannelGoods(String goodsId){
+        Goods goods =  this.selectById(goodsId);
+        //推送商品
+        if(Objects.nonNull(goods) && HookahConstants.GOODS_IS_PUSH_YES.equals(goods.getIsPush())){
+            ChannelDataVo channelDataVo = new ChannelDataVo();
+            channelDataVo.setGoodsId(goods.getGoodsId());
+            channelDataVo.setOpera(HookahConstants.CHANNEL_PUSH_OPER_CANCEL);
+            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_CENTER_CHANNEL, channelDataVo);
+        }
     }
 
     // 商品上架

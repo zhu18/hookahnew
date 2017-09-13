@@ -23,6 +23,7 @@ import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -37,6 +38,9 @@ public class RabbitMQChannelListener {
 
     @Resource
     GoodsService goodsService;
+
+    @Value("${myconf.host.website}")
+    private String localUrl;
 
     @RabbitListener(queues = RabbitmqQueue.CONTRACE_CENTER_CHANNEL)
     public void operaPushGoods(ChannelDataVo channelDataVo) {
@@ -93,7 +97,23 @@ public class RabbitMQChannelListener {
                    //撤销商品
                } else if(HookahConstants.CHANNEL_PUSH_OPER_CANCEL == opera){
                    String params = JSON.toJSONString(encryptionData(goodVos,opera));
-                   HttpClientUtil.PostMethod(PropertiesManager.getInstance().getProperty("center.system.url"),params);
+                   Map<String,String> resultMap = HttpClientUtil.PostMethod(PropertiesManager.getInstance().getProperty("center.system.url"),params);
+                   if(resultMap!=null){
+                       String result = resultMap.get("result");
+                       String resultCode = resultMap.get("resultCode");
+                       logger.info("推送返回数据：",resultMap);
+                       if(StringUtils.isNotBlank(resultCode) && "200".equals(resultCode)){
+                           logger.info("推送",result);
+                           ReturnData returnData = JSON.parseObject(result, ReturnData.class);
+                           if(ExceptionConst.Success.equals(returnData.getCode())){
+                               logger.info("商品[" + goodVos.getGoodsName() + "][id:" + goodsId +"]推送成功。" ,result);
+                           } else {
+                               logger.error("商品[" + goodVos.getGoodsName() + "][id:" + goodsId +"]推送失败。原因：" + returnData.getMessage());
+                           }
+                       } else {
+                           logger.error("商品[" + goodVos.getGoodsName() + "][id:" + goodsId +"]推送失败。原因：" + result);
+                       }
+                   }
                }
            } else {
                logger.info("商品[" + goodVos.getGoodsName() + "][id:" + goodsId +"]不可推送。");
@@ -114,6 +134,7 @@ public class RabbitMQChannelListener {
         skey += data.getTimestamp().toString().substring(16 - skey.length());
         data.setTransData(DESUtils.enPass(JSON.toJSONString(relationData), skey));
         data.setCheckCode(Md5Utils.encoderByMd5(SHAUtils.encryptSHA(JSON.toJSONString(relationData))));
+        data.setLocalUrl(localUrl);
         return data;
     }
 
