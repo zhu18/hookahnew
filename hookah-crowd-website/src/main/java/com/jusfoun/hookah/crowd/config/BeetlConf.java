@@ -67,6 +67,16 @@ public class BeetlConf {
 
   @Bean(name = "beetlViewResolver")
   public BeetlSpringViewResolver getBeetlSpringViewResolver(@Qualifier("beetlConfig") BeetlGroupUtilConfiguration beetlGroupUtilConfiguration) {
+//    BeetlSpringViewResolver beetlSpringViewResolver = new BeetlSpringViewResolver();
+//    beetlSpringViewResolver.setContentType("text/html;charset=UTF-8");
+//    beetlSpringViewResolver.setCache(false);
+//    beetlSpringViewResolver.setOrder(0);
+//    beetlSpringViewResolver.setPrefix(myProps.getBeetl().get("prefix"));
+//    beetlSpringViewResolver.setSuffix(myProps.getBeetl().get("suffix"));
+//    beetlSpringViewResolver.setConfig(beetlGroupUtilConfiguration);
+//    return beetlSpringViewResolver;
+
+    beetlGroupUtilConfiguration.getGroupTemplate().registerFunctionPackage("shiro", new ShiroExt());
     BeetlSpringViewResolver beetlSpringViewResolver = new BeetlSpringViewResolver();
     beetlSpringViewResolver.setContentType("text/html;charset=UTF-8");
     beetlSpringViewResolver.setCache(false);
@@ -75,5 +85,6 @@ public class BeetlConf {
     beetlSpringViewResolver.setSuffix(myProps.getBeetl().get("suffix"));
     beetlSpringViewResolver.setConfig(beetlGroupUtilConfiguration);
     return beetlSpringViewResolver;
+
   }
 }
