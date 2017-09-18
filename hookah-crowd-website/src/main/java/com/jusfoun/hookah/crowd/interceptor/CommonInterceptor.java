@@ -50,14 +50,6 @@ public class CommonInterceptor implements HandlerInterceptor {
         } catch (UnavailableSecurityManagerException e) {
 
         }
-        if (!ajax && modelAndView != null) {
-
-//            HelpService helpService = (HelpService) factory.getBean("helpService");
-//            List<Help> helpList = helpService.selectList();
-//            Map<String, Object> model = modelAndView.getModel();
-//            model.put("help", helpList);
-        }
-
     }
 
     @Override
