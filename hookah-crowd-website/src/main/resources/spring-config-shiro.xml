@@ -5,11 +5,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-  <!-- 缓存管理器 -->
-  <!--<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">-->
-  <!--<property name="cacheManagerConfigFile" value="classpath:ehcache/ehcache.xml"/>-->
-  <!--</bean>-->
-
   <!-- Realm实现 -->
   <bean id="oAuth2Realm" class="com.jusfoun.hookah.crowd.shiro.OAuth2Realm">
     <property name="cachingEnabled" value="true"/>
@@ -59,13 +54,6 @@
     <property name="soTimeout" value="3000"/>
     <property name="maxRedirections" value="5"/>
     <property name="genericObjectPoolConfig" ref="genericObjectPoolConfig"/>
-    <!--<property name="jedisClusterNodes">-->
-      <!--<set>-->
-        <!--<value>192.168.15.90:7000</value>-->
-        <!--<value>192.168.15.90:7001</value>-->
-        <!--<value>192.168.15.90:7002</value>-->
-      <!--</set>-->
-    <!--</property>-->
   </bean>
   <!-- 真正的redis操作类，具体连接方式由jedisClient的ref属性决定
          可选项为jedisClusterClient、jedisClient
