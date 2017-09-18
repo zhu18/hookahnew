@@ -45,7 +45,7 @@
       </encoder>
   </appender> -->
 
-  <logger name="com.jusfoun.hookah.webiste" level="DEBUG" />
+  <logger name="com.jusfoun.hookah.core.dao" level="DEBUG" />
 
   <!-- 日志输出级别 -->
   <root level="INFO">
