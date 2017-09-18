@@ -1,10 +1,11 @@
 package com.jusfoun.hookah.core.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.jusfoun.hookah.core.generic.GenericModel;
 
 import java.util.Date;
 
-public class ZbUser {
+public class ZbUser extends GenericModel {
   private Long userId;
   private String userDesc;
   private Long userStatus;

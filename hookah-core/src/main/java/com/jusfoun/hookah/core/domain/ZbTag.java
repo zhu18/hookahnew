@@ -1,11 +1,12 @@
 package com.jusfoun.hookah.core.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.jusfoun.hookah.core.generic.GenericModel;
 
 import javax.persistence.Id;
 import java.util.Date;
 
-public class ZbTag {
+public class ZbTag extends GenericModel {
   @Id
   private Long id;
   private String tagContent;
