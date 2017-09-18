@@ -2,7 +2,7 @@ package com.jusfoun.hookah.crowd.shiro;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.jusfoun.hookah.rpc.api.RoleService;
+import com.jusfoun.hookah.crowd.service.RoleService;
 import org.apache.oltu.oauth2.client.OAuthClient;
 import org.apache.oltu.oauth2.client.URLConnectionClient;
 import org.apache.oltu.oauth2.client.request.OAuthBearerClientRequest;

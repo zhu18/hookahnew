@@ -45,7 +45,7 @@ public class CrowdWebsitLauncher {
                 "classpath*:spring-config-shiro.xml",
                 CrowdWebsitLauncher.class},args);
 //        MotanSwitcherUtil.setSwitcherValue(MotanConstants.REGISTRY_HEARTBEAT_SWITCHER, true);
-        System.out.println("--------------> WebSite Start <---------------");
+        System.out.println("-------------->Crowd WebSite Start <---------------");
     }
 
     @PostConstruct
