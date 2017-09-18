@@ -25,7 +25,7 @@ import java.util.*;
  * @date 2017/2/28 下午4:37
  * @desc
  */
-@Service
+@Service("userService")
 public class UserServiceImpl extends GenericServiceImpl<User, String> implements UserService {
 
     @Resource

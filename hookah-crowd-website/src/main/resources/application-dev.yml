@@ -84,10 +84,10 @@ myconf:
     console: ${server.http.protocal}console.galaxybigdata.com
     admin: ${server.http.protocal}admin.galaxybigdata.com
   oauth2:
-    clientId: website
+    clientId: crowd
     clientSecret: Yqn2ht4DYkMHlDvTY7CV
     regUrl: http://auth.galaxybigdata.com/reg
-    loginUrl: http://auth.galaxybigdata.com/oauth/authorize?client_id=website&response_type=code&redirect_uri=
+    loginUrl: http://auth.galaxybigdata.com/oauth/authorize?client_id=crowd&response_type=code&redirect_uri=
     logoutUrl: http://auth.galaxybigdata.com/logout?redirect_uri=http://www.galaxybigdata.com/login
     accessTokenUrl: http://auth.galaxybigdata.com/oauth/accessToken
     userInfoUrl: http://auth.galaxybigdata.com/userInfo

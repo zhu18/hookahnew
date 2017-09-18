@@ -83,7 +83,7 @@ myconf:
     auth: ${server.http.protocal}auth.qddata.com.cn
     console: ${server.http.protocal}console.qddata.com.cn
   oauth2:
-    clientId: crowdWebsit
+    clientId: crowd
     clientSecret: Yqn2ht4DYkMHlDvTY7CV
     regUrl: http://auth.qddata.com.cn/reg
     loginUrl: http://auth.qddata.com.cn/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://admin.qddata.com.cn/home
