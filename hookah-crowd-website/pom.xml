@@ -160,6 +160,7 @@
         <dependency>
             <groupId>com.ibeetl</groupId>
             <artifactId>beetl</artifactId>
+            <version>${beetl.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.antlr</groupId>

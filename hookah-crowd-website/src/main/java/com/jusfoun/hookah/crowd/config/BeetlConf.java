@@ -55,6 +55,7 @@ public class BeetlConf {
       shared.put("authPath",myProps.getHost().get("auth"));
       shared.put("serverHost",myProps.getHost().get("server"));
       shared.put("host",myProps.getHost());
+      shared.put("oauth2", myProps.getOauth2());
       beetlGroupUtilConfiguration.setSharedVars(shared);
       return beetlGroupUtilConfiguration;
     } catch (Exception e) {

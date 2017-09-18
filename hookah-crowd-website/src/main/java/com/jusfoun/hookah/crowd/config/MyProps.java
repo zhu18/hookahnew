@@ -30,6 +30,8 @@ public class MyProps {
 
     private Map<String, String> api = new HashMap<>();
 
+    private Map<String, String> oauth2 = new HashMap<>();
+
     public Map<String, String> getBeetl() {
         return beetl;
     }
@@ -52,5 +54,13 @@ public class MyProps {
 
     public void setApi(Map<String, String> api) {
         this.api = api;
+    }
+
+    public Map<String, String> getOauth2() {
+        return oauth2;
+    }
+
+    public void setOauth2(Map<String, String> oauth2) {
+        this.oauth2 = oauth2;
     }
 }
