@@ -1,0 +1,174 @@
+.withdrawals-top{
+    margin: 12px 0 20px 0px;
+    border: 1px solid #E5E5E5;
+}
+ .withdrawals-top .withdrawals-content{
+    padding-left: 254px;
+    margin-top: 32px;
+}
+ .withdrawals-top .withdrawals-content .form-item{
+     margin-bottom: 20px;
+}
+ .withdrawals-top .withdrawals-content .form-item label{
+    text-align: right;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 5px;
+    width: 112px;
+    height: 32px;
+     line-height: 32px;
+    font-size: 14px;
+    color: #666666;
+}
+.withdrawals-top .withdrawals-content .apply-money{
+
+}
+.withdrawals-top .withdrawals-content .apply-money.money{
+   color: #f17d17;
+}
+.withdrawals-top .withdrawals-content .apply-money.blue{
+   color: #2a80e4;
+}
+.withdrawals-top .withdrawals-content .apply-money input{
+    width: 107px;
+    height: 30px;
+    vertical-align: middle;
+    padding-left: 5px;
+    margin-right: 5px;
+    border: 1px solid #E5E5E5;
+}
+.withdrawals-top .withdrawals-content .cash-account .cash-account-card{
+    display: inline-block;
+    vertical-align: middle;
+    width: 256px;
+    height: 133px;
+    padding: 20px;
+    border: 1px solid #E5E5E5;
+}
+.withdrawals-top .withdrawals-content .cash-account .cash-account-card h4{
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.withdrawals-top .withdrawals-content .cash-account .cash-account-card p{
+    height: 40px;
+    line-height:40px;
+}
+.withdrawals-top .withdrawals-content  .trade-password input{
+    width: 291px;
+    height: 30px;
+    vertical-align: middle;
+    padding-left: 5px;
+    border: 1px solid #E5E5E5;
+}
+.withdrawals-top .withdrawals-content  .payment a{
+    display: inline-block;
+    width: 130px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    color: #ffffff;
+    cursor: pointer;
+    margin-left: 120px;
+    margin-bottom: 20px;
+    background-color: #4E95F4;
+}
+.withdrawals-top .help-block{
+   color:#ff0000 !important ;
+}
+
+.withdrawals-down{
+    margin-top: 30px;
+}
+.withdrawals-down h4{
+    height: 20px;
+    font: 14px/20px "microsoft yahei";
+    font-weight: bold;
+    padding-left: 10px;
+    border-left: 2px solid #237DE7;
+}
+.withdrawals-down .search-criteria{
+    width: 100%;
+    border: 1px solid #e5e5e5;
+}
+.search-criteria li{
+    height: 46px;
+    border-bottom: 1px dashed #e5e5e5;
+}
+.search-criteria li:last-child{
+    height: 46px;
+    line-height: 46px;
+    border-bottom:none;
+}
+.search-criteria li span{
+    float: left;
+    height: 46px;
+    line-height: 46px;
+    text-align: center;
+    font-size: 14px;
+    color: #333333;
+    width: 118px;
+    background-color: #F6F6F6;
+}
+.search-criteria li ul{
+    float: left;
+}
+ .search-criteria li ul li{
+    float: left;
+    height: 46px;
+    line-height: 46px;
+    width: 100px;
+    cursor:pointer;
+    text-align: center;
+}
+ .search-criteria li ul li.active{
+    color: #247de8;
+}
+ .search-criteria li:last-child div{
+    display: inline-block;
+}
+ .search-criteria li:last-child .line{
+    display: inline-block;
+    height: 1px;
+    width: 14px;
+    background-color: #e5e5e5;
+    margin: 0 5px 4px;
+}
+ .search-criteria li:last-child div input{
+    width: 125px;
+    height: 25px;
+    padding-left: 5px;
+    border: 1px solid #e5e5e5;
+}
+ .search-criteria li:last-child .time-box{
+    margin-left: 25px;
+}
+ .search-criteria li:last-child .select-month a{
+    padding: 0 15px ;
+}
+.search-criteria li:last-child .select-month a.active{
+    color: #247de8;
+}
+.search-criteria li:last-child .select-month a:first-child{
+    border-right: 1px solid #6E6E6E;
+}
+.withdrawals-down .withdrawals-down-list{
+    margin-top: 15px;
+    width: 100%;
+    border: 1px solid #e5e5e5;
+}
+.withdrawals-down .withdrawals-down-list tr th{
+    font-size: 14px;
+    color: #333333;
+    text-align: center;
+    line-height: 39px;
+    background-color: #F4F4F4;
+
+}
+.withdrawals-down .withdrawals-down-list tr td{
+    height: 39px;
+    border: 1px solid #E5E5E5;
+}
+.withdrawals-down .withdrawals-down-list tr {
+    text-align: center;
+}

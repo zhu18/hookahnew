@@ -1,0 +1,28 @@
+<%
+var head = {
+%>
+<link type="text/css" rel="stylesheet" href="/static/css/exposition/expos.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="innovation-center">
+    <div class="innovation-bd grid-row clearfix innovation-padding">
+        <%include("/exposition/exposition_template.html"){}%>
+        <div class="innovation-content grid-right ">
+            <div class="public">
+                <span></span>
+                <h3>数据众包</h3>
+            </div>
+            <div class="crowdsourc">
+                <p class="info-text">众包 是一种在互联网蓬勃发展的背景下产生的一种创新的生产组织形式。在这样的商业模式下，企业利用网络将工作分配出去，通过让更合适的人群参与其中来发现创意和解决技术问题。</p>
+                <br>
+                <p class="info-text">数据星河BDGStore数据众包平台专注数据采集、数据标注、数据处理、清洗加工领域，为政府、企业、高校、研究机构共提供各类数据众包服务。</p>
+            </div>
+        </div>
+    </div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>

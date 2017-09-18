@@ -1,0 +1,44 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/userProfile.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="grid-left info-center-box ">
+            <div class="user-center-box grid-right">
+                <div class="header">
+                    <h4 class="center-title">个人资料</h4>
+                </div>
+
+                <div class="user-info">
+                    <h3 class="hello-user">Dear<span>${user.userName}</span>,请填写真实有效的个人资料！</h3>
+                    <form action="">
+                        <ul>
+                            <li><label>头像：</label><span class="user-head-portrait"><img src="/static/images/zheng.jpg" alt=""> <span>点击上传</span></span></li>
+                            <li><label>昵称：</label><input class="input-txt" type="text" value="${user.userName}"></li>
+                            <li><label>真实姓名：</label><input class="input-txt" type="text" value="${userDetail.realName}"></li>
+                            <li class="tip-title">请填写真实姓名</li>
+                            <li><label>性别：</label><label class="except"><input type="radio" name="sex" checked="checked">男</label><label class="except"><input type="radio" name="sex">女</label></li>
+                            <li><label>出生日期：</label><input class="input-txt" type="date"></li>
+                            <li><label>身份证号：</label><input class="input-txt" type="text" value="110188199002077389"></li>
+                            <li><button class="submit-btn">保存</button></li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+
+</script>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>

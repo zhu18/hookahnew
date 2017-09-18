@@ -1,0 +1,111 @@
+/*充值第一步*/
+.fundmanage-box .recharge{
+     margin: 12px 0 393px 0px;
+     border: 1px solid #E5E5E5;
+ }
+.fundmanage-box .recharge ul{
+    display: inline-block;
+    padding-left: 280px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.fundmanage-box .recharge ul li{
+    height: 50px;
+    color: #333333;
+    line-height:53px;
+    font-size: 14px;
+}
+
+.fundmanage-box .recharge ul li label{
+    margin-right: 14px;
+}
+.fundmanage-box .recharge ul li input{
+    width: 216px;
+    height: 30px;
+    font-size: 14px;
+    padding-left: 10px;
+    border: 1px solid #E5E5E5;
+    font-size:12px;
+}
+.fundmanage-box .recharge ul li a{
+    display: inline-block;
+    color: #ffffff;
+    width: 130px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    margin-left: 84px;
+    margin-top: 15px;
+    border-radius: 5px;
+    background-color: #4C94F4;
+}
+
+.fundmanage-box .recharge ul .money{
+     font-size: 0px;
+ }
+.fundmanage-box .recharge ul .money label{
+    font-size: 14px;
+}
+
+.fundmanage-box .recharge ul .color-orange{
+    color:#F17D17 ;
+    font-weight: bold;
+}
+/*充值第二步*/
+
+.rechargeFailure{
+    padding: 200px 370px;
+}
+.rechargeFailure .error{
+    border-radius: 50%;
+    color: #ffffff;
+    background-color: #D74548;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    line-height: 36px;
+    font-size: 35px;
+    font-weight: bold;
+    display: inline-block;
+}
+.rechargeFailure .pay-btn{
+    display: inline-block;
+    width: 86px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    color: #ffffff;
+    border-radius: 3px;
+    margin-top: 31px;
+    margin-left: 34px;
+}
+
+
+.rechargeSuccess{ padding: 200px 370px;}
+.rechargeSuccess .tick{
+    border-radius: 50%;
+    color: #ffffff;
+    background-color: #179D1D;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    line-height: 41px;
+    font-size: 35px;
+    font-weight: bold;
+    display: inline-block;
+}
+.rechargeSuccess ul{
+  display: inline-block;
+}
+.rechargeSuccess .pay-btn{
+    display: inline-block;
+    width: 86px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    color: #ffffff;
+    border-radius: 3px;
+    margin-top: 31px;
+    margin-left: 34px;
+}

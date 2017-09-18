@@ -1,0 +1,82 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/innovation/index.css">
+<link rel="stylesheet" href="/static/css/font/innovation/iconfont.css">
+<%};%>
+<%
+var htmlPart = {
+%>
+<div class="box">
+    <div class="information grid-row padding-top-10">
+        <div class="content clearfix">
+            <!--左侧栏-->
+            <div class="leftSide margin-right-10">
+                <!--中心动态-->
+                <div class="top margin-bottom-10">
+                    <ul>
+                        <li onclick="renderChange(this)" class="active">
+                            <a href="javascript:;">
+                                <i class="iconfont icon-huodong"></i>
+                                <span class="page-title">孵化器</span>
+                            </a>
+                        </li>
+                        <li onclick="renderChange(this)">
+                            <a href="javascript:;">
+                                <i class="iconfont icon-huodong"></i>
+                                <span class="page-title">基础开发平台</span>
+                            </a>
+                        </li>
+                        <li onclick="renderChange(this)">
+                            <a href="javascript:;">
+                                <i class="iconfont icon-huodong"></i>
+                                <span class="page-title">大数据产业基金</span>
+                            </a>
+                        </li>
+                        <li onclick="renderChange(this)">
+                            <a href="javascript:;">
+                                <i class="iconfont icon-huodong"></i>
+                                <span class="page-title">活动</span>
+                            </a>
+                        </li>
+                        <li onclick="renderChange(this)">
+                            <a href="javascript:;">
+                                <i class="iconfont icon-huodong"></i>
+                                <span class="page-title">创客大赛</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--右侧内容-->
+            <div class="rightCenter padding-left-20 padding-right-30 margin-bottom-30">
+                <div class="title">
+                    <span class="margin-right-10"></span>
+                    <h3 id="J_pageTitle">孵化器</h3>
+                </div>
+                <div class="list-innovation">
+                    <div class="data-item active">
+                        <%include("/innovation/incubator.html"){}%>
+                    </div>
+                    <div class="data-item">
+                        <%include("/innovation/base_development_platform.html"){}%>
+                    </div>
+                    <div class="data-item">
+                        <%include("/innovation/bigdata_industry.html"){}%>
+                    </div>
+                    <div class="data-item">
+                        <%include("/innovation/activity.html"){}%>
+                    </div>
+                    <div class="data-item">
+                        <%include("/innovation/guest_competition.html"){}%>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+<script type="text/javascript" src="/static/js/innovation/index.js"></script>

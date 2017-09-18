@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>数据展示-BDG Store数据星河-全球大数据生态产业圈</title>
+    <style>
+        body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td {
+            margin: 0;
+            padding: 0;
+            list-style: none
+        }
+
+        body, html {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        .clearfix:after {
+            visibility: hidden;
+            clear: both;
+            display: block;
+            content: ".";
+            height: 0;
+            font-size: 0;
+            zoom: 1;
+        }
+
+        .box {
+            height: 100%;
+            width: 100%;
+            background-color: #2B2B2B;
+            /*background: -moz-linear-gradient(top, rgba(30,247,247,0.4) 0%,rgba(255,255,255,0) 100%);*/
+            /*background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(30,247,247,0.4)), color-stop(100%,rgba(255,255,255,0)));*/
+            /*background: -webkit-linear-gradient(top, rgba(30,247,247,0.4) 0%,rgba(255,255,255,0) 100%);*/
+            /*background: -o-linear-gradient(top, rgba(30,247,247,0.4) 0%,rgba(255,255,255,0) 100%);*/
+            /*background: -ms-radial-gradient( #105FD4 0%,#0A3C98 100%);*/
+            /*background:radial-gradient(#105FD4 5%,#0A3C98 50%);*/
+            /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#105FD4", endColorstr="#0A3C98",GradientType=0 );*/
+            /*background-image: -webkit-gradient(radial,40% 67%,0,40% 67%,422,from(rgba(30,247,247,0.4)),to(rgba(255,255,255,0))),*/
+            /*-webkit-radial-gradient(#105FD4 5%,#0A3C98 50%);*/
+        }
+
+        .box .header {
+            width: 100%;
+            height: 80px;
+            line-height: 80px;
+            text-align: center;
+        }
+
+        .box .header h1 {
+            font-size: 30px;
+            color: #8FCBE9;
+            background-image: -webkit-linear-gradient(top, #1B77F8, #8FCBE9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .content {
+            height: calc(100% - 80px);
+            width: 100%;
+        }
+
+        .content .common {
+            position: relative;
+            height: 100%;
+            width: calc(100% / 3 - 1px);
+            float: left;
+            margin-right: calc(3px / 2);
+        }
+
+        .content .d {
+            /*height: calc(100% - 10%);*/
+            width: calc(100% / 2 - 1px);
+            float: left;
+            margin-right: calc(2px / 1);
+        }
+
+        .content .line:after {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: 2px;
+            background: -webkit-radial-gradient(rgba(30, 247, 247, 1), rgba(30, 247, 247, 0), rgba(30, 247, 247, 0));
+        }
+
+        .content .common:nth-child(3) {
+            margin-right: 0;
+        }
+
+        .content .common:nth-child(6) {
+            margin-right: 0;
+        }
+
+        .content .common .sub-common {
+            height: 100%;
+            width: 100%;
+        }
+
+        .content .common h2 {
+            position: absolute;
+            top: 7px;
+            left: 40px;
+            font-size: 17px;
+            color: #8FCBE9;
+            background-image: -webkit-linear-gradient(left, #07DAFF, #0299F3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .content .common h2:before {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 0px;
+            left: -16px;
+            width: 6px;
+            height: 20px;
+            border: 1px solid #E34F4F;
+            -moz-border-radius: 6px / 7px;
+            -webkit-border-radius: 6px / 7px;
+            border-radius: 6px / 7px;
+        }
+
+        .content .common h2:after {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 3px;
+            left: -13px;
+            width: 2px;
+            height: 15px;
+            background-color: #E34F4F;
+        }
+
+        .content .common .info {
+            position: absolute;
+            top: 30%;
+            left: 60px;
+        }
+
+        .content .common .info .num {
+            text-shadow: 0px 0px 51px #fff;
+            font-size: 40px;
+            font-weight: 600;
+            color: #D19F31;
+            text-align: center;
+        }
+
+        .content .common .info p {
+            font-size: 15px;
+            color: #81C6FF;
+        }
+
+        .content .common .info .sub-box {
+            float: left;
+            margin-right: 5px;
+        }
+
+        .content .content-top {
+            height: 30%;
+            width: 100%;
+        }
+
+        .content .content-top-box {
+            position: relative;
+            height: 100%;
+            width: calc(100% - 40px - 2px);
+            margin: 0 20px;
+            border-left: 1px solid #1A61A8;
+            border-right: 1px solid #1A61A8;
+        }
+
+        /*边框横线*/
+        .content .content-top-box:before {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 1px;
+            width: 8px;
+            background-color: #1A61A8;
+        }
+
+        .content .content-top-box:after {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 1px;
+            width: 8px;
+            background-color: #1A61A8;
+        }
+
+        .content .content-down {
+            height: 70%;
+            width: 100%;
+        }
+
+        .content .content-down-box {
+            position: relative;
+            height: calc(100% - 7px);
+            width: calc(100% - 40px - 2px);
+            margin: 0 20px 5px;
+            border-left: 1px solid #1A61A8;
+            border-right: 1px solid #1A61A8;
+            /*background-color: rgba(13,55,140, 0.5);*/
+        }
+
+        .content .content-down-box:before {
+            content: "";
+            display: block;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 1px;
+            width: 8px;
+            background-color: #1A61A8;
+        }
+
+        .content .content-down-box:after {
+            content: "";
+            display: block;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            height: 1px;
+            width: 8px;
+            background-color: #1A61A8;
+        }
+
+        /*.content .content-down-box .common{*/
+        /*height: 100%;*/
+        /*width: calc(100%/3 - 1px);*/
+        /*float: left;*/
+        /*margin-right: calc(3px /2);*/
+        /*}*/
+        .content .content-down-box .six {
+            margin-right: 0;
+        }
+
+        .content .content-down-box .oneLay {
+            height: 40%;
+            position: relative;
+        }
+
+        /*.content .content-down-box .oneLay:after{*/
+        /*content: "";*/
+        /*display: block;*/
+        /*position: absolute;*/
+        /*bottom: 0;*/
+        /*left: 2%;*/
+        /*width: 96%;*/
+        /*height: 1px;*/
+        /*background: #0971C8;*/
+        /*}*/
+        .content .content-down-box .twoLay {
+            height: 60%;
+        }
+
+        .content .content-down-box .twoLay ul {
+            margin-left: 15px;
+        }
+
+        .content .content-down-box .twoLay ul .line1:before {
+            content: "";
+            display: block;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 1px;
+            height: 100%;
+            background: -webkit-radial-gradient(rgba(30, 247, 247, 1), rgba(30, 247, 247, 0.5), rgba(30, 247, 247, 0.2), rgba(30, 247, 247, 0));
+        }
+
+        .content .content-down-box .twoLay ul li {
+            position: relative;
+            float: left;
+            height: 10%;
+            padding: 0 10px;
+            color: #07DAFF;
+        }
+
+        .content .content-down-box .twoLay ul .active {
+            color: #EACB57;
+        }
+
+        .content .content-down-box .twoLay ul .last {
+            font-size: 10px;
+            padding-top: 5px;
+            color: #8AC5FD;
+        }
+
+        .content .content-down-box .twoLay ul .last input {
+            border-radius: 5px;
+            border: 1px solid #09BDEE;
+            background: transparent;
+            width: 100px;
+            padding: 0 5px;
+        }
+
+        /*.content .content-down-box .twoLay .card{*/
+        /*position: absolute;*/
+        /*right: 10%;*/
+        /*top: 20%;*/
+        /*width: 20%;*/
+        /*height: 60%;*/
+        /*background: red;*/
+        /*}*/
+        .content .content-down-box .eight {
+            margin-right: 0;
+        }
+    </style>
+    <script src="/static/js/plugins/echarts/echarts.js"></script>
+    <script src="/static/js/plugins/echarts/china.js"></script>
+</head>
+<body>
+<div class="box">
+    <div class="header">
+        <h1>数据星河BDGStore</h1>
+    </div>
+    <div class="content">
+        <div class="content-top">
+            <div class="content-top-box">
+                <div class="common line">
+                    <h2>用户注册数</h2>
+                    <div class="info">
+                        <p class="num" id="J_oneNumber">20</p>
+                        <p>用户注册数</p>
+                    </div>
+                    <div id="one" class=" one sub-common"></div>
+                </div>
+                <div class="common line">
+                    <h2>上架商品数量</h2>
+                    <div class="info " style="left: 7%;">
+                        <p class="num" id="J_twoNumber">--</p>
+                        <p>上架商品总数</p>
+                    </div>
+                    <div id="two" class=" two sub-common"></div>
+                </div>
+                <div class="common ">
+                    <h2>订单数量</h2>
+                    <div class="info" style="left: 2px;">
+                        <div class="sub-box ">
+                            <p class="num" id="J_threeNumber01">--</p>
+                            <p>交易订单总笔数</p>
+                        </div>
+                        <div class="sub-box">
+                            <p class="num" id="J_threeNumber02">--</p>
+                            <p>交易商品总数</p>
+                        </div>
+                    </div>
+                    <div id="three" class=" three sub-common"></div>
+                </div>
+            </div>
+        </div>
+        <div class="content-down">
+            <div class="content-down-box">
+                <div class="oneLay">
+                    <div class="common line">
+                        <h2>日注册用户/日活跃用户</h2>
+                        <div id="four" class="four sub-common"></div>
+                    </div>
+                    <div class="common line">
+                        <h2>PV/UV趋势分析</h2>
+                        <div id="five" class="five sub-common"></div>
+                    </div>
+                    <div class="common ">
+                        <h2>日交易金额趋势分析</h2>
+                        <div id="six" class="six sub-common"></div>
+                    </div>
+                </div>
+                <div class="twoLay">
+                    <!--<ul class="clearfix">-->
+                    <!--<li class="line1 active">最近一周</li>-->
+                    <!--<li class="line1">最近半个月</li>-->
+                    <!--<li>最近一个月</li>-->
+                    <!--<li class="last">-->
+                    <!--<label for="">日期区间:</label>-->
+                    <!--<input type="text"/>-->
+                    <!--至-->
+                    <!--<input type="text"/>-->
+                    <!--</li>-->
+                    <!--</ul>-->
+                    <div class="common d seven line">
+                        <h2>商品类型交易金额分析</h2>
+                        <div id="seven" class="seven sub-common"></div>
+                    </div>
+                    <div class="common d seven" style="margin-right: 0">
+                        <div class="card"></div>
+                        <h2>注册用户地域分布分析</h2>
+                        <div id="eight" class="eight sub-common"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="/static/js/plugins/jquery/jquery-1.9.1.min.js"></script>
+<script>
+
+  var giftImageUrl = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABXCAYAAACAw4LhAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA9BpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wUmlnaHRzPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvcmlnaHRzLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcFJpZ2h0czpNYXJrZWQ9IkZhbHNlIiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InV1aWQ6NUVFRDBCOTFERjdBRTAxMUJCM0I5OUMwOUJDREUxRkIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MDdBREJGNjY0Njc5MTFFN0IyQUJENTEwNkM5RTNBRTEiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MDdBREJGNjU0Njc5MTFFN0IyQUJENTEwNkM5RTNBRTEiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUuNSAoTWFjaW50b3NoKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjA1YWE2MDVkLWY2ZDAtNDVjZS05MDVjLTc2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"
+  var oneChart = echarts.init(document.getElementById('one'));
+  var twoChart = echarts.init(document.getElementById('two'));
+  var threeChart = echarts.init(document.getElementById('three'));
+  var fourChart = echarts.init(document.getElementById('four'));
+  var fiveChart = echarts.init(document.getElementById('five'));
+  var sixChart = echarts.init(document.getElementById('six'));
+  var sevenChart = echarts.init(document.getElementById('seven'));
+  var eightChart = echarts.init(document.getElementById('eight'));
+  function oneOptionFn() {
+    $.ajax({
+      type: "GET",
+      url: "http://www.galaxybigdata.com/show/userCountList",
+      dataType: "json",
+      success: function (data) {
+        console.log(data);
+        var listData = data.data[0];
+        var nameListArr = [];
+        for (var key in data.data[0]) {
+          nameListArr.push(data.data[0][key].name)
+          console.log(data.data[0][key].name)
+        }
+        var oneOption = {
+          tooltip: {
+            trigger: 'item',
+            formatter: "{b}: {c}"
+          },
+          legend: {
+            orient: 'vertical',
+            right: '5%',
+            top: "30%",
+            data: nameListArr,
+            textStyle: {
+              fontSize: 12,
+              color: '#88C6FF'
+            }
+          },
+          graphic: {//中间的图片
+            elements: [{
+              type: 'image',
+              style: {
+                image: giftImageUrl,
+                width: 65,
+                height: 65
+              },
+              left: 'center',
+              top: 'center'
+            }]
+          },
+          series: [
+            {
+              name: '访问来源',
+              type: 'pie',
+              radius: [40, '70%'],
+              center: ['50%', '50%'],
+              avoidLabelOverlap: false,
+              label: {
+                normal: {
+                  show: false
+//                        position: 'center'
+                },
+                emphasis: {
+                  show: true,
+                  formatter: "{b}\n{c}",
+                  textStyle: {
+                    fontSize: '15',
+                    fontWeight: 'bold'
+                  }
+                }
+              },
+              color: ['#047AEB', '#BCD53B', '#CD6655'],
+              data: listData
+            }
+          ]
+        };
+        oneChart.setOption(oneOption, true);
+        $('#J_oneNumber').html(data.data[1][0].value);
+
+      }
+    })
+  }
+  oneOptionFn()
+  function twoOptionFn() {
+    $.ajax({
+      type: "GET",
+      url: "http://www.galaxybigdata.com/show/goodsCount",
+      dataType: "json",
+      success: function (data) {
+        console.log(data);
+        var listData = data.data[0];
+        var nameListArr = [];
+        for (var key in data.data[0]) {
+          nameListArr.push(data.data[0][key].name)
+          console.log(data.data[0][key].name)
+        }
+        var twoOption = {
+          tooltip: {
+            trigger: 'item',
+            formatter: "{b}: {c}"
+          },
+          legend: {
+            orient: 'vertical',
+            right: '5%',
+            top: "10%",
+            itemHeight: 8,
+            itemWidth: 10,
+            textStyle: {
+              fontSize: 12,
+              color: '#88C6FF'
+            },
+            data: nameListArr
+          },
+          label: {
+            normal: {
+              show: false,
+
+
+            },
+            emphasis: {
+              show: true,
+              formatter: "{b}\n{c}",
+              textStyle: {
+                fontSize: '15',
+                fontWeight: 'bold'
+              }
+            }
+          },
+          series: [
+            {
+              name: '访问来源',
+              type: 'pie',
+              radius: ['40%', '70%'],
+              center: ['45%', '50%'],
+              avoidLabelOverlap: false,
+              label: {
+                normal: {
+                  show: false
+//                        position: 'center'
+                },
+                emphasis: {
+                  show: true,
+                  formatter: "{b}\n{c}",
+                  textStyle: {
+                    fontSize: '15',
+                    fontWeight: 'bold'
+                  }
+                }
+              },
+              color: ['#0699F4', '#07A6F4', '#07D0F5', '#09DEEA', '#21C893', '#C1DF55', '#CEB347', '#CE9C4F', '#D08465'],
+              data: listData
+            }
+          ]
+        };
+
+        twoChart.setOption(twoOption, true);
+        $('#J_twoNumber').html(data.data[1][0].value);
+
+
+      }
+    });
+  }
+  twoOptionFn();
+  function threeOptionFn() {
+    $.ajax({
+      type: "GET",
+      url: "http://www.galaxybigdata.com/show/orderInfoCount",
+      dataType: "json",
+      success: function (data) {
+        console.log(data);
+        var listData = data.data[0];
+        var nameListArr = [];
+        for (var key in data.data[0]) {
+          nameListArr.push(data.data[0][key].name)
+          console.log(data.data[0][key].name)
+        }
+        var threeOption = {
+          tooltip: {
+            trigger: 'item',
+            formatter: "{b}: {c}"
+          },
+          legend: {
+            orient: 'vertical',
+            right: 'right',
+            top: "30%",
+            data: nameListArr,
+            textStyle: {
+              fontSize: 12,
+              color: '#88C6FF'
+            }
+          },
+          series: [
+            {
+              name: '访问来源',
+              type: 'pie',
+              radius: ['40%', '70%'],
+              center: ['60%', '50%'],
+              avoidLabelOverlap: false,
+              label: {
+                normal: {
+                  show: false
+//                        position: 'center'
+                },
+                emphasis: {
+                  show: true,
+                  formatter: "{b}\n{c}",
+                  textStyle: {
+                    fontSize: '15',
+                    fontWeight: 'bold'
+                  }
+                }
+              },
+              color: ['#0479EB', '#C1CE40'],
+              data: listData,
+              itemStyle: {
+                emphasis: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+              }
+            }
+          ]
+        };
+
+        threeChart.setOption(threeOption, true);
+        $('#J_threeNumber01').html(data.data[1][0].value);
+        $('#J_threeNumber02').html(data.data[1][1].value);
+
+
+      }
+    });
+  }
+  threeOptionFn();
+
+  function fourOptionFn() {
+    $.ajax({
+      type: "GET",
+      url: "http://www.galaxybigdata.com/show/userAnalysis",
+      dataType: "json",
+      success: function (data) {
+        console.log(data);
+
+        var yMax=data.data.max;
+        var xAxisData=data.data.registerUser.x;
+        var registerCount=data.data.registerUser.count;
+        var activeUser=data.data.activeUser.count;
+
+
+        var fourOption = {
+          tooltip: {
+            trigger: 'axis'
+//            formatter: "{a}: {c}"
+          },
+          grid: {
+            show: false,
+            x: '10%',
+            y: '28%',
+            width: '60%',
+            height: '58%'
+          },
+          xAxis: [
+            {
+              type: 'category',
+              boundaryGap: false,
+              axisLine: {
+                lineStyle: {
+                  color: '#88C6FF'
+                }
+              },
+//                data : ['2017/5/30','2017/5/30','2017/5/30','2017/5/30','2017/5/30']
+              data: xAxisData
+            }
+          ],
+          yAxis: [
+            {
+              gridIndex: 0,
+              min: 0,
+              max: yMax,
+              axisLine: {
+                lineStyle: {
+                  color: '#88C6FF'
+                }
+              },
+              splitLine: {//不显示基线
+                "show": false
+              }
+            }
+//            { type: 'value'}
+          ],
+          color: ["#88C6FF", "#DEE499"],
+          legend: {
+            orient: 'vertical',
+            icon: 'pin',
+            itemWidth: 14,
+            itemHeight: 5,
+            itemGap: 13,
+            data: ['日注册用户', '日活跃用户'],
+            top: "20%",
+            right: '2%',
+            textStyle: {
+              fontSize: 12,
+              color: '#88C6FF'
+            }
+          },
+          series: [
+            {
+              name: "日注册用户",
+              type: 'line',
+              smooth: true,
+//                showSymbol: true,//不显示圆点
+              lineStyle: {
+                normal: {
+                  color: "#DEE499"
+                }
+              },
+              data: registerCount
+            },
+            {
+              name: "日活跃用户",
+              type: 'line',
+              smooth: true,
+//                showSymbol: false,
+              lineStyle: {
+                normal: {
+                  color: "#62D3EF"
+                }
+              },
+              data: activeUser
+            }
+          ]
+
+        }
+
+        fourChart.setOption(fourOption, true);
+
+
+      }
+    });
+  }
+  fourOptionFn();
+
+  function fiveOptionFn() {
+    $.ajax({
+      type: "GET",
+      url: "http://wwww.galaxybigdata.com/show/viewsCount",
+      dataType: "json",
+      success: function (data) {
+        console.log(data);
+
+        var xAxisData=data.data.x;
+        var listUv=data.data.listUv;
+        var listPv=data.data.listPv;
+
+        var fiveOption = {
+          tooltip: {
+            trigger: 'axis'
+//            formatter: "{a}: {c}"
+          },
+          grid: {
+            show: false,
+            x: '10%',
+            y: '28%',
+            width: '60%',
+            height: '58%'
+          },
+          xAxis: [
+            {
+              type: 'category',
+              boundaryGap: false,
+              splitNumber: 5,
+              axisLine: {
+                lineStyle: {
+                  color: '#88C6FF'
+                }
+              },
+//                data : ['2017/5/30','2017/5/30','2017/5/30','2017/5/30','2017/5/30']
+              data:xAxisData
+            }
+          ],
+          yAxis: [
+            {
+              gridIndex: 0,
+              min: 0,
+              max: 5000,
+              axisLine: {
+                lineStyle: {
+                  color: '#88C6FF'
+                }
+              },
+              splitLine: {
+                "show": false
+              }
+            }
+//            { type: 'value'}
+          ],
+          color: ["#88C6FF", "#DEE499"],//图例的颜色
+          legend: {
+            orient: 'vertical',
+            icon: 'rect',
+            itemWidth: 14,
+            itemHeight: 5,
+            itemGap: 13,
+            data: ['PV(页面浏览量)', 'UV(独立访问量)'],
+            top: "20%",
+            right: '2%',
+            textStyle: {
+              fontSize: 12,
+              color: '#88C6FF'
+            }
+          },
+          markLine: {
+            show: false
+          },
+          series: [
+            {
+              name: "PV(页面浏览量)",
+              type: 'line',
+              smooth: true,
+//                showSymbol: false,
+              lineStyle: {
+                normal: {
+                  color: "#DEE499"
+                }
+              },
+              data: listPv
+            },
+            {
+              name: "UV(独立访问量)",
+              type: 'line',
+              smooth: true,
+//                showSymbol: false,
+              lineStyle: {
+                normal: {
+                  color: "#62D3EF"
+                }
+              },
+              data: listUv
+            }
+          ]
+
+        }
+
+        fiveChart.setOption(fiveOption, true);
+
+
+      }
+    });
+  }
+  fiveOptionFn();
+
+  function sixOptionFn() {
+    $.ajax({
+      type: "GET",
+      url: "http://www.galaxybigdata.com/show/transactionMoney",
+      dataType: "json",
+      success: function (data) {
+        console.log(data);
+
+        var xAxisData=data.data.transactionAmount.x;
+        var transactionAmount=data.data.transactionAmount.count;
+        var unTransactionAmount=data.data.unTransactionAmount.count;
+        var sixOption = {
+          tooltip: {
+            trigger: 'axis'
+          },
+          grid: {
+            show: false,
+            x: '10%',
+            y: '28%',
+            width: '60%',
+            height: '58%'
+          },
+          barGap: "0",
+          legend: {
+            orient: 'vertical',
+            top: "20%",
+            right: '2%',
+            data: ['日交易金额', '待支付金额'],
+            textStyle: {
+              fontSize: 12,
+              color: '#88C6FF'
+            }
+          },
+          calculable: false,
+          xAxis: [
+            {
+              type: 'category',
+              boundaryGap: true,
+              axisLine: {
+                lineStyle: {
+                  color: '#88C6FF'
+                }
+              },
+              data: xAxisData
+            }
+          ],
+          yAxis: [
+            {
+              type: 'value',
+              axisLine: {
+                lineStyle: {
+                  color: '#88C6FF'
+                }
+
+              },
+              splitLine: {
+                "show": false
+              }
+//                data : ['0','50','100','150','200',"250",'300','350','400']
+            }
+          ],
+          series: [
+            {
+              name: '日交易金额',
+              type: 'bar',
+              barWidth: '20%',//设置圆柱的宽度
+              data: transactionAmount,
+              itemStyle: {
+                normal: {
+                  color: "#04A9E9",
+                  barBorderRadius: [10, 10, 0, 0] //设置圆角
+                }
+              }
+
+            },
+            {
+              name: '待支付金额',
+              type: 'bar',
+              barWidth: '20%',
+              data: unTransactionAmount,
+              itemStyle: {
+                normal: {
+                  color: "#C8BC20",
+                  barBorderRadius: [10, 10, 0, 0] //设置圆角
+                }
+              }
+
+            }
+          ]
+        }
+
+
+        sixChart.setOption(sixOption, true);
+
+
+
+      }
+    });
+  }
+  sixOptionFn();
+
+  function sevenOptionFn() {
+    $.ajax({
+      type: "GET",
+      url: "http://www.galaxybigdata.com/show/typeAmount",
+      dataType: "json",
+      success: function (data) {
+        console.log(data);
+        var listData = data.data;
+        var nameListArr = [];
+        for (var key in data.data) {
+          nameListArr.push(data.data[key].name)
+          console.log(data.data[key].name)
+        }
+        var sevenOption = {
+          tooltip: {
+            trigger: 'item',
+            formatter: "{b}: {c}"
+          },
+          legend: {
+            orient: 'vertical',
+            left: '68%',
+            top: "20%",
+            itemHeight: 8,
+            itemWidth: 10,
+            textStyle: {
+              fontSize: 12,
+              color: '#88C6FF'
+            },
+            data: nameListArr
+          },
+          series: [{
+            type: 'pie',
+            radius: [30, '55%'],
+            center: ['40%', '65%'],
+            roseType: 'radius',
+            color: ['#0699F4', '#07D0F5', '#D08465', '#09DEEA', '#21C893', '#C1DF55', '#CEB347', '#CE9C4F', '#07A6F4'],
+            data: listData,
+            label: {
+              normal: {
+//                    show:function(){
+//                        if (value == 0.00)
+//                        { return false; }
+//                    }(),
+                textStyle: {
+                  fontSize: 14
+                },
+                formatter: function (param) {
+                  return param.name
+                }
+              }
+            },
+            labelLine: {
+              normal: {
+//                    show:function(value){
+//                        if(value == 0) return false;
+//                    }(),
+                smooth: true,
+                lineStyle: {
+                  width: 1
+                }
+              }
+            },
+            itemStyle: {
+              normal: {
+                shadowBlur: 30,
+                shadowColor: 'rgba(0, 0, 0, 0.4)'
+              }
+            },
+            animationType: 'scale',
+            animationEasing: 'elasticOut'
+          }]
+        }
+
+        sevenChart.setOption(sevenOption, true);
+
+
+      }
+    });
+  }
+  sevenOptionFn();
+
+  function eightOptionFn() {
+    $.ajax({
+      type: "GET",
+      url: "http://www.galaxybigdata.com/show/userArea",
+      dataType: "json",
+      success: function (data) {
+        console.log(data);
+        data = data.data;
+
+
+        var resultdata0 = [];
+        var sum0 = 0;
+        var titledata = [];
+        for (var i = 0; i < data.length; i++) {
+          var d0 = {
+            name: data[i].name,
+            value: data[i].value1 + data[i].value2
+          };
+          titledata.push(data[i].name);
+          resultdata0.push(d0);
+          sum0 += data[i].value1 + data[i].value2;
+        }
+        function NumDescSort(a, b) {
+          return a.value - b.value;
+        }
+
+        resultdata0.sort(NumDescSort);
+        var eightOption = {
+          tooltip: {
+            trigger: 'item',
+            formatter: function (item) {
+              if (isNaN(item.value)) {
+                return item.name
+              } else {
+                return item.name + ":" + item.value
+              }
+
+            }
+          },
+          geo: {
+            map: 'china',
+            top: "20%",
+            left: "15%",
+            label: {
+              normal: {
+                show: false
+              },
+              emphasis: {
+                show: false
+              }
+
+            },
+            itemStyle: {//每块区域的颜色样式
+              normal: {
+                areaColor: {
+                  type: 'radial',
+                  x: 0.9,
+                  y: 1,
+                  r: 1.5,
+                  colorStops: [{
+                    offset: 0, color: '#195DC5 ' // 0% 处的颜色
+                  }, {
+                    offset: 1, color: '#2089E0' // 100% 处的颜色
+                  }],
+                  globalCoord: false // 缺省为 false
+                },
+                borderWidth: .5,//区域边框宽度
+                borderColor: '#009fe8'//区域边框颜色
+              },
+              emphasis: {
+                areaColor: {
+                  type: 'radial',
+                  x: 0.5,
+                  y: 0.5,
+                  r: 0.5,
+                  colorStops: [{
+                    offset: 0, color: '#F9DF2C ' // 0% 处的颜色
+                  }, {
+                    offset: 1, color: '#D2C45D' // 100% 处的颜色
+                  }],
+                  globalCoord: false // 缺省为 false
+                },
+                borderWidth: .5,
+                borderColor: '#4b0082'
+              }
+            }
+          },
+          grid: {
+            right: "5%",
+            bottom: 15,
+            height: "70%",
+            width: '30%'
+          },
+          xAxis: [{
+            position: 'top',
+            type: 'value',
+            boundaryGap: false,
+            splitLine: {
+              show: false
+            },
+            axisLine: {
+              lineStyle: {
+                color: '#88C6FF'
+              }
+            },
+            axisTick: {
+              show: false
+            }
+          }],
+          yAxis: [{
+            type: 'category',
+            data: titledata,
+            axisLine: {
+              lineStyle: {
+                color: '#88C6FF'
+              }
+            },
+            axisTick: {
+              alignWithLabel: true
+            }
+          }],
+          series: [{
+            z: 1,
+            type: 'map',
+            geoIndex: 0,
+            left: '10',
+            top: 100,
+            bottom: "35%",
+            zoom: 0.75,
+            label: {
+              normal: {
+                show: true
+              },
+              emphasis: {
+                show: true
+              }
+            },
+            //roam: true,
+            data: resultdata0
+          }, {
+            z: 2,
+            type: 'bar',
+            label: {
+//                normal: {
+//                    show: true
+//                },
+              emphasis: {
+                show: true
+              }
+            },
+            itemStyle: {
+              normal: {
+                color: {
+                  type: 'linear',
+                  x: 0.9,
+                  y: 1,
+                  r: 1.5,
+                  colorStops: [{
+                    offset: 0.1, color: '#07A6F8' // 100% 处的颜色
+                  }, {
+                    offset: 1, color: '#EDE039' // 100% 处的颜色
+                  }],
+                  globalCoord: false // 缺省为 false
+                },
+                barBorderRadius: [0, 10, 10, 0] //设置圆角
+              },
+              emphasis: {
+                color: "#04A9E9"
+              }
+            },
+            data: resultdata0
+          }]
+        }
+
+        eightChart.setOption(eightOption, true);
+
+      }
+    })
+  }
+
+  eightOptionFn();
+
+  window.onresize = function () {
+    oneChart.resize();
+    twoChart.resize();
+    threeChart.resize();
+    fourChart.resize();
+    fiveChart.resize();
+    sixChart.resize();
+    sevenChart.resize();
+    eightChart.resize();
+  };
+  //  oneChart.setOption(oneOption, true);
+  //  twoChart.setOption(twoOption, true);
+  //  threeChart.setOption(threeOption, true);
+//  fourChart.setOption(fourOption, true);
+//  fiveChart.setOption(fiveOption, true);
+//  sixChart.setOption(sixOption, true);
+//  sevenChart.setOption(sevenOption, true);
+  //  eightChart.setOption(eightOption, true);
+</script>
+</html>

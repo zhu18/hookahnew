@@ -1,0 +1,97 @@
+<div class="grid-0 header-centerbar" style="position: relative">
+	<div class="grid-row" style="position: relative">
+		<div class="logo grid-left"><a href="${host.website}/exchange/index"><img src="/static/images/brand_logo.png" alt=""></a></div>
+		<ul id="navList" class="grid-left">
+			<li class="index"><a href="${host.website}/exchange/index"><span class="text">数据星河</span></a></li>
+			<li class="bdg-cate"><a href="${host.website}/exchange/list?catId=000&prId=101&prNm=%e5%85%a8%e9%83%a8"><span class="text">星河分类</span></a></li>
+			<li class="bdg-projects"><a href="${host.website}/usercenter/buyer/allOrderList"><span class="text">购买记录</span></a></li>
+			<li class="bdg-mine"><a href="${host.website}/usercenter/index"><span class="text">我的BDG</span></a></li>
+		</ul>
+		<ul class="text-align-right topbar-user grid-right margin-left-30" style="margin-top:28px;" >
+			<!--<li class="display-inline-block" style="float:left"><a href="/" class="a-hover-blue">首页</a></li>-->
+			<%if(isEmpty(user)){%>
+			<li class="display-inline-block">
+				<a href="${oauth2.loginUrl}">登录</a>
+			</li>
+			<li class="display-inline-block margin-left-10"><a href="${oauth2.regUrl}" class="color-orange">注册</a></li>
+			<%}else{%>
+			<!--<li class="display-inline-block userInfos">-->
+
+				<!--<a href="javascript:void(0)" class="login">-->
+					<!--欢迎，-->
+					<!--&lt;!&ndash;<span class="fa fa-user-o margin-right-5"></span>&ndash;&gt;-->
+					<!--${user.userName}-->
+				<!--</a>-->
+
+			<!--</li>-->
+			<li class="display-inline-block margin-left-10"><a href="${host.auth}/logout">退出</a></li>
+			<%}%>
+
+
+		</ul>
+		<div class="search grid-right">
+			<div class="search-input">
+				<span class="fa fa-search text-align-center"></span>
+				<input type="text" id="J_searchInput" placeholder="请输入...">
+				<button class="btn btn-full-right-red" id="J_searchBtn">搜索</button>
+			</div>
+			<div class="search-sug">
+				<ul>
+				</ul>
+			</div>
+		</div>
+
+		<!--<div class="shopping-cart grid-right">-->
+		<!--<div class="shopping-cart-top  grid-right">-->
+		<!--<i class="fa fa-shopping-cart color-bright-blue" aria-hidden="true"></i>-->
+		<!--<a href="/cart" class="display-inline-block">我的购物车</a>-->
+		<!--<span>${cartSize!"0"}</span>-->
+		<!--<i class="fa fa-angle-right" aria-hidden="true"></i>-->
+		<!--</div>-->
+		<!--<div class="showLine"></div>-->
+		<!--<div class="shopping-cart-down grid-right">-->
+		<!--<%if(isEmpty(user)){%>-->
+		<!--<div class="shopping-cart-down-title"><h1>你还没有登录</h1></div>-->
+		<!--<div class="goLogin text-align-center"><a href="${oauth2.loginUrl}" class="color-blue">去登录</a></div>-->
+		<!--<%}else{%>-->
+		<!--<%if(has(cartSize) && cartSize > 0){%>-->
+		<!--<div class="shopping-cart-down-title"><h1>最新加入的商品</h1></div>-->
+		<!--<div class="shopping-cart-down-content">-->
+		<!--<ul>-->
+		<!--<%for(list in cartList){%>-->
+		<!--<li>-->
+		<!--&lt;!&ndash;<div class="content-top clearfix">&ndash;&gt;-->
+		<!--&lt;!&ndash;<div class="font-weight-normal grid-left"><span>满减</span>购满599元，即可享受满减优惠</div>&ndash;&gt;-->
+		<!--&lt;!&ndash;<div class="grid-right">小计：<span>￥299.00</span></div>&ndash;&gt;-->
+		<!--&lt;!&ndash;</div>&ndash;&gt;-->
+		<!--<div class="content-down">-->
+		<!--<a class="img" href="/exchange/details?id=${list.goodsId}"><img src="http://static.qddata.com.cn/${list.goodsImg}" alt=""></a>-->
+		<!--<div class="content-down-name display-inline-block">-->
+		<!--<a href="/exchange/details?id=${list.goodsId}">${list.goodsName}</a>-->
+		<!--</div>-->
+		<!--<div class="grid-right font-weight-bold content-down-money">-->
+		<!--<div class=""><span class="color-red">￥${list.goodsPrice / 100}</span>×${list.goodsNumber}</div>-->
+		<!--&lt;!&ndash;<a href="" class="grid-right font-weight-normal">删除</a>&ndash;&gt;-->
+		<!--<%if(list.goods.isOnsale == 0){%>-->
+		<!--<span class="color-orange">此商品已下架</span>-->
+		<!--<%}%>-->
+		<!--</div>-->
+		<!--</div>-->
+		<!--</li>-->
+		<!--<%}%>-->
+		<!--</ul>-->
+		<!--</div>-->
+		<!--<%}else{%>-->
+		<!--<div class="shopping-cart-down-title"><h1>购物车还没有商品</h1></div>-->
+		<!--<div class="goLogin text-align-center"><a href="${host.websita}/exchange/index" class="color-blue">去购物</a></div>-->
+		<!--<%}%>-->
+		<!--<div class="shopping-cart-down-pay">-->
+		<!--<div class="display-inline-block">共<span>${cartSize!"0"}</span>件商品</div>-->
+		<!--<a href="/cart" class="go-cart display-inline-block grid-right btn btn-full-red">去购物车</a>-->
+		<!--</div>-->
+		<!--<%}%>-->
+		<!--</div>-->
+		<!--</div>-->
+	</div>
+
+</div>

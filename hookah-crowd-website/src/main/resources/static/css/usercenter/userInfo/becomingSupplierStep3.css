@@ -1,0 +1,44 @@
+.becomingSupplierStep3{
+    padding:85px 168px 0px 168px;
+}
+.becomingSupplierStep1-progress-bar ul li:nth-child(2){
+    color: #F53839;
+}
+.becomingSupplierStep1-progress-bar ul li:nth-child(2) span{
+    background-color: #F53839;
+}
+.becomingSupplierStep1-progress-bar ul li:last-child{
+    color: #F53839;
+}
+.becomingSupplierStep1-progress-bar ul li:last-child span{
+    background-color: #F53839;
+}
+
+.becomingSupplierStep1-progress-bar ul li:first-child:before{
+    background-color: #F53839 !important;
+}
+.becomingSupplierStep1-progress-bar ul li:last-child:before{
+    background-color: #F53839 !important;
+}
+
+.becomingSupplierStep3-info p{
+    height: 36px;
+    line-height:36px;
+    font-size: 14px;
+    color: #666666;
+}
+.becomingSupplierStep3-info .btn{
+    display:block;
+    width: 130px;
+    height: 36px;
+    font-size: 14px;
+    line-height:36px;
+    text-align: center;
+    margin: auto;
+    margin-top: 80px;
+    color: #ffffff;
+    background-color: #4F95F4;
+}
+.becomingSupplierStep3-info .status{
+    color: #1fbb0f;
+}

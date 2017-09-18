@@ -1,0 +1,231 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/plugins/jedate/jedate.css">
+<link rel="stylesheet" href="/static/css/auth/user_auth_init.css">
+<link rel="stylesheet" href="/static/css/auth/company_auth_init.css">
+<script src="/static/js/plugins/widget/jquery.ui.widget.js"></script>
+<script src="/static/js/plugins/fileupload/jquery.fileupload.js"></script>
+<script src="/static/js/plugins/jedate/jquery.jedate.min.js"></script>
+<script src="/static/js/plugins/validate/jquery-validate.js"></script>
+<script src="/static/js/plugins/validate/messages_zh.js"></script>
+<%};%>
+<%
+var htmlPart = {
+%>
+<div class="grid-0  backgorund-gray">
+	<div class="grid-row padding-bottom-30 padding-top-10">
+		<div class="auth-box">
+			<div class="auth-title clearfix">
+				<h3 class="grid-left">单位认证</h3>
+			</div>
+			<div class="auth-content">
+				<!--认证信息开始-->
+				<div class="auth-info">
+					<div class="steps">
+						<div class="img-show step2"></div>
+						<ul class="txt clearfix">
+							<li class="grid-left blue">阅读购买协议</li>
+							<li class="grid-left">提交认证信息</li>
+							<li class="grid-left">等待审核</li>
+							<li class="grid-left last">完成</li>
+						</ul>
+					</div>
+					<div id="authForm">
+						<form id="companyForm" name="companyForm">
+							<div class="auth-info">
+								<h3>单位认证信息</h3>
+								<ul class="typeBox">
+									<li>
+										<label><span>单位名称：</span><span class="gs">*</span></label>
+										<div class="inputBoxs">
+											<input name="governmentName" placeholder="请输入单位全称" type="text"/>
+										</div>
+									</li>
+									<li>
+										<label><span>统一社会信用代码：</span></label>
+										<div class="inputBoxs">
+											<input name="creditCode" placeholder="请输入统一社会信用代码" type="text"/>
+										</div>
+									</li>
+									<li>
+										<label><span>经营范围：</span><span class="gs">*</span></label>
+										<div class="inputBoxs">
+											<input type="text" name="mainBusiness" placeholder="请输入经营范围"/>
+										</div>
+									</li>
+									<li>
+										<label><span>法定代表人：</span><span class="gs">*</span></label>
+										<div class="inputBoxs">
+											<input type="text" name="companyLegal" placeholder="请输入单位的法定代表人"/></div>
+									</li>
+									<li>
+										<label><span>法定代表人证件类别：</span></label>
+										<div class="inputBoxs">
+											<select name="" id="">
+												<option value="">居民身份证</option>
+											</select>
+										</div>
+									</li>
+									<li>
+										<label><span>法定代表人证件编号：</span><span class="gs">*</span></label>
+										<div class="inputBoxs"><input type="text" name="lawPersonNum" placeholder="请输入法定代表人证件编号"/></div>
+									</li>
+									<li>
+										<label><span>法定代表人证件照：</span></label>
+										<span style="line-height: 32px;">请上传在有效期之内的身份证照片或扫描件</span>
+									</li>
+									<li>
+										<div class="upLoad upLoad_d">
+											<label>
+												<input type="file" name="filename" multiple="multiple" class="unloadBtn" accept="image/gif,image/jpeg,image/jpg,image/png"/>
+											</label>
+											<input type="hidden" class="input_hide" name="lawPersonPositivePath">
+											<input type="text"  class="input_op">
+											<img src="/static/images/auth/id_0.jpg" alt="" id="lawPersonPositivePath"/>
+											<span class="upLoad_warp">点击上传图片</span>
+										</div>
+										<div class="upLoad upLoad_d">
+											<label>
+												<input type="file" name="filename" multiple="multiple" class="unloadBtn" accept="image/gif,image/jpeg,image/jpg,image/png"/>
+											</label>
+											<input type="hidden" class="input_hide" name="lawPersonNegativePath">
+											<input type="text"  class="input_op">
+											<img src="/static/images/auth/id_1.jpg" alt="" id="lawPersonNegativePath"/>
+											<span class="upLoad_warp">点击上传图片</span>
+										</div>
+									</li>
+									<li>
+										<label><span>注册地址：</span><span class="gs">*</span></label>
+										<div class="linkage">
+											<select id="registerProvince" name="registerProvince" onchange="loadRegion('registerCity', this)">
+												<option value="">全部</option>
+											</select>
+											<select id="registerCity" name="registerCity">
+												<option value="">全部</option>
+											</select>
+											<input class="margin-top-5" type="text" name="address" placeholder="请输入公司注册的详细地址，与营业执照住所保持一致"/>
+										</div>
+									</li>
+									<li>
+										<label><span>办公地址：</span><span class="gs">*</span></label>
+										<div class="linkage">
+											<select id="workProvince" name="workProvince" onchange="loadRegion('workCity', this)">
+												<option value="">全部</option>
+											</select>
+											<select id="workCity" name="workCity">
+												<option value="">全部</option>
+											</select>
+											<input class="margin-top-5" type="text" name="workAddress" placeholder="请输入公司办公的详细地址"/>
+										</div>
+									</li>
+									<li>
+										<label><span>联系电话：</span><span class="gs">*</span></label>
+										<div class="inputBoxs"><input type="text" name="tel" placeholder="请输入公司座机，区号+电话号码，如：053286617555"/></div>
+									</li>
+									<li>
+										<label><span>营业执照编号：</span></label>
+										<div class="inputBoxs">
+											<input type="text" name="businessLicence" placeholder="请输入营业执照编号"/></div>
+									</li>
+									<li>
+										<label><span>上传营业执照：</span></label>
+										<span class="p_title">上传加盖公章的扫描件</span>
+									</li>
+									<li>
+										<div class="upLoad">
+											<label>
+												<input type="file"  name="filename" multiple="multiple" class="unloadBtn" accept="image/gif,image/jpeg,image/jpg,image/png"/>
+											</label>
+											<input type="hidden" class="input_hide" id="licensePathSrc">
+											<input type="text" name="licensePath" class="input_op">
+											<img src="/static/images/auth/bk.jpg" alt="" id="licensePath"/>
+											<span class="upLoad_warp">点击上传图片</span>
+										</div>
+									</li>
+									<li>
+										<label><span>税务登记证编号：</span></label>
+										<div class="inputBoxs">
+											<input type="text" name="taxRegCertificate" placeholder="请输入税务登记编号"/>
+										</div>
+									</li>
+									<li><label><span>上传税务登记证：</span></label><span class="p_title">上传加盖公章的扫描件</span></li>
+									<li>
+										<div class="upLoad upLoad_dk">
+											<label>
+												<input type="file" name="filename" multiple="multiple" class="unloadBtn" accept="image/gif,image/jpeg,image/jpg,image/png"/>
+											</label>
+											<input type="hidden" class="input_hide"  id="taxPathSrc">
+											<input type="text" name="taxPath" class="input_op">
+											<img src="/static/images/auth/dk.jpg" alt="" id="taxPath"/>
+											<span class="upLoad_warp">点击上传图片</span>
+										</div>
+									</li>
+									<li>
+										<label><span>组织机构代码：</span></label>
+										<div class="inputBoxs"><input type="text" name="certificateCode" placeholder="请输入信用代码证编号"/></div>
+									</li>
+									<li><label><span>上传组织机构代码证：</span></label><span class="p_title">上传加盖公章的扫描件</span></li>
+									<li>
+										<div class="upLoad upLoad_dk">
+											<label>
+												<input type="file"  name="filename" multiple="multiple" class="unloadBtn" accept="image/gif,image/jpeg,image/jpg,image/png"/>
+											</label>
+											<input type="hidden" class="input_hide" id="certifictePathSrc">
+											<input type="text" name="certifictePath" class="input_op">
+											<img src="/static/images/auth/sk.jpg" alt="" id="certifictePath"/>
+											<span class="upLoad_warp">点击上传图片</span>
+										</div>
+									</li>
+									<li>
+										<label><span></span><span class="gs">*</span></label>
+										<div class="inputBoxs tips_box" style="font-size:14px;">
+											提示：
+											<br>
+											1.请点击下面的“点击下载”，下载协议模板；
+											<br>
+											2.提交认证申请后，请将下载的用户协议打印2份，请贵单位签字、盖章；快递至数据星河BDGStore，BDGStore在收前述纸质文件后，将尽快审核。
+											<br><br>
+											<span style="width:75px;display: inline-block;text-align: right;">收件地址：</span>${address}
+											<br>
+											<span style="width:75px;display: inline-block;text-align: right;">邮编：</span>${email}
+											<br>
+											<span style="width:75px;display: inline-block;text-align: right;">收件人：</span>${name}
+											<br>
+											<span style="width:75px;display: inline-block;text-align: right;">手机号：</span>${mobile}
+											<br>
+											<span style="width:75px;display: inline-block;text-align: right;">电话：</span>${phone}
+											<br>
+										</div>
+									</li>
+									<li>
+										<label><span>下载协议模板：</span></label>
+										<div class="inputBoxs"><a class="J_downLoadBtn btn btn-default" href="${host.static}/static/userAuth/用户协议2017-7-18.docx">点击下载</a></div>
+									</li>
+									<li>
+										<label></label>
+										<div class="inputBoxs">
+											<label><input type="checkbox" name ="fruit" class="margin-right-5 supplier vertical-align-middle" value="1">同时申请成为供应商</label>
+											<p class="supplier-info">
+												申请成为供应商，请点击下载 <a href="http://static.galaxybigdata.com/supplier/BDGStore产品代理协议.doc" target="_blank" class="a-color-blue">《BDGStore产品代理协议》</a><!--（签署版）-->，在提交申请后，按协议模版填写好内容打印、盖章后快递至数据星河BDGStore。
+											</p>
+										</div>
+									</li>
+								</ul>
+
+								<div class="button">
+									<button id="verifyBtn" type="button" class="btn-full-blue">立即认证</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<!--认证信息结束-->
+			</div>
+		</div>
+	</div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+<script type="text/javascript" src="/static/js/auth/company_auth_step2.js"></script>

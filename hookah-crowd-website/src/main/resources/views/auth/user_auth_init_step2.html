@@ -1,0 +1,87 @@
+<%
+var head = {
+%>
+<!--<link rel="stylesheet" href="/static/css/plugins/sweetalert/sweetalert.css">-->
+<link rel="stylesheet" href="/static/css/auth/user_auth_init.css">
+<script src="/static/js/plugins/widget/jquery.ui.widget.js"></script>
+<script src="/static/js/plugins/fileupload/jquery.fileupload.js"></script>
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0  backgorund-gray">
+    <div class="grid-row padding-bottom-30 padding-top-10">
+        <div class="auth-box">
+            <div class="auth-title clearfix">
+                <h3 class="grid-left">个人认证</h3>
+                <!--<p class="grid-right"><a class="blue" href="javascript:void(0)">去用户中心</a></p>-->
+            </div>
+            <div class="auth-content">
+                <!--认证信息开始-->
+                <div class="auth-info" >
+                    <div class="steps">
+                        <div class="img-show step2"></div>
+                        <ul class="txt clearfix">
+                            <li class="grid-left blue">阅读购买协议</li>
+                            <li class="grid-left blue">提交认证信息</li>
+                            <li class="grid-left">等待审核</li>
+                            <li class="grid-left last">完成</li>
+                        </ul>
+                    </div>
+                    <form action="" id="authForm" enctype="multipart/form-data">
+                        <div class="auth-info">
+                            <h3>个人认证信息</h3>
+                            <ul class="clearfix">
+                                <li>
+                                    <label for="userName" class="tit">姓名：</label>
+                                    <input type="text" id="userName" class="txt" placeholder="务必填写本人真实姓名，便于我们提供技术支持">
+                                    <p class="error_tip name_error_tip"></p>
+                                </li>
+                                <li>
+                                    <label for="userCode" class="tit">身份证号：</label>
+                                    <input type="text" id="userCode" class="txt" placeholder="请正确填写本人身份证号码">
+                                    <p class="error_tip code_error_tip"></p>
+                                </li>
+                                <li>
+                                    <label for="userCode" class="tit">上传身份证：</label>
+                                    <span style="line-height: 32px;">请上传在有效期之内的身份证照片或扫描件</span>
+                                </li>
+                                <li class="submit-file">
+                                    <div id="zform" class="file_item">
+                                        <span class="warp">点击上传</span>
+                                        <input type="text" class="hidVal" id="z_hidVal">
+                                        <label for="submit1" style="display:block;height:135px;">
+                                            <input type="file" id="submit1" multiple="multiple" name="filename"  accept="image/gif,image/jpeg,image/jpg,image/png"/>
+                                            <img src="/static/images/auth/id_0.jpg" alt="" id="zm"/>
+                                        </label>
+                                    </div>
+                                    <div id="fform" class="file_item">
+                                        <span class="warp">点击上传</span>
+                                        <input type="text" class="hidVal" id="f_hidVal">
+                                        <label for="submit2">
+                                            <input type="file" id="submit2" multiple="multiple" name="filename"  accept="image/gif,image/jpeg,image/jpg,image/png"/>
+                                            <img src="/static/images/auth/id_1.jpg" alt="" id="fm"/>
+                                        </label>
+                                    </div>
+                                    <p class="error_tip z_error_tip"></p>
+                                    <p class="error_tip f_error_tip"></p>
+                                </li>
+                                <li class="auth-submit">
+                                    <div class="button btn-full-blue">立即认证</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+                <!--认证信息结束-->
+            </div>
+        </div>
+    </div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+<!--<script src="/static/js/plugins/sweetalert/sweetalert.min.js"></script>-->
+
+<script type="text/javascript" src="/static/js/auth/user_auth_step2.js"></script>

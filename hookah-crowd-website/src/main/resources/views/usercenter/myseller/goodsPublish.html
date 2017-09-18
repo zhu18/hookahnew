@@ -1,0 +1,53 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
+<link rel="stylesheet" href="/static/css/usercenter/myseller/goodsPublish.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="info-center-box grid-right margin-top-10">
+            <div class="category-search category-label">
+                <label>类目搜索：</label>
+                <span class="search">
+                    <input type="text" id="input-search">
+                    <span class="clean" style="display: none" >X</span>
+                    <button class="btn btn-full-orange" id="btn-search">搜索</button>
+                </span>
+            </div>
+            <div class="search-list">
+                <ul></ul>
+            </div>
+            <!--<div class="lastused-category category-label">-->
+                <!--<label>最近使用的类目：</label>-->
+                <!--<select>-->
+                    <!--<option value="">请选择</option>-->
+                    <!--<option value="">分类1</option>-->
+                    <!--<option value="">分类2</option>-->
+                <!--</select>-->
+            <!--</div>-->
+            <div class="select-category-box"></div>
+            <div class="cate-path">
+                <div class="clearfix">
+                    <label>您当前的选择是：</label>
+                    <span class="clearfix-content"></span>
+                </div>
+                <span class="arrow"></span>
+            </div>
+            <div class="pulish-btn">
+                <button class="btn btn-full-orange" id="pusblishBtn">
+                    发布商品
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+<script type="text/javascript" src="/static/js/usercenter/myseller/goodsPublish.js"></script>

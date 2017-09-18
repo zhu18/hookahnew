@@ -1,0 +1,37 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/becomingSupplierStep3.css">
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/common-progress-bar.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="grid-right info-center-box ">
+            <div class="becomingSupplierStep3">
+                <div class="becomingSupplierStep1-progress-bar">
+                    <ul class="clearfix">
+                        <li><span class="active"><i>1</i></span>下载合作协议</li>
+                        <li><span><i>2</i></span>提出申请</li>
+                        <li><span><i>3</i></span>等待平台审核</li>
+                    </ul>
+                </div>
+                <div class="becomingSupplierStep3-info">
+                    <p>您的申请已经 <span class="status">提交成功</span>，按供应商合作协议模板填写内容打印、盖章快递至数据星河BDGStore。我们</p>
+                    <p>在收到您的申请材料后，将尽快审核完毕，请及时关注审核进度。</p>
+                    <a href="/usercenter/index" class="btn">返回基本信息</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>

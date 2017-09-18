@@ -1,0 +1,103 @@
+<%
+var head = {
+%>
+<meta http-equiv= "Pragma" content= "no-cache" />
+<meta http-equiv= "Cache-Control" content= "no-cache" />
+<meta http-equiv= "Expires" content= "0" />
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/withdrawals.css">
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
+<link rel="stylesheet" href="/static/css/plugins/jedate/jedate.css">
+<script src="/static/js/plugins/jedate/jquery.jedate.min.js"></script>
+<script type="text/javascript" src="/static/js/plugins/md/md5.js"></script>
+<script src="/static/js/plugins/validate/jquery-validate.js"></script>
+<script src="/static/js/plugins/validate/messages_zh.js"></script>
+<script type="text/javascript">
+    var pagePath = host.website+'/withdrawRecord/getList';
+    var pageType = 'get';
+    var dataParm = {};
+    dataParm.pageNumber = 1;
+    dataParm.pageSize = 10;
+</script>
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="grid-right info-center-box ">
+            <div class="header">
+                <h4 class="center-title">提现</h4>
+            </div>
+            <div class="withdrawals-top">
+                <form id="form" action="" class="withdrawals-content" autocomplete="off">
+                    <div class="apply-money form-item">
+                        <label for="money">申请提现金额：</label>
+                        <input type="text" id="money" name="money" autocomplete="off">元
+                        <span>可用金额</span>
+                        ￥<span class="money color-orange font-size-16">${payBankCard.payAccountId / 100}</span>
+                        <a href="javascript:void(0)" id="withdrawals-btn" class="blue margin-left-15 color-blue ">全部提现</a>
+                    </div>
+                    <div class="cash-account form-item">
+                        <label for=""><span class="color-red">*</span>提现账号：</label>
+                        <div class="cash-account-card">
+                           <h4>${payBankCard.bankName}</h4>
+                           <p><span >银行卡号：</span><span id="cardNo">${payBankCard.cardCode}</span></p >
+                           <p><span>账户名：</span>${payBankCard.cardOwner}</p >
+                        </div>
+                    </div>
+                    <div class="trade-password form-item">
+                        <label for="password"><span class="color-red">*</span>交易密码：</label>
+                        <input type="password"  id="password" name="password" maxlength="6" placeholder="输入交易密码"  autocomplete="off" data-inner_placeholder="r_p_input_enterPassword" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false">
+                    </div>
+                    <div class="form-item payment">
+                        <a class="btn" id="goPay" >去支付</a>
+                    </div>
+                </form>
+            </div>
+            <div class="withdrawals-down" id="one">
+                <h4>提现申请记录</h4>
+                <ul class="search-criteria margin-top-10 ">
+                    <li class="status">
+                        <span>状态</span>
+                        <ul class="clearfix">
+                            <li data-status="" class="active">全部</li>
+                            <li data-status="1">审核成功</li>
+                            <li data-status="2">审核未成功</li>
+                            <li data-status="0">待审核</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span>时间</span>
+                        <div class="time-box">
+                            <input id="startDate" type="text" placeholder="请选择开始时间" readonly="">
+                            <div class="line"></div>
+                            <input id="endDate" type="text" placeholder="请选择结束时间" readonly="">
+                        </div>
+                    </li>
+                </ul>
+                <table class="withdrawals-down-list">
+                    <thead>
+                    <tr>
+                        <th>流水号</th>
+                        <th>申请提现时间</th>
+                        <th>提现金额(元)</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody class="ithdrawals-down-list-content">
+
+                    </tbody>
+                </table>
+                <%include("/layout/pageaction.html"){} %>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+<script type="text/javascript" src="/static/js/usercenter/userInfo/withdrawals.js"></script>

@@ -1,0 +1,122 @@
+.trade-box{
+
+}
+.trade-box table {
+    width: 100%;
+}
+.trade-box table tr {
+    border: 1px solid #e5e5e5;
+
+}
+
+.trade-box table th {
+    background: #f5f6fa;
+    height: 39px;
+    line-height: 39px;
+    padding: 0 10px;
+}
+.trade-box table td {
+    padding:0 10px;
+}
+.trade-box table td a{
+    display: block;
+    padding:10px;
+    text-align:center;
+    max-width: 200px;
+    margin: 0 auto;
+}
+.trade-box .text-right {
+    text-align: right;
+}
+.trade-box .text-center {
+    text-align: center;
+}
+.trade-box table td a img{
+    width:70px;
+    height:70px;
+}
+.trade-box table td a p{
+    word-break: break-all;
+}
+.wrapper-tab{
+    margin-bottom: 10px;
+    border-bottom: 1px solid #e9e9e9;
+}
+.wrapper-tab li{
+    float: left;
+    height:30px;
+    width: 15%;
+    font-size: 16px;
+    text-align: center;
+    line-height: 30px;
+}
+.wrapper-tab .active{
+    height:30px;
+    width: 133px;
+    display: inline-block;
+    border-bottom: 2px solid #F17D17;
+}
+.wrapper-tab .active a{
+    color: #F17D17;
+}
+.wrapper-tab .trade-box{
+
+}
+/*搜索条件样式开始*/
+.searchQuery{
+    height: 50px;
+}
+
+.searchQuery .date{
+    width: 55%;
+    margin-bottom:28px;
+}
+.searchQuery .start-date,.searchQuery .end-date{
+    margin-right:50px;
+}
+.searchQuery #startDate,.searchQuery #endDate{
+    height: 25px;
+    padding-left:5px;
+    border:1px solid #ccc;
+}
+.searchQuery #startDate:focus,.searchQuery #endDate:focus{
+    border:1px solid #ccc;
+}
+.searchQuery .search{
+    cursor: pointer;
+}
+#noPaySearch{
+    height: 40px;
+}
+.searchQuery .searchInput{
+    position: relative;
+}
+.searchQuery .searchInput input{
+    width:220px;
+    height:28px;
+    padding:0 5px;
+    border:1px solid #ccc;
+}
+.searchQuery .searchInput .cleanBtn{
+    position: absolute;
+    margin: 4px 0 0 -21px;
+    display: block;
+    padding: 3px;
+    color: #ccc;
+    cursor: pointer;
+    font-size: 16px;
+    left: 290px;
+    top: 0px;
+}
+.searchQuery .searchInput .cleanBtn:hover{
+    color:#333;
+}
+.searchQuery .spanTitle{
+    font-weight: 800;
+}
+.searchQuery select{
+    min-width: 60px;
+    height:30px;
+    birder:1px solid #ccc;
+}
+/*搜索条件样式结束*/

@@ -1,0 +1,55 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/exchange/style.css">
+<script type="text/javascript">
+	$.getUrlParam = function (key) {
+		var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+		var result = window.location.search.substr(1).match(reg);
+		return result ? decodeURIComponent(result[2]) : null;
+	};
+	var catId = $.getUrlParam('catId');
+	var prId = $.getUrlParam('prId');
+	var prNm = $.getUrlParam('prNm');
+	var msId = $.getUrlParam('msId');
+	var msNm = $.getUrlParam('msNm');
+	var names = $.getUrlParam('names');
+	var pagePath = '/search/v1/goods';
+	var pageType = 'post';
+	var dataParm = {};
+	dataParm.pageNumber = 1;
+	dataParm.pageSize = 20;
+	dataParm.esGoods = {};
+	dataParm.range = {};
+	dataParm.esGoods.catIds = catId;
+	dataParm.esGoods.names = names;
+</script>
+<script src="/static/js/exchange/common.js"></script>
+<script src="/static/js/exchange/list.js"></script>
+<%};%>
+<%
+var htmlPart = {
+%>
+<div class="grid-0 exchange-list">
+	<div class="grid-row">
+		<div class="search">
+			<div class="bdg-row exchange-search" style="position: relative">
+				<!--头部类目展示模块-->
+				<%include("/layout/menu.html"){} %>
+				<div class="search-category" id="J_searchCategory">
+				</div>
+				<!--中间主体列表展示模块-->
+				<%include("/exchange/search-conditions.html"){} %>
+				<div class="order-list">
+					<ul>
+					</ul>
+				</div>
+				<%include("/layout/pageaction.html"){} %>
+			</div>
+		</div>
+	</div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+

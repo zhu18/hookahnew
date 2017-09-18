@@ -1,0 +1,404 @@
+h1{
+    font-size: 14px;
+    padding: 0 20px;
+    color: #000;
+}
+.struct{
+    margin:10px 0;
+    padding:5px;
+}
+.num {
+    height: 38px;
+    line-height: 38px;
+}
+.struct.selects{
+    display: none;
+}
+.api-info-box{display: none;}
+.struct table{width:100%}
+.struct tr{}
+.struct tr td{
+    padding:3px 5px;
+    line-height: 24px;
+}
+.help-block{
+    display: block;
+    color: #cc2629
+}
+.attribute-bd .search-select-box .search-txt{
+    width: 560px;
+    height: 30px;
+    border: 1px solid #ccc;
+    position: relative;
+    cursor: text;
+}
+.attribute-bd .search-select-box .search-txt span{
+    position: absolute;
+    right:10px;
+    top:10px;
+}
+.attribute-bd .search-option{
+    display: none;
+    margin-top: -32px;
+    width:552px;
+    max-height:200px;
+    position: absolute;
+    background: #fff;
+    z-index: 999;
+    border: 1px solid #d7d7d7;
+    padding:5px;
+}
+.attribute-bd .search-option input{
+    width:222px;
+    height:26px;
+    padding:0 3px;
+    border:1px solid #ccc;
+}
+.attribute-bd .search-option ul{
+    max-height: 172px;
+    overflow-y: scroll;
+}
+.attribute-bd .search-option ul li{
+    line-height: 26px;
+    padding-left: 5px;
+}
+.attribute-bd .search-option ul li:nth-child(even){
+    background: #f8f8f8;
+}
+.attribute-bd .search-option ul li:hover{
+    background: #f6f6f6;
+}
+.text-box input{
+    width: 700px;
+    border: 1px solid #ccc;
+    height: 22px;
+    color: #333;
+    padding: 2px 5px;
+}
+.selects .text-box input{
+    width: 400px;
+    border: 1px solid #ccc;
+    height: 22px;
+    color: #333;
+    padding: 2px 5px;
+}
+.selects .date-box input{
+    width: 182px;
+    border: 1px solid #ccc;
+    height: 22px;
+    color: #333;
+    padding: 2px 5px;
+}
+.select-box select{
+    height:30px;
+    line-height:20px;
+    padding:2px 0
+}
+.errors{
+    white-space: normal;
+    word-wrap: break-word;
+    overflow: hidden;
+    word-break: break-all;
+    padding: 0 10px 0 0;
+    color: #EA4A36;
+    line-height: 24px;
+    display: none;
+}
+.textarea-box textarea{
+    width: 700px;
+    border: 1px solid #ccc;
+    height: 80px;
+    color: #333;
+    padding: 2px 5px;
+    resize:none;
+}
+.selects .textarea-box textarea{
+    width: 620px;
+    border: 1px solid #ccc;
+    height: 80px;
+    color: #333;
+    padding: 2px 5px;
+    resize:none;
+}
+.input-count{
+    margin-left:10px;
+    vertical-align: top;
+    display: inline-block;
+}
+.struct tr td.bar{
+    width: 108px;
+    text-align: right;
+    vertical-align: top;
+    position: relative;
+}
+.struct tr td.bar .requireds{
+    position: absolute;
+    right: 0px;
+    top:0;
+    display: block;
+    line-height: 41px;
+    font-size: 14px;
+    color: #cc2629;
+}
+.table-box{width:712px;}
+.table-box table{
+    /*border: 1px solid #d7d7d7;*/
+}
+.table-box table th{
+    background-color: #f8f8f8;
+    border: 1px solid #d7d7d7;
+    white-space: nowrap;
+    font-weight: 400;
+    padding: 1px 0;
+    text-align: center;
+}
+.table-box table td{
+    border: 1px solid #d7d7d7;
+    padding: 1px 0;
+    text-align: center;
+    white-space: nowrap;
+}
+.table-box table td .table-plus-btn{
+    display: inline-block;
+    width:20px;
+    cursor: pointer;
+}
+.inputbox input{
+    border: 0;
+    width: 100%;
+    text-align: center;
+    background: #fff;
+    height: 23px;
+    text-indent: 3px;
+}
+.inputbox textarea{
+    border: 0;
+    width: 100%;
+    text-align: center;
+    background: #fff;
+    min-height: 23px;
+    text-indent: 3px;
+}
+.selectbox select{
+    width: 100%;
+    text-align: center;
+    background: #fff;
+    height: 23px;
+    text-indent: 3px;
+}
+.checkbox-box input{
+    margin-right: 5px;
+}
+.radio-box input{
+    margin-right: 5px;
+}
+.radio-box label,.checkbox-box label{
+    margin-right:15px;
+}
+.multimage-wrap {
+    margin-bottom: 10px;
+}
+.multimage-wrap .image-list {
+    display: inline-block;
+}
+.multimage-wrap .image-list li {
+    border: 1px solid #cdcdcd;
+    cursor: pointer;
+    height: 100px;
+    width: 100px;
+    display:table;
+    line-height: 0px;
+    table-layout:fixed;
+}
+.multimage-wrap .image-list li .preview {
+    list-style: none;
+    z-index: 0;
+    text-align: center;
+    background-color: #f6f6f6;
+    height: 100px;
+    width: 100px;
+    position: relative;
+    display: table-cell;
+    vertical-align: middle;
+}
+.multimage-wrap .image-list li .preview .upload-tip {
+    color: #a5a3a3;
+    font-size: 30px;
+    position:absolute;
+    top:0px;
+    left:0px;
+    width:100px;
+    line-height:100px;
+}
+.multimage-wrap .image-list li .preview .preview-img{
+    text-align: center;
+    vertical-align: middle;
+    max-width: 100%;
+    max-height: 100%;
+    background: #f6f6f6;
+}
+.multimage-wrap .image-list li .preview .preview-btn {
+    font-size: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100px;
+    height: 100px;
+    background: rgba(0,0,0,0);
+    cursor: pointer;
+    z-index: 40;
+    filter:alpha(opacity=0); /* IE */
+    -moz-opacity:0; /* 老版Mozilla */
+    -khtml-opacity:0; /* 老版Safari */
+    opacity: 0; /* 支持opacity的浏览器*/
+}
+.multimage-wrap .image-list li .preview .replace-btn {
+    display: none;
+    color: #fff;
+    background: rgba(0,0,0,0.8);
+    cursor: pointer;
+    font-size: 14px;
+    position: absolute;
+    top: 0px;
+    left: 0;
+    text-decoration: none;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 100px;
+    z-index: 30;
+}
+.multimage-wrap .image-list li .preview .help-block{
+    position: absolute;
+    left: 100px;
+    top: 0;
+    width: 100%;
+    display: block;
+    cursor: default;
+}
+.radio-box .isOnsale-box{display: none;}
+.radio-box .isOnsale-box input {
+    width:200px;
+    height:30px;
+    border:1px solid #ccc;
+
+}
+.info.block {
+    line-height: 26px;
+    display: inline-block;
+    color: #767676;
+}
+.struct tr td tr td{padding:3px 5px;}
+.pulish-btn{
+    margin:30px 0;
+    text-align: center;
+}
+.pulish-btn button {
+    min-width: 150px;
+    height: 40px;
+    border-radius: 3px;
+    border: none;
+}
+.fileUploads{
+    position: relative;
+}
+.fileUploads button{
+    width:100px;
+    height:32px;
+    border:1px solid #ccc;
+    background: #fff;
+    border-radius:5px;
+    margin-right:20px;
+}
+#fileupload2{
+    height:32px;
+    position: absolute;
+    left:0;
+    top:0;
+    filter:alpha(opacity=0); /* IE */
+    -moz-opacity:0; /* 老版Mozilla */
+    -khtml-opacity:0; /* 老版Safari */
+    opacity: 0; /* 支持opacity的浏览器*/
+    cursor: pointer;
+}
+.childrenSelect{
+    display: none;
+}
+.struct tr td tr td.bar{
+    text-align:left;
+    width:90px;
+}
+.uploadFiles {
+    position: relative;
+    display: inline-block;
+    background: #D0EEFF;
+    /*border: 1px solid #99D3F5;*/
+    border-radius: 4px;
+    padding: 0 10px;
+    overflow: hidden;
+    color: #1E88C7;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 28px;
+    margin-left: 10px;
+}
+.uploadFiles input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    filter:alpha(opacity=0); /* IE */
+    -moz-opacity:0; /* 老版Mozilla */
+    -khtml-opacity:0; /* 老版Safari */
+    opacity: 0; /* 支持opacity的浏览器*/
+}
+.uploadFiles:hover {
+    background: #AADFFD;
+    border-color: #78C3F3;
+    color: #004974;
+    text-decoration: none;
+}
+.readonlyInput{
+    position: relative;
+}
+.readonlyWrap{
+    width:412px;
+    height:28px;
+    position: absolute;
+    left:0;
+    top:0;
+}
+#bars{
+    position: absolute;
+    left: 5px;
+    top: 45px;
+    width: 90px;
+    height: 10px;
+    background: rgb(230, 230, 230);
+    border-radius: 5px;
+    overflow: hidden;
+    display: none;
+}
+#barSmail{
+    height: 100%;
+    position: absolute;
+    background: rgb(30, 177, 37);
+    left: 0px;
+    top: 0px;
+}
+#barText{
+    width:100%;
+    height: 100%;
+    line-height: 10px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    text-shadow: rgb(204, 204, 204) 0px 0px 1px;
+    font-size: 10px;
+}
+.radio-box .isOnsale-box .help-block{
+    padding-top: 35px;
+}
+.file-info-box .date-box .help-block{margin-top:30px;}

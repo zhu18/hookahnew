@@ -1,0 +1,341 @@
+
+.basic-information-top {
+    width:100%;
+    border: 1px solid #E5E5E5;
+}
+.basic-information-top  .basic-information-top-title{
+    width: calc(100% - 14px );
+    height: 39px;
+    font-size: 14px;
+    color:#333333;
+    line-height: 39px;
+    padding-left: 14px;
+    border-bottom: 1px solid #E5E5E5;
+    background-color: #F4F4F4;
+}
+.basic-information-top  .basic-information-top-content{
+    font-size: 0;
+    width: calc(100% - 40px );
+    height: 158px;
+    padding: 20px;
+}
+.basic-information-top  .basic-information-top-content .user-info,.basic-information-top  .basic-information-top-content .user-status,
+.basic-information-top  .basic-information-top-content .user-money{
+    font-size: 14px;
+    width: 33%;
+    display: inline-block;
+}
+.basic-information-top  .basic-information-top-content .user-info{
+    height: 100%;
+    border-right: 1px solid #E5E5E5;
+}
+.basic-information-top  .basic-information-top-content .user-info .user-info-left{
+    width: 136px;
+}
+.basic-information-top  .basic-information-top-content .user-info .user-info-left img{
+    margin-left: 20px;
+    margin-top: 10px;
+    border-radius: 50%;
+}
+.basic-information-top  .basic-information-top-content .user-info .user-info-left .icon-box{
+    font-size: 0;
+    margin-top: 20px;
+    margin-left: 8px;
+}
+.basic-information-top  .basic-information-top-content .user-info .user-info-left span{
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    margin-right: 8px;
+    border-radius: 50%;
+    color: #e5e5e5;
+    border:1px solid #e5e5e5;
+    display: inline-block;
+}
+.basic-information-top  .basic-information-top-content .user-info .user-info-left span.color-blue{
+    color: #2980E9;
+    border:1px solid #2980E9;
+}
+.basic-information-top  .basic-information-top-content .user-info .user-info-right .usertype{
+    margin-top: 20px;
+}
+.basic-information-top  .basic-information-top-content .user-info .user-info-right .info{
+    height: 26px;
+    width: 165px;
+    color: #666666;
+    line-height: 26px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.basic-information-top  .basic-information-top-content .user-info .user-info-right .info span{
+    color: #333;
+}
+
+.basic-information-top  .basic-information-top-content .user-money{
+    height: 100%;
+    vertical-align: top;
+    border-right: 1px solid #E5E5E5;
+}
+.basic-information-top  .basic-information-top-content .user-money>div{
+    display: inline-block;
+    padding: 0 30px;
+    width: calc(100% - 60px);
+}
+.basic-information-top  .basic-information-top-content .user-money p{
+    font-size: 16px;
+}
+.basic-information-top  .basic-information-top-content .user-money .btn{
+    display: inline-block;
+    width: 50px;
+    height: 25px;
+    text-align: center;
+    line-height: 25px;
+    border-radius: 3px;
+    vertical-align: top;
+}
+
+/*用户状态栏*/
+.basic-information-top  .basic-information-top-content .user-status div,.basic-information-top  .basic-information-top-content .user-status p{
+    text-align: center;
+}
+.basic-information-top  .basic-information-top-content .user-status{
+    height: 100%;
+    vertical-align: top;
+}
+.basic-information-top  .basic-information-top-content .user-status  .auth-introduce{
+    height: 100%;
+}
+.basic-information-top  .basic-information-top-content .user-status  .auth-introduce .span-yellow{
+    color: #EFC347;
+}
+.basic-information-top  .basic-information-top-content .user-status  .auth-introduce .auth-introduce-unit{
+}
+.basic-information-top  .basic-information-top-content .user-status  .auth-introduce .auth-introduce-unit p{
+    height: 40px;
+}
+.basic-information-top  .basic-information-top-content .user-status  .auth-introduce .auth-introduce-unit p.status{
+    height: 80px;
+    line-height: 80px;
+    font-size: 18px;
+}
+.basic-information-top  .basic-information-top-content .user-status  .auth-introduce .auth-introduce-supplier{
+
+}
+
+#enterForum {
+    color: #3C90E9;
+}
+
+#enterForum span {
+    margin-right: 5px;
+}
+
+.auth-introduce .large-btn{
+    position: relative;
+    display: inline-block;
+    width: 136px;
+    height: 30px;
+    margin-right:10px;
+    padding-right: 14px;
+    border-radius: 3px;
+    line-height:30px;
+    font-size:14px;
+    text-align: center;
+    background-color: #2eb5fb;
+    color: #fff;
+}
+.auth-introduce .large-btn:hover{
+    background-color: #0899f6;
+    cursor: pointer;
+}
+.auth-introduce .blue{
+    color: #2cb2f8;
+}
+.auth-introduce .blue:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+
+
+.recharge{
+    height: 26px;
+    width: 57px;
+    background-color: #F8A336;
+    color: #fff;
+    font-size:14px;
+    border-style:none;
+    margin-right:18px;
+}
+.recharge:hover {
+    cursor: pointer;
+    background-color: #eb9c03;
+}
+.balance-box  a{
+    color: #FF9B34;
+    font-size:14px;
+    text-decoration: underline;
+}
+.last-login-time{
+    margin-top:30px;
+}
+.balance-img{
+
+}
+.money-icon{
+    width: 162px;
+    height: 63px;
+    background: url("/static/images/user-money-icon.png") no-repeat right bottom;;
+}
+.bottom-img{
+    width: 162px;
+    height: 108px;
+    background: url("/static/images/user-balance.png") no-repeat 0 0;
+}
+.basic-information-down {
+    width: calc(100% - 28px - 2px);
+    margin-top: 14px;
+    border: 1px solid #EDEDED;
+    background-color: #fff;
+    padding: 0 14px;
+}
+.basic-information-down .header{
+    padding-top:10px;
+    padding-left:4px;
+}
+.basic-information-down .header h4{
+    cursor: pointer;
+    height: 30px;
+    line-height: 30px;
+    width: 84px;
+}
+.header .my-order{
+    width: 100px;
+    height: 20px;
+    font:14px/20px "microsoft yahei";
+
+}
+.header .my-order.active{
+    color:#247de8 ;
+    border-bottom: 1px solid #247de8;
+}
+.my-order-list-one,.my-order-list-two{
+    padding-top:26px;
+    margin-right: -12px;
+}
+.order-list-item{
+    width: 191px;
+    height: 110px;
+    padding:18px 18px 0px 18px;
+    margin-right:12px;
+    margin-bottom: 13px;
+    border: 1px solid #E5E5E5;
+    background-color: #FCFCFC;
+}
+.order-list-item .order-list-top{
+    width: 100%;
+    padding-bottom: 25px;
+    border-bottom: 1px dashed #CCCCCC;
+}
+.order-list-item .order-list-top img{
+    width: 60px;
+    height: 48px;
+    margin-right: 12px;
+}
+.order-list-item .order-list-top .order-list-top-info{
+    display: inline-block;
+    width: 112px;
+}
+.order-list-item .order-list-top .order-list-top-info h4{
+   overflow: hidden;
+   text-overflow:ellipsis;
+   white-space: nowrap;
+   cursor: pointer;
+   font-size: 16px;
+   color: #333333;
+   margin-bottom: 8px;
+}
+.order-list-item .order-list-top .order-list-top-info p{
+   font-size: 14px;
+    color: #666666;
+}
+.order-list-item .order-list-top .order-list-top-info p span{
+    color: #f53839;
+}
+.order-list-item .order-list-down {
+   margin-top: 6px;
+   color: #666666;
+}
+
+/*.forum-hot{*/
+    /*width: 214px;*/
+    /*height: 170px;*/
+    /*border:1px solid #EDEDED;*/
+    /*background-color: #fff;*/
+    /*margin:10px 0;*/
+    /*padding:0 20px;*/
+/*}*/
+/*.forum-hot .header{*/
+    /*height: 31px;*/
+    /*padding-top:10px;*/
+    /*border-bottom: 1px solid #EDEDED;*/
+/*}*/
+/*.forum-hot h4{*/
+    /*width: 100%;*/
+    /*height: 20px;*/
+    /*font:14px/20px "microsoft yahei";*/
+    /*padding-left:10px;*/
+    /*border-left:2px solid #237DE7;*/
+/*}*/
+/*.forum-hot .hot-list{*/
+     /*padding-top:22px;*/
+ /*}*/
+/*.forum-hot .item{*/
+    /*height: 30px;*/
+/*}*/
+/*.forum-hot .hot-icon{*/
+    /*display: inline-block;*/
+    /*width: 32px;*/
+    /*height: 18px;*/
+    /*background-color: #F98D00;*/
+    /*color: #fff;*/
+    /*text-align: center;*/
+    /*vertical-align: middle;*/
+    /*margin-right:5px;*/
+/*}*/
+/*.notice{*/
+    /*margin-top:20px;*/
+    /*height: 364px;*/
+/*}*/
+/*.bottom-content{*/
+    /*padding-top:22px;*/
+/*}*/
+/*.bottom-content .line-box{*/
+    /*margin-right:8px;*/
+/*}*/
+/*.notice .bottom-content .active{*/
+    /*background-color: #F98D00;*/
+/*}*/
+/*.notice .line{*/
+    /*position: relative;*/
+    /*width: 2px;*/
+    /*height: 50px;*/
+    /*background-color: #D6D6D6;*/
+/*}*/
+/*.notice .round{*/
+    /*position: absolute;*/
+    /*width: 10px;*/
+    /*height: 10px;*/
+    /*top:0;*/
+    /*left:-4px;*/
+    /*border-radius: 50%;*/
+    /*background-color: #D6D6D6;*/
+/*}*/
+/*.notice-list .notice-item{*/
+    /*margin-bottom:15px;*/
+/*}*/
+/*.notice-list .current{*/
+    /*color: #F98D00;*/
+/*}*/

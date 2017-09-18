@@ -1,0 +1,34 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/recharge.css">
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="grid-right info-center-box ">
+            <div class="header">
+                <h4 class="center-title">充值</h4>
+            </div>
+            <div class="rechargeSuccess">
+                <div class="tick">√</div>
+                <ul class="margin-left-10 font-size-18">
+                    <li>充值成功</li>
+                    <li>充值金额: <span class="color-red">￥${money}</span></li>
+                </ul>
+                <a href="/usercenter/fundmanage" class="pay-btn btn-full-blue">查看余额</a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+<script type="text/javascript" src="/static/js/usercenter/userInfo/recharge.js"></script>
