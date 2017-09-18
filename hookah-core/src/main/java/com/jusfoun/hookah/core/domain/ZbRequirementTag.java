@@ -5,12 +5,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.Id;
 import java.util.Date;
 
-public class Zb_program {
+public class ZbRequirementTag {
   @Id
   private Long id;
-  private Long applyId;
-  private String title;
-  private String content;
+  private Long requirementId;
+  private Long tagId;
   @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
   private Date addTime;
 
@@ -22,24 +21,20 @@ public class Zb_program {
     this.id = id;
   }
 
-  public Long getApplyId() {return applyId;}
-
-  public void setApplyId(Long applyId) {this.applyId = applyId;}
-
-  public String getTitle() {
-    return title;
+  public Long getRequirementId() {
+    return requirementId;
   }
 
-  public void setTitle(String title) {
-    this.title = title;
+  public void setRequirementId(Long requirementId) {
+    this.requirementId = requirementId;
   }
 
-  public String getContent() {
-    return content;
+  public Long getTagId() {
+    return tagId;
   }
 
-  public void setContent(String content) {
-    this.content = content;
+  public void setTagId(Long tagId) {
+    this.tagId = tagId;
   }
 
   public Date getAddTime() {

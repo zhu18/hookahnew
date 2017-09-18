@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 
-public class Zb_user {
+public class ZbUser {
   private Long userId;
   private String userDesc;
   private Long userStatus;

@@ -5,19 +5,17 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.Id;
 import java.util.Date;
 
-public class Zb_service_provider_person {
+public class ZbServiceProviderOrg {
   @Id
   private Long id;
   private String userId;
-  private String realName;
-  private String cardNum;
-  private String mobile;
-  private String personDesc;
+  private String orgName;
+  private String orgDesc;
   @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
   private Date addTime;
+  private Long status;
   @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
   private Date updateTime;
-  private Long status;
 
   public Long getId() {
     return id;
@@ -35,36 +33,20 @@ public class Zb_service_provider_person {
     this.userId = userId;
   }
 
-  public String getRealName() {
-    return realName;
+  public String getOrgName() {
+    return orgName;
   }
 
-  public void setRealName(String realName) {
-    this.realName = realName;
+  public void setOrgName(String orgName) {
+    this.orgName = orgName;
   }
 
-  public String getCardNum() {
-    return cardNum;
+  public String getOrgDesc() {
+    return orgDesc;
   }
 
-  public void setCardNum(String cardNum) {
-    this.cardNum = cardNum;
-  }
-
-  public String getMobile() {
-    return mobile;
-  }
-
-  public void setMobile(String mobile) {
-    this.mobile = mobile;
-  }
-
-  public String getPersonDesc() {
-    return personDesc;
-  }
-
-  public void setPersonDesc(String personDesc) {
-    this.personDesc = personDesc;
+  public void setOrgDesc(String orgDesc) {
+    this.orgDesc = orgDesc;
   }
 
   public Date getAddTime() {
@@ -75,19 +57,19 @@ public class Zb_service_provider_person {
     this.addTime = addTime;
   }
 
-  public Date getUpdateTime() {
-    return updateTime;
-  }
-
-  public void setUpdateTime(Date updateTime) {
-    this.updateTime = updateTime;
-  }
-
   public Long getStatus() {
     return status;
   }
 
   public void setStatus(Long status) {
     this.status = status;
+  }
+
+  public Date getUpdateTime() {
+    return updateTime;
+  }
+
+  public void setUpdateTime(Date updateTime) {
+    this.updateTime = updateTime;
   }
 }

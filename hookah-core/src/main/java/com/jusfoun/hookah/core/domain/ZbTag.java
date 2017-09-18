@@ -5,17 +5,17 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.Id;
 import java.util.Date;
 
-public class Zb_service_provider_org {
+public class ZbTag {
   @Id
   private Long id;
-  private String userId;
-  private String orgName;
-  private String orgDesc;
+  private String tagContent;
+  private Long type;
   @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
   private Date addTime;
-  private Long status;
   @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
   private Date updateTime;
+  private String addOperator;
+  private String updateOperator;
 
   public Long getId() {
     return id;
@@ -25,28 +25,20 @@ public class Zb_service_provider_org {
     this.id = id;
   }
 
-  public String getUserId() {
-    return userId;
+  public String getTagContent() {
+    return tagContent;
   }
 
-  public void setUserId(String userId) {
-    this.userId = userId;
+  public void setTagContent(String tagContent) {
+    this.tagContent = tagContent;
   }
 
-  public String getOrgName() {
-    return orgName;
+  public Long getType() {
+    return type;
   }
 
-  public void setOrgName(String orgName) {
-    this.orgName = orgName;
-  }
-
-  public String getOrgDesc() {
-    return orgDesc;
-  }
-
-  public void setOrgDesc(String orgDesc) {
-    this.orgDesc = orgDesc;
+  public void setType(Long type) {
+    this.type = type;
   }
 
   public Date getAddTime() {
@@ -57,19 +49,27 @@ public class Zb_service_provider_org {
     this.addTime = addTime;
   }
 
-  public Long getStatus() {
-    return status;
-  }
-
-  public void setStatus(Long status) {
-    this.status = status;
-  }
-
   public Date getUpdateTime() {
     return updateTime;
   }
 
   public void setUpdateTime(Date updateTime) {
     this.updateTime = updateTime;
+  }
+
+  public String getAddOperator() {
+    return addOperator;
+  }
+
+  public void setAddOperator(String addOperator) {
+    this.addOperator = addOperator;
+  }
+
+  public String getUpdateOperator() {
+    return updateOperator;
+  }
+
+  public void setUpdateOperator(String updateOperator) {
+    this.updateOperator = updateOperator;
   }
 }

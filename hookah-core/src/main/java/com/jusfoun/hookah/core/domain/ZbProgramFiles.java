@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.Id;
 import java.util.Date;
 
-public class Zb_program_files {
+public class ZbProgramFiles {
   @Id
   private Long id;
   private Long programId;

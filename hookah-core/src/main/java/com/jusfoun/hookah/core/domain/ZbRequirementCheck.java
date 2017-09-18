@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.Id;
 import java.util.Date;
 
-public class Zb_requirement_check {
+public class ZbRequirementCheck {
   @Id
   private Long id;
   private Long requirementId;
