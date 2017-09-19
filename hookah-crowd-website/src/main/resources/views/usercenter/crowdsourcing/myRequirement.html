@@ -1,8 +1,30 @@
 <%
 var head = {
 %>
-<link rel="stylesheet" href="/static/css/usercenter/userInfo/accountInformation.css">
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
+<link rel="stylesheet" href="/static/css/crowdsourcing/crowdsourcing.css">
+<script type="text/javascript">
+  $.getUrlParam = function (key) {
+    var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+    var result = window.location.search.substr(1).match(reg);
+    return result ? decodeURIComponent(result[2]) : null;
+  };
+  var catId = $.getUrlParam('catId');
+  var prId = $.getUrlParam('prId');
+  var prNm = $.getUrlParam('prNm');
+  var msId = $.getUrlParam('msId');
+  var msNm = $.getUrlParam('msNm');
+  var names = $.getUrlParam('names');
+  var pagePath = '/api/require/getListByUser';
+  var pageType = 'get';
+  var dataParm = {};
+  dataParm.pageNumber = 1;
+  dataParm.pageSize = 5;
+  dataParm.status = '';
+  dataParm.title = '';
+  dataParm.requireSn = '';
+</script>
+
 <%};%>
 
 <%
@@ -12,7 +34,103 @@ var htmlPart = {
   <div class="grid-row clearfix">
     <%include("/usercenter/user-center-menu.html"){} %>
     <div class="grid-right info-center-box ">
-      我的发布
+      <div class="header clearfix">
+        <h4 class="grid-left center-title">我的发布</h4>
+      </div>
+
+      <ul class="crowdsourcing-menu myRequirement-search bgc-fff">
+        <li>
+        <span>
+        状态：
+        </span>
+          <ul id="status" value="">
+            <li value="" class="active">全部</li>
+            <li value="2">审核未通过</li>
+            <li value="1">待审核</li>
+            <li value="3">待托管赏金</li>
+
+            <li value="7">待二次托管</li>
+            <li value="8">工作中</li>
+            <li value="10">待验收付款</li>
+            <li value="13">待评价</li>
+            <li value="16">待退款</li>
+            <li value="14">交易取消</li>
+            <li value="15">交易完成</li>
+          </ul>
+        </li>
+        <li>
+         <span>
+        编号：
+        </span>
+          <ul>
+            <li class="li01"><input type="text" id="requireSn" placeholder="需求编号"></li>
+            <li class="li02">需求标题：</li>
+            <li class="li01"><input type="text" id="title" placeholder="标题关键字，模糊查询"></li>
+            <li class="li03"><button class="searchBtn">搜索</button></li>
+          </ul>
+        </li>
+
+      </ul>
+
+      <table class="crowdsourcing-table  bgc-fff">
+        <thead>
+        <tr>
+          <th>序号</th>
+          <th>需求编号</th>
+          <th>需求标题</th>
+          <th>悬赏金额</th>
+          <th>状态</th>
+          <th>发布时间</th>
+          <th>交付截止时间</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>1</td>
+          <td>a877d9adfas9d8f9asdf</td>
+          <td>数据商城采集源</td>
+          <td>1289.00</td>
+          <td>待二次托管</td>
+          <td>2017-02-03</td>
+          <td>2017-03-03</td>
+          <td><span class="signUp">修改</span><span class="signUp">删除</span><span class="signUp">托管赏金</span></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>a877d9adfas9d8f9asdf</td>
+          <td>数据商城采集源</td>
+          <td>1289.00</td>
+          <td>待二次托管</td>
+          <td>2017-02-03</td>
+          <td>2017-03-03</td>
+          <td><span class="signUp">托管赏金</span></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>a877d9adfas9d8f9asdf</td>
+          <td>数据商城采集源</td>
+          <td>1289.00</td>
+          <td>待二次托管</td>
+          <td>2017-02-03</td>
+          <td>2017-03-03</td>
+          <td><span class="signUp">修改</span><span class="signUp">删除</span></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>a877d9adfas9d8f9asdf</td>
+          <td>数据商城采集源</td>
+          <td>1289.00</td>
+          <td>待二次托管</td>
+          <td>2017-02-03</td>
+          <td>2017-03-03</td>
+          <td><span class="signUp">修改</span></td>
+        </tr>
+
+        </tbody>
+      </table>
+      <%include("/layout/pageaction.html"){} %>
+
     </div>
   </div>
 </div>
@@ -20,5 +138,7 @@ var htmlPart = {
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
+<script src="/static/js/usercenter/crowdsourcing/myRequirement.js"></script>
+
 <!--<script type="text/javascript" src="/static/js/usercenter/userInfo/accountInformation.js"></script>-->
 
