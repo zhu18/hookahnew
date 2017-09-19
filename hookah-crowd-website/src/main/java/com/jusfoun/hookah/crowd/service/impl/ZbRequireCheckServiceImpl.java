@@ -20,8 +20,11 @@ import java.util.List;
  */
 @Service
 public class ZbRequireCheckServiceImpl extends GenericServiceImpl<ZbRequirementCheck, Long> implements ZbRequireCheckService {
+
+    @Resource
     private ZbRequirementCheckMapper zbRequirementCheckMapper;
 
+    @Resource
     ZbRequirementMapper zbRequirementMapper;
 
     @Resource
@@ -42,16 +45,16 @@ public class ZbRequireCheckServiceImpl extends GenericServiceImpl<ZbRequirementC
         try {
             returnData.setData(updateByCondition(zbRequirementCheck,filters));
 
-            if (zbRequirementCheck.getCheckStatus().equals(1)){
+            if (null != zbRequirementCheck.getCheckStatus() && Short.valueOf("1").equals(zbRequirementCheck.getCheckStatus())){
                zbRequirement.setStatus(ZbContants.Zb_Require_Status.SINGING.getCode().shortValue());
              }
-             if (zbRequirementCheck.getCheckStatus().equals(0)){
+             if (null != zbRequirementCheck.getCheckStatus() && Short.valueOf("0").equals(zbRequirementCheck.getCheckStatus())){
                 zbRequirement.setStatus(ZbContants.Zb_Require_Status.WAIT_CHECK.getCode().shortValue());
             }
-            if (zbRequirementCheck.getCheckStatus().equals(2)){
+            if (null != zbRequirementCheck.getCheckStatus() && Short.valueOf("2").equals(zbRequirementCheck.getCheckStatus())){
                 zbRequirement.setStatus(ZbContants.Zb_Require_Status.WAIT_TG.getCode().shortValue());
             }
-            zbRequirementMapper.updateByPrimaryKey(zbRequirement);
+            zbRequirementMapper.updateByPrimaryKeySelective(zbRequirement);
 
         }catch (Exception e){
             return ReturnData.error("发生了一个错误");
