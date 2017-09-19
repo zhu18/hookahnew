@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ public class RequireController extends BaseController{
     }
 
     @RequestMapping("/allRequirement")
+    @ResponseBody
     public ReturnData AllRequirement(String currentPage, String pageSize, ZbRequirement zbRequirement) {
         Pagination<ZbRequirement> page = new Pagination<>();
         ReturnData returnData = new ReturnData<>();
@@ -89,6 +91,7 @@ public class RequireController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/getListByUser", method = RequestMethod.GET)
+    @ResponseBody
     public ReturnData<ZbRequirement> getListByUser (Integer pageNumber, Integer pageSize, Integer status, String title ,String requireSn){
         try {
             String userId = this.getCurrentUser().getUserId();
