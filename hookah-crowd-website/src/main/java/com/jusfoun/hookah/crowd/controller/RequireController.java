@@ -79,15 +79,22 @@ public class RequireController extends BaseController{
         return returnData;
     }
 
+    /**
+     * 我的发布
+     * @param pageNumber
+     * @param pageSize
+     * @param status
+     * @param title
+     * @param requireSn
+     * @return
+     */
     @RequestMapping(value = "/getListByUser", method = RequestMethod.GET)
     public ReturnData<ZbRequirement> getListByUser (Integer pageNumber, Integer pageSize, Integer status, String title ,String requireSn){
         try {
+            String userId = this.getCurrentUser().getUserId();
             if (pageNumber==null) pageNumber = Integer.parseInt(PAGE_NUM);
             if (pageSize==null) pageSize = Integer.parseInt(PAGE_SIZE);
-            return zbRequireService.getListByUser( pageNumber, pageSize, status, title, requireSn);
-        } catch (HookahException e) {
-            e.printStackTrace();
-            return ReturnData.error(e.getMessage());
+            return zbRequireService.getListByUser( pageNumber, pageSize, userId ,status, title, requireSn);
         } catch (Exception e) {
             logger.error("分页查询我的发布错误", e);
             return ReturnData.error("分页查询我的发布错误");

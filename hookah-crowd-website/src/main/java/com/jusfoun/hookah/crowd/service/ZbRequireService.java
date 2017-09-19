@@ -13,5 +13,6 @@ public interface ZbRequireService extends GenericService<ZbRequirement, Long> {
 
     int insertRecord(ZbRequirement zbRequirement);
 
-    ReturnData<ZbRequirement> getListByUser(Integer pageNum, Integer pageSize, Integer status, String title , String requireSn) throws HookahException;
+    ReturnData<ZbRequirement> getListByUser(Integer pageNum, Integer pageSize, String userId,
+                                            Integer status, String title , String requireSn) throws HookahException;
 }
