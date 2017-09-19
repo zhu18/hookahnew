@@ -12,6 +12,7 @@ import com.jusfoun.hookah.crowd.service.ZbRequireService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -76,6 +77,21 @@ public class RequireController extends BaseController{
             e.printStackTrace();
         }
         return returnData;
+    }
+
+    @RequestMapping(value = "/getListByUser", method = RequestMethod.GET)
+    public ReturnData<ZbRequirement> getListByUser (Integer pageNumber, Integer pageSize, Integer status, String title ,String requireSn){
+        try {
+            if (pageNumber==null) pageNumber = Integer.parseInt(PAGE_NUM);
+            if (pageSize==null) pageSize = Integer.parseInt(PAGE_SIZE);
+            return zbRequireService.getListByUser( pageNumber, pageSize, status, title, requireSn);
+        } catch (HookahException e) {
+            e.printStackTrace();
+            return ReturnData.error(e.getMessage());
+        } catch (Exception e) {
+            logger.error("分页查询我的发布错误", e);
+            return ReturnData.error("分页查询我的发布错误");
+        }
     }
 
 
