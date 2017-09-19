@@ -484,7 +484,7 @@ input:focus, select:focus, textarea:focus {
 }
 #navList li {
 	float: left;
-	width: 100px;
+	width: 95px;
 	text-align: center;
 	color: rgb(142, 164, 185);
 	height: 57px;

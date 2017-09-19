@@ -1,20 +1,157 @@
 <%
 var head = {
 %>
-<link rel="stylesheet" href="/static/css/index/index.css">
-<link rel="stylesheet" href="/static/css/common.css">
-<link rel="stylesheet" href="/static/css/exchange/style.css">
+<link rel="stylesheet" href="/static/css/crowdsourcing/crowdsourcing.css">
 
 <%};%>
 <%
 var htmlPart = {
 %>
+<!--<script type="text/javascript">
+  $.getUrlParam = function (key) {
+    var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+    var result = window.location.search.substr(1).match(reg);
+    return result ? decodeURIComponent(result[2]) : null;
+  };
+  var catId = $.getUrlParam('catId');
+  var prId = $.getUrlParam('prId');
+  var prNm = $.getUrlParam('prNm');
+  var msId = $.getUrlParam('msId');
+  var msNm = $.getUrlParam('msNm');
+  var names = $.getUrlParam('names');
+  var pagePath = '/search/v1/goods';
+  var pageType = 'post';
+  var dataParm = {};
+  dataParm.pageNumber = 1;
+  dataParm.pageSize = 20;
+  dataParm.esGoods = {};
+  dataParm.range = {};
+  dataParm.esGoods.catIds = catId;
+  dataParm.esGoods.names = names;
+</script>-->
+<div class="grid-0 exchange-list bgc-eaedf0 padding-bottom-20">
+  <div class="grid-row ">
+    <div class="ad-box"></div>
+    <ul class="crowdsourcing-menu bgc-fff">
+      <li>
+        <span>
+        需求类型：
+        </span>
+        <ul>
+          <li class="active">全部</li>
+          <li>数据采集</li>
+          <li>数据加工</li>
+          <li>数据模型</li>
+          <li>数据应用</li>
+          <li>其他类型</li>
+        </ul>
+      </li>
+      <li>
+         <span>
+        需求类型：
+        </span>
+        <ul>
+          <li class="active">全部</li>
+          <li>一天</li>
+          <li>一周以内</li>
+          <li>一月以内</li>
+          <li>一月以上</li>
+        </ul>
+      </li>
+      <li>
+         <span>
+        状态：
+        </span>
+        <ul>
+          <li class="active">全部</li>
+          <li>报名中</li>
+          <li>报名结束</li>
+        </ul>
+      </li>
+    </ul>
+    <table class="crowdsourcing-table bgc-fff">
+      <thead>
+      <tr>
+        <th>需求标题</th>
+        <th>需求类型</th>
+        <th>悬赏金额</th>
+        <th>状态</th>
+        <th>发布时间</th>
+        <th>交付截止时间</th>
+        <th>报名剩余名额</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td><a href="javascript:void(0)">数据商城采集源</a></td>
+        <td>数据采集</td>
+        <td>1289.00</td>
+        <td>报名中</td>
+        <td>2017-02-03</td>
+        <td>2017-03-03</td>
+        <td>7天12小时23分钟 <span class="signUp">我要报名</span></td>
+      </tr>
+      <tr>
+        <td><a href="javascript:void(0)">数据商城采集源</a></td>
+        <td>数据采集</td>
+        <td>1289.00</td>
+        <td>报名中</td>
+        <td>2017-02-03</td>
+        <td>2017-03-03</td>
+        <td>7天12小时23分钟 <span class="timeover signUp">报名结束</span></td>
+      </tr>
+      <tr>
+        <td><a href="javascript:void(0)">数据商城采集源</a></td>
+        <td>数据采集</td>
+        <td>1289.00</td>
+        <td>报名中</td>
+        <td>2017-02-03</td>
+        <td>2017-03-03</td>
+        <td>7天12小时23分钟 <span class="timeover signUp">报名结束</span></td>
+      </tr>
+      <tr>
+        <td><a href="javascript:void(0)">数据商城采集源</a></td>
+        <td>数据采集</td>
+        <td>1289.00</td>
+        <td>报名中</td>
+        <td>2017-02-03</td>
+        <td>2017-03-03</td>
+        <td>7天12小时23分钟 <span class="timeover signUp">报名结束</span></td>
+      </tr>
+      <tr>
+        <td><a href="javascript:void(0)">数据商城采集源</a></td>
+        <td>数据采集</td>
+        <td>1289.00</td>
+        <td>报名中</td>
+        <td>2017-02-03</td>
+        <td>2017-03-03</td>
+        <td>7天12小时23分钟 <span class="timeover signUp">报名结束</span></td>
+      </tr>
+      <tr>
+        <td><a href="javascript:void(0)">数据商城采集源</a></td>
+        <td>数据采集</td>
+        <td>1289.00</td>
+        <td>报名中</td>
+        <td>2017-02-03</td>
+        <td>2017-03-03</td>
+        <td>7天12小时23分钟 <span class="timeover signUp">报名结束</span></td>
+      </tr>
+      <tr>
+        <td><a href="javascript:void(0)">数据商城采集源</a></td>
+        <td>数据采集</td>
+        <td>1289.00</td>
+        <td>报名中</td>
+        <td>2017-02-03</td>
+        <td>2017-03-03</td>
+        <td>7天12小时23分钟 <span class="timeover signUp">报名结束</span></td>
+      </tr>
 
-safasfasdfasfdasdfs
+      </tbody>
+    </table>
+    <%include("/layout/pageaction.html"){} %>
 
-
-
-
+  </div>
+</div>
 
 
 <%};

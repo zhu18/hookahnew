@@ -31,9 +31,14 @@ import java.util.Map;
 @Controller
 public class ExchangeController{
 
-    @RequestMapping(value = "/crowdsourcingRelease", method = RequestMethod.GET)
+    @RequestMapping(value = "/usercenter/crowdsourcingRelease", method = RequestMethod.GET)
     public String crowdsourcingRelease(Model model) {
         return "usercenter/crowdsourcing/release";
+    }
+
+    @RequestMapping(value = "/usercenter/myRequirement", method = RequestMethod.GET)
+    public String myRequirement(Model model) {
+        return "usercenter/crowdsourcing/myRequirement";
     }
 
     @RequestMapping(value = "/crowdsourcing-list", method = RequestMethod.GET)
