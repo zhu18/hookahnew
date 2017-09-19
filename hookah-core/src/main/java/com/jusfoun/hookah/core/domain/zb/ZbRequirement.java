@@ -86,6 +86,7 @@ public class ZbRequirement extends GenericModel {
      *
      * @mbggenerated
      */
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date deliveryDeadline;
 
     /**
@@ -94,6 +95,7 @@ public class ZbRequirement extends GenericModel {
      *
      * @mbggenerated
      */
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date applyDeadline;
 
     /**
