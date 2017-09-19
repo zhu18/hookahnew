@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.core.domain.zb;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jusfoun.hookah.core.generic.GenericModel;
 
 import javax.persistence.Id;
@@ -117,6 +118,7 @@ public class ZbRequirement extends GenericModel {
      *
      * @mbggenerated
      */
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addTime;
 
     /**
@@ -125,6 +127,7 @@ public class ZbRequirement extends GenericModel {
      *
      * @mbggenerated
      */
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
     /**

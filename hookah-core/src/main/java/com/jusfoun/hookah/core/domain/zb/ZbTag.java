@@ -1,6 +1,9 @@
 package com.jusfoun.hookah.core.domain.zb;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jusfoun.hookah.core.generic.GenericModel;
+
+import javax.persistence.Id;
 import java.util.Date;
 
 public class ZbTag extends GenericModel {
@@ -10,6 +13,7 @@ public class ZbTag extends GenericModel {
      *
      * @mbggenerated
      */
+    @Id
     private Integer id;
 
     /**
@@ -34,6 +38,7 @@ public class ZbTag extends GenericModel {
      *
      * @mbggenerated
      */
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addTime;
 
     /**
@@ -42,6 +47,7 @@ public class ZbTag extends GenericModel {
      *
      * @mbggenerated
      */
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
     /**
