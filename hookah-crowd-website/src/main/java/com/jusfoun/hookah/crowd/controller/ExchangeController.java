@@ -28,11 +28,19 @@ import java.util.Map;
  * @date 2017/3/6 上午10:52
  * @desc
  */
-@RestController
+@Controller
 public class ExchangeController{
 
-    @RequestMapping(value = "/shelves", method = RequestMethod.GET)
-    public String shelves(Model model) {
-        return "exchange/shelves";
+    @RequestMapping(value = "/crowdsourcingRelease", method = RequestMethod.GET)
+    public String crowdsourcingRelease(Model model) {
+        return "usercenter/crowdsourcing/release";
     }
+
+    @RequestMapping(value = "/crowdsourcing-list", method = RequestMethod.GET)
+    public String crowdsourcingList(Model model) {
+        return "crowdsourcing/index";
+    }
+
+
+
 }
