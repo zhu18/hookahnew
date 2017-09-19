@@ -4,15 +4,14 @@ package com.jusfoun.hookah.crowd.service.impl;
  * Created by zhaoshuai on 2017/9/18.
  */
 
+import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirementFiles;
 import com.jusfoun.hookah.core.domain.zb.ZbTag;
-import com.jusfoun.hookah.core.domain.zb.ZbType;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbRequirementVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.ReturnData;
-import com.jusfoun.hookah.crowd.constants.ZbContants;
 import com.jusfoun.hookah.crowd.service.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -33,43 +32,53 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
     ZbRequirementFilesService zbRequirementFilesService;
 
     @Resource
-    ReleaseService releaseService;
-
-    @Resource
     ZbRequireService zbRequireService;
 
     @Resource
     ZbTypeService zbTypeService;
 
+    @Resource
+    private ZbRequirementMapper zbRequirementMapper;
+
+    @Resource
+    public void setDao(ZbRequirementMapper zbRequirementMapper) {
+        super.setDao(zbRequirementMapper);
+    }
+
     /**
      * 数据众包--发布需求
      */
     public ReturnData insertRequirements(ZbRequirementVo vo){
+
         if(vo.getZbRequirement() != null){
             ZbRequirement ment = vo.getZbRequirement();
-//            ment.setAddTime(new Date());
-//            ment.setUserId(userId);
-//            ment.setContactName(zbRequirement.getContactName());
-//            ment.setContactPhone(zbRequirement.getContactPhone());
-//            ment.setStatus(Short.parseShort("0"));
-//            ment.setAddOperator(userId);
-//            ment.setDescription(zbRequirement.getDescription());
-//            ment.setDeliveryDeadline(zbRequirement.getDeliveryDeadline());
-//            ment.setRewardMoney(zbRequirement.getRewardMoney());
-//            ment.setCheckRemark(zbRequirement.getCheckRemark());
-//            ment.setType(zbRequirement.getType());
-            super.insert(ment);
 
-            if(vo.getList().size() > 0){
-                for(ZbRequirementFiles file : vo.getList()){
-                    zbRequirementFilesService.insert(file);
+            if(ment.getId() == null){
+                zbRequirementMapper.insertAndGetId(ment);
+
+                if(vo.getList().size() > 0){
+                    for(ZbRequirementFiles zbfile : vo.getList()){
+                        zbfile.setRequirementId(ment.getId());
+                        zbRequirementFilesService.insert(zbfile);
+                    }
+                }
+            }else{
+                super.updateById(ment);
+
+                List<Condition> filter = new ArrayList<>();
+                filter.add(Condition.eq("requirementId", ment.getId()));
+                zbRequirementFilesService.deleteByCondtion(filter);
+
+                if(vo.getList().size() > 0){
+                    for(ZbRequirementFiles zbfile : vo.getList()){
+                        zbfile.setRequirementId(ment.getId());
+                        zbRequirementFilesService.insert(zbfile);
+                    }
                 }
             }
 
-            /*if(vo.getZbRequirement().getId()){
+            return ReturnData.success(vo);
 
-            }*/
-            return ReturnData.success();
         }else {
             return  ReturnData.error("发布需求失败");
         }

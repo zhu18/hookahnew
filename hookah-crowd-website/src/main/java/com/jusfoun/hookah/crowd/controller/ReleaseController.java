@@ -1,7 +1,5 @@
 package com.jusfoun.hookah.crowd.controller;
 
-import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
-import com.jusfoun.hookah.core.domain.zb.ZbRequirementFiles;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbRequirementVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.utils.ReturnData;
@@ -32,8 +30,8 @@ public class ReleaseController extends BaseController{
     @RequestMapping(value = "/insertRequirements", method = RequestMethod.POST)
     public ReturnData ReleaseRequirements(@RequestBody ZbRequirementVo vo){
         try {
-            /*String userId = this.getCurrentUser().getUserId();
-            vo.getZbRequirement().setUserId(userId);*/
+            String userId = this.getCurrentUser().getUserId();
+            vo.getZbRequirement().setUserId(userId);
             ReturnData returnData = releaseService.insertRequirements(vo);
             return ReturnData.success(returnData);
         } catch (Exception e) {
