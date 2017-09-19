@@ -60,7 +60,7 @@
     <!--生成Dao类存放位置-->
     <javaClientGenerator type="XMLMAPPER" targetPackage="com.jusfoun.hookah.core.dao.zb" targetProject="src/main/java">
       <property name="enableSubPackages" value="true"/>
-      <property name="rootInterface" value="com.jusfoun.hookah.core.dao.GenericDao&lt;ZbRequirement&gt;"/>
+      <property name="rootInterface" value="com.jusfoun.hookah.core.dao.GenericDao&lt;ZbUser&gt;"/>
     </javaClientGenerator>
     <!--生成对应表及类名-->
     <!-- <table tableName="hb_enterprise_copy"  domainObjectName="EnterprisePojo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
@@ -76,7 +76,7 @@
       <columnOverride column="seller_note" javaType="java.lang.String" jdbcType="VARCHAR" />
     </table>-->
 
-    <table schema="hookah" tableName="zb_requirement" domainObjectName="ZbRequirement"
+    <table schema="hookah" tableName="zb_user" domainObjectName="ZbUser"
            enableCountByExample="false" enableUpdateByExample="false"
            enableDeleteByExample="false" enableSelectByExample="false"
            selectByExampleQueryId="false" >
