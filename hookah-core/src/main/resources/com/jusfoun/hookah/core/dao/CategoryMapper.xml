@@ -34,4 +34,23 @@
         and cat_sign = 1
         and level = 3
     </select>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into category
+        (
+        cat_id, cat_name, code, domain_id, cat_desc, parent_id, is_show, level, add_time, last_update_time,
+        user_id, add_user, goods_type_id, goods_code, goods_type_name
+        )
+        values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.catId,jdbcType=VARCHAR}, #{item.catName,jdbcType=VARCHAR},  #{item.code,jdbcType=VARCHAR},
+            #{item.domainId,jdbcType=VARCHAR}, #{item.catDesc,jdbcType=VARCHAR}, #{item.parentId,jdbcType=VARCHAR},
+            #{item.isShow,jdbcType=SMALLINT}, #{item.level,jdbcType=SMALLINT}, #{item.addTime,jdbcType=TIMESTAMP},
+            #{item.lastUpdateTime,jdbcType=TIMESTAMP}, #{item.userId,jdbcType=VARCHAR}, #{item.addUser,jdbcType=VARCHAR},
+            #{item.goodsTypeId,jdbcType=SMALLINT},#{item.goodsCode,jdbcType=VARCHAR}, #{item.goodsTypeName,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
 </mapper>
