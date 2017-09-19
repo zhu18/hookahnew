@@ -1,8 +1,9 @@
 <%
 var head = {
 %>
-<link rel="stylesheet" href="/static/css/usercenter/userInfo/accountInformation.css">
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
+<link rel="stylesheet" href="/static/css/crowdsourcing/crowdsourcing.css">
+
 <%};%>
 
 <%
@@ -12,7 +13,67 @@ var htmlPart = {
   <div class="grid-row clearfix">
     <%include("/usercenter/user-center-menu.html"){} %>
     <div class="grid-right info-center-box ">
-      发布需求
+      <div class="header clearfix">
+        <h4 class="grid-left center-title">发布需求</h4>
+      </div>
+
+      <ul class="crowdsourcing-menu myRequirement-search bgc-fff">
+        <li>
+        <span>
+        状态：
+        </span>
+          <ul>
+            <li class="active">发布需求</li>
+            <li>平台审核</li>
+            <li>悬赏费用托管</li>
+            <li>平台发布</li>
+            <li>供应商工作</li>
+            <li>验收付款</li>
+            <li>评价</li>
+          </ul>
+        </li>
+      </ul>
+
+      <table class="crowdsourcing-table myRequirement-table bgc-fff">
+        <tbody>
+        <tr>
+          <td valign="top">需求标题 <span>*</span></td>
+          <td><input type="text" placeholder="一句话描述您的需求（要求简洁全面，20个汉字以内）"></td>
+        </tr>
+        <tr>
+          <td>需求类型 <span>*</span></td>
+          <td><span>数据采集</span><span>数据加工</span><span>数据模型</span><span>数据应用</span><span>其他</span></td>
+        </tr>
+        <tr>
+          <td valign="top">需求描述 <span>*</span></td>
+          <td><textarea placeholder="详细描述具体的需求信息，2000个汉字以内。" name="" id="" cols="30" rows="10"></textarea></td>
+        </tr>
+        <tr>
+          <td>附件<span>*</span></td>
+          <td><input type="text">最多可上传5个附件，每个附件大小不超过10M。</td>
+        </tr>
+        <tr>
+          <td>交付截止日期 <span>*</span></td>
+          <td>日期组件</td>
+        </tr>
+        <tr>
+          <td>悬赏金额 <span>*</span></td>
+          <td>￥<input type="number">元</td>
+        </tr>
+        <tr>
+          <td valign="top">交付验收要求 <span>*</span></td>
+          <td><textarea placeholder="请详情描述交付及验收要求，1000个汉字以内。" name="" id="" cols="30" rows="10"></textarea></td>
+        </tr>
+
+        </tbody>
+      </table>
+      <div>
+        温馨提示： 发布需求不收取任何佣金，请放心发布。如没有匹配到供应商，全额退款。整个交易过程平台会担保您的赏金安全，并保障交易效果。
+        <button>下一步</button>
+        <button>重置</button>
+      </div>
+      <%include("/layout/pageaction.html"){} %>
+
     </div>
   </div>
 </div>
