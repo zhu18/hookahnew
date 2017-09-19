@@ -40,7 +40,10 @@ public class RequireController extends BaseController{
             e.printStackTrace();
         }
     }
-
+    /**
+     * 需求大厅
+     * @author crs
+     */
     @RequestMapping("/allRequirement")
     @ResponseBody
     public ReturnData AllRequirement(String currentPage, String pageSize, ZbRequirement zbRequirement) {
@@ -54,12 +57,7 @@ public class RequireController extends BaseController{
 
     /**
      * 我的发布
-     * @param pageNumber
-     * @param pageSize
-     * @param status
-     * @param title
-     * @param requireSn
-     * @return
+     * @author lt
      */
     @RequestMapping(value = "/getListByUser", method = RequestMethod.GET)
     @ResponseBody
