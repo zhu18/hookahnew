@@ -95,16 +95,33 @@ public class OAuth2AuthenticationFilter extends AuthenticatingFilter {
 
         if(!subject.isAuthenticated()) {
             if(StringUtils.isEmpty(request.getParameter(authcCodeParam))) {
+//                //如果用户没有身份验证，且没有auth code，则重定向到服务端授权
+//                HttpServletResponse httpServletResponse =(HttpServletResponse)response;
+//                httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//                OutputStream outputStream = httpServletResponse.getOutputStream();
+//                String data = lurl;
+//                outputStream.write(data.getBytes());
+//                outputStream.close();
+//
+////                saveRequestAndRedirectToLogin(request, response);
+//                return false;
+
                 //如果用户没有身份验证，且没有auth code，则重定向到服务端授权
-                HttpServletResponse httpServletResponse =(HttpServletResponse)response;
-                httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                OutputStream outputStream = httpServletResponse.getOutputStream();
-                String data = lurl;
-                outputStream.write(data.getBytes());
-                outputStream.close();
-//                saveRequestAndRedirectToLogin(request, response);
+                boolean ajax = "XMLHttpRequest".equals(httpServletRequest.getHeader("X-Requested-With"));
+                if(ajax) {
+                    HttpServletResponse httpServletResponse =(HttpServletResponse)response;
+                    httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    OutputStream outputStream = httpServletResponse.getOutputStream();
+                    String data = "{code:401}";
+                    outputStream.write(data.getBytes());
+                    outputStream.close();
+                }else{
+                    saveRequestAndRedirectToLogin(request, response);
+                }
 
                 return false;
+
+
             }else{
                 return executeLogin(request, response);
             }
