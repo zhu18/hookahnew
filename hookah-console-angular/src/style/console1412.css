@@ -9427,3 +9427,94 @@ input[type="radio"], input[type="checkbox"] {
 /*时间选择 快捷选择激活*/
 .set-date-style a{ color:#737373}
 .set-date-style a.active{ color:#06C; text-decoration: underline;}
+
+.publish-status {
+  border-right: 1px solid #e5e5e5;
+}
+.publish-status p{
+  text-align: center;
+  line-height: 40px;
+  font-size: 16px;
+}
+.publish-Progress{
+
+}
+.publish-Progress ul{
+
+}
+.publish-Progress ul li{
+  float: left;
+  height: 60px;
+  width:14%;
+  position: relative;
+  list-style: none;
+  padding-right: 10px;
+}
+
+.publish-Progress ul li:before{
+     display: block;
+     content: attr(data-index);
+     position: absolute;
+     top: 0px;
+     left: 0px;
+     width: 30px;
+     height: 30px;
+     line-height: 30px;
+     text-align: center;
+     z-index: 10000;
+     border-radius: 50%;
+     background-color: #e5e5e5;
+}
+.publish-Progress ul li:after{
+     display: block;
+     content: "";
+     position: absolute;
+     top: 13px;
+     right: 0px;
+     width: 100%;
+     height: 2px;
+     background-color: #e5e5e5;
+}
+.publish-Progress ul li:last-child:after{
+     display: none;
+}
+
+.publish-Progress ul li p:first-child{
+  margin-top: 45px;
+  font-size: 16px;
+}
+
+.publish-Progress ul li.active:before{
+  background-color:#09c;
+  color: #ffffff;
+}
+.publish-Progress ul li.visited:before{
+  background-color:#09c;
+  color: #ffffff;
+}
+.publish-Progress ul li.visited:after{
+  background-color:#09c;
+}
+.publish-table-box{
+  margin: 140px 20px;
+}
+
+.publish-table-box table th,.publish-table-box table td{
+  border: 1px solid #e5e5e5;
+  vertical-align: middle !important;
+}
+
+.publish-table-box table th{
+  text-align: center;
+}
+.publish-table-box table th input{
+  vertical-align: middle !important;
+}
+
+.margin-top-10{
+  margin-top: 10px !important;
+}
+/*清楚影响*/
+.uib-daypicker table th,.uib-daypicker table td{
+   padding: 0 !important;
+}
