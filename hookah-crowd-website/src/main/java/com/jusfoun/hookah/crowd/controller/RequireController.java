@@ -20,13 +20,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/require")
 public class RequireController extends BaseController{
 
     @Resource
     ZbRequireService zbRequireService;
 
-    @RequestMapping("/insertRequire")
+    @RequestMapping("/require/insertRequire")
     public void insertRequire(){
 
         ZbRequirement zb = new ZbRequirement();
@@ -44,7 +43,7 @@ public class RequireController extends BaseController{
      * 需求大厅
      * @author crs
      */
-    @RequestMapping("/allRequirement")
+    @RequestMapping("/require/allRequirement")
     @ResponseBody
     public ReturnData AllRequirement(String currentPage, String pageSize, ZbRequirement zbRequirement) {
         try {
@@ -59,7 +58,7 @@ public class RequireController extends BaseController{
      * 我的发布
      * @author lt
      */
-    @RequestMapping(value = "/getListByUser", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/require/getListByUser", method = RequestMethod.GET)
     @ResponseBody
     public ReturnData<ZbRequirement> getListByUser (Integer pageNumber, Integer pageSize, Integer status, String title ,String requireSn){
         try {

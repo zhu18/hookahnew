@@ -7,7 +7,8 @@ var config = {
     apiServer: "http://console.galaxybigdata.com",
     websiteServer: "http://www.galaxybigdata.com",
     authServer: "http://auth.galaxybigdata.com",
-    staticServer: "http://static.galaxybigdata.com"
+    staticServer: "http://static.galaxybigdata.com",
+    crowdServer: "http://crowd.galaxybigdata.com"
   },
   url: {
     loginUrl: "http://auth.galaxybigdata.com/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://console.galaxybigdata.com/login&backurl=",
