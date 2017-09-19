@@ -37,7 +37,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
 
     @Override
     public ReturnData<ZbRequirement> getListByUser(Integer pageNum, Integer pageSize, String userId, Integer status,
-                                                   String requireSn, String title) throws HookahException{
+                                                   String title, String requireSn) throws HookahException{
         List<Condition> filter = new ArrayList<>();
         filter.add(Condition.eq("userId",userId));
         if (StringUtils.isNotBlank(title)) filter.add(Condition.like("title",title));
