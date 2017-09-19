@@ -15,4 +15,6 @@ public interface ZbRequireService extends GenericService<ZbRequirement, Long> {
 
     ReturnData<ZbRequirement> getListByUser(Integer pageNum, Integer pageSize, String userId,
                                             Integer status, String title , String requireSn) throws HookahException;
+
+    ReturnData<ZbRequirement> getAllRequirement(String currentPage, String pageSize, ZbRequirement zbRequirement);
 }
