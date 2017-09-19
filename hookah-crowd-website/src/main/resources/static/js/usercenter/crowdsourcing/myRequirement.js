@@ -2,7 +2,6 @@
  * Created by Dajun on 2017-9-19.
  */
 function loadPageData(data) { //渲染页面数据
-  console.log(data);
   data = data.data.list;
   var tempHtml = '\
         <thead>\
@@ -66,13 +65,8 @@ function loadPageData(data) { //渲染页面数据
         break;
 
     }
-
-
-
-
-
     tempHtml += '<tr>\
-          <td>'+i+'</td>\
+          <td>'+(i+1)+'</td>\
           <td>'+data[i].requireSn+'</td>\
           <td>'+data[i].title+'</td>\
           <td>'+data[i].rewardMoney+'</td>\
@@ -82,9 +76,9 @@ function loadPageData(data) { //渲染页面数据
           <td>'+tempEdit+'</td>\
           </tr>'
   }
-
-  tempHtml += '</tbody></table>'
-
+  if(!data.length){
+    tempHtml += '<tr><td style="padding: 70px;" colspan="8">----无数据----</td></tr>'  }
+  tempHtml += '</tbody></table>';
   $('.crowdsourcing-table').html(tempHtml)
 
 }
@@ -101,6 +95,5 @@ function searchFn(){
   dataParm.status = $('#status').attr('value');
   dataParm.title = $('#title').val();
   dataParm.requireSn = $('#requireSn').val();
-  console.log(dataParm);
   goPage("1");
 }
