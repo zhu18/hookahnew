@@ -4,31 +4,43 @@ public class ZbContants {
 
     /**
      * 需求周期状态
-     0: 草稿
-     1：待审核,
-     2：待托管赏金，
-     3：待发布，
-     4：报名中，
-     5：待验收，
-     6：已验收待付款，
-     7：待评价，
-     8：交易成功，
-     9：交易失败，
-     10：交易失败待退款
+     0草稿
+     1待审核
+     2审核未通过
+     3待托管资金
+     4待发布
+     5报名中
+     6平台筛选
+     7待二次托管资金
+     8工作中
+     9待平台验收
+     10待需方验收
+     11已验收代付款
+     12二次工作中
+     13待评价
+     14交易取消
+     15交易成功
+     16待退款
      */
     public enum Zb_Require_Status {
 
         DRAFT(0),
         WAIT_CHECK(1),
-        WAIT_TG(2),
-        WAIT_FB(3),
-        SINGING(4),
-        WAIT_YS(5),
-        WAIT_FK(6),
-        WAIT_PJ(7),
-        ZB_SUCCESS(8),
-        ZB_FAIL(9),
-        WAIT_TK(10);
+        CHECK_NOT(2),
+        WAIT_TG(3),
+        WAIT_FB(4),
+        SINGING(5),
+        SELECTING(6),
+        WAIT_TWO_TG(7),
+        WORKINGING(8),
+        WAIT_PLAT_YS(9),
+        WAIT_buyer_YS(10),
+        WAIT_FK(11),
+        TWO_WORKING(12),
+        WAIT_PJ(13),
+        ZB_SUCCESS(14),
+        ZB_FAIL(15),
+        WAIT_TK(16);
 
         public Integer code;
 
