@@ -35,7 +35,7 @@ public class RequireController extends BaseController{
 
         try {
             String Uname = this.getCurrentUser().getUserName();
-            System.out.print(Uname);
+            System.out.println(Uname);
         } catch (HookahException e) {
             e.printStackTrace();
         }
