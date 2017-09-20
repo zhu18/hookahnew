@@ -23,31 +23,31 @@
             <div class="col-sm-12">
                 订单状态：
                 <div class="searchSection  btn-group">
-                    <button class="btn btn-default" data-ng-model="settleStatus" uib-btn-radio=""
+                    <button class="btn btn-default" data-ng-model="status" uib-btn-radio=""
                             data-ng-click="search()"> 全部
                     </button>
-                    <button class="btn btn-default" data-ng-model="settleStatus" uib-btn-radio="0"
+                    <button class="btn btn-default" data-ng-model="status" uib-btn-radio="1"
                             data-ng-click="search()"> 待审核
                     </button>
-                    <button class="btn btn-default" data-ng-model="settleStatus" uib-btn-radio="1"
+                    <button class="btn btn-default" data-ng-model="status" uib-btn-radio="4"
                             data-ng-click="search()"> 待发布
                     </button>
-                    <button class="btn btn-default" data-ng-model="settleStatus" uib-btn-radio="1"
+                    <button class="btn btn-default" data-ng-model="status" uib-btn-radio="5"
                             data-ng-click="search()"> 报名中
                     </button>
-                    <button class="btn btn-default" data-ng-model="settleStatus" uib-btn-radio="1"
+                    <button class="btn btn-default" data-ng-model="status" uib-btn-radio="9"
                             data-ng-click="search()"> 待验收
                     </button>
-                    <button class="btn btn-default" data-ng-model="settleStatus" uib-btn-radio="1"
+                    <button class="btn btn-default" data-ng-model="status" uib-btn-radio="11"
                             data-ng-click="search()">已验收待付款
                     </button>
-                    <button class="btn btn-default" data-ng-model="settleStatus" uib-btn-radio="1"
+                    <button class="btn btn-default" data-ng-model="status" uib-btn-radio="16"
                             data-ng-click="search()">待退款
                     </button>
-                    <button class="btn btn-default" data-ng-model="settleStatus" uib-btn-radio="1"
+                    <button class="btn btn-default" data-ng-model="status" uib-btn-radio="14"
                             data-ng-click="search()">交易取消
                     </button>
-                    <button class="btn btn-default" data-ng-model="settleStatus" uib-btn-radio="1"
+                    <button class="btn btn-default" data-ng-model="status" uib-btn-radio="15"
                             data-ng-click="search()">交易完成
                     </button>
                 </div>
@@ -55,9 +55,9 @@
 
                 <div style="padding:15px 0 0;">
                     <label class="control-label">需求编号：</label>
-                    <input ng-model="orderSn" type="text" class="form-control" placeholder="请输入需求编号">
+                    <input ng-model="requireSn" type="text" class="form-control" placeholder="请输入需求编号">
                     <label class="control-label">需求标题：</label>
-                    <input ng-model="orgName" type="text" class="form-control" placeholder="请输入需求标题">
+                    <input ng-model="title" type="text" class="form-control" placeholder="请输入需求标题">
                     <!--<div class="form-inline"><label class="control-label">时间：</label>-->
                         <!--<p class="input-group" style="margin-top: 15px">-->
                             <!--<input style="background-color: transparent;" ng-keypress="$event.preventDefault()"-->
@@ -97,88 +97,49 @@
                     <div class="gridSection">
                         <table class="table table-hover">
                             <thead>
-                            <tr>
-                                <th>序号</th>
-                                <th>需求编号</th>
-                                <th>需求标题</th>
-                                <th>需求方</th>
-                                <th>悬赏金额</th>
-                                <th>状态</th>
-                                <th>提交日期</th>
-                                <th>截止日期</th>
-                                <th>操作</th>
-                            </tr>
+                               <tr>
+                                   <th>序号</th>
+                                   <th>需求编号</th>
+                                   <th>需求标题</th>
+                                   <th>需求方</th>
+                                   <th>悬赏金额</th>
+                                   <th>状态</th>
+                                   <th>提交日期</th>
+                                   <th>截止日期</th>
+                                   <th>操作</th>
+                               </tr>
                             </thead>
                             <tbody>
-                            <!--<tr data-ng-repeat="item in publishList">-->
-                                <!--<td data-ng-bind="$index"></td>-->
-                                <!--<td data-ng-bind="item.orgName"></td>-->
-                                <!--<td data-ng-bind="item.orgName"></td>-->
-                                <!--<td data-ng-bind="item.orgName"></td>-->
-                                <!--<td data-ng-bind="'￥'+item.noSettleAmount/100"></td>-->
-                                <!--<td>-->
-                                    <!--<span data-ng-show="item.settleStatus==0">待审核</span>-->
-                                    <!--<span data-ng-show="item.settleStatus==0">待发布</span>-->
-                                    <!--<span data-ng-show="item.settleStatus==0">报名中</span>-->
-                                    <!--<span data-ng-show="item.settleStatus==0">待验收</span>-->
-                                    <!--<span data-ng-show="item.settleStatus==0">已验收待付款</span>-->
-                                    <!--<span data-ng-show="item.settleStatus==0">待退款</span>-->
-                                    <!--<span data-ng-show="item.settleStatus==0">交易取消</span>-->
-                                    <!--<span data-ng-show="item.settleStatus==0">交易完成</span>-->
-                                <!--</td>-->
-                                <!--<td data-ng-bind="item.orderTime"></td>-->
-                                <!--<td data-ng-bind="item.orderTime"></td>-->
-                                <!--<td >-->
-                                    <!--<a data-ng-show="item.settleStatus==0" data-ng-click="auditing(item.id)">去审核</a>-->
-                                    <!--<a data-ng-show="item.settleStatus==0" data-ng-click="public(item.id)">去发布</a>-->
-                                    <!--<a data-ng-show="item.settleStatus==0" data-ng-click="getDetails(item.id)">资格筛选</a>-->
-                                    <!--<a data-ng-show="item.settleStatus==0" data-ng-click="getDetails(item.id)">去验收</a>-->
-                                    <!--<a data-ng-show="item.settleStatus==0" data-ng-click="getDetails(item.id)">去付款</a>-->
-                                    <!--<a data-ng-show="item.settleStatus==0" data-ng-click="getDetails(item.id)">退款</a>-->
-                                    <!--<a data-ng-show="item.settleStatus==0" data-ng-click="getDetails(item.id)">查看</a>-->
-                                    <!--<a data-ng-show="item.settleStatus==0" data-ng-click="getDetails(item.id)">查看</a>-->
+                            <tr data-ng-repeat="item in publishList">
+                                <td data-ng-bind="$index+1"></td>
+                                <td data-ng-bind="item.requireSn"></td>
+                                <td data-ng-bind="item.title"></td>
+                                <td data-ng-bind="item.contactName"></td>
+                                <td data-ng-bind="'￥'+item.rewardMoney/100"></td>
+                                <td>
+                                    <span data-ng-show="item.status==0">待审核</span>
+                                    <span data-ng-show="item.status==2">待发布</span>
+                                    <span data-ng-show="item.status==3">报名中</span>
+                                    <span data-ng-show="item.status==4">待验收</span>
+                                    <span data-ng-show="item.status==5">已验收待付款</span>
+                                    <span data-ng-show="item.status==8">待退款</span>
+                                    <span data-ng-show="item.status==9">交易取消</span>
+                                    <span data-ng-show="item.status==7">交易完成</span>
+                                </td>
+                                <td data-ng-bind="item.addTime"></td>
+                                <td data-ng-bind="item.applyDeadline"></td>
+                                <td >
+                                    <a data-ng-show="item.status==0" data-ng-click="auditing(item)">去审核</a>
+                                    <a data-ng-show="item.status==2" data-ng-click="public(item)">去发布</a>
+                                    <a data-ng-show="item.status==3" data-ng-click="getDetails(item)">资格筛选</a>
+                                    <a data-ng-show="item.status==4" data-ng-click="getDetails(item)">去验收</a>
+                                    <a data-ng-show="item.status==5" data-ng-click="getDetails(item)">去付款</a>
+                                    <a data-ng-show="item.status==8" data-ng-click="getDetails(item)">退款</a>
+                                    <a data-ng-show="item.status==9" data-ng-click="getDetails(item)">查看</a>
+                                    <a data-ng-show="item.status==7" data-ng-click="getDetails(item)">查看</a>
+                                </td>
+                            </tr>
 
-                                <!--</td>-->
-                            <!--</tr>-->
-                            <tr>
-                                <td>1</td>
-                                <td>XXXXXXXXX</td>
-                                <td>XXXXXXXXX</td>
-                                <td>XXXXXXXXX</td>
-                                <td>6326.00</td>
-                                <td>待审核</td>
-                                <td>2018-01-05</td>
-                                <td>2018-01-05</td>
-                                <td>
-                                    <a data-ng-click="public(item.id)" class="btn btn-default">去发布</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>XXXXXXXXX</td>
-                                <td>XXXXXXXXX</td>
-                                <td>XXXXXXXXX</td>
-                                <td>6326.00</td>
-                                <td>待审核</td>
-                                <td>2018-01-05</td>
-                                <td>2018-01-05</td>
-                                <td>
-                                    <a data-ng-click="getDetails(item.id)" class="btn btn-default">查看</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>XXXXXXXXX</td>
-                                <td>XXXXXXXXX</td>
-                                <td>XXXXXXXXX</td>
-                                <td>6326.00</td>
-                                <td>待审核</td>
-                                <td>2018-01-05</td>
-                                <td>2018-01-05</td>
-                                <td>
-                                    <a data-ng-click="auditing(item.id)" class="btn btn-default">审核</a>
-                                </td>
-                            </tr>
                             </tbody>
                         </table>
 

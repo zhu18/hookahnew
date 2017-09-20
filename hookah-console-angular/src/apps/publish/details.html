@@ -42,7 +42,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="publish-table-box">
+            <div class="col-sm-12 margin-top-10 publish-table-box">
                 <table class="table">
                     <tr>
                         <th>需求方</th>
@@ -99,9 +99,88 @@
                         </td>
                     </tr>
                 </table>
-                <div style="margin: auto;width: 60px;">
-                    <button class="btn btn-primary " data-ng-click="back()">返回</button>
-                </div>
+            </div>
+            <div class="col-sm-12 margin-top-10 tab-box">
+                <uib-tabset active="active">
+                    <uib-tab index="0" heading="任务报名">
+                        <div class="tab-info">
+                            <table class="table">
+                               <thead>
+                               <tr>
+                                   <th>公司名称</th>
+                                   <th>信誉</th>
+                                   <th>报名时间</th>
+                                   <th>状态</th>
+                                   <th>联系人</th>
+                                   <th>手机号</th>
+                                   <th>自荐理由描述</th>
+                                   <th>操作</th>
+                               </tr>
+                               </thead>
+                               <tbody>
+                               <tr>
+                                   <td>XXX公司</td>
+                                   <td>88分</td>
+                                   <td>2017-05-28</td>
+                                   <td>报名</td>
+                                   <td>路**</td>
+                                   <td>18769883892</td>
+                                   <td>我觉得我很好，你应该选我，你觉得呢。</td>
+                                   <td>
+                                       <button class="btn btn-default">选中</button>
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td>XXX公司</td>
+                                   <td>88分</td>
+                                   <td>2017-05-28</td>
+                                   <td>报名</td>
+                                   <td>路**</td>
+                                   <td>18769883892</td>
+                                   <td>我觉得我很好，你应该选我，你觉得呢。</td>
+                                   <td>
+                                       <button class="btn btn-primary">选中</button>
+                                   </td>
+                               </tr>
+                               </tbody>
+                           </table>
+                            <p class="margin-top-10 "> <span class="glyphicon glyphicon-volume-up"></span>温馨提示:报名结束后，请在上述报名用户名单尽快进行资格审查，筛选确认中标用户。</p>
+                            <div style="margin: auto;width: 58px;">
+                                <button class="btn btn-primary">提交</button>
+                            </div>
+                        </div>
+                    </uib-tab>
+                    <uib-tab index="1" heading="任务成果">
+                        <div class="tab-info">
+                            <table class="table">
+                                <tr>
+                                    <th>方案标题</th>
+                                    <td>路珊珊城市改造方案</td>
+                                </tr>
+                                <tr>
+                                    <th>方案描述</th>
+                                    <td>就是那么牛逼的方案。</td>
+                                </tr>
+                                <tr>
+                                    <th>方案附件</th>
+                                    <td>
+                                        <a href="javascript:void (0)" class="margin-right-5"> <span class="glyphicon glyphicon-save"></span>lushansahsn</a>
+                                        <a href="javascript:void (0)" class="margin-right-5"> <span class="glyphicon glyphicon-save"></span>lusjasuajnh</a>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div style="margin: auto; width: 190px" class="margin-top-10">
+                                <button class="btn btn-primary">成果验收</button>
+                                <button class="btn btn-default">返回</button>
+                            </div>
+                        </div>
+                    </uib-tab>
+                    <uib-tab index="2" heading="任务评价">
+                        <div class="tab-info">
+                            暂无内容
+                        </div>
+                    </uib-tab>
+                </uib-tabset>
             </div>
         </div>
     </div>

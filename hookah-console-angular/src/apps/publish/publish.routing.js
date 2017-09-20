@@ -16,26 +16,47 @@ export default function publishRouting($stateProvider, $urlRouterProvider) {
       url: '/publish/list',
       template: require('./list.html'),
       controller: publishController,
-      permission: 'publishList'
+      permission: 'list'
     })
-    .state('publish.details', {//发布大厅
+    .state('publish.details', {// 查看详情页大厅
       url: '/publish/details/:id',
       template: require('./details.html'),
       controller: detailsController,
-      permission: 'publishDetails'
+      permission: 'details'
     })
     .state('publish.public', {  //发布页面
       url: '/publish/public/:id',
       template: require('./public.html'),
       controller: publicController,
-      permission: 'publishPublic'
+      permission: 'public'
 
     })
     .state('publish.auditing', {  //审核页面
       url: '/publish/auditing/:id',
       template: require('./auditing.html'),
       controller: auditingController,
-      permission: 'publishAuditing'
+      permission: 'auditing'
 
     })
+    // .state('publish.auditing', {  //报名页面
+    //   url: '/publish/auditing/:id',
+    //   template: require('./auditing.html'),
+    //   controller: auditingController,
+    //   permission: 'publishAuditing'
+    //
+    // })
+    // .state('publish.auditing', {  //验收页面
+    //   url: '/publish/auditing/:id',
+    //   template: require('./auditing.html'),
+    //   controller: auditingController,
+    //   permission: 'publishAuditing'
+    //
+    // })
+    // .state('publish.auditing', {  //审核页面
+    //   url: '/publish/auditing/:id',
+    //   template: require('./auditing.html'),
+    //   controller: auditingController,
+    //   permission: 'publishAuditing'
+    //
+    // })
 };

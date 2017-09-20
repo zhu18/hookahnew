@@ -9495,9 +9495,7 @@ input[type="radio"], input[type="checkbox"] {
 .publish-Progress ul li.visited:after{
   background-color:#09c;
 }
-.publish-table-box{
-  margin: 140px 20px;
-}
+
 
 .publish-table-box table th,.publish-table-box table td{
   border: 1px solid #e5e5e5;
@@ -9510,9 +9508,27 @@ input[type="radio"], input[type="checkbox"] {
 .publish-table-box table th input{
   vertical-align: middle !important;
 }
+.tab-box .tab-info{
+  border: 1px solid #e5e5e5;
+  border-top: none;
+  padding: 10px;
+}
+.tab-box .tab-info table th{
+  border: 1px solid #e5e5e5;
+  text-align: center;
+}
+.tab-box .nav{
+  padding-left: 1px !important;
+}
+.tab-box table{
+  margin: 0;
+}
 
 .margin-top-10{
   margin-top: 10px !important;
+}
+.margin-right-5{
+  margin-right: 5px !important;
 }
 /*清楚影响*/
 .uib-daypicker table th,.uib-daypicker table td{
