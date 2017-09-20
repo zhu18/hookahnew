@@ -115,7 +115,7 @@ $('.fileUploadBtn').fileupload(
           <span class="overflowpoint">' + data.files[0].name + '</span>\
           <div class="crowdsourcing-table-edit">\
           <a href="' + obj.absPath + '" target="_blank" class="download"><img src="/static/images/crowdsourcing/download.png" alt=""></a>\
-          <a href="javascript:void (0)" class="del" ><img src="/static/images/crowdsourcing/del.png" alt=""></a>\
+          <a href="javascript:void (0)" class="del j_firstPage" ><img src="/static/images/crowdsourcing/del.png" alt=""></a>\
           </div>\
           </dd>\
         </dl>';
