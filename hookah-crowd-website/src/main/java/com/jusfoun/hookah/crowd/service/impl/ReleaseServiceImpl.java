@@ -7,7 +7,6 @@ package com.jusfoun.hookah.crowd.service.impl;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirementFiles;
-import com.jusfoun.hookah.core.domain.zb.ZbTag;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbRequirementVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
@@ -25,9 +24,6 @@ import java.util.*;
  */
 @Service
 public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String> implements ReleaseService {
-
-    @Resource
-    ZbTagService zbTagService;
 
     @Resource
     ZbRequirementFilesService zbRequirementFilesService;
@@ -64,6 +60,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                 if(vo.getFiles().size() > 0){
                     for(ZbRequirementFiles zbfile : vo.getFiles()){
                         zbfile.setRequirementId(ment.getId());
+                        zbfile.setAddTime(new Date());
                         zbRequirementFilesService.insert(zbfile);
                     }
                 }
@@ -95,19 +92,6 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
         }
     }
 
-    /**
-     * 数据众包--添加标签
-     * @param tagContent 标签内容
-     * @param type 标签类型
-     */
-    public void insertTag(String tagContent, Short type, String userId){
-        ZbTag tag = new ZbTag();
-        tag.setAddTime(new Date());
-        tag.setTagContent(tagContent);
-        tag.setType(type);
-        tag.setAddOperator(userId);
-        zbTagService.insert(tag);
-    }
 
     /**
      * 数据众包-发布需求--确认信息
