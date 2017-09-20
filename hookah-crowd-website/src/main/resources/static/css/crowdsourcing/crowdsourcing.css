@@ -2,6 +2,7 @@
 .bgc-fff{ background-color: #fff;}
 .padding-bottom-20{ padding-bottom:20px;}
 .ad-box{ background: #00A1CB; height:200px;}
+.margin-bottom-20{ margin-bottom:20px;}
 .crowdsourcing-menu>li { overflow: hidden; font-size: 14px; line-height:50px; border-bottom:1px dashed #ececec;}
 .crowdsourcing-menu>li:last-child { border-bottom:0 dashed #ececec;}
 .crowdsourcing-menu li span{ float: left; width: 90px; padding-right: 18px; text-align: right ; background-color: #f9f9f9;}
@@ -53,25 +54,92 @@
 
 
 .myRequirement-table tr { text-align: left; }
-.myRequirement-table tr td{ text-align: left; padding:0 10px 0 10px;  }
-.myRequirement-table tr td input{ padding-left:5px; min-width: 320px;line-height: 25px;}
-.myRequirement-table tr td:first-child{ text-align: right; padding:0 10px 0 0; font-size: 15px;  width: 146px;border-right:1px solid #e4e4e4;}
+.myRequirement-table tr td{ text-align: left; padding:0 10px 0 10px;  position: relative; }
+.myRequirement-table tr td input{padding-left:5px; width: 320px;line-height: 25px;border: 1px solid #e0e0e0; }
+.myRequirement-table tr td:first-child{ text-align: right; padding:0 10px 0 0; font-size: 15px;  width: 126px;border-right:1px solid #e4e4e4;background: #f5f5f5;}
 .myRequirement-table tr td:first-child span{ color: #f00;}
-.myRequirement-table tr td textarea{ margin:10px 10px 0 0; width: 90%; padding: 10px; }
+.myRequirement-table tr td textarea{ margin:10px 10px 0 0; width: 771px; padding: 10px;border: 1px solid #e0e0e0; }
 .myRequirement-table tbody tr:nth-child(odd) { background-color: #fff;border-bottom:1px solid #e4e4e4; }
 .myRequirement-table tbody tr:hover { background-color: #fff; }
 .myRequirement-table tbody tr:nth-child(odd):hover { background-color: #fff; }
+.release-notice{ font-size: 13px; display: block; padding: 20px}
+
+.release-first-btnbox{ padding-left:170px;}
+.release-first-btnbox button{padding: 5px 15px; margin-right:15px; font-size: 15px; border:none; cursor: pointer;background-color: #337ab7; color:#fff; border-color: #2e6da4;}
+.release-first-btnbox button:hover{background-color: #286090; border-color: #204d74;}
+
+.myRequirement-table tr td input.fileUploadBtn{min-width:70px; width: 70px;position: relative; z-index: 1; background-color: #ff0000; opacity:0; }
+.myRequirement-table tr td .falseBen{width:70px;height:25px; display: inline-block;  position: absolute; left: 10px;top:11px;line-height: 25px; text-align: center;background-color: #337ab7; color:#fff; border-color: #2e6da4;}
+.myRequirement-table tr td .falseBen:hover{background-color: #286090; border-color: #204d74;}
+
+.upload-file-notice{ color: #cccccc;}
+.color-red{ color: #f00;}
 
 
 
 
 
+.crowdsourcing-table .load-file{float:left; height:48px; width:259px; margin:0 12px 12px 0; background:#f5f5f5; overflow:hidden;}
+.crowdsourcing-table .load-file:nth-child(3){ margin-right:0;}
+.crowdsourcing-table .load-file:nth-child(6){ margin-right:0;}
+.crowdsourcing-table .load-file dt{ position: relative;  height: 46px;; width:46px;float:left; overflow:hidden; border: 1px solid #ededed; background: #fff; line-height: 44px; text-align: center }
+.crowdsourcing-table .load-file dt a{ height:100%;width:100%; display: block; position: absolute; left: 0; top:0; z-index: 9}
+.crowdsourcing-table .load-file dd{ position: relative; float:left; width: 200px; padding-left: 10px; margin:0; font-size: 12px; color: #717171;}
+.crowdsourcing-table .load-file dd span:first-child{ line-height:48px; font-size: 13px; color:#3d4245;}
+.crowdsourcing-table .load-file dd span{ position: relative; display: block; color:#888888;   line-height: 17px;}
+.crowdsourcing-table .load-file.text dt{ border-color:#c4c4c4}
+.crowdsourcing-table .load-file.text dt:before { content: 'T'; display: block; height: 100%; width: 100%; color: #c4c4c4; font-family: Arial; font-size: 28px; text-align: center; line-height: 48px }
+.crowdsourcing-table .load-file.text dt img{ opacity:0;}
+
+.crowdsourcing-table .load-file.word dt{ border-color:#4fa5f1}
+.crowdsourcing-table .load-file.word dt:before { content: 'W'; display: block; height: 100%; width: 100%; color: #4fa5f1; font-family: Arial; font-size: 28px; text-align: center; line-height: 48px }
+.crowdsourcing-table .load-file.word dt img{ opacity:0;}
+
+.crowdsourcing-table .load-file.ppt dt{ border-color:#fc5143}
+.crowdsourcing-table .load-file.ppt dt img{ opacity:0;}
+
+.crowdsourcing-table .load-file.ppt dt:before{ content: 'P'; display:block;height:100%;width:100%; color:#fc5143; font-family:Arial; font-size: 28px; text-align: center;line-height: 48px}
+.crowdsourcing-table .load-file.excel dt{ border-color:#6ab909}
+.crowdsourcing-table .load-file.excel dt:before { content: 'X'; display: block; height: 100%; width: 100%; color: #6ab909; font-family: Arial; font-size: 28px; text-align: center; line-height: 48px }
+.crowdsourcing-table .load-file.excel dt img{ opacity:0;}
+
+.crowdsourcing-table .load-file.img dt{ border-color:#ededed}
+.crowdsourcing-table .load-file.img dt img{position: absolute; left: 0; z-index: 2; max-width: 100px;}
+.crowdsourcing-table .load-file.img dt:before{ content: 'img'; display: none; position: absolute;left:0; z-index:2; height:100%;width:100%; color:#c4c4c4; font-family:Arial; font-size: 14px; text-align: center;line-height: 46px}
+
+.crowdsourcing-table .load-file.zip dt{ border-color:#4fa5f1}
+.crowdsourcing-table .load-file.zip dt img{ position: relative; z-index:2;}
+.crowdsourcing-table .load-file.zip dt:before{ content: ''; background: url("../../images/crowdsourcing/zipbg.gif") 0 0 no-repeat; position: absolute;left:0; z-index:2; display:block;height:100%;width:100%; color:#c4c4c4; font-family:Arial; font-size: 14px; text-align: center;line-height: 46px}
+.crowdsourcing-table .load-file.zip dt img{ opacity:0;}
+
+.crowdsourcing-table .load-file.others dt{ border-color:#d14233}
+.crowdsourcing-table .load-file.others dt img{ position: relative; z-index:2;}
+.crowdsourcing-table .load-file.others dt:before{ content: '?'; position: absolute;left:0; z-index:3; display:block;height:100%;width:100%; color:#fed9d6; font-family:Arial; font-size: 44px; text-align: center;line-height: 46px}
+.crowdsourcing-table .load-file.others dt img{ opacity:0;}
+
+.crowdsourcing-table-edit {display: none; opacity:0; position: absolute;left:0;top:5px; height:48px;width:100%; text-align: right;font-size: 0; line-height:48px; }
+.crowdsourcing-table-edit:after{ content: ''; position: absolute;left:0;top:0;height:100%;width:100%; background: #000; opacity:.7;}
+.crowdsourcing-table-edit a{ position: relative;top:7px; margin-right: 15px; opacity: .85; z-index:2; display: inline-block; height:32px; width:32px; line-height:32px; text-align: center}
+.crowdsourcing-table-edit a:last-child{margin-right: 12px;}
 
 
+.crowdsourcing-table .load-file.word .view{ display: none;}
+.crowdsourcing-table .load-file.ppt .view{ display: none;}
+.crowdsourcing-table .load-file.text .view{ display: none;}
+.crowdsourcing-table .load-file.excel .view{ display: none;}
+.crowdsourcing-table .load-file.others .view{ display: none;}
+.crowdsourcing-table .load-file.zip .view{ display: none;}
 
+.crowdsourcing-user { position: absolute; left: 470px;top:0;}
+.crowdsourcing-user span{ display: inline-block; border-left: 1px solid #e4e4e4 ; width: 80px; text-align: right; padding-right:15px;border-right: 1px solid #e4e4e4 ;background: #f5f5f5;}
+.myRequirement-table tr td .crowdsourcing-user input{  width: 70px; margin-left: 10px;}
+.myRequirement-table tr td .crowdsourcing-user input:last-child{  width: 140px;}
+.myRequirement-table tr td .crowdsourcing-user input.tag{  width: 227px;}
+.myRequirement-table tr td .crowdsourcing-user .tagNotice{ position: relative; font-style: normal ; width: 32px;display: inline-block;text-align: center;}
+.myRequirement-table tr td .crowdsourcing-user .tagNoticeContent{  display: none;position: absolute; top: 0; background: #fff; width: 328px; height: 36px; line-height: 17px; padding: 5px; right: 33px;}
 
-
-
+.requirement-type span{ background-color: #e6e6e6; margin:0 3px; padding: 3px 9px;user-select: none;cursor:pointer}
+.requirement-type span.active{background-color: #6084a2; color: #fff;}
 
 
 
