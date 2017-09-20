@@ -19,10 +19,19 @@ class publishController {
         console.log('数据在这里');
         console.log(res);
         if (res.data.code == '1') {
-          $scope.publishList = res.data.data.list;
-          $scope.showNoneDataInfoTip = false;
-          if (res.data.data.totalPage > 1) {
+          var publishList = res.data.data.list;
+          $scope.publishList=[];
+          angular.forEach(publishList,function (item) {
+              if(item.status==1 || item.status==4||item.status==5||item.status==9||item.status==11||item.status==16||item.status==14||item.status==15){
+                $scope.publishList.push(item);
+              }
+          })
+            $scope.showNoneDataInfoTip = true;
+          if (res.data.data.totalPage > 0) {
+            $scope.showNoneDataInfoTip = false;
             $scope.showPageHelpInfo = true;
+          }else {
+              $scope.showPageHelpInfo = true;
           }
         } else {
           $scope.settleList = [];

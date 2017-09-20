@@ -36,17 +36,17 @@ public class CommonInterceptor implements HandlerInterceptor {
         BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(httpServletRequest.getServletContext());
         try {
             Subject subject = SecurityUtils.getSubject();
-            if (subject != null && subject.isAuthenticated()) {
-                if (!ajax) {
-                    Session session = subject.getSession();
-                    Map userMap = (Map)session.getAttribute("user");
-                    String userId = (String)userMap.get("userId");
-                    UserService userService = (UserService) factory.getBean("userService");
-                    User user = userService.selectById(userId);
-                    Map<String, Object> model = modelAndView.getModel();
-                    model.put("user", user);
-                }
-            }
+//            if (subject != null && subject.isAuthenticated()) {
+//                if (!ajax) {
+//                    Session session = subject.getSession();
+//                    Map userMap = (Map)session.getAttribute("user");
+//                    String userId = (String)userMap.get("userId");
+//                    UserService userService = (UserService) factory.getBean("userService");
+//                    User user = userService.selectById(userId);
+//                    Map<String, Object> model = modelAndView.getModel();
+//                    model.put("user", user);
+//                }
+//            }
         } catch (UnavailableSecurityManagerException e) {
 
         }
