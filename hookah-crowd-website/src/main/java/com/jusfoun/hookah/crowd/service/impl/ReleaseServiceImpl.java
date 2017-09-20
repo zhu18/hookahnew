@@ -108,18 +108,20 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
         }
         filters.add(Condition.eq("status", 0));
         ZbRequirement zbRequirement = zbRequireService.selectOne(filters);
-        if(zbRequirement.getTag() != null){
-            String[] strArray = null;
-            strArray = zbRequirement.getTag().split(",");
-            map.put("tag",strArray);
-        }
+        if(zbRequirement != null){
+            if(zbRequirement.getTag() != null){
+                String[] strArray = null;
+                strArray = zbRequirement.getTag().split(",");
+                map.put("tag",strArray);
+            }
 
-        if(zbRequirement.getId() != null){
-            filters1.add(Condition.eq("correlationId", zbRequirement.getId()));
+            if(zbRequirement.getId() != null){
+                filters1.add(Condition.eq("correlationId", zbRequirement.getId()));
+            }
+            List<ZbAnnex> zbAnnexes = zbAnnexService.selectList(filters1);
+            map.put("zbRequirement",zbRequirement);
+            map.put("zbRequirementFiles",zbAnnexes);
         }
-        List<ZbAnnex> zbAnnexes = zbAnnexService.selectList(filters1);
-        map.put("zbRequirement",zbRequirement);
-        map.put("zbRequirementFiles",zbAnnexes);
         return ReturnData.success(map);
     }
 
