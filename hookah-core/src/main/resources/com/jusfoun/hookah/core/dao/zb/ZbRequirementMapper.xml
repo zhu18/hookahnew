@@ -52,7 +52,7 @@
     #{title,jdbcType=VARCHAR}, #{contactName,jdbcType=VARCHAR}, #{contactPhone,jdbcType=VARCHAR},
     #{description,jdbcType=VARCHAR}, #{rewardMoney,jdbcType=BIGINT}, #{trusteePercent,jdbcType=INTEGER},
     #{deliveryDeadline,jdbcType=TIMESTAMP}, #{applyDeadline,jdbcType=TIMESTAMP}, #{checkRemark,jdbcType=VARCHAR},
-    #{status,jdbcType=SMALLINT}, #{type,jdbcType=SMALLINT}, #{tag,jdbcType=SMALLINT},#{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+    #{status,jdbcType=SMALLINT}, #{type,jdbcType=SMALLINT}, #{tag,jdbcType=VARCHAR},#{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
     #{pressTime,jdbcType=TIMESTAMP}, #{addOperator,jdbcType=VARCHAR}, #{updateOperator,jdbcType=VARCHAR})
   </insert>
 
