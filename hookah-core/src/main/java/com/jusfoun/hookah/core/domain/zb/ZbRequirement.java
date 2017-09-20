@@ -586,4 +586,15 @@ public class ZbRequirement extends GenericModel {
     public void setTag(String tag) {
         this.tag = tag;
     }
+
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date pressTime; // 发布时间
+
+    public Date getPressTime() {
+        return pressTime;
+    }
+
+    public void setPressTime(Date pressTime) {
+        this.pressTime = pressTime;
+    }
 }

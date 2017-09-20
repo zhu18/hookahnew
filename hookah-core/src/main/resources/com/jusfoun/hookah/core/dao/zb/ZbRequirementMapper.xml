@@ -21,6 +21,7 @@
     <result column="status" property="status" jdbcType="SMALLINT" />
     <result column="type" property="type" jdbcType="SMALLINT" />
     <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    <result column="press_time" property="pressTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="add_operator" property="addOperator" jdbcType="VARCHAR" />
     <result column="update_operator" property="updateOperator" jdbcType="VARCHAR" />
@@ -32,7 +33,7 @@
     -->
     id, require_sn, user_id, title, contact_name, contact_phone, description, reward_money, 
     trustee_percent, delivery_deadline, apply_deadline, check_remark, status, type, add_time,
-    update_time, add_operator, update_operator
+    update_time, press_time, add_operator, update_operator
   </sql>
 
   <insert id="insertAndGetId" useGeneratedKeys="true" keyProperty="id" parameterType="com.jusfoun.hookah.core.domain.zb.ZbRequirement">
@@ -44,14 +45,14 @@
     title, contact_name, contact_phone,
     description, reward_money, trustee_percent,
     delivery_deadline, apply_deadline, check_remark,
-    status, type, add_time, update_time,
+    status, type, add_time, update_time, press_time,
     add_operator, update_operator)
     values (#{requireSn,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},
     #{title,jdbcType=VARCHAR}, #{contactName,jdbcType=VARCHAR}, #{contactPhone,jdbcType=VARCHAR},
     #{description,jdbcType=VARCHAR}, #{rewardMoney,jdbcType=BIGINT}, #{trusteePercent,jdbcType=INTEGER},
     #{deliveryDeadline,jdbcType=TIMESTAMP}, #{applyDeadline,jdbcType=TIMESTAMP}, #{checkRemark,jdbcType=VARCHAR},
     #{status,jdbcType=SMALLINT}, #{status,jdbcType=SMALLINT}, #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
-    #{addOperator,jdbcType=VARCHAR}, #{updateOperator,jdbcType=VARCHAR})
+    #{pressTime,jdbcType=TIMESTAMP}, #{addOperator,jdbcType=VARCHAR}, #{updateOperator,jdbcType=VARCHAR})
   </insert>
 
   <sql id="getRequirementListCondition">

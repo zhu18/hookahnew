@@ -24,6 +24,7 @@ public class ZbContants {
      17删除
      18取消
      19到期
+     20违约失败
      */
     public enum Zb_Require_Status {
 
@@ -47,6 +48,7 @@ public class ZbContants {
         DELETE(17),
         CANCEL(18),
         DATE_EXPIRE(19),
+        BREA_FAILE(20)
         ;
 
         public Integer code;
