@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -112,11 +113,11 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             Pagination<ZbRequirement> pagination = new Pagination<>();
             int startIndex= (helper.getPageNumber()-1)*helper.getPageSize();
             helper.setStartIndex(startIndex);
-            helper.setSort("desc");
             int count=zbRequirementMapper.countRequirementList(helper);
             List<ZbRequirement> list=zbRequirementMapper.getRequirementList(helper);
             for (ZbRequirement requirement :  list) {
-                requirement.setRemainTime(DateUtil.timeCountDown(requirement.getApplyDeadline()));
+                Date deadline=requirement.getApplyDeadline();
+                if (deadline!=null)requirement.setRemainTime(DateUtil.timeCountDown(requirement.getApplyDeadline()));
             }
             pagination.setTotalItems(count);
             pagination.setPageSize(helper.getPageSize());

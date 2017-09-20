@@ -93,7 +93,8 @@ public class RequireController extends BaseController{
             String userId = this.getCurrentUser().getUserId();
             if (helper.getPageNumber()==null)helper.setPageNumber(Integer.parseInt(PAGE_NUM));
             if (helper.getPageSize()==null) helper.setPageSize(Integer.parseInt(PAGE_SIZE));
-            if (!StringUtils.isNotBlank(helper.getOrder()))  helper.setOrder("apply_deadline");;
+            if (!StringUtils.isNotBlank(helper.getOrder()))  helper.setOrder("apply_deadline");
+            if (!StringUtils.isNotBlank(helper.getSort()))  helper.setSort("desc");
             String timeType=helper.getTimeType();
             if (StringUtils.isNotBlank(timeType)){
                 String addTime= "";
