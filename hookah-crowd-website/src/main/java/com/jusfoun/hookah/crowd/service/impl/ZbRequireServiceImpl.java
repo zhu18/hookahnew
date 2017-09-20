@@ -113,7 +113,6 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             Pagination<ZbRequirement> pagination = new Pagination<>();
             int startIndex= (helper.getPageNumber()-1)*helper.getPageSize();
             helper.setStartIndex(startIndex);
-            helper.setSort("desc");
             int count=zbRequirementMapper.countRequirementList(helper);
             List<ZbRequirement> list=zbRequirementMapper.getRequirementList(helper);
             for (ZbRequirement requirement :  list) {
