@@ -106,6 +106,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
         if(StringUtils.isNotBlank(userId)){
             filters.add(Condition.eq("userId", userId));
         }
+        filters.add(Condition.eq("status", 0));
         ZbRequirement zbRequirement = zbRequireService.selectOne(filters);
         if(zbRequirement.getTag() != null){
             String[] strArray = null;
