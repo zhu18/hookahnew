@@ -124,6 +124,8 @@
         /login** = oauth2Authc
         /api* = oauth2Authc
         /api/** = oauth2Authc
+        /usercenter* = oauth2Authc
+        /usercenter/** = oauth2Authc
         <!--/pay* = oauth2Authc
         /pay/** = oauth2Authc-->
         /logout = logout
