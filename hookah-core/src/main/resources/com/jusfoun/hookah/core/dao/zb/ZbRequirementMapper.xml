@@ -65,10 +65,10 @@
     <if test="timeType!=null and timeType!=''">
       <if test="addTime!=null and addTime!=''">
         <if test="timeType!='gtmonth'">
-          <![CDATA[  and zbr.add_time >=#{addTime} ]]>
+          <![CDATA[  and zbr.press_time >=#{pressTime} ]]>
         </if>
         <if test="timeType=='gtmonth'">
-          <![CDATA[  and zbr.add_time <=#{addTime} ]]>
+          <![CDATA[  and zbr.press_time <=#{pressTime} ]]>
         </if>
       </if>
     </if>

@@ -117,7 +117,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             List<ZbRequirement> list=zbRequirementMapper.getRequirementList(helper);
             for (ZbRequirement requirement :  list) {
                 Date deadline=requirement.getApplyDeadline();
-                if (deadline!=null)requirement.setRemainTime(DateUtil.timeCountDown(requirement.getApplyDeadline()));
+                if (deadline!=null)requirement.setRemainTime(DateUtil.timeCountDown(deadline));
             }
             pagination.setTotalItems(count);
             pagination.setPageSize(helper.getPageSize());

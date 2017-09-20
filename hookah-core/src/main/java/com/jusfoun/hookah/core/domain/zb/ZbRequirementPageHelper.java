@@ -18,8 +18,8 @@ public class ZbRequirementPageHelper extends GenericModel {
     //day :一天，week：一周内，month：一个月内，gtmonth：一个月以上，""或者null：全部
     private String timeType;
 
-    //添加时间的查询条件，该值通过timeType推算出来
-    private String addTime;
+    //发布时间的查询条件，该值通过timeType推算出来
+    private String pressTime;
     //需求类型
     private Short type;
     //需求状态
@@ -53,12 +53,12 @@ public class ZbRequirementPageHelper extends GenericModel {
         this.timeType = timeType;
     }
 
-    public String getAddTime() {
-        return addTime;
+    public String getPressTime() {
+        return pressTime;
     }
 
-    public void setAddTime(String addTime) {
-        this.addTime = addTime;
+    public void setPressTime(String pressTime) {
+        this.pressTime = pressTime;
     }
 
     public Short getType() {

@@ -97,15 +97,15 @@ public class RequireController extends BaseController{
             if (!StringUtils.isNotBlank(helper.getSort()))  helper.setSort("desc");
             String timeType=helper.getTimeType();
             if (StringUtils.isNotBlank(timeType)){
-                String addTime= "";
+                String pressTime= "";
                 switch (timeType){
-                    case ("day"): addTime = DateUtil.datePlusOrMinusAsString(-1);break;
-                    case ("week"): addTime = DateUtil.datePlusOrMinusAsString(-7);break;
-                    case ("month"): addTime = DateUtil.monthPlusOrMinusAsString(-1);break;
-                    case ("gtmonth"): addTime = DateUtil.monthPlusOrMinusAsString(-1);break;
-                    default: addTime= "";break;
+                    case ("day"): pressTime = DateUtil.datePlusOrMinusAsString(-1);break;
+                    case ("week"): pressTime = DateUtil.datePlusOrMinusAsString(-7);break;
+                    case ("month"): pressTime = DateUtil.monthPlusOrMinusAsString(-1);break;
+                    case ("gtmonth"): pressTime = DateUtil.monthPlusOrMinusAsString(-1);break;
+                    default: pressTime= "";break;
                 }
-                helper.setAddTime(addTime);
+                helper.setPressTime(pressTime);
             }
             return zbRequireService.getRequirementList( helper);
         } catch (Exception e) {
