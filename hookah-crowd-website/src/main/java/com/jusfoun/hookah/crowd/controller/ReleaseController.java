@@ -17,7 +17,7 @@ import javax.annotation.Resource;
  */
 
 @Controller
-@RequestMapping("/release")
+@RequestMapping("/api/release")
 public class ReleaseController extends BaseController{
 
     @Resource

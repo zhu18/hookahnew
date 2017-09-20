@@ -12,14 +12,14 @@ public class ZbRequirementVo {
 
     private ZbRequirement zbRequirement;
 
-    private List<ZbRequirementFiles> list;
+    private List<ZbRequirementFiles> files;
 
-    public List<ZbRequirementFiles> getList() {
-        return list;
+    public List<ZbRequirementFiles> getFiles() {
+        return files;
     }
 
-    public void setList(List<ZbRequirementFiles> list) {
-        this.list = list;
+    public void setFiles(List<ZbRequirementFiles> files) {
+        this.files = files;
     }
 
     public ZbRequirement getZbRequirement() {

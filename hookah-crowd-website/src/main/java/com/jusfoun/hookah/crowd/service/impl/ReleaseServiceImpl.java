@@ -56,8 +56,8 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
             if(ment.getId() == null){
                 zbRequirementMapper.insertAndGetId(ment);
 
-                if(vo.getList().size() > 0){
-                    for(ZbRequirementFiles zbfile : vo.getList()){
+                if(vo.getFiles().size() > 0){
+                    for(ZbRequirementFiles zbfile : vo.getFiles()){
                         zbfile.setRequirementId(ment.getId());
                         zbRequirementFilesService.insert(zbfile);
                     }
@@ -69,8 +69,8 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                 filter.add(Condition.eq("requirementId", ment.getId()));
                 zbRequirementFilesService.deleteByCondtion(filter);
 
-                if(vo.getList().size() > 0){
-                    for(ZbRequirementFiles zbfile : vo.getList()){
+                if(vo.getFiles().size() > 0){
+                    for(ZbRequirementFiles zbfile : vo.getFiles()){
                         zbfile.setRequirementId(ment.getId());
                         zbRequirementFilesService.insert(zbfile);
                     }
