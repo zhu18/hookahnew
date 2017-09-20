@@ -11,6 +11,7 @@ import com.jusfoun.hookah.core.domain.zb.vo.ZbRequirementVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.crowd.constants.ZbContants;
 import com.jusfoun.hookah.crowd.service.*;
 import com.jusfoun.hookah.crowd.util.CommonUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -119,5 +120,20 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
         map.put("zbRequirement",zbRequirement);
         map.put("zbRequirementFiles",zbAnnexes);
         return ReturnData.success(map);
+    }
+
+    /**
+     * 数据众包-发布需求--确认提交
+     * @return
+     */
+    public ReturnData getRequirementSubmit(Long id){
+        ZbRequirement zbRequirement = zbRequireService.selectById(id);
+        zbRequirement.setStatus(ZbContants.Zb_Require_Status.WAIT_CHECK.getCode().shortValue());
+        List<Condition> filters = new ArrayList<>();
+        if(StringUtils.isNotBlank(id.toString())){
+            filters.add(Condition.eq("id", id));
+        }
+        int i = zbRequireService.updateByConditionSelective(zbRequirement, filters);
+        return ReturnData.success(i);
     }
 }

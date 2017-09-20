@@ -14,4 +14,6 @@ public interface ReleaseService extends GenericService<ZbRequirement, String> {
 
     ReturnData getRequirementInfo(String userId);
 
+    ReturnData getRequirementSubmit(Long id);
+
 }

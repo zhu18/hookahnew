@@ -1,8 +1,10 @@
 package com.jusfoun.hookah.crowd.controller;
 
+import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbRequirementVo;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.crowd.service.ReleaseService;
+import com.jusfoun.hookah.crowd.service.ZbRequireService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,6 +55,22 @@ public class ReleaseController extends BaseController{
         } catch (Exception e) {
             logger.error("查询发布需求失败",e);
             return ReturnData.error("查询发布需求失败");
+        }
+    }
+
+    /**
+     * 数据众包-发布需求--确认提交
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/requirementSubmit", method = RequestMethod.GET)
+    public ReturnData requirementSubmit(Long id){
+        try {
+            ReturnData requirementSubmit = releaseService.getRequirementSubmit(id);
+            return requirementSubmit;
+        } catch (Exception e) {
+            logger.error("需求提交失败",e);
+            return ReturnData.error("需求提交失败");
         }
     }
 }
