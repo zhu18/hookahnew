@@ -52,7 +52,7 @@ function loadPageData(data) { //渲染页面数据
       <td><a href="javascript:void(0)">' + data[i].title + '</a></td>\
       <td>' + tempType + '</td>\
       <td>' + data[i].rewardMoney + '</td>\
-      <td>' + data[i].tempState + '</td>\
+      <td>' + tempState + '</td>\
       <td>' + data[i].addTime + '</td>\
       <td>' + data[i].applyDeadline + '</td>\
       <td><span class="lastTime">'+data[i].remainTime+'</span>' + tempButtonHtml + '</td>\
