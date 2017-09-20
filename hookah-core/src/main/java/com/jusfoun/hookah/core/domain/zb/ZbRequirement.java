@@ -158,9 +158,31 @@ public class ZbRequirement extends GenericModel {
     public void setTypeName(String typeName) {
         this.typeName = typeName;
     }
+    //链接文件名
+    @Transient
+    private String fileName;
 
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    //链接文件地址
     @Transient
 
+    private String filePath;
+    @Transient
     private String typeName;
 
     @Transient

@@ -3,6 +3,7 @@ package com.jusfoun.hookah.crowd.service.impl;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.UserMapper;
+import com.jusfoun.hookah.core.dao.zb.ZbAnnexMapper;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
 import com.jusfoun.hookah.core.dao.zb.ZbTypeMapper;
 import com.jusfoun.hookah.core.domain.User;
@@ -32,6 +33,9 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
 
     @Resource
     ZbTypeMapper zbTypeMapper;
+
+    @Resource
+    ZbAnnexMapper zbAnnexMapper;
 
     @Resource
     public void setDao(ZbRequirementMapper zbRequirementMapper) {
@@ -69,6 +73,8 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             List<OrderBy> orderBys = new ArrayList();
             orderBys.add(OrderBy.desc("addTime"));
              zbRequirement.setTypeName( zbTypeMapper.selectByPrimaryKey(zbRequirement.getType()).getTypeName());
+             zbRequirement.setFileName(zbAnnexMapper.selectByPrimaryKey(zbRequirement.getId()).getFileName());
+             zbRequirement.setFilePath(zbAnnexMapper.selectByPrimaryKey(zbRequirement.getId()).getFilePath());
             if (StringUtils.isNotBlank(zbRequirement.getRequireSn())) {
                 filters.add(Condition.like("requireSn", zbRequirement.getRequireSn()));
             }
