@@ -1,6 +1,11 @@
 <%
 var head = {
 %>
+<link rel="stylesheet" href="/static/css/plugins/jedate/jedate.css">
+<script src="/static/js/plugins/jedate/jquery.jedate.min.js"></script>
+<script src="/static/js/plugins/widget/jquery.ui.widget.js"></script>
+<script src="/static/js/plugins/fileupload/jquery.fileupload.js"></script>
+
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
 <link rel="stylesheet" href="/static/css/crowdsourcing/crowdsourcing.css">
 
@@ -12,7 +17,7 @@ var htmlPart = {
 <div class="grid-0 backgorund-gray">
   <div class="grid-row clearfix">
     <%include("/usercenter/user-center-menu.html"){} %>
-    <div class="grid-right info-center-box ">
+    <div class="grid-right info-center-box margin-bottom-20">
       <div class="header clearfix">
         <h4 class="grid-left center-title">发布需求</h4>
       </div>
@@ -23,13 +28,7 @@ var htmlPart = {
         状态：
         </span>
           <ul>
-            <li class="active">发布需求</li>
-            <li>平台审核</li>
-            <li>悬赏费用托管</li>
-            <li>平台发布</li>
-            <li>供应商工作</li>
-            <li>验收付款</li>
-            <li>评价</li>
+            <li style="width:500px;">发布需求->平台审核->悬赏费用托管->平台发布->供应商工作->验收付款->评价</li>
           </ul>
         </li>
       </ul>
@@ -38,27 +37,52 @@ var htmlPart = {
         <tbody>
         <tr>
           <td valign="top">需求标题 <span>*</span></td>
-          <td><input type="text" placeholder="一句话描述您的需求（要求简洁全面，20个汉字以内）"></td>
+          <td><input type="text" placeholder="一句话描述您的需求（要求简洁全面，20个汉字以内）">
+            <div class="crowdsourcing-user"><span>需求联系人</span><input
+            type="text" placeholder="输入联系人"><input type="text" placeholder="输入手机号"></div></td>
         </tr>
         <tr>
           <td>需求类型 <span>*</span></td>
-          <td><span>数据采集</span><span>数据加工</span><span>数据模型</span><span>数据应用</span><span>其他</span></td>
+          <td>
+            <div class="requirement-type">
+            </div>
+            <div class="crowdsourcing-user"><span>需求标签</span><input class="tag" type="text" placeholder="请输入标签关键词。"><i class="tagNotice">?</i><div class="tagNoticeContent">标签信息为需求的关键词，至多由5个词组组成，由英文字符“,”隔开。</div></div></td>
         </tr>
         <tr>
           <td valign="top">需求描述 <span>*</span></td>
-          <td><textarea placeholder="详细描述具体的需求信息，2000个汉字以内。" name="" id="" cols="30" rows="10"></textarea></td>
+          <td><textarea placeholder="详细描述具体的需求信息，2000个汉字以内。" name="" cols="30" rows="10"></textarea></td>
         </tr>
         <tr>
           <td>附件<span>*</span></td>
-          <td><input type="text">最多可上传5个附件，每个附件大小不超过10M。</td>
+          <td>
+              <input type="file" name="filename" class="fileUploadBtn">
+              <span class="falseBen">上传附件</span><span class="upload-file-notice">最多可上传5个附件，每个附件大小不超过10M。</span>
+
+            <div class="load-file-list">
+             <!--
+              <dl class="load-file word">
+                <dt><a href="javascript:void(0)" title=""><img src="http://static.galaxybigdata.com/file/20170920/null/null/094044e0a950bcbb3b4c69bc3962951112fe42.jpg"></a></dt>
+                <dd>
+                  <span class="overflowpoint">' + 备注 + '</span>
+                  <span class="overflowpoint">' + ？？？？？ + '</span>
+                  <div class="crowdsourcing-table-edit">
+                    <a href="#" target="_blank" class="download"><img src="/static/images/crowdsourcing/download.png" alt=""></a>
+                    <a href="javascript:void (0)" class="view j_img-view-btn" ><img src="/static/images/crowdsourcing/view.png" alt=""></a>
+                    <a href="javascript:void (0)" class="del" ><img src="/static/images/crowdsourcing/del.png" alt=""></a>
+                  </div>
+                </dd>
+              </dl>-->
+            </div>
+
+          </td>
         </tr>
         <tr>
           <td>交付截止日期 <span>*</span></td>
-          <td>日期组件</td>
+          <td><label for="endDate" class="end-date grid-left"><input id="endDate" type="text" placeholder="请选择结束时间" readonly=""></label></td>
         </tr>
         <tr>
           <td>悬赏金额 <span>*</span></td>
-          <td>￥<input type="number">元</td>
+          <td><input type="number"> 元</td>
         </tr>
         <tr>
           <td valign="top">交付验收要求 <span>*</span></td>
@@ -68,12 +92,12 @@ var htmlPart = {
         </tbody>
       </table>
       <div>
-        温馨提示： 发布需求不收取任何佣金，请放心发布。如没有匹配到供应商，全额退款。整个交易过程平台会担保您的赏金安全，并保障交易效果。
-        <button>下一步</button>
-        <button>重置</button>
+        <span class="release-notice">温馨提示： 发布需求不收取任何佣金，请放心发布。如没有匹配到供应商，全额退款。整个交易过程平台会担保您的赏金安全，并保障交易效果。</span>
+        <div class="release-first-btnbox">
+          <button>下一步</button>
+          <button>重置</button>
+        </div>
       </div>
-      <%include("/layout/pageaction.html"){} %>
-
     </div>
   </div>
 </div>
@@ -81,5 +105,5 @@ var htmlPart = {
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
-<!--<script type="text/javascript" src="/static/js/usercenter/userInfo/accountInformation.js"></script>-->
+<script src="/static/js/usercenter/crowdsourcing/release.js"></script>
 
