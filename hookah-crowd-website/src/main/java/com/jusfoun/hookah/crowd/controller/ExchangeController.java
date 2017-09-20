@@ -43,7 +43,7 @@ public class ExchangeController{
 
     @RequestMapping(value = "/crowdsourcing-list", method = RequestMethod.GET)
     public String crowdsourcingList(Model model) {
-        return "crowdsourcing/index";
+        return "crowdsourcing/crowdsourcing-list";
     }
 
 

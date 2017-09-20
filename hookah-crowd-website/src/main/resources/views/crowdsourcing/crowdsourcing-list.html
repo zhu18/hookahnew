@@ -7,7 +7,7 @@ var head = {
 <%
 var htmlPart = {
 %>
-<!--<script type="text/javascript">
+<script type="text/javascript">
   $.getUrlParam = function (key) {
     var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
     var result = window.location.search.substr(1).match(reg);
@@ -19,16 +19,17 @@ var htmlPart = {
   var msId = $.getUrlParam('msId');
   var msNm = $.getUrlParam('msNm');
   var names = $.getUrlParam('names');
-  var pagePath = '/search/v1/goods';
+  var pagePath = '/require/getRequirementList';
   var pageType = 'post';
   var dataParm = {};
   dataParm.pageNumber = 1;
-  dataParm.pageSize = 20;
-  dataParm.esGoods = {};
-  dataParm.range = {};
-  dataParm.esGoods.catIds = catId;
-  dataParm.esGoods.names = names;
-</script>-->
+  dataParm.pageSize = 5;
+  dataParm.type = '';
+  dataParm.status = '';
+  dataParm.timeType = '';
+  dataParm.order = 'remainTime';
+  dataParm.sort = 'desc';
+</script>
 <div class="grid-0 exchange-list bgc-eaedf0 padding-bottom-20 padding-top-20">
   <div class="grid-row ">
     <div class="ad-box"><img src="/static/images/crowdsourcing/banner.png" alt=""></div>
@@ -37,35 +38,36 @@ var htmlPart = {
         <span>
         需求类型：
         </span>
-        <ul>
-          <li class="active">全部</li>
-          <li>数据采集</li>
-          <li>数据加工</li>
-          <li>数据模型</li>
-          <li>数据应用</li>
-          <li>其他类型</li>
+        <ul class="j_searchLi" id="type" value="">
+          <li value="" class="active">全部</li>
+          <li value="1">数据采集</li>
+          <li value="2">数据加工</li>
+          <li value="3">数据模型</li>
+          <li value="4">数据应用</li>
+          <li value="5">数据清洗</li>
+          <li value="6">其他类型</li>
         </ul>
       </li>
       <li>
          <span>
-        需求类型：
+        发布时间：
         </span>
-        <ul>
-          <li class="active">全部</li>
-          <li>一天</li>
-          <li>一周以内</li>
-          <li>一月以内</li>
-          <li>一月以上</li>
+        <ul class="j_searchLi" id="timeType" value="">
+          <li value="" class="active">全部</li>
+          <li value="day">一天</li>
+          <li value="week">一周以内</li>
+          <li value="month">一月以内</li>
+          <li value="gtmonth">一月以上</li>
         </ul>
       </li>
       <li>
          <span>
         状态：
         </span>
-        <ul>
-          <li class="active">全部</li>
-          <li>报名中</li>
-          <li>报名结束</li>
+        <ul class="j_searchLi" id="status" value="">
+          <li value="" class="active">全部</li>
+          <li value="5">报名中</li>
+          <li value="6">报名结束</li>
         </ul>
       </li>
     </ul>
@@ -158,3 +160,5 @@ var htmlPart = {
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
 <script src="/static/js/exchange/common.js"></script>
+<script src="/static/js/crowdsourcing/crowdsourcing-list.js"></script>
+

@@ -9,6 +9,7 @@
 .crowdsourcing-menu li ul>li{ float: left;  width: 87px; margin-right:50px;  font-size:15px; text-align: center; cursor:pointer}
 .crowdsourcing-menu li ul>li.active{ color:#ff0000}
 
+.lastTime{ display: inline-block; width: 100px;}
 
 .crowdsourcing-table{
     margin-top: 15px;
