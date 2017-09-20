@@ -4,6 +4,7 @@ import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
+import com.jusfoun.hookah.core.domain.zb.ZbRequirementPageHelper;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
@@ -11,6 +12,7 @@ import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.crowd.service.ZbRequireService;
+import com.jusfoun.hookah.crowd.util.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -103,5 +105,32 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
         return ReturnData.success("发布成功");
     }
 
+    @Override
+    public ReturnData<ZbRequirement> getRequirementList(ZbRequirementPageHelper helper) {
+        ReturnData returnData=new ReturnData();
+        try{
+            Pagination<ZbRequirement> pagination = new Pagination<>();
+            int startIndex= (helper.getPageNumber()-1)*helper.getPageSize();
+            helper.setStartIndex(startIndex);
+            helper.setSort("desc");
+            int count=zbRequirementMapper.countRequirementList(helper);
+            List<ZbRequirement> list=zbRequirementMapper.getRequirementList(helper);
+            for (ZbRequirement requirement :  list) {
+                requirement.setRemainTime(DateUtil.timeCountDown(requirement.getApplyDeadline()));
+            }
+            pagination.setTotalItems(count);
+            pagination.setPageSize(helper.getPageSize());
+            pagination.setCurrentPage(helper.getPageNumber());
+            pagination.setList(list);
+            returnData.setData(pagination);
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.error("ZbRequireServiceImpl-->getRequirementList", e);
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setMessage("系统错误："+e.getMessage());
+        }finally {
+            return returnData;
+        }
+    }
 
 }

@@ -1,11 +1,10 @@
 package com.jusfoun.hookah.crowd.service;
 
 import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
+import com.jusfoun.hookah.core.domain.zb.ZbRequirementPageHelper;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.GenericService;
 import com.jusfoun.hookah.core.utils.ReturnData;
-
-import java.util.List;
 
 public interface ZbRequireService extends GenericService<ZbRequirement, Long> {
 
@@ -17,4 +16,6 @@ public interface ZbRequireService extends GenericService<ZbRequirement, Long> {
     ReturnData<ZbRequirement> getAllRequirement(String currentPage, String pageSize, ZbRequirement zbRequirement);
 
     ReturnData<ZbRequirement> updateStatus(ZbRequirement zbRequirement);
+
+    ReturnData<ZbRequirement> getRequirementList(ZbRequirementPageHelper helper);
 }

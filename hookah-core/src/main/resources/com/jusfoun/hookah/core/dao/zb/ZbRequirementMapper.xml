@@ -54,4 +54,43 @@
     #{addOperator,jdbcType=VARCHAR}, #{updateOperator,jdbcType=VARCHAR})
   </insert>
 
+  <sql id="getRequirementListCondition">
+    FROM zb_requirement zbr WHERE  1=1
+
+    <if test="type!=null and type!=''">
+      and zbr.type=#{type}
+    </if>
+
+    <if test="timeType!=null and timeType!=''">
+      <if test="addTime!=null and addTime!=''">
+        <if test="timeType!='gtmonth'">
+          <![CDATA[  and zbr.add_time >=#{addTime} ]]>
+        </if>
+        <if test="timeType=='gtmonth'">
+          <![CDATA[  and zbr.add_time <=#{addTime} ]]>
+        </if>
+      </if>
+    </if>
+    <if test="status!=null and status!=''">
+      and zbr.status=#{status}
+    </if>
+
+  </sql>
+
+  <select id="countRequirementList" resultType="int" parameterType="com.jusfoun.hookah.core.domain.zb.ZbRequirementPageHelper">
+    SELECT COUNT(zbr.id) <include refid="getRequirementListCondition"/>
+
+  </select>
+
+  <select id="getRequirementList" resultMap="BaseResultMap" parameterType="com.jusfoun.hookah.core.domain.zb.ZbRequirementPageHelper">
+
+    SELECT  * <include refid="getRequirementListCondition"/>
+
+    ORDER BY ${order} ${sort}
+
+    limit #{startIndex},#{pageSize}
+  </select>
+
+
+
 </mapper>
