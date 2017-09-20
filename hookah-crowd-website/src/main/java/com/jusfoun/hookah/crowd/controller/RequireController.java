@@ -4,12 +4,8 @@ import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
 import com.jusfoun.hookah.core.exception.HookahException;
-import com.jusfoun.hookah.core.generic.Condition;
-import com.jusfoun.hookah.core.generic.OrderBy;
-import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.crowd.service.ZbRequireService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -73,4 +69,18 @@ public class RequireController extends BaseController{
     }
 
 
+    /**
+     * 需求大厅-发布
+     * @author crs
+     */
+    @RequestMapping("/require/updateStatus")
+    @ResponseBody
+    public ReturnData updateStatus( ZbRequirement zbRequirement) {
+        try {
+            return zbRequireService.updateStatus(zbRequirement);
+        }catch (Exception e){
+            logger.error("发布失败", e);
+            return ReturnData.error("发布失败");
+        }
+    }
 }

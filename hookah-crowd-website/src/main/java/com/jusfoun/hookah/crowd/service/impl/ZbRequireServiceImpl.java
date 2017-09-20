@@ -89,5 +89,19 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
         return returnData;
     }
 
+    @Override
+    public ReturnData<ZbRequirement> updateStatus(ZbRequirement zbRequirement) {
+        List<Condition> filters = new ArrayList();
+        filters.add(Condition.eq(("id"),zbRequirement.getId()));
+
+        try {
+           // zbRequirementMapper.updateByExampleSelective(zbRequirement,filters);
+            updateByIdSelective(zbRequirement);
+        }catch (Exception e){
+            return ReturnData.error("发布失败");
+        }
+        return ReturnData.success("发布成功");
+    }
+
 
 }

@@ -13,6 +13,7 @@ import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.crowd.service.*;
+import com.jusfoun.hookah.crowd.util.CommonUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -52,8 +53,12 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
 
         if(vo.getZbRequirement() != null){
             ZbRequirement ment = vo.getZbRequirement();
-
+            ment.setStatus(Short.parseShort("0"));
             if(ment.getId() == null){
+                ment.setAddOperator(vo.getZbRequirement().getUserId());
+                ment.setAddTime(new Date());
+                if(vo.getZbRequirement().getType() != null)
+                    ment.setRequireSn(CommonUtils.getRequireSn("ZB",vo.getZbRequirement().getType().toString()));
                 zbRequirementMapper.insertAndGetId(ment);
 
                 if(vo.getFiles().size() > 0){
@@ -63,6 +68,12 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                     }
                 }
             }else{
+                ZbRequirement zbRequirement = zbRequireService.selectById(ment.getId());
+                ment.setRequireSn(zbRequirement.getRequireSn());
+                ment.setAddTime(zbRequirement.getAddTime());
+                ment.setAddOperator(zbRequirement.getAddOperator());
+                ment.setUpdateTime(new Date());
+                ment.setUpdateOperator(vo.getZbRequirement().getUserId());
                 super.updateById(ment);
 
                 List<Condition> filter = new ArrayList<>();

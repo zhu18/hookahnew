@@ -26,6 +26,7 @@ public class RequireCheckController extends BaseController{
     @ResponseBody
     public ReturnData requirementCheck(ZbRequirementCheck zbRequirementCheck) {
         try {
+           // zbRequirementCheck.setCheckUser(this.getCurrentUser().getUserSn());
             return zbRequireCheckService.requirementCheck(zbRequirementCheck);
         }catch (Exception e){
             logger.error("审核失败", e);
