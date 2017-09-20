@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jusfoun.hookah.core.generic.GenericModel;
 
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.util.Date;
 
 public class ZbRequirement extends GenericModel {
@@ -150,7 +151,7 @@ public class ZbRequirement extends GenericModel {
      */
     private String updateOperator;
 
-
+    @Transient
     private String remainTime;
 
     /**
