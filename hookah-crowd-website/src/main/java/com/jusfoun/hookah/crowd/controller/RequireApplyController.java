@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 
@@ -18,17 +19,43 @@ import javax.annotation.Resource;
 public class RequireApplyController extends BaseController{
 
     @Resource
-    ZbRequireService zbRequireService;
-    @Resource
     ZbRequireApplyService zbRequireApplyService;
 
-    @RequestMapping(value = "/requireApply/{id}",method = RequestMethod.GET)
-    public ReturnData viewApplyByRequire(@PathVariable Integer id){
+    /**
+     *后台需求大厅  查看需求报名情况
+     * @return
+     */
+    @RequestMapping(value = "/requireApply/viewApply",method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnData viewApplyByRequire(Long id){
         try {
-            zbRequireApplyService.viewApplyByRequire(id);
+            return zbRequireApplyService.viewApplyByRequire(id);
         } catch (Exception e) {
             e.printStackTrace();
+            return ReturnData.error("");
         }
+    }
+
+    /**
+     * 后台  报名资格筛选
+     * @return
+     */
+    @RequestMapping(value = "/requireApply/choseApply",method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnData choseApply(Long id){
+        try {
+            return zbRequireApplyService.choseApply(id);
+        } catch (Exception e){
+            logger.error(e.getMessage());
+            return ReturnData.error(e.getMessage());
+        }
+    }
+
+    /**
+     * 后台  审核方案
+     * @return
+     */
+    public ReturnData checkProgram(){
         return null;
     }
 }
