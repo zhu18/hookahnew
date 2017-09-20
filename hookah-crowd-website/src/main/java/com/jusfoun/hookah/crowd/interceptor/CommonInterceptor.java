@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @description:
@@ -35,17 +36,18 @@ public class CommonInterceptor implements HandlerInterceptor {
         boolean ajax = "XMLHttpRequest".equals(httpServletRequest.getHeader("X-Requested-With"));
         BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(httpServletRequest.getServletContext());
         try {
-            Subject subject = SecurityUtils.getSubject();
-            if (subject != null && subject.isAuthenticated()) {
-                if (!ajax) {
-
-                    Session session = subject.getSession();
-                    Map userMap = (Map)session.getAttribute("user");
-                    String userId = (String)userMap.get("userId");
-                    UserService userService = (UserService) factory.getBean("userService");
-                    User user = userService.selectById(userId);
-                    Map<String, Object> model = modelAndView.getModel();
-                    model.put("user", user);
+            if(Objects.nonNull(modelAndView)){
+                Subject subject = SecurityUtils.getSubject();
+                if (subject != null && subject.isAuthenticated()) {
+                    if (!ajax) {
+                        Session session = subject.getSession();
+                        Map userMap = (Map)session.getAttribute("user");
+                        String userId = (String)userMap.get("userId");
+                        UserService userService = (UserService) factory.getBean("userService");
+                        User user = userService.selectById(userId);
+                        Map<String, Object> model = modelAndView.getModel();
+                        model.put("user", user);
+                    }
                 }
             }
         } catch (UnavailableSecurityManagerException e) {
