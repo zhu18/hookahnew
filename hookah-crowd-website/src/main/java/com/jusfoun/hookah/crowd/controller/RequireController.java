@@ -39,7 +39,7 @@ public class RequireController extends BaseController{
      * 需求大厅
      * @author crs
      */
-    @RequestMapping("/require/allRequirement")
+    @RequestMapping("/api/require/allRequirement")
     @ResponseBody
     public ReturnData AllRequirement(String currentPage, String pageSize, ZbRequirement zbRequirement, User user) {
         try {

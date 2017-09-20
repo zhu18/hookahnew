@@ -2,6 +2,7 @@ package com.jusfoun.hookah.crowd.service.impl;
 
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementCheckMapper;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
+import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirementCheck;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
@@ -25,13 +26,14 @@ public class ZbRequireCheckServiceImpl extends GenericServiceImpl<ZbRequirementC
     @Resource
     ZbRequirementMapper zbRequirementMapper;
 
+
     @Resource
     public void setDao(ZbRequirementCheckMapper zbRequirementCheckMapper) {
         super.setDao(zbRequirementCheckMapper);
     }
 
     @Override
-    public ReturnData<ZbRequirementCheck> requirementCheck(ZbRequirementCheck zbRequirementCheck) {
+    public ReturnData<ZbRequirementCheck> requirementCheck(ZbRequirementCheck zbRequirementCheck, User user) {
         ReturnData returnData = new ReturnData<>();
         ZbRequirement zbRequirement = new ZbRequirement();
         if (zbRequirementCheck.getRequirementId()!=null) {
@@ -41,6 +43,7 @@ public class ZbRequireCheckServiceImpl extends GenericServiceImpl<ZbRequirementC
         zbRequirementCheck.setRequirementId(zbRequirementCheck.getRequirementId());
         zbRequirementCheck.setCheckStatus(zbRequirementCheck.getCheckStatus());
         zbRequirementCheck.setCheckTime(new Date());
+        zbRequirementCheck.setCheckUser(user.getUserName());
         try {
             returnData.setData(insert(zbRequirementCheck));
 

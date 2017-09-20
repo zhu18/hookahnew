@@ -1,6 +1,6 @@
 package com.jusfoun.hookah.crowd.controller;
 
-import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
+import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirementCheck;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.crowd.service.ZbRequireCheckService;
@@ -22,12 +22,12 @@ public class RequireCheckController extends BaseController{
      * 需求大厅
      * @author crs
      */
-    @RequestMapping("/require/requirementCheck")
+    @RequestMapping("/api/require/requirementCheck")
     @ResponseBody
-    public ReturnData requirementCheck(ZbRequirementCheck zbRequirementCheck) {
+    public ReturnData requirementCheck(ZbRequirementCheck zbRequirementCheck, User user) {
         try {
-           // zbRequirementCheck.setCheckUser(this.getCurrentUser().getUserSn());
-            return zbRequireCheckService.requirementCheck(zbRequirementCheck);
+            user=getCurrentUser();
+            return zbRequireCheckService.requirementCheck(zbRequirementCheck,user);
         }catch (Exception e){
             logger.error("审核失败", e);
             return ReturnData.error("审核失败");
