@@ -3,6 +3,7 @@ package com.jusfoun.hookah.crowd.service.impl;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
+import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirementPageHelper;
 import com.jusfoun.hookah.core.exception.HookahException;
@@ -54,7 +55,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
     }
 
     @Override
-    public ReturnData<ZbRequirement> getAllRequirement(String currentPage, String pageSize, ZbRequirement zbRequirement) {
+    public ReturnData<ZbRequirement> getAllRequirement(String currentPage, String pageSize, ZbRequirement zbRequirement , User user) {
         Pagination<ZbRequirement> page = new Pagination<>();
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
@@ -71,6 +72,11 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             }
             if (zbRequirement.getStatus() != null && zbRequirement.getStatus()!= -1) {
                 filters.add(Condition.eq("status", zbRequirement.getStatus()));
+            }
+            if (user.getUserType().equals(4)){
+                zbRequirement.setRequiremetName(user.getOrgName());
+            }else {
+                zbRequirement.setRequiremetName(user.getUserName());
             }
 
             int pageNumberNew = HookahConstants.PAGE_NUM;

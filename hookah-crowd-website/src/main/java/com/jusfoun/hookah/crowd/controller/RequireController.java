@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.crowd.controller;
 
+import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirementPageHelper;
 import com.jusfoun.hookah.core.exception.HookahException;
@@ -40,9 +41,10 @@ public class RequireController extends BaseController{
      */
     @RequestMapping("/require/allRequirement")
     @ResponseBody
-    public ReturnData AllRequirement(String currentPage, String pageSize, ZbRequirement zbRequirement) {
+    public ReturnData AllRequirement(String currentPage, String pageSize, ZbRequirement zbRequirement, User user) {
         try {
-                return zbRequireService.getAllRequirement(currentPage, pageSize, zbRequirement);
+                   user=getCurrentUser();
+                return zbRequireService.getAllRequirement(currentPage, pageSize, zbRequirement ,user);
         }catch (Exception e){
                 logger.error("需求查询失败", e);
                 return ReturnData.error("需求查询失败");
