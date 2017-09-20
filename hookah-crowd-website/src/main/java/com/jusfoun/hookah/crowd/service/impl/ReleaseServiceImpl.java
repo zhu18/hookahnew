@@ -5,8 +5,8 @@ package com.jusfoun.hookah.crowd.service.impl;
  */
 
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
+import com.jusfoun.hookah.core.domain.zb.ZbAnnex;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
-import com.jusfoun.hookah.core.domain.zb.ZbRequirementFiles;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbRequirementVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
@@ -26,7 +26,7 @@ import java.util.*;
 public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String> implements ReleaseService {
 
     @Resource
-    ZbRequirementFilesService zbRequirementFilesService;
+    ZbAnnexService zbAnnexService;
 
     @Resource
     ZbRequireService zbRequireService;
@@ -57,11 +57,12 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                     ment.setRequireSn(CommonUtils.getRequireSn("ZB",vo.getZbRequirement().getType().toString()));
                 zbRequirementMapper.insertAndGetId(ment);
 
-                if(vo.getFiles().size() > 0){
-                    for(ZbRequirementFiles zbfile : vo.getFiles()){
-                        zbfile.setRequirementId(ment.getId());
-                        zbfile.setAddTime(new Date());
-                        zbRequirementFilesService.insert(zbfile);
+                if(vo.getAnnex().size() > 0){
+                    for(ZbAnnex zbAnnex : vo.getAnnex()){
+                        zbAnnex.setCorrelationId(ment.getId());
+                        zbAnnex.setAddTime(new Date());
+                        zbAnnex.setType(Short.parseShort("0"));
+                        zbAnnexService.insert(zbAnnex);
                     }
                 }
             }else{
@@ -74,17 +75,17 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                 super.updateById(ment);
 
                 List<Condition> filter = new ArrayList<>();
-                filter.add(Condition.eq("requirementId", ment.getId()));
-                zbRequirementFilesService.deleteByCondtion(filter);
+                filter.add(Condition.eq("correlationId", ment.getId()));
+                zbAnnexService.deleteByCondtion(filter);
 
-                if(vo.getFiles().size() > 0){
-                    for(ZbRequirementFiles zbfile : vo.getFiles()){
-                        zbfile.setRequirementId(ment.getId());
-                        zbRequirementFilesService.insert(zbfile);
+                if(vo.getAnnex().size() > 0){
+                    for(ZbAnnex zbAnnex : vo.getAnnex()){
+                        zbAnnex.setCorrelationId(ment.getId());
+                        zbAnnex.setAddTime(new Date());
+                        zbAnnexService.insert(zbAnnex);
                     }
                 }
             }
-
             return ReturnData.success(vo);
 
         }else {
@@ -105,12 +106,18 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
             filters.add(Condition.eq("userId", userId));
         }
         ZbRequirement zbRequirement = zbRequireService.selectOne(filters);
-        if(zbRequirement.getId() != null){
-            filters1.add(Condition.eq("requirementId", zbRequirement.getId()));
+        if(zbRequirement.getTag() != null){
+            String[] strArray = null;
+            strArray = zbRequirement.getTag().split(",");
+            map.put("tag",strArray);
         }
-        List<ZbRequirementFiles> zbRequirementFiles = zbRequirementFilesService.selectList(filters1);
+
+        if(zbRequirement.getId() != null){
+            filters1.add(Condition.eq("correlationId", zbRequirement.getId()));
+        }
+        List<ZbAnnex> zbAnnexes = zbAnnexService.selectList(filters1);
         map.put("zbRequirement",zbRequirement);
-        map.put("zbRequirementFiles",zbRequirementFiles);
+        map.put("zbRequirementFiles",zbAnnexes);
         return ReturnData.success(map);
     }
 }

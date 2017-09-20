@@ -11,5 +11,7 @@ public interface ZbRequireApplyService extends GenericService<ZbRequirementApply
 
     int insertRecord(ZbRequirementApply zbRequirementApply);
 
-    ReturnData viewApplyByRequire(Integer id) throws Exception;
+    ReturnData viewApplyByRequire(Long id) throws Exception;
+
+    ReturnData choseApply(Long id);
 }

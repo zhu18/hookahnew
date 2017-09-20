@@ -5,4 +5,5 @@ import com.jusfoun.hookah.core.generic.GenericDao;
 
 public interface ZbRequirementApplyMapper extends GenericDao<ZbRequirementApply> {
 
+    int insertAndGetId(ZbRequirementApply zbRequirementApply);
 }

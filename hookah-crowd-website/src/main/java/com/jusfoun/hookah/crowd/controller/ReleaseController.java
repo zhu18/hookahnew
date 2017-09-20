@@ -1,7 +1,6 @@
 package com.jusfoun.hookah.crowd.controller;
 
 import com.jusfoun.hookah.core.domain.zb.vo.ZbRequirementVo;
-import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.crowd.service.ReleaseService;
 import org.springframework.stereotype.Controller;
@@ -17,7 +16,7 @@ import javax.annotation.Resource;
  */
 
 @Controller
-@RequestMapping("/api/release")
+@RequestMapping("/release")
 public class ReleaseController extends BaseController{
 
     @Resource
@@ -30,10 +29,10 @@ public class ReleaseController extends BaseController{
     @RequestMapping(value = "/insertRequirements", method = RequestMethod.POST)
     public ReturnData ReleaseRequirements(@RequestBody ZbRequirementVo vo){
         try {
-            String userId = this.getCurrentUser().getUserId();
-            vo.getZbRequirement().setUserId(userId);
+            /*String userId = this.getCurrentUser().getUserId();
+            vo.getZbRequirement().setUserId(userId);*/
             ReturnData returnData = releaseService.insertRequirements(vo);
-            return ReturnData.success(returnData);
+            return returnData;
         } catch (Exception e) {
             logger.error("发布需求失败",e);
             return ReturnData.error("发布需求失败");
@@ -48,10 +47,11 @@ public class ReleaseController extends BaseController{
     @RequestMapping(value = "/requirementInfo", method = RequestMethod.GET)
     public ReturnData requirementInfo(){
         try {
-            String userId = this.getCurrentUser().getUserId();
+            //String userId = this.getCurrentUser().getUserId();
+            String userId = "87432356876451";
             ReturnData requirementInfo = releaseService.getRequirementInfo(userId);
-            return ReturnData.success(requirementInfo);
-        } catch (HookahException e) {
+            return requirementInfo;
+        } catch (Exception e) {
             logger.error("查询发布需求失败",e);
             return ReturnData.error("查询发布需求失败");
         }
