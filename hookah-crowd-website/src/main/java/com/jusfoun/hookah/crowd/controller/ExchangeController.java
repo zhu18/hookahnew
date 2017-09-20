@@ -33,7 +33,7 @@ public class ExchangeController{
 
     @RequestMapping(value = "/usercenter/crowdsourcingRelease", method = RequestMethod.GET)
     public String crowdsourcingRelease(Model model) {
-        return "usercenter/crowdsourcing/release";
+        return "usercenter/crowdsourcing/crowdsourcingRelease";
     }
 
     @RequestMapping(value = "/usercenter/myRequirement", method = RequestMethod.GET)
