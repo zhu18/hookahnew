@@ -28,8 +28,8 @@ public class RequireCheckController extends BaseController{
         try {
             return zbRequireCheckService.requirementCheck(zbRequirementCheck);
         }catch (Exception e){
-            logger.error("需求查询失败", e);
-            return ReturnData.error("需求查询失败");
+            logger.error("审核失败", e);
+            return ReturnData.error("审核失败");
         }
     }
 

@@ -21,6 +21,9 @@ public class ZbContants {
      14交易取消
      15交易成功
      16待退款
+     17删除
+     18取消
+     19到期
      */
     public enum Zb_Require_Status {
 
@@ -40,7 +43,11 @@ public class ZbContants {
         WAIT_PJ(13),
         ZB_SUCCESS(14),
         ZB_FAIL(15),
-        WAIT_TK(16);
+        WAIT_TK(16),
+        DELETE(17),
+        CANCEL(18),
+        DATE_EXPIRE(19),
+        ;
 
         public Integer code;
 
