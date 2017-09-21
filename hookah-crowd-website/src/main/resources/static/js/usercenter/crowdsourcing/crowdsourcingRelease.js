@@ -35,10 +35,9 @@ function crowdsourcingRelease() {
       console.log(data);
       if (data.data.hasOwnProperty('zbRequirement')) {
         if(data.data.zbRequirement.id){
-          crowdSourcingId=null;
-        }else{
           crowdSourcingId=data.data.zbRequirement.id;
-
+        }else{
+          crowdSourcingId=null;
         }
         $('#J_title').val(data.data.zbRequirement.title);
         $('#J_username').val(data.data.zbRequirement.contactName);
