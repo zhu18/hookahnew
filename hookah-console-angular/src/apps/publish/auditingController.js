@@ -65,7 +65,12 @@ class auditingController {
                     });
 
                 } else {
-                    $rootScope.openConfirmDialogModal("审核失败！")
+                    var modalInstance =$rootScope.openConfirmDialogModal("审核失败！");
+                    modalInstance.result.then(function () {
+                        $state.go('publish.list');
+                    }, function () {
+                        $state.go('publish.list');
+                    });
                 }
                 $rootScope.loadingState = false;
                 growl.addSuccessMessage("订单数据加载完毕。。。");

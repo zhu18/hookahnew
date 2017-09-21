@@ -9444,7 +9444,6 @@ input[type="radio"], input[type="checkbox"] {
 }
 .publish-Progress ul li{
   float: left;
-  height: 60px;
   width:14%;
   position: relative;
   list-style: none;
@@ -9504,6 +9503,7 @@ input[type="radio"], input[type="checkbox"] {
 
 .publish-table-box table th{
   text-align: center;
+  width: 100px;
 }
 .publish-table-box table td div{
   display: inline-block;

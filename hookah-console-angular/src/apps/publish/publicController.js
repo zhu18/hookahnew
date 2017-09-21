@@ -53,11 +53,20 @@ class publicController {
               console.log('数据在这里');
               console.log(res);
               if (res.data.code == '1') {
-                  $rootScope.openComponentModal("发布成功！");
-                  $state.go('publish.list');
+                  var modalInstance =$rootScope.openConfirmDialogModal("发布成功！");
+                  modalInstance.result.then(function () {
+                      $state.go('publish.list');
+                  }, function () {
+                      $state.go('publish.list');
+                  });
               } else {
-                  $rootScope.openComponentModal("发布失败！");
-                  $state.go('publish.list');
+
+                  var modalInstance =$rootScope.openConfirmDialogModal("发布失败！");
+                  modalInstance.result.then(function () {
+                      $state.go('publish.list');
+                  }, function () {
+                      $state.go('publish.list');
+                  });
               }
               $rootScope.loadingState = false;
               growl.addSuccessMessage("订单数据加载完毕。。。");
