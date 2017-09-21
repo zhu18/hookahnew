@@ -54,6 +54,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
             if(ment.getId() == null){
                 ment.setAddOperator(vo.getZbRequirement().getUserId());
                 ment.setAddTime(new Date());
+                ment.setRewardMoney(vo.getZbRequirement().getRewardMoney()*100);
                 if(vo.getZbRequirement().getType() != null)
                     ment.setRequireSn(CommonUtils.getRequireSn("ZB",vo.getZbRequirement().getType().toString()));
                 zbRequirementMapper.insertAndGetId(ment);
@@ -68,27 +69,30 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                 }
             }else{
                 ZbRequirement zbRequirement = zbRequireService.selectById(ment.getId());
-                ment.setRequireSn(zbRequirement.getRequireSn());
-                ment.setAddTime(zbRequirement.getAddTime());
-                ment.setAddOperator(zbRequirement.getAddOperator());
-                ment.setUpdateTime(new Date());
-                ment.setUpdateOperator(vo.getZbRequirement().getUserId());
-                super.updateById(ment);
+                if(zbRequirement != null){
+                    ment.setRequireSn(zbRequirement.getRequireSn());
+                    ment.setAddTime(zbRequirement.getAddTime());
+                    ment.setAddOperator(zbRequirement.getAddOperator());
+                    ment.setUpdateTime(new Date());
+                    ment.setUpdateOperator(vo.getZbRequirement().getUserId());
+                    ment.setRewardMoney(vo.getZbRequirement().getRewardMoney()*100);
+                    super.updateById(ment);
 
-                List<Condition> filter = new ArrayList<>();
-                filter.add(Condition.eq("correlationId", ment.getId()));
-                zbAnnexService.deleteByCondtion(filter);
-
-                if(vo.getAnnex().size() > 0){
-                    for(ZbAnnex zbAnnex : vo.getAnnex()){
-                        zbAnnex.setCorrelationId(ment.getId());
-                        zbAnnex.setAddTime(new Date());
-                        zbAnnexService.insert(zbAnnex);
+                    List<Condition> filter = new ArrayList<>();
+                    filter.add(Condition.eq("correlationId", ment.getId()));
+                    zbAnnexService.deleteByCondtion(filter);
+                    if(vo.getAnnex() != null){
+                        if(vo.getAnnex().size() > 0){
+                            for(ZbAnnex zbAnnex : vo.getAnnex()){
+                                zbAnnex.setCorrelationId(ment.getId());
+                                zbAnnex.setAddTime(new Date());
+                                zbAnnexService.insert(zbAnnex);
+                            }
+                        }
                     }
                 }
             }
             return ReturnData.success(vo);
-
         }else {
             return  ReturnData.error("发布需求失败");
         }
