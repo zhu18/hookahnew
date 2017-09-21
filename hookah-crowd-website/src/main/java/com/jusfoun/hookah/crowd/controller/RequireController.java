@@ -41,13 +41,13 @@ public class RequireController extends BaseController{
      */
     @RequestMapping("/api/require/allRequirement")
     @ResponseBody
-    public ReturnData AllRequirement(String currentPage, String pageSize, ZbRequirement zbRequirement, User user) {
+    public ReturnData AllRequirement(String currentPage, String pageSize, ZbRequirement zbRequirement) {
         try {
-                   user=getCurrentUser();
-                return zbRequireService.getAllRequirement(currentPage, pageSize, zbRequirement ,user);
+            User user = this.getCurrentUser();
+            return zbRequireService.getAllRequirement(currentPage, pageSize, zbRequirement);
         }catch (Exception e){
-                logger.error("需求查询失败", e);
-                return ReturnData.error("需求查询失败");
+            logger.error("需求查询失败", e);
+            return ReturnData.error("需求查询失败");
         }
     }
 
