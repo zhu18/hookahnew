@@ -104,6 +104,12 @@ $('.tagNotice').on('mouseover', function () { //鼠标离开描述显示工具�
   $(this).next().hide();
 });
 
+$(document).on('click','#J_reset', function () { //重置
+  $('.j_firstPage').val('');
+  $('.requirement-type span').removeClass('active').parent().attr('value','')
+  $('.load-file-list').html('');
+});
+
 
 //上传页面
 
