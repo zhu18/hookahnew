@@ -1,5 +1,5 @@
 class publicController {
-  constructor($scope, $rootScope, $http, $state, $stateParams, growl) {
+  constructor($scope, $rootScope, $http, $state, $stateParams, growl,$filter) {
 
     $scope.reader = function () {
           var promise = $http({
@@ -43,8 +43,8 @@ class publicController {
               url: $rootScope.site.crowdServer + "/api/require/updateStatus",
               params: {
                   requirementId:$scope.id,
-                  status:$scope.checkContent,
-                  pressTime:checkStatus
+                  status:5,
+                  pressTime:$filter('format')($scope.applyDeadline, 'yyyy-MM-dd HH:mm:ss')
 
               }
           });
