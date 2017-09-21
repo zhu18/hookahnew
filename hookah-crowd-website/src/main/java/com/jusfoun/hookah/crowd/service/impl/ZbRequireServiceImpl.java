@@ -16,6 +16,7 @@ import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.crowd.service.UserService;
 import com.jusfoun.hookah.crowd.service.ZbAnnexService;
 import com.jusfoun.hookah.crowd.service.ZbRequireService;
 import com.jusfoun.hookah.crowd.util.DateUtil;
@@ -29,9 +30,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-/**
- * lushanshan
- */
 @Service
 public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long> implements ZbRequireService {
 
@@ -43,6 +41,9 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
 
     @Resource
     ZbAnnexService zbAnnexService;
+
+    @Resource
+    UserService userService;
 
     @Resource
     public void setDao(ZbRequirementMapper zbRequirementMapper) {
@@ -76,7 +77,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
     }
 
     @Override
-    public ReturnData<ZbRequirement> getAllRequirement(String currentPage, String pageSize, ZbRequirement zbRequirement , User user) {
+    public ReturnData<ZbRequirement> getAllRequirement(String currentPage, String pageSize, ZbRequirement zbRequirement) {
         Pagination<ZbRequirement> page = new Pagination<>();
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
@@ -84,9 +85,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             List<Condition> filters = new ArrayList();
             List<OrderBy> orderBys = new ArrayList();
             orderBys.add(OrderBy.desc("addTime"));
-            if(zbRequirement.getType()!=null){
-                zbRequirement.setTypeName( zbTypeMapper.selectByPrimaryKey(zbRequirement.getType()).getTypeName());
-            }
+
             if (StringUtils.isNotBlank(zbRequirement.getRequireSn())) {
                 filters.add(Condition.like("requireSn", zbRequirement.getRequireSn()));
             }
@@ -95,11 +94,6 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             }
             if (zbRequirement.getStatus() != null && zbRequirement.getStatus()!= -1) {
                 filters.add(Condition.eq("status", zbRequirement.getStatus()));
-            }
-            if (user.getUserType().equals(4)){
-                zbRequirement.setRequiremetName(user.getOrgName());
-            }else {
-                zbRequirement.setRequiremetName(user.getUserName());
             }
 
             int pageNumberNew = HookahConstants.PAGE_NUM;
@@ -112,6 +106,11 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                 pageSizeNew = Integer.parseInt(pageSize);
             }
             page = getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
+            List<ZbRequirement> list = page.getList();
+            for (ZbRequirement zbRequirement1:list){
+                User user1 = userService.selectById(zbRequirement1.getUserId());
+                zbRequirement1.setRequiremetName(user1.getUserName());
+            }
             returnData.setData(page);
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Error);
@@ -127,7 +126,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
         filters.add(Condition.eq(("id"),zbRequirement.getId()));
 
         try {
-           // zbRequirementMapper.updateByExampleSelective(zbRequirement,filters);
+            // zbRequirementMapper.updateByExampleSelective(zbRequirement,filters);
             updateByIdSelective(zbRequirement);
         }catch (Exception e){
             return ReturnData.error("发布失败");
