@@ -86,6 +86,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                             for(ZbAnnex zbAnnex : vo.getAnnex()){
                                 zbAnnex.setCorrelationId(ment.getId());
                                 zbAnnex.setAddTime(new Date());
+                                zbAnnex.setType(Short.parseShort("0"));
                                 zbAnnexService.insert(zbAnnex);
                             }
                         }
