@@ -85,6 +85,22 @@ public class RequireController extends BaseController{
         }
     }
     /**
+     * 需求大厅-发布
+     * @author crs
+     */
+    @RequestMapping("/api/require/ReqCheck")
+    @ResponseBody
+    public ReturnData ReqCheck( ZbRequirement zbRequirement ,User user) {
+        try {
+            user=getCurrentUser();
+            return zbRequireService.reqCheck(zbRequirement ,user);
+        }catch (Exception e){
+            logger.error("查询失败", e);
+            return ReturnData.error("查询失败");
+        }
+    }
+
+    /**
      * 数据众包列表页，根据条件展示需求列表
      * @author ndf
      */

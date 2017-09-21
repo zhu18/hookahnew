@@ -7,6 +7,7 @@ import com.jusfoun.hookah.core.dao.zb.ZbAnnexMapper;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
 import com.jusfoun.hookah.core.dao.zb.ZbTypeMapper;
 import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.domain.zb.ZbAnnex;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirementPageHelper;
 import com.jusfoun.hookah.core.exception.HookahException;
@@ -15,8 +16,10 @@ import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.crowd.service.ZbAnnexService;
 import com.jusfoun.hookah.crowd.service.ZbRequireService;
 import com.jusfoun.hookah.crowd.util.DateUtil;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +27,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long> implements ZbRequireService {
@@ -35,7 +39,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
     ZbTypeMapper zbTypeMapper;
 
     @Resource
-    ZbAnnexMapper zbAnnexMapper;
+    ZbAnnexService zbAnnexService;
 
     @Resource
     public void setDao(ZbRequirementMapper zbRequirementMapper) {
@@ -80,8 +84,6 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             if(zbRequirement.getType()!=null){
                 zbRequirement.setTypeName( zbTypeMapper.selectByPrimaryKey(zbRequirement.getType()).getTypeName());
             }
-             zbRequirement.setFileName( zbAnnexMapper.selectByPrimaryKey(zbRequirement.getId()).getFileName());
-             zbRequirement.setFilePath(zbAnnexMapper.selectByPrimaryKey(zbRequirement.getId()).getFilePath());
             if (StringUtils.isNotBlank(zbRequirement.getRequireSn())) {
                 filters.add(Condition.like("requireSn", zbRequirement.getRequireSn()));
             }
@@ -156,6 +158,30 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
         }finally {
             return returnData;
         }
+    }
+    @Override
+    public ReturnData<ZbRequirement> reqCheck(ZbRequirement zbRequirement ,User user) {
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        List<Condition> filter = new ArrayList<>();
+        filter.add(Condition.eq("correlationId",zbRequirement.getId()));
+        List<ZbAnnex> zbAnnexes = zbAnnexService.selectList(filter);
+        Map<String,Object> map= new HashedMap();
+        map.put("zbAnnexes",zbAnnexes);
+        filter.clear();
+        filter.add(Condition.eq("requireSn",zbRequirement.getRequireSn()));
+        zbRequirement=selectOne(filter);
+        if(zbRequirement.getType()!=null){
+            zbRequirement.setTypeName( zbTypeMapper.selectByPrimaryKey(zbRequirement.getType()).getTypeName());
+        }
+        if (user.getUserType().equals(4)){
+            zbRequirement.setRequiremetName(user.getOrgName());
+        }else {
+            zbRequirement.setRequiremetName(user.getUserName());
+        }
+        map.put("zbRequirement",zbRequirement);
+        returnData.setData(map);
+        return returnData;
     }
 
 }

@@ -19,4 +19,6 @@ public interface ZbRequireService extends GenericService<ZbRequirement, Long> {
     ReturnData<ZbRequirement> updateStatus(ZbRequirement zbRequirement);
 
     ReturnData<ZbRequirement> getRequirementList(ZbRequirementPageHelper helper);
+
+    ReturnData<ZbRequirement> reqCheck(ZbRequirement zbRequirement ,User user);
 }
