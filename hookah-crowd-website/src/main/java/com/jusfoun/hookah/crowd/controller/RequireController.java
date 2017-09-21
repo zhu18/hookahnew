@@ -64,8 +64,8 @@ public class RequireController extends BaseController{
             if (pageSize==null) pageSize = Integer.parseInt(PAGE_SIZE);
             return zbRequireService.getListByUser( pageNumber, pageSize, userId ,status, title, requireSn);
         } catch (Exception e) {
-            logger.error("分页查询我的发布错误", e);
-            return ReturnData.error("分页查询我的发布错误");
+            logger.error("getListByUser", e);
+            return ReturnData.error("系统错误："+e.getMessage());
         }
     }
 

@@ -59,8 +59,13 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
 
         List<OrderBy> orderBys = new ArrayList<>();
         orderBys.add(OrderBy.desc("addTime"));
-        Pagination<ZbRequirement> list= getListInPage(pageNum, pageSize,filter,orderBys);
-        return ReturnData.success(list);
+        try {
+            Pagination<ZbRequirement> list= getListInPage(pageNum, pageSize,filter,orderBys);
+            return ReturnData.success(list);
+        }catch (Exception e){
+            logger.error("获取"+userId+"发布需求失败",e.getMessage());
+            return ReturnData.error("系统错误："+e.getMessage());
+        }
     }
 
     @Override
@@ -72,8 +77,10 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             List<Condition> filters = new ArrayList();
             List<OrderBy> orderBys = new ArrayList();
             orderBys.add(OrderBy.desc("addTime"));
-             zbRequirement.setTypeName( zbTypeMapper.selectByPrimaryKey(zbRequirement.getType()).getTypeName());
-             zbRequirement.setFileName(zbAnnexMapper.selectByPrimaryKey(zbRequirement.getId()).getFileName());
+            if(zbRequirement.getType()!=null){
+                zbRequirement.setTypeName( zbTypeMapper.selectByPrimaryKey(zbRequirement.getType()).getTypeName());
+            }
+             zbRequirement.setFileName( zbAnnexMapper.selectByPrimaryKey(zbRequirement.getId()).getFileName());
              zbRequirement.setFilePath(zbAnnexMapper.selectByPrimaryKey(zbRequirement.getId()).getFilePath());
             if (StringUtils.isNotBlank(zbRequirement.getRequireSn())) {
                 filters.add(Condition.like("requireSn", zbRequirement.getRequireSn()));
