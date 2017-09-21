@@ -75,8 +75,8 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             if(zbRequirement.getType()!=null){
                 zbRequirement.setTypeName( zbTypeMapper.selectByPrimaryKey(zbRequirement.getType()).getTypeName());
             }
-             zbRequirement.setFileName( zbAnnexMapper.selectByPrimaryKey(zbRequirement.getId()).getFileName());
-             zbRequirement.setFilePath(zbAnnexMapper.selectByPrimaryKey(zbRequirement.getId()).getFilePath());
+           //  zbRequirement.setFileName( zbAnnexMapper.selectByPrimaryKey(zbRequirement.getId()).getFileName());
+            // zbRequirement.setFilePath(zbAnnexMapper.selectByPrimaryKey(zbRequirement.getId()).getFilePath());
             if (StringUtils.isNotBlank(zbRequirement.getRequireSn())) {
                 filters.add(Condition.like("requireSn", zbRequirement.getRequireSn()));
             }
