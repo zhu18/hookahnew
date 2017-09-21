@@ -20,7 +20,6 @@ function getRequirementType() {
       crowdsourcingRelease();//放这里的原因是 要等到需求类型渲染出来才可以 请求草稿数据（草稿数据里有选中的需求类型）
     }
   });
-
 }
 getRequirementType();
 
@@ -106,10 +105,9 @@ $('.tagNotice').on('mouseover', function () { //鼠标离开描述显示工具�
 
 $(document).on('click','#J_reset', function () { //重置
   $('.j_firstPage').val('');
-  $('.requirement-type span').removeClass('active').parent().attr('value','')
+  $('.requirement-type span').removeClass('active').parent().attr('value','');
   $('.load-file-list').html('');
 });
-
 
 //上传页面
 
@@ -165,7 +163,6 @@ $(document).on('click', '.del', function () { //鼠标离开描述显示工具�
 $(document).on('click', '.requirement-type span', function () { //鼠标离开描述显示工具栏
   $(this).addClass('active').siblings().removeClass('active').parent().attr('value', $(this).attr('value'))
 });
-
 
 function fileTypeClassName(fileName) { //返回class
   var fileTypeReg = /[^.]*$/;
@@ -239,9 +236,7 @@ function fileTypeClassName(fileName) { //返回class
   return attachmentListClassName;
 }
 
-
 $(document).on('click', '#J_nextPage', function () { //鼠标离开描述显示工具栏
-
   let annexList = [];//附件列表
   let list = $('dl.load-file');
   for (let i = 0; i < list.length; i++) {
@@ -267,8 +262,6 @@ $(document).on('click', '#J_nextPage', function () { //鼠标离开描述显示�
     },
     "annex": annexList
   };
-
-
   if (insertRequirementsData.zbRequirement.title && insertRequirementsData.zbRequirement.type && insertRequirementsData.zbRequirement.description && insertRequirementsData.zbRequirement.deliveryDeadline && insertRequirementsData.zbRequirement.rewardMoney && insertRequirementsData.zbRequirement.checkRemark) {
     $.ajax({
       type: 'post',
@@ -334,7 +327,7 @@ $(document).on('click', '#J_nextPage', function () { //鼠标离开描述显示�
     $.alert('带 * 为必填项，请按要求输入！')
   }
 
-})
+});
 
 $(document).on('click', '#J_prevPage', function () { //鼠标离开描述显示工具栏
   $('.j_firstPage').show();
