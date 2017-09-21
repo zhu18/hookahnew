@@ -4,7 +4,7 @@ class publicController {
     $scope.reader = function () {
           var promise = $http({
               method: 'GET',
-              url: $rootScope.site.crowdServer + "/api/require/allRequirement",
+              url: $rootScope.site.crowdServer + "/api/require/ReqCheck",
               params: {
                   requireSn: $stateParams.id
               }
@@ -52,8 +52,10 @@ class publicController {
               console.log('数据在这里');
               console.log(res);
               if (res.data.code == '1') {
-                  $state.go('publish.list', {id: id});
+                  $rootScope.openComponentModal("发布成功！");
+                  $state.go('publish.list');
               } else {
+                  $rootScope.openComponentModal("发布失败！");
 
               }
               $rootScope.loadingState = false;

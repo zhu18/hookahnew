@@ -7,7 +7,7 @@ class auditingController {
         $scope.reader = function () {
             var promise = $http({
                 method: 'GET',
-                url: $rootScope.site.crowdServer + "/api/require/allRequirement",
+                url: $rootScope.site.crowdServer + "/api/require/ReqCheck",
                 params: {
                     requireSn: $stateParams.id
                 }
@@ -16,12 +16,15 @@ class auditingController {
                 console.log('数据在这里');
                 console.log(res);
                 if (res.data.code == '1') {
-                    var item= res.data.data.list;
-                        item = item[0];
+                    var item= res.data.data.zbRequirement;
+                    console.log(item);
+                    $scope.zbAnnexes= res.data.data.zbAnnexes;
                     $scope.requiremetName=item.requiremetName;
                     $scope.contactName=item.contactName;
                     $scope.contactPhone=item.contactPhone;
                     $scope.title=item.title;
+                    $scope.tag=item.tag;
+                    $scope.type=item.type;
                     $scope.description=item.description;
                     $scope.deliveryDeadline=item.deliveryDeadline;
                     $scope.applyDeadline=item.applyDeadline;
@@ -54,18 +57,19 @@ class auditingController {
                 console.log('数据在这里');
                 console.log(res);
                 if (res.data.code == '1') {
+                    var modalInstance =$rootScope.openConfirmDialogModal("审核成功！");
+                    modalInstance.result.then(function () {
+                        $state.go('publish.list', {id: id});
+                    }, function () {
+                        $state.go('publish.list', {id: id});
+                    });
 
                 } else {
-
-
+                    $rootScope.openConfirmDialogModal("审核失败！")
                 }
                 $rootScope.loadingState = false;
                 growl.addSuccessMessage("订单数据加载完毕。。。");
             });
-        };
-        // 去发布
-        $scope.public = function (id) {
-            $state.go('publish.public', {id: id});
         };
     }
 }

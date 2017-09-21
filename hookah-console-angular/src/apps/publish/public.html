@@ -62,14 +62,17 @@
                         </td>
                         <th>需求标签</th>
                         <td>
-                            <button class="btn btn-info">类型三</button>
-                            <button class="btn btn-info">其他</button>
+                            <button class="btn btn-info" data-ng-bind="tag"></button>
                         </td>
                     </tr>
                     <tr>
                         <th>需求类型</th>
                         <td colspan="3">
-                            <button class="btn btn-info">类型三</button>
+                            <button class="btn btn-info" data-ng-show="type==1">数据采集</button>
+                            <button class="btn btn-info" data-ng-show="type==2">数据加工</button>
+                            <button class="btn btn-info" data-ng-show="type==3">数据模型</button>
+                            <button class="btn btn-info" data-ng-show="type==4">数据应用</button>
+                            <button class="btn btn-info" data-ng-show="type==5">数据清洗</button>
                         </td>
                     </tr>
                     <tr>
@@ -81,7 +84,7 @@
                     <tr>
                         <th>附件</th>
                         <td colspan="3">
-                            <a data-ng-href="filePath" data-ng-bind="fileName">XXX大数据平台建设需求1</a>
+                            <a data-ng-repeat="item in zbAnnexes" data-ng-href="{{item.filePath}}" data-ng-bind="item.fileName" class="margin-right-5"></a>
                         </td>
                     </tr>
                     <tr>
