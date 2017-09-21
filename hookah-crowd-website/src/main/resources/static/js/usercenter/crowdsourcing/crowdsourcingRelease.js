@@ -26,7 +26,7 @@ function getRequirementType() {
 }
 getRequirementType();
 
-
+let crowdSourcingId = null;
 function crowdsourcingRelease() {
   $.ajax({
     type: 'get',
@@ -34,9 +34,10 @@ function crowdsourcingRelease() {
     success: function (data) {
       console.log(data);
       if (data.data) {
+        crowdSourcingId = data.data.zbRequirement.id;
         $('#J_title').val(data.data.zbRequirement.title);
         $('#J_username').val(data.data.zbRequirement.contactName);
-        $('.requirement-type').attr('value',data.data.zbRequirement.type);
+        $('.requirement-type').attr('value', data.data.zbRequirement.type);
         $('#J_phone').val(data.data.zbRequirement.contactPhone);
         $('#J_tag').val(data.data.zbRequirement.tag);
         $('#J_description').val(data.data.zbRequirement.description);
@@ -53,8 +54,8 @@ function crowdsourcingRelease() {
 
         for (let c = 0; c < data.data.zbRequirementFiles.length; c++) {
 
-        var className = fileTypeClassName(data.data.zbRequirementFiles[c].fileName);
-        tempHtml += '\
+          var className = fileTypeClassName(data.data.zbRequirementFiles[c].fileName);
+          tempHtml += '\
         <dl fileName="' + data.data.zbRequirementFiles[c].fileName + '" filePath="' + data.data.zbRequirementFiles[c].filePath + '" class="load-file ' + className + '">\
           <dt><a href="javascript:void(0)" title=""><img src="' + data.data.zbRequirementFiles[c].filePath + '"></a></dt>\
           <dd>\
@@ -250,6 +251,7 @@ $(document).on('click', '#J_nextPage', function () { //鼠标离开描述显示�
 
   let insertRequirementsData = {
     "zbRequirement": {
+      "id": crowdSourcingId,//id
       "title": $('#J_title').val(),//标题
       "contactName": $('#J_username').val(),//联系人姓名
       "contactPhone": $('#J_phone').val(),//联系人电话
@@ -263,30 +265,73 @@ $(document).on('click', '#J_nextPage', function () { //鼠标离开描述显示�
     "annex": annexList
   };
 
-  if(insertRequirementsData.zbRequirement.title && insertRequirementsData.zbRequirement.type && insertRequirementsData.zbRequirement.description &&insertRequirementsData.zbRequirement.deliveryDeadline &&insertRequirementsData.zbRequirement.rewardMoney && insertRequirementsData.zbRequirement.checkRemark){
-    $.ajax({
-      type: 'post',
-      url: "/api/release/insertRequirements",
-      data: insertRequirementsData,
-      success: function (data) {
-        console.log(data);
-        if (data.data) {
-          console.log(data);
-          $('.j_firstPage').hide();
-          $('.secondPage').show()
-        }
-      }
-    })
+  $('.j_firstPage').hide();
+  $('.secondPage').show();
 
+  $('.j_title').html(insertRequirementsData.zbRequirement.title);
+  $('.j_username').html(insertRequirementsData.zbRequirement.contactName);
+  $('.j_phone').html(insertRequirementsData.zbRequirement.contactPhone);
+  $('.j_tag').html(insertRequirementsData.zbRequirement.tag);
+  $('.j_description').html(insertRequirementsData.zbRequirement.description);
+  $('.j_date').html(insertRequirementsData.zbRequirement.deliveryDeadline);
+  $('.j_money').html(insertRequirementsData.zbRequirement.rewardMoney);
+  $('.j_checkRemark').html(insertRequirementsData.zbRequirement.checkRemark);
 
-  }else{
-    $.alert('带 * 为必填项，请按要求输入！')
+  let tempTypeHtml = '';
+  switch (Number(insertRequirementsData.zbRequirement.type)) {
+    case 1 : {
+      $('.requirement-type-active span').html('数据采集');
+      break;
+    }
+    case 2 : {
+      $('.requirement-type-active span').html('数据加工');
+      break;
+    }
+    case 3 : {
+      $('.requirement-type-active span').html('数据模型');
+      break;
+    }
+    case 4 : {
+      $('.requirement-type-active span').html('数据应用');
+      break;
+    }
+    case 5 : {
+      $('.requirement-type-active span').html('数据清洗');
+      break;
+    }
+    case 6 : {
+      $('.requirement-type-active span').html('其他');
+      break;
+    }
   }
 
+  /*  if (insertRequirementsData.zbRequirement.title && insertRequirementsData.zbRequirement.type && insertRequirementsData.zbRequirement.description && insertRequirementsData.zbRequirement.deliveryDeadline && insertRequirementsData.zbRequirement.rewardMoney && insertRequirementsData.zbRequirement.checkRemark) {
+   $.ajax({
+   type: 'post',
+   url: "/api/release/insertRequirements",
+   dataType: 'json',
+   contentType: 'application/json',
+   data: JSON.stringify(insertRequirementsData),
+   success: function (data) {
+   console.log(data);
+   if (data.data) {
+   console.log(data);
+   $('.j_firstPage').hide();
+   $('.secondPage').show()
+   }
+   }
+   })
 
 
+   }
+   else
+   {
+   $.alert('带 * 为必填项，请按要求输入！')
+   }
+   */
 
-});
+})
+;
 
 
 $(document).on('click', '#J_prevPage', function () { //鼠标离开描述显示工具栏
