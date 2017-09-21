@@ -5,15 +5,15 @@ function loadPageData(data) { //渲染页面数据
   data = data.data.list;
   var tempHtml = '\
         <thead>\
-          <tr>\
-          <th>序号</th>\
+          <tr style="background-color:#b3b3b3;">\
+          <th style="width:50px;">序号</th>\
           <th>需求编号</th>\
           <th>需求标题</th>\
           <th>悬赏金额</th>\
           <th>状态</th>\
           <th>发布时间</th>\
           <th>交付截止时间</th>\
-          <th>操作</th>\
+          <th style="width:140px;"  >操作</th>\
           </tr>\
           </thead>\
           <tbody>';
