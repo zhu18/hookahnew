@@ -74,7 +74,7 @@ public class RequireController extends BaseController{
      * 需求大厅-发布
      * @author crs
      */
-    @RequestMapping("/require/updateStatus")
+    @RequestMapping("/api/require/updateStatus")
     @ResponseBody
     public ReturnData updateStatus( ZbRequirement zbRequirement) {
         try {

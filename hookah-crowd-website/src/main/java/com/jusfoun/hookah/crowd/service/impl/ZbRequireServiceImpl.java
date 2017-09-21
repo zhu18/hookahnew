@@ -129,9 +129,6 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
 
     @Override
     public ReturnData<ZbRequirement> updateStatus(ZbRequirement zbRequirement) {
-        List<Condition> filters = new ArrayList();
-        filters.add(Condition.eq(("id"),zbRequirement.getId()));
-
         try {
             updateByIdSelective(zbRequirement);
         }catch (Exception e){
