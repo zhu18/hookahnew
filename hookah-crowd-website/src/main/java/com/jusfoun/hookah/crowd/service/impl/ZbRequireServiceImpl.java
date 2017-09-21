@@ -93,7 +93,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                 filters.add(Condition.like(" title", zbRequirement.getTitle()));
             }
             if (zbRequirement.getStatus() != null && zbRequirement.getStatus()!= -1) {
-                filters.add(Condition.notIn("status", new Short[]{2,3,6,7,8,10,12,13}));
+                filters.add(Condition.notIn("status", new Short[]{0,2,3,6,7,8,10,12,13}));
             }
             int pageNumberNew = HookahConstants.PAGE_NUM;
             if (StringUtils.isNotBlank(currentPage)) {
@@ -129,7 +129,6 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
         filters.add(Condition.eq(("id"),zbRequirement.getId()));
 
         try {
-            // zbRequirementMapper.updateByExampleSelective(zbRequirement,filters);
             updateByIdSelective(zbRequirement);
         }catch (Exception e){
             return ReturnData.error("发布失败");
