@@ -62,7 +62,9 @@
                         </td>
                         <th>需求标签</th>
                         <td>
-                            <button class="btn btn-info" data-ng-bind="tag"></button>
+                            <div data-ng-if="tag !=null ">
+                                <button class="btn btn-info" data-ng-bind="tag"></button>
+                            </div>
                         </td>
                     </tr>
                     <tr>
