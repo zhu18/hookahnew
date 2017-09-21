@@ -59,8 +59,13 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
 
         List<OrderBy> orderBys = new ArrayList<>();
         orderBys.add(OrderBy.desc("addTime"));
-        Pagination<ZbRequirement> list= getListInPage(pageNum, pageSize,filter,orderBys);
-        return ReturnData.success(list);
+        try {
+            Pagination<ZbRequirement> list= getListInPage(pageNum, pageSize,filter,orderBys);
+            return ReturnData.success(list);
+        }catch (Exception e){
+            logger.error("获取"+userId+"发布需求失败",e.getMessage());
+            return ReturnData.error("系统错误："+e.getMessage());
+        }
     }
 
     @Override
