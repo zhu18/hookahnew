@@ -14,7 +14,7 @@ function getRequirementType() {
       console.log(data);
       let tempHtml = '';
       for (let i = 0; i < list.length; i++) {
-        tempHtml += '<span value="' + list[i].id + '">' + list[i].typeName + '</span>'
+        tempHtml += '<span class="type-span" value="' + list[i].id + '">' + list[i].typeName + '</span>'
 
       }
       $('.requirement-type').html(tempHtml);
@@ -40,7 +40,7 @@ function crowdsourcingRelease() {
         $('#J_tag').val(data.data.zbRequirement.tag);
         $('#J_description').val(data.data.zbRequirement.description);
         $('#J_date').val(data.data.zbRequirement.deliveryDeadline);
-        $('#J_money').val(data.data.zbRequirement.rewardMoney);
+        $('#J_money').val(data.data.zbRequirement.rewardMoney/100);
         $('#J_checkRemark').val(data.data.zbRequirement.checkRemark);
         let spanList = $('.requirement-type span');
         for (let i = 0; i < spanList.length; i++) {
@@ -263,6 +263,7 @@ $(document).on('click', '#J_nextPage', function () { //鼠标离开描述显示�
 
   };
 
+<<<<<<< HEAD
   $.ajax({
     type: 'post',
     url: "/api/release/insertRequirements",
@@ -279,11 +280,97 @@ $(document).on('click', '#J_nextPage', function () { //鼠标离开描述显示�
 
 
 });
+=======
+
+  if (insertRequirementsData.zbRequirement.title && insertRequirementsData.zbRequirement.type && insertRequirementsData.zbRequirement.description && insertRequirementsData.zbRequirement.deliveryDeadline && insertRequirementsData.zbRequirement.rewardMoney && insertRequirementsData.zbRequirement.checkRemark) {
+    $.ajax({
+      type: 'post',
+      url: "/api/release/insertRequirements",
+      dataType: 'json',
+      contentType: 'application/json',
+      data: JSON.stringify(insertRequirementsData),
+      success: function (data) {
+        console.log(data);
+        if (data.data) {
+          crowdSourcingId = data.data.zbRequirement.id;
+          $('.j_title').html(insertRequirementsData.zbRequirement.title);
+          $('.j_username').html(insertRequirementsData.zbRequirement.contactName);
+          $('.j_phone').html(insertRequirementsData.zbRequirement.contactPhone);
+          $('.j_description').html(insertRequirementsData.zbRequirement.description);
+          $('.j_date').html(insertRequirementsData.zbRequirement.deliveryDeadline);
+          $('.j_money').html(insertRequirementsData.zbRequirement.rewardMoney);
+          let temTagHtml = '';
+          let temTagArr = insertRequirementsData.zbRequirement.tag.split(',');
+          for (let t = 0; t < temTagArr.length; t++) {
+            temTagHtml += '<i class="type-span">' + temTagArr[t] + '</i>'
+          }
+          $('.j_tag').html(temTagHtml);
+
+          $('.j_checkRemark').html(insertRequirementsData.zbRequirement.checkRemark);
+
+          let tempTypeHtml = '';
+          switch (Number(insertRequirementsData.zbRequirement.type)) {
+            case 1 : {
+              $('.requirement-type-active span').html('数据采集');
+              break;
+            }
+            case 2 : {
+              $('.requirement-type-active span').html('数据加工');
+              break;
+            }
+            case 3 : {
+              $('.requirement-type-active span').html('数据模型');
+              break;
+            }
+            case 4 : {
+              $('.requirement-type-active span').html('数据应用');
+              break;
+            }
+            case 5 : {
+              $('.requirement-type-active span').html('数据清洗');
+              break;
+            }
+            case 6 : {
+              $('.requirement-type-active span').html('其他');
+              break;
+            }
+          }
+          $('.j_firstPage').hide();
+          $('.secondPage').show();
+        }
+      }
+    })
+
+
+  }
+  else {
+    $.alert('带 * 为必填项，请按要求输入！')
+  }
+
+})
+;
+>>>>>>> 33bcda0e7933829656f9ff273e8b23f91512aafd
 
 
 $(document).on('click', '#J_prevPage', function () { //鼠标离开描述显示工具栏
   $('.j_firstPage').show();
   $('.secondPage,.tagNoticeContent').hide()
+
+});
+
+
+$(document).on('click', '#J_release', function () { //鼠标离开描述显示工具栏
+  $.ajax({
+    type: 'get',
+    url: "/api/release/requirementSubmite?id=" + crowdSourcingId,
+    success: function (data) {
+      console.log(data);
+      if (data.data) {
+        console.log('发布成功')
+      }
+    }
+  })
+
 
 });
 

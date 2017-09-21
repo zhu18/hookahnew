@@ -85,11 +85,21 @@ var htmlPart = {
           </td>
         </tr>
         <tr>
+<<<<<<< HEAD
           <td>附件<span>*</span></td>
           <td>
             <input type="file" name="filename" class="fileUploadBtn j_firstPage">
             <span class="falseBen j_firstPage">上传附件</span><span class="upload-file-notice j_firstPage">最多可上传5个附件，每个附件大小不超过10M。</span>
 
+=======
+          <td>附件</td>
+          <td style="padding:0;">
+            <div class="upload-box">
+              <input type="file" name="filename" class="fileUploadBtn j_firstPage">
+              <span class="falseBen j_firstPage">上传附件</span>
+              <span class="upload-file-notice j_firstPage">最多可上传5个附件，每个附件大小不超过10M。</span>
+            </div>
+>>>>>>> 33bcda0e7933829656f9ff273e8b23f91512aafd
             <div class="load-file-list">
               <!--
                <dl class="load-file word">
@@ -120,12 +130,14 @@ var htmlPart = {
         </tr>
         <tr>
           <td>悬赏金额 <span>*</span></td>
-          <td>            <div class="secondPage j_money">????? 元</div>
+          <td>
+            <div class="secondPage j_money">????? 元</div>
             <input id="J_money" class="j_firstPage" type="number"> <span class="j_firstPage">元</span></td>
         </tr>
         <tr>
           <td valign="top">交付验收要求 <span>*</span></td>
           <td>
+<<<<<<< HEAD
             <textarea class="j_firstPage" placeholder="请详情描述交付及验收要求，1000个汉字以内。" id="J_checkRemark" ></textarea>
             <p class="j_checkRemark secondPage description">
               其中，一类风险是产品宣传藏“忽悠”。目前互联网保险险种主要涉及电商类保险、旅行类保险、车险、意外险、健康险,以及一些场景创新类产品(如航班延误险、退货运费险等)。有的保险公司为片面追求爆款、吸引眼球，存在保险产品宣传内容不规范、网页所载格式条款的内容不一致或显示不全、未对免责条款进行说明、保险责任模糊等问题，容易造成消费者误解。
@@ -133,6 +145,10 @@ var htmlPart = {
               另一类风险是不法行为“鱼目混珠”。一些不法分子利用互联网平台虚构保险产品或保险项目，假借保险之名非法集资。或承诺高额回报引诱消费者出资；或冒用保险机构名义伪造保单，骗取消费者资金。
               对此，保监会表示，保险的主要功能是为社会公众提供风险保障，而不是提供高额投资回报，建议保险消费者先要合理评估自身需求，选择符合自身保险保障实际需求的保险产品。其次，在网上投保后，可通过拨
             </p>
+=======
+            <textarea class="j_firstPage" placeholder="请详情描述交付及验收要求，1000个汉字以内。" id="J_checkRemark"></textarea>
+            <p class="j_checkRemark secondPage description">asda</p>
+>>>>>>> 33bcda0e7933829656f9ff273e8b23f91512aafd
 
           </td>
         </tr>
@@ -147,7 +163,7 @@ var htmlPart = {
           </div>
           <div class="secondPage">
             <button id="J_prevPage">上一步</button>
-            <button>确认提交</button>
+            <button id="J_release">确认提交</button>
           </div>
         </div>
       </div>

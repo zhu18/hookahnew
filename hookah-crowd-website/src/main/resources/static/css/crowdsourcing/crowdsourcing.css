@@ -65,7 +65,7 @@
 .myRequirement-table tbody tr:nth-child(odd):hover { background-color: #fff; }
 .release-notice{ font-size: 13px; display: block; padding: 20px}
 
-.release-first-btnbox{ padding-left:170px;}
+.release-first-btnbox{ padding-left:144px;}
 .release-first-btnbox button{padding: 5px 15px; margin-right:15px; font-size: 15px; border:none; cursor: pointer;background-color: #337ab7; color:#fff; border-color: #2e6da4;}
 .release-first-btnbox button:hover{background-color: #286090; border-color: #204d74;}
 
@@ -78,14 +78,15 @@
 
 
 
+.crowdsourcing-table i{ font-style: normal;}
 
-
-.crowdsourcing-table .load-file{float:left; height:48px; width:259px; margin:0 12px 12px 0; background:#f5f5f5; overflow:hidden;}
+.crowdsourcing-table .load-file{float:left; height:48px; width:265px; margin:12px 0 12px 12px; background:#f5f5f5; overflow:hidden;}
+.crowdsourcing-table .load-file:nth-child(n+4){ margin-top: 0;}
 .crowdsourcing-table .load-file:nth-child(3){ margin-right:0;}
 .crowdsourcing-table .load-file:nth-child(6){ margin-right:0;}
 .crowdsourcing-table .load-file dt{ position: relative;  height: 46px;; width:46px;float:left; overflow:hidden; border: 1px solid #ededed; background: #fff; line-height: 44px; text-align: center }
 .crowdsourcing-table .load-file dt a{ height:100%;width:100%; display: block; position: absolute; left: 0; top:0; z-index: 9}
-.crowdsourcing-table .load-file dd{ position: relative; float:left; width: 200px; padding-left: 10px; margin:0; font-size: 12px; color: #717171;}
+.crowdsourcing-table .load-file dd{ position: relative; float:left; width: 207px; padding-left: 10px; margin:0; font-size: 12px; color: #717171;}
 .crowdsourcing-table .load-file dd span:first-child{ line-height:48px; font-size: 13px; color:#3d4245;}
 .crowdsourcing-table .load-file dd span{ position: relative; display: block; color:#888888;   line-height: 17px;}
 .crowdsourcing-table .load-file.text dt{ border-color:#c4c4c4}
@@ -142,10 +143,11 @@
   content: ''; height:0; width:0; border:7px solid transparent; border-left:7px solid #d4d4d4; position: absolute; right: -14px; top: 16px;
 }
 
+.load-file-list{ overflow: hidden;background: #e4e4e4; }
 
 .description{ margin: 10px 10px 10px 0; width: 785px; padding: 10px; border: 1px solid #e0e0e0;line-height: 19.5px; max-height:212px; overflow: auto;}
-.requirement-type span{ background-color: #e6e6e6; margin:0 3px; padding: 3px 9px;user-select: none;cursor:pointer}
-.requirement-type span.active{background-color: #6084a2; color: #fff;}
+.type-span{ background-color: #e6e6e6; margin:0 3px; padding: 3px 9px;user-select: none;cursor:pointer}
+.type-span.active{background-color: #6084a2; color: #fff;}
 
 .secondPage{ display: none}
 
