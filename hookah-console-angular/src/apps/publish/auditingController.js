@@ -31,6 +31,7 @@ class auditingController {
                     $scope.trusteePercent=item.trusteePercent;
                     // $scope.applyDeadline=item.applyDeadline;
                     $scope.checkRemark=item.checkRemark;
+                    $scope.status=item.status;
                     $scope.id=item.id;
                 } else {
 

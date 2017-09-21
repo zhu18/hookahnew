@@ -28,6 +28,7 @@ class publicController {
                   $scope.trusteePercent=item.trusteePercent;
                   // $scope.applyDeadline=item.applyDeadline;
                   $scope.checkRemark=item.checkRemark;
+                  $scope.status=item.status;
                   $scope.id=item.id;
               } else {
 
@@ -41,13 +42,12 @@ class publicController {
 
     $scope.public=function () {
           var promise = $http({
-              method: 'POST',
+              method: 'GET',
               url: $rootScope.site.crowdServer + "/api/require/updateStatus",
               params: {
-                  requirementId:$scope.id,
+                  id:$scope.id,
                   status:5,
-                  pressTime:$filter('format')($scope.applyDeadline, 'yyyy-MM-dd HH:mm:ss')
-
+                  applyDeadline:$filter('format')($scope.applyDeadline, 'yyyy-MM-dd HH:mm:ss')
               }
           });
           promise.then(function (res, status, config, headers) {

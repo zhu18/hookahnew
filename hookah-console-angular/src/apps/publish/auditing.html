@@ -7,7 +7,16 @@
             <div class="col-sm-12 margin-top-10 clearfix">
                 <div class="col-md-1 col-sm-1  publish-status">
                     <p>状态</p>
-                    <p>待发布</p>
+                    <p>
+                        <span data-ng-show="status==1" >待审核</span>
+                        <span data-ng-show="status==4" >待发布</span>
+                        <span data-ng-show="status==5" >报名中</span>
+                        <span data-ng-show="status==9" >待验收</span>
+                        <span data-ng-show="status==11">已验收待付款</span>
+                        <span data-ng-show="status==16">待退款</span>
+                        <span data-ng-show="status==14">交易取消</span>
+                        <span data-ng-show="status==15">交易完成</span>
+                    </p>
                 </div>
                 <div class="col-md-11 col-sm-11  publish-Progress">
                     <ul class="clearfix">
