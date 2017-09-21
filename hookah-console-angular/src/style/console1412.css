@@ -9505,6 +9505,9 @@ input[type="radio"], input[type="checkbox"] {
 .publish-table-box table th{
   text-align: center;
 }
+.publish-table-box table td div{
+  display: inline-block;
+}
 .publish-table-box table th input{
   vertical-align: middle !important;
 }

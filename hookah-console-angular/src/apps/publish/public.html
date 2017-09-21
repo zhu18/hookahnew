@@ -42,56 +42,62 @@
                    </ul>
                </div>
             </div>
-            <div class="publish-table-box">
+            <div class="col-sm-12 publish-table-box margin-top-10">
                 <table class="table">
                     <tr>
                         <th>需求方</th>
-                        <td>XXXXXX有限公司</td>
+                        <td>
+                            <span data-ng-bind="requiremetName"></span>
+                        </td>
                         <th>需求方联系人</th>
                         <td>
-                            李某某 170900521XX
+                            <span data-ng-bind="contactName"></span>
+                            <span data-ng-bind="contactPhone"></span>
                         </td>
                     </tr>
                     <tr>
                         <th>需求标题</th>
-                        <td>大数据商城</td>
+                        <td>
+                            <span data-ng-bind="title"></span>
+                        </td>
                         <th>需求标签</th>
                         <td>
-                            <button class="btn btn-info">类型三</button>
-                            <button class="btn btn-info">其他</button>
+                            <button class="btn btn-info" data-ng-bind="tag"></button>
                         </td>
                     </tr>
                     <tr>
                         <th>需求类型</th>
                         <td colspan="3">
-                            <button class="btn btn-info">类型三</button>
-                            <button class="btn btn-info">其他</button>
+                            <button class="btn btn-info" data-ng-show="type==1">数据采集</button>
+                            <button class="btn btn-info" data-ng-show="type==2">数据加工</button>
+                            <button class="btn btn-info" data-ng-show="type==3">数据模型</button>
+                            <button class="btn btn-info" data-ng-show="type==4">数据应用</button>
+                            <button class="btn btn-info" data-ng-show="type==5">数据清洗</button>
                         </td>
                     </tr>
                     <tr>
                         <th>需求描述</th>
                         <td colspan="3">
-                            详细描述具体的需求信息如下：XXXXXXXXXXXXXXXXXXXXX
+                            <textarea style=" resize:none;" data-ng-bind="description" cols="100" rows="10" readonly></textarea>
                         </td>
                     </tr>
                     <tr>
                         <th>附件</th>
                         <td colspan="3">
-                            <a href="">XXX大数据平台建设需求1</a>
-                            <a href="">XXX大数据平台建设需求2</a>
+                            <a data-ng-repeat="item in zbAnnexes" data-ng-href="{{item.filePath}}" data-ng-bind="item.fileName" class="margin-right-5"></a>
                         </td>
                     </tr>
                     <tr>
                         <th>交付截止日期</th>
                         <td>
-                            2017-08-01
+                            <span data-ng-bind="deliveryDeadline"></span>
                         </td>
                         <th>报名截止日期</th>
                         <td>
                             <p class="input-group">
                                 <input style="background-color: transparent;" ng-keypress="$event.preventDefault()"
                                        ng-paste="$event.preventDefault()" type="text" class="form-control"
-                                       uib-datepicker-popup="yyyy-MM-dd" type="datetime-local" ng-model="startDate"
+                                       uib-datepicker-popup="yyyy-MM-dd" type="datetime-local" ng-model="applyDeadline"
                                        is-open="popup1.opened" datepicker-options="startDateOptions" close-text="关闭" clear-text="清除"
                                        current-text="今天" readonly="true"/>
                                 <span class="input-group-btn">
@@ -103,18 +109,30 @@
                     <tr>
                         <th>悬赏金额</th>
                         <td colspan="3">
-                            ￥12900.00元 已托管比例（%）：30   托管赏金：￥3870.00元
+                            <div>
+                                <span>￥</span>
+                                <span data-ng-bind="rewardMoney"></span>
+                            </div>
+                            <div>
+                                <span class="glyphicon glyphicon-piggy-bank"></span>
+                                <span> 已托管比例（%）：</span>
+                                <span data-ng-bind="trusteePercent"> </span>
+                            </div>
+                            <div>
+                                <span>托管赏金：</span>
+                                <span data-ng-bind="rewardMoney"></span>
+                            </div>
                         </td>
                     </tr>
                     <tr>
                         <th>交付验收要求</th>
                         <td colspan="3">
-                            本需求的交付计划以及相应的提交物要求如下：XXXXXXXXXXXXXXXX
+                            <textarea style=" resize:none;" data-ng-bind="checkRemark" cols="100" rows="10" readonly></textarea>
                         </td>
                     </tr>
                 </table>
                 <div style="margin: auto;width: 58px;">
-                    <button class="btn btn-primary ">发布</button>
+                    <button class="btn btn-primary" data-ng-click="public()">发布</button>
                 </div>
             </div>
         </div>

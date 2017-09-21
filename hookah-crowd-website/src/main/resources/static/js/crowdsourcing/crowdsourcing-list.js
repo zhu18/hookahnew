@@ -24,7 +24,7 @@ function loadPageData(data) { //渲染页面数据
     switch (data[i].status) {
       case 5:
         tempState = '报名中';
-        tempButtonHtml = '<span class="signUp">我要报名</span>';
+        tempButtonHtml = '<span class="signUp">报名中</span>';
         break;
       default:
         tempState = '报名结束';
@@ -55,7 +55,7 @@ function loadPageData(data) { //渲染页面数据
       <td>' + tempState + '</td>\
       <td>' + data[i].addTime + '</td>\
       <td>' + data[i].applyDeadline + '</td>\
-      <td><span class="lastTime">' + data[i].remainTime + '</span>' + tempButtonHtml + '</td>\
+      <td><span class="lastTime">'+data[i].remainTime+'</span>' + tempButtonHtml + '</td>\
       </tr>'
   }
   if (!data.length) {
@@ -80,58 +80,3 @@ function searchFn() {
   console.log(dataParm);
   goPage("1");
 }
-
-$(document).on('click','.signUp',function () {
-  $.ajax({
-    url: '/islogin',
-    type: 'post',
-    success: function (data) {
-      if(data){
-        $.confirm('您好！您还不是服务商，不能参加需求任务报名，如想报名请点击 【确定】 申请成为服务商，按要求提交信息即可通过服务商认证。 ',null,function(type){
-          if(type == 'yes'){
-            this.hide();
-          }else{
-            this.hide();
-          }
-        });
-      }else{
-        window.location.href = host.loginUrl + encodeURIComponent( host.crowd+'/crowdsourcing-list');
-      }
-    }
-  });
-});
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

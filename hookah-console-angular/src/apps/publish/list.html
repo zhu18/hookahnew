@@ -114,7 +114,7 @@
                                 <td data-ng-bind="$index+1"></td>
                                 <td data-ng-bind="item.requireSn"></td>
                                 <td data-ng-bind="item.title"></td>
-                                <td data-ng-bind="item.contactName"></td>
+                                <td data-ng-bind="item.requiremetName"></td>
                                 <td data-ng-bind="'￥'+item.rewardMoney/100"></td>
                                 <td>
                                     <span data-ng-show="item.status==1" >待审核</span>
@@ -129,14 +129,14 @@
                                 <td data-ng-bind="item.addTime"></td>
                                 <td data-ng-bind="item.applyDeadline"></td>
                                 <td >
-                                    <button class="btn btn-primary" data-ng-show="item.status==1"  data-ng-click="auditing(item)">去审核</button>
-                                    <button class="btn btn-primary" data-ng-show="item.status==4"  data-ng-click="public(item)">去发布</button>
-                                    <button class="btn btn-primary" data-ng-show="item.status==5"  data-ng-click="getDetails(item)">资格筛选</button>
-                                    <button class="btn btn-primary" data-ng-show="item.status==9"  data-ng-click="getDetails(item)">去验收</button>
-                                    <button class="btn btn-primary" data-ng-show="item.status==11" data-ng-click="getDetails(item)">去付款</button>
-                                    <button class="btn btn-primary" data-ng-show="item.status==16" data-ng-click="getDetails(item)">退款</button>
-                                    <button class="btn btn-primary" data-ng-show="item.status==14" data-ng-click="getDetails(item)">查看</button>
-                                    <button class="btn btn-primary" data-ng-show="item.status==15" data-ng-click="getDetails(item)">查看</button>
+                                    <button class="btn btn-primary" data-ng-show="item.status==1"  data-ng-click="auditing(item.requireSn)">去审核</button>
+                                    <button class="btn btn-primary" data-ng-show="item.status==4"  data-ng-click="public(item.requireSn)">去发布</button>
+                                    <button class="btn btn-primary" data-ng-show="item.status==5"  data-ng-click="getDetails(item.requireSn)">资格筛选</button>
+                                    <button class="btn btn-primary" data-ng-show="item.status==9"  data-ng-click="getDetails(item.requireSn)">去验收</button>
+                                    <button class="btn btn-primary" data-ng-show="item.status==11" data-ng-click="getDetails(item.requireSn)">去付款</button>
+                                    <button class="btn btn-primary" data-ng-show="item.status==16" data-ng-click="getDetails(item.requireSn)">退款</button>
+                                    <button class="btn btn-primary" data-ng-show="item.status==14" data-ng-click="getDetails(item.requireSn)">查看</button>
+                                    <button class="btn btn-primary" data-ng-show="item.status==15" data-ng-click="getDetails(item.requireSn)">查看</button>
                                 </td>
                             </tr>
 

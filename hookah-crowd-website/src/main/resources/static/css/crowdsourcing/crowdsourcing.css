@@ -125,13 +125,6 @@
 .crowdsourcing-table-edit a:last-child{margin-right: 12px;}
 
 
-.requirement-type-active span{margin: 0 3px;
-    padding: 3px 9px;
-    user-select: none;
-    cursor: pointer;
-    background-color: #6084a2;
-    color: #fff;}
-
 .crowdsourcing-table .load-file.word .view{ display: none;}
 .crowdsourcing-table .load-file.ppt .view{ display: none;}
 .crowdsourcing-table .load-file.text .view{ display: none;}
