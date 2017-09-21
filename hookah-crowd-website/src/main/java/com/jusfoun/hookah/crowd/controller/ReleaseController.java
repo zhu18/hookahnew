@@ -40,7 +40,7 @@ public class ReleaseController extends BaseController{
     }
 
     /**
-     * 数据众包-发布需求--确认信息
+     * 数据众包-发布需求--查询草稿状态需求
      * @return
      */
     @ResponseBody
