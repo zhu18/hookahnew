@@ -33,8 +33,13 @@ function crowdsourcingRelease() {
     url: "/api/release/requirementInfo",
     success: function (data) {
       console.log(data);
-      if (data.data) {
-        crowdSourcingId = data.data.zbRequirement.id;
+      if (data.data.hasOwnProperty('zbRequirement')) {
+        if(data.data.zbRequirement.id){
+          crowdSourcingId=null;
+        }else{
+          crowdSourcingId=data.data.zbRequirement.id;
+
+        }
         $('#J_title').val(data.data.zbRequirement.title);
         $('#J_username').val(data.data.zbRequirement.contactName);
         $('.requirement-type').attr('value', data.data.zbRequirement.type);
