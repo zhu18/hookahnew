@@ -16,7 +16,7 @@ public interface ZbRequireService extends GenericService<ZbRequirement, Long> {
 
     ReturnData<ZbRequirement> getAllRequirement(String currentPage, String pageSize, ZbRequirement zbRequirement);
 
-    ReturnData<ZbRequirement> updateStatus(ZbRequirement zbRequirement);
+    ReturnData<ZbRequirement> updateStatus(ZbRequirement zbRequirement,String applyDeadline);
 
     ReturnData<ZbRequirement> getRequirementList(ZbRequirementPageHelper helper);
 

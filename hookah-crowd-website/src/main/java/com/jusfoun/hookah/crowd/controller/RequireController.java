@@ -76,16 +76,15 @@ public class RequireController extends BaseController{
      */
     @RequestMapping("/api/require/updateStatus")
     @ResponseBody
-    public ReturnData updateStatus( ZbRequirement zbRequirement) {
+    public ReturnData updateStatus( ZbRequirement zbRequirement,String applyDeadline) {
         try {
-            return zbRequireService.updateStatus(zbRequirement);
+            return zbRequireService.updateStatus(zbRequirement,applyDeadline);
         }catch (Exception e){
             logger.error("发布失败", e);
             return ReturnData.error("发布失败");
         }
     }
     /**
-     * 需求大厅-发布
      * @author crs
      */
     @RequestMapping("/api/require/ReqCheck")

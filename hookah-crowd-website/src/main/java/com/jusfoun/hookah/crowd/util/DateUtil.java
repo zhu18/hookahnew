@@ -7,6 +7,32 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class DateUtil {
+
+    /**
+     * Default time format :  yyyy-MM-dd HH:mm:ss
+     */
+    public static final String DEFAULT_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+    /**
+     * Time format :  yyyy-MM-dd HH:mm
+     */
+    public static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm";
+    public static final String TIME_FORMAT = "HH:mm";
+
+    /**
+     * Default date format
+     */
+    public static final String DATE_FORMAT = "yyyy-MM-dd";
+    /**
+     * Default month format
+     */
+    public static final String MONTH_FORMAT = "yyyy-MM";
+    /**
+     * Default day format
+     */
+    public static final String DAY_FORMAT = "dd";
+
+
 	  // 获得当前日期与本周一相差的天数
     public static  int getMondayPlus() {
         Calendar cd = Calendar.getInstance();
@@ -142,5 +168,14 @@ public class DateUtil {
             sb.append(milliSecond+"毫秒");
         }*/
         return sb.toString();
+    }
+
+    public static Date getDate(String dateText, String pattern) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
+        try {
+            return dateFormat.parse(dateText);
+        } catch (ParseException e) {
+            throw new IllegalStateException("Parse date from [" + dateText + "," + pattern + "] failed", e);
+        }
     }
 }

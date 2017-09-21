@@ -128,8 +128,9 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
     }
 
     @Override
-    public ReturnData<ZbRequirement> updateStatus(ZbRequirement zbRequirement) {
+    public ReturnData<ZbRequirement> updateStatus(ZbRequirement zbRequirement ,String applyDeadline) {
         try {
+            zbRequirement.setApplyDeadline( DateUtil.getDate(applyDeadline,DateUtil.DEFAULT_DATE_TIME_FORMAT));
             updateByIdSelective(zbRequirement);
         }catch (Exception e){
             return ReturnData.error("发布失败");
