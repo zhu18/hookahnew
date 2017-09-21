@@ -59,7 +59,6 @@ spring:
               enable: true
             socketFactory:
               fallback: false
-        dialect : org.hibernate.dialect.MySQL5Dialect
   mvc:
     static-path-pattern: /static/**
 myconf:
@@ -93,8 +92,7 @@ myconf:
   redis:
     ipPort: 192.168.15.174:7000,192.168.15.174:7001,192.168.15.174:7002
   consul:
-    ipPort: 127.0.0.1:8500
+    ipPort: 192.168.15.174:8500
   es:
     ipPort: 192.168.15.175:9300
 debug: true
-

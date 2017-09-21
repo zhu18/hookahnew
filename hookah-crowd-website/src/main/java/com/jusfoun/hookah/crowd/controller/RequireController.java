@@ -76,9 +76,9 @@ public class RequireController extends BaseController{
      */
     @RequestMapping("/api/require/updateStatus")
     @ResponseBody
-    public ReturnData updateStatus( ZbRequirement zbRequirement,String applyDeadline) {
+    public ReturnData updateStatus(String id, String status ,String applyDeadline) {
         try {
-            return zbRequireService.updateStatus(zbRequirement,applyDeadline);
+            return zbRequireService.updateStatus(id, status ,applyDeadline);
         }catch (Exception e){
             logger.error("发布失败", e);
             return ReturnData.error("发布失败");

@@ -2,8 +2,6 @@ package com.jusfoun.hookah.crowd.service.impl;
 
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
-import com.jusfoun.hookah.core.dao.UserMapper;
-import com.jusfoun.hookah.core.dao.zb.ZbAnnexMapper;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
 import com.jusfoun.hookah.core.dao.zb.ZbTypeMapper;
 import com.jusfoun.hookah.core.domain.User;
@@ -14,6 +12,7 @@ import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.generic.OrderBy;
+import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.crowd.service.UserService;
@@ -128,10 +127,13 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
     }
 
     @Override
-    public ReturnData<ZbRequirement> updateStatus(ZbRequirement zbRequirement ,String applyDeadline) {
+    public ReturnData<ZbRequirement> updateStatus(String id, String status ,String applyDeadline) {
         try {
-            zbRequirement.setApplyDeadline( DateUtil.getDate(applyDeadline,DateUtil.DEFAULT_DATE_TIME_FORMAT));
-            updateByIdSelective(zbRequirement);
+            ZbRequirement zbRequirement = new ZbRequirement();
+            zbRequirement.setId(Long.parseLong(id));
+            zbRequirement.setStatus(Short.parseShort(status));
+            zbRequirement.setApplyDeadline(DateUtils.getDate(applyDeadline));
+            super.updateByIdSelective(zbRequirement);
         }catch (Exception e){
             return ReturnData.error("发布失败");
         }

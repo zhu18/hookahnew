@@ -1,6 +1,5 @@
 package com.jusfoun.hookah.crowd.service;
 
-import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirementPageHelper;
 import com.jusfoun.hookah.core.exception.HookahException;
@@ -16,7 +15,7 @@ public interface ZbRequireService extends GenericService<ZbRequirement, Long> {
 
     ReturnData<ZbRequirement> getAllRequirement(String currentPage, String pageSize, ZbRequirement zbRequirement);
 
-    ReturnData<ZbRequirement> updateStatus(ZbRequirement zbRequirement,String applyDeadline);
+    ReturnData<ZbRequirement> updateStatus(String id, String status ,String applyDeadline);
 
     ReturnData<ZbRequirement> getRequirementList(ZbRequirementPageHelper helper);
 
