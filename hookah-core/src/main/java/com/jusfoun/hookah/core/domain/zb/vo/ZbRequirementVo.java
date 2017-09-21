@@ -3,12 +3,13 @@ package com.jusfoun.hookah.core.domain.zb.vo;
 import com.jusfoun.hookah.core.domain.zb.ZbAnnex;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by computer on 2017/9/19.
  */
-public class ZbRequirementVo {
+public class ZbRequirementVo implements Serializable {
 
     private ZbRequirement zbRequirement;
 
