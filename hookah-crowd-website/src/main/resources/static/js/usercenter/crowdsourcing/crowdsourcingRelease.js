@@ -36,6 +36,7 @@ function crowdsourcingRelease() {
       if (data.data) {
         $('#J_title').val(data.data.zbRequirement.title);
         $('#J_username').val(data.data.zbRequirement.contactName);
+        $('.requirement-type').attr('value',data.data.zbRequirement.type);
         $('#J_phone').val(data.data.zbRequirement.contactPhone);
         $('#J_tag').val(data.data.zbRequirement.tag);
         $('#J_description').val(data.data.zbRequirement.description);
@@ -260,22 +261,29 @@ $(document).on('click', '#J_nextPage', function () { //鼠标离开描述显示�
       "checkRemark": $('#J_checkRemark').val()//交付验收要求
     },
     "annex": annexList
-
   };
 
-  $.ajax({
-    type: 'post',
-    url: "/api/release/insertRequirements",
-    data: insertRequirementsData,
-    success: function (data) {
-      console.log(data);
-      if (data.data) {
+  if(insertRequirementsData.zbRequirement.title && insertRequirementsData.zbRequirement.type && insertRequirementsData.zbRequirement.description &&insertRequirementsData.zbRequirement.deliveryDeadline &&insertRequirementsData.zbRequirement.rewardMoney && insertRequirementsData.zbRequirement.checkRemark){
+    $.ajax({
+      type: 'post',
+      url: "/api/release/insertRequirements",
+      data: insertRequirementsData,
+      success: function (data) {
         console.log(data);
-        $('.j_firstPage').hide();
-        $('.secondPage').show()
+        if (data.data) {
+          console.log(data);
+          $('.j_firstPage').hide();
+          $('.secondPage').show()
+        }
       }
-    }
-  })
+    })
+
+
+  }else{
+    $.alert('带 * 为必填项，请按要求输入！')
+  }
+
+
 
 
 });
