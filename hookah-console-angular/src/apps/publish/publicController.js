@@ -26,7 +26,6 @@ class publicController {
                   $scope.applyDeadline=item.applyDeadline;
                   $scope.rewardMoney=item.rewardMoney;
                   $scope.trusteePercent=item.trusteePercent;
-                  // $scope.applyDeadline=item.applyDeadline;
                   $scope.checkRemark=item.checkRemark;
                   $scope.status=item.status;
                   $scope.id=item.id;
@@ -58,7 +57,7 @@ class publicController {
                   $state.go('publish.list');
               } else {
                   $rootScope.openComponentModal("发布失败！");
-
+                  $state.go('publish.list');
               }
               $rootScope.loadingState = false;
               growl.addSuccessMessage("订单数据加载完毕。。。");
