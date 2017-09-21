@@ -108,7 +108,11 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             List<ZbRequirement> list = page.getList();
             for (ZbRequirement zbRequirement1:list){
                 User user1 = userService.selectById(zbRequirement1.getUserId());
-                zbRequirement1.setRequiremetName(user1.getUserName());
+                if (user1.getUserType()==4){
+                    zbRequirement1.setRequiremetName(user1.getOrgName());
+                }else {
+                    zbRequirement1.setRequiremetName(user1.getUserName());
+                }
             }
             returnData.setData(page);
         } catch (Exception e) {
@@ -161,7 +165,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
         }
     }
     @Override
-    public ReturnData<ZbRequirement> reqCheck(ZbRequirement zbRequirement ,User user) {
+    public ReturnData<ZbRequirement> reqCheck(ZbRequirement zbRequirement ) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         List<Condition> filter = new ArrayList<>();
@@ -172,10 +176,8 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
         filter.clear();
         filter.add(Condition.eq("requireSn",zbRequirement.getRequireSn()));
         zbRequirement=selectOne(filter);
-        if(zbRequirement.getType()!=null){
-            zbRequirement.setTypeName( zbTypeMapper.selectByPrimaryKey(zbRequirement.getType()).getTypeName());
-        }
-        if (user.getUserType().equals(4)){
+        User user = userService.selectById(zbRequirement.getUserId());
+        if (user.getUserType()==4){
             zbRequirement.setRequiremetName(user.getOrgName());
         }else {
             zbRequirement.setRequiremetName(user.getUserName());
