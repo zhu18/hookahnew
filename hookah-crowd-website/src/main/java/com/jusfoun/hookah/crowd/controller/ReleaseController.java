@@ -57,7 +57,7 @@ public class ReleaseController extends BaseController{
     }
 
     /**
-     * 数据众包-发布需求--确认提交
+     * 数据众包-发布需求--变更待审核状态需求
      * @return
      */
     @ResponseBody
