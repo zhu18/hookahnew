@@ -17,27 +17,27 @@ public class MgZbUser extends GenericModel {
     @Id
     private String userId;
 
-    private String personDesc;
+    private String personDesc;                          //个人介绍
 
-    private Integer status;
+    private Integer status;                             //认证状态
 
-    private List<String> specialSkills;
+    private List<String> specialSkills;                 //擅长领域
 
-    private List<EducationsExp> educationsExpList;
+    private List<EducationsExp> educationsExpList;      //
 
-    private List<WorksExp> worksExpList;
+    private List<WorksExp> worksExpList;                //
 
-    private List<ProjectsExp> projectsExpList;
+    private List<ProjectsExp> projectsExpList;          //
 
     public static class EducationsExp implements Serializable {
 
-        private String schoolName;
-        private String major;
-        private Date startTime;
-        private Date endTime;
-        private String edu;
-        private Integer orExam;
-        private List<String> certPath;
+        private String schoolName;  //学校名称
+        private String major;       //专业名称
+        private Date startTime;     //就学开始时间
+        private Date endTime;       //结束时间
+        private String edu;         //学历
+        private Integer orExam;     //是否统招
+        private List<String> certPath;//证明材料
 
         public String getSchoolName() {
             return schoolName;
@@ -97,12 +97,12 @@ public class MgZbUser extends GenericModel {
     }
     public static class WorksExp implements Serializable {
 
-        private String companyName;
-        private String departName;
-        private Date startTime;
-        private Date endTime;
-        private String position;
-        private List<String> certPath;
+        private String companyName;         //公司名称
+        private String departName;          //部门名称
+        private Date startTime;             //开始花间
+        private Date endTime;               //结束时间
+        private String position;            //职位
+        private List<String> certPath;      //证明材料
 
         public String getCompanyName() {
             return companyName;
@@ -153,11 +153,12 @@ public class MgZbUser extends GenericModel {
         }
     }
     public static class ProjectsExp implements Serializable {
-        private String projectName;
-        private String projectDuty;
-        private Date startTime;
-        private Date endTime;
-        private String projectDesc;
+
+        private String projectName;     //项目名称
+        private String projectDuty;     //项目职责
+        private Date startTime;         //开始时间
+        private Date endTime;           //结束时间
+        private String projectDesc;     //项目描述
 
         public String getProjectName() {
             return projectName;

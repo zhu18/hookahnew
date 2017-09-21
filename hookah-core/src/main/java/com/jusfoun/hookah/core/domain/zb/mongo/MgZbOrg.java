@@ -17,26 +17,25 @@ public class MgZbOrg extends GenericModel {
     @Id
     private String userId;
 
-    private String companyDesc;
+    private String companyDesc;                     //企业介绍
 
-    private Integer status;
+    private Integer status;                         //认证状态
 
-    private List<String> specialSkills;
+    private List<String> specialSkills;             //擅长领域
 
-    private List<AppCase> appCaseList;
+    private List<AppCase> appCaseList;              //应用案例
 
-    private List<WorksExp> worksExpList;
+    private List<SoftWarePower> swpList;            //软件著作权
 
-    private List<ProjectsExp> projectsExpList;
+    private List<InventionPatent> inPatentsList;    //发明专利
 
     public static class AppCase implements Serializable {
 
-        private String caseName;
-        private Date startTime;
-        private Date endTime;
-        private String caseDesc;
-        private String solution;
-        private List<String> certPath;
+        private String caseName;    //应用案例名称
+        private Date startTime;     //开始时间
+        private Date endTime;       //结束时间
+        private String caseDesc;    //解决方案
+        private List<String> certPath;//证明材料
 
         public String getCaseName() {
             return caseName;
@@ -70,12 +69,52 @@ public class MgZbOrg extends GenericModel {
             this.caseDesc = caseDesc;
         }
 
-        public String getSolution() {
-            return solution;
+        public List<String> getCertPath() {
+            return certPath;
         }
 
-        public void setSolution(String solution) {
-            this.solution = solution;
+        public void setCertPath(List<String> certPath) {
+            this.certPath = certPath;
+        }
+    }
+    public static class SoftWarePower implements Serializable {
+
+        private String softWareName;    //  软件名称
+        private Date publicTime;        //  首次发表日期
+        private String registerNum;     //  登记号
+        private String purpose;         //  软件用途
+        private List<String> certPath;  //  证明材料
+
+        public String getSoftWareName() {
+            return softWareName;
+        }
+
+        public void setSoftWareName(String softWareName) {
+            this.softWareName = softWareName;
+        }
+
+        public Date getPublicTime() {
+            return publicTime;
+        }
+
+        public void setPublicTime(Date publicTime) {
+            this.publicTime = publicTime;
+        }
+
+        public String getRegisterNum() {
+            return registerNum;
+        }
+
+        public void setRegisterNum(String registerNum) {
+            this.registerNum = registerNum;
+        }
+
+        public String getPurpose() {
+            return purpose;
+        }
+
+        public void setPurpose(String purpose) {
+            this.purpose = purpose;
         }
 
         public List<String> getCertPath() {
@@ -86,53 +125,44 @@ public class MgZbOrg extends GenericModel {
             this.certPath = certPath;
         }
     }
-    public static class WorksExp implements Serializable {
+    public static class InventionPatent implements Serializable {
 
-        private String companyName;
-        private String departName;
-        private Date startTime;
-        private Date endTime;
-        private String position;
-        private List<String> certPath;
+        private String patentName;      //  专利名称
+        private String PatentNum;       //  专利号
+        private Date applyTime;         //  申请日期
+        private String PatentDesc;     //   专利概述
+        private List<String> certPath;  //  证明材料
 
-        public String getCompanyName() {
-            return companyName;
+        public String getPatentName() {
+            return patentName;
         }
 
-        public void setCompanyName(String companyName) {
-            this.companyName = companyName;
+        public void setPatentName(String patentName) {
+            this.patentName = patentName;
         }
 
-        public String getDepartName() {
-            return departName;
+        public String getPatentNum() {
+            return PatentNum;
         }
 
-        public void setDepartName(String departName) {
-            this.departName = departName;
+        public void setPatentNum(String patentNum) {
+            PatentNum = patentNum;
         }
 
-        public Date getStartTime() {
-            return startTime;
+        public Date getApplyTime() {
+            return applyTime;
         }
 
-        public void setStartTime(Date startTime) {
-            this.startTime = startTime;
+        public void setApplyTime(Date applyTime) {
+            this.applyTime = applyTime;
         }
 
-        public Date getEndTime() {
-            return endTime;
+        public String getPatentDesc() {
+            return PatentDesc;
         }
 
-        public void setEndTime(Date endTime) {
-            this.endTime = endTime;
-        }
-
-        public String getPosition() {
-            return position;
-        }
-
-        public void setPosition(String position) {
-            this.position = position;
+        public void setPatentDesc(String patentDesc) {
+            PatentDesc = patentDesc;
         }
 
         public List<String> getCertPath() {
@@ -141,53 +171,6 @@ public class MgZbOrg extends GenericModel {
 
         public void setCertPath(List<String> certPath) {
             this.certPath = certPath;
-        }
-    }
-    public static class ProjectsExp implements Serializable {
-        private String projectName;
-        private String projectDuty;
-        private Date startTime;
-        private Date endTime;
-        private String projectDesc;
-
-        public String getProjectName() {
-            return projectName;
-        }
-
-        public void setProjectName(String projectName) {
-            this.projectName = projectName;
-        }
-
-        public String getProjectDuty() {
-            return projectDuty;
-        }
-
-        public void setProjectDuty(String projectDuty) {
-            this.projectDuty = projectDuty;
-        }
-
-        public Date getStartTime() {
-            return startTime;
-        }
-
-        public void setStartTime(Date startTime) {
-            this.startTime = startTime;
-        }
-
-        public Date getEndTime() {
-            return endTime;
-        }
-
-        public void setEndTime(Date endTime) {
-            this.endTime = endTime;
-        }
-
-        public String getProjectDesc() {
-            return projectDesc;
-        }
-
-        public void setProjectDesc(String projectDesc) {
-            this.projectDesc = projectDesc;
         }
     }
 
