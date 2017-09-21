@@ -9,16 +9,18 @@ class publicController {
                   requireSn: $stateParams.id
               }
           });
-          promise.then(function (res, status, config, headers) {
+          promise.then(function (res) {
               console.log('数据在这里');
               console.log(res);
               if (res.data.code == '1') {
-                  var item= res.data.data.list;
-                  item = item[0];
+                  var item= res.data.data.zbRequirement;
+                  $scope.zbAnnexes= res.data.data.zbAnnexes;
                   $scope.requiremetName=item.requiremetName;
                   $scope.contactName=item.contactName;
                   $scope.contactPhone=item.contactPhone;
                   $scope.title=item.title;
+                  $scope.type=item.type;
+                  $scope.tag=item.tag;
                   $scope.description=item.description;
                   $scope.deliveryDeadline=item.deliveryDeadline;
                   $scope.applyDeadline=item.applyDeadline;
@@ -37,9 +39,9 @@ class publicController {
       };
     $scope.reader();
 
-    $scope.public=function (checkStatus) {
+    $scope.public=function () {
           var promise = $http({
-              method: 'GET',
+              method: 'POST',
               url: $rootScope.site.crowdServer + "/api/require/updateStatus",
               params: {
                   requirementId:$scope.id,

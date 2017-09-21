@@ -17,7 +17,6 @@ class auditingController {
                 console.log(res);
                 if (res.data.code == '1') {
                     var item= res.data.data.zbRequirement;
-                    console.log(item);
                     $scope.zbAnnexes= res.data.data.zbAnnexes;
                     $scope.requiremetName=item.requiremetName;
                     $scope.contactName=item.contactName;
@@ -45,7 +44,7 @@ class auditingController {
         $scope.auditing=function (checkStatus) {
             var promise = $http({
                 method: 'GET',
-                url: $rootScope.site.crowdServer + "/api/require/allRequirement",
+                url: $rootScope.site.crowdServer + "/api/require/requirementCheck",
                 params: {
                     requirementId:$scope.id,
                     checkContent:$scope.checkContent,
@@ -59,9 +58,9 @@ class auditingController {
                 if (res.data.code == '1') {
                     var modalInstance =$rootScope.openConfirmDialogModal("审核成功！");
                     modalInstance.result.then(function () {
-                        $state.go('publish.list', {id: id});
+                        $state.go('publish.list');
                     }, function () {
-                        $state.go('publish.list', {id: id});
+                        $state.go('publish.list');
                     });
 
                 } else {
