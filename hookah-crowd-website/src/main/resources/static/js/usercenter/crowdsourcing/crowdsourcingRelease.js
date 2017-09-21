@@ -15,11 +15,9 @@ function getRequirementType() {
       let tempHtml = '';
       for (let i = 0; i < list.length; i++) {
         tempHtml += '<span class="type-span" value="' + list[i].id + '">' + list[i].typeName + '</span>'
-
       }
       $('.requirement-type').html(tempHtml);
       crowdsourcingRelease();//放这里的原因是 要等到需求类型渲染出来才可以 请求草稿数据（草稿数据里有选中的需求类型）
-
     }
   });
 
@@ -34,10 +32,10 @@ function crowdsourcingRelease() {
     success: function (data) {
       console.log(data);
       if (data.data.hasOwnProperty('zbRequirement')) {
-        if(data.data.zbRequirement.id){
-          crowdSourcingId=data.data.zbRequirement.id;
-        }else{
-          crowdSourcingId=null;
+        if (data.data.zbRequirement.id) {
+          crowdSourcingId = data.data.zbRequirement.id;
+        } else {
+          crowdSourcingId = null;
         }
         $('#J_title').val(data.data.zbRequirement.title);
         $('#J_username').val(data.data.zbRequirement.contactName);
@@ -46,7 +44,7 @@ function crowdsourcingRelease() {
         $('#J_tag').val(data.data.zbRequirement.tag);
         $('#J_description').val(data.data.zbRequirement.description);
         $('#J_date').val(data.data.zbRequirement.deliveryDeadline);
-        $('#J_money').val(data.data.zbRequirement.rewardMoney/100);
+        $('#J_money').val(data.data.zbRequirement.rewardMoney / 100);
         $('#J_checkRemark').val(data.data.zbRequirement.checkRemark);
         let spanList = $('.requirement-type span');
         for (let i = 0; i < spanList.length; i++) {
@@ -70,12 +68,8 @@ function crowdsourcingRelease() {
           </div>\
           </dd>\
         </dl>';
-
         }
-
         $('.load-file-list').append(tempHtml)
-
-
       }
     }
   });
@@ -155,7 +149,6 @@ $('.fileUploadBtn').fileupload(
       }
     },
     progressall: function (e, data) {
-
     }
   });
 
@@ -289,7 +282,7 @@ $(document).on('click', '#J_nextPage', function () { //鼠标离开描述显示�
           $('.j_money').html(insertRequirementsData.zbRequirement.rewardMoney);
           let temTagHtml = '';
           let temTagArr = insertRequirementsData.zbRequirement.tag.split(',');
-          if(temTagArr[0]){
+          if (temTagArr[0]) {
             for (let t = 0; t < temTagArr.length; t++) {
               temTagHtml += '<i class="type-span">' + temTagArr[t] + '</i>'
             }
@@ -330,23 +323,17 @@ $(document).on('click', '#J_nextPage', function () { //鼠标离开描述显示�
         }
       }
     })
-
-
   }
   else {
     $.alert('带 * 为必填项，请按要求输入！')
   }
 
 })
-;
-
 
 $(document).on('click', '#J_prevPage', function () { //鼠标离开描述显示工具栏
   $('.j_firstPage').show();
   $('.secondPage,.tagNoticeContent').hide()
-
 });
-
 
 $(document).on('click', '#J_release', function () { //鼠标离开描述显示工具栏
   $.ajax({
@@ -355,38 +342,19 @@ $(document).on('click', '#J_release', function () { //鼠标离开描述显示�
     success: function (data) {
       console.log(data);
       if (data.data) {
-        $.confirm('需求提交成功，等待平台审核！',null,function(type){
-          if(type == 'yes'){
+        $.confirm('需求提交成功，等待平台审核！', null, function (type) {
+          if (type == 'yes') {
             this.hide();
-            window.location.href =  host.crowd+'/usercenter/myRequirement';
+            window.location.href = host.crowd + '/usercenter/myRequirement';
 
-          }else{
+          } else {
             this.hide();
-            window.location.href =  host.crowd+'/usercenter/myRequirement';
+            window.location.href = host.crowd + '/usercenter/myRequirement';
 
           }
         });
       }
     }
   })
-
-
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
