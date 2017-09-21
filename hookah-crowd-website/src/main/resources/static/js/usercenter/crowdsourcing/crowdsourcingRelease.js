@@ -37,17 +37,39 @@ function crowdsourcingRelease() {
         $('#J_title').val(data.data.zbRequirement.title);
         $('#J_username').val(data.data.zbRequirement.contactName);
         $('#J_phone').val(data.data.zbRequirement.contactPhone);
-        let spanList = $('.requirement-type span');
-        for (let i = 0; i < spanList.length; i++) {
-          if(spanList.eq(i).attr('value') == data.data.zbRequirement.type){
-            spanList.eq(i).addClass('active');
-          }
-        }
         $('#J_tag').val(data.data.zbRequirement.tag);
         $('#J_description').val(data.data.zbRequirement.description);
         $('#J_date').val(data.data.zbRequirement.deliveryDeadline);
         $('#J_money').val(data.data.zbRequirement.rewardMoney);
-        $('#J_checkRemark').val(data.data.zbRequirement.checkRemark)
+        $('#J_checkRemark').val(data.data.zbRequirement.checkRemark);
+        let spanList = $('.requirement-type span');
+        for (let i = 0; i < spanList.length; i++) {
+          if (spanList.eq(i).attr('value') == data.data.zbRequirement.type) {
+            spanList.eq(i).addClass('active');
+          }
+        }
+        let tempHtml = '';
+
+        for (let c = 0; c < data.data.zbRequirementFiles.length; c++) {
+
+        var className = fileTypeClassName(data.data.zbRequirementFiles[c].fileName);
+        tempHtml += '\
+        <dl fileName="' + data.data.zbRequirementFiles[c].fileName + '" filePath="' + data.data.zbRequirementFiles[c].filePath + '" class="load-file ' + className + '">\
+          <dt><a href="javascript:void(0)" title=""><img src="' + data.data.zbRequirementFiles[c].filePath + '"></a></dt>\
+          <dd>\
+          <span class="overflowpoint">' + data.data.zbRequirementFiles[c].fileName + '</span>\
+          <div class="crowdsourcing-table-edit">\
+          <a href="' + data.data.zbRequirementFiles[c].filePath + '" target="_blank" class="download"><img src="/static/images/crowdsourcing/download.png" alt=""></a>\
+          <a href="javascript:void (0)" class="del j_firstPage" ><img src="/static/images/crowdsourcing/del.png" alt=""></a>\
+          </div>\
+          </dd>\
+        </dl>';
+
+        }
+
+        $('.load-file-list').append(tempHtml)
+
+
       }
     }
   });
@@ -109,7 +131,7 @@ $('.fileUploadBtn').fileupload(
         var className = fileTypeClassName(data.files[0].name);
         console.log(className);
         var tempHtml = '\
-        <dl class="load-file ' + className + '">\
+        <dl fileName="' + data.files[0].name + '" filePath="' + obj.absPath + '" class="load-file ' + className + '">\
           <dt><a href="javascript:void(0)" title=""><img src="' + obj.absPath + '"></a></dt>\
           <dd>\
           <span class="overflowpoint">' + data.files[0].name + '</span>\
@@ -136,7 +158,7 @@ $(document).on('click', '.del', function () { //鼠标离开描述显示工具�
 });
 
 $(document).on('click', '.requirement-type span', function () { //鼠标离开描述显示工具栏
-  $(this).addClass('active').siblings().removeClass('active')
+  $(this).addClass('active').siblings().removeClass('active').parent().attr('value', $(this).attr('value'))
 });
 
 
@@ -213,11 +235,49 @@ function fileTypeClassName(fileName) { //返回class
 }
 
 
-
-
 $(document).on('click', '#J_nextPage', function () { //鼠标离开描述显示工具栏
-  $('.j_firstPage').hide()
-  $('.secondPage').show()
+
+  let annexList = [];//附件列表
+  let list = $('dl.load-file');
+  for (let i = 0; i < list.length; i++) {
+    let tempObj = {
+      fileName: list.eq(i).attr('fileName'),
+      filePath: list.eq(i).attr('filePath')
+    };
+    annexList.push(tempObj);
+  }
+
+  let insertRequirementsData = {
+    "zbRequirement": {
+      "title": $('#J_title').val(),//标题
+      "contactName": $('#J_username').val(),//联系人姓名
+      "contactPhone": $('#J_phone').val(),//联系人电话
+      "type": $('.requirement-type').attr('value'),//需求类型
+      "tag": $('#J_tag').val(),//标签
+      "description": $('#J_description').val(),//描述
+      "deliveryDeadline": $('#J_date').val(),//交付截止日期
+      "rewardMoney": $('#J_money').val(),//悬赏金额
+      "checkRemark": $('#J_checkRemark').val()//交付验收要求
+    },
+    "annex": annexList
+
+  };
+
+  $.ajax({
+    type: 'post',
+    url: "/api/release/insertRequirements",
+    data: insertRequirementsData,
+    success: function (data) {
+      console.log(data);
+      if (data.data) {
+        console.log(data);
+        $('.j_firstPage').hide();
+        $('.secondPage').show()
+      }
+    }
+  })
+
+
 });
 
 
