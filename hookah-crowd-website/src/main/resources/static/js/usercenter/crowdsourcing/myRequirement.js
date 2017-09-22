@@ -17,7 +17,7 @@ function loadPageData(data) { //渲染页面数据
           </tr>\
           </thead>\
           <tbody>';
-  for (var i = 0; i < data.length; i++) {
+  for (let i = 0; i < data.length; i++) {
     let tempState='';
     let tempEdit='';
     switch(data[i].status)
@@ -85,14 +85,14 @@ function loadPageData(data) { //渲染页面数据
 
 $('#status li').on('click', function () {
   $(this).addClass('active').siblings().removeClass('active');
-  $('#status').attr('value', $(this).attr('value'));
+  $('#statusInput').val($(this).attr('value'));
   searchFn();
 });
 $('.searchBtn').on('click', function () {
   searchFn();
 });
 function searchFn(){
-  dataParm.status = $('#status').attr('value');
+  dataParm.status = $('#statusInput').val();
   dataParm.title = $('#title').val();
   dataParm.requireSn = $('#requireSn').val();
   goPage("1");
