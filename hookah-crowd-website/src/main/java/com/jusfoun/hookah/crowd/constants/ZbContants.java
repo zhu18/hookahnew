@@ -62,6 +62,29 @@ public class ZbContants {
         }
     }
 
+    /**
+     * 供应商认证
+     * 0.未认证 1.审核中 2.已认证 3.认证失败
+     */
+    public enum Provider_Auth_Status {
+
+        AUTH_NO(0),
+        AUTH_CHECKING(1),
+        AUTH_SUCCESS(2),
+        AUTH_FAIL(3)
+        ;
+
+        public Integer code;
+
+        Provider_Auth_Status(Integer code) {
+            this.code = code;
+        }
+
+        public Integer getCode() {
+            return code;
+        }
+    }
+
 
 
 }
