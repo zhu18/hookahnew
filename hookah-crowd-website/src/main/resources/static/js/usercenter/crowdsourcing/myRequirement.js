@@ -5,7 +5,7 @@ function loadPageData(data) { //渲染页面数据
   data = data.data.list;
   var tempHtml = '\
         <thead>\
-          <tr style="background-color:#b3b3b3;">\
+          <tr style="background-color:#fff;">\
           <th style="width:50px;">序号</th>\
           <th>需求编号</th>\
           <th>需求标题</th>\
@@ -33,11 +33,11 @@ function loadPageData(data) { //渲染页面数据
         break;
       case 3:
         tempState='待托管赏金';
-        tempEdit='<span class="signUp">托管赏金</span>';
+        tempEdit='<span class="signUp">托管资金</span>';
         break;
       case 7:
         tempState='待二次托管';
-        tempEdit='<span class="signUp">托管赏金</span>';
+        tempEdit='<span class="signUp">托管资金</span>';
         break;
       case 8:
         tempState='工作中';
@@ -69,7 +69,7 @@ function loadPageData(data) { //渲染页面数据
           <td>'+(i+1)+'</td>\
           <td>'+data[i].requireSn+'</td>\
           <td>'+data[i].title+'</td>\
-          <td>'+data[i].rewardMoney/100+'</td>\
+          <td>'+data[i].rewardMoney+'</td>\
           <td>'+tempState+'</td>\
           <td>'+data[i].addTime+'</td>\
           <td>'+data[i].deliveryDeadline+'</td>\
@@ -85,14 +85,14 @@ function loadPageData(data) { //渲染页面数据
 
 $('#status li').on('click', function () {
   $(this).addClass('active').siblings().removeClass('active');
-  $('#status').prop('value', $(this).prop('value'));
+  $('#status').attr('value', $(this).attr('value'));
   searchFn();
 });
 $('.searchBtn').on('click', function () {
   searchFn();
 });
 function searchFn(){
-  dataParm.status = $('#status').prop('value');
+  dataParm.status = $('#status').attr('value');
   dataParm.title = $('#title').val();
   dataParm.requireSn = $('#requireSn').val();
   goPage("1");
