@@ -88,10 +88,10 @@ var htmlPart = {
 							<div class="auth-introduce-unit">
 								<%if(userCur.userType == 0){%>
 								<%}else if(userCur.userType == 1){%>
-									<!--<p>如果您是个人用户，请进行个人用户认证</p>-->
-									<!--<div class="margin-10">-->
-									<!--<a href="/auth/user_auth_init" class="large-btn">个人用户认证</a>-->
-									<!--</div>-->
+									<p>如果您是个人用户，请进行个人用户认证</p>
+									<div class="margin-10">
+									<a href="/auth/user_auth_init" class="large-btn">个人用户认证</a>
+									</div>
 									<p class="margin-top-20">如果您是单位用户，请进行单位用户认证</p>
 									<a href="/auth/company_auth_init" class="large-btn">单位用户认证</a>
 								<%}else if(userCur.userType == 2){%>
