@@ -43,7 +43,7 @@ function crowdsourcingRelease() {
         $('#J_tag').val(data.data.zbRequirement.tag);
         $('#J_description').val(data.data.zbRequirement.description);
         $('#J_date').val(data.data.zbRequirement.deliveryDeadline);
-        $('#J_money').val(data.data.zbRequirement.rewardMoney / 100);
+        $('#J_money').val(data.data.rewardMoney / 100);
         $('#J_checkRemark').val(data.data.zbRequirement.checkRemark);
         let spanList = $('.requirement-type span');
         for (let i = 0; i < spanList.length; i++) {
@@ -271,7 +271,7 @@ $(document).on('click', '#J_nextPage', function () { //鼠标离开描述显示�
     "rewardMoney": $('#J_money').val(),//悬赏金额
     "annex": annexList
   };
-  if (insertRequirementsData.zbRequirement.title && insertRequirementsData.zbRequirement.type && insertRequirementsData.zbRequirement.description && insertRequirementsData.zbRequirement.deliveryDeadline && insertRequirementsData.zbRequirement.rewardMoney && insertRequirementsData.zbRequirement.checkRemark) {
+  if (insertRequirementsData.zbRequirement.title && insertRequirementsData.zbRequirement.type && insertRequirementsData.zbRequirement.description && insertRequirementsData.zbRequirement.deliveryDeadline && insertRequirementsData.rewardMoney && insertRequirementsData.zbRequirement.checkRemark) {
     $.ajax({
       type: 'post',
       url: "/api/release/insertRequirements",
@@ -287,7 +287,7 @@ $(document).on('click', '#J_nextPage', function () { //鼠标离开描述显示�
           $('.j_phone').html(insertRequirementsData.zbRequirement.contactPhone);
           $('.j_description').html(insertRequirementsData.zbRequirement.description);
           $('.j_date').html(insertRequirementsData.zbRequirement.deliveryDeadline);
-          $('.j_money').html(insertRequirementsData.zbRequirement.rewardMoney);
+          $('.j_money').html(insertRequirementsData.rewardMoney);
           let temTagHtml = '';
           let temTagArr = insertRequirementsData.zbRequirement.tag.split(',');
           if (temTagArr[0]) {
