@@ -33,11 +33,11 @@ function loadPageData(data) { //渲染页面数据
         break;
       case 3:
         tempState='待托管赏金';
-        tempEdit='<span class="signUp">托管资金</span>';
+        tempEdit='<span class="signUp">托管赏金</span>';
         break;
       case 7:
         tempState='待二次托管';
-        tempEdit='<span class="signUp">托管资金</span>';
+        tempEdit='<span class="signUp">托管赏金</span>';
         break;
       case 8:
         tempState='工作中';
@@ -69,7 +69,7 @@ function loadPageData(data) { //渲染页面数据
           <td>'+(i+1)+'</td>\
           <td>'+data[i].requireSn+'</td>\
           <td>'+data[i].title+'</td>\
-          <td>'+data[i].rewardMoney+'</td>\
+          <td>'+data[i].rewardMoney/100+'</td>\
           <td>'+tempState+'</td>\
           <td>'+data[i].addTime+'</td>\
           <td>'+data[i].deliveryDeadline+'</td>\

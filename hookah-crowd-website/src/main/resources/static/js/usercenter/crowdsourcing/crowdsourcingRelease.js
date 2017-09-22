@@ -116,6 +116,15 @@ $('.fileUploadBtn').fileupload(
     url: host.static + '/upload/other',
     dataType: 'json',
     maxFileSize: 10240000,
+    add: function (e, data) {
+      var filesize = data.files[0].size;
+      if(Math.ceil(filesize / 1024) > 1024*10){
+        console.log('文件过大'+filesize);
+        $.alert('附件大小不得超过10M！');
+        return;
+      }
+      data.submit();
+    },
     done: function (e, data) {
       console.log('上传完毕')
       if ($('.load-file-list dl').length == 5) {
