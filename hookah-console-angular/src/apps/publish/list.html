@@ -115,7 +115,7 @@
                                 <td data-ng-bind="item.requireSn"></td>
                                 <td data-ng-bind="item.title"></td>
                                 <td data-ng-bind="item.requiremetName"></td>
-                                <td data-ng-bind="'￥'+item.rewardMoney/100"></td>
+                                <td>{{(item.rewardMoney/100) | currency: '￥'}}</td>
                                 <td>
                                     <span data-ng-show="item.status==1" >待审核</span>
                                     <span data-ng-show="item.status==4" >待发布</span>
