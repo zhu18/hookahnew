@@ -85,14 +85,14 @@ function loadPageData(data) { //渲染页面数据
 
 $('#status li').on('click', function () {
   $(this).addClass('active').siblings().removeClass('active');
-  $('#status').attr('value', $(this).attr('value'));
+  $('#status').prop('value', $(this).prop('value'));
   searchFn();
 });
 $('.searchBtn').on('click', function () {
   searchFn();
 });
 function searchFn(){
-  dataParm.status = $('#status').attr('value');
+  dataParm.status = $('#status').prop('value');
   dataParm.title = $('#title').val();
   dataParm.requireSn = $('#requireSn').val();
   goPage("1");
