@@ -105,7 +105,7 @@
                                    <th>悬赏金额</th>
                                    <th>状态</th>
                                    <th>提交日期</th>
-                                   <th>截止日期</th>
+                                   <th>交付截止日期</th>
                                    <th>操作</th>
                                </tr>
                             </thead>
@@ -127,7 +127,7 @@
                                     <span data-ng-show="item.status==15">交易完成</span>
                                 </td>
                                 <td data-ng-bind="item.addTime"></td>
-                                <td data-ng-bind="item.applyDeadline"></td>
+                                <td data-ng-bind="item.deliveryDeadline"></td>
                                 <td >
                                     <button class="btn btn-primary" data-ng-show="item.status==1"  data-ng-click="auditing(item.requireSn)">去审核</button>
                                     <button class="btn btn-primary" data-ng-show="item.status==4"  data-ng-click="public(item.requireSn)">去发布</button>
