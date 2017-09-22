@@ -57,7 +57,7 @@ class auditingController {
                 console.log('数据在这里');
                 console.log(res);
                 if (res.data.code == '1') {
-                    var modalInstance =$rootScope.openConfirmDialogModal("审核成功！");
+                    var modalInstance =$rootScope.openConfirmDialogModal("审核结果提交成功！");
                     modalInstance.result.then(function () {
                         $state.go('publish.list');
                     }, function () {
@@ -65,7 +65,7 @@ class auditingController {
                     });
 
                 } else {
-                    var modalInstance =$rootScope.openConfirmDialogModal("审核失败！");
+                    var modalInstance =$rootScope.openConfirmDialogModal("审核结果提交失败！");
                     modalInstance.result.then(function () {
                         $state.go('publish.list');
                     }, function () {
