@@ -48,13 +48,13 @@ public class ZbRequireCheckServiceImpl extends GenericServiceImpl<ZbRequirementC
             returnData.setData(insert(zbRequirementCheck));
 
             if (null != zbRequirementCheck.getCheckStatus() && Short.valueOf("1").equals(zbRequirementCheck.getCheckStatus())){
-               zbRequirement.setStatus(ZbContants.Zb_Require_Status.SINGING.getCode().shortValue());
+               zbRequirement.setStatus(ZbContants.Zb_Require_Status.WAIT_FB.getCode().shortValue());
              }
              if (null != zbRequirementCheck.getCheckStatus() && Short.valueOf("0").equals(zbRequirementCheck.getCheckStatus())){
                 zbRequirement.setStatus(ZbContants.Zb_Require_Status.WAIT_CHECK.getCode().shortValue());
             }
             if (null != zbRequirementCheck.getCheckStatus() && Short.valueOf("2").equals(zbRequirementCheck.getCheckStatus())){
-                zbRequirement.setStatus(ZbContants.Zb_Require_Status.WAIT_TG.getCode().shortValue());
+                zbRequirement.setStatus(ZbContants.Zb_Require_Status.CHECK_NOT.getCode().shortValue());
             }
             zbRequirementMapper.updateByPrimaryKeySelective(zbRequirement);
 
