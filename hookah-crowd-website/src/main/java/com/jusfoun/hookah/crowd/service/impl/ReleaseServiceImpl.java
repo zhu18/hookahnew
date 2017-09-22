@@ -54,7 +54,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
             if(ment.getId() == null){
                 ment.setAddOperator(vo.getZbRequirement().getUserId());
                 ment.setAddTime(new Date());
-                ment.setRewardMoney(vo.getZbRequirement().getRewardMoney()*100);
+                ment.setRewardMoney(Math.round(Double.valueOf(vo.getRewardMoney())*100));
                 if(vo.getZbRequirement().getType() != null)
                     ment.setRequireSn(CommonUtils.getRequireSn("ZB",vo.getZbRequirement().getType().toString()));
                 zbRequirementMapper.insertAndGetId(ment);
@@ -75,7 +75,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                     ment.setAddOperator(zbRequirement.getAddOperator());
                     ment.setUpdateTime(new Date());
                     ment.setUpdateOperator(vo.getZbRequirement().getUserId());
-                    ment.setRewardMoney(vo.getZbRequirement().getRewardMoney()*100);
+                    ment.setRewardMoney(Math.round(Double.valueOf(vo.getRewardMoney())*100));
                     super.updateById(ment);
 
                     List<Condition> filter = new ArrayList<>();

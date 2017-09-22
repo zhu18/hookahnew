@@ -12,6 +12,8 @@ public class ZbRequirementVo {
 
     private ZbRequirement zbRequirement;
 
+    private Double rewardMoney;
+
     private List<ZbAnnex> annex;
 
     public ZbRequirement getZbRequirement() {
@@ -28,5 +30,13 @@ public class ZbRequirementVo {
 
     public void setAnnex(List<ZbAnnex> annex) {
         this.annex = annex;
+    }
+
+    public Double getRewardMoney() {
+        return rewardMoney;
+    }
+
+    public void setRewardMoney(Double rewardMoney) {
+        this.rewardMoney = rewardMoney;
     }
 }

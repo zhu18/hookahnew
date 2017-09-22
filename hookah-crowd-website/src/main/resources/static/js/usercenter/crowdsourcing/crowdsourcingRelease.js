@@ -266,9 +266,9 @@ $(document).on('click', '#J_nextPage', function () { //鼠标离开描述显示�
       "tag": $('#J_tag').val(),//标签
       "description": $('#J_description').val(),//描述
       "deliveryDeadline": $('#J_date').val(),//交付截止日期
-      "rewardMoney": $('#J_money').val(),//悬赏金额
       "checkRemark": $('#J_checkRemark').val()//交付验收要求
     },
+    "rewardMoney": $('#J_money').val(),//悬赏金额
     "annex": annexList
   };
   if (insertRequirementsData.zbRequirement.title && insertRequirementsData.zbRequirement.type && insertRequirementsData.zbRequirement.description && insertRequirementsData.zbRequirement.deliveryDeadline && insertRequirementsData.zbRequirement.rewardMoney && insertRequirementsData.zbRequirement.checkRemark) {
