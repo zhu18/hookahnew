@@ -13,7 +13,7 @@ function loadPageData(data) { //渲染页面数据
           <th>状态</th>\
           <th>发布时间</th>\
           <th>交付截止时间</th>\
-          <th>报名剩余名额</th>\
+          <th>报名剩余时间</th>\
           </tr>\
           </thead>\
           <tbody>';
@@ -24,7 +24,7 @@ function loadPageData(data) { //渲染页面数据
     switch (data[i].status) {
       case 5:
         tempState = '报名中';
-        tempButtonHtml = '<span class="signUp">报名中</span>';
+        tempButtonHtml = '<span class="signUp">我要报名</span>';
         break;
       default:
         tempState = '报名结束';
@@ -35,23 +35,26 @@ function loadPageData(data) { //渲染页面数据
         tempType = '数据采集';
         break;
       case 2:
-        tempType = '数据模型';
+        tempType = '数据加工';
         break;
       case 3:
-        tempType = '数据应用';
+        tempType = '数据模型';
         break;
       case 4:
-        tempType = '数据清洗';
+        tempType = '数据应用';
         break;
       case 5:
-        tempType = '其他';
+        tempType = '数据清洗';
+        break;
+      case 6:
+        tempType = '其他类型';
         break;
 
     }
     tempHtml += '<tr>\
       <td><a href="javascript:void(0)">' + data[i].title + '</a></td>\
       <td>' + tempType + '</td>\
-      <td>' + data[i].rewardMoney + '</td>\
+      <td>' + data[i].rewardMoney/100 + '</td>\
       <td>' + tempState + '</td>\
       <td>' + data[i].addTime + '</td>\
       <td>' + data[i].applyDeadline + '</td>\
