@@ -96,6 +96,8 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                 filters.add(Condition.like(" title", zbRequirement.getTitle()));
             }
             if (zbRequirement.getStatus() != null && zbRequirement.getStatus()!= -1) {
+                filters.add(Condition.eq("status",zbRequirement.getStatus()));
+            }else {
                 filters.add(Condition.in("status", new Short[]{1,4,5,9,11,14,15,16}));
             }
             int pageNumberNew = HookahConstants.PAGE_NUM;
