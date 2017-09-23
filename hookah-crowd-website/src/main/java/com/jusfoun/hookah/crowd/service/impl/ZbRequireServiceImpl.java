@@ -57,25 +57,25 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
 
     @Override
     public ReturnData<ZbRequirement> getListByUser(Integer pageNum, Integer pageSize, String userId, Integer status,
-                                                   String title, String requireSn) throws HookahException{
+                                                   String title, String requireSn) throws HookahException {
         List<Condition> filter = new ArrayList<>();
-        filter.add(Condition.eq("userId",userId));
-        if (StringUtils.isNotBlank(title)) filter.add(Condition.like("title",title));
-        if (StringUtils.isNotBlank(requireSn)) filter.add(Condition.eq("requireSn",requireSn));
+        filter.add(Condition.eq("userId", userId));
+        if (StringUtils.isNotBlank(title)) filter.add(Condition.like("title", title));
+        if (StringUtils.isNotBlank(requireSn)) filter.add(Condition.eq("requireSn", requireSn));
         if (status != null) {
-            filter.add(Condition.eq("status",status));
-        }else {
-            filter.add(Condition.in("status",new Short[]{1,2,3,7,8,10,13,16,14,15}));
+            filter.add(Condition.eq("status", status));
+        } else {
+            filter.add(Condition.in("status", new Short[]{1, 2, 3, 7, 8, 10, 13, 16, 14, 15}));
         }
 
         List<OrderBy> orderBys = new ArrayList<>();
         orderBys.add(OrderBy.desc("addTime"));
         try {
-            Pagination<ZbRequirement> list= getListInPage(pageNum, pageSize,filter,orderBys);
+            Pagination<ZbRequirement> list = getListInPage(pageNum, pageSize, filter, orderBys);
             return ReturnData.success(list);
-        }catch (Exception e){
-            logger.error("获取"+userId+"发布需求失败",e.getMessage());
-            return ReturnData.error("系统错误："+e.getMessage());
+        } catch (Exception e) {
+            logger.error("获取" + userId + "发布需求失败", e.getMessage());
+            return ReturnData.error("系统错误：" + e.getMessage());
         }
     }
 
@@ -95,10 +95,10 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             if (StringUtils.isNotBlank(zbRequirement.getTitle())) {
                 filters.add(Condition.like(" title", zbRequirement.getTitle()));
             }
-            if (zbRequirement.getStatus() != null && zbRequirement.getStatus()!= -1) {
-                filters.add(Condition.eq("status",zbRequirement.getStatus()));
-            }else {
-                filters.add(Condition.in("status", new Short[]{1,4,5,9,11,14,15,16}));
+            if (zbRequirement.getStatus() != null && zbRequirement.getStatus() != -1) {
+                filters.add(Condition.eq("status", zbRequirement.getStatus()));
+            } else {
+                filters.add(Condition.in("status", new Short[]{1, 4, 5, 9, 11, 14, 15, 16}));
             }
             int pageNumberNew = HookahConstants.PAGE_NUM;
             if (StringUtils.isNotBlank(currentPage)) {
@@ -111,11 +111,11 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             }
             page = getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
             List<ZbRequirement> list = page.getList();
-            for (ZbRequirement zbRequirement1:list){
+            for (ZbRequirement zbRequirement1 : list) {
                 User user1 = userService.selectById(zbRequirement1.getUserId());
-                if (user1.getUserType()==4){
+                if (user1.getUserType() == 4) {
                     zbRequirement1.setRequiremetName(user1.getOrgName());
-                }else {
+                } else {
                     zbRequirement1.setRequiremetName(user1.getUserName());
                 }
             }
@@ -129,14 +129,14 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
     }
 
     @Override
-    public ReturnData<ZbRequirement> updateStatus(String id, String status ,String applyDeadline) {
+    public ReturnData<ZbRequirement> updateStatus(String id, String status, String applyDeadline) {
         try {
             ZbRequirement zbRequirement = new ZbRequirement();
             zbRequirement.setId(Long.parseLong(id));
             zbRequirement.setStatus(Short.parseShort(status));
             zbRequirement.setApplyDeadline(DateUtils.getDate(applyDeadline));
             super.updateByIdSelective(zbRequirement);
-        }catch (Exception e){
+        } catch (Exception e) {
             return ReturnData.error("发布失败");
         }
         return ReturnData.success("发布成功");
@@ -144,50 +144,51 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
 
     @Override
     public ReturnData<ZbRequirement> getRequirementList(ZbRequirementPageHelper helper) {
-        ReturnData returnData=new ReturnData();
-        try{
+        ReturnData returnData = new ReturnData();
+        try {
             Pagination<ZbRequirement> pagination = new Pagination<>();
-            int startIndex= (helper.getPageNumber()-1)*helper.getPageSize();
+            int startIndex = (helper.getPageNumber() - 1) * helper.getPageSize();
             helper.setStartIndex(startIndex);
-            int count=zbRequirementMapper.countRequirementList(helper);
-            List<ZbRequirement> list=zbRequirementMapper.getRequirementList(helper);
-            for (ZbRequirement requirement :  list) {
-                Date deadline=requirement.getApplyDeadline();
-                if (deadline!=null)requirement.setRemainTime(DateUtil.timeCountDown(deadline));
+            int count = zbRequirementMapper.countRequirementList(helper);
+            List<ZbRequirement> list = zbRequirementMapper.getRequirementList(helper);
+            for (ZbRequirement requirement : list) {
+                Date deadline = requirement.getApplyDeadline();
+                if (deadline != null) requirement.setRemainTime(DateUtil.timeCountDown(deadline));
             }
             pagination.setTotalItems(count);
             pagination.setPageSize(helper.getPageSize());
             pagination.setCurrentPage(helper.getPageNumber());
             pagination.setList(list);
             returnData.setData(pagination);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             logger.error("ZbRequireServiceImpl-->getRequirementList", e);
             returnData.setCode(ExceptionConst.Error);
-            returnData.setMessage("系统错误："+e.getMessage());
-        }finally {
+            returnData.setMessage("系统错误：" + e.getMessage());
+        } finally {
             return returnData;
         }
     }
+
     @Override
-    public ReturnData<ZbRequirement> reqCheck(ZbRequirement zbRequirement ) {
+    public ReturnData<ZbRequirement> reqCheck(ZbRequirement zbRequirement) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         List<Condition> filter = new ArrayList<>();
-        filter.add(Condition.eq("correlationId",zbRequirement.getId()));
+        filter.add(Condition.eq("correlationId", zbRequirement.getId()));
         List<ZbAnnex> zbAnnexes = zbAnnexService.selectList(filter);
-        Map<String,Object> map= new HashedMap();
-        map.put("zbAnnexes",zbAnnexes);
+        Map<String, Object> map = new HashedMap();
+        map.put("zbAnnexes", zbAnnexes);
         filter.clear();
-        filter.add(Condition.eq("requireSn",zbRequirement.getRequireSn()));
-        zbRequirement=selectOne(filter);
+        filter.add(Condition.eq("requireSn", zbRequirement.getRequireSn()));
+        zbRequirement = selectOne(filter);
         User user = userService.selectById(zbRequirement.getUserId());
-        if (user.getUserType()==4){
+        if (user.getUserType() == 4) {
             zbRequirement.setRequiremetName(user.getOrgName());
-        }else {
+        } else {
             zbRequirement.setRequiremetName(user.getUserName());
         }
-        map.put("zbRequirement",zbRequirement);
+        map.put("zbRequirement", zbRequirement);
         returnData.setData(map);
         return returnData;
     }

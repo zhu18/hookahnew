@@ -56,8 +56,8 @@ function loadPageData(data) { //渲染页面数据
       <td>' + tempType + '</td>\
       <td>' + data[i].rewardMoney/100 + '</td>\
       <td>' + tempState + '</td>\
-      <td>' + data[i].addTime + '</td>\
-      <td>' + data[i].applyDeadline + '</td>\
+      <td>' + data[i].pressTime + '</td>\
+      <td>' + data[i].deliveryDeadline + '</td>\
       <td><span class="lastTime">'+data[i].remainTime+'</span>' + tempButtonHtml + '</td>\
       </tr>'
   }
