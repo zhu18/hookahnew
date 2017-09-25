@@ -23,4 +23,9 @@
     id, recommenderId, inviteeId, isdeal, isauthenticate, reward_money, add_time, update_time
   </sql>
 
+  <select id="countInviteeAndReward" resultType="java.util.HashMap" parameterType="java.lang.String">
+
+    SELECT count(id) AS inviteeNum,SUM(reward_money) AS rewardMoney FROM wx_user_recommend WHERE  recommenderId=#{userId}
+  </select>
+
 </mapper>
