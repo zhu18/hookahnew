@@ -1,0 +1,95 @@
+<link rel="stylesheet" href="${host.website}/static/css/usercenter/user-center-menu.css">
+<% if(shiro.hasRole("Admin")){%>
+<div class="grid-left left-bar margin-bottom-30 margin-top-10 status adminS">
+    <!--<ul>-->
+        <!--<li class="text-align-center active"><span class="fa fa-caret-down"></span><span class="fa fa-caret-up" style="display: none;"></span>用户中心 <span class="fa fa-"></span></li>-->
+        <!--&lt;!&ndash;<li class="text-align-center"><a href="/usercenter/userProfile"><span class="fa fa-file-text"></span>个人资料</a></li>&ndash;&gt;-->
+        <!--<li class="text-align-center"><a href="/usercenter/safeSet"><span class="fa fa-heart-o" aria-hidden="true"></span> </a></li>-->
+    <!--</ul>-->
+    <div class="one-level-menu ">
+        <ul>
+            <!--<li class="text-align-center active"><span class="fa fa-caret-down"></span><span class="fa fa-caret-up" style="display: none;"></span>文章管理 <span class="fa fa-"></span></li>-->
+            <li><a href="${host.website}/admin/articleManage"><span class="fa fa-file-text margin-right-22"></span>文章列表</a></li>
+            <li><a href="${host.website}/usercenter/goodsManage"><span class="fa fa-cog margin-right-22"></span>商品管理</a></li>
+            <li><a href="${host.website}/usercenter/trade"><span class="fa fa-indent margin-right-22"></span>交易管理</a></li>
+            <li><a href="${host.website}/usercenter/infoStation"><span class="fa fa-id-card-o margin-right-22"></span>站内信息</a></li>
+        </ul>
+    </div>
+</div>
+<%}else{%>
+<div class="grid-left left-bar margin-top-10 margin-bottom-30 status">
+    <div class="one-level-menu ">
+        <div class="title"><span class="fa fa-caret-down margin-right-25"></span>帐号中心</div>
+        <ul>
+            <li><a href="${host.website}/usercenter/index"><span class="fa fa-id-card-o margin-right-22 "></span>基本信息</a></li>
+            <li><a href="${host.website}/usercenter/accountInformation"><span class="fa fa-id-card-o margin-right-22"></span>帐号信息</a></li>
+            <li><a href="${host.website}/usercenter/safeSet"><span class="fa fa-id-card-o margin-right-22"></span>安全中心</a></li>
+            <li><a href="${host.website}/usercenter/nameAuthentication"><span class="fa fa-id-card-o margin-right-22"></span>实名认证</a></li>
+            <li><a href="${host.website}/usercenter/infoStation"><span class="fa fa-id-card-o margin-right-22"></span>站内信息</a></li>
+            <li><a href="${host.website}/usercenter/contactInformation"><span class="fa fa-id-card-o margin-right-22"></span>联系信息</a></li>
+        </ul>
+    </div>
+    <div class="one-level-menu">
+        <div class="title"><span class="fa fa-caret-down margin-right-25"></span>资金管理</div>
+        <ul>
+            <li><a href="${host.website}/usercenter/fundmanage"><span class="fa fa-id-card-o margin-right-22"></span>资金总览</a></li>
+            <li><a href="${host.website}/usercenter/capitalRecord"><span class="fa fa-id-card-o margin-right-22"></span>资金记录</a></li>
+        </ul>
+    </div>
+    <div class="one-level-menu">
+        <div class="title"><span class="fa fa-caret-down margin-right-25"></span>买家中心</div>
+        <ul>
+            <li><a href="${host.website}/usercenter/buyer/orderManagement"><span class="fa fa-id-card-o margin-right-22"></span>我的订单</a></li>
+            <!--<li><a href="/usercenter/buyer/evaluation"><span class="fa fa-id-card-o margin-right-22"></span>订单评价</a></li>-->
+            <li><a href="${host.website}/usercenter/myAttention"><span class="fa fa-id-card-o margin-right-22"></span>我的关注</a></li>
+            <!--<li><a href="/usercenter/myGoods"><span class="fa fa-id-card-o margin-right-22"></span>我的商品</a></li>-->
+        </ul>
+    </div>
+    <div class="one-level-menu">
+        <div class="title"><span class="fa fa-caret-down margin-right-25"></span>众包</div>
+        <ul>
+            <li><a href="/usercenter/crowdsourcingRelease"><span class="fa fa-id-card-o margin-right-22"></span>发布需求</a></li>
+            <li><a href="/usercenter/myRequirement"><span class="fa fa-id-card-o margin-right-22"></span>我的发布</a></li>
+        </ul>
+    </div>
+
+    <%if(user.supplierStatus == 1){%>
+    <div class="one-level-menu">
+        <div class="title"><span class="fa fa-caret-down margin-right-25"></span>卖家中心</div>
+        <ul>
+            <li><a href="${host.website}/usercenter/goodsManage"><span class="fa fa-id-card-o margin-right-22"></span>商品管理</a></li>
+            <li><a href="${host.website}/usercenter/trade"><span class="fa fa-id-card-o margin-right-22"></span>交易管理</a></li>
+            <li><a href="${host.website}/usercenter/settlementRecord"><span class="fa fa-id-card-o margin-right-22"></span>结算记录</a></li>
+        </ul>
+    </div>
+    <%}%>
+
+</div>
+<%}%>
+
+<script>
+    $(function(){
+        var url=window.location.pathname;
+        $('.status ul li').each(function () {
+            var href = $(this).children('a').attr('href');
+            if (url.indexOf(href) >= 0) {
+                $(this).addClass('active').siblings().removeClass("active");
+                $(this).siblings().addClass('item-active');
+                $(this).parent().siblings().addClass('active')
+            }
+
+        });
+//        控制菜单下拉
+        $('.title').on('click',function () {
+            var display=$(this).siblings().css("display");
+            $(this).addClass('active').parent().siblings().find(".title").removeClass('active');
+            if(display=="block" ){
+                $(this).siblings().hide()
+            }else {
+                $(this).siblings().show()
+            }
+        });
+
+    })
+</script>
+

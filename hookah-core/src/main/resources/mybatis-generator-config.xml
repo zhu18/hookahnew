@@ -42,25 +42,25 @@
     </commentGenerator>
     <!--数据库链接地址账号密码-->
     <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                    connectionURL="jdbc:mysql://192.168.15.90:3306/hookah?characterEncoding=utf8&amp;tinyInt1isBit=false"
-                    userId="root" password="password"/>
+                    connectionURL="jdbc:mysql://192.168.15.175:3306/hookah?characterEncoding=utf8&amp;tinyInt1isBit=false"
+                    userId="root" password="bdgStore3306"/>
     <javaTypeResolver>
       <property name="forceBigDecimals" value="false"/>
     </javaTypeResolver>
     <!--生成Model类存放位置-->
-    <javaModelGenerator targetPackage="com.jusfoun.hookah.core.domain" targetProject="src/main/java">
+    <javaModelGenerator targetPackage="com.jusfoun.hookah.core.domain.zb" targetProject="src/main/java">
       <property name="enableSubPackages" value="true"/>
       <property name="trimStrings" value="true"/>
       <property name="rootClass" value="com.jusfoun.hookah.core.generic.GenericModel"/>
     </javaModelGenerator>
     <!--生成映射文件存放位置-->
-    <sqlMapGenerator targetPackage="com.jusfoun.hookah.core.dao" targetProject="src/main/resources">
+    <sqlMapGenerator targetPackage="com.jusfoun.hookah.core.dao.zb" targetProject="src/main/resources">
       <property name="enableSubPackages" value="true"/>
     </sqlMapGenerator>
     <!--生成Dao类存放位置-->
-    <javaClientGenerator type="XMLMAPPER" targetPackage="com.jusfoun.hookah.core.dao" targetProject="src/main/java">
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.jusfoun.hookah.core.dao.zb" targetProject="src/main/java">
       <property name="enableSubPackages" value="true"/>
-      <property name="rootInterface" value="com.jusfoun.hookah.core.dao.GenericDao&lt;PayAccount&gt;"/>
+      <property name="rootInterface" value="com.jusfoun.hookah.core.generic.GenericDao&lt;ZbComment&gt;"/>
     </javaClientGenerator>
     <!--生成对应表及类名-->
     <!-- <table tableName="hb_enterprise_copy"  domainObjectName="EnterprisePojo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
@@ -76,11 +76,11 @@
       <columnOverride column="seller_note" javaType="java.lang.String" jdbcType="VARCHAR" />
     </table>-->
 
-    <!--<table schema="hookah" tableName="pay_account" domainObjectName="PayAccount"-->
-           <!--enableCountByExample="false" enableUpdateByExample="false"-->
-           <!--enableDeleteByExample="false" enableSelectByExample="false"-->
-           <!--selectByExampleQueryId="false" >-->
-    <!--</table>-->
+    <table schema="hookah" tableName="zb_comment" domainObjectName="ZbComment"
+           enableCountByExample="false" enableUpdateByExample="false"
+           enableDeleteByExample="false" enableSelectByExample="false"
+           selectByExampleQueryId="false" >
+    </table>
 
   </context>
 </generatorConfiguration>

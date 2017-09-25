@@ -572,28 +572,36 @@ public class PayAccountServiceImpl extends GenericServiceImpl<PayAccount, Long> 
 		String totalFee=params.get("totalFee");
 		String userId=params.get("userId");
 		String tradeType=params.get("tradeType");
+		String orderSn=params.get("orderSn");
 		Long money=0l;
 		try{
-			List<Condition> filters = new ArrayList();
-			if(StringUtils.isNotBlank(userId)){
-				filters.add(Condition.eq("userId", userId));
-			}
-			//查询出payAccountId
-			PayAccount payAccount = super.selectOne(filters);
-			if(tradeStatus.equals("1")){
-				money = Math.round(Double.parseDouble(totalFee)*100);
-				if (money<=0){
-					returnData.setCode(ExceptionConst.Failed);
-					returnData.setMessage("充值失败！充值金额必须大于0元！");
-					return returnData;
+			Map<String,String> paramMap = new HashMap<>();
+			paramMap.put("orderSn",orderSn);
+			paramMap.put("userId",userId);
+			//查询pay_trade_record表中的trade_status状态是否为0（交易状态 0处理中 1成功 2失败），
+			int status = payTradeRecordService.selectStatusByOrderSn(paramMap);
+			if (status==0){
+				List<Condition> filters = new ArrayList();
+				if(StringUtils.isNotBlank(userId)){
+					filters.add(Condition.eq("userId", userId));
 				}
-				//更新账户金额
-				updatePayAccountMoney(payAccount.getId(),money,userId);
-			}
-			//更新记录表
-			payTradeRecordMapper.updatePayTradeRecordStatusByOrderSn(params);
-			payAccountRecordMapper.updatePayAccountRecordStatusByOrderSn(params);
+				//查询出payAccountId
+				PayAccount payAccount = super.selectOne(filters);
+				if(tradeStatus.equals("1")){
+					money = Math.round(Double.parseDouble(totalFee)*100);
+					if (money<=0){
+						returnData.setCode(ExceptionConst.Failed);
+						returnData.setMessage("充值失败！充值金额必须大于0元！");
+						return returnData;
+					}
 
+					//更新账户金额
+					updatePayAccountMoney(payAccount.getId(),money,userId);
+				}
+				//更新记录表
+				payTradeRecordMapper.updatePayTradeRecordStatusByOrderSn(params);
+				payAccountRecordMapper.updatePayAccountRecordStatusByOrderSn(params);
+			}
 			returnData.setCode(ExceptionConst.Success);
 			returnData.setMessage("操作成功！");
 			return returnData;

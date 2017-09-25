@@ -45,6 +45,14 @@
             <!--<li><a href="/usercenter/myGoods"><span class="fa fa-id-card-o margin-right-22"></span>我的商品</a></li>-->
         </ul>
     </div>
+    <div class="one-level-menu">
+        <div class="title"><span class="fa fa-caret-down margin-right-25"></span>众包</div>
+        <ul>
+            <li><a href="${host.crowd}/usercenter/crowdsourcingRelease"><span class="fa fa-id-card-o margin-right-22"></span>发布需求</a></li>
+            <li><a href="${host.crowd}/usercenter/myRequirement"><span class="fa fa-id-card-o margin-right-22"></span>我的发布</a></li>
+        </ul>
+    </div>
+
     <%if(user.supplierStatus == 1){%>
     <div class="one-level-menu">
         <div class="title"><span class="fa fa-caret-down margin-right-25"></span>卖家中心</div>
@@ -55,48 +63,7 @@
         </ul>
     </div>
     <%}%>
-    <!--<ul class="one-level-menu-user">-->
-        <!--&lt;!&ndash;<li class="text-align-center"><a href="/usercenter/userProfile"><span class="fa fa-file-text"></span>个人资料</a></li>&ndash;&gt;-->
-        <!--<li class="padding-left-30"><a href="/usercenter/index"><span class="fa fa-file-text"></span>账户中心</a></li>-->
-        <!--&lt;!&ndash;<li class="text-align-center"><a href="/usercenter/infoCenter"><span class="fa fa-id-card-o"></span>信息中心</a></li>&ndash;&gt;-->
-        <!--<li class="two-level-menu">-->
-            <!--<a href="/usercenter/fundmanage">资金总览</a>-->
-             <!--&lt;!&ndash;<div class="padding-left-30"><span class="fa fa-caret-down"></span><span class="fa fa-caret-up" style="display: none;"></span>资金管理</div>&ndash;&gt;-->
-             <!--&lt;!&ndash;<a href="/usercenter/fundmanage"><span class="fa fa-life-buoy" aria-hidden="true"></span>资金管理</a>&ndash;&gt;-->
-             <!--&lt;!&ndash;<ul class="three-level-menu">&ndash;&gt;-->
-                 <!--&lt;!&ndash;<li class=""></li>&ndash;&gt;-->
-                 <!--&lt;!&ndash;<li class=""><a href="/usercenter/recharge">充值</a></li>&ndash;&gt;-->
-                 <!--&lt;!&ndash;<li class=""><a href="/usercenter/withdrawals">提现</a></li>&ndash;&gt;-->
-                 <!--&lt;!&ndash;<li class=""><a href="/usercenter/capitalRecord">资金记录</a></li>&ndash;&gt;-->
-             <!--&lt;!&ndash;</ul>&ndash;&gt;-->
-        <!--</li>-->
-        <!--<li class="padding-left-30"><a href="/usercenter/safeSet"><span class="fa fa-unlock-alt" aria-hidden="true"></span></a></li>-->
-    <!--</ul>-->
-    <!--<ul class="one-level-menu-fundmanage">-->
-        <!--<li class="font-weight-bold padding-left-20">买家中心</li>-->
-        <!--&lt;!&ndash;<li class="text-align-center"><span class="fa fa-caret-down"></span><span class="fa fa-caret-up" style="display: none;"></span>买家中心 <span class=""></span></li>&ndash;&gt;-->
-        <!--<li class="padding-left-30"><a href="/usercenter/buyer/orderManagement"><span class="fa fa-indent"></span>订单管理</a></li>-->
-        <!--&lt;!&ndash;<li class="text-align-center"><a href="/usercenter/invoice"><span class="fa fa-list-alt"></span>我的发票</a></li>&ndash;&gt;-->
-        <!--&lt;!&ndash;<li class="text-align-center"><a href="/usercenter/buyer/cart"><span class="fa fa-shopping-cart"></span>购物车&nbsp;&nbsp;&nbsp;</a></li>&ndash;&gt;-->
-        <!--&lt;!&ndash;<li class="text-align-center"><a href="/usercenter/buyer/evaluation"><span class="fa fa-building"></span>我的评价</a></li>&ndash;&gt;-->
-        <!--<li class="padding-left-30"><a href="/usercenter/myAttention"><span class="fa fa-star"></span>我的关注</a></li>-->
-    <!--</ul>-->
-    <!--<ul class="one-level-menu-buyer">-->
-        <!--<li class="font-weight-bold padding-left-20">买家中心</li>-->
-        <!--&lt;!&ndash;<li class="text-align-center"><span class="fa fa-caret-down"></span><span class="fa fa-caret-up" style="display: none;"></span>买家中心 <span class=""></span></li>&ndash;&gt;-->
-        <!--<li class="padding-left-30"><a href="/usercenter/buyer/orderManagement"><span class="fa fa-indent"></span>订单管理</a></li>-->
-        <!--&lt;!&ndash;<li class="text-align-center"><a href="/usercenter/invoice"><span class="fa fa-list-alt"></span>我的发票</a></li>&ndash;&gt;-->
-        <!--&lt;!&ndash;<li class="text-align-center"><a href="/usercenter/buyer/cart"><span class="fa fa-shopping-cart"></span>购物车&nbsp;&nbsp;&nbsp;</a></li>&ndash;&gt;-->
-        <!--&lt;!&ndash;<li class="text-align-center"><a href="/usercenter/buyer/evaluation"><span class="fa fa-building"></span>我的评价</a></li>&ndash;&gt;-->
-        <!--<li class="padding-left-30"><a href="/usercenter/myAttention"><span class="fa fa-star"></span>我的关注</a></li>-->
-    <!--</ul>-->
-    <!--<ul class="one-level-menu-seller">-->
-        <!--<li class="text-align-center"><span class="fa fa-caret-down"></span><span class="fa fa-caret-up" style="display: none;"></span>卖家中心 <span class=""></span></li>-->
-        <!--<li class="text-align-center goods"><a href="/usercenter/goodsManage"><span class="fa fa-cart-plus"></span>商品管理</a></li>-->
-        <!--<li class="text-align-center"><a href="/usercenter/trade"><span class="fa fa-indent"></span>交易管理</a></li>-->
-        <!--<li class="text-align-center"><a href="javascript:void(0);"><span class="fa fa-outdent"></span>店铺管理</a></li>-->
-        <!--<li class="text-align-center"><a href="/usercenter/custom"><span class="fa fa-volume-control-phone"></span>客服管理</a></li>-->
-    <!--</ul>-->
+
 </div>
 <%}%>
 
@@ -122,31 +89,7 @@
                 $(this).siblings().show()
             }
         });
-      /*  if(url == '/admin/articleManage' || url == '/admin/articlePublish' || url == '/admin/articleModify'){
-            $('.adminS ul li:first-child').addClass('active').children('a').css("color","#247DE8").siblings().removeClass("active");
-        }else if(url == '/usercenter/trade'){
-			$('.adminS ul li').eq(3).addClass('active').children('a').css("color","#247DE8").siblings().removeClass("active");
-        }
-        if(url == '/usercenter/goodsManage'){
-            $('.adminS ul li:nth-child(2)').addClass('active').siblings().removeClass("active").children('a').css("color","#247DE8");
-        }
-        if(url == '/usercenter/trade'){
-            $('.adminS ul li:nth-child(3)').addClass('active').siblings().removeClass("active").children('a').css("color","#247DE8");
-        }
 
-        if(url=="/usercenter/buyer/orderStay"||url=="/order/viewDetails" ||url=="/usercenter/sunAlone"){
-            $('.u2 li:nth-child(2)').addClass('active').siblings().removeClass("active");
-            $('.u2 li:nth-child(2)').children('a').css("color","#247DE8");
-        }
-        if(url.indexOf("goods")>=0){
-            $(".goods").addClass('active').siblings().removeClass("active");
-            $(".goods").children('a').css("color","#247DE8");
-        }
-        if(url.indexOf('/usercenter/recharge') >= 0 || url.indexOf('/usercenter/withdrawals') >= 0){
-			$('.u1 li:nth-child(3)').addClass('active').siblings().removeClass("active");
-			$('.u1 li:nth-child(3)').children('a').css("color","#247DE8");
-        }
-*/
     })
 </script>
 

@@ -1,0 +1,90 @@
+.becomingSupplierStep2{
+    padding:85px 168px 0px 168px;
+}
+.becomingSupplierStep1-progress-bar ul li:nth-child(2){
+    color: #F53839;
+}
+.becomingSupplierStep1-progress-bar ul li:nth-child(2) span{
+    background-color: #F53839;
+}
+.becomingSupplierStep1-progress-bar ul li:first-child:before{
+    background: #F53839 !important;
+}
+
+.becomingSupplierStep2-info{
+
+}
+.becomingSupplierStep2-info h4{
+    height: 16px;
+    border-left: 2px solid #247DE8;
+    line-height: 16px;
+    margin-bottom: 16px;
+    padding-left: 5px;
+}
+.becomingSupplierStep2-info .unit-contact .item{
+    height: 32px;
+    width: 100%;
+    margin-bottom: 17px;
+    margin-left: 160px;
+}
+.becomingSupplierStep2-info .unit-contact .item label{
+    display: inline-block;
+    width: 85px;
+    margin-right: 5px;
+    height: 32px;
+    text-align: right;
+    line-height: 32px;
+}
+.becomingSupplierStep2-info .unit-contact .item:last-child label{
+    vertical-align: top;
+}
+.becomingSupplierStep2-info .unit-contact .item input{
+    height: 30px;
+    width: 216px;
+    padding-left: 10px;
+    border: 1px solid #e5e5e5;
+}
+.becomingSupplierStep2-info .unit-contact .item textarea{
+    width: 216px;
+    padding-left: 10px;
+    outline:none;
+    resize:none;
+    border: 1px solid #E5E5E5;
+}
+.becomingSupplierStep2-info .unit-contact .help-block{
+    color: #ff0000;
+    vertical-align: top;
+}
+
+.becomingSupplierStep2-info .unit-information div{
+    height: 32px;
+    width: 100%;
+    margin-bottom: 17px;
+    margin-left: 160px;
+}
+.becomingSupplierStep2-info .unit-information div span{
+    display: inline-block;
+    height: 32px;
+    width: 216px;
+}
+.becomingSupplierStep2-info .unit-information div label{
+    display: inline-block;
+    width: 85px;
+    margin-right: 5px;
+    height: 32px;
+    text-align: right;
+    line-height: 32px;
+}
+
+.becomingSupplierStep2-info .btn{
+    display:block;
+    width: 130px;
+    height: 36px;
+    font-size: 14px;
+    line-height:36px;
+    text-align: center;
+    margin: auto;
+    margin-top: 80px;
+    color: #ffffff;
+    background-color: #4F95F4;
+}

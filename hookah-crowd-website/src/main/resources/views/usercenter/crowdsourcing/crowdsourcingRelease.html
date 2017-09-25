@@ -1,0 +1,149 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/plugins/jedate/jedate.css">
+<script src="/static/js/plugins/jedate/jquery.jedate.min.js"></script>
+<script src="/static/js/plugins/widget/jquery.ui.widget.js"></script>
+<script src="/static/js/plugins/fileupload/jquery.fileupload.js"></script>
+
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
+<link rel="stylesheet" href="/static/css/crowdsourcing/crowdsourcing.css">
+
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+  <div class="grid-row clearfix">
+    <%include("/usercenter/user-center-menu.html"){} %>
+    <div class="grid-right info-center-box myRequirementBox margin-bottom-20">
+      <div class="header clearfix">
+        <h4 class="grid-left center-title">发布需求</h4>
+      </div>
+
+      <div class="crowdsourcing-menu myRequirement-search bgc-fff">
+        <img src="/static/images/crowdsourcing/progress.jpg" alt="">
+      </div>
+
+      <table class="crowdsourcing-table myRequirement-table bgc-fff">
+        <tbody>
+        <tr>
+          <td valign="top">需求标题 <span>*</span></td>
+          <td>
+            <div class="secondPage j_title">啊手动阀手动阀</div>
+            <input type="text" class="j_firstPage" maxlength="20" id="J_title" placeholder="一句话描述您的需求（要求简洁全面，20个汉字以内）">
+            <div class="crowdsourcing-user">
+              <span>需求联系人</span>
+              <i class="secondPage j_username">招数君</i>
+              <i class="secondPage j_phone">13988887875</i>
+              <input type="text" class="j_firstPage" id="J_username" placeholder="输入联系人">
+              <input type="text" class="j_firstPage" id="J_phone" maxlength="11" placeholder="输入手机号">
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>需求类型 <span>*</span></td>
+          <td>
+            <div class="secondPage j_type requirement-type-active"><span>？？？？？</span></div>
+            <div class="j_firstPage">
+              <div class="requirement-type ">
+                <!--需求类型列表-->
+              </div>
+            </div>
+            <div class="crowdsourcing-user">
+              <span>需求标签</span>
+              <input class="tag j_firstPage " id="J_tag" type="text" placeholder="请输入标签关键词">
+              <i class="tagNotice j_firstPage">?</i>
+              <div class="tagNoticeContent j_firstPage">标签信息为需求的关键词，至多由5个词组组成，由英文字符“,”隔开。</div>
+              <div class="secondPage tagList j_tag">
+                <i>????</i>
+                <i>????</i>
+                <i>????</i>
+                <i>????</i>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">需求描述 <span>*</span></td>
+          <td>
+            <textarea id="J_description" class="j_firstPage" maxlength="2000" placeholder="详细描述具体的需求信息，2000个汉字以内。" rows="10"></textarea>
+            <p class="j_description secondPage description">
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td>附件</td>
+          <td style="padding:0;">
+            <div class="upload-box">
+              <input type="file" name="filename" class="fileUploadBtn j_firstPage">
+              <span class="falseBen j_firstPage">上传附件</span>
+              <span class="upload-file-notice j_firstPage">最多可上传5个附件，每个附件大小不超过10M。</span>
+            </div>
+            <div class="load-file-list">
+              <!--
+               <dl class="load-file word">
+                 <dt><a href="javascript:void(0)" title=""><img src="http://static.galaxybigdata.com/file/20170920/null/null/094044e0a950bcbb3b4c69bc3962951112fe42.jpg"></a></dt>
+                 <dd>
+                   <span class="overflowpoint">' + 备注 + '</span>
+                   <span class="overflowpoint">' + ？？？？？ + '</span>
+                   <div class="crowdsourcing-table-edit">
+                     <a href="#" target="_blank" class="download"><img src="/static/images/crowdsourcing/download.png" alt=""></a>
+                     <a href="javascript:void (0)" class="view j_img-view-btn" ><img src="/static/images/crowdsourcing/view.png" alt=""></a>
+                     <a href="javascript:void (0)" class="del" ><img src="/static/images/crowdsourcing/del.png" alt=""></a>
+                   </div>
+                 </dd>
+               </dl>-->
+            </div>
+
+          </td>
+        </tr>
+        <tr>
+          <td>交付截止日期 <span>*</span></td>
+          <td>
+            <div class="secondPage j_date">?????</div>
+
+            <label for="J_date" class="end-date grid-left">
+              <input id="J_date" class="j_firstPage" type="text" placeholder="请选择交付截止日期" readonly="">
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>悬赏金额 <span>*</span></td>
+          <td>
+            <div class="secondPage j_money">????? 元</div>
+            <input id="J_money" class="j_firstPage" type="number"> <span class="j_firstPage">元</span></td>
+        </tr>
+        <tr>
+          <td valign="top">交付验收要求 <span>*</span></td>
+          <td>
+            <textarea class="j_firstPage" maxlength="1000" placeholder="请详情描述交付及验收要求，1000个汉字以内。" id="J_checkRemark"></textarea>
+            <p class="j_checkRemark secondPage description">asda</p>
+
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div>
+        <span class="release-notice">温馨提示： 发布需求不收取任何佣金，请放心发布。如没有匹配到供应商，全额退款。整个交易过程平台会担保您的赏金安全，并保障交易效果。</span>
+        <div class="release-first-btnbox">
+          <div class="j_firstPage">
+            <button id="J_nextPage">下一步</button>
+            <button id="J_reset">重置</button>
+          </div>
+          <div class="secondPage">
+            <button id="J_prevPage">上一步</button>
+            <button id="J_release">确认提交</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+<script src="/static/js/usercenter/crowdsourcing/crowdsourcingRelease.js"></script>
+

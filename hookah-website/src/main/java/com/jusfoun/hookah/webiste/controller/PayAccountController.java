@@ -68,7 +68,7 @@ public class PayAccountController extends BaseController{
      * @return
      * @throws IOException
      */
-    @RequestMapping(value = "/rechargeSync", method = RequestMethod.POST)
+    @RequestMapping(value = "/recharge_sync", method = RequestMethod.POST)
     @ResponseBody
     public String rechargeResultSync(HttpServletRequest request) throws IOException {
 
@@ -115,7 +115,7 @@ public class PayAccountController extends BaseController{
      * @return
      * @throws IOException
      */
-    @RequestMapping(value = "/rechargeResult", method = RequestMethod.GET)
+    @RequestMapping(value = "/recharge_result", method = RequestMethod.GET)
     public String rechargeResultPage(HttpServletRequest request) throws  IOException{
         //支付宝交易号
         String tradeNo = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"),"UTF-8");

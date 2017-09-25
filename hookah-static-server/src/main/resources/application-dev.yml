@@ -9,6 +9,7 @@ myconf:
     static: ${server.http.protocal}static.galaxybigdata.com
     auth: ${server.http.protocal}auth.galaxybigdata.com
     console: ${server.http.protocal}console.galaxybigdata.com
+    crowd: ${server.http.protocal}crowd.galaxybigdata.com
 debug: true
 spring:
   data:

@@ -7,7 +7,8 @@ var config = {
     apiServer: "http://console.galaxybigdata.com",
     websiteServer: "http://www.galaxybigdata.com",
     authServer: "http://auth.galaxybigdata.com",
-    staticServer: "http://static.galaxybigdata.com"
+    staticServer: "http://static.galaxybigdata.com",
+    crowdServer: "http://crowd.galaxybigdata.com"
   },
   url: {
     loginUrl: "http://auth.galaxybigdata.com/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://console.galaxybigdata.com/login&backurl=",
@@ -383,7 +384,35 @@ export default angular.module('Common', [
     return function (input) {
       return $sce.trustAsHtml(input);
     }
-  })
+  }).filter('format',function () { //标准时间处理
+        return function (time,format) {
+            let t = new Date(time);
+            let tf = function(i){return (i < 10 ? '0' : "") + i};
+            return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function(a){
+                switch(a){
+                    case 'yyyy':
+                        return tf(t.getFullYear());
+                        break;
+                    case 'MM':
+                        return tf(t.getMonth() + 1);
+                        break;
+                    case 'mm':
+                        return tf(t.getMinutes());
+                        break;
+                    case 'dd':
+                        return tf(t.getDate());
+                        break;
+                    case 'HH':
+                        return tf(t.getHours());
+                        break;
+                    case 'ss':
+                        return tf(t.getSeconds());
+                        break;
+                }
+            })
+        }
+
+    })
   .controller("MainController", MainController)
   .run(function ($rootScope, $window, $location, $state, permissions) {
     // console.log("common init..");

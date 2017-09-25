@@ -1,0 +1,108 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/crowdsourcing/crowdsourcing.css">
+
+<%};%>
+<%
+var htmlPart = {
+%>
+<script type="text/javascript">
+  $.getUrlParam = function (key) {
+    var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+    var result = window.location.search.substr(1).match(reg);
+    return result ? decodeURIComponent(result[2]) : null;
+  };
+  var catId = $.getUrlParam('catId');
+  var prId = $.getUrlParam('prId');
+  var prNm = $.getUrlParam('prNm');
+  var msId = $.getUrlParam('msId');
+  var msNm = $.getUrlParam('msNm');
+  var names = $.getUrlParam('names');
+  var pagePath = '/require/getRequirementList';
+  var pageType = 'get';
+  var dataParm = {};
+  dataParm.pageNumber = 1;
+  dataParm.pageSize = 10;
+  dataParm.type = '';
+  dataParm.status = '';
+  dataParm.timeType = '';
+  dataParm.order = 'apply_deadline';
+  dataParm.sort = 'desc';
+</script>
+<div class="grid-0 exchange-list bgc-eaedf0 padding-bottom-20 padding-top-10">
+  <div class="grid-row ">
+    <div class="ad-box"><img src="/static/images/crowdsourcing/banner.png" alt=""></div>
+    <ul class="crowdsourcing-menu bgc-fff">
+      <li>
+        <span>
+        需求类型：
+        </span>
+        <ul class="j_searchLi" id="type" value="">
+          <li value="" class="active">全部</li>
+          <li value="1">数据采集</li>
+          <li value="2">数据加工</li>
+          <li value="3">数据模型</li>
+          <li value="4">数据应用</li>
+          <li value="5">数据清洗</li>
+          <li value="6">其他类型</li>
+        </ul>
+      </li>
+      <li>
+         <span>
+        发布时间：
+        </span>
+        <ul class="j_searchLi" id="timeType" value="">
+          <li value="" class="active">全部</li>
+          <li value="day">一天</li>
+          <li value="week">一周以内</li>
+          <li value="month">一月以内</li>
+          <li value="gtmonth">一月以上</li>
+        </ul>
+      </li>
+      <li>
+         <span>
+        状态：
+        </span>
+        <ul class="j_searchLi" id="status" value="">
+          <li value="" class="active">全部</li>
+          <li value="5">报名中</li>
+          <li value="6">报名结束</li>
+        </ul>
+      </li>
+    </ul>
+    <table class="crowdsourcing-table bgc-fff">
+      <thead>
+      <tr>
+        <th>需求标题</th>
+        <th>需求类型</th>
+        <th>悬赏金额</th>
+        <th>状态</th>
+        <th>发布时间</th>
+        <th>交付截止时间</th>
+        <th>报名剩余时间</th>
+      </tr>
+      </thead>
+      <tbody>
+      <!--<tr>
+        <td><a href="javascript:void(0)">数据商城采集源</a></td>
+        <td>数据采集</td>
+        <td>1289.00</td>
+        <td>报名中</td>
+        <td>2017-02-03</td>
+        <td>2017-03-03</td>
+        <td>7天12小时23分钟 <span class="signUp">我要报名</span></td>
+      </tr>-->
+      </tbody>
+    </table>
+    <%include("/layout/pageaction.html"){} %>
+
+  </div>
+</div>
+
+
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+<script src="/static/js/crowdsourcing/crowdsourcing-list.js"></script>
+
