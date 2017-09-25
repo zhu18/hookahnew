@@ -43,7 +43,7 @@ function crowdsourcingRelease() {
         $('#J_tag').val(data.data.zbRequirement.tag);
         $('#J_description').val(data.data.zbRequirement.description);
         $('#J_date').val(data.data.zbRequirement.deliveryDeadline);
-        $('#J_money').val(data.data.rewardMoney / 100);
+        $('#J_money').val(data.data.zbRequirement.rewardMoney / 100);
         $('#J_checkRemark').val(data.data.zbRequirement.checkRemark);
         let spanList = $('.requirement-type span');
         for (let i = 0; i < spanList.length; i++) {
