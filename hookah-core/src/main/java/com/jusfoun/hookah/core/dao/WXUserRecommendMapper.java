@@ -54,5 +54,5 @@ public interface WXUserRecommendMapper extends GenericDao<WXUserRecommend> {
      */
     int updateByPrimaryKey(WXUserRecommend record);
 
-    HashMap<String,String> countInviteeAndReward(String userId);
+    HashMap<String,Integer> countInviteeAndReward(String userId);
 }

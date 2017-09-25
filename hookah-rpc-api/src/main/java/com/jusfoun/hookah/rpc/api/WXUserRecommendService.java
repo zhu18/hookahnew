@@ -10,5 +10,5 @@ import java.util.HashMap;
  */
 public interface WXUserRecommendService extends GenericService<WXUserRecommend,String> {
 
-    HashMap<String,String> countInviteeAndReward(String userId);
+    HashMap<String,Integer> countInviteeAndReward(String userId);
 }

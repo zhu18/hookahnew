@@ -19,7 +19,7 @@ public class WXUserRecommendServiceImpl extends GenericServiceImpl<WXUserRecomme
     private WXUserRecommendMapper wxUserRecommendMapper;
 
     @Override
-    public HashMap<String, String> countInviteeAndReward(String userId) {
+    public HashMap<String, Integer> countInviteeAndReward(String userId) {
         return wxUserRecommendMapper.countInviteeAndReward(userId);
     }
 }
