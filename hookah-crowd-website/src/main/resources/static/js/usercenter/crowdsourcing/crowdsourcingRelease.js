@@ -28,6 +28,7 @@ function crowdsourcingRelease() {
   $.ajax({
     type: 'get',
     url: "/api/release/requirementInfo",
+    cache:false,
     success: function (data) {
       console.log(data);
       if (data.data.hasOwnProperty('zbRequirement')) {
@@ -346,6 +347,7 @@ $(document).on('click', '#J_prevPage', function () { //鼠标离开描述显示�
 $(document).on('click', '#J_release', function () { //鼠标离开描述显示工具栏
   $.ajax({
     type: 'get',
+    cache:false,
     url: "/api/release/requirementSubmit?id=" + crowdSourcingId,
     success: function (data) {
       console.log(data);
