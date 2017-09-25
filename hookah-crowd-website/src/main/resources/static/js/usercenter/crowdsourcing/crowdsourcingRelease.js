@@ -126,7 +126,7 @@ $('.fileUploadBtn').fileupload(
       data.submit();
     },
     done: function (e, data) {
-      console.log('上传完毕')
+      console.log('上传完毕');
       if ($('.load-file-list dl').length == 5) {
         $('.upload-file-notice').addClass('color-red');
         setTimeout(function () {
