@@ -6,18 +6,14 @@ class publicController {
               method: 'GET',
               url: $rootScope.site.crowdServer + "/api/require/ReqCheck",
               params: {
-                  requireSn: $stateParams.id
+                  id: $stateParams.id
               }
           });
           promise.then(function (res) {
               console.log('数据在这里');
               console.log(res);
               if (res.data.code == '1') {
-                  var item= res.data.data.list;
-                  console.log(item);
-
-                  item=item[0];
-                  console.log(item);
+                  var item= res.data.data.zbRequirement;
                   $scope.zbAnnexes= res.data.data.zbAnnexes;
                   $scope.requiremetName=item.requiremetName;
                   $scope.contactName=item.contactName;
