@@ -26,9 +26,10 @@ function loadPageData(data) { //渲染页面数据
         tempState = '报名中';
         tempButtonHtml = '<span class="signUp">我要报名</span>';
         break;
-      default:
+      case 6:
         tempState = '报名结束';
-        tempButtonHtml = '<span class="signUp timeover">报名结束</span>'
+        tempButtonHtml = '<span class="signUp timeover">报名结束</span>';
+        break;
     }
     switch (data[i].type) {
       case 1:
