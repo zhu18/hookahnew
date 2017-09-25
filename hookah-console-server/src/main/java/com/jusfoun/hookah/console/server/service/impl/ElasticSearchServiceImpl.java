@@ -499,6 +499,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     private String getPayFormatsName(String id) {
         return HookahConstants.PAY_FORMATS_TIMES.equals(id) ? "按次" :
                     HookahConstants.PAY_FORMATS_MONTH.equals(id) ? "按月" :
-                        HookahConstants.PAY_FORMATS_YEAR.equals(id) ? "按年" : "按套";
+                        HookahConstants.PAY_FORMATS_YEAR.equals(id) ? "按年" :
+                                HookahConstants.PAY_FORMATS_ONE.equals(id) ? "按套" : "面议";
     }
 }
