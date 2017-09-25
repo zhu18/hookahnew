@@ -13,7 +13,11 @@ class publicController {
               console.log('数据在这里');
               console.log(res);
               if (res.data.code == '1') {
-                  var item= res.data.data.zbRequirement;
+                  var item= res.data.data.list;
+                  console.log(item);
+
+                  item=item[0];
+                  console.log(item);
                   $scope.zbAnnexes= res.data.data.zbAnnexes;
                   $scope.requiremetName=item.requiremetName;
                   $scope.contactName=item.contactName;
