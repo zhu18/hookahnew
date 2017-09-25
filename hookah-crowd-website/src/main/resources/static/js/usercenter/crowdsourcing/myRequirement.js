@@ -69,7 +69,7 @@ function loadPageData(data) { //渲染页面数据
           <td>'+(i+1)+'</td>\
           <td>'+data[i].requireSn+'</td>\
           <td>'+data[i].title+'</td>\
-          <td>'+data[i].rewardMoney+'</td>\
+          <td>'+data[i].rewardMoney/100+'</td>\
           <td>'+tempState+'</td>\
           <td>'+data[i].addTime+'</td>\
           <td>'+data[i].deliveryDeadline+'</td>\
