@@ -1,6 +1,5 @@
 package com.jusfoun.hookah.crowd.util;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -25,11 +24,17 @@ public class CommonUtils {
     }
 
     public static void main(String[] args){
-        String sn = getRequireSn("zb", "1");
-        System.out.println(sn);
+//        String sn = getRequireSn("zb", "1");
+//        System.out.println(sn);
+//
+//        System.out.println(DateTimeFormatter.ofPattern("uuuuMMdd").format(LocalDate.now()));
+//        System.out.println(DateTimeFormatter.ofPattern("yyyyMMddHHmmss").format(LocalDateTime.now()));
+//        System.out.println(DateTimeFormatter.BASIC_ISO_DATE.format(LocalDateTime.now()));
 
-        System.out.println(DateTimeFormatter.ofPattern("uuuuMMdd").format(LocalDate.now()));
-        System.out.println(DateTimeFormatter.ofPattern("yyyyMMddHHmmss").format(LocalDateTime.now()));
-        System.out.println(DateTimeFormatter.BASIC_ISO_DATE.format(LocalDateTime.now()));
+
+        System.out.println(Math.round(Double.valueOf(0.1)*100));
+
+        Short[] zbStatus = new Short[]{};
+        System.out.println(zbStatus.length);
     }
 }

@@ -16,11 +16,21 @@ public class MgZbProvider extends GenericModel {
 
     private Integer authType;                           // 1个人2企业
 
-    private String personDesc;                          //服务商介绍
+    private String providerDesc;                          //服务商介绍
 
     private Integer status;                             //认证状态 0.未认证 1.审核中 2.已认证 3.认证失败
 
     private List<String> specialSkills;                 //擅长领域
+
+    private Date addTime;
+
+    private Date updateTime;
+
+    private String checkContent;                        //审核意见
+
+    private String checkUser;                           //审核人
+
+    private String checkTime;                           //审核时间
 
     /**
      * 个人服务商认证
@@ -33,13 +43,22 @@ public class MgZbProvider extends GenericModel {
 
     public static class EducationsExp implements Serializable {
 
+        private String sn;
         private String schoolName;  //学校名称
         private String major;       //专业名称
-        private Date startTime;     //就学开始时间
-        private Date endTime;       //结束时间
+        private String startTime;     //就学开始时间
+        private String endTime;       //结束时间
         private String edu;         //学历
         private Integer orExam;     //是否统招
         private List<String> certPath;//证明材料
+
+        public String getSn() {
+            return sn;
+        }
+
+        public void setSn(String sn) {
+            this.sn = sn;
+        }
 
         public String getSchoolName() {
             return schoolName;
@@ -57,19 +76,19 @@ public class MgZbProvider extends GenericModel {
             this.major = major;
         }
 
-        public Date getStartTime() {
+        public String getStartTime() {
             return startTime;
         }
 
-        public void setStartTime(Date startTime) {
+        public void setStartTime(String startTime) {
             this.startTime = startTime;
         }
 
-        public Date getEndTime() {
+        public String getEndTime() {
             return endTime;
         }
 
-        public void setEndTime(Date endTime) {
+        public void setEndTime(String endTime) {
             this.endTime = endTime;
         }
 
@@ -100,12 +119,21 @@ public class MgZbProvider extends GenericModel {
 
     public static class WorksExp implements Serializable {
 
+        private String sn;
         private String companyName;         //公司名称
         private String departName;          //部门名称
-        private Date startTime;             //开始花间
-        private Date endTime;               //结束时间
+        private String startTime;             //开始花间
+        private String endTime;               //结束时间
         private String position;            //职位
         private List<String> certPath;      //证明材料
+
+        public String getSn() {
+            return sn;
+        }
+
+        public void setSn(String sn) {
+            this.sn = sn;
+        }
 
         public String getCompanyName() {
             return companyName;
@@ -123,19 +151,19 @@ public class MgZbProvider extends GenericModel {
             this.departName = departName;
         }
 
-        public Date getStartTime() {
+        public String getStartTime() {
             return startTime;
         }
 
-        public void setStartTime(Date startTime) {
+        public void setStartTime(String startTime) {
             this.startTime = startTime;
         }
 
-        public Date getEndTime() {
+        public String getEndTime() {
             return endTime;
         }
 
-        public void setEndTime(Date endTime) {
+        public void setEndTime(String endTime) {
             this.endTime = endTime;
         }
 
@@ -158,11 +186,20 @@ public class MgZbProvider extends GenericModel {
 
     public static class ProjectsExp implements Serializable {
 
+        private String sn;
         private String projectName;     //项目名称
         private String projectDuty;     //项目职责
-        private Date startTime;         //开始时间
-        private Date endTime;           //结束时间
+        private String startTime;         //开始时间
+        private String endTime;           //结束时间
         private String projectDesc;     //项目描述
+
+        public String getSn() {
+            return sn;
+        }
+
+        public void setSn(String sn) {
+            this.sn = sn;
+        }
 
         public String getProjectName() {
             return projectName;
@@ -180,19 +217,19 @@ public class MgZbProvider extends GenericModel {
             this.projectDuty = projectDuty;
         }
 
-        public Date getStartTime() {
+        public String getStartTime() {
             return startTime;
         }
 
-        public void setStartTime(Date startTime) {
+        public void setStartTime(String startTime) {
             this.startTime = startTime;
         }
 
-        public Date getEndTime() {
+        public String getEndTime() {
             return endTime;
         }
 
-        public void setEndTime(Date endTime) {
+        public void setEndTime(String endTime) {
             this.endTime = endTime;
         }
 
@@ -215,12 +252,21 @@ public class MgZbProvider extends GenericModel {
     private List<InventionPatent> inPatentsList;    //发明专利
 
     public static class AppCase implements Serializable {
-        private String caseName;    //应用案例名称
-        private Date startTime;     //开始时间
-        private Date endTime;       //结束时间
-        private String caseDesc;    //解决方案
 
+        private String sn;
+        private String caseName;    //应用案例名称
+        private String startTime;     //开始时间
+        private String endTime;       //结束时间
+        private String caseDesc;    //解决方案
         private List<String> certPath;//证明材料
+
+        public String getSn() {
+            return sn;
+        }
+
+        public void setSn(String sn) {
+            this.sn = sn;
+        }
 
         public String getCaseName() {
             return caseName;
@@ -230,19 +276,19 @@ public class MgZbProvider extends GenericModel {
             this.caseName = caseName;
         }
 
-        public Date getStartTime() {
+        public String getStartTime() {
             return startTime;
         }
 
-        public void setStartTime(Date startTime) {
+        public void setStartTime(String startTime) {
             this.startTime = startTime;
         }
 
-        public Date getEndTime() {
+        public String getEndTime() {
             return endTime;
         }
 
-        public void setEndTime(Date endTime) {
+        public void setEndTime(String endTime) {
             this.endTime = endTime;
         }
 
@@ -264,12 +310,21 @@ public class MgZbProvider extends GenericModel {
     }
 
     public static class SoftWarePower implements Serializable {
+
+        private String sn;
         private String softWareName;    //  软件名称
-        private Date publicTime;        //  首次发表日期
+        private String publicTime;        //  首次发表日期
         private String registerNum;     //  登记号
         private String purpose;         //  软件用途
-
         private List<String> certPath;  //  证明材料
+
+        public String getSn() {
+            return sn;
+        }
+
+        public void setSn(String sn) {
+            this.sn = sn;
+        }
 
         public String getSoftWareName() {
             return softWareName;
@@ -279,11 +334,11 @@ public class MgZbProvider extends GenericModel {
             this.softWareName = softWareName;
         }
 
-        public Date getPublicTime() {
+        public String getPublicTime() {
             return publicTime;
         }
 
-        public void setPublicTime(Date publicTime) {
+        public void setPublicTime(String publicTime) {
             this.publicTime = publicTime;
         }
 
@@ -313,12 +368,21 @@ public class MgZbProvider extends GenericModel {
     }
 
     public static class InventionPatent implements Serializable {
+
+        private String sn;
         private String patentName;      //  专利名称
         private String PatentNum;       //  专利号
-        private Date applyTime;         //  申请日期
+        private String applyTime;         //  申请日期
         private String PatentDesc;     //   专利概述
-
         private List<String> certPath;  //  证明材料
+
+        public String getSn() {
+            return sn;
+        }
+
+        public void setSn(String sn) {
+            this.sn = sn;
+        }
 
         public String getPatentName() {
             return patentName;
@@ -336,11 +400,11 @@ public class MgZbProvider extends GenericModel {
             PatentNum = patentNum;
         }
 
-        public Date getApplyTime() {
+        public String getApplyTime() {
             return applyTime;
         }
 
-        public void setApplyTime(Date applyTime) {
+        public void setApplyTime(String applyTime) {
             this.applyTime = applyTime;
         }
 
@@ -377,12 +441,12 @@ public class MgZbProvider extends GenericModel {
         this.authType = authType;
     }
 
-    public String getPersonDesc() {
-        return personDesc;
+    public String getProviderDesc() {
+        return providerDesc;
     }
 
-    public void setPersonDesc(String personDesc) {
-        this.personDesc = personDesc;
+    public void setProviderDesc(String providerDesc) {
+        this.providerDesc = providerDesc;
     }
 
     public Integer getStatus() {
@@ -447,5 +511,45 @@ public class MgZbProvider extends GenericModel {
 
     public void setInPatentsList(List<InventionPatent> inPatentsList) {
         this.inPatentsList = inPatentsList;
+    }
+
+    public Date getAddTime() {
+        return addTime;
+    }
+
+    public void setAddTime(Date addTime) {
+        this.addTime = addTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getCheckContent() {
+        return checkContent;
+    }
+
+    public void setCheckContent(String checkContent) {
+        this.checkContent = checkContent;
+    }
+
+    public String getCheckUser() {
+        return checkUser;
+    }
+
+    public void setCheckUser(String checkUser) {
+        this.checkUser = checkUser;
+    }
+
+    public String getCheckTime() {
+        return checkTime;
+    }
+
+    public void setCheckTime(String checkTime) {
+        this.checkTime = checkTime;
     }
 }

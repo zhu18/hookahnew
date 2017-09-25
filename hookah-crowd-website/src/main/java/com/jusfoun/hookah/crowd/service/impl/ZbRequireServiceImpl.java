@@ -1,10 +1,13 @@
 package com.jusfoun.hookah.crowd.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
 import com.jusfoun.hookah.core.dao.zb.ZbTypeMapper;
 import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.domain.vo.WithdrawVo;
 import com.jusfoun.hookah.core.domain.zb.ZbAnnex;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirementPageHelper;
@@ -81,45 +84,76 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
 
     @Override
     public ReturnData<ZbRequirement> getAllRequirement(String currentPage, String pageSize, ZbRequirement zbRequirement) {
-        Pagination<ZbRequirement> page = new Pagination<>();
+
+        Pagination<ZbRequirement> pagination = new Pagination<>();
+        PageInfo<ZbRequirement> pageInfo = new PageInfo<>();
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
-            List<Condition> filters = new ArrayList();
-            List<OrderBy> orderBys = new ArrayList();
-            orderBys.add(OrderBy.desc("addTime"));
 
-            if (StringUtils.isNotBlank(zbRequirement.getRequireSn())) {
-                filters.add(Condition.like("requireSn", zbRequirement.getRequireSn()));
-            }
-            if (StringUtils.isNotBlank(zbRequirement.getTitle())) {
-                filters.add(Condition.like(" title", zbRequirement.getTitle()));
-            }
-            if (zbRequirement.getStatus() != null && zbRequirement.getStatus() != -1) {
-                filters.add(Condition.eq("status", zbRequirement.getStatus()));
-            } else {
-                filters.add(Condition.in("status", new Short[]{1, 4, 5, 9, 11, 14, 15, 16}));
-            }
             int pageNumberNew = HookahConstants.PAGE_NUM;
-            if (StringUtils.isNotBlank(currentPage)) {
+            if (com.jusfoun.hookah.core.utils.StringUtils.isNotBlank(currentPage)) {
                 pageNumberNew = Integer.parseInt(currentPage);
             }
 
             int pageSizeNew = HookahConstants.PAGE_SIZE;
-            if (StringUtils.isNotBlank(pageSize)) {
+            if (com.jusfoun.hookah.core.utils.StringUtils.isNotBlank(pageSize)) {
                 pageSizeNew = Integer.parseInt(pageSize);
             }
-            page = getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
-            List<ZbRequirement> list = page.getList();
-            for (ZbRequirement zbRequirement1 : list) {
-                User user1 = userService.selectById(zbRequirement1.getUserId());
-                if (user1.getUserType() == 4) {
-                    zbRequirement1.setRequiremetName(user1.getOrgName());
-                } else {
-                    zbRequirement1.setRequiremetName(user1.getUserName());
-                }
+
+            Short[] zbStatus = new Short[]{1, 4, 5, 9, 11, 14, 15, 16};
+            if(zbRequirement.getStatus() != null && zbRequirement.getStatus() != -1){
+                zbStatus = new Short[]{zbRequirement.getStatus()};
             }
-            returnData.setData(page);
+
+            PageHelper.startPage(pageNumberNew, pageSizeNew);
+
+            List<ZbRequirement> list = zbRequirementMapper.
+                    selectListForPageByFilters(zbRequirement.getRequireSn(), zbRequirement.getTitle(), zbStatus);
+
+            pageInfo = new PageInfo<ZbRequirement>(list);
+
+            pagination.setTotalItems(pageInfo.getTotal());
+            pagination.setPageSize(pageSizeNew);
+            pagination.setCurrentPage(pageNumberNew);
+            pagination.setList(pageInfo.getList());
+            returnData.setData(pagination);
+
+//            List<Condition> filters = new ArrayList();
+//            List<OrderBy> orderBys = new ArrayList();
+//            orderBys.add(OrderBy.desc("addTime"));
+//
+//            if (StringUtils.isNotBlank(zbRequirement.getRequireSn())) {
+//                filters.add(Condition.like("requireSn", zbRequirement.getRequireSn()));
+//            }
+//            if (StringUtils.isNotBlank(zbRequirement.getTitle())) {
+//                filters.add(Condition.like(" title", zbRequirement.getTitle()));
+//            }
+//            if (zbRequirement.getStatus() != null && zbRequirement.getStatus() != -1) {
+//                filters.add(Condition.eq("status", zbRequirement.getStatus()));
+//            } else {
+//                filters.add(Condition.in("status", new Short[]{1, 4, 5, 9, 11, 14, 15, 16}));
+//            }
+//            int pageNumberNew = HookahConstants.PAGE_NUM;
+//            if (StringUtils.isNotBlank(currentPage)) {
+//                pageNumberNew = Integer.parseInt(currentPage);
+//            }
+//
+//            int pageSizeNew = HookahConstants.PAGE_SIZE;
+//            if (StringUtils.isNotBlank(pageSize)) {
+//                pageSizeNew = Integer.parseInt(pageSize);
+//            }
+//            page = getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
+//            List<ZbRequirement> list = page.getList();
+//            for (ZbRequirement zbRequirement1 : list) {
+//                User user1 = userService.selectById(zbRequirement1.getUserId());
+//                if (user1.getUserType() == 4) {
+//                    zbRequirement1.setRequiremetName(user1.getOrgName());
+//                } else {
+//                    zbRequirement1.setRequiremetName(user1.getUserName());
+//                }
+//            }
+//            returnData.setData(page);
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Error);
             returnData.setMessage(e.toString());
@@ -134,6 +168,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             ZbRequirement zbRequirement = new ZbRequirement();
             zbRequirement.setId(Long.parseLong(id));
             zbRequirement.setStatus(Short.parseShort(status));
+            zbRequirement.setPressTime(new Date());
             zbRequirement.setApplyDeadline(DateUtils.getDate(applyDeadline));
             super.updateByIdSelective(zbRequirement);
         } catch (Exception e) {
@@ -191,6 +226,11 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
         map.put("zbRequirement", zbRequirement);
         returnData.setData(map);
         return returnData;
+    }
+
+    @Override
+    public List<ZbRequirement> selectTradeListByUID(String userId) {
+        return null;
     }
 
 }

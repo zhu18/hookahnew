@@ -6,6 +6,8 @@ import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.GenericService;
 import com.jusfoun.hookah.core.utils.ReturnData;
 
+import java.util.List;
+
 public interface ZbRequireService extends GenericService<ZbRequirement, Long> {
 
     int insertRecord(ZbRequirement zbRequirement);
@@ -20,4 +22,6 @@ public interface ZbRequireService extends GenericService<ZbRequirement, Long> {
     ReturnData<ZbRequirement> getRequirementList(ZbRequirementPageHelper helper);
 
     ReturnData<ZbRequirement> reqCheck(ZbRequirement zbRequirement );
+
+    List<ZbRequirement> selectTradeListByUID(String userId);
 }
