@@ -90,13 +90,14 @@ public class RequireController extends BaseController {
     }
 
     /**
+     * 需求详情查询
      * @author crs
      */
     @RequestMapping("/api/require/ReqCheck")
     @ResponseBody
-    public ReturnData ReqCheck(ZbRequirement zbRequirement) {
+    public ReturnData ReqCheck(String id) {
         try {
-            return zbRequireService.reqCheck(zbRequirement);
+            return zbRequireService.reqCheck(id);
         } catch (Exception e) {
             logger.error("查询失败", e);
             return ReturnData.error("查询失败");

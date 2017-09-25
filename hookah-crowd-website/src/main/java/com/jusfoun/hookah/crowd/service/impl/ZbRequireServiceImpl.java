@@ -206,30 +206,22 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
     }
 
     @Override
-    public ReturnData<ZbRequirement> reqCheck(ZbRequirement zbRequirement) {
+    public ReturnData<ZbRequirement> reqCheck(String id) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
+
+        ZbRequirement zbr = zbRequirementMapper.selectForDetail(Long.parseLong(id));
+        if(zbr == null){
+            return ReturnData.error("未获取相关信息！");
+        }
+
         List<Condition> filter = new ArrayList<>();
-        filter.add(Condition.eq("correlationId", zbRequirement.getId()));
+        filter.add(Condition.eq("correlationId", zbr.getId()));
+        filter.add(Condition.eq("type", 0));
         List<ZbAnnex> zbAnnexes = zbAnnexService.selectList(filter);
         Map<String, Object> map = new HashedMap();
         map.put("zbAnnexes", zbAnnexes);
-//        filter.clear();
-//        filter.add(Condition.eq("requireSn", zbRequirement.getRequireSn()));
-//        zbRequirement = selectOne(filter);
-//        User user = userService.selectById(zbRequirement.getUserId());
-//        if (user.getUserType() == 4) {
-//            zbRequirement.setRequiremetName(user.getOrgName());
-//        } else {
-//            zbRequirement.setRequiremetName(user.getUserName());
-//        }
-
-        Short[] zbStatus = new Short[]{1, 4, 5, 9, 11, 14, 15, 16};
-        if(zbRequirement.getStatus() != null && zbRequirement.getStatus() != -1){
-            zbStatus = new Short[]{zbRequirement.getStatus()};
-        }
-        List<ZbRequirement> list= zbRequirementMapper.selectListForPageByFilters(zbRequirement.getRequireSn(), zbRequirement.getTitle(),zbStatus);
-        map.put("list", list);
+        map.put("zbRequirement", zbr);
         returnData.setData(map);
         return returnData;
     }

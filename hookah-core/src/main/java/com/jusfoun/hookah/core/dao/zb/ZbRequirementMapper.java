@@ -22,4 +22,6 @@ public interface ZbRequirementMapper extends GenericDao<ZbRequirement> {
             @Param("zbStatus") Short[] zbStatus);
 
     List<ZbTradeRecord> selectTradeRecodes(@Param("userId") String userId);
+
+    ZbRequirement selectForDetail(@Param("id") Long id);
 }

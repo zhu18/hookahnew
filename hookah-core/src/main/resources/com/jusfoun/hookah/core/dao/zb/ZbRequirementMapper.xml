@@ -146,4 +146,17 @@
         where zra.user_id = #{userId}
     </select>
 
+    <select id="selectForDetail" resultType="com.jusfoun.hookah.core.domain.zb.ZbRequirement">
+        SELECT
+            *,
+            CASE us.user_type
+                WHEN 4 THEN org.org_name
+                ELSE us.user_name
+            END AS requiremetName
+        FROM zb_requirement zr
+        LEFT JOIN `user` us ON zr.user_id = us.user_id
+        LEFT JOIN organization org ON us.org_id = org.org_id
+        WHERE 1 = 1 and zr.id = #{id}
+    </select>
+
 </mapper>
