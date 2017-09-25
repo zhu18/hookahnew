@@ -214,16 +214,22 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
         List<ZbAnnex> zbAnnexes = zbAnnexService.selectList(filter);
         Map<String, Object> map = new HashedMap();
         map.put("zbAnnexes", zbAnnexes);
-        filter.clear();
-        filter.add(Condition.eq("requireSn", zbRequirement.getRequireSn()));
-        zbRequirement = selectOne(filter);
-        User user = userService.selectById(zbRequirement.getUserId());
-        if (user.getUserType() == 4) {
-            zbRequirement.setRequiremetName(user.getOrgName());
-        } else {
-            zbRequirement.setRequiremetName(user.getUserName());
+//        filter.clear();
+//        filter.add(Condition.eq("requireSn", zbRequirement.getRequireSn()));
+//        zbRequirement = selectOne(filter);
+//        User user = userService.selectById(zbRequirement.getUserId());
+//        if (user.getUserType() == 4) {
+//            zbRequirement.setRequiremetName(user.getOrgName());
+//        } else {
+//            zbRequirement.setRequiremetName(user.getUserName());
+//        }
+
+        Short[] zbStatus = new Short[]{1, 4, 5, 9, 11, 14, 15, 16};
+        if(zbRequirement.getStatus() != null && zbRequirement.getStatus() != -1){
+            zbStatus = new Short[]{zbRequirement.getStatus()};
         }
-        map.put("zbRequirement", zbRequirement);
+        List<ZbRequirement> list= zbRequirementMapper.selectListForPageByFilters(zbRequirement.getRequireSn(), zbRequirement.getTitle(),zbStatus);
+        map.put("list", list);
         returnData.setData(map);
         return returnData;
     }
