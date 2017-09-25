@@ -102,5 +102,48 @@
         limit #{startIndex},#{pageSize}
     </select>
 
+    <select id="selectListForPageByFilters" resultType="com.jusfoun.hookah.core.domain.zb.ZbRequirement">
+        SELECT
+            *,
+            CASE us.user_type
+              WHEN 4 THEN org.org_name
+              ELSE us.user_name
+            END AS requiremetName
+        FROM
+            zb_requirement zr
+        LEFT JOIN `user` us ON zr.user_id = us.user_id
+        LEFT JOIN organization org ON us.org_id = org.org_id
+        WHERE 1 = 1
+        <if test="requireSn != null and requireSn != ''">
+            and zr.require_sn like '%${requireSn}%'
+        </if>
+        <if test="title != null and title != ''">
+            and zr.title like '%${title}%'
+        </if>
+        <if test="zbStatus != null">
+            and zr.status IN
+            <foreach item="item" index="index" collection="zbStatus" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        ORDER BY zr.update_time
+    </select>
+
+    <select id="selectTradeRecodes" resultType="com.jusfoun.hookah.core.domain.zb.vo.ZbTradeRecord">
+
+        SELECT
+            req.title AS title,
+            req.type AS type,
+            req.reward_money AS rewardMoney,
+            req.press_time,
+            CASE zra.`status`
+                    WHEN 0 THEN 34
+                    ELSE req.`status`
+            END AS status
+        FROM
+            zb_requirement req
+        LEFT JOIN zb_requirement_apply zra ON req.id = zra.requirement_id
+        where zra.user_id = #{userId}
+    </select>
 
 </mapper>
