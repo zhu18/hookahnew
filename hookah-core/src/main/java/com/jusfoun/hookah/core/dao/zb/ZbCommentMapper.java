@@ -4,4 +4,5 @@ import com.jusfoun.hookah.core.domain.zb.ZbComment;
 import com.jusfoun.hookah.core.generic.GenericDao;
 
 public interface ZbCommentMapper extends GenericDao<ZbComment> {
+
 }
