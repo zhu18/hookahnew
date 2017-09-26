@@ -17,7 +17,7 @@ import javax.annotation.Resource;
  */
 
 @Controller
-@RequestMapping("/release")
+@RequestMapping("/api/release")
 public class ReleaseController extends BaseController{
 
     @Resource
@@ -30,8 +30,8 @@ public class ReleaseController extends BaseController{
     @RequestMapping(value = "/insertRequirements", method = RequestMethod.POST)
     public ReturnData ReleaseRequirements(@RequestBody ZbRequirementVo vo){
         try {
-            /*String userId = this.getCurrentUser().getUserId();
-            vo.getZbRequirement().setUserId(userId);*/
+            String userId = this.getCurrentUser().getUserId();
+            vo.getZbRequirement().setUserId(userId);
             ReturnData returnData = releaseService.insertRequirements(vo);
             return returnData;
         } catch (Exception e) {
