@@ -78,10 +78,14 @@ app.run(function ($rootScope, $state) {
                   "title":"分类查询",
                   "url":"category.search"
               },
-              {
-                  "title":"添加分类",
-                  "url":"category.add"
-              }
+			  {
+				  "title":"添加分类",
+				  "url":"category.add"
+			  },
+			  {
+				  "title":"分类迁移",
+				  "url":"category.move"
+			  }
           ]
       }
       // ,

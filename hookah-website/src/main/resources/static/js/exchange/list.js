@@ -251,15 +251,14 @@ function getDataForin(){
 	}
 	goPage('1')
 }
-if(prId){//渲染分类
-	var html = '';
-	html += '<div class="crumbs-nav margin-top-20 padding-bottom-10" id="J_crimbsNav">';
-	// if(msId){
-		// html += '分类：<a href="/exchange/list?catId='+prId+'&prId='+prId+'&prNm='+prNm+'">'+prNm+'</a><span class="fa fa-angle-right margin-left-5 margin-right-5"></span><span class="color-blue">'+msNm+'</span></div>';
-    // }else{
+
+$(document).ready(function(){
+	if(prId){//渲染分类
+		var html = '';
+		html += '<div class="crumbs-nav margin-top-20 padding-bottom-10" id="J_crimbsNav">';
 		html += '分类：<span class="color-blue">'+prNm+'</span></div>';
-    // }
-	$('#J_searchCategory').before(html)
-}else{
-	$('#J_searchCategory').addClass('margin-top-20')
-}
+		$('#J_searchCategory').before(html)
+	}else{
+		$('#J_searchCategory').addClass('margin-top-20')
+	}
+});

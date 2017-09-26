@@ -1,0 +1,53 @@
+<div class="row">
+	<div class="col-sm-12">
+		<div class="console-title console-title-border clearfix">
+			<div class="pull-left"><h5 ng-bind="title">新增分类</h5></div>
+			<div class="pull-right">
+				<button class="btn btn-default" ui-sref="category.search">
+					<span class="glyphicon glyphicon-arrow-left"></span> 返回
+				</button>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-12">
+		<form class="form-horizontal" role="form" id="categoryForm" name="category">
+			<div class="form-group">
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label class="col-sm-2 control-label">数据类型</label>
+						<div class="col-sm-6">
+							<select id="dataTemp" data-ng-model="dataTemp" ng-options="dataTemp.typeId as dataTemp.typeName for dataTemp in dataTemps" style="width: 184px;height: 32px">
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label class="col-sm-2 control-label">数据类型</label>
+						<div class="col-sm-6">
+							<select data-ng-model="dataTemp"  multiple="multiple" size="8"  style="width: 184px;">
+								<option value="12">1231231</option>
+								<option value="12">1231231</option>
+								<option value="12">1231231</option>
+								<option value="12">1231231</option>
+								<option value="12">1231231</option>
+								<option value="12">1231231</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label class="col-sm-2 control-label">数据类型</label>
+						<div class="col-sm-6">
+							<select data-ng-model="dataTemp" ng-options="dataTemp.typeId as dataTemp.typeName for dataTemp in dataTemps" style="width: 184px;height: 32px">
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</form>
+	</div>
+</div>

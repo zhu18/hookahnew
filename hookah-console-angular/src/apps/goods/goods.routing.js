@@ -1,6 +1,7 @@
 import ShelfController from "../shelf/ShelfController";
 import ManageGoodsController from "../shelf/ManageGoodsController";
 import CategoryController from "../category/CategoryController";
+import MoveController from "../category/MoveController";
 import ManageAttrTypeController from "../category/ManageAttrTypeController";
 import AttrTypeController from "../attrtype/AttrTypeController";
 import GoodsListController from "./GoodsListController";
@@ -89,6 +90,12 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
 			template: require('../category/add.html'),
 			controller: CategoryController,
 			permission: 'category_add'
+		})
+		.state('category.move', {
+			url: '/category/move',
+			template: require('../category/move.html'),
+			controller: MoveController,
+			permission: 'category_move'
 		})
 		.state('category.edit', {
 			url: '/category/edit/:data',
