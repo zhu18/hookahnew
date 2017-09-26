@@ -70,5 +70,33 @@
         GROUP BY wxu.recommenderId
         ORDER BY rewardMoney DESC
   </select>
+    <select id="selectByInviteeId" parameterType="java.lang.String" resultMap="BaseResultMap">
 
+          SELECT * FROM wx_user_recommend WHERE inviteeId = #{inviteeId}
+    </select>
+
+    <update id="updateByInviteeidSelective" parameterType="com.jusfoun.hookah.core.domain.WXUserRecommend" >
+        update wx_user_recommend
+        <set >
+            <if test="recommenderid != null" >
+                recommenderId = #{recommenderid,jdbcType=VARCHAR},
+            </if>
+            <if test="isdeal != null" >
+                isdeal = #{isdeal,jdbcType=BIT},
+            </if>
+            <if test="isauthenticate != null" >
+                isauthenticate = #{isauthenticate,jdbcType=BIT},
+            </if>
+            <if test="rewardMoney != null" >
+                reward_money = #{rewardMoney,jdbcType=BIGINT},
+            </if>
+            <if test="addTime != null" >
+                add_time = #{addTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null" >
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where inviteeId = #{inviteeId}
+    </update>
 </mapper>

@@ -2,6 +2,9 @@
  * Created by Dajun on 2017-9-19.
  */
 
+
+let crowdSourcingId = GetUrlValue('id');
+
 // 获取需求类型
 function getRequirementType() {
   $.ajax({
@@ -17,14 +20,37 @@ function getRequirementType() {
         tempHtml += '<span class="type-span" value="' + list[i].id + '">' + list[i].typeName + '</span>'
       }
       $('.requirement-type').html(tempHtml);
-      crowdsourcingRelease();//放这里的原因是 要等到需求类型渲染出来才可以 请求草稿数据（草稿数据里有选中的需求类型）
+
+      if(crowdSourcingId){
+        modifyCrowdsourcing()
+      }else {
+        crowdsourcingRelease();//放这里的原因是 要等到需求类型渲染出来才可以 请求草稿数据（草稿数据里有选中的需求类型）;
+      }
     }
   });
 }
 getRequirementType();
 
-let crowdSourcingId = null;
-function crowdsourcingRelease() {
+
+
+
+function modifyCrowdsourcing() {//修改，从我的发布点击'修改'调转过来的
+  $.ajax({
+    type: 'get',
+    url: "/api/release/releaseStatus?id="+crowdSourcingId,
+    cache:false,
+    success: function (data) {
+      console.log(data);
+      if (data.data[0].hasOwnProperty('zbRequirement')) {
+
+        renderPage(data.data[0]);
+
+      }
+    }
+  });
+}
+
+function crowdsourcingRelease() { //请求草稿
   $.ajax({
     type: 'get',
     url: "/api/release/requirementInfo",
@@ -37,42 +63,47 @@ function crowdsourcingRelease() {
         } else {
           crowdSourcingId = null;
         }
-        $('#J_title').val(data.data.zbRequirement.title);
-        $('#J_username').val(data.data.zbRequirement.contactName);
-        $('.requirement-type').attr('value', data.data.zbRequirement.type);
-        $('#J_phone').val(data.data.zbRequirement.contactPhone);
-        $('#J_tag').val(data.data.zbRequirement.tag);
-        $('#J_description').val(data.data.zbRequirement.description);
-        $('#J_date').val(data.data.zbRequirement.deliveryDeadline);
-        $('#J_money').val(data.data.zbRequirement.rewardMoney / 100);
-        $('#J_checkRemark').val(data.data.zbRequirement.checkRemark);
-        let spanList = $('.requirement-type span');
-        for (let i = 0; i < spanList.length; i++) {
-          if (spanList.eq(i).attr('value') == data.data.zbRequirement.type) {
-            spanList.eq(i).addClass('active');
-          }
-        }
-        let tempHtml = '';
+        renderPage(data.data);
 
-        for (let c = 0; c < data.data.zbRequirementFiles.length; c++) {
+      }
+    }
+  });
+}
 
-          var className = fileTypeClassName(data.data.zbRequirementFiles[c].fileName);
-          tempHtml += '\
-        <dl fileName="' + data.data.zbRequirementFiles[c].fileName + '" filePath="' + data.data.zbRequirementFiles[c].filePath + '" class="load-file ' + className + '">\
-          <dt><a href="javascript:void(0)" title=""><img src="' + data.data.zbRequirementFiles[c].filePath + '"></a></dt>\
+function renderPage(data) {
+  $('#J_title').val(data.zbRequirement.title);
+  $('#J_username').val(data.zbRequirement.contactName);
+  $('.requirement-type').attr('value', data.zbRequirement.type);
+  $('#J_phone').val(data.zbRequirement.contactPhone);
+  $('#J_tag').val(data.zbRequirement.tag);
+  $('#J_description').val(data.zbRequirement.description);
+  $('#J_date').val(data.zbRequirement.deliveryDeadline);
+  $('#J_money').val(data.zbRequirement.rewardMoney / 100);
+  $('#J_checkRemark').val(data.zbRequirement.checkRemark);
+  let spanList = $('.requirement-type span');
+  for (let i = 0; i < spanList.length; i++) {
+    if (spanList.eq(i).attr('value') == data.zbRequirement.type) {
+      spanList.eq(i).addClass('active');
+    }
+  }
+  let tempHtml = '';
+
+  for (let c = 0; c < data.zbRequirementFiles.length; c++) {
+
+    var className = fileTypeClassName(data.zbRequirementFiles[c].fileName);
+    tempHtml += '\
+        <dl fileName="' + data.zbRequirementFiles[c].fileName + '" filePath="' + data.zbRequirementFiles[c].filePath + '" class="load-file ' + className + '">\
+          <dt><a href="javascript:void(0)" title=""><img src="' + data.zbRequirementFiles[c].filePath + '"></a></dt>\
           <dd>\
-          <span class="overflowpoint">' + data.data.zbRequirementFiles[c].fileName + '</span>\
+          <span class="overflowpoint">' + data.zbRequirementFiles[c].fileName + '</span>\
           <div class="crowdsourcing-table-edit">\
-          <a href="' + data.data.zbRequirementFiles[c].filePath + '" target="_blank" class="download"><img src="/static/images/crowdsourcing/download.png" alt=""></a>\
+          <a href="' + data.zbRequirementFiles[c].filePath + '" target="_blank" class="download"><img src="/static/images/crowdsourcing/download.png" alt=""></a>\
           <a href="javascript:void (0)" class="del j_firstPage" ><img src="/static/images/crowdsourcing/del.png" alt=""></a>\
           </div>\
           </dd>\
         </dl>';
-        }
-        $('.load-file-list').append(tempHtml)
-      }
-    }
-  });
+  }
+  $('.load-file-list').append(tempHtml)
 }
 
 

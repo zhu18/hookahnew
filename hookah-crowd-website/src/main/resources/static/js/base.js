@@ -302,3 +302,15 @@ function Transformation(price,quotaPrice) {
         return (price / 100 ).toFixed(2);
     }
 }
+
+/*
+* 获取URL中传过来的参数 比如  http://something.com?id=27
+* 获取id的值
+* 用法GetUrlValue('id') //27
+* */
+function GetUrlValue(name) {
+  let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)","i");
+  let r = window.location.search.substr(1).match(reg);
+  if (r!=null) return (r[2]); return null;
+}
+//用法

@@ -18,6 +18,7 @@ import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.crowd.constants.ZbContants;
 import com.jusfoun.hookah.crowd.service.UserService;
 import com.jusfoun.hookah.crowd.service.ZbAnnexService;
 import com.jusfoun.hookah.crowd.service.ZbRequireService;
@@ -101,7 +102,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                 pageSizeNew = Integer.parseInt(pageSize);
             }
 
-            Short[] zbStatus = new Short[]{1, 4, 5, 9, 11, 14, 15, 16};
+            Short[] zbStatus = new Short[]{1, 4, 5, 6,9, 11, 14, 15, 16};
             if(zbRequirement.getStatus() != null && zbRequirement.getStatus() != -1){
                 zbStatus = new Short[]{zbRequirement.getStatus()};
             }
@@ -111,6 +112,13 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             List<ZbRequirement> list = zbRequirementMapper.
                     selectListForPageByFilters(zbRequirement.getRequireSn(), zbRequirement.getTitle(), zbStatus);
 
+            for (ZbRequirement zbRequirement1:list){
+                if (zbRequirement1.getStatus()==5){
+                    if ( zbRequirement1.getApplyDeadline().getTime()<=new Date().getTime()) {
+                        zbRequirement1.setStatus(ZbContants.Zb_Require_Status.SELECTING.getCode().shortValue());
+                    }
+                }
+            }
             pageInfo = new PageInfo<ZbRequirement>(list);
 
             pagination.setTotalItems(pageInfo.getTotal());

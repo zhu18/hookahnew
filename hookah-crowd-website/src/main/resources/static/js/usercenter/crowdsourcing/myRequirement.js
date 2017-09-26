@@ -24,11 +24,11 @@ function loadPageData(data) { //渲染页面数据
     {
       case 1:
         tempState='待审核';
-        tempEdit='<span class="signUp">修改</span><span class="signUp">删除</span>';
+        tempEdit='<a href="/usercenter/crowdsourcingRelease?id='+data[i].id+' "class="signUp">修改</a><span class="signUp">删除</span>';
         break;
       case 2:
         tempState='审核未通过';
-        tempEdit='<span class="signUp">修改</span><span class="signUp">删除</span>';
+        tempEdit='<a href="/usercenter/crowdsourcingRelease?id='+data[i].id+'" class="signUp">修改</a><span class="signUp">删除</span>';
 
         break;
       case 3:

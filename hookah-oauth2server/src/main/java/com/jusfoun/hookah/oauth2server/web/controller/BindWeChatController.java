@@ -112,6 +112,7 @@ public class BindWeChatController {
             String userSn = "QD"+ now + num;
             user.setUserSn(userSn);
             user.setUserName("");  //规则待确定
+            user.setPassword("");
 
             User regUser = userService.insert((User) user);
             //TODO...绑定微信信息
@@ -119,56 +120,7 @@ public class BindWeChatController {
             logger.info("用户[" + user.getUserName() + "]注册成功(这里可以进行一些注册通过后的一些系统参数初始化操作)");
         }
         //绑定完成 登录
-        return "redirect:/reg/login?userName="+user.getUserName()+"&passWord"+user.getPassword();
+        return "forward:/login?userName="+user.getUserName()+"&password="+user.getPassword();
     }
 
-    @RequestMapping(value = "/reg/login", method = RequestMethod.GET)
-    public String postLogin(User user, RedirectAttributes redirectAttributes, HttpServletRequest request, HttpServletResponse response) {
-
-        UsernameAndPasswordToken token = new UsernameAndPasswordToken();
-        String username = user.getUserName();
-        if(FormatCheckUtil.checkMobile(username)){
-            token.setMobile(username);
-        }else if(FormatCheckUtil.checkEmail(username)){
-            token.setEmail(username);
-        }else{
-            token.setUsername(username);
-        }
-        token.setPassword(user.getPassword().toCharArray());
-        Subject currentUser = SecurityUtils.getSubject();
-
-        try {
-            logger.info("对用户[" + username + "]进行登录验证..验证开始");
-            currentUser.login(token);
-            logger.info("对用户[" + username + "]进行登录验证..验证通过");
-        } catch (UnknownAccountException uae) {
-            logger.info("对用户[" + username + "]进行登录验证..验证未通过,未知账户");
-            redirectAttributes.addFlashAttribute("message", "未知账户");
-        } catch (IncorrectCredentialsException ice) {
-            logger.info("对用户[" + username + "]进行登录验证..验证未通过,错误的凭证");
-            redirectAttributes.addFlashAttribute("message", "密码不正确");
-        } catch (LockedAccountException lae) {
-            logger.info("对用户[" + username + "]进行登录验证..验证未通过,账户已锁定");
-            redirectAttributes.addFlashAttribute("message", "账户已锁定");
-        } catch (ExcessiveAttemptsException eae) {
-            logger.info("对用户[" + username + "]进行登录验证..验证未通过,错误次数过多");
-            redirectAttributes.addFlashAttribute("message", "用户名或密码错误次数过多");
-        } catch (AuthenticationException ae) {
-            //通过处理Shiro的运行时AuthenticationException就可以控制用户登录失败或密码错误时的情景
-            logger.info("对用户[" + username + "]进行登录验证..验证未通过,堆栈轨迹如下");
-            ae.printStackTrace();
-            redirectAttributes.addFlashAttribute("message", "用户名或密码不正确");
-        }
-        Map<String,String> host = myProps.getHost();
-        //验证是否登录成功
-        if (currentUser.isAuthenticated()) {
-            //TODO...登录日志
-            loginLogService.addLoginLog(username, NetUtils.getIpAddr(request));
-            logger.info("用户[" + username + "]登录认证通过(这里可以进行一些认证通过后的一些系统参数初始化操作)");
-            return "redirect:"+host.get("website")+"/login";
-        } else {
-            token.clear();
-            return "redirect:"+host.get("website")+"/login";
-        }
-    }
 }

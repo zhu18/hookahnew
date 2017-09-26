@@ -1,8 +1,9 @@
 package com.jusfoun.hookah.crowd.controller;
 
+import com.jusfoun.hookah.core.domain.zb.ZbProgram;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirementApply;
 import com.jusfoun.hookah.core.utils.ReturnData;
-import com.jusfoun.hookah.crowd.service.ZbRequireApplyWebsiteService;
+import com.jusfoun.hookah.crowd.service.ZbProgramService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,20 +15,20 @@ import javax.annotation.Resource;
  * Created by ctp on 2017/9/26.
  */
 @Controller
-public class RequireApplyWebsiteController extends BaseController {
+public class ZbProgramController extends BaseController {
+
 
     @Resource
-    ZbRequireApplyWebsiteService zbRequireApplyWebsiteService;
+    ZbProgramService zbProgramService;
 
     /**
-     *前台需求大厅  需求报名
+     *前台选中方案提交
      * @return
      */
-    @RequestMapping(value = "/api/apply/add",method = RequestMethod.GET)
-    @ResponseBody
-    public ReturnData add(ZbRequirementApply zbRequirementApply){
-        return zbRequireApplyWebsiteService.addApplay(zbRequirementApply);
-    }
-
+//    @RequestMapping(value = "/api/apply/add",method = RequestMethod.GET)
+//    @ResponseBody
+//    public ReturnData add(ZbRequirementApply zbRequirementApply){
+//        return null;
+//    }
 
 }
