@@ -41,4 +41,25 @@ public class WXUserRecommendServiceImpl extends GenericServiceImpl<WXUserRecomme
         pagination.setList(list);
         return pagination;
     }
+
+    @Override
+    public void updateWXUserRecommendIsAuthenticate(String inviteeId) {
+        WXUserRecommend  recommend =new WXUserRecommend();
+        recommend.setInviteeid(inviteeId);
+        recommend.setIsauthenticate((byte)1);  //将被邀请人是否认证的状态更改为是
+        recommend.setUpdateTime(new Date());
+        wxUserRecommendMapper.updateByInviteeidSelective(recommend);
+    }
+
+    @Override
+    public void updateWXUserRecommendIsDeal(String inviteeId) {
+        WXUserRecommend  recommend=wxUserRecommendMapper.selectByInviteeId(inviteeId);
+        if (recommend.getIsdeal()==0){
+            recommend.setIsdeal((byte)1);  //将被邀请人是否成功交易的状态更改为是
+            recommend.setUpdateTime(new Date());
+            //wxUserRecommendMapper.updateByPrimaryKeySelective(recommend);
+            wxUserRecommendMapper.updateByInviteeidSelective(recommend);
+        }
+    }
+
 }

@@ -98,6 +98,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     MgGoodsOrderService mgGoodsOrderService;
 
     @Resource
+    private WXUserRecommendService wxUserRecommendService;
+
+    @Resource
     public void setDao(OrderInfoMapper orderinfoMapper) {
         super.setDao(orderinfoMapper);
     }
@@ -663,6 +666,10 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         if(OrderInfo.PAYSTATUS_PAYED == payStatus){
             managePaySuccess(orderInfo);
             countSales(orderInfo.getOrderId());
+
+            //更新微信推荐是否成功交易状态
+            wxUserRecommendService.updateWXUserRecommendIsDeal(orderInfo.getUserId());
+
         }
         //        if(list!=null&&list.size()>0){
         //            mapper.updatePayStatus(orderSn,status);
