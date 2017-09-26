@@ -1,9 +1,11 @@
 package com.jusfoun.hookah.core.dao;
 
 import com.jusfoun.hookah.core.domain.WXUserRecommend;
+import com.jusfoun.hookah.core.domain.vo.WXUserRecommendVo;
 import com.jusfoun.hookah.core.generic.GenericDao;
 
 import java.util.HashMap;
+import java.util.List;
 
 public interface WXUserRecommendMapper extends GenericDao<WXUserRecommend> {
     /**
@@ -55,4 +57,8 @@ public interface WXUserRecommendMapper extends GenericDao<WXUserRecommend> {
     int updateByPrimaryKey(WXUserRecommend record);
 
     HashMap<String,Integer> countInviteeAndReward(String userId);
+
+    List<WXUserRecommendVo> findRecommendListByCondition(HashMap<String, Object> paramMap);
+
+    int countRecommendListByCondition(HashMap<String, Object> paramMap);
 }
