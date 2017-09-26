@@ -2,7 +2,6 @@ package com.jusfoun.hookah.webiste.interceptor;
 
 import com.jusfoun.hookah.core.domain.Help;
 import com.jusfoun.hookah.core.domain.User;
-import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.HelpService;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -38,17 +37,20 @@ public class CommonInterceptor implements HandlerInterceptor {
         BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(httpServletRequest.getServletContext());
         try {
             Subject subject = SecurityUtils.getSubject();
-            if (subject != null && subject.isAuthenticated()) {
-                if (!ajax) {
-                    Session session = subject.getSession();
-                    Map userMap = (Map)session.getAttribute("user");
-                    String userId = (String)userMap.get("userId");
-                    UserService userService = (UserService) factory.getBean("userService");
-                    User user = userService.selectById(userId);
-                    Map<String, Object> model = modelAndView.getModel();
-                    model.put("user", user);
+            if(modelAndView != null){
+                if (subject != null && subject.isAuthenticated()) {
+                    if (!ajax) {
+                        Session session = subject.getSession();
+                        Map userMap = (Map)session.getAttribute("user");
+                        String userId = (String)userMap.get("userId");
+                        UserService userService = (UserService) factory.getBean("userService");
+                        User user = userService.selectById(userId);
+                        Map<String, Object> model = modelAndView.getModel();
+                        model.put("user", user);
+                    }
                 }
             }
+
         } catch (UnavailableSecurityManagerException e) {
 
         }

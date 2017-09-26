@@ -309,7 +309,7 @@
         WHERE
         goods.is_delete = 1
         <if test="catId != '' and catId != null">
-            AND goods.cat_id like '102101%'
+            AND goods.cat_id like '${catId}%'
         </if>
 
     </select>

@@ -131,7 +131,7 @@ public class CategoryController {
         ReturnData<List<Goods>> returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
-            List<Goods> list = (List) goodsService.getListByCatId(catId);
+            List<Goods> list =  goodsService.getListByCatId(catId);
             returnData.setData(list);
         }catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
