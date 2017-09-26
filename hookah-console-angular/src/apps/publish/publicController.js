@@ -21,7 +21,7 @@ class publicController {
                   $scope.tag=item.tag;
                   $scope.description=item.description;
                   $scope.deliveryDeadline=item.deliveryDeadline;
-                  var tomorrow = new Date();
+                  var tomorrow = new Date(item.deliveryDeadline);
                   $scope.applyDeadline=new Date(tomorrow.setDate(tomorrow.getDate() + 7));
                   $scope.rewardMoney=item.rewardMoney;
                   $scope.trusteePercent=item.trusteePercent;
@@ -41,8 +41,14 @@ class publicController {
     $scope.reader();
 
     $scope.public=function () {
-        if($scope.applyDeadline>$scope.deliveryDeadline){
-            console.log(555555);
+        if($filter('format')($scope.applyDeadline, 'yyyy-MM-dd HH:mm:ss')>$scope.deliveryDeadline){
+            var modalInstance =$rootScope.openConfirmDialogModal("报名截止日期超过交付日期了，请重新选择日期！");
+            modalInstance.result.then(function () {
+
+            }, function () {
+
+            });
+        }else {
             var promise = $http({
                 method: 'GET',
                 url: $rootScope.site.crowdServer + "/api/require/updateStatus",
@@ -74,8 +80,6 @@ class publicController {
                 $rootScope.loadingState = false;
                 growl.addSuccessMessage("订单数据加载完毕。。。");
             });
-        }else {
-            console.log(8888);
         }
 
       };
