@@ -3,12 +3,14 @@ package com.jusfoun.hookah.crowd.service.impl;
 import com.jusfoun.hookah.core.dao.zb.ZbProgramMapper;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementApplyMapper;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
+import com.jusfoun.hookah.core.domain.zb.ZbAnnex;
 import com.jusfoun.hookah.core.domain.zb.ZbProgram;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirementApply;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.crowd.service.ZbAnnexService;
 import com.jusfoun.hookah.crowd.service.ZbProgramService;
 import com.jusfoun.hookah.crowd.service.ZbRequireApplyService;
 import org.springframework.stereotype.Service;
@@ -35,6 +37,9 @@ public class ZbRequireApplyServiceImpl extends GenericServiceImpl<ZbRequirementA
     ZbProgramService zbProgramService;
 
     @Resource
+    ZbAnnexService zbAnnexService;
+
+    @Resource
     public void setDao(ZbRequirementApplyMapper zbRequirementApplyMapper) {
         super.setDao(zbRequirementApplyMapper);
     }
@@ -51,9 +56,12 @@ public class ZbRequireApplyServiceImpl extends GenericServiceImpl<ZbRequirementA
         }
         List<Condition> filters = new ArrayList<>();
         filters.add(Condition.eq("requirementId",requirementId));
-        ZbRequirement zbRequirement = zbRequirementMapper.selectByPrimaryKey(requirementId);
+        ZbRequirement zbRequirement = zbRequirementMapper.selectForDetail(requirementId);
         List<ZbRequirementApply> zbRequirementApplies = selectList(filters);
         List<ZbProgram> zbPrograms = new ArrayList<>();
+        List<Condition> filter = new ArrayList<>();
+        filter.add(Condition.eq("correlationId", zbRequirement.getId()));
+        List<ZbAnnex> zbAnnexes = zbAnnexService.selectList(filter);
         for (ZbRequirementApply zbRequirementApply:zbRequirementApplies){
             if (zbRequirementApply.getStatus().equals(1)){
                 filters.clear();
@@ -65,6 +73,7 @@ public class ZbRequireApplyServiceImpl extends GenericServiceImpl<ZbRequirementA
         map.put("zbRequirement",zbRequirement);
         map.put("zbRequirementApplies",zbRequirementApplies);
         map.put("zbPrograms",zbPrograms);
+        map.put("zbAnnexes", zbAnnexes);
         return ReturnData.success(map);
     }
 
