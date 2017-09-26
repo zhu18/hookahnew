@@ -2,7 +2,6 @@
  * Created by Dajun on 2017-9-19.
  */
 function loadPageData(data) { //渲染页面数据
-  console.log(data)
   data = data.data.list;
   var tempHtml = '\
         <thead>\
@@ -83,4 +82,28 @@ function searchFn() {
   dataParm.timeType = $('#timeType').attr('value');
   console.log(dataParm);
   goPage("1");
+}
+
+$(document).on('click','.signUp',function () {
+  check()
+});
+function check() {
+  $.ajax({
+    url: '/islogin',
+    type: 'post',
+    success: function (data) {
+      if(data){
+        $.confirm('您好！您还不是服务商，不能参加需求任务报名，如想报名请点击 【确定】 申请成为服务商，按要求提交信息即可通过服务商认证。 ',null,function(type){
+          if(type == 'yes'){
+            this.hide();
+          }else{
+            this.hide();
+
+          }
+        });
+      }else{
+        window.location.href = host.loginUrl + encodeURIComponent(host.crowd+'/crowdsourcing-list');
+      }
+    }
+  });
 }

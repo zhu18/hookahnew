@@ -62,7 +62,14 @@ spring:
               enable: true
             socketFactory:
               fallback: false
-        dialect : org.hibernate.dialect.MySQL5Dialect
+#  jpa:
+#    database: MYSQL
+#    show-sql: true
+##    hibernate:
+##      ddl-auto: create-drop
+#    properties:
+#      hibernate:
+#        dialect : org.hibernate.dialect.MySQL5Dialect
   mvc:
     static-path-pattern: /static/**
 myconf:
@@ -91,5 +98,5 @@ myconf:
   redis:
     ipPort: 192.168.15.174:7000,192.168.15.174:7001,192.168.15.174:7002
   consul:
-    ipPort: 127.0.0.1:8500
+    ipPort: localhost:8500
 debug: true

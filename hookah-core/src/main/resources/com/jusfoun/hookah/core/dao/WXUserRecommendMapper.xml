@@ -28,4 +28,47 @@
     SELECT count(id) AS inviteeNum,SUM(reward_money) AS rewardMoney FROM wx_user_recommend WHERE  recommenderId=#{userId}
   </select>
 
+   <sql id="sqlRecommendListByCondition">
+       FROM
+       wx_user_recommend wxu
+
+       LEFT JOIN USER u ON u.user_id = wxu.recommenderId
+
+       WHERE 1=1
+
+       <if test="userName != '' and userName != null">
+           AND (
+           u.user_name like CONCAT('%', #{userName}, '%')
+           OR u.user_id like CONCAT('%', #{userName}, '%')
+           )
+       </if>
+   </sql>
+
+  <select id="countRecommendListByCondition" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+       SELECT
+           count(DISTINCT(wxu.recommenderId)) <include refid="sqlRecommendListByCondition"/>
+  </select>
+  <select id="findRecommendListByCondition" resultType="com.jusfoun.hookah.core.domain.vo.WXUserRecommendVo" parameterType="java.util.HashMap">
+        SELECT
+            u.user_id AS userId,
+            u.user_name AS userName,
+            u.user_type AS userType,
+            u.mobile,
+            count(wxu.id) AS inviteeNum,
+            sum(wxu.reward_money) AS rewardMoney,
+            (
+                SELECT
+                    count(wxur.id)
+                FROM
+                    wx_user_recommend wxur
+                WHERE
+                    wxur.recommenderId = wxu.recommenderId
+                AND wxur.isdeal = #{isdeal}
+            ) AS isdealNum
+        <include refid="sqlRecommendListByCondition"/>
+
+        GROUP BY wxu.recommenderId
+        ORDER BY rewardMoney DESC
+  </select>
+
 </mapper>

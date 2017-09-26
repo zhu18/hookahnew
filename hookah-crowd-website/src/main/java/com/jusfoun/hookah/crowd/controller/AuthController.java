@@ -10,12 +10,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,6 +31,17 @@ public class AuthController extends BaseController {
 
     @Resource
     private MgZbProviderService mgZbProviderService;
+
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login(String redirect_uri, HttpServletRequest request) {
+        if (!StringUtils.isEmpty(redirect_uri)) {
+            return "redirect:" + redirect_uri;
+        } else {
+//            userService.setUVCountByDate();
+            return "redirect:/crowdsourcing-list";
+        }
+    }
 
     /**
      * 校验是否登录

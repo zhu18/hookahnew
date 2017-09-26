@@ -24,6 +24,12 @@ public class UserRecommendController extends BaseController{
     @Resource
     private WXUserRecommendService wxUserRecommendService;
 
+    /**
+     * 前台奖励推荐页面
+     * @param request
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/recommendInfo")
     public String recommendInfo(HttpServletRequest request) throws Exception {
         try{

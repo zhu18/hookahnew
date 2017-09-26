@@ -20,6 +20,8 @@ import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.DateUtils;
+import com.jusfoun.hookah.core.utils.ExceptionConst;
+import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -674,4 +676,29 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         return goodsVo;
     }
 
+    @Override
+    public List<Goods> getListByCatId(String catId){
+        return goodsMapper.getListByCatId(catId);
+    }
+
+    @Override
+    public ReturnData confirmTransCategorInfo(String catId, String goodsIds){
+
+        ReturnData<Goods> returnData = new ReturnData<Goods>();
+        returnData.setCode(ExceptionConst.Success);
+        Map<String,Object> map=new HashMap<String,Object>();
+        try {
+            //参数处理
+            String[] ids=goodsIds.split(",");
+            map.put("ids",ids);
+            map.put("catId",catId);
+            goodsMapper.transferCategoryInfoByGoodsIds(map);
+        }catch (Exception e){
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setMessage("操作失败："+e.toString());
+            e.printStackTrace();
+        }
+
+        return returnData;
+    }
 }
