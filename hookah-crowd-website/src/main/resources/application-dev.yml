@@ -9,9 +9,9 @@ server:
 spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.15.175:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
+    url: jdbc:mysql://192.168.15.90:3306/bdgStore?&characterEncoding=utf8&autoReconnect=true&useSSL=false
     username: root
-    password: bdgStore3306
+    password: password
     initialize: true
     type: com.alibaba.druid.pool.DruidDataSource
     # 连接池配置
