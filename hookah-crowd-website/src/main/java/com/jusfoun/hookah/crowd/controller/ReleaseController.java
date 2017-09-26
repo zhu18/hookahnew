@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.crowd.controller;
 
 import com.jusfoun.hookah.core.domain.zb.vo.ZbRequirementVo;
+import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.crowd.service.ReleaseService;
 import org.springframework.stereotype.Controller;
@@ -69,6 +70,52 @@ public class ReleaseController extends BaseController{
         } catch (Exception e) {
             logger.error("需求提交失败",e);
             return ReturnData.error("需求提交失败");
+        }
+    }
+
+    /**
+     * 数据众包-需求方-我的发布
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/releaseStatus", method = RequestMethod.GET)
+    public ReturnData releaseStatus(Long id){
+        try {
+            //String userId = this.getCurrentUser().getUserId();
+            ReturnData releaseStatus = releaseService.getUpdateReleaseStatus(id);
+            return releaseStatus;
+        } catch (Exception e) {
+            logger.error("getUpdateReleaseStatus", e);
+            return ReturnData.error("系统错误：" + e.getMessage());
+        }
+    }
+
+
+    /**
+     * 数据众包-需求方-添加验收意见
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/insertAcceptanceAdvice", method = RequestMethod.GET)
+    public ReturnData acceptanceAdvice(Short status, String checkAdvice, Long id){
+        ReturnData acceptanceAdvice = releaseService.getAcceptanceAdvice(status, checkAdvice, id);
+        return acceptanceAdvice;
+    }
+
+    /**
+     * 数据众包-需求方-添加对服务商的评价
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/insertEvaluation", method = RequestMethod.GET)
+    public ReturnData insertEvaluation(int level, String content, Long programId){
+        try {
+            String userId = this.getCurrentUser().getUserId();
+            ReturnData evaluation = releaseService.getInsertEvaluation(level, content, programId, userId);
+            return evaluation;
+        } catch (Exception e) {
+            logger.error("getInsertEvaluation", e);
+            return ReturnData.error("系统错误：" + e.getMessage());
         }
     }
 }

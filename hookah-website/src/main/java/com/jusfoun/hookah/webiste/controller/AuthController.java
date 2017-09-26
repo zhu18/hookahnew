@@ -62,6 +62,9 @@ public class AuthController extends BaseController {
     @Resource
     SupplierService supplierService;
 
+    @Resource
+    private WXUserRecommendService wxUserRecommendService;
+
     //认证状态(0.未认证 1.认证中 2.已认证 3.认证失败)
     public static final Byte AUTH_STATUS_SUCCESS = 2;
     public static final Byte AUTH_STATUS_CHECKING = 1;
@@ -229,7 +232,8 @@ public class AuthController extends BaseController {
             //用户待审核状态
             user.setUserType(HookahConstants.UserType.PERSON_CHECK_NO.getCode());
             userService.updateByIdSelective(user);
-
+            //更新微信用户推荐表
+            wxUserRecommendService.updateWXUserRecommendIsAuthenticate(userId);
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());
@@ -296,6 +300,8 @@ public class AuthController extends BaseController {
             user1.setUserType(HookahConstants.UserType.ORGANIZATION_CHECK_NO.getCode());
 
             userService.updateByIdSelective(user1);
+            //更新微信用户推荐表
+            wxUserRecommendService.updateWXUserRecommendIsAuthenticate(userId);
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());

@@ -5,8 +5,7 @@ package com.jusfoun.hookah.crowd.service.impl;
  */
 
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
-import com.jusfoun.hookah.core.domain.zb.ZbAnnex;
-import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
+import com.jusfoun.hookah.core.domain.zb.*;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbRequirementVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
@@ -14,10 +13,14 @@ import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.crowd.constants.ZbContants;
 import com.jusfoun.hookah.crowd.service.*;
 import com.jusfoun.hookah.crowd.util.CommonUtils;
+import com.jusfoun.hookah.crowd.util.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -34,6 +37,15 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
 
     @Resource
     ZbTypeService zbTypeService;
+
+    @Resource
+    ZbProgramService zbProgramService;
+
+    @Resource
+    ZbRequireApplyService zbRequireApplyService;
+
+    @Resource
+    ZbCommentService zbCommentService;
 
     @Resource
     private ZbRequirementMapper zbRequirementMapper;
@@ -55,6 +67,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                 ment.setAddOperator(vo.getZbRequirement().getUserId());
                 ment.setAddTime(new Date());
                 ment.setRewardMoney(Math.round(Double.valueOf(vo.getRewardMoney())*100));
+                ment.setTrusteePercent(30);
                 if(vo.getZbRequirement().getType() != null)
                     ment.setRequireSn(CommonUtils.getRequireSn("ZB",vo.getZbRequirement().getType().toString()));
                 zbRequirementMapper.insertAndGetId(ment);
@@ -76,6 +89,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                     ment.setUpdateTime(new Date());
                     ment.setUpdateOperator(vo.getZbRequirement().getUserId());
                     ment.setRewardMoney(Math.round(Double.valueOf(vo.getRewardMoney())*100));
+                    ment.setTrusteePercent(vo.getZbRequirement().getTrusteePercent());
                     super.updateById(ment);
 
                     List<Condition> filter = new ArrayList<>();
@@ -144,4 +158,197 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
         int i = zbRequireService.updateByConditionSelective(zbRequirement, filters);
         return ReturnData.success(i);
     }
+
+    /**
+     * 数据众包-需求方--我的发布
+     * @return
+     */
+    public ReturnData getUpdateReleaseStatus(Long id){
+
+        Map<String, Object> map = new HashMap<>(6);
+        List list = new ArrayList();
+        List<Condition> filters = new ArrayList<>();
+        List<Condition> filters1 = new ArrayList<>();
+        List<Condition> filters2 = new ArrayList<>();
+        if(StringUtils.isNotBlank(id.toString())){
+            filters.add(Condition.eq("id", id));
+        }
+        ZbRequirement zbRequirement = zbRequireService.selectOne(filters);
+        //我的发布-待审核状态
+        if(zbRequirement != null){
+            Short status = zbRequirement.getStatus();
+            if(StringUtils.isNotBlank(status.toString())){
+                Object info = null;
+                String managedMoney = null;
+                switch (status){
+                    case 1://待审核
+                        info = requirementInfo(id).getData();
+                        list.add(info);
+                        break;
+                    case 3: //审核通过,待托管赏金
+                        managedMoney = String.valueOf(zbRequirement.getRewardMoney()*zbRequirement.getTrusteePercent());
+                        info = requirementInfo(id).getData();
+                        list.add(info);
+                        list.add(managedMoney);
+                        break;
+                    case 7: //待二次托管或报名结束
+                        managedMoney = String.valueOf(zbRequirement.getRewardMoney()*zbRequirement.getTrusteePercent());
+                        info = requirementInfo(id).getData();
+                        //List<Condition> filters1 = new ArrayList<>();
+                        //List<Condition> filters2 = new ArrayList<>();
+                        if(StringUtils.isNotBlank(status.toString())){
+                            filters1.add(Condition.eq("status", 0));
+                            filters2.add(Condition.eq("status", 1));
+                        }
+                        long count = zbRequireApplyService.count(filters1);
+                        list.add(managedMoney);
+                        list.add(info);
+                        list.add(count);
+                        ZbRequirementApply zbRequirementApply = zbRequireApplyService.selectOne(filters);
+                        if(zbRequirementApply != null){
+                            //已选中信息
+                        }
+                        //list.add();
+                        break;
+                    case 8: //工作中
+                    case 9: //待验收
+                    case 13://待评价
+                    case 18://需方驳回
+                        info = requirementInfo(id).getData();
+                        list.add(info);
+                        if(zbRequirement.getId() != null){
+                            filters1.add(Condition.eq("requirementId", zbRequirement.getId()));
+                            ZbProgram zbProgram = zbProgramService.selectOne(filters1);
+                            if(zbProgram != null){
+                                list.add(zbProgram);
+                                if(StringUtils.isNotBlank(zbProgram.getId().toString())){
+                                    filters2.add(Condition.eq("correlationId", zbProgram.getId()));
+                                }
+                                filters2.add(Condition.eq("type", 1));
+                                ZbAnnex zbAnnex = zbAnnexService.selectOne(filters2);
+                                if(zbAnnex != null){
+                                    list.add(zbAnnex);
+                                }
+                            }
+                        }
+                        break;
+                    case 15://交易完成
+                        info = requirementInfo(id).getData();
+                        list.add(info);
+                        if(zbRequirement.getId() != null){
+                            filters1.add(Condition.eq("requirementId", zbRequirement.getId()));
+                            ZbProgram zbProgram = zbProgramService.selectOne(filters1);
+                            if(zbProgram != null){
+                                list.add(zbProgram);
+                                if(StringUtils.isNotBlank(zbProgram.getId().toString())){
+                                    filters2.add(Condition.eq("correlationId", zbProgram.getId()));
+                                }
+                                filters2.add(Condition.eq("type", 1));
+                                ZbAnnex zbAnnex = zbAnnexService.selectOne(filters2);
+                                if(zbAnnex != null){
+                                    list.add(zbAnnex);
+                                    List<Condition> filters3 = new ArrayList<>();
+                                    if(StringUtils.isNotBlank(zbAnnex.getId().toString())){
+                                        filters3.add(Condition.eq("programId", zbAnnex.getId()));
+                                    }
+                                    //filters3.add(Condition.eq("userType", 2));
+                                    ZbComment zbComment = zbCommentService.selectOne(filters3);
+                                    list.add(zbComment);
+                                }
+                            }
+                        }
+                        break;
+                    case 19://流标
+                        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                        Date date = new Date();
+                        try {
+                            Date time1 = df.parse(date.toString());//当前时间
+                            Date time2 = df.parse(zbRequirement.getApplyDeadline().toString());//截止报名时间
+                            if(time2.before(time1)){//截止报名时间小于当前时间----流标
+                                info = requirementInfo(id).getData();
+                                list.add(info);
+                            }
+                        } catch (Exception e) {
+                            logger.error("获取时间有误", e);
+                            return ReturnData.error("获取时间有误：" + e.getMessage());
+                        }
+                        break;
+                    default:
+                        list = null;
+                        break;
+                }
+            }
+            return ReturnData.success(list);
+        }
+        return ReturnData.error("查询错误");
+    }
+
+    //获取需求信息
+    public ReturnData  requirementInfo(Long id){
+        Map<String, Object> map = new HashMap<>(6);
+        List<Condition> filters = new ArrayList<>();
+        List<Condition> filters1 = new ArrayList<>();
+        if(StringUtils.isNotBlank(id.toString())){
+            filters.add(Condition.eq("id", id));
+        }
+        ZbRequirement zbRequirement = zbRequireService.selectOne(filters);
+        if(zbRequirement != null){
+            if(zbRequirement.getTag() != null){
+                String[] strArray = null;
+                strArray = zbRequirement.getTag().split(",");
+                map.put("tag",strArray);
+            }
+
+            if(zbRequirement.getId() != null){
+                filters1.add(Condition.eq("correlationId", zbRequirement.getId()));
+            }
+            List<ZbAnnex> zbAnnexes = zbAnnexService.selectList(filters1);
+            map.put("zbRequirement",zbRequirement);
+            map.put("zbRequirementFiles",zbAnnexes);
+            return ReturnData.success(map);
+        }
+        return ReturnData.error("未查询到需求信息");
+    }
+
+    /**
+     * 数据众包-需求方-添加验收意见
+     * @return
+     */
+    public ReturnData getAcceptanceAdvice(Short status, String checkAdvice, Long id){
+        if(id != null){
+            List<Condition> filters = new ArrayList<>();
+            if(StringUtils.isNotBlank(id.toString())){
+                filters.add(Condition.eq("id", id));
+            }
+            ZbProgram zbProgram = null;
+            zbProgram.setStatus(status);
+            zbProgram.setCheckAdvice(checkAdvice);
+            int i = zbProgramService.updateByCondition(zbProgram, filters);
+            return ReturnData.success(i);
+        }
+        return ReturnData.error("添加验收成果失败！");
+    }
+
+    /**
+     * 数据众包-需求方-添加对服务商的评价
+     * @return
+     */
+   public ReturnData getInsertEvaluation(int level, String content, Long programId, String userId){
+       if(programId != null){
+           List<Condition> filters = new ArrayList<>();
+           if(StringUtils.isNotBlank(programId.toString())){
+               filters.add(Condition.eq("programId", programId));
+           }
+           ZbComment zbComment = null;
+           zbComment.setUserId(userId);
+           zbComment.setProgramId(programId);
+           zbComment.setLevel(level);
+           zbComment.setContent(content);
+           zbComment.setAddTime(new Date());
+           zbComment.setUserType(2);
+           ZbComment insert = zbCommentService.insert(zbComment);
+           return ReturnData.success(insert);
+       }
+       return ReturnData.error("添加评价意见失败！");
+   }
 }
