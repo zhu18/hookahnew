@@ -291,4 +291,40 @@
 
     </select>
 
+    <select id="getListByCatId" resultMap="BaseResultMap">
+        SELECT
+        goods.goods_id,
+        goods.goods_sn,
+        goods.goods_name,
+        goods.is_delete,
+        goods.goods_type,
+        goods.goods_area,
+        goods.shop_price,
+        goods.cat_id,
+        goods.shop_name,
+        goods.check_status,
+        goods.is_onsale
+        FROM
+        goods goods
+        WHERE
+        goods.is_delete = 1
+        <if test="catId != '' and catId != null">
+            AND goods.cat_id like '102101%'
+        </if>
+
+    </select>
+
+    <update id="transferCategoryInfoByGoodsIds" >
+
+        UPDATE goods SET cat_id = #{catId}
+
+        WHERE   goods_id IN
+
+        <foreach collection="ids" index="index" item="item" open="("  separator="," close=")">
+            #{item}
+        </foreach>
+
+    </update>
+
+
 </mapper>

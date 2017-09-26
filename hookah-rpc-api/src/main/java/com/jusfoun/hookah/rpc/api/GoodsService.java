@@ -8,6 +8,7 @@ import com.jusfoun.hookah.core.domain.vo.GoodsCheckedVo;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.GenericService;
+import com.jusfoun.hookah.core.utils.ReturnData;
 
 import java.util.List;
 import java.util.Map;
@@ -50,4 +51,8 @@ public interface GoodsService extends GenericService<Goods,String> {
     void changeConcatInfo(String goodsId, Byte isOffline, Byte goodsType, MgGoods.OffLineInfoBean concatInfo);
 
     public GoodsVo findGoodsByIdChannel(String goodsId);
+
+    public List<Goods> getListByCatId(String catId);
+
+    public ReturnData confirmTransCategorInfo(String catId, String GoodsIds);
 }

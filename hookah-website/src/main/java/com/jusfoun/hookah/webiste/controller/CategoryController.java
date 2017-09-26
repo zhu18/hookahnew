@@ -2,11 +2,13 @@ package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.domain.Category;
 import com.jusfoun.hookah.core.domain.CategoryVo;
+import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.mongo.MgCategoryAttrType;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.CategoryService;
+import com.jusfoun.hookah.rpc.api.GoodsService;
 import com.jusfoun.hookah.rpc.api.MgCategoryAttrTypeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +33,9 @@ public class CategoryController {
     CategoryService categoryService;
     @Resource
     MgCategoryAttrTypeService mgCategoryAttrTypeService;
+
+    @Resource
+    GoodsService goodsService;
 
     /**
      * 查询所有分类
@@ -115,4 +120,36 @@ public class CategoryController {
         return returnData;
     }
 
+    /**
+     * 根据商品分类查询商品
+     * catSign: 0 普通； 1 系统
+     * @param catId
+     * @return
+     */
+    @RequestMapping("/findByCatId")
+    public ReturnData findByCatId(String catId) {
+        ReturnData<List<Goods>> returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            List<Goods> list = (List) goodsService.getListByCatId(catId);
+            returnData.setData(list);
+        }catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
+
+    /**
+     *  确认迁移
+     * @param catId 商品分类ID
+     * @param goodsIds 商品IDs
+     * @return
+     */
+    @RequestMapping("/confirmTransfer")
+    public ReturnData confirmTransfer(String catId, String goodsIds) {
+
+        return goodsService.confirmTransCategorInfo(catId, goodsIds);
+    }
 }
