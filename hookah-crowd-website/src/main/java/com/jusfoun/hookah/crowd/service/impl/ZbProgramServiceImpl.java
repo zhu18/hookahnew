@@ -24,4 +24,5 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
     public int insertRecord(ZbProgram zbProgram) {
         return 0;
     }
+
 }
