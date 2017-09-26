@@ -8,7 +8,7 @@ server:
       name: hookah_sid
 spring:
   datasource:
-    url: jdbc:log4jdbc:mysql://192.168.15.90:3306/hookah?characterEncoding=utf8&useSSL=false&autoReconnect=true&failOverReadOnly=false&autoReconnectForPools=true
+    url: jdbc:log4jdbc:mysql://192.168.15.90:3306/bdgStore?characterEncoding=utf8&useSSL=false&autoReconnect=true&failOverReadOnly=false&autoReconnectForPools=true
     driverClassName: net.sf.log4jdbc.DriverSpy
     #driverClassName: com.mysql.jdbc.Driver
     #url: jdbc:mysql://192.168.15.90:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false

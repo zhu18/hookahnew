@@ -9,7 +9,7 @@ server:
 spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.15.90:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
+    url: jdbc:mysql://192.168.15.90:3306/bdgStore?&characterEncoding=utf8&autoReconnect=true&useSSL=false
     username: root
     password: password
     initialize: true

@@ -200,6 +200,7 @@ public class GoodsApi extends BaseController{
                 filters.add(Condition.like("keywords", keywords.trim()));
             }
             if(StringUtils.isNotBlank(shopName)){
+                filters.add(Condition.like("shopName", shopName.trim()));
             }
 
             //获取匹配到的供应商发布的GoodsId
