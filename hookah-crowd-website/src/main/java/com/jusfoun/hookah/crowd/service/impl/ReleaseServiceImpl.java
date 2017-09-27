@@ -5,6 +5,7 @@ package com.jusfoun.hookah.crowd.service.impl;
  */
 
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
+import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.zb.*;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbRequirementVo;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -46,6 +47,9 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
 
     @Resource
     ZbCommentService zbCommentService;
+
+    @Resource
+    UserService userService;
 
     @Resource
     private ZbRequirementMapper zbRequirementMapper;
@@ -177,9 +181,9 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
         //我的发布-待审核状态
         if(zbRequirement != null){
             Short status = zbRequirement.getStatus();
+            String managedMoney = null;
             if(StringUtils.isNotBlank(status.toString())){
                 Object info = null;
-                String managedMoney = null;
                 switch (status){
                     case 1://待审核
                         info = requirementInfo(id).getData();
@@ -189,7 +193,6 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                         managedMoney = String.valueOf(zbRequirement.getRewardMoney()*zbRequirement.getTrusteePercent());
                         info = requirementInfo(id).getData();
                         list.add(info);
-                        list.add(managedMoney);
                         break;
                     case 7: //待二次托管或报名结束
                         managedMoney = String.valueOf(zbRequirement.getRewardMoney()*zbRequirement.getTrusteePercent());
@@ -207,6 +210,9 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                         ZbRequirementApply zbRequirementApply = zbRequireApplyService.selectOne(filters);
                         if(zbRequirementApply != null){
                             //已选中信息
+                            //User user = userService.selectById(zbRequirement.getUserId());
+                            //user.getContactName();
+                            //user.getContactPhone();
                         }
                         //list.add();
                         break;
@@ -278,6 +284,8 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                         break;
                 }
             }
+            map.put("managedMoney",managedMoney);
+            list.add(map);
             return ReturnData.success(list);
         }
         return ReturnData.error("查询错误");
@@ -351,4 +359,22 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
        }
        return ReturnData.error("添加评价意见失败！");
    }
+
+    /**
+     * 数据众包-需求方-删除需求
+     * @return
+     */
+    public ReturnData deleteRequirement(Long id){
+        if(id != null){
+            ZbRequirement zbRequirement = zbRequireService.selectById(id);
+            List<Condition> filter = new ArrayList<>();
+            if(StringUtils.isNotBlank(zbRequirement.getId().toString())){
+                filter.add(Condition.eq("correlationId", zbRequirement.getId()));
+            }
+            zbAnnexService.deleteByCondtion(filter);
+            int i = zbRequireService.delete(id);
+            return ReturnData.success(i);
+        }
+        return  ReturnData.error("删除需求信息失败！");
+    }
 }
