@@ -34,10 +34,10 @@ getRequirementType();
 
 
 
-function modifyCrowdsourcing() {//修改，从我的发布点击'修改'调转过来的
+function modifyCrowdsourcing() { //修改，从我的发布点击'修改'调转过来的
   $.ajax({
-    type: 'get',
-    url: "/api/release/releaseStatus?id="+crowdSourcingId,
+    type: 'post',
+    url: "/api/release/insertRequirements?id="+crowdSourcingId,
     cache:false,
     success: function (data) {
       console.log(data);

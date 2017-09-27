@@ -186,6 +186,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                 Object info = null;
                 switch (status){
                     case 1://待审核
+                    case 2://审核未通过
                         info = requirementInfo(id).getData();
                         list.add(info);
                         break;
