@@ -10,6 +10,7 @@ import com.jusfoun.hookah.core.domain.zb.ZbRequirementApply;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.crowd.service.UserService;
 import com.jusfoun.hookah.crowd.service.ZbAnnexService;
 import com.jusfoun.hookah.crowd.service.ZbProgramService;
 import com.jusfoun.hookah.crowd.service.ZbRequireApplyService;
@@ -40,6 +41,13 @@ public class ZbRequireApplyServiceImpl extends GenericServiceImpl<ZbRequirementA
     ZbAnnexService zbAnnexService;
 
     @Resource
+    UserService userService;
+
+    @Resource
+    ZbRequireApplyService zbRequireApplyService;
+
+
+    @Resource
     public void setDao(ZbRequirementApplyMapper zbRequirementApplyMapper) {
         super.setDao(zbRequirementApplyMapper);
     }
@@ -57,12 +65,14 @@ public class ZbRequireApplyServiceImpl extends GenericServiceImpl<ZbRequirementA
         List<Condition> filters = new ArrayList<>();
         filters.add(Condition.eq("requirementId",requirementId));
         ZbRequirement zbRequirement = zbRequirementMapper.selectForDetail(requirementId);
-        List<ZbRequirementApply> zbRequirementApplies = selectList(filters);
+        List<ZbRequirementApply> zbRequirementApplies = zbRequireApplyService.selectList(filters);
         List<ZbProgram> zbPrograms = new ArrayList<>();
         List<Condition> filter = new ArrayList<>();
         filter.add(Condition.eq("correlationId", zbRequirement.getId()));
         List<ZbAnnex> zbAnnexes = zbAnnexService.selectList(filter);
         for (ZbRequirementApply zbRequirementApply:zbRequirementApplies){
+           zbRequirementApply.setUserName(userService.selectById(zbRequirement.getUserId()).getUserName());
+           zbRequirementApply.setMobile(userService.selectById(zbRequirement.getUserId()).getMobile());
             if (zbRequirementApply.getStatus().equals(1)){
                 filters.clear();
                 filters.add(Condition.eq("applyId",zbRequirementApply.getId()));
