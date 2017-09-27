@@ -25,6 +25,9 @@ import com.jusfoun.hookah.rpc.api.GoodsAttrTypeService;
 import com.jusfoun.hookah.rpc.api.MgGoodsService;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
+import org.elasticsearch.action.bulk.BulkRequestBuilder;
+import org.elasticsearch.action.bulk.BulkResponse;
+import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.client.transport.TransportClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionFailedException;
@@ -35,6 +38,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 
 /**
  * Created by wangjl on 2017-3-28.
@@ -493,6 +498,31 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             vo.setNodeName(getPayFormatsName(result.getId()));
             vo.setCnt(result.getCnt());
             payFormatList.add(vo);
+        }
+    }
+
+    public void updateEsCatIdInfo(String[] goodsIds, String catId, String catIds) throws Exception{
+
+        BulkRequestBuilder bulkRequest = esTransportClient.getObject().prepareBulk();
+
+        UpdateRequest updateRequest = null;
+        for(int i=0;i<goodsIds.length;i++){
+
+            updateRequest = new UpdateRequest();
+            updateRequest.index(Constants.GOODS_INDEX);
+            updateRequest.type(Constants.GOODS_TYPE);
+            updateRequest.id(goodsIds[i]);
+            updateRequest.doc(jsonBuilder()
+                    .startObject()
+                    .field("catId", catId)
+                    .field("catIds", catIds)
+                    .endObject());
+            bulkRequest.add(updateRequest);
+        }
+
+        BulkResponse bulkResponse = bulkRequest.get();
+        if (bulkResponse.hasFailures()) {
+            // process failures by iterating through each bulk response item
         }
     }
 

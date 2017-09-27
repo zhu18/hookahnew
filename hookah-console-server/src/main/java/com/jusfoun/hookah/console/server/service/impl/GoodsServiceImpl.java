@@ -66,10 +66,14 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
 
     @Resource
     UserService userService;
+
     @Resource
     public void setDao(GoodsMapper goodsMapper) {
         super.setDao(goodsMapper);
     }
+
+    @Resource
+    ElasticSearchService elasticSearchService;
 
     @Override
     @Transactional
@@ -693,6 +697,9 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             map.put("ids",ids);
             map.put("catId",catId);
             goodsMapper.transferCategoryInfoByGoodsIds(map);
+
+            String catIds = goodsMapper.getNeedGoodsByCatId(catId).get(0).getCatIds();
+            elasticSearchService.updateEsCatIdInfo(ids, catId, catIds);
         }catch (Exception e){
             returnData.setCode(ExceptionConst.Error);
             returnData.setMessage("操作失败："+e.toString());

@@ -26,47 +26,33 @@
 					<div class="form-group pull-right" style="margin:60px 0 30px;">
 						<label class="col-sm-4 control-label">一级分类</label>
 						<div class="col-sm-6">
-							<select id="dataTempa" data-ng-model="dataTemp" ng-options="dataTemp.typeId as dataTemp.typeName for dataTemp in dataTemps" style="width: 184px;height: 32px">
+							<select id="dataTemp1" data-ng-model="dataTemp1v" ng-options="dataTemp.catId as dataTemp.catName for dataTemp in dataTemp1" style="width: 184px;height: 32px" ng-change="getCategory(dataTemp1v,'dataTemp2')">
 							</select>
 						</div>
 					</div>
-					<div class="form-group pull-right" style="margin:30px 0 30px;">
+					<div class="form-group pull-right" style="margin:30px 0 30px;" ng-show="dataTemp2">
 						<label class="col-sm-4 control-label">二级分类</label>
 						<div class="col-sm-6">
-							<select id="dataTempb" data-ng-model="dataTemp" ng-options="dataTemp.typeId as dataTemp.typeName for dataTemp in dataTemps" style="width: 184px;height: 32px">
+							<select id="dataTemp2" data-ng-model="dataTemp2v" ng-options="dataTemp.catId as dataTemp.catName for dataTemp in dataTemp2" style="width: 184px;height: 32px" ng-change="getCategory(dataTemp2v,'dataTemp3')">
 							</select>
 						</div>
 					</div>
-					<div class="form-group pull-right" style="margin:30px 0 30px;">
+					<div class="form-group pull-right" style="margin:30px 0 30px;" ng-show="dataTemp3">
 						<label class="col-sm-4 control-label">三级分类</label>
 						<div class="col-sm-6">
-							<select id="dataTempc" data-ng-model="dataTemp" ng-options="dataTemp.typeId as dataTemp.typeName for dataTemp in dataTemps" style="width: 184px;height: 32px">
+							<select id="dataTemp3" data-ng-model="dataTemp3v" ng-options="dataTemp.catId as dataTemp.catName for dataTemp in dataTemp3" style="width: 184px;height: 32px" ng-change="getCategory(dataTemp3v,'dataTemp4')">
 							</select>
 						</div>
 					</div>
 				</div>
 				<div class="col-sm-2">
 					<div class="form-group">
-						<div>
+						<div style="position:relative">
 							<span style="font-size: 16px;margin-bottom: 20px;">选择需迁移数据</span>
-							<select data-ng-model="dataTemp" class="multipleSelect" multiple="multiple" size="8" style="height:300px;">
-								<option value="1">1231231</option>
-								<option value="2">1231231</option>
-								<option value="3">1231231</option>
-								<option value="4">1231231</option>
-								<option value="5">1231231</option>
-								<option value="6">1231231</option>
-								<option value="7">1231231</option>
-								<option value="8">1231231</option>
-								<option value="9">1231231</option>
-								<option value="10">1231231</option>
-								<option value="11">1231231</option>
-								<option value="12">1231231</option>
-								<option value="13">1231231</option>
-								<option value="14">1231231</option>
-								<option value="15">1231231</option>
-								<option value="16">1231231</option>
+							<select data-ng-model="goodsV" ng-options="dataTemp.goodsId as dataTemp.goodsName for dataTemp in goodsArr" ng-click="evaluate()" class="multipleSelect" multiple="multiple" size="8" style="height:300px;">
+
 							</select>
+							<span class="" ng-show="goodsArrS" style="position: absolute;left:95px;top:140px;">{{goodsArrS_txt}}</span>
 						</div>
 					</div>
 				</div>
@@ -79,28 +65,28 @@
 					<div class="form-group" style="margin:60px 0 60px;">
 						<label class="col-sm-2 control-label">一级分类</label>
 						<div class="col-sm-6">
-							<select id="dataTemp1" data-ng-model="dataTemp" ng-options="dataTemp.typeId as dataTemp.typeName for dataTemp in dataTemps" style="width: 184px;height: 32px">
+							<select id="dataTempA" data-ng-model="dataTempAv" ng-options="dataTemp.catId as dataTemp.catName for dataTemp in dataTempA" style="width: 184px;height: 32px" ng-change="getCategory(dataTempAv,'dataTempB')">
 							</select>
 						</div>
 					</div>
-					<div class="form-group" style="margin:30px 0 60px;">
+					<div class="form-group" style="margin:30px 0 60px;" ng-show="dataTempB">
 						<label class="col-sm-2 control-label">二级分类</label>
 						<div class="col-sm-6">
-							<select id="dataTemp2" data-ng-model="dataTemp" ng-options="dataTemp.typeId as dataTemp.typeName for dataTemp in dataTemps" style="width: 184px;height: 32px">
+							<select id="dataTempB" data-ng-model="dataTempBv" ng-options="dataTemp.catId as dataTemp.catName for dataTemp in dataTempB" style="width: 184px;height: 32px" ng-change="getCategory(dataTempBv,'dataTempC')">
 							</select>
 						</div>
 					</div>
-					<div class="form-group" style="margin:30px 0 30px;">
+					<div class="form-group" style="margin:30px 0 30px;" ng-show="dataTempC">
 						<label class="col-sm-2 control-label">三级分类</label>
 						<div class="col-sm-6">
-							<select id="dataTemp3" data-ng-model="dataTemp" ng-options="dataTemp.typeId as dataTemp.typeName for dataTemp in dataTemps" style="width: 184px;height: 32px">
+							<select id="dataTempC" data-ng-model="dataTempcV" ng-options="dataTemp.catId as dataTemp.catName for dataTemp in dataTempC" style="width: 184px;height: 32px" ng-change="getCategory(dataTempCv,'dataTempD')">
 							</select>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="form-group">
-				<button class="btn btn-primary btn-lg center-block" style="min-width: 200px;">
+				<button class="btn btn-primary btn-lg center-block" ng-disabled="!goodsVd || !dataFrom || !dataEnd " ng-click="pushData()" style="min-width: 200px;">
 					确认迁移
 				</button>
 			</div>

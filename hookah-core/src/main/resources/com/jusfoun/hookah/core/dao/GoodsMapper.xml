@@ -309,7 +309,7 @@
         WHERE
         goods.is_delete = 1
         <if test="catId != '' and catId != null">
-            AND goods.cat_id like '102101%'
+            AND goods.cat_id like '${catId}%'
         </if>
 
     </select>
@@ -326,5 +326,16 @@
 
     </update>
 
+
+    <select id="getNeedGoodsByCatId" resultType="com.jusfoun.hookah.core.domain.es.EsGoods" parameterType="java.lang.String">
+        SELECT
+        goods_id,
+        goods_name,
+        cat_id,
+        getCategoryParentList(cat_id) cat_ids
+        from
+        goods
+        where cat_id = #{id}
+    </select>
 
 </mapper>

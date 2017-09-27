@@ -1,109 +1,142 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="console-title console-title-border clearfix">
-            <div class="pull-left"><h5>需求列表->查看</h5></div>
+            <div class="pull-left"><h5>需求大厅->报名中</h5></div>
         </div>
         <div class="row margin-top form-inline">
             <div class="col-sm-12 margin-top-10 clearfix">
                 <div class="col-md-1 col-sm-1  publish-status">
-                    <p>状态</p>
-                    <p>待发布</p>
+                        <p>状态</p>
+                        <p>
+                            <span data-ng-show="status==1" >待审核</span>
+                            <span data-ng-show="status==4" >待发布</span>
+                            <span data-ng-show="status==5" >报名中</span>
+                            <span data-ng-show="status==9" >待验收</span>
+                            <span data-ng-show="status==11">已验收待付款</span>
+                            <span data-ng-show="status==16">待退款</span>
+                            <span data-ng-show="status==14">交易取消</span>
+                            <span data-ng-show="status==15">交易完成</span>
+                        </p>
+                    </div>
+                    <div class="col-md-11 col-sm-11  publish-Progress">
+                        <ul class="clearfix">
+                            <li data-index="1" class="visited">
+                                <p>发布需求</p>
+                                <p>2017/02/56 12:24:00</p>
+                            </li>
+                            <li data-index="2" class="active">
+                                <p>平台审核</p>
+                                <p>2017/02/56 12:24:00</p>
+                            </li>
+                            <li data-index="3">
+                                <p>悬赏费用托管</p>
+                                <p>2017/02/56 12:24:00</p>
+                            </li>
+                            <li data-index="4">
+                                <p>待发布</p>
+                                <p>2017/02/56 12:24:00</p>
+                            </li>
+                            <li data-index="5">
+                                <p>供应商工作</p>
+                                <p>2017/02/56 12:24:00</p>
+                            </li>
+                            <li data-index="6">
+                                <p>验收付款</p>
+                                <p>2017/02/56 12:24:00</p>
+                            </li>
+                            <li data-index="7">
+                                <p>评价</p>
+                                <p>2017/02/56 12:24:00</p>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="col-md-11 col-sm-11  publish-Progress">
-                    <ul class="clearfix">
-                        <li data-index="1">
-                            <p>发布需求</p>
-                            <p>2017/02/56 12:24:00</p>
-                        </li>
-                        <li data-index="2">
-                            <p>平台审核</p>
-                            <p>2017/02/56 12:24:00</p>
-                        </li>
-                        <li data-index="3">
-                            <p>悬赏费用托管</p>
-                            <p>2017/02/56 12:24:00</p>
-                        </li>
-                        <li data-index="4">
-                            <p>待发布</p>
-                            <p>2017/02/56 12:24:00</p>
-                        </li>
-                        <li data-index="5">
-                            <p>供应商工作</p>
-                            <p>2017/02/56 12:24:00</p>
-                        </li>
-                        <li data-index="6">
-                            <p>验收付款</p>
-                            <p>2017/02/56 12:24:00</p>
-                        </li>
-                        <li data-index="7">
-                            <p>评价</p>
-                            <p>2017/02/56 12:24:00</p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
             <div class="col-sm-12 margin-top-10 publish-table-box">
-                <table class="table">
-                    <tr>
-                        <th>需求方</th>
-                        <td>XXXXXX有限公司</td>
-                        <th>需求方联系人</th>
-                        <td>
-                            李某某 170900521XX
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>需求标题</th>
-                        <td colspan="3">大数据商城</td>
-                    </tr>
-                    <tr>
-                        <th>需求类型</th>
-                        <td colspan="3">
-                            <button class="btn btn-info">类型三</button>
-                            <button class="btn btn-info">类型无</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>需求描述</th>
-                        <td colspan="3">
-                            详细描述具体的需求信息如下：XXXXXXXXXXXXXXXXXXXXX
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>附件</th>
-                        <td colspan="3">
-                            <a href="">XXX大数据平台建设需求1</a>
-                            <a href="">XXX大数据平台建设需求2</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>交付截止日期</th>
-                        <td>
-                            2017-08-01
-                        </td>
-                        <th>报名截止日期</th>
-                        <td>
-                            2017-08-01
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>悬赏金额</th>
-                        <td colspan="3">
-                            ￥12900.00元
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>交付验收要求</th>
-                        <td colspan="3">
-                            本需求的交付计划以及相应的提交物要求如下：XXXXXXXXXXXXXXXX
-                        </td>
-                    </tr>
-                </table>
-            </div>
+                    <table class="table">
+                        <tr>
+                            <th>需求方</th>
+                            <td>
+                                <span data-ng-bind="requiremetName"></span>
+                            </td>
+                            <th>需求方联系人</th>
+                            <td>
+                                <span data-ng-bind="contactName"></span>
+                                <span data-ng-bind="contactPhone"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>需求标题</th>
+                            <td>
+                                <span data-ng-bind="title"></span>
+                            </td>
+                            <th>需求标签</th>
+                            <td>
+                                <div data-ng-if="tag">
+                                    <button class="btn btn-info" data-ng-bind="tag"></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>需求类型</th>
+                            <td colspan="3">
+                                <button class="btn btn-info" data-ng-show="type==1">数据采集</button>
+                                <button class="btn btn-info" data-ng-show="type==2">数据加工</button>
+                                <button class="btn btn-info" data-ng-show="type==3">数据模型</button>
+                                <button class="btn btn-info" data-ng-show="type==4">数据应用</button>
+                                <button class="btn btn-info" data-ng-show="type==5">数据清洗</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>需求描述</th>
+                            <td colspan="3">
+                                <textarea style=" resize:none;" data-ng-bind="description" cols="100" rows="10" readonly></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>附件</th>
+                            <td colspan="3">
+                                <a data-ng-repeat="item in zbAnnexes" data-ng-href="{{item.filePath}}" data-ng-bind="item.fileName" class="margin-right-5"></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>交付截止日期</th>
+                            <td>
+                                <span data-ng-bind="deliveryDeadline"></span>
+                            </td>
+                            <th>报名截止日期</th>
+                            <td>
+                                <span data-ng-bind="applyDeadline"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>悬赏金额</th>
+                            <td colspan="3">
+                                <div style="margin-right: 10px">
+                                    <span>{{(rewardMoney/100) | currency: '￥'}}</span>
+                                </div>
+                                <div style="margin-right: 10px">
+                                    <span class="glyphicon glyphicon-piggy-bank"></span>
+                                    <span> 已托管比例（%）：</span>
+                                    <span data-ng-bind="trusteePercent"> </span>
+                                </div>
+                                <div style="margin-right: 10px">
+                                    <span>托管赏金：</span>
+                                    <!--<span data-ng-bind="rewardMoney"></span>-->
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>交付验收要求</th>
+                            <td colspan="3">
+                                <textarea style=" resize:none;" data-ng-bind="checkRemark" cols="100" rows="10" readonly></textarea>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             <div class="col-sm-12 margin-top-10 tab-box">
                 <uib-tabset active="active">
                     <uib-tab index="0" heading="任务报名">
-                        <div class="tab-info">
+                        <div class="tab-info" data-ng-if="$scope.isZbRequirementAppliesShow">
                             <table class="table">
                                <thead>
                                <tr>
@@ -118,36 +151,27 @@
                                </tr>
                                </thead>
                                <tbody>
-                               <tr>
-                                   <td>XXX公司</td>
-                                   <td>88分</td>
-                                   <td>2017-05-28</td>
-                                   <td>报名</td>
-                                   <td>路**</td>
-                                   <td>18769883892</td>
-                                   <td>我觉得我很好，你应该选我，你觉得呢。</td>
-                                   <td>
-                                       <button class="btn btn-default">选中</button>
-                                   </td>
-                               </tr>
-                               <tr>
-                                   <td>XXX公司</td>
-                                   <td>88分</td>
-                                   <td>2017-05-28</td>
-                                   <td>报名</td>
-                                   <td>路**</td>
-                                   <td>18769883892</td>
-                                   <td>我觉得我很好，你应该选我，你觉得呢。</td>
-                                   <td>
-                                       <button class="btn btn-primary">选中</button>
-                                   </td>
-                               </tr>
+                               <!--<tr data-ng-repeat="item in zbRequirementApplies">-->
+                                   <!--<td>XXX公司</td>-->
+                                   <!--<td>88分</td>-->
+                                   <!--<td>2017-05-28</td>-->
+                                   <!--<td>报名</td>-->
+                                   <!--<td>路**</td>-->
+                                   <!--<td>18769883892</td>-->
+                                   <!--<td>我觉得我很好，你应该选我，你觉得呢。</td>-->
+                                   <!--<td>-->
+                                       <!--<button class="btn btn-default">选中</button>-->
+                                   <!--</td>-->
+                               <!--</tr>-->
                                </tbody>
                            </table>
                             <p class="margin-top-10 "> <span class="glyphicon glyphicon-volume-up"></span>温馨提示:报名结束后，请在上述报名用户名单尽快进行资格审查，筛选确认中标用户。</p>
                             <div style="margin: auto;width: 58px;">
                                 <button class="btn btn-primary">提交</button>
                             </div>
+                        </div>
+                        <div class="tab-info" data-ng-if="$scope.isZbRequirementAppliesShow">
+                            暂无内容
                         </div>
                     </uib-tab>
                     <uib-tab index="1" heading="任务成果">
@@ -174,9 +198,12 @@
                                 <button class="btn btn-default">返回</button>
                             </div>
                         </div>
+                        <div class="tab-info" data-ng-if="$scope.isZbRequirementShow">
+                            暂无内容
+                        </div>
                     </uib-tab>
                     <uib-tab index="2" heading="任务评价">
-                        <div class="tab-info">
+                        <div class="tab-info" data-ng-if="$scope.isZbRequirementShow">
                             暂无内容
                         </div>
                     </uib-tab>

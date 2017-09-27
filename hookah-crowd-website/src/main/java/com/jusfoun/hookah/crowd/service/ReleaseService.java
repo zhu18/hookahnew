@@ -22,4 +22,6 @@ public interface ReleaseService extends GenericService<ZbRequirement, String> {
 
     ReturnData getInsertEvaluation(int level, String content, Long programId, String userId);
 
+    ReturnData deleteRequirement(Long id);
+
 }
