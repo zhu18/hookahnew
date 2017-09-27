@@ -4,16 +4,14 @@ server:
       protocal: http://
   session:
     cookie:
-      domain: qddata.com.cn
+      domain: galaxybigdata.com
       name: hookah_sid
 spring:
   datasource:
-    url: jdbc:log4jdbc:mysql://172.16.201.43:3306/hookah?characterEncoding=utf8&useSSL=false&autoReconnect=true&failOverReadOnly=false&autoReconnectForPools=true
+    url: jdbc:log4jdbc:mysql://192.168.15.175:3306/hookah?characterEncoding=utf8&useSSL=false&autoReconnect=true&failOverReadOnly=false&autoReconnectForPools=true
     driverClassName: net.sf.log4jdbc.DriverSpy
-    #driverClassName: com.mysql.jdbc.Driver
-    #url: jdbc:mysql://192.168.15.90:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
     username: root
-    password: jusfoun2017
+    password: bdgStore3306
     initialize: true
     type: com.alibaba.druid.pool.DruidDataSource
     # 连接池配置
@@ -40,15 +38,15 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
   data:
     mongodb:
-      uri:  mongodb://172.16.201.42:27017/hookah
+      uri:  mongodb://192.168.15.175:27017/hookah
   rabbitmq:
-    addresses: 172.16.201.41:5672
+    addresses: 192.168.15.174:5672
     username: root
     password: password
     publisher-confirms: true
     virtual-host: /
   mail:
-      host: smtp.qddata.com.cn
+      host: smtp.galaxybigdata.com
       username: service@qddata.com.cn
       password: Bigdata8661101
       transport:
@@ -79,16 +77,17 @@ myconf:
     suffix: .html
     cache: false
   host:
-    domain: qddata.com.cn
-    cms: ${server.http.protocal}www.qddata.com.cn
-    website: ${server.http.protocal}trade.qddata.com.cn
-    static: ${server.http.protocal}static.qddata.com.cn
-    auth: ${server.http.protocal}auth.qddata.com.cn
-    console: ${server.http.protocal}console.qddata.com.cn
+    domain: galaxybigdata.com
+    cms: ${server.http.protocal}www.galaxybigdata.com
+    website: ${server.http.protocal}www.galaxybigdata.com
+    static: ${server.http.protocal}static.galaxybigdata.com
+    auth: ${server.http.protocal}auth.galaxybigdata.com
+    console: ${server.http.protocal}console.galaxybigdata.com
+    crowd: ${server.http.protocal}crowd.galaxybigdata.com
   site:
-    user-default-img: /static/images/user-safe-head.png
+      user-default-img: /static/images/user-safe-head.png
   redis:
-    ipPort: 172.16.201.41:7000,172.16.201.41:7001,172.16.201.41:7002
+    ipPort: 192.168.15.174:7000,192.168.15.174:7001,192.168.15.174:7002
   consul:
-    ipPort: 172.16.201.41:8500
+      ipPort: 192.168.15.174:8500
 debug: true

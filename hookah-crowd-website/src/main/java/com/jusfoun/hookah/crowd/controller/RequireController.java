@@ -2,6 +2,7 @@ package com.jusfoun.hookah.crowd.controller;
 
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
+import com.jusfoun.hookah.core.domain.zb.ZbRequirementApply;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirementPageHelper;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.utils.ReturnData;
@@ -80,9 +81,9 @@ public class RequireController extends BaseController {
      */
     @RequestMapping("/api/require/updateStatus")
     @ResponseBody
-    public ReturnData updateStatus(String id, String status, String applyDeadline) {
+    public ReturnData updateStatus(String id, String status, String applyDeadline ,Long applyId) {
         try {
-            return zbRequireService.updateStatus(id, status, applyDeadline);
+            return zbRequireService.updateStatus(id, status, applyDeadline ,applyId);
         } catch (Exception e) {
             logger.error("发布失败", e);
             return ReturnData.error("发布失败");

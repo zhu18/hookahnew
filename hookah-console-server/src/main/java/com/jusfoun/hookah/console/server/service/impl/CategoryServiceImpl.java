@@ -13,6 +13,7 @@ import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StrUtil;
 import com.jusfoun.hookah.rpc.api.CategoryService;
+import com.jusfoun.hookah.rpc.api.GoodsService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +38,9 @@ public class CategoryServiceImpl extends GenericServiceImpl<Category, String> im
 
     @Resource
     GoodsTypeMapper goodsTypeMapper;
+
+    @Resource
+    GoodsService goodsService;
 
     @Resource
     public void setDao(CategoryMapper categoryMapper) {
@@ -206,7 +210,12 @@ public class CategoryServiceImpl extends GenericServiceImpl<Category, String> im
                 returnData.setMessage(ExceptionConst.get(ExceptionConst.AssertFailed));
                 return returnData;
             }
-           int number = super.delete(cateId);
+            if(goodsService.getListByCatId(cateId) == null){
+
+                int number = super.delete(cateId);
+            }else{
+                returnData.setCode(ExceptionConst.Failed);
+            }
         }catch (Exception e) {
             returnData.setCode(ExceptionConst.Error);
             returnData.setMessage(e.toString());
@@ -231,4 +240,5 @@ public class CategoryServiceImpl extends GenericServiceImpl<Category, String> im
         }
         return returnData;
     }
+
 }

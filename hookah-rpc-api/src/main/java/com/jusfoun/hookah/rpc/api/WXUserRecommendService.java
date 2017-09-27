@@ -8,7 +8,7 @@ import com.jusfoun.hookah.core.generic.GenericService;
 import java.util.HashMap;
 
 /**
- * Created by admin on 2017/9/25.
+ * Created by ndf on 2017/9/25.
  */
 public interface WXUserRecommendService extends GenericService<WXUserRecommend,String> {
 

@@ -4,13 +4,12 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.dao.zb.ZbRequirementApplyMapper;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
 import com.jusfoun.hookah.core.dao.zb.ZbTypeMapper;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.vo.WithdrawVo;
-import com.jusfoun.hookah.core.domain.zb.ZbAnnex;
-import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
-import com.jusfoun.hookah.core.domain.zb.ZbRequirementPageHelper;
+import com.jusfoun.hookah.core.domain.zb.*;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
@@ -21,6 +20,7 @@ import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.crowd.constants.ZbContants;
 import com.jusfoun.hookah.crowd.service.UserService;
 import com.jusfoun.hookah.crowd.service.ZbAnnexService;
+import com.jusfoun.hookah.crowd.service.ZbRequireApplyService;
 import com.jusfoun.hookah.crowd.service.ZbRequireService;
 import com.jusfoun.hookah.crowd.util.DateUtil;
 import org.apache.commons.collections.map.HashedMap;
@@ -47,6 +47,12 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
 
     @Resource
     UserService userService;
+
+    @Resource
+    ZbRequirementApplyMapper zbRequirementApplyMapper;
+
+    @Resource
+    ZbRequireApplyService zbRequireApplyService;
 
     @Resource
     public void setDao(ZbRequirementMapper zbRequirementMapper) {
@@ -171,13 +177,19 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
     }
 
     @Override
-    public ReturnData<ZbRequirement> updateStatus(String id, String status, String applyDeadline) {
+    public ReturnData<ZbRequirement> updateStatus(String id, String status, String applyDeadline , Long applyId) {
         try {
             ZbRequirement zbRequirement = new ZbRequirement();
             zbRequirement.setId(Long.parseLong(id));
             zbRequirement.setStatus(Short.parseShort(status));
             zbRequirement.setPressTime(new Date());
             zbRequirement.setApplyDeadline(DateUtils.getDate(applyDeadline));
+            ZbRequirementApply zbRequirementApply= zbRequirementApplyMapper.selectByPrimaryKey(applyId);
+            if (status.equals(ZbContants.Zb_Require_Status.SELECTING.getCode().shortValue())&& zbRequirementApply.getStatus()!=null){
+                zbRequirementApply.setId(applyId);
+                zbRequirementApply.setStatus(ZbContants.Zb_Require_Status.WAIT_CHECK.getCode().shortValue());
+               zbRequireApplyService.updateByIdSelective(zbRequirementApply);
+            }
             super.updateByIdSelective(zbRequirement);
         } catch (Exception e) {
             return ReturnData.error("发布失败");

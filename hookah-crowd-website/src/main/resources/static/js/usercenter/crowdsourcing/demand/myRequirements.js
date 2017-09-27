@@ -23,16 +23,16 @@ function loadPageData(data) { //渲染页面数据
     switch (data[i].status) {
       case 1:
         tempState = '待审核';
-        tempEdit = '<a href="/usercenter/crowdsourcingRelease?id=' + data[i].id + ' "class="signUp">修改</a><span class="signUp j_del" id="' + data[i].id + '">删除</span>';
+        tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">查看</a>';
         break;
       case 2:
         tempState = '审核未通过';
-        tempEdit = '<a href="/usercenter/crowdsourcingRelease?id=' + data[i].id + '" class="signUp">修改</a><span class="signUp j_del" id="' + data[i].id + '">删除</span>';
+        tempEdit = '<a href="/usercenter/crowdsourcingRelease?id=' + data[i].id + '" class="signUp">修改</a><span class="signUp j_del" id="' + data[i].id + '">取消</span>';
 
         break;
       case 3:
         tempState = '待托管赏金';
-        tempEdit = '<span class="signUp">托管资金</span>';
+        tempEdit = '<a href="#" class="signUp">托管资金</a>';
         break;
       case 7:
         tempState = '待二次托管';

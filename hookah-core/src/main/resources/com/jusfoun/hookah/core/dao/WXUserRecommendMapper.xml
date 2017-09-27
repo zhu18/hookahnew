@@ -44,11 +44,11 @@
        </if>
    </sql>
 
-  <select id="countRecommendListByCondition" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+  <select id="countRecommendList" resultType="java.lang.Integer" parameterType="java.util.HashMap">
        SELECT
            count(DISTINCT(wxu.recommenderId)) <include refid="sqlRecommendListByCondition"/>
   </select>
-  <select id="findRecommendListByCondition" resultType="com.jusfoun.hookah.core.domain.vo.WXUserRecommendVo" parameterType="java.util.HashMap">
+  <select id="getRecommendList" resultType="com.jusfoun.hookah.core.domain.vo.WXUserRecommendVo" parameterType="java.util.HashMap">
         SELECT
             u.user_id AS userId,
             u.user_name AS userName,
@@ -69,6 +69,7 @@
 
         GROUP BY wxu.recommenderId
         ORDER BY rewardMoney DESC
+
   </select>
     <select id="selectByInviteeId" parameterType="java.lang.String" resultMap="BaseResultMap">
 

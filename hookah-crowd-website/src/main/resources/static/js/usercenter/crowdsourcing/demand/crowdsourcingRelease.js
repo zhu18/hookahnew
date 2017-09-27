@@ -34,7 +34,7 @@ getRequirementType();
 
 
 
-function modifyCrowdsourcing() {//修改，从我的发布点击'修改'调转过来的
+function modifyCrowdsourcing() { //修改，从我的发布点击'修改'调转过来的
   $.ajax({
     type: 'get',
     url: "/api/release/releaseStatus?id="+crowdSourcingId,
@@ -386,11 +386,11 @@ $(document).on('click', '#J_release', function () { //鼠标离开描述显示�
         $.confirm('需求提交成功，等待平台审核！', null, function (type) {
           if (type == 'yes') {
             this.hide();
-            window.location.href = host.crowd + '/usercenter/myRequirement';
+            window.location.href = host.crowd + '/usercenter/myRequirements';
 
           } else {
             this.hide();
-            window.location.href = host.crowd + '/usercenter/myRequirement';
+            window.location.href = host.crowd + '/usercenter/myRequirements';
 
           }
         });
