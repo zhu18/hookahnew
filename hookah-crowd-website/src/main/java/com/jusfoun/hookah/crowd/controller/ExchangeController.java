@@ -41,6 +41,11 @@ public class ExchangeController{
         return "usercenter/crowdsourcing/demand/myRequirements";
     }
 
+    @RequestMapping(value = "/usercenter/requirementDetail", method = RequestMethod.GET)
+    public String requirementDetail(Model model) {
+        return "usercenter/crowdsourcing/demand/requirementDetail";
+    }
+
     @RequestMapping(value = "/crowdsourcing-list", method = RequestMethod.GET)
     public String crowdsourcingList(Model model) {
         return "crowdsourcing/crowdsourcing-list";
