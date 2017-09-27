@@ -48,6 +48,10 @@ class publishController {
     $scope.getDetails = function (id) {
       $state.go('publish.details', {id: id});
     };
+    // 资格筛选
+    $scope.screen = function (id) {
+      $state.go('publish.details', {id: id});
+    };
 
     $scope.pageChanged = function () {
       $scope.search();
