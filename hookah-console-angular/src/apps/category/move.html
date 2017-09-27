@@ -47,11 +47,12 @@
 				</div>
 				<div class="col-sm-2">
 					<div class="form-group">
-						<div>
+						<div style="position:relative">
 							<span style="font-size: 16px;margin-bottom: 20px;">选择需迁移数据</span>
-							<select data-ng-model="goodsV" ng-options="dataTemp.goodsId as dataTemp.goodsName for dataTemp in goodsArr" class="multipleSelect" multiple="multiple" size="8" style="height:300px;">
+							<select data-ng-model="goodsV" ng-options="dataTemp.goodsId as dataTemp.goodsName for dataTemp in goodsArr" ng-click="evaluate()" class="multipleSelect" multiple="multiple" size="8" style="height:300px;">
 
 							</select>
+							<span class="" ng-show="goodsArrS" style="position: absolute;left:95px;top:140px;">{{goodsArrS_txt}}</span>
 						</div>
 					</div>
 				</div>
@@ -85,7 +86,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<button class="btn btn-primary btn-lg center-block" style="min-width: 200px;">
+				<button class="btn btn-primary btn-lg center-block" ng-disabled="!goodsVd || !dataFrom || !dataEnd " ng-click="pushData()" style="min-width: 200px;">
 					确认迁移
 				</button>
 			</div>
