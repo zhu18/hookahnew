@@ -9520,6 +9520,10 @@ input[type="radio"], input[type="checkbox"] {
   border: 1px solid #e5e5e5;
   text-align: center;
 }
+.tab-box .tab-info table td{
+  border: 1px solid #e5e5e5;
+  text-align: center;
+}
 .tab-box .nav{
   padding-left: 1px !important;
 }
