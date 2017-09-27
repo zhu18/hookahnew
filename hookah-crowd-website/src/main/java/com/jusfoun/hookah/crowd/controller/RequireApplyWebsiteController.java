@@ -23,7 +23,7 @@ public class RequireApplyWebsiteController extends BaseController {
      *前台需求大厅  需求报名
      * @return
      */
-    @RequestMapping(value = "/api/apply/add",method = RequestMethod.GET)
+    @RequestMapping(value = "/api/apply/add",method = RequestMethod.POST)
     @ResponseBody
     public ReturnData add(ZbRequirementApply zbRequirementApply){
         return zbRequireApplyWebsiteService.addApplay(zbRequirementApply);
