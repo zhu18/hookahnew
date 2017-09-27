@@ -49,8 +49,8 @@ public class ZbProgramController extends BaseController {
      */
     @RequestMapping(value = "detail")
     @ResponseBody
-    public ReturnData detail(Long id){
-        return zbProgramService.selectProgramById(id);
+    public ReturnData detail(Long reqId){
+        return zbProgramService.selectProgramByReqId(reqId);
     }
 
     /**

@@ -27,9 +27,9 @@ public interface ZbProgramService extends GenericService<ZbProgram, Long> {
 
 
     /**
-     *查询方案
+     *查询方案(根据需求id 查询当前的方案)
      */
-    ReturnData selectProgramById(Long progId);
+    ReturnData selectProgramByReqId(Long reqId);
 
     /**
      * 对需求方评价

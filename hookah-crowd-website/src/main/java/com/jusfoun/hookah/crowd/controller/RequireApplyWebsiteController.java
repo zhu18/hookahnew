@@ -29,5 +29,13 @@ public class RequireApplyWebsiteController extends BaseController {
         return zbRequireApplyWebsiteService.addApplay(zbRequirementApply);
     }
 
+    /**
+     * 查看报名信息
+     */
+    @RequestMapping(value = "/api/apply/detail")
+    @ResponseBody
+    public ReturnData detail(Long reqId){
+        return zbRequireApplyWebsiteService.selectByReqId(reqId);
+    }
 
 }

@@ -16,6 +16,7 @@ import com.jusfoun.hookah.crowd.service.ZbCommentService;
 import com.jusfoun.hookah.crowd.service.ZbProgramService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -173,23 +174,43 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
     }
 
     @Override
-    public ReturnData selectProgramById(Long progId) {
+    public ReturnData selectProgramByReqId(Long reqId) {
         ReturnData returnData = new ReturnData();
         returnData.setCode(ExceptionConst.Success);
         try {
+
+            //参数校验
+            if(Objects.isNull(reqId)){
+                returnData.setCode(ExceptionConst.AssertFailed);
+                returnData.setMessage(ExceptionConst.get(ExceptionConst.AssertFailed));
+                return returnData;
+            }
+
+            String userId = this.getCurrentUser().getUserId();
             //查询方案详情
-            ZbProgramVo zbProgramVo = new ZbProgramVo();
-            zbProgramVo = (ZbProgramVo) this.selectById(progId);
-            //查看附件
-            List<Condition> filters = new ArrayList<>();
-            filters.add(Condition.eq("correlationId",progId));
-            filters.add(Condition.eq("type",ZbContants.ZB_ANNEX_TYPE_PROGRAM));
-            List<ZbAnnex> zbAnnexes = zbAnnexService.selectList(filters);
-            zbProgramVo.setZbAnnexes(zbAnnexes);
-            returnData.setData(zbProgramVo);
-            logger.info("@查询方案[id:" + progId + "]" + zbProgramVo.getTitle() + "成功@");
+            List<Condition> progFilters = new ArrayList<>();
+            progFilters.add(Condition.eq("requirementId",reqId));
+            progFilters.add(Condition.eq("userId",userId));
+            ZbProgram zbProgram =  this.selectOne(progFilters);
+
+            if(null != zbProgram){
+                ZbProgramVo zbProgramVo = new ZbProgramVo();
+                BeanUtils.copyProperties(zbProgram,zbProgramVo);
+
+                //查看附件
+                List<Condition> filters = new ArrayList<>();
+                filters.add(Condition.eq("correlationId",zbProgram.getId()));
+                filters.add(Condition.eq("type",ZbContants.ZB_ANNEX_TYPE_PROGRAM));
+                List<ZbAnnex> zbAnnexes = zbAnnexService.selectList(filters);
+                zbProgramVo.setZbAnnexes(zbAnnexes);
+                returnData.setData(zbProgramVo);
+                logger.info("@查询方案[id:" + zbProgram.getId() + "]" + zbProgramVo.getTitle() + "成功@");
+            } else {
+                returnData.setData(null);
+                logger.info("@查询需求[id:" + reqId + "]方案为空@");
+            }
         } catch (Exception e) {
-            logger.error("@查询方案[id:" + progId + "]失败@");
+            logger.error("@查询需求[id:" + reqId + "]方案失败@");
             e.printStackTrace();
             returnData.setCode(ExceptionConst.Error);
             returnData.setData(ExceptionConst.get(ExceptionConst.Error));
