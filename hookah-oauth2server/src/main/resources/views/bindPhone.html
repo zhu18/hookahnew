@@ -307,7 +307,7 @@ var htmlPart = {
 		self.innerText  =  "( "+count+" ) 秒";
 		$(self).off('click');
 		/*请求验证码*/
-		sendReq('',{},function () { });
+		//sendReq('',{},function () { });
 		tick = setInterval(function () {
 			count--;
 			self.innerText  =  "( "+count+" ) 秒";
