@@ -163,10 +163,12 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             if(mgGoods != null) {
                 List<MgGoods.FormatBean> formatList = mgGoods.getFormatList();
                 if(formatList != null && formatList.size() > 0) {
-                    StringBuffer stringBuffer = new StringBuffer();
-                    for(MgGoods.FormatBean obj : formatList)
-                        stringBuffer.append(obj.getFormat()).append(" ");
-                    goods.setPayFormats(stringBuffer.toString());
+//                    StringBuffer stringBuffer = new StringBuffer();
+//                    for(MgGoods.FormatBean obj : formatList)
+//                        stringBuffer.append(obj.getFormat()).append(" ");
+//                    goods.setPayFormats(stringBuffer.toString());
+
+                    goods.setPayFormats(formatList.get(0).getFormat() + "");
                 }
             }
         }catch (ConverterNotFoundException | ConversionFailedException e) {
