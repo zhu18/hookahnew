@@ -37,7 +37,8 @@
 
 
 .crowdsourcing-progress{ height:90px; display: flex; padding: 10px 0;border-bottom: 1px solid #EDEDED;}
-.crowdsourcing-status{width:110px; font-size: 16px; text-align: center; border-right:1px solid #EDEDED; display: none;}
+.requirementDetailProgress .crowdsourcing-status{ display: block;}
+.crowdsourcing-status{ display: none;width:110px; font-size: 16px; text-align: center; border-right:1px solid #EDEDED;}
 .crowdsourcing-status span{ display: block;margin-top: 27px;}
 .crowdsourcing-progress-box{ flex:1;display: flex; position: relative;}
 .crowdsourcing-progress-box:after{ content: ''; width:100%; height: 4px; position: absolute;top:24px; background-color: #b3e1fb; }
@@ -58,6 +59,8 @@
 .myRequirement-search  li .searchBtn:hover{ background: #a40000;}
 
 
+.requirementDetailTab-table  { }
+.requirementDetailTab-table .secondPage{ display: inline-block;}
 .myRequirement-table tr { text-align: left; }
 .myRequirement-table tr td{ text-align: left; padding:0 10px 0 10px;  position: relative; }
 .myRequirement-table tr td input{padding:2px 0 5px 5px; width: 320px; border: 1px solid #e0e0e0; }
@@ -70,8 +73,8 @@
 .release-notice{ font-size: 13px; display: block; padding: 20px}
 
 .release-first-btnbox{ padding-left:144px;}
-.release-first-btnbox button{padding: 5px 15px; margin-right:15px; font-size: 15px; border:none; cursor: pointer;background-color: #337ab7; color:#fff; border-color: #2e6da4;}
-.release-first-btnbox button:hover{background-color: #286090; border-color: #204d74;}
+.release-first-btnbox button,.release-first-btnbox a{padding: 5px 15px; margin-right:15px; font-size: 15px; border:none; cursor: pointer;background-color: #337ab7; color:#fff; border-color: #2e6da4;}
+.release-first-btnbox button:hover,.release-first-btnbox a:hover{background-color: #286090; border-color: #204d74;}
 
 .myRequirement-table tr td input.fileUploadBtn{min-width:70px; width: 70px;position: relative; z-index: 1; background-color: #ff0000; opacity:0; }
 .myRequirement-table tr td .falseBen{width:70px;height:25px; display: inline-block;  position: absolute; left: 10px;top:11px;line-height: 25px; text-align: center;background-color: #337ab7; color:#fff; border-color: #2e6da4;}

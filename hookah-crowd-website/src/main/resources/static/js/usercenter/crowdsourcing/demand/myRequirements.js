@@ -23,7 +23,7 @@ function loadPageData(data) { //渲染页面数据
     switch (data[i].status) {
       case 1:
         tempState = '待审核';
-        tempEdit = '<span class="signUp">查看</span>';
+        tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">查看</a>';
         break;
       case 2:
         tempState = '审核未通过';
