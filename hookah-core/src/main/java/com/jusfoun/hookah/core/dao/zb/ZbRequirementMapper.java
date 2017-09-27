@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.core.dao.zb;
 
+import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirementPageHelper;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbTradeRecord;
@@ -24,4 +25,6 @@ public interface ZbRequirementMapper extends GenericDao<ZbRequirement> {
     List<ZbTradeRecord> selectTradeRecodes(@Param("userId") String userId);
 
     ZbRequirement selectForDetail(@Param("id") Long id);
+
+    User selectReleaseInfo(String userId);
 }

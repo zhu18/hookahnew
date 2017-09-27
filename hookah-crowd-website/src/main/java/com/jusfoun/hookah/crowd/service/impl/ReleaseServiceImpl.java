@@ -190,31 +190,36 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                         list.add(info);
                         break;
                     case 3: //审核通过,待托管赏金
-                        managedMoney = String.valueOf(zbRequirement.getRewardMoney()*zbRequirement.getTrusteePercent());
+                        if(zbRequirement.getTrusteePercent() != null) {
+                            managedMoney = String.valueOf(zbRequirement.getRewardMoney() * zbRequirement.getTrusteePercent());
+                            map.put("managedMoney",managedMoney);
+                            list.add(map);
+                        }
                         info = requirementInfo(id).getData();
                         list.add(info);
                         break;
                     case 7: //待二次托管或报名结束
-                        managedMoney = String.valueOf(zbRequirement.getRewardMoney()*zbRequirement.getTrusteePercent());
+                        if(zbRequirement.getTrusteePercent() != null){
+                            managedMoney = String.valueOf(zbRequirement.getRewardMoney()*zbRequirement.getTrusteePercent());
+                            map.put("managedMoney",managedMoney);
+                            list.add(map);
+                        }
                         info = requirementInfo(id).getData();
-                        //List<Condition> filters1 = new ArrayList<>();
-                        //List<Condition> filters2 = new ArrayList<>();
-                        if(StringUtils.isNotBlank(status.toString())){
-                            filters1.add(Condition.eq("status", 0));
-                            filters2.add(Condition.eq("status", 1));
+                        if(StringUtils.isNotBlank(zbRequirement.getId().toString())){
+                            filters1.add(Condition.eq("requirementId", zbRequirement.getId()));
                         }
-                        long count = zbRequireApplyService.count(filters1);
-                        list.add(managedMoney);
+                        ZbRequirementApply zbRequirementApply = zbRequireApplyService.selectOne(filters1);
                         list.add(info);
-                        list.add(count);
-                        ZbRequirementApply zbRequirementApply = zbRequireApplyService.selectOne(filters);
                         if(zbRequirementApply != null){
+                            //计算报名人数
+                            List<ZbRequirementApply> zbRequirementApplies = zbRequireApplyService.selectList();
+                            map.put("count",zbRequirementApplies.size());
                             //已选中信息
-                            //User user = userService.selectById(zbRequirement.getUserId());
-                            //user.getContactName();
-                            //user.getContactPhone();
+                            if(zbRequirementApply.getStatus() == 1){
+                                User user = zbRequirementMapper.selectReleaseInfo(zbRequirement.getUserId());
+                                list.add(user);
+                            }
                         }
-                        //list.add();
                         break;
                     case 8: //工作中
                     case 9: //待验收
@@ -284,8 +289,6 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                         break;
                 }
             }
-            map.put("managedMoney",managedMoney);
-            list.add(map);
             return ReturnData.success(list);
         }
         return ReturnData.error("查询错误");
