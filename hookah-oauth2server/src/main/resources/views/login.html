@@ -2,6 +2,7 @@
 var head = {
 %>
 <link type="text/css" rel="stylesheet" href="/static/css/loginform.css">
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <style>
 	#header.transparent {
 		position: relative;
@@ -83,6 +84,10 @@ var head = {
 		position: relative;
 		background: transparent;
 		z-index: 2
+	}
+	.login-login-links a{
+		font-size: 16px;
+		margin: 0 5px;
 	}
 </style>
 <%};%>
@@ -203,6 +208,9 @@ var htmlPart = {
 				</div>
 				<div id="login-other">
 					<div class="login-login-links">
+						<a href="javascript:;" target="_blank" title="微博登陆" style="color:#E05244;"><i class="fa fa-weibo" aria-hidden="true"></i></a>
+						<a href="javascript:;" target="_blank" title="QQ登陆" style="color:#498AD5;"><i class="fa fa-qq" aria-hidden="true"></i></a>
+						<a href="http://www.galaxybigdata.com/exchange/wechat" target="_blank" title="微信登陆" style="color:#00BB29;"><i class="fa fa-weixin" aria-hidden="true"></i></a>
 					</div>
 					<div class="register">
 						<a href="/reg" class="register" target=" _blank"
