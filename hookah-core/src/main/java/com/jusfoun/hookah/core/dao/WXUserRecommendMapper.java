@@ -58,9 +58,9 @@ public interface WXUserRecommendMapper extends GenericDao<WXUserRecommend> {
 
     HashMap<String,Integer> countInviteeAndReward(String userId);
 
-    List<WXUserRecommendVo> findRecommendListByCondition(HashMap<String, Object> paramMap);
+    List<WXUserRecommendVo> getRecommendList(HashMap<String, Object> paramMap);
 
-    int countRecommendListByCondition(HashMap<String, Object> paramMap);
+    int countRecommendList(HashMap<String, Object> paramMap);
 
     WXUserRecommend selectByInviteeId(String userId);
 

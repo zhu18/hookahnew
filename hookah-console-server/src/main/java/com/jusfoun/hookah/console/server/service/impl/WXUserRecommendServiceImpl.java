@@ -33,8 +33,8 @@ public class WXUserRecommendServiceImpl extends GenericServiceImpl<WXUserRecomme
     public Pagination<WXUserRecommendVo> findRecommendListByCondition(HashMap<String, Object> paramMap) {
         Pagination<WXUserRecommendVo> pagination = new Pagination<>();
         //int startIndex = ((int)paramMap.get("pageNum") - 1) * (int)paramMap.get("pageSize");
-        int count = wxUserRecommendMapper.countRecommendListByCondition(paramMap);
-        List<WXUserRecommendVo> list = wxUserRecommendMapper.findRecommendListByCondition(paramMap);
+        List<WXUserRecommendVo> list = wxUserRecommendMapper.getRecommendList(paramMap);
+        int count = wxUserRecommendMapper.countRecommendList(paramMap);
         pagination.setTotalItems(count);
         pagination.setPageSize((int)paramMap.get("pageSize"));
         pagination.setCurrentPage((int)paramMap.get("pageNum"));
