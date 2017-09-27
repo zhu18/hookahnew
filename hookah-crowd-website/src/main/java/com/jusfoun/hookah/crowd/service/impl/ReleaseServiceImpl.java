@@ -361,7 +361,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
             if(StringUtils.isNotBlank(programId.toString())){
                 filters.add(Condition.eq("programId", programId));
             }
-            ZbComment zbComment = null;
+            ZbComment zbComment = new ZbComment();
             zbComment.setUserId(userId);
             zbComment.setProgramId(programId);
             zbComment.setLevel(level);

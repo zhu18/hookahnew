@@ -1,6 +1,8 @@
 package com.jusfoun.hookah.core.domain.zb;
 
 import com.jusfoun.hookah.core.generic.GenericModel;
+
+import javax.persistence.Id;
 import java.util.Date;
 
 public class ZbComment extends GenericModel {
@@ -10,6 +12,7 @@ public class ZbComment extends GenericModel {
      *
      * @mbggenerated
      */
+    @Id
     private Long id;
 
     /**

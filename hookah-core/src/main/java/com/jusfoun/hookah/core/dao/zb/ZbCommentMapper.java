@@ -5,4 +5,6 @@ import com.jusfoun.hookah.core.generic.GenericDao;
 
 public interface ZbCommentMapper extends GenericDao<ZbComment> {
 
+    int insertAndGetId(ZbComment zbComment);
+
 }
