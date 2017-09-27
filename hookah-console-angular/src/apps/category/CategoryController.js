@@ -134,7 +134,9 @@ class CategoryController {
                         if (res.data.code == 1) {
                             growl.addSuccessMessage("删除成功。。。");
                             $scope.search();
-                        } else {
+                        } else if (res.data.code == 0) {
+                            growl.addErrorMessage("该分类存在商品，删除失败。");
+                        }else{
                             growl.addErrorMessage("删除失败。。。");
                         }
 
