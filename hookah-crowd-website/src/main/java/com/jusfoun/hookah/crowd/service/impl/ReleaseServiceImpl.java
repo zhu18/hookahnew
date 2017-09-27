@@ -14,13 +14,11 @@ import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.crowd.constants.ZbContants;
 import com.jusfoun.hookah.crowd.service.*;
 import com.jusfoun.hookah.crowd.util.CommonUtils;
-import com.jusfoun.hookah.crowd.util.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -87,6 +85,9 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
             }else{
                 ZbRequirement zbRequirement = zbRequireService.selectById(ment.getId());
                 if(zbRequirement != null){
+                    if(zbRequirement.getStatus() == ZbContants.Zb_Require_Status.CHECK_NOT.getCode().shortValue()){
+                        ment.setStatus(ZbContants.Zb_Require_Status.CHECK_NOT.getCode().shortValue());
+                    }
                     ment.setRequireSn(zbRequirement.getRequireSn());
                     ment.setAddTime(zbRequirement.getAddTime());
                     ment.setAddOperator(zbRequirement.getAddOperator());
@@ -186,6 +187,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                 Object info = null;
                 switch (status){
                     case 1://待审核
+                    case 2://审核未通过
                         info = requirementInfo(id).getData();
                         list.add(info);
                         break;
@@ -225,20 +227,29 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                     case 9: //待验收
                     case 13://待评价
                     case 18://需方驳回
+                        if(zbRequirement.getTrusteePercent() != null){
+                            managedMoney = String.valueOf(zbRequirement.getRewardMoney()*zbRequirement.getTrusteePercent());
+                            map.put("managedMoney",managedMoney);
+                            list.add(map);
+                        }
                         info = requirementInfo(id).getData();
                         list.add(info);
                         if(zbRequirement.getId() != null){
                             filters1.add(Condition.eq("requirementId", zbRequirement.getId()));
                             ZbProgram zbProgram = zbProgramService.selectOne(filters1);
                             if(zbProgram != null){
-                                list.add(zbProgram);
+                                Map<String, Object> zpMap = new HashMap<>(6);
+                                zpMap.put("zbProgram",zbProgram);
+                                list.add(zpMap);
                                 if(StringUtils.isNotBlank(zbProgram.getId().toString())){
                                     filters2.add(Condition.eq("correlationId", zbProgram.getId()));
                                 }
                                 filters2.add(Condition.eq("type", 1));
-                                ZbAnnex zbAnnex = zbAnnexService.selectOne(filters2);
-                                if(zbAnnex != null){
-                                    list.add(zbAnnex);
+                                List<ZbAnnex> zbAnnexes = zbAnnexService.selectList(filters2);
+                                if(zbAnnexes != null){
+                                    Map<String, Object> zaMap = new HashMap<>(6);
+                                    zaMap.put("zbAnnexes",zbAnnexes);
+                                    list.add(zaMap);
                                 }
                             }
                         }
@@ -331,7 +342,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
             if(StringUtils.isNotBlank(id.toString())){
                 filters.add(Condition.eq("id", id));
             }
-            ZbProgram zbProgram = null;
+            ZbProgram zbProgram = zbProgramService.selectOne(filters);
             zbProgram.setStatus(status);
             zbProgram.setCheckAdvice(checkAdvice);
             int i = zbProgramService.updateByCondition(zbProgram, filters);
@@ -344,40 +355,45 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
      * 数据众包-需求方-添加对服务商的评价
      * @return
      */
-   public ReturnData getInsertEvaluation(int level, String content, Long programId, String userId){
-       if(programId != null){
-           List<Condition> filters = new ArrayList<>();
-           if(StringUtils.isNotBlank(programId.toString())){
-               filters.add(Condition.eq("programId", programId));
-           }
-           ZbComment zbComment = null;
-           zbComment.setUserId(userId);
-           zbComment.setProgramId(programId);
-           zbComment.setLevel(level);
-           zbComment.setContent(content);
-           zbComment.setAddTime(new Date());
-           zbComment.setUserType(2);
-           ZbComment insert = zbCommentService.insert(zbComment);
-           return ReturnData.success(insert);
-       }
-       return ReturnData.error("添加评价意见失败！");
-   }
+    public ReturnData getInsertEvaluation(int level, String content, Long programId, String userId){
+        if(programId != null){
+            List<Condition> filters = new ArrayList<>();
+            if(StringUtils.isNotBlank(programId.toString())){
+                filters.add(Condition.eq("programId", programId));
+            }
+            ZbComment zbComment = null;
+            zbComment.setUserId(userId);
+            zbComment.setProgramId(programId);
+            zbComment.setLevel(level);
+            zbComment.setContent(content);
+            zbComment.setAddTime(new Date());
+            zbComment.setUserType(2);
+            ZbComment insert = zbCommentService.insert(zbComment);
+            return ReturnData.success(insert);
+        }
+        return ReturnData.error("添加评价意见失败！");
+    }
 
     /**
-     * 数据众包-需求方-删除需求
+     * 数据众包-需求方-取消需求
      * @return
      */
     public ReturnData deleteRequirement(Long id){
         if(id != null){
             ZbRequirement zbRequirement = zbRequireService.selectById(id);
             List<Condition> filter = new ArrayList<>();
-            if(StringUtils.isNotBlank(zbRequirement.getId().toString())){
+            /*if(StringUtils.isNotBlank(zbRequirement.getId().toString())){
                 filter.add(Condition.eq("correlationId", zbRequirement.getId()));
             }
             zbAnnexService.deleteByCondtion(filter);
-            int i = zbRequireService.delete(id);
+            int i = zbRequireService.delete(id);*/
+            if(StringUtils.isNotBlank(id.toString())){
+                filter.add(Condition.eq("id", id));
+            }
+            zbRequirement.setStatus(Short.parseShort("18"));
+            int i = zbRequireService.updateByConditionSelective(zbRequirement, filter);
             return ReturnData.success(i);
         }
-        return  ReturnData.error("删除需求信息失败！");
+        return  ReturnData.error("取消需求信息失败！");
     }
 }

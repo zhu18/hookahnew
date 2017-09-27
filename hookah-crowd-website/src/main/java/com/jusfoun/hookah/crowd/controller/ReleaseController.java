@@ -119,7 +119,7 @@ public class ReleaseController extends BaseController{
     }
 
     /**
-     * 数据众包-需求方-删除需求
+     * 数据众包-需求方-取消需求
      * @return
      */
     @ResponseBody
