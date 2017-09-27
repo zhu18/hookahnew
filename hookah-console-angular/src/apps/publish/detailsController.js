@@ -34,21 +34,22 @@ class detailsController {
                     $scope.applyDeadline=zbRequirement.applyDeadline;
                     $scope.checkRemark=zbRequirement.checkRemark;
                     $scope.status=zbRequirement.status;
+                    $scope.id=zbRequirement.id;
                     //报名tab
-                    if(zbRequirementApplies){
-
+                    if(zbRequirementApplies.length>0){
+                        $scope.zbRequirementApplies=zbRequirementApplies;
                         $scope.isZbRequirementAppliesShow=false;
                     }else {
                         $scope.isZbRequirementAppliesShow=true;
                     }
-                    //成果tab
-                    if(zbPrograms){
-
-                        $scope.isZbProgramsShow=false;
-                    }else {
-                        $scope.isZbProgramsShow=true;
-                    }
-                    //评价tab
+                    // //成果tab
+                    // if(zbPrograms){
+                    //
+                    //     $scope.isZbProgramsShow=false;
+                    // }else {
+                    //     $scope.isZbProgramsShow=true;
+                    // }
+                    // //评价tab
 
                 } else {
 
@@ -58,6 +59,45 @@ class detailsController {
             });
         };
         $scope.screen();
+        $scope.check=function (id) {
+            console.log(id);
+        }
+
+        $scope.public=function (id) {
+            $state.go('publish.public', {id: id});
+        };
+        $scope.giveUp=function (id) {
+            var promise = $http({
+                method: 'GET',
+                url: $rootScope.site.crowdServer + "/api/require/updateStatus",
+                params: {
+                    id:id,
+                    status:16
+                }
+            });
+            promise.then(function (res, status, config, headers) {
+                console.log('数据在这里');
+                console.log(res);
+                if (res.data.code == '1') {
+                    var modalInstance =$rootScope.openConfirmDialogModal("确认流标成功！");
+                    modalInstance.result.then(function () {
+                        $state.go('publish.list');
+                    }, function () {
+                        $state.go('publish.list');
+                    });
+                } else {
+
+                    var modalInstance =$rootScope.openConfirmDialogModal("确认流标失败！");
+                    modalInstance.result.then(function () {
+                        $state.go('publish.list');
+                    }, function () {
+                        $state.go('publish.list');
+                    });
+                }
+                $rootScope.loadingState = false;
+                growl.addSuccessMessage("订单数据加载完毕。。。");
+            });
+        };
     }
 }
 

@@ -9511,6 +9511,9 @@ input[type="radio"], input[type="checkbox"] {
 .publish-table-box table th input{
   vertical-align: middle !important;
 }
+.tab-box{
+  margin-bottom: 30px;
+}
 .tab-box .tab-info{
   border: 1px solid #e5e5e5;
   border-top: none;
