@@ -158,10 +158,11 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             if(mgGoods != null) {
                 List<MgGoods.FormatBean> formatList = mgGoods.getFormatList();
                 if(formatList != null && formatList.size() > 0) {
-                    StringBuffer stringBuffer = new StringBuffer();
-                    for(MgGoods.FormatBean obj : formatList)
-                        stringBuffer.append(obj.getFormat()).append(" ");
-                    goods.setPayFormats(stringBuffer.toString());
+//                    StringBuffer stringBuffer = new StringBuffer();
+//                    for(MgGoods.FormatBean obj : formatList)
+//                        stringBuffer.append(obj.getFormat()).append(" ");
+//                    goods.setPayFormats(stringBuffer.toString());
+                    goods.setPayFormats(formatList.get(0).getFormat() == -1 ? "9" : formatList.get(0).getFormat() + "");
                 }
             }
         }catch (ConverterNotFoundException | ConversionFailedException e) {
@@ -499,6 +500,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     private String getPayFormatsName(String id) {
         return HookahConstants.PAY_FORMATS_TIMES.equals(id) ? "按次" :
                     HookahConstants.PAY_FORMATS_MONTH.equals(id) ? "按月" :
-                        HookahConstants.PAY_FORMATS_YEAR.equals(id) ? "按年" : "按套";
+                        HookahConstants.PAY_FORMATS_YEAR.equals(id) ? "按年" :
+                                HookahConstants.PAY_FORMATS_ONE.equals(id) ? "按套" : "面议";
     }
 }
