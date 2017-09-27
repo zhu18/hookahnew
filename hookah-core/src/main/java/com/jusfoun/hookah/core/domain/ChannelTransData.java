@@ -9,6 +9,7 @@ public class ChannelTransData implements Serializable {
     private String transData;//传输数据(加密)
     private String checkCode;//校验码
     private Long timestamp;//时间
+    private String localUrl;//本地域名
 
     public String getTransData() {
         return transData;
@@ -34,6 +35,13 @@ public class ChannelTransData implements Serializable {
         this.timestamp = timestamp;
     }
 
+    public String getLocalUrl() {
+        return localUrl;
+    }
+
+    public void setLocalUrl(String localUrl) {
+        this.localUrl = localUrl;
+    }
 
     public static class RelationData<T> {
         private String userId;

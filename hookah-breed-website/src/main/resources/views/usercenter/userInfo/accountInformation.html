@@ -8,36 +8,50 @@ var head = {
 <%
 var htmlPart = {
 %>
-<div class="grid-0 backgorund-gray">
+<div class="grid-0 backgorund-gray bgi">
     <div class="grid-row clearfix">
         <%include("/usercenter/user-center-menu.html"){} %>
-        <div class="grid-right info-center-box ">
-            <div class="accountInformation">
+        <div class="grid-right info-center-box info-center-box-n">
+            <div class="accountInformation" style="margin-top:-14px;margin-left:-12px;">
                  <div class="accountInformation-top">
                      <div class="header clearfix">
-                         <h4 class="grid-left center-title">帐号信息</h4>
+                         <h4 class="grid-left center-title center-title-n">帐号信息</h4>
+                         <img src="../../static/images/shz/titleP.png" style="position:relative;top:0;left:20px;"/>
                      </div>
+                     <div class="top-div">
+                         <div class="top-div-c">
                      <ul class="accountInformation-top-list">
 
                      </ul>
-                 </div>
-                 <div class="accountInformation-down">
-                     <div class="header clearfix">
-                         <h4 class="grid-left center-title">登录日志</h4>
+                         </div>
                      </div>
-                     <table>
-                         <thead>
-                             <tr>
-                                 <th>登录时间</th>
-                                 <th>登录IP</th>
-                                 <th>备注</th>
-                             </tr>
-                         </thead>
-                          <tbody>
-
-                          </tbody>
-                     </table>
                  </div>
+
+            </div>
+
+            <div class="accountInformation" style="margin-top:14px;margin-left:-12px;">
+                <div class="accountInformation-down">
+                    <div class="header clearfix">
+                        <h4 class="grid-left center-title center-title-n">登录日志</h4>
+                        <img src="../../static/images/shz/titleP.png" style="position:relative;top:0;left:20px;"/>
+                    </div>
+                    <div class="top-div">
+                        <div class="top-div-c">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>登录时间</th>
+                            <th>登录IP</th>
+                            <th>备注</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                            </div>
+                        </div>
+                </div>
             </div>
 
         </div>

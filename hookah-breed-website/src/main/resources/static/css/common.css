@@ -508,11 +508,6 @@ ul li {
     font-size: 16px;
 }
 
-.font-size-14{
-    font-size: 14px;
-    margin-top:70px!important;
-}
-
 .font-size-25{
     font-size: 25px;
 }
@@ -654,29 +649,30 @@ ul li {
     padding-bottom: 5px;
 }
 /* 页头 */
-.header {
+header {
     width: 100%;
     min-width: 1200px;
     background-color: #000d24;
     border-bottom: 1px solid #3578ff;
 }
-.header *{
+header *{
     box-sizing: border-box;
 }
-.header .header-container {
+header .header-container {
     width: 1200px;
     min-width: 1200px;
     height: 100px;
     margin: 0 auto;
+    position: relative;
 }
 
-.header .header-container .logo {
+header .header-container .logo {
     float: left;
     position: relative;
     top: 30px;
 }
 
-.header .header-container .nav {
+header .header-container .nav {
     list-style: none;
     margin: 0;
     padding: 43px 0 0 120px;
@@ -684,7 +680,7 @@ ul li {
     float: left;
 }
 
-.header .header-container .nav .nav-item {
+header .header-container .nav .nav-item {
     font-size: 16px;
     float: left;
     width: 95px;
@@ -693,7 +689,7 @@ ul li {
     margin-bottom: -2px;
 }
 
-.header .header-container .nav .nav-item a {
+header .header-container .nav .nav-item a {
     display: block;
     height: 100%;
     transition: .3s;
@@ -701,48 +697,50 @@ ul li {
     text-decoration: none;
 }
 
-.header .header-container .nav .nav-item a:hover, .header .header-container .nav .nav-item a.active {
+header .header-container .nav .nav-item a:hover, .header .header-container .nav .nav-item a.active {
     color: #fda40a;
     text-decoration: none;
 }
 
-.header .header-container .nav .nav-item a:hover {
+header .header-container .nav .nav-item a:hover {
     border-bottom: 2px solid #fda40a;
 }
 
-.header .header-container .nav .nav-item.active a {
+header .header-container .nav .nav-item.active a {
     color: #fda40a;
     border-bottom: 2px solid #fda40a;
 }
 
-.header .header-container .nav:before, .header .header-container .nav:after {
+header .header-container .nav:before, .header .header-container .nav:after {
     content: " ";
     display: table;
 }
 
-.header .header-container .nav:after {
+header .header-container .nav:after {
     clear: both;
 }
 
-.header .header-container .operation {
+header .header-container .operation {
     float: right;
     padding-top: 15px;
     color: #fff;
+    position: absolute;
+    right: 0;
 }
 
-.header .header-container .operation .operation-item {
+header .header-container .operation .operation-item {
     display: inline-block;
     list-style: none;
     margin: 0;
     padding: 0 0 0 0;
 }
 
-.header .header-container .operation .operation-item li {
+header .header-container .operation .operation-item li {
     float: left;
     text-align: center;
 }
 
-.header .header-container .operation .operation-item li a {
+header .header-container .operation .operation-item li a {
     display: inline-block;
     text-decoration: none;
     font-size: 12px;
@@ -752,31 +750,32 @@ ul li {
     cursor: pointer;
 }
 
-.header .header-container .operation .operation-item li a:hover, .header .header-container .operation .operation-item li a.active {
+header .header-container .operation .operation-item li a:hover, .header .header-container .operation .operation-item li a.active {
     background-image: linear-gradient(to right, #fe9402, #f8b615);
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.35);
     color: #fff;
     border-color: #fff;
 }
 
-.header .header-container .operation .operation-item:before, .header .header-container .operation .operation-item:after {
+header .header-container .operation .operation-item:before, .header .header-container .operation .operation-item:after {
     content: " ";
     display: table;
 }
 
-.header .header-container .operation .operation-item:after {
+header .header-container .operation .operation-item:after {
     clear: both;
 }
 
-.header .header-container .operation .srch-cart {
-    position: relative;
-    top: 15px;
+header .header-container .operation .srch-cart {
+    position: absolute;
+    top: 55px;
+    right: 35px;
 }
-.header .header-container .operation .srch-cart a{
+header .header-container .operation .srch-cart a{
     text-decoration: none;
     color:#fff;
 }
-.header .header-container .operation .srch-cart .fa-search {
+header .header-container .operation .srch-cart .fa-search {
     position: absolute;
     top: 6px;
     left: 160px;
@@ -784,7 +783,7 @@ ul li {
     font-size: 18px;
 }
 
-.header .header-container .operation .srch-cart .fa-shopping-cart {
+header .header-container .operation .srch-cart .fa-shopping-cart {
     cursor: pointer;
     font-size: 18px;
     top: 2px;
@@ -792,7 +791,7 @@ ul li {
     position: relative;
 }
 
-.header .header-container .operation .srch-cart .cart-num {
+header .header-container .operation .srch-cart .cart-num {
     position: absolute;
     top: -8px;
     left: 10px;
@@ -807,7 +806,7 @@ ul li {
     text-align: center;
 }
 
-.header .header-container .operation .srch-cart input {
+header .header-container .operation .srch-cart input {
     width: 190px;
     line-height: 30px;
     font-size: 14px;

@@ -61,3 +61,14 @@
     margin: 5px;
 }
 /*menu-end*/
+
+/*换肤*/
+.exchange-index-menu .menu-list{
+    background-color: #031128;
+}
+.iconfont{
+    color:#B4B8BF;
+}
+.exchange-index-menu .menu-list li{
+    border-bottom-color: transparent;
+}

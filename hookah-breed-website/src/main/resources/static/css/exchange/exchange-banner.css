@@ -1,9 +1,29 @@
+.index-top-banner {
+    background:url(../../images/exchange/silu.jpg) no-repeat center;
+    background-size:cover;
+}
+.index-top-banner .text {
+    width:400px;
+    height:90px;
+    margin:0 auto;
+    position:relative;
+    top:22%;
+    left:-7%;
+}
+.index-top-banner .text .p1{
+    font-size:38px;
+    color:38px;
+}
+.index-top-banner .text .p2{
+    font-size:20px;
+}
 .banner-tab {
     z-index: 989;
     position: absolute;
     bottom: 3px;
     left: 50%;
 }
+
 .banner-tab .banner-tab-li {
     -webkit-box-sizing: content-box;
     -moz-box-sizing: content-box;

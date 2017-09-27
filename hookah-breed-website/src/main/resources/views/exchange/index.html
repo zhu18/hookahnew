@@ -56,24 +56,28 @@ var htmlPart = {
 	<!--</ul>-->
 	<!--</div>-->
 	<!--推荐资讯-->
+	<div  style='background:url("../../static/images/bg.png") no-repeat;background-size:cover;'>
 	<%
 	if(goodsShelvesVoInfo.recomm_data != '')
 	var recomm_data = goodsShelvesVoInfo.recomm_data;
 	{%>
 	<div class="exchange-recommend-resource padding-bottom-30">
 		<div class="grid-row">
-			<div class="recommend-resource-top" style="">
-				<div class="recommend-resource-top-left grid-left">
-					<div class="d">
-						<i class="iconfont icon-zanxiao color-gray-blue" aria-hidden="true"></i>
-						<span class="font-weight-bold">${recomm_data.shelvesName}</span>
-						<span class="color-gray-6">${recomm_data.shelvesDesc}</span>
-					</div>
-				</div>
-				<div class="recommend-resource-top-right grid-right">
-					<a href="${host.website}/exchange/shelves?id=${recomm_data.shelvesId}" target="_blank" class="a-hover-blue">更多>></a>
-				</div>
+			<div class="resource-top">
+				<img src="../../static/images/exchange/tui.png" alt="">
 			</div>
+			<!--<div class="recommend-resource-top" style="">-->
+				<!--<div class="recommend-resource-top-left grid-left">-->
+					<!--<div class="d">-->
+						<!--<i class="iconfont icon-zanxiao color-gray-blue" aria-hidden="true"></i>-->
+						<!--<span class="font-weight-bold" style="color: #fff;">${recomm_data.shelvesName}</span>-->
+						<!--<span class="color-gray-6" style="color:#C5C9D4;">${recomm_data.shelvesDesc}</span>-->
+					<!--</div>-->
+				<!--</div>-->
+				<!--<div class="recommend-resource-top-right grid-right">-->
+					<!--<a href="${host.website}/exchange/shelves?id=${recomm_data.shelvesId}" target="_blank" style="color:#fff;">更多>></a>-->
+				<!--</div>-->
+			<!--</div>-->
 			<div class="recommend-resource-down clearfix">
 				<ul>
 					<%
@@ -87,17 +91,18 @@ var htmlPart = {
 					for(var i=0;i< index;i++){
 					%>
 					<li>
-						<!--<div class="li-item-top">-->
+						<!--<div class="">-->
 							<!--<a href="${host.website}/exchange/details?id=${item[i].goodsId}">-->
 								<!--<img src="${item[i].goodsImg}" alt="">-->
 							<!--</a>-->
 							<!--<div class="padding-left-5 top-box">-->
 								<!--<a href="${host.website}/exchange/details?id=${item[i].goodsId}">-->
 									<!--<p class="title">${item[i].goodsName}</p></a>-->
-								<!--<a href="${host.website}/exchange/details?id=${item[i].goodsId}">-->
+								<!--<a href="${host.website}/exchange/detailsli-item-top?id=${item[i].goodsId}">-->
 									<!--<p class="subtitle">${item[i].goodsBrief}</p></a>-->
 							<!--</div>-->
 						<!--</div>-->
+					<div class="container">
 						<div class="li-item-top">
 							<a target="_blank" href="${host.website}/exchange/details?id=${item[i].goodsId}" class="top-box">
 								<img src="${host.static}/${item[i].goodsImg}" class="top-box-img" alt="">
@@ -125,12 +130,12 @@ var htmlPart = {
 										<%}%>
 									</span>
 									<!--<span class="grade-star">-->
-                                          <!--<i class="iconfont icon-shoucang star-i-item"></i>-->
-                                          <!--<i class="iconfont icon-shoucang star-i-item"></i>-->
-                                          <!--<i class="iconfont icon-shoucang star-i-item"></i>-->
-                                          <!--<i class="iconfont icon-shoucang star-i-item"></i>-->
-                                          <!--<i class="iconfont icon-shoucang star-i-item"></i>-->
-                                      <!--</span>-->
+									<!--<i class="iconfont icon-shoucang star-i-item"></i>-->
+									<!--<i class="iconfont icon-shoucang star-i-item"></i>-->
+									<!--<i class="iconfont icon-shoucang star-i-item"></i>-->
+									<!--<i class="iconfont icon-shoucang star-i-item"></i>-->
+									<!--<i class="iconfont icon-shoucang star-i-item"></i>-->
+									<!--</span>-->
 								</div>
 								<!--<span class="collect" onclick="Attention.add('${item[i].goodsId}')"><i class="iconfont icon-jushoucanggift collect-item"></i>关注</span>-->
 							</div>
@@ -138,18 +143,22 @@ var htmlPart = {
 								<%if(item[i].isDiscussPrice == 1){%>
 								<span class="money" style="font-size: 20px;"><span style="font-size: 14px;">价格:</span>面议</span>
 								<%}else{%>
-									<%if(item[i].shopPrice >= 1000000){%>
-									<span class="money"><i class="money-i-item" >￥</i>${trunc(item[i].shopPrice / 1000000,2)}万</span>
-									<%}else{%>
-									<span class="money"><i class="money-i-item" >￥</i>${item[i].shopPrice / 100}</span>
-									<%}%>
+								<%if(item[i].shopPrice >= 1000000){%>
+								<span class="money"><i class="money-i-item" >￥</i>${trunc(item[i].shopPrice / 1000000,2)}万</span>
+								<%}else{%>
+								<span class="money"><i class="money-i-item" >￥</i>${item[i].shopPrice / 100}</span>
+								<%}%>
 								<%}%>
 
-								<a class="detail btn-hover-red" href="${host.website}/exchange/details?id=${item[i].goodsId}" target="_blank" >查看详情</a>
+
+							</div>
+							<div class="down-btn">
+								<a class="down-btn-a  detail btn-hover-or" href="${host.website}/exchange/details?id=${item[i].goodsId}" target="_blank" >查看详情</a>
 							</div>
 						</div>
 						<div class="li-hover">
 						</div>
+					</div>
 					</li>
 					<%}%>
 				</ul>
@@ -157,42 +166,49 @@ var htmlPart = {
 		</div>
 	</div>
 	<%}%>
-	<div class="exchange-center-bar">
+<!--	<div class="exchange-center-bar">
 		<img src="/static/images/exIndex.png" alt="" style="width: 100%;">
-	</div>
+	</div>-->
 	<!--热门资讯-->
 	<%
 	if(goodsShelvesVoInfo.hot_res_data != ''){
 	var hot_res_data = goodsShelvesVoInfo.hot_res_data;
 	%>
 	<div class="exchange-hot-resource grid-row">
-		<div class="hot-resource-top" style="">
-			<div class="hot-resource-top-left grid-left">
-				<div class="d">
-					<i class="iconfont icon-fire2 color-red"></i>
-					<span class="font-weight-bold">${hot_res_data.shelvesName}</span>
-					<span class="color-gray-6">${hot_res_data.shelvesDesc}</span>
-				</div>
-			</div>
-			<div class="hot-resource-top-right grid-right">
-				<a href="${host.website}/exchange/shelves?id=${hot_res_data.shelvesId}" class="a-hover-blue" target="_blank" >更多>></a>
-			</div>
-		</div>
+		<!--<div class="hot-resource-top" style="">-->
+			<!--<div class="hot-resource-top-left grid-left">-->
+				<!--<div class="d">-->
+					<!--<i class="iconfont icon-fire2 color-red"></i>-->
+					<!--<span class="font-weight-bold" style="color: #fff;">${hot_res_data.shelvesName}</span>-->
+					<!--<span class="color-gray-6" style="color:#C5C9D4;">${hot_res_data.shelvesDesc}</span>-->
+				<!--</div>-->
+			<!--</div>-->
+			<!--<div class="hot-resource-top-right grid-right">-->
+				<!--<a href="${host.website}/exchange/shelves?id=${hot_res_data.shelvesId}" style="color:#fff;" target="_blank" >更多>></a>-->
+			<!--</div>-->
+		<!--</div>-->
 		<div class="hot-resource-down clearfix">
-			<div class="hot-down-left ">
-				<div class="headline-box">
-					<p class="main-headline">${hot_res_data.shelvesName}</p>
-					<p class="sub-headline">${hot_res_data.shelvesDesc}</p>
-				</div>
-				<div class="label-box">
-					<a target="_blank" href="/exchange/search?names=金融">金融</a>
-					<a target="_blank" href="/exchange/search?names=银行">银行</a>
-					<a target="_blank" href="/exchange/search?names=信用">信用</a>
-					<a target="_blank" href="/exchange/search?names=企业信息">企业信息</a>
-				</div>
-				<span class="iconfont icon-toutiao bg-img"></span>
-			</div>
-			<div class="hot-down-table ">
+				<div class="hot-top">
+					<div class="hot-top-resource">
+						<span class="center-left-titles">热门资源</span>
+						<img src="../../static/images/shz/titleP.png" style="position:relative;left:4px;top:13px;width:860px;">
+						<a href="${host.website}/exchange/shelves?id=${hot_res_data.shelvesId}"  target="_blank" >更多>></a>
+					</div>
+					<div class="bd">
+						<div class="hot-down-left ">
+							<div class="headline-box">
+								<p class="main-headline">${hot_res_data.shelvesName}</p>
+								<p class="sub-headline">${hot_res_data.shelvesDesc}</p>
+							</div>
+							<div class="label-box">
+								<a target="_blank" href="/exchange/search?names=金融">金融</a>
+								<a target="_blank" href="/exchange/search?names=银行">银行</a>
+								<a target="_blank" href="/exchange/search?names=信用">信用</a>
+								<a target="_blank" href="/exchange/search?names=企业信息">企业信息</a>
+							</div>
+							<span class="iconfont icon-toutiao bg-img"></span>
+						</div>
+						<div class="hot-down-table ">
 				<table>
 					<tr>
 						<th>资源标识</th>
@@ -232,9 +248,14 @@ var htmlPart = {
 					<%}%>
 				</table>
 			</div>
+					</div>
+			</div>
+
 			<div class="hot-down-rank display-inline-block">
-				<div class="h-title"><i></i><span>热销榜</span></div>
-				<ul>
+				<div class="h-title">
+					<span class="center-left-titles">热销榜</span>
+				</div>
+				<ul class="padding-top:15px;">
 					<%
 					var hot_sellItem = goodsShelvesVoInfo.hot_sell_data.goods;
 					var index2 =0;
@@ -285,19 +306,22 @@ var htmlPart = {
 	var ind_res_data_4 = goodsShelvesVoInfo.ind_res_data_4;
 	%>
 	<div class="exchange-industry-resource grid-row">
-		<div class="industry-resource-top ">
-			<div class="industry-resource-top-left grid-left">
-				<div class="d">
-					<i class="iconfont icon-hangye color-gray-blue" aria-hidden="true"></i>
-					<span class="font-weight-bold">${ind_res_data.shelvesName}</span>
-					<span class="color-gray-6">${ind_res_data.shelvesDesc}</span>
-				</div>
-			</div>
-			<div class="industry-resource-top-right grid-right">
-				<!--<a href="" class="a-hover-blue"-->
-				   <!--target="_blank">更多>></a>-->
-			</div>
+		<div class="resource-top">
+			<img src="../../static/images/exchange/exhang.png" alt="">
 		</div>
+		<!--<div class="industry-resource-top ">-->
+			<!--<div class="industry-resource-top-left grid-left">-->
+				<!--<div class="d">-->
+					<!--<i class="iconfont icon-hangye color-gray-blue" aria-hidden="true"></i>-->
+					<!--<span class="font-weight-bold" style="color: #fff;">${ind_res_data.shelvesName}</span>-->
+					<!--<span class="color-gray-6"  style="color: #C5C9D4;">${ind_res_data.shelvesDesc}</span>-->
+				<!--</div>-->
+			<!--</div>-->
+			<!--<div class="industry-resource-top-right grid-right">-->
+				<!--&lt;!&ndash;<a href="" class="a-hover-blue"&ndash;&gt;-->
+				   <!--&lt;!&ndash;target="_blank">更多>></a>&ndash;&gt;-->
+			<!--</div>-->
+		<!--</div>-->
 		<div class="industry-resource-down ">
 			<div class="carousel-box">
 				<!--<div id="arr">-->
@@ -435,7 +459,7 @@ var htmlPart = {
 								<%}%>
 							</div>
 						</li>
-						<li class="slide-item">
+						<li class="slide-item  slide-four ">
 							<div class="slide-item-top">
 								<img src="${host.static}/${ind_res_data_4.backImgPath}" alt="" class="bg">
 								<a href="javascript:void(0);" class="hover-bg">
@@ -511,9 +535,9 @@ var htmlPart = {
 					<div class="label-box">
 						<!--<span>资源汇总</span>-->
 						<!--<span>资源汇总</span>-->
-						<a class="more a-hover-blue" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.model_data.shelvesId}" class="a-hover-blue" target="_blank" >更多>></a>
+						<a class="more a-hover-blue" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.model_data.shelvesId}" target="_blank" >查看更多>></a>
 					</div>
-					<span class="iconfont icon-productfeatures bg-img"></span>
+					<!--<span class="iconfont icon-productfeatures bg-img"></span>-->
 				</div>
 				<div class="grid-right list-box">
 					<ul>
@@ -566,10 +590,10 @@ var htmlPart = {
 					<div class="label-box">
 						<!--<span>资源汇总</span>-->
 						<!--<span>资源汇总</span>-->
-						<a class="more a-hover-blue" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.scene_data.shelvesId}" class="a-hover-blue" target="_blank" >更多>></a>
+						<a class="more a-hover-blue" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.scene_data.shelvesId}"  target="_blank" >查看更多>></a>
 
 					</div>
-					<span class="iconfont icon-productfeatures bg-img"></span>
+					<!--<span class="iconfont icon-productfeatures bg-img"></span>-->
 				</div>
 				<div class="grid-right list-box">
 					<ul>
@@ -622,9 +646,9 @@ var htmlPart = {
 					<div class="label-box">
 						<!--<span>资源汇总</span>-->
 						<!--<span>资源汇总</span>-->
-						<a class="more a-hover-blue" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.plat_data.shelvesId}" class="a-hover-blue" target="_blank" >更多>></a>
+						<a class="more a-hover-blue" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.plat_data.shelvesId}" target="_blank" >查看更多>></a>
 					</div>
-					<span class="iconfont icon-productfeatures bg-img"></span>
+					<!--<span class="iconfont icon-productfeatures bg-img"></span>-->
 
 				</div>
 				<div class="grid-right list-box">
@@ -678,9 +702,9 @@ var htmlPart = {
 					<div class="label-box">
 						<!--<span>资源汇总</span>-->
 						<!--<span>资源汇总</span>-->
-						<a class="more a-hover-blue" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.tools_data.shelvesId}" class="a-hover-blue" target="_blank" >更多>></a>
+						<a class="more a-hover-blue" href="${host.website}/exchange/shelves?id=${goodsShelvesVoInfo.tools_data.shelvesId}"  target="_blank" >查看更多>></a>
 					</div>
-					<span class="iconfont icon-productfeatures bg-img"></span>
+					<!--<span class="iconfont icon-productfeatures bg-img"></span>-->
 
 				</div>
 				<div class="grid-right list-box">
@@ -742,6 +766,7 @@ var htmlPart = {
 				<!--<li class="a-hover-blue"><span>9</span>近三年全国交..<span></span><span class="">2016-5-8</span></li>-->
 			<!--</ul>-->
 		<!--</div>-->
+	</div>
 	</div>
 </div>
 <script src="/static/js/exchange/common.js"></script>
