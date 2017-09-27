@@ -5,6 +5,7 @@ package com.jusfoun.hookah.crowd.service.impl;
  */
 
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
+import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.zb.*;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbRequirementVo;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -46,6 +47,9 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
 
     @Resource
     ZbCommentService zbCommentService;
+
+    @Resource
+    UserService userService;
 
     @Resource
     private ZbRequirementMapper zbRequirementMapper;
@@ -177,38 +181,45 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
         //我的发布-待审核状态
         if(zbRequirement != null){
             Short status = zbRequirement.getStatus();
+            String managedMoney = null;
             if(StringUtils.isNotBlank(status.toString())){
                 Object info = null;
-                String managedMoney = null;
                 switch (status){
                     case 1://待审核
                         info = requirementInfo(id).getData();
                         list.add(info);
                         break;
                     case 3: //审核通过,待托管赏金
-                        managedMoney = String.valueOf(zbRequirement.getRewardMoney()*zbRequirement.getTrusteePercent());
+                        if(zbRequirement.getTrusteePercent() != null) {
+                            managedMoney = String.valueOf(zbRequirement.getRewardMoney() * zbRequirement.getTrusteePercent());
+                            map.put("managedMoney",managedMoney);
+                            list.add(map);
+                        }
                         info = requirementInfo(id).getData();
                         list.add(info);
-                        list.add(managedMoney);
                         break;
                     case 7: //待二次托管或报名结束
-                        managedMoney = String.valueOf(zbRequirement.getRewardMoney()*zbRequirement.getTrusteePercent());
+                        if(zbRequirement.getTrusteePercent() != null){
+                            managedMoney = String.valueOf(zbRequirement.getRewardMoney()*zbRequirement.getTrusteePercent());
+                            map.put("managedMoney",managedMoney);
+                            list.add(map);
+                        }
                         info = requirementInfo(id).getData();
-                        //List<Condition> filters1 = new ArrayList<>();
-                        //List<Condition> filters2 = new ArrayList<>();
-                        if(StringUtils.isNotBlank(status.toString())){
-                            filters1.add(Condition.eq("status", 0));
-                            filters2.add(Condition.eq("status", 1));
+                        if(StringUtils.isNotBlank(zbRequirement.getId().toString())){
+                            filters1.add(Condition.eq("requirementId", zbRequirement.getId()));
                         }
-                        long count = zbRequireApplyService.count(filters1);
-                        list.add(managedMoney);
+                        ZbRequirementApply zbRequirementApply = zbRequireApplyService.selectOne(filters1);
                         list.add(info);
-                        list.add(count);
-                        ZbRequirementApply zbRequirementApply = zbRequireApplyService.selectOne(filters);
                         if(zbRequirementApply != null){
+                            //计算报名人数
+                            List<ZbRequirementApply> zbRequirementApplies = zbRequireApplyService.selectList();
+                            map.put("count",zbRequirementApplies.size());
                             //已选中信息
+                            if(zbRequirementApply.getStatus() == 1){
+                                User user = zbRequirementMapper.selectReleaseInfo(zbRequirement.getUserId());
+                                list.add(user);
+                            }
                         }
-                        //list.add();
                         break;
                     case 8: //工作中
                     case 9: //待验收
@@ -351,4 +362,22 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
        }
        return ReturnData.error("添加评价意见失败！");
    }
+
+    /**
+     * 数据众包-需求方-删除需求
+     * @return
+     */
+    public ReturnData deleteRequirement(Long id){
+        if(id != null){
+            ZbRequirement zbRequirement = zbRequireService.selectById(id);
+            List<Condition> filter = new ArrayList<>();
+            if(StringUtils.isNotBlank(zbRequirement.getId().toString())){
+                filter.add(Condition.eq("correlationId", zbRequirement.getId()));
+            }
+            zbAnnexService.deleteByCondtion(filter);
+            int i = zbRequireService.delete(id);
+            return ReturnData.success(i);
+        }
+        return  ReturnData.error("删除需求信息失败！");
+    }
 }

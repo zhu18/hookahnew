@@ -327,4 +327,15 @@
     </update>
 
 
+    <select id="getNeedGoodsByCatId" resultType="com.jusfoun.hookah.core.domain.es.EsGoods" parameterType="java.lang.String">
+        SELECT
+        goods_id,
+        goods_name,
+        cat_id,
+        getCategoryParentList(cat_id) cat_ids
+        from
+        goods
+        where cat_id = #{id}
+    </select>
+
 </mapper>
