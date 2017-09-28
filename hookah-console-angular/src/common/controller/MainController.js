@@ -137,6 +137,29 @@ class MainController {
 			});
 
 		};
+        $rootScope.openConfirmDialogModalCheck = function (message) {
+            return $uibModal.open({
+                animation: true,
+                template: require('../confirmDialogModalCheck.html'),
+                controller: function ($scope, $sce, $uibModalInstance, message) {
+                    $scope.message = $sce.trustAsHtml(message);
+                    $scope.ok = function () {
+                        $uibModalInstance.close($scope);
+                    };
+                    $scope.cancel = function () {
+                        $uibModalInstance.dismiss('cancel');
+                    };
+                },
+                // size: 'lg',
+                backdrop: 'static',
+                resolve: {
+                    message: function () {
+                        return message;
+                    }
+                }
+            });
+
+        };
 		$rootScope.openConfirmDialogModel = function (title,content) {
 			return $uibModal.open({
 				animation: true,

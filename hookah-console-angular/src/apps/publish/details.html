@@ -72,7 +72,7 @@
                             <th>需求标签</th>
                             <td>
                                 <div data-ng-if="tag">
-                                    <button class="btn btn-info" data-ng-bind="tag"></button>
+                                    <span class="label label-primary" data-ng-bind="tag"></span>
                                 </div>
                             </td>
                         </tr>
@@ -170,23 +170,24 @@
                                        <span data-ng-bind="item.mobile"></span>
                                    </td>
                                    <td>
-                                       <span data-ng-bind="item.applyContent"></span>
+                                       <span  ng-model="applyId"></span>
                                    </td>
                                    <td>
-                                       <button class="btn btn-default" data-ng-click="check(item.id)" data-ng-if="status==5" disabled="disabled">选中</button>
-                                       <button class="btn btn-default" data-ng-click="check(item.id)" data-ng-if="status==6">选中</button>
+                                       <div class="roundedTwo">
+                                           <input type="radio" value="{{item.id}}" id="{{item.id}}" name="applyId" ng-model="apply.id">
+                                           <label for="{{item.id}}"></label>
+                                       </div>
                                    </td>
                                </tr>
                                </tbody>
                            </table>
                             <p class="margin-top-10 "> <span class="glyphicon glyphicon-volume-up"></span>温馨提示:报名结束后，请在上述报名用户名单尽快进行资格审查，筛选确认中标用户。</p>
-                            <div style="margin: auto;width: 58px;">
-                                <button class="btn btn-primary">提交</button>
+                            <div style="margin: auto;width: 58px;" >
+                                <button class="btn btn-primary" data-ng-click="submit()">提交</button>
                             </div>
                         </div>
                         <div class="tab-info" data-ng-show="isZbRequirementAppliesShow">
                             <div>
-
                                 <table class="table" >
                                     <thead>
                                     <tr>
@@ -210,7 +211,7 @@
                                 </table>
                             </div>
                             <p class="margin-top-10 "> <span class="glyphicon glyphicon-volume-up"></span>温馨提示:报名结束后，请在上述报名用户名单尽快进行资格审查，筛选确认中标用户。</p>
-                            <div style="margin: auto;width: 200px;">
+                            <div style="margin: auto;width: 200px;"  data-ng-if="status!=5">
                                 <button class="btn btn-primary" data-ng-click="public(id)">重新发布</button>
                                 <button class="btn btn-primary"data-ng-click="giveUp(id)">确认流标</button>
                             </div>
@@ -220,23 +221,36 @@
                         <div class="tab-info">
                             <table class="table">
                                 <tr>
+                                    <td colspan="2">
+                                        <span data-ng-show="zbProgramsStatus==0">待验收</span>
+                                        <span data-ng-show="zbProgramsStatus==1">平台验收通过，待需方验收</span>
+                                        <span data-ng-show="zbProgramsStatus==2">平台验收不通过，待修改</span>
+                                        <span data-ng-show="zbProgramsStatus==3">方案不符合需求方要求验收驳回，交易失败</span>
+                                        <span data-ng-show="zbProgramsStatus==4">需求方验收通过</span>
+                                        <span data-ng-show="zbProgramsStatus==5">需求方验收不通过，退回修改</span>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th>方案标题</th>
-                                    <td>路珊珊城市改造方案</td>
+                                    <td>
+                                        <span data-ng-bind="title"></span>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>方案描述</th>
-                                    <td>就是那么牛逼的方案。</td>
+                                    <td>
+                                        <span data-ng-bind="content"></span>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>方案附件</th>
                                     <td>
-                                        <a href="javascript:void (0)" class="margin-right-5"> <span class="glyphicon glyphicon-save"></span>lushansahsn</a>
-                                        <a href="javascript:void (0)" class="margin-right-5"> <span class="glyphicon glyphicon-save"></span>lusjasuajnh</a>
+                                        <a data-ng-repeat="item in zbAnnexes" data-ng-show="item.type==1" data-ng-href="{{item.filePath}}"  class="margin-right-5"><span class="glyphicon glyphicon-save"></span> <span data-ng-bind="item.fileName"></span></a>
                                     </td>
                                 </tr>
                             </table>
                             <div style="margin: auto; width: 190px" class="margin-top-10">
-                                <button class="btn btn-primary">成果验收</button>
+                                <button class="btn btn-primary" data-ng-click="check()">成果验收</button>
                                 <button class="btn btn-default">返回</button>
                             </div>
                         </div>
