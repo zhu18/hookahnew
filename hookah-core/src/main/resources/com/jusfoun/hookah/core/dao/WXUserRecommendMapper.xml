@@ -23,14 +23,63 @@
     id, recommenderId, inviteeId, isdeal, isauthenticate, reward_money, add_time, update_time
   </sql>
 
+    <!--<insert id="insertAndGetEntry" parameterType="com.jusfoun.hookah.core.domain.WXUserRecommend">-->
+        <!--INSERT INTO w_x_user_recommend-->
+        <!--<trim prefix="(" suffix=")" suffixOverrides=",">-->
+            <!--<if test="recommenderId != null">-->
+                <!--recommenderId,-->
+            <!--</if>-->
+            <!--<if test="inviteeid != null">-->
+                <!--inviteeId,-->
+            <!--</if>-->
+            <!--<if test="isdeal != null">-->
+                <!--isdeal,-->
+            <!--</if>-->
+            <!--<if test="isauthenticate != null">-->
+                <!--isauthenticate,-->
+            <!--</if>-->
+            <!--<if test="rewardMoney != null">-->
+                <!--reward_money,-->
+            <!--</if>-->
+            <!--<if test="addTime != null">-->
+                <!--add_time,-->
+            <!--</if>-->
+            <!--<if test="updateTime != null">-->
+                <!--update_time,-->
+            <!--</if>-->
+        <!--</trim>-->
+        <!--<trim prefix="values (" suffix=")" suffixOverrides=",">-->
+            <!--<if test="recommenderId != null">-->
+                <!--#{recommenderId,jdbcType=VARCHAR},-->
+            <!--</if>-->
+            <!--<if test="inviteeid != null">-->
+                <!--#{inviteeid,jdbcType=VARCHAR},-->
+            <!--</if>-->
+            <!--<if test="isdeal != null">-->
+                <!--#{isdeal,jdbcType=TINYINT},-->
+            <!--</if>-->
+            <!--<if test="isauthenticate != null">-->
+                <!--#{isauthenticate,jdbcType=TINYINT},-->
+            <!--</if>-->
+            <!--<if test="rewardMoney != null">-->
+                <!--#{rewardMoney,jdbcType=BIGINT},-->
+            <!--</if>-->
+            <!--<if test="addTime != null">-->
+                <!--#{addTime,jdbcType=TIMESTAMP},-->
+            <!--</if>-->
+            <!--<if test="updateTime != null">-->
+                <!--#{updateTime,jdbcType=TIMESTAMP},-->
+            <!--</if>-->
+        <!--</trim>-->
+    <!--</insert>-->
   <select id="countInviteeAndReward" resultType="java.util.HashMap" parameterType="java.lang.String">
 
-    SELECT count(id) AS inviteeNum,SUM(reward_money) AS rewardMoney FROM wx_user_recommend WHERE  recommenderId=#{userId}
+    SELECT count(id) AS inviteeNum,SUM(reward_money) AS rewardMoney FROM w_x_user_recommend WHERE  recommenderId=#{userId}
   </select>
 
    <sql id="sqlRecommendListByCondition">
        FROM
-       wx_user_recommend wxu
+       w_x_user_recommend wxu
 
        LEFT JOIN USER u ON u.user_id = wxu.recommenderId
 
@@ -60,7 +109,7 @@
                 SELECT
                     count(wxur.id)
                 FROM
-                    wx_user_recommend wxur
+                    w_x_user_recommend wxur
                 WHERE
                     wxur.recommenderId = wxu.recommenderId
                 AND wxur.isdeal = #{isdeal}
@@ -73,11 +122,11 @@
   </select>
     <select id="selectByInviteeId" parameterType="java.lang.String" resultMap="BaseResultMap">
 
-          SELECT * FROM wx_user_recommend WHERE inviteeId = #{inviteeId}
+          SELECT * FROM w_x_user_recommend WHERE inviteeId = #{inviteeId}
     </select>
 
     <update id="updateByInviteeidSelective" parameterType="com.jusfoun.hookah.core.domain.WXUserRecommend" >
-        update wx_user_recommend
+        update w_x_user_recommend
         <set >
             <if test="recommenderid != null" >
                 recommenderId = #{recommenderid,jdbcType=VARCHAR},

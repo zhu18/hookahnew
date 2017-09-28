@@ -3,13 +3,12 @@ package com.jusfoun.hookah.webiste.controller;
 import com.jusfoun.hookah.webiste.config.MyProps;
 import com.jusfoun.hookah.webiste.util.SecretUtil;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 
 /**
  * Created by lt on 2017/9/26.
@@ -20,20 +19,17 @@ public class RecommendController extends BaseController{
 
     @Resource
     MyProps myProps;
-    @RequestMapping(value = "recommendReg", method = RequestMethod.GET)
-    public String recommendReg(String token, Model model){
-        try {
-            String unSecret = URLDecoder.decode(token,"UTF-8");
-            token = unSecret.split("&")[1].split(":")[1];
-            String userId = unSecret.split("&")[0].split(":")[1];
-            if (!token.equals(SecretUtil.getSecret(userId))){
-                return "";
-            }
-            model.addAttribute("userId",userId);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+    @RequestMapping(value = "/recommendReg", method = RequestMethod.GET)
+    public String recommendReg(@RequestParam String recommendToken, RedirectAttributes redirectAttributes){
+        String token = recommendToken.split("&")[1].split(":")[1];
+        String userId = recommendToken.split("&")[0].split(":")[1];
+        String secret = SecretUtil.getSecret(userId).split("&")[1].split(":")[1];
+        if (!token.equals(secret)){
+            return "";  //错误页面
         }
-        return "redirect:"+myProps.getHost().get("auth")+"/reg";
+        redirectAttributes.addAttribute("recommendToken",recommendToken);
+
+        return "redirect:"+myProps.getHost().get("auth")+"/reg/recommendReg";
     }
 
 }

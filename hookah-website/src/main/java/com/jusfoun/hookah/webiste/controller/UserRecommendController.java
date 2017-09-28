@@ -47,4 +47,9 @@ public class UserRecommendController extends BaseController{
         return "/usercenter/recommend/recommendInfo";
     }
 
+    public static void main(String[] args) throws Exception{
+        String secret = URLEncoder.encode(SecretUtil.getSecret("2087dd1c897611e7bf2afefcfe6cbde7"), "UTF-8");
+        System.out.println(secret);
+    }
+
 }
