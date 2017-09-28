@@ -182,7 +182,6 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
         //我的发布-待审核状态
         if(zbRequirement != null){
             Short status = zbRequirement.getStatus();
-            String managedMoney = null;
             if(StringUtils.isNotBlank(status.toString())){
                 Object info = null;
                 switch (status){
@@ -192,20 +191,10 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                         list.add(info);
                         break;
                     case 3: //审核通过,待托管赏金
-                        if(zbRequirement.getTrusteePercent() != null) {
-                            managedMoney = String.valueOf(zbRequirement.getRewardMoney() * zbRequirement.getTrusteePercent());
-                            map.put("managedMoney",managedMoney);
-                            list.add(map);
-                        }
                         info = requirementInfo(id).getData();
                         list.add(info);
                         break;
                     case 7: //待二次托管或报名结束
-                        if(zbRequirement.getTrusteePercent() != null){
-                            managedMoney = String.valueOf(zbRequirement.getRewardMoney()*zbRequirement.getTrusteePercent());
-                            map.put("managedMoney",managedMoney);
-                            list.add(map);
-                        }
                         info = requirementInfo(id).getData();
                         if(StringUtils.isNotBlank(zbRequirement.getId().toString())){
                             filters1.add(Condition.eq("requirementId", zbRequirement.getId()));
@@ -227,11 +216,6 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                     case 9: //待验收
                     case 13://待评价
                     case 18://需方驳回
-                        if(zbRequirement.getTrusteePercent() != null){
-                            managedMoney = String.valueOf(zbRequirement.getRewardMoney()*zbRequirement.getTrusteePercent());
-                            map.put("managedMoney",managedMoney);
-                            list.add(map);
-                        }
                         info = requirementInfo(id).getData();
                         list.add(info);
                         if(zbRequirement.getId() != null){
@@ -315,6 +299,20 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
         }
         ZbRequirement zbRequirement = zbRequireService.selectOne(filters);
         if(zbRequirement != null){
+            if(zbRequirement.getStatus() == 3 ||
+                    zbRequirement.getStatus() == 7 ||
+                        zbRequirement.getStatus() == 8 ||
+                            zbRequirement.getStatus() == 9 ||
+                            zbRequirement .getStatus() == 13 ||
+                                zbRequirement.getStatus() == 18 ||
+                                    zbRequirement.getStatus() == 15 ||
+                                        zbRequirement.getStatus() == 19){
+                if(zbRequirement.getTrusteePercent() != null){
+                    String managedMoney = null;
+                    managedMoney = String.valueOf(zbRequirement.getRewardMoney()*zbRequirement.getTrusteePercent());
+                    map.put("managedMoney",managedMoney);
+                }
+            }
             if(zbRequirement.getTag() != null){
                 String[] strArray = null;
                 strArray = zbRequirement.getTag().split(",");
