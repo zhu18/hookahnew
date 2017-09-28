@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.dao.zb.ZbProgramMapper;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementApplyMapper;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
 import com.jusfoun.hookah.core.dao.zb.ZbTypeMapper;
@@ -53,6 +54,9 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
 
     @Resource
     ZbRequireApplyService zbRequireApplyService;
+
+    @Resource
+    ZbProgramMapper zbProgramMapper;
 
     @Resource
     public void setDao(ZbRequirementMapper zbRequirementMapper) {
@@ -177,7 +181,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
     }
 
     @Override
-    public ReturnData<ZbRequirement> updateStatus(String id, String status, String applyDeadline , Long applyId) {
+    public ReturnData<ZbRequirement> updateStatus(String id, String status, String applyDeadline , Long applyId ,Long programId ,String checkAdvice) {
         try {
             ZbRequirement zbRequirement = new ZbRequirement();
             zbRequirement.setId(Long.parseLong(id));
@@ -189,6 +193,15 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                 zbRequirementApply.setId(applyId);
                 zbRequirementApply.setStatus(ZbContants.Zb_Require_Status.WAIT_CHECK.getCode().shortValue());
                zbRequireApplyService.updateByIdSelective(zbRequirementApply);
+            }
+            ZbProgram zbProgram = zbProgramMapper.selectByPrimaryKey(programId);
+            if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.WAIT_buyer_YS.getCode().shortValue())&& zbProgram.getStatus()!=null){
+                zbProgram.setId(programId);
+                zbProgram.setStatus(ZbContants.Zb_Require_Status.WAIT_CHECK.getCode().shortValue());
+            }
+            if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.WAIT_FK.getCode().shortValue())&& zbProgram.getStatus()!=null){
+                zbProgram.setId(programId);
+                zbProgram.setStatus(ZbContants.Zb_Require_Status.CHECK_NOT.getCode().shortValue());
             }
             super.updateByIdSelective(zbRequirement);
         } catch (Exception e) {
