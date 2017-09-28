@@ -19,10 +19,7 @@ import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.crowd.constants.ZbContants;
-import com.jusfoun.hookah.crowd.service.UserService;
-import com.jusfoun.hookah.crowd.service.ZbAnnexService;
-import com.jusfoun.hookah.crowd.service.ZbRequireApplyService;
-import com.jusfoun.hookah.crowd.service.ZbRequireService;
+import com.jusfoun.hookah.crowd.service.*;
 import com.jusfoun.hookah.crowd.util.DateUtil;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
@@ -57,6 +54,9 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
 
     @Resource
     ZbProgramMapper zbProgramMapper;
+
+    @Resource
+    ZbProgramService zbProgramService;
 
     @Resource
     public void setDao(ZbRequirementMapper zbRequirementMapper) {
@@ -198,10 +198,18 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.WAIT_buyer_YS.getCode().shortValue())&& zbProgram.getStatus()!=null){
                 zbProgram.setId(programId);
                 zbProgram.setStatus(ZbContants.Zb_Require_Status.WAIT_CHECK.getCode().shortValue());
+                if (checkAdvice!=null){
+                    zbProgram.setCheckAdvice(checkAdvice);
+                }
+              zbProgramService.updateByIdSelective(zbProgram);
             }
             if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.WAIT_FK.getCode().shortValue())&& zbProgram.getStatus()!=null){
                 zbProgram.setId(programId);
                 zbProgram.setStatus(ZbContants.Zb_Require_Status.CHECK_NOT.getCode().shortValue());
+                if (checkAdvice!=null){
+                    zbProgram.setCheckAdvice(checkAdvice);
+                }
+                zbProgramService.updateByIdSelective(zbProgram);
             }
             super.updateByIdSelective(zbRequirement);
         } catch (Exception e) {
