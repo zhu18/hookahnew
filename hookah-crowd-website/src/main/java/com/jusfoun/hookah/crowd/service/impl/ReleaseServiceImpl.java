@@ -205,6 +205,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                             //计算报名人数
                             List<ZbRequirementApply> zbRequirementApplies = zbRequireApplyService.selectList();
                             map.put("count",zbRequirementApplies.size());
+                            list.add(map);
                             //已选中信息
                             if(zbRequirementApply.getStatus() == 1){
                                 User user = zbRequirementMapper.selectReleaseInfo(zbRequirement.getUserId());
@@ -245,31 +246,36 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                             filters1.add(Condition.eq("requirementId", zbRequirement.getId()));
                             ZbProgram zbProgram = zbProgramService.selectOne(filters1);
                             if(zbProgram != null){
-                                list.add(zbProgram);
+                                Map<String, Object> zpMap = new HashMap<>(6);
+                                zpMap.put("zbProgram",zbProgram);
+                                list.add(zpMap);
                                 if(StringUtils.isNotBlank(zbProgram.getId().toString())){
                                     filters2.add(Condition.eq("correlationId", zbProgram.getId()));
                                 }
                                 filters2.add(Condition.eq("type", 1));
                                 ZbAnnex zbAnnex = zbAnnexService.selectOne(filters2);
                                 if(zbAnnex != null){
-                                    list.add(zbAnnex);
-                                    List<Condition> filters3 = new ArrayList<>();
-                                    if(StringUtils.isNotBlank(zbAnnex.getId().toString())){
-                                        filters3.add(Condition.eq("programId", zbAnnex.getId()));
-                                    }
-                                    //filters3.add(Condition.eq("userType", 2));
-                                    ZbComment zbComment = zbCommentService.selectOne(filters3);
-                                    list.add(zbComment);
+                                    Map<String, Object> zaMap = new HashMap<>(6);
+                                    zaMap.put("zbAnnex",zbAnnex);
+                                    list.add(zaMap);
                                 }
+                                List<Condition> filters3 = new ArrayList<>();
+                                if(StringUtils.isNotBlank(zbAnnex.getId().toString())){
+                                    filters3.add(Condition.eq("programId", zbProgram.getId()));
+                                }
+                                ZbComment zbComment = zbCommentService.selectOne(filters3);
+                                Map<String, Object> zcMap = new HashMap<>(6);
+                                zcMap.put("zbComment",zbComment);
+                                list.add(zcMap);
                             }
                         }
                         break;
                     case 19://流标
-                        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         Date date = new Date();
                         try {
-                            Date time1 = df.parse(date.toString());//当前时间
-                            Date time2 = df.parse(zbRequirement.getApplyDeadline().toString());//截止报名时间
+                            Date time1 = df.parse(df.format(date));//当前时间
+                            Date time2 = df.parse(df.format(zbRequirement.getApplyDeadline()));//截止报名时间
                             if(time2.before(time1)){//截止报名时间小于当前时间----流标
                                 info = requirementInfo(id).getData();
                                 list.add(info);
@@ -359,7 +365,9 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
             if(StringUtils.isNotBlank(programId.toString())){
                 filters.add(Condition.eq("programId", programId));
             }
+            ZbProgram zbProgram = zbProgramService.selectById(programId);
             ZbComment zbComment = new ZbComment();
+            zbComment.setRequirementId(zbProgram.getRequirementId());
             zbComment.setUserId(userId);
             zbComment.setProgramId(programId);
             zbComment.setLevel(level);
