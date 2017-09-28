@@ -81,9 +81,9 @@ public class RequireController extends BaseController {
      */
     @RequestMapping("/api/require/updateStatus")
     @ResponseBody
-    public ReturnData updateStatus(String id, String status, String applyDeadline ,Long applyId) {
+    public ReturnData updateStatus(String id, String status, String applyDeadline ,Long applyId ,Long programId ,String checkAdvice) {
         try {
-            return zbRequireService.updateStatus(id, status, applyDeadline ,applyId);
+            return zbRequireService.updateStatus(id, status, applyDeadline ,applyId ,programId ,checkAdvice);
         } catch (Exception e) {
             logger.error("发布失败", e);
             return ReturnData.error("发布失败");

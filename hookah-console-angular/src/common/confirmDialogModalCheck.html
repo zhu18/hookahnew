@@ -1,0 +1,25 @@
+<div class="console-message-dialog">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" data-ng-click="cancel(false)" aria-hidden="true">×</button>
+    <h5 class="modal-title">平台验收-数据商城所需数据源</h5>
+  </div>
+  <div class="modal-body clearfix">
+    <div class="row">
+      <div>
+        <label class="col-sm-2">验收意见：</label>
+        <textarea name="" id="checkContent" cols="60" rows="10" placeholder="如不通过，请填写不通过意见，100汉字以内。">
+
+        </textarea>
+      </div>
+      <p>
+        <label  class="col-sm-2 text-right">验收结果：</label>
+        <label class="radio-inline"><input type="radio" name="tRadio" value="10">通过</label>
+        <label class="radio-inline"><input type="radio" name="tRadio" value="11">不通过，退回修改</label>
+      </p>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button ng-click="ok()" id="Submit" class="btn btn-primary" ng-class="">提交</button>
+    <button ng-click="cancel()" class="btn btn-warning" type="button">取消</button>
+  </div>
+</div>

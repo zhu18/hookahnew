@@ -22,20 +22,18 @@ class auditingController {
                     $scope.contactName=item.contactName;
                     $scope.contactPhone=item.contactPhone;
                     $scope.title=item.title;
-                    $scope.tag=item.tag;
+                    $scope.tag=item.tag.split(',');
                     $scope.type=item.type;
                     $scope.description=item.description;
                     $scope.deliveryDeadline=item.deliveryDeadline;
                     $scope.applyDeadline=item.applyDeadline;
                     $scope.rewardMoney=item.rewardMoney;
                     $scope.trusteePercent=item.trusteePercent;
-                    // $scope.applyDeadline=item.applyDeadline;
+                    $scope.applyDeadline=item.applyDeadline;
                     $scope.checkRemark=item.checkRemark;
                     $scope.status=item.status;
                     $scope.id=item.id;
                 } else {
-
-
                 }
                 $rootScope.loadingState = false;
                 growl.addSuccessMessage("订单数据加载完毕。。。");
