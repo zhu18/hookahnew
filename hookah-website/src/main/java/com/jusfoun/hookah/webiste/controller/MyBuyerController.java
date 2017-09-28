@@ -61,11 +61,7 @@ public class MyBuyerController {
     public String myGoods() {
         return "usercenter/buyer/myGoods";
     }
-//    推荐有奖
-    @RequestMapping(value = "/recommend", method = RequestMethod.GET)
-    public String myRecommend() {
-        return "usercenter/recommend/recommendInfo";
-    }
+
 //    @RequestMapping(value = "/viewDetails", method = RequestMethod.GET)
 //    public String viewDetails() {  return "usercenter/buyer/viewDetails"; }
 
