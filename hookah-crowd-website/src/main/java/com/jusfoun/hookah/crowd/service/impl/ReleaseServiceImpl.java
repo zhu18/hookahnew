@@ -94,7 +94,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                     ment.setUpdateTime(new Date());
                     ment.setUpdateOperator(vo.getZbRequirement().getUserId());
                     ment.setRewardMoney(Math.round(Double.valueOf(vo.getRewardMoney())*100));
-                    ment.setTrusteePercent(vo.getZbRequirement().getTrusteePercent());
+                    ment.setTrusteePercent(zbRequirement.getTrusteePercent());
                     super.updateById(ment);
 
                     List<Condition> filter = new ArrayList<>();
