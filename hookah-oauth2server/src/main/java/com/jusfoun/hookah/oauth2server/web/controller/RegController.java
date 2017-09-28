@@ -5,6 +5,7 @@ import com.jusfoun.hookah.core.annotation.Log;
 import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.domain.WXUserRecommend;
 import com.jusfoun.hookah.core.domain.vo.UserValidVo;
 import com.jusfoun.hookah.core.exception.UserRegConfirmPwdException;
 import com.jusfoun.hookah.core.exception.UserRegEmptyPwdException;
@@ -21,6 +22,7 @@ import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.oauth2server.config.MyProps;
 import com.jusfoun.hookah.rpc.api.PayAccountService;
 import com.jusfoun.hookah.rpc.api.UserService;
+import com.jusfoun.hookah.rpc.api.WXUserRecommendService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -39,6 +41,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -66,9 +70,28 @@ public class RegController {
     @Resource
     PayAccountService payAccountService;
 
+    @Resource
+    WXUserRecommendService WXUserRecommendService;
+
     @RequestMapping(value = "/reg", method = RequestMethod.GET)
     public String reg(Model model) {
         return "register";
+    }
+
+    /**
+     * 微信推荐 注册
+     * @return
+     */
+    @RequestMapping(value = "/reg/recommendReg", method = RequestMethod.GET)
+    public String recommendReg(HttpServletRequest request, String recommendToken) {
+        try {
+            String unSecret = URLDecoder.decode(recommendToken,"UTF-8");
+            String recommendUserId = unSecret.split("&")[0].split(":")[1];
+            request.setAttribute("recommendUserId",recommendUserId);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return "recommendRegister";
     }
 
     @Log(platform = "front",logType = "f0001",optType = "insert")
@@ -159,6 +182,20 @@ public class RegController {
         User regUser = userService.insert((User) user);
         //redirectAttributes.addAttribute(regUser);
         payAccountService.insertPayAccountByUserIdAndName(regUser.getUserId(),regUser.getUserName());
+
+        String recommendUserId = request.getParameter("recommendUserId");
+        if (recommendUserId != null){
+            User recommendUser = userService.selectById(recommendUserId);
+            if (recommendUser != null){
+                WXUserRecommend wxUserRecommend = new WXUserRecommend();
+                wxUserRecommend.setRecommenderid(recommendUserId);
+                wxUserRecommend.setInviteeid(regUser.getUserId());
+                wxUserRecommend.setAddTime(new Date());
+                wxUserRecommend.setUpdateTime(new Date());
+//                wxUserRecommend.setRewardMoney();
+                WXUserRecommendService.insert(wxUserRecommend);
+            }
+        }
         //TODO...登录日志
         logger.info("用户[" + user.getUserName() + "]注册成功(这里可以进行一些注册通过后的一些系统参数初始化操作)");
 //            return "redirect:"+host.get("website")+"/login";

@@ -10,17 +10,10 @@ import com.jusfoun.hookah.core.exception.UserRegInvalidCaptchaException;
 import com.jusfoun.hookah.core.exception.UserRegInvalidSmsException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.DateUtils;
-import com.jusfoun.hookah.core.utils.FormatCheckUtil;
-import com.jusfoun.hookah.core.utils.NetUtils;
-import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.oauth2server.config.MyProps;
-import com.jusfoun.hookah.oauth2server.security.UsernameAndPasswordToken;
 import com.jusfoun.hookah.rpc.api.LoginLogService;
 import com.jusfoun.hookah.rpc.api.PayAccountService;
 import com.jusfoun.hookah.rpc.api.UserService;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.*;
-import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +24,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Date;
@@ -111,8 +103,8 @@ public class BindWeChatController {
             String num = String.format("%06d",Integer.parseInt(redisOperate.incr("userSn")));
             String userSn = "QD"+ now + num;
             user.setUserSn(userSn);
-            user.setUserName("");  //规则待确定
-            user.setPassword("");
+            user.setUserName("BDGStore"+user.getMobile());
+            user.setPassword("000000");
 
             User regUser = userService.insert((User) user);
             //TODO...绑定微信信息
