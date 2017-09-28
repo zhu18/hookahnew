@@ -85,7 +85,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
             }else{
                 ZbRequirement zbRequirement = zbRequireService.selectById(ment.getId());
                 if(zbRequirement != null){
-                    if(zbRequirement.getStatus() == 2){
+                    if(zbRequirement.getStatus() == ZbContants.Zb_Require_Status.CHECK_NOT.getCode().shortValue()){
                         ment.setStatus(ZbContants.Zb_Require_Status.CHECK_NOT.getCode().shortValue());
                     }
                     ment.setRequireSn(zbRequirement.getRequireSn());
@@ -342,7 +342,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
             if(StringUtils.isNotBlank(id.toString())){
                 filters.add(Condition.eq("id", id));
             }
-            ZbProgram zbProgram = null;
+            ZbProgram zbProgram = zbProgramService.selectOne(filters);
             zbProgram.setStatus(status);
             zbProgram.setCheckAdvice(checkAdvice);
             int i = zbProgramService.updateByCondition(zbProgram, filters);
@@ -361,7 +361,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
             if(StringUtils.isNotBlank(programId.toString())){
                 filters.add(Condition.eq("programId", programId));
             }
-            ZbComment zbComment = null;
+            ZbComment zbComment = new ZbComment();
             zbComment.setUserId(userId);
             zbComment.setProgramId(programId);
             zbComment.setLevel(level);

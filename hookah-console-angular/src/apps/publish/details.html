@@ -95,7 +95,7 @@
                         <tr>
                             <th>附件</th>
                             <td colspan="3">
-                                <a data-ng-repeat="item in zbAnnexes" data-ng-href="{{item.filePath}}" data-ng-bind="item.fileName" class="margin-right-5"></a>
+                                <a data-ng-repeat="item in zbAnnexes" data-ng-show="item.type==0" data-ng-href="{{item.filePath}}" data-ng-bind="item.fileName" class="margin-right-5"></a>
                             </td>
                         </tr>
                         <tr>
@@ -136,8 +136,8 @@
             <div class="col-sm-12 margin-top-10 tab-box">
                 <uib-tabset active="active">
                     <uib-tab index="0" heading="任务报名">
-                        <div class="tab-info" data-ng-if="$scope.isZbRequirementAppliesShow">
-                            <table class="table">
+                        <div class="tab-info" data-ng-show="!isZbRequirementAppliesShow">
+                            <table class="table" >
                                <thead>
                                <tr>
                                    <th>公司名称</th>
@@ -151,18 +151,32 @@
                                </tr>
                                </thead>
                                <tbody>
-                               <!--<tr data-ng-repeat="item in zbRequirementApplies">-->
-                                   <!--<td>XXX公司</td>-->
-                                   <!--<td>88分</td>-->
-                                   <!--<td>2017-05-28</td>-->
-                                   <!--<td>报名</td>-->
-                                   <!--<td>路**</td>-->
-                                   <!--<td>18769883892</td>-->
-                                   <!--<td>我觉得我很好，你应该选我，你觉得呢。</td>-->
-                                   <!--<td>-->
-                                       <!--<button class="btn btn-default">选中</button>-->
-                                   <!--</td>-->
-                               <!--</tr>-->
+                               <tr data-ng-repeat="item in zbRequirementApplies">
+                                   <td>
+                                       <span data-ng-bind="item.userName"></span>
+                                   </td>
+                                   <td>88分</td>
+                                   <td>
+                                       <span data-ng-bind="item.addTime"></span>
+                                   </td>
+                                   <td>
+                                       <span  data-ng-show="item.status==0">报名中</span>
+                                       <span  data-ng-show="item.status==1">已被选中</span>
+                                   </td>
+                                   <td>
+                                       <span data-ng-bind="item.userName"></span>
+                                   </td>
+                                   <td>
+                                       <span data-ng-bind="item.mobile"></span>
+                                   </td>
+                                   <td>
+                                       <span data-ng-bind="item.applyContent"></span>
+                                   </td>
+                                   <td>
+                                       <button class="btn btn-default" data-ng-click="check(item.id)" data-ng-if="status==5" disabled="disabled">选中</button>
+                                       <button class="btn btn-default" data-ng-click="check(item.id)" data-ng-if="status==6">选中</button>
+                                   </td>
+                               </tr>
                                </tbody>
                            </table>
                             <p class="margin-top-10 "> <span class="glyphicon glyphicon-volume-up"></span>温馨提示:报名结束后，请在上述报名用户名单尽快进行资格审查，筛选确认中标用户。</p>
@@ -170,8 +184,36 @@
                                 <button class="btn btn-primary">提交</button>
                             </div>
                         </div>
-                        <div class="tab-info" data-ng-if="$scope.isZbRequirementAppliesShow">
-                            暂无内容
+                        <div class="tab-info" data-ng-show="isZbRequirementAppliesShow">
+                            <div>
+
+                                <table class="table" >
+                                    <thead>
+                                    <tr>
+                                        <th>公司名称</th>
+                                        <th>信誉</th>
+                                        <th>报名时间</th>
+                                        <th>状态</th>
+                                        <th>联系人</th>
+                                        <th>手机号</th>
+                                        <th>自荐理由描述</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td colspan="8">
+                                            暂时没有人报名！
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="margin-top-10 "> <span class="glyphicon glyphicon-volume-up"></span>温馨提示:报名结束后，请在上述报名用户名单尽快进行资格审查，筛选确认中标用户。</p>
+                            <div style="margin: auto;width: 200px;">
+                                <button class="btn btn-primary" data-ng-click="public(id)">重新发布</button>
+                                <button class="btn btn-primary"data-ng-click="giveUp(id)">确认流标</button>
+                            </div>
                         </div>
                     </uib-tab>
                     <uib-tab index="1" heading="任务成果">

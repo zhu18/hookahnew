@@ -2,6 +2,10 @@ package com.jusfoun.hookah.crowd.constants;
 
 public class ZbContants {
 
+    //类型；0：需求表附件，1：方案表附件
+    public static final  Short ZB_ANNEX_TYPE_REQUIREMENT = 0;
+    public static final  Short ZB_ANNEX_TYPE_PROGRAM = 1;
+
     /**
      * 需求周期状态
      0草稿
@@ -85,6 +89,48 @@ public class ZbContants {
         }
     }
 
+    /**
+     * 方案状态
+     * 方案状态：默认0 平台审核通过1 平台审核不通过2 需方审核通过3 需方审核不通过4
+     */
+    public enum Program_Status {
 
+        DEFAULT(Short.valueOf("0")),
+        PROGRAM_SUCCESS(Short.valueOf("3")),
+        PROGRAM_FAIL(Short.valueOf("4")),
+        SYSTEM_SUCCESS(Short.valueOf("1")),
+        SYSTEM_FAIL(Short.valueOf("2"));
+
+        public short code;
+
+        Program_Status(short code) {
+            this.code = code;
+        }
+
+        public short getCode() {
+            return code;
+        }
+    }
+
+    /**
+     * 评价状态
+     * 0.待审核 1.审核通过，2.审核不通过
+     */
+    public enum Comment_Status {
+
+        WAIT_CHECK(0),
+        CHECK_SUCCESS(1),
+        CHECK_FAIL(2);
+
+        public Integer code;
+
+        Comment_Status(Integer code) {
+            this.code = code;
+        }
+
+        public Integer getCode() {
+            return code;
+        }
+    }
 
 }

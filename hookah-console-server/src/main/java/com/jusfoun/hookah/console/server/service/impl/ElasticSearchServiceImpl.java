@@ -163,10 +163,8 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             if(mgGoods != null) {
                 List<MgGoods.FormatBean> formatList = mgGoods.getFormatList();
                 if(formatList != null && formatList.size() > 0) {
-                    StringBuffer stringBuffer = new StringBuffer();
-                    for(MgGoods.FormatBean obj : formatList)
-                        stringBuffer.append(obj.getFormat()).append(" ");
-                    goods.setPayFormats(stringBuffer.toString());
+                    //前期设定默认-1为面议，es搜索发现BUG，对-1搜索不出来，ES存数据时暂时改为9面议
+                    goods.setPayFormats(formatList.get(0).getFormat() == -1 ? "9" : formatList.get(0).getFormat() + "");
                 }
             }
         }catch (ConverterNotFoundException | ConversionFailedException e) {

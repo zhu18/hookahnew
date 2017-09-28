@@ -95,7 +95,7 @@ public class ReleaseController extends BaseController{
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/insertAcceptanceAdvice", method = RequestMethod.GET)
+    @RequestMapping(value = "/insertAcceptanceAdvice", method = RequestMethod.POST)
     public ReturnData acceptanceAdvice(Short status, String checkAdvice, Long id){
         ReturnData acceptanceAdvice = releaseService.getAcceptanceAdvice(status, checkAdvice, id);
         return acceptanceAdvice;
@@ -106,7 +106,7 @@ public class ReleaseController extends BaseController{
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/insertEvaluation", method = RequestMethod.GET)
+    @RequestMapping(value = "/insertEvaluation", method = RequestMethod.POST)
     public ReturnData insertEvaluation(int level, String content, Long programId){
         try {
             String userId = this.getCurrentUser().getUserId();
