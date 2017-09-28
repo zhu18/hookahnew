@@ -44,7 +44,7 @@ public class UserRecommendController extends BaseController{
         }catch (Exception e){
             e.printStackTrace();
         }
-        return "/usercenter/userInfo/rewardRecommend";
+        return "/usercenter/recommend/recommendInfo";
     }
 
 }
