@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
  * Created by ctp on 2017/8/29.
  */
 
-@Controller
+@RestController
 @RequestMapping("/channel")
 public class ChannelController {
 

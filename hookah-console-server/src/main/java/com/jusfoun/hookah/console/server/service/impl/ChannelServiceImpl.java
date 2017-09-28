@@ -63,11 +63,6 @@ public class ChannelServiceImpl extends GenericServiceImpl<Goods,String> impleme
         ReturnData returnData = new ReturnData();
         returnData.setCode(ExceptionConst.Success);
 
-        ChannelDataVo channelDataVo = new ChannelDataVo();
-        channelDataVo.setGoodsId("4df2698f916d11e79b9e6a3b07101c5a");
-        channelDataVo.setOpera(1);
-
-        mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_CENTER_CHANNEL, channelDataVo);
         //参数校验
         if(Objects.isNull(channelTransData) || StringUtils.isBlank(channelTransData.getCheckCode()) ||
                 StringUtils.isBlank(channelTransData.getTransData()) || Objects.isNull(channelTransData.getTimestamp())){
