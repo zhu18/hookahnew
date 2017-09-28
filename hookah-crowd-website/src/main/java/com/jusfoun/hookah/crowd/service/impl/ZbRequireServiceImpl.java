@@ -185,7 +185,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             zbRequirement.setPressTime(new Date());
             zbRequirement.setApplyDeadline(DateUtils.getDate(applyDeadline));
             ZbRequirementApply zbRequirementApply= zbRequirementApplyMapper.selectByPrimaryKey(applyId);
-            if (status.equals(ZbContants.Zb_Require_Status.SELECTING.getCode().shortValue())&& zbRequirementApply.getStatus()!=null){
+            if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.SELECTING.getCode().shortValue())&& zbRequirementApply.getStatus()!=null){
                 zbRequirementApply.setId(applyId);
                 zbRequirementApply.setStatus(ZbContants.Zb_Require_Status.WAIT_CHECK.getCode().shortValue());
                zbRequireApplyService.updateByIdSelective(zbRequirementApply);

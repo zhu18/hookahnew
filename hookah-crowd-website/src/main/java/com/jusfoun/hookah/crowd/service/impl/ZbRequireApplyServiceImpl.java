@@ -8,6 +8,7 @@ import com.jusfoun.hookah.core.domain.zb.*;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.crowd.constants.ZbContants;
 import com.jusfoun.hookah.crowd.service.*;
 import org.springframework.stereotype.Service;
 
@@ -70,7 +71,7 @@ public class ZbRequireApplyServiceImpl extends GenericServiceImpl<ZbRequirementA
         for (ZbRequirementApply zbRequirementApply:zbRequirementApplies){
            zbRequirementApply.setUserName(userService.selectById(zbRequirement.getUserId()).getUserName());
            zbRequirementApply.setMobile(userService.selectById(zbRequirement.getUserId()).getMobile());
-            if (zbRequirementApply.getStatus().equals(1)){
+            if (Short.valueOf(zbRequirementApply.getStatus()).equals(ZbContants.Zb_Require_Status.WAIT_CHECK.getCode().shortValue())){
                 filters.clear();
                 filters.add(Condition.eq("applyId",zbRequirementApply.getId()));
                 zbPrograms = zbProgramService.selectList(filters);
