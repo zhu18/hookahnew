@@ -119,9 +119,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
 
             PageHelper.startPage(pageNumberNew, pageSizeNew);
 
-            List<ZbRequirement> list = zbRequirementMapper.
-                    selectListForPageByFilters(zbRequirement.getRequireSn(), zbRequirement.getTitle(), zbStatus);
-
+            List<ZbRequirement> list =new ArrayList<>();
             for (ZbRequirement zbRequirement1:list){
                 if (zbRequirement1.getStatus()==5){
                     if ( zbRequirement1.getApplyDeadline().getTime()<=new Date().getTime()) {
@@ -129,6 +127,9 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                     }
                 }
             }
+            list   = zbRequirementMapper.
+                    selectListForPageByFilters(zbRequirement.getRequireSn(), zbRequirement.getTitle(), zbStatus);
+
             pageInfo = new PageInfo<ZbRequirement>(list);
 
             pagination.setTotalItems(pageInfo.getTotal());
