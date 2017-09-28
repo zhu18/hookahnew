@@ -253,14 +253,14 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                                     filters2.add(Condition.eq("correlationId", zbProgram.getId()));
                                 }
                                 filters2.add(Condition.eq("type", 1));
-                                ZbAnnex zbAnnex = zbAnnexService.selectOne(filters2);
-                                if(zbAnnex != null){
+                                List<ZbAnnex> zbAnnexes = zbAnnexService.selectList(filters2);
+                                if(zbAnnexes != null){
                                     Map<String, Object> zaMap = new HashMap<>(6);
-                                    zaMap.put("zbAnnex",zbAnnex);
+                                    zaMap.put("zbAnnexes",zbAnnexes);
                                     list.add(zaMap);
                                 }
                                 List<Condition> filters3 = new ArrayList<>();
-                                if(StringUtils.isNotBlank(zbAnnex.getId().toString())){
+                                if(StringUtils.isNotBlank(zbProgram.getId().toString())){
                                     filters3.add(Condition.eq("programId", zbProgram.getId()));
                                 }
                                 ZbComment zbComment = zbCommentService.selectOne(filters3);
