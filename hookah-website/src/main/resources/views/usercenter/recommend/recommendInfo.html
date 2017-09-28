@@ -1,10 +1,86 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    有奖推荐
-</body>
-</html>
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/recommendInfo.css">
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="grid-right info-center-box ">
+            <div class="user-center-box grid-right">
+                <div class="header">
+                    <h4 class="center-title">市场推广/有奖推荐</h4>
+                </div>
+                <div class="fundmanage-box">
+                    <div class="fundmanage-bd">
+                        <div class="account-funds margin-top-10">
+                            <div class="account-funds-title">邀请推荐</div>
+                            <div class="recommend-data">
+                                <div class="recommend-data-content">
+                                    <h2 class="recommend-data-content-title">推荐人数</h2>
+                                    <i class="recommend-data-num">${inviteeInfo.inviteeNum!0}</i>人
+                                </div>
+                                <div class="recommend-data-content">
+                                    <h2 class="recommend-data-content-title">推荐获得奖金</h2>
+                                    <i class="recommend-data-num">￥${inviteeInfo.rewardMoney!0,numberFormat="##.##"}</i>
+                                </div>
+                            </div>
+                            <p class="recommend-data-footer">
+                                注：1.数据每日更新，请耐心等待 ;&nbsp;&nbsp; 2.进行过购物的用户，指充值且购买过任意产品满500元 ;&nbsp;&nbsp;
+                                3.推荐投资金额指所有好友活动期内根据推荐好友所获得的奖励金额。
+                            </p>
+                        </div>
+                        <div class="bank-card  margin-top-10">
+                            <div class="bank-card-title">我的推荐</div>
+                            <div class="bank-card-content margin-bottom-30">
+                                <div class="recommend-operate-content">
+                                    <h2>我的专属推广链接</h2>
+                                    <input class="recommendUrl" id="recommendUrl" type="text" readonly
+                                           value="${recommendUr!''}">
+                                    <button type="button"
+                                            onclick="document.getElementById('recommendUrl').select();document.execCommand('Copy'); document.getElementById('msg-info').style.display='inline-block';"
+                                            class="forCopy">点击复制
+                                    </button>
+                                    <span id="msg-info" class="msg-info">*复制成功，请粘贴给你的好友!*</span>
+                                </div>
+                                <div class="recommend-operate-content">
+                                    <h2>通过社交应用推荐</h2>
+                                    <ul class="recommend-ways">
+                                        <li><a href="javascript:;"><i class="social-logo social-wechat"></i>微信</a></li>
+                                        <li><a href="javascript:;"><i class="social-logo social-weibo"></i>新浪微博</a></li>
+                                        <li><a href="javascript:;"><i class="social-logo social-qqzone"></i>QQ空间</a>
+                                        </li>
+                                        <li><a href="javascript:;"><i class="social-logo social-qq"></i>QQ好友</a></li>
+                                    </ul>
+                                </div>
+                                <div class="recommend-operate-content">
+                                    <p class="recommend-tips">
+                                        1、BDGstore将采用大数据技术杜绝违规操作及作弊行为（包括但不限于：恶意注册虚假账号、恶意刷奖等），若判定为违规操作及作弊行为，BDGstore有权取消其获奖资格。
+                                        <br>
+                                        2、好友需通过你的专属链接注册才能建立推荐关系。奖励针对活动期间的推荐，累计奖励无上限。
+                                        <br>
+                                        3、好友注册成功，可获得1999元礼包；活动期间好友充值且任意投资满500元，您可获得20元投资优惠券。活动期间内好友投资金额排行前十二名，您可以可获得相应金额投资优惠劵奖励。
+                                        <br>
+                                        4、好友消费满500元奖励，在好友满足活动条件后自动发放至您的账户；排行榜奖励在活动结束后的7个工作日内发放；好友获得返现奖励，在活动结束后7个工作日内发放至好友BDGstore账户。
+                                        <br>
+                                        5、满减优惠劵，可用于消费订单满减，为便于您购买，优惠劵将根据面额拆分发放。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%};
+    include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+    %>
+    <script type="text/javascript">
+
+    </script>
