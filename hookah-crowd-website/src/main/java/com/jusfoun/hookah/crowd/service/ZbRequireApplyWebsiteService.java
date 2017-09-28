@@ -9,6 +9,14 @@ import com.jusfoun.hookah.core.utils.ReturnData;
  */
 public interface ZbRequireApplyWebsiteService extends GenericService<ZbRequirementApply, Long> {
 
+    /**
+     *报名
+     */
     ReturnData addApplay(ZbRequirementApply zbRequirementApply);
+
+    /**
+     * 报名信息(根据需求Id 查看当前用户的报名信息)
+     */
+    ReturnData selectByReqId(Long reqId);
 
 }
