@@ -1,0 +1,122 @@
+<style>
+  .control-label {
+    width: 80px;
+  }
+</style>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="console-title console-title-border clearfix">
+      <div class="pull-left"><h5 ng-bind="title"></h5></div>
+      <div class="pull-right">
+        <button class="btn btn-default" data-ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span> 刷新 </button>
+      </div>
+    </div>
+    <div class="row margin-top">
+      <div class="col-sm-12">
+        <div class="searchSection">
+          <form class="form-inline">
+            <div class="form-group">
+              <label class="control-label text-right">用户账号：</label>
+              <input ng-model="userName" type="text" placeholder="用户ID/账号" class="form-control">
+            </div>
+            <!--<div class="form-group">
+              <label class="control-label text-right">用户昵称：</label>
+              <input ng-model="nickName" type="text" placeholder="用户昵称" class="form-control">
+            </div>-->
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary" data-ng-click="search()">搜索</button>
+            </div>
+          </form>
+        </div>
+        <div class="gridSection">
+          <div us-spinner ng-show="showSpinner" spinner-start-active="true" spinner-key="showSpinner"></div>
+          <table class="table table-hover" style="margin-bottom: 57px;">
+            <thead>
+              <tr>
+                <!--<th width="10">-->
+                <!--<input type="checkbox" data-ng-model="tableState.selectAll"-->
+                <!--ng-change="changeSelectionAll()" class=" ">-->
+                <!--</th>-->
+                <!--<th class="state-column"></th>-->
+                <!--<th>Id</th>-->
+                <th>用户ID</th>
+                <th>用户账号</th>
+                <th>手机号</th>
+                <th>实名认证</th>
+                <th>邀请好友</th>
+                <!--<th>已认证好友</th>-->
+                <th>成功交易好友</th>
+                <th>累计奖励</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-if="!loadingState" data-ng-repeat="item in pagination.store" >
+              <!--<td width="10">-->
+              <!--<input type="checkbox" data-ng-model="item.selected" ng-change="changeSelection({data: item})"-->
+              <!--class=" ">-->
+              <!--</td>-->
+              <!--<td class="state-column">-->
+              <!--<span class="state-unread " ng-if="item.Status*1===0">●</span>-->
+              <!--</td>-->
+              <!--<td>-->
+              <!--<a ng-class="{'title-unread':item.Status*1===0,'title-read':item.Status*1!==0}" href="javascript:;"-->
+              <!--class=" title-unread">-->
+              <!--<span text-length="50" ng-bind="item.userId"></span>-->
+              <!--</a>-->
+              <!--</td>-->
+              <td>
+                <a ng-click="detail(item.id)" >
+                  <span ng-bind="item.userId" ></span>
+                </a>
+              </td>
+              <td><span data-ng-bind="item.userName"></span></td>
+              <td>
+                <span ng-bind="item.mobile"></span>
+              </td>
+              <td>
+                <span ng-bind="item.userType | UserType"></span>
+              </td>
+              <td>
+                <span  ng-bind="item.inviteeNum"></span>
+              </td>
+              <td>
+                <span  ng-bind="item.isdealNum"></span>
+              </td>
+              <td>
+                <span  ng-bind="item.rewardMoney"></span>
+              </td>
+              <td class="text-right">
+                <a href="javascript:void(0)" ng-click="detail(item.id)">查看明细</a>
+              </td>
+            </tr>
+            </tbody>
+            <tfoot ng-if="!showNoneDataInfoTip && showPageHelpInfo">
+            <tr>
+              <td colspan="9">
+                <div class="pull-right page-box">
+                  <div class="pagination-info">共有{{pagination.totalItems}}条，每页显示：{{pagination.pageSize}}条</div>
+                  <ul uib-pagination ng-change="pageChanged()" total-items="pagination.totalItems"
+                      ng-model="pagination.currentPage" items-per-page="pagination.pageSize"
+                      max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"
+                      force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"
+                      last-text="末页">
+                  </ul>
+                </div>
+              </td>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="simple-grid-none-data-wrap">
+          <div class="simple-grid-none-data text-center " ng-if="showNoneDataInfoTip && !loadingState">
+            <div class="row-padding row-margin text-center">
+              <span class="text-size-24 blue icon-info-1" style="vertical-align: middle"></span>
+              <div class="text-size-18 tip-text inline-block">没有查询到符合条件的记录</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
