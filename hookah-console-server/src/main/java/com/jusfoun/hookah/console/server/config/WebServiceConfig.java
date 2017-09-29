@@ -15,7 +15,7 @@ import javax.xml.ws.Endpoint;
 @Configuration
 public class WebServiceConfig {
           @Bean
-         public ServletRegistrationBean dispatcherServlet() {
+         public ServletRegistrationBean dispatcherServlet1() {
              return new ServletRegistrationBean(new CXFServlet(), "/webservice/*");
          }
          @Bean(name = Bus.DEFAULT_BUS_ID)
