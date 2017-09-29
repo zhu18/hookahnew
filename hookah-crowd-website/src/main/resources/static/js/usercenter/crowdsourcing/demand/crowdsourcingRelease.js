@@ -43,7 +43,7 @@ function modifyCrowdsourcing() { //修改，从我的发布点击'修改'调转�
       console.log(data);
       if (data.data[0].hasOwnProperty('zbRequirement')) {
 
-        renderPage(data.data[0]);
+        renderPage(data.data);
 
       }
     }

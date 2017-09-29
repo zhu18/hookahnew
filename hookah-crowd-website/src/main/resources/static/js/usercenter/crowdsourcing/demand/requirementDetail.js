@@ -35,7 +35,7 @@ function showDetail() { //修改，从我的发布点击'查看'调转过来的
     cache: false,
     success: function (data) {
       console.log(data);
-      renderPage(data.data[0]);
+      renderPage(data.data);
     }
   });
 }
@@ -125,11 +125,12 @@ function renderPage(data) {
       $('.detailMoneyBox,.otherDetailBox').show();
       $('.managedMoneyNotice').hide();
 
-      $('.j_peopleCount').html('llll');
-      $('.j_companyName').html('llll');
-      $('.j_SignUpTime').html('llll');
-      $('.j_contentName').html('llll');
-      $('.j_contentPhone').html('llll');
+      $('.j_peopleCount').html(data.count);
+
+      $('.j_companyName').html(data.user.orgName);
+      $('.j_SignUpTime').html(data.applyTime);
+      $('.j_contentName').html(data.user.contactName);
+      $('.j_contentPhone').html(data.user.contactPhone);
       $('.release-first-btnbox div').append('<a href="' + host.website + '/payAccount/userRecharge?money=' + insertRequirementsData.managedMoney / 10000 + '">去托管赏金70%</a>');
 
       break;
