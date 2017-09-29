@@ -175,41 +175,85 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
         List<Condition> filters = new ArrayList<>();
         List<Condition> filters1 = new ArrayList<>();
         List<Condition> filters2 = new ArrayList<>();
+        List<Condition> filters3 = new ArrayList<>();
         if(StringUtils.isNotBlank(id.toString())){
             filters.add(Condition.eq("id", id));
         }
         ZbRequirement zbRequirement = zbRequireService.selectOne(filters);
+        String managedMoney = null;
+        List<ZbAnnex> zbAnnexes = null;
+        String[] strArray = null;
         //我的发布-待审核状态
         if(zbRequirement != null){
+            //---------
+            if(zbRequirement.getStatus() == 3 ||
+                    zbRequirement.getStatus() == 7 ||
+                    zbRequirement.getStatus() == 8 ||
+                    zbRequirement.getStatus() == 9 ||
+                    zbRequirement .getStatus() == 13 ||
+                    zbRequirement.getStatus() == 18 ||
+                    zbRequirement.getStatus() == 15 ||
+                    zbRequirement.getStatus() == 19) {
+                if (zbRequirement.getTrusteePercent() != null) {
+                    managedMoney = String.valueOf(zbRequirement.getRewardMoney() * zbRequirement.getTrusteePercent());
+                    //map.put("managedMoney", managedMoney);
+                }
+                if (zbRequirement.getTag() != null) {
+                    strArray = zbRequirement.getTag().split(",");
+                    //map.put("tag", strArray);
+                }
+                if (zbRequirement.getId() != null) {
+                    filters1.add(Condition.eq("correlationId", zbRequirement.getId()));
+                }
+                zbAnnexes = zbAnnexService.selectList(filters1);
+                //map.put("zbRequirement", zbRequirement);
+                //map.put("zbRequirementFiles", zbAnnexes);
+            }
+            //--------
             Short status = zbRequirement.getStatus();
             if(StringUtils.isNotBlank(status.toString())){
                 Object info = null;
                 switch (status){
                     case 1://待审核
                     case 2://审核未通过
-                        info = requirementInfo(id).getData();
-                        list.add(info);
+                        //info = requirementInfo(id).getData();
+                        //list.add(info);
+                        map.put("tag", strArray);
+                        map.put("zbRequirement", zbRequirement);
+                        map.put("zbRequirementFiles", zbAnnexes);
                         break;
                     case 3: //审核通过,待托管赏金
-                        info = requirementInfo(id).getData();
-                        list.add(info);
+                        //info = requirementInfo(id).getData();
+                        //list.add(info);
+                        map.put("tag", strArray);
+                        map.put("managedMoney", managedMoney);
+                        map.put("zbRequirement", zbRequirement);
+                        map.put("zbRequirementFiles", zbAnnexes);
                         break;
                     case 7: //待二次托管或报名结束
-                        info = requirementInfo(id).getData();
+                        //info = requirementInfo(id).getData();
+                        map.put("tag", strArray);
+                        map.put("managedMoney", managedMoney);
+                        map.put("zbRequirement", zbRequirement);
+                        map.put("zbRequirementFiles", zbAnnexes);
                         if(StringUtils.isNotBlank(zbRequirement.getId().toString())){
-                            filters1.add(Condition.eq("requirementId", zbRequirement.getId()));
+                            filters2.add(Condition.eq("requirementId", zbRequirement.getId()));
                         }
-                        ZbRequirementApply zbRequirementApply = zbRequireApplyService.selectOne(filters1);
-                        list.add(info);
+                        ZbRequirementApply zbRequirementApply = zbRequireApplyService.selectOne(filters2);
+                        //list.add(info);
                         if(zbRequirementApply != null){
                             //计算报名人数
                             List<ZbRequirementApply> zbRequirementApplies = zbRequireApplyService.selectList();
                             map.put("count",zbRequirementApplies.size());
-                            list.add(map);
+                            //list.add(map);
                             //已选中信息
-                            if(zbRequirementApply.getStatus() == 1){
-                                User user = zbRequirementMapper.selectReleaseInfo(zbRequirement.getUserId());
-                                list.add(user);
+                            List<Condition> filters5 = new ArrayList<>();
+                            filters5.add(Condition.eq("status", 1));
+                            ZbRequirementApply apply = zbRequireApplyService.selectOne(filters5);
+                            if(apply != null){
+                                User user = zbRequirementMapper.selectReleaseInfo(apply.getUserId());
+                                map.put("user",user);
+                                //list.add(user);
                             }
                         }
                         break;
@@ -217,56 +261,64 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                     case 9: //待验收
                     case 13://待评价
                     case 18://需方驳回
-                        info = requirementInfo(id).getData();
-                        list.add(info);
+                        //info = requirementInfo(id).getData();
+                        //list.add(info);
+                        map.put("tag", strArray);
+                        map.put("managedMoney", managedMoney);
+                        map.put("zbRequirement", zbRequirement);
+                        map.put("zbRequirementFiles", zbAnnexes);
                         if(zbRequirement.getId() != null){
-                            filters1.add(Condition.eq("requirementId", zbRequirement.getId()));
-                            ZbProgram zbProgram = zbProgramService.selectOne(filters1);
+                            filters2.add(Condition.eq("requirementId", zbRequirement.getId()));
+                            ZbProgram zbProgram = zbProgramService.selectOne(filters2);
                             if(zbProgram != null){
-                                Map<String, Object> zpMap = new HashMap<>(6);
-                                zpMap.put("zbProgram",zbProgram);
-                                list.add(zpMap);
+                                //Map<String, Object> zpMap = new HashMap<>(6);
+                                map.put("zbProgram",zbProgram);
+                                //list.add(zpMap);
                                 if(StringUtils.isNotBlank(zbProgram.getId().toString())){
-                                    filters2.add(Condition.eq("correlationId", zbProgram.getId()));
+                                    filters3.add(Condition.eq("correlationId", zbProgram.getId()));
                                 }
-                                filters2.add(Condition.eq("type", 1));
-                                List<ZbAnnex> zbAnnexes = zbAnnexService.selectList(filters2);
+                                filters3.add(Condition.eq("type", 1));
+                                List<ZbAnnex> programFiles = zbAnnexService.selectList(filters3);
                                 if(zbAnnexes != null){
-                                    Map<String, Object> zaMap = new HashMap<>(6);
-                                    zaMap.put("zbAnnexes",zbAnnexes);
-                                    list.add(zaMap);
+                                    //Map<String, Object> zaMap = new HashMap<>(6);
+                                    map.put("programFiles",programFiles);
+                                    //list.add(zaMap);
                                 }
                             }
                         }
                         break;
                     case 15://交易完成
-                        info = requirementInfo(id).getData();
-                        list.add(info);
+                        map.put("tag", strArray);
+                        map.put("managedMoney", managedMoney);
+                        map.put("zbRequirement", zbRequirement);
+                        map.put("zbRequirementFiles", zbAnnexes);
+                        //info = requirementInfo(id).getData();
+                        //list.add(info);
                         if(zbRequirement.getId() != null){
-                            filters1.add(Condition.eq("requirementId", zbRequirement.getId()));
-                            ZbProgram zbProgram = zbProgramService.selectOne(filters1);
+                            filters2.add(Condition.eq("requirementId", zbRequirement.getId()));
+                            ZbProgram zbProgram = zbProgramService.selectOne(filters2);
                             if(zbProgram != null){
-                                Map<String, Object> zpMap = new HashMap<>(6);
-                                zpMap.put("zbProgram",zbProgram);
-                                list.add(zpMap);
+                                //Map<String, Object> zpMap = new HashMap<>(6);
+                                map.put("zbProgram",zbProgram);
+                                //list.add(zpMap);
                                 if(StringUtils.isNotBlank(zbProgram.getId().toString())){
-                                    filters2.add(Condition.eq("correlationId", zbProgram.getId()));
+                                    filters3.add(Condition.eq("correlationId", zbProgram.getId()));
                                 }
                                 filters2.add(Condition.eq("type", 1));
-                                List<ZbAnnex> zbAnnexes = zbAnnexService.selectList(filters2);
+                                List<ZbAnnex> programFiles = zbAnnexService.selectList(filters3);
                                 if(zbAnnexes != null){
-                                    Map<String, Object> zaMap = new HashMap<>(6);
-                                    zaMap.put("zbAnnexes",zbAnnexes);
-                                    list.add(zaMap);
+                                    //Map<String, Object> zaMap = new HashMap<>(6);
+                                    map.put("programFiles",programFiles);
+                                    //list.add(zaMap);
                                 }
-                                List<Condition> filters3 = new ArrayList<>();
+                                List<Condition> filters4 = new ArrayList<>();
                                 if(StringUtils.isNotBlank(zbProgram.getId().toString())){
-                                    filters3.add(Condition.eq("programId", zbProgram.getId()));
+                                    filters4.add(Condition.eq("programId", zbProgram.getId()));
                                 }
-                                ZbComment zbComment = zbCommentService.selectOne(filters3);
-                                Map<String, Object> zcMap = new HashMap<>(6);
-                                zcMap.put("zbComment",zbComment);
-                                list.add(zcMap);
+                                ZbComment zbComment = zbCommentService.selectOne(filters4);
+                                //Map<String, Object> zcMap = new HashMap<>(6);
+                                map.put("zbComment",zbComment);
+                                //list.add(zcMap);
                             }
                         }
                         break;
@@ -277,8 +329,12 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                             Date time1 = df.parse(df.format(date));//当前时间
                             Date time2 = df.parse(df.format(zbRequirement.getApplyDeadline()));//截止报名时间
                             if(time2.before(time1)){//截止报名时间小于当前时间----流标
-                                info = requirementInfo(id).getData();
-                                list.add(info);
+                                //info = requirementInfo(id).getData();
+                                //list.add(info);
+                                map.put("tag", strArray);
+                                map.put("managedMoney", managedMoney);
+                                map.put("zbRequirement", zbRequirement);
+                                map.put("zbRequirementFiles", zbAnnexes);
                             }
                         } catch (Exception e) {
                             logger.error("获取时间有误", e);
@@ -286,11 +342,11 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                         }
                         break;
                     default:
-                        list = null;
+                        map = null;
                         break;
                 }
             }
-            return ReturnData.success(list);
+            return ReturnData.success(map);
         }
         return ReturnData.error("查询错误");
     }
@@ -401,5 +457,9 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
             return ReturnData.success(i);
         }
         return  ReturnData.error("取消需求信息失败！");
+    }
+
+    public ReturnData updateMoneyStatus(String requireSn){
+        return ReturnData.success();
     }
 }
