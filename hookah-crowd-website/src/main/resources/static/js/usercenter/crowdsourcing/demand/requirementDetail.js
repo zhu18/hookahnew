@@ -188,6 +188,10 @@ $(document).on('mouseenter', '.load-file', function () { //鼠标滑过描述显
   }, 300);
 });
 
+$(document).on('click', '.otherDetailBoxNav li', function () { //需求详情下面的tab
+  $(this).addClass('active').siblings().removeClass('active').parent().next().children().removeClass('active').eq($(this).index()).addClass('active');
+});
+
 
 $(document).on('mouseleave', '.load-file', function () { //鼠标离开描述显示工具栏
   $(this).children().find('.crowdsourcing-table-edit').stop().animate({'opacity': 0}, 300, function () {
