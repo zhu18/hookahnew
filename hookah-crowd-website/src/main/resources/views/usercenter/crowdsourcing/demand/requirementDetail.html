@@ -24,10 +24,10 @@ var htmlPart = {
 
       <div class="crowdsourcing-progress requirementDetailProgress bgc-fff">
           <div class="crowdsourcing-status">
-            <span>审核通过待托管赏金</span>
+            <span>---</span>
           </div>
           <ul class="crowdsourcing-progress-box">
-            <li><span class="step">1</span><span class="progress-content">发布需求</span> <span class="addtime">1</span> </li>
+            <li><span class="step">1</span><span class="progress-content">发布需求</span> <span class="addtime"></span> </li>
             <li><span class="step">2</span><span class="progress-content">平台审核</span></li>
             <li><span class="step">3</span><span class="progress-content">悬赏费用托管</span></li>
             <li><span class="step">4</span><span class="progress-content">平台发布</span></li>
@@ -53,14 +53,14 @@ var htmlPart = {
         <tr>
           <td>需求类型</td>
           <td>
-            <div class="secondPage j_type requirement-type-active"><span>？？？？？</span></div>
+            <div class="secondPage j_type requirement-type-active"><span>----</span></div>
             <div class="crowdsourcing-user">
               <span>需求标签</span>
               <div class="secondPage tagList j_tag">
-                <i>????</i>
-                <i>????</i>
-                <i>????</i>
-                <i>????</i>
+                <i>----</i>
+                <i>----</i>
+                <i>----</i>
+                <i>----</i>
               </div>
             </div>
           </td>
@@ -96,19 +96,27 @@ var htmlPart = {
         <tr>
           <td>交付截止日期</td>
           <td>
-            <div class="secondPage j_date">?????</div>
+            <div class="secondPage j_date">----</div>
 
           </td>
         </tr>
         <tr>
           <td>悬赏金额</td>
           <td>
-            <div class="secondPage j_money">????? 元</div>
+            <div class="secondPage j_money">---- 元</div>
+            <div class="crowdsourcing-user detailMoneyBox">
+              <span class="managedMoneySpan">托管金额: <i class="moneyHow">--</i>% <i class="moneyAdd"></i> <i class="moneySub"></i></span>
+              <div class="secondPage tagList ">
+                ￥ <i class="moneyManageMoeny">---</i> 元
+              </div>
+              <i class="managedMoneyNotice">托管金额至少赏金的30%，可以上调到100%</i>
+            </div>
+
         </tr>
         <tr>
           <td valign="top">交付验收要求</td>
           <td>
-            <p class="j_checkRemark secondPage description">?????</p>
+            <p class="j_checkRemark secondPage description">----</p>
 
           </td>
         </tr>

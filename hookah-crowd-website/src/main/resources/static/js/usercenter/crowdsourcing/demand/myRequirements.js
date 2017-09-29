@@ -32,31 +32,31 @@ function loadPageData(data) { //渲染页面数据
         break;
       case 3:
         tempState = '待托管赏金';
-        tempEdit = '<a href="#" class="signUp">托管资金</a>';
+        tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">托管资金</a>';
         break;
       case 7:
         tempState = '待二次托管';
-        tempEdit = '<span class="signUp">托管资金</span>';
+        tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">托管资金</a>';
         break;
       case 8:
         tempState = '工作中';
-        tempEdit = '<span class="signUp">查看</span>';
+        tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">查看</a>';
         break;
       case 10:
         tempState = '待验收付款';
-        tempEdit = '<span class="signUp">验收</span>';
+        tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">验收</a>';
         break;
       case 13:
         tempState = '待评价';
-        tempEdit = '<span class="signUp">去评价</span>';
+        tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">去评价</a>';
         break;
       case 14:
         tempState = '交易取消';
-        tempEdit = '<span class="signUp">查看</span>';
+        tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">查看</a>';
         break;
       case 15:
         tempState = '交易完成';
-        tempEdit = '<span class="signUp">查看</span>';
+        tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">查看</a>';
         break;
       case 16:
         tempState = '待退款';

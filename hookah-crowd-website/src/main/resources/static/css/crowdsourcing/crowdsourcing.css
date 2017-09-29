@@ -61,6 +61,18 @@
 
 .requirementDetailTab-table  { }
 .requirementDetailTab-table .secondPage{ display: inline-block;}
+.requirementDetailTab-table .crowdsourcing-user{ left: 310px;width: 488px;;}
+.managedMoneyNotice{ position: absolute; right: 0; display: block; top: 0;color: #ccccdd;}
+
+.moneyAdd,.moneySub{display: block; height:0; width:0; position: absolute; right:5px;border:7px solid #f5f5f5; cursor: pointer;}
+.moneyAdd{  top:5px;border-bottom:7px solid #8e8b8b; }
+.moneySub{  bottom:5px;border-top:7px solid #8e8b8b;}
+.moneyAdd:hover{ border-bottom:7px solid #078cfc; }
+.moneySub:hover{ border-top:7px solid #078cfc;}
+
+.crowdsourcing-user span.managedMoneySpan{ position: relative;width: 110px;padding-right: 25px;}
+.detailMoneyBox{ display: none;}
+
 .myRequirement-table tr { text-align: left; }
 .myRequirement-table tr td{ text-align: left; padding:0 10px 0 10px;  position: relative; }
 .myRequirement-table tr td input{padding:2px 0 5px 5px; width: 320px; border: 1px solid #e0e0e0; }

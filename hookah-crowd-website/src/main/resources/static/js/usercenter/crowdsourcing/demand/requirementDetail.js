@@ -4,6 +4,8 @@
 
 
 let crowdSourcingId = GetUrlValue('id');
+let rewardMoney = null;
+
 // 获取需求类型
 function getRequirementType() {
   $.ajax({
@@ -40,13 +42,14 @@ function showDetail() { //修改，从我的发布点击'查看'调转过来的
 
 
 function renderPage(data) {
-  let insertRequirementsData=data;
+  let insertRequirementsData = data;
   $('.j_title').html(insertRequirementsData.zbRequirement.title);
   $('.j_username').html(insertRequirementsData.zbRequirement.contactName);
   $('.j_phone').html(insertRequirementsData.zbRequirement.contactPhone);
   $('.j_description').html(insertRequirementsData.zbRequirement.description);
+  $('.moneyHow').html(insertRequirementsData.zbRequirement.trusteePercent);
   $('.j_date').html(insertRequirementsData.zbRequirement.deliveryDeadline);
-  $('.j_money').html('￥ '+insertRequirementsData.zbRequirement.rewardMoney+' 元');
+  $('.j_money').html('￥ <i>' + insertRequirementsData.zbRequirement.rewardMoney / 100 + '</i> 元');
   let temTagHtml = '';
   let temTagArr = insertRequirementsData.zbRequirement.tag.split(',');
   if (temTagArr[0]) {
@@ -57,7 +60,7 @@ function renderPage(data) {
   $('.j_tag').html(temTagHtml);
   $('.j_checkRemark').html(insertRequirementsData.zbRequirement.checkRemark);
   let tempTypeHtml = '';
-  switch (Number(insertRequirementsData.zbRequirement.type)) {
+  switch (Number(insertRequirementsData.zbRequirement.type)) { //需求标签
     case 1 : {
       $('.requirement-type-active span').html('数据采集');
       break;
@@ -85,7 +88,7 @@ function renderPage(data) {
   }
 
   let tempHtml = '';
-  for (let c = 0; c < data.zbRequirementFiles.length; c++) {
+  for (let c = 0; c < data.zbRequirementFiles.length; c++) { //渲染附件
 
     let className = fileTypeClassName(data.zbRequirementFiles[c].fileName);
     tempHtml += '\
@@ -99,9 +102,71 @@ function renderPage(data) {
           </dd>\
         </dl>';
   }
-  $('.load-file-list').append(tempHtml)
+  $('.load-file-list').append(tempHtml);
+
+
+  let domModel = $('.crowdsourcing-status span');
+  switch (insertRequirementsData.zbRequirement.status) {
+    case 1:
+      domModel.html('待审核');
+      break;
+    /*case 2:
+     domModel.html('审核未通过');
+     break;*/
+    case 3:
+
+      domModel.html('审核通过<br>待托管赏金');
+      $('.detailMoneyBox').show();
+      $('.release-first-btnbox div').append('<a href="' + host.website + '/payAccount/userRecharge?money=' + insertRequirementsData.managedMoney / 10000 + '">去托管赏金</a>');
+      break;
+    case 7:
+      domModel.html('报名结束<br>待托管赏金');
+      break;
+    case 8:
+      domModel.html('工作中');
+      break;
+    case 10:
+      domModel.html('待验收');//TODO:验收要根据成果验收的三个状态显示
+      break;
+    case 13:
+      domModel.html('已付款<br>待评价');
+      break;
+    case 14:
+      domModel.html('交易取消');
+      break;
+    case 15:
+      domModel.html('交易成功');
+      break;
+    case 16:
+      domModel.html('待退款');
+      break;
+  }
+
+
+  rewardMoney = insertRequirementsData.zbRequirement.rewardMoney;
+  $('.moneyManageMoeny').html(rewardMoney * $('.moneyHow').text() / 10000);
 }
 
+
+$(document).on('click', '.moneyAdd', function () { //托管资金点击增加 托管金额百分比
+  let percentage = Number($('.moneyHow').html());
+  if (30 <= percentage && percentage < 100) {
+    percentage += 1;
+    $('.moneyHow').html(Number(percentage));
+    $('.moneyManageMoeny').html(rewardMoney * percentage / 10000);
+
+  }
+});
+
+$(document).on('click', '.moneySub', function () { //托管资金点击增加 托管金额百分比
+  let percentage = Number($('.moneyHow').html());
+  if (30 < percentage && percentage < 100) {
+    percentage -= 1;
+    $('.moneyHow').html(Number(percentage));
+    $('.moneyManageMoeny').html(rewardMoney * percentage / 10000);
+
+  }
+});
 
 
 $(document).on('mouseenter', '.load-file', function () { //鼠标滑过描述显示工具栏
@@ -124,12 +189,11 @@ $('.tagNotice').on('mouseover', function () { //鼠标离开描述显示工具�
 });
 
 
-
 function fileTypeClassName(fileName) { //返回class
-  var fileTypeReg = /[^.]*$/;
-  var fileType = fileTypeReg.exec(fileName)[0];
+  let fileTypeReg = /[^.]*$/;
+  let fileType = fileTypeReg.exec(fileName)[0];
 
-  var fileTypeObj = {
+  let fileTypeObj = {
     image: {
       'gif': 'gif',
       'jpg': 'jpg',
@@ -153,7 +217,7 @@ function fileTypeClassName(fileName) { //返回class
 
     }
   };
-  var attachmentListClassName = '';
+  let attachmentListClassName = '';
   switch (fileType) {
     case fileTypeObj.file.doc:
     case fileTypeObj.file.docx:
