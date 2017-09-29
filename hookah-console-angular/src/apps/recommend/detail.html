@@ -1,0 +1,116 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="console-title console-title-border clearfix">
+            <div class="pull-left"><h5 ng-bind="title"></h5></div>
+            <div class="pull-right">
+                <button class="btn btn-default" data-ng-click="back()">
+                    <span class="glyphicon glyphicon-arrow-left"></span> 返回
+                </button>
+                <button class="btn btn-default" data-ng-click="refresh()"><span
+                        class="glyphicon glyphicon-refresh"></span> 刷新
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+        <div class="gridSection">
+            <div us-spinner ng-show="showSpinner" spinner-start-active="true" spinner-key="showSpinner"></div>
+            <table class="table table-hover" style="margin-bottom: 27px;">
+                <thead>
+                    <tr>
+                        <th>用户ID</th>
+                        <th>用户账号</th>
+                        <th>手机号</th>
+                        <th>会员认证</th>
+                        <th>邀请好友</th>
+                        <th>成功交易好友</th>
+                        <th>累计奖励</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    <td>
+                        <span ng-bind="item.userId"></span>
+                    </td>
+                    <td>
+                        <span data-ng-bind="item.userName"></span>
+                    </td>
+                    <td>
+                        <span ng-bind="item.mobile"></span>
+                    </td>
+                    <td>
+                        <span ng-bind="item.regTime"></span>
+                    </td>
+                    <td>
+                        <span ng-bind="item.userType | UserType"></span>
+                    </td>
+                    <td>
+                        <span ng-bind="item.isdealNum"></span>
+                    </td>
+                    <td>
+                        <span ng-bind="item.isdealNum"></span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div> <span class="glyphicon glyphicon-list"></span> 邀请好友明细</div>
+            <table class="table table-hover" style="margin-bottom: 57px;">
+                <thead>
+                <tr>
+                    <th>用户ID</th>
+                    <th>用户账号</th>
+                    <th>手机号</th>
+                    <th>注册时间</th>
+                    <th>实名认证</th>
+                    <th>成功交易</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-ng-if="!loadingState" data-ng-repeat="item in pagination.store">
+                    <td>
+                        <span ng-bind="item.userId"></span>
+                    </td>
+                    <td><span data-ng-bind="item.userName"></span></td>
+                    <td>
+                        <span ng-bind="item.mobile"></span>
+                    </td>
+                    <td>
+                        <span ng-bind="item.regTime"></span>
+                    </td>
+                    <td>
+                        <span ng-bind="item.userType | UserType"></span>
+                    </td>
+                    <td>
+                        <span ng-bind="item.isdealNum"></span>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">
+                <tr>
+                    <td colspan="9">
+                        <div class="pull-right page-box">
+                            <div class="pagination-info">共有{{pagination.totalItems}}条，每页显示：{{pagination.pageSize}}条
+                            </div>
+                            <ul uib-pagination ng-change="pageChanged()" total-items="pagination.totalItems"
+                                ng-model="pagination.currentPage" items-per-page="pagination.pageSize"
+                                max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"
+                                force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"
+                                last-text="末页">
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="simple-grid-none-data-wrap">
+            <div class="simple-grid-none-data text-center " ng-if="showNoneDataInfoTip && !loadingState">
+                <div class="row-padding row-margin text-center">
+                    <span class="text-size-24 blue icon-info-1" style="vertical-align: middle"></span>
+                    <div class="text-size-18 tip-text inline-block">没有查询到符合条件的记录</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
