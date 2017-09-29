@@ -170,7 +170,8 @@ public class ChannelServiceImpl extends GenericServiceImpl<Goods,String> impleme
                     mongoTemplate.save(mgGoods);
                 } else {
                     // 将数据插入数据库
-                    goodsVo = (GoodsVo)super.insert(goodsVo);
+//                    goodsVo = (GoodsVo)super.insert(goodsVo);
+                    goodsMapper.insertRecord(goodsVo);
                     if(goodsVo == null)
                         throw new HookahException("操作失败");
                     mgGoods.setGoodsId(goodsVo.getGoodsId());

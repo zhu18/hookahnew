@@ -4,6 +4,7 @@ import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.GoodsShelves;
 import com.jusfoun.hookah.core.domain.mongo.MgShelvesGoods;
+import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericMongoServiceImpl;
@@ -16,6 +17,7 @@ import com.jusfoun.hookah.rpc.api.MgGoodsShelvesGoodsService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -188,11 +190,36 @@ public class MgGoodsShelvesGoodsServiceImpl extends GenericMongoServiceImpl<MgSh
                 List<Condition> filters = new ArrayList();
                 List<OrderBy> orderBys = new ArrayList();
                 filters.add(Condition.in("goodsId", mgShelvesGoods.getGoodsIdList().toArray()));
-                orderBys.add(OrderBy.desc("lastUpdateTime"));
+//                orderBys.add(OrderBy.desc("lastUpdateTime"));
                 page = goodsService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
+                page.setList(this.formatGoodsList(page.getList(),mgShelvesGoods.getGoodsIdList()));
+
             }
         }
         return page;
+    }
+
+    private List<Goods> formatGoodsList(List<Goods> goodsList,List<String> goodsIds) {
+        List<Goods> goodsVoList = new ArrayList<Goods>();
+        if(null != goodsIds && goodsIds.size() > 0){
+            int count = 0;
+            //按mongodb取出来的数据排序
+            for (String goodsId : goodsIds) {
+                if(null != goodsList && goodsList.size() > 0){
+                    for (Goods goods1 : goodsList) {
+                        //匹配成功则添加
+                        if(goodsId.equals(goods1.getGoodsId())){
+                            goodsVoList.add(goods1);
+                            break;
+                        }
+                    }
+                }
+
+            }
+        } else {
+            goodsVoList = goodsList;
+        }
+        return goodsVoList;
     }
 
     @Override

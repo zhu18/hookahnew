@@ -83,7 +83,7 @@ public class GoodsShelvesServiceImpl extends GenericServiceImpl<GoodsShelves, St
                         List<Goods> goodsList = goodsService.selectList(goodsfilters);
 
                         //获取包含评价分的商品VO集合
-                        List<GoodsVo> goodsVoList = bulidGoodsVoList(goodsList);
+                        List<GoodsVo> goodsVoList = bulidGoodsVoList(goodsList,sgIds);
 
                         goodsShelvesVo.setGoods(goodsVoList);
                     }
@@ -178,7 +178,7 @@ public class GoodsShelvesServiceImpl extends GenericServiceImpl<GoodsShelves, St
                 }
 
                 Pagination page = goodsService.getListInPage(goodsCritVo.getPageNumber(), goodsCritVo.getPageSize(), filters, orderBys);
-                page.setList(this.bulidGoodsVoList(page.getList()));
+                page.setList(this.bulidGoodsVoList(page.getList(),null));
                 returnData.setData(page);
             } catch (Exception e) {
                 returnData.setCode(ExceptionConst.Failed);
@@ -212,19 +212,41 @@ public class GoodsShelvesServiceImpl extends GenericServiceImpl<GoodsShelves, St
     }
 
 
-    private List<GoodsVo> bulidGoodsVoList(List<Goods> goodsList) {
+    private List<GoodsVo> bulidGoodsVoList(List<Goods> goodsList,List<String> goodsIds) {
         List<GoodsVo> goodsVoList = new ArrayList<GoodsVo>();
-        if(null != goodsList && goodsList.size() > 0){
-            for (Goods goods1 : goodsList) {
-                GoodsVo goodsVo = new GoodsVo();
-                BeanUtils.copyProperties(goods1, goodsVo);
-                //获取当前商品分数
-                Double goodsGrades = (Double) commentService.countGoodsGradesByGoodsId(goods1.getGoodsId()).getData();
-                goodsVo.setGoodsGrades(goodsGrades);
-                goodsVoList.add(goodsVo);
+        if(null != goodsIds && goodsIds.size() > 0){
+           int count = 0;
+            //按mongodb取出来的数据排序
+            for (String goodsId : goodsIds) {
+                if(null != goodsList && goodsList.size() > 0){
+                    for (Goods goods1 : goodsList) {
+                        //匹配成功则添加
+                        if(goodsId.equals(goods1.getGoodsId())){
+                            GoodsVo goodsVo = new GoodsVo();
+                            BeanUtils.copyProperties(goods1, goodsVo);
+                            //获取当前商品分数
+                            Double goodsGrades = (Double) commentService.countGoodsGradesByGoodsId(goods1.getGoodsId()).getData();
+                            goodsVo.setGoodsGrades(goodsGrades);
+                            goodsVoList.add(goodsVo);
+                            logger.info("循环了" + count++ + "次");
+                            break;
+                        }
+                    }
+                }
+
+            }
+        } else {
+            if(null != goodsList && goodsList.size() > 0) {
+                for (Goods goods1 : goodsList) {
+                    GoodsVo goodsVo = new GoodsVo();
+                    BeanUtils.copyProperties(goods1, goodsVo);
+                    //获取当前商品分数
+                    Double goodsGrades = (Double) commentService.countGoodsGradesByGoodsId(goods1.getGoodsId()).getData();
+                    goodsVo.setGoodsGrades(goodsGrades);
+                    goodsVoList.add(goodsVo);
+                }
             }
         }
-
         return goodsVoList;
     }
 

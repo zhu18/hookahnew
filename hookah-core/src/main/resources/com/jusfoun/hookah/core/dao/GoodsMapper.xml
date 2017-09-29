@@ -291,4 +291,292 @@
 
     </select>
 
+    <insert id="insertRecord" parameterType="com.jusfoun.hookah.core.domain.Goods">
+        insert into goods
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="goodsId != null" >
+                goods_id,
+            </if>
+            <if test="goodsSn != null" >
+                goods_sn,
+            </if>
+            <if test="domainId != null" >
+                domain_id,
+            </if>
+            <if test="catId != null" >
+                cat_id,
+            </if>
+            <if test="goodsName != null" >
+                goods_name,
+            </if>
+            <if test="goodsBrief != null" >
+                goods_brief,
+            </if>
+            <if test="keywords != null" >
+                keywords,
+            </if>
+            <if test="goodsType != null" >
+                goods_type,
+            </if>
+            <if test="goodsArea != null" >
+                goods_area,
+            </if>
+            <if test="goodsImg != null" >
+                goods_img,
+            </if>
+            <if test="trialRange != null" >
+                trial_range,
+            </if>
+            <if test="goodsDesc != null" >
+                goods_desc,
+            </if>
+            <if test="goodsAdvantage != null" >
+                goods_advantage,
+            </if>
+            <if test="afterSaleService != null" >
+                after_sale_service,
+            </if>
+            <if test="dataSample != null" >
+                data_sample,
+            </if>
+            <if test="appCase != null" >
+                app_case,
+            </if>
+            <if test="isDiscussPrice != null" >
+                is_discuss_price,
+            </if>
+            <if test="isDelete != null" >
+                is_delete,
+            </if>
+            <if test="goodsNumber != null" >
+                goods_number,
+            </if>
+            <if test="warnNumber != null" >
+                warn_number,
+            </if>
+            <if test="industry != null" >
+                industry,
+            </if>
+            <if test="onsaleStartDate != null" >
+                onsale_start_date,
+            </if>
+            <if test="onsaleEndDate != null" >
+                onsale_end_date,
+            </if>
+            <if test="addTime != null" >
+                add_time,
+            </if>
+            <if test="lastUpdateTime != null" >
+                last_update_time,
+            </if>
+            <if test="isReal != null" >
+                is_real,
+            </if>
+            <if test="shopPrice != null" >
+                shop_price,
+            </if>
+            <if test="shopNumber != null" >
+                shop_number,
+            </if>
+            <if test="shopFormat != null" >
+                shop_format,
+            </if>
+            <if test="sellerNote != null" >
+                seller_note,
+            </if>
+            <if test="addUser != null" >
+                add_user,
+            </if>
+            <if test="checkStatus != null" >
+                check_status,
+            </if>
+            <if test="isOnsale != null" >
+                is_onsale,
+            </if>
+            <if test="isUpdate != null" >
+                is_update,
+            </if>
+            <if test="version != null" >
+                version,
+            </if>
+            <if test="shopId != null" >
+                shop_id,
+            </if>
+            <if test="shopName != null" >
+                shop_name,
+            </if>
+            <if test="sourceId != null" >
+                source_id,
+            </if>
+            <if test="sourceType != null" >
+                source_type,
+            </if>
+            <if test="offReason != null" >
+                off_reason,
+            </if>
+            <if test="followNum != null" >
+                follow_num,
+            </if>
+            <if test="uploadUrl != null" >
+                upload_url,
+            </if>
+            <if test="isBook != null" >
+                is_book,
+            </if>
+            <if test="isOffline != null" >
+                is_offline,
+            </if>
+            <if test="isPush != null" >
+                is_push,
+            </if>
+            <if test="ver != null" >
+                ver,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="goodsId != null" >
+                #{goodsId,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsSn != null" >
+                #{goodsSn,jdbcType=VARCHAR},
+            </if>
+            <if test="domainId != null" >
+                #{domainId,jdbcType=VARCHAR},
+            </if>
+            <if test="catId != null" >
+                #{catId,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsName != null" >
+                #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsBrief != null" >
+                #{goodsBrief,jdbcType=VARCHAR},
+            </if>
+            <if test="keywords != null" >
+                #{keywords,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsType != null" >
+                #{goodsType,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsArea != null" >
+                #{goodsArea,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsImg != null" >
+                #{goodsImg,jdbcType=VARCHAR},
+            </if>
+            <if test="trialRange != null" >
+                #{trialRange,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsDesc != null" >
+                #{goodsDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsAdvantage != null" >
+                #{goodsAdvantage,jdbcType=VARCHAR},
+            </if>
+            <if test="afterSaleService != null" >
+                #{afterSaleService,jdbcType=VARCHAR},
+            </if>
+            <if test="dataSample != null" >
+                #{dataSample,jdbcType=VARCHAR},
+            </if>
+            <if test="appCase != null" >
+                #{appCase,jdbcType=VARCHAR},
+            </if>
+            <if test="isDiscussPrice != null" >
+                #{isDiscussPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null" >
+                #{isDelete,jdbcType=SMALLINT},
+            </if>
+            <if test="goodsNumber != null" >
+                #{goodsNumber,jdbcType=INTEGER},
+            </if>
+            <if test="warnNumber != null" >
+                #{warnNumber,jdbcType=INTEGER},
+            </if>
+            <if test="industry != null" >
+                #{industry,jdbcType=VARCHAR},
+            </if>
+            <if test="onsaleStartDate != null" >
+                #{onsaleStartDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="onsaleEndDate != null" >
+                #{onsaleEndDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="addTime != null" >
+                #{addTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateTime != null" >
+                #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isReal != null" >
+                #{isReal,jdbcType=INTEGER},
+            </if>
+            <if test="shopPrice != null" >
+                #{shopPrice,jdbcType=BIGINT},
+            </if>
+            <if test="shopNumber != null" >
+                #{shopNumber,jdbcType=INTEGER},
+            </if>
+            <if test="shopFormat != null" >
+                #{shopFormat,jdbcType=SMALLINT},
+            </if>
+            <if test="sellerNote != null" >
+                #{sellerNote,jdbcType=INTEGER},
+            </if>
+            <if test="addUser != null" >
+                #{addUser,jdbcType=BIGINT},
+            </if>
+            <if test="checkStatus != null" >
+                #{checkStatus,jdbcType=SMALLINT},
+            </if>
+            <if test="isOnsale != null" >
+                #{isOnsale,jdbcType=SMALLINT},
+            </if>
+            <if test="isUpdate != null" >
+                #{isUpdate,jdbcType=SMALLINT},
+            </if>
+            <if test="version != null" >
+                #{version,jdbcType=INTEGER},
+            </if>
+            <if test="shopId != null" >
+                #{shopId,jdbcType=VARCHAR},
+            </if>
+            <if test="shopName != null" >
+                #{shopName,jdbcType=VARCHAR},
+            </if>
+            <if test="sourceId != null" >
+                #{sourceId,jdbcType=VARCHAR},
+            </if>
+            <if test="sourceType != null" >
+                #{sourceType,jdbcType=VARCHAR},
+            </if>
+            <if test="offReason != null" >
+                #{offReason,jdbcType=VARCHAR},
+            </if>
+            <if test="followNum != null" >
+                #{followNum,jdbcType=INTEGER},
+            </if>
+            <if test="uploadUrl != null" >
+                #{uploadUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="isBook != null" >
+                #{isBook,jdbcType=VARCHAR},
+            </if>
+            <if test="isOffline != null" >
+                #{isOffline,jdbcType=SMALLINT},
+            </if>
+            <if test="isPush != null" >
+                #{isPush,jdbcType=SMALLINT},
+            </if>
+            <if test="ver != null" >
+                #{ver,jdbcType=VARCHAR},
+            </if>
+            <if test="isLocal != null" >
+                #{isLocal,jdbcType=SMALLINT},
+            </if>
+
+        </trim>
+    </insert>
+
 </mapper>
