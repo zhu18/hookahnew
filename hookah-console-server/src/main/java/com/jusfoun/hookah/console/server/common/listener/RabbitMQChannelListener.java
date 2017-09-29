@@ -1,35 +1,25 @@
 package com.jusfoun.hookah.console.server.common.listener;
 
 import com.alibaba.fastjson.JSON;
+import com.jusfoun.hookah.console.server.config.MyProps;
 import com.jusfoun.hookah.console.server.util.PropertiesManager;
 import com.jusfoun.hookah.core.Md5Utils;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.domain.ChannelTransData;
-import com.jusfoun.hookah.core.domain.Goods;
-import com.jusfoun.hookah.core.domain.WaitSettleRecord;
-import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
 import com.jusfoun.hookah.core.domain.vo.ChannelDataVo;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
-import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
-import com.jusfoun.hookah.core.exception.HookahException;
-import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.*;
-import com.jusfoun.hookah.rpc.api.ChannelService;
 import com.jusfoun.hookah.rpc.api.GoodsService;
-import com.jusfoun.hookah.rpc.api.MgOrderInfoService;
-import com.jusfoun.hookah.rpc.api.WaitSettleRecordService;
-import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.*;
-
-import static org.bouncycastle.asn1.x500.style.RFC4519Style.o;
+import java.util.Date;
+import java.util.Map;
+import java.util.Objects;
 
 @Component
 public class RabbitMQChannelListener {
@@ -39,8 +29,10 @@ public class RabbitMQChannelListener {
     @Resource
     GoodsService goodsService;
 
-    @Value("${myconf.host.website}")
-    private String localUrl;
+    @Resource
+    MyProps myProps;
+
+    private String localUrl = myProps.getHost().get("website");
 
     @RabbitListener(queues = RabbitmqQueue.CONTRACE_CENTER_CHANNEL)
     public void operaPushGoods(ChannelDataVo channelDataVo) {
