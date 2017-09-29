@@ -176,6 +176,18 @@
 
 
 
+.otherDetailBox{display: none; margin-top: 10px; }
+.otherDetailBoxNav{overflow: hidden; border-top: 2px solid #2cabf8; border-bottom: 1px solid #e4e4e4;}
+.otherDetailBoxNav li{ float: left;width: 139px; height: 40px; text-align: center; line-height: 40px; color: #848484; border-right: 1px solid #e4e4e4; font-size: 16px; cursor: pointer;}
+.otherDetailBoxNav li.active{background-color: #2cabf8; color: #fff; font-weight: bold;}
+.otherDetailBoxList{border: 1px solid #e4e4e4;border-top: 0;}
+.otherDetailBoxItem{ display:none;padding: 15px; font-size: 14px;}
+.otherDetailBoxItem.active{ display: block;}
+
+
+
+
+
 
 
 

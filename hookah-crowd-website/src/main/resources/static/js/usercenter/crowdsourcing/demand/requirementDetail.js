@@ -121,6 +121,17 @@ function renderPage(data) {
       break;
     case 7:
       domModel.html('报名结束<br>待托管赏金');
+      $('.managedMoneySpanText').html('已托管比例');
+      $('.detailMoneyBox,.otherDetailBox').show();
+      $('.managedMoneyNotice').hide();
+
+      $('.j_peopleCount').html('llll');
+      $('.j_companyName').html('llll');
+      $('.j_SignUpTime').html('llll');
+      $('.j_contentName').html('llll');
+      $('.j_contentPhone').html('llll');
+      $('.release-first-btnbox div').append('<a href="' + host.website + '/payAccount/userRecharge?money=' + insertRequirementsData.managedMoney / 10000 + '">去托管赏金70%</a>');
+
       break;
     case 8:
       domModel.html('工作中');
