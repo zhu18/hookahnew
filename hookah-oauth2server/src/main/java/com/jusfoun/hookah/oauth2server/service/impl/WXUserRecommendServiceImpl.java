@@ -6,13 +6,15 @@ import com.jusfoun.hookah.core.domain.WXUserRecommend;
 import com.jusfoun.hookah.core.domain.vo.WXUserRecommendVo;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.rpc.api.WXUserRecommendService;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
 
 /**
- * Created by hhh on 2017/9/27.
+ * Created by lt on 2017/9/27.
  */
+@Service
 public class WXUserRecommendServiceImpl extends GenericServiceImpl<WXUserRecommend, String> implements WXUserRecommendService {
     @Resource
     private WXUserRecommendMapper wxUserRecommendMapper;

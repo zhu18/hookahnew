@@ -16,7 +16,6 @@
   <bean id="loginLogService" class="com.jusfoun.hookah.oauth2server.service.impl.LoginLogServiceImpl"/>
   <bean id="mqSenderService" class="com.jusfoun.hookah.oauth2server.service.impl.MqSenderServiceImpl"/>
   <bean id="operateInfoMongoService" class="com.jusfoun.hookah.oauth2server.service.impl.OperateInfoMongoServiceImpl"/>
-  <bean id="wxUserRecommendService" class="com.jusfoun.hookah.oauth2server.service.impl.WXUserRecommendServiceImpl"/>
 
   <!-- 注册中心配置 使用不同注册中心需要依赖对应的jar包。如果不使用注册中心，可以把check属性改为false，忽略注册失败。-->
   <!--<motan:registry regProtocol="local" name="registry" />-->
@@ -61,8 +60,5 @@
   </motan:service>
   <motan:service interface="com.jusfoun.hookah.rpc.api.OperateInfoMongoService"
                  ref="operateInfoMongoService" export="hookah:5003" basicService="serviceBasicConfig">
-  </motan:service>
-  <motan:service interface="com.jusfoun.hookah.rpc.api.WXUserRecommendService"
-                 ref="wxUserRecommendService" export="hookah:5003" basicService="serviceBasicConfig">
   </motan:service>
 </beans>
