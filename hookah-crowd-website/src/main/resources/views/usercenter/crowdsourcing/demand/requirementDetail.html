@@ -42,11 +42,11 @@ var htmlPart = {
         <tr>
           <td valign="top">需求标题</td>
           <td>
-            <div class="secondPage j_title">啊手动阀手动阀</div>
+            <div class="secondPage j_title">-</div>
             <div class="crowdsourcing-user">
               <span>需求联系人</span>
-              <i class="secondPage j_username">招数君</i>
-              <i class="secondPage j_phone">13988887875</i>
+              <i class="secondPage j_username">-</i>
+              <i class="secondPage j_phone">-</i>
             </div>
           </td>
         </tr>
@@ -75,7 +75,7 @@ var htmlPart = {
         <tr>
           <td>附件</td>
           <td style="padding:0;">
-            <div class="load-file-list">
+            <div class="load-file-list j_load-file-list">
               <!--
                <dl class="load-file word">
                  <dt><a href="javascript:void(0)" title=""><img src="http://static.galaxybigdata.com/file/20170920/null/null/094044e0a950bcbb3b4c69bc3962951112fe42.jpg"></a></dt>
@@ -97,7 +97,13 @@ var htmlPart = {
           <td>交付截止日期</td>
           <td>
             <div class="secondPage j_date">----</div>
-
+            <div class="crowdsourcing-user applyDeadlineBox">
+              <span class="managedMoneySpan">报名截止日期:</span>
+              <div class="secondPage tagList ">
+                 <i class="j_applyDeadline">---</i>
+              </div>
+              <i class="managedMoneyNotice">托管金额至少赏金的30%，可以上调到100%</i>
+            </div>
           </td>
         </tr>
         <tr>
@@ -130,12 +136,57 @@ var htmlPart = {
         </ul>
         <div class="otherDetailBoxList">
           <div class="otherDetailBoxItem active">
-            至报名截止日期： 已报名 <span class="j_peopleCount">15</span>人 <br>
-            已为你筛选如下用户：<br>
-            <span class="j_companyName">*****公司</span>，信誉88分 <span class="j_SignUpTime">2017-05-28</span>报名 联系人 <span class="j_contentName">李***</span> 手机 <span class="j_contentPhone">137*********1</span>，该用户将为您提供工作成果。
+            <p class="missionResultEmpty"  style="display:none;">暂无报名信息</p>
+            <div class="missioinApply">
+              至报名截止日期： 已报名 <span class="j_peopleCount">---</span>人 <br>
+              已为你筛选如下用户：<br>
+              <span class="j_companyName">---</span>，信誉---分 <span class="j_SignUpTime"> ---</span>报名 联系人 <span class="j_contentName">---</span> 手机 <span class="j_contentPhone">---</span>，该用户将为您提供工作成果。
+            </div>
           </div>
-          <div class="otherDetailBoxItem">暂无任务成果</div>
-          <div class="otherDetailBoxItem">暂无交易说明</div>
+          <div class="otherDetailBoxItem">
+            <p class="missionResultEmpty"  style="display:none;">暂无任务成果</p>
+            <table class="missionResult myRequirement-table">
+              <tbody>
+                <tr>
+                  <td>方案标题</td>
+                  <td>
+                    <span class="missonTitle">数据商城所需数据源解决方案</span>
+                    <div class="missionStatus">验收通过，待付款</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top">方案描述</td>
+                  <td>
+                    提交的任务成果方案详细描述如下：
+                    <p class="missionResultDes">最近，日本科学家发明了一种新的光量子计算方法，通过在光路上连成一列具有时间先后的光脉冲，实现了用最小规模光电路结构有效进行大规模运算操作。从理论上来说，量子计算机的运算速度会远超现有的超级计算机，可用于高速数据库检索、开发功能性材料及药物等各领域。目前世界各国争相开发以原子、离子及超导电路为基础的各种系统通用的量子计算机。</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>方案附件</td>
+                  <td style="padding:0;">
+                    <div class="load-file-list j_missionResult-load-file-list">
+<!--
+                     <dl class="load-file word">
+                       <dt><a href="javascript:void(0)" title=""><img src="http://static.galaxybigdata.com/file/20170920/null/null/094044e0a950bcbb3b4c69bc3962951112fe42.jpg"></a></dt>
+                       <dd>
+                         <span class="overflowpoint">备注</span>
+                         <span class="overflowpoint">？？？？？</span>
+                         <div class="crowdsourcing-table-edit">
+                           <a href="#" target="_blank" class="download"><img src="/static/images/crowdsourcing/download.png" alt=""></a>
+                         </div>
+                       </dd>
+                     </dl>
+-->
+                  </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+          <div class="otherDetailBoxItem">
+            <p class="missionResultEmpty">暂无交易说明</p>
+          </div>
         </div>
       </div>
       <div>

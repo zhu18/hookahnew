@@ -11,11 +11,7 @@
 
 .lastTime{ display: inline-block; width: 100px;}
 
-.crowdsourcing-table{
-    width:100%;
-    border:1px solid #e4e4e4;
-    font-size: 14px;margin-top: 10px;
-}
+.crowdsourcing-table{ width:100%; border:1px solid #e4e4e4; font-size: 14px;margin-top: 10px; }
 .crowdsourcing-table th{ font-size: 13px; font-weight:normal; line-height:45px; border-bottom:1px solid #e4e4e4;}
 .crowdsourcing-table th:last-child{ width:260px;}
 .crowdsourcing-table tr{ text-align: center; }
@@ -99,44 +95,44 @@
 
 .crowdsourcing-table i{ font-style: normal;}
 
-.crowdsourcing-table .load-file{float:left; height:48px; width:265px; margin:12px 0 12px 12px; background:#f5f5f5; overflow:hidden;}
-.crowdsourcing-table .load-file:nth-child(n+4){ margin-top: 0;}
-.crowdsourcing-table .load-file:nth-child(3){ margin-right:0;}
-.crowdsourcing-table .load-file:nth-child(6){ margin-right:0;}
-.crowdsourcing-table .load-file dt{ position: relative;  height: 46px;; width:46px;float:left; overflow:hidden; border: 1px solid #ededed; background: #fff; line-height: 44px; text-align: center }
-.crowdsourcing-table .load-file dt a{ height:100%;width:100%; display: block; position: absolute; left: 0; top:0; z-index: 9}
-.crowdsourcing-table .load-file dd{ position: relative; float:left; width: 207px; padding-left: 10px; margin:0; font-size: 12px; color: #717171;}
-.crowdsourcing-table .load-file dd span:first-child{ line-height:48px; font-size: 13px; color:#3d4245;}
-.crowdsourcing-table .load-file dd span{ position: relative; display: block; color:#888888;   line-height: 17px;}
-.crowdsourcing-table .load-file.text dt{ border-color:#c4c4c4}
-.crowdsourcing-table .load-file.text dt:before { content: 'T'; display: block; height: 100%; width: 100%; color: #c4c4c4; font-family: Arial; font-size: 28px; text-align: center; line-height: 48px }
-.crowdsourcing-table .load-file.text dt img{ opacity:0;}
+.load-file{float:left; height:48px; width:265px; margin:12px 0 12px 12px; background:#f5f5f5; overflow:hidden;}
+.load-file:nth-child(n+4){ margin-top: 0;}
+.load-file:nth-child(3){ margin-right:0;}
+.load-file:nth-child(6){ margin-right:0;}
+.load-file dt{ position: relative;  height: 46px;; width:46px;float:left; overflow:hidden; border: 1px solid #ededed; background: #fff; line-height: 44px; text-align: center }
+.load-file dt a{ height:100%;width:100%; display: block; position: absolute; left: 0; top:0; z-index: 9}
+.load-file dd{ position: relative; float:left; width: 207px; padding-left: 10px; margin:0; font-size: 12px; color: #717171;}
+.load-file dd span:first-child{ line-height:48px; font-size: 13px; color:#3d4245;}
+.load-file dd span{ position: relative; display: block; color:#888888;   line-height: 17px;}
+.load-file.text dt{ border-color:#c4c4c4}
+.load-file.text dt:before { content: 'T'; display: block; height: 100%; width: 100%; color: #c4c4c4; font-family: Arial; font-size: 28px; text-align: center; line-height: 48px }
+.load-file.text dt img{ opacity:0;}
 
-.crowdsourcing-table .load-file.word dt{ border-color:#4fa5f1}
-.crowdsourcing-table .load-file.word dt:before { content: 'W'; display: block; height: 100%; width: 100%; color: #4fa5f1; font-family: Arial; font-size: 28px; text-align: center; line-height: 48px }
-.crowdsourcing-table .load-file.word dt img{ opacity:0;}
+.load-file.word dt{ border-color:#4fa5f1}
+.load-file.word dt:before { content: 'W'; display: block; height: 100%; width: 100%; color: #4fa5f1; font-family: Arial; font-size: 28px; text-align: center; line-height: 48px }
+.load-file.word dt img{ opacity:0;}
 
-.crowdsourcing-table .load-file.ppt dt{ border-color:#fc5143}
-.crowdsourcing-table .load-file.ppt dt img{ opacity:0;}
+.load-file.ppt dt{ border-color:#fc5143}
+.load-file.ppt dt img{ opacity:0;}
 
-.crowdsourcing-table .load-file.ppt dt:before{ content: 'P'; display:block;height:100%;width:100%; color:#fc5143; font-family:Arial; font-size: 28px; text-align: center;line-height: 48px}
-.crowdsourcing-table .load-file.excel dt{ border-color:#6ab909}
-.crowdsourcing-table .load-file.excel dt:before { content: 'X'; display: block; height: 100%; width: 100%; color: #6ab909; font-family: Arial; font-size: 28px; text-align: center; line-height: 48px }
-.crowdsourcing-table .load-file.excel dt img{ opacity:0;}
+.load-file.ppt dt:before{ content: 'P'; display:block;height:100%;width:100%; color:#fc5143; font-family:Arial; font-size: 28px; text-align: center;line-height: 48px}
+.load-file.excel dt{ border-color:#6ab909}
+.load-file.excel dt:before { content: 'X'; display: block; height: 100%; width: 100%; color: #6ab909; font-family: Arial; font-size: 28px; text-align: center; line-height: 48px }
+.load-file.excel dt img{ opacity:0;}
 
-.crowdsourcing-table .load-file.img dt{ border-color:#ededed}
-.crowdsourcing-table .load-file.img dt img{position: absolute; left: 0; z-index: 2; max-width: 100px;}
-.crowdsourcing-table .load-file.img dt:before{ content: 'img'; display: none; position: absolute;left:0; z-index:2; height:100%;width:100%; color:#c4c4c4; font-family:Arial; font-size: 14px; text-align: center;line-height: 46px}
+.load-file.img dt{ border-color:#ededed}
+.load-file.img dt img{position: absolute; left: 0; z-index: 2; max-width: 100px;}
+.load-file.img dt:before{ content: 'img'; display: none; position: absolute;left:0; z-index:2; height:100%;width:100%; color:#c4c4c4; font-family:Arial; font-size: 14px; text-align: center;line-height: 46px}
 
-.crowdsourcing-table .load-file.zip dt{ border-color:#4fa5f1}
-.crowdsourcing-table .load-file.zip dt img{ position: relative; z-index:2;}
-.crowdsourcing-table .load-file.zip dt:before{ content: ''; background: url("../../images/crowdsourcing/zipbg.gif") 0 0 no-repeat; position: absolute;left:0; z-index:2; display:block;height:100%;width:100%; color:#c4c4c4; font-family:Arial; font-size: 14px; text-align: center;line-height: 46px}
-.crowdsourcing-table .load-file.zip dt img{ opacity:0;}
+.load-file.zip dt{ border-color:#4fa5f1}
+.load-file.zip dt img{ position: relative; z-index:2;}
+.load-file.zip dt:before{ content: ''; background: url("../../images/crowdsourcing/zipbg.gif") 0 0 no-repeat; position: absolute;left:0; z-index:2; display:block;height:100%;width:100%; color:#c4c4c4; font-family:Arial; font-size: 14px; text-align: center;line-height: 46px}
+.load-file.zip dt img{ opacity:0;}
 
-.crowdsourcing-table .load-file.others dt{ border-color:#d14233}
-.crowdsourcing-table .load-file.others dt img{ position: relative; z-index:2;}
-.crowdsourcing-table .load-file.others dt:before{ content: '?'; position: absolute;left:0; z-index:3; display:block;height:100%;width:100%; color:#fed9d6; font-family:Arial; font-size: 44px; text-align: center;line-height: 46px}
-.crowdsourcing-table .load-file.others dt img{ opacity:0;}
+.load-file.others dt{ border-color:#d14233}
+.load-file.others dt img{ position: relative; z-index:2;}
+.load-file.others dt:before{ content: '?'; position: absolute;left:0; z-index:3; display:block;height:100%;width:100%; color:#fed9d6; font-family:Arial; font-size: 44px; text-align: center;line-height: 46px}
+.load-file.others dt img{ opacity:0;}
 
 .crowdsourcing-table-edit {display: none; opacity:0; position: absolute;left:0;top:5px; height:48px;width:100%; text-align: right;font-size: 0; line-height:48px; }
 .crowdsourcing-table-edit:after{ content: ''; position: absolute;left:0;top:0;height:100%;width:100%; background: #000; opacity:.7;}
@@ -144,12 +140,12 @@
 .crowdsourcing-table-edit a:last-child{margin-right: 12px;}
 
 
-.crowdsourcing-table .load-file.word .view{ display: none;}
-.crowdsourcing-table .load-file.ppt .view{ display: none;}
-.crowdsourcing-table .load-file.text .view{ display: none;}
-.crowdsourcing-table .load-file.excel .view{ display: none;}
-.crowdsourcing-table .load-file.others .view{ display: none;}
-.crowdsourcing-table .load-file.zip .view{ display: none;}
+.load-file.word .view{ display: none;}
+.load-file.ppt .view{ display: none;}
+.load-file.text .view{ display: none;}
+.load-file.excel .view{ display: none;}
+.load-file.others .view{ display: none;}
+.load-file.zip .view{ display: none;}
 
 .crowdsourcing-user { position: absolute; left: 470px;top:0;}
 .crowdsourcing-user span{ display: inline-block; border-left: 1px solid #e4e4e4 ; width: 80px; text-align: right; padding-right:15px;border-right: 1px solid #e4e4e4 ;background: #f5f5f5;}
@@ -169,20 +165,28 @@
 .type-span.active{background-color: #6084a2; color: #fff;}
 
 .secondPage{ display: none}
-
 .tagList{ display: inline-block}
 
 
-
+.applyDeadlineBox{ display: none;}
 
 
 .otherDetailBox{display: none; margin-top: 10px; }
-.otherDetailBoxNav{overflow: hidden; border-top: 2px solid #2cabf8; border-bottom: 1px solid #e4e4e4;}
+.otherDetailBoxNav{overflow: hidden;  border: 1px solid #e4e4e4;border-top: 2px solid #2cabf8;}
 .otherDetailBoxNav li{ float: left;width: 139px; height: 40px; text-align: center; line-height: 40px; color: #848484; border-right: 1px solid #e4e4e4; font-size: 16px; cursor: pointer;}
 .otherDetailBoxNav li.active{background-color: #2cabf8; color: #fff; font-weight: bold;}
 .otherDetailBoxList{border: 1px solid #e4e4e4;border-top: 0;}
-.otherDetailBoxItem{ display:none;padding: 15px; font-size: 14px;}
+.otherDetailBoxItem{ display:none;font-size: 14px;}
 .otherDetailBoxItem.active{ display: block;}
+
+.missionResult  { width: 100%;}
+.missionResult tr { line-height:47px;background-color: #fff; border-bottom: 1px solid #e4e4e4;}
+.missionResult tr .missionResultDes{ line-height: 22px;  padding-bottom: 15px;}
+
+.missonTitle{ font-size:16px;}
+.missionStatus{ position: absolute; top:0; right:0; padding-right:15px;  display: none;}
+.missionResultEmpty{ padding-left:30px; line-height: 60px;}
+.missioinApply{ padding: 15px;}
 
 
 

@@ -302,7 +302,7 @@
             this.width = this.settings.width || 'auto' //this.dialogContainer.width();
             this.dialogContainer.append(this.dailogContent).show().css({
                 height: this.height,
-                width: this.width
+                'min-width': this.settings.width
             });
             if (this.settings.beforeShow) {
                 this.settings.beforeShow.call(this, this.dialogContainer);
@@ -337,13 +337,15 @@
                 }
                 var clientHeight = $(window).height();
                 var clientWidth = $(window).width();
-                var ml = this.width / 2;
+                // var ml = this.width / 2;
+                var ml = this.dailogContent[0].clientWidth / 2;
                 var mt = this.height / 2;
                 var left = clientWidth / 2 - ml;
                 var top = clientHeight / 2 - mt;
                 left = Math.floor(Math.max(0, left));
                 top = Math.floor(Math.max(0, top));
-                // console.log("ch:"+clientHeight,"cw:"+clientWidth,"left:"+left,"top:"+top,"w:"+this.width,"h:"+this.height);
+                        console.log(this);
+                        console.log("ch:"+clientHeight,"cw:"+clientWidth,"left:"+left,"top:"+top,"w:"+this.width,"h:"+this.height);
                 var position = 'absolute';
                 if (_this.settings.fixed) {
                     position = 'fixed';
