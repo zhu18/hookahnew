@@ -41,6 +41,8 @@ function showDetail() { //修改，从我的发布点击'查看'调转过来的
 }
 
 
+
+
 function renderPage(data) {
   let insertRequirementsData = data;
   $('.j_title').html(insertRequirementsData.zbRequirement.title);
@@ -87,22 +89,8 @@ function renderPage(data) {
     }
   }
 
-  let tempHtml = '';
-  for (let c = 0; c < data.zbRequirementFiles.length; c++) { //渲染附件
-
-    let className = fileTypeClassName(data.zbRequirementFiles[c].fileName);
-    tempHtml += '\
-        <dl fileName="' + data.zbRequirementFiles[c].fileName + '" filePath="' + data.zbRequirementFiles[c].filePath + '" class="load-file ' + className + '">\
-          <dt><a href="javascript:void(0)" title=""><img src="' + data.zbRequirementFiles[c].filePath + '"></a></dt>\
-          <dd>\
-          <span class="overflowpoint">' + data.zbRequirementFiles[c].fileName + '</span>\
-          <div class="crowdsourcing-table-edit">\
-          <a href="' + data.zbRequirementFiles[c].filePath + '" target="_blank" class="download"><img src="/static/images/crowdsourcing/download.png" alt=""></a>\
-          </div>\
-          </dd>\
-        </dl>';
-  }
-  $('.load-file-list').append(tempHtml);
+  let loadfileHtml=renderLoadFile(data.zbRequirementFiles);
+  $('.j_load-file-list').append(loadfileHtml);
 
 
   let domModel = $('.crowdsourcing-status span');
@@ -119,11 +107,12 @@ function renderPage(data) {
       $('.detailMoneyBox').show();
       $('.release-first-btnbox div').append('<a href="' + host.website + '/payAccount/userRecharge?money=' + insertRequirementsData.managedMoney / 10000 + '">去托管赏金</a>');
       break;
-    case 7:
+    case 7: //二次托管
       domModel.html('报名结束<br>待托管赏金');
       $('.managedMoneySpanText').html('已托管比例');
       $('.detailMoneyBox,.otherDetailBox').show();
       $('.managedMoneyNotice').hide();
+      $('.moneyAdd,.moneySub').hide();//百分比
 
       $('.j_peopleCount').html(data.count);
 
@@ -131,11 +120,29 @@ function renderPage(data) {
       $('.j_SignUpTime').html(data.applyTime);
       $('.j_contentName').html(data.user.contactName);
       $('.j_contentPhone').html(data.user.contactPhone);
-      $('.release-first-btnbox div').append('<a href="' + host.website + '/payAccount/userRecharge?money=' + insertRequirementsData.managedMoney / 10000 + '">去托管赏金70%</a>');
+      $('.release-first-btnbox div').append('<a class="j_goTwiceMoney" href="' + host.website + '/payAccount/userRecharge?money=' + insertRequirementsData.zbRequirement.rewardMoney*(100-insertRequirementsData.zbRequirement.trusteePercent)/100/100 + '">去托管剩余'+(100-insertRequirementsData.zbRequirement.trusteePercent)+'% 赏金</a>');
+      $('.moneyHow').html(insertRequirementsData.zbRequirement.trusteePercent);
 
       break;
-    case 8:
+    case 8: //工作中
       domModel.html('工作中');
+      $('.detailMoneyBox,.otherDetailBox,.applyDeadlineBox').show();//显示下方tab
+      $('.managedMoneyNotice,.moneyAdd,.moneySub').hide();//隐藏托管30%提示 隐藏调整托管比例
+      $('.missionResultEmpty').eq(0).show().next().hide();//任务报名内容置空
+      $('.otherDetailBoxNav li').removeClass('active').eq(1).addClass('active').parent().next().children().removeClass('active').eq(1).addClass('active');//选中第二个tab 显示
+
+
+      $('.j_applyDeadline').html(insertRequirementsData.zbRequirement.applyDeadline);
+      $('.missonTitle').html(insertRequirementsData.zbProgram.title);
+      $('.missionStatus').html(insertRequirementsData.zbProgram.checkAdvice);
+      $('.missionResultDes').html(insertRequirementsData.zbProgram.content);
+
+
+
+      let missionResultLoadfileHtml=renderLoadFile(data.programFiles);
+      $('.j_missionResult-load-file-list').append(missionResultLoadfileHtml);
+
+
       break;
     case 10:
       domModel.html('待验收');//TODO:验收要根据成果验收的三个状态显示
@@ -153,10 +160,9 @@ function renderPage(data) {
       domModel.html('待退款');
       break;
   }
-
-
   rewardMoney = insertRequirementsData.zbRequirement.rewardMoney;
   $('.moneyManageMoeny').html(rewardMoney * $('.moneyHow').text() / 10000);
+
 }
 
 
@@ -204,6 +210,25 @@ $('.tagNotice').on('mouseover', function () { //鼠标离开描述显示工具�
   $(this).next().hide();
 });
 
+
+function renderLoadFile(loadFileList) { //渲染附件列表
+  let tempHtml = '';
+  for (let c = 0; c < loadFileList.length; c++) { //渲染附件
+
+    let className = fileTypeClassName(loadFileList[c].filePath);
+    tempHtml += '\
+        <dl fileName="' + loadFileList[c].fileName + '" filePath="' + loadFileList[c].filePath + '" class="load-file ' + className + '">\
+          <dt><a href="javascript:void(0)" title=""><img src="' + loadFileList[c].filePath + '"></a></dt>\
+          <dd>\
+          <span class="overflowpoint">' + loadFileList[c].fileName + '</span>\
+          <div class="crowdsourcing-table-edit">\
+          <a href="' + loadFileList[c].filePath + '" target="_blank" class="download"><img src="/static/images/crowdsourcing/download.png" alt=""></a>\
+          </div>\
+          </dd>\
+        </dl>';
+  }
+  return tempHtml;
+}
 
 function fileTypeClassName(fileName) { //返回class
   let fileTypeReg = /[^.]*$/;
