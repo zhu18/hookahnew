@@ -38,7 +38,7 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
   data:
     mongodb:
-      uri:  mongodb://192.168.15.175:27017/hookah
+      uri:  mongodb://192.168.15.90:27017/bdgStore
   rabbitmq:
     addresses: 192.168.15.174:5672
     username: root
@@ -92,7 +92,7 @@ myconf:
   redis:
     ipPort: 192.168.15.174:7000,192.168.15.174:7001,192.168.15.174:7002
   consul:
-    ipPort: 192.168.15.174:8500
+    ipPort: 127.0.0.1:8500
   es:
     ipPort: 192.168.15.175:9300
 debug: true

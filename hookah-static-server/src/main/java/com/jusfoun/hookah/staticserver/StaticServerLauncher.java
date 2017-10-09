@@ -26,6 +26,7 @@ public class StaticServerLauncher {
 
     public static void main(String[] args) {
         ApplicationContext ctx = SpringApplication.run(StaticServerLauncher.class,args);
+        System.out.println("--------------> Static Server Start <---------------");
     }
 
     @PostConstruct

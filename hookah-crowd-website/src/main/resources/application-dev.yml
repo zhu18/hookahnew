@@ -38,7 +38,7 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
   data:
     mongodb:
-      uri:  mongodb://192.168.15.175:27017/hookah
+      uri:  mongodb://192.168.15.90:27017/bdgStore
   rabbitmq:
     addresses: 192.168.15.174:5672
     username: root
@@ -59,7 +59,6 @@ spring:
               enable: true
             socketFactory:
               fallback: false
-        dialect : org.hibernate.dialect.MySQL5Dialect
   mvc:
     static-path-pattern: /static/**
 myconf:
@@ -97,4 +96,3 @@ myconf:
   es:
     ipPort: 192.168.15.175:9300
 debug: true
-

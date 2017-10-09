@@ -18,7 +18,7 @@ public class MgZbProvider extends GenericModel {
 
     private String providerDesc;                          //服务商介绍
 
-    private Integer status;                             //认证状态 0.未认证 1.审核中 2.已认证 3.认证失败
+    private Integer status = 1;                           //认证状态 0.未认证 1.审核中 2.已认证 3.认证失败
 
     private List<String> specialSkills;                 //擅长领域
 
@@ -125,7 +125,8 @@ public class MgZbProvider extends GenericModel {
         private String startTime;             //开始花间
         private String endTime;               //结束时间
         private String position;            //职位
-        private List<String> certPath;      //证明材料
+//        private List<String> certPath;      //证明材料
+        private String certPath;      //证明材料
 
         public String getSn() {
             return sn;
@@ -175,11 +176,11 @@ public class MgZbProvider extends GenericModel {
             this.position = position;
         }
 
-        public List<String> getCertPath() {
+        public String getCertPath() {
             return certPath;
         }
 
-        public void setCertPath(List<String> certPath) {
+        public void setCertPath(String certPath) {
             this.certPath = certPath;
         }
     }
@@ -258,7 +259,8 @@ public class MgZbProvider extends GenericModel {
         private String startTime;     //开始时间
         private String endTime;       //结束时间
         private String caseDesc;    //解决方案
-        private List<String> certPath;//证明材料
+//        private List<String> certPath;//证明材料
+        private String certPath;//证明材料
 
         public String getSn() {
             return sn;
@@ -300,23 +302,24 @@ public class MgZbProvider extends GenericModel {
             this.caseDesc = caseDesc;
         }
 
-        public List<String> getCertPath() {
+        public String getCertPath() {
             return certPath;
         }
-        public void setCertPath(List<String> certPath) {
+
+        public void setCertPath(String certPath) {
             this.certPath = certPath;
         }
-
     }
 
     public static class SoftWarePower implements Serializable {
 
         private String sn;
         private String softWareName;    //  软件名称
-        private String publicTime;        //  首次发表日期
+        private String publicTime;      //  首次发表日期
         private String registerNum;     //  登记号
         private String purpose;         //  软件用途
-        private List<String> certPath;  //  证明材料
+        private String certPath;        //  证明材料
+//        private List<String> certPath;  //  证明材料
 
         public String getSn() {
             return sn;
@@ -358,13 +361,21 @@ public class MgZbProvider extends GenericModel {
             this.purpose = purpose;
         }
 
-        public List<String> getCertPath() {
+//        public List<String> getCertPath() {
+//            return certPath;
+//        }
+//        public void setCertPath(List<String> certPath) {
+//            this.certPath = certPath;
+//        }
+
+
+        public String getCertPath() {
             return certPath;
         }
-        public void setCertPath(List<String> certPath) {
+
+        public void setCertPath(String certPath) {
             this.certPath = certPath;
         }
-
     }
 
     public static class InventionPatent implements Serializable {
@@ -374,7 +385,8 @@ public class MgZbProvider extends GenericModel {
         private String PatentNum;       //  专利号
         private String applyTime;         //  申请日期
         private String PatentDesc;     //   专利概述
-        private List<String> certPath;  //  证明材料
+        private String certPath;  //  证明材料
+//        private List<String> certPath;  //  证明材料
 
         public String getSn() {
             return sn;
@@ -416,13 +428,20 @@ public class MgZbProvider extends GenericModel {
             PatentDesc = patentDesc;
         }
 
-        public List<String> getCertPath() {
+//        public List<String> getCertPath() {
+//            return certPath;
+//        }
+//        public void setCertPath(List<String> certPath) {
+//            this.certPath = certPath;
+//        }
+
+        public String getCertPath() {
             return certPath;
         }
-        public void setCertPath(List<String> certPath) {
+
+        public void setCertPath(String certPath) {
             this.certPath = certPath;
         }
-
     }
 
     public String getUserId() {

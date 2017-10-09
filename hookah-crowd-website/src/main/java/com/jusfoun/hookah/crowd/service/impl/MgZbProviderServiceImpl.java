@@ -20,6 +20,7 @@ import com.jusfoun.hookah.crowd.service.MgZbProviderService;
 import com.jusfoun.hookah.crowd.service.ZbRequireService;
 import com.mongodb.BasicDBObject;
 import com.mongodb.WriteResult;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -244,130 +245,158 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
 
         try {
 
-            if(vo.getOptType() == null){
-                return ReturnData.error("参数不能为空！^_^");
+            if(!StringUtils.isNotBlank(vo.getUserId())){
+                return ReturnData.error("未获取有效的用户信息！^_^");
             }
-            if(vo.getOptType().equals(1)){
-                Query query = new Query(Criteria.where("_id").is(vo.getUserId()));
-                Update update = new Update();
-                if(vo.getEducationsExpList() != null && vo.getEducationsExpList().size() > 0){
-                    update.addToSet("educationsExpList", vo.getEducationsExpList().get(0));
-                }
 
-                if(vo.getWorksExpList() != null && vo.getWorksExpList().size() > 0){
-                    update.addToSet("worksExpList", vo.getWorksExpList().get(0));
-                }
+            MgZbProvider mgZbProvider = mongoTemplate.findById(vo.getUserId(), MgZbProvider.class);
+            if(mgZbProvider == null){
 
-                if(vo.getProjectsExpList() != null && vo.getProjectsExpList().size() > 0){
-                    update.addToSet("projectsExpList", vo.getProjectsExpList().get(0));
-                }
+                MgZbProvider mzp = new MgZbProvider();
+                BeanUtils.copyProperties(vo, mzp);
+                mzp.setAddTime(new Date());
+                mzp.setUpdateTime(new Date());
+                mongoTemplate.insert(mzp);
+                return ReturnData.success("认证信息添加成功");
+            }else{
 
-                if(vo.getAppCaseList() != null && vo.getAppCaseList().size() > 0){
-                    update.addToSet("appCaseList", vo.getAppCaseList().get(0));
-                }
+                if(vo.getOptType() == null){ //  插入1删除2修改3
 
-                if(vo.getSwpList() != null && vo.getSwpList().size() > 0){
-                    update.addToSet("swpList", vo.getSwpList().get(0));
-                }
+                    Query query = new Query(Criteria.where("_id").is(vo.getUserId()));
+                    Update update = new Update();
 
-                if(vo.getInPatentsList() != null && vo.getInPatentsList().size() > 0){
-                    update.addToSet("inPatentsList", vo.getInPatentsList().get(0));
-                }
+                    if(StringUtils.isNotBlank(vo.getProviderDesc())){
+                        update.set("providerDesc", vo.getProviderDesc());
+                    }
 
-                update.set("updateTime", new Date());
+                    if(vo.getSpecialSkills() != null && vo.getSpecialSkills().size() > 0){
+                        update.addToSet("specialSkills").each(vo.getSpecialSkills());
+                    }
 
-                update.set("status", ZbContants.Provider_Auth_Status.AUTH_CHECKING.code);
+                    if(vo.getEducationsExpList() != null && vo.getEducationsExpList().size() > 0){
+                        update.addToSet("educationsExpList", vo.getEducationsExpList().get(0));
+                    }
 
-                mongoTemplate.upsert(query, update, MgZbProvider.class);
-            }else if(vo.getOptType().equals(2)){  //插入1删除2修改3
-                Query query = new Query(Criteria.where("_id").is(vo.getUserId()));
-                Update update = new Update();
-                if(!StringUtils.isNotBlank(vo.getOptArrAySn())){
-                    return ReturnData.error("认证编号参数不能为空！^_^");
-                }
-                String optSn = vo.getOptArrAySn();
-                switch (vo.getOptAuthType()){
-                    case "1":
-                        update.pull("educationsExpList", new BasicDBObject("sn", optSn));
-                        break;
-                    case "2":
-                        update.pull("worksExpList", new BasicDBObject("sn", optSn));
-                        break;
-                    case "3":
-                        update.pull("projectsExpList", new BasicDBObject("sn", optSn));
-                        break;
-                    case "4":
-                        update.pull("appCaseList", new BasicDBObject("sn", optSn));
-                        break;
-                    case "5":
-                        update.pull("swpList", new BasicDBObject("sn", optSn));
-                        break;
-                    default:
-                        update.pull("inPatentsList", new BasicDBObject("sn", optSn));
-                        break;
-                }
-                mongoTemplate.updateFirst(query, update, MgZbProvider.class);
-            }else if(vo.getOptType().equals(3)){ //插入1删除2修改3
-                Query query = new Query(Criteria.where("_id").is(vo.getUserId()));
-                Update del = new Update();
-                Update add = new Update();
-                switch (vo.getOptAuthType()){
-                    case "1":
-                        if(vo.getEducationsExpList() == null || vo.getEducationsExpList().size() < 1){
-                            return ReturnData.error("教育经历认证信息不能为空！^_^");
+                    if(vo.getWorksExpList() != null && vo.getWorksExpList().size() > 0){
+                        update.addToSet("worksExpList", vo.getWorksExpList().get(0));
+                    }
+
+                    if(vo.getProjectsExpList() != null && vo.getProjectsExpList().size() > 0){
+                        update.addToSet("projectsExpList", vo.getProjectsExpList().get(0));
+                    }
+
+                    if(vo.getAppCaseList() != null && vo.getAppCaseList().size() > 0){
+                        update.addToSet("appCaseList", vo.getAppCaseList().get(0));
+                    }
+
+                    if(vo.getSwpList() != null && vo.getSwpList().size() > 0){
+                        update.addToSet("swpList", vo.getSwpList().get(0));
+                    }
+
+                    if(vo.getInPatentsList() != null && vo.getInPatentsList().size() > 0){
+                        update.addToSet("inPatentsList", vo.getInPatentsList().get(0));
+                    }
+
+                    update.set("updateTime", new Date());
+
+                    update.set("status", ZbContants.Provider_Auth_Status.AUTH_CHECKING.code);
+
+                    mongoTemplate.upsert(query, update, MgZbProvider.class);
+                }else{
+
+                    if(vo.getOptType().equals(2)){  //插入1删除2修改3
+                        Query query = new Query(Criteria.where("_id").is(vo.getUserId()));
+                        Update update = new Update();
+                        if(!StringUtils.isNotBlank(vo.getOptArrAySn())){
+                            return ReturnData.error("认证编号参数不能为空！^_^");
                         }
-                        //先删除再添加
-                        del.pull("educationsExpList", new BasicDBObject("sn", vo.getEducationsExpList().get(0).getSn()));
-                        mongoTemplate.updateMulti(query, del, MgZbProvider.class);
-                        add.addToSet("educationsExpList", vo.getEducationsExpList().get(0));
-                        break;
-                    case "2":
-                        if(vo.getWorksExpList() == null || vo.getWorksExpList().size() < 1){
-                            return ReturnData.error("工作经历认证信息不能为空！^_^");
+                        String optSn = vo.getOptArrAySn();
+                        switch (vo.getOptAuthType()){
+                            case "1":
+                                update.pull("educationsExpList", new BasicDBObject("sn", optSn));
+                                break;
+                            case "2":
+                                update.pull("worksExpList", new BasicDBObject("sn", optSn));
+                                break;
+                            case "3":
+                                update.pull("projectsExpList", new BasicDBObject("sn", optSn));
+                                break;
+                            case "4":
+                                update.pull("appCaseList", new BasicDBObject("sn", optSn));
+                                break;
+                            case "5":
+                                update.pull("swpList", new BasicDBObject("sn", optSn));
+                                break;
+                            default:
+                                update.pull("inPatentsList", new BasicDBObject("sn", optSn));
+                                break;
                         }
-                        del.pull("worksExpList", new BasicDBObject("sn", vo.getWorksExpList().get(0).getSn()));
-                        mongoTemplate.updateMulti(query, del, MgZbProvider.class);
-                        add.addToSet("worksExpList", vo.getWorksExpList().get(0));
-                        break;
-                    case "3":
-                        if(vo.getProjectsExpList() == null || vo.getProjectsExpList().size() < 1){
-                            return ReturnData.error("项目经历认证信息不能为空！^_^");
+                        mongoTemplate.updateFirst(query, update, MgZbProvider.class);
+                    }else if(vo.getOptType().equals(3)){ //插入1删除2修改3
+                        Query query = new Query(Criteria.where("_id").is(vo.getUserId()));
+                        Update del = new Update();
+                        Update add = new Update();
+                        switch (vo.getOptAuthType()){
+                            case "1":
+                                if(vo.getEducationsExpList() == null || vo.getEducationsExpList().size() < 1){
+                                    return ReturnData.error("教育经历认证信息不能为空！^_^");
+                                }
+                                //先删除再添加
+                                del.pull("educationsExpList", new BasicDBObject("sn", vo.getEducationsExpList().get(0).getSn()));
+                                mongoTemplate.updateMulti(query, del, MgZbProvider.class);
+                                add.addToSet("educationsExpList", vo.getEducationsExpList().get(0));
+                                break;
+                            case "2":
+                                if(vo.getWorksExpList() == null || vo.getWorksExpList().size() < 1){
+                                    return ReturnData.error("工作经历认证信息不能为空！^_^");
+                                }
+                                del.pull("worksExpList", new BasicDBObject("sn", vo.getWorksExpList().get(0).getSn()));
+                                mongoTemplate.updateMulti(query, del, MgZbProvider.class);
+                                add.addToSet("worksExpList", vo.getWorksExpList().get(0));
+                                break;
+                            case "3":
+                                if(vo.getProjectsExpList() == null || vo.getProjectsExpList().size() < 1){
+                                    return ReturnData.error("项目经历认证信息不能为空！^_^");
+                                }
+                                del.pull("projectsExpList", new BasicDBObject("sn", vo.getProjectsExpList().get(0).getSn()));
+                                mongoTemplate.updateMulti(query, del, MgZbProvider.class);
+                                add.addToSet("projectsExpList", vo.getProjectsExpList().get(0));
+                                break;
+                            case "4":
+                                if(vo.getAppCaseList() == null || vo.getAppCaseList().size() < 1){
+                                    return ReturnData.error("应用案例认证信息不能为空！^_^");
+                                }
+                                del.pull("appCaseList", new BasicDBObject("sn", vo.getAppCaseList().get(0).getSn()));
+                                mongoTemplate.updateMulti(query, del, MgZbProvider.class);
+                                add.addToSet("appCaseList", vo.getAppCaseList().get(0));
+                                break;
+                            case "5":
+                                if(vo.getSwpList() == null || vo.getSwpList().size() < 1){
+                                    return ReturnData.error("软件著作权认证信息不能为空！^_^");
+                                }
+                                del.pull("swpList", new BasicDBObject("sn", vo.getSwpList().get(0).getSn()));
+                                mongoTemplate.updateMulti(query, del, MgZbProvider.class);
+                                add.addToSet("swpList", vo.getSwpList().get(0));
+                                break;
+                            default:
+                                if(vo.getInPatentsList() == null || vo.getInPatentsList().size() < 1){
+                                    return ReturnData.error("发明专利认证信息不能为空！^_^");
+                                }
+                                del.pull("inPatentsList", new BasicDBObject("sn", vo.getInPatentsList().get(0).getSn()));
+                                mongoTemplate.updateMulti(query, del, MgZbProvider.class);
+                                add.addToSet("inPatentsList", vo.getInPatentsList().get(0));
+                                break;
                         }
-                        del.pull("projectsExpList", new BasicDBObject("sn", vo.getProjectsExpList().get(0).getSn()));
-                        mongoTemplate.updateMulti(query, del, MgZbProvider.class);
-                        add.addToSet("projectsExpList", vo.getProjectsExpList().get(0));
-                        break;
-                    case "4":
-                        if(vo.getAppCaseList() == null || vo.getAppCaseList().size() < 1){
-                            return ReturnData.error("应用案例认证信息不能为空！^_^");
-                        }
-                        del.pull("appCaseList", new BasicDBObject("sn", vo.getAppCaseList().get(0).getSn()));
-                        mongoTemplate.updateMulti(query, del, MgZbProvider.class);
-                        add.addToSet("appCaseList", vo.getAppCaseList().get(0));
-                        break;
-                    case "5":
-                        if(vo.getSwpList() == null || vo.getSwpList().size() < 1){
-                            return ReturnData.error("软件著作权认证信息不能为空！^_^");
-                        }
-                        del.pull("swpList", new BasicDBObject("sn", vo.getSwpList().get(0).getSn()));
-                        mongoTemplate.updateMulti(query, del, MgZbProvider.class);
-                        add.addToSet("swpList", vo.getSwpList().get(0));
-                        break;
-                    default:
-                        if(vo.getInPatentsList() == null || vo.getInPatentsList().size() < 1){
-                            return ReturnData.error("发明专利认证信息不能为空！^_^");
-                        }
-                        del.pull("inPatentsList", new BasicDBObject("sn", vo.getInPatentsList().get(0).getSn()));
-                        mongoTemplate.updateMulti(query, del, MgZbProvider.class);
-                        add.addToSet("inPatentsList", vo.getInPatentsList().get(0));
-                        break;
+                        mongoTemplate.upsert(query, add, MgZbProvider.class);
+                    }else{
+                        return ReturnData.error("操作类型有误！^_^");
+                    }
                 }
-                mongoTemplate.upsert(query, add, MgZbProvider.class);
             }
-            return ReturnData.success();
+            return ReturnData.success("认证信息操作成功！^_^");
         }catch (Exception e){
-            logger.error("认证信息操作失败", e);
-            return ReturnData.error("认证信息操作失败");
+            logger.error("认证信息操作失败！^_^", e);
+            return ReturnData.error("认证信息操作失败！^_^");
         }
     }
 

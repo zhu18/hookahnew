@@ -9,9 +9,9 @@ server:
 spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.15.175:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
+    url: jdbc:mysql://192.168.15.90:3306/bdgStore?&characterEncoding=utf8&autoReconnect=true&useSSL=false
     username: root
-    password: bdgStore3306
+    password: password
     initialize: true
     type: com.alibaba.druid.pool.DruidDataSource
     # 连接池配置
@@ -38,7 +38,7 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
   data:
     mongodb:
-      uri:  mongodb://192.168.15.175:27017/hookah
+      uri:  mongodb://192.168.15.90:27017/bdgStore
   rabbitmq:
     addresses: 192.168.15.174:5672
     username: root
@@ -59,14 +59,6 @@ spring:
               enable: true
             socketFactory:
               fallback: false
-#  jpa:
-#    database: MYSQL
-#    show-sql: true
-##    hibernate:
-##      ddl-auto: create-drop
-#    properties:
-#      hibernate:
-#        dialect : org.hibernate.dialect.MySQL5Dialect
   mvc:
     static-path-pattern: /static/**
 myconf:
@@ -100,8 +92,7 @@ myconf:
   redis:
     ipPort: 192.168.15.174:7000,192.168.15.174:7001,192.168.15.174:7002
   consul:
-    ipPort: localhost:8500
-#    ipPort: 192.168.15.174:8500
+    ipPort: 127.0.0.1:8500
   es:
     ipPort: 192.168.15.175:9300
 debug: true
