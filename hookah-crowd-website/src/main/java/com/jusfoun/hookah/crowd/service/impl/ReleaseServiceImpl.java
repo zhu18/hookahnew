@@ -50,6 +50,9 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
     UserService userService;
 
     @Resource
+    ZbTrusteeRecordService zbTrusteeRecordService;
+
+    @Resource
     private ZbRequirementMapper zbRequirementMapper;
 
     @Resource
@@ -208,6 +211,9 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
             //需求附件
             zbAnnexes = zbAnnexService.selectList(filters1);
 
+            //选中人信息
+            User user = zbRequirementMapper.selectReleaseInfo(zbRequirement.getUserId());
+
             Short status = zbRequirement.getStatus();
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             if(StringUtils.isNotBlank(status.toString())){
@@ -243,7 +249,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                             ZbRequirementApply apply = zbRequireApplyService.selectOne(filters5);
                             if(apply != null){
                                 map.put("applyTime",df.format(apply.getAddTime()));
-                                User user = zbRequirementMapper.selectReleaseInfo(apply.getUserId());
+                                //User user = zbRequirementMapper.selectReleaseInfo(apply.getUserId());
                                 map.put("user",user);
                             }
                         }
@@ -256,6 +262,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                         map.put("managedMoney", managedMoney);
                         map.put("zbRequirement", zbRequirement);
                         map.put("zbRequirementFiles", zbAnnexes);
+                        map.put("user",user);
                         if(zbRequirement.getId() != null){
                             filters2.add(Condition.eq("requirementId", zbRequirement.getId()));
                             ZbProgram zbProgram = zbProgramService.selectOne(filters2);
@@ -277,6 +284,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                         map.put("managedMoney", managedMoney);
                         map.put("zbRequirement", zbRequirement);
                         map.put("zbRequirementFiles", zbAnnexes);
+                        map.put("user",user);
                         if(zbRequirement.getId() != null){
                             filters2.add(Condition.eq("requirementId", zbRequirement.getId()));
                             ZbProgram zbProgram = zbProgramService.selectOne(filters2);
@@ -395,5 +403,36 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
 
     public ReturnData updateMoneyStatus(String requireSn){
         return ReturnData.success();
+    }
+
+
+    public String getManagedMoney(Long requirementId){
+        List<Condition> filter = new ArrayList<>();
+        filter.add(Condition.eq("id",requirementId));
+        ZbRequirement zbRequirement = zbRequireService.selectOne(filter);
+        if(zbRequirement != null){
+            ZbTrusteeRecord zbTrusteeRecord = new ZbTrusteeRecord();
+            zbTrusteeRecord.setUserId(zbRequirement.getUserId());
+            zbTrusteeRecord.setRequirementId(requirementId);
+            zbTrusteeRecord.setRewardMoney(zbRequirement.getRewardMoney());
+            zbTrusteeRecord.setTrusteePercent(zbRequirement.getTrusteePercent());
+            if(zbRequirement.getStatus().equals(ZbContants.Zb_Require_Status.WAIT_TG.getCode())){
+                //第一次托管
+                zbTrusteeRecord.setTrusteeNum(1);
+            }else if (zbRequirement.getStatus().equals(ZbContants.Zb_Require_Status.WAIT_TWO_TG.getCode())){
+                //第二次托管
+                zbTrusteeRecord.setTrusteeNum(2);
+            }
+            zbTrusteeRecord.setSerialNo(CommonUtils.getRequireSn("ZB","ZFB"));
+            zbTrusteeRecord.setStatus(ZbContants.Trustee_Record_Status.RECORD_INITIAL.getCode());
+            zbTrusteeRecord.setActualMoney(zbRequirement.getRewardMoney() * zbRequirement.getTrusteePercent());//本次托管金额除以10000
+            zbTrusteeRecord.setAddTime(new Date());
+            zbTrusteeRecordService.insert(zbTrusteeRecord);
+        }
+        List<Condition> filter1 = new ArrayList<>();
+        filter1.add(Condition.eq("requirementId",zbRequirement.getId()));
+        ZbTrusteeRecord zbTrusteeRecord = zbTrusteeRecordService.selectOne(filter1);
+        String url= "http://www.galaxybigdata.com/pay/aliPay?orderSn="+ zbTrusteeRecord.getSerialNo();
+        return url;
     }
 }

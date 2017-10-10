@@ -133,4 +133,25 @@ public class ZbContants {
         }
     }
 
+
+    /**
+     * 托管赏金流水状态
+     * 0.初始 1.成功，2.失败
+     */
+    public enum Trustee_Record_Status {
+
+        RECORD_INITIAL(Short.valueOf("0")),
+        RECORD_SUCCESS(Short.valueOf("1")),
+        RECORD_FAIL(Short.valueOf("2"));
+
+        public short code;
+
+        Trustee_Record_Status(short code) {
+            this.code = code;
+        }
+
+        public short getCode() {
+            return code;
+        }
+    }
 }

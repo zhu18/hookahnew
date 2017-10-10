@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.crowd.controller;
 
 import com.jusfoun.hookah.core.domain.zb.vo.ZbRequirementVo;
+import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.crowd.service.ReleaseService;
 import org.springframework.stereotype.Controller;
@@ -127,5 +128,31 @@ public class ReleaseController extends BaseController{
     public ReturnData deleteRequirement(Long id){
         ReturnData returnData = releaseService.deleteRequirement(id);
         return returnData;
+    }
+
+    /**
+     * 数据众包-需求方-托管赏金插入流水
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/managedMoney", method = RequestMethod.GET)
+    public String managedMoney(Long requirementId){
+        return releaseService.getManagedMoney(requirementId);
+    }
+
+    /**
+     * 数据众包-发布需求--变更托管赏金成功之后的状态
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/updateMoneyStatus", method = RequestMethod.GET)
+    public ReturnData moneyStatus(String requireSn){
+        try {
+            ReturnData moneyStatus = releaseService.updateMoneyStatus(requireSn);
+            return moneyStatus;
+        } catch (Exception e) {
+            logger.error("系统错误",e);
+            return ReturnData.error("系统错误");
+        }
     }
 }
