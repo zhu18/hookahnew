@@ -192,9 +192,10 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                     zbRequirement.getStatus() == 7 ||
                     zbRequirement.getStatus() == 8 ||
                     zbRequirement.getStatus() == 9 ||
-                    zbRequirement .getStatus() == 13 ||
-                    zbRequirement.getStatus() == 18 ||
+                    zbRequirement.getStatus() == 10 ||
+                    zbRequirement.getStatus() == 13 ||
                     zbRequirement.getStatus() == 15 ||
+                    zbRequirement.getStatus() == 18 ||
                     zbRequirement.getStatus() == 19) {
                 if (zbRequirement.getTrusteePercent() != null) {
                     managedMoney = String.valueOf(zbRequirement.getRewardMoney() * zbRequirement.getTrusteePercent());
@@ -212,10 +213,30 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
             zbAnnexes = zbAnnexService.selectList(filters1);
 
             //选中人信息
-            User user = zbRequirementMapper.selectReleaseInfo(zbRequirement.getUserId());
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            if(StringUtils.isNotBlank(zbRequirement.getId().toString())){
+                filters2.add(Condition.eq("requirementId", zbRequirement.getId()));
+            }
+            ZbRequirementApply zbRequirementApply = zbRequireApplyService.selectOne(filters2);
+            List<ZbRequirementApply> zbRequirementApplies = null;
+            ZbRequirementApply apply = null;
+            User user = null;
+            if(zbRequirementApply != null){
+                //计算报名人数
+                List<Condition> filters5 = new ArrayList<>();
+                filters5.add(Condition.eq("requirementId", zbRequirement.getId()));
+                zbRequirementApplies = zbRequireApplyService.selectList(filters5);
+                //已选中信息
+                List<Condition> filters6 = new ArrayList<>();
+                filters6.add(Condition.eq("requirementId", zbRequirement.getId()));
+                filters6.add(Condition.eq("status", 1));
+                apply = zbRequireApplyService.selectOne(filters6);
+                if(apply != null){
+                    user = zbRequirementMapper.selectReleaseInfo(apply.getUserId());
+                }
+            }
 
             Short status = zbRequirement.getStatus();
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             if(StringUtils.isNotBlank(status.toString())){
                 switch (status){
                     case 1://待审核
@@ -235,36 +256,37 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                         map.put("managedMoney", managedMoney);
                         map.put("zbRequirement", zbRequirement);
                         map.put("zbRequirementFiles", zbAnnexes);
-                        if(StringUtils.isNotBlank(zbRequirement.getId().toString())){
-                            filters2.add(Condition.eq("requirementId", zbRequirement.getId()));
-                        }
-                        ZbRequirementApply zbRequirementApply = zbRequireApplyService.selectOne(filters2);
                         if(zbRequirementApply != null){
                             //计算报名人数
-                            List<ZbRequirementApply> zbRequirementApplies = zbRequireApplyService.selectList();
                             map.put("count",zbRequirementApplies.size());
-                            //已选中信息
-                            List<Condition> filters5 = new ArrayList<>();
-                            filters5.add(Condition.eq("status", 1));
-                            ZbRequirementApply apply = zbRequireApplyService.selectOne(filters5);
                             if(apply != null){
+                                //报名时间
                                 map.put("applyTime",df.format(apply.getAddTime()));
-                                //User user = zbRequirementMapper.selectReleaseInfo(apply.getUserId());
+                                //已选中信息
                                 map.put("user",user);
                             }
                         }
                         break;
-                    case 8: //工作中
-                    case 9: //待验收
-                    case 13://待评价
-                    case 18://需方驳回
+                    case 8:  //工作中
+                    case 9:  //待平台验收
+                    case 10: //待需方验收
+                    case 13: //待评价
+                    case 18: //需方驳回
                         map.put("tag", strArray);
                         map.put("managedMoney", managedMoney);
                         map.put("zbRequirement", zbRequirement);
                         map.put("zbRequirementFiles", zbAnnexes);
-                        map.put("user",user);
+                        if(zbRequirementApply != null){
+                            //计算报名人数
+                            map.put("count",zbRequirementApplies.size());
+                            if(apply != null){
+                                //报名时间
+                                map.put("applyTime",df.format(apply.getAddTime()));
+                                //已选中信息
+                                map.put("user",user);
+                            }
+                        }
                         if(zbRequirement.getId() != null){
-                            filters2.add(Condition.eq("requirementId", zbRequirement.getId()));
                             ZbProgram zbProgram = zbProgramService.selectOne(filters2);
                             if(zbProgram != null){
                                 map.put("zbProgram",zbProgram);
@@ -284,9 +306,15 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                         map.put("managedMoney", managedMoney);
                         map.put("zbRequirement", zbRequirement);
                         map.put("zbRequirementFiles", zbAnnexes);
-                        map.put("user",user);
+                        if(zbRequirementApply != null){
+                            //计算报名人数
+                            map.put("count",zbRequirementApplies.size());
+                            if(apply != null){
+                                map.put("applyTime",df.format(apply.getAddTime()));
+                                map.put("user",user);
+                            }
+                        }
                         if(zbRequirement.getId() != null){
-                            filters2.add(Condition.eq("requirementId", zbRequirement.getId()));
                             ZbProgram zbProgram = zbProgramService.selectOne(filters2);
                             if(zbProgram != null){
                                 map.put("zbProgram",zbProgram);
