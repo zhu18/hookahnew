@@ -4,15 +4,18 @@ import com.jusfoun.hookah.core.dao.zb.ZbRequirementApplyMapper;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.zb.ZbProgram;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirementApply;
+import com.jusfoun.hookah.core.domain.zb.vo.ZbRequirementApplyVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.crowd.service.UserService;
 import com.jusfoun.hookah.crowd.service.ZbRequireApplyWebsiteService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -31,6 +34,9 @@ public class ZbRequireApplyWebsiteServiceImpl extends GenericServiceImpl<ZbRequi
 
     @Resource
     private ZbRequirementApplyMapper zbRequirementApplyMapper;
+
+    @Resource
+    UserService userService;
 
     @Resource
     public void setDao(ZbRequirementApplyMapper zbRequirementApplyMapper) {
@@ -76,13 +82,14 @@ public class ZbRequireApplyWebsiteServiceImpl extends GenericServiceImpl<ZbRequi
         }
 
         try {
-            String userId = this.getCurrentUser().getUserId();
-            //查询方案详情
+            User user = this.getCurrentUser();
+            String userId = user.getUserId();
+            //查询报名详情
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.eq("requirementId",reqId));
             filters.add(Condition.eq("userId",userId));
             ZbRequirementApply zbRequirementApply = this.selectOne(filters);
-            returnData.setData(zbRequirementApply);
+            returnData.setData(buildZbRequirementApplyVo(zbRequirementApply,userId));
             logger.info("@查询报名[id:" + zbRequirementApply.getId() + "]成功@");
         } catch (Exception e) {
             logger.error("@查询需求[id:" + reqId + "]报名信息失败@");
@@ -92,4 +99,27 @@ public class ZbRequireApplyWebsiteServiceImpl extends GenericServiceImpl<ZbRequi
         }
         return returnData;
     }
+
+    //封装报名信息详情
+    private ZbRequirementApplyVo buildZbRequirementApplyVo(ZbRequirementApply zbRequirementApply,String userId){
+        ZbRequirementApplyVo zbRequirementApplyVo = new ZbRequirementApplyVo();
+        if(Objects.nonNull(zbRequirementApply)){
+            BeanUtils.copyProperties(zbRequirementApply,zbRequirementApplyVo);
+            User user = userService.selectById(userId);
+            zbRequirementApplyVo.setCurrUserPhone(user.getMobile());
+            zbRequirementApplyVo.setMobile(user.getMobile());
+            if(null != zbRequirementApply.getRequirementId()){
+                List<Condition> filters = new ArrayList<Condition>();
+                filters.add(Condition.eq("requirementId",zbRequirementApply.getRequirementId()));
+                List<ZbRequirementApply> zbRequirementApplies = this.selectList(filters);
+                zbRequirementApplyVo.setApplyNumber(zbRequirementApplies == null ? 0 : zbRequirementApplies.size());
+            } else {
+                zbRequirementApplyVo.setApplyNumber(0);
+            }
+        } else {
+            zbRequirementApplyVo = null;
+        }
+        return zbRequirementApplyVo;
+    }
+
 }
