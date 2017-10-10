@@ -91,16 +91,16 @@ public class ZbContants {
 
     /**
      * 方案状态
-     * 方案状态：默认0 平台审核通过1 平台审核不通过2 平台审核驳回3 需方审核通过4 需方审核不通过5
+     * 方案状态：默认0 平台审核通过1 平台审核不通过2 需方审核通过3 需方审核不通过4  需方审核驳回5
      */
     public enum Program_Status {
 
         DEFAULT(Short.valueOf("0")),
-        PROGRAM_SUCCESS(Short.valueOf("4")),
-        PROGRAM_FAIL(Short.valueOf("5")),
+        PROGRAM_SUCCESS(Short.valueOf("3")),
+        PROGRAM_FAIL(Short.valueOf("4")),
+        PROGRAM_REJECT(Short.valueOf("5")),
         SYSTEM_SUCCESS(Short.valueOf("1")),
-        SYSTEM_FAIL(Short.valueOf("2")),
-        SYSTEM_REJECT(Short.valueOf("3"));
+        SYSTEM_FAIL(Short.valueOf("2"));
 
         public short code;
 

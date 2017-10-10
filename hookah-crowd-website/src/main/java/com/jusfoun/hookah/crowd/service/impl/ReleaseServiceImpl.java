@@ -4,12 +4,14 @@ package com.jusfoun.hookah.crowd.service.impl;
  * Created by zhaoshuai on 2017/9/18.
  */
 
+import com.alibaba.druid.sql.ast.statement.SQLIfStatement;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.zb.*;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbRequirementVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
+import com.jusfoun.hookah.core.utils.HttpClientUtil;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.crowd.constants.ZbContants;
 import com.jusfoun.hookah.crowd.service.*;
@@ -369,14 +371,35 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
     public ReturnData getAcceptanceAdvice(Short status, String checkAdvice, Long id){
         if(id != null){
             List<Condition> filters = new ArrayList<>();
+            List<Condition> filters1 = new ArrayList<>();
             if(StringUtils.isNotBlank(id.toString())){
                 filters.add(Condition.eq("id", id));
             }
             ZbProgram zbProgram = zbProgramService.selectOne(filters);
-            zbProgram.setStatus(status);
-            zbProgram.setCheckAdvice(checkAdvice);
-            int i = zbProgramService.updateByCondition(zbProgram, filters);
-            return ReturnData.success(i);
+            if(zbProgram != null){
+                zbProgram.setStatus(status);
+                zbProgram.setCheckAdvice(checkAdvice);
+                zbProgramService.updateByCondition(zbProgram, filters);
+
+                //验收之后更改需求状态
+                ZbProgram program = zbProgramService.selectOne(filters);
+                ZbRequirement zbRequirement = zbRequireService.selectById(program.getRequirementId());
+                if(zbRequirement.getId() != null){
+                    filters1.add(Condition.eq("id", zbRequirement.getId()));
+                }
+                if(zbRequirement != null){
+                    //需方验收通过
+                    if(program.getStatus().equals(ZbContants.Program_Status.PROGRAM_SUCCESS.getCode())){
+                        zbRequirement.setStatus(ZbContants.Zb_Require_Status.WAIT_FK.getCode().shortValue());
+                    }else if(program.getStatus().equals(ZbContants.Program_Status.PROGRAM_FAIL.getCode())){//验收不通过
+                        zbRequirement.setStatus(ZbContants.Zb_Require_Status.TWO_WORKING.getCode().shortValue());
+                    }else if(program.getStatus().equals(ZbContants.Program_Status.PROGRAM_REJECT.getCode())){//验收驳回
+                        zbRequirement.setStatus(ZbContants.Zb_Require_Status.WAIT_TK.getCode().shortValue());
+                    }
+                    zbRequireService.updateByCondition(zbRequirement,filters1);
+                }
+            }
+            return ReturnData.success("添加验收成果成功！");
         }
         return ReturnData.error("添加验收成果失败！");
     }
@@ -461,6 +484,8 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
         filter1.add(Condition.eq("requirementId",zbRequirement.getId()));
         ZbTrusteeRecord zbTrusteeRecord = zbTrusteeRecordService.selectOne(filter1);
         String url= "http://www.galaxybigdata.com/pay/aliPay?orderSn="+ zbTrusteeRecord.getSerialNo();
-        return url;
+        Map m = HttpClientUtil.GetMethod(url);
+        System.out.print(m);
+        return null;
     }
 }
