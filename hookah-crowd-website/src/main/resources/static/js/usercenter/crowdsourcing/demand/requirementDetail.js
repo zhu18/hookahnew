@@ -112,43 +112,31 @@ function renderPage(data) {
       $('.managedMoneySpanText').html('已托管比例');
       $('.detailMoneyBox,.otherDetailBox').show();
       $('.managedMoneyNotice').hide();
-      $('.moneyAdd,.moneySub').hide();//百分比
-
-      $('.j_peopleCount').html(data.count);
-
-      $('.j_companyName').html(data.user.orgName);
-      $('.j_SignUpTime').html(data.applyTime);
-      $('.j_contentName').html(data.user.contactName);
-      $('.j_contentPhone').html(data.user.contactPhone);
+      $('.moneyAdd,.moneySub').hide(); //百分比
+      $('.missionResult').hide().prev().show(); //百分比
+      missionApplyInfo(data); //任务报名信息显示
       $('.release-first-btnbox div').append('<a class="j_goTwiceMoney" href="' + host.website + '/payAccount/userRecharge?money=' + insertRequirementsData.zbRequirement.rewardMoney*(100-insertRequirementsData.zbRequirement.trusteePercent)/100/100 + '">去托管剩余'+(100-insertRequirementsData.zbRequirement.trusteePercent)+'% 赏金</a>');
       $('.moneyHow').html(insertRequirementsData.zbRequirement.trusteePercent);
 
       break;
     case 8: //工作中
       domModel.html('工作中');
-      $('.detailMoneyBox,.otherDetailBox,.applyDeadlineBox').show();//显示下方tab
-      $('.managedMoneyNotice,.moneyAdd,.moneySub').hide();//隐藏托管30%提示 隐藏调整托管比例
-      $('.missionResultEmpty').eq(0).show().next().hide();//任务报名内容置空
-      $('.otherDetailBoxNav li').removeClass('active').eq(1).addClass('active').parent().next().children().removeClass('active').eq(1).addClass('active');//选中第二个tab 显示
-
-
-      $('.j_applyDeadline').html(insertRequirementsData.zbRequirement.applyDeadline);
-      $('.missonTitle').html(insertRequirementsData.zbProgram.title);
-      $('.missionStatus').html(insertRequirementsData.zbProgram.checkAdvice);
-      $('.missionResultDes').html(insertRequirementsData.zbProgram.content);
-
-
-
-      let missionResultLoadfileHtml=renderLoadFile(data.programFiles);
-      $('.j_missionResult-load-file-list').append(missionResultLoadfileHtml);
-
-
+      missionApplyInfo(data); //任务报名信息显示
       break;
     case 10:
       domModel.html('待验收');//TODO:验收要根据成果验收的三个状态显示
+      missionApplyInfo(data); //任务报名信息显示
+
+      $('.release-first-btnbox div').append('<a class="j_checkMission" href="javascript:void(0)">成果验收</a>');
+
+
       break;
     case 13:
       domModel.html('已付款<br>待评价');
+      missionApplyInfo(data); //任务报名信息显示
+      $('.release-first-btnbox div').append('<a class="j_commentBtn" href="javascript:void(0)">评价</a>');
+
+
       break;
     case 14:
       domModel.html('交易取消');
@@ -164,6 +152,102 @@ function renderPage(data) {
   $('.moneyManageMoeny').html(rewardMoney * $('.moneyHow').text() / 10000);
 
 }
+
+$(document).on('click', '.j_checkMission', function () { // 成果验收
+   let missionTitle=$('.missonTitle').html();
+  $.confirm('\
+  <div class="checkMissionBox">\
+    <h5>需求方验收-' + missionTitle + '</h5>\
+    <table>\
+      <tr>\
+        <th>验收结果：</th>\
+        <td>\
+          <label><input type="radio" name="resultStatus" value="1" checked> 通过</label>\
+          <label><input type="radio" name="resultStatus" value="2"> 不通过,退回修改</label>\
+          <label><input type="radio" name="resultStatus" value="5"> 方案不符合要求，驳回</label>\
+        </td>\
+      </tr>\
+      <tr>\
+        <th valign="top">验收意见：</th>\
+        <td>\
+          <textarea id="checkAdvice" cols="30" rows="10" maxlength="100"></textarea>\
+        </td>\
+      </tr>\
+    </table>\
+  </div>', null, function (type) {
+    if (type == 'yes') {
+      let confirmThis=this;
+      let acceptanceAdvice={};
+      acceptanceAdvice.status=$("input[name='resultStatus']:checked").val();
+      acceptanceAdvice.id=$('.missonTitle').attr('acceptanceAdviceId');
+      acceptanceAdvice.checkAdvice=$("#checkAdvice").val();
+      console.log(acceptanceAdvice);
+
+      if(acceptanceAdvice.status && acceptanceAdvice.id && acceptanceAdvice.checkAdvice){
+        console.log(1);
+        $.ajax({
+          type: 'post',
+          url: "/api/release/insertAcceptanceAdvice",
+          cache: false,
+          data:acceptanceAdvice,
+          success: function (data) {
+            console.log(data);
+            if(data.code==1){
+              if(acceptanceAdvice.status == 1){
+                $('.missionStatus').html('验收通过，待付款！').show();
+              }else if(acceptanceAdvice.status == 2){
+                $('.missionStatus').html('验收不通过，待修改！').show();
+              }else if(acceptanceAdvice.status == 5){
+                $('.missionStatus').html('方案不符合需求方要求，验收驳回！').show();
+                $('.canNotSelect').show();
+                $('.j_missionResult-load-file-list .crowdsourcing-table-edit').remove();
+              }
+              confirmThis.hide();
+              $('.j_checkMission').remove();
+
+            }
+          }
+        });
+
+
+      }else{
+        $.alert('请填写验收意见!')
+      }
+
+    } else {
+      this.hide();
+
+    }
+  });
+});
+
+
+
+function missionApplyInfo(data) { //任务报名信息显示
+  $('.detailMoneyBox,.otherDetailBox,.applyDeadlineBox').show();//显示下方tab
+  $('.managedMoneyNotice,.moneyAdd,.moneySub').hide();//隐藏托管30%提示 隐藏调整托管比例
+  $('.otherDetailBoxNav li').removeClass('active').eq(1).addClass('active').parent().next().children().removeClass('active').eq(1).addClass('active');//选中第二个tab 显示
+
+  //任务报名内容
+  $('.j_peopleCount').html(data.count);
+  $('.j_companyName').html(data.user.orgName);
+  $('.j_SignUpTime').html(data.applyTime);
+  $('.j_contentName').html(data.user.contactName);
+
+  $('.j_contentPhone').html(data.user.contactPhone);
+  //任务成果内容
+  $('.j_applyDeadline').html(data.zbRequirement.applyDeadline);
+  $('.missonTitle').html(data.zbProgram.title).attr('acceptanceAdviceId',data.zbProgram.id);
+  $('.missionStatus').html(data.zbProgram.checkAdvice);
+
+  $('.missionResultDes').html(data.zbProgram.content);
+  //方案附件列表
+  let missionResultLoadfileHtml=renderLoadFile(data.programFiles);
+
+
+  $('.j_missionResult-load-file-list').append(missionResultLoadfileHtml);
+}
+
 
 
 $(document).on('click', '.moneyAdd', function () { //托管资金点击增加 托管金额百分比

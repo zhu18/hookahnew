@@ -344,8 +344,7 @@
                 var top = clientHeight / 2 - mt;
                 left = Math.floor(Math.max(0, left));
                 top = Math.floor(Math.max(0, top));
-                        console.log(this);
-                        console.log("ch:"+clientHeight,"cw:"+clientWidth,"left:"+left,"top:"+top,"w:"+this.width,"h:"+this.height);
+                        // console.log("ch:"+clientHeight,"cw:"+clientWidth,"left:"+left,"top:"+top,"w:"+this.width,"h:"+this.height);
                 var position = 'absolute';
                 if (_this.settings.fixed) {
                     position = 'fixed';

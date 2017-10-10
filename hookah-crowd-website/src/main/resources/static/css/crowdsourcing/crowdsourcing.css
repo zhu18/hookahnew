@@ -177,17 +177,26 @@
 .otherDetailBoxNav li.active{background-color: #2cabf8; color: #fff; font-weight: bold;}
 .otherDetailBoxList{border: 1px solid #e4e4e4;border-top: 0;}
 .otherDetailBoxItem{ display:none;font-size: 14px;}
-.otherDetailBoxItem.active{ display: block;}
+.otherDetailBoxItem.active{ display: block;    position: relative;}
 
 .missionResult  { width: 100%;}
+.canNotSelect{ display: none;position: absolute; width: 100%; height: 100%; background: #fff; z-index: 1; opacity: .4; }
 .missionResult tr { line-height:47px;background-color: #fff; border-bottom: 1px solid #e4e4e4;}
 .missionResult tr .missionResultDes{ line-height: 22px;  padding-bottom: 15px;}
 
 .missonTitle{ font-size:16px;}
-.missionStatus{ position: absolute; top:0; right:0; padding-right:15px;  display: none;}
+.missionStatus{ position: absolute; top:0; right:0; padding-right:15px;  display: none;z-index: 2;}
 .missionResultEmpty{ padding-left:30px; line-height: 60px;}
 .missioinApply{ padding: 15px;}
 
+.checkMissionBox{ width: 600px;padding: 0 20px; text-align: left;}
+.checkMissionBox h5{ font-size: 16px; font-weight: normal;}
+.checkMissionBox table{ margin-top: 10px; width: 100%;}
+.checkMissionBox table tr:first-child{line-height: 47px;}
+.checkMissionBox table th{ font-weight: normal;}
+.checkMissionBox table td label{ margin-right:20px; cursor:pointer; }
+.checkMissionBox table td input{ vertical-align:middle}
+.checkMissionBox table td textarea{margin: 0; height: 156px; width: 100%;}
 
 
 
