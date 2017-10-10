@@ -4,14 +4,12 @@ server:
       protocal: http://
   session:
     cookie:
-      domain: qddata.com.cn
+      domain: galaxybigdata.com
       name: hookah_sid
 spring:
   datasource:
     url: jdbc:log4jdbc:mysql://192.168.15.90:3306/bdgStore?characterEncoding=utf8&useSSL=false&autoReconnect=true&failOverReadOnly=false&autoReconnectForPools=true
     driverClassName: net.sf.log4jdbc.DriverSpy
-    #driverClassName: com.mysql.jdbc.Driver
-    #url: jdbc:mysql://192.168.15.90:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
     username: root
     password: password
     initialize: true
@@ -47,44 +45,26 @@ spring:
     password: password
     publisher-confirms: true
     virtual-host: /
-    listener:
+	listener:
       retry:
-        enabled: true
-        max-attempts: 2
+      enabled: true
+      max-attempts: 2
   mail:
-    host: smtp.qiye.163.com
-    port: 25
-    username: gbd@jusfoun.com
-    password: 1QAZ2wsx
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
+      host: smtp.galaxybigdata.com
+      username: service@qddata.com.cn
+      password: Bigdata8661101
+      transport:
+        protocol: smtp
+      properties:
+        mail:
+          smtp:
+            auth: true
+            starttls:
+              enable: true
             socketFactory:
               fallback: false
-#  jpa:
-#    database: MYSQL
-#    show-sql: true
-##    hibernate:
-##      ddl-auto: create-drop
-#    properties:
-#      hibernate:
-#        dialect : org.hibernate.dialect.MySQL5Dialect
   mvc:
     static-path-pattern: /static/**
-redis:
-  ip: 192.168.15.90
-  port: 6379
-  password: Yqn2ht4DYkMHlDvTY7CV
-  pool:
-    #最大分配的对象数
-    maxTotal: 1024
-    #最大能够保持idel状态的对象数
-    maxIdle: 200
-    #当调用borrow Object方法时，是否进行有效性检查
-    testOnBorrow: false
 myconf:
   beetl:
     templatesPath: views/
@@ -93,16 +73,17 @@ myconf:
     suffix: .html
     cache: false
   host:
-    domain: qddata.com.cn
-    cms: ${server.http.protocal}www.qddata.com.cn
-    website: ${server.http.protocal}trade.qddata.com.cn
-    static: ${server.http.protocal}static.qddata.com.cn
-    auth: ${server.http.protocal}auth.qddata.com.cn
-    console: ${server.http.protocal}console.qddata.com.cn
+    domain: galaxybigdata.com
+    cms: ${server.http.protocal}www.galaxybigdata.com
+    website: ${server.http.protocal}www.galaxybigdata.com
+    static: ${server.http.protocal}static.galaxybigdata.com
+    auth: ${server.http.protocal}auth.galaxybigdata.com
+    console: ${server.http.protocal}console.galaxybigdata.com
+    crowd: ${server.http.protocal}crowd.galaxybigdata.com
   site:
-    user-default-img: /static/images/user-safe-head.png
+      user-default-img: /static/images/user-safe-head.png
   redis:
     ipPort: 192.168.15.90:7000,192.168.15.90:7001,192.168.15.90:7002
   consul:
-    ipPort: 192.168.15.90:8500
+      ipPort: 192.168.15.202:8500
 debug: true

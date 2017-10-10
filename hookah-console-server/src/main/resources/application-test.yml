@@ -4,7 +4,7 @@ server:
     protocal: http://
   session:
     cookie:
-      domain: qddata.com.cn
+      domain: galaxybigdata.com
       name: hookah_sid
 spring:
   datasource:

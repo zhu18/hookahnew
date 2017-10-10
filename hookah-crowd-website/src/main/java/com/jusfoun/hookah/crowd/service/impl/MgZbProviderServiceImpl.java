@@ -6,7 +6,6 @@ import com.github.pagehelper.PageInfo;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
-import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
 import com.jusfoun.hookah.core.domain.zb.mongo.MgZbProvider;
 import com.jusfoun.hookah.core.domain.zb.vo.MgZbProviderVo;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbCheckVo;
@@ -44,119 +43,10 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
     ZbRequirementMapper zbRequirementMapper;
 
     @Override
-    public ReturnData userAuth(MgZbProvider provider) {
-
-        try {
-
-            MgZbProvider mgZbProvider = mongoTemplate.findById(provider.getUserId(), MgZbProvider.class);
-            if(mgZbProvider == null){
-
-                provider.setAddTime(new Date());
-                provider.setUpdateTime(new Date());
-                mongoTemplate.insert(provider);
-                return ReturnData.success("认证信息添加成功");
-            }else{
-
-                Query query = new Query(Criteria.where("_id").is(mgZbProvider.getUserId()));
-                Update update = new Update();
-
-                if(StringUtils.isNotBlank(provider.getProviderDesc())){
-                    update.set("providerDesc", provider.getProviderDesc());
-                }
-
-                if(provider.getSpecialSkills() != null && provider.getSpecialSkills().size() > 0){
-
-
-                    update.addToSet("specialSkills").each(provider.getSpecialSkills());
-//                    Update.AddToSetBuilder ab = update.new AddToSetBuilder("specialSkills");
-//                    update = ab.each(provider.getSpecialSkills());
-//                    update.addToSet("specialSkills", provider.getSpecialSkills());
-                }
-
-                if(provider.getEducationsExpList() != null && provider.getEducationsExpList().size() > 0){
-                    update.addToSet("educationsExpList", provider.getEducationsExpList().get(0));
-                }
-
-                if(provider.getWorksExpList() != null && provider.getWorksExpList().size() > 0){
-                    update.addToSet("worksExpList", provider.getWorksExpList().get(0));
-                }
-
-                if(provider.getProjectsExpList() != null && provider.getProjectsExpList().size() > 0){
-                    update.addToSet("projectsExpList", provider.getProjectsExpList().get(0));
-                }
-
-                if(provider.getAppCaseList() != null && provider.getAppCaseList().size() > 0){
-                    update.addToSet("appCaseList", provider.getAppCaseList().get(0));
-                }
-
-                if(provider.getSwpList() != null && provider.getSwpList().size() > 0){
-                    update.addToSet("swpList", provider.getSwpList().get(0));
-                }
-
-                if(provider.getInPatentsList() != null && provider.getInPatentsList().size() > 0){
-                    update.addToSet("inPatentsList", provider.getInPatentsList().get(0));
-                }
-
-                update.set("updateTime", new Date());
-
-                update.set("status", ZbContants.Provider_Auth_Status.AUTH_CHECKING.code);
-
-                mongoTemplate.upsert(query, update, MgZbProvider.class);
-                return ReturnData.success("认证信息添加成功");
-            }
-        }catch (Exception e){
-            logger.error("认证信息添加失败", e);
-            return ReturnData.error("认证信息添加失败");
-        }
-    }
-
-    @Override
     public ReturnData getAuthInfo(String userId) {
-
         try {
-
             MgZbProvider mgZbProvider = mongoTemplate.findById(userId, MgZbProvider.class);
             return ReturnData.success(mgZbProvider);
-        }catch (Exception e){
-            logger.error("认证信息获取失败", e);
-            return ReturnData.error("认证信息获取失败");
-        }
-    }
-
-    @Override
-    public ReturnData delAuthInfo(String userId, String optSn, String optType) {
-
-        try {
-
-            if(!StringUtils.isNotBlank(optSn) || !StringUtils.isNotBlank(optType)){
-                return ReturnData.error("参数不能为空！^_^");
-            }
-
-            Query query = new Query(Criteria.where("_id").is(userId));
-            Update update = new Update();
-            switch (optType){
-                case "1":
-                    update.pull("educationsExpList", new BasicDBObject("sn", optSn));
-                    break;
-                case "2":
-                    update.pull("worksExpList", new BasicDBObject("sn", optSn));
-                    break;
-                case "3":
-                    update.pull("projectsExpList", new BasicDBObject("sn", optSn));
-                    break;
-                case "4":
-                    update.pull("appCaseList", new BasicDBObject("sn", optSn));
-                    break;
-                case "5":
-                    update.pull("swpList", new BasicDBObject("sn", optSn));
-                    break;
-                default:
-                    update.pull("inPatentsList", new BasicDBObject("sn", optSn));
-                    break;
-            }
-
-            mongoTemplate.updateFirst(query, update, MgZbProvider.class);
-            return ReturnData.success();
         }catch (Exception e){
             logger.error("认证信息获取失败", e);
             return ReturnData.error("认证信息获取失败");

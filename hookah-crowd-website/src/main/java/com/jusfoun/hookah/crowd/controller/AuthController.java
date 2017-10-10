@@ -32,13 +32,11 @@ public class AuthController extends BaseController {
     @Resource
     private MgZbProviderService mgZbProviderService;
 
-
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(String redirect_uri, HttpServletRequest request) {
         if (!StringUtils.isEmpty(redirect_uri)) {
             return "redirect:" + redirect_uri;
         } else {
-//            userService.setUVCountByDate();
             return "redirect:/crowdsourcing-list";
         }
     }
@@ -65,20 +63,22 @@ public class AuthController extends BaseController {
     }
 
     /**
-     * 服务商认证添加
-     * @param provider
-     * @author  dx
+     * 校验是否认证
+     * @param model
      * @return
      */
-    @RequestMapping(value = "/auth/providerAuth", method = RequestMethod.POST)
+    @RequestMapping(value = "/isAuth", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnData personAuth(@RequestBody MgZbProvider provider) {
+    public boolean isAuth(Model model) {
         try {
-//            provider.setUserId(getCurrentUser().getUserId());
-            return mgZbProviderService.userAuth(provider);
-        }catch (Exception e){
-            logger.error("认证信息添加失败", e);
-            return ReturnData.error("系统繁忙，请稍后再试！[add]^_^");
+            MgZbProvider mgZbProvider = mgZbProviderService.selectById(getCurrentUser().getUserId());
+            if(mgZbProvider != null && mgZbProvider.getStatus().equals(2)){
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
         }
     }
 
@@ -91,8 +91,8 @@ public class AuthController extends BaseController {
     public ReturnData getAuthInfo() {
 
         try {
-//            String userId = getCurrentUser().getUserId();
-            String userId = "1234567890";
+            String userId = getCurrentUser().getUserId();
+//            String userId = "1234567890";
             return mgZbProviderService.getAuthInfo(userId);
         }catch (Exception e){
             logger.error("认证信息查询失败", e);
@@ -110,30 +110,9 @@ public class AuthController extends BaseController {
     public ReturnData optAuthInfo(@RequestBody MgZbProviderVo vo) {
 
         try {
-//            String userId = getCurrentUser().getUserId();
-            String userId = "1234567890";
+            String userId = getCurrentUser().getUserId();
             vo.setUserId(userId);
             return mgZbProviderService.optAuthInfo(vo);
-        }catch (Exception e){
-            logger.error("认证信息删除失败", e);
-            return ReturnData.error("系统繁忙，请稍后再试！[del]^_^");
-        }
-    }
-
-    /**
-     * 删除认证信息
-     * @param optSn     认证信息编号
-     * @param optType   认证类别-1教育2工作3项目4应用案例5软件著作权6发明专利
-     * @return
-     */
-    @RequestMapping(value = "/auth/delAuthInfo")
-    @ResponseBody
-    public ReturnData delAuthInfo(String optSn, String optType) {
-
-        try {
-//            String userId = getCurrentUser().getUserId();
-            String userId = "1234567890";
-            return mgZbProviderService.delAuthInfo(userId, optSn, optType);
         }catch (Exception e){
             logger.error("认证信息删除失败", e);
             return ReturnData.error("系统繁忙，请稍后再试！[del]^_^");
@@ -150,8 +129,8 @@ public class AuthController extends BaseController {
     public ReturnData dcheckAuthInfo(ZbCheckVo vo) {
 
         try {
-//            String userId = getCurrentUser().getUserId();
-            String userId = "1234567890";
+            String userId = getCurrentUser().getUserId();
+//            String userId = "1234567890";
             vo.setCheckerId(userId);
             return mgZbProviderService.checkAuthInfo(vo);
         }catch (Exception e){
@@ -178,12 +157,6 @@ public class AuthController extends BaseController {
 //            return ReturnData.error("系统繁忙，请稍后再试！[check]^_^");
 //        }
 //    }
-
-
-
-
-
-
 
 
 }

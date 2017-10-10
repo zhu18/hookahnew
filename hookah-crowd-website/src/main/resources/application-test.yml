@@ -40,7 +40,7 @@ spring:
     mongodb:
       uri:  mongodb://192.168.15.90:27017/bdgStore
   rabbitmq:
-    addresses: 192.168.15.174:5672
+    addresses: 192.168.200.116:5672
     username: root
     password: password
     publisher-confirms: true
@@ -90,9 +90,9 @@ myconf:
     tokenUrl: http://192.168.200.116:5555/gateway/getToken
     changeUrl: http://192.168.200.116:5555/gateway/changeToken
   redis:
-    ipPort: 192.168.15.174:7000,192.168.15.174:7001,192.168.15.174:7002
+    ipPort: 192.168.15.90:7000,192.168.15.90:7001,192.168.15.90:7002
   consul:
-    ipPort: 127.0.0.1:8500
+    ipPort: 192.168.15.202:8500
   es:
-    ipPort: 192.168.15.175:9300
+    ipPort: 192.168.200.116:9300
 debug: true

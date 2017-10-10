@@ -4,7 +4,7 @@ server:
     protocal: http://
   session:
     cookie:
-      domain: qddata.com.cn
+      domain: galaxybigdata.com
       name: hookah_sid
 myconf:
   beetl:
@@ -13,27 +13,27 @@ myconf:
     prefix: /
     suffix: .html
     cache: false
-
   host:
-    domain: qddata.com.cn
-    website: ${server.http.protocal}trade.qddata.com.cn
-    static: ${server.http.protocal}static.qddata.com.cn
-    auth: ${server.http.protocal}auth.qddata.com.cn
-    console: ${server.http.protocal}console.qddata.com.cn
-    admin: ${server.http.protocal}admin.qddata.com.cn
+    domain: galaxybigdata.com
+    website: ${server.http.protocal}www.galaxybigdata.com
+    static: ${server.http.protocal}static.galaxybigdata.com
+    auth: ${server.http.protocal}auth.galaxybigdata.com
+    console: ${server.http.protocal}console.galaxybigdata.com
+    admin: ${server.http.protocal}admin.galaxybigdata.com
+    crowd: ${server.http.protocal}crowd.galaxybigdata.com
   oauth2:
     clientId: website
     clientSecret: Yqn2ht4DYkMHlDvTY7CV
-    regUrl: http://auth.qddata.com.cn/reg
-    loginUrl: http://auth.qddata.com.cn/oauth/authorize?client_id=website&response_type=code&redirect_uri=
-    logoutUrl: http://auth.qddata.com.cn/logout?redirect_uri=http://trade.qddata.com.cn/login
-    accessTokenUrl: http://auth.qddata.com.cn/oauth/accessToken
-    userInfoUrl: http://auth.qddata.com.cn/userInfo
-    redirectUrl: http://auth.qddata.com.cn/login
+    regUrl: http://auth.galaxybigdata.com/reg
+    loginUrl: http://auth.galaxybigdata.com/oauth/authorize?client_id=website&response_type=code&redirect_uri=
+    logoutUrl: http://auth.galaxybigdata.com/logout?redirect_uri=http://www.galaxybigdata.com/login
+    accessTokenUrl: http://auth.galaxybigdata.com/oauth/accessToken
+    userInfoUrl: http://auth.galaxybigdata.com/userInfo
+    redirectUrl: http://auth.galaxybigdata.com/login
   redis:
     ipPort: 192.168.15.90:7000,192.168.15.90:7001,192.168.15.90:7002
   consul:
-    ipPort: 192.168.15.90:8500
+    ipPort: 192.168.15.202:8500
 debug: true
 spring:
   data:
@@ -49,18 +49,5 @@ spring:
       virtual-host: /
       listener:
         retry:
-          enabled: true
-          max-attempts: 2
-redis:
-  ip: 192.168.15.90
-  port: 6379
-  password: Yqn2ht4DYkMHlDvTY7CV
-  pool:
-    #最大分配的对象数
-    maxTotal: 1024
-    #最大能够保持idel状态的对象数
-    maxIdle: 200
-    #当调用borrow Object方法时，是否进行有效性检查
-    testOnBorrow: false
-
-
+        enabled: true
+        max-attempts: 2

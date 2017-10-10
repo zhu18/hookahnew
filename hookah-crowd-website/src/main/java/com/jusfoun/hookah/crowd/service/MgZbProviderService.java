@@ -8,11 +8,7 @@ import com.jusfoun.hookah.core.utils.ReturnData;
 
 public interface MgZbProviderService extends GenericService<MgZbProvider, String> {
 
-    ReturnData userAuth(MgZbProvider provider);
-
     ReturnData getAuthInfo(String userId);
-
-    ReturnData delAuthInfo(String userId, String optSn, String optType);
 
     ReturnData checkAuthInfo(ZbCheckVo vo);
 
