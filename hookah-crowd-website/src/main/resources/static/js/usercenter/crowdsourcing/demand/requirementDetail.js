@@ -134,6 +134,7 @@ function renderPage(data) {
     case 13:
       domModel.html('已付款<br>待评价');
       missionApplyInfo(data); //任务报名信息显示
+      $('.missionStatus').show();
       $('.release-first-btnbox div').append('<a class="j_commentBtn" href="javascript:void(0)">评价</a>');
 
 
@@ -194,14 +195,17 @@ $(document).on('click', '.j_checkMission', function () { // 成果验收
             console.log(data);
             if(data.code==1){
               if(acceptanceAdvice.status == 1){
-                $('.missionStatus').html('验收通过，待付款！').show();
+                $('.missionStatusResult').html('验收通过，待付款！');
               }else if(acceptanceAdvice.status == 2){
-                $('.missionStatus').html('验收不通过，待修改！').show();
+                $('.missionStatusResult').html('验收不通过，待修改！');
               }else if(acceptanceAdvice.status == 5){
-                $('.missionStatus').html('方案不符合需求方要求，验收驳回！').show();
+                $('.missionStatusResult').html('方案不符合需求方要求，验收驳回！');
                 $('.canNotSelect').show();
                 $('.j_missionResult-load-file-list .crowdsourcing-table-edit').remove();
               }
+              $('.checkAdviceDetailBox').html(acceptanceAdvice.checkAdvice);
+              $('.missionStatus').show();
+
               confirmThis.hide();
               $('.j_checkMission').remove();
 
@@ -238,7 +242,6 @@ function missionApplyInfo(data) { //任务报名信息显示
   //任务成果内容
   $('.j_applyDeadline').html(data.zbRequirement.applyDeadline);
   $('.missonTitle').html(data.zbProgram.title).attr('acceptanceAdviceId',data.zbProgram.id);
-  $('.missionStatus').html(data.zbProgram.checkAdvice);
 
   $('.missionResultDes').html(data.zbProgram.content);
   //方案附件列表
@@ -247,6 +250,12 @@ function missionApplyInfo(data) { //任务报名信息显示
 
   $('.j_missionResult-load-file-list').append(missionResultLoadfileHtml);
 }
+$('.j_checkAdviceDetail').on('mouseover', function () { //鼠标离开描述显示工具栏
+  $('.checkAdviceDetailBox').show();
+}).on('mouseout', function () { //鼠标离开描述显示工具栏
+  $('.checkAdviceDetailBox').hide();
+});
+
 
 
 
