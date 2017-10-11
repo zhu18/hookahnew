@@ -4,7 +4,6 @@ package com.jusfoun.hookah.crowd.service.impl;
  * Created by zhaoshuai on 2017/9/18.
  */
 
-import com.alibaba.druid.sql.ast.statement.SQLIfStatement;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.zb.*;
@@ -53,6 +52,9 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
 
     @Resource
     ZbTrusteeRecordService zbTrusteeRecordService;
+
+    @Resource
+    MgZbRequireStatusService mgZbRequireStatusService;
 
     @Resource
     private ZbRequirementMapper zbRequirementMapper;
@@ -196,8 +198,8 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                     zbRequirement.getStatus() == 9 ||
                     zbRequirement.getStatus() == 10 ||
                     zbRequirement.getStatus() == 13 ||
+                    zbRequirement.getStatus() == 14 ||
                     zbRequirement.getStatus() == 15 ||
-                    zbRequirement.getStatus() == 18 ||
                     zbRequirement.getStatus() == 19) {
                 if (zbRequirement.getTrusteePercent() != null) {
                     managedMoney = String.valueOf(zbRequirement.getRewardMoney() * zbRequirement.getTrusteePercent());
@@ -273,7 +275,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                     case 9:  //待平台验收
                     case 10: //待需方验收
                     case 13: //待评价
-                    case 18: //需方驳回
+                    case 14: //需方驳回
                         map.put("tag", strArray);
                         map.put("managedMoney", managedMoney);
                         map.put("zbRequirement", zbRequirement);
