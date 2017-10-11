@@ -2,6 +2,8 @@
 var head = {
 %>
 <link rel="stylesheet" href="/static/css/plugins/jedate/jedate.css">
+<script type="text/javascript" src="/static/js/plugins/vendor/jquery.raty.js"></script>
+
 <script src="/static/js/plugins/jedate/jquery.jedate.min.js"></script>
 <script src="/static/js/plugins/widget/jquery.ui.widget.js"></script>
 <script src="/static/js/plugins/fileupload/jquery.fileupload.js"></script>
@@ -184,7 +186,23 @@ var htmlPart = {
                 </tr>
               </tbody>
             </table>
+            <table class="commentBox">
+              <tr class="">
+                <th valign="top">我的评价</th>
+                <td>
+                  <div class="commentStart myCommentStart"></div>
+                  <div class="commentDetail myCommentDetail"></div>
+                  <div class="commentTime myCommentTime"></div>
+                </td>
 
+                <th valign="top" class="serviceComment bdrl">对我的评价</th>
+                <td valign="top" class="serviceComment">
+                  <div class="commentStart serviceCommentStart"></div>
+                  <div class="commentDetail serviceCommentDetail"></div>
+                  <div class="commentTime serviceCommentTime"></div>
+                </td>
+              </tr>
+            </table>
           </div>
           <div class="otherDetailBoxItem">
             <p class="missionResultEmpty">暂无交易说明</p>

@@ -135,7 +135,18 @@ function renderPage(data) {
       domModel.html('已付款<br>待评价');
       missionApplyInfo(data); //任务报名信息显示
       $('.missionStatus').show();
+      $.fn.raty.defaults.path = '/static/images/crowdsourcing';//初始化星星图标位置
+
+      if(insertRequirementsData.zbComment){
+        $('.serviceCommentStart').raty({ readOnly: true, score: insertRequirementsData.zbComment.level });
+        $('.serviceCommentDetail').html(insertRequirementsData.zbComment.content);
+        $('.serviceCommentTime').html(insertRequirementsData.zbComment.addTime);
+
+      }
+      $('.missionStatusResult').html('验收通过且已付款，待评价！');
+      $('.checkAdviceDetailBox').html(insertRequirementsData.zbProgram.checkAdvice);
       $('.release-first-btnbox div').append('<a class="j_commentBtn" href="javascript:void(0)">评价</a>');
+
 
 
       break;
@@ -154,6 +165,90 @@ function renderPage(data) {
 
 }
 
+let commentData={};
+$(document).on('click', '.j_commentBtn', function () { // 评价
+  $.confirm('\
+  <div class="checkMissionBox">\
+    <h5>对服务商的评价</h5>\
+    <span>请您根据本次交易，给予真实客观评价。您的评价将影响服务商的信用。</span>\
+    <table>\
+      <tr>\
+        <th>验收结果：</th>\
+        <td>\
+          <div class="j_startBox"></div>\
+        </td>\
+      </tr>\
+      <tr>\
+        <th valign="top">评价内容：</th>\
+        <td>\
+          <textarea placeholder="写下您对服务商的评价吧，100个字以内。" id="commentContent" cols="30" rows="10" maxlength="100"></textarea>\
+        </td>\
+      </tr>\
+    </table>\
+  </div>', null, function (type) {
+
+    if (type == 'yes') {
+      let confirmThis=this;
+      commentData.programId=$('.missonTitle').attr('acceptanceAdviceId');
+      commentData.content=$("#commentContent").val();
+      console.log(commentData);
+
+      if(commentData.level && commentData.programId && commentData.content){
+        console.log(1);
+        $.ajax({
+          type: 'post',
+          url: "/api/release/insertEvaluation",
+          cache: false,
+          data:commentData,
+          success: function (data) {
+            console.log(data);
+            if(data.code==1){
+              $('.myCommentStart').raty({ readOnly: true, score: commentData.level });
+              $('.myCommentDetail').html(commentData.content);
+              $('.myCommentTime').html(data.data.addTime);
+              $('.commentBox').show(); //显示评价模块
+
+
+              confirmThis.hide();// 隐藏弹出框
+              $('.j_commentBtn').remove();//删除评价按钮
+
+            }else{
+              $.alert(data.message)
+            }
+          }
+        });
+
+
+      }else{
+        $.alert('请对服务商评价!')
+      }
+
+    } else {
+      this.hide();
+
+    }
+  });
+
+  $('.j_startBox').raty({
+    click: function(score, evt) {
+      // alert('ID: ' + this.id + "\nscore: " + score + "\nevent: " + evt);
+      commentData.level=score;
+      console.log(score)
+
+    }
+  });
+
+});
+
+
+
+
+
+
+
+
+
+
 $(document).on('click', '.j_checkMission', function () { // 成果验收
    let missionTitle=$('.missonTitle').html();
   $.confirm('\
@@ -163,8 +258,8 @@ $(document).on('click', '.j_checkMission', function () { // 成果验收
       <tr>\
         <th>验收结果：</th>\
         <td>\
-          <label><input type="radio" name="resultStatus" value="1" checked> 通过</label>\
-          <label><input type="radio" name="resultStatus" value="2"> 不通过,退回修改</label>\
+          <label><input type="radio" name="resultStatus" value="3" checked> 通过</label>\
+          <label><input type="radio" name="resultStatus" value="4"> 不通过,退回修改</label>\
           <label><input type="radio" name="resultStatus" value="5"> 方案不符合要求，驳回</label>\
         </td>\
       </tr>\
@@ -194,9 +289,9 @@ $(document).on('click', '.j_checkMission', function () { // 成果验收
           success: function (data) {
             console.log(data);
             if(data.code==1){
-              if(acceptanceAdvice.status == 1){
+              if(acceptanceAdvice.status == 3){
                 $('.missionStatusResult').html('验收通过，待付款！');
-              }else if(acceptanceAdvice.status == 2){
+              }else if(acceptanceAdvice.status == 4){
                 $('.missionStatusResult').html('验收不通过，待修改！');
               }else if(acceptanceAdvice.status == 5){
                 $('.missionStatusResult').html('方案不符合需求方要求，验收驳回！');
