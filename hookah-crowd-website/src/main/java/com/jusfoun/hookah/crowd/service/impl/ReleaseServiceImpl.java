@@ -300,6 +300,18 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                                 if(zbAnnexes != null){
                                     map.put("programFiles",programFiles);
                                 }
+                                //服务商的评价
+                                if(zbRequirement.getStatus().equals(ZbContants.Zb_Require_Status.WAIT_PJ.getCode().shortValue())){
+                                    List<Condition> filters4 = new ArrayList<>();
+                                    if(StringUtils.isNotBlank(zbProgram.getId().toString())){
+                                        filters4.add(Condition.eq("programId", zbProgram.getId()));
+                                        filters4.add(Condition.eq("userType", 2));
+                                    }
+                                    ZbComment zbComment = zbCommentService.selectOne(filters4);
+                                    if(zbComment != null){
+                                        map.put("zbComment",zbComment);
+                                    }
+                                }
                             }
                         }
                         break;
