@@ -44,6 +44,10 @@ public class MgZbRequireStatusServiceImpl extends GenericMongoServiceImpl<MgZbRe
         }
     }
 
+    @Override
+    public MgZbRequireStatus getByRequirementNum(String requirementNum) {
+        return null;
+    }
 
     public static void main(String[] args) throws Exception{
 //        Class clazz = Class.forName("com.itcast.day26.Person");
