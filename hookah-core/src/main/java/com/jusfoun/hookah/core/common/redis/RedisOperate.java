@@ -182,6 +182,9 @@ public class RedisOperate implements IJedisClient {
         return jedisClient.incr(key);
     }
 
-
+    @Override
+    public String hset(String key, String field, String value) {
+        return jedisClient.hset(key, field, value);
+    }
 
 }

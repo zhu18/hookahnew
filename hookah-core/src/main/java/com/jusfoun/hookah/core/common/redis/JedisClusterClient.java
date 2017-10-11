@@ -665,6 +665,11 @@ public class JedisClusterClient implements IJedisClient {
         return String.valueOf(result);
     }
 
+    @Override
+    public String hset(String key, String field, String value) {
+        return jedisCluster.hset(key, field, value).toString();
+    }
+
 
     /**
      * 获取byte[]类型Key

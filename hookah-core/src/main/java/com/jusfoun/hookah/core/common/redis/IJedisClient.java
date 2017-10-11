@@ -284,4 +284,7 @@ public interface IJedisClient {
      * @return
      */
     public String incr(String key);
+
+    public String hset(String key, String field, String value);
+
 }

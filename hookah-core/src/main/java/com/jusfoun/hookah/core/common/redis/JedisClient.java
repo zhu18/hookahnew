@@ -805,6 +805,22 @@ public class JedisClient implements IJedisClient {
         return String.valueOf(result);
     }
 
+    @Override
+    public String hset(String key, String field, String value) {
+        Long result = 0L;
+        Jedis jedis = null;
+        try {
+            jedis = getResource();
+            result = jedis.hset(key, field, value);
+            logger.debug("hset {}", key);
+        } catch (Exception e) {
+            logger.warn("hset {}", key, e);
+        } finally {
+            returnResource(jedis);
+        }
+        return String.valueOf(result);
+    }
+
     /**
      * 获取资源
      *
