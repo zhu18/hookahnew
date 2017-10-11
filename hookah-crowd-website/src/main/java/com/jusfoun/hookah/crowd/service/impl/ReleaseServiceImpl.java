@@ -332,12 +332,12 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                                 if(StringUtils.isNotBlank(zbProgram.getId().toString())){
                                     filters4.add(Condition.eq("programId", zbProgram.getId()));
                                 }
-                                ZbComment zbComment = zbCommentService.selectOne(filters4);
-                                map.put("zbComment",zbComment);
+                                List<ZbComment> zbComments = zbCommentService.selectList(filters4);
+                                map.put("zbComment",zbComments);
                             }
                         }
                         break;
-                    case 19://流标
+                    case 19://流标-到期
                         Date date = new Date();
                         try {
                             Date time1 = df.parse(df.format(date));//当前时间
