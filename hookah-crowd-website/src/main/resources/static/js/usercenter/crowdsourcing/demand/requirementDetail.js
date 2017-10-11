@@ -135,16 +135,16 @@ function renderPage(data) {
       domModel.html('已付款<br>待评价');
       missionApplyInfo(data); //任务报名信息显示
       $('.missionStatus').show();
+
       $.fn.raty.defaults.path = '/static/images/crowdsourcing';//初始化星星图标位置
 
       if(insertRequirementsData.zbComment){
-        $('.serviceCommentStart').raty({ readOnly: true, score: insertRequirementsData.zbComment.level });
+        $('.serviceCommentStar').raty({ readOnly: true, score: insertRequirementsData.zbComment.level });
         $('.serviceCommentDetail').html(insertRequirementsData.zbComment.content);
         $('.serviceCommentTime').html(insertRequirementsData.zbComment.addTime);
-
       }
       $('.missionStatusResult').html('验收通过且已付款，待评价！');
-      $('.checkAdviceDetailBox').html(insertRequirementsData.zbProgram.checkAdvice);
+      $('.checkAdviceDetailBox').html(insertRequirementsData.zbProgram.checkAdvice);//验收意见
       $('.release-first-btnbox div').append('<a class="j_commentBtn" href="javascript:void(0)">评价</a>');
 
 
@@ -152,12 +152,46 @@ function renderPage(data) {
       break;
     case 14:
       domModel.html('交易取消');
+      $('.missionStatusResult').html('方案不符合需求方要求，验收驳回！');
+      $('.checkAdviceDetailBox').html(insertRequirementsData.zbProgram.checkAdvice);//验收意见
+      $('.canNotSelect').show();//禁止选择
+      $('.missionStatus').show();//验收结果和查看验收意见按钮
+      $('.cancleStatusNotice').show();// 悬赏金额 最右侧提示
+      $('.cancleStatusNoticeContent').html('需方驳回，交易取消已退款');//悬赏金额 最右侧提示内容
+
+      missionApplyInfo(data); //任务报名信息显示
+
       break;
     case 15:
       domModel.html('交易成功');
+      $.fn.raty.defaults.path = '/static/images/crowdsourcing';//初始化星星图标位置
+
+
+      $('.myCommentStar').raty({ readOnly: true, score: insertRequirementsData.zbDemandComment.level });
+      $('.myCommentDetail').html(insertRequirementsData.zbDemandComment.content);
+      $('.myCommentTime').html(insertRequirementsData.zbDemandComment.addTime);
+
+      $('.serviceCommentStar').raty({ readOnly: true, score: insertRequirementsData.zbComment.level });
+      $('.serviceCommentDetail').html(insertRequirementsData.zbComment.content);
+      $('.serviceCommentTime').html(insertRequirementsData.zbComment.addTime);
+      $('.commentBox').show(); //显示评价模块
+
+
+      missionApplyInfo(data); //任务报名信息显示
+
+
       break;
     case 16:
       domModel.html('待退款');
+      break;
+    case 19: //流标
+      domModel.html('交易取消');
+      $('.cancleStatusNotice').show().prev().hide();// 悬赏金额 最右侧提示
+      $('.cancleStatusNoticeContent').html('无报名流标，交易取消已退款 。');//悬赏金额 最右侧提示内容
+      $('.detailMoneyBox').show();
+
+
+
       break;
   }
   rewardMoney = insertRequirementsData.zbRequirement.rewardMoney;
@@ -175,7 +209,7 @@ $(document).on('click', '.j_commentBtn', function () { // 评价
       <tr>\
         <th>验收结果：</th>\
         <td>\
-          <div class="j_startBox"></div>\
+          <div class="j_starBox"></div>\
         </td>\
       </tr>\
       <tr>\
@@ -189,7 +223,7 @@ $(document).on('click', '.j_commentBtn', function () { // 评价
 
     if (type == 'yes') {
       let confirmThis=this;
-      commentData.programId=$('.missonTitle').attr('acceptanceAdviceId');
+      commentData.programId=$('.missionTitle').attr('acceptanceAdviceId');
       commentData.content=$("#commentContent").val();
       console.log(commentData);
 
@@ -203,7 +237,7 @@ $(document).on('click', '.j_commentBtn', function () { // 评价
           success: function (data) {
             console.log(data);
             if(data.code==1){
-              $('.myCommentStart').raty({ readOnly: true, score: commentData.level });
+              $('.myCommentStar').raty({ readOnly: true, score: commentData.level });
               $('.myCommentDetail').html(commentData.content);
               $('.myCommentTime').html(data.data.addTime);
               $('.commentBox').show(); //显示评价模块
@@ -229,7 +263,7 @@ $(document).on('click', '.j_commentBtn', function () { // 评价
     }
   });
 
-  $('.j_startBox').raty({
+  $('.j_starBox').raty({
     click: function(score, evt) {
       // alert('ID: ' + this.id + "\nscore: " + score + "\nevent: " + evt);
       commentData.level=score;
@@ -242,15 +276,8 @@ $(document).on('click', '.j_commentBtn', function () { // 评价
 
 
 
-
-
-
-
-
-
-
 $(document).on('click', '.j_checkMission', function () { // 成果验收
-   let missionTitle=$('.missonTitle').html();
+   let missionTitle=$('.missionTitle').html();
   $.confirm('\
   <div class="checkMissionBox">\
     <h5>需求方验收-' + missionTitle + '</h5>\
@@ -275,7 +302,7 @@ $(document).on('click', '.j_checkMission', function () { // 成果验收
       let confirmThis=this;
       let acceptanceAdvice={};
       acceptanceAdvice.status=$("input[name='resultStatus']:checked").val();
-      acceptanceAdvice.id=$('.missonTitle').attr('acceptanceAdviceId');
+      acceptanceAdvice.id=$('.missionTitle').attr('acceptanceAdviceId');
       acceptanceAdvice.checkAdvice=$("#checkAdvice").val();
       console.log(acceptanceAdvice);
 
@@ -298,7 +325,7 @@ $(document).on('click', '.j_checkMission', function () { // 成果验收
                 $('.canNotSelect').show();
                 $('.j_missionResult-load-file-list .crowdsourcing-table-edit').remove();
               }
-              $('.checkAdviceDetailBox').html(acceptanceAdvice.checkAdvice);
+              $('.checkAdviceDetailBox').html(acceptanceAdvice.checkAdvice);//验收意见
               $('.missionStatus').show();
 
               confirmThis.hide();
@@ -336,7 +363,7 @@ function missionApplyInfo(data) { //任务报名信息显示
   $('.j_contentPhone').html(data.user.contactPhone);
   //任务成果内容
   $('.j_applyDeadline').html(data.zbRequirement.applyDeadline);
-  $('.missonTitle').html(data.zbProgram.title).attr('acceptanceAdviceId',data.zbProgram.id);
+  $('.missionTitle').html(data.zbProgram.title).attr('acceptanceAdviceId',data.zbProgram.id);
 
   $('.missionResultDes').html(data.zbProgram.content);
   //方案附件列表

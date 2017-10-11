@@ -79,7 +79,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
         if (status != null) {
             filter.add(Condition.eq("status", status));
         } else {
-            filter.add(Condition.in("status", new Short[]{1, 2, 3, 7, 8, 10, 13, 16, 14, 15}));
+            filter.add(Condition.in("status", new Short[]{1, 2, 3, 7, 8, 10, 13, 16, 14, 15 ,19}));
         }
 
         List<OrderBy> orderBys = new ArrayList<>();
