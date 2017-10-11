@@ -308,9 +308,8 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                                         filters4.add(Condition.eq("userType", 2));
                                     }
                                     ZbComment zbComment = zbCommentService.selectOne(filters4);
-                                    if(zbComment != null){
-                                        map.put("zbComment",zbComment);
-                                    }
+                                    map.put("zbComment",zbComment != null ? zbComment : " ");
+
                                 }
                             }
                         }
@@ -340,12 +339,22 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                                 if(zbAnnexes != null){
                                     map.put("programFiles",programFiles);
                                 }
+                                //服务商的平价
                                 List<Condition> filters4 = new ArrayList<>();
                                 if(StringUtils.isNotBlank(zbProgram.getId().toString())){
                                     filters4.add(Condition.eq("programId", zbProgram.getId()));
+                                    filters4.add(Condition.eq("userType", 2));
                                 }
-                                List<ZbComment> zbComments = zbCommentService.selectList(filters4);
-                                map.put("zbComment",zbComments);
+                                ZbComment zbComment = zbCommentService.selectOne(filters4);
+                                map.put("zbComment",zbComment != null ? zbComment : " ");
+                                //对服务商的评价
+                                List<Condition> filters7 = new ArrayList<>();
+                                if(StringUtils.isNotBlank(zbProgram.getId().toString())){
+                                    filters7.add(Condition.eq("programId", zbProgram.getId()));
+                                    filters7.add(Condition.eq("userType", 1));
+                                }
+                                ZbComment zbDemandComment = zbCommentService.selectOne(filters7);
+                                map.put("zbDemandComment",zbDemandComment != null ? zbDemandComment : " ");
                             }
                         }
                         break;
