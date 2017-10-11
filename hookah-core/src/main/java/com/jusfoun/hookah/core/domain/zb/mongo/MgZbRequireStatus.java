@@ -1,10 +1,8 @@
 package com.jusfoun.hookah.core.domain.zb.mongo;
 
 import com.jusfoun.hookah.core.generic.GenericModel;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import javax.persistence.Id;
-import java.util.Date;
 
 @Document
 public class MgZbRequireStatus extends GenericModel {
@@ -13,41 +11,41 @@ public class MgZbRequireStatus extends GenericModel {
     private String requirementNum;
 
     // 发布需求
-    private Date addTime;
+    private String addTime;
 
     // 平台审核
-    private Date checkTime;
+    private String checkTime;
     private String checkContext;
 
     // 资金托管
-    private Date trusteeTime;
+    private String trusteeTime;
 
     // 平台发布
-    private Date pressTime;
+    private String pressTime;
 
     // 服务商工作
-    private Date workingTime;
+    private String workingTime;
 
     // 验收付款
-    private Date payTime;
+    private String payTime;
 
     // 评价
-    private Date commentTime;
+    private String commentTime;
 
     // 报名
-    private Date applyTime;
+    private String applyTime;
 
     // 资格筛选
-    private Date selectTime;
+    private String selectTime;
 
     // 提交成果
-    private Date submitTime;
+    private String submitTime;
 
     // 平台预验
-    private Date platevalTime;
+    private String platevalTime;
 
     // 需求方验收
-    private Date requiredAcceptTime;
+    private String requiredAcceptTime;
 
     public String getRequirementNum() {
         return requirementNum;
@@ -57,19 +55,19 @@ public class MgZbRequireStatus extends GenericModel {
         this.requirementNum = requirementNum;
     }
 
-    public Date getAddTime() {
+    public String getAddTime() {
         return addTime;
     }
 
-    public void setAddTime(Date addTime) {
+    public void setAddTime(String addTime) {
         this.addTime = addTime;
     }
 
-    public Date getCheckTime() {
+    public String getCheckTime() {
         return checkTime;
     }
 
-    public void setCheckTime(Date checkTime) {
+    public void setCheckTime(String checkTime) {
         this.checkTime = checkTime;
     }
 
@@ -81,83 +79,103 @@ public class MgZbRequireStatus extends GenericModel {
         this.checkContext = checkContext;
     }
 
-    public Date getTrusteeTime() {
+    public String getTrusteeTime() {
         return trusteeTime;
     }
 
-    public void setTrusteeTime(Date trusteeTime) {
+    public void setTrusteeTime(String trusteeTime) {
         this.trusteeTime = trusteeTime;
     }
 
-    public Date getPressTime() {
+    public String getPressTime() {
         return pressTime;
     }
 
-    public void setPressTime(Date pressTime) {
+    public void setPressTime(String pressTime) {
         this.pressTime = pressTime;
     }
 
-    public Date getWorkingTime() {
+    public String getWorkingTime() {
         return workingTime;
     }
 
-    public void setWorkingTime(Date workingTime) {
+    public void setWorkingTime(String workingTime) {
         this.workingTime = workingTime;
     }
 
-    public Date getPayTime() {
+    public String getPayTime() {
         return payTime;
     }
 
-    public void setPayTime(Date payTime) {
+    public void setPayTime(String payTime) {
         this.payTime = payTime;
     }
 
-    public Date getCommentTime() {
+    public String getCommentTime() {
         return commentTime;
     }
 
-    public void setCommentTime(Date commentTime) {
+    public void setCommentTime(String commentTime) {
         this.commentTime = commentTime;
     }
 
-    public Date getApplyTime() {
+    public String getApplyTime() {
         return applyTime;
     }
 
-    public void setApplyTime(Date applyTime) {
+    public void setApplyTime(String applyTime) {
         this.applyTime = applyTime;
     }
 
-    public Date getSelectTime() {
+    public String getSelectTime() {
         return selectTime;
     }
 
-    public void setSelectTime(Date selectTime) {
+    public void setSelectTime(String selectTime) {
         this.selectTime = selectTime;
     }
 
-    public Date getSubmitTime() {
+    public String getSubmitTime() {
         return submitTime;
     }
 
-    public void setSubmitTime(Date submitTime) {
+    public void setSubmitTime(String submitTime) {
         this.submitTime = submitTime;
     }
 
-    public Date getPlatevalTime() {
+    public String getPlatevalTime() {
         return platevalTime;
     }
 
-    public void setPlatevalTime(Date platevalTime) {
+    public void setPlatevalTime(String platevalTime) {
         this.platevalTime = platevalTime;
     }
 
-    public Date getRequiredAcceptTime() {
+    public String getRequiredAcceptTime() {
         return requiredAcceptTime;
     }
 
-    public void setRequiredAcceptTime(Date requiredAcceptTime) {
+    public void setRequiredAcceptTime(String requiredAcceptTime) {
         this.requiredAcceptTime = requiredAcceptTime;
+    }
+
+    @Override
+    public String toString() {
+        return "MgZbRequireStatus{" +
+                "requirementNum='" + requirementNum + '\'' +
+                ", addTime='" + addTime + '\'' +
+                ", checkTime='" + checkTime + '\'' +
+                ", checkContext='" + checkContext + '\'' +
+                ", trusteeTime='" + trusteeTime + '\'' +
+                ", pressTime='" + pressTime + '\'' +
+                ", workingTime='" + workingTime + '\'' +
+                ", payTime='" + payTime + '\'' +
+                ", commentTime='" + commentTime + '\'' +
+                ", applyTime='" + applyTime + '\'' +
+                ", selectTime='" + selectTime + '\'' +
+                ", submitTime='" + submitTime + '\'' +
+                ", platevalTime='" + platevalTime + '\'' +
+                ", requiredAcceptTime='" + requiredAcceptTime + '\'' +
+                '}';
     }
 }

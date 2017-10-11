@@ -1,6 +1,5 @@
 package com.jusfoun.hookah.crowd.controller;
 
-import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.domain.zb.mongo.MgZbProvider;
 import com.jusfoun.hookah.core.domain.zb.vo.MgZbProviderVo;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbCheckVo;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -33,31 +31,6 @@ public class AuthController extends BaseController {
 
     @Resource
     private MgZbProviderService mgZbProviderService;
-
-    @Resource
-    RedisOperate redisOperate;
-
-    @RequestMapping(value = "/testredis", method = RequestMethod.GET)
-    public String test() {
-
-        String r1 = redisOperate.hset("123456", "addtime", "2017-09-23 19:30:34");
-        String r2 = redisOperate.hset("123456", "updatetime", "2017-09-25 19:36:34");
-        String r3 = redisOperate.hset("123456", "applytime", "2017-09-26 19:50:34");
-        String r4 = redisOperate.hset("123456", "addtime", "2017-09-29 19:30:34");
-
-        System.out.println(r1);
-        System.out.println(r2);
-        System.out.println(r3);
-
-        Map<String, String> hmap = redisOperate.getMap("123456");
-        Iterator iter = hmap.entrySet().iterator();
-        while (iter.hasNext()) {
-           Map.Entry entry = (Map.Entry) iter.next();
-           System.out.println(entry.getKey() + ":" + entry.getValue());
-        }
-        return "";
-    }
-
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(String redirect_uri, HttpServletRequest request) {

@@ -6,6 +6,18 @@ public class ZbContants {
     public static final  Short ZB_ANNEX_TYPE_REQUIREMENT = 0;
     public static final  Short ZB_ANNEX_TYPE_PROGRAM = 1;
 
+    public static final String ADDTIME = "addTime";
+    public static final String CHECKTIME = "checkTime";
+    public static final String TRUSTEETIME = "trusteeTime";
+    public static final String PRESSTIME = "pressTime";
+    public static final String WORKINGTIME = "workingTime";
+    public static final String PAYTIME = "payTime";
+    public static final String COMMENTTIME = "commentTime";
+    public static final String APPLYTIME = "applyTime";
+    public static final String SUBMITTIME = "submitTime";
+    public static final String PLATEVALTIME = "platevalTime";
+    public static final String REQUIREDACCEPTTIME = "requiredAcceptTime";
+
     /**
      * 需求周期状态
      0草稿
