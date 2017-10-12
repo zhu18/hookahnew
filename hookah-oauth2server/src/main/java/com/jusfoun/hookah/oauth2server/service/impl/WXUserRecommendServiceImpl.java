@@ -2,7 +2,7 @@ package com.jusfoun.hookah.oauth2server.service.impl;
 
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.dao.WXUserRecommendMapper;
-import com.jusfoun.hookah.core.domain.WXUserRecommend;
+import com.jusfoun.hookah.core.domain.WxUserRecommend;
 import com.jusfoun.hookah.core.domain.vo.WXUserRecommendVo;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.rpc.api.WXUserRecommendService;
@@ -15,7 +15,7 @@ import java.util.HashMap;
  * Created by lt on 2017/9/27.
  */
 @Service
-public class WXUserRecommendServiceImpl extends GenericServiceImpl<WXUserRecommend, String> implements WXUserRecommendService {
+public class WXUserRecommendServiceImpl extends GenericServiceImpl<WxUserRecommend, String> implements WXUserRecommendService {
     @Resource
     private WXUserRecommendMapper wxUserRecommendMapper;
 

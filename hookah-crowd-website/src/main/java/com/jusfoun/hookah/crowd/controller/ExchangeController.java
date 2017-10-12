@@ -30,27 +30,61 @@ import java.util.Map;
  */
 @Controller
 public class ExchangeController{
-
+    /**
+     * 需求方发布需求页面
+     */
     @RequestMapping(value = "/usercenter/crowdsourcingRelease", method = RequestMethod.GET)
     public String crowdsourcingRelease(Model model) {
         return "usercenter/crowdsourcing/demand/crowdsourcingRelease";
     }
 
+    /**
+     * 需求方 我发布的需求列表
+     */
     @RequestMapping(value = "/usercenter/myRequirements", method = RequestMethod.GET)
     public String myRequirement(Model model) {
         return "usercenter/crowdsourcing/demand/myRequirements";
     }
 
+    /**
+     * 需求方 需求详情
+     */
     @RequestMapping(value = "/usercenter/requirementDetail", method = RequestMethod.GET)
     public String requirementDetail(Model model) {
         return "usercenter/crowdsourcing/demand/requirementDetail";
     }
 
+    /**
+     * 官网展示 所有需求列表
+     */
     @RequestMapping(value = "/crowdsourcing-list", method = RequestMethod.GET)
     public String crowdsourcingList(Model model) {
         return "crowdsourcing/crowdsourcing-list";
     }
 
+    /**
+     * 服务商 需求大厅 所有需求列表
+     */
+    @RequestMapping(value = "/usercenter/demandList", method = RequestMethod.GET)
+    public String demandList(Model model) {
+        return "usercenter/crowdsourcing/service/demandList";
+    }
+
+    /**
+     * 服务商 我的任务列表
+     */
+    @RequestMapping(value = "/usercenter/myMissionList", method = RequestMethod.GET)
+    public String myMissionList(Model model) {
+        return "usercenter/crowdsourcing/service/myMissionList";
+    }
+
+    /**
+     * 服务商 需求详情
+     */
+    @RequestMapping(value = "/usercenter/missionDetail", method = RequestMethod.GET)
+    public String missionDetail(Model model) {
+        return "usercenter/crowdsourcing/service/missionDetail";
+    }
 
 
 }
