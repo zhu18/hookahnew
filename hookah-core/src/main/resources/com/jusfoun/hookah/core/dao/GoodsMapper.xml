@@ -432,6 +432,9 @@
             <if test="ver != null" >
                 ver,
             </if>
+            <if test="isLocal != null" >
+                is_local,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="goodsId != null" >

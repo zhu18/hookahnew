@@ -126,8 +126,7 @@ public class PushGoodsApi extends BaseController {
         try {
             goodsService.updateByConditionSelective(goods,filters);
             //添加商品到ES
-            GoodsCheck goodsCheck = new GoodsCheck();
-            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_GOODS_ID, goodsCheck.getGoodsId());
+            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_GOODS_ID, goods.getGoodsId());
         }catch (Exception e){
             return ReturnData.error("修改失败");
         }

@@ -198,7 +198,7 @@ public class ChannelServiceImpl extends GenericServiceImpl<Goods,String> impleme
                     goodsFifters.add(Condition.eq("goodsSn",goodsSn));
                     Goods updateGoods = new Goods();
                     updateGoods.setGoodsId(goodsId);
-                    updateGoods.setIsOffline(HookahConstants.GOODS_STATUS_OFFSALE);
+                    updateGoods.setIsOnsale(HookahConstants.GOODS_STATUS_CENTER_FORCE_OFFSALE);
                     int count = this.updateByConditionSelective(updateGoods,goodsFifters);
                     //推送es 更新索引
                     if(count > 0) {

@@ -132,6 +132,7 @@ public class HookahConstants {
     public static final Byte GOODS_STATUS_ONSALE = 1;
     public static final Byte GOODS_STATUS_OFFSALE = 0;
     public static final Byte GOODS_STATUS_FORCE_OFFSALE = 2;//强制下架
+    public static final Byte GOODS_STATUS_CENTER_FORCE_OFFSALE = 3;//资源中心强制下架
     public static final Byte GOODS_CHECK_STATUS_WAIT = 0;
     public static final Byte GOODS_CHECK_STATUS_YES = 1;
     public static final Byte GOODS_CHECK_STATUS_NOT = 2;
