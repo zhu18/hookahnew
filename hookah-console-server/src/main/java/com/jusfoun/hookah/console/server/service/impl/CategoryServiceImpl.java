@@ -210,7 +210,7 @@ public class CategoryServiceImpl extends GenericServiceImpl<Category, String> im
                 returnData.setMessage(ExceptionConst.get(ExceptionConst.AssertFailed));
                 return returnData;
             }
-            if(goodsService.getListByCatId(cateId) == null){
+            if(0 == goodsService.getListByCatId(cateId).size()){
 
                 int number = super.delete(cateId);
             }else{
