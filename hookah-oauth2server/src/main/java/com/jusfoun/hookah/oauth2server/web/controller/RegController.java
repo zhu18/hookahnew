@@ -184,7 +184,7 @@ public class RegController {
         payAccountService.insertPayAccountByUserIdAndName(regUser.getUserId(),regUser.getUserName());
 
         String recommendUserId = request.getParameter("recommendUserId");
-        if (recommendUserId != null){
+        if (StringUtils.isNotBlank(recommendUserId)){
             User recommendUser = userService.selectById(recommendUserId);
             if (recommendUser != null){
                 WxUserRecommend wxUserRecommend = new WxUserRecommend();
