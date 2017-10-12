@@ -15,7 +15,7 @@ public class ZbRequirementSPVo extends ZbRequirement{
 
     private List<ZbAnnex> annex;
 
-    private Integer operStatus;//可操作状态
+    private Integer operStatus;//可操作状态 是否已报名 或者 报名状态
 
     public Integer getOperStatus() {
         return operStatus;

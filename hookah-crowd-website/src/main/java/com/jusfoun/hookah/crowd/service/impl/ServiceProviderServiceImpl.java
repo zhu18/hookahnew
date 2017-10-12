@@ -3,10 +3,12 @@ package com.jusfoun.hookah.crowd.service.impl;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
+import com.jusfoun.hookah.core.dao.zb.ZbTypeMapper;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirementApply;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirementPageHelper;
+import com.jusfoun.hookah.core.domain.zb.ZbType;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbRequirementSPVo;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbRequirementVo;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -17,6 +19,7 @@ import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.crowd.service.ServiceProviderService;
 import com.jusfoun.hookah.crowd.service.ZbRequireApplyWebsiteService;
+import com.jusfoun.hookah.crowd.service.ZbTypeService;
 import com.jusfoun.hookah.crowd.util.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +50,9 @@ public class ServiceProviderServiceImpl extends GenericServiceImpl<ZbRequirement
 
     @Resource
     private ZbRequireApplyWebsiteService zbRequireApplyWebsiteService;
+
+    @Resource
+    private ZbTypeMapper zbTypeMapper;
 
     @Resource
     public void setDao(ZbRequirementMapper zbRequirementMapper) {
@@ -92,6 +98,10 @@ public class ServiceProviderServiceImpl extends GenericServiceImpl<ZbRequirement
             List<Condition> filters = new ArrayList<>();
             if(Objects.nonNull(helper.getRequireTitle())){
                 filters.add(Condition.like("title",helper.getRequireTitle()));
+            }
+            //需求类型
+            if(Objects.nonNull(helper.getType())){
+                filters.add(Condition.eq("type",helper.getType()));
             }
             if(Objects.nonNull(timeType) && !"".equals(timeType) &&
                     Objects.nonNull(pressTime) && !"".equals(pressTime)){
@@ -187,6 +197,9 @@ public class ServiceProviderServiceImpl extends GenericServiceImpl<ZbRequirement
             //计算报名截止剩余时间
             Date deadline = zbRequirement.getApplyDeadline();
             if (deadline != null) zbRequirement.setRemainTime(DateUtil.timeCountDown(deadline));
+            Short typeId = zbRequirement.getType();
+            ZbType zbType = zbTypeMapper.selectByPrimaryKey(typeId.intValue());
+            zbRequirement.setTypeName(zbType == null? "未知类型" : zbType.getTypeName());
             //查看当前用户是否已报名
             ZbRequirementSPVo zbRequirementVo = new ZbRequirementSPVo();
             BeanUtils.copyProperties(zbRequirement,zbRequirementVo);
