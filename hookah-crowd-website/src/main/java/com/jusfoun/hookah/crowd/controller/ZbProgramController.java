@@ -44,7 +44,7 @@ public class ZbProgramController extends BaseController {
     }
 
     /**
-     *前台选中方案重新提交
+     *前台选中方案详情
      * @return
      */
     @RequestMapping(value = "detail")
@@ -54,7 +54,7 @@ public class ZbProgramController extends BaseController {
     }
 
     /**
-     *前台选中方案重新提交
+     *服务商评价
      * @return
      */
     @RequestMapping(value = "addComment")
