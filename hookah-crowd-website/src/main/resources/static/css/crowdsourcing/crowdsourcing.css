@@ -8,6 +8,8 @@
 .crowdsourcing-menu li span{ float: left; width: 90px; padding-right: 18px; text-align: right ; background-color: #f9f9f9;}
 .crowdsourcing-menu li ul>li{ float: left;  width: 87px; margin-right:50px;  font-size:15px; text-align: center; cursor:pointer}
 .crowdsourcing-menu li ul>li.active{ color:#ff0000}
+.listFilter{ position: relative;}
+.moneyType{ position: absolute; right:25px; bottom:5px; }
 
 .lastTime{ display: inline-block; width: 100px;}
 
@@ -45,12 +47,12 @@
 
 /*我的发布*/
 .myRequirementBox{min-height: 707px;}
-.myRequirement-search  li ul>li{ font-size:13px; margin-right:0;width: 80px; }
+.myRequirement-search  li ul>li{ font-size:13px; margin-right:0;width: 78px; }
 .myRequirement-search  li ul>li.li01{ width: 210px;}
 .myRequirement-search  li ul>li.li01 input{ padding:2px 0 5px 5px}
 .myRequirement-search  li ul>li.li02{ width: 80px; background-color: #f9f9f9;}
 .myRequirement-search  li ul>li.li03{    width: 140px; }
-.myRequirement-search  li span{ width: 60px;padding-right: 12px; }
+.myRequirement-search  li span{ width: 90px;padding-right: 12px; }
 .myRequirement-search  li .searchBtn{ background: red;color: #fff;border: none; padding: 5px 30px; border-radius: 4px; cursor: pointer; }
 .myRequirement-search  li .searchBtn:hover{ background: #a40000;}
 
@@ -211,7 +213,10 @@
 .cancleStatusNotice{ position: absolute; right: 0; top: 0; font-size: 15px; color:#ff0000; display: none;}
 
 
-
-
-
+/*
+ *服务商
+*/
+.demandList-table th:last-child { width: 130px; }
+.demandList-table th:nth-child(2) { width: 190px; }
+.titleLineHeight{ line-height: 15px;}
 
