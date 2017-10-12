@@ -15,4 +15,6 @@ public interface MgZbProviderService extends GenericService<MgZbProvider, String
     ReturnData getTradeRecod(String userId, String pageNumber, String pageSize);
 
     ReturnData optAuthInfo(MgZbProviderVo vo);
+
+    boolean isAuthRealName();
 }

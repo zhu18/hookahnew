@@ -15,6 +15,7 @@ import javax.annotation.Resource;
  */
 @Service
 public class UserDetailServiceImpl extends GenericServiceImpl<UserDetail, String> implements UserDetailService {
+
     @Resource
     UserDetailMapper userDetailMapper;
 

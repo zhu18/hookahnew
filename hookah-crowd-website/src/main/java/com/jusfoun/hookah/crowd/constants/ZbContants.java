@@ -38,9 +38,10 @@ public class ZbContants {
      15交易成功
      16待退款
      17删除
-     18取消
-     19到期
+     18取消(需求取消不做了)
+     19流标
      20违约失败
+     21到期(工作时间到期)
      */
     public enum Zb_Require_Status {
 
@@ -63,8 +64,9 @@ public class ZbContants {
         WAIT_TK(16),
         DELETE(17),
         CANCEL(18),
-        DATE_EXPIRE(19),
-        BREA_FAILE(20)
+        FAIL_TO_SOLD(19),
+        BREA_FAILE(20),
+        DATE_EXPIRE(21),
         ;
 
         public Integer code;
@@ -167,4 +169,27 @@ public class ZbContants {
             return code;
         }
     }
+
+    /**
+     * 服务商认证类型
+     * 1.个人，2.企业
+     */
+    public enum ProviderAuthType {
+
+        PERSON(1),
+        COMPANY(2)
+        ;
+
+        public Integer code;
+
+        ProviderAuthType(Integer code) {
+            this.code = code;
+        }
+
+        public Integer getCode() {
+            return code;
+        }
+    }
+
+
 }

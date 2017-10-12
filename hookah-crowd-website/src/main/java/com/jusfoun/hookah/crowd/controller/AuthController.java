@@ -64,14 +64,33 @@ public class AuthController extends BaseController {
     }
 
     /**
-     * 校验是否认证
+     * 校验是否实名认证
      *
      * @param model
      * @return
      */
-    @RequestMapping(value = "/isAuth", method = RequestMethod.POST)
+    @RequestMapping(value = "/isAuthRealName")
     @ResponseBody
-    public boolean isAuth(Model model) {
+    public boolean isAuthRealName(Model model) {
+        try {
+
+            String userId = getCurrentUser().getUserId();
+            System.out.println(userId);
+            return mgZbProviderService.isAuthRealName();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * 校验是否服务商认证
+     *
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/isAuthProvider")
+    @ResponseBody
+    public boolean isAuthProvider(Model model) {
         try {
             MgZbProvider mgZbProvider = mgZbProviderService.selectById(getCurrentUser().getUserId());
             if (mgZbProvider != null && mgZbProvider.getStatus().equals(2)) {
