@@ -2,12 +2,10 @@ package com.jusfoun.hookah.console.server.service.impl;
 
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.dao.WXUserRecommendMapper;
-import com.jusfoun.hookah.core.domain.WXUserRecommend;
+import com.jusfoun.hookah.core.domain.WxUserRecommend;
 import com.jusfoun.hookah.core.domain.vo.WXUserRecommendVo;
-import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.rpc.api.WXUserRecommendService;
-import org.apache.commons.httpclient.util.DateUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -19,7 +17,7 @@ import java.util.List;
  * Created by admin on 2017/9/25.
  */
 @Service
-public class WXUserRecommendServiceImpl extends GenericServiceImpl<WXUserRecommend, String> implements WXUserRecommendService {
+public class WXUserRecommendServiceImpl extends GenericServiceImpl<WxUserRecommend, String> implements WXUserRecommendService {
 
     @Resource
     private WXUserRecommendMapper wxUserRecommendMapper;
@@ -44,7 +42,7 @@ public class WXUserRecommendServiceImpl extends GenericServiceImpl<WXUserRecomme
 
     @Override
     public void updateWXUserRecommendIsAuthenticate(String inviteeId) {
-        WXUserRecommend  recommend =new WXUserRecommend();
+        WxUserRecommend recommend =new WxUserRecommend();
         recommend.setInviteeid(inviteeId);
         recommend.setIsauthenticate((byte)1);  //将被邀请人是否认证的状态更改为是
         recommend.setUpdateTime(new Date());
@@ -53,7 +51,7 @@ public class WXUserRecommendServiceImpl extends GenericServiceImpl<WXUserRecomme
 
     @Override
     public void updateWXUserRecommendIsDeal(String inviteeId) {
-        WXUserRecommend  recommend=wxUserRecommendMapper.selectByInviteeId(inviteeId);
+        WxUserRecommend recommend=wxUserRecommendMapper.selectByInviteeId(inviteeId);
         if (recommend.getIsdeal()==0){
             recommend.setIsdeal((byte)1);  //将被邀请人是否成功交易的状态更改为是
             recommend.setUpdateTime(new Date());

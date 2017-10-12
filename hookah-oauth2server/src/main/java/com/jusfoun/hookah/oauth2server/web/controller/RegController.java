@@ -5,7 +5,7 @@ import com.jusfoun.hookah.core.annotation.Log;
 import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.User;
-import com.jusfoun.hookah.core.domain.WXUserRecommend;
+import com.jusfoun.hookah.core.domain.WxUserRecommend;
 import com.jusfoun.hookah.core.domain.vo.UserValidVo;
 import com.jusfoun.hookah.core.exception.UserRegConfirmPwdException;
 import com.jusfoun.hookah.core.exception.UserRegEmptyPwdException;
@@ -187,7 +187,7 @@ public class RegController {
         if (recommendUserId != null){
             User recommendUser = userService.selectById(recommendUserId);
             if (recommendUser != null){
-                WXUserRecommend wxUserRecommend = new WXUserRecommend();
+                WxUserRecommend wxUserRecommend = new WxUserRecommend();
                 wxUserRecommend.setRecommenderid(recommendUserId);
                 wxUserRecommend.setInviteeid(regUser.getUserId());
                 wxUserRecommend.setAddTime(new Date());
