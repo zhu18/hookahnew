@@ -15,7 +15,7 @@ var head = {
   var msId = $.getUrlParam('msId');
   var msNm = $.getUrlParam('msNm');
   var names = $.getUrlParam('names');
-  var pagePath = '/api/require/getListByUser';
+  var pagePath = '/api/myTask/getRequirementList';
   var pageType = 'get';
   var dataParm = {};
   dataParm.pageNumber = 1;
@@ -47,16 +47,16 @@ var htmlPart = {
           <ul id="status" value="">
             <input type="hidden" id="statusInput">
             <li value="" class="active">全部</li>
-            <li value="2">审核未通过</li>
-            <li value="1">待审核</li>
-            <li value="3">待托管赏金</li>
-            <li value="7">待二次托管</li>
-            <li value="8">工作中</li>
-            <li value="10">待验收付款</li>
-            <li value="13">待评价</li>
-            <li value="16">待退款</li>
-            <li value="14">交易取消</li>
-            <li value="15">交易完成</li>
+            <li value="1">待评选</li>
+            <li value="3">工作中</li>
+            <li value="4">评审中</li>
+            <li value="5">验收中</li>
+            <li value="6">待付款</li>
+            <li value="7">待评价</li>
+            <li value="8">交易取消</li>
+            <li value="9">交易完成</li>
+            <li value="2">未中标</li>
+
           </ul>
         </li>
         <li>

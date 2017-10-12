@@ -21,58 +21,52 @@ function loadPageData(data) { //渲染页面数据
     let tempState = '';
     let tempEdit = '';
     switch (data[i].status) {
+      case 0:
+        tempState = '待评选';
+        tempEdit = '<span class="signUp">查看</span>';
+        break;
       case 1:
-        tempState = '待审核';
-        tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">查看</a>';
+        tempState = '工作中'; //TODO:后台在1的状态下 是已被选中，已被选中就是处于工作中？？跟状态 3 的工作中有什么区别
+        tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">提交成果</a>';
         break;
       case 2:
-        tempState = '审核未通过';
-        tempEdit = '<a href="/usercenter/crowdsourcingRelease?id=' + data[i].id + '" class="signUp">修改</a><span class="signUp j_del" id="' + data[i].id + '">取消</span>';
+        tempState = '未中标';
+        tempEdit = '<a href="/usercenter/crowdsourcingRelease?id=' + data[i].id + '" class="signUp">查看</a>';
 
         break;
       case 3:
-        tempState = '待托管赏金';
-        tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">托管资金</a>';
-        break;
-      case 7:
-        tempState = '待二次托管';
-        tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">托管资金</a>';
-        break;
-      case 8:
         tempState = '工作中';
+        tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">提交成果</a>';
+        break;
+      case 4:
+        tempState = '评审中';
+        tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">评审结果</a>';
+        break;
+      case 5:
+        tempState = '验收中';
+        tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">验收结果</a>';
+        break;
+      case 6:
+        tempState = '待付款';
         tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">查看</a>';
         break;
-      case 10:
-        tempState = '待验收付款';
-        tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">验收</a>';
-        break;
-      case 13:
+      case 7:
         tempState = '待评价';
         tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">去评价</a>';
         break;
-      case 14:
+      case 8:
         tempState = '交易取消';
         tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">查看</a>';
         break;
-      case 15:
+      case 9:
         tempState = '交易完成';
         tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">查看</a>';
         break;
-      case 16:
-        tempState = '待退款';
-        tempEdit = '<span class="signUp">查看</span>';
-        break;
-      case 19:
-        tempState = '交易取消';
-        tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">查看</a>';
-        break;
-
-
-    }
+     }
     tempHtml += '<tr>\
           <td>' + (i + 1) + '</td>\
           <td>' + data[i].requireSn + '</td>\
-          <td>' + data[i].title + '</td>\
+          <td><div class="titleLineHeight">' + data[i].title + '</div></td>\
           <td>' + data[i].rewardMoney / 100 + '</td>\
           <td>' + tempState + '</td>\
           <td>' + data[i].addTime + '</td>\
