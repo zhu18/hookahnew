@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Created by hhh on 2017/9/20.
+ * Created by ctp on 2017/9/20.
  */
 @Service
 public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> implements ZbProgramService{

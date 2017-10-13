@@ -33,7 +33,7 @@ public class ZbRequirementPageHelper extends GenericModel {
 
     private String requireSn;//需求编号(ctp to 20171011 add)
 
-    private Short applyStatus;//报名状态(ctp to 20171011 add)  '状态；0 ：已报名；1：已被选中 2:未中标 3：工作中 4：评审中 5：验收中 6：待付款 7：待评价 8：交易取消 9：交易完成'
+    private Short applyStatus;//报名状态(ctp to 20171011 add)  '状态；0 ：已报名；1：已被选中 2:未中标  3：评审中 4：验收中 5：待付款 6：待评价 7：交易取消 8：交易完成'
 
     public Short getApplyStatus() {
         return applyStatus;

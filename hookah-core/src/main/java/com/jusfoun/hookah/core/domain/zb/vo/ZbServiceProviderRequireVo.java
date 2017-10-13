@@ -1,12 +1,14 @@
 package com.jusfoun.hookah.core.domain.zb.vo;
 
 import com.jusfoun.hookah.core.domain.zb.ZbComment;
+import com.jusfoun.hookah.core.domain.zb.mongo.MgZbRequireStatus;
+import com.jusfoun.hookah.core.generic.GenericModel;
 
 /**
  * 服务商 - 查看需求
  * Created by ctp on 2017/10/11.
  */
-public class ZbServiceProviderRequireVo {
+public class ZbServiceProviderRequireVo extends GenericModel {
 
     private Short reqStatus;//当前需求状态
 
@@ -16,7 +18,17 @@ public class ZbServiceProviderRequireVo {
 
     private ZbProgramVo zbProgramVo;//方案信息
 
-    private ZbComment zbComment;//评价
+    private ZbCommentVo zbCommentVo;//评价
+
+    private MgZbRequireStatus mgZbRequireStatus;//进度条状态时间
+
+    public MgZbRequireStatus getMgZbRequireStatus() {
+        return mgZbRequireStatus;
+    }
+
+    public void setMgZbRequireStatus(MgZbRequireStatus mgZbRequireStatus) {
+        this.mgZbRequireStatus = mgZbRequireStatus;
+    }
 
     public Short getReqStatus() {
         return reqStatus;
@@ -26,12 +38,12 @@ public class ZbServiceProviderRequireVo {
         this.reqStatus = reqStatus;
     }
 
-    public ZbComment getZbComment() {
-        return zbComment;
+    public ZbCommentVo getZbCommentVo() {
+        return zbCommentVo;
     }
 
-    public void setZbComment(ZbComment zbComment) {
-        this.zbComment = zbComment;
+    public void setZbCommentVo(ZbCommentVo zbCommentVo) {
+        this.zbCommentVo = zbCommentVo;
     }
 
     public ZbRequirementSPVo getZbRequirementSPVo() {
