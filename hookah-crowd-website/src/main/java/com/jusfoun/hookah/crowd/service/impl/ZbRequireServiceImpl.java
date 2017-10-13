@@ -224,7 +224,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             }
             if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.SINGING.getCode().shortValue())){
                 //添加平台发布时间
-                mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.SELECTTIME, DateUtil.getSimpleDate(zbRequirement.getUpdateTime()));
+                mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.PRESSTIME, DateUtil.getSimpleDate(zbRequirement.getPressTime()));
             }
 
         } catch (Exception e) {
