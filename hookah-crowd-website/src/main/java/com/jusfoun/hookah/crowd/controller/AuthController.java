@@ -69,13 +69,13 @@ public class AuthController extends BaseController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/isAuthRealName")
+    @RequestMapping(value = "/api/isAuthRealName")
     @ResponseBody
     public boolean isAuthRealName(Model model) {
         try {
 
-            String userId = getCurrentUser().getUserId();
-            System.out.println(userId);
+//            String userId = this.getCurrentUser().getUserId();
+//            System.out.println(userId);
             return mgZbProviderService.isAuthRealName();
         } catch (Exception e) {
             return false;
@@ -88,7 +88,7 @@ public class AuthController extends BaseController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/isAuthProvider")
+    @RequestMapping(value = "/api/isAuthProvider")
     @ResponseBody
     public boolean isAuthProvider(Model model) {
         try {
@@ -108,7 +108,7 @@ public class AuthController extends BaseController {
      *
      * @return
      */
-    @RequestMapping(value = "/auth/getAuthInfo")
+    @RequestMapping(value = "/api/auth/getAuthInfo")
     @ResponseBody
     public ReturnData getAuthInfo() {
 
@@ -133,8 +133,8 @@ public class AuthController extends BaseController {
     public ReturnData optAuthInfo(@RequestBody MgZbProviderVo vo) {
 
         try {
-            String userId = getCurrentUser().getUserId();
-            vo.setUserId(userId);
+//            String userId = getCurrentUser().getUserId();
+//            vo.setUserId(userId);
             return mgZbProviderService.optAuthInfo(vo);
         } catch (Exception e) {
             logger.error("认证信息删除失败", e);
@@ -144,11 +144,10 @@ public class AuthController extends BaseController {
 
     /**
      * 服务商审核
-     *
      * @param vo
      * @return
      */
-    @RequestMapping(value = "/auth/checkAuthInfo", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/auth/checkAuthInfo", method = RequestMethod.POST)
     @ResponseBody
     public ReturnData dcheckAuthInfo(ZbCheckVo vo) {
 

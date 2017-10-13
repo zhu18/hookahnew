@@ -233,7 +233,7 @@ public class AuthController extends BaseController {
             user.setUserType(HookahConstants.UserType.PERSON_CHECK_NO.getCode());
             userService.updateByIdSelective(user);
             //更新微信用户推荐表
-            wxUserRecommendService.updateWXUserRecommendIsAuthenticate(userId);
+//            wxUserRecommendService.updateWXUserRecommendIsAuthenticate(userId);
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());

@@ -19,10 +19,7 @@ import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.crowd.constants.ZbContants;
-import com.jusfoun.hookah.crowd.service.MgZbProviderService;
-import com.jusfoun.hookah.crowd.service.OrganizationService;
-import com.jusfoun.hookah.crowd.service.UserDetailService;
-import com.jusfoun.hookah.crowd.service.ZbRequireService;
+import com.jusfoun.hookah.crowd.service.*;
 import com.jusfoun.hookah.crowd.util.DateUtil;
 import com.jusfoun.hookah.crowd.util.DictionaryUtil;
 import com.mongodb.BasicDBObject;
@@ -49,6 +46,9 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
 
     @Resource
     UserDetailService userDetailService;
+
+    @Resource
+    UserService userService;
 
     @Resource
     OrganizationService organizationService;
@@ -99,7 +99,7 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                 logger.info(JSON.toJSONString(writeResult));
             }
 
-            return ReturnData.success();
+            return ReturnData.success("认证信息审核成功");
         }catch (Exception e){
             logger.error("认证信息审核异常", e);
             return ReturnData.error("系统繁忙，请稍后再试！[check]^_^");
@@ -156,15 +156,17 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
             MgZbProvider mgZbProvider = mongoTemplate.findById(vo.getUserId(), MgZbProvider.class);
             if(mgZbProvider == null){
 
-                User user = getCurrentUser();
+//                String userId = this.getCurrentUser().getUserId();
+//                User user = userService.selectById(userId);
                 MgZbProvider mzp = new MgZbProvider();
                 BeanUtils.copyProperties(vo, mzp);
 
-                if(user.getUserType() == 4){
-                    Organization organization = organizationService.findOrgByUserId(user.getUserId());
-                    if(organization == null || !organization.getIsAuth().equals(Byte.valueOf("2"))){
-                        return ReturnData.error("请先进行企业认证！");
-                    }
+                if(this.getCurrentUser().getUserType().equals(4)){
+                    Organization organization = organizationService.findOrgByUserId(this.getCurrentUser().getUserId());
+//                    这段注释的代码可能不需要了
+//                    if(organization == null || !organization.getIsAuth().equals(Byte.valueOf("2"))){
+//                        return ReturnData.error("请先进行企业认证！");
+//                    }
                     mzp.setAuthType(ZbContants.ProviderAuthType.COMPANY.code);
                     mzp.setUpname(organization.getOrgName());
                     mzp.setUcity((organization.getRegion() == null || "".equals(organization.getRegion())) ? "" : DictionaryUtil.getRegionById(organization.getRegion()).getMergerName());
@@ -174,17 +176,22 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                     mzp.setRegisterAddr((organization.getRegion() == null || "".equals(organization.getRegion())) ? "" : DictionaryUtil.getRegionById(organization.getRegion()).getMergerName());
                     mzp.setCreditCode(organization.getCreditCode());
                     mzp.setScopeOfBuss(organization.getIndustry());
-                }else if(user.getUserType() == 2){
+                }else if(this.getCurrentUser().getUserType().equals(2)){
+                    String userId = this.getCurrentUser().getUserId();
+                    User user = userService.selectById(userId);
                     UserDetail userDetail = userDetailService.selectById(user.getUserId());
-                    if(userDetail == null || !userDetail.getIsAuth().equals(Byte.valueOf("2"))){
-                        return ReturnData.error("请先进行个人认证！");
-                    }
+//                    这段注释的代码可能不需要了
+//                    if(userDetail == null || !userDetail.getIsAuth().equals(Byte.valueOf("2"))){
+//                        return ReturnData.error("请先进行个人认证！");
+//                    }
                     mzp.setAuthType(ZbContants.ProviderAuthType.PERSON.code);
                     mzp.setRegisterTime(DateUtil.getSimpleDate(new Date()));
                     mzp.setPhoneNum(user.getContactPhone());
                     mzp.setUpname(user.getUserName());
 //                    mzp.setUcity((userDetail.getAddress() == null || "".equals(userDetail.getAddress())) ? "" : DictionaryUtil.getRegionById(userDetail.getAddress()).getMergerName());
                     mzp.setRegisterAddr(user.getContactAddress());
+                }else{
+                    return ReturnData.error("请先认证！");
                 }
                 mzp.setAddTime(new Date());
                 mzp.setUpdateTime(new Date());
@@ -336,21 +343,30 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
     public boolean isAuthRealName() {
 
         try {
-            User user = getCurrentUser();
-            if(user.getUserType() == 4){
-                Organization organization = organizationService.findOrgByUserId(user.getUserId());
-                if(organization == null || !organization.getIsAuth().equals(Byte.valueOf("2"))){
-                    return false;
-                }
-            }else if(user.getUserType() == 2){
-                UserDetail userDetail = userDetailService.selectById(user.getUserId());
-                if(userDetail == null || !userDetail.getIsAuth().equals(Byte.valueOf("2"))){
-                    return false;
-                }
+            Integer userType = this.getCurrentUser().getUserType();
+//            User user = userService.selectById(userId);
+
+//            org与detail中的实名认证状态无用
+//            if(user.getUserType() == 4){
+//                Organization organization = organizationService.findOrgByUserId(user.getUserId());
+//                if(organization == null || !organization.getIsAuth().equals(Byte.valueOf("2"))){
+//                    return false;
+//                }
+//            }else if(user.getUserType() == 2){
+//                UserDetail userDetail = userDetailService.selectById(user.getUserId());
+//                if(userDetail == null || !userDetail.getIsAuth().equals(Byte.valueOf("2"))){
+//                    return false;
+//                }
+//            }else{
+//                return false;
+//            }
+
+//          现在只需要判断是否等于4（企业）和是否等于2（个人）
+            if(userType.equals(4) || userType.equals(2)){
+                return true;
+            }else{
+                return false;
             }
-
-            return true;
-
         } catch (HookahException e) {
             e.printStackTrace();
         }

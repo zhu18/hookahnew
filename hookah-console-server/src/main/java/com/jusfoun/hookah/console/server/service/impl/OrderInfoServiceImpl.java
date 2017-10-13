@@ -668,7 +668,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             countSales(orderInfo.getOrderId());
 
             //更新微信推荐是否成功交易状态
-            wxUserRecommendService.updateWXUserRecommendIsDeal(orderInfo.getUserId());
+//            wxUserRecommendService.updateWXUserRecommendIsDeal(orderInfo.getUserId());
 
         }
         //        if(list!=null&&list.size()>0){
