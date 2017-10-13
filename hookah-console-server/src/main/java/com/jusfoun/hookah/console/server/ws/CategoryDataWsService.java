@@ -28,9 +28,10 @@ public class CategoryDataWsService {
 
         List<Category> categoryTradeList = JSON.parseArray(jsonStr, Category.class);
 
+        List<Condition> filters = new ArrayList();
+
         if (categoryTradeList != null && categoryTradeList.size() > 0){
 
-            List<Condition> filters = new ArrayList();
             if(categoryService.exists(filters)){
                 categoryService.deleteByCondtion(filters);
                 categoryService.insertBatch(categoryTradeList);
@@ -38,7 +39,9 @@ public class CategoryDataWsService {
                 categoryService.insertBatch(categoryTradeList);
             }
 
-            return  DateUtils.toDefaultNowTime();
+//            return  DateUtils.toDefaultNowTime();
+        }else if(categoryTradeList.size() == 0){
+            categoryService.deleteByCondtion(filters);
         }
         return  DateUtils.toDefaultNowTime();
     }
