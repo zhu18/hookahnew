@@ -14,6 +14,7 @@ import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
+import com.jusfoun.hookah.crowd.constants.ZbContants;
 import com.jusfoun.hookah.crowd.service.*;
 import com.jusfoun.hookah.crowd.util.DateUtil;
 import org.slf4j.Logger;
@@ -226,12 +227,21 @@ public class ServiceProviderServiceImpl extends GenericServiceImpl<ZbRequirement
             //时间条信息
             MgZbRequireStatus mgZbRequireStatus = mgZbRequireStatusService.getByRequirementSn(zbRequirement.getRequireSn());
 
+            //类似任务
+            filters.clear();
+            filters.add(Condition.eq("type",zbRequirement.getType()));
+            filters.add(Condition.eq("status", ZbContants.Zb_Require_Status.SINGING.getCode().shortValue()));
+            List<OrderBy> orderBys = new ArrayList<>();
+            orderBys.add(OrderBy.desc("pressTime"));
+            List<ZbRequirement> anTaskRequires = this.selectList(filters,orderBys);
+
             zbServiceProviderRequireVo.setZbRequirementSPVo(zbRequirementSPVo);//需求信息
             zbServiceProviderRequireVo.setZbProgramVo(zbProgramVo);//方案信息
             zbServiceProviderRequireVo.setZbRequirementApplyVo(zbRequirementApplyVo);//报名信息
             zbServiceProviderRequireVo.setMgZbRequireStatus(mgZbRequireStatus);//时间条信息
             zbServiceProviderRequireVo.setReqStatus(zbRequirementApplyVo == null ? -1 : zbRequirementApplyVo.getStatus());//当前用户的需求状态
             zbServiceProviderRequireVo.setZbCommentVo(buildZbCommentVo(zbProgramVo == null ? null : zbProgramVo.getId()));//评论信息
+            zbServiceProviderRequireVo.setAnalogyTask(anTaskRequires);//类似任务
 
             returnData.setData(zbServiceProviderRequireVo);
         } catch (Exception e) {
@@ -242,6 +252,7 @@ public class ServiceProviderServiceImpl extends GenericServiceImpl<ZbRequirement
         return returnData;
     }
 
+    //获取当前需求的评价
     private ZbCommentVo buildZbCommentVo(Long zbProgId){
         ZbCommentVo zbCommentVo = new ZbCommentVo();
 
