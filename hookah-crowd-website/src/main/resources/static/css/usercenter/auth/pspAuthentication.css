@@ -73,3 +73,28 @@
     width: 167px;
     border: 1px solid #e5e5e5;
 }
+
+#education .upload-box {
+    position: relative;
+}
+#education input.fileUploadBtn {
+    min-width: 70px;
+    width: 70px;
+    position: relative;
+    z-index: 1;
+    background-color: #ff0000;
+    opacity: 0;
+}
+#education  .falseBen {
+    width: 70px;
+    height: 25px;
+    display: inline-block;
+    position: absolute;
+    left: 7px;
+    top: 7px;
+    line-height: 25px;
+    text-align: center;
+    background-color: #078cfc;
+    color: #fff;
+    border-color: #078cfc;
+}

@@ -91,20 +91,22 @@ myconf:
     suffix: .html
     cache: false
   host:
-    domain: qddata.com.cn
-    website: ${server.http.protocal}trade.qddata.com.cn
-    static: ${server.http.protocal}static.qddata.com.cn
-    auth: ${server.http.protocal}auth.qddata.com.cn
-    console: ${server.http.protocal}console.qddata.com.cn
+    domain: galaxybigdata.com
+    cms: ${server.http.protocal}www.galaxybigdata.com
+    website: ${server.http.protocal}www.galaxybigdata.com
+    static: ${server.http.protocal}static.galaxybigdata.com
+    auth: ${server.http.protocal}auth.galaxybigdata.com
+    console: ${server.http.protocal}console.galaxybigdata.com
+    crowd: ${server.http.protocal}crowd.galaxybigdata.com
   oauth2:
     clientId: admin
     clientSecret: Yqn2ht4DYkMHlDvTY7CV
-    regUrl: http://auth.qddata.com.cn/reg
-    loginUrl: http://auth.qddata.com.cn/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://admin.qddata.com.cn/home
-    logoutUrl: http://auth.qddata.com.cn/logout?redirect_uri=http://trade.qddata.com.cn/login
-    accessTokenUrl: http://auth.qddata.com.cn/oauth/accessToken
-    userInfoUrl: http://auth.qddata.com.cn/userInfo
-    redirectUrl: http://auth.qddata.com.cn/login
+    regUrl: http://auth.galaxybigdata.com.cn/reg
+    loginUrl: http://auth.galaxybigdata.com.cn/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://admin.galaxybigdata.com.cn/home
+    logoutUrl: http://auth.galaxybigdata.com.cn/logout?redirect_uri=http://trade.galaxybigdata.com.cn/login
+    accessTokenUrl: http://auth.galaxybigdata.com.cn/oauth/accessToken
+    userInfoUrl: http://auth.galaxybigdata.com.cn/userInfo
+    redirectUrl: http://auth.galaxybigdata.com.cn/login
   api:
     url: http://192.168.200.116:5555/gateway/insert
     tokenUrl: http://192.168.200.116:5555/gateway/getToken
@@ -112,7 +114,7 @@ myconf:
   redis:
     ipPort: 192.168.15.90:7000,192.168.15.90:7001,192.168.15.90:7002
   consul:
-    ipPort: 192.168.15.90:8500
+    ipPort: 192.168.15.202:8500
   es:
-    ipPort: 192.168.200.116:9300
+    ipPort: 192.168.15.175:9300
 debug: true

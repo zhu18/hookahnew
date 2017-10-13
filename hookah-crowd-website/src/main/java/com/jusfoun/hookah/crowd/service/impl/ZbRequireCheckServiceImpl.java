@@ -8,7 +8,9 @@ import com.jusfoun.hookah.core.domain.zb.ZbRequirementCheck;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.crowd.constants.ZbContants;
+import com.jusfoun.hookah.crowd.service.MgZbRequireStatusService;
 import com.jusfoun.hookah.crowd.service.ZbRequireCheckService;
+import com.jusfoun.hookah.crowd.util.DateUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -24,8 +26,10 @@ public class ZbRequireCheckServiceImpl extends GenericServiceImpl<ZbRequirementC
     private ZbRequirementCheckMapper zbRequirementCheckMapper;
 
     @Resource
-    ZbRequirementMapper zbRequirementMapper;
+    MgZbRequireStatusService mgZbRequireStatusService;
 
+    @Resource
+    ZbRequirementMapper zbRequirementMapper;
 
     @Resource
     public void setDao(ZbRequirementCheckMapper zbRequirementCheckMapper) {
@@ -36,8 +40,13 @@ public class ZbRequireCheckServiceImpl extends GenericServiceImpl<ZbRequirementC
     public ReturnData<ZbRequirementCheck> requirementCheck(ZbRequirementCheck zbRequirementCheck, User user) {
         ReturnData returnData = new ReturnData<>();
         ZbRequirement zbRequirement = new ZbRequirement();
+        ZbRequirement zbRequirement1= zbRequirementMapper.selectByPrimaryKey(zbRequirementCheck.getRequirementId());
+
         if (zbRequirementCheck.getRequirementId()!=null) {
             zbRequirement.setId(zbRequirementCheck.getRequirementId());
+        }
+        if (zbRequirement1.getRequireSn()!=null){
+            zbRequirement.setRequireSn(zbRequirement1.getRequireSn());
         }
         zbRequirementCheck.setCheckContent(zbRequirementCheck.getCheckContent());
         zbRequirementCheck.setRequirementId(zbRequirementCheck.getRequirementId());
@@ -56,6 +65,11 @@ public class ZbRequireCheckServiceImpl extends GenericServiceImpl<ZbRequirementC
             if (null != zbRequirementCheck.getCheckStatus() && Short.valueOf("2").equals(zbRequirementCheck.getCheckStatus())){
                 zbRequirement.setStatus(ZbContants.Zb_Require_Status.CHECK_NOT.getCode().shortValue());
             }
+            //添加平台审核时间
+            if (zbRequirement.getRequireSn()!=null){
+                mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.CHECKTIME, DateUtil.getSimpleDate(zbRequirementCheck.getCheckTime()));
+            }
+
             zbRequirementMapper.updateByPrimaryKeySelective(zbRequirement);
 
         }catch (Exception e){

@@ -71,13 +71,13 @@ public class WXUserRecommendServiceImpl extends GenericServiceImpl<WxUserRecomme
     }
 
     @Override
-    public Pagination<WxUserRecommend> findRecommendDetailsByRecommenderId(HashMap<String, Object> paramMap) {
-        Pagination<WxUserRecommend> pagination = new Pagination<>();
+    public Pagination<WXUserRecommendVo> findRecommendDetailsByRecommenderId(HashMap<String, Object> paramMap) {
+        Pagination<WXUserRecommendVo> pagination = new Pagination<>();
         //int startIndex = ((int)paramMap.get("pageNum") - 1) * (int)paramMap.get("pageSize");
         PageHelper.startPage((int)paramMap.get("pageNum"), (int)paramMap.get("pageSize"));   //pageNum为第几页，pageSize为每页数量
-        List<WxUserRecommend> list = wxUserRecommendMapper.findRecommendDetailsByRecommenderId(paramMap);
+        List<WXUserRecommendVo> list = wxUserRecommendMapper.findRecommendDetailsByRecommenderId(paramMap);
         //int count = wxUserRecommendMapper.countRecommendDetailsByRecommenderId(paramMap);
-        PageInfo<WxUserRecommend> page = page = new PageInfo<WxUserRecommend>(list);
+        PageInfo<WXUserRecommendVo> page = page = new PageInfo<WXUserRecommendVo>(list);
         pagination.setTotalItems(page.getTotal());
         pagination.setPageSize((int)paramMap.get("pageSize"));
         pagination.setCurrentPage((int)paramMap.get("pageNum"));

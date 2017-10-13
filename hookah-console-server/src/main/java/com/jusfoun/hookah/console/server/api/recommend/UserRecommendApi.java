@@ -3,7 +3,6 @@ package com.jusfoun.hookah.console.server.api.recommend;
 import com.jusfoun.hookah.console.server.controller.BaseController;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
-import com.jusfoun.hookah.core.domain.WxUserRecommend;
 import com.jusfoun.hookah.core.domain.vo.WXUserRecommendVo;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
@@ -112,7 +111,7 @@ public class UserRecommendApi extends BaseController {
                 pageSizeNew = Integer.parseInt(pageSize);
             }
             if (!StringUtils.isNotBlank(order)) {
-                order = "reg_time";
+                order = "regTime";
             }
             if (!StringUtils.isNotBlank(sort)) {
                 sort = "DESC";
@@ -124,7 +123,7 @@ public class UserRecommendApi extends BaseController {
             paramMap.put("order",order);
             paramMap.put("sort",sort);
             paramMap.put("startIndex",(pageNumberNew-1)*pageSizeNew);
-            Pagination<WxUserRecommend> page=wxUserRecommendService.findRecommendDetailsByRecommenderId(paramMap);
+            Pagination<WXUserRecommendVo> page=wxUserRecommendService.findRecommendDetailsByRecommenderId(paramMap);
             returnData.setData(page);
             returnData.setCode(ExceptionConst.Success);
         }catch (Exception e){

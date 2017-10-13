@@ -11,9 +11,7 @@ import java.util.List;
  */
 public class ZbRequirementSPVo extends ZbRequirement{
 
-    private Double rewardMoneyWebsite;
-
-    private List<ZbAnnex> annex;
+    private List<ZbAnnex> annex;//需求附件
 
     private Integer operStatus;//可操作状态 是否已报名 或者 报名状态
 
@@ -25,7 +23,6 @@ public class ZbRequirementSPVo extends ZbRequirement{
         this.operStatus = operStatus;
     }
 
-
     public List<ZbAnnex> getAnnex() {
         return annex;
     }
@@ -34,11 +31,4 @@ public class ZbRequirementSPVo extends ZbRequirement{
         this.annex = annex;
     }
 
-    public Double getRewardMoneyWebsite() {
-        return rewardMoneyWebsite;
-    }
-
-    public void setRewardMoneyWebsite(Double rewardMoneyWebsite) {
-        this.rewardMoneyWebsite = rewardMoneyWebsite;
-    }
 }

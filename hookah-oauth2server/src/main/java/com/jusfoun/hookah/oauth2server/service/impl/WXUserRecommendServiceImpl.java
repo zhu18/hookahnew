@@ -49,7 +49,7 @@ public class WXUserRecommendServiceImpl extends GenericServiceImpl<WxUserRecomme
     }
 
     @Override
-    public Pagination<WxUserRecommend> findRecommendDetailsByRecommenderId(HashMap<String, Object> paramMap) {
+    public Pagination<WXUserRecommendVo> findRecommendDetailsByRecommenderId(HashMap<String, Object> paramMap) {
         return null;
     }
 }

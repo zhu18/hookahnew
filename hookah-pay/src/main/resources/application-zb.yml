@@ -1,15 +1,15 @@
 server:
-  port: 9900
+  port: 9898
   http:
-      protocal: http://
+    protocal: http://
   session:
     cookie:
-      domain: galaxybigdata.com
+      domain: qddata.com.cn
       name: hookah_sid
 spring:
   datasource:
-    url: jdbc:log4jdbc:mysql://192.168.15.90:3306/bdgStore?characterEncoding=utf8&useSSL=false&autoReconnect=true&failOverReadOnly=false&autoReconnectForPools=true
-    driverClassName: net.sf.log4jdbc.DriverSpy
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.15.90:3306/bdgStore?&characterEncoding=utf8&autoReconnect=true&useSSL=false
     username: root
     password: password
     initialize: true
@@ -38,7 +38,7 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
   data:
     mongodb:
-      uri:  mongodb://192.168.15.90:27017/hookah
+      uri:  mongodb://192.168.15.90:27017/hookah_pay
   rabbitmq:
     addresses: 192.168.200.116:5672
     username: root
@@ -47,14 +47,13 @@ spring:
     virtual-host: /
     listener:
       retry:
-      enabled: true
-      max-attempts: 2
+        enabled: true
+        max-attempts: 2
   mail:
-      host: smtp.galaxybigdata.com
-      username: service@qddata.com.cn
-      password: Bigdata8661101
-      transport:
-        protocol: smtp
+      host: smtp.qiye.163.com
+      port: 25
+      username: gbd@jusfoun.com
+      password: 1QAZ2wsx
       properties:
         mail:
           smtp:
@@ -63,6 +62,14 @@ spring:
               enable: true
             socketFactory:
               fallback: false
+#  jpa:
+#    database: MYSQL
+#    show-sql: true
+##    hibernate:
+##      ddl-auto: create-drop
+#    properties:
+#      hibernate:
+#        dialect : org.hibernate.dialect.MySQL5Dialect
   mvc:
     static-path-pattern: /static/**
 myconf:
@@ -80,10 +87,17 @@ myconf:
     auth: ${server.http.protocal}auth.galaxybigdata.com
     console: ${server.http.protocal}console.galaxybigdata.com
     crowd: ${server.http.protocal}crowd.galaxybigdata.com
-  site:
-      user-default-img: /static/images/user-safe-head.png
+  oauth2:
+    clientId: admin
+    clientSecret: Yqn2ht4DYkMHlDvTY7CV
+    regUrl: http://auth.galaxybigdata.com.cn/reg
+    loginUrl: http://auth.galaxybigdata.com.cn/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://admin.galaxybigdata.com.cn/home
+    logoutUrl: http://auth.galaxybigdata.com.cn/logout?redirect_uri=http://trade.galaxybigdata.com.cn/login
+    accessTokenUrl: http://auth.galaxybigdata.com.cn/oauth/accessToken
+    userInfoUrl: http://auth.galaxybigdata.com.cn/userInfo
+    redirectUrl: http://auth.galaxybigdata.com.cn/login
   redis:
     ipPort: 192.168.15.90:7000,192.168.15.90:7001,192.168.15.90:7002
   consul:
-      ipPort: 127.0.0.1:8500
+    ipPort: 127.0.0.1:8500
 debug: true

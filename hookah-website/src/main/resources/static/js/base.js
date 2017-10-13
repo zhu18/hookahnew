@@ -28,7 +28,7 @@ $(document).ready(function () {
     if(pathname.indexOf('/exchange/index') >= 0){
       $('#navList li:nth-child(1)').addClass('active');
     }
-    if(pathname.indexOf('/crowdsourcing-list') >= 0){
+    if(pathname.indexOf('/crowdsourcing') >= 0){
       $('#navList li:nth-child(3)').addClass('active');
     }
     if(pathname.indexOf('/exchange/list') >= 0 || pathname.indexOf('/exchange/details') >= 0){

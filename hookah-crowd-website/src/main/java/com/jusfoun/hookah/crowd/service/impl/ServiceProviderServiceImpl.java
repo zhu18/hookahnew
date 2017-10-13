@@ -5,21 +5,16 @@ import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
 import com.jusfoun.hookah.core.dao.zb.ZbTypeMapper;
 import com.jusfoun.hookah.core.domain.User;
-import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
-import com.jusfoun.hookah.core.domain.zb.ZbRequirementApply;
-import com.jusfoun.hookah.core.domain.zb.ZbRequirementPageHelper;
-import com.jusfoun.hookah.core.domain.zb.ZbType;
-import com.jusfoun.hookah.core.domain.zb.vo.ZbRequirementSPVo;
-import com.jusfoun.hookah.core.domain.zb.vo.ZbRequirementVo;
+import com.jusfoun.hookah.core.domain.zb.*;
+import com.jusfoun.hookah.core.domain.zb.mongo.MgZbRequireStatus;
+import com.jusfoun.hookah.core.domain.zb.vo.*;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
-import com.jusfoun.hookah.crowd.service.ServiceProviderService;
-import com.jusfoun.hookah.crowd.service.ZbRequireApplyWebsiteService;
-import com.jusfoun.hookah.crowd.service.ZbTypeService;
+import com.jusfoun.hookah.crowd.service.*;
 import com.jusfoun.hookah.crowd.util.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,6 +48,18 @@ public class ServiceProviderServiceImpl extends GenericServiceImpl<ZbRequirement
 
     @Resource
     private ZbTypeMapper zbTypeMapper;
+
+    @Resource
+    private ZbProgramService zbProgramService;
+
+    @Resource
+    private ZbAnnexService zbAnnexService;
+
+    @Resource
+    MgZbRequireStatusService mgZbRequireStatusService;
+
+    @Resource
+    ZbCommentService zbCommentService;
 
     @Resource
     public void setDao(ZbRequirementMapper zbRequirementMapper) {
@@ -189,7 +196,71 @@ public class ServiceProviderServiceImpl extends GenericServiceImpl<ZbRequirement
     public ReturnData findByRequirementId(Long reqId) {
         ReturnData returnData = new ReturnData();
         returnData.setCode(ExceptionConst.Success);
-        return null;
+        if(Objects.isNull(reqId)){
+            returnData.setCode(ExceptionConst.AssertFailed);
+            returnData.setMessage(ExceptionConst.get(ExceptionConst.AssertFailed));
+            return returnData;
+        }
+        try{
+            ZbServiceProviderRequireVo zbServiceProviderRequireVo = new ZbServiceProviderRequireVo();
+            //----需求信息 start----
+            ZbRequirement zbRequirement = zbRequirementMapper.selectByPrimaryKey(reqId);
+            List<Condition> filters = new ArrayList<>();
+            if (zbRequirement.getId() != null) {
+                filters.add(Condition.eq("correlationId", zbRequirement.getId()));
+            }
+            filters.add(Condition.eq("type", 0));
+            //需求附件
+            List<ZbAnnex> zbAnnexes = zbAnnexService.selectList(filters);
+            ZbRequirementSPVo zbRequirementSPVo = new ZbRequirementSPVo();
+            BeanUtils.copyProperties(zbRequirement,zbRequirementSPVo);
+            zbRequirementSPVo.setAnnex(zbAnnexes);
+            //----需求信息 end----
+
+            //方案信息
+            ZbProgramVo zbProgramVo = zbProgramService.selectProgramByReqId(reqId) == null ? new ZbProgramVo() : (ZbProgramVo) zbProgramService.selectProgramByReqId(reqId).getData();
+
+            //报名信息
+            ZbRequirementApplyVo zbRequirementApplyVo = zbRequireApplyWebsiteService.selectByReqId(reqId) == null ? new ZbRequirementApplyVo() : (ZbRequirementApplyVo) zbRequireApplyWebsiteService.selectByReqId(reqId).getData();
+
+            //时间条信息
+            MgZbRequireStatus mgZbRequireStatus = mgZbRequireStatusService.getByRequirementSn(zbRequirement.getRequireSn());
+
+            zbServiceProviderRequireVo.setZbRequirementSPVo(zbRequirementSPVo);//需求信息
+            zbServiceProviderRequireVo.setZbProgramVo(zbProgramVo);//方案信息
+            zbServiceProviderRequireVo.setZbRequirementApplyVo(zbRequirementApplyVo);//报名信息
+            zbServiceProviderRequireVo.setMgZbRequireStatus(mgZbRequireStatus);//时间条信息
+            zbServiceProviderRequireVo.setReqStatus(zbRequirementApplyVo == null ? -1 : zbRequirementApplyVo.getStatus());//当前用户的需求状态
+            zbServiceProviderRequireVo.setZbCommentVo(buildZbCommentVo(zbProgramVo == null ? null : zbProgramVo.getId()));//评论信息
+
+            returnData.setData(zbServiceProviderRequireVo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setData(ExceptionConst.get(ExceptionConst.Error));
+        }
+        return returnData;
+    }
+
+    private ZbCommentVo buildZbCommentVo(Long zbProgId){
+        ZbCommentVo zbCommentVo = new ZbCommentVo();
+
+        if(Objects.nonNull(zbProgId)){
+            //对服务商的评价
+            List<Condition> filters = new ArrayList<>();
+            filters.add(Condition.eq("programId", zbProgId));
+            filters.add(Condition.eq("userType", 2));
+            ZbComment servicerComment = zbCommentService.selectOne(filters);
+            zbCommentVo.setServicerComment(servicerComment);
+
+            //对需求方的评价
+            filters.clear();
+            filters.add(Condition.eq("programId", zbProgId));
+            filters.add(Condition.eq("userType", 1));
+            ZbComment requireComment = zbCommentService.selectOne(filters);
+            zbCommentVo.setRequireZbComment(requireComment);
+        }
+        return zbCommentVo;
     }
 
     //服务商 - 需求大厅 - 封装数据
