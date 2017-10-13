@@ -51,6 +51,11 @@ public class ExchangeController{
         return "crowdsourcing/crowdsourcing-list";
     }
 
+    @RequestMapping(value = "/usercenter/pspAuthentication", method = RequestMethod.GET)
+    public String pspAuthentication(Model model) {
+        return "usercenter/auth/pspAuthentication";
+    }
+
 
 
 }

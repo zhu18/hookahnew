@@ -3,11 +3,12 @@
  */
 
 class detailsController {
-    constructor($scope, $rootScope, $http, $state,$stateParams,growl) {
+    constructor($scope, $rootScope, $http, $state,$stateParams,growl,$filter) {
         console.log($stateParams.id);
         $scope.apply={
-
         };
+
+        $scope.currDate=$filter('format')(new Date(), 'yyyy-MM-dd HH:mm:ss');
         $scope.screen = function () {
             let promise = $http({
                 method: 'GET',
@@ -21,6 +22,7 @@ class detailsController {
                     var zbRequirement= res.data.data.zbRequirement; //基本信息
                     var zbRequirementApplies= res.data.data.zbRequirementApplies; //报名的人
                     var zbPrograms= res.data.data.zbPrograms;
+                    var zbComments= res.data.data.zbComments;
                     $scope.zbAnnexes= res.data.data.zbAnnexes;
                     //基本信息
                     $scope.requiremetName=zbRequirement.requiremetName;
@@ -57,7 +59,12 @@ class detailsController {
                         $scope.isZbProgramsShow=true;
                     }
                     // //评价tab
-
+                    if(zbComments.length>0){
+                        $scope.zbComments=zbComments;
+                        $scope.isZbCommentsShow=false;
+                    }else {
+                        $scope.isZbCommentsShow=true;
+                    }
                 } else {
 
                 }
@@ -68,37 +75,60 @@ class detailsController {
         $scope.screen();
         $scope.submit=function () {
             console.log($scope.apply.id);
-            var promise = $http({
-                method: 'GET',
-                url: $rootScope.site.crowdServer + "/api/require/updateStatus",
-                params: {
-                    id:$scope.id,
-                    status:8,
-                    applyId:$scope.apply.id
-                }
-            });
-            promise.then(function (res, status, config, headers) {
-                console.log('数据在这里');
-                console.log(res);
-                if (res.data.code == '1') {
-                    var modalInstance =$rootScope.openConfirmDialogModal("发布成功！");
-                    modalInstance.result.then(function () {
-                        $state.go('publish.list');
-                    }, function () {
-                        $state.go('publish.list');
+            console.log($scope.apply.name);
+            if($scope.apply.id){
+                $scope.zbRequirementApplies.forEach(function (item) {
+                    if(item.id==$scope.apply.id){
+                        $scope.apply.name=item.userName
+                    }
+                })
+                var modalInstance =$rootScope.openConfirmDialogModal("是否确认选中"+$scope.apply.name);
+                modalInstance.result.then(function () {
+                    var promise = $http({
+                        method: 'GET',
+                        url: $rootScope.site.crowdServer + "/api/require/updateStatus",
+                        params: {
+                            id:$scope.id,
+                            status:8,
+                            applyId:$scope.apply.id
+                        }
                     });
-                } else {
+                    promise.then(function (res, status, config, headers) {
+                        console.log('数据在这里');
+                        console.log(res);
+                        if (res.data.code == '1') {
+                            var modalInstance =$rootScope.openConfirmDialogModal("提交成功！");
+                            modalInstance.result.then(function () {
+                                $state.go('publish.list');
+                            }, function () {
+                                $state.go('publish.list');
+                            });
+                        } else {
 
-                    var modalInstance =$rootScope.openConfirmDialogModal("发布失败！");
-                    modalInstance.result.then(function () {
-                        $state.go('publish.list');
-                    }, function () {
-                        $state.go('publish.list');
+                            var modalInstance =$rootScope.openConfirmDialogModal("提交失败！");
+                            modalInstance.result.then(function () {
+                                $state.go('publish.list');
+                            }, function () {
+                                $state.go('publish.list');
+                            });
+                        }
+                        $rootScope.loadingState = false;
+                        growl.addSuccessMessage("订单数据加载完毕。。。");
                     });
-                }
-                $rootScope.loadingState = false;
-                growl.addSuccessMessage("订单数据加载完毕。。。");
-            });
+                    $state.go('publish.list');
+                }, function () {
+                    $state.go('publish.list');
+                });
+            }else {
+                var modalInstance =$rootScope.openConfirmDialogModal("还未资格筛选，请选择中标的服务商！");
+                modalInstance.result.then(function () {
+
+                }, function () {
+
+                });
+            }
+
+
         };
         $scope.check=function () {
             var modalInstance = null;
@@ -111,7 +141,7 @@ class detailsController {
                     params: {
                         id: $scope.id,
                         programId:$scope.programId,
-                        checkContent: $('#checkContent').val(),
+                        checkAdvice: $('#checkContent').val(),
                         status: $('input:radio[name="tRadio"]:checked').val()
                     }
                 });
@@ -119,9 +149,10 @@ class detailsController {
                     $rootScope.loadingState = false;
                     if (res.data.code == 1) {
                         growl.addSuccessMessage("保存成功。。。");
-                        $scope.search();
+                        $state.go('publish.list');
                     } else {
                         growl.addErrorMessage("保存失败。。。");
+                        $state.go('publish.list');
                     }
 
                 });
@@ -131,6 +162,9 @@ class detailsController {
 
         $scope.public=function (id) {
             $state.go('publish.public', {id: id});
+        };
+        $scope.back=function (id) {
+            $state.go('publish.list', {id: id});
         };
         $scope.giveUp=function (id) {
             var promise = $http({

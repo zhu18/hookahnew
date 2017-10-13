@@ -1,0 +1,75 @@
+.pspAuthentication{
+    margin-top: 20px;
+    border: 1px solid #e5e5e5;
+    padding: 0 10px;
+}
+.pspAuthentication button{
+    cursor: pointer;
+}
+.pspAuthentication .item label{
+    display: inline-block;
+    width: 80px;
+    line-height: 39px;
+}
+.pspAuthentication .item div{
+    display: inline-block;
+}
+.pspAuthentication table{
+    width: 100%;
+    border: 1px solid #e5e5e5;
+}
+.pspAuthentication table caption{
+    line-height: 39px;
+}
+.pspAuthentication table tr{
+    height: 39px;
+    line-height: 39px;
+}
+.pspAuthentication table tr td{
+    text-align: center;
+    border: 1px solid #e5e5e5;
+}
+.pspAuthentication table tr td a{
+    text-align: center;
+}
+
+.pspAuthentication .info{
+    border-bottom: 1px solid #e5e5e5;
+}
+.info .info-header{
+    line-height: 39px;
+}
+.info .tag-box span{
+    display: inline-block;
+    background-color: #e6e6e6;
+    margin: 0 3px;
+    padding: 3px 9px;
+    cursor: pointer;
+}
+
+#education{
+
+}
+#education td{
+    width: 50%;
+}
+#education td label{
+    display: inline-block;
+    width: 70px;
+}
+#education td input{
+    height: 25px;
+    width: 160px;
+    border: 1px solid #e5e5e5;
+    padding-left: 5px;
+}
+#education td input[type="checkbox"]{
+    height: 14px;
+    width: 20px;
+    vertical-align: text-bottom;
+}
+#education td select{
+    height: 25px;
+    width: 167px;
+    border: 1px solid #e5e5e5;
+}
