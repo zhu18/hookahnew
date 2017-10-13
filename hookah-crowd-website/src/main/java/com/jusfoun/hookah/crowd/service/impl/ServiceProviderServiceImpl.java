@@ -148,15 +148,17 @@ public class ServiceProviderServiceImpl extends GenericServiceImpl<ZbRequirement
         try{
             if (helper.getPageNumber() == null) helper.setPageNumber(HookahConstants.PAGE_NUM);
             if (helper.getPageSize() == null) helper.setPageSize(HookahConstants.PAGE_SIZE);
-            //获取当前用户
+            //获取当前用户Id
             String userId = this.getCurrentUser() == null ? "" : this.getCurrentUser().getUserId();
+            //获取当前用户已报名的需求id集合
             List<Condition> filters = new ArrayList<Condition>();
-            if(Objects.nonNull(helper.getApplyStatus()) && Short.valueOf("-1").equals(helper.getApplyStatus())){
+            if(Objects.nonNull(helper.getApplyStatus()) && !Short.valueOf("-1").equals(helper.getApplyStatus())){
                 filters.add(Condition.eq("status", helper.getApplyStatus()));
             }
             filters.add(Condition.eq("userId",userId));
             List<ZbRequirementApply> zbRequirementApplies = zbRequireApplyWebsiteService.selectList(filters);
             List<Long> zbRequirementIds = new ArrayList<>();
+            zbRequirementIds.add(-1l);
             if(Objects.nonNull(zbRequirementApplies) && zbRequirementApplies.size() > 0){
                 zbRequirementIds = zbRequirementApplies.stream().map(zbRequirementApply->{return zbRequirementApply.getRequirementId();}).collect(Collectors.toList());
             }
