@@ -641,4 +641,28 @@ public class ZbRequirement extends GenericModel {
     public void setPressTime(Date pressTime) {
         this.pressTime = pressTime;
     }
+
+    //报名剩余时间
+    @Transient
+    private String applyLastTime;
+
+    //报名数量
+    @Transient
+    private int count;
+
+    public String getApplyLastTime() {
+        return applyLastTime;
+    }
+
+    public void setApplyLastTime(String applyLastTime) {
+        this.applyLastTime = applyLastTime;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 }

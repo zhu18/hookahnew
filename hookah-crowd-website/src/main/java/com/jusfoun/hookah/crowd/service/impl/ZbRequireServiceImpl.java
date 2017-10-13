@@ -8,8 +8,6 @@ import com.jusfoun.hookah.core.dao.zb.ZbProgramMapper;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementApplyMapper;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
 import com.jusfoun.hookah.core.dao.zb.ZbTypeMapper;
-import com.jusfoun.hookah.core.domain.User;
-import com.jusfoun.hookah.core.domain.vo.WithdrawVo;
 import com.jusfoun.hookah.core.domain.zb.*;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -26,10 +24,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long> implements ZbRequireService {
@@ -270,6 +267,71 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
     @Override
     public List<ZbRequirement> selectTradeListByUID(String userId) {
         return null;
+    }
+
+    @Override
+    public ReturnData selectRequirementTypeInfo(){
+        Map<String, Object> map = new HashMap<>(6);
+        //数据采集
+        map.put("dataCollection",applyLastTime(Short.valueOf("1")));
+        //数据加工
+        map.put("dataProcess",applyLastTime(Short.valueOf("2")));
+        //数据模型
+        map.put("dataModel",applyLastTime(Short.valueOf("3")));
+        //数据应用
+        map.put("datApplication",applyLastTime(Short.valueOf("4")));
+        //数据清洗
+        map.put("dataCleansing",applyLastTime(Short.valueOf("5")));
+        //其他
+        map.put("otherData",applyLastTime(Short.valueOf("6")));
+        return ReturnData.success(map);
+    }
+
+
+    //计算截止报名时间的剩余时间
+    public Object applyLastTime(Short type){
+        Map<String, Object> map = new HashMap<>(6);
+        List<Condition> filters = new ArrayList<>();
+        filters.add(Condition.eq("type",type));
+        List<ZbRequirement> zbRequirement = this.selectList(filters);
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        long day = 0;
+        long hour = 0;
+        long min = 0;
+        Date one;//报名截止时间
+        Date two;//当前时间
+        String applyLastTime = null;
+        try {
+            for(ZbRequirement zb : zbRequirement){
+                if(zb != null){
+                    if(zb.getApplyDeadline() != null){
+                        one = df.parse(df.format(zb.getApplyDeadline()));
+                        two = df.parse(df.format(new Date()));
+                        long time1 = one.getTime();
+                        long time2 = two.getTime();
+                        long diff = 0;
+                        if(time1 > time2){
+                            diff = time1 - time2;
+                        }
+                        day = diff / (24 * 60 * 60 * 1000);
+                        hour = (diff / (60 * 60 * 1000) - day * 24);
+                        min = ((diff / (60 * 1000)) - day * 24 * 60 - hour * 60);
+                        applyLastTime = day + "天" + hour + "小时" + min + "分";
+                        zb.setApplyLastTime(applyLastTime != null ? applyLastTime : "报名结束");
+                    }
+                    List<Condition> filters2 = new ArrayList<>();
+                    filters2.add(Condition.eq("requirementId", zb.getId()));
+                    List<ZbRequirementApply> zbRequirementApplies = zbRequireApplyService.selectList(filters2);
+                    zb.setCount(zbRequirementApplies.size());
+                }
+            }
+            return zbRequirement;
+        } catch (Exception e) {
+            logger.error("系统错误",e);
+            return "系统错误";
+            //return ReturnData.error("系统错误");
+        }
+
     }
 
 }

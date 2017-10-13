@@ -147,4 +147,14 @@ public class RequireController extends BaseController {
         }
     }
 
+    /**
+     * 数据众包--首页--分类查询需求信息
+     * @author zhaoshuai
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/api/require/requirementTypeInfo")
+    public ReturnData requirementTypeInfo(){
+        return zbRequireService.selectRequirementTypeInfo();
+    }
 }
