@@ -1,0 +1,27 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/error/error.css">
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 error">
+    <div class="grid-row">
+        <div class="error-prompt">
+            <div class="display-inline-block error-prompt-content">
+                <!--<img src="/static/images/error_06.png" alt="">-->
+                <p>邀请码不匹配，请确认邀请码无误后再行注册。</p>
+                <ul>
+                    <li>返回</li>
+                    <li><a href="/">首页</a></li>
+                    <li><a href="/exchange/index">BDGStore </a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>

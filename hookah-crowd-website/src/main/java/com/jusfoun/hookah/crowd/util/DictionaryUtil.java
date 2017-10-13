@@ -1,8 +1,7 @@
 package com.jusfoun.hookah.crowd.util;
 
-import com.jusfoun.hookah.core.domain.Category;
-import com.jusfoun.hookah.core.domain.GoodsAttrType;
 import com.jusfoun.hookah.core.domain.Region;
+import com.jusfoun.hookah.crowd.service.RegionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,22 +13,26 @@ import javax.annotation.PostConstruct;
  */
 @Component
 public class DictionaryUtil {
+
 //    @Autowired
 //    CategoryService categoryService;
+//
 //    @Autowired
 //    GoodsAttrTypeService goodsAttrTypeService;
-//    @Autowired
-//    RegionService regionService;
-//    private static DictionaryUtil dictionaryUtil;
-//
-//    @PostConstruct
-//    public void init() {
-//        dictionaryUtil = this;
+
+    @Autowired
+    RegionService regionService;
+
+    private static DictionaryUtil dictionaryUtil;
+
+    @PostConstruct
+    public void init() {
+        dictionaryUtil = this;
 //        dictionaryUtil.categoryService = this.categoryService;
 //        dictionaryUtil.goodsAttrTypeService = this.goodsAttrTypeService;
-//        dictionaryUtil.regionService = this.regionService;
-//    }
-//
+        dictionaryUtil.regionService = this.regionService;
+    }
+
 //    /**
 //     * 获取商品分类信息
 //     * @param id 商品分类id
@@ -47,8 +50,8 @@ public class DictionaryUtil {
 //    public static GoodsAttrType getAttrById(String id) {
 //        return dictionaryUtil.goodsAttrTypeService.selectById(id);
 //    }
-//
-//    public static Region getRegionById(String id) {
-//        return dictionaryUtil.regionService.selectById(id);
-//    }
+
+    public static Region getRegionById(String id) {
+        return dictionaryUtil.regionService.selectById(id);
+    }
 }

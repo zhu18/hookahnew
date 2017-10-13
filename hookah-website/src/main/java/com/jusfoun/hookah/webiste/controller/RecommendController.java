@@ -25,7 +25,7 @@ public class RecommendController extends BaseController{
         String userId = recommendToken.split("&")[0].split(":")[1];
         String secret = SecretUtil.getSecret(userId).split("&")[1].split(":")[1];
         if (!token.equals(secret)){
-            return "";  //错误页面
+            return "error/recommendRegError";  //错误页面
         }
         redirectAttributes.addAttribute("recommendToken",recommendToken);
 

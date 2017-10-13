@@ -1,8 +1,11 @@
 package com.jusfoun.hookah.core.generic;
 
-import com.github.pagehelper.PageHelper;
 import com.jusfoun.hookah.core.common.Pagination;
+import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.exception.HookahException;
+import com.jusfoun.hookah.core.utils.JsonUtils;
 import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -16,11 +19,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import javax.annotation.Resource;
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
+import java.lang.reflect.*;
 import java.util.*;
 
 
@@ -503,5 +502,26 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
             return (T) Arrays.asList(((Object[]) obj));
         }
         return (T) ConvertUtils.convert(obj, clazz);
+    }
+
+    /**
+     * 获取当前用户
+     * @return
+     * @throws HookahException
+     */
+    protected User getCurrentUser() throws HookahException {
+        Map userMap = (HashMap) SecurityUtils.getSubject().getSession().getAttribute("user");
+        if(userMap==null){
+            throw  new HookahException("没有登录用户信息");
+        }
+        User user = new User();
+        try {
+            org.apache.commons.beanutils.BeanUtils.populate(user,userMap);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+            throw new HookahException("获取用户信息出错！",e);
+        }
+        logger.info(JsonUtils.toJson(user));
+        return user;
     }
 }

@@ -350,7 +350,7 @@ $(document).on('click', '#J_nextPage', function () { //鼠标离开描述显示�
               break;
             }
             case 5 : {
-              $('.requirement-type-active span').html('数据清洗');
+              $('.requirement-type-active span').html('数据分析');
               break;
             }
             case 6 : {

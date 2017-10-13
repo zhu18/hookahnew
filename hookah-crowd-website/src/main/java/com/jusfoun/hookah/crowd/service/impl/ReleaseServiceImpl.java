@@ -4,7 +4,6 @@ package com.jusfoun.hookah.crowd.service.impl;
  * Created by zhaoshuai on 2017/9/18.
  */
 
-import com.alibaba.druid.sql.ast.statement.SQLIfStatement;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.zb.*;
@@ -53,6 +52,9 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
 
     @Resource
     ZbTrusteeRecordService zbTrusteeRecordService;
+
+    @Resource
+    MgZbRequireStatusService mgZbRequireStatusService;
 
     @Resource
     private ZbRequirementMapper zbRequirementMapper;
@@ -196,8 +198,8 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                     zbRequirement.getStatus() == 9 ||
                     zbRequirement.getStatus() == 10 ||
                     zbRequirement.getStatus() == 13 ||
+                    zbRequirement.getStatus() == 14 ||
                     zbRequirement.getStatus() == 15 ||
-                    zbRequirement.getStatus() == 18 ||
                     zbRequirement.getStatus() == 19) {
                 if (zbRequirement.getTrusteePercent() != null) {
                     managedMoney = String.valueOf(zbRequirement.getRewardMoney() * zbRequirement.getTrusteePercent());
@@ -273,7 +275,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                     case 9:  //待平台验收
                     case 10: //待需方验收
                     case 13: //待评价
-                    case 18: //需方驳回
+                    case 14: //需方驳回
                         map.put("tag", strArray);
                         map.put("managedMoney", managedMoney);
                         map.put("zbRequirement", zbRequirement);
@@ -299,6 +301,17 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                                 List<ZbAnnex> programFiles = zbAnnexService.selectList(filters3);
                                 if(zbAnnexes != null){
                                     map.put("programFiles",programFiles);
+                                }
+                                //服务商的评价
+                                if(zbRequirement.getStatus().equals(ZbContants.Zb_Require_Status.WAIT_PJ.getCode().shortValue())){
+                                    List<Condition> filters4 = new ArrayList<>();
+                                    if(StringUtils.isNotBlank(zbProgram.getId().toString())){
+                                        filters4.add(Condition.eq("programId", zbProgram.getId()));
+                                        filters4.add(Condition.eq("userType", 2));
+                                    }
+                                    ZbComment zbComment = zbCommentService.selectOne(filters4);
+                                    map.put("zbComment",zbComment != null ? zbComment : " ");
+
                                 }
                             }
                         }
@@ -328,12 +341,22 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                                 if(zbAnnexes != null){
                                     map.put("programFiles",programFiles);
                                 }
+                                //服务商的平价
                                 List<Condition> filters4 = new ArrayList<>();
                                 if(StringUtils.isNotBlank(zbProgram.getId().toString())){
                                     filters4.add(Condition.eq("programId", zbProgram.getId()));
+                                    filters4.add(Condition.eq("userType", 2));
                                 }
-                                List<ZbComment> zbComments = zbCommentService.selectList(filters4);
-                                map.put("zbComment",zbComments);
+                                ZbComment zbComment = zbCommentService.selectOne(filters4);
+                                map.put("zbComment",zbComment != null ? zbComment : " ");
+                                //对服务商的评价
+                                List<Condition> filters7 = new ArrayList<>();
+                                if(StringUtils.isNotBlank(zbProgram.getId().toString())){
+                                    filters7.add(Condition.eq("programId", zbProgram.getId()));
+                                    filters7.add(Condition.eq("userType", 1));
+                                }
+                                ZbComment zbDemandComment = zbCommentService.selectOne(filters7);
+                                map.put("zbDemandComment",zbDemandComment != null ? zbDemandComment : " ");
                             }
                         }
                         break;
@@ -411,6 +434,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
     public ReturnData getInsertEvaluation(int level, String content, Long programId, String userId){
         if(programId != null){
             List<Condition> filters = new ArrayList<>();
+            List<Condition> filters1 = new ArrayList<>();
             if(StringUtils.isNotBlank(programId.toString())){
                 filters.add(Condition.eq("programId", programId));
             }
@@ -422,8 +446,23 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
             zbComment.setLevel(level);
             zbComment.setContent(content);
             zbComment.setAddTime(new Date());
-            zbComment.setUserType(2);
+            zbComment.setUserType(1);
             ZbComment insert = zbCommentService.insert(zbComment);
+            //评价完之后变更需求状态为交易完成
+            filters.add(Condition.eq("userType", 1));
+            ZbComment comment = zbCommentService.selectOne(filters);
+            ZbRequirement zbRequirement = zbRequireService.selectById(zbProgram.getRequirementId());
+            if(zbRequirement.getId() != null){
+                filters1.add(Condition.eq("id", zbRequirement.getId()));
+            }
+            if(zbRequirement != null){
+                if(zbComment != null){
+                    if(comment.getUserType() == 1){
+                        zbRequirement.setStatus(ZbContants.Zb_Require_Status.ZB_FAIL.getCode().shortValue());
+                        zbRequireService.updateByCondition(zbRequirement,filters1);
+                    }
+                }
+            }
             return ReturnData.success(insert);
         }
         return ReturnData.error("添加评价意见失败！");

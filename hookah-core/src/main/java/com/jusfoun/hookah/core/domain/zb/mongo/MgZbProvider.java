@@ -14,11 +14,31 @@ public class MgZbProvider extends GenericModel {
     @Id
     private String userId;
 
+    private String upname;//姓名-企业名称
+
+    private String ucity;//所在城市
+
+    private Integer ucreditValue;//信誉值
+
+    private List<Evalevel> evalevelList; //用户评价
+
+    private String phoneNum;//手机号码
+
+    private String lawPersonName;//企业法人代表
+
+    private String registerTime;//注册时间
+
+    private String registerAddr;//注册地点
+
+    private String scopeOfBuss;//经营范围
+
+    private String creditCode;//统一社会信用代码
+
     private Integer authType;                           // 1个人2企业
 
-    private String providerDesc;                          //服务商介绍
+    private String providerDesc;                        //服务商介绍
 
-    private Integer status = 1;                           //认证状态 0.未认证 1.审核中 2.已认证 3.认证失败
+    private Integer status = 1;                         //认证状态 0.未认证 1.审核中 2.已认证 3.认证失败
 
     private List<String> specialSkills;                 //擅长领域
 
@@ -444,6 +464,29 @@ public class MgZbProvider extends GenericModel {
         }
     }
 
+    public static class Evalevel implements Serializable{
+
+        private Integer starsNum;
+
+        private Integer evalNum;
+
+        public Integer getStarsNum() {
+            return starsNum;
+        }
+
+        public void setStarsNum(Integer starsNum) {
+            this.starsNum = starsNum;
+        }
+
+        public Integer getEvalNum() {
+            return evalNum;
+        }
+
+        public void setEvalNum(Integer evalNum) {
+            this.evalNum = evalNum;
+        }
+    }
+
     public String getUserId() {
         return userId;
     }
@@ -570,5 +613,85 @@ public class MgZbProvider extends GenericModel {
 
     public void setCheckTime(String checkTime) {
         this.checkTime = checkTime;
+    }
+
+    public String getUpname() {
+        return upname;
+    }
+
+    public void setUpname(String upname) {
+        this.upname = upname;
+    }
+
+    public String getUcity() {
+        return ucity;
+    }
+
+    public void setUcity(String ucity) {
+        this.ucity = ucity;
+    }
+
+    public Integer getUcreditValue() {
+        return ucreditValue;
+    }
+
+    public void setUcreditValue(Integer ucreditValue) {
+        this.ucreditValue = ucreditValue;
+    }
+
+    public List<Evalevel> getEvalevelList() {
+        return evalevelList;
+    }
+
+    public void setEvalevelList(List<Evalevel> evalevelList) {
+        this.evalevelList = evalevelList;
+    }
+
+    public String getPhoneNum() {
+        return phoneNum;
+    }
+
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
+    }
+
+    public String getLawPersonName() {
+        return lawPersonName;
+    }
+
+    public void setLawPersonName(String lawPersonName) {
+        this.lawPersonName = lawPersonName;
+    }
+
+    public String getRegisterTime() {
+        return registerTime;
+    }
+
+    public void setRegisterTime(String registerTime) {
+        this.registerTime = registerTime;
+    }
+
+    public String getRegisterAddr() {
+        return registerAddr;
+    }
+
+    public void setRegisterAddr(String registerAddr) {
+        this.registerAddr = registerAddr;
+    }
+
+    public String getScopeOfBuss() {
+        return scopeOfBuss;
+    }
+
+    public void setScopeOfBuss(String scopeOfBuss) {
+        this.scopeOfBuss = scopeOfBuss;
+    }
+
+    public String getCreditCode() {
+        return creditCode;
+    }
+
+    public void setCreditCode(String creditCode) {
+        this.creditCode = creditCode;
     }
 }

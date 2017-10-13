@@ -29,6 +29,36 @@ public class ZbRequirementPageHelper extends GenericModel {
     //正序还是倒叙
     private String sort;
 
+    private String requireTitle;//需求标题(ctp to 20171010 add)
+
+    private String requireSn;//需求编号(ctp to 20171011 add)
+
+    private Short applyStatus;//报名状态(ctp to 20171011 add)  '状态；0 ：已报名；1：已被选中 2:未中标 3：工作中 4：评审中 5：验收中 6：待付款 7：待评价 8：交易取消 9：交易完成'
+
+    public Short getApplyStatus() {
+        return applyStatus;
+    }
+
+    public void setApplyStatus(Short applyStatus) {
+        this.applyStatus = applyStatus;
+    }
+
+    public String getRequireSn() {
+        return requireSn;
+    }
+
+    public void setRequireSn(String requireSn) {
+        this.requireSn = requireSn;
+    }
+
+    public String getRequireTitle() {
+        return requireTitle;
+    }
+
+    public void setRequireTitle(String requireTitle) {
+        this.requireTitle = requireTitle;
+    }
+
     public Integer getPageNumber() {
         return pageNumber;
     }
