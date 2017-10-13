@@ -5,7 +5,10 @@ class RecommendDetailController {
             /*个人表格*/
             $http({
                 method: 'GET',
-                url: $rootScope.site.apiServer + "/api/recommend/findOneRecommend"
+                url: $rootScope.site.apiServer + "/api/recommend/findOneRecommend",
+                params: {
+                    recommenderId:$stateParams.id
+                }
             }).then(function (res, status, config, headers) {
                 $scope.self  =  res.data.data2;
             });
@@ -16,7 +19,7 @@ class RecommendDetailController {
                 params: {
                     currentPage: initCurrentPage? 1 :$rootScope.pagination.currentPage,
                     pageSize: $rootScope.pagination.pageSize,
-                    userId:$stateParams.id
+                    recommenderId:$stateParams.id
                 }
             });
             promise.then(function (res, status, config, headers) {

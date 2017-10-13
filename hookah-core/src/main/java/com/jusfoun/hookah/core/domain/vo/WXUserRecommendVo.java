@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.core.domain.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jusfoun.hookah.core.generic.GenericModel;
 
 import java.util.Date;
@@ -24,6 +25,7 @@ public class WXUserRecommendVo extends GenericModel {
 
     private Integer isdealNum;
 
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date regTime;
 
     private Byte isdeal;
