@@ -1,0 +1,56 @@
+.bannerBox{ width: 100%; height:425px; background-color: #48c8e3;}
+.banner{ height:100%; background:url("../../images/crowdsourcing/index/banner.png") 0 0 no-repeat;}
+.banner-btn{ display: inline-block;height:31px; width: 128px; margin-top:302px;border:3px solid #b6e9f4; border-radius:18px; text-align: center; text-decoration: none; color:#fff; font-size: 24px; line-height: 29px;;}
+.banner-btn.active{ color:#f9d657; background-color: #fff; border:3px solid #fff; margin:302px 100px 0 59px;}
+
+.advantagesBox{ height:284px; overflow: hidden;}
+.advantagesUl { overflow: hidden; padding-left: 83px;}
+.advantagesUl li{ float: left; width: 282px; height:284px; position: relative;}
+.advantagesUl li:after{ content: ''; position: absolute; right:0; top: 153px; display: block; height:6px; width:95px; background-color: #f9d657; border-radius:6px;  }
+.advantagesUl li:last-child{ float: left; width: 200px;}
+.advantagesUl li:last-child:after{ display: none}
+
+.advantagesBgBox{ width: 193px; height:247px;color:#48c8e3; background:url("../../images/crowdsourcing/index/advantages-bg.png") -193px 0 no-repeat ; overflow: hidden;}
+.advantagesBgBox:hover{color:#fff; background-position: 0 0; }
+
+.advantageTitle{ text-align: center; font-size: 18px; margin:85px 0 5px 0; font-weight:bold;}
+.advantageContent{width: 140px; padding:0 0 0 32px;font-size: 14px; line-height:25px;}
+.advantageImg{ position: absolute; left:57px;top:215px;}
+
+.bgc-f5f6f8{ background-color: #f5f6f8;}
+
+
+
+.toBeService{}
+.toBeServiceBox{ height:386px;overflow: hidden;}
+.toBeServiceTopBox{ margin: 20px 0 14px; overflow: hidden;}
+.toBeServiceTopBoxLeft{ float: left; width: 595px; margin-right:10px; background-color: #48c8e3; color:#fff;}
+.toBeServiceUl{ overflow: hidden; height:163px; }
+.toBeServiceUl dt{ float: left; width:110px;}
+.toBeServiceUl dt img{ margin:58px 0 0 27px; }
+.toBeServiceUl dd{ float: left; width:456px;}
+.toBeServiceTitle{margin:42px 0 12px 0; font-size:18px; font-weight: bold; }
+.toBeServiceContent{ line-height: 24px;font-size: 14px;}
+.toBeServiceTitle a{ font-size:14px; font-style: italic;  color:#fff; font-weight:normal;}
+.toBeServiceTopBoxRight{ float: left; width: 595px; background-color: #fff;}
+.toBeServiceNotice{ overflow: hidden;}
+.toBeServiceNotice li{ float: left; width: 168px; line-height: 23px;}
+.toBeServiceNotice li span{ display: inline-block; height: 18px; width: 18px; border-radius:9px; color:#fff;font-size: 14px; background-color: #48c8e3;text-align: center; line-height: 19px;}
+.toBeServiceNotice li a{ color:#48c8e3; margin-left:9px;}
+.toBeServiceNotice li a:hover{ text-decoration: underline}
+
+
+.toBeServiceBottomBox{ height: 163px; background-color: #fff; overflow: hidden;}
+.toBeServiceBottomBoxLeft{ margin-top:13px; height:135px; width:156px; border-right:1px solid #48c8e3;text-align: center; float: left;}
+.toBeServiceBottomBoxLeft img{ margin-top:14px;}
+.toBeServiceBottomBoxLeft span{ font-size:24px;color:#48c8e3; display: block; }
+.toBeServiceBottomBoxRight{ float: left; width: 1043px; overflow: hidden;}
+.toBeServiceBottomBoxRight li{ position: relative; float: left; margin:0 34px 0 26px;}
+.toBeServiceBottomBoxRight li:last-child{ margin-right:0;}
+
+.toBeServiceDemandName{ margin:16px 0 5px 0 ; font-size: 18px; color: #535353;}
+.toBeServiceDeadData{ color: #959494;font-size: 14px;}
+.toBeServiceLastTime{ margin-top:4px;color: #959494;font-size: 14px;}
+.toBeServiceMoney{ font-size: 18px; color: #ffc600;}
+.toBeServiceHasApply{ font-size: 14px;color:#cccbcb}
+.toBeServiceApply{ padding:2px 8px 3px; position: absolute; right:0; bottom:0; background-color: #48c8e3;color:#fff; border-radius: 4px;}

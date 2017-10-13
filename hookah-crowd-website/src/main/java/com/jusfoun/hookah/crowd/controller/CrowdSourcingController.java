@@ -29,7 +29,22 @@ import java.util.Map;
  * @desc
  */
 @Controller
-public class ExchangeController{
+public class CrowdSourcingController {
+    /**
+     * 数据众包首页
+     */
+    @RequestMapping(value = "/crowdsourcing", method = RequestMethod.GET)
+    public String index(Model model) {
+        return "crowdsourcing/index";
+    }
+    /**
+     * 官网展示 更多需求列表
+     */
+    @RequestMapping(value = "/crowdsourcing-list", method = RequestMethod.GET)
+    public String crowdsourcingList(Model model) {
+        return "crowdsourcing/crowdsourcing-list";
+    }
+
     /**
      * 需求方发布需求页面
      */
@@ -52,14 +67,6 @@ public class ExchangeController{
     @RequestMapping(value = "/usercenter/requirementDetail", method = RequestMethod.GET)
     public String requirementDetail(Model model) {
         return "usercenter/crowdsourcing/demand/requirementDetail";
-    }
-
-    /**
-     * 官网展示 所有需求列表
-     */
-    @RequestMapping(value = "/crowdsourcing-list", method = RequestMethod.GET)
-    public String crowdsourcingList(Model model) {
-        return "crowdsourcing/crowdsourcing-list";
     }
 
     /**
