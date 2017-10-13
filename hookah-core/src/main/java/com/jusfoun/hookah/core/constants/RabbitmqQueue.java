@@ -30,4 +30,7 @@ public interface RabbitmqQueue {
 
     /** 渠道推送 */
     public final String CONTRACE_CENTER_CHANNEL ="CONTRACE_CENTER_CHANNEL";
+
+    /** 状态推送 */
+    public final String CONTRACE_CENTER_STATUS ="CONTRACE_CENTER_STATUS";
 }

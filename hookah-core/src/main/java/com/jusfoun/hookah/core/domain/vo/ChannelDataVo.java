@@ -10,6 +10,8 @@ public class ChannelDataVo implements Serializable {
     private String goodsId; //推送的商品id
     private int opera;// 0 撤回； 1 推送
 
+    private GoodsVo goodsVo;
+
     public String getGoodsId() {
         return goodsId;
     }
@@ -24,5 +26,13 @@ public class ChannelDataVo implements Serializable {
 
     public void setOpera(int opera) {
         this.opera = opera;
+    }
+
+    public GoodsVo getGoodsVo() {
+        return goodsVo;
+    }
+
+    public void setGoodsVo(GoodsVo goodsVo) {
+        this.goodsVo = goodsVo;
     }
 }

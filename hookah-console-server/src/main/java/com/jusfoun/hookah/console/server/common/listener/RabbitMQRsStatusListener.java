@@ -22,9 +22,9 @@ import java.util.Map;
 import java.util.Objects;
 
 @Component
-public class RabbitMQChannelListener {
+public class RabbitMQRsStatusListener {
 
-    private static final Logger logger = LoggerFactory.getLogger(RabbitMQChannelListener.class);
+    private static final Logger logger = LoggerFactory.getLogger(RabbitMQRsStatusListener.class);
 
     @Resource
     GoodsService goodsService;
@@ -32,7 +32,9 @@ public class RabbitMQChannelListener {
     @Resource
     MyProps myProps;
 
-    @RabbitListener(queues = RabbitmqQueue.CONTRACE_CENTER_CHANNEL)
+//    private String localUrl = myProps.getHost().get("website");
+
+    @RabbitListener(queues = RabbitmqQueue.CONTRACE_CENTER_STATUS)
     public void operaPushGoods(ChannelDataVo channelDataVo) {
 
         logger.info("开始执行渠道推送/撤回操作：" + (channelDataVo == null ? "未取到推送数据！": JSON.toJSONString(channelDataVo)));
@@ -45,49 +47,24 @@ public class RabbitMQChannelListener {
                 logger.info("推送失败：" + e.getMessage());
             }
         }
-        logger.info("结束执行渠道推送/撤回操作：" + (channelDataVo == null ? "未取到推送数据！":JSON.toJSONString(channelDataVo)));
+        logger.info("结束执行渠道推送/撤回操作：" + (channelDataVo == null ? "未取到推送数据！": JSON.toJSONString(channelDataVo)));
 
     }
 
     private void channel(ChannelDataVo channelDataVo) throws Exception{
         int opera = channelDataVo.getOpera();
+//        String goodsId = channelDataVo.getGoodsId();
         String goodsId = channelDataVo.getGoodsId();
-        GoodsVo goodVos = goodsService.findGoodsByIdChannel(goodsId);
+//        GoodsVo goodVos = goodsService.findGoodsByIdChannel(goodsId);
+        GoodsVo goodVos = channelDataVo.getGoodsVo();
         if(Objects.nonNull(goodVos)){
-           Byte isPush =  goodVos.getIsPush();
+//           Byte isPush =  goodVos.getIsPush();
            //判断商品是否属于推送商品
-           if(HookahConstants.GOODS_IS_PUSH_YES.equals(isPush)){
-               ChannelTransData channelTransData = encryptionData(goodVos,opera);
-//               Map<String, String> params = new HashedMap();
-//               params.put("transData",channelTransData.getTransData());
-//               params.put("checkCode",channelTransData.getCheckCode());
-//               params.put("timestamp",String.valueOf(channelTransData.getTimestamp()));
+           if(goodVos.getIsOnsale() != null){
                //推送商品
-               if(HookahConstants.CHANNEL_PUSH_OPER_PUSH == opera){
+//               if(HookahConstants.CHANNEL_PUSH_OPER_PUSH == opera){
                    String params = JSON.toJSONString(encryptionData(goodVos,opera));
-                   Map<String,String> resultMap = HttpClientUtil.PostMethod(PropertiesManager.getInstance().getProperty("center.system.url"),params);
-                   if(resultMap!=null){
-//                       resMap.put("result", method.getResponseBodyAsString());
-//                       resMap.put("resultCode", String.valueOf(method.getStatusCode()));
-                       String result = resultMap.get("result");
-                       String resultCode = resultMap.get("resultCode");
-                       logger.info("推送返回数据：",resultMap);
-                       if(StringUtils.isNotBlank(resultCode) && "200".equals(resultCode)){
-                           logger.info("推送",result);
-                           ReturnData returnData = JSON.parseObject(result, ReturnData.class);
-                           if(ExceptionConst.Success.equals(returnData.getCode())){
-                               logger.info("商品[" + goodVos.getGoodsName() + "][id:" + goodsId +"]推送成功。" ,result);
-                           } else {
-                               logger.error("商品[" + goodVos.getGoodsName() + "][id:" + goodsId +"]推送失败。原因：" + returnData.getMessage());
-                           }
-                       } else {
-                           logger.error("商品[" + goodVos.getGoodsName() + "][id:" + goodsId +"]推送失败。原因：" + result);
-                       }
-                   }
-                   //撤销商品
-               } else if(HookahConstants.CHANNEL_PUSH_OPER_CANCEL == opera){
-                   String params = JSON.toJSONString(encryptionData(goodVos,opera));
-                   Map<String,String> resultMap = HttpClientUtil.PostMethod(PropertiesManager.getInstance().getProperty("center.system.url"),params);
+                   Map<String,String> resultMap = HttpClientUtil.PostMethod(PropertiesManager.getInstance().getProperty("center.system.statusUrl"),params);
                    if(resultMap!=null){
                        String result = resultMap.get("result");
                        String resultCode = resultMap.get("resultCode");
@@ -104,7 +81,7 @@ public class RabbitMQChannelListener {
                            logger.error("商品[" + goodVos.getGoodsName() + "][id:" + goodsId +"]推送失败。原因：" + result);
                        }
                    }
-               }
+//               }
            } else {
                logger.info("商品[" + goodVos.getGoodsName() + "][id:" + goodsId +"]不可推送。");
            }
@@ -114,7 +91,7 @@ public class RabbitMQChannelListener {
     }
 
     //加密数据
-    private ChannelTransData encryptionData(Object obj,int opera){
+    private ChannelTransData encryptionData(Object obj, int opera){
         ChannelTransData data = new ChannelTransData();
         ChannelTransData.RelationData relationData = new ChannelTransData.RelationData();
         relationData.setOpera(opera);

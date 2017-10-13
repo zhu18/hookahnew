@@ -7,6 +7,7 @@ import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.GoodsCheck;
+import com.jusfoun.hookah.core.domain.vo.ChannelDataVo;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
@@ -127,6 +128,15 @@ public class PushGoodsApi extends BaseController {
             goodsService.updateByConditionSelective(goods,filters);
             //添加商品到ES
             mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_GOODS_ID, goods.getGoodsId());
+
+            // 通知资源管理中心，本地资源状态
+            ChannelDataVo channelDataVo = new ChannelDataVo();
+            GoodsVo goodsVo = new GoodsVo();
+            BeanUtils.copyProperties(goods, goodsVo);
+            channelDataVo.setGoodsVo(goodsVo);
+            if(goodsVo.getIsOnsale() == 0)goodsVo.setIsOnsale(Byte.valueOf("2"));
+            channelDataVo.setOpera(HookahConstants.CHANNEL_PUSH_OPER_PUSH);
+            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_CENTER_STATUS, channelDataVo);
         }catch (Exception e){
             return ReturnData.error("修改失败");
         }

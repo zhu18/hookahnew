@@ -147,7 +147,7 @@ public class ChannelServiceImpl extends GenericServiceImpl<Goods,String> impleme
                 if(null != formatBeanList && formatBeanList.size() > 0){
                     for(MgGoods.FormatBean formatBean : formatBeanList){
                         formatBean.setSettlementPrice(formatBean.getAgencyPrice());
-                        formatBean.setAgencyPrice(null);
+//                        formatBean.setAgencyPrice(null);
                     }
                 }
 
