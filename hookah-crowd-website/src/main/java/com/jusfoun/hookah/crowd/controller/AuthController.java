@@ -133,8 +133,8 @@ public class AuthController extends BaseController {
     public ReturnData optAuthInfo(@RequestBody MgZbProviderVo vo) {
 
         try {
-//            String userId = getCurrentUser().getUserId();
-//            vo.setUserId(userId);
+            String userId = getCurrentUser().getUserId();
+            vo.setUserId(userId);
             return mgZbProviderService.optAuthInfo(vo);
         } catch (Exception e) {
             logger.error("认证信息删除失败", e);

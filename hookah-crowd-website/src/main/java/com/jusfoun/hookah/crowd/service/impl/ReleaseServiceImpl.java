@@ -10,11 +10,11 @@ import com.jusfoun.hookah.core.domain.zb.*;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbRequirementVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
-import com.jusfoun.hookah.core.utils.HttpClientUtil;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.crowd.constants.ZbContants;
 import com.jusfoun.hookah.crowd.service.*;
 import com.jusfoun.hookah.crowd.util.CommonUtils;
+import com.jusfoun.hookah.crowd.util.PayConfiguration;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -49,6 +49,9 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
 
     @Resource
     UserService userService;
+
+    @Resource
+    PayService payService;
 
     @Resource
     ZbTrusteeRecordService zbTrusteeRecordService;
@@ -522,9 +525,11 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
         List<Condition> filter1 = new ArrayList<>();
         filter1.add(Condition.eq("requirementId",zbRequirement.getId()));
         ZbTrusteeRecord zbTrusteeRecord = zbTrusteeRecordService.selectOne(filter1);
-        String url= "http://www.galaxybigdata.com/pay/aliPay?orderSn="+ zbTrusteeRecord.getSerialNo();
-        Map m = HttpClientUtil.GetMethod(url);
-        System.out.print(m);
-        return null;
+//        String url= "http://www.galaxybigdata.com/pay/aliPay?orderSn="+ zbTrusteeRecord.getSerialNo();
+//        Map m = HttpClientUtil.GetMethod(url);
+
+        String html = payService.toPayByZFB(zbRequirement.getRequireSn(), zbTrusteeRecord.getSerialNo(), zbTrusteeRecord.getActualMoney(), zbRequirement.getStatus().toString(), PayConfiguration.ALIPAY_NOTIFY_URL, PayConfiguration.ALIPAY_RETURN_URL);
+        System.out.print(html);
+        return html;
     }
 }

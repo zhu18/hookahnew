@@ -47,6 +47,7 @@ public class TestController {
      */
     @RequestMapping("/testMg1")
     public void testMg1(){
+
         mgZbRequireStatusService.
                 setRequireStatusInfo("zb_01_001", "addTime", "2018-08-08 12:00:00");
 
