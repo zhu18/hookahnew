@@ -2,6 +2,7 @@
  * Created by Dajun on 2017-9-19.
  */
 function loadPageData(data) { //渲染页面数据
+  console.log(data)
   data = data.data.list;
   var tempHtml = '\
         <thead>\
@@ -20,13 +21,13 @@ function loadPageData(data) { //渲染页面数据
   for (let i = 0; i < data.length; i++) {
     let tempState = '';
     let tempEdit = '';
-    switch (data[i].status) {
+    switch (data[i].operStatus) {
       case 0:
         tempState = '待评选';
         tempEdit = '<span class="signUp">查看</span>';
         break;
       case 1:
-        tempState = '工作中'; //TODO:后台在1的状态下 是已被选中，已被选中就是处于工作中？？跟状态 3 的工作中有什么区别
+        tempState = '工作中';
         tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">提交成果</a>';
         break;
       case 2:
@@ -35,43 +36,39 @@ function loadPageData(data) { //渲染页面数据
 
         break;
       case 3:
-        tempState = '工作中';
-        tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">提交成果</a>';
-        break;
-      case 4:
         tempState = '评审中';
         tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">评审结果</a>';
         break;
-      case 5:
+      case 4:
         tempState = '验收中';
         tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">验收结果</a>';
         break;
-      case 6:
+      case 5:
         tempState = '待付款';
         tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">查看</a>';
         break;
-      case 7:
+      case 6:
         tempState = '待评价';
         tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">去评价</a>';
         break;
-      case 8:
+      case 7:
         tempState = '交易取消';
         tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">查看</a>';
         break;
-      case 9:
+      case 8:
         tempState = '交易完成';
         tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">查看</a>';
         break;
      }
     tempHtml += '<tr>\
-          <td>' + (i + 1) + '</td>\
-          <td>' + data[i].requireSn + '</td>\
-          <td><div class="titleLineHeight">' + data[i].title + '</div></td>\
-          <td>' + data[i].rewardMoney / 100 + '</td>\
-          <td>' + tempState + '</td>\
-          <td>' + data[i].addTime + '</td>\
-          <td>' + data[i].deliveryDeadline + '</td>\
-          <td>' + tempEdit + '</td>\
+            <td>' + (i + 1) + '</td>\
+            <td>' + data[i].requireSn + '</td>\
+            <td><div class="titleLineHeight">' + data[i].title + '</div></td>\
+            <td>' + data[i].rewardMoney / 100 + '</td>\
+            <td>' + tempState + '</td>\
+            <td>' + data[i].addTime + '</td>\
+            <td>' + data[i].deliveryDeadline + '</td>\
+            <td>' + tempEdit + '</td>\
           </tr>'
   }
   if (!data.length) {
@@ -108,17 +105,19 @@ $(document).on('click', '.j_del', function () { //搜索我的发布
   });
 });
 
-$('#status li').on('click', function () { //切换状态
+
+
+$('#applyStatus li').on('click', function () { //切换状态
   $(this).addClass('active').siblings().removeClass('active');
-  $('#statusInput').val($(this).attr('value'));
+  $('#applyStatusInput').val($(this).attr('value'));
   searchFn();
 });
 $('.searchBtn').on('click', function () { //搜索我的发布
   searchFn();
 });
 function searchFn() {
-  dataParm.status = $('#statusInput').val();
-  dataParm.title = $('#title').val();
+  dataParm.applyStatus = $('#applyStatusInput').val();
+  dataParm.requireTitle = $('#requireTitle').val();
   dataParm.requireSn = $('#requireSn').val();
   goPage("1");
 }
