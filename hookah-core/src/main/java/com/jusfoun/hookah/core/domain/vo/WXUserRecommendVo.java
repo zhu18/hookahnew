@@ -2,6 +2,8 @@ package com.jusfoun.hookah.core.domain.vo;
 
 import com.jusfoun.hookah.core.generic.GenericModel;
 
+import java.util.Date;
+
 /**
  * Created by ndf on 2017/9/25.
  * 扩展实体类，用于展示 后台邀请好友查询
@@ -21,6 +23,12 @@ public class WXUserRecommendVo extends GenericModel {
     private Long rewardMoney;
 
     private Integer isdealNum;
+
+    private Date regTime;
+
+    private Byte isdeal;
+
+    private Byte isauthenticate;
 
     public String getUserId() {
         return userId;
@@ -76,5 +84,29 @@ public class WXUserRecommendVo extends GenericModel {
 
     public void setIsdealNum(Integer isdealNum) {
         this.isdealNum = isdealNum;
+    }
+
+    public Date getRegTime() {
+        return regTime;
+    }
+
+    public void setRegTime(Date regTime) {
+        this.regTime = regTime;
+    }
+
+    public Byte getIsdeal() {
+        return isdeal;
+    }
+
+    public void setIsdeal(Byte isdeal) {
+        this.isdeal = isdeal;
+    }
+
+    public Byte getIsauthenticate() {
+        return isauthenticate;
+    }
+
+    public void setIsauthenticate(Byte isauthenticate) {
+        this.isauthenticate = isauthenticate;
     }
 }

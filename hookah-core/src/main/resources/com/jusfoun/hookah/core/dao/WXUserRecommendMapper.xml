@@ -24,7 +24,7 @@
   </sql>
 
     <!--<insert id="insertAndGetEntry" parameterType="com.jusfoun.hookah.core.domain.WxUserRecommend">-->
-        <!--INSERT INTO w_x_user_recommend-->
+        <!--INSERT INTO wx_user_recommend-->
         <!--<trim prefix="(" suffix=")" suffixOverrides=",">-->
             <!--<if test="recommenderId != null">-->
                 <!--recommenderId,-->
@@ -74,14 +74,14 @@
     <!--</insert>-->
   <select id="countInviteeAndReward" resultType="java.util.HashMap" parameterType="java.lang.String">
 
-    SELECT count(id) AS inviteeNum,SUM(reward_money) AS rewardMoney FROM w_x_user_recommend WHERE  recommenderId=#{userId}
+    SELECT count(id) AS inviteeNum,SUM(reward_money) AS rewardMoney FROM wx_user_recommend WHERE  recommenderId=#{userId}
   </select>
 
    <sql id="sqlRecommendListByCondition">
        FROM
-       w_x_user_recommend wxu
+       wx_user_recommend wxu
 
-       LEFT JOIN USER u ON u.user_id = wxu.recommenderId
+       LEFT JOIN user u ON u.user_id = wxu.recommenderId
 
        WHERE 1=1
 
@@ -109,7 +109,7 @@
                 SELECT
                     count(wxur.id)
                 FROM
-                    w_x_user_recommend wxur
+                    wx_user_recommend wxur
                 WHERE
                     wxur.recommenderId = wxu.recommenderId
                 AND wxur.isdeal = #{isdeal}
@@ -122,11 +122,11 @@
   </select>
     <select id="selectByInviteeId" parameterType="java.lang.String" resultMap="BaseResultMap">
 
-          SELECT * FROM w_x_user_recommend WHERE inviteeId = #{inviteeId}
+          SELECT * FROM wx_user_recommend WHERE inviteeId = #{inviteeId}
     </select>
 
     <update id="updateByInviteeidSelective" parameterType="com.jusfoun.hookah.core.domain.WxUserRecommend" >
-        update w_x_user_recommend
+        update wx_user_recommend
         <set >
             <if test="recommenderid != null" >
                 recommenderId = #{recommenderid,jdbcType=VARCHAR},
@@ -149,4 +149,56 @@
         </set>
         where inviteeId = #{inviteeId}
     </update>
+    <select id="selectRecommendByRecommenderId" resultType="com.jusfoun.hookah.core.domain.vo.WXUserRecommendVo" parameterType="java.lang.String">
+         SELECT
+            u.user_id AS userId,
+            u.user_name AS userName,
+            u.user_type AS userType,
+            u.mobile,
+            count(wxu.id) AS inviteeNum,
+            sum(wxu.reward_money) AS rewardMoney,
+            (
+                SELECT
+                    count(wxur.id)
+                FROM
+                    wx_user_recommend wxur
+                WHERE
+                    wxur.recommenderId = wxu.recommenderId
+                AND wxur.isdeal = 1
+            ) AS isdealNum
+             FROM
+       wx_user_recommend wxu
+
+       LEFT JOIN user u ON u.user_id = wxu.recommenderId
+
+       WHERE wxu.recommenderId=#{recommenderId}
+
+    </select>
+
+    <sql id="sqlRecommendDetailsByRecommenderId">
+          FROM wx_user_recommend wur
+          LEFT JOIN user u ON  wur.inviteeId=u.user_id
+          WHERE wur.recommenderId=#{recommenderId}
+    </sql>
+    <select id="countRecommendDetailsByRecommenderId"  resultType="java.lang.Integer" parameterType="java.util.HashMap">
+          SELECT COUNT(id)
+
+        <include refid="sqlRecommendDetailsByRecommenderId"/>
+    </select>
+
+    <select id="findRecommendDetailsByRecommenderId" resultType="com.jusfoun.hookah.core.domain.vo.WXUserRecommendVo" parameterType="java.util.HashMap">
+        SELECT
+            wur.isdeal,
+            wur.isauthenticate,
+            u.reg_time  AS regTime,
+            u.user_id AS userId,
+            u.user_name AS userName,
+            u.user_type AS userType,
+            u.mobile
+              <include refid="sqlRecommendDetailsByRecommenderId"/>
+
+        ORDER BY ${order} ${sort}
+
+    </select>
+
 </mapper>

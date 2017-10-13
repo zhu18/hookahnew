@@ -19,4 +19,8 @@ public interface WXUserRecommendService extends GenericService<WxUserRecommend,S
     void updateWXUserRecommendIsAuthenticate(String inviteeId);
 
     void updateWXUserRecommendIsDeal(String inviteeId);
+
+    WXUserRecommendVo findRecommendByRecommenderId(String recommenderId);
+
+    Pagination<WxUserRecommend> findRecommendDetailsByRecommenderId(HashMap<String, Object> paramMap);
 }

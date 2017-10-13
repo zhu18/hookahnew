@@ -42,4 +42,14 @@ public class WXUserRecommendServiceImpl extends GenericServiceImpl<WxUserRecomme
     @Override
     public void updateWXUserRecommendIsDeal(String inviteeId) {
     }
+
+    @Override
+    public WXUserRecommendVo findRecommendByRecommenderId(String recommenderId) {
+        return null;
+    }
+
+    @Override
+    public Pagination<WxUserRecommend> findRecommendDetailsByRecommenderId(HashMap<String, Object> paramMap) {
+        return null;
+    }
 }
