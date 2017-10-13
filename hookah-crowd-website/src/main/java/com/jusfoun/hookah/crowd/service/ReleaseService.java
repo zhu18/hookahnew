@@ -1,7 +1,6 @@
 package com.jusfoun.hookah.crowd.service;
 
 import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
-import com.jusfoun.hookah.core.domain.zb.ZbRequirementFiles;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbRequirementVo;
 import com.jusfoun.hookah.core.generic.GenericService;
 import com.jusfoun.hookah.core.utils.ReturnData;
@@ -24,7 +23,7 @@ public interface ReleaseService extends GenericService<ZbRequirement, String> {
 
     ReturnData deleteRequirement(Long id);
 
-    String getManagedMoney(Long requirementId);
+    String getManagedMoney(String requirementId);
 
     ReturnData updateMoneyStatus(String requireSn);
 

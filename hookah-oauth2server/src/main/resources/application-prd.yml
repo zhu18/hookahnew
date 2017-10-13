@@ -10,6 +10,8 @@ spring:
   datasource:
     url: jdbc:log4jdbc:mysql://192.168.15.175:3306/hookah?characterEncoding=utf8&useSSL=false&autoReconnect=true&failOverReadOnly=false&autoReconnectForPools=true
     driverClassName: net.sf.log4jdbc.DriverSpy
+    #driverClassName: com.mysql.jdbc.Driver
+    #url: jdbc:mysql://192.168.15.90:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
     username: root
     password: bdgStore3306
     initialize: true
@@ -89,5 +91,5 @@ myconf:
   redis:
     ipPort: 192.168.15.174:7000,192.168.15.174:7001,192.168.15.174:7002
   consul:
-      ipPort: 192.168.15.174:8500
+    ipPort: 192.168.15.174:8500
 debug: true

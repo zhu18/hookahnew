@@ -499,37 +499,44 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
     }
 
 
-    public String getManagedMoney(Long requirementId){
+    public String getManagedMoney(String requirementId){
+
+        String html = null;
         List<Condition> filter = new ArrayList<>();
-        filter.add(Condition.eq("id",requirementId));
+        filter.add(Condition.eq("id", requirementId));
         ZbRequirement zbRequirement = zbRequireService.selectOne(filter);
         if(zbRequirement != null){
             ZbTrusteeRecord zbTrusteeRecord = new ZbTrusteeRecord();
             zbTrusteeRecord.setUserId(zbRequirement.getUserId());
-            zbTrusteeRecord.setRequirementId(requirementId);
+            zbTrusteeRecord.setRequirementId(Long.parseLong(requirementId));
             zbTrusteeRecord.setRewardMoney(zbRequirement.getRewardMoney());
             zbTrusteeRecord.setTrusteePercent(zbRequirement.getTrusteePercent());
-            if(zbRequirement.getStatus().equals(ZbContants.Zb_Require_Status.WAIT_TG.getCode())){
+//            if(zbRequirement.getStatus().equals(ZbContants.Zb_Require_Status.WAIT_TG.getCode())){
+            if(zbRequirement.getStatus().equals(Short.parseShort("3"))){
                 //第一次托管
                 zbTrusteeRecord.setTrusteeNum(1);
-            }else if (zbRequirement.getStatus().equals(ZbContants.Zb_Require_Status.WAIT_TWO_TG.getCode())){
+//            }else if (zbRequirement.getStatus().equals(ZbContants.Zb_Require_Status.WAIT_TWO_TG.getCode())){
+            }else if (zbRequirement.getStatus().equals(Short.parseShort("7"))){
                 //第二次托管
                 zbTrusteeRecord.setTrusteeNum(2);
+            }else{
+                return "状态有误";
             }
             zbTrusteeRecord.setSerialNo(CommonUtils.getRequireSn("ZB","ZFB"));
             zbTrusteeRecord.setStatus(ZbContants.Trustee_Record_Status.RECORD_INITIAL.getCode());
             zbTrusteeRecord.setActualMoney(zbRequirement.getRewardMoney() * zbRequirement.getTrusteePercent());//本次托管金额除以10000
             zbTrusteeRecord.setAddTime(new Date());
             zbTrusteeRecordService.insert(zbTrusteeRecord);
-        }
-        List<Condition> filter1 = new ArrayList<>();
-        filter1.add(Condition.eq("requirementId",zbRequirement.getId()));
-        ZbTrusteeRecord zbTrusteeRecord = zbTrusteeRecordService.selectOne(filter1);
+
+//            List<Condition> filter1 = new ArrayList<>();
+//            filter1.add(Condition.eq("requirementId",zbRequirement.getId()));
+//            ZbTrusteeRecord zbTrusteeRecord = zbTrusteeRecordService.selectOne(filter1);
 //        String url= "http://www.galaxybigdata.com/pay/aliPay?orderSn="+ zbTrusteeRecord.getSerialNo();
 //        Map m = HttpClientUtil.GetMethod(url);
 
-        String html = payService.toPayByZFB(zbRequirement.getRequireSn(), zbTrusteeRecord.getSerialNo(), zbTrusteeRecord.getActualMoney(), zbTrusteeRecord.getTrusteeNum().toString(), PayConfiguration.ALIPAY_NOTIFY_URL, PayConfiguration.ALIPAY_RETURN_URL);
-        System.out.print(html);
+            html = payService.toPayByZFB(zbRequirement.getRequireSn(), zbTrusteeRecord.getSerialNo(), zbTrusteeRecord.getActualMoney() / 100, zbTrusteeRecord.getTrusteeNum().toString(), PayConfiguration.ALIPAY_NOTIFY_URL, PayConfiguration.ALIPAY_RETURN_URL);
+            System.out.print(html);
+        }
         return html;
     }
 }

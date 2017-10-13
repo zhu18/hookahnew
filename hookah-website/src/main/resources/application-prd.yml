@@ -48,3 +48,7 @@ spring:
       password: password
       publisher-confirms: true
       virtual-host: /
+      listener:
+        retry:
+        enabled: true
+        max-attempts: 2
