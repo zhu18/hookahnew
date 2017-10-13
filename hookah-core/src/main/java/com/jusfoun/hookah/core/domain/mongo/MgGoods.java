@@ -171,7 +171,7 @@ public class MgGoods extends GenericModel {
         private String formatName; //名称
         private int format; //类型 0:按次 1：按月 2：按年 3：套
         private Integer number; //规格
-        private Long price; //价格
+        private Long price; //零售价格
         private Long settlementPrice;//结算价
         private Long agencyPrice;//代理价
 
