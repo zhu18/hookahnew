@@ -33,10 +33,10 @@ app.run(function ($rootScope, $state) {
       "folded": false
     }
   };
-  $rootScope.config.title = '发布大厅';
+  $rootScope.config.title = '需求大厅';
   $rootScope.config.mainNav =[
     {
-      "title":"发布查询",
+      "title":"需求查询",
       "url":"publish.list"
     }
   ];

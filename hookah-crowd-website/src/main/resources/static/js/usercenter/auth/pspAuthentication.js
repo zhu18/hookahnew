@@ -6,35 +6,46 @@ $(function () {
     // 教育经历单个修改
     $(".educationEdit").on('click',function (r) {
         console.log(r.currentTarget.attributes[2].nodeValue);
-        var sn=r.currentTarget.attributes[2].nodeValue;
-        console.log($(this));
-        var html='<td colspan="7">' +
-            '<table id="education"> ' +
-            '<tr> ' +
-            '<td> ' +
-            '<div> ' +
-            '<label for="">学校名称</label> ' +
-            '<input type="text"> ' +
-            '</div> ' +
-            '</td> ' +
-            '<td> ' +
-            '<div> ' +
-            '<label for="">专业名称</label>' +
-            '<input type="text"> </div>' +
-            '</td>' +
-            '</tr> ' +
-            '<tr> <td> <div > ' +
-            '<label for="">就学时间</label> ' +
-            '<div class="display-inline-block">' +
-            ' <input id="startDate" type="text" placeholder="请选择开始时间" readonly=""> 至 <input id="endDate" type="text" placeholder="请选择结束时间" readonly=""> </div> </div> </td> ' +
-            '<td> <div> <label for="">学校名称</label> <select name="" id=""> <option value="">大专</option> <option value="">本科</option> <option value="">硕士</option> <option value="">博士</option> </select> </div> </td> </tr> <tr> <td> <input type="checkbox" name="sex" value="n" />是否统招 </td> <td> <div > <label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename" class="fileUploadBtn j_firstPage"> </div> </div> </td> </tr> ' +
-            '<tr> <td colspan="2"> ' +
-            '<button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5" onclick="educationAddSave(132456)" >保存</button> </td> </tr> </table> </td>'
-
-        var index =r.currentTarget.parentNode.parentNode.parentNode.rowIndex;
-        $(".education tr").eq(index).html(html);
-        jeDate();
-
+        $.ajax({
+            type: 'post',
+            url: "/api/auth/getAuthInfo",
+            dataType: 'json',
+            contentType: 'application/json',
+            data:JSON.stringify({
+                optArrAySn:r.currentTarget.attributes[2].nodeValue,
+                optAuthType: "1"
+            }),
+            success: function (data) {
+                console.log(data);
+                if(data.code==1){
+                    var html='<td colspan="7">' +
+                        '<table id="education"> ' +
+                        '<tr> ' +
+                        '<td> ' +
+                        '<div> ' +
+                        '<label for="">学校名称</label> ' +
+                        '<input type="text"> ' +
+                        '</div> ' +
+                        '</td> ' +
+                        '<td> ' +
+                        '<div> ' +
+                        '<label for="">专业名称</label>' +
+                        '<input type="text"> </div>' +
+                        '</td>' +
+                        '</tr> ' +
+                        '<tr> <td> <div > ' +
+                        '<label for="">就学时间</label> ' +
+                        '<div class="display-inline-block">' +
+                        ' <input id="startDate" type="text" placeholder="请选择开始时间" readonly=""> 至 <input id="endDate" type="text" placeholder="请选择结束时间" readonly=""> </div> </div> </td> ' +
+                        '<td> <div> <label for="">学校名称</label> <select name="" id=""> <option value="">大专</option> <option value="">本科</option> <option value="">硕士</option> <option value="">博士</option> </select> </div> </td> </tr> <tr> <td> <input type="checkbox" name="sex" value="n" />是否统招 </td> <td> <div > <label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename" class="fileUploadBtn j_firstPage"> </div> </div> </td> </tr> ' +
+                        '<tr> <td colspan="2"> ' +
+                        '<button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5" onclick="educationAddSave(132456)" >保存</button> </td> </tr> </table> </td>'
+                         var index =r.currentTarget.parentNode.parentNode.parentNode.rowIndex;
+                         $(".education tr").eq(index).html(html);
+                         jeDate();
+                }
+            }
+        });
 
     });
 
@@ -86,14 +97,13 @@ $("#educationAdd").on('click',function () {
         ' <input id="startDate" type="text" placeholder="请选择开始时间" readonly=""> 至 <input id="endDate" type="text" placeholder="请选择结束时间" readonly=""> </div> </div> </td> ' +
         '<td> <div> <label for="">学历</label> <select name="" id="edu"> <option value="大专">大专</option> <option value="本科">本科</option> <option value="硕士">硕士</option> <option value="博士">博士</option> </select> </div> </td> </tr> ' +
         '<tr> ' +
-        '<td> <input type="checkbox" name="sex" value="n" id="orExam" />是否统招 </td> <td> <div > <label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename" class="fileUploadBtn j_firstPage"> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td> </tr> ' +
+        '<td> <input type="checkbox" name="sex" value="n" id="orExam" />是否统招 </td> <td> <div > <label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename" class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td> </tr> ' +
         '<tr> <td colspan="2"> ' +
         '<button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " onclick="educationAddSave()">保存</button> </td> </tr> </table> </td> </tr>'
 
          $(".education tbody").append(html);
          $(".education tfoot").hide();
          jeDate();
-         var file=''
          fileUpload();
 
 
@@ -247,7 +257,8 @@ function fileUpload() {
             done: function (e, data) {
                 console.log('上传完毕');
                 var obj = data.result.data[0];
-                $('input[type="hidden"]').val(obj.filePath)
+                $('input[type="hidden"]').val(obj.filePath);
+                $('.fileTip').html(data.files[0].name);
                 console.log(data);
                 console.log(obj.filePath);
                 console.log(data.files[0].name);
