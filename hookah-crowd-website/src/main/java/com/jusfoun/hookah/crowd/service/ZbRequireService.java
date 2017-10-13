@@ -25,4 +25,6 @@ public interface ZbRequireService extends GenericService<ZbRequirement, Long> {
     ReturnData<ZbRequirement> reqCheck(String id);
 
     List<ZbRequirement> selectTradeListByUID(String userId);
+
+    ReturnData selectRequirementTypeInfo();
 }

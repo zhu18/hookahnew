@@ -57,9 +57,38 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
     ZbRequirementMapper zbRequirementMapper;
 
     @Override
-    public ReturnData getAuthInfo(String userId) {
+    public ReturnData getAuthInfo(String optAuthType, String optArrAySn) {
         try {
-            MgZbProvider mgZbProvider = mongoTemplate.findById(userId, MgZbProvider.class);
+
+            String userId = this.getCurrentUser().getUserId();
+            MgZbProvider mgZbProvider = null;
+            if(!StringUtils.isNotBlank(optArrAySn) || !StringUtils.isNotBlank(optAuthType)){
+                mgZbProvider = mongoTemplate.findById(userId, MgZbProvider.class);
+            }else{
+
+                Query query = new Query();
+                switch (optAuthType) {
+                    case "1":
+                        query.addCriteria(Criteria.where("_id").is(userId).and("educationsExpList.sn").is(optArrAySn));
+                        break;
+                    case "2":
+                        query.addCriteria(Criteria.where("_id").is(userId).and("worksExpList.sn").is(optArrAySn));
+                        break;
+                    case "3":
+                        query.addCriteria(Criteria.where("_id").is(userId).and("projectsExpList.sn").is(optArrAySn));
+                        break;
+                    case "4":
+                        query.addCriteria(Criteria.where("_id").is(userId).and("appCaseList.sn").is(optArrAySn));
+                        break;
+                    case "5":
+                        query.addCriteria(Criteria.where("_id").is(userId).and("swpList.sn").is(optArrAySn));
+                        break;
+                    default:
+                        query.addCriteria(Criteria.where("_id").is(userId).and("inPatentsList.sn").is(optArrAySn));
+                        break;
+                }
+                mgZbProvider = mongoTemplate.findOne(query, MgZbProvider.class);
+            }
             return ReturnData.success(mgZbProvider);
         }catch (Exception e){
             logger.error("认证信息获取失败", e);

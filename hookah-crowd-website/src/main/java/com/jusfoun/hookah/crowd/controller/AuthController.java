@@ -110,12 +110,10 @@ public class AuthController extends BaseController {
      */
     @RequestMapping(value = "/api/auth/getAuthInfo")
     @ResponseBody
-    public ReturnData getAuthInfo() {
+    public ReturnData getAuthInfo(String optAuthType, String optArrAySn) {
 
         try {
-            String userId = getCurrentUser().getUserId();
-//            String userId = "1234567890";
-            return mgZbProviderService.getAuthInfo(userId);
+            return mgZbProviderService.getAuthInfo(optAuthType, optArrAySn);
         } catch (Exception e) {
             logger.error("认证信息查询失败", e);
             return ReturnData.error("系统繁忙，请稍后再试！[query]^_^");
@@ -126,6 +124,7 @@ public class AuthController extends BaseController {
      * 认证信息操作
      *
      * @param vo
+     *
      * @return
      */
     @RequestMapping(value = "/api/auth/optAuthInfo")
