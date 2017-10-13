@@ -1,7 +1,6 @@
 package com.jusfoun.hookah.crowd.controller;
 
 import com.jusfoun.hookah.core.domain.zb.vo.ZbRequirementVo;
-import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.crowd.service.ReleaseService;
 import org.springframework.stereotype.Controller;
@@ -136,7 +135,7 @@ public class ReleaseController extends BaseController{
      */
     @ResponseBody
     @RequestMapping(value = "/managedMoney", method = RequestMethod.GET)
-    public String managedMoney(Long requirementId){
+    public String managedMoney(String requirementId){
         return releaseService.getManagedMoney(requirementId);
     }
 
