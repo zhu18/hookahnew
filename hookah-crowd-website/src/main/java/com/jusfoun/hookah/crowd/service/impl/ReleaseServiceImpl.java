@@ -528,7 +528,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
 //        String url= "http://www.galaxybigdata.com/pay/aliPay?orderSn="+ zbTrusteeRecord.getSerialNo();
 //        Map m = HttpClientUtil.GetMethod(url);
 
-        String html = payService.toPayByZFB(zbRequirement.getRequireSn(), zbTrusteeRecord.getSerialNo(), zbTrusteeRecord.getActualMoney(), zbRequirement.getStatus().toString(), PayConfiguration.ALIPAY_NOTIFY_URL, PayConfiguration.ALIPAY_RETURN_URL);
+        String html = payService.toPayByZFB(zbRequirement.getRequireSn(), zbTrusteeRecord.getSerialNo(), zbTrusteeRecord.getActualMoney(), zbTrusteeRecord.getTrusteeNum().toString(), PayConfiguration.ALIPAY_NOTIFY_URL, PayConfiguration.ALIPAY_RETURN_URL);
         System.out.print(html);
         return html;
     }

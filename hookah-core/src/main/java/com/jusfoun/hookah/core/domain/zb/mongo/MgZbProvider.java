@@ -70,7 +70,8 @@ public class MgZbProvider extends GenericModel {
         private String endTime;       //结束时间
         private String edu;         //学历
         private Integer orExam;     //是否统招
-        private List<String> certPath;//证明材料
+//        private List<String> certPath;//证明材料
+        private String certPath;//证明材料
 
         public String getSn() {
             return sn;
@@ -128,11 +129,11 @@ public class MgZbProvider extends GenericModel {
             this.orExam = orExam;
         }
 
-        public List<String> getCertPath() {
+        public String getCertPath() {
             return certPath;
         }
 
-        public void setCertPath(List<String> certPath) {
+        public void setCertPath(String certPath) {
             this.certPath = certPath;
         }
     }
