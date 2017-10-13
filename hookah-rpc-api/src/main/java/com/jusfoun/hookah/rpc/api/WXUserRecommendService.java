@@ -22,5 +22,5 @@ public interface WXUserRecommendService extends GenericService<WxUserRecommend,S
 
     WXUserRecommendVo findRecommendByRecommenderId(String recommenderId);
 
-    Pagination<WxUserRecommend> findRecommendDetailsByRecommenderId(HashMap<String, Object> paramMap);
+    Pagination<WXUserRecommendVo> findRecommendDetailsByRecommenderId(HashMap<String, Object> paramMap);
 }
