@@ -77,7 +77,7 @@ public class UserRecommendApi extends BaseController {
         ReturnData returnData=new ReturnData();
         try{
             WXUserRecommendVo wxUserRecommend=wxUserRecommendService.findRecommendByRecommenderId(recommenderId);
-            returnData.setData(wxUserRecommend);
+            returnData.setData2(wxUserRecommend);
             returnData.setCode(ExceptionConst.Success);
         }catch (Exception e){
             e.printStackTrace();

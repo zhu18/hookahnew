@@ -2,9 +2,17 @@ class RecommendDetailController {
     constructor($scope, $rootScope, $http, $stateParams, growl) {
         $scope.title="后台邀请好友明细";
         $scope.search = function (initCurrentPage) {
+            /*个人表格*/
+            $http({
+                method: 'GET',
+                url: $rootScope.site.apiServer + "/api/recommend/findOneRecommend"
+            }).then(function (res, status, config, headers) {
+                $scope.self  =  res.data.data2;
+            });
+            /*邀请列表*/
             var promise = $http({
                 method: 'GET',
-                url: $rootScope.site.apiServer + "/api/recommend/findRecommendList",
+                url: $rootScope.site.apiServer + "/api/recommend/findRecommendDetails",
                 params: {
                     currentPage: initCurrentPage? 1 :$rootScope.pagination.currentPage,
                     pageSize: $rootScope.pagination.pageSize,

@@ -31,25 +31,25 @@
                 <tbody>
                     <tr>
                     <td>
-                        <span ng-bind="item.userId"></span>
+                        <span ng-bind="self.userId"></span>
                     </td>
                     <td>
-                        <span data-ng-bind="item.userName"></span>
+                        <span ng-bind="self.userName"></span>
                     </td>
                     <td>
-                        <span ng-bind="item.mobile"></span>
+                        <span ng-bind="self.mobile"></span>
                     </td>
                     <td>
-                        <span ng-bind="item.regTime"></span>
+                        <span ng-bind="self.userType | UserType"></span>
                     </td>
                     <td>
-                        <span ng-bind="item.userType | UserType"></span>
+                        <span ng-bind="self.inviteeNum"></span>
                     </td>
                     <td>
-                        <span ng-bind="item.isdealNum"></span>
+                        <span ng-bind="self.isdealNum"></span>
                     </td>
                     <td>
-                        <span ng-bind="item.isdealNum"></span>
+                        <span ng-bind="self.rewardMoney"></span>
                     </td>
                 </tr>
                 </tbody>
