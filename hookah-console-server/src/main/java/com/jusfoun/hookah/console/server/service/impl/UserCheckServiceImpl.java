@@ -17,7 +17,7 @@ import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.MqSenderService;
 import com.jusfoun.hookah.rpc.api.UserCheckService;
 import com.jusfoun.hookah.rpc.api.UserService;
-import org.apache.commons.lang3.StringUtils;
+import com.jusfoun.hookah.rpc.api.WXUserRecommendService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -38,6 +38,9 @@ public class UserCheckServiceImpl extends GenericServiceImpl<UserCheck, String> 
 
     @Resource
     MqSenderService mqSenderService;
+
+    @Resource
+    private WXUserRecommendService wxUserRecommendService;
 
     //用户类型(0.个人 1.企业)
     public static final String USER_TYPE_PERSON = "0";
@@ -86,6 +89,9 @@ public class UserCheckServiceImpl extends GenericServiceImpl<UserCheck, String> 
                 }
             }
             userService.updateByIdSelective(user);
+            //更新微信用户推荐表
+            wxUserRecommendService.updateWXUserRecommendIsAuthenticate(user.getUserId());
+
             returnData.setData(userCheck);
 
         } catch (Exception e) {
