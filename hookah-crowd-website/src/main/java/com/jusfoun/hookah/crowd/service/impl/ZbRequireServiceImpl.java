@@ -56,6 +56,10 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
     ZbProgramService zbProgramService;
 
     @Resource
+    MgZbRequireStatusService mgZbRequireStatusService;
+
+
+    @Resource
     public void setDao(ZbRequirementMapper zbRequirementMapper) {
         super.setDao(zbRequirementMapper);
     }
@@ -195,6 +199,9 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.WAIT_buyer_YS.getCode().shortValue())&& zbProgram.getStatus()!=null){
                 zbProgram.setId(programId);
                 zbProgram.setStatus(ZbContants.Zb_Require_Status.WAIT_CHECK.getCode().shortValue());
+                //添加平台预评时间
+                mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.PLATEVALTIME, DateUtil.getSimpleDate(zbProgram.getAddTime()));
+
                 if (checkAdvice!=null){
                     zbProgram.setCheckAdvice(checkAdvice);
                 }
@@ -209,6 +216,17 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                 zbProgramService.updateByIdSelective(zbProgram);
             }
             super.updateByIdSelective(zbRequirement);
+            ZbRequirement zbRequirement1 =zbRequirementMapper.selectByPrimaryKey(id);
+            zbRequirement.setUpdateTime(zbRequirement1.getUpdateTime());
+            if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.WORKINGING.getCode().shortValue())){
+                //添加资格评选时间
+                mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.SELECTTIME, DateUtil.getSimpleDate(zbRequirement.getUpdateTime()));
+            }
+            if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.SINGING.getCode().shortValue())){
+                //添加平台发布时间
+                mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.SELECTTIME, DateUtil.getSimpleDate(zbRequirement.getUpdateTime()));
+            }
+
         } catch (Exception e) {
             return ReturnData.error("发布失败");
         }
