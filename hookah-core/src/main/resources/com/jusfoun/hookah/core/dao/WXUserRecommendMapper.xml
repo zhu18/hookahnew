@@ -147,7 +147,7 @@
                 update_time = #{updateTime,jdbcType=TIMESTAMP},
             </if>
         </set>
-        where inviteeId = #{inviteeId}
+        where inviteeId = #{inviteeid}
     </update>
     <select id="selectRecommendByRecommenderId" resultType="com.jusfoun.hookah.core.domain.vo.WXUserRecommendVo" parameterType="java.lang.String">
          SELECT
