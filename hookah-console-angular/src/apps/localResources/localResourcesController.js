@@ -26,6 +26,9 @@ class localResourcesController {
 
         $scope.search();
 
+		$scope.refresh = function () {
+			$scope.search();
+		};
 
         $scope.pageChanged = function () {//翻页
         		$scope.search();
