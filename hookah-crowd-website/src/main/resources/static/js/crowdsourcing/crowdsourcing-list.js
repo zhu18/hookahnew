@@ -3,69 +3,41 @@
  */
 function loadPageData(data) { //渲染页面数据
   data = data.data.list;
-  var tempHtml = '\
-        <thead>\
-          <tr>\
-          <th>需求标题</th>\
-          <th>需求类型</th>\
-          <th>悬赏金额</th>\
-          <th>状态</th>\
-          <th>发布时间</th>\
-          <th>交付截止时间</th>\
-          <th>报名剩余时间</th>\
-          </tr>\
-          </thead>\
-          <tbody>';
-  for (var i = 0; i < data.length; i++) {
+  let demandList = '';
+  for (let i = 0; i < data.length; i++) {
     let tempState = '';
     let tempType = '';
+    let tempClass = '';
     let tempButtonHtml = '';
     switch (data[i].status) {
       case 5:
-        tempState = '报名中';
         tempButtonHtml = '<span class="signUp">我要报名</span>';
-        break;
-      case 6:
-        tempState = '报名结束';
-        tempButtonHtml = '<span class="signUp timeover">报名结束</span>';
-        break;
-    }
-    switch (data[i].type) {
-      case 1:
-        tempType = '数据采集';
-        break;
-      case 2:
-        tempType = '数据加工';
-        break;
-      case 3:
-        tempType = '数据模型';
-        break;
-      case 4:
-        tempType = '数据应用';
-        break;
-      case 5:
-        tempType = '数据清洗';
-        break;
-      case 6:
-        tempType = '其他类型';
-        break;
+        tempState = '我要报名';
+        tempClass = '';
 
+        break;
+      case 6:
+        tempButtonHtml = '<span class="signUp timeover">报名结束</span>';
+        tempState = '报名结束';
+        tempClass = 'timeOver';
+        break;
     }
-    tempHtml += '<tr>\
-      <td><a href="javascript:void(0)">' + data[i].title + '</a></td>\
-      <td>' + tempType + '</td>\
-      <td>' + data[i].rewardMoney/100 + '</td>\
-      <td>' + tempState + '</td>\
-      <td>' + data[i].pressTime + '</td>\
-      <td>' + data[i].deliveryDeadline + '</td>\
-      <td><span class="lastTime">'+data[i].remainTime+'</span>' + tempButtonHtml + '</td>\
-      </tr>'
+    demandList+='<li>\
+            <div class="demandDetailTitle">' + data[i].title + '</div>\
+            <img class="demandTimeIco" src="/static/images/crowdsourcing/index/demandDetail-ico.png" alt="">\
+            <div class="demandDeadData">交付截止日期：' + data[i].deliveryDeadline + '</div>\
+            <div class="demandLastTime">报名剩余时间：'+data[i].remainTime+'</div>\
+            <div class="demandMoney">￥ ' + data[i].rewardMoney/100 + ' 元  </div>\
+            <div class="demandHasApply">已报名：0人</div>\
+            <a class="applyBtn demandApply ' + tempState + '" href="6">' + tempState + '</a>\
+          </li>\
+      ';
   }
+
   if (!data.length) {
-    tempHtml += '<tr><td style="padding: 70px;" colspan="8">----无数据----</td></tr>'
+    demandList += '<li style="padding: 70px; width:89%;height: 20px;text-align:center;">----无数据----</li>'
   }
-  tempHtml += '</tbody></table>';
-  $('.crowdsourcing-table').html(tempHtml)
+  $('.demandList').html(demandList)
 
 }
 

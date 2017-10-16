@@ -1,0 +1,57 @@
+.bannerBox{height: 181px;background: url("../../images/crowdsourcing/crowdsourcing-list/bannerBg.png") repeat-x 0 0;}
+.banner{ position: relative;height: 181px;background: url("../../images/crowdsourcing/crowdsourcing-list/banner.png") no-repeat 0 0;}
+.bannerDemandApply{ display: block; position: absolute; top:104px; left:15px; width: 123px; height: 27px; }
+.bannerServerApply{ position: absolute;top:22px; right: 5px; background-color: #daf4f9;color:#48c8e3; font-style: italic; font-size: 18px; line-height:39px; padding: 0 13px; border-radius:4px;
+  transform: scale(1); transition: transform .5s ease-in-out;
+}
+
+.banner:hover .bannerServerApply{  transform: scale(1.1); transition: transform .5s ease-in-out;}
+.crumbs{ font-size: 14px; ; line-height:47px; color:#a5a5a5;}
+.crumbs a{ color:#a5a5a5;}
+
+.crowdsourcing-menu>li { overflow: hidden; font-size: 14px; line-height:33px; border:1px solid #efefef; margin-bottom: 10px;}
+.crowdsourcing-menu li span{ float: left; width: 113px; border: 1px solid #fff; text-align: center ; background-color: #f5f5f5; color:#9f9f9f}
+.crowdsourcing-menu li ul>li{ float: left;  width: 87px; font-size:14px; text-align: center; cursor:pointer}
+.crowdsourcing-menu li ul>li.active{ color:#49c2dc}
+.listFilter{ position: relative;}
+.moneyType{ position: absolute; right:25px; bottom:5px; }
+
+.lastTime{ display: inline-block; width: 100px;}
+
+
+.demandList{ overflow: hidden; border:1px solid #d2d2d2; border-bottom: none;}
+.demandList li{ position: relative; float: left; width:276px; height: 145px; padding:16px 0 0 23px; overflow: hidden; border-right:1px solid #d2d2d2; border-bottom: 1px solid #d2d2d2;transition: all .3s ease-in-out;}
+.demandList li:hover{ background-color: #f2f8fc;}
+.demandList li:hover .applyBtn{ background-color: #ffc600;}
+.demandList li:hover .applyBtn.timeOver{ background-color: #c9c9c9;}
+.demandList li:nth-child(4n+0){ border-right:none;width:275px; }
+
+.applyBtn{ padding:2px 8px 3px;  background-color: #48c8e3;color:#fff; border-radius: 4px; transition: all .3s ease-in-out;}
+.demandApply{  position: absolute; right:19px; bottom:19px;}
+.timeOver{ background-color: #c9c9c9;}
+
+.demandDetailShow{ padding: 16px 0 0 23px; }
+.demandDetailTitle{     margin-bottom: 5px;font-size: 18px; color:#535353;}
+.demandTimeIco{ float: left;margin: 9px 10px 0 0;}
+.demandDeadData{ float: left; font-size: 14px; color:#959494}
+.demandLastTime{ float: left; font-size: 14px; color:#959494}
+.demandMoney{    padding-top: 7px; clear: both; font-size: 18px; color: #ffc600; }
+.demandHasApply{font-size: 14px;color:#cccbcb}
+
+.demandList li:before{ content: ''; display: block; height:3px; width:26px; opacity:0;background-color: #48c8e3; position: absolute; left:20px; top:2px; transition: all .3s ease-in-out;}
+.demandList li:after{ content: ''; display: block; height:26px; width:3px; opacity:0; background-color: #48c8e3; position: absolute; left:2px; top:20px; transition: all .3s ease-in-out;}
+
+.demandList li:hover:before{left:2px; top:2px; opacity:1;}
+.demandList li:hover:after{ left:2px; top:2px; opacity:1;}
+
+.demandList li .demandDetailTitle:before{ content: ''; display: block; opacity:0; height:3px; width:26px; background-color: #48c8e3; position: absolute; right:20px; bottom:2px; transition: all .3s ease-in-out;}
+.demandList li .demandDetailTitle:after{ content: ''; display: block; opacity:0; height:26px; width:3px; background-color: #48c8e3; position: absolute; right:2px; bottom:20px; transition: all .3s ease-in-out;}
+
+.demandList li:hover .demandDetailTitle:before{ right:2px; bottom:2px; opacity:1;}
+.demandList li:hover .demandDetailTitle:after{  right:2px; bottom:2px; opacity:1;}
+
+
+
+
+
+
