@@ -37,25 +37,16 @@ public class RabbitMQEsGoodsListener {
         logger.info(goodsId + ":开始执行ES添加/删除流程");
         try {
             Goods goods = goodsMapper.selectByPrimaryKey(goodsId);
-            if(goods != null) {
-                // 如果isDelete == 0 或者 is_onsale == 0 删除es中的商品
-                if(HookahConstants.GOODS_STATUS_DELETE.equals(goods.getIsDelete())
-                        || HookahConstants.GOODS_STATUS_OFFSALE.equals(goods.getIsOnsale())
-                        || HookahConstants.GOODS_STATUS_FORCE_OFFSALE.equals(goods.getIsOnsale())) {
-                    elasticSearchService.deleteById(esProps.getGoods().get("index"),
-                            esProps.getGoods().get("type"), goodsId);
-                }else if(HookahConstants.GOODS_STATUS_UNDELETE.equals(goods.getIsDelete())
-                        && HookahConstants.GOODS_STATUS_ONSALE.equals(goods.getIsOnsale())) {
-
-                    EsGoods esGoods = goodsMapper.getNeedEsGoodsById(goodsId);
-                    if(esGoods != null) {
-                        Map<String, Object> map = elasticSearchService.completionEsGoods(esGoods);
-                        // 如果isDelete == 1 并且 is_onsale == 1 添加或者修改es中的商品
-                        elasticSearchService.upsertById(esProps.getGoods().get("index"),
-                                esProps.getGoods().get("type"), goodsId, map);
-                    }else {
-                        logger.warn(goodsId + ":esGoods查询为null");
-                    }
+            if(goods != null && HookahConstants.GOODS_STATUS_UNDELETE.equals(goods.getIsDelete())
+                    && HookahConstants.GOODS_STATUS_ONSALE.equals(goods.getIsOnsale())) {
+                EsGoods esGoods = goodsMapper.getNeedEsGoodsById(goodsId);
+                if(esGoods != null) {
+                    Map<String, Object> map = elasticSearchService.completionEsGoods(esGoods);
+                    // 如果isDelete == 1 并且 is_onsale == 1 添加或者修改es中的商品
+                    elasticSearchService.upsertById(esProps.getGoods().get("index"),
+                            esProps.getGoods().get("type"), goodsId, map);
+                }else {
+                    logger.warn(goodsId + ":esGoods查询为null");
                 }
             }else {
                 //删除ES中的商品
