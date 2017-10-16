@@ -23,6 +23,8 @@ import com.jusfoun.hookah.crowd.service.*;
 import com.jusfoun.hookah.crowd.util.DateUtil;
 import com.jusfoun.hookah.crowd.util.DictionaryUtil;
 import com.mongodb.BasicDBObject;
+import com.mongodb.CommandResult;
+import com.mongodb.DBObject;
 import com.mongodb.WriteResult;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -58,18 +60,56 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
 
     @Override
     public ReturnData getAuthInfo(String optAuthType, String optArrAySn) {
+
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+
         try {
 
             String userId = this.getCurrentUser().getUserId();
             MgZbProvider mgZbProvider = null;
             if(!StringUtils.isNotBlank(optArrAySn) || !StringUtils.isNotBlank(optAuthType)){
                 mgZbProvider = mongoTemplate.findById(userId, MgZbProvider.class);
+                returnData.setData(mgZbProvider);
+                returnData.setMessage("查询成功");
             }else{
 
                 Query query = new Query();
                 switch (optAuthType) {
                     case "1":
-                        query.addCriteria(Criteria.where("_id").is(userId).and("educationsExpList.sn").is(optArrAySn));
+//                        query.addCriteria(Criteria.where("_id").is(userId).and("educationsExpList.sn").is(optArrAySn));
+//                        mgZbProvider = mongoTemplate.findOne(query, MgZbProvider.class, "educationsExpList");
+//                        MgZbProvider mgZbProvider2 = mongoTemplate.findOne(query, MgZbProvider.class);
+
+//                        query.addCriteria(Criteria.where("_id").is(userId).
+//                                and("educationsExpList").elemMatch(Criteria.where("sn").is(userId)).is(optArrAySn));
+//                        query.addCriteria(new Criteria().elemMatch(Criteria.where("_id").is(userId).and("educationsExpList.sn").is(optArrAySn)));
+
+//                        String jsonSql = "{'_id':'73b93bda947611e7b7dd26d6fa745dc9'},{'educationsExpList':{'$elemMatch':{'sn':'SN_1_1507875843788'}}}";
+//                        String jsonSql = "{'_id': '" + userId + "'},{'educationsExpList':{'$elemMatch':{'sn': '" + optArrAySn + "'}}}";
+//                        CommandResult commandResult = mongoTemplate.executeCommand(jsonSql);
+//                        CommandResult commandResult = mongoTemplate.executeCommand((DBObject)JSON.parseObject(jsonSql));
+
+
+//                        query.addCriteria(Criteria.where("_id").is(userId))
+//                                .addCriteria(Criteria.where("educationsExpList")
+//                                        .elemMatch(Criteria.where("sn").is(optArrAySn)));
+
+                        Criteria criatira = new Criteria();
+                        criatira.andOperator(Criteria.where("_id").is(userId),
+                                Criteria.where("educationsExpList")
+                                        .elemMatch(Criteria.where("sn").is(optArrAySn)));
+
+//                        Query query2 = new Query(Criteria.where("educationsExpList").elemMatch(Criteria.where("sn").is(optArrAySn)));
+//                        query2.addCriteria(Criteria.where("_id").is(userId));
+//                        query2.fields().include("educationsExpList");
+
+//                        query.addCriteria(Criteria.where("_id").is(userId));
+//                        query.addCriteria(Criteria.where("educationsExpList").elemMatch(Criteria.where("sn").is(optArrAySn)));
+
+                        mgZbProvider = mongoTemplate.findOne(new Query(criatira), MgZbProvider.class);
+
+                        returnData.setData(mgZbProvider.getEducationsExpList());
                         break;
                     case "2":
                         query.addCriteria(Criteria.where("_id").is(userId).and("worksExpList.sn").is(optArrAySn));
@@ -87,9 +127,9 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                         query.addCriteria(Criteria.where("_id").is(userId).and("inPatentsList.sn").is(optArrAySn));
                         break;
                 }
-                mgZbProvider = mongoTemplate.findOne(query, MgZbProvider.class);
+
             }
-            return ReturnData.success(mgZbProvider);
+            return returnData;
         }catch (Exception e){
             logger.error("认证信息获取失败", e);
             return ReturnData.error("认证信息获取失败");
@@ -311,8 +351,9 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                                 }
                                 //先删除再添加
                                 del.pull("educationsExpList", new BasicDBObject("sn", vo.getEducationsExpList().get(0).getSn()));
-                                mongoTemplate.updateMulti(query, del, MgZbProvider.class);
-                                add.addToSet("educationsExpList", vo.getEducationsExpList().get(0));
+                                WriteResult wr = mongoTemplate.updateMulti(query, del, MgZbProvider.class);
+//                                add.addToSet("educationsExpList", vo.getEducationsExpList().get(0));
+                                add.addToSet("educationsExpList").each(vo.getEducationsExpList());
                                 break;
                             case "2":
                                 if(vo.getWorksExpList() == null || vo.getWorksExpList().size() < 1){
