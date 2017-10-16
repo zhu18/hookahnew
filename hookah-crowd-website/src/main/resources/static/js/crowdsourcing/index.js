@@ -14,7 +14,7 @@
 function renderDOM() {
   $.ajax({
     type: 'get',
-    url: "/api/require/requirementTypeInfo",
+    url: "/require/requirementTypeInfo",
     success: function (data) {
       console.log(data);
       if(data.code==1){

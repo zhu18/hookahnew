@@ -61,7 +61,7 @@
 .demandListTitle{position: relative;  height:35px; margin:18px 0 10px;  font-weight: normal;  overflow: hidden;}
 .demandListTitle img{ float: left;margin-right: 10px;}
 .demandListTitle span{ float: left; font-size: 24px; color:#535353;  }
-.demandListTitle a{ position: absolute; right:0;color:#959494; font-size:14px;  line-height:35px;}
+.demandListTitle a{ position: absolute;right: 15px;;color:#959494; font-size:14px;  line-height:35px;}
 
 .demandListBox{ overflow: hidden;}
 .demandListImg{ float: left; width: 299px;}
@@ -99,23 +99,6 @@
 .demandDetailCon{ padding: 27px 22px 0;margin-bottom: 24px; height: 70px;line-height:22px; text-align: left; font-size: 14px; color:#959494;word-break:break-all;  word-wrap:break-word; overflow: hidden;}
 .demandApply{}
 .img-animate{ transform: scale(1.1); transition: transform .5s ease-in-out;}
-
-
-
-div#welcome img{
-  transform: scale(1.1); transition: transform .5s ease-in-out;}
-
-div#welcome:hover img {
-  -webkit-transform: rotate(90deg);
-  -moz-transform: rotate(90deg);
-  -o-transform: rotate(90deg);
-  transform: rotate(90deg);
-}
-
-
-
-
-
 
 
 
