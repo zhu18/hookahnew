@@ -317,4 +317,25 @@ public class ZbTrusteeRecord extends GenericModel {
     public void setAddTime(Date addTime) {
         this.addTime = addTime;
     }
+
+
+    private String operator;
+
+    private Date updateTime;
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
 }

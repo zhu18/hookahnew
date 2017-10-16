@@ -1,6 +1,10 @@
 package com.jusfoun.hookah.crowd.service.impl;
 
+import com.jusfoun.hookah.core.domain.zb.ZbTrusteeRecord;
+import com.jusfoun.hookah.core.generic.Condition;
+import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.crowd.service.PayService;
+import com.jusfoun.hookah.crowd.service.ZbTrusteeRecordService;
 import com.jusfoun.hookah.crowd.util.AlipayConfig;
 import com.jusfoun.hookah.crowd.util.AlipayNotify;
 import com.jusfoun.hookah.crowd.util.FormFactory;
@@ -10,15 +14,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class PayServiceImpl implements PayService {
 
     protected final static Logger logger = LoggerFactory.getLogger(PayServiceImpl.class);
+
+    @Resource
+    private ZbTrusteeRecordService zbTrusteeRecordService;
 
     @Override
     public String toPayByZFB(String requirementSn, String tradeSn, Long amount, String flagNum, String notify_url, String return_url) {
@@ -64,14 +70,16 @@ public class PayServiceImpl implements PayService {
     @Override
     public ModelAndView handleZFBRs(HttpServletRequest request) {
 
+        logger.info("众包项目，支付宝同步回调处理中……");
+
         ModelAndView modelAndView = new ModelAndView();
-//        mav.setViewName("welcome");
-//        mav.addObject("msg", "hello kitty");
+
+        String tradeSn = "";
 
         try {
 
             //商户订单号
-            String orderSn = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
+            tradeSn = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
             //支付宝交易号
             String tradeNo = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"),"UTF-8");
             //交易状态
@@ -80,20 +88,47 @@ public class PayServiceImpl implements PayService {
             String total_fee = new String(request.getParameter("total_fee").getBytes("ISO-8859-1"),"UTF-8");
 
             Map<String,String> param = getRequestParams(request);
-            logger.info("支付宝同步回调" + orderSn);
-            boolean flag = aliPayHandle(orderSn, tradeStatus, param);
+
+            boolean flag = aliPayHandle(tradeSn, tradeStatus, param);
+            if (flag){
+                modelAndView.addObject("money", total_fee);
+                modelAndView.setViewName("pay/success");
+            }else {
+                modelAndView.addObject("orderSn", tradeSn);
+                modelAndView.setViewName("pay/fail");
+            }
+
+            logger.info("众包项目，支付宝同步回调处理中……");
+
+            return modelAndView;
 
         }catch(Exception e){
-
+           logger.error("众包项目，支付宝同步回调{}", e);
         }
+
         return modelAndView;
     }
 
-    private boolean aliPayHandle(String orderSn, String tradeStatus, Map<String, String> param) {
+    private boolean aliPayHandle(String tradeSn, String tradeStatus, Map<String, String> param) {
 
         if (AlipayNotify.verify(param)){
             if(tradeStatus.equals("TRADE_FINISHED") || tradeStatus.equals("TRADE_SUCCESS")){
 
+                if(!StringUtils.isNotBlank(tradeSn)){
+                    return false;
+                }
+                List<Condition> filters = new ArrayList<>();
+                filters.add(Condition.eq("serialNo", tradeSn));
+                ZbTrusteeRecord zbTrusteeRecord = zbTrusteeRecordService.selectOne(filters);
+                if(zbTrusteeRecord == null){
+                    return false;
+                }
+//                if(!zbTrusteeRecord.getStatus().equals(Short.parseShort("0"))){
+//                    return false;
+//                }
+
+                zbTrusteeRecord.setStatus(Short.parseShort("1"));
+                zbTrusteeRecordService.updateById(zbTrusteeRecord);
 
                 logger.info("支付宝支付成功"+orderSn);
                 return true;
